@@ -2,8 +2,8 @@
 	import { AppBar } from 'svelte-ux';
 </script>
 
-<AppBar title="LayerChart" />
+<AppBar title="Chart" />
 
 <main class="p-2">
-	<h1>Welcome to LayerChart</h1>
+	<h1>Chart TODO</h1>
 </main>

@@ -14,14 +14,21 @@
 		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
 	},
 	"devDependencies": {
-		"@sveltejs/kit": "next",
-		"prettier": "~2.2.1",
-		"prettier-plugin-svelte": "^2.2.0",
-		"svelte": "^3.34.0",
-		"svelte-check": "^2.0.0",
-		"svelte-preprocess": "^4.0.0",
-		"tslib": "^2.0.0",
-		"typescript": "^4.0.0"
+		"@sveltejs/kit": "1.0.0-next.196",
+		"autoprefixer": "^10.4.0",
+		"prettier": "^2.4.1",
+		"prettier-plugin-svelte": "^2.4.0",
+		"svelte": "^3.42.6",
+		"svelte-check": "^2.2.6",
+		"svelte-preprocess": "^4.9.4",
+		"tailwindcss": "^2.2.19",
+		"tailwindcss-elevation": "^1.0.1",
+		"tslib": "^2.3.1",
+		"typescript": "^4.4.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@mdi/js": "^6.5.95",
+		"svelte-ux": "^0.0.99"
+	}
 }
