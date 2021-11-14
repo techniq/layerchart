@@ -1,0 +1,43 @@
+<script context="module" lang="ts">
+	import { LayerCake, Svg, Html } from 'layercake';
+	export { Svg, Html };
+</script>
+
+<script lang="ts">
+	import { max, min } from 'd3-array';
+	import { get, isFunction } from 'lodash-es';
+	type Accessor = string | ((d: any) => number);
+	/**
+	 *  Resolve a value from data based on the accessor type
+	 */
+	function getValue(accessor: Accessor | Accessor[], d) {
+		if (Array.isArray(accessor)) {
+			return accessor.map((a) => getValue(a, d));
+		} else if (isFunction(accessor)) {
+			return accessor(d) || 0;
+		} else if (typeof accessor === 'string') {
+			return get(d, accessor);
+		} else {
+			throw new Error('Unexpected accessor: ' + accessor);
+		}
+	}
+	export let data: any[] = [];
+	export let x: Accessor | Accessor[];
+	export let xBaseline: number | null = null;
+	let xDomain = undefined;
+	$: if (xBaseline != null) {
+		const xValues = data.flatMap((d) => getValue(x, d));
+		xDomain = [min([xBaseline, ...xValues]), max([xBaseline, ...xValues])];
+	}
+	export let y: Accessor | Accessor[];
+	export let yBaseline: number | null = null;
+	let yDomain = undefined;
+	$: if (yBaseline != null) {
+		const yValues = data.flatMap((d) => getValue(y, d));
+		yDomain = [min([yBaseline, ...yValues]), max([yBaseline, ...yValues])];
+	}
+</script>
+
+<LayerCake {data} {y} {yDomain} {x} {xDomain} {...$$restProps}>
+	<slot />
+</LayerCake>
