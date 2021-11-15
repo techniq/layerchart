@@ -14,6 +14,7 @@
 	import { getRandomNumber } from '$lib/utils/genData';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 	import HighlightBar from '$lib/components/HighlightBar.svelte';
+	import Preview from '$lib/docs/Preview.svelte';
 
 	function createData(count = 10) {
 		const now = new Date();
@@ -32,43 +33,45 @@
 <AppBar title={['Components', 'Chart']} />
 
 <main class="p-2">
-	<Card class="h-[300px] p-4">
-		<Chart
-			{data}
-			x="date"
-			xScale={scaleBand().padding(0.4)}
-			xDomain={data.map((d) => d.date)}
-			y="value"
-			yDomain={[0, null]}
-			yNice
-			padding={{ right: 10, bottom: 56, left: 40 }}
-		>
-			<Svg>
-				<AxisY gridlines />
-				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<Baseline x y />
-				<Bar radius={4} strokeWidth={1} />
-			</Svg>
+	<Preview>
+		<Card class="h-[300px] p-4">
+			<Chart
+				{data}
+				x="date"
+				xScale={scaleBand().padding(0.4)}
+				xDomain={data.map((d) => d.date)}
+				y="value"
+				yDomain={[0, null]}
+				yNice
+				padding={{ right: 10, bottom: 56, left: 40 }}
+			>
+				<Svg>
+					<AxisY gridlines />
+					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+					<Baseline x y />
+					<Bar radius={4} strokeWidth={1} />
+				</Svg>
 
-			<Tooltip let:data>
-				<div class="tooltip">
-					<div class="tooltip-header">
-						{format(data.date, 'eee, MMMM do')}
-					</div>
-					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-						<div class="tooltip-label">value:</div>
-						<div class="tooltip-value">
-							{formatNumberAsStyle(data.value, 'integer')}
+				<Tooltip let:data>
+					<div class="tooltip">
+						<div class="tooltip-header">
+							{format(data.date, 'eee, MMMM do')}
+						</div>
+						<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
+							<div class="tooltip-label">value:</div>
+							<div class="tooltip-value">
+								{formatNumberAsStyle(data.value, 'integer')}
+							</div>
 						</div>
 					</div>
-				</div>
 
-				<g slot="highlight">
-					<HighlightBar {data} />
-				</g>
-			</Tooltip>
-		</Chart>
-	</Card>
+					<g slot="highlight">
+						<HighlightBar {data} />
+					</g>
+				</Tooltip>
+			</Chart>
+		</Card>
+	</Preview>
 </main>
 
 <style lang="postcss">
