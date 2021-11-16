@@ -34,7 +34,7 @@ title: ['Charts', 'Area Chart']
 			y="value"
 			yDomain={[0, null]}
 			yNice
-			padding={{ right: 10, bottom: 56, left: 40 }}
+			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
 				<AxisY gridlines />
@@ -57,7 +57,7 @@ title: ['Charts', 'Area Chart']
 			y="value"
 			yDomain={[0, null]}
 			yNice
-			padding={{ right: 10, bottom: 56, left: 40 }}
+			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
 				<AxisY gridlines />
