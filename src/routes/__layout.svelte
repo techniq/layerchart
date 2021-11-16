@@ -1,4 +1,6 @@
 <script lang="ts">
+	import 'prism-themes/themes/prism-vsc-dark-plus.css';
+
 	import { AppLayout } from 'svelte-ux';
 	import NavMenu from './_NavMenu.svelte';
 </script>
