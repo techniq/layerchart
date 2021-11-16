@@ -3,7 +3,7 @@ const plugin = require('tailwindcss/plugin');
 
 module.exports = {
 	mode: 'jit',
-	purge: ['./src/**/*.{html,svelte}', './node_modules/svelte-ux/**/*.{svelte,js}'],
+	purge: ['./src/**/*.{html,svelte,md}', './node_modules/svelte-ux/**/*.{svelte,js,md}'],
 	darkMode: false, // or 'media' or 'class'
 	theme: {
 		extend: {
