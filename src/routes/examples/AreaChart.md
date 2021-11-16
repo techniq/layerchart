@@ -30,7 +30,7 @@
 	const data = createData();
 </script>
 
-<AppBar title={['Components', 'Bar Chart']} />
+<AppBar title={['Components', 'Area Chart']} />
 
 <main class="p-2">
 	<Preview>
