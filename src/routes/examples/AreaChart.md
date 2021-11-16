@@ -1,20 +1,20 @@
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
+	import { scaleTime } from 'd3-scale';
 	import { subDays, format } from 'date-fns';
 	import { AppBar, Card } from 'svelte-ux';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
+	import Area from '$lib/components/Area.svelte';
 	import AxisX from '$lib/components/AxisX.svelte';
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
-	import Bar from '$lib/components/Bar.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 
 	import { getRandomNumber } from '$lib/utils/genData';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
-	import HighlightBar from '$lib/components/HighlightBar.svelte';
 	import Preview from '$lib/docs/Preview.svelte';
+	import HighlightLine from '$lib/components/HighlightLine.svelte';
 
 	function createData(count = 10) {
 		const now = new Date();
@@ -30,7 +30,7 @@
 	const data = createData();
 </script>
 
-<AppBar title={['Components', 'Chart']} />
+<AppBar title={['Components', 'Bar Chart']} />
 
 <main class="p-2">
 	<Preview>
@@ -38,8 +38,7 @@
 			<Chart
 				{data}
 				x="date"
-				xScale={scaleBand().padding(0.4)}
-				xDomain={data.map((d) => d.date)}
+				xScale={scaleTime()}
 				y="value"
 				yDomain={[0, null]}
 				yNice
@@ -49,9 +48,8 @@
 					<AxisY gridlines />
 					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 					<Baseline x y />
-					<Bar radius={4} strokeWidth={1} />
+					<Area color="var(--color-blue-500)" line={{ width: 2 }} />
 				</Svg>
-
 				<Tooltip let:data>
 					<div class="tooltip">
 						<div class="tooltip-header">
@@ -66,7 +64,7 @@
 					</div>
 
 					<g slot="highlight">
-						<HighlightBar {data} />
+						<HighlightLine {data} color="var(--color-blue-500)" />
 					</g>
 				</Tooltip>
 			</Chart>
