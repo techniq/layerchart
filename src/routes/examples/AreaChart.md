@@ -4,33 +4,23 @@ title: ['Charts', 'Area Chart']
 
 <script lang="ts">
 	import { scaleTime } from 'd3-scale';
-	import { subDays, format } from 'date-fns';
+	import { format } from 'date-fns';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
+	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Area from '$lib/components/Area.svelte';
 	import AxisX from '$lib/components/AxisX.svelte';
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
+	import HighlightLine from '$lib/components/HighlightLine.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 
-	import { getRandomNumber } from '$lib/utils/genData';
-	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 	import Preview from '$lib/docs/Preview.svelte';
-	import HighlightLine from '$lib/components/HighlightLine.svelte';
+	import { createDateSeries } from '$lib/utils/genData';
 
-	function createData(count = 10) {
-		const now = new Date();
 
-		return Array.from({ length: count }).map((_, i) => {
-			return {
-				date: subDays(now, count - i - 1),
-				value: getRandomNumber(50, 100)
-			};
-		});
-	}
-
-	const data = createData();
+	const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
 </script>
 
 ## Basic

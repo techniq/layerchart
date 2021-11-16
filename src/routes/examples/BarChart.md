@@ -4,33 +4,23 @@ title: ['Chart', 'Bar Chart']
 
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
-	import { subDays, format } from 'date-fns';
+	import { format } from 'date-fns';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
+	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import AxisX from '$lib/components/AxisX.svelte';
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
 	import Bar from '$lib/components/Bar.svelte';
+	import HighlightBar from '$lib/components/HighlightBar.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 
-	import { getRandomNumber } from '$lib/utils/genData';
-	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
-	import HighlightBar from '$lib/components/HighlightBar.svelte';
 	import Preview from '$lib/docs/Preview.svelte';
+	import { createDateSeries } from '$lib/utils/genData';
 
-	function createData(count = 10) {
-		const now = new Date();
-
-		return Array.from({ length: count }).map((_, i) => {
-			return {
-				date: subDays(now, count - i - 1),
-				value: getRandomNumber(50, 100)
-			};
-		});
-	}
-
-	const data = createData();
+	const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
+	const negativeData = createDateSeries({ min: -20, max: 50, value: 'integer' });
 </script>
 
 ## Basic
@@ -95,6 +85,29 @@ title: ['Chart', 'Bar Chart']
     		</Tooltip>
     	</Chart>
     </div>
+</Preview>
+
+## Negative data
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			data={negativeData}
+			x="date"
+			xScale={scaleBand().padding(0.4)}
+			xDomain={data.map((d) => d.date)}
+			y="value"
+			yNice
+			padding={{ right: 10, bottom: 56, left: 40 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Bar radius={4} strokeWidth={1} />
+			</Svg>
+		</Chart>
+	</div>
 </Preview>
 
 <style lang="postcss">

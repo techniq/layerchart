@@ -1,3 +1,5 @@
+import { subDays } from 'date-fns';
+
 /**
  * Get random number between min (inclusive) and max (exclusive)
  *   see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#getting_a_random_number_between_0_inclusive_and_1_exclusive
@@ -14,4 +16,24 @@ export function getRandomInteger(min: number, max: number, includeMax = true) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min + (includeMax ? 1 : 0)) + min);
+}
+
+export function createDateSeries(options: {
+	count?: number;
+	min: number;
+	max: number;
+	value: 'number' | 'integer';
+}) {
+	const now = new Date();
+
+	const count = options.count ?? 10;
+	const min = options.min;
+	const max = options.max;
+
+	return Array.from({ length: count }).map((_, i) => {
+		return {
+			date: subDays(now, count - i - 1),
+			value: options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max)
+		};
+	});
 }
