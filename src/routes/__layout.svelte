@@ -21,4 +21,18 @@
 	:global(body) {
 		@apply bg-black/10;
 	}
+
+	:global(h2) {
+		@apply text-lg font-semibold mt-8 mb-1 ml-2;
+	}
+	:global(h2:first-child) {
+		@apply mt-0;
+	}
+
+	:global(h3) {
+		@apply text-xs text-black/50 ml-2 mb-1;
+	}
+	:global(h2 + h3) {
+		@apply -mt-1;
+	}
 </style>

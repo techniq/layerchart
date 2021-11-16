@@ -1,7 +1,10 @@
+---
+title: ['Chart', 'Bar Chart']
+---
+
 <script lang="ts">
 	import { scaleBand } from 'd3-scale';
 	import { subDays, format } from 'date-fns';
-	import { AppBar, Card } from 'svelte-ux';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -30,49 +33,69 @@
 	const data = createData();
 </script>
 
-<AppBar title={['Components', 'Bar Chart']} />
+## Basic
 
-<main class="p-2">
-	<Preview>
-		<Card class="h-[300px] p-4">
-			<Chart
-				{data}
-				x="date"
-				xScale={scaleBand().padding(0.4)}
-				xDomain={data.map((d) => d.date)}
-				y="value"
-				yDomain={[0, null]}
-				yNice
-				padding={{ right: 10, bottom: 56, left: 40 }}
-			>
-				<Svg>
-					<AxisY gridlines />
-					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-					<Baseline x y />
-					<Bar radius={4} strokeWidth={1} />
-				</Svg>
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="date"
+			xScale={scaleBand().padding(0.4)}
+			xDomain={data.map((d) => d.date)}
+			y="value"
+			yDomain={[0, null]}
+			yNice
+			padding={{ right: 10, bottom: 56, left: 40 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Bar radius={4} strokeWidth={1} />
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
 
-				<Tooltip let:data>
-					<div class="tooltip">
-						<div class="tooltip-header">
-							{format(data.date, 'eee, MMMM do')}
-						</div>
-						<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-							<div class="tooltip-label">value:</div>
-							<div class="tooltip-value">
-								{formatNumberAsStyle(data.value, 'integer')}
-							</div>
-						</div>
-					</div>
+## With Tooltip and HighlightBar
 
-					<g slot="highlight">
-						<HighlightBar {data} />
-					</g>
-				</Tooltip>
-			</Chart>
-		</Card>
-	</Preview>
-</main>
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="date"
+			xScale={scaleBand().padding(0.4)}
+			xDomain={data.map((d) => d.date)}
+			y="value"
+			yDomain={[0, null]}
+			yNice
+			padding={{ right: 10, bottom: 56, left: 40 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Bar radius={4} strokeWidth={1} />
+			</Svg>
+    		<Tooltip let:data>
+    			<div class="tooltip">
+    				<div class="tooltip-header">
+    					{format(data.date, 'eee, MMMM do')}
+    				</div>
+    				<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
+    					<div class="tooltip-label">value:</div>
+    					<div class="tooltip-value">
+    						{formatNumberAsStyle(data.value, 'integer')}
+    					</div>
+    				</div>
+    			</div>
+    			<g slot="highlight">
+    				<HighlightBar {data} />
+    			</g>
+    		</Tooltip>
+    	</Chart>
+    </div>
+</Preview>
 
 <style lang="postcss">
 	.tooltip {

@@ -7,12 +7,14 @@
 </script>
 
 <script>
+	import { AppBar } from 'svelte-ux';
+
 	// frontmatter: https://mdsvex.com/docs#frontmatter-1
 	export let title;
 </script>
 
-{#if title}
-	<h1>{title}</h1>
-{/if}
+<AppBar {title} />
 
-<slot />
+<main class="p-2">
+	<slot />
+</main>
