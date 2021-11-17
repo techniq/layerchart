@@ -1,16 +1,20 @@
 <script context="module" lang="ts">
 	import { LayerCake, Svg, Html } from 'layercake';
+
 	export { Svg, Html };
 </script>
 
 <script lang="ts">
 	import { max, min } from 'd3-array';
 	import { get, isFunction } from 'lodash-es';
+
 	type Accessor = string | ((d: any) => number);
+
 	/**
 	 *  Resolve a value from data based on the accessor type
 	 */
 	function getValue(accessor: Accessor | Accessor[], d) {
+		console.log({ accessor });
 		if (Array.isArray(accessor)) {
 			return accessor.map((a) => getValue(a, d));
 		} else if (isFunction(accessor)) {
@@ -21,16 +25,28 @@
 			throw new Error('Unexpected accessor: ' + accessor);
 		}
 	}
+
 	export let data: any[] = [];
+
 	export let x: Accessor | Accessor[];
+	export let y: Accessor | Accessor[];
+
+	/**
+	 * xBaseline guaranteed to be visible in xDomain
+	 */
 	export let xBaseline: number | null = null;
+
 	let xDomain = undefined;
 	$: if (xBaseline != null) {
 		const xValues = data.flatMap((d) => getValue(x, d));
 		xDomain = [min([xBaseline, ...xValues]), max([xBaseline, ...xValues])];
 	}
-	export let y: Accessor | Accessor[];
+
+	/**
+	 * yBaseline guaranteed to be visible in yDomain
+	 */
 	export let yBaseline: number | null = null;
+
 	let yDomain = undefined;
 	$: if (yBaseline != null) {
 		const yValues = data.flatMap((d) => getValue(y, d));
