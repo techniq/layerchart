@@ -14,6 +14,7 @@ title: ['Charts', 'Area Chart']
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
+	import Label from '$lib/components/Label.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
@@ -81,6 +82,30 @@ title: ['Charts', 'Area Chart']
 					<HighlightLine {data} color="var(--color-blue-500)" />
 				</g>
 			</Tooltip>
+		</Chart>
+	</div>
+</Preview>
+
+## With Labels
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="date"
+			xScale={scaleTime()}
+			y="value"
+			yDomain={[0, null]}
+			yNice
+			padding={{ left: 16, bottom: 24 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Area color="var(--color-blue-500)" line={{ width: 2 }} />
+				<Label formatStyle="integer" />
+			</Svg>
 		</Chart>
 	</div>
 </Preview>

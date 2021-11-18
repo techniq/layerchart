@@ -14,6 +14,7 @@ title: ['Chart', 'Bar Chart']
 	import Baseline from '$lib/components/Baseline.svelte';
 	import Bar from '$lib/components/Bar.svelte';
 	import HighlightBar from '$lib/components/HighlightBar.svelte';
+	import Label from '$lib/components/Label.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
@@ -34,6 +35,29 @@ title: ['Chart', 'Bar Chart']
 			xDomain={data.map((d) => d.date)}
 			y="value"
 			yDomain={[0, null]}
+			yNice
+			padding={{ left: 16, bottom: 24 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Bar radius={4} strokeWidth={1} />
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Negative data
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			data={negativeData}
+			x="date"
+			xScale={scaleBand().padding(0.4)}
+			xDomain={data.map((d) => d.date)}
+			y="value"
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
@@ -87,16 +111,17 @@ title: ['Chart', 'Bar Chart']
     </div>
 </Preview>
 
-## Negative data
+## With Labels
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
-			data={negativeData}
+			{data}
 			x="date"
 			xScale={scaleBand().padding(0.4)}
 			xDomain={data.map((d) => d.date)}
 			y="value"
+			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
@@ -105,6 +130,7 @@ title: ['Chart', 'Bar Chart']
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Bar radius={4} strokeWidth={1} />
+				<Label />
 			</Svg>
 		</Chart>
 	</div>
