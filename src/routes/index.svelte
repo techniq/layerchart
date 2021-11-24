@@ -1,9 +1,0 @@
-<script lang="ts">
-	import { AppBar } from 'svelte-ux';
-</script>
-
-<AppBar title="LayerChart" />
-
-<main class="p-2">
-	<h1>Welcome to LayerChart</h1>
-</main>
