@@ -6,7 +6,7 @@
 
 <script lang="ts">
 	import { max, min } from 'd3-array';
-	import { get, isFunction } from 'lodash-es';
+	import { get } from 'lodash-es';
 
 	type Accessor = string | ((d: any) => number);
 
@@ -17,7 +17,7 @@
 		console.log({ accessor });
 		if (Array.isArray(accessor)) {
 			return accessor.map((a) => getValue(a, d));
-		} else if (isFunction(accessor)) {
+		} else if (typeof accessor === 'function') {
 			return accessor(d) || 0;
 		} else if (typeof accessor === 'string') {
 			return get(d, accessor);

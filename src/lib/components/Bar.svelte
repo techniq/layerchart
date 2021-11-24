@@ -2,7 +2,6 @@
 	import { getContext } from 'svelte';
 	import { scaleBand } from 'd3-scale';
 	import { max, min } from 'd3-array';
-	import { isFunction } from 'lodash-es';
 
 	import Rect from './Rect.svelte';
 	import { unique } from 'svelte-ux/utils/array';
@@ -79,9 +78,8 @@
 	};
 
 	function getColor(item: any, index: number) {
-		if (isFunction(color)) {
-			const value = $y(item);
-			return color({ value, item, index });
+		if (typeof color === 'function') {
+			return color({ value: $y(item), item, index });
 		} else if ($config.r) {
 			return $rGet(item);
 		} else {
