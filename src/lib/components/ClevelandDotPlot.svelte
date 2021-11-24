@@ -1,11 +1,23 @@
-<script>
+<script lang="ts">
 	import { getContext } from 'svelte';
 
-	const { data, xGet, yGet, yScale, y, zGet, z } = getContext('LayerCake');
+	const { data, xGet, yGet, y, yScale, rGet, config } = getContext('LayerCake');
 
-	export let r = 5;
+	export let color: string | ((obj: { value: any; item: any; index: number }) => string) =
+		'var(--color-blue-500)';
+	export let radius = 5;
 
 	$: midHeight = $yScale.bandwidth() / 2;
+
+	function getColor(item: any, index: number) {
+		if (typeof color == 'function') {
+			return color({ value: $y(item), item, index });
+		} else if ($config.r) {
+			return $rGet(item);
+		} else {
+			return color;
+		}
+	}
 </script>
 
 <g class="dot-plot">
@@ -18,7 +30,7 @@
 				y2={$yGet(row) + midHeight}
 			/>
 			{#each $xGet(row) as circleX, i}
-				<circle cx={circleX} cy={$yGet(row) + midHeight} {r} fill={$zGet(row)} />
+				<circle cx={circleX} cy={$yGet(row) + midHeight} r={radius} fill={getColor(row, i)} />
 			{/each}
 		</g>
 	{/each}
