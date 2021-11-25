@@ -41,7 +41,7 @@ title: ['Charts', 'Area Chart']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Area color="var(--color-blue-500)" line={{ width: 2 }} />
+				<Area line={{ width: 2 }} />
 			</Svg>
 		</Chart>
 	</div>
@@ -64,7 +64,7 @@ title: ['Charts', 'Area Chart']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Area color="var(--color-blue-500)" line={{ width: 2 }} />
+				<Area line={{ width: 2 }} />
 			</Svg>
 			<Tooltip let:data>
 				<div class="tooltip">
@@ -103,7 +103,7 @@ title: ['Charts', 'Area Chart']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Area color="var(--color-blue-500)" line={{ width: 2 }} />
+				<Area line={{ width: 2 }} />
 				<Label formatStyle="integer" />
 			</Svg>
 		</Chart>
