@@ -12,3 +12,4 @@
 <NavItem text="Area Chart" path="/examples/AreaChart" class="pl-6 py-2" />
 <NavItem text="Bar Chart" path="/examples/BarChart" class="pl-6 py-2" />
 <NavItem text="ClevelandDotPlot" path="/examples/ClevelandDotPlot" class="pl-6 py-2" />
+<NavItem text="Threshold" path="/examples/Threshold" class="pl-6 py-2" />

@@ -1,4 +1,9 @@
 <script lang="ts">
+	/*
+	 * TODO
+	 *   - [ ] Support step curves (center like scaleBand())
+	 *   - [ ] Support multiple values (threshold, stacks, etc)
+	 */
 	import { getContext } from 'svelte';
 	import { scaleBand } from 'd3-scale';
 	import { max, min } from 'd3-array';

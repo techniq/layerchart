@@ -33,7 +33,8 @@ export function createDateSeries(options: {
 	return Array.from({ length: count }).map((_, i) => {
 		return {
 			date: subDays(now, count - i - 1),
-			value: options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max)
+			value: options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max),
+			baseline: options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max)
 		};
 	});
 }
