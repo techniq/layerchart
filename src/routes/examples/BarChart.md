@@ -91,22 +91,22 @@ title: ['Chart', 'Bar Chart']
 				<Baseline x y />
 				<Bar radius={4} strokeWidth={1} />
 			</Svg>
-    		<Tooltip let:data>
-    			<div class="tooltip">
-    				<div class="tooltip-header">
-    					{format(data.date, 'eee, MMMM do')}
-    				</div>
-    				<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-    					<div class="tooltip-label">value:</div>
-    					<div class="tooltip-value">
-    						{formatNumberAsStyle(data.value, 'integer')}
-    					</div>
-    				</div>
-    			</div>
-    			<g slot="highlight">
-    				<HighlightBar {data} />
-    			</g>
-    		</Tooltip>
+			<Tooltip let:data>
+				<div class="tooltip">
+					<div class="tooltip-header">
+						{format(data.date, 'eee, MMMM do')}
+					</div>
+					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
+						<div class="tooltip-label">value:</div>
+						<div class="tooltip-value">
+							{formatNumberAsStyle(data.value, 'integer')}
+						</div>
+					</div>
+				</div>
+				<g slot="highlight">
+					<HighlightBar {data} />
+				</g>
+			</Tooltip>
     	</Chart>
     </div>
 </Preview>
