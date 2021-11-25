@@ -70,10 +70,6 @@
 		/* stroke-dasharray: 2; */
 	}
 
-	.tick text {
-		fill: #666;
-	}
-
 	.tick.tick-0 line {
 		stroke-dasharray: 0;
 	}

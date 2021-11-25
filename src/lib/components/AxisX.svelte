@@ -56,8 +56,4 @@
 	.tick line {
 		stroke: #e0e0e0;
 	}
-
-	.tick text {
-		fill: #666;
-	}
 </style>
