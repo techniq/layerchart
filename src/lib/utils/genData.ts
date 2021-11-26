@@ -23,18 +23,26 @@ export function createDateSeries(options: {
 	min: number;
 	max: number;
 	value: 'number' | 'integer';
+	fields: Array<string>;
 }) {
 	const now = new Date();
 
 	const count = options.count ?? 10;
 	const min = options.min;
 	const max = options.max;
+	const fields = options.fields ?? ['value'];
 
 	return Array.from({ length: count }).map((_, i) => {
 		return {
 			date: subDays(now, count - i - 1),
-			value: options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max),
-			baseline: options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max)
+			...Object.fromEntries(
+				fields.map((field) => {
+					return [
+						field,
+						options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max)
+					];
+				})
+			)
 		};
 	});
 }

@@ -25,7 +25,7 @@ title: ['Charts', 'Area Chart']
 	import { createDateSeries } from '$lib/utils/genData';
 
 
-	const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
+	const data = createDateSeries({ min: 50, max: 100, value: 'integer', fields: ['value', 'baseline'] });
 </script>
 
 ## Basic
