@@ -22,23 +22,23 @@ export function createDateSeries(options: {
 	count?: number;
 	min: number;
 	max: number;
+	keys: Array<string>;
 	value: 'number' | 'integer';
-	fields: Array<string>;
 }) {
 	const now = new Date();
 
 	const count = options.count ?? 10;
 	const min = options.min;
 	const max = options.max;
-	const fields = options.fields ?? ['value'];
+	const keys = options.keys ?? ['value'];
 
 	return Array.from({ length: count }).map((_, i) => {
 		return {
 			date: subDays(now, count - i - 1),
 			...Object.fromEntries(
-				fields.map((field) => {
+				keys.map((key) => {
 					return [
-						field,
+						key,
 						options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max)
 					];
 				})
