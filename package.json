@@ -29,6 +29,7 @@
 		"svelte": "^3.44.2",
 		"svelte-check": "^2.2.10",
 		"svelte-preprocess": "^4.9.4",
+		"svelte2tsx": "^0.4.10",
 		"tailwindcss": "^2.2.19",
 		"tailwindcss-elevation": "^1.0.1",
 		"tslib": "^2.3.1",
