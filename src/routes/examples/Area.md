@@ -1,27 +1,27 @@
 ---
-title: ['Chart', 'Bar Chart']
+title: ['Charts', 'Area']
 ---
 
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
+	import { scaleTime } from 'd3-scale';
 	import { format } from 'date-fns';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
+	import Area from '$lib/components/Area.svelte';
 	import AxisX from '$lib/components/AxisX.svelte';
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
-	import Bar from '$lib/components/Bar.svelte';
-	import HighlightBar from '$lib/components/HighlightBar.svelte';
+	import HighlightLine from '$lib/components/HighlightLine.svelte';
 	import Label from '$lib/components/Label.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import { createDateSeries } from '$lib/utils/genData';
 
+
 	const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
-	const negativeData = createDateSeries({ min: -20, max: 50, value: 'integer' });
 </script>
 
 ## Basic
@@ -31,8 +31,7 @@ title: ['Chart', 'Bar Chart']
 		<Chart
 			{data}
 			x="date"
-			xScale={scaleBand().padding(0.4)}
-			xDomain={data.map((d) => d.date)}
+			xScale={scaleTime()}
 			y="value"
 			yDomain={[0, null]}
 			yNice
@@ -42,44 +41,20 @@ title: ['Chart', 'Bar Chart']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Bar radius={4} strokeWidth={1} />
+				<Area line={{ width: 2 }} />
 			</Svg>
 		</Chart>
 	</div>
 </Preview>
 
-## Negative data
-
-<Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			data={negativeData}
-			x="date"
-			xScale={scaleBand().padding(0.4)}
-			xDomain={data.map((d) => d.date)}
-			y="value"
-			yNice
-			padding={{ left: 16, bottom: 24 }}
-		>
-			<Svg>
-				<AxisY gridlines />
-				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<Baseline x y />
-				<Bar radius={4} strokeWidth={1} />
-			</Svg>
-		</Chart>
-	</div>
-</Preview>
-
-## With Tooltip and HighlightBar
+## With Tooltip and HighlightLine
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			{data}
 			x="date"
-			xScale={scaleBand().padding(0.4)}
-			xDomain={data.map((d) => d.date)}
+			xScale={scaleTime()}
 			y="value"
 			yDomain={[0, null]}
 			yNice
@@ -89,7 +64,7 @@ title: ['Chart', 'Bar Chart']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Bar radius={4} strokeWidth={1} />
+				<Area line={{ width: 2 }} />
 			</Svg>
 			<Tooltip let:data>
 				<div class="tooltip">
@@ -104,11 +79,11 @@ title: ['Chart', 'Bar Chart']
 					</div>
 				</div>
 				<g slot="highlight">
-					<HighlightBar {data} />
+					<HighlightLine {data} color="var(--color-blue-500)" />
 				</g>
 			</Tooltip>
-    	</Chart>
-    </div>
+		</Chart>
+	</div>
 </Preview>
 
 ## With Labels
@@ -118,8 +93,7 @@ title: ['Chart', 'Bar Chart']
 		<Chart
 			{data}
 			x="date"
-			xScale={scaleBand().padding(0.4)}
-			xDomain={data.map((d) => d.date)}
+			xScale={scaleTime()}
 			y="value"
 			yDomain={[0, null]}
 			yNice
@@ -129,8 +103,8 @@ title: ['Chart', 'Bar Chart']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Bar radius={4} strokeWidth={1} />
-				<Label />
+				<Area line={{ width: 2 }} />
+				<Label formatStyle="integer" />
 			</Svg>
 		</Chart>
 	</div>
