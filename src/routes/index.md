@@ -52,3 +52,11 @@ title: LayerChart
 - HighlightBar
 - HighlightLine
 - Tooltip
+
+## Todo
+
+- Add basic line charge (data-driven)
+  - Differentiate with Path and Line, although could probbaly just use Path, although might be confusing
+- Add examples with animated Circle, Rect, and Line
+- Consider updating Circle, Rect, and Line to support xGet/yGet with data, along with explicit `cx`/`cy`
+- Consider changing `Label` to `Mark`
