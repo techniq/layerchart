@@ -14,7 +14,7 @@ export function getAccessor(key) {
  *  - see also: https://observablehq.com/d/ac2a320cf2b0adc4 as generator
  */
 export function pivotLonger(data, columns, name, value) {
-	const keep = data.columns.filter((c) => !columns.includes(c));
+	const keep = Object.keys(data[0]).filter((c) => !columns.includes(c));
 	return data.flatMap((d) => {
 		const base = keep.map((k) => [k, d[k]]);
 		return columns.map((column) => {
