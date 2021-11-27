@@ -16,14 +16,14 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-static": "^1.0.0-next.21",
-		"@sveltejs/kit": "1.0.0-next.196",
+		"@sveltejs/kit": "^1.0.0-next.201",
 		"@types/d3-array": "^3.0.2",
 		"@types/d3-scale": "^4.0.2",
 		"@types/d3-shape": "^3.0.2",
 		"@types/lodash-es": "^4.17.5",
 		"autoprefixer": "^10.4.0",
 		"mdsvex": "^0.9.8",
-		"prettier": "^2.4.1",
+		"prettier": "^2.5.0",
 		"prettier-plugin-svelte": "^2.5.0",
 		"prism-themes": "^1.9.0",
 		"svelte": "^3.44.2",
@@ -43,8 +43,8 @@
 		"d3-scale": "^4.0.2",
 		"d3-shape": "^3.0.1",
 		"date-fns": "^2.26.0",
-		"layercake": "^5.0.0",
+		"layercake": "^5.0.1",
 		"lodash-es": "^4.17.21",
-		"svelte-ux": "^0.0.102"
+		"svelte-ux": "^0.0.105"
 	}
 }
