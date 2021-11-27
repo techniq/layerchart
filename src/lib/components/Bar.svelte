@@ -2,9 +2,9 @@
 	import { getContext } from 'svelte';
 	import { scaleBand } from 'd3-scale';
 	import { max, min } from 'd3-array';
+	import { unique } from 'svelte-ux/utils/array';
 
 	import Rect from './Rect.svelte';
-	import { unique } from 'svelte-ux/utils/array';
 
 	const { data, flatData, xGet, yRange, xScale, yScale, x, y, rGet, config } =
 		getContext('LayerCake');
