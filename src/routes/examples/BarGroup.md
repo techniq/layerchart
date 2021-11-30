@@ -23,6 +23,7 @@ title: ['Chart', 'Bar']
 
 	import { longData as data } from '$lib/utils/genData';
 	import { pivotWider } from '$lib/utils/pivot';
+	import { createStackData } from '$lib/utils/stack';
 
 	const xKey = "year";
 	const groupBy = 'basket';
@@ -33,33 +34,7 @@ title: ['Chart', 'Bar']
 	$: colorKeys = [...new Set(data.map(x => x[colorBy]))]
 	const keyColors = ['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)', 'var(--color-orange-500)'];
 
-	$: groupedData = flatGroup(data, d => d[xKey], d => d[groupBy])
-		
-	$: chartData = groupedData.flatMap((d, i) => {
-		const keys = d.slice(0, -1); 			// all but last item
-		const itemData = d.slice(-1)[0];  // last item
-		
-		const pivotData = pivotWider(itemData, xKey, stackBy, 'value');
-		
-		const stackKeys = [...new Set(itemData.map(x => x[stackBy]))]
-		const stackData = stack()
-			.keys(stackKeys)
-			.offset(offset)
-			(pivotData);
-		
-		//console.log({ pivotData, stackData })
-		
-		return stackData.flatMap(series => {
-			//console.log({ series })
-			return series.flatMap(s => {
-				return {
-					...itemData[0], // TODO: More than one should use stacks or aggregate values?
-					keys: stackBy ? [...keys, series.key] : keys,
-					values: stackBy ? [s[0], s[1]] : [0, sum(itemData, d => d.value)],
-				}
-			})
-		})
-	})
+	$: chartData = createStackData(data, { xKey, groupBy, stackBy })
 
 	$: extents = {
 		y: extent(chartData.flatMap(d => d.values))

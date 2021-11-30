@@ -52,7 +52,7 @@
 		let yTop = 0;
 		let yBottom = 0;
 		if (Array.isArray(yValue)) {
-			// Array contains both top and bottom values;
+			// Array contains both top and bottom values (stack, etc);
 			yTop = max(yValue);
 			yBottom = min(yValue);
 		} else if (yValue == null) {
