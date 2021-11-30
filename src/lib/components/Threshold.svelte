@@ -54,30 +54,33 @@
 	$: if (defined) linePathBelow.defined(defined);
 </script>
 
-<g class="clip-paths">
-	<defs>
-		<clipPath id="threshold-clip-below-{id}">
-			<path d={clipPathBelow(data ?? $contextData)} />
-		</clipPath>
-		<clipPath id="threshold-clip-above-{id}">
-			<path d={clipPathAbove(data ?? $contextData)} />
-		</clipPath>
-	</defs>
-</g>
+<!-- Recreate on curve change as otherwise is 1 state change behind for some reason -->
+{#key curve}
+	<g class="clip-paths">
+		<defs>
+			<clipPath id="threshold-clip-below-{id}">
+				<path d={clipPathBelow(data ?? $contextData)} />
+			</clipPath>
+			<clipPath id="threshold-clip-above-{id}">
+				<path d={clipPathAbove(data ?? $contextData)} />
+			</clipPath>
+		</defs>
+	</g>
 
-<slot
-	name="pathAbove"
-	areaPathData={areaPath(data ?? $contextData)}
-	clipPath="url(#threshold-clip-below-{id})"
-	linePathData={linePathAbove(data ?? $contextData)}
-/>
+	<slot
+		name="pathAbove"
+		areaPathData={areaPath(data ?? $contextData)}
+		clipPath="url(#threshold-clip-below-{id})"
+		linePathData={linePathAbove(data ?? $contextData)}
+	/>
 
-<slot
-	name="pathBelow"
-	areaPathData={areaPath(data ?? $contextData)}
-	clipPath="url(#threshold-clip-above-{id})"
-	linePathData={linePathBelow(data ?? $contextData)}
-/>
+	<slot
+		name="pathBelow"
+		areaPathData={areaPath(data ?? $contextData)}
+		clipPath="url(#threshold-clip-above-{id})"
+		linePathData={linePathBelow(data ?? $contextData)}
+	/>
+{/key}
 
 <!-- Fix `<Threshold> received an unexpected slot "default".` warning -->
 <slot />

@@ -4,7 +4,7 @@ title: ['Charts', 'Area Chart']
 
 <script lang="ts">
 	import { scaleTime } from 'd3-scale';
-	import { curveStepAfter } from 'd3-shape';
+	import { curveLinear, curveStepAfter, curveBumpX, curveMonotoneX } from 'd3-shape';
 	import { format } from 'date-fns';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
@@ -24,9 +24,17 @@ title: ['Charts', 'Area Chart']
 	import Preview from '$lib/docs/Preview.svelte';
 	import { createDateSeries } from '$lib/utils/genData';
 
+	let selectedCurve = curveLinear;
 
 	const data = createDateSeries({ min: 50, max: 100, value: 'integer', keys: ['value', 'baseline'] });
 </script>
+
+<select bind:value={selectedCurve}>
+  <option value={curveLinear}>curveLinear</option>
+  <option value={curveStepAfter}>curveStepAfter</option>
+  <option value={curveBumpX}>curveBumpX</option>
+  <option value={curveMonotoneX}>curveMonotoneX</option>
+</select>
 
 ## Basic
 
@@ -45,62 +53,7 @@ title: ['Charts', 'Area Chart']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Threshold>
-					<g
-						slot="pathAbove"
-						let:areaPathData
-						let:clipPath
-						let:linePathData
-					>
-						<Path pathData={linePathData} color="black" width="1.5" />
-						<Area
-							pathData={areaPathData}
-							{clipPath}
-							color="var(--color-green-500)"
-						/>
-					</g>
-					<g
-						slot="pathBelow"
-						let:areaPathData
-						let:clipPath
-						let:linePathData
-					>
-						<Path
-							pathData={linePathData}
-							color="black"
-							width="1"
-							stroke-dasharray="4"
-						/>
-						<Area
-							pathData={areaPathData}
-							{clipPath}
-							color="var(--color-red-500)"
-						/>
-					</g>
-				</Threshold>
-			</Svg>
-		</Chart>
-	</div>
-</Preview>
-
-## Curve
-
-<Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="date"
-			xScale={scaleTime()}
-			y={['value', 'baseline']}
-			yDomain={[0, null]}
-			yNice
-			padding={{ left: 16, bottom: 24 }}
-		>
-			<Svg>
-				<AxisY gridlines />
-				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<Baseline x y />
-				<Threshold curve={curveStepAfter}>
+				<Threshold curve={selectedCurve}>
 					<g
 						slot="pathAbove"
 						let:areaPathData
