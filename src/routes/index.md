@@ -60,3 +60,9 @@ title: LayerChart
 - Add examples with animated Circle, Rect, and Line
 - Consider updating Circle, Rect, and Line to support xGet/yGet with data, along with explicit `cx`/`cy`
 - Consider changing `Label` to `Mark`
+
+## Principals
+
+- Use `r` scale for color, but allow `color` prop directly on item (with access to item, value, index, etc)
+- Use `x`, `y`, and `z` scales for dimensions
+  - `z` for size (depth) of circles, etc
