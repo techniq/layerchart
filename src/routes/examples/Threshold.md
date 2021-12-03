@@ -168,6 +168,8 @@ title: ['Charts', 'Area Chart']
 
 ## With Labels
 
+### TODO: Show label for both value and baseline (above and below)
+
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
@@ -183,7 +185,7 @@ title: ['Charts', 'Area Chart']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Threshold curve={curveStepAfter}>
+				<Threshold>
 					<g
 						slot="pathAbove"
 						let:areaPathData
