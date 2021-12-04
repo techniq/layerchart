@@ -7,6 +7,7 @@ title: ['Chart', 'Bar']
 	import { format } from 'date-fns';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
+	import { extent } from 'd3-array';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import AxisX from '$lib/components/AxisX.svelte';
@@ -20,7 +21,7 @@ title: ['Chart', 'Bar']
 	import Preview from '$lib/docs/Preview.svelte';
 	import { createDateSeries } from '$lib/utils/genData';
 
-	const data = createDateSeries({ min: 50, max: 100, value: 'integer', keys: ['value', 'baseline'] });
+	const data = createDateSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] });
 	const negativeData = createDateSeries({ min: -20, max: 50, value: 'integer' });
 </script>
 
@@ -142,6 +143,9 @@ title: ['Chart', 'Bar']
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			{data}
+			extents={{
+				y: extent(data.flatMap((d) => [d.value, d.baseline]))
+			}}
 			x="date"
 			xScale={scaleBand().padding(0.4)}
 			xDomain={data.map((d) => d.date)}
