@@ -6,15 +6,35 @@
 
 	import Rect from './Rect.svelte';
 
-	const { data, flatData, xGet, yRange, xScale, yScale, x, y, rGet, config } =
-		getContext('LayerCake');
+	const {
+		data,
+		flatData,
+		xGet,
+		yRange,
+		xScale,
+		yScale,
+		x: xContext,
+		y: yContext,
+		rGet,
+		config
+	} = getContext('LayerCake');
+
+	/**
+	 * Override `x` from context.  Useful for multiple Bar instances
+	 */
+	export let x = $xContext;
+	// Convert x to function
+	$: _x = x ? (typeof x === 'string' ? (d) => d[x] : x) : $xContext;
+
+	/**
+	 * Override `y` from context.  Useful for multiple Bar instances
+	 */
+	export let y = $yContext;
+	$: _y = y ? (typeof y === 'string' ? (d) => d[y] : y) : $yContext;
 
 	/*
-    TODO: Support vertical/horizontal layout
-      - https://layercake.graphics/example/Bar
-      - https://layercake.graphics/example/Column
-      - https://layercake.graphics/example/BarStacked
-      - https://layercake.graphics/example/ColumnStacked
+    TODO:
+		  - [ ] Support vertical/horizontal layout (Bar/Column)
   */
 
 	export let color: string | ((obj: { value: any; item: any; index: number }) => string) =
@@ -23,8 +43,9 @@
 	export let stroke = 'black';
 	export let strokeWidth = 0;
 	export let radius = 0;
-	export let getKey: (item: any, index: number) => any = (item) => $x(item);
+	export let getKey: (item: any, index: number) => any = (item) => _x(item);
 	export let getProps: (obj: { value: any; item: any; index: number }) => any = undefined;
+	export let widthOffset = 0;
 
 	// See: https://svelte.dev/repl/7000c5ce05b84cd98ccbfb2768b4be3d?version=3.38.3
 
@@ -39,15 +60,15 @@
 	$: getDimensions = (item) => {
 		// console.log({ item, y: $y(item) });
 
-		const x = $xGet(item) + (groupBy ? x1Scale(item[groupBy]) : 0);
+		const x = $xGet(item) + (groupBy ? x1Scale(item[groupBy]) : 0) - widthOffset / 2;
 
 		// TODO: Do we need to support the non-bandwidth scale?
 		//   const width = $xScale.bandwidth
 		//     ? $xScale.bandwidth()
 		//     : Math.max(0, $xGet(d)[1] - $xGet(d)[0]);
-		const width = groupBy ? x1Scale.bandwidth() : $xScale.bandwidth();
+		const width = (groupBy ? x1Scale.bandwidth() : $xScale.bandwidth()) + widthOffset;
 
-		const yValue = $y(item);
+		const yValue = _y(item);
 
 		let yTop = 0;
 		let yBottom = 0;
@@ -79,7 +100,7 @@
 
 	function getColor(item: any, index: number) {
 		if (typeof color === 'function') {
-			return color({ value: $y(item), item, index });
+			return color({ value: _y(item), item, index });
 		} else if ($config.r) {
 			return $rGet(item);
 		} else {
@@ -99,7 +120,7 @@
 			stroke-width={strokeWidth}
 			rx={radius}
 			{...getDimensions(item)}
-			{...getProps?.({ value: $y(item), item, index })}
+			{...getProps?.({ value: _y(item), item, index })}
 			{...$$restProps}
 		/>
 	{/each}

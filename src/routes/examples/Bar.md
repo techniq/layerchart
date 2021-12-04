@@ -20,7 +20,7 @@ title: ['Chart', 'Bar']
 	import Preview from '$lib/docs/Preview.svelte';
 	import { createDateSeries } from '$lib/utils/genData';
 
-	const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
+	const data = createDateSeries({ min: 50, max: 100, value: 'integer', keys: ['value', 'baseline'] });
 	const negativeData = createDateSeries({ min: -20, max: 50, value: 'integer' });
 </script>
 
@@ -132,6 +132,51 @@ title: ['Chart', 'Bar']
 				<Bar radius={4} strokeWidth={1} />
 				<Label />
 			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Multiple (overlapping)
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="date"
+			xScale={scaleBand().padding(0.4)}
+			xDomain={data.map((d) => d.date)}
+			y="value"
+			yDomain={[0, null]}
+			yNice
+			padding={{ left: 16, bottom: 24 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Bar y="baseline" radius={4} strokeWidth={1} color="#ddd" />
+				<Bar y="value" radius={4} strokeWidth={1} widthOffset={-16} />
+			</Svg>
+			<Tooltip let:data>
+				<div class="tooltip">
+					<div class="tooltip-header">
+						{format(data.date, 'eee, MMMM do')}
+					</div>
+					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
+						<div class="tooltip-label">value:</div>
+						<div class="tooltip-value">
+							{formatNumberAsStyle(data.value, 'integer')}
+						</div>
+						<div class="tooltip-label">baseline:</div>
+						<div class="tooltip-value">
+							{formatNumberAsStyle(data.baseline, 'integer')}
+						</div>
+					</div>
+				</div>
+				<g slot="highlight">
+					<HighlightBar {data} />
+				</g>
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
