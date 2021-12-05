@@ -3,7 +3,7 @@ title: ['Chart', 'Bar']
 ---
 
 <script lang="ts">
-	import { scaleBand } from 'd3-scale';
+	import { scaleBand, scaleOrdinal } from 'd3-scale';
 	import { format } from 'date-fns';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
@@ -19,10 +19,18 @@ title: ['Chart', 'Bar']
 	import Tooltip from '$lib/components/Tooltip.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
-	import { createDateSeries } from '$lib/utils/genData';
+	import { createStackData } from '$lib/utils/stack';
+	import { createDateSeries, longData } from '$lib/utils/genData';
 
 	const data = createDateSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] });
 	const negativeData = createDateSeries({ min: -20, max: 50, value: 'integer' });
+
+	const groupedData = createStackData(longData, { xKey: 'year', groupBy: 'fruit' })
+	const stackedData = createStackData(longData, { xKey: 'year', stackBy: 'fruit' })
+	const groupedStackedData = createStackData(longData, { xKey: 'year', groupBy: 'basket', stackBy: 'fruit' })
+
+	const colorKeys = [...new Set(longData.map(x => x.fruit))]
+	const keyColors = ['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)', 'var(--color-orange-500)'];
 </script>
 
 ## Basic
@@ -181,6 +189,99 @@ title: ['Chart', 'Bar']
 					<HighlightBar {data} />
 				</g>
 			</Tooltip>
+		</Chart>
+	</div>
+</Preview>
+
+## Grouped
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			data={groupedData}
+			flatData={longData}
+			extents={{
+				y: extent(groupedData.flatMap(d => d.values))
+			}}
+			x="year"
+			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+			xDomain={longData.map(d => d.year)}
+			y="values"
+			yNice
+			r={d => d}
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
+			padding={{ left: 16, bottom: 24 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX />
+				<Baseline x y />
+				<Bar groupBy="fruit" getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Stacked
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			data={stackedData}
+			flatData={longData}
+			extents={{
+				y: extent(stackedData.flatMap(d => d.values))
+			}}
+			x="year"
+			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+			xDomain={longData.map(d => d.year)}
+			y="values"
+			yNice
+			r={d => d}
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
+			padding={{ left: 16, bottom: 24 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX />
+				<Baseline x y />
+				<Bar getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Grouped and Stacked
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			data={groupedStackedData}
+			flatData={longData}
+			extents={{
+				y: extent(groupedStackedData.flatMap(d => d.values))
+			}}
+			x="year"
+			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+			xDomain={longData.map(d => d.year)}
+			y="values"
+			yNice
+			r={d => d}
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
+			padding={{ left: 16, bottom: 24 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX />
+				<Baseline x y />
+				<Bar groupBy="basket" getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+			</Svg>
 		</Chart>
 	</div>
 </Preview>
