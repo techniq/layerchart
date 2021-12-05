@@ -18,7 +18,7 @@ export function createStackData(
 
 		const pivotData = pivotWider(itemData, options.xKey, options.stackBy, 'value');
 
-		const stackKeys: Array<any> = [...new Set(itemData.map((x) => x[options.stackBy]))];
+		const stackKeys: Array<any> = [...new Set(itemData.map((d) => d[options.stackBy]))];
 		const stackData = stack().keys(stackKeys)(
 			// .offset(offset)
 			pivotData
