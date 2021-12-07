@@ -44,6 +44,7 @@ export function createStackData(
  * Function to offset each layer by the maximum of the previous layer
  *   - see: https://observablehq.com/@mkfreeman/separated-bar-chart
  */
+// TODO: Try to find way to support separated with createStackData() (which has isolated stacked per group)
 export function stackOffsetSeparated(series, order) {
 	const gap = 100; // TODO: Determine way to pass in as option (curry?)
 
