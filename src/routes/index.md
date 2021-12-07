@@ -42,7 +42,7 @@ title: LayerChart
 - Bar
 - ClevelandDotPlot
 - Label
-- Scatter
+- Points
 - Threshold
   - Calculates line, area, and clip path data to show colored areas above/below
   - `y={[actual, baseline/threshold]}`
