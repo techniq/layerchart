@@ -1,5 +1,5 @@
 ---
-title: ['Charts', 'Area Chart']
+title: ['Charts', 'Threshold']
 ---
 
 <script lang="ts">
