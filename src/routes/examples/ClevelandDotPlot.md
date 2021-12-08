@@ -3,6 +3,7 @@ title: ['Chart', 'Cleveland Dot Plot']
 ---
 
 <script lang="ts">
+	import { get } from 'svelte/store';
 	import { scaleBand, scaleTime } from 'd3-scale';
 	import { addHours, addMinutes, format, startOfDay } from 'date-fns';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
@@ -13,9 +14,10 @@ title: ['Chart', 'Cleveland Dot Plot']
 	import AxisX from '$lib/components/AxisX.svelte';
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
-	import ClevelandDotPlot from '$lib/components/ClevelandDotPlot.svelte';
+	import ConnectedPoints from '$lib/components/ConnectedPoints.svelte';
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
 	import Label from '$lib/components/Label.svelte';
+	import Points from '$lib/components/Points.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
@@ -47,7 +49,7 @@ title: ['Chart', 'Cleveland Dot Plot']
 	*/
 
 	$: yDomain = data.map((x) => x.name).reverse()
-	$: console.log({ data, yDomain })
+	//$: console.log({ data, yDomain })
 </script>
 
 ## Basic
@@ -67,7 +69,15 @@ title: ['Chart', 'Cleveland Dot Plot']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
 				<Baseline y />
-				<ClevelandDotPlot />
+				<ConnectedPoints
+					offsetY={(value, { yScale }) => get(yScale).bandwidth() / 2}
+					stroke="#000"
+				/>
+				<Points
+					offsetY={(value, { yScale }) => get(yScale).bandwidth() / 2}
+					fill="var(--color-blue-500)"
+					stroke="#000"
+				/>
 			</Svg>
 		</Chart>
 	</div>

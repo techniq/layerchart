@@ -42,7 +42,7 @@ title: ['Charts', 'Scatter']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Points />
+				<Points fill="var(--color-blue-500)" stroke="var(--color-blue-800)"  />
 			</Svg>
 		</Chart>
 	</div>
@@ -65,7 +65,7 @@ title: ['Charts', 'Scatter']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Points />
+				<Points fill="var(--color-blue-500)" stroke="var(--color-blue-800)" />
 			</Svg>
 			<Tooltip let:data>
 				<div class="tooltip">
@@ -104,7 +104,7 @@ title: ['Charts', 'Scatter']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Points />
+				<Points fill="var(--color-blue-500)" stroke="var(--color-blue-800)" />
 				<Label formatStyle="integer" />
 			</Svg>
 		</Chart>
