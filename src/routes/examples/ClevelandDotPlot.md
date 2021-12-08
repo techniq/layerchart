@@ -66,7 +66,7 @@ title: ['Chart', 'Cleveland Dot Plot']
 			padding={{ left: 0, bottom: 24 }}
 		>
 			<Svg>
-				<AxisY gridlines />
+				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
 				<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
 				<Baseline y />
 				<ConnectedPoints
@@ -76,7 +76,7 @@ title: ['Chart', 'Cleveland Dot Plot']
 				<Points
 					offsetY={(value, { yScale }) => get(yScale).bandwidth() / 2}
 					fill="var(--color-blue-500)"
-					stroke="#000"
+					stroke="var(--color-blue-800)"
 				/>
 			</Svg>
 		</Chart>

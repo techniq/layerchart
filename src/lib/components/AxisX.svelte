@@ -29,7 +29,7 @@
 	{#each tickVals as tick, i}
 		<g class="tick tick-{tick}" transform="translate({$xScale(tick)},{$yRange[0]})">
 			{#if gridlines !== false}
-				<line y1={$height * -1} y2="0" x1="0" x2="0" />
+				<line y1={$height * -1} y2="0" x1="0" x2="0" {...gridlines} />
 			{/if}
 			<Text
 				x={xTick || isBand ? $xScale.bandwidth() / 2 : 0}

@@ -37,6 +37,7 @@
 					x2={$width + $padding.left}
 					y1={yTick + (isBand ? $yScale.bandwidth() / 2 : 0)}
 					y2={yTick + (isBand ? $yScale.bandwidth() / 2 : 0)}
+					{...gridlines}
 				/>
 			{/if}
 			<!-- <circle
@@ -68,9 +69,5 @@
 	.tick line {
 		stroke: #e0e0e0;
 		/* stroke-dasharray: 2; */
-	}
-
-	.tick.tick-0 line {
-		stroke-dasharray: 0;
 	}
 </style>
