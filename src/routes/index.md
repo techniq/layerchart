@@ -40,7 +40,7 @@ title: LayerChart
   - Easily add line (same curve, color, etc)
 - AreaStack
 - Bar
-- ClevelandDotPlot
+- ConnectedPoints
 - Label
 - Points
 - Threshold
@@ -52,6 +52,9 @@ title: LayerChart
 - HighlightBar
 - HighlightLine
 - Tooltip
+  - Data selection
+  - Animated location
+  - Smart container positioning
 
 ## Todo
 
@@ -59,11 +62,12 @@ title: LayerChart
   - Differentiate with Path and Line, although could probbaly just use Path, although might be confusing
 - Add examples with animated Circle, Rect, and Line
 - Consider updating Circle, Rect, and Line to support xGet/yGet with data, along with explicit `cx`/`cy`
-- Consider changing `Label` to `Mark` (or at least call `Labels`)
+- Consider renaming `Label` to `Mark` (or at least call `Labels`)
+- Consider renaming `HighlightBar` to `HighlightRect`
 - Should some props be renamed/aliased or always passed through
-  - <Circle r={10} stroke-width={2} />
+  - `<Circle r={10} stroke-width={2} />`
   - vs
-  - <Circle radius={10} strokeWidth={2}>)
+  - `<Circle radius={10} strokeWidth={2} />`
 
 ## Principals
 
