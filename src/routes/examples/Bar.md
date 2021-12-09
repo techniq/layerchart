@@ -20,7 +20,7 @@ title: ['Chart', 'Bar']
 	import Tooltip from '$lib/components/Tooltip.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
-	import { createStackData } from '$lib/utils/stack';
+	import { createStackData, stackOffsetSeparated } from '$lib/utils/stack';
 	import { createDateSeries, longData } from '$lib/utils/genData';
 
 	const data = createDateSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] });
@@ -30,6 +30,7 @@ title: ['Chart', 'Bar']
 	const stackedData = createStackData(longData, { xKey: 'year', stackBy: 'fruit' })
 	const groupedStackedData = createStackData(longData, { xKey: 'year', groupBy: 'basket', stackBy: 'fruit' })
 	const stackedPercentData = createStackData(longData, { xKey: 'year', stackBy: 'fruit', offset: stackOffsetExpand })
+	const stackedSeperatedData = createStackData(longData, { xKey: 'year', stackBy: 'fruit', offset: stackOffsetSeparated })
 
 	const colorKeys = [...new Set(longData.map(x => x.fruit))]
 	const keyColors = ['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)', 'var(--color-orange-500)'];
@@ -232,7 +233,6 @@ title: ['Chart', 'Bar']
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			data={stackedData}
-			flatData={longData}
 			extents={{
 				y: extent(stackedData.flatMap(d => d.values))
 			}}
@@ -241,7 +241,7 @@ title: ['Chart', 'Bar']
 			xDomain={longData.map(d => d.year)}
 			y="values"
 			yNice
-			r={d => d}
+			r={d => d.keys[1]}
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -257,13 +257,12 @@ title: ['Chart', 'Bar']
 	</div>
 </Preview>
 
-## Stacked Percent
+## Stacked (Percent)
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			data={stackedPercentData}
-			flatData={longData}
 			extents={{
 				y: extent(stackedPercentData.flatMap(d => d.values))
 			}}
@@ -272,7 +271,7 @@ title: ['Chart', 'Bar']
 			xDomain={longData.map(d => d.year)}
 			y="values"
 			yNice
-			r={d => d}
+			r={d => d.keys[1]}
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -280,6 +279,36 @@ title: ['Chart', 'Bar']
 		>
 			<Svg>
 				<AxisY gridlines formatTick={d => formatNumberAsStyle(d, 'percentRound')} />
+				<AxisX />
+				<Baseline x y />
+				<Bar getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Stack (Separated)
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			data={stackedSeperatedData}
+			extents={{
+				y: extent(stackedSeperatedData.flatMap(d => d.values))
+			}}
+			x="year"
+			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+			xDomain={longData.map(d => d.year)}
+			y="values"
+			yNice
+			r={d => d.keys[1]}
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
+			padding={{ left: 16, bottom: 24 }}
+		>
+			<Svg>
+				<AxisY gridlines />
 				<AxisX />
 				<Baseline x y />
 				<Bar getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
