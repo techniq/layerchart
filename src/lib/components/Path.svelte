@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import { line as d3Line } from 'd3-shape';
-	import type { CurveFactory, CurveFactoryLineOnly } from 'd3-shape';
+	import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
 
 	const { data: contextData, xGet, yGet, zGet } = getContext('LayerCake');
 
@@ -12,24 +12,23 @@
 	export let pathData: string = undefined;
 
 	export let curve: CurveFactory | CurveFactoryLineOnly = undefined;
-	export let defined: Parameters<typeof path.defined>[0] = undefined;
-	export let color = 'var(--color-blue-500)';
+	export let defined: Parameters<Line<any>['defined']>[0] = undefined;
+	export let color = 'black';
 	export let width = undefined;
 
-	$: path = d3Line()
-		.x(x ?? $xGet)
-		.y(y ?? $yGet);
-	$: if (curve) path.curve(curve);
-	$: if (defined) path.defined(defined);
+	let d;
+	$: {
+		const path = d3Line()
+			.x(x ?? $xGet)
+			.y(y ?? $yGet);
+		if (curve) path.curve(curve);
+		if (defined) path.defined(defined);
+
+		d = pathData ?? path(data ?? $contextData);
+	}
 </script>
 
-<path
-	class="path-line"
-	d={pathData ?? path(data ?? $contextData)}
-	stroke={color}
-	stroke-width={width}
-	{...$$restProps}
-/>
+<path class="path-line" {d} stroke={color} stroke-width={width} {...$$restProps} />
 
 <style lang="postcss">
 	.path-line {
