@@ -7,8 +7,8 @@ import { spring, tweened } from 'svelte/motion';
 export function getMotionStore(
 	value: any,
 	options: {
-		spring: boolean | Parameters<typeof spring>[1];
-		tweened: boolean | Parameters<typeof tweened>[1];
+		spring?: boolean | Parameters<typeof spring>[1];
+		tweened?: boolean | Parameters<typeof tweened>[1];
 	}
 ) {
 	if (options.spring) {
