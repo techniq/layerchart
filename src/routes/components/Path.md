@@ -124,3 +124,27 @@ title: ['Primatives', 'Path']
 		</Chart>
 	</div>
 </Preview>
+
+## Tweened
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="x"
+			y="y"
+			yNice
+			padding={{ left: 16, bottom: 24 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX />
+				<Baseline x y />
+				<Path {curve} tweened />
+				{#if showPoints}
+					<Points tweened />
+				{/if}
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
