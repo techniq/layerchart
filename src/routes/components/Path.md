@@ -46,6 +46,7 @@ title: ['Primatives', 'Path']
 	const curveOptions = Object
 		.keys(d3shapes)
 		.filter(key => key.startsWith('curve'))
+		.filter(key => !key.endsWith('Open') && !key.endsWith('Closed'))
 		.map(key => {
 			return {
 				name: key,
@@ -74,7 +75,7 @@ title: ['Primatives', 'Path']
 	let showPoints = false;
 </script>
 
-<div class="grid grid-cols-4 gap-2 sticky top-0 z-10">
+<div class="grid grid-cols-[1fr,1fr,1fr,auto] gap-2 sticky top-0 z-10">
 	<Field label="Path Example" let:id>
 		<Button icon={mdiChevronLeft} on:click={() => easing = prev(easingOptions, easing)} class="mr-2" />
 		<select bind:value={easing} class="w-full outline-none appearance-none text-sm" {id}>
@@ -93,8 +94,10 @@ title: ['Primatives', 'Path']
 		</select>
 		<Button icon={mdiChevronRight} on:click={() => curve = next(curveOptions, curve)} class="ml-2" />
 	</Field>
-	<Field label="Count" let:id>
-		<input type="range" bind:value={pointCount} min={2} max={500} {id} class="h-6" /> <span class="ml-4 text-sm text-black/50">{pointCount}</span>
+	<Field label="Points" let:id>
+		<Button icon={mdiChevronLeft} on:click={() => pointCount -= (pointCount > 2 ? 1 : 0)} class="mr-2" />
+		<input type="range" bind:value={pointCount} min={2} max={500} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{pointCount}</span>
+		<Button icon={mdiChevronRight} on:click={() => pointCount += 1} class="ml-2" />
 	</Field>
 	<Field label="Show points" let:id>
 		<Switch bind:checked={showPoints} {id} />
