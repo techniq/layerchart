@@ -5,8 +5,10 @@ title: ['Primatives', 'Path']
 <script lang="ts">
 	import * as easings from 'svelte/easing';
 	import * as d3shapes from 'd3-shape';
+	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
 	import {
+		Button,
 		Field,
 		SelectField,
 		Switch
@@ -33,6 +35,13 @@ title: ['Primatives', 'Path']
 		}
 	})
 
+	const easingOptions = Object.entries(easings).map(([key, value]) => {
+		return {
+			name: key,
+			value
+		}
+	})
+
 	let curve = d3shapes['curveLinear'];
 	const curveOptions = Object
 		.keys(d3shapes)
@@ -44,19 +53,46 @@ title: ['Primatives', 'Path']
 			}
 		})
 
-	const easingOptions = Object.entries(easings).map(([key, value]) => {
-		return {
-			name: key,
-			value
+	function prev(options, current) {
+		const index = options.findIndex(x => x.value === current);
+		if (index === 0) {
+			return options[options.length - 1].value
+		} else {
+			return options[index - 1].value
 		}
-	})
+	}
+
+	function next(options, current) {
+		const index = options.findIndex(x => x.value === current);
+		if (index === options.length - 1) {
+			return options[0].value
+		} else {
+			return options[index + 1].value
+		}
+	}
 
 	let showPoints = false;
 </script>
 
-<div class="grid grid-cols-4 gap-2">
-	<SelectField label="Path Example" items={easingOptions} bind:value={easing} />
-	<SelectField label="Curve" items={curveOptions} bind:value={curve} />
+<div class="grid grid-cols-4 gap-2 sticky top-0 z-10">
+	<Field label="Path Example" let:id>
+		<Button icon={mdiChevronLeft} on:click={() => easing = prev(easingOptions, easing)} class="mr-2" />
+		<select bind:value={easing} class="w-full outline-none appearance-none text-sm" {id}>
+			{#each easingOptions as option}
+				<option value={option.value}>{option.name}</option>
+			{/each}
+		</select>
+		<Button icon={mdiChevronRight} on:click={() => easing = next(easingOptions, easing)} class="ml-2" />
+	</Field>
+	<Field label="Curve" let:id>
+		<Button icon={mdiChevronLeft} on:click={() => curve = prev(curveOptions, curve)} class="mr-2" />
+		<select bind:value={curve} class="w-full outline-none appearance-none text-sm" {id}>
+			{#each curveOptions as option}
+				<option value={option.value}>{option.name}</option>
+			{/each}
+		</select>
+		<Button icon={mdiChevronRight} on:click={() => curve = next(curveOptions, curve)} class="ml-2" />
+	</Field>
 	<Field label="Count" let:id>
 		<input type="range" bind:value={pointCount} min={2} max={500} {id} class="h-6" /> <span class="ml-4 text-sm text-black/50">{pointCount}</span>
 	</Field>
