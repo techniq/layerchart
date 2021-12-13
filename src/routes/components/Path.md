@@ -96,7 +96,7 @@ title: ['Primatives', 'Path']
 	</Field>
 	<Field label="Points" let:id>
 		<Button icon={mdiChevronLeft} on:click={() => pointCount -= (pointCount > 2 ? 1 : 0)} class="mr-2" />
-		<input type="range" bind:value={pointCount} min={2} max={500} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{pointCount}</span>
+		<input type="range" bind:value={pointCount} min={2} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{pointCount}</span>
 		<Button icon={mdiChevronRight} on:click={() => pointCount += 1} class="ml-2" />
 	</Field>
 	<Field label="Show points" let:id>
