@@ -41,6 +41,8 @@
 	export let innerRadius = 50;
 	export let outerRadius = 60;
 	export let cornerRadius = 10;
+	export let padAngle = 0;
+	export let padRadius = 0;
 	export let label: 'svg-center' | 'arc-center' | 'arc-bottom' | 'arc-centroid' | undefined =
 		undefined;
 
@@ -55,14 +57,18 @@
 		.outerRadius(outerRadius)
 		.startAngle(startAngle)
 		.endAngle(valueAngle)
-		.cornerRadius(cornerRadius);
+		.cornerRadius(cornerRadius)
+		.padAngle(padAngle);
+	// .padRadius(padRadius);
 
 	$: trackArc = d3arc()
 		.innerRadius(innerRadius)
 		.outerRadius(outerRadius)
 		.startAngle(startAngle)
 		.endAngle(endAngle)
-		.cornerRadius(cornerRadius);
+		.cornerRadius(cornerRadius)
+		.padAngle(padAngle);
+	// .padRadius(padRadius);
 
 	$: trackArcCentroid = trackArc.centroid();
 	// $: console.log(trackArcCentroid)

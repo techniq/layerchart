@@ -23,6 +23,8 @@ title: ['Primatives', 'Arc']
 	let innerRadius = 50;
 	let outerRadius = 60;
 	let cornerRadius = 5;
+	let padAngle = 0;
+	let padRadius = 0;
 
 	const labelOptions = [
 		{ name: 'None', value: undefined },
@@ -110,12 +112,24 @@ title: ['Primatives', 'Arc']
 		<input type="range" bind:value={cornerRadius} min={0} max={(outerRadius - innerRadius) / 2} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{cornerRadius}</span>
 		<Button icon={mdiChevronRight} on:click={() => cornerRadius += 1} class="ml-2" />
 	</Field>
+	<!--  -->
+	<Field label="Pad angle" let:id>
+		<Button icon={mdiChevronLeft} on:click={() => padAngle -= 0.1} class="mr-2" />
+		<input type="range" bind:value={padAngle} min={0} max={2} step={0.1} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{padAngle}</span>
+		<Button icon={mdiChevronRight} on:click={() => padAngle += 0.1} class="ml-2" />
+	</Field>
+	<!--  -->
+	<!-- <Field label="Pad radius" let:id>
+		<Button icon={mdiChevronLeft} on:click={() => padRadius -= 0.1} class="mr-2" />
+		<input type="range" bind:value={padRadius} min={0} max={2} step={0.1} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{padRadius}</span>
+		<Button icon={mdiChevronRight} on:click={() => padRadius += 0.1} class="ml-2" />
+	</Field> -->
 </div>
 
 ## Arc
 
-<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {label} />
+<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} />
 
 ## Spring
 
-<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {label} spring />
+<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {label} {padAngle} spring />
