@@ -73,9 +73,10 @@ title: ['Primatives', 'Path']
 	}
 
 	let showPoints = false;
+	let tweened = true;
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,1fr,auto] gap-2 sticky top-0 z-10">
+<div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2 sticky top-0 z-10">
 	<Field label="Path Example" let:id>
 		<Button icon={mdiChevronLeft} on:click={() => easing = prev(easingOptions, easing)} class="mr-2" />
 		<select bind:value={easing} class="w-full outline-none appearance-none text-sm" {id}>
@@ -102,9 +103,12 @@ title: ['Primatives', 'Path']
 	<Field label="Show points" let:id>
 		<Switch bind:checked={showPoints} {id} />
 	</Field>
+	<Field label="Tweened" let:id>
+		<Switch bind:checked={tweened} {id} />
+	</Field>
 </div>
 
-## Basic
+## Playground
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -119,33 +123,9 @@ title: ['Primatives', 'Path']
 				<AxisY gridlines />
 				<AxisX />
 				<Baseline x y />
-				<Path {curve} />
+				<Path {curve} {tweened} />
 				{#if showPoints}
-					<Points />
-				{/if}
-			</Svg>
-		</Chart>
-	</div>
-</Preview>
-
-## Tweened
-
-<Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="x"
-			y="y"
-			yNice
-			padding={{ left: 16, bottom: 24 }}
-		>
-			<Svg>
-				<AxisY gridlines />
-				<AxisX />
-				<Baseline x y />
-				<Path {curve} tweened />
-				{#if showPoints}
-					<Points tweened />
+					<Points {tweened} />
 				{/if}
 			</Svg>
 		</Chart>
