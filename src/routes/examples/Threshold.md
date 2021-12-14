@@ -14,7 +14,7 @@ title: ['Charts', 'Threshold']
 	import AxisX from '$lib/components/AxisX.svelte';
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
-	import HighlightBar from '$lib/components/HighlightBar.svelte';
+	import HighlightRect from '$lib/components/HighlightRect.svelte';
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
 	import Labels from '$lib/components/Labels.svelte';
 	import Path from '$lib/components/Path.svelte';
@@ -91,7 +91,7 @@ title: ['Charts', 'Threshold']
 	</div>
 </Preview>
 
-## With Tooltip and HighlightBar
+## With Tooltip and HighlightRect
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -159,7 +159,7 @@ title: ['Charts', 'Threshold']
 					</div>
 				</div>
 				<g slot="highlight">
-					<HighlightBar {data} />
+					<HighlightRect {data} />
 				</g>
 			</Tooltip>
 		</Chart>

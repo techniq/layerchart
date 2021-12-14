@@ -15,7 +15,7 @@ title: ['Chart', 'Bars']
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
 	import Bars from '$lib/components/Bars.svelte';
-	import HighlightBar from '$lib/components/HighlightBar.svelte';
+	import HighlightRect from '$lib/components/HighlightRect.svelte';
 	import Labels from '$lib/components/Labels.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 
@@ -83,7 +83,7 @@ title: ['Chart', 'Bars']
 	</div>
 </Preview>
 
-## With Tooltip and HighlightBar
+## With Tooltip and HighlightRect
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -116,7 +116,7 @@ title: ['Chart', 'Bars']
 					</div>
 				</div>
 				<g slot="highlight">
-					<HighlightBar {data} />
+					<HighlightRect {data} />
 				</g>
 			</Tooltip>
     	</Chart>
@@ -189,7 +189,7 @@ title: ['Chart', 'Bars']
 					</div>
 				</div>
 				<g slot="highlight">
-					<HighlightBar {data} />
+					<HighlightRect {data} />
 				</g>
 			</Tooltip>
 		</Chart>

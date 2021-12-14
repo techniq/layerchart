@@ -1,5 +1,5 @@
 ---
-title: ['Interaction', 'HighlightBar']
+title: ['Interaction', 'HighlightRect']
 ---
 
 <script lang="ts">

@@ -49,7 +49,7 @@ title: LayerChart
 
 ## Interations
 
-- HighlightBar
+- HighlightRect
 - HighlightLine
 - Tooltip
   - Data selection
@@ -58,13 +58,13 @@ title: LayerChart
 
 ## Todo
 
-- Add basic line charge (data-driven)
+- [ ] Add basic line charge (data-driven)
   - Differentiate with Path and Line, although could probbaly just use Path, although might be confusing
-- Add examples with animated Circle, Rect, and Line
-- Consider updating Circle, Rect, and Line to support xGet/yGet with data, along with explicit `cx`/`cy`
-- Consider renaming `Label` to `Mark` (or at least call `Labels`)
-- Consider renaming `HighlightBar` to `HighlightRect`
-- Should some props be renamed/aliased or always passed through
+- [ ] Add examples with animated Circle, Rect, and Line
+- [ ] Consider updating Circle, Rect, and Line to support xGet/yGet with data, along with explicit `cx`/`cy`
+- [x] Consider renaming `Label` to `Mark` (or at least call `Labels`)
+- [x] Consider renaming `HighlightRect` to `HighlightRect`
+- [ ] Should some props be renamed/aliased or always passed through
   - `<Circle r={10} stroke-width={2} />`
   - vs
   - `<Circle radius={10} strokeWidth={2} />`

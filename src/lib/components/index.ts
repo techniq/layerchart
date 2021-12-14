@@ -7,7 +7,7 @@ export { default as Baseline } from './Baseline.svelte';
 export { default as Chart } from './Chart.svelte';
 export { default as Circle } from './Circle.svelte';
 export { default as ClevelandDotPlot } from './ClevelandDotPlot.svelte';
-export { default as HighlightBar } from './HighlightBar.svelte';
+export { default as HighlightRect } from './HighlightRect.svelte';
 export { default as HighlightLine } from './HighlightLine.svelte';
 export { default as Labels } from './Labels.svelte';
 export { default as Line } from './Line.svelte';

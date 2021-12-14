@@ -29,7 +29,7 @@
 
 <div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Interactions</div>
 <NavItem text="Tooltip" path="/components/Tooltip" class="pl-6 py-2" />
-<NavItem text="HighlightBar" path="/components/HighlightBar" class="pl-6 py-2" />
+<NavItem text="HighlightRect" path="/components/HighlightRect" class="pl-6 py-2" />
 <NavItem text="HighlightLine" path="/components/HighlightLine" class="pl-6 py-2" />
 
 <div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Utils</div>
