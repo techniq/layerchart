@@ -2,10 +2,10 @@
 	/*
 		TODO:
 		- [ ] Chart usage
-		- [ ] Track on/off and pass props
-		- [ ] Text configuration / slot?
+		- [x] Track on/off and pass props
+		- [x] Text configuration / slot?
 		- [ ] Pie usage (second dimension?)
-		- [ ] style / class (gradient, etc)
+		- [x] style / class (gradient, etc)
 		- [ ] Allow spring/tweened to be reactive (but ignore value)
 	*/
 	// https://caniuse.com/#feat=css-conic-gradients
@@ -42,6 +42,8 @@
 	export let cornerRadius = 10;
 	export let padAngle = 0;
 	export let padRadius = 0;
+
+	export let track: boolean | svelte.JSX.SVGProps<SVGPathElement> = false;
 
 	$: scale = scaleLinear().domain(domain).range(range);
 
@@ -91,26 +93,10 @@
 	// $: console.log(labelArcBottomOffset)
 </script>
 
-<path d={trackArc()} class="track" bind:this={trackArcEl} />
-<path d={arc()} />
+{#if track}
+	<path d={trackArc()} class="track" bind:this={trackArcEl} {...track} />
+{/if}
+
+<path d={arc()} {...$$restProps} />
 
 <slot value={$tweened_value} centroid={trackArcCentroid} {boundingBox} />
-
-<defs>
-	<linearGradient id="fillGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-		<stop offset="0%" stop-color="hsl(60, 100%, 50%)" />
-		<stop offset="100%" stop-color="hsl(140, 100%, 50%)" />
-	</linearGradient>
-</defs>
-
-<style>
-	path {
-		fill: url(#fillGradient);
-	}
-
-	.track {
-		stroke: hsla(0, 0%, 100%, 0.2);
-		stroke-width: 1px;
-		fill: none;
-	}
-</style>

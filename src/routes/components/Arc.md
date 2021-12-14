@@ -15,12 +15,13 @@ title: ['Primatives', 'Arc']
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Arc from '$lib/components/Arc.svelte';
 	import Group from '$lib/components/Group.svelte';
+	import LinearGradient from '$lib/components/LinearGradient.svelte';
 	import Text from '$lib/components/Text.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
 
-	// let value = 50;
-	let value = 100;
+	let value = 50;
+	// let value = 100;
 	let domain = [0, 100];
 	// let range = [-120, 120];
 	let range = [0, 360];
@@ -142,9 +143,10 @@ title: ['Primatives', 'Arc']
 	<div class="h-[200px] p-4 border rounded">
 		<Chart>
 			<Svg>
+				<LinearGradient id="arcGradient" from="hsl(60 100% 50%)" to="hsl(140 100% 50%)" vertical />
 				<Group center>
 					{#key spring}
-						<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} spring={spring} let:value let:boundingBox>
+						<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} spring={spring} let:value let:boundingBox fill="url(#arcGradient)" track={{ fill: 'hsl(0 0% 0% / 6% )' }}>
 							<Text
 								value={Math.round(value)}
 								textAnchor="middle"
@@ -160,36 +162,28 @@ title: ['Primatives', 'Arc']
 	</div>
 </Preview>
 
-## Spring
+## Partial Arc
 
 <Preview>
 	<div class="h-[200px] p-4 border rounded">
 		<Chart>
 			<Svg>
+				<LinearGradient id="arcGradient2" from="hsl(80 100% 50%)" to="hsl(200 100% 50%)" />
 				<Group center>
-					<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} spring let:value>
-						<Text
-							value={Math.round(value)}
-							textAnchor="middle"
-							verticalAnchor="middle"
-							style="font-size: 2.25em"
-							dy={8}
-						/>
-					</Arc>
-				</Group>
-			</Svg>
-		</Chart>
-	</div>
-</Preview>
-
-## Partial
-
-<Preview>
-	<div class="h-[200px] p-4 border rounded">
-		<Chart>
-			<Svg>
-				<Group center>
-					<Arc {value} {domain} range={[-120, 120]} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} spring let:value>
+					<Arc
+						{value}
+						{domain}
+						range={[-120, 120]}
+						{innerRadius}
+						{outerRadius}
+						{cornerRadius}
+						{padAngle}
+						{label}
+						spring
+						let:value
+						fill="url(#arcGradient2)"
+						track={{ fill: 'none', stroke: 'hsl(0 0% 0% / 10%)' }}
+					>
 						<Text
 							value={Math.round(value)}
 							textAnchor="middle"
@@ -202,6 +196,8 @@ title: ['Primatives', 'Arc']
 		</Chart>
 	</div>
 </Preview>
+
+## Label location
 
 <!-- {#if label === 'svg-center'}
 	<text dy={16}>
@@ -232,7 +228,8 @@ title: ['Primatives', 'Arc']
 		<Chart>
 			<Svg>
 				<Group center>
-					<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} let:boundingBox>
+					<LinearGradient id="arcGradient3" from="hsl(80, 100%, 50%)" to="hsl(200, 100%, 50%)" vertical />
+					<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} let:boundingBox fill="url(#arcGradient3)">
 						<!-- svg center -->
 						<!-- <Text
 							value={Math.round(value)}
