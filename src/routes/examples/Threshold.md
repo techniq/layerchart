@@ -16,7 +16,7 @@ title: ['Charts', 'Threshold']
 	import Baseline from '$lib/components/Baseline.svelte';
 	import HighlightBar from '$lib/components/HighlightBar.svelte';
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
-	import Label from '$lib/components/Label.svelte';
+	import Labels from '$lib/components/Labels.svelte';
 	import Path from '$lib/components/Path.svelte';
 	import Threshold from '$lib/components/Threshold.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
@@ -218,7 +218,7 @@ title: ['Charts', 'Threshold']
 						/>
 					</g>
 				</Threshold>
-				<Label formatStyle="integer" />
+				<Labels formatStyle="integer" />
 			</Svg>
 		</Chart>
 	</div>

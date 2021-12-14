@@ -1,5 +1,5 @@
 ---
-title: ['Data', 'Label']
+title: ['Data', 'Labels']
 ---
 
 <script lang="ts">

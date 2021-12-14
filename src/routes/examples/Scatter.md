@@ -14,7 +14,7 @@ title: ['Charts', 'Scatter']
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
-	import Label from '$lib/components/Label.svelte';
+	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 
@@ -105,7 +105,7 @@ title: ['Charts', 'Scatter']
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Points fill="var(--color-blue-500)" stroke="var(--color-blue-800)" />
-				<Label formatStyle="integer" />
+				<Labels formatStyle="integer" />
 			</Svg>
 		</Chart>
 	</div>

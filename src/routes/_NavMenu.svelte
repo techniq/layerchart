@@ -23,7 +23,7 @@
 <NavItem text="AreaStack" path="/components/AreaStack" class="pl-6 py-2" />
 <NavItem text="Bar" path="/components/Bar" class="pl-6 py-2" />
 <NavItem text="ConnectedPoints" path="/components/ConnectedPoints" class="pl-6 py-2" />
-<NavItem text="Label" path="/components/Label" class="pl-6 py-2" />
+<NavItem text="Labels" path="/components/Labels" class="pl-6 py-2" />
 <NavItem text="Points" path="/components/Points" class="pl-6 py-2" />
 <NavItem text="Threshold" path="/components/Threshold" class="pl-6 py-2" />
 

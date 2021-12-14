@@ -20,7 +20,7 @@ title: ['Primatives', 'Path']
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
-	import Label from '$lib/components/Label.svelte';
+	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
 	import Path from '$lib/components/Path.svelte';
 

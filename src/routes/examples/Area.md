@@ -14,7 +14,7 @@ title: ['Charts', 'Area']
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
-	import Label from '$lib/components/Label.svelte';
+	import Labels from '$lib/components/Labels.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
@@ -104,7 +104,7 @@ title: ['Charts', 'Area']
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Area line={{ width: 2 }} />
-				<Label formatStyle="integer" />
+				<Labels formatStyle="integer" />
 			</Svg>
 		</Chart>
 	</div>

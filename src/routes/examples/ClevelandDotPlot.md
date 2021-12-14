@@ -16,7 +16,7 @@ title: ['Chart', 'Cleveland Dot Plot']
 	import Baseline from '$lib/components/Baseline.svelte';
 	import ConnectedPoints from '$lib/components/ConnectedPoints.svelte';
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
-	import Label from '$lib/components/Label.svelte';
+	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 

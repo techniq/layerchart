@@ -16,7 +16,7 @@ title: ['Chart', 'Bar']
 	import Baseline from '$lib/components/Baseline.svelte';
 	import Bar from '$lib/components/Bar.svelte';
 	import HighlightBar from '$lib/components/HighlightBar.svelte';
-	import Label from '$lib/components/Label.svelte';
+	import Labels from '$lib/components/Labels.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
@@ -142,7 +142,7 @@ title: ['Chart', 'Bar']
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Bar radius={4} strokeWidth={1} />
-				<Label />
+				<Labels />
 			</Svg>
 		</Chart>
 	</div>

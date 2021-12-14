@@ -9,7 +9,7 @@ export { default as Circle } from './Circle.svelte';
 export { default as ClevelandDotPlot } from './ClevelandDotPlot.svelte';
 export { default as HighlightBar } from './HighlightBar.svelte';
 export { default as HighlightLine } from './HighlightLine.svelte';
-export { default as Label } from './Label.svelte';
+export { default as Labels } from './Labels.svelte';
 export { default as Line } from './Line.svelte';
 export { default as Path } from './Path.svelte';
 export { default as Rect } from './Rect.svelte';
