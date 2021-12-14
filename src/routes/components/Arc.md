@@ -68,7 +68,7 @@ title: ['Primatives', 'Arc']
 	</Field>
 	<!--  -->
 	<Field label="Use spring" let:id>
-		<Switch bind:checked={spring} {id} disabled />
+		<Switch bind:checked={spring} {id} />
 	</Field>
 	<!--  -->
 	<!-- <Field label="Label" let:id>
@@ -143,15 +143,17 @@ title: ['Primatives', 'Arc']
 		<Chart>
 			<Svg>
 				<Group center>
-					<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} spring={spring} let:value let:boundingBox>
-						<Text
-							value={Math.round(value)}
-							textAnchor="middle"
-							verticalAnchor="middle"
-							style="font-size: 2.25em"
-							dy={8}
-						/>
-					</Arc>
+					{#key spring}
+						<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} spring={spring} let:value let:boundingBox>
+							<Text
+								value={Math.round(value)}
+								textAnchor="middle"
+								verticalAnchor="middle"
+								style="font-size: 2.25em"
+								dy={8}
+							/>
+						</Arc>
+					{/key}
 				</Group>
 			</Svg>
 		</Chart>
