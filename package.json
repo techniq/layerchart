@@ -15,25 +15,25 @@
 		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-static": "^1.0.0-next.21",
-		"@sveltejs/kit": "^1.0.0-next.201",
+		"@sveltejs/adapter-static": "^1.0.0-next.22",
+		"@sveltejs/kit": "^1.0.0-next.202",
 		"@types/d3-array": "^3.0.2",
 		"@types/d3-scale": "^4.0.2",
 		"@types/d3-shape": "^3.0.2",
 		"@types/lodash-es": "^4.17.5",
 		"autoprefixer": "^10.4.0",
 		"mdsvex": "^0.9.8",
-		"prettier": "^2.5.0",
-		"prettier-plugin-svelte": "^2.5.0",
+		"prettier": "^2.5.1",
+		"prettier-plugin-svelte": "^2.5.1",
 		"prism-themes": "^1.9.0",
-		"svelte": "^3.44.2",
+		"svelte": "^3.44.3",
 		"svelte-check": "^2.2.10",
-		"svelte-preprocess": "^4.9.4",
-		"svelte2tsx": "^0.4.10",
+		"svelte-preprocess": "^4.10.0",
+		"svelte2tsx": "^0.4.11",
 		"tailwindcss": "^2.2.19",
 		"tailwindcss-elevation": "^1.0.1",
 		"tslib": "^2.3.1",
-		"typescript": "^4.5.2",
+		"typescript": "^4.5.4",
 		"unist-util-visit": "^4.1.0"
 	},
 	"type": "module",
@@ -43,9 +43,9 @@
 		"d3-interpolate-path": "^2.2.3",
 		"d3-scale": "^4.0.2",
 		"d3-shape": "^3.0.1",
-		"date-fns": "^2.26.0",
-		"layercake": "^5.0.1",
+		"date-fns": "^2.27.0",
+		"layercake": "^5.0.2",
 		"lodash-es": "^4.17.21",
-		"svelte-ux": "^0.0.105"
+		"svelte-ux": "^0.0.112"
 	}
 }
