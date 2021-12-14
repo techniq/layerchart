@@ -14,6 +14,7 @@
 	export let defined: (d: Datum, index: number, data: Datum[]) => boolean = undefined;
 	export let opacity = 0.3;
 	export let line: boolean | any = false;
+	export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
 	// Render in reverse order so bottom stacks are rendered last (and stack above the upper stacks).  Fixes when upper stack has 0 value
 	$: lineData = [...$data].reverse();
@@ -28,6 +29,7 @@
 				color={$zGet(seriesData)}
 				{curve}
 				{defined}
+				{tweened}
 				{...line}
 			/>
 		{/each}
@@ -44,6 +46,7 @@
 			{curve}
 			{defined}
 			{opacity}
+			{tweened}
 		/>
 	{/each}
 </g>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
+	import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 	import { scaleBand } from 'd3-scale';
 	import { max, min } from 'd3-array';
 	import { unique } from 'svelte-ux/utils/array';
@@ -46,6 +47,9 @@
 	export let getKey: (item: any, index: number) => any = (item) => _x(item);
 	export let getProps: (obj: { value: any; item: any; index: number }) => any = undefined;
 	export let widthOffset = 0;
+
+	export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
+	export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
 	// See: https://svelte.dev/repl/7000c5ce05b84cd98ccbfb2768b4be3d?version=3.38.3
 
@@ -119,6 +123,8 @@
 			{stroke}
 			stroke-width={strokeWidth}
 			rx={radius}
+			{spring}
+			{tweened}
 			{...getDimensions(item)}
 			{...getProps?.({ value: _y(item), item, index })}
 			{...$$restProps}
