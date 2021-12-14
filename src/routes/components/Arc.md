@@ -14,17 +14,23 @@ title: ['Primatives', 'Arc']
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Arc from '$lib/components/Arc.svelte';
+	import Group from '$lib/components/Group.svelte';
+	import Text from '$lib/components/Text.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
 
-	let value = 50;
+	// let value = 50;
+	let value = 100;
 	let domain = [0, 100];
-	let range = [-120, 120];
+	// let range = [-120, 120];
+	let range = [0, 360];
 	let innerRadius = 50;
 	let outerRadius = 60;
 	let cornerRadius = 5;
 	let padAngle = 0;
 	let padRadius = 0;
+
+	let spring = true;
 
 	const labelOptions = [
 		{ name: 'None', value: undefined },
@@ -61,7 +67,11 @@ title: ['Primatives', 'Arc']
 		<Button icon={mdiChevronRight} on:click={() => value += 1} class="ml-2" />
 	</Field>
 	<!--  -->
-	<Field label="Label" let:id>
+	<Field label="Use spring" let:id>
+		<Switch bind:checked={spring} {id} disabled />
+	</Field>
+	<!--  -->
+	<!-- <Field label="Label" let:id>
 		<Button icon={mdiChevronLeft} on:click={() => label = prev(labelOptions, label)} class="mr-2" />
 		<select bind:value={label} class="w-full outline-none appearance-none text-sm" {id}>
 			{#each labelOptions as option}
@@ -69,7 +79,7 @@ title: ['Primatives', 'Arc']
 			{/each}
 		</select>
 		<Button icon={mdiChevronRight} on:click={() => label = next(labelOptions, label)} class="ml-2" />
-	</Field>
+	</Field> -->
 	<!--  -->
 	<Field label="Domain Min" let:id>
 		<Button icon={mdiChevronLeft} on:click={() => domain[0] -= 1} class="mr-2" />
@@ -126,10 +136,124 @@ title: ['Primatives', 'Arc']
 	</Field> -->
 </div>
 
-## Arc
+## Playground
 
-<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} />
+<Preview>
+	<div class="h-[200px] p-4 border rounded">
+		<Chart>
+			<Svg>
+				<Group center>
+					<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} spring={spring} let:value let:boundingBox>
+						<Text
+							value={Math.round(value)}
+							textAnchor="middle"
+							verticalAnchor="middle"
+							style="font-size: 2.25em"
+							dy={8}
+						/>
+					</Arc>
+				</Group>
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
 
 ## Spring
 
-<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {label} {padAngle} spring />
+<Preview>
+	<div class="h-[200px] p-4 border rounded">
+		<Chart>
+			<Svg>
+				<Group center>
+					<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} spring let:value>
+						<Text
+							value={Math.round(value)}
+							textAnchor="middle"
+							verticalAnchor="middle"
+							style="font-size: 2.25em"
+							dy={8}
+						/>
+					</Arc>
+				</Group>
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Partial
+
+<Preview>
+	<div class="h-[200px] p-4 border rounded">
+		<Chart>
+			<Svg>
+				<Group center>
+					<Arc {value} {domain} range={[-120, 120]} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} spring let:value>
+						<Text
+							value={Math.round(value)}
+							textAnchor="middle"
+							verticalAnchor="middle"
+							style="font-size: 2.25em"
+						/>
+					</Arc>
+				</Group>
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+<!-- {#if label === 'svg-center'}
+	<text dy={16}>
+		{Math.round($tweened_value)}
+	</text>
+{/if} -->
+
+<!-- {#if label === 'arc-center'}
+	<text x={labelArcCenterOffset.x} y={labelArcCenterOffset.y} dy={16}>
+		{Math.round($tweened_value)}
+	</text>
+{/if} -->
+
+<!-- {#if label === 'arc-bottom'}
+	<text x={labelArcBottomOffset.x} y={labelArcBottomOffset.y} dy={0}>
+		{Math.round($tweened_value)}
+	</text>
+{/if} -->
+
+<!-- {#if label === 'arc-centroid'}
+	<text x={trackArcCentroid[0]} y={trackArcCentroid[1]} dy={16}>
+		{Math.round($tweened_value)}
+	</text>
+{/if} -->
+
+<Preview>
+	<div class="h-[200px] p-4 border rounded">
+		<Chart>
+			<Svg>
+				<Group center>
+					<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} let:boundingBox>
+						<!-- svg center -->
+						<!-- <Text
+							value={Math.round(value)}
+							textAnchor="middle"
+							verticalAnchor="middle"
+							style="font-size: 2.25em"
+							dy={8}
+						/> -->
+						<!-- arc center -->
+						<Text
+							value={Math.round(value)}
+							textAnchor="middle"
+							verticalAnchor="middle"
+							style="font-size: 2.25em"
+							x={outerRadius - boundingBox.width / 2}
+							y={(outerRadius - boundingBox.height / 2) * -1}
+							dy={8}
+						/>
+						<!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-4xl" capHeight="1.5rem" /> -->
+						<!-- <Text {value} textAnchor="middle" verticalAnchor="middle" style="font-size: 4.5em" capHeight="3.1em" /> -->
+					</Arc>
+				</Group>
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
