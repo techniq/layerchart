@@ -21,7 +21,7 @@
 <div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Data-driven</div>
 <NavItem text="Area" path="/components/Area" class="pl-6 py-2" />
 <NavItem text="AreaStack" path="/components/AreaStack" class="pl-6 py-2" />
-<NavItem text="Bar" path="/components/Bar" class="pl-6 py-2" />
+<NavItem text="Bars" path="/components/Bars" class="pl-6 py-2" />
 <NavItem text="ConnectedPoints" path="/components/ConnectedPoints" class="pl-6 py-2" />
 <NavItem text="Labels" path="/components/Labels" class="pl-6 py-2" />
 <NavItem text="Points" path="/components/Points" class="pl-6 py-2" />
@@ -38,7 +38,7 @@
 <div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Chart Examples</div>
 <NavItem text="Area" path="/examples/Area" class="pl-6 py-2" />
 <NavItem text="AreaStack" path="/examples/AreaStack" class="pl-6 py-2" />
-<NavItem text="Bar" path="/examples/Bar" class="pl-6 py-2" />
+<NavItem text="Bars" path="/examples/Bars" class="pl-6 py-2" />
 <NavItem text="ClevelandDotPlot" path="/examples/ClevelandDotPlot" class="pl-6 py-2" />
 <NavItem text="Scatter" path="/examples/Scatter" class="pl-6 py-2" />
 <NavItem text="Threshold" path="/examples/Threshold" class="pl-6 py-2" />

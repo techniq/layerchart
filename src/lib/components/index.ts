@@ -2,7 +2,7 @@ export { default as Area } from './Area.svelte';
 export { default as AreaStack } from './AreaStack.svelte';
 export { default as AxisX } from './AxisX.svelte';
 export { default as AxisY } from './AxisY.svelte';
-export { default as Bar } from './Bar.svelte';
+export { default as Bars } from './Bars.svelte';
 export { default as Baseline } from './Baseline.svelte';
 export { default as Chart } from './Chart.svelte';
 export { default as Circle } from './Circle.svelte';

@@ -1,5 +1,5 @@
 ---
-title: ['Chart', 'Bar']
+title: ['Chart', 'Bars']
 ---
 
 <script lang="ts">
@@ -14,7 +14,7 @@ title: ['Chart', 'Bar']
 	import AxisX from '$lib/components/AxisX.svelte';
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
-	import Bar from '$lib/components/Bar.svelte';
+	import Bars from '$lib/components/Bars.svelte';
 	import HighlightBar from '$lib/components/HighlightBar.svelte';
 	import Labels from '$lib/components/Labels.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
@@ -54,7 +54,7 @@ title: ['Chart', 'Bar']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Bar radius={4} strokeWidth={1} />
+				<Bars radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
 	</div>
@@ -77,7 +77,7 @@ title: ['Chart', 'Bar']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Bar radius={4} strokeWidth={1} />
+				<Bars radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
 	</div>
@@ -101,7 +101,7 @@ title: ['Chart', 'Bar']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Bar radius={4} strokeWidth={1} />
+				<Bars radius={4} strokeWidth={1} />
 			</Svg>
 			<Tooltip let:data>
 				<div class="tooltip">
@@ -141,7 +141,7 @@ title: ['Chart', 'Bar']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Bar radius={4} strokeWidth={1} />
+				<Bars radius={4} strokeWidth={1} />
 				<Labels />
 			</Svg>
 		</Chart>
@@ -169,8 +169,8 @@ title: ['Chart', 'Bar']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Bar y="baseline" radius={4} strokeWidth={1} color="#ddd" />
-				<Bar y="value" radius={4} strokeWidth={1} widthOffset={-16} />
+				<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
+				<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
 			</Svg>
 			<Tooltip let:data>
 				<div class="tooltip">
@@ -221,7 +221,7 @@ title: ['Chart', 'Bar']
 				<AxisY gridlines />
 				<AxisX />
 				<Baseline x y />
-				<Bar groupBy="fruit" getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+				<Bars groupBy="fruit" getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
 	</div>
@@ -251,7 +251,7 @@ title: ['Chart', 'Bar']
 				<AxisY gridlines />
 				<AxisX />
 				<Baseline x y />
-				<Bar getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+				<Bars getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
 	</div>
@@ -281,7 +281,7 @@ title: ['Chart', 'Bar']
 				<AxisY gridlines formatTick={d => formatNumberAsStyle(d, 'percentRound')} />
 				<AxisX />
 				<Baseline x y />
-				<Bar getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+				<Bars getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
 	</div>
@@ -311,7 +311,7 @@ title: ['Chart', 'Bar']
 				<AxisY gridlines />
 				<AxisX />
 				<Baseline x y />
-				<Bar getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+				<Bars getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
 	</div>
@@ -342,7 +342,7 @@ title: ['Chart', 'Bar']
 				<AxisY gridlines />
 				<AxisX />
 				<Baseline x y />
-				<Bar groupBy="basket" getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+				<Bars groupBy="basket" getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
 	</div>

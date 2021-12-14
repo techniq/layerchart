@@ -39,9 +39,9 @@ title: LayerChart
 - Area
   - Easily add line (same curve, color, etc)
 - AreaStack
-- Bar
+- Bars
 - ConnectedPoints
-- Label
+- Labels
 - Points
 - Threshold
   - Calculates line, area, and clip path data to show colored areas above/below
