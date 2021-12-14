@@ -21,6 +21,8 @@
 	export let opacity = 0.3;
 	export let line: boolean | any = false;
 
+	// TODO: Add tweened prop.  See Path
+
 	$: path = d3Area()
 		.x(x ?? $xGet)
 		.y0(y0 ?? $yRange[0])
