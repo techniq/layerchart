@@ -2,17 +2,12 @@ const colors = require('tailwindcss/colors');
 const plugin = require('tailwindcss/plugin');
 
 module.exports = {
-	mode: 'jit',
-	purge: ['./src/**/*.{html,svelte,md}', './node_modules/svelte-ux/**/*.{svelte,js,md}'],
-	darkMode: false, // or 'media' or 'class'
+	content: ['./src/**/*.{html,svelte,md}', './node_modules/svelte-ux/**/*.{svelte,js,md}'],
 	theme: {
 		extend: {
 			colors: {
 				'color-var': 'var(--color)',
-				accent: colors.blue,
-				sky: colors.sky,
-				orange: colors.orange,
-				gray: colors.gray
+				accent: colors.blue
 			}
 		}
 	},
