@@ -49,9 +49,13 @@ title: ['Charts', 'Pie']
 			{data}
 			x="value"
 			xRange={[-90, 90]}
+			r={d => d.date}
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
 		>
 			<Svg>
-				<Pie color="var(--color-blue-500)" />
+				<Pie />
 			</Svg>
 		</Chart>
 	</div>
@@ -61,7 +65,14 @@ title: ['Charts', 'Pie']
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart {data} x="value">
+		<Chart 
+			{data}
+			x="value"
+			r={d => d.date}
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
+		>
 			<Svg>
 				<Pie range={[-90, 90]} color="var(--color-blue-500)" />
 			</Svg>
@@ -165,7 +176,7 @@ title: ['Charts', 'Pie']
 	</div>
 </Preview>
 
-## Multiple (zScale)
+## Tweened
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -176,11 +187,9 @@ title: ['Charts', 'Pie']
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
-			z={[data, data2]}
 		>
 			<Svg>
-				<Pie innerRadius={100} />
-				<Pie outerRadius={90} />
+				<Pie tweened />
 			</Svg>
 		</Chart>
 	</div>

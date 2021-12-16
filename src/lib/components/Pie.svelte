@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
+	import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 	import { pie as d3pie } from 'd3-shape';
 
 	import Arc from './Arc.svelte';
 	import Group from './Group.svelte';
 	import { degreesToRadians } from '$lib/utils/math';
+	import { getMotionStore } from '$lib/stores/motionStore';
 
 	/*
     TODO:
@@ -52,11 +54,18 @@
 
 	export let color: string | ((obj: { value: any; item: any; index: number }) => string) = 'black';
 
+	export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
+	export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
+
 	const { data: contextData, x, y, xRange, rGet, config } = getContext('LayerCake');
+
+	$: resolved_endAngle = endAngle ?? degreesToRadians($config.xRange ? $xRange[1] : range[1]);
+	let tweened_endAngle = getMotionStore(0, { spring, tweened });
+	$: tweened_endAngle.set(resolved_endAngle);
 
 	$: pie = d3pie()
 		.startAngle(startAngle ?? degreesToRadians($config.xRange ? $xRange[0] : range[0]))
-		.endAngle(endAngle ?? degreesToRadians($config.xRange ? $xRange[1] : range[1]))
+		.endAngle($tweened_endAngle)
 		.padAngle(padAngle)
 		.value($x);
 
