@@ -41,5 +41,6 @@
 <NavItem text="AreaStack" path="/examples/AreaStack" class="pl-6 py-2" />
 <NavItem text="Bars" path="/examples/Bars" class="pl-6 py-2" />
 <NavItem text="ClevelandDotPlot" path="/examples/ClevelandDotPlot" class="pl-6 py-2" />
+<NavItem text="Pie" path="/examples/Pie" class="pl-6 py-2" />
 <NavItem text="Scatter" path="/examples/Scatter" class="pl-6 py-2" />
 <NavItem text="Threshold" path="/examples/Threshold" class="pl-6 py-2" />

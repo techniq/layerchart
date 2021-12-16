@@ -142,22 +142,41 @@ title: ['Primatives', 'Arc']
 <Preview>
 	<div class="h-[200px] p-4 border rounded">
 		<Chart>
-			<Svg>
-				<LinearGradient id="arcGradient" from="hsl(60 100% 50%)" to="hsl(140 100% 50%)" vertical />
-				<Group center>
-					{#key spring}
-						<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} spring={spring} let:value let:boundingBox fill="url(#arcGradient)" track={{ fill: 'hsl(0 0% 0% / 6% )' }}>
-							<Text
-								value={Math.round(value)}
-								textAnchor="middle"
-								verticalAnchor="middle"
-								style="font-size: 2.25em"
-								dy={8}
-							/>
-						</Arc>
-					{/key}
-				</Group>
-			</Svg>
+<Svg>
+      <LinearGradient
+        id="arcGradient"
+        from="hsl(60 100% 50%)"
+        to="hsl(140 100% 50%)"
+        vertical
+      />
+      <Group center>
+        {#key spring}
+          <Arc
+            {value}
+            {domain}
+            {range}
+            {innerRadius}
+            {outerRadius}
+            {cornerRadius}
+            {padAngle}
+            {label}
+            {spring}
+            let:value
+            let:boundingBox
+            fill="url(#arcGradient)"
+            track={{ fill: 'hsl(0 0% 0% / 6% )' }}
+          >
+            <Text
+              value={Math.round(value)}
+              textAnchor="middle"
+              verticalAnchor="middle"
+              style="font-size: 2.25em"
+              dy={8}
+            />
+          </Arc>
+        {/key}
+      </Group>
+    </Svg>
 		</Chart>
 	</div>
 </Preview>

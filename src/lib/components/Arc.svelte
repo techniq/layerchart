@@ -22,6 +22,7 @@
 	// https://svelte.dev/repl/09711e43a1264ba18945d7db7cab9335?version=3.38.2
 	// https://codepen.io/simeydotme/pen/rrOEmO/
 
+	import { getContext } from 'svelte';
 	import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 	import { arc as d3arc } from 'd3-shape';
 	import { scaleLinear } from 'd3-scale';
@@ -36,35 +37,56 @@
 	$: tweened_value.set(value);
 
 	export let domain = [0, 100];
+
+	/**
+	 * Range [min,max] in degrees.  See also startAngle/endAngle
+	 */
 	export let range = [0, 360]; // degrees
-	export let innerRadius = 50;
-	export let outerRadius = 60;
-	export let cornerRadius = 10;
+
+	/**
+	 * Start angle in radians
+	 */
+	export let startAngle: number = undefined;
+
+	/**
+	 * End angle in radians
+	 */
+	export let endAngle: number = undefined;
+
+	/**
+	 * Define innerRadius.  Defaults to yRange min
+	 */
+	export let innerRadius = undefined;
+
+	/**
+	 * Define innerRadius.  Defaults to yRange max/2 (ie. chart height / 2)
+	 */
+	export let outerRadius = undefined;
+
+	export let cornerRadius = 0;
 	export let padAngle = 0;
-	export let padRadius = 0;
+	// export let padRadius = 0;
 
 	export let track: boolean | svelte.JSX.SVGProps<SVGPathElement> = false;
 
+	const { yRange } = getContext('LayerCake');
+
 	$: scale = scaleLinear().domain(domain).range(range);
 
-	$: startAngle = degreesToRadians(range[0]);
-	$: endAngle = degreesToRadians(range[1]);
-	$: valueAngle = degreesToRadians(scale($tweened_value));
-
 	$: arc = d3arc()
-		.innerRadius(innerRadius)
-		.outerRadius(outerRadius)
-		.startAngle(startAngle)
-		.endAngle(valueAngle)
+		.innerRadius(innerRadius ?? $yRange[1])
+		.outerRadius(outerRadius ?? $yRange[0] / 2)
+		.startAngle(startAngle ?? degreesToRadians(range[0]))
+		.endAngle(endAngle ?? degreesToRadians(scale($tweened_value)))
 		.cornerRadius(cornerRadius)
 		.padAngle(padAngle);
 	// .padRadius(padRadius);
 
 	$: trackArc = d3arc()
-		.innerRadius(innerRadius)
-		.outerRadius(outerRadius)
-		.startAngle(startAngle)
-		.endAngle(endAngle)
+		.innerRadius(innerRadius ?? $yRange[1])
+		.outerRadius(outerRadius ?? $yRange[0] / 2)
+		.startAngle(startAngle ?? degreesToRadians(range[0]))
+		.endAngle(endAngle ?? degreesToRadians(range[1]))
 		.cornerRadius(cornerRadius)
 		.padAngle(padAngle);
 	// .padRadius(padRadius);

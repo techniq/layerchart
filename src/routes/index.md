@@ -74,3 +74,6 @@ title: LayerChart
 - Use `r` scale for color, but allow `color` prop directly on item (with access to item, value, index, etc)
 - Use `x`, `y`, and `z` scales for dimensions
   - `z` for size (depth) of circles, etc
+- Read data from context, or override with prop
+  - See Path, Area, Threshold
+  - Add to Pie, Bars, etc
