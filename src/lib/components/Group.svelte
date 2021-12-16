@@ -4,17 +4,17 @@
 	/**
 	 * Translate x
 	 */
-	export let x: number;
+	export let x: number = undefined;
 
 	/**
 	 * Translate x
 	 */
-	export let y: number;
+	export let y: number = undefined;
 
 	/**
 	 * Center within chart
 	 */
-	export let center: boolean;
+	export let center: boolean = false;
 
 	const { width, height } = getContext('LayerCake');
 
