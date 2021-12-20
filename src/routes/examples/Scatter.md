@@ -104,8 +104,7 @@ title: ['Charts', 'Scatter']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Points fill="var(--color-blue-500)" stroke="var(--color-blue-800)" />
-				<Labels formatStyle="integer" />
+				<Labels formatStyle="integer" verticalAnchor="bottom" />
 			</Svg>
 		</Chart>
 	</div>
