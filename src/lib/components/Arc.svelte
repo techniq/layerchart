@@ -54,12 +54,16 @@
 	export let endAngle: number = undefined;
 
 	/**
-	 * Define innerRadius.  Defaults to yRange min
+	 * Define innerRadius.
+	 *   value >= 1: discrete value
+	 *   value >  0: percent of `outerRadius`
+	 *   value <  0: offset of `outerRadius`
+	 *   default: yRange min
 	 */
 	export let innerRadius = undefined;
 
 	/**
-	 * Define innerRadius.  Defaults to yRange max/2 (ie. chart height / 2)
+	 * Define outerRadius.  Defaults to yRange max/2 (ie. chart height / 2)
 	 */
 	export let outerRadius = undefined;
 
@@ -73,9 +77,19 @@
 
 	$: scale = scaleLinear().domain(domain).range(range);
 
+	$: _outerRadius = outerRadius ?? $yRange[0] / 2;
+	$: _innerRadius =
+		(innerRadius > 1
+			? innerRadius
+			: innerRadius > 0
+			? _outerRadius * innerRadius
+			: innerRadius < 0
+			? _outerRadius - innerRadius
+			: innerRadius) ?? $yRange[1];
+
 	$: arc = d3arc()
-		.innerRadius(innerRadius ?? $yRange[1])
-		.outerRadius(outerRadius ?? $yRange[0] / 2)
+		.innerRadius(_innerRadius)
+		.outerRadius(_outerRadius)
 		.startAngle(startAngle ?? degreesToRadians(range[0]))
 		.endAngle(endAngle ?? degreesToRadians(scale($tweened_value)))
 		.cornerRadius(cornerRadius)
@@ -83,8 +97,8 @@
 	// .padRadius(padRadius);
 
 	$: trackArc = d3arc()
-		.innerRadius(innerRadius ?? $yRange[1])
-		.outerRadius(outerRadius ?? $yRange[0] / 2)
+		.innerRadius(_innerRadius)
+		.outerRadius(_outerRadius)
 		.startAngle(startAngle ?? degreesToRadians(range[0]))
 		.endAngle(endAngle ?? degreesToRadians(range[1]))
 		.cornerRadius(cornerRadius)

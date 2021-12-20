@@ -120,6 +120,8 @@ title: ['Charts', 'Pie']
 
 ## Inner radius
 
+### If value >= 1, value will be treated as discrete
+
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
@@ -132,6 +134,44 @@ title: ['Charts', 'Pie']
 		>
 			<Svg>
 				<Pie innerRadius={100} />
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+### If value >= 0 and less than 1, value will be treated as a percentage of outerRadius
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="value"
+			r={d => d.date}
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
+		>
+			<Svg>
+				<Pie innerRadius={.9} />
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+### If value less than 0, value will be treated as a offset of outerRadius
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="value"
+			r={d => d.date}
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
+		>
+			<Svg>
+				<Pie innerRadius={-30} />
 			</Svg>
 		</Chart>
 	</div>
