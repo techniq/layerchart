@@ -20,7 +20,8 @@ function codePreview() {
 
 			const formattedCode = format(code, {
 				parser: 'svelte',
-				plugins: [typescriptPlugin, sveltePlugin]
+				plugins: [typescriptPlugin, sveltePlugin],
+				printWidth: 100
 			});
 			const highlightedCode = Prism.highlight(formattedCode, Prism.languages.svelte, 'svelte');
 			node.value = `<Preview code="{\`${highlightedCode}\`}" language="svelte">${code}</Preview>`;

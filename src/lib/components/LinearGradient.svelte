@@ -1,8 +1,9 @@
 <script lang="ts">
 	export let id: string;
 
-	export let from: string;
-	export let to: string;
+	export let from: string | boolean;
+	export let via: string; // TODO: Currently --tw-gradient-via is not the color but the full stops
+	export let to: string | boolean;
 
 	export let vertical = false;
 	export let x1 = '0%';
@@ -24,8 +25,18 @@
 		{...$$restProps}
 	>
 		<slot>
-			<stop offset="0%" stop-color={from} />
-			<stop offset="100%" stop-color={to} />
+			{#if from}
+				<stop offset="0%" stop-color={from === true ? 'var(--tw-gradient-from)' : from} />
+			{/if}
+
+			{#if via}
+				<!-- <stop offset="50%" stop-color={via === true ? 'var(--tw-gradient-via)' : via} /> -->
+				<stop offset="50%" stop-color={via} />
+			{/if}
+
+			{#if to}
+				<stop offset="100%" stop-color={to === true ? 'var(--tw-gradient-to)' : to} />
+			{/if}
 		</slot>
 	</linearGradient>
 </defs>
