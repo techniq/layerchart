@@ -15,6 +15,7 @@ module.exports = {
 		extend: {}
 	},
 	plugins: [
+		require('@tailwindcss/typography'),
 		require('tailwindcss-elevation')(['responsive']),
 
 		// Expose color palette as CSS variables (--color-xxx-yyy) - https://gist.github.com/Merott/d2a19b32db07565e94f10d13d11a8574

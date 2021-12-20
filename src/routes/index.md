@@ -2,6 +2,9 @@
 title: LayerChart
 ---
 
+<div class="bg-white p-2 m-2 rounded shadow-lg border">
+<div class="prose">
+
 # Welcome to LayerChart
 
 ## Common
@@ -77,3 +80,6 @@ title: LayerChart
 - Read data from context, or override with prop
   - See Path, Area, Threshold
   - Add to Pie, Bars, etc
+
+</div>
+</div>
