@@ -42,7 +42,7 @@ title: ['Common', 'LinearGradient']
     </div>
 </Preview>
 
-## Tailwind
+## Tailwind colors
 
 <Preview>
 	<div class="h-[400px] p-4 border rounded">

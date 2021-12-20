@@ -21,7 +21,6 @@ title: ['Charts', 'Scatter']
 	import Preview from '$lib/docs/Preview.svelte';
 	import { createDateSeries } from '$lib/utils/genData';
 
-
 	const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
 </script>
 
@@ -42,7 +41,7 @@ title: ['Charts', 'Scatter']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Points fill="var(--color-blue-500)" stroke="var(--color-blue-800)"  />
+				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
 		</Chart>
 	</div>
@@ -65,7 +64,7 @@ title: ['Charts', 'Scatter']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Points fill="var(--color-blue-500)" stroke="var(--color-blue-800)" />
+				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
 			<Tooltip let:data>
 				<div class="tooltip">
@@ -104,6 +103,7 @@ title: ['Charts', 'Scatter']
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
+				<Points class="fill-blue-500 stroke-blue-800" />
 				<Labels formatStyle="integer" verticalAnchor="bottom" />
 			</Svg>
 		</Chart>

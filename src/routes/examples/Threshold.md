@@ -64,7 +64,7 @@ title: ['Charts', 'Threshold']
 						<Area
 							pathData={areaPathData}
 							{clipPath}
-							color="var(--color-green-500)"
+							class="fill-green-500"
 						/>
 					</g>
 					<g
@@ -82,7 +82,7 @@ title: ['Charts', 'Threshold']
 						<Area
 							pathData={areaPathData}
 							{clipPath}
-							color="var(--color-red-500)"
+							class="fill-red-500"
 						/>
 					</g>
 				</Threshold>
@@ -119,7 +119,7 @@ title: ['Charts', 'Threshold']
 						<Area
 							pathData={areaPathData}
 							{clipPath}
-							color="var(--color-green-500)"
+							class="fill-green-500"
 						/>
 					</g>
 					<g
@@ -137,7 +137,7 @@ title: ['Charts', 'Threshold']
 						<Area
 							pathData={areaPathData}
 							{clipPath}
-							color="var(--color-red-500)"
+							class="fill-red-500"
 						/>
 					</g>
 				</Threshold>
@@ -196,7 +196,7 @@ title: ['Charts', 'Threshold']
 						<Area
 							pathData={areaPathData}
 							{clipPath}
-							color="var(--color-green-500)"
+							class="fill-green-500"
 						/>
 					</g>
 					<g
@@ -214,7 +214,7 @@ title: ['Charts', 'Threshold']
 						<Area
 							pathData={areaPathData}
 							{clipPath}
-							color="var(--color-red-500)"
+							class="fill-red-500"
 						/>
 					</g>
 				</Threshold>

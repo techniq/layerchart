@@ -75,8 +75,7 @@ title: ['Chart', 'Cleveland Dot Plot']
 				/>
 				<Points
 					offsetY={(value, { yScale }) => get(yScale).bandwidth() / 2}
-					fill="var(--color-blue-500)"
-					stroke="var(--color-blue-800)"
+					class="fill-blue-500 stroke-blue-800"
 				/>
 			</Svg>
 		</Chart>
