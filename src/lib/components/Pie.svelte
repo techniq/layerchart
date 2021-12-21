@@ -13,12 +13,7 @@
     - [ ] Offset (always, on hover)
     - [ ] Labels
     - [ ] Multiple nested circles (zScale, or take in data to override context data).  See Path/Area/Threshold
-    - [ ] Hover events / change radii
-    - [ ] innerRadius as offset / ratio of outerRadius
-      - 10% of outerRadius: maybe if it's less than 1 it's a percentage of outerRadius
-        - innerRadius={0.5}
-      - `outerRadius - 30`: maybe if value is negative it's computed
-        - innerRadius={-30}
+    - [ ] Hover events / change innerRadius / outerRadius, etc
   */
 
 	export let data: any = undefined; // TODO: Update Type

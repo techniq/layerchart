@@ -1,11 +1,6 @@
 <script lang="ts">
 	/*
 		TODO:
-		- [ ] Chart usage
-		- [x] Track on/off and pass props
-		- [x] Text configuration / slot?
-		- [ ] Pie usage (second dimension?)
-		- [x] style / class (gradient, etc)
 		- [ ] Allow spring/tweened to be reactive (but ignore value)
 	*/
 	// https://caniuse.com/#feat=css-conic-gradients
