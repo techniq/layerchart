@@ -1,4 +1,8 @@
 <script lang="ts">
+	/*
+		TODO:
+		- [ ] Show path progressively show / animated in on load.  Also fix sliding in from left side (at last in from bottom)
+	*/
 	import { getContext } from 'svelte';
 	import type { tweened as tweenedStore } from 'svelte/motion';
 	import { line as d3Line } from 'd3-shape';
