@@ -56,6 +56,11 @@
 	export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
 	export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
+	/**
+	 * Offset all arcs from center
+	 */
+	export let offset = 0;
+
 	const { data: contextData, x, y, xRange, rGet, config } = getContext('LayerCake');
 
 	$: resolved_endAngle = endAngle ?? degreesToRadians($config.xRange ? $xRange[1] : range[1]);
@@ -83,15 +88,18 @@
 </script>
 
 <Group center>
-	{#each arcs as arc, index}
-		<Arc
-			startAngle={arc.startAngle}
-			endAngle={arc.endAngle}
-			padAngle={arc.padAngle}
-			{innerRadius}
-			{outerRadius}
-			{cornerRadius}
-			fill={getColor(arc.data, index)}
-		/>
-	{/each}
+	<slot {arcs}>
+		{#each arcs as arc, index}
+			<Arc
+				startAngle={arc.startAngle}
+				endAngle={arc.endAngle}
+				padAngle={arc.padAngle}
+				{innerRadius}
+				{outerRadius}
+				{cornerRadius}
+				{offset}
+				fill={getColor(arc.data, index)}
+			/>
+		{/each}
+	</slot>
 </Group>

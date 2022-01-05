@@ -9,6 +9,7 @@ title: ['Charts', 'Pie']
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
+	import Arc from '$lib/components/Arc.svelte';
 	import Pie from '$lib/components/Pie.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
@@ -230,6 +231,54 @@ title: ['Charts', 'Pie']
 		>
 			<Svg>
 				<Pie tweened />
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Offset
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="value"
+			r={d => d.date}
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
+		>
+			<Svg>
+				<Pie offset={4} />
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## default slot / render each `<Arc>`
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="value"
+			r={d => d.date}
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
+		>
+			<Svg>
+				<Pie let:arcs>
+					{#each arcs as arc, index}
+						<Arc
+							startAngle={arc.startAngle}
+							endAngle={arc.endAngle}
+							padAngle={arc.padAngle}
+							fill={keyColors[index]}
+							offset={index === 0 ? 16 : 0}
+						/>
+					{/each}
+				</Pie>
 			</Svg>
 		</Chart>
 	</div>

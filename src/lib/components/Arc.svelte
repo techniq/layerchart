@@ -122,12 +122,20 @@
 		y: (outerRadius - boundingBox.height) * -1
 	};
 	// $: console.log(labelArcBottomOffset)
+
+	/**
+	 * Offset arc from center
+	 */
+	export let offset = 0;
+	$: angle = (startAngle + endAngle) / 2;
+	$: xOffset = Math.sin(angle) * offset;
+	$: yOffset = -Math.cos(angle) * offset;
 </script>
 
 {#if track}
 	<path d={trackArc()} class="track" bind:this={trackArcEl} {...track} />
 {/if}
 
-<path d={arc()} {...$$restProps} />
+<path d={arc()} transform="translate({xOffset}, {yOffset})" {...$$restProps} />
 
 <slot value={$tweened_value} centroid={trackArcCentroid} {boundingBox} />
