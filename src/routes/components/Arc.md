@@ -6,11 +6,14 @@ title: ['Primatives', 'Arc']
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
 	import {
+		ApiDocs,
 		Button,
 		Field,
 		SelectField,
 		Switch
 	} from 'svelte-ux';
+
+	import api from '$lib/components/Arc.svelte?raw&sveld';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Arc from '$lib/components/Arc.svelte';
@@ -275,3 +278,7 @@ title: ['Primatives', 'Arc']
 		</Chart>
 	</div>
 </Preview>
+
+# API
+
+<ApiDocs {api} />

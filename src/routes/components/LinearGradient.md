@@ -3,6 +3,10 @@ title: ['Common', 'LinearGradient']
 ---
 
 <script lang="ts">
+	import { ApiDocs } from 'svelte-ux';
+
+	import api from '$lib/components/LinearGradient.svelte?raw&sveld';
+
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 
 	import Arc from '$lib/components/Arc.svelte';
@@ -10,6 +14,8 @@ title: ['Common', 'LinearGradient']
 
 	import Preview from '$lib/docs/Preview.svelte';
 </script>
+
+# Examples
 
 ## Direction and custom colors
 
@@ -64,3 +70,7 @@ title: ['Common', 'LinearGradient']
 		</Chart>
 	</div>
 </Preview>
+
+# API
+
+<ApiDocs {api} />

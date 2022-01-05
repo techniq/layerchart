@@ -8,11 +8,14 @@ title: ['Primatives', 'Area']
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
 	import {
+		ApiDocs,
 		Button,
 		Field,
 		SelectField,
 		Switch
 	} from 'svelte-ux';
+
+	import api from '$lib/components/Area.svelte?raw&sveld';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Area from '$lib/components/Area.svelte';
@@ -135,3 +138,7 @@ title: ['Primatives', 'Area']
 		</Chart>
 	</div>
 </Preview>
+
+# API
+
+<ApiDocs {api} />

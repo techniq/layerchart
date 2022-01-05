@@ -1,7 +1,7 @@
 <script lang="ts">
 	import 'prism-themes/themes/prism-vsc-dark-plus.css';
 
-	import { AppLayout } from 'svelte-ux';
+	import { AppBar, AppLayout } from 'svelte-ux';
 	import NavMenu from './_NavMenu.svelte';
 </script>
 
@@ -10,7 +10,11 @@
 		<NavMenu />
 	</nav>
 
-	<slot />
+	<AppBar title="LayerChart" />
+
+	<main class="p-4 scroll-smooth">
+		<slot />
+	</main>
 </AppLayout>
 
 <style lang="postcss">

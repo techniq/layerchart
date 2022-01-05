@@ -3,6 +3,10 @@ title: ['Components', 'Text']
 ---
 
 <script>
+	import { ApiDocs } from 'svelte-ux';
+
+	import api from '$lib/components/Text.svelte?raw&sveld';
+
 	import Text from '$lib/components/Text.svelte';
 
 	let value = 'This is really long text';
@@ -121,3 +125,7 @@ title: ['Components', 'Text']
     </div>
 
 </div>
+
+# API
+
+<ApiDocs {api} />
