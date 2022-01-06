@@ -51,7 +51,7 @@ title: ['Primatives', 'Path']
 		.filter(key => !key.endsWith('Open') && !key.endsWith('Closed'))
 		.map(key => {
 			return {
-				name: key,
+				name: key.replace('curve', ''),
 				value: d3shapes[key]
 			}
 		})
