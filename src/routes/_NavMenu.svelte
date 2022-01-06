@@ -9,15 +9,16 @@
 <NavItem text="Chart" path="/components/Chart" class="pl-6 py-2" />
 <NavItem text="Axis" path="/components/Axis" class="pl-6 py-2" />
 <NavItem text="Baseline" path="/components/Baseline" class="pl-6 py-2" />
-<NavItem text="LinearGradient" path="/components/LinearGradient" class="pl-6 py-2" />
 
 <div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Primatives</div>
 <NavItem text="Arc" path="/components/Arc" class="pl-6 py-2" />
 <NavItem text="Area" path="/components/Area" class="pl-6 py-2" />
 <NavItem text="Circle" path="/components/Circle" class="pl-6 py-2" />
-<NavItem text="Rect" path="/components/Rect" class="pl-6 py-2" />
 <NavItem text="Line" path="/components/Line" class="pl-6 py-2" />
+<NavItem text="LinearGradient" path="/components/LinearGradient" class="pl-6 py-2" />
 <NavItem text="Path" path="/components/Path" class="pl-6 py-2" />
+<NavItem text="Pattern" path="/components/Pattern" class="pl-6 py-2" />
+<NavItem text="Rect" path="/components/Rect" class="pl-6 py-2" />
 <NavItem text="Text" path="/components/Text" class="pl-6 py-2" />
 
 <div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Data-driven</div>
