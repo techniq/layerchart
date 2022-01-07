@@ -40,7 +40,11 @@ title: ['Common', 'Pattern']
 				<Pattern id="line-pattern-5" width={8} height={8}>
 					<line x2={8} y2={8} stroke="black" />
 				</Pattern>
-				{#each { length: 5 } as _, i}
+				<Pattern id="line-pattern-6" width={8} height={8}>
+					<line x1={8} y2={8} stroke="black" />
+					<line x2={8} y2={8} stroke="black" />
+				</Pattern>
+				{#each { length: 6 } as _, i}
 					<rect x={0 + (i * 120)} y={0} width={100} height={300} rx={8} fill="url(#line-pattern-{i + 1})" stroke="black" />
 				{/each}
     		</Svg>
