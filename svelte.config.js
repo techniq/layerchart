@@ -17,7 +17,7 @@ const config = {
 			plugins: [sveld()],
 			optimizeDeps: {
 				// Fixes: `Missing "./package.json" export in "d3-scale" package`
-				include: ['d3-array', 'd3-format', 'd3-scale', 'd3-shape', 'd3-time']
+				// include: ['d3-array', 'd3-format', 'd3-scale', 'd3-shape', 'd3-time']
 			}
 		}
 	}
