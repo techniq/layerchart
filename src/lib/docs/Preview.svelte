@@ -15,12 +15,8 @@
 	</div>
 
 	{#if displayCode}
-		<pre
-			class="language-{language} rounded"
-			style="margin: 0">
-		<code class="language-{language}">
-			{@html displayCode}
-		</code>
-	</pre>
+		<pre class="language-{language} rounded" style="margin: 0; white-space: normal;">
+			<code class="language-{language}">{@html displayCode}</code>
+		</pre>
 	{/if}
 </div>
