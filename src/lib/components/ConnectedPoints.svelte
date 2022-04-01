@@ -8,20 +8,25 @@
 	import { getContext } from 'svelte';
 	import { extent } from 'd3-array';
 	import Line from './Line.svelte';
+	import { isScaleBand } from '../utils/scales';
 
 	const context = getContext('LayerCake') as any;
-	const { data, xGet, yGet, config } = context;
+	const { data, xGet, yGet, xScale, yScale, config } = context;
 
 	type Offset = number | ((value: number, context: any) => number);
 
-	export let offsetX: Offset = 0;
-	export let offsetY: Offset = 0;
+	export let offsetX: Offset = undefined;
+	export let offsetY: Offset = undefined;
 
-	function getOffset(value, offset: Offset) {
+	function getOffset(value, offset: Offset, scale: any) {
 		if (typeof offset === 'function') {
 			return offset(value, context);
-		} else {
+		} else if (offset != null) {
 			return offset;
+		} else if (isScaleBand(scale)) {
+			return scale.bandwidth() / 2;
+		} else {
+			return 0;
 		}
 	}
 
@@ -33,10 +38,10 @@
 			*/
 			const [xMin, xMax] = extent($xGet(d));
 			return {
-				x1: xMin + getOffset(xMin, offsetX),
-				y1: $yGet(d) + getOffset($yGet(d), offsetY),
-				x2: xMax + getOffset(xMax, offsetX),
-				y2: $yGet(d) + getOffset($yGet(d), offsetY)
+				x1: xMin + getOffset(xMin, offsetX, $xScale),
+				y1: $yGet(d) + getOffset($yGet(d), offsetY, $yScale),
+				x2: xMax + getOffset(xMax, offsetX, $xScale),
+				y2: $yGet(d) + getOffset($yGet(d), offsetY, $yScale)
 			};
 		} else if (Array.isArray($config.y)) {
 			/*
@@ -45,10 +50,10 @@
 			*/
 			const [yMin, yMax] = extent($yGet(d));
 			return {
-				x1: $xGet(d) + getOffset($xGet(d), offsetX),
-				y1: yMin + getOffset(yMin, offsetY),
-				x2: $xGet(d) + getOffset($xGet(d), offsetX),
-				y2: yMax + getOffset(yMax, offsetY)
+				x1: $xGet(d) + getOffset($xGet(d), offsetX, $xScale),
+				y1: yMin + getOffset(yMin, offsetY, $yScale),
+				x2: $xGet(d) + getOffset($xGet(d), offsetX, $xScale),
+				y2: yMax + getOffset(yMax, offsetY, $yScale)
 			};
 		} else {
 			/*
@@ -57,10 +62,10 @@
 			*/
 			// Not really supported (nothing to connect...)
 			return {
-				x1: $xGet(d) + getOffset($xGet(d), offsetX),
-				y1: $yGet(d) + getOffset($yGet(d), offsetY),
-				x2: $xGet(d) + getOffset($xGet(d), offsetX),
-				y2: $yGet(d) + getOffset($yGet(d), offsetY)
+				x1: $xGet(d) + getOffset($xGet(d), offsetX, $xScale),
+				y1: $yGet(d) + getOffset($yGet(d), offsetY, $yScale),
+				x2: $xGet(d) + getOffset($xGet(d), offsetX, $xScale),
+				y2: $yGet(d) + getOffset($yGet(d), offsetY, $yScale)
 			};
 		}
 	});

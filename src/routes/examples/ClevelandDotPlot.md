@@ -69,15 +69,8 @@ title: ['Chart', 'Cleveland Dot Plot']
 				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
 				<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
 				<Baseline y />
-				<!-- Set offsetY to center within scaleBand -->
-				<ConnectedPoints
-					offsetY={(value, { yScale }) => get(yScale).bandwidth() / 2}
-					stroke="#000"
-				/>
-				<Points
-					offsetY={(value, { yScale }) => get(yScale).bandwidth() / 2}
-					class="fill-blue-500 stroke-blue-800"
-				/>
+				<ConnectedPoints stroke="#000" />
+				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
 		</Chart>
 	</div>
