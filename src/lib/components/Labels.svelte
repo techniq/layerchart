@@ -97,7 +97,7 @@
 			textAnchor="middle"
 			verticalAnchor="middle"
 			value={getValue(item)}
-			style="font-size: 0.7em"
+			style="font-size: 0.7em; stroke: white; stroke-width: 2px;"
 			{...getDimensions(item)}
 			{...$$restProps}
 		/>

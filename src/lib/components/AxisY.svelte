@@ -53,7 +53,7 @@
 				dy={dyTick}
 				textAnchor="end"
 				verticalAnchor="middle"
-				style="font-size: 10px;"
+				style="font-size: 10px; stroke: white; stroke-width: 2px;"
 				value={format(tick, formatTick ?? $yScale.tickFormat?.())}
 			/>
 		</g>
