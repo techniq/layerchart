@@ -147,7 +147,9 @@
 	}
 </script>
 
-<svg x={dx} y={dy} style="overflow: visible">
+<!-- overflow: visible;   allow contents to be shown outside element -->
+<!-- paint-order: stroke; support stroke outlining text  -->
+<svg x={dx} y={dy} style="overflow: visible; paint-order: stroke;">
 	{#if isValidXOrY(x) && isValidXOrY(y)}
 		<text {x} {y} {transform} text-anchor={textAnchor} {...$$restProps}>
 			{#each wordsByLines as line, index}
