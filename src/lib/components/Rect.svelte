@@ -21,6 +21,7 @@
 	$: tweened_height.set(height);
 </script>
 
+<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <rect
 	x={$tweened_x}
 	y={$tweened_y}
@@ -28,4 +29,6 @@
 	height={$tweened_height}
 	{...$$restProps}
 	on:click
+	on:mouseover
+	on:mouseout
 />
