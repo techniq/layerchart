@@ -2,9 +2,9 @@ import { writable } from 'svelte/store';
 import { spring, tweened } from 'svelte/motion';
 
 /**
- * Convenient wrapper to get motion store based on properties, or fall back to basic writable() store
+ * Convenient wrapper to create a motion store (spring(), tweened()) based on properties, or fall back to basic writable() store
  */
-export function getMotionStore(
+export function createMotionStore(
 	value: any,
 	options: {
 		spring?: boolean | Parameters<typeof spring>[1];

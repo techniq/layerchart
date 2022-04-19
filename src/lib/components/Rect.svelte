@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 
-	import { getMotionStore } from '$lib/stores/motionStore';
+	import { createMotionStore } from '$lib/stores/motionStore';
 
 	export let x: number;
 	export let y: number;
@@ -10,10 +10,10 @@
 	export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
 	export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
-	let tweened_x = getMotionStore(x, { spring, tweened });
-	let tweened_y = getMotionStore(y, { spring, tweened });
-	let tweened_width = getMotionStore(width, { spring, tweened });
-	let tweened_height = getMotionStore(height, { spring, tweened });
+	let tweened_x = createMotionStore(x, { spring, tweened });
+	let tweened_y = createMotionStore(y, { spring, tweened });
+	let tweened_width = createMotionStore(width, { spring, tweened });
+	let tweened_height = createMotionStore(height, { spring, tweened });
 
 	$: tweened_x.set(x);
 	$: tweened_y.set(y);

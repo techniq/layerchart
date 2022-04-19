@@ -21,14 +21,14 @@
 	import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 	import { arc as d3arc } from 'd3-shape';
 	import { scaleLinear } from 'd3-scale';
-	import { getMotionStore } from '$lib/stores/motionStore';
+	import { createMotionStore } from '$lib/stores/motionStore';
 	import { degreesToRadians } from '$lib/utils/math';
 
 	export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
 	export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
 	export let value = 0;
-	let tweened_value = getMotionStore(value, { spring, tweened });
+	let tweened_value = createMotionStore(value, { spring, tweened });
 	$: tweened_value.set(value);
 
 	export let domain = [0, 100];

@@ -17,7 +17,7 @@
 	import { linkHorizontal, linkVertical, linkRadial } from 'd3-shape';
 	import { interpolatePath } from 'd3-interpolate-path';
 
-	import { getMotionStore } from '$lib/stores/motionStore';
+	import { createMotionStore } from '$lib/stores/motionStore';
 
 	// Properties to override what is used from context
 	export let data: any = undefined; // TODO: Update Type
@@ -33,7 +33,7 @@
 	export let width = undefined;
 
 	$: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
-	$: tweened_d = getMotionStore('', { tweened: tweenedOptions });
+	$: tweened_d = createMotionStore('', { tweened: tweenedOptions });
 	$: {
 		const link = linkHorizontal().source(source).target(target);
 

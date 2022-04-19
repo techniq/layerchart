@@ -10,7 +10,7 @@
 	// import { interpolateString } from 'd3-interpolate';
 	import { interpolatePath } from 'd3-interpolate-path';
 
-	import { getMotionStore } from '$lib/stores/motionStore';
+	import { createMotionStore } from '$lib/stores/motionStore';
 
 	const { data: contextData, xGet, yGet, zGet } = getContext('LayerCake');
 
@@ -27,7 +27,7 @@
 	export let width = undefined;
 
 	$: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
-	$: tweened_d = getMotionStore('', { tweened: tweenedOptions });
+	$: tweened_d = createMotionStore('', { tweened: tweenedOptions });
 	$: {
 		const path = d3Line()
 			.x(x ?? $xGet)
