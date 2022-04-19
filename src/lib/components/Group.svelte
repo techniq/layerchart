@@ -1,5 +1,10 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
+	import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
+
+	import { createMotionStore } from '$lib/stores/motionStore';
+
+	const { width, height } = getContext('LayerCake');
 
 	/**
 	 * Translate x
@@ -16,14 +21,19 @@
 	 */
 	export let center: boolean = false;
 
-	const { width, height } = getContext('LayerCake');
+	export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
+	export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
+
+	let tweened_x = createMotionStore(x, { spring, tweened });
+	let tweened_y = createMotionStore(y, { spring, tweened });
+
+	$: tweened_x.set(x);
+	$: tweened_y.set(y);
 
 	let transform = undefined;
-
 	$: if (x != null || y != null) {
-		transform = `translate(${x ?? 0}, ${y ?? 0})`;
+		transform = `translate(${$tweened_x ?? 0}, ${$tweened_y ?? 0})`;
 	}
-
 	$: if (center) {
 		transform = `translate(${$width / 2}, ${$height / 2})`;
 	}
