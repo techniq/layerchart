@@ -23,12 +23,10 @@ title: ['Charts', 'Area Stack']
 	import { createDateSeries } from '$lib/utils/genData';
 	import { flatten } from 'svelte-ux/utils/array';
 
-
 	const keys = ['apples', 'bananas', 'oranges']
 	const data = createDateSeries({ min: 50, max: 100, value: 'integer', keys });
 	const stackData = stack().keys(keys)(data);
-
-	console.log({ data, stackData })
+	// console.log({ data, stackData })
 </script>
 
 ## Basic

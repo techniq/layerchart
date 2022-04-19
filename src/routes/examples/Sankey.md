@@ -114,7 +114,6 @@ title: ['Charts', 'Sankey']
 						/>
 					{/each}
 					{#each nodes as node}
-						{console.log(node)}
 						{@const nodeWidth = node.x1 - node.x0}
 						{@const nodeHeight = node.y1 - node.y0}
 						<Group x={node.x0} y={node.y0} tweened>
