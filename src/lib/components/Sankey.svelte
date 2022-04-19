@@ -54,4 +54,4 @@
 	$: sankeyData = sankey($data);
 </script>
 
-<slot links={sankeyData.links} nodes={sankeyData.nodes} />
+<slot nodes={sankeyData.nodes} links={sankeyData.links} />

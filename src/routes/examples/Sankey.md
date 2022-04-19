@@ -13,17 +13,11 @@ title: ['Charts', 'Sankey']
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
-	import Area from '$lib/components/Area.svelte';
-	import AxisX from '$lib/components/AxisX.svelte';
-	import AxisY from '$lib/components/AxisY.svelte';
-	import Baseline from '$lib/components/Baseline.svelte';
-	import HighlightLine from '$lib/components/HighlightLine.svelte';
-	import Labels from '$lib/components/Labels.svelte';
+	import Group from '$lib/components/Group.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import Rect from '$lib/components/Rect.svelte';
 	import Sankey from '$lib/components/Sankey.svelte';
 	import Text from '$lib/components/Text.svelte';
-	import Tooltip from '$lib/components/Tooltip.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
 
@@ -48,20 +42,22 @@ title: ['Charts', 'Sankey']
 						<Link sankey data={link} stroke="#ddd" stroke-opacity={0.5} stroke-width={link.width} />
 					{/each}
 					{#each nodes as node (node.id)}
-						<Rect
-							x={node.x0}
-							y={node.y0}
-							height={node.y1 - node.y0}
-							width={node.x1 - node.x0}
-							class="fill-blue-500"
-						/>
-						<Text
-							value={node.id}
-							x={node.layer < 3 ? node.x1 + 4 : node.x0 - 4}
-							y={(node.y1 + node.y0) / 2}
-							textAnchor={node.layer < 3 ? 'start' : 'end'}
-							verticalAnchor="middle"
-						/>
+						{@const nodeWidth = node.x1 - node.x0}
+						{@const nodeHeight = node.y1 - node.y0}
+						<Group x={node.x0} y={node.y0}>
+							<Rect
+								width={nodeWidth}
+								height={nodeHeight}
+								class="fill-blue-500"
+							/>
+							<Text
+								value={node.id}
+								x={node.layer < 3 ? nodeWidth + 4 : - 4}
+								y={nodeHeight / 2}
+								textAnchor={node.layer < 3 ? 'start' : 'end'}
+								verticalAnchor="middle"
+							/>
+						</Group>
 					{/each}
 				</Sankey>
 			</Svg>
@@ -108,30 +104,32 @@ title: ['Charts', 'Sankey']
 						/>
 					{/each}
 					{#each nodes as node}
-						<Rect
-							x={node.x0}
-							y={node.y0}
-							height={node.y1 - node.y0}
-							width={node.x1 - node.x0}
-							fill={colorScale(node.depth)}
-							fill-opacity={0.5}
-							on:mouseover={() => {
-								highlightLinkIndexes = [
-									...node.sourceLinks.map((l) => l.index),
-									...node.targetLinks.map((l) => l.index),
-								];
-							}}
-							on:mouseout={() => highlightLinkIndexes = []}
-							tweened
-						/>
-						<Text
-							value={node.name}
-							x={node.x1 + 4}
-							y={(node.y1 + node.y0) / 2}
-							dy={-2}
-							verticalAnchor="middle"
-							style="font-size: .6rem"
-						/>
+						{@const nodeWidth = node.x1 - node.x0}
+						{@const nodeHeight = node.y1 - node.y0}
+						<Group x={node.x0} y={node.y0} tweened>
+							<Rect
+								width={nodeWidth}
+								height={nodeHeight}
+								fill={colorScale(node.depth)}
+								fill-opacity={0.5}
+								on:mouseover={() => {
+									highlightLinkIndexes = [
+										...node.sourceLinks.map((l) => l.index),
+										...node.targetLinks.map((l) => l.index),
+									];
+								}}
+								on:mouseout={() => highlightLinkIndexes = []}
+								tweened
+							/>
+							<Text
+								value={node.name}
+								x={nodeWidth + 4}
+								y={nodeHeight / 2}
+								dy={-2}
+								verticalAnchor="middle"
+								style="font-size: .6rem"
+							/>
+						</Group>
 					{/each}
 				</Sankey>
 			</Svg>
