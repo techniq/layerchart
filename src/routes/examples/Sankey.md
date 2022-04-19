@@ -29,6 +29,7 @@ title: ['Charts', 'Sankey']
 	let nodeAlign = 'justify';
 	let nodePadding = 4;
 	let nodeWidth = 10;
+	let colorBy = 'layer';
 </script>
 
 ## Simple
@@ -78,6 +79,15 @@ title: ['Charts', 'Sankey']
 			</div>
 		</Tabs>
 	</Field>
+	<Field label="Color By">
+		<Tabs bind:selected={colorBy} contained class="w-full">
+			<div class="tabList w-full border h-8">
+				<Tab value="layer">Layer</Tab>
+				<Tab value="depth">Depth</Tab>
+				<Tab value="height">Height</Tab>
+			</div>
+		</Tabs>
+	</Field>
 	<Field label="Node Padding">
 		<input type="range" bind:value={nodePadding} max={20} step={1} class="w-full h-8" />
 	</Field>
@@ -104,13 +114,14 @@ title: ['Charts', 'Sankey']
 						/>
 					{/each}
 					{#each nodes as node}
+						{console.log(node)}
 						{@const nodeWidth = node.x1 - node.x0}
 						{@const nodeHeight = node.y1 - node.y0}
 						<Group x={node.x0} y={node.y0} tweened>
 							<Rect
 								width={nodeWidth}
 								height={nodeHeight}
-								fill={colorScale(node.depth)}
+								fill={colorScale(node[colorBy])}
 								fill-opacity={0.5}
 								on:mouseover={() => {
 									highlightLinkIndexes = [
