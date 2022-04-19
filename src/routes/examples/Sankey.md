@@ -99,8 +99,8 @@ title: ['Charts', 'Sankey']
 						<Link
 							sankey
 							data={link}
-							stroke={highlightLinkIndexes.includes(i) ? 'red' : 'black'}
-							stroke-opacity={highlightLinkIndexes.includes(i) ? 0.2 : 0.1}
+							stroke="black"
+							stroke-opacity={highlightLinkIndexes.length ? highlightLinkIndexes.includes(i) ? 0.1 : 0.01 : 0.1}
 							stroke-width={link.width}
 							on:mouseover={() => highlightLinkIndexes = [i]}
 							on:mouseout={() => highlightLinkIndexes = []}
