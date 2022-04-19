@@ -1,4 +1,4 @@
-import staticAdapter from '@sveltejs/adapter-static';
+import vercelAdapter from '@sveltejs/adapter-vercel';
 import sveltePreprocess from 'svelte-preprocess';
 import { mdsvex } from 'mdsvex';
 import sveld from 'vite-plugin-sveld';
@@ -12,7 +12,7 @@ const config = {
 	preprocess: [mdsvex(mdsvexConfig), sveltePreprocess(), markdownToc()],
 
 	kit: {
-		adapter: staticAdapter(),
+		adapter: vercelAdapter(),
 		vite: {
 			plugins: [sveld()],
 			optimizeDeps: {
