@@ -3,8 +3,8 @@
 
 	import { createMotionStore } from '$lib/stores/motionStore';
 
-	export let x: number;
-	export let y: number;
+	export let x: number = 0;
+	export let y: number = 0;
 	export let width: number;
 	export let height: number;
 	export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
