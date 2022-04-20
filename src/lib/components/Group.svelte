@@ -39,6 +39,6 @@
 	}
 </script>
 
-<g {transform} {...$$restProps}>
+<g {transform} {...$$restProps} on:click>
 	<slot />
 </g>
