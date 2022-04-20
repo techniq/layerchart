@@ -58,8 +58,11 @@ title: ['Charts', 'Sankey']
 
 <Preview>
 	<Breadcrumb items={selectedPath}>
-		<Button slot="item" let:item on:click={() => selected = item}>
-			<div class="text-xs">{item.data.name}</div>
+		<Button slot="item" let:item on:click={() => selected = item} base class="px-2 py-1 rounded">
+			<div class="text-left">
+				<div class="text-sm">{item.data.name}</div>
+				<div class="text-xs text-black/50">{formatNumberAsStyle(item.value, 'integer')}</div>
+			</div>
 		</Button>
 	</Breadcrumb>
     <div class="h-[600px] p-4 border rounded">
