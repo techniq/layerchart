@@ -4,8 +4,9 @@ title: ['Charts', 'Sankey']
 
 <script lang="ts">
 	import { hierarchy } from 'd3-hierarchy';
+	import { fade } from 'svelte/transition';
 
-	import { Field, Tabs, Tab } from 'svelte-ux';
+	import { Button, Breadcrumb, Field, Tabs, Tab } from 'svelte-ux';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
@@ -23,6 +24,19 @@ title: ['Charts', 'Sankey']
 		.sort((a, b) => b.value - a.value);
 
 	let tile = 'squarify'
+
+	let selected = null;
+
+	function getPath (node) {
+	 	const path = [node];
+	 	while (node.parent) {
+	 		path.unshift(node.parent);
+	 		node = node.parent;
+	 	}
+
+		 return path;
+	 };
+	$: selectedPath = selected ? getPath(selected) : [];
 </script>
 
 ## Complex
@@ -43,27 +57,39 @@ title: ['Charts', 'Sankey']
 </div>
 
 <Preview>
-	<div class="h-[600px] p-4 border rounded">
-		<Chart data={complexDataHierarchy}>
-			<Svg>
-				<Treemap {tile} let:node let:rect>
-					<Rect {...rect} stroke="white" fill={node.children ? "#ccc" : "#ddd"} rx={5} />
-					<Text
-						value="{node.data.name} ({node.children?.length ?? 0})"
-						style="font-size: 0.6rem; font-weight: 500"
-						verticalAnchor="start"
-						x={4}
-						y={2}
-					/>
-					<Text
-						value={formatNumberAsStyle(node.value, 'integer')}
-						style="font-size: 0.5rem; font-weight: 200"
-						verticalAnchor="start"
-						x={4}
-						y={16}
-					/>
-				</Treemap>
-			</Svg>
-		</Chart>
-	</div>
+	<Breadcrumb items={selectedPath}>
+		<Button slot="item" let:item on:click={() => selected = item}>
+			<div class="text-xs">{item.data.name}</div>
+		</Button>
+	</Breadcrumb>
+    <div class="h-[600px] p-4 border rounded">
+    	<Chart data={complexDataHierarchy}>
+    		<Svg>
+    			<Treemap {tile} bind:selected let:node let:rect>
+    				<g on:click={() => selected = node} transition:fade={{ duration: 600 }}>
+    					<Rect
+    						{...rect}
+    						stroke="white"
+    						fill={node.children ? "#ccc" : "#ddd"}
+    						rx={5}
+    					/>
+    					<Text
+    						value="{node.data.name} ({node.children?.length ?? 0})"
+    						style="font-size: 0.6rem; font-weight: 500"
+    						verticalAnchor="start"
+    						x={4}
+    						y={2}
+    					/>
+    					<Text
+    						value={formatNumberAsStyle(node.value, 'integer')}
+    						style="font-size: 0.5rem; font-weight: 200"
+    						verticalAnchor="start"
+    						x={4}
+    						y={16}
+    					/>
+    				</g>
+    			</Treemap>
+    		</Svg>
+    	</Chart>
+    </div>
 </Preview>

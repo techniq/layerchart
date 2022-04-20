@@ -2,13 +2,12 @@
 	import { getContext } from 'svelte';
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
-	import { fade } from 'svelte/transition';
 	import * as d3 from 'd3-hierarchy';
 	import { scaleLinear } from 'd3-scale';
 
 	import TreemapNode from './TreemapNode.svelte';
 	import RectClipPath from './RectClipPath.svelte';
-	import { aspectTile } from '$lib/utils/treemap';
+	import { aspectTile } from '../utils/treemap';
 
 	const { data, width, height } = getContext('LayerCake');
 
@@ -23,6 +22,8 @@
 	export let padding = 0;
 	export let paddingInner = 0;
 	export let paddingOuter = 0;
+
+	export let selected = null;
 
 	$: tileFunc =
 		tile === 'squarify'
@@ -48,28 +49,7 @@
 		.paddingOuter(paddingOuter);
 
 	$: root = treemap($data);
-
-	$: selected = root;
-
-	function selectNode(node) {
-		while (node.parent && node.parent !== selected) {
-			node = node.parent;
-		}
-
-		if (node && node.children) {
-			selected = node;
-		}
-	}
-
-	// const breadcrumbs = (node) => {
-	// 	const crumbs = [];
-	// 	while (node) {
-	// 		crumbs.unshift(node.data.name);
-	// 		node = node.parent;
-	// 	}
-
-	// 	return crumbs.join('/');
-	// };
+	$: selected = root; // update initial selection
 
 	function isVisible(a, b) {
 		while (b) {
@@ -101,9 +81,7 @@
 	<g style="clip-path: url(#{id})">
 		<TreemapNode node={root} {xScale} {yScale} let:node let:rect>
 			{#if isVisible(node, selected)}
-				<g on:click={() => selectNode(node)} transition:fade={{ duration }}>
-					<slot {node} {rect} />
-				</g>
+				<slot {node} {rect} />
 			{/if}
 		</TreemapNode>
 	</g>
