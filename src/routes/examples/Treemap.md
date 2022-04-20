@@ -66,7 +66,7 @@ title: ['Charts', 'Sankey']
     	<Chart data={complexDataHierarchy}>
     		<Svg>
     			<Treemap {tile} bind:selected let:node let:rect>
-    				<g on:click={() => selected = node} transition:fade={{ duration: 600 }}>
+    				<g on:click={() => node.children ? selected = node : null} transition:fade={{ duration: 600 }}>
     					<Rect
     						{...rect}
     						stroke="white"
