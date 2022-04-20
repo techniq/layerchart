@@ -51,6 +51,9 @@
 	$: root = treemap($data);
 	$: selected = root; // update initial selection
 
+	/**
+	 * Show if the node (a) is a child of the selected (b), or any parent of the selected
+	 */
 	function isVisible(a, b) {
 		while (b) {
 			if (a.parent === b) return true;
