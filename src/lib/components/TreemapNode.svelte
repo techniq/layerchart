@@ -11,12 +11,11 @@
 	export let yScale;
 </script>
 
-<RectClipPath
-	width={xScale(node.x1) - xScale(node.x0)}
-	height={yScale(node.y1) - yScale(node.y0)}
-	let:id
->
-	<Group x={xScale(node.x0)} y={yScale(node.y0)} style="clip-path: url(#{id})" on:click>
+<Group x={xScale(node.x0)} y={yScale(node.y0)} on:click>
+	<RectClipPath
+		width={xScale(node.x1) - xScale(node.x0)}
+		height={yScale(node.y1) - yScale(node.y0)}
+	>
 		<slot
 			{node}
 			rect={{
@@ -26,8 +25,8 @@
 				height: yScale(node.y1) - yScale(node.y0)
 			}}
 		/>
-	</Group>
-</RectClipPath>
+	</RectClipPath>
+</Group>
 
 {#each node.children || [] as child}
 	<svelte:self node={child} {xScale} {yScale} let:node let:rect>

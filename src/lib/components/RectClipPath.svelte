@@ -16,4 +16,8 @@
 	<rect {x} {y} {width} {height} />
 </ClipPath>
 
-<slot {id} />
+{#if $$slots.default}
+	<g style="clip-path: url(#{id})">
+		<slot {id} />
+	</g>
+{/if}

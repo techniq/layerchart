@@ -80,12 +80,10 @@
 	$: yScale = scaleLinear().domain([$extents.y0, $extents.y1]).rangeRound([0, $height]);
 </script>
 
-<RectClipPath width={$width} height={$height} let:id>
-	<g style="clip-path: url(#{id})">
-		<TreemapNode node={root} {xScale} {yScale} let:node let:rect>
-			{#if isVisible(node, selected)}
-				<slot {node} {rect} />
-			{/if}
-		</TreemapNode>
-	</g>
+<RectClipPath width={$width} height={$height}>
+	<TreemapNode node={root} {xScale} {yScale} let:node let:rect>
+		{#if isVisible(node, selected)}
+			<slot {node} {rect} />
+		{/if}
+	</TreemapNode>
 </RectClipPath>

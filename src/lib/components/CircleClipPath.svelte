@@ -15,4 +15,8 @@
 	<circle {cx} {cy} {r} />
 </ClipPath>
 
-<slot {id} />
+{#if $$slots.default}
+	<g style="clip-path: url(#{id})">
+		<slot {id} />
+	</g>
+{/if}
