@@ -64,11 +64,7 @@
 	}
 
 	const duration = 800;
-
-	const extents = tweened(undefined, {
-		easing: cubicOut,
-		duration
-	});
+	const extents = tweened(undefined, { easing: cubicOut, duration });
 	$: $extents = {
 		x0: selected.x0,
 		x1: selected.x1,
