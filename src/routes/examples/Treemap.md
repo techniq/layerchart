@@ -26,17 +26,7 @@ title: ['Charts', 'Sankey']
 	let tile = 'squarify'
 
 	let selected = null;
-
-	function getPath (node) {
-	 	const path = [node];
-	 	while (node.parent) {
-	 		path.unshift(node.parent);
-	 		node = node.parent;
-	 	}
-
-		 return path;
-	 };
-	$: selectedPath = selected ? getPath(selected) : [];
+	$: selectedAncestors = selected?.ancestors().reverse() ?? []
 </script>
 
 ## Complex
@@ -57,7 +47,7 @@ title: ['Charts', 'Sankey']
 </div>
 
 <Preview>
-	<Breadcrumb items={selectedPath}>
+	<Breadcrumb items={selectedAncestors}>
 		<Button slot="item" let:item on:click={() => selected = item} base class="px-2 py-1 rounded">
 			<div class="text-left">
 				<div class="text-sm">{item.data.name}</div>
