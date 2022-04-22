@@ -35,7 +35,16 @@ title: ['Charts', 'Sankey']
 	let nodeColorBy = 'layer';
 	let linkColorBy = 'static';
 
-	$: linkOpacity = linkColorBy === 'static' ? 0.1 : 0.2;
+	$: linkOpacity = linkColorBy === 'static' ? 
+	{
+		default: 0.1,
+		hover: 0.1,
+		other: 0.01,
+	} : {
+		default: 0.2,
+		hover: 0.2,
+		other: 0.01,
+	};
 
 	const complexDataHierarchy = hierarchy(hierarchyComplexData)
 		.sum((d) => d.value)
@@ -140,7 +149,7 @@ title: ['Charts', 'Sankey']
 							sankey
 							data={link}
 							stroke={linkColorBy === 'static' ? "black" : colorScale(link[linkColorBy][nodeColorBy])}
-							stroke-opacity={highlightLinkIndexes.length ? highlightLinkIndexes.includes(i) ? linkOpacity : 0.01 : linkOpacity}
+							stroke-opacity={highlightLinkIndexes.length ? highlightLinkIndexes.includes(i) ? linkOpacity.hover : linkOpacity.other : linkOpacity.default}
 							stroke-width={link.width}
 							on:mouseover={() => highlightLinkIndexes = [i]}
 							on:mouseout={() => highlightLinkIndexes = []}
@@ -243,7 +252,7 @@ title: ['Charts', 'Sankey']
 							sankey
 							data={link}
 							stroke={linkColorBy === 'static' ? "black" : colorScale(link[linkColorBy][nodeColorBy])}
-							stroke-opacity={highlightLinkIndexes.length ? highlightLinkIndexes.includes(i) ? linkOpacity : 0.01 : linkOpacity}
+							stroke-opacity={highlightLinkIndexes.length ? highlightLinkIndexes.includes(i) ? linkOpacity.hover : linkOpacity.other : linkOpacity.default}
 							stroke-width={link.width}
 							on:mouseover={() => highlightLinkIndexes = [i]}
 							on:mouseout={() => highlightLinkIndexes = []}
