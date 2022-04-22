@@ -3,8 +3,7 @@ title: ['Charts', 'Sankey']
 ---
 
 <script lang="ts">
-	import { scaleTime } from 'd3-scale';
-	import { scaleSequential } from 'd3-scale';
+	import { scaleTime, scaleSequential } from 'd3-scale';
 	import { interpolateCool } from 'd3-scale-chromatic';
 	import { format } from 'date-fns';
 
@@ -29,7 +28,10 @@ title: ['Charts', 'Sankey']
 	let nodeAlign = 'justify';
 	let nodePadding = 4;
 	let nodeWidth = 10;
-	let colorBy = 'layer';
+	let nodeColorBy = 'layer';
+	let linkColorBy = 'static';
+
+	$: linkOpacity = linkColorBy === 'static' ? 0.1 : 0.2;
 </script>
 
 ## Simple
@@ -79,12 +81,22 @@ title: ['Charts', 'Sankey']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Color By">
-		<Tabs bind:selected={colorBy} contained class="w-full">
+	<Field label="Node Color">
+		<Tabs bind:selected={nodeColorBy} contained class="w-full">
 			<div class="tabList w-full border h-8">
 				<Tab value="layer">Layer</Tab>
 				<Tab value="depth">Depth</Tab>
 				<Tab value="height">Height</Tab>
+				<Tab value="index">Index</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Link Color">
+		<Tabs bind:selected={linkColorBy} contained class="w-full">
+			<div class="tabList w-full border h-8">
+				<Tab value="static">Static</Tab>
+				<Tab value="source">Source</Tab>
+				<Tab value="target">Target</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -105,8 +117,8 @@ title: ['Charts', 'Sankey']
 						<Link
 							sankey
 							data={link}
-							stroke="black"
-							stroke-opacity={highlightLinkIndexes.length ? highlightLinkIndexes.includes(i) ? 0.1 : 0.01 : 0.1}
+							stroke={linkColorBy === 'static' ? "black" : colorScale(link[linkColorBy][nodeColorBy])}
+							stroke-opacity={highlightLinkIndexes.length ? highlightLinkIndexes.includes(i) ? linkOpacity : 0.01 : linkOpacity}
 							stroke-width={link.width}
 							on:mouseover={() => highlightLinkIndexes = [i]}
 							on:mouseout={() => highlightLinkIndexes = []}
@@ -120,7 +132,7 @@ title: ['Charts', 'Sankey']
 							<Rect
 								width={nodeWidth}
 								height={nodeHeight}
-								fill={colorScale(node[colorBy])}
+								fill={colorScale(node[nodeColorBy])}
 								fill-opacity={0.5}
 								on:mouseover={() => {
 									highlightLinkIndexes = [
