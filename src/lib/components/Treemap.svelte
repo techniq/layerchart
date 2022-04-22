@@ -8,6 +8,7 @@
 	import TreemapNode from './TreemapNode.svelte';
 	import RectClipPath from './RectClipPath.svelte';
 	import { aspectTile } from '../utils/treemap';
+	import { group } from 'd3-array';
 
 	const { data, width, height } = getContext('LayerCake');
 
@@ -22,8 +23,13 @@
 	export let padding = 0;
 	export let paddingInner = 0;
 	export let paddingOuter = 0;
+	export let paddingTop = 0;
+	export let paddingBottom = 0;
+	export let paddingLeft = undefined;
+	export let paddingRight = undefined;
 
 	export let selected = null;
+	export let zoomable = false;
 
 	$: tileFunc =
 		tile === 'squarify'
@@ -40,16 +46,37 @@
 			? d3.treemapSliceDice
 			: tile;
 
-	$: treemap = d3
-		.treemap()
-		.size([$width, $height])
-		.tile(aspectTile(tileFunc, $width, $height))
-		.padding(padding)
-		.paddingInner(paddingInner)
-		.paddingOuter(paddingOuter);
+	$: treemap = d3.treemap().size([$width, $height]).tile(aspectTile(tileFunc, $width, $height));
+
+	$: if (padding) {
+		treemap.padding(padding);
+	}
+	$: if (paddingInner) {
+		treemap.paddingInner(paddingInner);
+	}
+	$: if (paddingOuter) {
+		treemap.paddingOuter(paddingOuter);
+	}
+	$: if (paddingTop) {
+		treemap.paddingTop(paddingTop);
+	}
+	$: if (paddingBottom) {
+		treemap.paddingBottom(paddingBottom);
+	}
+	$: if (paddingLeft) {
+		treemap.paddingLeft(paddingLeft);
+	}
+	$: if (paddingLeft) {
+		treemap.paddingRight(paddingRight);
+	}
 
 	$: root = treemap($data);
+
+	// zoomable
 	$: selected = root; // update initial selection
+
+	// nested
+	$: nodesByHeight = group(root, (d) => d.height);
 
 	/**
 	 * Show if the node (a) is a child of the selected (b), or any parent of the selected
@@ -76,10 +103,18 @@
 	$: yScale = scaleLinear().domain([$extents.y0, $extents.y1]).rangeRound([0, $height]);
 </script>
 
-<RectClipPath width={$width} height={$height}>
-	<TreemapNode node={root} {xScale} {yScale} let:node let:rect>
-		{#if isVisible(node, selected)}
-			<slot {node} {rect} />
-		{/if}
-	</TreemapNode>
-</RectClipPath>
+{#if zoomable}
+	<RectClipPath width={$width} height={$height}>
+		<TreemapNode node={root} {xScale} {yScale} let:node let:rect>
+			{#if isVisible(node, selected)}
+				<slot {node} {rect} />
+			{/if}
+		</TreemapNode>
+	</RectClipPath>
+{:else}
+	{#each Array.from(nodesByHeight) as [height, nodes]}
+		{#each nodes as node}
+			<slot {node} />
+		{/each}
+	{/each}
+{/if}

@@ -16,7 +16,6 @@ title: ['Charts', 'Sankey']
 	import RectClipPath from '$lib/components/RectClipPath.svelte';
 	import Text from '$lib/components/Text.svelte';
 	import Treemap from '$lib/components/Treemap.svelte';
-	import NestedTreemap from '$lib/components/NestedTreemap.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
 
@@ -53,7 +52,7 @@ title: ['Charts', 'Sankey']
 	<div class="h-[800px] p-4 border rounded">
 		<Chart data={complexDataHierarchy}>
 			<Svg>
-				<NestedTreemap {tile} paddingOuter={3} paddingTop={19} paddingInner={2} let:node>
+				<Treemap {tile} paddingOuter={3} paddingTop={19} paddingInner={2} let:node>
 					{@const nodeWidth = node.x1 - node.x0}
 					{@const nodeHeight = node.y1 - node.y0}
 					<Group x={node.x0} y={node.y0} tweened>
@@ -83,7 +82,7 @@ title: ['Charts', 'Sankey']
 							{/if}
 						</RectClipPath>
 					</Group>
-				</NestedTreemap>
+				</Treemap>
 			</Svg>
 		</Chart>
 	</div>
@@ -116,9 +115,9 @@ title: ['Charts', 'Sankey']
 		</Button>
 	</Breadcrumb>
     <div class="h-[600px] p-4 border rounded">
-    	<Chart data={complexDataHierarchy}>
+    	<Chart data={complexDataHierarchy} extents={{ x: [0, 100], y: [50, 100] }}>
     		<Svg>
-    			<Treemap {tile} bind:selected let:node let:rect>
+    			<Treemap zoomable {tile} bind:selected let:node let:rect>
     				<g on:click={() => node.children ? selected = node : null} transition:fade={{ duration: 600 }}>
     					<Rect
     						{...rect}
