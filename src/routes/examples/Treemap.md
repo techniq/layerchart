@@ -56,7 +56,7 @@ title: ['Charts', 'Sankey']
 				<NestedTreemap {tile} paddingOuter={3} paddingTop={19} paddingInner={2} let:node>
 					{@const nodeWidth = node.x1 - node.x0}
 					{@const nodeHeight = node.y1 - node.y0}
-					<Group x={node.x0} y={node.y0}>
+					<Group x={node.x0} y={node.y0} tweened>
 						<RectClipPath width={nodeWidth} height={nodeHeight}>
 							<Rect
 								width={nodeWidth}
@@ -64,6 +64,7 @@ title: ['Charts', 'Sankey']
 								stroke="white"
 								fill={node.children ? "#ccc" : "#ddd"}
 								rx={5}
+								tweened
 							/>
 							<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
 								<tspan>{node.data.name}</tspan>
