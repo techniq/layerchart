@@ -115,7 +115,7 @@ title: ['Charts', 'Sankey']
 		</Button>
 	</Breadcrumb>
     <div class="h-[600px] p-4 border rounded">
-    	<Chart data={complexDataHierarchy} extents={{ x: [0, 100], y: [50, 100] }}>
+    	<Chart data={complexDataHierarchy}>
     		<Svg>
     			<Treemap zoomable {tile} bind:selected let:node let:rect>
     				<g on:click={() => node.children ? selected = node : null} transition:fade={{ duration: 600 }}>
