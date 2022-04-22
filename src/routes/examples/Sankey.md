@@ -5,6 +5,7 @@ title: ['Charts', 'Sankey']
 <script lang="ts">
 	import { scaleTime, scaleSequential } from 'd3-scale';
 	import { interpolateCool } from 'd3-scale-chromatic';
+	import { extent } from 'd3-array';
 	import { format } from 'date-fns';
 
 	import { Field, Tabs, Tab } from 'svelte-ux';
@@ -22,8 +23,8 @@ title: ['Charts', 'Sankey']
 
 	import { simpleData, complexData } from './data/graph';
 
-	const colorScale = scaleSequential(interpolateCool).domain([0, 7]); // TODO: Calculate domain extents from Sankey data
-
+	const colorScale = scaleSequential(interpolateCool)
+	
 	let highlightLinkIndexes = [];
 	let nodeAlign = 'justify';
 	let nodePadding = 4;
@@ -112,7 +113,19 @@ title: ['Charts', 'Sankey']
 	<div class="h-[800px] p-4 border rounded">
 		<Chart data={complexData} padding={{ right: 100 }}>
 			<Svg>
-				<Sankey {nodeAlign} {nodePadding} {nodeWidth} let:links let:nodes>
+				<Sankey
+					{nodeAlign}
+					{nodePadding}
+					{nodeWidth}
+					let:links
+					let:nodes
+					on:update={e => {
+						// Calculate domain extents from Sankey data
+						// TODO: Update as 'nodeColorBy' changes
+						const extents = extent(e.detail.nodes, d => d[nodeColorBy]);
+						colorScale.domain(extents);
+					}}
+				>
 					{#each links as link, i}
 						<Link
 							sankey

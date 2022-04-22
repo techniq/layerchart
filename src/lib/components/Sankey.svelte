@@ -1,6 +1,6 @@
 <script lang="ts">
 	// https://github.com/d3/d3-sankey
-	import { getContext } from 'svelte';
+	import { createEventDispatcher, getContext } from 'svelte';
 	import {
 		sankey as d3Sankey,
 		sankeyLeft,
@@ -9,6 +9,8 @@
 		sankeyJustify,
 		type SankeyNode
 	} from 'd3-sankey';
+
+	const dispatch = createEventDispatcher();
 
 	const { data, width, height, padding } = getContext('LayerCake');
 
@@ -52,6 +54,8 @@
 		.linkSort(linkSort);
 
 	$: sankeyData = sankey($data);
+
+	$: dispatch('update', sankeyData);
 </script>
 
 <slot nodes={sankeyData.nodes} links={sankeyData.links} />
