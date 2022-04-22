@@ -4,6 +4,7 @@ title: ['Charts', 'Sankey']
 
 <script lang="ts">
 	import { scaleTime, scaleSequential } from 'd3-scale';
+	import { hierarchy } from 'd3-hierarchy';
 	import { interpolateCool } from 'd3-scale-chromatic';
 	import { extent } from 'd3-array';
 	import { format } from 'date-fns';
@@ -22,6 +23,8 @@ title: ['Charts', 'Sankey']
 	import Preview from '$lib/docs/Preview.svelte';
 
 	import { simpleData, complexData } from './data/graph';
+	import { complexData as hierarchyComplexData } from './data/hierarchy'
+	import { graphFromHierarchy } from '$lib/utils/graph';
 
 	const colorScale = scaleSequential(interpolateCool)
 	
@@ -33,6 +36,12 @@ title: ['Charts', 'Sankey']
 	let linkColorBy = 'static';
 
 	$: linkOpacity = linkColorBy === 'static' ? 0.1 : 0.2;
+
+	const complexDataHierarchy = hierarchy(hierarchyComplexData)
+		.sum((d) => d.value)
+		.sort((a, b) => b.value - a.value);
+
+	$: hierarchyGraph = graphFromHierarchy(complexDataHierarchy);
 </script>
 
 ## Simple
@@ -158,6 +167,109 @@ title: ['Charts', 'Sankey']
 							/>
 							<Text
 								value={node.name}
+								x={nodeWidth + 4}
+								y={nodeHeight / 2}
+								dy={-2}
+								verticalAnchor="middle"
+								style="font-size: .6rem"
+							/>
+						</Group>
+					{/each}
+				</Sankey>
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Hierarchy
+
+<div class="grid grid-flow-col gap-4 mb-4">
+	<Field label="Align">
+		<Tabs bind:selected={nodeAlign} contained class="w-full">
+			<div class="tabList w-full border h-8">
+				<Tab value="justify">Justify</Tab>
+				<Tab value="left">Left</Tab>
+				<Tab value="center">Center</Tab>
+				<Tab value="right">Right</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Node Color">
+		<Tabs bind:selected={nodeColorBy} contained class="w-full">
+			<div class="tabList w-full border h-8">
+				<Tab value="layer">Layer</Tab>
+				<Tab value="depth">Depth</Tab>
+				<Tab value="height">Height</Tab>
+				<Tab value="index">Index</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Link Color">
+		<Tabs bind:selected={linkColorBy} contained class="w-full">
+			<div class="tabList w-full border h-8">
+				<Tab value="static">Static</Tab>
+				<Tab value="source">Source</Tab>
+				<Tab value="target">Target</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Node Padding">
+		<input type="range" bind:value={nodePadding} max={20} step={1} class="w-full h-8" />
+	</Field>
+	<Field label="Node Width">
+		<input type="range" bind:value={nodeWidth} max={20} step={1} class="w-full h-8" />
+	</Field>
+</div>
+
+<Preview>
+	<div class="h-[2000px] p-4 border rounded">
+		<Chart data={hierarchyGraph} padding={{ right: 100 }}>
+			<Svg>
+				<Sankey
+					{nodeAlign}
+					{nodePadding}
+					{nodeWidth}
+					let:links
+					let:nodes
+					on:update={e => {
+						// Calculate domain extents from Sankey data
+						// TODO: Update as 'nodeColorBy' changes
+						const extents = extent(e.detail.nodes, d => d[nodeColorBy]);
+						colorScale.domain(extents);
+					}}
+				>
+					{#each links as link, i}
+						<Link
+							sankey
+							data={link}
+							stroke={linkColorBy === 'static' ? "black" : colorScale(link[linkColorBy][nodeColorBy])}
+							stroke-opacity={highlightLinkIndexes.length ? highlightLinkIndexes.includes(i) ? linkOpacity : 0.01 : linkOpacity}
+							stroke-width={link.width}
+							on:mouseover={() => highlightLinkIndexes = [i]}
+							on:mouseout={() => highlightLinkIndexes = []}
+							tweened
+						/>
+					{/each}
+					{#each nodes as node}
+						{@const nodeWidth = node.x1 - node.x0}
+						{@const nodeHeight = node.y1 - node.y0}
+						<Group x={node.x0} y={node.y0} tweened>
+							<Rect
+								width={nodeWidth}
+								height={nodeHeight}
+								fill={colorScale(node[nodeColorBy])}
+								fill-opacity={0.5}
+								on:mouseover={() => {
+									highlightLinkIndexes = [
+										...node.sourceLinks.map((l) => l.index),
+										...node.targetLinks.map((l) => l.index),
+									];
+								}}
+								on:mouseout={() => highlightLinkIndexes = []}
+								tweened
+							/>
+							<Text
+								value={node.data.name}
 								x={nodeWidth + 4}
 								y={nodeHeight / 2}
 								dy={-2}

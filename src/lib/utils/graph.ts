@@ -1,5 +1,6 @@
 import { csvParseRows } from 'd3-dsv';
 import type { SankeyGraph } from 'd3-sankey';
+import type { hierarchy as d3Hierarchy } from 'd3-hierarchy';
 
 /**
  * Convert CSV rows in format: 'source,target,value' to SankeyGraph
@@ -27,4 +28,14 @@ export function graphFromCsv(csv: string): SankeyGraph<any, any> {
 		}
 	}
 	return { nodes: Array.from(nodeByName.values()), links };
+}
+
+/**
+ * Convert d3-hierarchy to graph (nodes/links)
+ */
+export function graphFromHierarchy(hierarchy: ReturnType<typeof d3Hierarchy>) {
+	return {
+		nodes: hierarchy.descendants(),
+		links: hierarchy.links().map((link) => ({ ...link, value: link.target.value }))
+	};
 }
