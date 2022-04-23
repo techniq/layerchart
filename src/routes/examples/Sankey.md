@@ -77,9 +77,9 @@ title: ['Charts', 'Sankey']
 							/>
 							<Text
 								value={node.id}
-								x={node.layer < 3 ? nodeWidth + 4 : - 4}
+								x={node.height === 0 ? -4 : nodeWidth + 4}
 								y={nodeHeight / 2}
-								textAnchor={node.layer < 3 ? 'start' : 'end'}
+								textAnchor={node.height === 0 ? 'end' : 'start'}
 								verticalAnchor="middle"
 							/>
 						</Group>
@@ -113,9 +113,9 @@ title: ['Charts', 'Sankey']
     						/>
     						<Text
     							value={node.name}
-    							x={node.layer < 3 ? nodeWidth + 4 : - 4}
+    							x={node.height === 0 ? -4 : nodeWidth + 4}
     							y={nodeHeight / 2}
-    							textAnchor={node.layer < 3 ? 'start' : 'end'}
+    							textAnchor={node.height === 0 ? 'end' : 'start'}
     							verticalAnchor="middle"
     						/>
     					</Group>
