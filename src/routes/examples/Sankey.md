@@ -22,7 +22,7 @@ title: ['Charts', 'Sankey']
 
 	import Preview from '$lib/docs/Preview.svelte';
 
-	import { simpleData, complexData } from './data/graph';
+	import { simpleData, complexData, greenhouse } from './data/graph';
 	import { complexData as hierarchyComplexData } from './data/hierarchy'
 	import { graphFromHierarchy, graphFromNode } from '$lib/utils/graph';
 
@@ -53,6 +53,7 @@ title: ['Charts', 'Sankey']
 	$: hierarchyGraph = graphFromHierarchy(complexDataHierarchy);
 
 	let selectedNode = null
+	$: selectedNode && console.log(graphFromNode(selectedNode))
 </script>
 
 ## Simple
@@ -92,14 +93,14 @@ title: ['Charts', 'Sankey']
 ## Selected
 
 <Preview>
-	<div class="h-[400px] p-4 border rounded">
-		<Chart data={selectedNode ? graphFromNode(selectedNode) : simpleData}>
+	<div class="h-[600px] p-4 border rounded">
+		<Chart data={selectedNode ? graphFromNode(selectedNode) : greenhouse}>
 			<Svg>
-				<Sankey nodeId={d => d.id} nodeWidth={8} let:links let:nodes>
-    				{#each links as link (link.source.id + '-' + link.target.id)}
+				<Sankey nodeId={d => d.name} nodeWidth={8} let:links let:nodes>
+    				{#each links as link (link.source.name + '-' + link.target.name)}
     					<Link sankey data={link} stroke="#ddd" stroke-opacity={0.5} stroke-width={link.width} tweened />
     				{/each}
-    				{#each nodes as node (node.id)}
+    				{#each nodes as node (node.name)}
     					{@const nodeWidth = node.x1 - node.x0}
     					{@const nodeHeight = node.y1 - node.y0}
     					<Group x={node.x0} y={node.y0} tweened on:click={() => {
@@ -111,7 +112,7 @@ title: ['Charts', 'Sankey']
 									tweened
     						/>
     						<Text
-    							value={node.id}
+    							value={node.name}
     							x={node.layer < 3 ? nodeWidth + 4 : - 4}
     							y={nodeHeight / 2}
     							textAnchor={node.layer < 3 ? 'start' : 'end'}

@@ -55,13 +55,17 @@ export function graphFromNode(node: SankeyNodeMinimal<any, any>) {
 			const targetData = graphFromNode(link.target);
 
 			// Only add new nodes
-			targetData.nodes.forEach((n) => {
-				if (!nodes.includes(n)) {
-					nodes.push(n);
+			targetData.nodes.forEach((node) => {
+				if (!nodes.includes(node)) {
+					nodes.push(node);
 				}
 			});
 
-			links.push(...targetData.links);
+			targetData.links.forEach((link) => {
+				if (!links.includes(link)) {
+					links.push(link);
+				}
+			});
 		}
 	});
 
