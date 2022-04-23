@@ -1,5 +1,5 @@
 import { csvParseRows } from 'd3-dsv';
-import type { SankeyGraph } from 'd3-sankey';
+import type { SankeyGraph, SankeyNodeMinimal } from 'd3-sankey';
 import type { hierarchy as d3Hierarchy } from 'd3-hierarchy';
 
 /**
@@ -38,4 +38,32 @@ export function graphFromHierarchy(hierarchy: ReturnType<typeof d3Hierarchy>) {
 		nodes: hierarchy.descendants(),
 		links: hierarchy.links().map((link) => ({ ...link, value: link.target.value }))
 	};
+}
+
+/**
+ * Create graph from node (and target node/links downward)
+ */
+export function graphFromNode(node: SankeyNodeMinimal<any, any>) {
+	const nodes = [node];
+	const links = [];
+
+	node.sourceLinks.forEach((link) => {
+		nodes.push(link.target);
+		links.push(link);
+
+		if (link.target.sourceLinks.length) {
+			const targetData = graphFromNode(link.target);
+
+			// Only add new nodes
+			targetData.nodes.forEach((n) => {
+				if (!nodes.includes(n)) {
+					nodes.push(n);
+				}
+			});
+
+			links.push(...targetData.links);
+		}
+	});
+
+	return { nodes, links };
 }

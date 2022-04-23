@@ -24,7 +24,7 @@ title: ['Charts', 'Sankey']
 
 	import { simpleData, complexData } from './data/graph';
 	import { complexData as hierarchyComplexData } from './data/hierarchy'
-	import { graphFromHierarchy } from '$lib/utils/graph';
+	import { graphFromHierarchy, graphFromNode } from '$lib/utils/graph';
 
 	const colorScale = scaleSequential(interpolateCool)
 	
@@ -51,6 +51,8 @@ title: ['Charts', 'Sankey']
 		.sort((a, b) => b.value - a.value);
 
 	$: hierarchyGraph = graphFromHierarchy(complexDataHierarchy);
+
+	let selectedNode = null
 </script>
 
 ## Simple
@@ -85,6 +87,42 @@ title: ['Charts', 'Sankey']
 			</Svg>
 		</Chart>
 	</div>
+</Preview>
+
+## Selected
+
+<Preview>
+	<div class="h-[400px] p-4 border rounded">
+		<Chart data={selectedNode ? graphFromNode(selectedNode) : simpleData}>
+			<Svg>
+				<Sankey nodeId={d => d.id} nodeWidth={8} let:links let:nodes>
+    				{#each links as link (link.source.id + '-' + link.target.id)}
+    					<Link sankey data={link} stroke="#ddd" stroke-opacity={0.5} stroke-width={link.width} tweened />
+    				{/each}
+    				{#each nodes as node (node.id)}
+    					{@const nodeWidth = node.x1 - node.x0}
+    					{@const nodeHeight = node.y1 - node.y0}
+    					<Group x={node.x0} y={node.y0} tweened on:click={() => {
+								selectedNode = (node === selectedNode || node.sourceLinks.length === 0) ? null : node}}>
+    						<Rect
+    							width={nodeWidth}
+    							height={nodeHeight}
+    							class="fill-blue-500"
+									tweened
+    						/>
+    						<Text
+    							value={node.id}
+    							x={node.layer < 3 ? nodeWidth + 4 : - 4}
+    							y={nodeHeight / 2}
+    							textAnchor={node.layer < 3 ? 'start' : 'end'}
+    							verticalAnchor="middle"
+    						/>
+    					</Group>
+    				{/each}
+    			</Sankey>
+    		</Svg>
+    	</Chart>
+    </div>
 </Preview>
 
 ## Complex
