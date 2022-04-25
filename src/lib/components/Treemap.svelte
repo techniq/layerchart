@@ -1,14 +1,19 @@
 <script lang="ts">
+	/**
+	 * TODO:
+	 *   - [ ] Improve zoomable nested (apply extent ratio?  const extentRatio = ($extents.y1 - $extents.y0) / $height;
+	 */
 	import { getContext } from 'svelte';
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
+
 	import * as d3 from 'd3-hierarchy';
 	import { scaleLinear } from 'd3-scale';
+	import { group } from 'd3-array';
 
-	import TreemapNode from './TreemapNode.svelte';
+	import Group from './Group.svelte';
 	import RectClipPath from './RectClipPath.svelte';
 	import { aspectTile } from '../utils/treemap';
-	import { group } from 'd3-array';
 
 	const { data, width, height } = getContext('LayerCake');
 
@@ -29,7 +34,6 @@
 	export let paddingRight = undefined;
 
 	export let selected = null;
-	export let zoomable = false;
 
 	$: tileFunc =
 		tile === 'squarify'
@@ -71,50 +75,50 @@
 	}
 
 	$: root = treemap($data);
+	$: selected = root; // set initial selection
 
-	// zoomable
-	$: selected = root; // update initial selection
-
-	// nested
+	// group nodes by height so can be rendered lowest to highest
 	$: nodesByHeight = group(root, (d) => d.height);
-
-	/**
-	 * Show if the node (a) is a child of the selected (b), or any parent of the selected
-	 */
-	function isVisible(a, b) {
-		while (b) {
-			if (a.parent === b) return true;
-			b = b.parent;
-		}
-
-		return false;
-	}
 
 	const duration = 800;
 	const extents = tweened(undefined, { easing: cubicOut, duration });
-	$: $extents = {
-		x0: selected.x0,
-		x1: selected.x1,
-		y0: selected.y0,
-		y1: selected.y1
-	};
-
+	$: $extents = selected
+		? {
+				x0: selected.x0,
+				y0: selected.y0,
+				x1: selected.x1,
+				y1: selected.y1
+		  }
+		: {
+				x0: 0,
+				y0: 0,
+				x1: $width,
+				y1: $height
+		  };
 	$: xScale = scaleLinear().domain([$extents.x0, $extents.x1]).rangeRound([0, $width]);
 	$: yScale = scaleLinear().domain([$extents.y0, $extents.y1]).rangeRound([0, $height]);
 </script>
 
-{#if zoomable}
-	<RectClipPath width={$width} height={$height}>
-		<TreemapNode node={root} {xScale} {yScale} let:node let:rect>
-			{#if isVisible(node, selected)}
-				<slot {node} {rect} />
-			{/if}
-		</TreemapNode>
-	</RectClipPath>
-{:else}
+<RectClipPath width={$width} height={$height}>
 	{#each Array.from(nodesByHeight) as [height, nodes]}
-		{#each nodes as node}
-			<slot {node} />
-		{/each}
+		<g>
+			{#each nodes as node}
+				{@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
+				{@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
+				<Group x={xScale(node.x0)} y={yScale(node.y0)}>
+					<RectClipPath width={nodeWidth} height={nodeHeight}>
+						<slot
+							{node}
+							rect={{
+								x: 0, // applied by Group
+								y: 0, // applied by Group
+								width: nodeWidth,
+								height: nodeHeight
+							}}
+						/>
+					</RectClipPath>
+				</Group>
+			{/each}
+		</g>
 	{/each}
-{/if}
+</RectClipPath>
