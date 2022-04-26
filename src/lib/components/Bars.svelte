@@ -70,7 +70,7 @@
 		//   const width = $xScale.bandwidth
 		//     ? $xScale.bandwidth()
 		//     : Math.max(0, $xGet(d)[1] - $xGet(d)[0]);
-		const width = (groupBy ? x1Scale.bandwidth() : $xScale.bandwidth()) + widthOffset;
+		const width = Math.max(0, (groupBy ? x1Scale.bandwidth() : $xScale.bandwidth()) + widthOffset);
 
 		const yValue = _y(item);
 
