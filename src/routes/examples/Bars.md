@@ -36,7 +36,7 @@ title: ['Chart', 'Bars']
 	const keyColors = ['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)', 'var(--color-orange-500)'];
 </script>
 
-## Basic
+## Vertical (Column)
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -59,6 +59,32 @@ title: ['Chart', 'Bars']
 		</Chart>
 	</div>
 </Preview>
+
+<!--
+## Horizontal (Bar)
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="value"
+			xDomain={[0, null]}
+			xNice
+			y="date"
+			yScale={scaleBand().padding(0.4)}
+			yDomain={data.map((d) => d.date)}
+			padding={{ left: 16, bottom: 24 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Bars radius={4} strokeWidth={1} />
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+-->
 
 ## Negative data
 

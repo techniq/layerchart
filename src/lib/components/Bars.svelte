@@ -54,7 +54,6 @@
 	// See: https://svelte.dev/repl/7000c5ce05b84cd98ccbfb2768b4be3d?version=3.38.3
 
 	export let groupBy: string = undefined;
-	// export let delay = 300;
 
 	// 	$: console.log({ $data, $flatData, groupBy, stackBy })
 
