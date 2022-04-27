@@ -4,6 +4,9 @@ title: ['Charts', 'Sankey']
 
 <script lang="ts">
 	import { hierarchy } from 'd3-hierarchy';
+	import { scaleSequential, scaleOrdinal } from 'd3-scale';
+	import * as chromatic from 'd3-scale-chromatic';
+	import { hsl } from 'd3-color';
 	import { fade } from 'svelte/transition';
 
 	import { Button, Breadcrumb, Field, Tabs, Tab } from 'svelte-ux';
@@ -15,6 +18,7 @@ title: ['Charts', 'Sankey']
 	import Rect from '$lib/components/Rect.svelte';
 	import Text from '$lib/components/Text.svelte';
 	import Treemap from '$lib/components/Treemap.svelte';
+	import { findAncestor } from '$lib/utils/hierarchy';
 
 	import Preview from '$lib/docs/Preview.svelte';
 
@@ -25,6 +29,7 @@ title: ['Charts', 'Sankey']
 		.sort((a, b) => b.value - a.value);
 
 	let tile = 'squarify'
+	let colorBy = 'children';
 
 	let selectedNested = null;
 	let selectedZoomable = null;
@@ -40,23 +45,50 @@ title: ['Charts', 'Sankey']
 
 		return false;
 	}
+
+	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu)
+	const ordinalColor = scaleOrdinal(chromatic.schemeSpectral[9])
+	// const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
+
+	function getNodeColor(node, colorBy) {
+		switch (colorBy) {
+			case 'children':
+				return node.children ? '#ccc' : '#ddd'
+			case 'depth':
+				return sequentialColor(node.depth);
+			case 'parent':
+				const colorParent = findAncestor(node, n => n.depth === 1)
+				return colorParent ? hsl(ordinalColor((colorParent).data.name)).brighter(node.depth * .3) : '#ccc'
+		}
+	}
 </script>
 
 ## Nested
 
 <div class="grid grid-flow-col gap-4 mb-4">
-	<Field label="Tile">
-		<Tabs bind:selected={tile} contained class="w-full">
-			<div class="tabList w-full border h-8">
-				<Tab value="squarify">Squarify</Tab>
-				<Tab value="resquarify">Resquarify</Tab>
-				<Tab value="binary">Binary</Tab>
-				<Tab value="slice">Slice</Tab>
-				<Tab value="dice">Dice</Tab>
-				<Tab value="sliceDice">Slice / Dice</Tab>
-			</div>
-		</Tabs>
-	</Field>
+	<div class="grid grid-cols-[1fr,200px] gap-2">
+		<Field label="Tile">
+			<Tabs bind:selected={tile} contained class="w-full">
+				<div class="tabList w-full border h-8">
+					<Tab value="squarify">Squarify</Tab>
+					<Tab value="resquarify">Resquarify</Tab>
+					<Tab value="binary">Binary</Tab>
+					<Tab value="slice">Slice</Tab>
+					<Tab value="dice">Dice</Tab>
+					<Tab value="sliceDice">Slice / Dice</Tab>
+				</div>
+			</Tabs>
+		</Field>
+		<Field label="Color By">
+			<Tabs bind:selected={colorBy} contained class="w-full">
+				<div class="tabList w-full border h-8">
+					<Tab value="children">Children</Tab>
+					<Tab value="depth">Depth</Tab>
+					<Tab value="parent">Parent</Tab>
+				</div>
+			</Tabs>
+		</Field>
+	</div>
 </div>
 
 <Preview>
@@ -72,11 +104,12 @@ title: ['Charts', 'Sankey']
 		<Chart data={complexDataHierarchy.copy()}>
 			<Svg>
 				<Treemap {tile} bind:selected={selectedNested} paddingOuter={3} paddingTop={19} paddingInner={2} let:node let:rect>
+					{@const nodeColor = getNodeColor(node, colorBy)}
 					<g on:click={() => node.children ? selectedNested = node : null} transition:fade={{ duration: 600 }}>
 						<Rect
 							{...rect}
-							stroke="white"
-							fill={node.children ? "#ccc" : "#ddd"}
+							stroke={hsl(nodeColor).darker(1.5)}
+							fill={nodeColor}
 							rx={5}
 						/>
 						<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
@@ -104,18 +137,29 @@ title: ['Charts', 'Sankey']
 ## Zoomable
 
 <div class="grid grid-flow-col gap-4 mb-4">
-	<Field label="Tile">
-		<Tabs bind:selected={tile} contained class="w-full">
-			<div class="tabList w-full border h-8">
-				<Tab value="squarify">Squarify</Tab>
-				<Tab value="resquarify">Resquarify</Tab>
-				<Tab value="binary">Binary</Tab>
-				<Tab value="slice">Slice</Tab>
-				<Tab value="dice">Dice</Tab>
-				<Tab value="sliceDice">Slice / Dice</Tab>
-			</div>
-		</Tabs>
-	</Field>
+	<div class="grid grid-cols-[1fr,200px] gap-2">
+		<Field label="Tile">
+			<Tabs bind:selected={tile} contained class="w-full">
+				<div class="tabList w-full border h-8">
+					<Tab value="squarify">Squarify</Tab>
+					<Tab value="resquarify">Resquarify</Tab>
+					<Tab value="binary">Binary</Tab>
+					<Tab value="slice">Slice</Tab>
+					<Tab value="dice">Dice</Tab>
+					<Tab value="sliceDice">Slice / Dice</Tab>
+				</div>
+			</Tabs>
+		</Field>
+		<Field label="Color By">
+			<Tabs bind:selected={colorBy} contained class="w-full">
+				<div class="tabList w-full border h-8">
+					<Tab value="children">Children</Tab>
+					<Tab value="depth">Depth</Tab>
+					<Tab value="parent">Parent</Tab>
+				</div>
+			</Tabs>
+		</Field>
+	</div>
 </div>
 
 <Preview>
@@ -131,12 +175,13 @@ title: ['Charts', 'Sankey']
     	<Chart data={complexDataHierarchy.copy()}>
     		<Svg>
     			<Treemap {tile} bind:selected={selectedZoomable} let:node let:rect>
+						{@const nodeColor = getNodeColor(node, colorBy)}
 						{#if isVisible(node, selectedZoomable)}
 							<g on:click={() => node.children ? selectedZoomable = node : null} transition:fade={{ duration: 600 }}>
 								<Rect
 									{...rect}
-									stroke="white"
-									fill={node.children ? "#ccc" : "#ddd"}
+									stroke={hsl(nodeColor).darker(1.5)}
+									fill={nodeColor}
 									rx={5}
 								/>
 								<Text
