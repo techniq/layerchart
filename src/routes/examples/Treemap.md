@@ -16,6 +16,7 @@ title: ['Charts', 'Sankey']
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Group from '$lib/components/Group.svelte';
 	import Rect from '$lib/components/Rect.svelte';
+	import RectClipPath from '$lib/components/RectClipPath.svelte';
 	import Text from '$lib/components/Text.svelte';
 	import Treemap from '$lib/components/Treemap.svelte';
 	import { findAncestor } from '$lib/utils/hierarchy';
@@ -58,7 +59,7 @@ title: ['Charts', 'Sankey']
 				return sequentialColor(node.depth);
 			case 'parent':
 				const colorParent = findAncestor(node, n => n.depth === 1)
-				return colorParent ? hsl(ordinalColor((colorParent).data.name)).brighter(node.depth * .3) : '#ccc'
+				return colorParent ? hsl(ordinalColor((colorParent).data.name)).brighter(node.depth * .3) : '#ddd'
 		}
 	}
 </script>
@@ -103,31 +104,36 @@ title: ['Charts', 'Sankey']
 	<div class="h-[800px] p-4 border rounded">
 		<Chart data={complexDataHierarchy.copy()}>
 			<Svg>
-				<Treemap {tile} bind:selected={selectedNested} paddingOuter={3} paddingTop={19} paddingInner={2} let:node let:rect>
-					{@const nodeColor = getNodeColor(node, colorBy)}
-					<g on:click={() => node.children ? selectedNested = node : null} transition:fade={{ duration: 600 }}>
-						<Rect
-							{...rect}
-							stroke={hsl(nodeColor).darker(1.5)}
-							fill={nodeColor}
-							rx={5}
-						/>
-						<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
-							<tspan>{node.data.name}</tspan>
-							{#if node.children}
-								<tspan style="font-size: 0.5rem; font-weight: 200">{formatNumberAsStyle(node.value, 'integer')}</tspan>
-							{/if}
-						</text>
-						{#if !node.children}
-							<Text
-								value={formatNumberAsStyle(node.value, 'integer')}
-								style="font-size: 0.5rem; font-weight: 200"
-								verticalAnchor="start"
-								x={4}
-								y={16}
+				<Treemap {tile} bind:selected={selectedNested} paddingOuter={3} paddingTop={19} paddingInner={2} >
+					<Group slot="node" let:node let:rect x={rect.x} y={rect.y} on:click={() => node.children ? selectedNested = node : null}>
+						{@const nodeColor = getNodeColor(node, colorBy)}
+						<g transition:fade={{ duration: 600 }}>
+							<Rect
+								width={rect.width}
+								height={rect.height}
+								stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+								fill={nodeColor}
+								rx={5}
 							/>
-						{/if}
-					</g>
+							<RectClipPath width={rect.width} height={rect.height}>
+								<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
+									<tspan>{node.data.name}</tspan>
+									{#if node.children}
+										<tspan style="font-size: 0.5rem; font-weight: 200">{formatNumberAsStyle(node.value, 'integer')}</tspan>
+									{/if}
+								</text>
+								{#if !node.children}
+									<Text
+										value={formatNumberAsStyle(node.value, 'integer')}
+										style="font-size: 0.5rem; font-weight: 200"
+										verticalAnchor="start"
+										x={4}
+										y={16}
+									/>
+								{/if}
+							</RectClipPath>
+						</g>
+					</Group>
 				</Treemap>
 			</Svg>
 		</Chart>
@@ -174,32 +180,37 @@ title: ['Charts', 'Sankey']
     <div class="h-[600px] p-4 border rounded">
     	<Chart data={complexDataHierarchy.copy()}>
     		<Svg>
-    			<Treemap {tile} bind:selected={selectedZoomable} let:node let:rect>
-						{@const nodeColor = getNodeColor(node, colorBy)}
-						{#if isVisible(node, selectedZoomable)}
-							<g on:click={() => node.children ? selectedZoomable = node : null} transition:fade={{ duration: 600 }}>
-								<Rect
-									{...rect}
-									stroke={hsl(nodeColor).darker(1.5)}
-									fill={nodeColor}
-									rx={5}
-								/>
-								<Text
-									value="{node.data.name} ({node.children?.length ?? 0})"
-									style="font-size: 0.6rem; font-weight: 500"
-									verticalAnchor="start"
-									x={4}
-									y={2}
-								/>
-								<Text
-									value={formatNumberAsStyle(node.value, 'integer')}
-									style="font-size: 0.5rem; font-weight: 200"
-									verticalAnchor="start"
-									x={4}
-									y={16}
-								/>
-							</g>
-						{/if}
+    			<Treemap {tile} bind:selected={selectedZoomable}>
+						<Group slot="node" let:node let:rect x={rect.x} y={rect.y} on:click={() => node.children ? selectedZoomable = node : null}>
+								<RectClipPath width={rect.width} height={rect.height}>
+									{@const nodeColor = getNodeColor(node, colorBy)}
+									{#if isVisible(node, selectedZoomable)}
+										<g transition:fade={{ duration: 600 }}>
+											<Rect
+												width={rect.width}
+												height={rect.height}
+												stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+												fill={nodeColor}
+												rx={5}
+											/>
+												<Text
+													value="{node.data.name} ({node.children?.length ?? 0})"
+													style="font-size: 0.6rem; font-weight: 500"
+													verticalAnchor="start"
+													x={4}
+													y={2}
+												/>
+												<Text
+													value={formatNumberAsStyle(node.value, 'integer')}
+													style="font-size: 0.5rem; font-weight: 200"
+													verticalAnchor="start"
+													x={4}
+													y={16}
+												/>
+										</g>
+									{/if}
+							</RectClipPath>
+						</Group>
     			</Treemap>
     		</Svg>
     	</Chart>

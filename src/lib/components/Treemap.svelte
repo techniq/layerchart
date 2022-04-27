@@ -11,7 +11,6 @@
 	import { scaleLinear } from 'd3-scale';
 	import { group } from 'd3-array';
 
-	import Group from './Group.svelte';
 	import RectClipPath from './RectClipPath.svelte';
 	import { aspectTile } from '../utils/treemap';
 
@@ -103,21 +102,16 @@
 	{#each Array.from(nodesByHeight) as [height, nodes]}
 		<g>
 			{#each nodes as node}
-				{@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
-				{@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
-				<Group x={xScale(node.x0)} y={yScale(node.y0)}>
-					<RectClipPath width={nodeWidth} height={nodeHeight}>
-						<slot
-							{node}
-							rect={{
-								x: 0, // applied by Group
-								y: 0, // applied by Group
-								width: nodeWidth,
-								height: nodeHeight
-							}}
-						/>
-					</RectClipPath>
-				</Group>
+				<slot
+					name="node"
+					{node}
+					rect={{
+						x: xScale(node.x0),
+						y: yScale(node.y0),
+						width: xScale(node.x1) - xScale(node.x0),
+						height: yScale(node.y1) - yScale(node.y0)
+					}}
+				/>
 			{/each}
 		</g>
 	{/each}
