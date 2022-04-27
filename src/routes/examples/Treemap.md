@@ -48,7 +48,8 @@ title: ['Charts', 'Sankey']
 	}
 
 	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu)
-	const ordinalColor = scaleOrdinal(chromatic.schemeSpectral[9])
+	// filter out hard to see yellow and green
+	const ordinalColor = scaleOrdinal(chromatic.schemeSpectral[9].filter(c => hsl(c).h < 60 || hsl(c).h > 90))
 	// const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
 
 	function getNodeColor(node, colorBy) {
@@ -67,7 +68,7 @@ title: ['Charts', 'Sankey']
 ## Nested
 
 <div class="grid grid-flow-col gap-4 mb-4">
-	<div class="grid grid-cols-[1fr,200px] gap-2">
+	<div class="grid grid-cols-[6fr,3fr] gap-2">
 		<Field label="Tile">
 			<Tabs bind:selected={tile} contained class="w-full">
 				<div class="tabList w-full border h-8">
@@ -143,7 +144,7 @@ title: ['Charts', 'Sankey']
 ## Zoomable
 
 <div class="grid grid-flow-col gap-4 mb-4">
-	<div class="grid grid-cols-[1fr,200px] gap-2">
+	<div class="grid grid-cols-[6fr,3fr] gap-2">
 		<Field label="Tile">
 			<Tabs bind:selected={tile} contained class="w-full">
 				<div class="tabList w-full border h-8">
