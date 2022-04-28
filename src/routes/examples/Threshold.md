@@ -6,6 +6,7 @@ title: ['Charts', 'Threshold']
 	import { scaleTime } from 'd3-scale';
 	import { curveLinear, curveStepAfter, curveBumpX, curveMonotoneX } from 'd3-shape';
 	import { format } from 'date-fns';
+	import { Field } from 'svelte-ux';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
@@ -29,12 +30,14 @@ title: ['Charts', 'Threshold']
 	const data = createDateSeries({ min: 50, max: 100, value: 'integer', keys: ['value', 'baseline'] });
 </script>
 
-<select bind:value={selectedCurve}>
-  <option value={curveLinear}>curveLinear</option>
-  <option value={curveStepAfter}>curveStepAfter</option>
-  <option value={curveBumpX}>curveBumpX</option>
-  <option value={curveMonotoneX}>curveMonotoneX</option>
-</select>
+<Field label="Curve" let:id>
+	<select bind:value={selectedCurve} class="text-sm w-full outline-none cursor-pointer" {id}>
+		<option value={curveLinear}>curveLinear</option>
+		<option value={curveStepAfter}>curveStepAfter</option>
+		<option value={curveBumpX}>curveBumpX</option>
+		<option value={curveMonotoneX}>curveMonotoneX</option>
+	</select>
+</Field>
 
 ## Basic
 
