@@ -1,5 +1,5 @@
 /**
- * This custom tiling function adapts the built-in binary tiling function
+ * This custom tiling function adapts the tiling function
  * for the appropriate aspect ratio when the treemap is zoomed-in.
  * see: https://observablehq.com/@d3/zoomable-treemap#tile and https://observablehq.com/@d3/stretched-treemap
  */

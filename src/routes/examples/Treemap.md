@@ -3,11 +3,12 @@ title: ['Charts', 'Sankey']
 ---
 
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import { hierarchy } from 'd3-hierarchy';
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
-	import { fade } from 'svelte/transition';
+	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
 	import { Button, Breadcrumb, Field, Tabs, Tab } from 'svelte-ux';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
@@ -34,6 +35,12 @@ title: ['Charts', 'Sankey']
 
 	let selectedNested = null;
 	let selectedZoomable = null;
+	let paddingOuter = 4;
+	let paddingInner = 4;
+	let paddingTop = 20;
+	let paddingBottom = 0;
+	let paddingLeft = 0;
+	let paddingRight = 0;
 
 	/**
 	 * Show if the node (a) is a child of the selected (b), or any parent of the selected
@@ -67,8 +74,8 @@ title: ['Charts', 'Sankey']
 
 ## Nested
 
-<div class="grid grid-flow-col gap-4 mb-4">
-	<div class="grid grid-cols-[6fr,3fr] gap-2">
+<div class="grid gap-1 mb-4">
+	<div class="grid grid-cols-[6fr,3fr] gap-1">
 		<Field label="Tile">
 			<Tabs bind:selected={tile} contained class="w-full">
 				<div class="tabList w-full border h-8">
@@ -91,6 +98,40 @@ title: ['Charts', 'Sankey']
 			</Tabs>
 		</Field>
 	</div>
+	<div class="grid grid-cols-2 gap-2">
+		<Field label="Padding Outer" let:id>
+			<Button icon={mdiChevronLeft} on:click={() => paddingOuter -= 1} class="mr-2" />
+			<input type="range" bind:value={paddingOuter} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingOuter}</span>
+			<Button icon={mdiChevronRight} on:click={() => paddingOuter += 1} class="ml-2" />
+		</Field>
+		<Field label="Padding Inner" let:id>
+			<Button icon={mdiChevronLeft} on:click={() => paddingInner -= 1} class="mr-2" />
+			<input type="range" bind:value={paddingInner} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingInner}</span>
+			<Button icon={mdiChevronRight} on:click={() => paddingInner += 1} class="ml-2" />
+		</Field>
+	</div>
+	<div class="grid grid-cols-4 gap-2">
+		<Field label="Padding Top" let:id>
+			<Button icon={mdiChevronLeft} on:click={() => paddingTop -= 1} class="mr-2" />
+			<input type="range" bind:value={paddingTop} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingTop}</span>
+			<Button icon={mdiChevronRight} on:click={() => paddingTop += 1} class="ml-2" />
+		</Field>
+		<Field label="Padding Bottom" let:id>
+			<Button icon={mdiChevronLeft} on:click={() => paddingBottom -= 1} class="mr-2" />
+			<input type="range" bind:value={paddingBottom} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingBottom}</span>
+			<Button icon={mdiChevronRight} on:click={() => paddingBottom += 1} class="ml-2" />
+		</Field>
+		<Field label="Padding Left" let:id>
+			<Button icon={mdiChevronLeft} on:click={() => paddingLeft -= 1} class="mr-2" />
+			<input type="range" bind:value={paddingLeft} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingLeft}</span>
+			<Button icon={mdiChevronRight} on:click={() => paddingLeft += 1} class="ml-2" />
+		</Field>
+		<Field label="Padding Right" let:id>
+			<Button icon={mdiChevronLeft} on:click={() => paddingRight -= 1} class="mr-2" />
+			<input type="range" bind:value={paddingRight} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingRight}</span>
+			<Button icon={mdiChevronRight} on:click={() => paddingRight += 1} class="ml-2" />
+		</Field>
+	</div>
 </div>
 
 <Preview>
@@ -105,7 +146,7 @@ title: ['Charts', 'Sankey']
 	<div class="h-[800px] p-4 border rounded">
 		<Chart data={complexDataHierarchy.copy()}>
 			<Svg>
-				<Treemap {tile} bind:selected={selectedNested} paddingOuter={3} paddingTop={19} paddingInner={2} >
+				<Treemap {tile} bind:selected={selectedNested} {paddingOuter} {paddingInner} {paddingTop} {paddingBottom} {paddingLeft} {paddingRight}>
 					<Group slot="node" let:node let:rect x={rect.x} y={rect.y} on:click={() => node.children ? selectedNested = node : null}>
 						{@const nodeColor = getNodeColor(node, colorBy)}
 						<g transition:fade={{ duration: 600 }}>

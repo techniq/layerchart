@@ -49,28 +49,31 @@
 			? d3.treemapSliceDice
 			: tile;
 
-	$: treemap = d3.treemap().size([$width, $height]).tile(aspectTile(tileFunc, $width, $height));
+	let treemap;
+	$: {
+		treemap = d3.treemap().size([$width, $height]).tile(aspectTile(tileFunc, $width, $height));
 
-	$: if (padding) {
-		treemap.padding(padding);
-	}
-	$: if (paddingInner) {
-		treemap.paddingInner(paddingInner);
-	}
-	$: if (paddingOuter) {
-		treemap.paddingOuter(paddingOuter);
-	}
-	$: if (paddingTop) {
-		treemap.paddingTop(paddingTop);
-	}
-	$: if (paddingBottom) {
-		treemap.paddingBottom(paddingBottom);
-	}
-	$: if (paddingLeft) {
-		treemap.paddingLeft(paddingLeft);
-	}
-	$: if (paddingLeft) {
-		treemap.paddingRight(paddingRight);
+		if (padding) {
+			treemap.padding(padding);
+		}
+		if (paddingInner) {
+			treemap.paddingInner(paddingInner);
+		}
+		if (paddingOuter) {
+			treemap.paddingOuter(paddingOuter);
+		}
+		if (paddingTop) {
+			treemap.paddingTop(paddingTop);
+		}
+		if (paddingBottom) {
+			treemap.paddingBottom(paddingBottom);
+		}
+		if (paddingLeft) {
+			treemap.paddingLeft(paddingLeft);
+		}
+		if (paddingRight) {
+			treemap.paddingRight(paddingRight);
+		}
 	}
 
 	$: root = treemap($data);
