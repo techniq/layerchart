@@ -21,6 +21,7 @@ title: ['Charts', 'Sankey']
 	import Text from '$lib/components/Text.svelte';
 	import Treemap from '$lib/components/Treemap.svelte';
 	import { findAncestor } from '$lib/utils/hierarchy';
+	import { isNodeVisible } from '$lib/utils/treemap';
 
 	import Preview from '$lib/docs/Preview.svelte';
 
@@ -41,18 +42,6 @@ title: ['Charts', 'Sankey']
 	let paddingBottom = 0;
 	let paddingLeft = 0;
 	let paddingRight = 0;
-
-	/**
-	 * Show if the node (a) is a child of the selected (b), or any parent of the selected
-	 */
-	function isVisible(a, b) {
-		while (b) {
-			if (a.parent === b) return true;
-			b = b.parent;
-		}
-
-		return false;
-	}
 
 	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu)
 	// filter out hard to see yellow and green
@@ -226,7 +215,7 @@ title: ['Charts', 'Sankey']
 						<Group slot="node" let:node let:rect x={rect.x} y={rect.y} on:click={() => node.children ? selectedZoomable = node : null}>
 								<RectClipPath width={rect.width} height={rect.height}>
 									{@const nodeColor = getNodeColor(node, colorBy)}
-									{#if isVisible(node, selectedZoomable)}
+									{#if isNodeVisible(node, selectedZoomable)}
 										<g transition:fade={{ duration: 600 }}>
 											<Rect
 												width={rect.width}

@@ -14,3 +14,15 @@ export function aspectTile(tile, width, height) {
 		}
 	};
 }
+
+/**
+ * Show if the node (a) is a child of the selected (b), or any parent above selected
+ */
+export function isNodeVisible(a, b) {
+	while (b) {
+		if (a.parent === b) return true;
+		b = b.parent;
+	}
+
+	return false;
+}
