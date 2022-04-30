@@ -79,8 +79,8 @@
 	$: root = treemap($data);
 	$: selected = root; // set initial selection
 
-	// group nodes by height so can be rendered lowest to highest
-	$: nodesByHeight = group(root, (d) => d.height);
+	// group nodes by depth so can be rendered lowest to highest
+	$: nodesByDepth = group(root, (d) => d.depth);
 
 	const duration = 800;
 	const extents = tweened(undefined, { easing: cubicOut, duration });
@@ -102,7 +102,7 @@
 </script>
 
 <RectClipPath width={$width} height={$height}>
-	{#each Array.from(nodesByHeight) as [height, nodes]}
+	{#each Array.from(nodesByDepth) as [depth, nodes]}
 		<g>
 			{#each nodes as node}
 				<slot
