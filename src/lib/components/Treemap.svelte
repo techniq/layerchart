@@ -31,6 +31,7 @@
 	export let paddingBottom = 0;
 	export let paddingLeft = undefined;
 	export let paddingRight = undefined;
+	export let key: (node: d3.HierarchyNode<any>, i: number) => any = (node, i) => i;
 
 	export let selected = null;
 
@@ -104,7 +105,7 @@
 <RectClipPath width={$width} height={$height}>
 	{#each Array.from(nodesByDepth) as [depth, nodes]}
 		<g>
-			{#each nodes as node}
+			{#each nodes as node, i (key(node, i))}
 				<slot
 					name="node"
 					{node}
