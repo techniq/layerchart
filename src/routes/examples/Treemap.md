@@ -4,10 +4,11 @@ title: ['Charts', 'Sankey']
 
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import { hierarchy } from 'd3-hierarchy';
+	import { hierarchy, stratify } from 'd3-hierarchy';
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
+
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
 	import { Button, Breadcrumb, Field, Tabs, Tab } from 'svelte-ux';
@@ -26,9 +27,22 @@ title: ['Charts', 'Sankey']
 	import Preview from '$lib/docs/Preview.svelte';
 
 	import { simpleData, complexData } from './data/hierarchy';
+	import flareCsv from './data/flare.csv'
 
 	const complexDataHierarchy = hierarchy(complexData)
 		.sum((d) => d.value)
+		.sort((a, b) => b.value - a.value);
+
+	const processedCsv = flareCsv
+		.map(d => {
+			return {
+				...d,
+				name: d.name.split(".").pop(),
+				path: d.name.replace(/\./g, '/')
+			}
+		})
+	const csvHierarchy = stratify().path(d => d.path)(processedCsv)
+		.sum(d => d.size)
 		.sort((a, b) => b.value - a.value);
 
 	let tile = 'squarify'
@@ -62,6 +76,8 @@ title: ['Charts', 'Sankey']
 </script>
 
 ## Nested
+
+### Zoomable
 
 <div class="grid gap-1 mb-4">
 	<div class="grid grid-cols-[6fr,3fr] gap-1">
@@ -171,7 +187,121 @@ title: ['Charts', 'Sankey']
 	</div>
 </Preview>
 
-## Zoomable
+## Nested
+
+### csv
+
+<div class="grid gap-1 mb-4">
+	<div class="grid grid-cols-[6fr,3fr] gap-1">
+		<Field label="Tile">
+			<Tabs bind:selected={tile} contained class="w-full">
+				<div class="tabList w-full border h-8">
+					<Tab value="squarify">Squarify</Tab>
+					<Tab value="resquarify">Resquarify</Tab>
+					<Tab value="binary">Binary</Tab>
+					<Tab value="slice">Slice</Tab>
+					<Tab value="dice">Dice</Tab>
+					<Tab value="sliceDice">Slice / Dice</Tab>
+				</div>
+			</Tabs>
+		</Field>
+		<Field label="Color By">
+			<Tabs bind:selected={colorBy} contained class="w-full">
+				<div class="tabList w-full border h-8">
+					<Tab value="children">Children</Tab>
+					<Tab value="depth">Depth</Tab>
+					<Tab value="parent">Parent</Tab>
+				</div>
+			</Tabs>
+		</Field>
+	</div>
+	<div class="grid grid-cols-2 gap-2">
+		<Field label="Padding Outer" let:id>
+			<Button icon={mdiChevronLeft} on:click={() => paddingOuter -= 1} class="mr-2" />
+			<input type="range" bind:value={paddingOuter} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingOuter}</span>
+			<Button icon={mdiChevronRight} on:click={() => paddingOuter += 1} class="ml-2" />
+		</Field>
+		<Field label="Padding Inner" let:id>
+			<Button icon={mdiChevronLeft} on:click={() => paddingInner -= 1} class="mr-2" />
+			<input type="range" bind:value={paddingInner} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingInner}</span>
+			<Button icon={mdiChevronRight} on:click={() => paddingInner += 1} class="ml-2" />
+		</Field>
+	</div>
+	<div class="grid grid-cols-4 gap-2">
+		<Field label="Padding Top" let:id>
+			<Button icon={mdiChevronLeft} on:click={() => paddingTop -= 1} class="mr-2" />
+			<input type="range" bind:value={paddingTop} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingTop}</span>
+			<Button icon={mdiChevronRight} on:click={() => paddingTop += 1} class="ml-2" />
+		</Field>
+		<Field label="Padding Bottom" let:id>
+			<Button icon={mdiChevronLeft} on:click={() => paddingBottom -= 1} class="mr-2" />
+			<input type="range" bind:value={paddingBottom} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingBottom}</span>
+			<Button icon={mdiChevronRight} on:click={() => paddingBottom += 1} class="ml-2" />
+		</Field>
+		<Field label="Padding Left" let:id>
+			<Button icon={mdiChevronLeft} on:click={() => paddingLeft -= 1} class="mr-2" />
+			<input type="range" bind:value={paddingLeft} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingLeft}</span>
+			<Button icon={mdiChevronRight} on:click={() => paddingLeft += 1} class="ml-2" />
+		</Field>
+		<Field label="Padding Right" let:id>
+			<Button icon={mdiChevronLeft} on:click={() => paddingRight -= 1} class="mr-2" />
+			<input type="range" bind:value={paddingRight} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingRight}</span>
+			<Button icon={mdiChevronRight} on:click={() => paddingRight += 1} class="ml-2" />
+		</Field>
+	</div>
+</div>
+
+<Preview>
+	<Breadcrumb items={selectedNested?.ancestors().reverse() ?? []}>
+		<Button slot="item" let:item on:click={() => selectedNested = item} base class="px-2 py-1 rounded">
+			<div class="text-left">
+				<div class="text-sm">{item.data.name}</div>
+				<div class="text-xs text-black/50">{formatNumberAsStyle(item.value, 'integer')}</div>
+			</div>
+		</Button>
+	</Breadcrumb>
+	<div class="h-[800px] p-4 border rounded">
+		<Chart data={csvHierarchy}>
+			<Svg>
+				<Treemap {tile} bind:selected={selectedNested} {paddingOuter} {paddingInner} {paddingTop} {paddingBottom} {paddingLeft} {paddingRight}>
+					<Group slot="node" let:node let:rect x={rect.x} y={rect.y} on:click={() => node.children ? selectedNested = node : null}>
+						{@const nodeColor = getNodeColor(node, colorBy)}
+						<g transition:fade={{ duration: 600 }}>
+							<Rect
+								width={rect.width}
+								height={rect.height}
+								stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+								fill={nodeColor}
+								rx={5}
+							/>
+							<RectClipPath width={rect.width} height={rect.height}>
+								<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
+									<tspan>{node.data.name}</tspan>
+									{#if node.children}
+										<tspan style="font-size: 0.5rem; font-weight: 200">{formatNumberAsStyle(node.value, 'integer')}</tspan>
+									{/if}
+								</text>
+								{#if !node.children}
+									<Text
+										value={formatNumberAsStyle(node.value, 'integer')}
+										style="font-size: 0.5rem; font-weight: 200"
+										verticalAnchor="start"
+										x={4}
+										y={16}
+									/>
+								{/if}
+							</RectClipPath>
+						</g>
+					</Group>
+				</Treemap>
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Stacked
+
+### Zoomable
 
 <div class="grid grid-flow-col gap-4 mb-4">
 	<div class="grid grid-cols-[6fr,3fr] gap-2">
