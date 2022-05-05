@@ -75,7 +75,7 @@ title: ['Charts', 'Sankey']
 
 	let selectedNested = null;
 	let selectedZoomable = null;
-	let selectedCarNode = null;
+	let selectedCarNode = groupedHierarchy;
 	let paddingOuter = 4;
 	let paddingInner = 4;
 	let paddingTop = 20;
@@ -395,7 +395,7 @@ title: ['Charts', 'Sankey']
 </div>
 
 <Preview>
-	<Breadcrumb items={selectedCarNode?.ancestors().reverse() ?? []}>
+	<Breadcrumb items={(selectedCarNode ?? groupedHierarchy).ancestors().reverse()}>
 		<Button slot="item" let:item on:click={() => selectedCarNode = item} base class="px-2 py-1 rounded">
 			<div class="text-left">
 				<div class="text-sm">{item.data[0] ?? 'Overall'}</div>
@@ -406,7 +406,7 @@ title: ['Charts', 'Sankey']
 	<div class="h-[800px] p-4 border rounded">
 		<Chart data={groupedHierarchy}>
 			<Svg>
-				<Treemap {tile} {paddingOuter} {paddingInner} {paddingTop} {paddingBottom} {paddingLeft} {paddingRight} key={(node, i) => node.ancestors().map(n => n.data[0]).join('_')}>
+				<Treemap {tile} {paddingOuter} {paddingInner} {paddingTop} {paddingBottom} {paddingLeft} {paddingRight} nodeKey={(node, i) => node.ancestors().map(n => n.data[0]).join('_')}>
 					<Group slot="node" let:node let:rect x={rect.x} y={rect.y} on:click={() => node.children ? selectedCarNode = node : null} tweened={{ delay: 600 }}>
 						{@const nodeColor = getNodeColor(node, colorBy)}
 						<g in:fade={{ duration: 600, delay: 1200 }} out:fade={{ duration: 600 }}>
