@@ -25,7 +25,7 @@
 <NavItem text="Arc" path="/components/Arc" class="pl-6 py-2" />
 <NavItem text="Area" path="/components/Area" class="pl-6 py-2" />
 <NavItem text="Circle" path="/components/Circle" class="pl-6 py-2" />
-<NavItem text="CirclePath" path="/components/CircleClipPath" class="pl-6 py-2" />
+<NavItem text="CircleClipPath" path="/components/CircleClipPath" class="pl-6 py-2" />
 <NavItem text="ClipPath" path="/components/ClipPath" class="pl-6 py-2" />
 <NavItem text="Group" path="/components/Group" class="pl-6 py-2" />
 <NavItem text="Line" path="/components/Line" class="pl-6 py-2" />
