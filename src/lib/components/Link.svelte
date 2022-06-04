@@ -14,7 +14,7 @@
     - [ ] Use for annotations - https://github.com/techniq/layerchart/issues/11
 	*/
 	import type { tweened as tweenedStore } from 'svelte/motion';
-	import { linkHorizontal, linkVertical, linkRadial } from 'd3-shape';
+	import { link as d3Link, curveBumpX, curveBumpY } from 'd3-shape';
 	import { interpolatePath } from 'd3-interpolate-path';
 
 	import { createMotionStore } from '$lib/stores/motionStore';
@@ -27,6 +27,9 @@
 	export let sankey = false;
 	export let source = sankey ? (d) => [d.source.x1, d.y0] : (d) => d.source;
 	export let target = sankey ? (d) => [d.target.x0, d.y1] : (d) => d.target;
+	export let x = sankey ? (d) => d[0] : (d) => d.x;
+	export let y = sankey ? (d) => d[1] : (d) => d.y;
+	export let orientation: 'vertical' | 'horizontal' = 'horizontal';
 	export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
 	export let color = 'black';
@@ -35,8 +38,8 @@
 	$: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
 	$: tweened_d = createMotionStore('', { tweened: tweenedOptions });
 	$: {
-		const link = linkHorizontal().source(source).target(target);
-
+		const curve = orientation === 'vertical' ? curveBumpY : curveBumpX;
+		const link = d3Link(curve).source(source).target(target).x(x).y(y);
 		const d = link(data);
 		tweened_d.set(d);
 	}
