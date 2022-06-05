@@ -19,12 +19,18 @@ title: ['Charts', 'Tree']
 
 	import { complexData } from './data/hierarchy';
 
-	const complexDataHierarchy = hierarchy(complexData)
+	let expandedNodeNames = ['flare']
+
+	$: complexDataHierarchy = hierarchy(complexData, d => expandedNodeNames.includes(d.name) ? d.children : null)
 		// .sum((d) => d.value)
 		// .sort((a, b) => b.value - a.value);
 
 	let orientation = 'horizontal';
 	let curve = curveBumpX;
+
+	function getNodeKey(node) {
+		return node.data.name + node.depth;
+	}
 </script>
 
 ## Basic
@@ -54,13 +60,13 @@ title: ['Charts', 'Tree']
 </div>
 
 <Preview>
-	<div class="h-[1000px] p-4 border rounded">
-		<Chart data={complexDataHierarchy.copy()} padding={{ left: 50, right: 50 }}>
+	<div class="h-[800px] p-4 border rounded">
+		<Chart data={complexDataHierarchy} padding={{ left: 50, right: 50 }}>
 			<Svg>
 				<Tree let:nodes let:links>
 					{@const nodeWidth = 100}
 					{@const nodeHeight = 20}
-					{#each links as link, i}
+					{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
 						<Link
 							data={link}
 							{orientation}
@@ -69,12 +75,25 @@ title: ['Charts', 'Tree']
 							class="stroke-gray-300"
 						/>
 					{/each}
-					{#each nodes as node}
-						<Group x={(orientation === 'horizontal' ? node.y : node.x) - (nodeWidth / 2)} y={(orientation === 'horizontal' ? node.x : node.y) - (nodeHeight / 2)} tweened>
+					{#each nodes as node (getNodeKey(node))}
+						<Group
+							x={(orientation === 'horizontal' ? node.y : node.x) - (nodeWidth / 2)}
+							y={(orientation === 'horizontal' ? node.x : node.y) - (nodeHeight / 2)}
+							tweened
+							on:click={() => {
+								if (expandedNodeNames.includes(node.data.name)) {
+									expandedNodeNames = expandedNodeNames.filter(name => name !== node.data.name);
+								} else {
+									expandedNodeNames = [...expandedNodeNames, node.data.name];
+								}
+							}}
+							class={node.data.children ? 'cursor-pointer' : ''}
+						>
 							<Rect
 								width={nodeWidth}
 								height={nodeHeight}
 								class="fill-blue-50 stroke-blue-400"
+								stroke-width={node.data.children ? 2 : 1}
 								rx={10}
 								tweened
 							/>
@@ -85,7 +104,7 @@ title: ['Charts', 'Tree']
 								dy={-2}
 								textAnchor="middle"
 								verticalAnchor="middle"
-								style="font-size: .6rem"
+								class="text-xs fill-blue-500"
 							/>
 						</Group>
 					{/each}
