@@ -1,89 +1,36 @@
 ---
-title: ['Charts', 'Sankey']
+title: ['Charts', 'Tree']
 ---
 
 <script lang="ts">
-	import { fade } from 'svelte/transition';
-	import { hierarchy, stratify } from 'd3-hierarchy';
-	import { scaleSequential, scaleOrdinal } from 'd3-scale';
+	import { hierarchy } from 'd3-hierarchy';
 	import { curveBumpX, curveBumpY, curveStep, curveStepBefore, curveStepAfter } from 'd3-shape';
-	import * as chromatic from 'd3-scale-chromatic';
-	import { hsl } from 'd3-color';
-	import { rollup } from 'd3-array'
 
-	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-
-	import { Button, Breadcrumb, Field, Switch, Tabs, Tab } from 'svelte-ux';
-	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
-	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
+	import { Field, Tabs, Tab } from 'svelte-ux';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Group from '$lib/components/Group.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import Rect from '$lib/components/Rect.svelte';
-	import RectClipPath from '$lib/components/RectClipPath.svelte';
 	import Text from '$lib/components/Text.svelte';
 	import Tree from '$lib/components/Tree.svelte';
-	import Treemap from '$lib/components/Treemap.svelte';
-	import { findAncestor } from '$lib/utils/hierarchy';
-	import { isNodeVisible } from '$lib/utils/treemap';
 
 	import Preview from '$lib/docs/Preview.svelte';
 
-	import { simpleData, complexData } from './data/hierarchy';
-	import flareCsv from './data/flare.csv'
-	import carsCsv from './data/cars.csv'
+	import { complexData } from './data/hierarchy';
 
 	const complexDataHierarchy = hierarchy(complexData)
-		.sum((d) => d.value)
-		.sort((a, b) => b.value - a.value);
-
-	const processedFlareCsv = flareCsv
-		.map(d => {
-			return {
-				...d,
-				name: d.name.split(".").pop(),
-				path: d.name.replace(/\./g, '/')
-			}
-		})
-	const flareCsvHierarchy = stratify().path(d => d.path)(processedFlareCsv)
-		.sum(d => d.size)
-		.sort((a, b) => b.value - a.value);
-
-	let isFiltered = false;
-	$: groupedCars = rollup(
-		carsCsv
-			// Limit dataset
-			.filter(d => ['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.Make))
-			// Hide some models in each group to show transitions
-			.filter(d => isFiltered ? d.Year > 2010 : true)
-			// Apply `Make` selection
-			.filter(d => {
-				if (selectedCarNode?.depth === 1) {
-					return d.Make === selectedCarNode.data[0]
-				} else {
-					return true
-				}
-			}),
-		items => items[0],//.slice(0, 3),
-		d => d.Make,
-		d => d.Model,
-		// d => d.Year,
-	)
-	$: groupedHierarchy = hierarchy(groupedCars).count()
+		// .sum((d) => d.value)
+		// .sort((a, b) => b.value - a.value);
 
 	let orientation = 'horizontal';
 	let curve = curveBumpX;
-
-	let selectedNested = null;
-	let selectedZoomable = null;
-	let selectedCarNode = groupedHierarchy;
 </script>
 
 ## Basic
 
 <div class="grid gap-1 mb-4">
-	<div class="grid grid-cols-[1fr,1fr] gap-1">
+	<div class="grid grid-cols-[1fr,2fr] gap-1">
 		<Field label="Orientation">
 			<Tabs bind:selected={orientation} contained class="w-full">
 				<div class="tabList w-full border h-8">
@@ -107,14 +54,6 @@ title: ['Charts', 'Sankey']
 </div>
 
 <Preview>
-	<Breadcrumb items={selectedNested?.ancestors().reverse() ?? []}>
-		<Button slot="item" let:item on:click={() => selectedNested = item} base class="px-2 py-1 rounded">
-			<div class="text-left">
-				<div class="text-sm">{item.data.name}</div>
-				<div class="text-xs text-black/50">{formatNumberAsStyle(item.value, 'integer')}</div>
-			</div>
-		</Button>
-	</Breadcrumb>
 	<div class="h-[1000px] p-4 border rounded">
 		<Chart data={complexDataHierarchy.copy()} padding={{ left: 50, right: 50 }}>
 			<Svg>
