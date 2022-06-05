@@ -27,16 +27,23 @@ title: ['Charts', 'Tree']
 
 	let orientation = 'horizontal';
 	let curve = curveBumpX;
+	let layout = 'chart';
 
 	function getNodeKey(node) {
 		return node.data.name + node.depth;
 	}
+
+	const nodeWidth = 100;
+	const nodeHeight = 20;
+	const nodeSiblingGap = 20 
+	const nodeParentGap = 100 
+	$: nodeSize = orientation === 'horizontal' ? [nodeHeight + nodeSiblingGap, nodeWidth + nodeParentGap] : [nodeWidth + nodeSiblingGap, nodeHeight + nodeParentGap] 
 </script>
 
 ## Basic
 
 <div class="grid gap-1 mb-4">
-	<div class="grid grid-cols-[1fr,2fr] gap-1">
+	<div class="grid grid-cols-[1fr,2fr,1fr] gap-1">
 		<Field label="Orientation">
 			<Tabs bind:selected={orientation} contained class="w-full">
 				<div class="tabList w-full border h-8">
@@ -56,6 +63,14 @@ title: ['Charts', 'Tree']
 				</div>
 			</Tabs>
 		</Field>
+		<Field label="Layout">
+			<Tabs bind:selected={layout} contained class="w-full">
+				<div class="tabList w-full border h-8">
+					<Tab value="chart">Chart</Tab>
+					<Tab value="node">Node</Tab>
+				</div>
+			</Tabs>
+		</Field>
 	</div>
 </div>
 
@@ -63,9 +78,7 @@ title: ['Charts', 'Tree']
 	<div class="h-[800px] p-4 border rounded">
 		<Chart data={complexDataHierarchy} padding={{ left: 50, right: 50 }}>
 			<Svg>
-				<Tree let:nodes let:links>
-					{@const nodeWidth = 100}
-					{@const nodeHeight = 20}
+				<Tree let:nodes let:links nodeSize={layout === 'node' ? nodeSize : null}>
 					{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
 						<Link
 							data={link}

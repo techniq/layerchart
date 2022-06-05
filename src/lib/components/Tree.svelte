@@ -16,13 +16,22 @@
 	/**
 	 * see: https://github.com/d3/d3-hierarchy#tree_separation
 	 */
-	export let separation: (a: HierarchyPointNode<any>, b: HierarchyPointNode<any>) => number;
+	export let separation: (a: HierarchyPointNode<any>, b: HierarchyPointNode<any>) => number =
+		undefined;
 
 	export let orientation: 'vertical' | 'horizontal' = 'horizontal';
 
-	$: tree = d3Tree().size(orientation === 'horizontal' ? [$height, $width] : [$width, $height]);
-	// .nodeSize(nodeSize)
-	// .separation(separation);
+	let tree;
+	$: {
+		tree = d3Tree().size(orientation === 'horizontal' ? [$height, $width] : [$width, $height]);
+
+		if (nodeSize) {
+			tree.nodeSize(nodeSize);
+		}
+		if (separation) {
+			tree.separation(separation);
+		}
+	}
 
 	$: treeData = tree($data);
 </script>
