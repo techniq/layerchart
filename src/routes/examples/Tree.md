@@ -69,100 +69,26 @@ title: ['Charts', 'Sankey']
 		d => d.Model,
 		// d => d.Year,
 	)
-	$: groupedHierarchy = hierarchy(groupedCars)
-		.count()
+	$: groupedHierarchy = hierarchy(groupedCars).count()
 
-	let tile = 'squarify'
-	let colorBy = 'children';
+	let orientation = 'horizontal';
 
 	let selectedNested = null;
 	let selectedZoomable = null;
 	let selectedCarNode = groupedHierarchy;
-	let paddingOuter = 4;
-	let paddingInner = 4;
-	let paddingTop = 20;
-	let paddingBottom = 0;
-	let paddingLeft = 0;
-	let paddingRight = 0;
-
-	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu)
-	// filter out hard to see yellow and green
-	const ordinalColor = scaleOrdinal(chromatic.schemeSpectral[9].filter(c => hsl(c).h < 60 || hsl(c).h > 90))
-	// const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
-
-	function getNodeColor(node, colorBy) {
-		switch (colorBy) {
-			case 'children':
-				return node.children ? '#ccc' : '#ddd'
-			case 'depth':
-				return sequentialColor(node.depth);
-			case 'parent':
-				const colorParent = findAncestor(node, n => n.depth === 1)
-				return colorParent ? hsl(ordinalColor((colorParent).data.name)).brighter(node.depth * .3) : '#ddd'
-		}
-	}
 </script>
 
-## Nested
-
-### Zoomable
+## Basic
 
 <div class="grid gap-1 mb-4">
-	<div class="grid grid-cols-[6fr,3fr] gap-1">
-		<Field label="Tile">
-			<Tabs bind:selected={tile} contained class="w-full">
+	<div class="grid grid-cols-[1fr,1fr] gap-1">
+		<Field label="Orientation">
+			<Tabs bind:selected={orientation} contained class="w-full">
 				<div class="tabList w-full border h-8">
-					<Tab value="squarify">Squarify</Tab>
-					<Tab value="resquarify">Resquarify</Tab>
-					<Tab value="binary">Binary</Tab>
-					<Tab value="slice">Slice</Tab>
-					<Tab value="dice">Dice</Tab>
-					<Tab value="sliceDice">Slice / Dice</Tab>
+					<Tab value="horizontal">Horizontal</Tab>
+					<Tab value="vertical">Vertical</Tab>
 				</div>
 			</Tabs>
-		</Field>
-		<Field label="Color By">
-			<Tabs bind:selected={colorBy} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value="children">Children</Tab>
-					<Tab value="depth">Depth</Tab>
-					<Tab value="parent">Parent</Tab>
-				</div>
-			</Tabs>
-		</Field>
-	</div>
-	<div class="grid grid-cols-2 gap-2">
-		<Field label="Padding Outer" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingOuter -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingOuter} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingOuter}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingOuter += 1} class="ml-2" />
-		</Field>
-		<Field label="Padding Inner" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingInner -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingInner} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingInner}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingInner += 1} class="ml-2" />
-		</Field>
-	</div>
-	<div class="grid grid-cols-4 gap-2">
-		<Field label="Padding Top" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingTop -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingTop} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingTop}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingTop += 1} class="ml-2" />
-		</Field>
-		<Field label="Padding Bottom" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingBottom -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingBottom} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingBottom}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingBottom += 1} class="ml-2" />
-		</Field>
-		<Field label="Padding Left" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingLeft -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingLeft} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingLeft}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingLeft += 1} class="ml-2" />
-		</Field>
-		<Field label="Padding Right" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingRight -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingRight} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingRight}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingRight += 1} class="ml-2" />
 		</Field>
 	</div>
 </div>
@@ -177,29 +103,25 @@ title: ['Charts', 'Sankey']
 		</Button>
 	</Breadcrumb>
 	<div class="h-[1000px] p-4 border rounded">
-		<Chart data={complexDataHierarchy.copy()}>
+		<Chart data={complexDataHierarchy.copy()} padding={{ left: 50, right: 50 }}>
 			<Svg>
 				<Tree let:nodes let:links>
-						{@const nodeWidth = 100}
-						{@const nodeHeight = 10}
+					{@const nodeWidth = 100}
+					{@const nodeHeight = 20}
 					{#each links as link, i}
 						<Link
 							data={link}
-							orientation="horizontal"
-							stroke="black"
-							stroke-width={link.width}
+							{orientation}
 							tweened
-							x={d => d.y}
-							y={d => d.x}
+							class="stroke-gray-300"
 						/>
 					{/each}
 					{#each nodes as node}
-						<Group x={node.y - (nodeWidth / 2)} y={node.x - (nodeHeight / 2)} tweened>
+						<Group x={(orientation === 'horizontal' ? node.y : node.x) - (nodeWidth / 2)} y={(orientation === 'horizontal' ? node.x : node.y) - (nodeHeight / 2)} tweened>
 							<Rect
 								width={nodeWidth}
 								height={nodeHeight}
-								class="fill-gray-200"
-								stroke="black"
+								class="fill-blue-50 stroke-blue-400"
 								rx={10}
 								tweened
 							/>
