@@ -6,6 +6,7 @@ title: ['Charts', 'Sankey']
 	import { fade } from 'svelte/transition';
 	import { hierarchy, stratify } from 'd3-hierarchy';
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
+	import { curveBumpX, curveBumpY, curveStep, curveStepBefore, curveStepAfter } from 'd3-shape';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
 	import { rollup } from 'd3-array'
@@ -72,6 +73,7 @@ title: ['Charts', 'Sankey']
 	$: groupedHierarchy = hierarchy(groupedCars).count()
 
 	let orientation = 'horizontal';
+	let curve = curveBumpX;
 
 	let selectedNested = null;
 	let selectedZoomable = null;
@@ -87,6 +89,17 @@ title: ['Charts', 'Sankey']
 				<div class="tabList w-full border h-8">
 					<Tab value="horizontal">Horizontal</Tab>
 					<Tab value="vertical">Vertical</Tab>
+				</div>
+			</Tabs>
+		</Field>
+		<Field label="Curve">
+			<Tabs bind:selected={curve} contained class="w-full">
+				<div class="tabList w-full border h-8">
+					<Tab value={curveBumpX}>BumpX</Tab>
+					<Tab value={curveBumpY}>BumpY</Tab>
+					<Tab value={curveStep}>Step</Tab>
+					<Tab value={curveStepBefore}>Step Before</Tab>
+					<Tab value={curveStepAfter}>Step After</Tab>
 				</div>
 			</Tabs>
 		</Field>
@@ -112,6 +125,7 @@ title: ['Charts', 'Sankey']
 						<Link
 							data={link}
 							{orientation}
+							{curve}
 							tweened
 							class="stroke-gray-300"
 						/>

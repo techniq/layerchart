@@ -30,6 +30,7 @@
 	export let target = sankey ? (d) => [d.target.x0, d.y1] : (d) => d.target;
 	export let x = sankey ? (d) => d[0] : (d) => (orientation === 'horizontal' ? d.y : d.x);
 	export let y = sankey ? (d) => d[1] : (d) => (orientation === 'horizontal' ? d.x : d.y);
+	export let curve = orientation === 'horizontal' ? curveBumpX : curveBumpY;
 	export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
 	export let color = 'black';
@@ -38,7 +39,7 @@
 	$: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
 	$: tweened_d = createMotionStore('', { tweened: tweenedOptions });
 	$: {
-		const curve = orientation === 'horizontal' ? curveBumpX : curveBumpY;
+		orientation; // subscribe to orientation changes to link is update
 		const link = d3Link(curve).source(source).target(target).x(x).y(y);
 		const d = link(data);
 		tweened_d.set(d);
