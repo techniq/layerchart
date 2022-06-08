@@ -1,4 +1,5 @@
 import { subDays } from 'date-fns';
+import { degreesToRadians, radiansToDegrees } from './math';
 
 /**
  * Get random number between min (inclusive) and max (exclusive)
@@ -75,3 +76,20 @@ export const longData = [
 	{ year: '2016', basket: 2, fruit: 'cherries', value: 720 },
 	{ year: '2016', basket: 2, fruit: 'dates', value: 400 }
 ];
+
+export function getPhyllotaxis({ radius, count, width, height }) {
+	// Phyllotaxis: https://www.youtube.com/watch?v=KWoJgHFYWxY
+	const rads = Math.PI * (3 - Math.sqrt(5)); // ~2.4 rads or ~137.5 degrees
+	return getSpiral({ angle: radiansToDegrees(rads), radius, count, width, height });
+}
+
+export function getSpiral({ angle, radius, count, width, height }) {
+	return Array.from({ length: count }, (_, i) => {
+		const r = radius * Math.sqrt(i);
+		const a = degreesToRadians(angle * i);
+		return {
+			x: width / 2 + r * Math.cos(a),
+			y: height / 2 + r * Math.sin(a)
+		};
+	});
+}
