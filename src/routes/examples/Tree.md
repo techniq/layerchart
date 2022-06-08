@@ -96,7 +96,7 @@ title: ['Charts', 'Tree']
 				</Tooltip>
 			</div>
 		</div>
-		<Chart data={complexDataHierarchy} padding={{ left: 50, right: 50 }}>
+		<Chart data={complexDataHierarchy} padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}>
 			<Svg>
 				<Zoom bind:this={zoom}>
 					<Tree let:nodes let:links nodeSize={layout === 'node' ? nodeSize : null}>
