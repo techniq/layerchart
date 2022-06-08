@@ -62,8 +62,10 @@
 	});
 </script>
 
-<g class="point-group">
-	{#each points as p}
-		<Circle cx={p.x} cy={p.y} {r} {...$$restProps} />
-	{/each}
-</g>
+<slot {points}>
+	<g class="point-group">
+		{#each points as point}
+			<Circle cx={point.x} cy={point.y} {r} {...$$restProps} />
+		{/each}
+	</g>
+</slot>
