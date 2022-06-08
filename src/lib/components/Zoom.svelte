@@ -1,37 +1,38 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
+	import { spring } from 'svelte/motion';
 
 	const { width, height, padding } = getContext('LayerCake');
 
 	let dragging = false;
 
-	let translate = { x: 0, y: 0 };
-	let scale = { x: 1, y: 1 };
+	let translate = spring({ x: 0, y: 0 });
+	let scale = spring({ x: 1, y: 1 });
 	let startPoint;
 	let startTranslate;
 	let svgEl = null;
 
 	export function reset() {
-		translate = { x: 0, y: 0 };
-		scale = { x: 1, y: 1 };
+		$translate = { x: 0, y: 0 };
+		$scale = { x: 1, y: 1 };
 	}
 
 	export function increase() {
-		scale = {
-			x: scale.x * 1.25,
-			y: scale.y * 1.25
+		$scale = {
+			x: $scale.x * 1.25,
+			y: $scale.y * 1.25
 		};
 	}
 
 	export function decrease() {
-		scale = {
-			x: scale.x * 0.8,
-			y: scale.y * 0.8
+		$scale = {
+			x: $scale.x * 0.8,
+			y: $scale.y * 0.8
 		};
 	}
 
 	export function translateCenter() {
-		translate = {
+		$translate = {
 			x: 0,
 			y: 0
 		};
@@ -41,7 +42,7 @@
 		dragging = true;
 		svgEl = e.target.ownerSVGElement;
 		startPoint = localPoint(svgEl, e);
-		startTranslate = translate;
+		startTranslate = $translate;
 
 		window.addEventListener('mousemove', handleMouseMove);
 		window.addEventListener('mouseup', handleMouseUp);
@@ -61,9 +62,9 @@
 		const deltaX = endPoint.x - startPoint.x;
 		const deltaY = endPoint.y - startPoint.y;
 
-		translate = {
-			x: startTranslate.x + deltaX / scale.x,
-			y: startTranslate.y + deltaY / scale.y
+		$translate = {
+			x: startTranslate.x + deltaX / $scale.x,
+			y: startTranslate.y + deltaY / $scale.y
 		};
 	}
 
@@ -74,9 +75,9 @@
 	function handleWheel(e) {
 		e.preventDefault();
 		const scaleBy = e.deltaY > 0 ? 1.1 : 0.9;
-		scale = {
-			x: scale.x * scaleBy,
-			y: scale.y * scaleBy
+		$scale = {
+			x: $scale.x * scaleBy,
+			y: $scale.y * scaleBy
 		};
 	}
 
@@ -102,13 +103,13 @@
 	$: center = { x: $width / 2, y: $height / 2 };
 
 	$: viewportCenter = {
-		x: center.x - translate.x,
-		y: center.y - translate.y
+		x: center.x - $translate.x,
+		y: center.y - $translate.y
 	};
 
 	$: newTranslate = {
-		x: translate.x * scale.x + center.x - center.x * scale.x,
-		y: translate.y * scale.y + center.y - center.y * scale.y
+		x: $translate.x * $scale.x + center.x - center.x * $scale.x,
+		y: $translate.y * $scale.y + center.y - center.y * $scale.y
 	};
 </script>
 
@@ -122,6 +123,6 @@
 	on:dblclick={handleDoubleClick}
 	fill="transparent"
 />
-<g transform="translate({newTranslate.x},{newTranslate.y}) scale({scale.x},{scale.y})">
+<g transform="translate({newTranslate.x},{newTranslate.y}) scale({$scale.x},{$scale.y})">
 	<slot />
 </g>
