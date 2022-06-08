@@ -108,7 +108,6 @@ title: ['Charts', 'Tree']
 								class="fill-blue-50 stroke-blue-400"
 								stroke-width={node.data.children ? 2 : 1}
 								rx={10}
-								tweened
 							/>
 							<Text
 								value={node.data.name}
