@@ -6,6 +6,7 @@ export { default as AxisY } from './AxisY.svelte';
 export { default as Bars } from './Bars.svelte';
 export { default as Baseline } from './Baseline.svelte';
 export { default as Chart } from './Chart.svelte';
+export { default as ChartClipPath } from './ChartClipPath.svelte';
 export { default as Circle } from './Circle.svelte';
 export { default as CircleClipPath } from './CircleClipPath.svelte';
 export { default as ClipPath } from './ClipPath.svelte';
