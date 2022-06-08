@@ -75,7 +75,7 @@ title: ['Charts', 'Tree']
 </div>
 
 <Preview>
-	<div class="h-[800px] p-4 border rounded">
+	<div class="h-[800px] p-4 border rounded overflow-hidden">
 		<Chart data={complexDataHierarchy} padding={{ left: 50, right: 50 }}>
 			<Svg>
 				<Tree let:nodes let:links nodeSize={layout === 'node' ? nodeSize : null}>
