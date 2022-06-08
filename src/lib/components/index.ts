@@ -29,3 +29,4 @@ export { default as Text } from './Text.svelte';
 export { default as Threshold } from './Threshold.svelte';
 export { default as Tooltip } from './Tooltip.svelte';
 export { default as Treemap } from './Treemap.svelte';
+export { default as Zoom } from './Zoom.svelte';
