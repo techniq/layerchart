@@ -62,10 +62,13 @@
 		const deltaX = endPoint.x - startPoint.x;
 		const deltaY = endPoint.y - startPoint.y;
 
-		$translate = {
-			x: startTranslate.x + deltaX / $scale.x,
-			y: startTranslate.y + deltaY / $scale.y
-		};
+		translate.set(
+			{
+				x: startTranslate.x + deltaX / $scale.x,
+				y: startTranslate.y + deltaY / $scale.y
+			},
+			{ hard: true }
+		);
 	}
 
 	function handleDoubleClick() {
@@ -74,11 +77,19 @@
 
 	function handleWheel(e) {
 		e.preventDefault();
-		const scaleBy = e.deltaY > 0 ? 1.1 : 0.9;
-		$scale = {
-			x: $scale.x * scaleBy,
-			y: $scale.y * scaleBy
-		};
+		const scaleBy = -e.deltaY > 0 ? 1.1 : 0.9;
+
+		// TODO: Update to match d3-zoom delta
+		// https://github.com/d3/d3-zoom#zoom_wheelDelta
+		// const scaleBy = -e.deltaY * (e.deltaMode === 1 ? 0.05 : e.deltaMode ? 1 : 0.002);
+
+		scale.set(
+			{
+				x: $scale.x * scaleBy,
+				y: $scale.y * scaleBy
+			},
+			{ hard: true }
+		);
 	}
 
 	function localPoint(svgEl, e) {
