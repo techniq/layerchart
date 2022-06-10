@@ -11,7 +11,7 @@
 	import { scaleLinear } from 'd3-scale';
 	import { group } from 'd3-array';
 
-	import RectClipPath from './RectClipPath.svelte';
+	import ChartClipPath from './ChartClipPath.svelte';
 	import { aspectTile } from '../utils/treemap';
 
 	const { data, width, height } = getContext('LayerCake');
@@ -102,7 +102,7 @@
 	$: yScale = scaleLinear().domain([$extents.y0, $extents.y1]).rangeRound([0, $height]);
 </script>
 
-<RectClipPath width={$width} height={$height}>
+<ChartClipPath>
 	{#each Array.from(nodesByDepth) as [depth, nodes]}
 		<g>
 			{#each nodes as node, i (nodeKey(node, i))}
@@ -119,4 +119,4 @@
 			{/each}
 		</g>
 	{/each}
-</RectClipPath>
+</ChartClipPath>
