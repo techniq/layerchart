@@ -85,19 +85,12 @@
 
 	const duration = 800;
 	const extents = tweened(undefined, { easing: cubicOut, duration });
-	$: $extents = selected
-		? {
-				x0: selected.x0,
-				y0: selected.y0,
-				x1: selected.x1,
-				y1: selected.y1
-		  }
-		: {
-				x0: 0,
-				y0: 0,
-				x1: $width,
-				y1: $height
-		  };
+	$: $extents = {
+		x0: selected?.x0 ?? 0,
+		y0: selected?.y0 ?? 0,
+		x1: selected?.x1 ?? $width,
+		y1: selected?.y1 ?? $height
+	};
 	$: xScale = scaleLinear().domain([$extents.x0, $extents.x1]).rangeRound([0, $width]);
 	$: yScale = scaleLinear().domain([$extents.y0, $extents.y1]).rangeRound([0, $height]);
 </script>
