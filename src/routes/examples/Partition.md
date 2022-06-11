@@ -1,19 +1,17 @@
 ---
-title: ['Charts', 'Sankey']
+title: ['Charts', 'Partition']
 ---
 
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import { hierarchy, stratify } from 'd3-hierarchy';
+	import { hierarchy } from 'd3-hierarchy';
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
-	import { rollup } from 'd3-array'
 
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
-	import { Button, Breadcrumb, Field, Switch, Tabs, Tab } from 'svelte-ux';
-	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
+	import { Button, Field, Tabs, Tab } from 'svelte-ux';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -23,59 +21,17 @@ title: ['Charts', 'Sankey']
 	import Text from '$lib/components/Text.svelte';
 	import Partition from '$lib/components/Partition.svelte';
 	import { findAncestor } from '$lib/utils/hierarchy';
-	import { isNodeVisible } from '$lib/utils/treemap';
 
 	import Preview from '$lib/docs/Preview.svelte';
 
-	import { simpleData, complexData } from './data/hierarchy';
-	import flareCsv from './data/flare.csv'
-	import carsCsv from './data/cars.csv'
+	import { complexData } from './data/hierarchy';
 
 	const complexDataHierarchy = hierarchy(complexData)
 		.sum((d) => d.value)
 		.sort((a, b) => b.value - a.value);
 
-	const processedFlareCsv = flareCsv
-		.map(d => {
-			return {
-				...d,
-				name: d.name.split(".").pop(),
-				path: d.name.replace(/\./g, '/')
-			}
-		})
-	const flareCsvHierarchy = stratify().path(d => d.path)(processedFlareCsv)
-		.sum(d => d.size)
-		.sort((a, b) => b.value - a.value);
-
-	let isFiltered = false;
-	$: groupedCars = rollup(
-		carsCsv
-			// Limit dataset
-			.filter(d => ['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.Make))
-			// Hide some models in each group to show transitions
-			.filter(d => isFiltered ? d.Year > 2010 : true)
-			// Apply `Make` selection
-			.filter(d => {
-				if (selectedCarNode?.depth === 1) {
-					return d.Make === selectedCarNode.data[0]
-				} else {
-					return true
-				}
-			}),
-		items => items[0],//.slice(0, 3),
-		d => d.Make,
-		d => d.Model,
-		// d => d.Year,
-	)
-	$: groupedHierarchy = hierarchy(groupedCars)
-		.count()
-
-	let tile = 'squarify'
 	let colorBy = 'children';
 
-	let selectedNested = null;
-	let selectedZoomable = null;
-	let selectedCarNode = groupedHierarchy;
 	let padding = 0;
 	let round = false;
 
