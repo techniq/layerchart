@@ -1,3 +1,6 @@
+import { derived } from 'svelte/store';
+import { tweened, spring } from 'svelte/motion';
+
 /**
  * Implemenation for missing `scaleBand().invert()`
  *
@@ -20,4 +23,58 @@ export function scaleBandInvert(scale) {
 
 export function isScaleBand(scale) {
 	return typeof scale.bandwidth === 'function';
+}
+
+/**
+ * Animate d3-scale as domain and/or range are updated using tweened store
+ */
+export function tweenedScale(scale, tweenedOptions: Parameters<typeof tweened>[1] = {}) {
+	const tweenedDomain = tweened(undefined, tweenedOptions);
+	const tweenedRange = tweened(undefined, tweenedOptions);
+
+	const tweenedScale = derived([tweenedDomain, tweenedRange], ([domain, range]) => {
+		const scaleInstance = scale.domain ? scale : scale(); // support `scaleLinear` or `scaleLinear()` (which could have `.interpolate()` and others set)
+
+		if (domain) {
+			scaleInstance.domain(domain);
+		}
+		if (range) {
+			scaleInstance.range(range);
+		}
+
+		return scaleInstance;
+	});
+
+	return {
+		subscribe: tweenedScale.subscribe,
+		domain: (values) => tweenedDomain.set(values),
+		range: (values) => tweenedRange.set(values)
+	};
+}
+
+/**
+ * Animate d3-scale as domain and/or range are updated using spring store
+ */
+export function springScale(scale, springOptions: Parameters<typeof spring>[1] = {}) {
+	const springDomain = spring(undefined, springOptions);
+	const springRange = spring(undefined, springOptions);
+
+	const tweenedScale = derived([springDomain, springRange], ([domain, range]) => {
+		const scaleInstance = scale.domain ? scale : scale(); // support `scaleLinear` or `scaleLinear()` (which could have `.interpolate()` and others set)
+
+		if (domain) {
+			scaleInstance.domain(domain);
+		}
+		if (range) {
+			scaleInstance.range(range);
+		}
+
+		return scaleInstance;
+	});
+
+	return {
+		subscribe: tweenedScale.subscribe,
+		domain: (values) => springDomain.set(values),
+		range: (values) => springRange.set(values)
+	};
 }

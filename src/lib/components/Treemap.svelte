@@ -4,7 +4,6 @@
 	 *   - [ ] Improve zoomable nested (apply extent ratio?  const extentRatio = ($extents.y1 - $extents.y0) / $height;
 	 */
 	import { getContext } from 'svelte';
-	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
 
 	import * as d3 from 'd3-hierarchy';
@@ -13,6 +12,7 @@
 
 	import ChartClipPath from './ChartClipPath.svelte';
 	import { aspectTile } from '../utils/treemap';
+	import { tweenedScale } from '$lib/utils/scales';
 
 	const { data, width, height } = getContext('LayerCake');
 
@@ -80,19 +80,18 @@
 	$: root = treemap($data);
 	$: selected = root; // set initial selection
 
-	// group nodes by depth so can be rendered lowest to highest
+	// group nodes by depth so can be rendered lowest to highest, to stack properly
 	$: nodesByDepth = group(root, (d) => d.depth);
 
-	const duration = 800;
-	const extents = tweened(undefined, { easing: cubicOut, duration });
-	$: $extents = {
-		x0: selected?.x0 ?? 0,
-		y0: selected?.y0 ?? 0,
-		x1: selected?.x1 ?? $width,
-		y1: selected?.y1 ?? $height
-	};
-	$: xScale = scaleLinear().domain([$extents.x0, $extents.x1]).rangeRound([0, $width]);
-	$: yScale = scaleLinear().domain([$extents.y0, $extents.y1]).rangeRound([0, $height]);
+	const tweenedOptions: Parameters<typeof tweenedScale>[1] = { easing: cubicOut, duration: 800 };
+
+	const xScale = tweenedScale(scaleLinear, tweenedOptions);
+	$: xScale.domain([selected?.x0 ?? 0, selected?.x1 ?? $width]);
+	$: xScale.range([0, $width]);
+
+	const yScale = tweenedScale(scaleLinear, tweenedOptions);
+	$: yScale.domain([selected?.y0 ?? 0, selected?.y1 ?? $height]);
+	$: yScale.range([0, $height]);
 </script>
 
 <ChartClipPath>
@@ -103,10 +102,10 @@
 					name="node"
 					{node}
 					rect={{
-						x: xScale(node.x0),
-						y: yScale(node.y0),
-						width: xScale(node.x1) - xScale(node.x0),
-						height: yScale(node.y1) - yScale(node.y0)
+						x: $xScale(node.x0),
+						y: $yScale(node.y0),
+						width: $xScale(node.x1) - $xScale(node.x0),
+						height: $yScale(node.y1) - $yScale(node.y0)
 					}}
 				/>
 			{/each}
