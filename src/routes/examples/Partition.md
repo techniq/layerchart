@@ -11,10 +11,12 @@ title: ['Charts', 'Partition']
 
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
-	import { Button, Field, Tabs, Tab } from 'svelte-ux';
+	import { Breadcrumb, Button, Field, Tabs, Tab } from 'svelte-ux';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
+	import Bounds from '$lib/components/Bounds.svelte';
+	import ChartClipPath from '$lib/components/ChartClipPath.svelte';
 	import Group from '$lib/components/Group.svelte';
 	import Rect from '$lib/components/Rect.svelte';
 	import RectClipPath from '$lib/components/RectClipPath.svelte';
@@ -30,10 +32,15 @@ title: ['Charts', 'Partition']
 		.sum((d) => d.value)
 		.sort((a, b) => b.value - a.value);
 
+	const horizontalHierarchy = complexDataHierarchy.copy()
+	const verticalHierarchy = complexDataHierarchy.copy()
+
 	let colorBy = 'children';
 
 	let padding = 0;
 	let round = false;
+	let selectedHorizontal = horizontalHierarchy;
+	let selectedVertical = verticalHierarchy;
 
 	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu)
 	// filter out hard to see yellow and green
@@ -83,89 +90,113 @@ title: ['Charts', 'Partition']
 ## Horizontal
 
 <Preview>
-    <div class="h-[600px] p-4 border rounded">
-    	<Chart data={complexDataHierarchy.copy()}>
-    		<Svg>
-    			<Partition {padding} {round} let:nodes>
-						{#each nodes as node}
-							{@const nodeWidth = node.y1 - node.y0}
-							{@const nodeHeight = node.x1 - node.x0}
-							<Group x={node.y0} y={node.x0}>
-								<RectClipPath width={nodeWidth} height={nodeHeight}>
-									{@const nodeColor = getNodeColor(node, colorBy)}
-									<g transition:fade={{ duration: 600 }}>
-										<Rect
-											width={nodeWidth}
-											height={nodeHeight}
-											stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
-											fill={nodeColor}
-											rx={5}
-										/>
-											<Text
-												value="{node.data.name} ({node.children?.length ?? 0})"
-												style="font-size: 0.6rem; font-weight: 500"
-												verticalAnchor="start"
-												x={4}
-												y={2}
+	<Breadcrumb items={selectedHorizontal?.ancestors().reverse() ?? []}>
+		<Button slot="item" let:item on:click={() => selectedHorizontal = item} base class="px-2 py-1 rounded">
+			<div class="text-left">
+				<div class="text-sm">{item.data.name}</div>
+				<div class="text-xs text-black/50">{formatNumberAsStyle(item.value, 'integer')}</div>
+			</div>
+		</Button>
+	</Breadcrumb>
+	<div class="h-[600px] p-4 border rounded">
+		<Chart data={horizontalHierarchy}>
+			<Svg>
+				<Bounds let:xScale let:yScale extents={{ x0: selectedHorizontal?.y0, y0: selectedHorizontal?.x0, y1: selectedHorizontal?.x1 }}>
+					<ChartClipPath>
+						<Partition {padding} {round} let:nodes>
+							{#each nodes as node}
+								{@const nodeWidth = xScale(node.y1) - xScale(node.y0)}
+								{@const nodeHeight = yScale(node.x1) - yScale(node.x0)}
+								<Group x={xScale(node.y0)} y={yScale(node.x0)} on:click={() => selectedHorizontal = node}>
+									<RectClipPath width={nodeWidth} height={nodeHeight}>
+										{@const nodeColor = getNodeColor(node, colorBy)}
+										<g transition:fade={{ duration: 600 }}>
+											<Rect
+												width={nodeWidth}
+												height={nodeHeight}
+												stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+												fill={nodeColor}
+												rx={5}
 											/>
-											<Text
-												value={formatNumberAsStyle(node.value, 'integer')}
-												style="font-size: 0.5rem; font-weight: 200"
-												verticalAnchor="start"
-												x={4}
-												y={16}
-											/>
-									</g>
-								</RectClipPath>
-							</Group>
-						{/each}
-    			</Partition>
-    		</Svg>
-    	</Chart>
-    </div>
+												<Text
+													value="{node.data.name} ({node.children?.length ?? 0})"
+													style="font-size: 0.6rem; font-weight: 500"
+													verticalAnchor="start"
+													x={4}
+													y={2}
+												/>
+												<Text
+													value={formatNumberAsStyle(node.value, 'integer')}
+													style="font-size: 0.5rem; font-weight: 200"
+													verticalAnchor="start"
+													x={4}
+													y={16}
+												/>
+										</g>
+									</RectClipPath>
+								</Group>
+							{/each}
+						</Partition>
+					</ChartClipPath>
+				</Bounds>
+			</Svg>
+		</Chart>
+	</div>
 </Preview>
 
 ## Vertical
 
 <Preview>
-    <div class="h-[600px] p-4 border rounded">
-    	<Chart data={complexDataHierarchy.copy()}>
-    		<Svg>
-    			<Partition orientation="vertical" {padding} {round} let:nodes>
-						{#each nodes as node}
-							{@const nodeWidth = node.x1 - node.x0}
-							{@const nodeHeight = node.y1 - node.y0}
-							<Group x={node.x0} y={node.y0}>
-								<RectClipPath width={nodeWidth} height={nodeHeight}>
-									{@const nodeColor = getNodeColor(node, colorBy)}
-									<g transition:fade={{ duration: 600 }}>
-										<Rect
-											width={nodeWidth}
-											height={nodeHeight}
-											stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
-											fill={nodeColor}
-											rx={5}
-										/>
-											<Text
-												value="{node.data.name} ({node.children?.length ?? 0})"
-												style="font-size: 0.6rem; font-weight: 500"
-												verticalAnchor="start"
-												x={4}
-												y={2}
+	<Breadcrumb items={selectedVertical?.ancestors().reverse() ?? []}>
+		<Button slot="item" let:item on:click={() => selectedVertical = item} base class="px-2 py-1 rounded">
+			<div class="text-left">
+				<div class="text-sm">{item.data.name}</div>
+				<div class="text-xs text-black/50">{formatNumberAsStyle(item.value, 'integer')}</div>
+			</div>
+		</Button>
+	</Breadcrumb>
+	<div class="h-[600px] p-4 border rounded">
+		<Chart data={verticalHierarchy}>
+			<Svg>
+				<Bounds let:xScale let:yScale extents={{ x0: selectedVertical?.x0, y0: selectedVertical?.y0, x1: selectedVertical?.x1 }}>
+					<ChartClipPath>
+						<Partition orientation="vertical" {padding} {round} let:nodes>
+							{#each nodes as node}
+								{@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
+								{@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
+								<Group x={xScale(node.x0)} y={yScale(node.y0)} on:click={() => selectedVertical = node}>
+									<RectClipPath width={nodeWidth} height={nodeHeight}>
+										{@const nodeColor = getNodeColor(node, colorBy)}
+										<g transition:fade={{ duration: 600 }}>
+											<Rect
+												width={nodeWidth}
+												height={nodeHeight}
+												stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+												fill={nodeColor}
+												rx={5}
 											/>
-											<Text
-												value={formatNumberAsStyle(node.value, 'integer')}
-												style="font-size: 0.5rem; font-weight: 200"
-												verticalAnchor="start"
-												x={4}
-												y={16}
-											/>
-									</g>
-								</RectClipPath>
-							</Group>
-						{/each}
-    			</Partition>
-    		</Svg>
-    	</Chart>
-    </div>
+												<Text
+													value="{node.data.name} ({node.children?.length ?? 0})"
+													style="font-size: 0.6rem; font-weight: 500"
+													verticalAnchor="start"
+													x={4}
+													y={2}
+												/>
+												<Text
+													value={formatNumberAsStyle(node.value, 'integer')}
+													style="font-size: 0.5rem; font-weight: 200"
+													verticalAnchor="start"
+													x={4}
+													y={16}
+												/>
+										</g>
+									</RectClipPath>
+								</Group>
+							{/each}
+						</Partition>
+					</ChartClipPath>
+				</Bounds>
+			</Svg>
+		</Chart>
+	</div>
 </Preview>
