@@ -10,7 +10,6 @@
 
 	import ChartClipPath from './ChartClipPath.svelte';
 	import { aspectTile } from '../utils/treemap';
-	import Bounds from './Bounds.svelte';
 
 	const { data, width, height } = getContext('LayerCake');
 
@@ -76,29 +75,19 @@
 	}
 
 	$: root = treemap($data);
+	// TODO: Remove selected
 	$: selected = root; // set initial selection
 
 	// group nodes by depth so can be rendered lowest to highest, to stack properly
 	$: nodesByDepth = group(root, (d) => d.depth);
 </script>
 
-<Bounds extents={selected} let:xScale let:yScale>
-	<ChartClipPath>
-		{#each Array.from(nodesByDepth) as [depth, nodes]}
-			<g>
-				{#each nodes as node, i (nodeKey(node, i))}
-					<slot
-						name="node"
-						{node}
-						rect={{
-							x: xScale(node.x0),
-							y: yScale(node.y0),
-							width: xScale(node.x1) - xScale(node.x0),
-							height: yScale(node.y1) - yScale(node.y0)
-						}}
-					/>
-				{/each}
-			</g>
-		{/each}
-	</ChartClipPath>
-</Bounds>
+<ChartClipPath>
+	{#each Array.from(nodesByDepth) as [depth, nodes]}
+		<g>
+			{#each nodes as node, i (nodeKey(node, i))}
+				<slot name="node" {node} />
+			{/each}
+		</g>
+	{/each}
+</ChartClipPath>
