@@ -8,7 +8,6 @@
 	import * as d3 from 'd3-hierarchy';
 	import { group } from 'd3-array';
 
-	import ChartClipPath from './ChartClipPath.svelte';
 	import { aspectTile } from '../utils/treemap';
 
 	const { data, width, height } = getContext('LayerCake');
@@ -82,12 +81,10 @@
 	$: nodesByDepth = group(root, (d) => d.depth);
 </script>
 
-<ChartClipPath>
-	{#each Array.from(nodesByDepth) as [depth, nodes]}
-		<g>
-			{#each nodes as node, i (nodeKey(node, i))}
-				<slot name="node" {node} />
-			{/each}
-		</g>
-	{/each}
-</ChartClipPath>
+{#each Array.from(nodesByDepth) as [depth, nodes]}
+	<g>
+		{#each nodes as node, i (nodeKey(node, i))}
+			<slot name="node" {node} />
+		{/each}
+	</g>
+{/each}
