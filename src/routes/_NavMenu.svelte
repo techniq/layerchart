@@ -26,6 +26,7 @@
 <div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Primatives</div>
 <NavItem text="Arc" path="/components/Arc" class="pl-6 py-2" />
 <NavItem text="Area" path="/components/Area" class="pl-6 py-2" />
+<NavItem text="Bounds" path="/components/Bounds" class="pl-6 py-2" />
 <NavItem text="ChartClipPath" path="/components/ChartClipPath" class="pl-6 py-2" />
 <NavItem text="Circle" path="/components/Circle" class="pl-6 py-2" />
 <NavItem text="CircleClipPath" path="/components/CircleClipPath" class="pl-6 py-2" />

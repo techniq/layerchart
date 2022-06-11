@@ -4,15 +4,13 @@
 	 *   - [ ] Improve zoomable nested (apply extent ratio?  const extentRatio = ($extents.y1 - $extents.y0) / $height;
 	 */
 	import { getContext } from 'svelte';
-	import { cubicOut } from 'svelte/easing';
 
 	import * as d3 from 'd3-hierarchy';
-	import { scaleLinear } from 'd3-scale';
 	import { group } from 'd3-array';
 
 	import ChartClipPath from './ChartClipPath.svelte';
 	import { aspectTile } from '../utils/treemap';
-	import { tweenedScale } from '$lib/utils/scales';
+	import Bounds from './Bounds.svelte';
 
 	const { data, width, height } = getContext('LayerCake');
 
@@ -82,33 +80,25 @@
 
 	// group nodes by depth so can be rendered lowest to highest, to stack properly
 	$: nodesByDepth = group(root, (d) => d.depth);
-
-	const tweenedOptions: Parameters<typeof tweenedScale>[1] = { easing: cubicOut, duration: 800 };
-
-	const xScale = tweenedScale(scaleLinear, tweenedOptions);
-	$: xScale.domain([selected?.x0 ?? 0, selected?.x1 ?? $width]);
-	$: xScale.range([0, $width]);
-
-	const yScale = tweenedScale(scaleLinear, tweenedOptions);
-	$: yScale.domain([selected?.y0 ?? 0, selected?.y1 ?? $height]);
-	$: yScale.range([0, $height]);
 </script>
 
-<ChartClipPath>
-	{#each Array.from(nodesByDepth) as [depth, nodes]}
-		<g>
-			{#each nodes as node, i (nodeKey(node, i))}
-				<slot
-					name="node"
-					{node}
-					rect={{
-						x: $xScale(node.x0),
-						y: $yScale(node.y0),
-						width: $xScale(node.x1) - $xScale(node.x0),
-						height: $yScale(node.y1) - $yScale(node.y0)
-					}}
-				/>
-			{/each}
-		</g>
-	{/each}
-</ChartClipPath>
+<Bounds extents={selected} let:xScale let:yScale>
+	<ChartClipPath>
+		{#each Array.from(nodesByDepth) as [depth, nodes]}
+			<g>
+				{#each nodes as node, i (nodeKey(node, i))}
+					<slot
+						name="node"
+						{node}
+						rect={{
+							x: xScale(node.x0),
+							y: yScale(node.y0),
+							width: xScale(node.x1) - xScale(node.x0),
+							height: yScale(node.y1) - yScale(node.y0)
+						}}
+					/>
+				{/each}
+			</g>
+		{/each}
+	</ChartClipPath>
+</Bounds>
