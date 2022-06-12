@@ -28,19 +28,19 @@ title: ['Charts', 'Partition']
 
 	import { complexData } from './data/hierarchy';
 
-	const complexDataHierarchy = hierarchy(complexData)
+	const complexHierarchy = hierarchy(complexData)
 		.sum((d) => d.value)
 		.sort((a, b) => b.value - a.value);
 
-	const horizontalHierarchy = complexDataHierarchy.copy()
-	const verticalHierarchy = complexDataHierarchy.copy()
+	const horizontalHierarchy = complexHierarchy.copy()
+	const verticalHierarchy = complexHierarchy.copy()
 
 	let colorBy = 'children';
 
 	let padding = 0;
 	let round = false;
-	let selectedHorizontal = horizontalHierarchy;
-	let selectedVertical = verticalHierarchy;
+	let selectedHorizontal = horizontalHierarchy; // select root initially
+	let selectedVertical = verticalHierarchy; // select root initially
 
 	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu)
 	// filter out hard to see yellow and green
@@ -101,7 +101,11 @@ title: ['Charts', 'Partition']
 	<div class="h-[600px] p-4 border rounded">
 		<Chart data={horizontalHierarchy}>
 			<Svg>
-				<Bounds let:xScale let:yScale extents={{ x0: selectedHorizontal?.y0, y0: selectedHorizontal?.x0, y1: selectedHorizontal?.x1 }}>
+				<Bounds
+					let:xScale
+					let:yScale
+					extents={{ x0: selectedHorizontal?.y0, y0: selectedHorizontal?.x0, y1: selectedHorizontal?.x1 }}
+				>
 					<ChartClipPath>
 						<Partition {padding} {round} let:nodes>
 							{#each nodes as node}
@@ -158,7 +162,11 @@ title: ['Charts', 'Partition']
 	<div class="h-[600px] p-4 border rounded">
 		<Chart data={verticalHierarchy}>
 			<Svg>
-				<Bounds let:xScale let:yScale extents={{ x0: selectedVertical?.x0, y0: selectedVertical?.y0, x1: selectedVertical?.x1 }}>
+				<Bounds
+					let:xScale
+					let:yScale
+					extents={{ x0: selectedVertical?.x0, y0: selectedVertical?.y0, x1: selectedVertical?.x1 }}
+				>
 					<ChartClipPath>
 						<Partition orientation="vertical" {padding} {round} let:nodes>
 							{#each nodes as node}
