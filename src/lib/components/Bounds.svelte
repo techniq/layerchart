@@ -5,20 +5,33 @@
 
 	import { tweenedScale } from '$lib/utils/scales';
 
-	export let domain: { x0: number; y0: number; x1: number; y1: number };
-	export let range: { x0: number; y0: number; x1: number; y1: number };
-
 	const { width, height } = getContext('LayerCake');
+
+	type Extents = { x0: number; y0: number; x1: number; y1: number };
+	type ExtentsAcccessor = (dimensions: { width: number; height: number }) => Extents;
+
+	export let domain: Extents | ExtentsAcccessor;
+	export let range: Extents | ExtentsAcccessor;
 
 	const tweenedOptions: Parameters<typeof tweenedScale>[1] = { easing: cubicOut, duration: 800 };
 
+	function getExtents(extents: Extents | ExtentsAcccessor, axis: 'x' | 'y', fallback: number) {
+		const resolvedExtents =
+			typeof extents === 'function' ? extents({ width: $width, height: $height }) : extents;
+
+		return [
+			resolvedExtents?.[axis + '0'] ?? 0, // x0 or y0
+			resolvedExtents?.[axis + '1'] ?? fallback // x1 or y1, fallback as $width or $height
+		];
+	}
+
 	const xScale = tweenedScale(scaleLinear, tweenedOptions);
-	$: xScale.domain([domain?.x0 ?? 0, domain?.x1 ?? $width]);
-	$: xScale.range([range?.x0 ?? 0, range?.x1 ?? $width]);
+	$: xScale.domain(getExtents(domain, 'x', $width));
+	$: xScale.range(getExtents(range, 'x', $width));
 
 	const yScale = tweenedScale(scaleLinear, tweenedOptions);
-	$: yScale.domain([domain?.y0 ?? 0, domain?.y1 ?? $height]);
-	$: yScale.range([range?.y0 ?? 0, range?.y1 ?? $height]);
+	$: yScale.domain(getExtents(domain, 'y', $height));
+	$: yScale.range(getExtents(range, 'y', $height));
 </script>
 
 <slot xScale={$xScale} yScale={$yScale} />
