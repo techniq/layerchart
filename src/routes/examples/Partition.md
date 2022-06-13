@@ -104,7 +104,7 @@ title: ['Charts', 'Partition']
 				<Bounds
 					let:xScale
 					let:yScale
-					extents={{ x0: selectedHorizontal?.y0, y0: selectedHorizontal?.x0, y1: selectedHorizontal?.x1 }}
+					domain={{ x0: selectedHorizontal?.y0, y0: selectedHorizontal?.x0, y1: selectedHorizontal?.x1 }}
 				>
 					<ChartClipPath>
 						<Partition {padding} {round} let:nodes>
@@ -165,7 +165,7 @@ title: ['Charts', 'Partition']
 				<Bounds
 					let:xScale
 					let:yScale
-					extents={{ x0: selectedVertical?.x0, y0: selectedVertical?.y0, x1: selectedVertical?.x1 }}
+					domain={{ x0: selectedVertical?.x0, y0: selectedVertical?.y0, x1: selectedVertical?.x1 }}
 				>
 					<ChartClipPath>
 						<Partition orientation="vertical" {padding} {round} let:nodes>

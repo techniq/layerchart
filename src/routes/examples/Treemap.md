@@ -179,7 +179,7 @@ title: ['Charts', 'Sankey']
 	<div class="h-[800px] p-4 border rounded">
 		<Chart data={complexDataHierarchy.copy()}>
 			<Svg>
-				<Bounds extents={selectedNested} let:xScale let:yScale>
+				<Bounds domain={selectedNested} let:xScale let:yScale>
 					<ChartClipPath>
 						<Treemap {tile} bind:selected={selectedNested} {paddingOuter} {paddingInner} {paddingTop} {paddingBottom} {paddingLeft} {paddingRight}>
 							<Group slot="node" let:node x={xScale(node.x0)} y={yScale(node.y0)} on:click={() => node.children ? selectedNested = node : null}>
@@ -297,7 +297,7 @@ title: ['Charts', 'Sankey']
 	<div class="h-[800px] p-4 border rounded">
 		<Chart data={flareCsvHierarchy}>
 			<Svg>
-				<Bounds extents={selectedNested} let:xScale let:yScale>
+				<Bounds domain={selectedNested} let:xScale let:yScale>
 					<ChartClipPath>
 						<Treemap {tile} bind:selected={selectedNested} {paddingOuter} {paddingInner} {paddingTop} {paddingBottom} {paddingLeft} {paddingRight}>
 							<Group slot="node" let:node x={xScale(node.x0)} y={yScale(node.y0)} on:click={() => node.children ? selectedNested = node : null}>
@@ -420,7 +420,7 @@ title: ['Charts', 'Sankey']
 	<div class="h-[800px] p-4 border rounded">
 		<Chart data={groupedHierarchy}>
 			<Svg>
-				<Bounds extents={selectedNested} let:xScale let:yScale>
+				<Bounds domain={selectedNested} let:xScale let:yScale>
 					<Treemap {tile} {paddingOuter} {paddingInner} {paddingTop} {paddingBottom} {paddingLeft} {paddingRight} nodeKey={(node, i) => node.ancestors().map(n => n.data[0]).join('_')}>
 						<Group slot="node" let:node x={xScale(node.x0)} y={yScale(node.y0)} on:click={() => node.children ? selectedCarNode = node : null} tweened={{ delay: 600 }}>
 							{@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
@@ -503,7 +503,7 @@ title: ['Charts', 'Sankey']
     <div class="h-[600px] p-4 border rounded">
     	<Chart data={complexDataHierarchy.copy()}>
     		<Svg>
-					<Bounds extents={selectedZoomable} let:xScale let:yScale>
+					<Bounds domain={selectedZoomable} let:xScale let:yScale>
 						<ChartClipPath>
 							<Treemap {tile} bind:selected={selectedZoomable}>
 								<Group slot="node" let:node x={xScale(node.x0)} y={yScale(node.y0)} on:click={() => node.children ? selectedZoomable = node : null}>
