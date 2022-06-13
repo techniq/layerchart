@@ -6,7 +6,7 @@
 
 	import { interpolatePath } from 'd3-interpolate-path';
 
-	import { createMotionStore } from '$lib/stores/motionStore';
+	import { motionStore } from '$lib/stores/motionStore';
 
 	import Path from './Path.svelte';
 
@@ -28,7 +28,7 @@
 	export let line: boolean | any = false;
 
 	$: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
-	$: tweened_d = createMotionStore('', { tweened: tweenedOptions });
+	$: tweened_d = motionStore('', { tweened: tweenedOptions });
 	$: {
 		const path = d3Area()
 			.x(x ?? $xGet)

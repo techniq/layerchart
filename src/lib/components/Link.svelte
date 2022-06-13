@@ -17,7 +17,7 @@
 	import { link as d3Link, curveBumpX, curveBumpY } from 'd3-shape';
 	import { interpolatePath } from 'd3-interpolate-path';
 
-	import { createMotionStore } from '$lib/stores/motionStore';
+	import { motionStore } from '$lib/stores/motionStore';
 
 	// Properties to override what is used from context
 	export let data: any = undefined; // TODO: Update Type
@@ -37,7 +37,7 @@
 	export let width = undefined;
 
 	$: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
-	$: tweened_d = createMotionStore('', { tweened: tweenedOptions });
+	$: tweened_d = motionStore('', { tweened: tweenedOptions });
 	$: {
 		orientation; // subscribe to orientation changes to link is update
 		const link = d3Link(curve).source(source).target(target).x(x).y(y);

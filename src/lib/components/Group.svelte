@@ -2,7 +2,7 @@
 	import { getContext } from 'svelte';
 	import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 
-	import { createMotionStore } from '$lib/stores/motionStore';
+	import { motionStore } from '$lib/stores/motionStore';
 
 	const { width, height } = getContext('LayerCake');
 
@@ -24,8 +24,8 @@
 	export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
 	export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
-	let tweened_x = createMotionStore(x, { spring, tweened });
-	let tweened_y = createMotionStore(y, { spring, tweened });
+	let tweened_x = motionStore(x, { spring, tweened });
+	let tweened_y = motionStore(y, { spring, tweened });
 
 	$: tweened_x.set(x);
 	$: tweened_y.set(y);

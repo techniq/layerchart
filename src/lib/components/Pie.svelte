@@ -6,7 +6,7 @@
 	import Arc from './Arc.svelte';
 	import Group from './Group.svelte';
 	import { degreesToRadians } from '$lib/utils/math';
-	import { createMotionStore } from '$lib/stores/motionStore';
+	import { motionStore } from '$lib/stores/motionStore';
 
 	/*
     TODO:
@@ -64,7 +64,7 @@
 	const { data: contextData, x, y, xRange, rGet, config } = getContext('LayerCake');
 
 	$: resolved_endAngle = endAngle ?? degreesToRadians($config.xRange ? $xRange[1] : range[1]);
-	let tweened_endAngle = createMotionStore(0, { spring, tweened });
+	let tweened_endAngle = motionStore(0, { spring, tweened });
 	$: tweened_endAngle.set(resolved_endAngle);
 
 	$: pie = d3pie()
