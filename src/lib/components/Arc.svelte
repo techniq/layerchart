@@ -136,6 +136,6 @@
 	<path d={trackArc()} class="track" bind:this={trackArcEl} {...track} />
 {/if}
 
-<path d={arc()} transform="translate({xOffset}, {yOffset})" {...$$restProps} />
+<path d={arc()} transform="translate({xOffset}, {yOffset})" {...$$restProps} on:click />
 
 <slot value={$tweened_value} centroid={trackArcCentroid} {boundingBox} />
