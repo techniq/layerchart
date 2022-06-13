@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { cubicOut } from 'svelte/easing';
 	import { scaleLinear } from 'd3-scale';
 
-	import { tweenedScale } from '$lib/utils/scales';
+	import { motionScale } from '$lib/utils/scales';
 
 	const { width, height } = getContext('LayerCake');
 
@@ -12,8 +11,8 @@
 
 	export let domain: Extents | ExtentsAcccessor;
 	export let range: Extents | ExtentsAcccessor;
-
-	const tweenedOptions: Parameters<typeof tweenedScale>[1] = { easing: cubicOut, duration: 800 };
+	export let spring: boolean | Parameters<typeof motionScale>[1]['spring'] = undefined;
+	export let tweened: boolean | Parameters<typeof motionScale>[1]['tweened'] = undefined;
 
 	function getExtents(extents: Extents | ExtentsAcccessor, axis: 'x' | 'y', fallback: number) {
 		const resolvedExtents =
@@ -25,11 +24,11 @@
 		];
 	}
 
-	const xScale = tweenedScale(scaleLinear, tweenedOptions);
+	const xScale = motionScale(scaleLinear, { spring, tweened });
 	$: xScale.domain(getExtents(domain, 'x', $width));
 	$: xScale.range(getExtents(range, 'x', $width));
 
-	const yScale = tweenedScale(scaleLinear, tweenedOptions);
+	const yScale = motionScale(scaleLinear, { spring, tweened });
 	$: yScale.domain(getExtents(domain, 'y', $height));
 	$: yScale.range(getExtents(range, 'y', $height));
 </script>

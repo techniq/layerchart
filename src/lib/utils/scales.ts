@@ -1,5 +1,6 @@
-import { derived } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
 import { tweened, spring } from 'svelte/motion';
+import { MotionOptions, motionStore } from '$lib/stores/motionStore';
 
 /**
  * Implemenation for missing `scaleBand().invert()`
@@ -53,13 +54,13 @@ export function tweenedScale(scale, tweenedOptions: Parameters<typeof tweened>[1
 }
 
 /**
- * Animate d3-scale as domain and/or range are updated using spring store
+ * Create a store wrapper around a d3-scale which interpolates the domain and/or range using `tweened()` or `spring()` stores.  Fallbacks to `writable()` if not interpolating
  */
-export function springScale(scale, springOptions: Parameters<typeof spring>[1] = {}) {
-	const springDomain = spring(undefined, springOptions);
-	const springRange = spring(undefined, springOptions);
+export function motionScale(scale, options: MotionOptions) {
+	const domainStore = motionStore(undefined, options);
+	const rangeStore = motionStore(undefined, options);
 
-	const tweenedScale = derived([springDomain, springRange], ([domain, range]) => {
+	const tweenedScale = derived([domainStore, rangeStore], ([domain, range]) => {
 		const scaleInstance = scale.domain ? scale : scale(); // support `scaleLinear` or `scaleLinear()` (which could have `.interpolate()` and others set)
 
 		if (domain) {
@@ -74,7 +75,7 @@ export function springScale(scale, springOptions: Parameters<typeof spring>[1] =
 
 	return {
 		subscribe: tweenedScale.subscribe,
-		domain: (values) => springDomain.set(values),
-		range: (values) => springRange.set(values)
+		domain: (values) => domainStore.set(values),
+		range: (values) => rangeStore.set(values)
 	};
 }

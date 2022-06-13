@@ -3,6 +3,7 @@ title: ['Charts', 'Sunburst']
 ---
 
 <script lang="ts">
+	import { cubicOut } from 'svelte/easing';
 	import { hierarchy } from 'd3-hierarchy';
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
@@ -32,20 +33,24 @@ title: ['Charts', 'Sunburst']
 
 	let selected = complexHierarchy; // select root initially
 
-	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu)
+	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
 	// filter out hard to see yellow and green
-	const ordinalColor = scaleOrdinal(chromatic.schemeSpectral[9].filter(c => hsl(c).h < 60 || hsl(c).h > 90))
+	const ordinalColor = scaleOrdinal(
+		chromatic.schemeSpectral[9].filter((c) => hsl(c).h < 60 || hsl(c).h > 90)
+	);
 	// const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
 
 	function getNodeColor(node, colorBy) {
 		switch (colorBy) {
 			case 'children':
-				return node.children ? '#ccc' : '#ddd'
+				return node.children ? '#ccc' : '#ddd';
 			case 'depth':
 				return sequentialColor(node.depth);
 			case 'parent':
-				const colorParent = findAncestor(node, n => n.depth === 1)
-				return colorParent ? hsl(ordinalColor((colorParent).data.name)).brighter(node.depth * .3) : '#ddd'
+				const colorParent = findAncestor(node, (n) => n.depth === 1);
+				return colorParent
+					? hsl(ordinalColor(colorParent.data.name)).brighter(node.depth * 0.3)
+					: '#ddd';
 		}
 	}
 </script>
@@ -67,7 +72,7 @@ title: ['Charts', 'Sunburst']
 
 <Preview>
 	<Breadcrumb items={selected?.ancestors().reverse() ?? []}>
-		<Button slot="item" let:item on:click={() => selected = item} base class="px-2 py-1 rounded">
+		<Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded">
 			<div class="text-left">
 				<div class="text-sm">{item.data.name}</div>
 				<div class="text-xs text-black/50">{formatNumberAsStyle(item.value, 'integer')}</div>
@@ -78,12 +83,18 @@ title: ['Charts', 'Sunburst']
 		<Chart data={complexHierarchy}>
 			<Svg>
 				<Bounds
+					domain={{ x0: selected?.x0 ?? 0, x1: selected?.x1 ?? 1, y0: selected?.y0 ?? 0, y1: 1 }}
+					range={({ height }) => ({
+						x0: 0,
+						x1: 2 * Math.PI,
+						y0: selected?.y0 ? 20 : 0,
+						y1: height / 2
+					})}
+					tweened={{ duration: 800, easing: cubicOut }}
 					let:xScale
 					let:yScale
-					domain={{ x0: selected?.x0 ?? 0, x1: selected?.x1 ?? 1, y0: selected?.y0 ?? 0, y1: 1 }}
-					range={({ height }) => ({ x0: 0, x1: 2 * Math.PI, y0: selected?.y0 ? 20 : 0, y1: height / 2 })}
 				>
-					<Partition size={[1,1]} let:nodes>
+					<Partition size={[1, 1]} let:nodes>
 						<Group center>
 							{#each nodes as node}
 								{@const nodeColor = getNodeColor(node, colorBy)}

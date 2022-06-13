@@ -3,6 +3,7 @@ title: ['Charts', 'Partition']
 ---
 
 <script lang="ts">
+	import { cubicOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
 	import { hierarchy } from 'd3-hierarchy';
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
@@ -105,6 +106,7 @@ title: ['Charts', 'Partition']
 					let:xScale
 					let:yScale
 					domain={{ x0: selectedHorizontal?.y0, y0: selectedHorizontal?.x0, y1: selectedHorizontal?.x1 }}
+					tweened={{ duration: 800, easing: cubicOut }}
 				>
 					<ChartClipPath>
 						<Partition {padding} {round} let:nodes>
@@ -166,6 +168,7 @@ title: ['Charts', 'Partition']
 					let:xScale
 					let:yScale
 					domain={{ x0: selectedVertical?.x0, y0: selectedVertical?.y0, x1: selectedVertical?.x1 }}
+					tweened={{ duration: 800, easing: cubicOut }}
 				>
 					<ChartClipPath>
 						<Partition orientation="vertical" {padding} {round} let:nodes>
