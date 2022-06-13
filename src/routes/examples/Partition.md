@@ -9,10 +9,11 @@ title: ['Charts', 'Partition']
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
+	import { rollup } from 'd3-array'
 
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
-	import { Breadcrumb, Button, Field, Tabs, Tab } from 'svelte-ux';
+	import { Breadcrumb, Button, Field, Switch, Tabs, Tab } from 'svelte-ux';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -28,6 +29,7 @@ title: ['Charts', 'Partition']
 	import Preview from '$lib/docs/Preview.svelte';
 
 	import { complexData } from './data/hierarchy';
+	import carsCsv from './data/cars.csv'
 
 	const complexHierarchy = hierarchy(complexData)
 		.sum((d) => d.value)
@@ -36,12 +38,35 @@ title: ['Charts', 'Partition']
 	const horizontalHierarchy = complexHierarchy.copy()
 	const verticalHierarchy = complexHierarchy.copy()
 
+	let isFiltered = false;
+	$: groupedCars = rollup(
+		carsCsv
+			// Limit dataset
+			.filter(d => ['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.Make))
+			// Hide some models in each group to show transitions
+			.filter(d => isFiltered ? d.Year > 2010 : true)
+			// Apply `Make` selection
+			.filter(d => {
+				if (selectedCarNode?.depth === 1) {
+					return d.Make === selectedCarNode.data[0]
+				} else {
+					return true
+				}
+			}),
+		items => items[0],//.slice(0, 3),
+		d => d.Make,
+		d => d.Model,
+		// d => d.Year,
+	)
+	$: groupedHierarchy = hierarchy(groupedCars).count()
+
 	let colorBy = 'children';
 
 	let padding = 0;
 	let round = false;
 	let selectedHorizontal = horizontalHierarchy; // select root initially
 	let selectedVertical = verticalHierarchy; // select root initially
+	let selectedCarNode = groupedHierarchy;
 
 	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu)
 	// filter out hard to see yellow and green
@@ -126,7 +151,7 @@ title: ['Charts', 'Partition']
 											/>
 												<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
 													<tspan>{node.data.name}</tspan>
-														<tspan style="font-size: 0.5rem; font-weight: 200">{formatNumberAsStyle(node.value, 'integer')}</tspan>
+													<tspan style="font-size: 0.5rem; font-weight: 200">{formatNumberAsStyle(node.value, 'integer')}</tspan>
 												</text>
 										</g>
 									</RectClipPath>
@@ -192,6 +217,68 @@ title: ['Charts', 'Partition']
 												/>
 										</g>
 									</RectClipPath>
+								</Group>
+							{/each}
+						</Partition>
+					</ChartClipPath>
+				</Bounds>
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Filterable
+
+<div class="grid gap-1 mb-4">
+	<div class="grid grid-cols-4 gap-2">
+		<Field label="Apply Partial Filter" let:id>
+			<Switch {id} bind:checked={isFiltered} />
+		</Field>
+	</div>
+</div>
+
+<Preview>
+	<Breadcrumb items={selectedCarNode?.ancestors().reverse() ?? []}>
+		<Button slot="item" let:item on:click={() => selectedCarNode = item} base class="px-2 py-1 rounded">
+			<div class="text-left">
+				<div class="text-sm">{item.data[0] ?? 'Overall'}</div>
+				<div class="text-xs text-black/50">{formatNumberAsStyle(item.value, 'integer')}</div>
+			</div>
+		</Button>
+	</Breadcrumb>
+	<div class="h-[600px] p-4 border rounded">
+		<Chart data={groupedHierarchy}>
+			<Svg>
+				<Bounds
+					let:xScale
+					let:yScale
+					domain={{ x0: selectedCarNode?.y0, y0: selectedCarNode?.x0, y1: selectedCarNode?.x1 }}
+				>
+					<ChartClipPath>
+						<Partition {padding} {round} let:nodes>
+							{#each nodes as node (node.ancestors().map(n => n.data[0]).join('_'))}
+								<Group x={xScale(node.y0)} y={yScale(node.x0)} on:click={() => selectedCarNode = node} tweened={{ delay: 600 }}>
+									{@const nodeWidth = xScale(node.y1) - xScale(node.y0)}
+									{@const nodeHeight = yScale(node.x1) - yScale(node.x0)}
+									{@const nodeColor = getNodeColor(node, colorBy)}
+									<g in:fade={{ duration: 600, delay: 1200 }} out:fade={{ duration: 600 }}>
+										<Rect
+											width={nodeWidth}
+											height={nodeHeight}
+											stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+											fill={nodeColor}
+											rx={5}
+											tweened={{ delay: 600 }}
+										/>
+										<RectClipPath width={nodeWidth} height={nodeHeight} tweened={{ delay: 600 }}>
+											<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
+												<tspan>{node.data[0] ?? 'Overall'}</tspan>
+												{#if node.children}
+													<tspan style="font-size: 0.5rem; font-weight: 200">{formatNumberAsStyle(node.value, 'integer')}</tspan>
+												{/if}
+											</text>
+										</RectClipPath>
+									</g>
 								</Group>
 							{/each}
 						</Partition>
