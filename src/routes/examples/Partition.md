@@ -124,20 +124,10 @@ title: ['Charts', 'Partition']
 												fill={nodeColor}
 												rx={5}
 											/>
-												<Text
-													value="{node.data.name} ({node.children?.length ?? 0})"
-													style="font-size: 0.6rem; font-weight: 500"
-													verticalAnchor="start"
-													x={4}
-													y={2}
-												/>
-												<Text
-													value={formatNumberAsStyle(node.value, 'integer')}
-													style="font-size: 0.5rem; font-weight: 200"
-													verticalAnchor="start"
-													x={4}
-													y={16}
-												/>
+												<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
+													<tspan>{node.data.name}</tspan>
+														<tspan style="font-size: 0.5rem; font-weight: 200">{formatNumberAsStyle(node.value, 'integer')}</tspan>
+												</text>
 										</g>
 									</RectClipPath>
 								</Group>
@@ -187,7 +177,7 @@ title: ['Charts', 'Partition']
 												rx={5}
 											/>
 												<Text
-													value="{node.data.name} ({node.children?.length ?? 0})"
+													value={node.data.name}
 													style="font-size: 0.6rem; font-weight: 500"
 													verticalAnchor="start"
 													x={4}
