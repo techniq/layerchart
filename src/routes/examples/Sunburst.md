@@ -103,7 +103,8 @@ title: ['Charts', 'Sunburst']
 								innerRadius={Math.max(0, $yScale(node.y0))}
 								outerRadius={Math.max(0, $yScale(node.y1))}
 								fill={nodeColor}
-								stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+								_stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+								stroke="hsl(0 0% 30%)"
 								let:centroid
 								on:click={() => {
 									xScale.domain([node.x0, node.x1]);
