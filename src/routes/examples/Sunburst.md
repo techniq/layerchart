@@ -3,13 +3,10 @@ title: ['Charts', 'Sunburst']
 ---
 
 <script lang="ts">
-	import { cubicOut } from 'svelte/easing';
 	import { hierarchy } from 'd3-hierarchy';
-	import { scaleSequential, scaleOrdinal, scaleLinear } from 'd3-scale';
+	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
-
-	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
 	import { Breadcrumb, Button, Field, Tabs, Tab } from 'svelte-ux';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
@@ -25,7 +22,6 @@ title: ['Charts', 'Sunburst']
 	import Preview from '$lib/docs/Preview.svelte';
 
 	import { complexData } from './data/hierarchy';
-	import { tweenedScale } from '$lib/utils/scales';
 
 	const complexHierarchy = hierarchy(complexData)
 		.sum((d) => d.value)
@@ -35,16 +31,6 @@ title: ['Charts', 'Sunburst']
 	let colorBy = 'parent';
 
 	let selected = complexHierarchy; // select root initially
-
-	const tweenedOptions = { easing: cubicOut, duration: 800 };
-
-	const xScale = tweenedScale(scaleLinear, tweenedOptions);
-	$: xScale.domain([0, 1]);
-	$: xScale.range([0, 2 * Math.PI]);
-
-	const yScale = tweenedScale(scaleLinear, tweenedOptions);
-	$: yScale.domain([0, 1]);
-	$: yScale.range([0, 250]); // [0, width / 2]
 
 	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu)
 	// filter out hard to see yellow and green
@@ -69,9 +55,8 @@ title: ['Charts', 'Sunburst']
 		<Field label="Color By">
 			<Tabs bind:selected={colorBy} contained class="w-full">
 				<div class="tabList w-full border h-8">
-					<Tab value="children">Children</Tab>
-					<Tab value="depth">Depth</Tab>
 					<Tab value="parent">Parent</Tab>
+					<Tab value="depth">Depth</Tab>
 				</div>
 			</Tabs>
 		</Field>
@@ -92,31 +77,36 @@ title: ['Charts', 'Sunburst']
 	<div class="h-[600px] p-4 border rounded">
 		<Chart data={complexHierarchy}>
 			<Svg>
-				<Partition size={[1,1]} let:nodes>
-					<Group center>
-						{#each nodes as node}
-							{@const nodeColor = getNodeColor(node, colorBy)}
-							<Arc
-								value={node.value}
-								startAngle={Math.max(0, Math.min(2 * Math.PI, $xScale(node.x0)))}
-								endAngle={Math.max(0, Math.min(2 * Math.PI, $xScale(node.x1)))}
-								innerRadius={Math.max(0, $yScale(node.y0))}
-								outerRadius={Math.max(0, $yScale(node.y1))}
-								fill={nodeColor}
-								_stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
-								stroke="hsl(0 0% 30%)"
-								let:centroid
-								on:click={() => {
-									xScale.domain([node.x0, node.x1]);
-									yScale.domain([node.y0, 1]);
-									yScale.range([node.y0 ? 20 : 0, 250 /*width / 2*/]);
-								}}
-							>
-								<!-- <text x={centroid[0]} y={centroid[1]}>{node.data.name}</text> -->
-							</Arc>
-						{/each}
-					</Group>
-				</Partition>
+				<Bounds
+					let:xScale
+					let:yScale
+					domain={{ x0: selected?.x0 ?? 0, x1: selected?.x1 ?? 1, y0: selected?.y0 ?? 0, y1: 1 }}
+					range={({ height }) => ({ x0: 0, x1: 2 * Math.PI, y0: selected?.y0 ? 20 : 0, y1: height / 2 })}
+				>
+					<Partition size={[1,1]} let:nodes>
+						<Group center>
+							{#each nodes as node}
+								{@const nodeColor = getNodeColor(node, colorBy)}
+								<Arc
+									value={node.value}
+									startAngle={Math.max(0, Math.min(2 * Math.PI, xScale(node.x0)))}
+									endAngle={Math.max(0, Math.min(2 * Math.PI, xScale(node.x1)))}
+									innerRadius={Math.max(0, yScale(node.y0))}
+									outerRadius={Math.max(0, yScale(node.y1))}
+									fill={nodeColor}
+									_stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+									stroke="hsl(0 0% 30%)"
+									let:centroid
+									on:click={() => {
+										selected = node;
+									}}
+								>
+									<!-- <text x={centroid[0]} y={centroid[1]}>{node.data.name}</text> -->
+								</Arc>
+							{/each}
+						</Group>
+					</Partition>
+				</Bounds>
 			</Svg>
 		</Chart>
 	</div>
