@@ -14,6 +14,7 @@
 <NavItem text="Pie" path="/examples/Pie" class="pl-6 py-2" />
 <NavItem text="Sankey" path="/examples/Sankey" class="pl-6 py-2" />
 <NavItem text="Scatter" path="/examples/Scatter" class="pl-6 py-2" />
+<NavItem text="Sunburst (WIP)" path="/examples/Sunburst" class="pl-6 py-2" />
 <NavItem text="Threshold" path="/examples/Threshold" class="pl-6 py-2" />
 <NavItem text="Tree" path="/examples/Tree" class="pl-6 py-2" />
 <NavItem text="Treemap" path="/examples/Treemap" class="pl-6 py-2" />
