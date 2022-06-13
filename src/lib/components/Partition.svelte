@@ -6,6 +6,8 @@
 
 	export let orientation: 'vertical' | 'horizontal' = 'horizontal';
 
+	export let size: [number, number] | undefined = undefined;
+
 	/**
 	 * see: https://github.com/d3/d3-hierarchy#tree_nodeSize
 	 */
@@ -19,7 +21,7 @@
 	let partition: ReturnType<typeof d3Partition>;
 	$: {
 		partition = d3Partition().size(
-			orientation === 'horizontal' ? [$height, $width] : [$width, $height]
+			size ?? (orientation === 'horizontal' ? [$height, $width] : [$width, $height])
 		);
 
 		if (padding) {
