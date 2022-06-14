@@ -7,7 +7,7 @@ title: ['Charts', 'Tree']
 	import { hierarchy } from 'd3-hierarchy';
 	import { curveBumpX, curveBumpY, curveStep, curveStepBefore, curveStepAfter } from 'd3-shape';
 
-	import { mdiArrowExpandAll, mdiMagnifyPlusOutline, mdiMagnifyMinusOutline, mdiImageFilterCenterFocus } from '@mdi/js';
+	import { mdiArrowULeftTop, mdiMagnifyPlusOutline, mdiMagnifyMinusOutline, mdiImageFilterCenterFocus } from '@mdi/js';
 
 	import { Button, Field, Tabs, Tab, Tooltip } from 'svelte-ux';
 
@@ -99,11 +99,11 @@ title: ['Charts', 'Tree']
 				<Tooltip title="Zoom out">
 					<Button icon={mdiMagnifyMinusOutline} on:click={() => zoom.decrease()} class="text-black/50 p-2" />
 				</Tooltip>
-				<Tooltip title="Reset">
-					<Button icon={mdiArrowExpandAll} on:click={() => zoom.reset()} class="text-black/50 p-2" />
-				</Tooltip>
 				<Tooltip title="Center">
 					<Button icon={mdiImageFilterCenterFocus} on:click={() => zoom.translateCenter()} class="text-black/50 p-2" />
+				</Tooltip>
+				<Tooltip title="Reset">
+					<Button icon={mdiArrowULeftTop} on:click={() => zoom.reset()} class="text-black/50 p-2" />
 				</Tooltip>
 			</div>
 		</div>
