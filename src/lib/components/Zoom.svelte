@@ -159,6 +159,7 @@
 	on:mousewheel={handleWheel}
 	on:mousedown={handleMouseDown}
 	on:dblclick={handleDoubleClick}
+	on:click
 	fill="transparent"
 />
 <g transform="translate({newTranslate.x},{newTranslate.y}) scale({$scale.x},{$scale.y})">

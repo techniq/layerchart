@@ -21,7 +21,7 @@
 </ClipPath>
 
 {#if $$slots.default}
-	<g style="clip-path: url(#{id})">
+	<g style="clip-path: url(#{id})" on:click>
 		<slot {id} />
 	</g>
 {/if}
