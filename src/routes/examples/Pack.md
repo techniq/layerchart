@@ -124,14 +124,12 @@ title: ['Charts', 'Pack']
 							{#each nodes as node}
 								<Group x={node.x} y={node.y} on:click={() => selected = node} class="cursor-pointer hover:contrast-[1.2]">
 									{@const nodeColor = getNodeColor(node, colorBy)}
-									<g transition:fade={{ duration: 600 }}>
-										<Circle
-											r={node.r}
-											stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
-											fill={nodeColor}
-											rx={5}
-										/>
-									</g>
+									<Circle
+										r={node.r}
+										stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+										fill={nodeColor}
+										rx={5}
+									/>
 								</Group>
 							{/each}
 							<!-- Show text on top of all circles -->
