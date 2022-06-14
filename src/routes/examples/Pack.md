@@ -140,7 +140,8 @@ title: ['Charts', 'Pack']
 										x={node.x}
 										y={node.y}
 										dy={fontSize * 8}
-										style="font-size: {fontSize}rem; text-anchor: middle; pointer-events: none;"
+										class="stroke-white/70"
+										style="font-size: {fontSize}rem; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke-width: {fontSize * 2}px"
 									>
 										{node.data.name}
 									</text>
