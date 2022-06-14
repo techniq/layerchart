@@ -88,7 +88,7 @@
 				x: startTranslate.x + deltaX / $scale.x,
 				y: startTranslate.y + deltaY / $scale.y
 			},
-			{ hard: true }
+			spring ? { hard: true } : tweened ? { duration: 0 } : undefined
 		);
 	}
 
@@ -109,7 +109,7 @@
 				x: $scale.x * scaleBy,
 				y: $scale.y * scaleBy
 			},
-			{ hard: true }
+			spring ? { hard: true } : tweened ? { duration: 0 } : undefined
 		);
 	}
 
@@ -156,5 +156,5 @@
 	fill="transparent"
 />
 <g transform="translate({newTranslate.x},{newTranslate.y}) scale({$scale.x},{$scale.y})">
-	<slot />
+	<slot scale={$scale} />
 </g>
