@@ -7,6 +7,7 @@
 
 	export let spring: boolean | Parameters<typeof motionStore>[1]['spring'] = undefined;
 	export let tweened: boolean | Parameters<typeof motionStore>[1]['tweened'] = undefined;
+	export let disablePointer = false;
 
 	let dragging = false;
 
@@ -60,6 +61,8 @@
 	}
 
 	function handleMouseDown(e) {
+		if (disablePointer) return;
+
 		dragging = true;
 		svgEl = e.target.ownerSVGElement;
 		startPoint = localPoint(svgEl, e);
@@ -93,10 +96,13 @@
 	}
 
 	function handleDoubleClick() {
+		if (disablePointer) return;
 		increase();
 	}
 
 	function handleWheel(e) {
+		if (disablePointer) return;
+
 		e.preventDefault();
 		const scaleBy = -e.deltaY > 0 ? 1.1 : 0.9;
 
