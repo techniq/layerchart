@@ -32,7 +32,17 @@ title: ['Charts', 'Tree']
 	let orientation = 'horizontal';
 	let curve = curveBumpX;
 	let layout = 'chart';
+	let selected;
 	let zoom;
+
+	/*
+	$: if (zoom && selected) {
+		zoom.zoomTo({
+			x: (orientation === 'horizontal' ? selected.y : selected.x),
+			y: (orientation === 'horizontal' ? selected.x : selected.y)
+		})
+	}
+	*/
 
 	function getNodeKey(node) {
 		return node.data.name + node.depth;
@@ -121,6 +131,7 @@ title: ['Charts', 'Tree']
 									} else {
 										expandedNodeNames = [...expandedNodeNames, node.data.name];
 									}
+									selected = node;
 								}}
 								class={node.data.children ? 'cursor-pointer' : ''}
 							>

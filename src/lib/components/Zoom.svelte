@@ -42,6 +42,23 @@
 		};
 	}
 
+	export function zoomTo(
+		newTranslate: { x: number; y: number },
+		newScale?: { x: number; y: number }
+	) {
+		$translate = {
+			x: $width / 2 - newTranslate.x,
+			y: $height / 2 - newTranslate.y
+		};
+
+		if (newScale) {
+			$scale = {
+				x: Math.min($width, $height) / newScale.x,
+				y: Math.min($width, $height) / newScale.y
+			};
+		}
+	}
+
 	function handleMouseDown(e) {
 		dragging = true;
 		svgEl = e.target.ownerSVGElement;
