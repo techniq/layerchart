@@ -151,17 +151,20 @@
 	};
 </script>
 
-<rect
-	x={-$padding.left}
-	y={-$padding.top}
-	width={$width + $padding.left + $padding.right}
-	height={$height + $padding.top + $padding.bottom}
+<g
 	on:mousewheel={handleWheel}
 	on:mousedown={handleMouseDown}
 	on:dblclick={handleDoubleClick}
 	on:click
-	fill="transparent"
-/>
-<g transform="translate({newTranslate.x},{newTranslate.y}) scale({$scale.x},{$scale.y})">
-	<slot scale={$scale} />
+>
+	<rect
+		x={-$padding.left}
+		y={-$padding.top}
+		width={$width + $padding.left + $padding.right}
+		height={$height + $padding.top + $padding.bottom}
+		fill="transparent"
+	/>
+	<g transform="translate({newTranslate.x},{newTranslate.y}) scale({$scale.x},{$scale.y})">
+		<slot scale={$scale} />
+	</g>
 </g>
