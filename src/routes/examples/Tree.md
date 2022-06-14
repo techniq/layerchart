@@ -99,7 +99,7 @@ title: ['Charts', 'Tree']
 		<Chart data={complexDataHierarchy} padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}>
 			<Svg>
 				<Zoom bind:this={zoom}>
-					<Tree let:nodes let:links nodeSize={layout === 'node' ? nodeSize : null}>
+					<Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : null}>
 						{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
 							<Link
 								data={link}
