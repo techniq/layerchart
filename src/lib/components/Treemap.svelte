@@ -1,12 +1,7 @@
 <script lang="ts">
-	/**
-	 * TODO:
-	 *   - [ ] Improve zoomable nested (apply extent ratio?  const extentRatio = ($extents.y1 - $extents.y0) / $height;
-	 */
 	import { getContext } from 'svelte';
 
 	import * as d3 from 'd3-hierarchy';
-	import { group } from 'd3-array';
 
 	import { aspectTile } from '../utils/treemap';
 
@@ -27,7 +22,6 @@
 	export let paddingBottom = 0;
 	export let paddingLeft = undefined;
 	export let paddingRight = undefined;
-	export let nodeKey: (node: d3.HierarchyNode<any>, i: number) => any = (node, i) => i;
 
 	export let selected = null;
 
@@ -73,18 +67,9 @@
 		}
 	}
 
-	$: root = treemap($data);
+	$: treemapData = treemap($data);
 	// TODO: Remove selected
-	$: selected = root; // set initial selection
-
-	// group nodes by depth so can be rendered lowest to highest, to stack properly
-	$: nodesByDepth = group(root, (d) => d.depth);
+	$: selected = treemapData; // set initial selection
 </script>
 
-{#each Array.from(nodesByDepth) as [depth, nodes]}
-	<g>
-		{#each nodes as node, i (nodeKey(node, i))}
-			<slot name="node" {node} />
-		{/each}
-	</g>
-{/each}
+<slot nodes={treemapData.descendants()} />
