@@ -6,8 +6,8 @@
 
 	let dragging = false;
 
-	let translate = spring({ x: 0, y: 0 });
-	let scale = spring({ x: 1, y: 1 });
+	const translate = spring({ x: 0, y: 0 });
+	const scale = spring({ x: 1, y: 1 });
 	let startPoint;
 	let startTranslate;
 	let svgEl = null;

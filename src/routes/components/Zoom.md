@@ -3,8 +3,9 @@ title: ['Primatives', 'Zoom']
 ---
 
 <script lang="ts">
-	import { ApiDocs, Button, Field, Switch, Tooltip } from 'svelte-ux';
 	import * as d3shapes from 'd3-shape';
+
+	import { ApiDocs, Button, Field, Switch, Tooltip } from 'svelte-ux';
 
 	import { mdiArrowULeftTop, mdiChevronLeft, mdiChevronRight, mdiMagnifyPlusOutline, mdiMagnifyMinusOutline, mdiImageFilterCenterFocus } from '@mdi/js';
 
