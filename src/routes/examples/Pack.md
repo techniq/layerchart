@@ -10,20 +10,15 @@ title: ['Charts', 'Pack']
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
-	import { rollup } from 'd3-array'
 
-	import { mdiArrowULeftTop, mdiChevronLeft, mdiChevronRight, mdiMagnifyPlusOutline, mdiMagnifyMinusOutline, mdiImageFilterCenterFocus } from '@mdi/js';
+	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
-	import { Breadcrumb, Button, Field, Switch, Tabs, Tab, Tooltip } from 'svelte-ux';
+	import { Breadcrumb, Button, Field, Tabs, Tab } from 'svelte-ux';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
-	import Bounds from '$lib/components/Bounds.svelte';
-	import ChartClipPath from '$lib/components/ChartClipPath.svelte';
 	import Group from '$lib/components/Group.svelte';
 	import Circle from '$lib/components/Circle.svelte';
-	import CircleClipPath from '$lib/components/CircleClipPath.svelte';
-	import Text from '$lib/components/Text.svelte';
 	import Pack from '$lib/components/Pack.svelte';
 	import Zoom from '$lib/components/Zoom.svelte';
 
@@ -32,7 +27,6 @@ title: ['Charts', 'Pack']
 	import Preview from '$lib/docs/Preview.svelte';
 
 	import { complexData } from './data/hierarchy';
-	import carsCsv from './data/cars.csv'
 
 	const complexHierarchy = hierarchy(complexData)
 		.sum((d) => d.value)
@@ -100,29 +94,13 @@ title: ['Charts', 'Pack']
 			</div>
 		</Button>
 	</Breadcrumb>
-	<div class="h-[600px] p-4 border rounded relative overflow-hidden">
-		<div class="absolute top-0 right-0 z-10">
-			<div class="bg-black/5 rounded-full m-1 backdrop-blur">
-				<Tooltip title="Zoom in">
-					<Button icon={mdiMagnifyPlusOutline} on:click={() => zoom.increase()} class="text-black/50 p-2" />
-				</Tooltip>
-				<Tooltip title="Zoom out">
-					<Button icon={mdiMagnifyMinusOutline} on:click={() => zoom.decrease()} class="text-black/50 p-2" />
-				</Tooltip>
-				<Tooltip title="Center">
-					<Button icon={mdiImageFilterCenterFocus} on:click={() => zoom.translateCenter()} class="text-black/50 p-2" />
-				</Tooltip>
-				<Tooltip title="Reset">
-					<Button icon={mdiArrowULeftTop} on:click={() => zoom.reset()} class="text-black/50 p-2" />
-				</Tooltip>
-			</div>
-		</div>
+	<div class="h-[600px] p-4 border rounded overflow-hidden" on:click={() => selected = complexHierarchy}>
 		<Chart data={complexHierarchy}>
 			<Svg>
-				<Zoom bind:this={zoom} let:scale tweened={{ duration: 800, easing: cubicOut }}>
+				<Zoom bind:this={zoom} let:scale tweened={{ duration: 800, easing: cubicOut }} disablePointer>
 						<Pack {padding} let:nodes>
 							{#each nodes as node}
-								<Group x={node.x} y={node.y} on:click={() => selected = node} class="cursor-pointer hover:contrast-[1.2]">
+								<Group x={node.x} y={node.y} on:click={(e) => { e.stopPropagation(); selected = node }} class="cursor-pointer hover:contrast-[1.2]">
 									{@const nodeColor = getNodeColor(node, colorBy)}
 									<Circle
 										r={node.r}
