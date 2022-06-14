@@ -19,6 +19,7 @@ export { default as Labels } from './Labels.svelte';
 export { default as Line } from './Line.svelte';
 export { default as LinearGradient } from './LinearGradient.svelte';
 export { default as Link } from './Link.svelte';
+export { default as Pack } from './Pack.svelte';
 export { default as Partition } from './Partition.svelte';
 export { default as Path } from './Path.svelte';
 export { default as Pattern } from './Pattern.svelte';
