@@ -99,7 +99,7 @@ title: ['Primatives', 'Zoom']
 <Preview>
 	<div class="h-[500px] p-4 border rounded relative overflow-hidden">
 		<div class="absolute top-0 right-0 z-10">
-			<div class="bg-black/5 rounded-full m-1">
+			<div class="bg-black/5 rounded-full m-1 backdrop-blur">
 				<Tooltip title="Zoom in">
 					<Button icon={mdiMagnifyPlusOutline} on:click={() => zoom.increase()} class="text-black/50 p-2" />
 				</Tooltip>
