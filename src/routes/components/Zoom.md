@@ -4,6 +4,7 @@ title: ['Primatives', 'Zoom']
 
 <script lang="ts">
 	import * as d3shapes from 'd3-shape';
+	import { cubicOut } from 'svelte/easing';
 
 	import { ApiDocs, Button, Field, Switch, Tooltip } from 'svelte-ux';
 
@@ -115,7 +116,7 @@ title: ['Primatives', 'Zoom']
 		</div>
 		<Chart {data} x="x" y="y">
 			<Svg>
-				<Zoom bind:this={zoom}>
+				<Zoom bind:this={zoom} tweened={{ duration: 800, easing: cubicOut }}>
 					{#if showPath}
 						<Path curve={curve} {tweened} />
 					{/if}

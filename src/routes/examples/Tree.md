@@ -3,6 +3,7 @@ title: ['Charts', 'Tree']
 ---
 
 <script lang="ts">
+	import { cubicOut } from 'svelte/easing';
 	import { hierarchy } from 'd3-hierarchy';
 	import { curveBumpX, curveBumpY, curveStep, curveStepBefore, curveStepAfter } from 'd3-shape';
 
@@ -98,7 +99,7 @@ title: ['Charts', 'Tree']
 		</div>
 		<Chart data={complexDataHierarchy} padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}>
 			<Svg>
-				<Zoom bind:this={zoom}>
+				<Zoom bind:this={zoom} tweened={{ duration: 800, easing: cubicOut }}>
 					<Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : null}>
 						{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
 							<Link

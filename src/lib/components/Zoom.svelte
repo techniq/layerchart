@@ -1,13 +1,17 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { spring } from 'svelte/motion';
+
+	import { motionStore } from '$lib/stores/motionStore';
 
 	const { width, height, padding } = getContext('LayerCake');
 
+	export let spring: boolean | Parameters<typeof motionStore>[1]['spring'] = undefined;
+	export let tweened: boolean | Parameters<typeof motionStore>[1]['tweened'] = undefined;
+
 	let dragging = false;
 
-	const translate = spring({ x: 0, y: 0 });
-	const scale = spring({ x: 1, y: 1 });
+	const translate = motionStore({ x: 0, y: 0 }, { spring, tweened });
+	const scale = motionStore({ x: 1, y: 1 }, { spring, tweened });
 	let startPoint;
 	let startTranslate;
 	let svgEl = null;
