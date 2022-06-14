@@ -3,8 +3,8 @@
 
 	import { motionStore } from '$lib/stores/motionStore';
 
-	export let cx: number;
-	export let cy: number;
+	export let cx: number = 0;
+	export let cy: number = 0;
 	export let r: number;
 	export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
 	export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
