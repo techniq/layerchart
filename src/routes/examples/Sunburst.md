@@ -105,8 +105,9 @@ title: ['Charts', 'Sunburst']
 									innerRadius={Math.max(0, yScale(node.y0))}
 									outerRadius={Math.max(0, yScale(node.y1))}
 									fill={nodeColor}
-									_stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
-									stroke="hsl(0 0% 30%)"
+									_stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 2)}
+									stroke="hsl(0 0% 20%)"
+									class="cursor-pointer"
 									let:centroid
 									on:click={() => {
 										selected = node;
