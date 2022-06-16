@@ -1,12 +1,19 @@
 import { flatGroup, max, sum } from 'd3-array';
-import { stack, stackOffsetNone, stackOffsetExpand } from 'd3-shape';
+import { stack, stackOffsetNone, stackOrderNone } from 'd3-shape';
 import { pivotWider } from './pivot';
 
+type OrderType = typeof stackOrderNone; // all orders share the same API
 type OffsetType = typeof stackOffsetNone; // all offsets share the same API
 
 export function createStackData(
 	data: any[],
-	options: { xKey: string; groupBy?: string; stackBy?: string; offset?: OffsetType }
+	options: {
+		xKey: string;
+		groupBy?: string;
+		stackBy?: string;
+		order?: OrderType;
+		offset?: OffsetType;
+	}
 ) {
 	if (options.groupBy) {
 		// Group then Stack (if needed)
@@ -23,7 +30,9 @@ export function createStackData(
 			const pivotData = pivotWider(itemData, options.xKey, options.stackBy, 'value');
 
 			const stackKeys: Array<any> = [...new Set(itemData.map((d) => d[options.stackBy]))];
-			const stackData = stack().keys(stackKeys).offset(options.offset)(pivotData);
+			const stackData = stack().keys(stackKeys).order(options.order).offset(options.offset)(
+				pivotData
+			);
 
 			//console.log({ pivotData, stackData })
 
@@ -45,7 +54,9 @@ export function createStackData(
 		const pivotData = pivotWider(data, options.xKey, options.stackBy, 'value');
 
 		const stackKeys: Array<any> = [...new Set(data.map((d) => d[options.stackBy]))];
-		const stackData = stack().keys(stackKeys).offset(options.offset)(pivotData);
+		const stackData = stack().keys(stackKeys).order(options.order).offset(options.offset)(
+			pivotData
+		);
 
 		const result = stackData.flatMap((series) => {
 			return series.flatMap((s) => {
