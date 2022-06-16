@@ -100,7 +100,7 @@ title: ['Charts', 'Pack']
 				<Zoom bind:this={zoom} let:scale tweened={{ duration: 800, easing: cubicOut }} disablePointer on:click={() => selected = complexHierarchy}>
 						<Pack {padding} let:nodes>
 							{#each nodes as node}
-								<Group x={node.x} y={node.y} on:click={(e) => selected = node} class="cursor-pointer hover:contrast-[1.2]">
+								<Group x={node.x} y={node.y} on:click={(e) => { e.stopPropagation(); selected = node }} class="cursor-pointer hover:contrast-[1.2]">
 									{@const nodeColor = getNodeColor(node, colorBy)}
 									<Circle
 										r={node.r}
