@@ -1,4 +1,4 @@
-import { derived, writable } from 'svelte/store';
+import { derived } from 'svelte/store';
 import { tweened, spring } from 'svelte/motion';
 import { MotionOptions, motionStore } from '$lib/stores/motionStore';
 
@@ -54,7 +54,34 @@ export function tweenedScale(scale, tweenedOptions: Parameters<typeof tweened>[1
 }
 
 /**
- * Create a store wrapper around a d3-scale which interpolates the domain and/or range using `tweened()` or `spring()` stores.  Fallbacks to `writable()` if not interpolating
+ * Animate d3-scale as domain and/or range are updated using spring store
+ */
+export function springScale(scale, springOptions: Parameters<typeof spring>[1] = {}) {
+	const domainStore = spring(undefined, springOptions);
+	const rangeStore = spring(undefined, springOptions);
+
+	const tweenedScale = derived([domainStore, rangeStore], ([domain, range]) => {
+		const scaleInstance = scale.domain ? scale : scale(); // support `scaleLinear` or `scaleLinear()` (which could have `.interpolate()` and others set)
+
+		if (domain) {
+			scaleInstance.domain(domain);
+		}
+		if (range) {
+			scaleInstance.range(range);
+		}
+
+		return scaleInstance;
+	});
+
+	return {
+		subscribe: tweenedScale.subscribe,
+		domain: (values) => domainStore.set(values),
+		range: (values) => rangeStore.set(values)
+	};
+}
+
+/**
+ * Create a store wrapper around a d3-scale which interpolates the domain and/or range using `tweened()` or `spring()` stores.  Fallbacks to `writable()` store if not interpolating
  */
 export function motionScale(scale, options: MotionOptions) {
 	const domainStore = motionStore(undefined, options);
