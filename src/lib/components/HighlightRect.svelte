@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { isScaleBand } from '$lib/utils/scales';
+	import { max, min } from 'd3-array';
 
+	import { isScaleBand } from '$lib/utils/scales';
 	import Rect from './Rect.svelte';
 
 	export let data;
@@ -9,20 +10,26 @@
 	const { flatData, xScale, x, xGet, yRange, padding } = getContext('LayerCake');
 
 	$: isBand = isScaleBand($xScale);
+	$: xCoord = $xGet(data);
 
 	let width = 0;
 	$: if (isBand) {
 		width = $xScale.step();
+	} else if (Array.isArray(xCoord)) {
+		// `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
+		// Use first/last values for width
+		width = max(xCoord) - min(xCoord);
+		xCoord = min(xCoord); // Use left-most value for top left of rect
 	} else {
 		// Find width to next data point
 		let index = $flatData.findIndex((d) => Number($x(d)) === Number($x(data)));
 		let nextDataPoint = $x($flatData[index + 1]);
-		width = ($xScale(nextDataPoint) ?? 0) - ($xGet(data) ?? 0);
+		width = ($xScale(nextDataPoint) ?? 0) - (xCoord ?? 0);
 	}
 
 	$: dimensions = {
-		x: $xGet(data) - (isBand ? ($xScale.padding() * $xScale.step()) / 2 : 0),
-		y: -$padding.top,
+		x: xCoord - (isBand ? ($xScale.padding() * $xScale.step()) / 2 : 0),
+		y: 0,
 		width,
 		height: $yRange[0]
 	};

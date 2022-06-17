@@ -58,23 +58,42 @@
 
 		let tooltipData;
 		if (isScaleBand($xScale)) {
-			// `x` value at mouse coordinate
-			const xValue = scaleBandInvert($xScale)(localX);
-			tooltipData = $flatData.find((d) => $x(d) === xValue);
+			// `x` value at mouse/touch coordinate
+			const valueAtPoint = scaleBandInvert($xScale)(localX);
+			tooltipData = $flatData.find((d) => $x(d) === valueAtPoint);
 		} else {
-			// `x` value at mouse coordinate
-			const xValue = $xScale.invert(localX);
+			// `x` value at mouse/touch coordinate
+			const valueAtPoint = $xScale.invert(localX);
 
-			const bisectX = bisector($x).left;
-			const index = bisectX($flatData, xValue, 1);
+			const bisectX = bisector((d) => {
+				const value = $x(d);
+				if (Array.isArray(value)) {
+					// `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
+					// Using first value.  Consider using average, max, etc
+					// const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
+					// return midpoint;
+					return value[0];
+				} else {
+					return value;
+				}
+			}).left;
+			const index = bisectX($flatData, valueAtPoint, 1);
 
 			const data0 = $flatData[index - 1];
 			const data1 = $flatData[index];
 
 			switch (findTooltipData) {
 				case 'closest':
-					tooltipData =
-						Number(xValue) - Number($x(data0)) > Number($x(data1)) - Number(xValue) ? data1 : data0;
+					if (data1 === undefined) {
+						tooltipData = data0;
+					} else if (data0 === undefined) {
+						tooltipData = data1;
+					} else {
+						tooltipData =
+							Number(valueAtPoint) - Number($x(data0)) > Number($x(data1)) - Number(valueAtPoint)
+								? data1
+								: data0;
+					}
 					break;
 				case 'left':
 					tooltipData = data0;
