@@ -1,4 +1,4 @@
-import { subDays } from 'date-fns';
+import { startOfToday, subDays } from 'date-fns';
 import { degreesToRadians, radiansToDegrees } from './math';
 
 /**
@@ -26,7 +26,7 @@ export function createDateSeries(options: {
 	keys: Array<string>;
 	value: 'number' | 'integer';
 }) {
-	const now = new Date();
+	const now = startOfToday();
 
 	const count = options.count ?? 10;
 	const min = options.min;
