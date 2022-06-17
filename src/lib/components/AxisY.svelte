@@ -27,10 +27,7 @@
 
 <g class="axis y-axis" transform="translate({-$padding.left}, 0)">
 	{#each tickVals as tick, i}
-		<g
-			class="tick tick-{tick}"
-			transform="translate({$xRange[0] + (isBand ? $padding.left : 0)}, {$yScale(tick)})"
-		>
+		<g class="tick tick-{tick}" transform="translate({$xRange[0]}, {$yScale(tick)})">
 			{#if gridlines !== false}
 				<line
 					x1={$padding.left}
