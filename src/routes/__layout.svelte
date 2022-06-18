@@ -1,7 +1,8 @@
 <script lang="ts">
+	import { mdiGithub } from '@mdi/js';
 	import 'prism-themes/themes/prism-vsc-dark-plus.css';
 
-	import { AppBar, AppLayout } from 'svelte-ux';
+	import { AppBar, AppLayout, Button, Tooltip } from 'svelte-ux';
 	import NavMenu from './_NavMenu.svelte';
 </script>
 
@@ -10,7 +11,18 @@
 		<NavMenu />
 	</nav>
 
-	<AppBar title="LayerChart" />
+	<AppBar title="LayerChart">
+		<div slot="actions">
+			<Tooltip title="View repository" placement="left" offset={2}>
+				<Button
+					icon={mdiGithub}
+					href="https://github.com/techniq/layerchart"
+					class="p-2"
+					target="_blank"
+				/>
+			</Tooltip>
+		</div>
+	</AppBar>
 
 	<main class="p-4 scroll-smooth">
 		<slot />
