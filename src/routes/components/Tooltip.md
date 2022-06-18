@@ -146,7 +146,47 @@ title: ['Interaction', 'Tooltip']
 	</div>
 </Preview>
 
-## Time series with HighlightLine
+## Single time
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			data={timeSeries}
+			x="startDate"
+			xScale={scaleTime()}
+			y="name"
+			yScale={scaleBand()}
+			yDomain={timeSeries.map((x) => x.name).reverse()}
+			padding={{ left: 36, bottom: 36 }}
+		>
+			<Svg>
+				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
+				<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
+				<Baseline y />
+				<!-- <Path /> -->
+				<Points class="fill-blue-500 stroke-blue-800" />
+			</Svg>
+			<Tooltip let:data>
+				<div class="tooltip">
+					<div class="tooltip-header">
+						{data.name}
+					</div>
+					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
+						<div class="tooltip-label">date:</div>
+						<div class="tooltip-value">
+							{format(data.startDate, 'h:mm a')}
+						</div>
+					</div>
+				</div>
+				<g slot="highlight">
+					<HighlightLine {data} color="var(--color-blue-500)" />
+				</g>
+			</Tooltip>
+		</Chart>
+	</div>
+</Preview>
+
+## Time duration with HighlightLine
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -194,7 +234,7 @@ title: ['Interaction', 'Tooltip']
 	</div>
 </Preview>
 
-## Time series with HighlightRect
+## Time duration with HighlightRect
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
