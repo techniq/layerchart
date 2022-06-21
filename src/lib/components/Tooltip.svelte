@@ -4,6 +4,7 @@
 	import { fade } from 'svelte/transition';
 	import { writable } from 'svelte/store';
 	import { bisector } from 'd3-array';
+	import { Delaunay } from 'd3-delaunay';
 
 	import { Svg, Html } from '$lib/components/Chart.svelte';
 
@@ -21,6 +22,7 @@
 	export let topOffset = 10;
 	export let leftOffset = 10;
 	export let contained: 'container' | false = 'container'; // TODO: Support 'window' using getBoundingClientRect()
+	export let mode: 'bisect' | 'voronoi' = 'bisect';
 	export let animate = true;
 
 	let tooltip = null;
@@ -51,56 +53,58 @@
 		}
 	}
 
-	function handleTooltip(event: MouseEvent | TouchEvent) {
+	function handleTooltip(event: MouseEvent | TouchEvent, tooltipData: any) {
 		const point = localPoint(event.target as Element, event);
 		const localX = point?.x ?? 0;
 		const localY = point?.y ?? 0;
 
-		let tooltipData;
-		if (isScaleBand($xScale)) {
-			// `x` value at mouse/touch coordinate
-			const valueAtPoint = scaleBandInvert($xScale)(localX);
-			tooltipData = $flatData.find((d) => $x(d) === valueAtPoint);
-		} else {
-			// `x` value at mouse/touch coordinate
-			const valueAtPoint = $xScale.invert(localX);
+		// If tooltipData not provided already (voronoi, etc), attempt to find it
+		if (tooltipData == null) {
+			if (isScaleBand($xScale)) {
+				// `x` value at mouse/touch coordinate
+				const valueAtPoint = scaleBandInvert($xScale)(localX);
+				tooltipData = $flatData.find((d) => $x(d) === valueAtPoint);
+			} else {
+				// `x` value at mouse/touch coordinate
+				const valueAtPoint = $xScale.invert(localX);
 
-			const bisectX = bisector((d) => {
-				const value = $x(d);
-				if (Array.isArray(value)) {
-					// `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
-					// Using first value.  Consider using average, max, etc
-					// const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
-					// return midpoint;
-					return value[0];
-				} else {
-					return value;
-				}
-			}).left;
-			const index = bisectX($flatData, valueAtPoint, 1);
-
-			const data0 = $flatData[index - 1];
-			const data1 = $flatData[index];
-
-			switch (findTooltipData) {
-				case 'closest':
-					if (data1 === undefined) {
-						tooltipData = data0;
-					} else if (data0 === undefined) {
-						tooltipData = data1;
+				const bisectX = bisector((d) => {
+					const value = $x(d);
+					if (Array.isArray(value)) {
+						// `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
+						// Using first value.  Consider using average, max, etc
+						// const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
+						// return midpoint;
+						return value[0];
 					} else {
-						tooltipData =
-							Number(valueAtPoint) - Number($x(data0)) > Number($x(data1)) - Number(valueAtPoint)
-								? data1
-								: data0;
+						return value;
 					}
-					break;
-				case 'left':
-					tooltipData = data0;
-					break;
-				case 'right':
-				default:
-					tooltipData = data1;
+				}).left;
+				const index = bisectX($flatData, valueAtPoint, 1);
+
+				const data0 = $flatData[index - 1];
+				const data1 = $flatData[index];
+
+				switch (findTooltipData) {
+					case 'closest':
+						if (data1 === undefined) {
+							tooltipData = data0;
+						} else if (data0 === undefined) {
+							tooltipData = data1;
+						} else {
+							tooltipData =
+								Number(valueAtPoint) - Number($x(data0)) > Number($x(data1)) - Number(valueAtPoint)
+									? data1
+									: data0;
+						}
+						break;
+					case 'left':
+						tooltipData = data0;
+						break;
+					case 'right':
+					default:
+						tooltipData = data1;
+				}
 			}
 		}
 
@@ -116,21 +120,18 @@
 	function hideTooltip(event: MouseEvent | TouchEvent) {
 		tooltip = null;
 	}
-</script>
 
-<Html>
-	<div
-		class="absolute"
-		style="width: {$width}px; height: {$height}px; background: _red; z-index: 9999"
-		on:touchstart={handleTooltip}
-		on:touchmove={handleTooltip}
-		on:mousemove={handleTooltip}
-		on:mouseleave={hideTooltip}
-		on:click={(e) => {
-			dispatch('click', { data: tooltip?.data });
-		}}
-	/>
-</Html>
+	let points;
+	let voronoi;
+	$: if (mode === 'voronoi') {
+		points = $flatData.map((d) => {
+			const point = [$xGet(d), $yGet(d)];
+			point.data = d;
+			return point;
+		});
+		voronoi = Delaunay.from(points).voronoi([0, 0, $width, $height]);
+	}
+</script>
 
 {#if tooltip}
 	<Html>
@@ -151,5 +152,32 @@
 
 	<Svg>
 		<slot name="highlight" data={tooltip?.data} />
+	</Svg>
+{/if}
+
+{#if mode === 'bisect'}
+	<Html>
+		<div
+			class="absolute"
+			style="width: {$width}px; height: {$height}px; background: _red; z-index: 9999"
+			on:touchstart={handleTooltip}
+			on:touchmove={handleTooltip}
+			on:mousemove={handleTooltip}
+			on:mouseleave={hideTooltip}
+			on:click={(e) => {
+				dispatch('click', { data: tooltip?.data });
+			}}
+		/>
+	</Html>
+{:else if mode === 'voronoi'}
+	<Svg>
+		{#each points as point, i}
+			<path
+				d={voronoi.renderCell(i)}
+				style="fill: transparent; stroke: none;"
+				on:mousemove={(e) => handleTooltip(e, point.data)}
+				on:mouseleave={hideTooltip}
+			/>
+		{/each}
 	</Svg>
 {/if}

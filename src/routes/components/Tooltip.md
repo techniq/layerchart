@@ -32,9 +32,10 @@ title: ['Interaction', 'Tooltip']
 
 	import Preview from '$lib/docs/Preview.svelte';
 
-	import { createDateSeries, getRandomInteger } from '$lib/utils/genData';
+	import { createDateSeries, getRandomInteger, getSpiral } from '$lib/utils/genData';
 
 	const dateSeries = createDateSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] });
+	const spiralData = 	getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 })
 
 	let lastStartDate = startOfDay(new Date());
 	const timeSeries = Array.from({ length: 10 }).map((_, i) => {
@@ -163,7 +164,6 @@ title: ['Interaction', 'Tooltip']
 				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
 				<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
 				<Baseline y />
-				<!-- <Path /> -->
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
 			<Tooltip let:data>
@@ -364,6 +364,38 @@ title: ['Interaction', 'Tooltip']
 				</div>
 				<g slot="highlight">
 					<HighlightRect {data} />
+				</g>
+			</Tooltip>
+		</Chart>
+	</div>
+</Preview>
+
+## Scatter Plot with Voronoi
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			data={spiralData}
+			x="x"
+			y="y"
+			padding={{ left: 30, bottom: 30 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX gridlines />
+				<Points class="fill-blue-500 stroke-blue-800" />
+			</Svg>
+			<Tooltip let:data mode="voronoi">
+				<div class="tooltip">
+					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
+						<div class="tooltip-label">x:</div>
+						<div class="tooltip-value">{data.x}</div>
+						<div class="tooltip-label">y:</div>
+						<div class="tooltip-value">{data.y}</div>
+					</div>
+				</div>
+				<g slot="highlight">
+					<HighlightLine {data} color="var(--color-blue-500)" />
 				</g>
 			</Tooltip>
 		</Chart>

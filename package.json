@@ -45,6 +45,7 @@
 	"dependencies": {
 		"@mdi/js": "^6.7.96",
 		"d3-array": "^3.1.6",
+		"d3-delaunay": "^6.0.2",
 		"d3-dsv": "^3.0.1",
 		"d3-hierarchy": "^3.1.2",
 		"d3-interpolate-path": "^2.2.3",
