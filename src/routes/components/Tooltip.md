@@ -9,7 +9,7 @@ title: ['Interaction', 'Tooltip']
 	import { stack } from 'd3-shape';
 	import { addHours, addMinutes, format, startOfDay } from 'date-fns';
 
-	import { ApiDocs, Duration } from 'svelte-ux';
+	import { ApiDocs, Duration, Field, Switch } from 'svelte-ux';
 	import { flatten } from 'svelte-ux/utils/array';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
@@ -52,6 +52,9 @@ title: ['Interaction', 'Tooltip']
 	const keys = ['apples', 'bananas', 'oranges']
 	const stackDateSeries = createDateSeries({ min: 50, max: 100, value: 'integer', keys });
 	const stackData = stack().keys(keys)(stackDateSeries);
+
+	let showVoronoi = false;
+	let showQuadtree = false;
 
 </script>
 
@@ -372,6 +375,12 @@ title: ['Interaction', 'Tooltip']
 
 ## Scatter Plot with Voronoi
 
+<div class="grid grid-cols-[100px] mb-2">
+	<Field label="Debug" let:id>
+		<Switch bind:checked={showVoronoi} {id} />
+	</Field>
+</div>
+
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
@@ -385,7 +394,45 @@ title: ['Interaction', 'Tooltip']
 				<AxisX gridlines />
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
-			<Tooltip let:data mode="voronoi">
+			<Tooltip mode="voronoi" let:data debug={showVoronoi}>
+				<div class="tooltip">
+					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
+						<div class="tooltip-label">x:</div>
+						<div class="tooltip-value">{data.x}</div>
+						<div class="tooltip-label">y:</div>
+						<div class="tooltip-value">{data.y}</div>
+					</div>
+				</div>
+				<g slot="highlight">
+					<HighlightLine {data} color="var(--color-blue-500)" />
+				</g>
+			</Tooltip>
+		</Chart>
+	</div>
+</Preview>
+
+## Scatter Plot with Quadtree
+
+<div class="grid grid-cols-[100px] mb-2">
+	<Field label="Debug" let:id>
+		<Switch bind:checked={showQuadtree} {id} />
+	</Field>
+</div>
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			data={spiralData}
+			x="x"
+			y="y"
+			padding={{ left: 30, bottom: 30 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX gridlines />
+				<Points class="fill-blue-500 stroke-blue-800" />
+			</Svg>
+			<Tooltip mode="quadtree" let:data debug={showQuadtree}>
 				<div class="tooltip">
 					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
 						<div class="tooltip-label">x:</div>

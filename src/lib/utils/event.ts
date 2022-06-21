@@ -6,6 +6,8 @@ import {
 } from 'svelte-ux/types/typeGuards';
 
 // See: https://github.com/airbnb/visx/blob/master/packages/visx-event/src/localPointGeneric.ts
+// TODO: Matches event.layerX/Y, but are deprecated (https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/layerX).
+//       Similar and could be replaced by event.offsetX/Y (but not identical)
 export function localPoint(node: Element, event: MouseEvent | TouchEvent) {
 	if (!node || !event) return null;
 

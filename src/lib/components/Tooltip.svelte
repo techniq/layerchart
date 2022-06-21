@@ -5,25 +5,31 @@
 	import { writable } from 'svelte/store';
 	import { bisector } from 'd3-array';
 	import { Delaunay } from 'd3-delaunay';
+	import { quadtree as d3Quadtree } from 'd3-quadtree';
 
 	import { Svg, Html } from '$lib/components/Chart.svelte';
+	import ChartClipPath from '$lib/components/ChartClipPath.svelte';
+	import Rect from '$lib/components/Rect.svelte';
 
 	import { localPoint } from '$lib/utils/event';
 	import { isScaleBand, scaleBandInvert } from '$lib/utils/scales';
+	import { quadtreeRects } from '$lib/utils/quadtree';
 
 	const dispatch = createEventDispatcher<{ click: { data: any } }>();
 
 	const { flatData, x, xScale, xGet, yScale, yGet, width, height, padding } =
 		getContext('LayerCake');
 
+	export let mode: 'bisect' | 'voronoi' | 'quadtree' = 'bisect';
 	export let snapToDataX: boolean = false;
 	export let snapToDataY: boolean = false;
 	export let findTooltipData: 'closest' | 'left' | 'right' = 'closest';
 	export let topOffset = 10;
 	export let leftOffset = 10;
 	export let contained: 'container' | false = 'container'; // TODO: Support 'window' using getBoundingClientRect()
-	export let mode: 'bisect' | 'voronoi' = 'bisect';
 	export let animate = true;
+	export let radius = Infinity;
+	export let debug = false;
 
 	let tooltip = null;
 	let tooltipWidth = 0;
@@ -60,7 +66,9 @@
 
 		// If tooltipData not provided already (voronoi, etc), attempt to find it
 		if (tooltipData == null) {
-			if (isScaleBand($xScale)) {
+			if (mode === 'quadtree') {
+				tooltipData = quadtree.find(localX, localY, radius);
+			} else if (isScaleBand($xScale)) {
 				// `x` value at mouse/touch coordinate
 				const valueAtPoint = scaleBandInvert($xScale)(localX);
 				tooltipData = $flatData.find((d) => $x(d) === valueAtPoint);
@@ -114,6 +122,9 @@
 				top: snapToDataY ? $yGet(tooltipData) : localY,
 				data: tooltipData
 			};
+		} else {
+			// Hide tooltip if unable to locate
+			tooltip = null;
 		}
 	}
 
@@ -130,6 +141,42 @@
 			return point;
 		});
 		voronoi = Delaunay.from(points).voronoi([0, 0, $width, $height]);
+	}
+
+	let quadtree;
+	$: if (mode === 'quadtree') {
+		quadtree = d3Quadtree()
+			.extent([
+				[0, 0],
+				[$width, $height]
+			])
+			.x((d) => {
+				const value = $xGet(d);
+
+				if (Array.isArray(value)) {
+					// `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
+					// Using first value.  Consider using average, max, etc
+					// const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
+					// return midpoint;
+					return value[0];
+				} else {
+					return value;
+				}
+			})
+			.y((d) => {
+				const value = $yGet(d);
+
+				if (Array.isArray(value)) {
+					// `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
+					// Using first value.  Consider using average, max, etc
+					// const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
+					// return midpoint;
+					return value[0];
+				} else {
+					return value;
+				}
+			})
+			.addAll($flatData);
 	}
 </script>
 
@@ -155,7 +202,7 @@
 	</Svg>
 {/if}
 
-{#if mode === 'bisect'}
+{#if mode === 'bisect' || mode === 'quadtree'}
 	<Html>
 		<div
 			class="absolute"
@@ -174,10 +221,21 @@
 		{#each points as point, i}
 			<path
 				d={voronoi.renderCell(i)}
-				style="fill: transparent; stroke: none;"
+				style:fill="transparent"
+				style:stroke={debug ? 'red' : 'transparent'}
 				on:mousemove={(e) => handleTooltip(e, point.data)}
 				on:mouseleave={hideTooltip}
 			/>
 		{/each}
+	</Svg>
+{/if}
+
+{#if mode === 'quadtree' && debug}
+	<Svg>
+		<ChartClipPath>
+			{#each quadtreeRects(quadtree, false) as rect}
+				<Rect {...rect} stroke="red" fill="none" />
+			{/each}
+		</ChartClipPath>
 	</Svg>
 {/if}
