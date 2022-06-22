@@ -52,15 +52,14 @@ title: ['Interaction', 'Tooltip']
 	let showQuadtree = false;
 
 	let charts = [
-		{ mode: 'bisect', debug: false },
-		{ mode: 'bisect', debug: false },
-		{ mode: 'bisect', debug: false },
-		{ mode: 'bounds', debug: false },
-		{ mode: 'bounds', debug: false },
-		{ mode: 'bounds', debug: false },
-		{ mode: 'bisect', debug: false },
-		{ mode: 'bisect', debug: false },
-		{ mode: 'voronoi', debug: false },
+		{ mode: 'bisect', highlight: 'line', debug: false },
+		{ mode: 'bisect', highlight: 'line', debug: false },
+		{ mode: 'bisect', highlight: 'line', debug: false },
+		{ mode: 'bounds', highlight: 'rect', debug: false },
+		{ mode: 'bounds', highlight: 'rect', debug: false },
+		{ mode: 'band', highlight: 'rect', debug: false },
+		{ mode: 'band', highlight: 'rect', debug: false },
+		{ mode: 'voronoi', highlight: 'line', debug: false },
 	]
 
 </script>
@@ -69,11 +68,11 @@ title: ['Interaction', 'Tooltip']
 
 ---
 
-## Simple Area
+## Area
 
 ### x: scaleTime, y: scaleLinear
 
-<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[0].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -82,6 +81,15 @@ title: ['Interaction', 'Tooltip']
 				<Tab value="band">band</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Highlight">
+		<Tabs bind:selected={charts[0].highlight} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="none">none</Tab>
+				<Tab value="line">line</Tab>
+				<Tab value="rect">rect</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -120,7 +128,11 @@ title: ['Interaction', 'Tooltip']
 					</div>
 				</div>
 				<g slot="highlight">
-					<HighlightLine {data} color="var(--color-blue-500)" />
+					{#if charts[0].highlight === 'line'}
+						<HighlightLine {data} color="var(--color-blue-500)" />
+					{:else if charts[0].highlight === 'rect'}
+						<HighlightRect {data} />
+					{/if}
 				</g>
 			</Tooltip>
 		</Chart>
@@ -131,7 +143,7 @@ title: ['Interaction', 'Tooltip']
 
 ### x: scaleTime, y: scaleLinear (stack)
 
-<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[1].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -140,6 +152,15 @@ title: ['Interaction', 'Tooltip']
 				<Tab value="band">band</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Highlight">
+		<Tabs bind:selected={charts[1].highlight} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="none">none</Tab>
+				<Tab value="line">line</Tab>
+				<Tab value="rect">rect</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -188,18 +209,22 @@ title: ['Interaction', 'Tooltip']
 					</div>
 				</div>
 				<g slot="highlight">
-					<HighlightLine {data} color="var(--color-blue-500)" />
+					{#if charts[1].highlight === 'line'}
+						<HighlightLine {data} color="var(--color-blue-500)" />
+					{:else if charts[1].highlight === 'rect'}
+						<HighlightRect {data} />
+					{/if}
 				</g>
 			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
 
-## Single time
+## Single Date / Time
 
 ### x: scaleTime, y: scaleBand
 
-<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[2].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -208,6 +233,15 @@ title: ['Interaction', 'Tooltip']
 				<Tab value="band">band</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Highlight">
+		<Tabs bind:selected={charts[2].highlight} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="none">none</Tab>
+				<Tab value="line">line</Tab>
+				<Tab value="rect">rect</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -246,18 +280,22 @@ title: ['Interaction', 'Tooltip']
 					</div>
 				</div>
 				<g slot="highlight">
-					<HighlightLine {data} color="var(--color-blue-500)" />
+					{#if charts[2].highlight === 'line'}
+						<HighlightLine {data} color="var(--color-blue-500)" />
+					{:else if charts[2].highlight === 'rect'}
+						<HighlightRect {data} />
+					{/if}
 				</g>
 			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
 
-## Time duration with HighlightLine
+## Duration
 
 ### x: scaleTime (multi), y: scaleBand
 
-<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[3].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -266,6 +304,15 @@ title: ['Interaction', 'Tooltip']
 				<Tab value="band">band</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Highlight">
+		<Tabs bind:selected={charts[3].highlight} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="none">none</Tab>
+				<Tab value="line">line</Tab>
+				<Tab value="rect">rect</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -313,18 +360,22 @@ title: ['Interaction', 'Tooltip']
 					</div>
 				</div>
 				<g slot="highlight">
-					<HighlightLine {data} color="var(--color-blue-500)" />
+					{#if charts[3].highlight === 'line'}
+						<HighlightLine {data} color="var(--color-blue-500)" />
+					{:else if charts[3].highlight === 'rect'}
+						<HighlightRect {data} />
+					{/if}
 				</g>
 			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
 
-## Time duration with HighlightRect
+## Multiple (overlapping) Durations
 
 ### x: scaleTime (multi), y: scaleBand
 
-<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[4].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -336,6 +387,15 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
+	<Field label="Highlight">
+		<Tabs bind:selected={charts[4].highlight} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="none">none</Tab>
+				<Tab value="line">line</Tab>
+				<Tab value="rect">rect</Tab>
+			</div>
+		</Tabs>
+	</Field>
 	<Field label="Debug" let:id>
 		<Switch bind:checked={charts[4].debug} {id} />
 	</Field>
@@ -344,12 +404,12 @@ title: ['Interaction', 'Tooltip']
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
-			data={timeSeries}
+			data={overlapTimeSeries}
 			x={['startDate', 'endDate']}
 			xScale={scaleTime()}
 			y="name"
 			yScale={scaleBand()}
-			yDomain={timeSeries.map((x) => x.name).reverse()}
+			yDomain={overlapTimeSeries.map((x) => x.name).reverse()}
 			padding={{ left: 36, bottom: 36 }}
 		>
 			<Svg>
@@ -380,18 +440,22 @@ title: ['Interaction', 'Tooltip']
 					</div>
 				</div>
 				<g slot="highlight">
-					<HighlightRect {data} />
+					{#if charts[4].highlight === 'line'}
+						<HighlightLine {data} color="var(--color-blue-500)" />
+					{:else if charts[4].highlight === 'rect'}
+						<HighlightRect {data} />
+					{/if}
 				</g>
 			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
 
-## Overlaping time series
+## Simple Bars
 
-### x: scaleTime (multi), y: scaleBand
+### x: scaleBand, y: scaleLinear
 
-<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[5].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -403,75 +467,17 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Debug" let:id>
-		<Switch bind:checked={charts[5].debug} {id} />
-	</Field>
-</div>
-
-<Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			data={overlapTimeSeries}
-			x={['startDate', 'endDate']}
-			xScale={scaleTime()}
-			y="name"
-			yScale={scaleBand()}
-			yDomain={overlapTimeSeries.map((x) => x.name).reverse()}
-			padding={{ left: 36, bottom: 36 }}
-		>
-			<Svg>
-				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
-				<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
-				<Baseline y />
-				<ConnectedPoints stroke="#000" />
-				<Points class="fill-blue-500 stroke-blue-800" />
-			</Svg>
-			<Tooltip let:data mode={charts[5].mode} debug={charts[5].debug}>
-				<div class="tooltip">
-					<div class="tooltip-header">
-						{data.name}
-					</div>
-					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-						<div class="tooltip-label">start:</div>
-						<div class="tooltip-value">
-							{format(data.startDate, 'h:mm a')}
-						</div>
-						<div class="tooltip-label">end:</div>
-						<div class="tooltip-value">
-							{format(data.endDate, 'h:mm a')}
-						</div>
-						<div class="tooltip-label">duration:</div>
-						<div class="tooltip-value">
-							<Duration start={data.startDate} end={data.endDate} />
-						</div>
-					</div>
-				</div>
-				<g slot="highlight">
-					<HighlightRect {data} />
-				</g>
-			</Tooltip>
-		</Chart>
-	</div>
-</Preview>
-
-## Simple Bars
-
-### x: scaleBand, y: scaleLinear
-
-<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
-	<Field label="Mode">
-		<Tabs bind:selected={charts[6].mode} contained class="w-full">
+	<Field label="Highlight">
+		<Tabs bind:selected={charts[5].highlight} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value="bisect">bisect</Tab>
-				<Tab value="bounds">bounds</Tab>
-				<Tab value="band">band</Tab>
-				<Tab value="voronoi">voronoi</Tab>
-				<Tab value="quadtree">quadtree</Tab>
+				<Tab value="none">none</Tab>
+				<Tab value="line">line</Tab>
+				<Tab value="rect">rect</Tab>
 			</div>
 		</Tabs>
 	</Field>
 	<Field label="Debug" let:id>
-		<Switch bind:checked={charts[6].debug} {id} />
+		<Switch bind:checked={charts[5].debug} {id} />
 	</Field>
 </div>
 
@@ -493,7 +499,7 @@ title: ['Interaction', 'Tooltip']
 				<Baseline x y />
 				<Bars radius={4} strokeWidth={1} />
 			</Svg>
-			<Tooltip let:data mode={charts[6].mode} debug={charts[6].debug}>
+			<Tooltip let:data mode={charts[5].mode} debug={charts[5].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{format(data.date, 'eee, MMMM do')}
@@ -506,7 +512,11 @@ title: ['Interaction', 'Tooltip']
 					</div>
 				</div>
 				<g slot="highlight">
-					<HighlightRect {data} />
+					{#if charts[5].highlight === 'line'}
+						<HighlightLine {data} color="var(--color-blue-500)" />
+					{:else if charts[5].highlight === 'rect'}
+						<HighlightRect {data} />
+					{/if}
 				</g>
 			</Tooltip>
     	</Chart>
@@ -517,9 +527,9 @@ title: ['Interaction', 'Tooltip']
 
 ### x: scaleBand, y: scaleLinear
 
-<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<Tabs bind:selected={charts[7].mode} contained class="w-full">
+		<Tabs bind:selected={charts[6].mode} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value="bisect">bisect</Tab>
 				<Tab value="bounds">bounds</Tab>
@@ -529,8 +539,17 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
+	<Field label="Highlight">
+		<Tabs bind:selected={charts[6].highlight} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="none">none</Tab>
+				<Tab value="line">line</Tab>
+				<Tab value="rect">rect</Tab>
+			</div>
+		</Tabs>
+	</Field>
 	<Field label="Debug" let:id>
-		<Switch bind:checked={charts[7].debug} {id} />
+		<Switch bind:checked={charts[6].debug} {id} />
 	</Field>
 </div>
 
@@ -553,7 +572,7 @@ title: ['Interaction', 'Tooltip']
 				<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
 				<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
 			</Svg>
-			<Tooltip let:data mode={charts[7].mode} debug={charts[7].debug}>
+			<Tooltip let:data mode={charts[6].mode} debug={charts[6].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{format(data.date, 'eee, MMMM do')}
@@ -570,20 +589,24 @@ title: ['Interaction', 'Tooltip']
 					</div>
 				</div>
 				<g slot="highlight">
-					<HighlightRect {data} />
+					{#if charts[6].highlight === 'line'}
+						<HighlightLine {data} color="var(--color-blue-500)" />
+					{:else if charts[6].highlight === 'rect'}
+						<HighlightRect {data} />
+					{/if}
 				</g>
 			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
 
-## Scatter Plot (voronoi, quadtree)
+## Scatter Plot
 
-### x: scaleLinear, y: scaleLinear
+### x: scaleLinear, y: scaleLinear. voronoi or quadtree recommended
 
-<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<Tabs bind:selected={charts[8].mode} contained class="w-full">
+		<Tabs bind:selected={charts[7].mode} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value="bisect">bisect</Tab>
 				<Tab value="bounds">bounds</Tab>
@@ -593,8 +616,17 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
+	<Field label="Highlight">
+		<Tabs bind:selected={charts[7].highlight} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="none">none</Tab>
+				<Tab value="line">line</Tab>
+				<Tab value="rect">rect</Tab>
+			</div>
+		</Tabs>
+	</Field>
 	<Field label="Debug" let:id>
-		<Switch bind:checked={charts[8].debug} {id} />
+		<Switch bind:checked={charts[7].debug} {id} />
 	</Field>
 </div>
 
@@ -611,7 +643,7 @@ title: ['Interaction', 'Tooltip']
 				<AxisX gridlines />
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
-			<Tooltip let:data mode={charts[8].mode} debug={charts[8].debug}>
+			<Tooltip let:data mode={charts[7].mode} debug={charts[7].debug}>
 				<div class="tooltip">
 					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
 						<div class="tooltip-label">x:</div>
@@ -621,7 +653,11 @@ title: ['Interaction', 'Tooltip']
 					</div>
 				</div>
 				<g slot="highlight">
-					<HighlightLine {data} color="var(--color-blue-500)" />
+					{#if charts[7].highlight === 'line'}
+						<HighlightLine {data} color="var(--color-blue-500)" />
+					{:else if charts[7].highlight === 'rect'}
+						<HighlightRect {data} />
+					{/if}
 				</g>
 			</Tooltip>
 		</Chart>
