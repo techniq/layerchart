@@ -52,14 +52,14 @@ title: ['Interaction', 'Tooltip']
 	let showQuadtree = false;
 
 	let charts = [
-		{ mode: 'bisect', highlight: 'line', debug: false },
-		{ mode: 'bisect', highlight: 'line', debug: false },
-		{ mode: 'bisect', highlight: 'line', debug: false },
-		{ mode: 'bounds', highlight: 'rect', debug: false },
-		{ mode: 'bounds', highlight: 'rect', debug: false },
-		{ mode: 'band', highlight: 'rect', debug: false },
-		{ mode: 'band', highlight: 'rect', debug: false },
-		{ mode: 'voronoi', highlight: 'line', debug: false },
+		{ mode: 'bisect', highlight: 'line', axis: undefined, debug: false },
+		{ mode: 'bisect', highlight: 'line', axis: undefined, debug: false },
+		{ mode: 'bisect', highlight: 'line', axis: undefined, debug: false },
+		{ mode: 'bounds', highlight: 'rect', axis: undefined, debug: false },
+		{ mode: 'bounds', highlight: 'rect', axis: undefined, debug: false },
+		{ mode: 'band', highlight: 'rect', axis: undefined, debug: false },
+		{ mode: 'band', highlight: 'rect', axis: undefined,  debug: false },
+		{ mode: 'voronoi', highlight: 'line', axis: 'both', debug: false },
 	]
 
 </script>
@@ -93,7 +93,7 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Highlight Axis" disabled={charts[0].highlight != 'rect'}>
+	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[0].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
@@ -139,7 +139,7 @@ title: ['Interaction', 'Tooltip']
 				</div>
 				<g slot="highlight">
 					{#if charts[0].highlight === 'line'}
-						<HighlightLine {data} color="var(--color-blue-500)" />
+						<HighlightLine {data} {...charts[0].axis && { axis: charts[0].axis}} color="var(--color-blue-500)" />
 					{:else if charts[0].highlight === 'rect'}
 						<HighlightRect {data} {...charts[0].axis && { axis: charts[0].axis}} />
 					{/if}
@@ -174,7 +174,7 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Highlight Axis" disabled={charts[1].highlight != 'rect'}>
+	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[1].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
@@ -230,7 +230,7 @@ title: ['Interaction', 'Tooltip']
 				</div>
 				<g slot="highlight">
 					{#if charts[1].highlight === 'line'}
-						<HighlightLine {data} color="var(--color-blue-500)" />
+						<HighlightLine {data} {...charts[1].axis && { axis: charts[1].axis}} color="var(--color-blue-500)" />
 					{:else if charts[1].highlight === 'rect'}
 						<HighlightRect {data} {...charts[1].axis && { axis: charts[1].axis}} />
 					{/if}
@@ -265,7 +265,7 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Highlight Axis" disabled={charts[2].highlight != 'rect'}>
+	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[2].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
@@ -311,7 +311,7 @@ title: ['Interaction', 'Tooltip']
 				</div>
 				<g slot="highlight">
 					{#if charts[2].highlight === 'line'}
-						<HighlightLine {data} color="var(--color-blue-500)" />
+						<HighlightLine {data} {...charts[2].axis && { axis: charts[2].axis}} color="var(--color-blue-500)" />
 					{:else if charts[2].highlight === 'rect'}
 						<HighlightRect {data} {...charts[2].axis && { axis: charts[2].axis}} />
 					{/if}
@@ -346,7 +346,7 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Highlight Axis" disabled={charts[3].highlight != 'rect'}>
+	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[3].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
@@ -401,7 +401,7 @@ title: ['Interaction', 'Tooltip']
 				</div>
 				<g slot="highlight">
 					{#if charts[3].highlight === 'line'}
-						<HighlightLine {data} color="var(--color-blue-500)" />
+						<HighlightLine {data} {...charts[3].axis && { axis: charts[3].axis}} color="var(--color-blue-500)" />
 					{:else if charts[3].highlight === 'rect'}
 						<HighlightRect {data} {...charts[3].axis && { axis: charts[3].axis}} />
 					{/if}
@@ -436,7 +436,7 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Highlight Axis" disabled={charts[4].highlight != 'rect'}>
+	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[4].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
@@ -491,7 +491,7 @@ title: ['Interaction', 'Tooltip']
 				</div>
 				<g slot="highlight">
 					{#if charts[4].highlight === 'line'}
-						<HighlightLine {data} color="var(--color-blue-500)" />
+						<HighlightLine {data} {...charts[4].axis && { axis: charts[4].axis}} color="var(--color-blue-500)" />
 					{:else if charts[4].highlight === 'rect'}
 						<HighlightRect {data} {...charts[4].axis && { axis: charts[4].axis}} />
 					{/if}
@@ -526,7 +526,7 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Highlight Axis" disabled={charts[5].highlight != 'rect'}>
+	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[5].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
@@ -573,7 +573,7 @@ title: ['Interaction', 'Tooltip']
 				</div>
 				<g slot="highlight">
 					{#if charts[5].highlight === 'line'}
-						<HighlightLine {data} color="var(--color-blue-500)" />
+						<HighlightLine {data} {...charts[5].axis && { axis: charts[5].axis}} color="var(--color-blue-500)" />
 					{:else if charts[5].highlight === 'rect'}
 						<HighlightRect {data} {...charts[5].axis && { axis: charts[5].axis}} />
 					{/if}
@@ -608,7 +608,7 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Highlight Axis" disabled={charts[6].highlight != 'rect'}>
+	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[6].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
@@ -660,7 +660,7 @@ title: ['Interaction', 'Tooltip']
 				</div>
 				<g slot="highlight">
 					{#if charts[6].highlight === 'line'}
-						<HighlightLine {data} color="var(--color-blue-500)" />
+						<HighlightLine {data} {...charts[6].axis && { axis: charts[6].axis}} color="var(--color-blue-500)" />
 					{:else if charts[6].highlight === 'rect'}
 						<HighlightRect {data} {...charts[6].axis && { axis: charts[6].axis}} />
 					{/if}
@@ -695,7 +695,7 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Highlight Axis" disabled={charts[7].highlight != 'rect'}>
+	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[7].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
@@ -734,7 +734,7 @@ title: ['Interaction', 'Tooltip']
 				</div>
 				<g slot="highlight">
 					{#if charts[7].highlight === 'line'}
-						<HighlightLine {data} color="var(--color-blue-500)" />
+						<HighlightLine {data} {...charts[7].axis && { axis: charts[7].axis}} color="var(--color-blue-500)" />
 					{:else if charts[7].highlight === 'rect'}
 						<HighlightRect {data} {...charts[7].axis && { axis: charts[7].axis}} />
 					{/if}
