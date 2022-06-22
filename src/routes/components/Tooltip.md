@@ -93,12 +93,13 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Axis" disabled={charts[0].highlight != 'rect'}>
+	<Field label="Highlight Axis" disabled={charts[0].highlight != 'rect'}>
 		<Tabs bind:selected={charts[0].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
+				<Tab value="both">both</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -173,12 +174,13 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Axis" disabled={charts[1].highlight != 'rect'}>
+	<Field label="Highlight Axis" disabled={charts[1].highlight != 'rect'}>
 		<Tabs bind:selected={charts[1].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
+				<Tab value="both">both</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -263,12 +265,13 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Axis" disabled={charts[2].highlight != 'rect'}>
+	<Field label="Highlight Axis" disabled={charts[2].highlight != 'rect'}>
 		<Tabs bind:selected={charts[2].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
+				<Tab value="both">both</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -343,12 +346,13 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Axis" disabled={charts[3].highlight != 'rect'}>
+	<Field label="Highlight Axis" disabled={charts[3].highlight != 'rect'}>
 		<Tabs bind:selected={charts[3].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
+				<Tab value="both">both</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -432,12 +436,13 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Axis" disabled={charts[4].highlight != 'rect'}>
+	<Field label="Highlight Axis" disabled={charts[4].highlight != 'rect'}>
 		<Tabs bind:selected={charts[4].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
+				<Tab value="both">both</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -521,12 +526,13 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Axis" disabled={charts[5].highlight != 'rect'}>
+	<Field label="Highlight Axis" disabled={charts[5].highlight != 'rect'}>
 		<Tabs bind:selected={charts[5].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
+				<Tab value="both">both</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -602,12 +608,13 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Axis" disabled={charts[6].highlight != 'rect'}>
+	<Field label="Highlight Axis" disabled={charts[6].highlight != 'rect'}>
 		<Tabs bind:selected={charts[6].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
+				<Tab value="both">both</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -688,12 +695,13 @@ title: ['Interaction', 'Tooltip']
 			</div>
 		</Tabs>
 	</Field>
-	<Field label="Axis" disabled={charts[7].highlight != 'rect'}>
+	<Field label="Highlight Axis" disabled={charts[7].highlight != 'rect'}>
 		<Tabs bind:selected={charts[7].axis} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value={undefined}>auto</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
+				<Tab value="both">both</Tab>
 			</div>
 		</Tabs>
 	</Field>
