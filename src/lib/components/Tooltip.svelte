@@ -151,8 +151,8 @@
 			const xValue = $xGet(d);
 			const yValue = $yGet(d);
 
-			const x = Array.isArray(xValue) ? xValue[0] : xValue;
-			const y = Array.isArray(yValue) ? yValue[0] : yValue;
+			const x = Array.isArray(xValue) ? min(xValue) : xValue;
+			const y = Array.isArray(yValue) ? min(yValue) : yValue;
 
 			const point = [x, y];
 			point.data = d;
@@ -176,7 +176,7 @@
 					// Using first value.  Consider using average, max, etc
 					// const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
 					// return midpoint;
-					return value[0];
+					return min(value);
 				} else {
 					return value;
 				}
@@ -189,7 +189,7 @@
 					// Using first value.  Consider using average, max, etc
 					// const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
 					// return midpoint;
-					return value[0];
+					return min(value);
 				} else {
 					return value;
 				}
