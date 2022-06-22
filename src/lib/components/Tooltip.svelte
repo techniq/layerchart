@@ -19,6 +19,16 @@
 	const { flatData, x, xScale, xGet, xRange, yScale, yGet, yRange, width, height, padding } =
 		getContext('LayerCake');
 
+	/*
+		TODO: Defaults to consider (if possible to detect scale type, which might not be possible)
+		- scaleTime / scaleLinear: bisect
+		- scaleTime / scaleLinear (multi/stack): bisect 
+		- scaleTime / scaleBand: bisect (or band)
+		- scaleTime (multi) / scaleBand: bounds (or possible band if not overlapping)
+		- scaleBand, scaleLinear: band (or bounds)
+		- scaleBand, scaleLinear: band (or bounds) - multiple (overlapping) bars
+		- scaleLinear, scaleLinear: voronoi (or quadtree)
+	*/
 	export let mode: 'bisect' | 'voronoi' | 'quadtree' | 'bounds' | 'band' = 'bisect';
 	export let snapToDataX: boolean = false;
 	export let snapToDataY: boolean = false;
