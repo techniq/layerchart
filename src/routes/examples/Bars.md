@@ -180,13 +180,10 @@ title: ['Chart', 'Bars']
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			{data}
-			extents={{
-				y: extent(data.flatMap((d) => [d.value, d.baseline]))
-			}}
 			x="date"
 			xScale={scaleBand().padding(0.4)}
 			xDomain={data.map((d) => d.date)}
-			y="value"
+			y={d => Math.max(d.value, d.baseline)}
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
