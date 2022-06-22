@@ -27,6 +27,18 @@ export function isScaleBand(scale) {
 }
 
 /**
+ *  Generic way to invert a scale value, handling scaleBand and continuous scales (linear, time, etc).
+ *  Useful to map mouse event location (x,y) to domain value
+ */
+export function scaleInvert(scale, value: number) {
+	if (isScaleBand(scale)) {
+		return scaleBandInvert(scale)(value);
+	} else {
+		return scale.invert(value);
+	}
+}
+
+/**
  * Animate d3-scale as domain and/or range are updated using tweened store
  */
 export function tweenedScale(scale, tweenedOptions: Parameters<typeof tweened>[1] = {}) {
