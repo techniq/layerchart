@@ -3,7 +3,7 @@ title: ['Charts', 'Scatter']
 ---
 
 <script lang="ts">
-	import { scaleTime } from 'd3-scale';
+	import { scaleTime, scaleThreshold } from 'd3-scale';
 	import { format } from 'date-fns';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
@@ -21,7 +21,7 @@ title: ['Charts', 'Scatter']
 	import Preview from '$lib/docs/Preview.svelte';
 	import { createDateSeries } from '$lib/utils/genData';
 
-	const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
+	const data = createDateSeries({ min: 10, max: 100, value: 'integer' });
 </script>
 
 ## Basic
@@ -105,6 +105,62 @@ title: ['Charts', 'Scatter']
 				<Baseline x y />
 				<Points class="fill-blue-500 stroke-blue-800" />
 				<Labels formatStyle="integer" verticalAnchor="bottom" />
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Color (function)
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="date"
+			xScale={scaleTime()}
+			y="value"
+			yDomain={[0, null]}
+			yNice
+			padding={{ left: 16, bottom: 24 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Points color={({ value }) => value >= 50 ? 'var(--color-green-500)' : 'var(--color-red-500)'} class="stroke-black/50" />
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Color (scale)
+
+### red (0-49), yellow (50-89), green (90+)
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="date"
+			xScale={scaleTime()}
+			y="value"
+			yDomain={[0, null]}
+			yNice
+			r="value"
+			rScale={scaleThreshold()}
+			rDomain={[50, 90]}
+			rRange={[
+				'var(--color-red-500)',
+				'var(--color-yellow-500)',
+				'var(--color-green-500)',
+			]}
+			padding={{ left: 16, bottom: 24 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Points class="stroke-black/50" />
 			</Svg>
 		</Chart>
 	</div>
