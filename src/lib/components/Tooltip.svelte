@@ -3,7 +3,7 @@
 	import { spring } from 'svelte/motion';
 	import { fade } from 'svelte/transition';
 	import { writable } from 'svelte/store';
-	import { bisector } from 'd3-array';
+	import { bisector, max, min } from 'd3-array';
 	import { Delaunay } from 'd3-delaunay';
 	import { quadtree as d3Quadtree } from 'd3-quadtree';
 
@@ -17,10 +17,10 @@
 
 	const dispatch = createEventDispatcher<{ click: { data: any } }>();
 
-	const { flatData, x, xScale, xGet, yScale, yGet, width, height, padding } =
+	const { flatData, x, xScale, xGet, xRange, yScale, yGet, yRange, width, height, padding } =
 		getContext('LayerCake');
 
-	export let mode: 'bisect' | 'voronoi' | 'quadtree' = 'bisect';
+	export let mode: 'bisect' | 'voronoi' | 'quadtree' | 'rect' = 'bisect';
 	export let snapToDataX: boolean = false;
 	export let snapToDataY: boolean = false;
 	export let findTooltipData: 'closest' | 'left' | 'right' = 'closest';
@@ -178,6 +178,40 @@
 			})
 			.addAll($flatData);
 	}
+
+	let rects = [];
+	$: if (mode === 'rect') {
+		rects = $flatData.map((d) => {
+			const xValue = $xGet(d);
+			const yValue = $yGet(d);
+
+			const x = Array.isArray(xValue) ? xValue[0] : xValue;
+			const y = Array.isArray(yValue) ? yValue[0] : yValue;
+
+			const xOffset = isScaleBand($xScale) ? ($xScale.padding() * $xScale.step()) / 2 : 0;
+			const yOffset = isScaleBand($yScale) ? ($yScale.padding() * $yScale.step()) / 2 : 0;
+
+			const fullWidth = max($xRange) - min($xRange);
+			const fullHeight = max($yRange) - min($yRange);
+
+			return {
+				x: x - xOffset,
+				y: y - yOffset,
+				width: Array.isArray(xValue)
+					? xValue[1] - xValue[0]
+					: isScaleBand($xScale)
+					? $xScale.step()
+					: fullWidth,
+				height: Array.isArray(yValue)
+					? yValue[1] - yValue[0]
+					: isScaleBand($yScale)
+					? $yScale.step()
+					: fullHeight,
+				data: d
+			};
+		});
+		// console.log({ rects });
+	}
 </script>
 
 {#if tooltip}
@@ -219,13 +253,15 @@
 {:else if mode === 'voronoi'}
 	<Svg>
 		{#each points as point, i}
-			<path
-				d={voronoi.renderCell(i)}
-				style:fill="transparent"
-				style:stroke={debug ? 'red' : 'transparent'}
-				on:mousemove={(e) => handleTooltip(e, point.data)}
-				on:mouseleave={hideTooltip}
-			/>
+			<g class="tooltip-voronoi">
+				<path
+					d={voronoi.renderCell(i)}
+					style:fill="transparent"
+					style:stroke={debug ? 'red' : 'transparent'}
+					on:mousemove={(e) => handleTooltip(e, point.data)}
+					on:mouseleave={hideTooltip}
+				/>
+			</g>
 		{/each}
 	</Svg>
 {/if}
@@ -233,9 +269,37 @@
 {#if mode === 'quadtree' && debug}
 	<Svg>
 		<ChartClipPath>
-			{#each quadtreeRects(quadtree, false) as rect}
-				<Rect {...rect} stroke="red" fill="none" />
-			{/each}
+			<g class="tooltip-quadtree">
+				{#each quadtreeRects(quadtree, false) as rect}
+					<rect
+						x={rect.x}
+						y={rect.y}
+						width={rect.width}
+						height={rect.height}
+						stroke="red"
+						fill="none"
+					/>
+				{/each}
+			</g>
 		</ChartClipPath>
+	</Svg>
+{/if}
+
+{#if mode === 'rect'}
+	<Svg>
+		<g class="tooltip-rects">
+			{#each rects as rect}
+				<rect
+					x={rect.x}
+					y={rect.y}
+					width={rect.width}
+					height={rect.height}
+					style:fill="transparent"
+					style:stroke={debug ? 'red' : 'transparent'}
+					on:mousemove={(e) => handleTooltip(e, rect.data)}
+					on:mouseleave={hideTooltip}
+				/>
+			{/each}
+		</g>
 	</Svg>
 {/if}

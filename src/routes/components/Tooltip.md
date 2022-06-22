@@ -9,7 +9,7 @@ title: ['Interaction', 'Tooltip']
 	import { stack } from 'd3-shape';
 	import { addHours, addMinutes, format, startOfDay } from 'date-fns';
 
-	import { ApiDocs, Duration, Field, Switch } from 'svelte-ux';
+	import { ApiDocs, Duration, Field, Switch, Tabs, Tab } from 'svelte-ux';
 	import { flatten } from 'svelte-ux/utils/array';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
@@ -32,29 +32,36 @@ title: ['Interaction', 'Tooltip']
 
 	import Preview from '$lib/docs/Preview.svelte';
 
-	import { createDateSeries, getRandomInteger, getSpiral } from '$lib/utils/genData';
+	import { createDateSeries, createTimeSeries, getRandomInteger, getSpiral } from '$lib/utils/genData';
 
 	const dateSeries = createDateSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] });
-	const spiralData = 	getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 })
 
-	let lastStartDate = startOfDay(new Date());
-	const timeSeries = Array.from({ length: 10 }).map((_, i) => {
-		const startDate = addMinutes(lastStartDate, getRandomInteger(0, 60));
-		const endDate = addMinutes(startDate, getRandomInteger(0, 60));
-		lastStartDate = startDate;
-		return {
-			name: `Item ${i + 1}`,
-			startDate,
-			endDate
-		};
-	});
+	const timeSeries = createTimeSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] })
+	const overlapTimeSeries = [
+		...createTimeSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] }),
+		...createTimeSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] })
+	]
 
 	const keys = ['apples', 'bananas', 'oranges']
 	const stackDateSeries = createDateSeries({ min: 50, max: 100, value: 'integer', keys });
 	const stackData = stack().keys(keys)(stackDateSeries);
 
+	const spiralData = 	getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 })
+
 	let showVoronoi = false;
 	let showQuadtree = false;
+
+	let charts = [
+		{ mode: 'bisect', debug: false },
+		{ mode: 'bisect', debug: false },
+		{ mode: 'bisect', debug: false },
+		{ mode: 'rect', debug: false },
+		{ mode: 'rect', debug: false },
+		{ mode: 'rect', debug: false },
+		{ mode: 'bisect', debug: false },
+		{ mode: 'bisect', debug: false },
+		{ mode: 'voronoi', debug: false },
+	]
 
 </script>
 
@@ -63,6 +70,24 @@ title: ['Interaction', 'Tooltip']
 ---
 
 ## Simple Area
+
+### x: scaleTime, y: scaleLinear
+
+<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+	<Field label="Mode">
+		<Tabs bind:selected={charts[0].mode} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="bisect">bisect</Tab>
+				<Tab value="rect">rect</Tab>
+				<Tab value="voronoi">voronoi</Tab>
+				<Tab value="quadtree">quadtree</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Debug" let:id>
+		<Switch bind:checked={charts[0].debug} {id} />
+	</Field>
+</div>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -81,7 +106,7 @@ title: ['Interaction', 'Tooltip']
 				<Baseline x y />
 				<Area line={{ width: 2 }} />
 			</Svg>
-			<Tooltip let:data>
+			<Tooltip let:data mode={charts[0].mode} debug={charts[0].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{format(data.date, 'eee, MMMM do')}
@@ -102,6 +127,24 @@ title: ['Interaction', 'Tooltip']
 </Preview>
 
 ## Stacked Area
+
+### x: scaleTime, y: scaleLinear (stack)
+
+<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+	<Field label="Mode">
+		<Tabs bind:selected={charts[1].mode} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="bisect">bisect</Tab>
+				<Tab value="rect">rect</Tab>
+				<Tab value="voronoi">voronoi</Tab>
+				<Tab value="quadtree">quadtree</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Debug" let:id>
+		<Switch bind:checked={charts[1].debug} {id} />
+	</Field>
+</div>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -128,7 +171,7 @@ title: ['Interaction', 'Tooltip']
 				<Baseline x y />
 				<AreaStack line={{ width: 2 }} />
 			</Svg>
-			<Tooltip let:data>
+			<Tooltip let:data mode={charts[1].mode} debug={charts[1].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{format(data.data.date, 'eee, MMMM do')}
@@ -152,6 +195,24 @@ title: ['Interaction', 'Tooltip']
 
 ## Single time
 
+### x: scaleTime, y: scaleBand
+
+<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+	<Field label="Mode">
+		<Tabs bind:selected={charts[2].mode} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="bisect">bisect</Tab>
+				<Tab value="rect">rect</Tab>
+				<Tab value="voronoi">voronoi</Tab>
+				<Tab value="quadtree">quadtree</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Debug" let:id>
+		<Switch bind:checked={charts[2].debug} {id} />
+	</Field>
+</div>
+
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
@@ -169,7 +230,7 @@ title: ['Interaction', 'Tooltip']
 				<Baseline y />
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
-			<Tooltip let:data>
+			<Tooltip let:data mode={charts[2].mode} debug={charts[2].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{data.name}
@@ -191,6 +252,24 @@ title: ['Interaction', 'Tooltip']
 
 ## Time duration with HighlightLine
 
+### x: scaleTime (multi), y: scaleBand
+
+<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+	<Field label="Mode">
+		<Tabs bind:selected={charts[3].mode} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="bisect">bisect</Tab>
+				<Tab value="rect">rect</Tab>
+				<Tab value="voronoi">voronoi</Tab>
+				<Tab value="quadtree">quadtree</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Debug" let:id>
+		<Switch bind:checked={charts[3].debug} {id} />
+	</Field>
+</div>
+
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
@@ -209,7 +288,7 @@ title: ['Interaction', 'Tooltip']
 				<ConnectedPoints stroke="#000" />
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
-			<Tooltip let:data>
+			<Tooltip let:data mode={charts[3].mode} debug={charts[3].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{data.name}
@@ -239,6 +318,24 @@ title: ['Interaction', 'Tooltip']
 
 ## Time duration with HighlightRect
 
+### x: scaleTime (multi), y: scaleBand
+
+<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+	<Field label="Mode">
+		<Tabs bind:selected={charts[4].mode} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="bisect">bisect</Tab>
+				<Tab value="rect">rect</Tab>
+				<Tab value="voronoi">voronoi</Tab>
+				<Tab value="quadtree">quadtree</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Debug" let:id>
+		<Switch bind:checked={charts[4].debug} {id} />
+	</Field>
+</div>
+
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
@@ -257,7 +354,73 @@ title: ['Interaction', 'Tooltip']
 				<ConnectedPoints stroke="#000" />
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
-			<Tooltip let:data>
+			<Tooltip let:data mode={charts[4].mode} debug={charts[4].debug}>
+				<div class="tooltip">
+					<div class="tooltip-header">
+						{data.name}
+					</div>
+					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
+						<div class="tooltip-label">start:</div>
+						<div class="tooltip-value">
+							{format(data.startDate, 'h:mm a')}
+						</div>
+						<div class="tooltip-label">end:</div>
+						<div class="tooltip-value">
+							{format(data.endDate, 'h:mm a')}
+						</div>
+						<div class="tooltip-label">duration:</div>
+						<div class="tooltip-value">
+							<Duration start={data.startDate} end={data.endDate} />
+						</div>
+					</div>
+				</div>
+				<g slot="highlight">
+					<HighlightRect {data} />
+				</g>
+			</Tooltip>
+		</Chart>
+	</div>
+</Preview>
+
+## Overlaping time series
+
+### x: scaleTime (multi), y: scaleBand
+
+<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+	<Field label="Mode">
+		<Tabs bind:selected={charts[5].mode} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="bisect">bisect</Tab>
+				<Tab value="rect">rect</Tab>
+				<Tab value="voronoi">voronoi</Tab>
+				<Tab value="quadtree">quadtree</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Debug" let:id>
+		<Switch bind:checked={charts[5].debug} {id} />
+	</Field>
+</div>
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			data={overlapTimeSeries}
+			x={['startDate', 'endDate']}
+			xScale={scaleTime()}
+			y="name"
+			yScale={scaleBand()}
+			yDomain={overlapTimeSeries.map((x) => x.name).reverse()}
+			padding={{ left: 36, bottom: 36 }}
+		>
+			<Svg>
+				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
+				<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
+				<Baseline y />
+				<ConnectedPoints stroke="#000" />
+				<Points class="fill-blue-500 stroke-blue-800" />
+			</Svg>
+			<Tooltip let:data mode={charts[5].mode} debug={charts[5].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{data.name}
@@ -287,6 +450,24 @@ title: ['Interaction', 'Tooltip']
 
 ## Simple Bars
 
+### x: scaleBand, y: scaleLinear
+
+<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+	<Field label="Mode">
+		<Tabs bind:selected={charts[6].mode} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="bisect">bisect</Tab>
+				<Tab value="rect">rect</Tab>
+				<Tab value="voronoi">voronoi</Tab>
+				<Tab value="quadtree">quadtree</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Debug" let:id>
+		<Switch bind:checked={charts[6].debug} {id} />
+	</Field>
+</div>
+
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
@@ -305,7 +486,7 @@ title: ['Interaction', 'Tooltip']
 				<Baseline x y />
 				<Bars radius={4} strokeWidth={1} />
 			</Svg>
-			<Tooltip let:data>
+			<Tooltip let:data mode={charts[6].mode} debug={charts[6].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{format(data.date, 'eee, MMMM do')}
@@ -326,6 +507,24 @@ title: ['Interaction', 'Tooltip']
 </Preview>
 
 ## Multiple (overlapping) Bars
+
+### x: scaleBand, y: scaleLinear
+
+<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+	<Field label="Mode">
+		<Tabs bind:selected={charts[7].mode} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="bisect">bisect</Tab>
+				<Tab value="rect">rect</Tab>
+				<Tab value="voronoi">voronoi</Tab>
+				<Tab value="quadtree">quadtree</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Debug" let:id>
+		<Switch bind:checked={charts[7].debug} {id} />
+	</Field>
+</div>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -349,7 +548,7 @@ title: ['Interaction', 'Tooltip']
 				<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
 				<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
 			</Svg>
-			<Tooltip let:data>
+			<Tooltip let:data mode={charts[7].mode} debug={charts[7].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{format(data.date, 'eee, MMMM do')}
@@ -373,11 +572,23 @@ title: ['Interaction', 'Tooltip']
 	</div>
 </Preview>
 
-## Scatter Plot with Voronoi
+## Scatter Plot (voronoi, quadtree)
 
-<div class="grid grid-cols-[100px] mb-2">
+### x: scaleLinear, y: scaleLinear
+
+<div class="grid grid-cols-[1fr,100px] gap-2 mb-2">
+	<Field label="Mode">
+		<Tabs bind:selected={charts[8].mode} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="bisect">bisect</Tab>
+				<Tab value="rect">rect</Tab>
+				<Tab value="voronoi">voronoi</Tab>
+				<Tab value="quadtree">quadtree</Tab>
+			</div>
+		</Tabs>
+	</Field>
 	<Field label="Debug" let:id>
-		<Switch bind:checked={showVoronoi} {id} />
+		<Switch bind:checked={charts[8].debug} {id} />
 	</Field>
 </div>
 
@@ -394,45 +605,7 @@ title: ['Interaction', 'Tooltip']
 				<AxisX gridlines />
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
-			<Tooltip mode="voronoi" let:data debug={showVoronoi}>
-				<div class="tooltip">
-					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-						<div class="tooltip-label">x:</div>
-						<div class="tooltip-value">{data.x}</div>
-						<div class="tooltip-label">y:</div>
-						<div class="tooltip-value">{data.y}</div>
-					</div>
-				</div>
-				<g slot="highlight">
-					<HighlightLine {data} color="var(--color-blue-500)" />
-				</g>
-			</Tooltip>
-		</Chart>
-	</div>
-</Preview>
-
-## Scatter Plot with Quadtree
-
-<div class="grid grid-cols-[100px] mb-2">
-	<Field label="Debug" let:id>
-		<Switch bind:checked={showQuadtree} {id} />
-	</Field>
-</div>
-
-<Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			data={spiralData}
-			x="x"
-			y="y"
-			padding={{ left: 30, bottom: 30 }}
-		>
-			<Svg>
-				<AxisY gridlines />
-				<AxisX gridlines />
-				<Points class="fill-blue-500 stroke-blue-800" />
-			</Svg>
-			<Tooltip mode="quadtree" let:data debug={showQuadtree}>
+			<Tooltip let:data mode={charts[8].mode} debug={charts[8].debug}>
 				<div class="tooltip">
 					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
 						<div class="tooltip-label">x:</div>
