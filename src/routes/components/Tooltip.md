@@ -55,9 +55,9 @@ title: ['Interaction', 'Tooltip']
 		{ mode: 'bisect', debug: false },
 		{ mode: 'bisect', debug: false },
 		{ mode: 'bisect', debug: false },
-		{ mode: 'rect', debug: false },
-		{ mode: 'rect', debug: false },
-		{ mode: 'rect', debug: false },
+		{ mode: 'bounds', debug: false },
+		{ mode: 'bounds', debug: false },
+		{ mode: 'bounds', debug: false },
 		{ mode: 'bisect', debug: false },
 		{ mode: 'bisect', debug: false },
 		{ mode: 'voronoi', debug: false },
@@ -78,7 +78,8 @@ title: ['Interaction', 'Tooltip']
 		<Tabs bind:selected={charts[0].mode} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value="bisect">bisect</Tab>
-				<Tab value="rect">rect</Tab>
+				<Tab value="bounds">bounds</Tab>
+				<Tab value="band">band</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -135,7 +136,8 @@ title: ['Interaction', 'Tooltip']
 		<Tabs bind:selected={charts[1].mode} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value="bisect">bisect</Tab>
-				<Tab value="rect">rect</Tab>
+				<Tab value="bounds">bounds</Tab>
+				<Tab value="band">band</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -202,7 +204,8 @@ title: ['Interaction', 'Tooltip']
 		<Tabs bind:selected={charts[2].mode} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value="bisect">bisect</Tab>
-				<Tab value="rect">rect</Tab>
+				<Tab value="bounds">bounds</Tab>
+				<Tab value="band">band</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -259,7 +262,8 @@ title: ['Interaction', 'Tooltip']
 		<Tabs bind:selected={charts[3].mode} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value="bisect">bisect</Tab>
-				<Tab value="rect">rect</Tab>
+				<Tab value="bounds">bounds</Tab>
+				<Tab value="band">band</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -325,7 +329,8 @@ title: ['Interaction', 'Tooltip']
 		<Tabs bind:selected={charts[4].mode} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value="bisect">bisect</Tab>
-				<Tab value="rect">rect</Tab>
+				<Tab value="bounds">bounds</Tab>
+				<Tab value="band">band</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -391,7 +396,8 @@ title: ['Interaction', 'Tooltip']
 		<Tabs bind:selected={charts[5].mode} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value="bisect">bisect</Tab>
-				<Tab value="rect">rect</Tab>
+				<Tab value="bounds">bounds</Tab>
+				<Tab value="band">band</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -457,7 +463,8 @@ title: ['Interaction', 'Tooltip']
 		<Tabs bind:selected={charts[6].mode} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value="bisect">bisect</Tab>
-				<Tab value="rect">rect</Tab>
+				<Tab value="bounds">bounds</Tab>
+				<Tab value="band">band</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -515,7 +522,8 @@ title: ['Interaction', 'Tooltip']
 		<Tabs bind:selected={charts[7].mode} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value="bisect">bisect</Tab>
-				<Tab value="rect">rect</Tab>
+				<Tab value="bounds">bounds</Tab>
+				<Tab value="band">band</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -581,7 +589,8 @@ title: ['Interaction', 'Tooltip']
 		<Tabs bind:selected={charts[8].mode} contained class="w-full">
 			<div class="tabList w-full border">
 				<Tab value="bisect">bisect</Tab>
-				<Tab value="rect">rect</Tab>
+				<Tab value="bounds">bounds</Tab>
+				<Tab value="band">band</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>

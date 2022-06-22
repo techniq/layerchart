@@ -9,7 +9,6 @@
 
 	import { Svg, Html } from '$lib/components/Chart.svelte';
 	import ChartClipPath from '$lib/components/ChartClipPath.svelte';
-	import Rect from '$lib/components/Rect.svelte';
 
 	import { localPoint } from '$lib/utils/event';
 	import { isScaleBand, scaleBandInvert } from '$lib/utils/scales';
@@ -20,7 +19,7 @@
 	const { flatData, x, xScale, xGet, xRange, yScale, yGet, yRange, width, height, padding } =
 		getContext('LayerCake');
 
-	export let mode: 'bisect' | 'voronoi' | 'quadtree' | 'rect' = 'bisect';
+	export let mode: 'bisect' | 'voronoi' | 'quadtree' | 'bounds' | 'band' = 'bisect';
 	export let snapToDataX: boolean = false;
 	export let snapToDataY: boolean = false;
 	export let findTooltipData: 'closest' | 'left' | 'right' = 'closest';
@@ -136,7 +135,13 @@
 	let voronoi;
 	$: if (mode === 'voronoi') {
 		points = $flatData.map((d) => {
-			const point = [$xGet(d), $yGet(d)];
+			const xValue = $xGet(d);
+			const yValue = $yGet(d);
+
+			const x = Array.isArray(xValue) ? xValue[0] : xValue;
+			const y = Array.isArray(yValue) ? yValue[0] : yValue;
+
+			const point = [x, y];
 			point.data = d;
 			return point;
 		});
@@ -180,13 +185,13 @@
 	}
 
 	let rects = [];
-	$: if (mode === 'rect') {
+	$: if (mode === 'bounds' || mode === 'band') {
 		rects = $flatData.map((d) => {
 			const xValue = $xGet(d);
 			const yValue = $yGet(d);
 
-			const x = Array.isArray(xValue) ? xValue[0] : xValue;
-			const y = Array.isArray(yValue) ? yValue[0] : yValue;
+			const x = Array.isArray(xValue) ? min(xValue) : xValue;
+			const y = Array.isArray(yValue) ? max(yValue) : yValue;
 
 			const xOffset = isScaleBand($xScale) ? ($xScale.padding() * $xScale.step()) / 2 : 0;
 			const yOffset = isScaleBand($yScale) ? ($yScale.padding() * $yScale.step()) / 2 : 0;
@@ -194,21 +199,34 @@
 			const fullWidth = max($xRange) - min($xRange);
 			const fullHeight = max($yRange) - min($yRange);
 
-			return {
-				x: x - xOffset,
-				y: y - yOffset,
-				width: Array.isArray(xValue)
-					? xValue[1] - xValue[0]
-					: isScaleBand($xScale)
-					? $xScale.step()
-					: fullWidth,
-				height: Array.isArray(yValue)
-					? yValue[1] - yValue[0]
-					: isScaleBand($yScale)
-					? $yScale.step()
-					: fullHeight,
-				data: d
-			};
+			if (mode === 'band') {
+				// full band width/height regardless of value
+				return {
+					x: isScaleBand($xScale) ? x - xOffset : min($xRange),
+					y: isScaleBand($yScale) ? y - yOffset : min($yRange),
+					width: isScaleBand($xScale) ? $xScale.step() : fullWidth,
+					height: isScaleBand($yScale) ? $yScale.step() : fullHeight,
+					data: d
+				};
+			} else if (mode === 'bounds') {
+				return {
+					x: isScaleBand($xScale) || Array.isArray(xValue) ? x - xOffset : min($xRange),
+					// y: isScaleBand($yScale) || Array.isArray(yValue) ? y - yOffset : min($yRange),
+					y: y - yOffset,
+
+					width: Array.isArray(xValue)
+						? xValue[1] - xValue[0]
+						: isScaleBand($xScale)
+						? $xScale.step()
+						: min($xRange) + x,
+					height: Array.isArray(yValue)
+						? yValue[1] - yValue[0]
+						: isScaleBand($yScale)
+						? $yScale.step()
+						: max($yRange) - y,
+					data: d
+				};
+			}
 		});
 		// console.log({ rects });
 	}
@@ -264,6 +282,23 @@
 			</g>
 		{/each}
 	</Svg>
+{:else if mode === 'bounds' || mode === 'band'}
+	<Svg>
+		<g class="tooltip-rects">
+			{#each rects as rect}
+				<rect
+					x={rect.x}
+					y={rect.y}
+					width={rect.width}
+					height={rect.height}
+					style:fill="transparent"
+					style:stroke={debug ? 'red' : 'transparent'}
+					on:mousemove={(e) => handleTooltip(e, rect.data)}
+					on:mouseleave={hideTooltip}
+				/>
+			{/each}
+		</g>
+	</Svg>
 {/if}
 
 {#if mode === 'quadtree' && debug}
@@ -282,24 +317,5 @@
 				{/each}
 			</g>
 		</ChartClipPath>
-	</Svg>
-{/if}
-
-{#if mode === 'rect'}
-	<Svg>
-		<g class="tooltip-rects">
-			{#each rects as rect}
-				<rect
-					x={rect.x}
-					y={rect.y}
-					width={rect.width}
-					height={rect.height}
-					style:fill="transparent"
-					style:stroke={debug ? 'red' : 'transparent'}
-					on:mousemove={(e) => handleTooltip(e, rect.data)}
-					on:mouseleave={hideTooltip}
-				/>
-			{/each}
-		</g>
 	</Svg>
 {/if}
