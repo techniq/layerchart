@@ -7,7 +7,7 @@
 
 	export let data;
 
-	const { flatData, xScale, x, xGet, yRange, padding } = getContext('LayerCake');
+	const { flatData, xScale, xDomain, x, xGet, yRange } = getContext('LayerCake');
 
 	$: isBand = isScaleBand($xScale);
 	$: xCoord = $xGet(data);
@@ -22,8 +22,9 @@
 		xCoord = min(xCoord); // Use left-most value for top left of rect
 	} else {
 		// Find width to next data point
-		let index = $flatData.findIndex((d) => Number($x(d)) === Number($x(data)));
-		let nextDataPoint = $x($flatData[index + 1]);
+		const index = $flatData.findIndex((d) => Number($x(d)) === Number($x(data)));
+		const isLastPoint = index + 1 === $flatData.length;
+		const nextDataPoint = isLastPoint ? max($xDomain) : $x($flatData[index + 1]);
 		width = ($xScale(nextDataPoint) ?? 0) - (xCoord ?? 0);
 	}
 
