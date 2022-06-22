@@ -72,7 +72,7 @@ title: ['Interaction', 'Tooltip']
 
 ### x: scaleTime, y: scaleLinear. bisect recommended. voronoi and quadtree supported. bounds and band to be improved
 
-<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[0].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -90,6 +90,15 @@ title: ['Interaction', 'Tooltip']
 				<Tab value="none">none</Tab>
 				<Tab value="line">line</Tab>
 				<Tab value="rect">rect</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Axis" disabled={charts[0].highlight != 'rect'}>
+		<Tabs bind:selected={charts[0].axis} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value={undefined}>auto</Tab>
+				<Tab value="x">x</Tab>
+				<Tab value="y">y</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -131,7 +140,7 @@ title: ['Interaction', 'Tooltip']
 					{#if charts[0].highlight === 'line'}
 						<HighlightLine {data} color="var(--color-blue-500)" />
 					{:else if charts[0].highlight === 'rect'}
-						<HighlightRect {data} />
+						<HighlightRect {data} {...charts[0].axis && { axis: charts[0].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
@@ -143,7 +152,7 @@ title: ['Interaction', 'Tooltip']
 
 ### x: scaleTime, y: scaleLinear (multi/stack). bisect recommended. voronoi and quadtree supporte. bounds and band to be improved
 
-<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[1].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -161,6 +170,15 @@ title: ['Interaction', 'Tooltip']
 				<Tab value="none">none</Tab>
 				<Tab value="line">line</Tab>
 				<Tab value="rect">rect</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Axis" disabled={charts[1].highlight != 'rect'}>
+		<Tabs bind:selected={charts[1].axis} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value={undefined}>auto</Tab>
+				<Tab value="x">x</Tab>
+				<Tab value="y">y</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -212,7 +230,7 @@ title: ['Interaction', 'Tooltip']
 					{#if charts[1].highlight === 'line'}
 						<HighlightLine {data} color="var(--color-blue-500)" />
 					{:else if charts[1].highlight === 'rect'}
-						<HighlightRect {data} />
+						<HighlightRect {data} {...charts[1].axis && { axis: charts[1].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
@@ -224,7 +242,7 @@ title: ['Interaction', 'Tooltip']
 
 ### x: scaleTime, y: scaleBand. bisect recommended. band, voronoi, and quadtree supported.
 
-<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[2].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -242,6 +260,15 @@ title: ['Interaction', 'Tooltip']
 				<Tab value="none">none</Tab>
 				<Tab value="line">line</Tab>
 				<Tab value="rect">rect</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Axis" disabled={charts[2].highlight != 'rect'}>
+		<Tabs bind:selected={charts[2].axis} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value={undefined}>auto</Tab>
+				<Tab value="x">x</Tab>
+				<Tab value="y">y</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -283,7 +310,7 @@ title: ['Interaction', 'Tooltip']
 					{#if charts[2].highlight === 'line'}
 						<HighlightLine {data} color="var(--color-blue-500)" />
 					{:else if charts[2].highlight === 'rect'}
-						<HighlightRect {data} />
+						<HighlightRect {data} {...charts[2].axis && { axis: charts[2].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
@@ -295,7 +322,7 @@ title: ['Interaction', 'Tooltip']
 
 ### x: scaleTime (multi), y: scaleBand. bounds recommended. band supported (when no overlap on same band). bisect supported (when no overlap on time scale). voronoi and quadtree partially supported (using first point)
 
-<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[3].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -313,6 +340,15 @@ title: ['Interaction', 'Tooltip']
 				<Tab value="none">none</Tab>
 				<Tab value="line">line</Tab>
 				<Tab value="rect">rect</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Axis" disabled={charts[3].highlight != 'rect'}>
+		<Tabs bind:selected={charts[3].axis} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value={undefined}>auto</Tab>
+				<Tab value="x">x</Tab>
+				<Tab value="y">y</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -363,7 +399,7 @@ title: ['Interaction', 'Tooltip']
 					{#if charts[3].highlight === 'line'}
 						<HighlightLine {data} color="var(--color-blue-500)" />
 					{:else if charts[3].highlight === 'rect'}
-						<HighlightRect {data} />
+						<HighlightRect {data} {...charts[3].axis && { axis: charts[3].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
@@ -375,7 +411,7 @@ title: ['Interaction', 'Tooltip']
 
 ### x: scaleTime (multi), y: scaleBand. bounds recommends. voronoi and quadtree partially supported (using first point)
 
-<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[4].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -393,6 +429,15 @@ title: ['Interaction', 'Tooltip']
 				<Tab value="none">none</Tab>
 				<Tab value="line">line</Tab>
 				<Tab value="rect">rect</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Axis" disabled={charts[4].highlight != 'rect'}>
+		<Tabs bind:selected={charts[4].axis} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value={undefined}>auto</Tab>
+				<Tab value="x">x</Tab>
+				<Tab value="y">y</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -443,7 +488,7 @@ title: ['Interaction', 'Tooltip']
 					{#if charts[4].highlight === 'line'}
 						<HighlightLine {data} color="var(--color-blue-500)" />
 					{:else if charts[4].highlight === 'rect'}
-						<HighlightRect {data} />
+						<HighlightRect {data} {...charts[4].axis && { axis: charts[4].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
@@ -455,7 +500,7 @@ title: ['Interaction', 'Tooltip']
 
 ### x: scaleBand, y: scaleLinear. band or bounds recommended. bisect supported. voronoi and quadtree partially support (using value / bar top)
 
-<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[5].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -473,6 +518,15 @@ title: ['Interaction', 'Tooltip']
 				<Tab value="none">none</Tab>
 				<Tab value="line">line</Tab>
 				<Tab value="rect">rect</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Axis" disabled={charts[5].highlight != 'rect'}>
+		<Tabs bind:selected={charts[5].axis} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value={undefined}>auto</Tab>
+				<Tab value="x">x</Tab>
+				<Tab value="y">y</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -515,7 +569,7 @@ title: ['Interaction', 'Tooltip']
 					{#if charts[5].highlight === 'line'}
 						<HighlightLine {data} color="var(--color-blue-500)" />
 					{:else if charts[5].highlight === 'rect'}
-						<HighlightRect {data} />
+						<HighlightRect {data} {...charts[5].axis && { axis: charts[5].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
@@ -527,7 +581,7 @@ title: ['Interaction', 'Tooltip']
 
 ### x: scaleBand, y: scaleLinear
 
-<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[6].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -545,6 +599,15 @@ title: ['Interaction', 'Tooltip']
 				<Tab value="none">none</Tab>
 				<Tab value="line">line</Tab>
 				<Tab value="rect">rect</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Axis" disabled={charts[6].highlight != 'rect'}>
+		<Tabs bind:selected={charts[6].axis} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value={undefined}>auto</Tab>
+				<Tab value="x">x</Tab>
+				<Tab value="y">y</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -592,7 +655,7 @@ title: ['Interaction', 'Tooltip']
 					{#if charts[6].highlight === 'line'}
 						<HighlightLine {data} color="var(--color-blue-500)" />
 					{:else if charts[6].highlight === 'rect'}
-						<HighlightRect {data} />
+						<HighlightRect {data} {...charts[6].axis && { axis: charts[6].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
@@ -604,7 +667,7 @@ title: ['Interaction', 'Tooltip']
 
 ### x: scaleLinear, y: scaleLinear. voronoi or quadtree recommended
 
-<div class="grid grid-cols-[2fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[7].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -622,6 +685,15 @@ title: ['Interaction', 'Tooltip']
 				<Tab value="none">none</Tab>
 				<Tab value="line">line</Tab>
 				<Tab value="rect">rect</Tab>
+			</div>
+		</Tabs>
+	</Field>
+	<Field label="Axis" disabled={charts[7].highlight != 'rect'}>
+		<Tabs bind:selected={charts[7].axis} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value={undefined}>auto</Tab>
+				<Tab value="x">x</Tab>
+				<Tab value="y">y</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -656,7 +728,7 @@ title: ['Interaction', 'Tooltip']
 					{#if charts[7].highlight === 'line'}
 						<HighlightLine {data} color="var(--color-blue-500)" />
 					{:else if charts[7].highlight === 'rect'}
-						<HighlightRect {data} />
+						<HighlightRect {data} {...charts[7].axis && { axis: charts[7].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
