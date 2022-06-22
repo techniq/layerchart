@@ -1,4 +1,4 @@
-import { startOfToday, subDays } from 'date-fns';
+import { addMinutes, startOfDay, startOfToday, subDays } from 'date-fns';
 import { degreesToRadians, radiansToDegrees } from './math';
 
 /**
@@ -46,6 +46,42 @@ export function createDateSeries(options: {
 			)
 		};
 	});
+}
+
+export function createTimeSeries(options: {
+	count?: number;
+	min: number;
+	max: number;
+	keys: Array<string>;
+	value: 'number' | 'integer';
+}) {
+	const count = options.count ?? 10;
+	const min = options.min;
+	const max = options.max;
+	const keys = options.keys ?? ['value'];
+
+	let lastStartDate = startOfDay(new Date());
+
+	const timeSeries = Array.from({ length: count }).map((_, i) => {
+		const startDate = addMinutes(lastStartDate, getRandomInteger(0, 60));
+		const endDate = addMinutes(startDate, getRandomInteger(5, 60));
+		lastStartDate = startDate;
+		return {
+			name: `item ${i + 1}`,
+			startDate,
+			endDate,
+			...Object.fromEntries(
+				keys.map((key) => {
+					return [
+						key,
+						options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max)
+					];
+				})
+			)
+		};
+	});
+
+	return timeSeries;
 }
 
 export const wideData = [
