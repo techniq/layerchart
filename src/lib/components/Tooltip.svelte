@@ -77,7 +77,7 @@
 		if (tooltipData == null) {
 			if (mode === 'quadtree') {
 				tooltipData = quadtree.find(localX, localY, radius);
-			} else {
+			} else if (mode === 'bisect') {
 				// `x` value at mouse/touch coordinate
 				const valueAtPoint = scaleInvert($xScale, localX);
 
