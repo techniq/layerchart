@@ -8,7 +8,7 @@
 
 	const { height, xScale, yRange } = getContext('LayerCake');
 
-	export let gridlines = false;
+	export let gridlines: boolean | svelte.JSX.SVGProps<SVGLineElement> = false;
 	export let formatTick: FormatType = undefined;
 	export let ticks = undefined;
 	export let xTick = undefined;
