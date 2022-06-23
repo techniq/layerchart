@@ -11,7 +11,7 @@
 
 	export let data;
 	export let color = undefined;
-	export let axis: 'x' | 'y' | 'both' = 'x';
+	export let axis: 'x' | 'y' | 'both' | 'none' = 'x';
 
 	// TODO: Fix circle points being backwards for stack (see AreaStack)
 

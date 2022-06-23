@@ -96,10 +96,11 @@ title: ['Interaction', 'Tooltip']
 	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[0].axis} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value={undefined}>auto</Tab>
+				<Tab value={undefined}>default</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
 				<Tab value="both">both</Tab>
+				<Tab value="none">none</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -177,10 +178,11 @@ title: ['Interaction', 'Tooltip']
 	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[1].axis} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value={undefined}>auto</Tab>
+				<Tab value={undefined}>default</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
 				<Tab value="both">both</Tab>
+				<Tab value="none">none</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -268,10 +270,11 @@ title: ['Interaction', 'Tooltip']
 	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[2].axis} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value={undefined}>auto</Tab>
+				<Tab value={undefined}>default</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
 				<Tab value="both">both</Tab>
+				<Tab value="none">none</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -349,10 +352,11 @@ title: ['Interaction', 'Tooltip']
 	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[3].axis} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value={undefined}>auto</Tab>
+				<Tab value={undefined}>default</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
 				<Tab value="both">both</Tab>
+				<Tab value="none">none</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -439,10 +443,11 @@ title: ['Interaction', 'Tooltip']
 	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[4].axis} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value={undefined}>auto</Tab>
+				<Tab value={undefined}>default</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
 				<Tab value="both">both</Tab>
+				<Tab value="none">none</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -529,10 +534,11 @@ title: ['Interaction', 'Tooltip']
 	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[5].axis} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value={undefined}>auto</Tab>
+				<Tab value={undefined}>default</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
 				<Tab value="both">both</Tab>
+				<Tab value="none">none</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -611,10 +617,11 @@ title: ['Interaction', 'Tooltip']
 	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[6].axis} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value={undefined}>auto</Tab>
+				<Tab value={undefined}>default</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
 				<Tab value="both">both</Tab>
+				<Tab value="none">none</Tab>
 			</div>
 		</Tabs>
 	</Field>
@@ -698,10 +705,11 @@ title: ['Interaction', 'Tooltip']
 	<Field label="Highlight Axis">
 		<Tabs bind:selected={charts[7].axis} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value={undefined}>auto</Tab>
+				<Tab value={undefined}>default</Tab>
 				<Tab value="x">x</Tab>
 				<Tab value="y">y</Tab>
 				<Tab value="both">both</Tab>
+				<Tab value="none">none</Tab>
 			</div>
 		</Tabs>
 	</Field>
