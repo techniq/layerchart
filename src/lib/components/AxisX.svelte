@@ -2,6 +2,7 @@
 	import { getContext } from 'svelte';
 	import { format } from 'svelte-ux/utils/format';
 	import type { FormatType } from 'svelte-ux/utils/format';
+	import { max } from 'd3-array';
 
 	import Text from './Text.svelte';
 	import { isScaleBand } from '$lib/utils/scales';
@@ -27,7 +28,7 @@
 
 <g class="axis x-axis">
 	{#each tickVals as tick, i}
-		<g class="tick tick-{tick}" transform="translate({$xScale(tick)},{$yRange[0]})">
+		<g class="tick tick-{tick}" transform="translate({$xScale(tick)},{max($yRange)})">
 			{#if gridlines !== false}
 				<line y1={$height * -1} y2="0" x1="0" x2="0" {...gridlines} />
 			{/if}
