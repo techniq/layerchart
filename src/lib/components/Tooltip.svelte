@@ -158,7 +158,7 @@
 			point.data = d;
 			return point;
 		});
-		voronoi = Delaunay.from(points).voronoi([0, 0, $width, $height]);
+		voronoi = Delaunay.from(points).voronoi([0, 0, Math.max($width, 0), Math.max($height, 0)]); // width and/or height can sometimes be negative (when loading data remotely and updately)
 	}
 
 	let quadtree;
