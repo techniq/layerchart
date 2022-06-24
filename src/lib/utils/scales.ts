@@ -1,18 +1,20 @@
 import { derived } from 'svelte/store';
 import { tweened, spring } from 'svelte/motion';
+import { min } from 'd3-array';
+
 import { MotionOptions, motionStore } from '$lib/stores/motionStore';
 
 /**
  * Implemenation for missing `scaleBand().invert()`
  *
- *  See: https://stackoverflow.com/a/50846323/191902
+ *  See: https://stackoverflow.com/questions/38633082/d3-getting-invert-value-of-band-scales
  *      https://github.com/d3/d3-scale/pull/64
  *      https://github.com/vega/vega-scale/blob/master/src/scaleBand.js#L118
  *      https://observablehq.com/@d3/ordinal-brushing
  */
 export function scaleBandInvert(scale) {
 	const domain = scale.domain();
-	const paddingOuter = scale(domain[0]);
+	const paddingOuter = scale(min(domain));
 	const eachBand = scale.step();
 
 	return function (value) {
