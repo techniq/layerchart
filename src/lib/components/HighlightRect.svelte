@@ -40,7 +40,7 @@
 			dimensions.x = xCoord - (isScaleBand($xScale) ? ($xScale.padding() * $xScale.step()) / 2 : 0);
 
 			if (axis === 'x') {
-				dimensions.height = $yRange[0];
+				dimensions.height = max($yRange);
 			}
 		}
 
@@ -63,7 +63,7 @@
 			dimensions.y = yCoord - (isScaleBand($yScale) ? ($yScale.padding() * $yScale.step()) / 2 : 0);
 
 			if (axis === 'y') {
-				dimensions.width = $xRange[1];
+				dimensions.width = max($xRange);
 			}
 		}
 	}
