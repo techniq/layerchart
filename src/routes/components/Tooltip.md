@@ -291,7 +291,7 @@ title: ['Interaction', 'Tooltip']
 			xScale={scaleTime()}
 			y="name"
 			yScale={scaleBand()}
-			yDomain={timeSeries.map((x) => x.name).reverse()}
+			yDomain={timeSeries.map((x) => x.name)}
 			padding={{ left: 36, bottom: 36 }}
 		>
 			<Svg>
@@ -373,7 +373,7 @@ title: ['Interaction', 'Tooltip']
 			xScale={scaleTime()}
 			y="name"
 			yScale={scaleBand()}
-			yDomain={timeSeries.map((x) => x.name).reverse()}
+			yDomain={timeSeries.map((x) => x.name)}
 			padding={{ left: 36, bottom: 36 }}
 		>
 			<Svg>
@@ -464,7 +464,7 @@ title: ['Interaction', 'Tooltip']
 			xScale={scaleTime()}
 			y="name"
 			yScale={scaleBand()}
-			yDomain={overlapTimeSeries.map((x) => x.name).reverse()}
+			yDomain={overlapTimeSeries.map((x) => x.name)}
 			padding={{ left: 36, bottom: 36 }}
 		>
 			<Svg>
