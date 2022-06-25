@@ -59,8 +59,7 @@
 	 * Reverse the default y range ([0, height] becomes [height, 0]). By default this is `true` unless using scaleBand y scale.
 	 * see: https://layercake.graphics/guide#yreverse
 	 * see: https://github.com/mhkeller/layercake/issues/83
-
-	*/
+	 */
 	$: yReverse = yScale ? !isScaleBand(yScale) : true;
 </script>
 
