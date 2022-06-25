@@ -199,48 +199,50 @@
 
 	let rects = [];
 	$: if (mode === 'bounds' || mode === 'band') {
-		rects = $flatData.map((d) => {
-			const xValue = $xGet(d);
-			const yValue = $yGet(d);
+		rects = $flatData
+			.map((d) => {
+				const xValue = $xGet(d);
+				const yValue = $yGet(d);
 
-			const x = Array.isArray(xValue) ? min(xValue) : xValue;
-			const y = Array.isArray(yValue) ? max(yValue) : yValue;
+				const x = Array.isArray(xValue) ? min(xValue) : xValue;
+				const y = Array.isArray(yValue) ? max(yValue) : yValue;
 
-			const xOffset = isScaleBand($xScale) ? ($xScale.padding() * $xScale.step()) / 2 : 0;
-			const yOffset = isScaleBand($yScale) ? ($yScale.padding() * $yScale.step()) / 2 : 0;
+				const xOffset = isScaleBand($xScale) ? ($xScale.padding() * $xScale.step()) / 2 : 0;
+				const yOffset = isScaleBand($yScale) ? ($yScale.padding() * $yScale.step()) / 2 : 0;
 
-			const fullWidth = max($xRange) - min($xRange);
-			const fullHeight = max($yRange) - min($yRange);
+				const fullWidth = max($xRange) - min($xRange);
+				const fullHeight = max($yRange) - min($yRange);
 
-			if (mode === 'band') {
-				// full band width/height regardless of value
-				return {
-					x: isScaleBand($xScale) ? x - xOffset : min($xRange),
-					y: isScaleBand($yScale) ? y - yOffset : min($yRange),
-					width: isScaleBand($xScale) ? $xScale.step() : fullWidth,
-					height: isScaleBand($yScale) ? $yScale.step() : fullHeight,
-					data: d
-				};
-			} else if (mode === 'bounds') {
-				return {
-					x: isScaleBand($xScale) || Array.isArray(xValue) ? x - xOffset : min($xRange),
-					// y: isScaleBand($yScale) || Array.isArray(yValue) ? y - yOffset : min($yRange),
-					y: y - yOffset,
+				if (mode === 'band') {
+					// full band width/height regardless of value
+					return {
+						x: isScaleBand($xScale) ? x - xOffset : min($xRange),
+						y: isScaleBand($yScale) ? y - yOffset : min($yRange),
+						width: isScaleBand($xScale) ? $xScale.step() : fullWidth,
+						height: isScaleBand($yScale) ? $yScale.step() : fullHeight,
+						data: d
+					};
+				} else if (mode === 'bounds') {
+					return {
+						x: isScaleBand($xScale) || Array.isArray(xValue) ? x - xOffset : min($xRange),
+						// y: isScaleBand($yScale) || Array.isArray(yValue) ? y - yOffset : min($yRange),
+						y: y - yOffset,
 
-					width: Array.isArray(xValue)
-						? xValue[1] - xValue[0]
-						: isScaleBand($xScale)
-						? $xScale.step()
-						: min($xRange) + x,
-					height: Array.isArray(yValue)
-						? yValue[1] - yValue[0]
-						: isScaleBand($yScale)
-						? $yScale.step()
-						: max($yRange) - y,
-					data: d
-				};
-			}
-		});
+						width: Array.isArray(xValue)
+							? xValue[1] - xValue[0]
+							: isScaleBand($xScale)
+							? $xScale.step()
+							: min($xRange) + x,
+						height: Array.isArray(yValue)
+							? yValue[1] - yValue[0]
+							: isScaleBand($yScale)
+							? $yScale.step()
+							: max($yRange) - y,
+						data: d
+					};
+				}
+			})
+			.sort(createPropertySortFunc('x'));
 		// console.log({ rects });
 	}
 </script>
