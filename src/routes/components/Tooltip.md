@@ -52,9 +52,9 @@ title: ['Interaction', 'Tooltip']
 	let showQuadtree = false;
 
 	let charts = [
-		{ mode: 'bisect', highlight: 'line', axis: undefined, debug: false },
-		{ mode: 'bisect', highlight: 'line', axis: undefined, debug: false },
-		{ mode: 'bisect', highlight: 'line', axis: undefined, debug: false },
+		{ mode: 'bisect-x', highlight: 'line', axis: undefined, debug: false },
+		{ mode: 'bisect-x', highlight: 'line', axis: undefined, debug: false },
+		{ mode: 'bisect-x', highlight: 'line', axis: undefined, debug: false },
 		{ mode: 'bounds', highlight: 'rect', axis: undefined, debug: false },
 		{ mode: 'bounds', highlight: 'rect', axis: undefined, debug: false },
 		{ mode: 'band', highlight: 'rect', axis: undefined, debug: false },
@@ -70,15 +70,17 @@ title: ['Interaction', 'Tooltip']
 
 ## Area
 
-### x: scaleTime, y: scaleLinear. bisect recommended. voronoi and quadtree supported. bounds and band to be improved
+### x: scaleTime, y: scaleLinear. bisect-x recommended. voronoi and quadtree supported. bounds and band to be improved
 
-<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[0].mode} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value="bisect">bisect</Tab>
-				<Tab value="bounds">bounds</Tab>
+				<Tab value="bisect-x">bisect-x</Tab>
+				<Tab value="bisect-y">bisect-y</Tab>
+				<Tab value="bisect-band">bisect-band</Tab>
 				<Tab value="band">band</Tab>
+				<Tab value="bounds">bounds</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -152,15 +154,17 @@ title: ['Interaction', 'Tooltip']
 
 ## Stacked Area
 
-### x: scaleTime, y: scaleLinear (multi/stack). bisect recommended. voronoi and quadtree supporte. bounds and band to be improved
+### x: scaleTime, y: scaleLinear (multi/stack). bisect-x recommended. voronoi and quadtree supporte. bounds and band to be improved
 
-<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[1].mode} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value="bisect">bisect</Tab>
-				<Tab value="bounds">bounds</Tab>
+				<Tab value="bisect-x">bisect-x</Tab>
+				<Tab value="bisect-y">bisect-y</Tab>
+				<Tab value="bisect-band">bisect-band</Tab>
 				<Tab value="band">band</Tab>
+				<Tab value="bounds">bounds</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -244,15 +248,17 @@ title: ['Interaction', 'Tooltip']
 
 ## Single Date / Time
 
-### x: scaleTime, y: scaleBand. bisect recommended. band, voronoi, and quadtree supported.
+### x: scaleTime, y: scaleBand. bisect-x recommended. band, voronoi, and quadtree supported.
 
-<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[2].mode} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value="bisect">bisect</Tab>
-				<Tab value="bounds">bounds</Tab>
+				<Tab value="bisect-x">bisect-x</Tab>
+				<Tab value="bisect-y">bisect-y</Tab>
+				<Tab value="bisect-band">bisect-band</Tab>
 				<Tab value="band">band</Tab>
+				<Tab value="bounds">bounds</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -326,15 +332,17 @@ title: ['Interaction', 'Tooltip']
 
 ## Duration
 
-### x: scaleTime (multi), y: scaleBand. bounds recommended. band supported (when no overlap on same band). bisect supported (when no overlap on time scale). voronoi and quadtree partially supported (using first point)
+### x: scaleTime (multi), y: scaleBand. bisect-band or bounds recommended. band supported (when no overlap on same band). bisect supported (when no overlap on time scale). voronoi and quadtree partially supported (using first point)
 
-<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[3].mode} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value="bisect">bisect</Tab>
-				<Tab value="bounds">bounds</Tab>
+				<Tab value="bisect-x">bisect-x</Tab>
+				<Tab value="bisect-y">bisect-y</Tab>
+				<Tab value="bisect-band">bisect-band</Tab>
 				<Tab value="band">band</Tab>
+				<Tab value="bounds">bounds</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -419,13 +427,15 @@ title: ['Interaction', 'Tooltip']
 
 ### x: scaleTime (multi), y: scaleBand. bounds recommends. voronoi and quadtree partially supported (using first point)
 
-<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[4].mode} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value="bisect">bisect</Tab>
-				<Tab value="bounds">bounds</Tab>
+				<Tab value="bisect-x">bisect-x</Tab>
+				<Tab value="bisect-y">bisect-y</Tab>
+				<Tab value="bisect-band">bisect-band</Tab>
 				<Tab value="band">band</Tab>
+				<Tab value="bounds">bounds</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -508,15 +518,17 @@ title: ['Interaction', 'Tooltip']
 
 ## Simple Bars
 
-### x: scaleBand, y: scaleLinear. band or bounds recommended. bisect supported. voronoi and quadtree partially support (using value / bar top)
+### x: scaleBand, y: scaleLinear. band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using value / bar top)
 
-<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[5].mode} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value="bisect">bisect</Tab>
-				<Tab value="bounds">bounds</Tab>
+				<Tab value="bisect-x">bisect-x</Tab>
+				<Tab value="bisect-y">bisect-y</Tab>
+				<Tab value="bisect-band">bisect-band</Tab>
 				<Tab value="band">band</Tab>
+				<Tab value="bounds">bounds</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -591,15 +603,17 @@ title: ['Interaction', 'Tooltip']
 
 ## Multiple (overlapping) Bars
 
-### x: scaleBand, y: scaleLinear
+### x: scaleBand, y: scaleLinear. band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using value / bar top)
 
-<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[6].mode} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value="bisect">bisect</Tab>
-				<Tab value="bounds">bounds</Tab>
+				<Tab value="bisect-x">bisect-x</Tab>
+				<Tab value="bisect-y">bisect-y</Tab>
+				<Tab value="bisect-band">bisect-band</Tab>
 				<Tab value="band">band</Tab>
+				<Tab value="bounds">bounds</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
@@ -681,13 +695,15 @@ title: ['Interaction', 'Tooltip']
 
 ### x: scaleLinear, y: scaleLinear. voronoi or quadtree recommended
 
-<div class="grid grid-cols-[2fr,1fr,1fr,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[7].mode} contained class="w-full">
 			<div class="tabList w-full border">
-				<Tab value="bisect">bisect</Tab>
-				<Tab value="bounds">bounds</Tab>
+				<Tab value="bisect-x">bisect-x</Tab>
+				<Tab value="bisect-y">bisect-y</Tab>
+				<Tab value="bisect-band">bisect-band</Tab>
 				<Tab value="band">band</Tab>
+				<Tab value="bounds">bounds</Tab>
 				<Tab value="voronoi">voronoi</Tab>
 				<Tab value="quadtree">quadtree</Tab>
 			</div>
