@@ -56,7 +56,7 @@ title: ['Interaction', 'Tooltip']
 		{ mode: 'bisect-x', highlight: 'line', axis: undefined, debug: false },
 		{ mode: 'bisect-x', highlight: 'line', axis: undefined, debug: false },
 		{ mode: 'bounds', highlight: 'rect', axis: undefined, debug: false },
-		{ mode: 'bounds', highlight: 'rect', axis: undefined, debug: false },
+		{ mode: 'bounds', highlight: 'rect', axis: 'both', debug: false },
 		{ mode: 'band', highlight: 'rect', axis: undefined, debug: false },
 		{ mode: 'band', highlight: 'rect', axis: undefined,  debug: false },
 		{ mode: 'voronoi', highlight: 'line', axis: 'both', debug: false },
