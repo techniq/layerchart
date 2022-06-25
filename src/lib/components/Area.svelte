@@ -3,6 +3,7 @@
 	import type { tweened as tweenedStore } from 'svelte/motion';
 	import { Area, area as d3Area } from 'd3-shape';
 	import type { CurveFactory } from 'd3-shape';
+	import { min, max } from 'd3-array';
 
 	import { interpolatePath } from 'd3-interpolate-path';
 
@@ -32,7 +33,7 @@
 	$: {
 		const path = d3Area()
 			.x(x ?? $xGet)
-			.y0(y0 ?? $yRange[0])
+			.y0(y0 ?? max($yRange))
 			.y1(y1 ?? $yGet);
 		if (curve) path.curve(curve);
 		if (defined) path.defined(defined);

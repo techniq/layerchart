@@ -2,6 +2,7 @@
 	import { getContext } from 'svelte';
 	import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 	import { pie as d3pie } from 'd3-shape';
+	import { min, max } from 'd3-array';
 
 	import Arc from './Arc.svelte';
 	import Group from './Group.svelte';
@@ -63,12 +64,12 @@
 
 	const { data: contextData, x, y, xRange, rGet, config } = getContext('LayerCake');
 
-	$: resolved_endAngle = endAngle ?? degreesToRadians($config.xRange ? $xRange[1] : range[1]);
+	$: resolved_endAngle = endAngle ?? degreesToRadians($config.xRange ? max($xRange) : max(range));
 	let tweened_endAngle = motionStore(0, { spring, tweened });
 	$: tweened_endAngle.set(resolved_endAngle);
 
 	$: pie = d3pie()
-		.startAngle(startAngle ?? degreesToRadians($config.xRange ? $xRange[0] : range[0]))
+		.startAngle(startAngle ?? degreesToRadians($config.xRange ? min($xRange) : min(range)))
 		.endAngle($tweened_endAngle)
 		.padAngle(padAngle)
 		.value($x);

@@ -2,6 +2,7 @@
 	import { getContext } from 'svelte';
 	import { format } from 'svelte-ux/utils/format';
 	import type { FormatType } from 'svelte-ux/utils/format';
+	import { min, max } from 'd3-array';
 
 	import Text from './Text.svelte';
 	import { isScaleBand } from '$lib/utils/scales';
@@ -27,7 +28,7 @@
 
 <g class="axis y-axis" transform="translate({-$padding.left}, 0)">
 	{#each tickVals as tick, i}
-		<g class="tick tick-{tick}" transform="translate({$xRange[0]}, {$yScale(tick)})">
+		<g class="tick tick-{tick}" transform="translate({min($xRange)}, {$yScale(tick)})">
 			{#if gridlines !== false}
 				<line
 					x1={$padding.left}

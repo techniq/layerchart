@@ -86,10 +86,10 @@
 		} else if (yValue > 0) {
 			// Positive value
 			yTop = yValue;
-			yBottom = $yRange[1]; // or `0`?
+			yBottom = min($yRange); // or `0`?
 		} else {
 			// Negative value
-			yTop = $yRange[1]; // or `0`?
+			yTop = min($yRange); // or `0`?
 			yBottom = yValue;
 		}
 

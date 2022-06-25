@@ -7,6 +7,7 @@
 	import { getContext } from 'svelte';
 	import { area as d3Area, line as d3Line } from 'd3-shape';
 	import type { CurveFactory } from 'd3-shape';
+	import { min, max } from 'd3-array';
 
 	const { data: contextData, xGet, yGet, yRange } = getContext('LayerCake');
 
@@ -30,13 +31,13 @@
 	$: clipPathBelow = d3Area()
 		.x(x ?? $xGet)
 		.y0(y0 ?? ((d) => $yGet(d)[0]))
-		.y1(y1 ?? ((d) => $yRange[0]));
+		.y1(y1 ?? ((d) => max($yRange)));
 	$: if (curve) clipPathBelow.curve(curve);
 	$: if (defined) clipPathBelow.defined(defined);
 
 	$: clipPathAbove = d3Area()
 		.x(x ?? $xGet)
-		.y0(y0 ?? ((d) => $yRange[0]))
+		.y0(y0 ?? ((d) => max($yRange)))
 		.y1(y1 ?? ((d) => $yGet(d)[1]));
 	$: if (curve) clipPathAbove.curve(curve);
 	$: if (defined) clipPathAbove.defined(defined);

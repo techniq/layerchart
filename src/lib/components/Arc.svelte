@@ -21,6 +21,7 @@
 	import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 	import { arc as d3arc } from 'd3-shape';
 	import { scaleLinear } from 'd3-scale';
+	import { min, max } from 'd3-array';
 	import { motionStore } from '$lib/stores/motionStore';
 	import { degreesToRadians } from '$lib/utils/math';
 
@@ -72,7 +73,7 @@
 
 	$: scale = scaleLinear().domain(domain).range(range);
 
-	$: _outerRadius = outerRadius ?? $yRange[0] / 2;
+	$: _outerRadius = outerRadius ?? max($yRange) / 2;
 	$: _innerRadius =
 		(innerRadius > 1
 			? innerRadius
@@ -80,7 +81,7 @@
 			? _outerRadius * innerRadius
 			: innerRadius < 0
 			? _outerRadius - innerRadius
-			: innerRadius) ?? $yRange[1];
+			: innerRadius) ?? min($yRange);
 
 	$: arc = d3arc()
 		.innerRadius(_innerRadius)
