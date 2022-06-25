@@ -287,7 +287,8 @@
 			<g class="tooltip-voronoi">
 				<path
 					d={voronoi.renderCell(i)}
-					style:fill="transparent"
+					style:fill={debug ? 'red' : 'transparent'}
+					style:fill-opacity={debug ? 0.1 : 0}
 					style:stroke={debug ? 'red' : 'transparent'}
 					on:mousemove={(e) => handleTooltip(e, point.data)}
 					on:mouseleave={hideTooltip}
@@ -304,7 +305,8 @@
 					y={rect.y}
 					width={rect.width}
 					height={rect.height}
-					style:fill="transparent"
+					style:fill={debug ? 'red' : 'transparent'}
+					style:fill-opacity={debug ? 0.1 : 0}
 					style:stroke={debug ? 'red' : 'transparent'}
 					on:mousemove={(e) => handleTooltip(e, rect.data)}
 					on:mouseleave={hideTooltip}
@@ -324,8 +326,9 @@
 						y={rect.y}
 						width={rect.width}
 						height={rect.height}
+						style:fill={debug ? 'red' : 'transparent'}
+						style:fill-opacity={debug ? 0.1 : 0}
 						stroke="red"
-						fill="none"
 					/>
 				{/each}
 			</g>
