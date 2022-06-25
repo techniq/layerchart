@@ -7,6 +7,7 @@
 <script lang="ts">
 	import { max, min } from 'd3-array';
 	import { get } from 'lodash-es';
+	import { isScaleBand } from '$lib/utils/scales';
 
 	type Accessor = string | ((d: any) => number);
 
@@ -30,6 +31,7 @@
 
 	export let x: Accessor | Accessor[];
 	export let y: Accessor | Accessor[];
+	export let yScale: Function;
 
 	/**
 	 * xBaseline guaranteed to be visible in xDomain
@@ -52,8 +54,16 @@
 		const yValues = data.flatMap((d) => getValue(y, d));
 		yDomain = [min([yBaseline, ...yValues]), max([yBaseline, ...yValues])];
 	}
+
+	/**
+	 * Reverse the default y range ([0, height] becomes [height, 0]). By default this is `true` unless using scaleBand y scale.
+	 * see: https://layercake.graphics/guide#yreverse
+	 * see: https://github.com/mhkeller/layercake/issues/83
+
+	*/
+	$: yReverse = yScale ? !isScaleBand(yScale) : true;
 </script>
 
-<LayerCake {data} {y} {yDomain} {x} {xDomain} {...$$restProps}>
+<LayerCake {data} {x} {xDomain} {y} {yScale} {yDomain} {yReverse} {...$$restProps}>
 	<slot />
 </LayerCake>
