@@ -166,7 +166,6 @@
 				const index = bisectX($flatData, xValueAtPoint, 1);
 				const previousValue = $flatData[index - 1];
 				const currentValue = $flatData[index];
-				console.log({ index, previousValue, currentValue });
 				tooltipData = findData(previousValue, currentValue, xValueAtPoint, $x);
 			} else if (mode === 'bisect-y') {
 				// `y` value at mouse/touch coordinate
