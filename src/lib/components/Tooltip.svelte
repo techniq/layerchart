@@ -344,6 +344,9 @@
 					style:stroke={debug ? 'red' : 'transparent'}
 					on:mousemove={(e) => handleTooltip(e, point.data)}
 					on:mouseleave={hideTooltip}
+					on:click={(e) => {
+						dispatch('click', { data: point.data });
+					}}
 				/>
 			</g>
 		{/each}
@@ -362,6 +365,9 @@
 					style:stroke={debug ? 'red' : 'transparent'}
 					on:mousemove={(e) => handleTooltip(e, rect.data)}
 					on:mouseleave={hideTooltip}
+					on:click={(e) => {
+						dispatch('click', { data: rect.data });
+					}}
 				/>
 			{/each}
 		</g>
