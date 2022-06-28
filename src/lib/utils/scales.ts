@@ -11,6 +11,8 @@ import { MotionOptions, motionStore } from '$lib/stores/motionStore';
  *      https://github.com/d3/d3-scale/pull/64
  *      https://github.com/vega/vega-scale/blob/master/src/scaleBand.js#L118
  *      https://observablehq.com/@d3/ordinal-brushing
+ * 			https://github.com/d3/d3-scale/blob/11777dac7d4b0b3e229d658aee3257ea67bd5ffa/src/band.js#L32
+ * 			https://gist.github.com/LuisSevillano/d53a1dc529eef518780c6df99613e2fd
  */
 export function scaleBandInvert(scale) {
 	const domain = scale.domain();
