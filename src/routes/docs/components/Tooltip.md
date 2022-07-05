@@ -1,5 +1,6 @@
 ---
-title: ['Interaction', 'Tooltip']
+component: $component
+filename: $filename
 ---
 
 <script lang="ts">

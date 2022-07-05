@@ -1,5 +1,6 @@
 ---
-title: ['Common', 'Pattern']
+component: $component
+filename: $filename
 ---
 
 <script lang="ts">

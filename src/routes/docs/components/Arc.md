@@ -1,5 +1,6 @@
 ---
-title: ['Primatives', 'Arc']
+component: $component
+filename: $filename
 ---
 
 <script lang="ts">

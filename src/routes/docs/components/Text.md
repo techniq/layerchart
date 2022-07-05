@@ -1,5 +1,6 @@
 ---
-title: ['Components', 'Text']
+component: $component
+filename: $filename
 ---
 
 <script>

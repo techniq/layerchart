@@ -15,7 +15,6 @@
 	 *  Resolve a value from data based on the accessor type
 	 */
 	function getValue(accessor: Accessor | Accessor[], d) {
-		console.log({ accessor });
 		if (Array.isArray(accessor)) {
 			return accessor.map((a) => getValue(a, d));
 		} else if (typeof accessor === 'function') {

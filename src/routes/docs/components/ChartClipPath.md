@@ -1,5 +1,7 @@
 ---
-title: ['Primatives', 'ChartClipPath']
+component: $component
+filename: $filename
+description: Convenient way to clip specific components (axis labels, etc) within chart while still allowing some to overflow (tooltips, etc)
 ---
 
 <script lang="ts">
@@ -11,10 +13,6 @@ title: ['Primatives', 'ChartClipPath']
 
 	import Preview from '$lib/docs/Preview.svelte';
 </script>
-
-# Description
-
-- Convenient way to clip specific components (axis labels, etc) within chart while still allowing some to overflow (tooltips, etc)
 
 # Examples
 

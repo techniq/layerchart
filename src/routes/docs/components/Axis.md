@@ -1,5 +1,6 @@
 ---
-title: ['Common', 'Axis']
+component: $component
+filename: $filename
 ---
 
 <script lang="ts">

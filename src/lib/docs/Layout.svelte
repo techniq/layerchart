@@ -26,7 +26,7 @@
 				<Button
 					class="text-black/50"
 					icon={mdiCodeTags}
-					href="https://github.com/techniq/svelte-ux/blob/master/src/lib/components/{component}.svelte"
+					href="https://github.com/techniq/layerchart/blob/master/src/lib/components/{component}.svelte"
 					target="_blank"
 				/>
 			</Tooltip>
@@ -37,7 +37,7 @@
 				<Button
 					class="text-black/50"
 					icon={mdiFileDocumentEditOutline}
-					href="https://github.com/techniq/svelte-ux/blob/master/{filename}"
+					href="https://github.com/techniq/layerchart/blob/master/{filename}"
 					target="_blank"
 				/>
 			</Tooltip>
@@ -46,9 +46,16 @@
 {/if}
 
 {#if description}
-	{description}
+	<div class="text-sm text-black/50">
+		{description}
+	</div>
 {/if}
 
-<slot name="toc" />
+{#if $$slots.toc}
+	<div class="text-xs uppercase text-black/50 leading-8 tracking-widest mt-4">Contents</div>
+	<div class="border border-black/20 rounded bg-white">
+		<slot name="toc" />
+	</div>
+{/if}
 
 <slot />

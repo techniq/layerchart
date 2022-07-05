@@ -1,11 +1,12 @@
 ---
-title: ['Common', 'Chart']
+component: $component
+filename: $filename
 ---
 
 <script lang="ts">
 	import { ApiDocs } from 'svelte-ux';
 
-	import api from '$lib/components/Chart.svelte?raw&sveld';
+	import api from '$lib/components/Labels.svelte?raw&sveld';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 

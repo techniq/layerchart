@@ -50,16 +50,15 @@
 	export let endAngle: number = undefined;
 
 	/**
-	 * Define innerRadius.
-	 *   value >= 1: discrete value
-	 *   value >  0: percent of `outerRadius`
-	 *   value <  0: offset of `outerRadius`
-	 *   default: yRange min
+	 * Define innerRadius. Defaults to yRange min
+	 *   • value >= 1: discrete value
+	 *   • value < 1: percent of `outerRadius`
+	 *   • value < 0: offset of `outerRadius`
 	 */
 	export let innerRadius = undefined;
 
 	/**
-	 * Define outerRadius.  Defaults to yRange max/2 (ie. chart height / 2)
+	 * Define outerRadius.  Defaults to yRange max / 2 (ie. chart height / 2)
 	 */
 	export let outerRadius = undefined;
 

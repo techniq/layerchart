@@ -1,11 +1,12 @@
 ---
-title: ['Data', 'Threshold']
+component: $component
+filename: $filename
 ---
 
 <script lang="ts">
 	import { ApiDocs } from 'svelte-ux';
 
-	import api from '$lib/components/Threshold.svelte?raw&sveld';
+	import api from '$lib/components/Points.svelte?raw&sveld';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 
