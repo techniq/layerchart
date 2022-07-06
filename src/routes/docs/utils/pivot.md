@@ -17,13 +17,13 @@
 
 ### Before
 
-<Preview code={wideDataDisplay} highlight>
+<Preview code={wideDataDisplay} highlight showCode>
   wideData
 </Preview>
 
 ### After
 
-<Preview code={pivotLongerDisplay} highlight>
+<Preview code={pivotLongerDisplay} highlight showCode>
 	pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'dates'], 'fruit', 'value')
 </Preview>
 
@@ -31,12 +31,12 @@
 
 ### Before
 
-<Preview code={longDataDisplay} highlight>
+<Preview code={longDataDisplay} highlight showCode>
   longData
 </Preview>
 
 ### After
 
-<Preview code={pivotWiderDisplay} highlight>
+<Preview code={pivotWiderDisplay} highlight showCode>
 	pivotWider(longData, 'year', 'fruit', 'value')
 </Preview>
