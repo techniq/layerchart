@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import { min, max } from 'd3-array';
+	import { isScaleBand } from '$lib/utils/scales';
 
 	const { xRange, yScale, yRange } = getContext('LayerCake');
 
@@ -10,7 +11,13 @@
 
 <g class="baseline">
 	{#if x}
-		<line x1={0} x2={max($xRange) || 0} y1={max($yRange)} y2={max($yRange)} class="baseline" />
+		<line
+			x1={0}
+			x2={max($xRange) || 0}
+			y1={isScaleBand($yScale) ? max($yRange) : $yScale(0) || 0}
+			y2={isScaleBand($yScale) ? max($yRange) : $yScale(0) || 0}
+			class="baseline"
+		/>
 	{/if}
 
 	{#if y}
