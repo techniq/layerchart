@@ -53,14 +53,14 @@ filename: $filename
 	let showQuadtree = false;
 
 	let charts = [
-		{ mode: 'bisect-x', highlight: 'line', axis: undefined, debug: false },
-		{ mode: 'bisect-x', highlight: 'line', axis: undefined, debug: false },
-		{ mode: 'bisect-x', highlight: 'line', axis: undefined, debug: false },
-		{ mode: 'bounds', highlight: 'rect', axis: undefined, debug: false },
-		{ mode: 'bounds', highlight: 'rect', axis: 'both', debug: false },
-		{ mode: 'band', highlight: 'rect', axis: undefined, debug: false },
-		{ mode: 'band', highlight: 'rect', axis: undefined,  debug: false },
-		{ mode: 'voronoi', highlight: 'line', axis: 'both', debug: false },
+		{ mode: 'bisect-x', highlight: 'line', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
+		{ mode: 'bisect-x', highlight: 'line', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
+		{ mode: 'bisect-x', highlight: 'line', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
+		{ mode: 'bounds', highlight: 'rect', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
+		{ mode: 'bounds', highlight: 'rect', axis: 'both', snapToDataX: false, snapToDataY: false, debug: false },
+		{ mode: 'band', highlight: 'rect', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
+		{ mode: 'band', highlight: 'rect', axis: undefined,  snapToDataX: false, snapToDataY: false, debug: false },
+		{ mode: 'voronoi', highlight: 'line', axis: 'both', snapToDataX: false, snapToDataY: false, debug: false },
 	]
 
 </script>
@@ -75,7 +75,7 @@ filename: $filename
 
 ### bisect-x recommended. voronoi and quadtree supported. bounds and band to be improved
 
-<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[0].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -109,6 +109,24 @@ filename: $filename
 			</div>
 		</Tabs>
 	</Field>
+	<Field label="Snap to Data">
+		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
+			<span>x:</span>
+			<Tabs bind:selected={charts[0].snapToDataX} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+			<span>y:</span>
+			<Tabs bind:selected={charts[0].snapToDataY} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+		</div>
+	</Field>
 	<Field label="Debug" let:id>
 		<Switch bind:checked={charts[0].debug} {id} />
 	</Field>
@@ -131,7 +149,7 @@ filename: $filename
 				<Baseline x y />
 				<Area line={{ width: 2 }} />
 			</Svg>
-			<Tooltip let:data mode={charts[0].mode} debug={charts[0].debug}>
+			<Tooltip let:data mode={charts[0].mode} snapToDataX={charts[0].snapToDataX} snapToDataY={charts[0].snapToDataY} debug={charts[0].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{format(data.date, 'eee, MMMM do')}
@@ -161,7 +179,7 @@ filename: $filename
 
 ### bisect-x recommended. voronoi and quadtree supported. bounds and band to be improved
 
-<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[1].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -195,6 +213,24 @@ filename: $filename
 			</div>
 		</Tabs>
 	</Field>
+	<Field label="Snap to Data">
+		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
+			<span>x:</span>
+			<Tabs bind:selected={charts[1].snapToDataX} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+			<span>y:</span>
+			<Tabs bind:selected={charts[1].snapToDataY} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+		</div>
+	</Field>
 	<Field label="Debug" let:id>
 		<Switch bind:checked={charts[1].debug} {id} />
 	</Field>
@@ -225,7 +261,7 @@ filename: $filename
 				<Baseline x y />
 				<AreaStack line={{ width: 2 }} />
 			</Svg>
-			<Tooltip let:data mode={charts[1].mode} debug={charts[1].debug}>
+			<Tooltip let:data mode={charts[1].mode} snapToDataX={charts[1].snapToDataX} snapToDataY={charts[1].snapToDataY} debug={charts[1].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{format(data.data.date, 'eee, MMMM do')}
@@ -257,7 +293,7 @@ filename: $filename
 
 ### bisect-x recommended. band, voronoi, and quadtree supported.
 
-<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[2].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -291,6 +327,24 @@ filename: $filename
 			</div>
 		</Tabs>
 	</Field>
+		<Field label="Snap to Data">
+		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
+			<span>x:</span>
+			<Tabs bind:selected={charts[2].snapToDataX} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+			<span>y:</span>
+			<Tabs bind:selected={charts[2].snapToDataY} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+		</div>
+	</Field>
 	<Field label="Debug" let:id>
 		<Switch bind:checked={charts[2].debug} {id} />
 	</Field>
@@ -313,7 +367,7 @@ filename: $filename
 				<Baseline y />
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
-			<Tooltip let:data mode={charts[2].mode} debug={charts[2].debug}>
+			<Tooltip let:data mode={charts[2].mode} snapToDataX={charts[2].snapToDataX} snapToDataY={charts[2].snapToDataY}  debug={charts[2].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{data.name}
@@ -343,7 +397,7 @@ filename: $filename
 
 ### bisect-band or bounds recommended. band supported (when no overlap on same band). bisect supported (when no overlap on time scale). voronoi and quadtree partially supported (using first point)
 
-<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[3].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -377,6 +431,24 @@ filename: $filename
 			</div>
 		</Tabs>
 	</Field>
+	<Field label="Snap to Data">
+		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
+			<span>x:</span>
+			<Tabs bind:selected={charts[3].snapToDataX} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+			<span>y:</span>
+			<Tabs bind:selected={charts[3].snapToDataY} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+		</div>
+	</Field>
 	<Field label="Debug" let:id>
 		<Switch bind:checked={charts[3].debug} {id} />
 	</Field>
@@ -400,7 +472,7 @@ filename: $filename
 				<ConnectedPoints stroke="#000" />
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
-			<Tooltip let:data mode={charts[3].mode} debug={charts[3].debug}>
+			<Tooltip let:data mode={charts[3].mode} snapToDataX={charts[3].snapToDataX} snapToDataY={charts[3].snapToDataY}  debug={charts[3].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{data.name}
@@ -438,7 +510,7 @@ filename: $filename
 
 ### bounds recommends. voronoi and quadtree partially supported (using first point)
 
-<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[4].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -472,6 +544,24 @@ filename: $filename
 			</div>
 		</Tabs>
 	</Field>
+	<Field label="Snap to Data">
+		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
+			<span>x:</span>
+			<Tabs bind:selected={charts[4].snapToDataX} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+			<span>y:</span>
+			<Tabs bind:selected={charts[4].snapToDataY} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+		</div>
+	</Field>
 	<Field label="Debug" let:id>
 		<Switch bind:checked={charts[4].debug} {id} />
 	</Field>
@@ -495,7 +585,7 @@ filename: $filename
 				<ConnectedPoints stroke="#000" />
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
-			<Tooltip let:data mode={charts[4].mode} debug={charts[4].debug}>
+			<Tooltip let:data mode={charts[4].mode} snapToDataX={charts[4].snapToDataX} snapToDataY={charts[4].snapToDataY} debug={charts[4].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{data.name}
@@ -533,7 +623,7 @@ filename: $filename
 
 ### band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using value / bar top)
 
-<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[5].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -567,6 +657,24 @@ filename: $filename
 			</div>
 		</Tabs>
 	</Field>
+	<Field label="Snap to Data">
+		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
+			<span>x:</span>
+			<Tabs bind:selected={charts[5].snapToDataX} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+			<span>y:</span>
+			<Tabs bind:selected={charts[5].snapToDataY} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+		</div>
+	</Field>
 	<Field label="Debug" let:id>
 		<Switch bind:checked={charts[5].debug} {id} />
 	</Field>
@@ -590,7 +698,7 @@ filename: $filename
 				<Baseline x y />
 				<Bars radius={4} strokeWidth={1} />
 			</Svg>
-			<Tooltip let:data mode={charts[5].mode} debug={charts[5].debug}>
+			<Tooltip let:data mode={charts[5].mode} snapToDataX={charts[5].snapToDataX} snapToDataY={charts[5].snapToDataY}  debug={charts[5].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{format(data.date, 'eee, MMMM do')}
@@ -620,7 +728,7 @@ filename: $filename
 
 ### band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using value / bar top)
 
-<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[6].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -654,6 +762,24 @@ filename: $filename
 			</div>
 		</Tabs>
 	</Field>
+	<Field label="Snap to Data">
+		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
+			<span>x:</span>
+			<Tabs bind:selected={charts[6].snapToDataX} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+			<span>y:</span>
+			<Tabs bind:selected={charts[6].snapToDataY} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+		</div>
+	</Field>
 	<Field label="Debug" let:id>
 		<Switch bind:checked={charts[6].debug} {id} />
 	</Field>
@@ -678,7 +804,7 @@ filename: $filename
 				<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
 				<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
 			</Svg>
-			<Tooltip let:data mode={charts[6].mode} debug={charts[6].debug}>
+			<Tooltip let:data mode={charts[6].mode} snapToDataX={charts[6].snapToDataX} snapToDataY={charts[6].snapToDataY}  debug={charts[6].debug}>
 				<div class="tooltip">
 					<div class="tooltip-header">
 						{format(data.date, 'eee, MMMM do')}
@@ -712,7 +838,7 @@ filename: $filename
 
 ### voronoi or quadtree recommended
 
-<div class="grid grid-cols-[1fr,148px,248px,100px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
 		<Tabs bind:selected={charts[7].mode} contained class="w-full">
 			<div class="tabList w-full border">
@@ -746,6 +872,24 @@ filename: $filename
 			</div>
 		</Tabs>
 	</Field>
+	<Field label="Snap to Data">
+		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
+			<span>x:</span>
+			<Tabs bind:selected={charts[7].snapToDataX} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+			<span>y:</span>
+			<Tabs bind:selected={charts[7].snapToDataY} contained>
+				<div class="tabList w-full border">
+					<Tab value={false}>off</Tab>
+					<Tab value={true}>on</Tab>
+				</div>
+			</Tabs>
+		</div>
+	</Field>
 	<Field label="Debug" let:id>
 		<Switch bind:checked={charts[7].debug} {id} />
 	</Field>
@@ -764,7 +908,7 @@ filename: $filename
 				<AxisX gridlines />
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
-			<Tooltip let:data mode={charts[7].mode} debug={charts[7].debug}>
+			<Tooltip let:data mode={charts[7].mode} snapToDataX={charts[7].snapToDataX} snapToDataY={charts[7].snapToDataY}  debug={charts[7].debug}>
 				<div class="tooltip">
 					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
 						<div class="tooltip-label">x:</div>
