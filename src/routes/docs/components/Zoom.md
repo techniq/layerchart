@@ -66,7 +66,7 @@ filename: $filename
 
 # Examples
 
-<div class="grid grid-cols-[1fr,1fr,auto,auto,1fr,auto] gap-2">
+<div class="grid grid-cols-[1fr,1fr,auto,auto,1fr,auto] gap-2 mb-2">
 	<Field label="Points" let:id>
 		<Button icon={mdiChevronLeft} on:click={() => pointCount -= (pointCount > 2 ? 1 : 0)} class="mr-2" />
 		<input type="range" bind:value={pointCount} min={1} max={2000} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{pointCount}</span>
