@@ -124,9 +124,10 @@
 	}
 
 	function handleTooltip(event: MouseEvent | TouchEvent, tooltipData: any) {
-		const point = localPoint(event.target as Element, event);
-		const localX = point?.x ?? 0;
-		const localY = point?.y ?? 0;
+		const referenceNode = (event.target as Element).closest('.layercake-container');
+		const point = localPoint(referenceNode, event);
+		const localX = point?.x - $padding.left ?? 0;
+		const localY = point?.y - $padding.top ?? 0;
 
 		// If tooltipData not provided already (voronoi, etc), attempt to find it
 		// TODO: When using bisect-x/y/band, values should be sorted.  Tyipcally are for `x`, but not `y` (and band depends on if x or y scale)
