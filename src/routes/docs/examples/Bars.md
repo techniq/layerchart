@@ -3,12 +3,15 @@ title: ['Chart', 'Bars']
 ---
 
 <script lang="ts">
+	import { cubicInOut } from 'svelte/easing';
 	import { scaleBand, scaleOrdinal } from 'd3-scale';
 	import { format } from 'date-fns';
-	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
-	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 	import { extent } from 'd3-array';
 	import { stackOffsetExpand } from 'd3-shape';
+
+	import { Field, Tabs, Tab } from 'svelte-ux';
+	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
+	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import AxisX from '$lib/components/AxisX.svelte';
@@ -34,6 +37,23 @@ title: ['Chart', 'Bars']
 
 	const colorKeys = [...new Set(longData.map(x => x.fruit))]
 	const keyColors = ['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)', 'var(--color-orange-500)'];
+
+	let transitionChartMode = "group"
+	$: transitionChart = transitionChartMode === 'group' ? {
+		groupBy: 'fruit',
+		stackBy: undefined
+	} : transitionChartMode === 'stack' ? {
+		groupBy: undefined,
+		stackBy: 'fruit'
+	} : transitionChartMode === 'groupStack' ? {
+		groupBy: 'basket',
+		stackBy: 'fruit'
+	} : {
+		groupBy: undefined,
+		stackBy: undefined
+	}
+	$: transitionData = createStackData(longData, { xKey: 'year', groupBy: transitionChart.groupBy, stackBy: transitionChart.stackBy })
+	// $: console.log({ transitionData })
 </script>
 
 ## Vertical (Column)
@@ -366,6 +386,63 @@ title: ['Chart', 'Bars']
 				<AxisX />
 				<Baseline x y />
 				<Bars groupBy="basket" getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Grouped, Stacked, or Both (transition)
+
+<div class="grid grid-cols-[1fr,1fr] gap-2 mb-2">
+	<Field label="Mode">
+		<Tabs bind:selected={transitionChartMode} contained class="w-full">
+			<div class="tabList w-full border">
+				<Tab value="group">Grouped</Tab>
+				<Tab value="stack">Stacked</Tab>
+				<Tab value="groupStack">Grouped & Stacked</Tab>
+			</div>
+		</Tabs>
+	</Field>
+</div>
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+	<!-- Always use stackedData for extents for consistent scale -->
+		<Chart
+			data={transitionData}
+			extents={{
+				y: extent(stackedData.flatMap(d => d.values))
+			}}
+			x="year"
+			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+			xDomain={longData.map(d => d.year)}
+			y="values"
+			yNice
+			r={d => {
+				// Color by fruit (last key)
+				return d.keys.at(-1);
+			}}
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
+			padding={{ left: 16, bottom: 24 }}
+		>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX />
+				<Baseline x y />
+				<Bars
+					groupBy={transitionChart.groupBy}
+					getKey={item => item.keys.at(0) + '-' + item.keys.at(-1)}
+					radius={4}
+					strokeWidth={1}
+					tweened={{
+						x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0: 300 },
+						y: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
+						width: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
+						height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
+					}}
+				/>
 			</Svg>
 		</Chart>
 	</div>

@@ -1,4 +1,4 @@
-import { flatGroup, max, sum } from 'd3-array';
+import { flatGroup, max, rollup, sum } from 'd3-array';
 import { stack, stackOffsetNone, stackOrderNone } from 'd3-shape';
 import { pivotWider } from './pivot';
 
@@ -70,8 +70,19 @@ export function createStackData(
 
 		return result;
 	} else {
-		// TODO: Do anything if no group or stack? Convert to { ...d, keys: [...}, values: [...] ]}?
-		return data;
+		// No grouping or stacking.  Aggregate based on `xKey`
+		return Array.from(
+			rollup(
+				data,
+				(items) => {
+					return {
+						keys: [items[0][options.xKey]],
+						values: [0, sum(items, (d) => d.value)]
+					};
+				},
+				(d) => d[options.xKey]
+			).values()
+		);
 	}
 }
 
