@@ -1,6 +1,5 @@
 import { derived } from 'svelte/store';
 import { tweened, spring } from 'svelte/motion';
-import { min } from 'd3-array';
 
 import { MotionOptions, motionStore } from '$lib/stores/motionStore';
 
@@ -16,8 +15,8 @@ import { MotionOptions, motionStore } from '$lib/stores/motionStore';
  */
 export function scaleBandInvert(scale) {
 	const domain = scale.domain();
-	const paddingOuter = scale(min(domain));
 	const eachBand = scale.step();
+	const paddingOuter = eachBand * scale.paddingOuter(); // scale(domain[0]);
 
 	return function (value) {
 		// TODO: Should this use Math.round to better select? https://stackoverflow.com/questions/38633082/d3-getting-invert-value-of-band-scales/50846323#comment104743795_50846323
