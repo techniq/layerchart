@@ -16,7 +16,7 @@ import { MotionOptions, motionStore } from '$lib/stores/motionStore';
 export function scaleBandInvert(scale) {
 	const domain = scale.domain();
 	const eachBand = scale.step();
-	const paddingOuter = eachBand * scale.paddingOuter(); // scale(domain[0]);
+	const paddingOuter = eachBand * (scale.paddingOuter?.() ?? scale.padding()); // `scaleBand` uses paddingOuter(), while `scalePoint` uses padding() for outer paddding - https://github.com/d3/d3-scale#point_padding
 
 	return function (value) {
 		// TODO: Should this use Math.round to better select? https://stackoverflow.com/questions/38633082/d3-getting-invert-value-of-band-scales/50846323#comment104743795_50846323
