@@ -12,7 +12,7 @@
 
 	import { motionStore } from '$lib/stores/motionStore';
 
-	const { data: contextData, xGet, yGet, zGet } = getContext('LayerCake');
+	const { data: contextData, xGet, yGet } = getContext('LayerCake');
 
 	// Properties to override what is used from context
 	export let data: any = undefined; // TODO: Update Type
