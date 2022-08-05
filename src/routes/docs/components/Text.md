@@ -1,6 +1,7 @@
 ---
-component: $component
-filename: $filename
+name: $name
+sourceUrl: $sourceUrl
+docUrl: $docUrl
 ---
 
 <script>

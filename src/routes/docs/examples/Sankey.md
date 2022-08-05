@@ -1,5 +1,6 @@
 ---
-title: ['Charts', 'Sankey']
+name: $name
+docUrl: $docUrl
 ---
 
 <script lang="ts">

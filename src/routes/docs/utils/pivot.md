@@ -1,3 +1,9 @@
+---
+name: $name
+sourceUrl: $sourceUrl
+docUrl: $docUrl
+---
+
 <script lang="ts">
 	import Preview from '$lib/docs/Preview.svelte';
 	import { pivotLonger, pivotWider } from '$lib/utils/pivot';
