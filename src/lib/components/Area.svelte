@@ -44,7 +44,7 @@
 </script>
 
 {#if line}
-	<Path {curve} {defined} {color} {tweened} {...line} />
+	<Path {data} {curve} {defined} {color} {tweened} {...line} />
 {/if}
 
 <path
