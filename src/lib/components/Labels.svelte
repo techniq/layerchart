@@ -13,7 +13,7 @@
 	import { isScaleBand } from '$lib/utils/scales';
 	import { greatestAbs, unique } from 'svelte-ux/utils/array';
 
-	const { data, flatData, xGet, yRange, xScale, yScale, x, y, custom } = getContext('LayerCake');
+	const { flatData, xGet, yRange, xScale, yScale, x, y, custom } = getContext('LayerCake');
 
 	export let orientation: 'outside' | 'inside' | 'auto' = 'auto';
 	export let significantDigits = 3;
@@ -91,7 +91,7 @@
 </script>
 
 <g class="label-group">
-	{#each $data as item, index}
+	{#each $flatData as item, index}
 		<Text
 			class="group-rect"
 			textAnchor="middle"
