@@ -65,6 +65,7 @@ docUrl: $docUrl
 
 	let padding = 0;
 	let round = false;
+	let fullSizeLeafNodes = false;
 	let selectedHorizontal = horizontalHierarchy; // select root initially
 	let selectedVertical = verticalHierarchy; // select root initially
 	let selectedCarNode = groupedHierarchy;
@@ -88,11 +89,19 @@ docUrl: $docUrl
 </script>
 
 <div class="grid grid-flow-col gap-4 mb-4">
-	<div class="grid grid-cols-[2fr,1fr,1fr] gap-2">
+	<div class="grid grid-cols-[2fr,1fr,1fr,1fr] gap-2">
 		<Field label="Padding" let:id>
 			<Button icon={mdiChevronLeft} on:click={() => padding -= 1} class="mr-2" />
 			<input type="range" bind:value={padding} min={0} max={20} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{padding}</span>
 			<Button icon={mdiChevronRight} on:click={() => padding += 1} class="ml-2" />
+		</Field>
+		<Field label="Full-size Leaf Nodes">
+			<Tabs bind:selected={fullSizeLeafNodes} contained class="w-full">
+				<div class="tabList w-full border h-8">
+					<Tab value={true}>Yes</Tab>
+					<Tab value={false}>No</Tab>
+				</div>
+			</Tabs>
 		</Field>
 		<Field label="Round">
 			<Tabs bind:selected={round} contained class="w-full">
@@ -126,7 +135,7 @@ docUrl: $docUrl
 		</Button>
 	</Breadcrumb>
 	<div class="h-[600px] p-4 border rounded">
-		<Chart data={horizontalHierarchy}>
+		<Chart data={horizontalHierarchy} let:width>
 			<Svg>
 				<Bounds
 					let:xScale
@@ -137,7 +146,7 @@ docUrl: $docUrl
 					<ChartClipPath>
 						<Partition {padding} {round} let:nodes>
 							{#each nodes as node}
-								{@const nodeWidth = xScale(node.y1) - xScale(node.y0)}
+								{@const nodeWidth = node.children || !fullSizeLeafNodes ? xScale(node.y1) - xScale(node.y0) : width - xScale(node.y0)}
 								{@const nodeHeight = yScale(node.x1) - yScale(node.x0)}
 								<Group x={xScale(node.y0)} y={yScale(node.x0)} on:click={() => selectedHorizontal = node}>
 									<RectClipPath width={nodeWidth} height={nodeHeight}>
@@ -178,7 +187,7 @@ docUrl: $docUrl
 		</Button>
 	</Breadcrumb>
 	<div class="h-[600px] p-4 border rounded">
-		<Chart data={verticalHierarchy}>
+		<Chart data={verticalHierarchy} let:height>
 			<Svg>
 				<Bounds
 					let:xScale
@@ -190,7 +199,7 @@ docUrl: $docUrl
 						<Partition orientation="vertical" {padding} {round} let:nodes>
 							{#each nodes as node}
 								{@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
-								{@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
+								{@const nodeHeight = node.children || !fullSizeLeafNodes ? yScale(node.y1) - yScale(node.y0) : height - yScale(node.y0)}
 								<Group x={xScale(node.x0)} y={yScale(node.y0)} on:click={() => selectedVertical = node}>
 									<RectClipPath width={nodeWidth} height={nodeHeight}>
 										{@const nodeColor = getNodeColor(node, colorBy)}
