@@ -62,6 +62,21 @@
 	$: yReverse = yScale ? !isScaleBand(yScale) : true;
 </script>
 
-<LayerCake {data} {x} {xDomain} {y} {yScale} {yDomain} {yReverse} {...$$restProps}>
-	<slot />
+<LayerCake
+	{data}
+	{x}
+	{xDomain}
+	{y}
+	{yScale}
+	{yDomain}
+	{yReverse}
+	{...$$restProps}
+	let:aspectRatio
+	let:containerHeight
+	let:containerWidth
+	let:height
+	let:width
+	let:element
+>
+	<slot {aspectRatio} {containerHeight} {containerWidth} {height} {width} {element} />
 </LayerCake>
