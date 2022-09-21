@@ -16,6 +16,7 @@ export { default as Group } from './Group.svelte';
 export { default as HighlightLine } from './HighlightLine.svelte';
 export { default as HighlightRect } from './HighlightRect.svelte';
 export { default as Labels } from './Labels.svelte';
+export { default as Legend } from './Legend.svelte';
 export { default as Line } from './Line.svelte';
 export { default as LinearGradient } from './LinearGradient.svelte';
 export { default as Link } from './Link.svelte';
