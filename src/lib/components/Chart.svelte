@@ -28,9 +28,9 @@
 
 	export let data: any[] = [];
 
-	export let x: Accessor | Accessor[];
-	export let y: Accessor | Accessor[];
-	export let yScale: Function;
+	export let x: Accessor | Accessor[] = undefined;
+	export let y: Accessor | Accessor[] = undefined;
+	export let yScale: Function = undefined;
 
 	/**
 	 * xBaseline guaranteed to be visible in xDomain
