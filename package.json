@@ -3,7 +3,7 @@
 	"author": "Sean Lynch <techniq35@gmail.com>",
 	"license": "MIT",
 	"repository": "techniq/layerchart",
-	"version": "0.8.0",
+	"version": "0.9.0",
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build",
