@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
+	import { getContext, SvelteComponentTyped } from 'svelte';
 	import { format } from 'svelte-ux/utils/format';
 	import type { FormatType } from 'svelte-ux/utils/format';
 	import { min, max } from 'd3-array';
 
 	import Text from './Text.svelte';
 	import { isScaleBand } from '$lib/utils/scales';
+	import type { ComponentProps } from 'svelte-ux';
 
 	const { padding, xRange, yScale, width } = getContext('LayerCake');
 
@@ -16,6 +17,7 @@
 	export let yTick = 0;
 	export let dxTick = 0;
 	export let dyTick = -3; // TODO: Maualliy tweak based on font-size until <Text /> handles custom styles
+	export let labelProps: ComponentProps<Text> = undefined;
 
 	$: isBand = isScaleBand($yScale);
 
@@ -35,6 +37,7 @@
 					x2={$width + $padding.left}
 					y1={yTick + (isBand ? $yScale.bandwidth() / 2 : 0)}
 					y2={yTick + (isBand ? $yScale.bandwidth() / 2 : 0)}
+					class="stroke-gray-200"
 					{...gridlines}
 				/>
 			{/if}
@@ -51,21 +54,10 @@
 				dy={dyTick}
 				textAnchor="end"
 				verticalAnchor="middle"
-				style="font-size: 10px; stroke: white; stroke-width: 2px;"
 				value={format(tick, formatTick ?? $yScale.tickFormat?.())}
+				class="text-[10px] stroke-white [stroke-width: 2px] font-light"
+				{...labelProps}
 			/>
 		</g>
 	{/each}
 </g>
-
-<style lang="postcss">
-	.tick {
-		font-size: 0.725em;
-		font-weight: 200;
-	}
-
-	.tick line {
-		stroke: #e0e0e0;
-		/* stroke-dasharray: 2; */
-	}
-</style>
