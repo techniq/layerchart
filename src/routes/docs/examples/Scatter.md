@@ -18,6 +18,8 @@ docUrl: $docUrl
 	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
+	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
+	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import { createDateSeries } from '$lib/utils/genData';
@@ -68,17 +70,9 @@ docUrl: $docUrl
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
 			<Tooltip let:data>
-				<div class="tooltip">
-					<div class="tooltip-header">
-						{format(data.date, 'eee, MMMM do')}
-					</div>
-					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-						<div class="tooltip-label">value:</div>
-						<div class="tooltip-value">
-							{formatNumberAsStyle(data.value, 'integer')}
-						</div>
-					</div>
-				</div>
+				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
+					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+				</TooltipContainer>
 				<g slot="highlight">
 					<HighlightLine {data} color="var(--color-blue-500)" />
 				</g>
@@ -166,23 +160,3 @@ docUrl: $docUrl
 		</Chart>
 	</div>
 </Preview>
-
-<style lang="postcss">
-	.tooltip {
-		@apply bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white rounded elevation-1 px-2 py-1;
-	}
-	.tooltip-header {
-		@apply text-center font-semibold pb-1 whitespace-nowrap;
-	}
-	.tooltip-label {
-		@apply text-xs text-white/75 text-right whitespace-nowrap;
-	}
-	.tooltip-value {
-		@apply text-sm text-right;
-	}
-	.tooltip-separator {
-		@apply rounded bg-white/50 my-1;
-		grid-column: 1 / -1;
-		height: 2px;
-	}
-</style>

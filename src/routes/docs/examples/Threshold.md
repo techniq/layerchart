@@ -22,6 +22,9 @@ docUrl: $docUrl
 	import Path from '$lib/components/Path.svelte';
 	import Threshold from '$lib/components/Threshold.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
+	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
+	import TooltipItem from '$lib/components/TooltipItem.svelte';
+	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import { createDateSeries } from '$lib/utils/genData';
@@ -147,21 +150,12 @@ docUrl: $docUrl
 				</Threshold>
 			</Svg>
 			<Tooltip findTooltipData="left" let:data>
-				<div class="tooltip">
-					<div class="tooltip-header">
-						{format(data.date, 'eee, MMMM do')}
-					</div>
-					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-						<div class="tooltip-label">value:</div>
-						<div class="tooltip-value">
-							{formatNumberAsStyle(data.value, 'integer')}
-						</div>
-						<div class="tooltip-label">baseline:</div>
-						<div class="tooltip-value">
-							{formatNumberAsStyle(data.baseline, 'integer')}
-						</div>
-					</div>
-				</div>
+				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
+					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
+					<TooltipSeparator />
+					<TooltipItem label="variance" value={formatNumberAsStyle(data.value - data.baseline, 'integer')} />
+				</TooltipContainer>
 				<g slot="highlight">
 					<HighlightRect {data} />
 				</g>
@@ -227,23 +221,3 @@ docUrl: $docUrl
 		</Chart>
 	</div>
 </Preview>
-
-<style lang="postcss">
-	.tooltip {
-		@apply bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white rounded elevation-1 px-2 py-1;
-	}
-	.tooltip-header {
-		@apply text-center font-semibold pb-1 whitespace-nowrap;
-	}
-	.tooltip-label {
-		@apply text-xs text-white/75 text-right whitespace-nowrap;
-	}
-	.tooltip-value {
-		@apply text-sm text-right;
-	}
-	.tooltip-separator {
-		@apply rounded bg-white/50 my-1;
-		grid-column: 1 / -1;
-		height: 2px;
-	}
-</style>

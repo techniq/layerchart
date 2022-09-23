@@ -31,6 +31,9 @@ docUrl: $docUrl
 	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
+	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
+	import TooltipItem from '$lib/components/TooltipItem.svelte';
+	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
 
@@ -151,17 +154,9 @@ docUrl: $docUrl
 				<Area line={{ width: 2 }} />
 			</Svg>
 			<Tooltip let:data mode={charts[0].mode} snapToDataX={charts[0].snapToDataX} snapToDataY={charts[0].snapToDataY} debug={charts[0].debug}>
-				<div class="tooltip">
-					<div class="tooltip-header">
-						{format(data.date, 'eee, MMMM do')}
-					</div>
-					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-						<div class="tooltip-label">value:</div>
-						<div class="tooltip-value">
-							{formatNumberAsStyle(data.value, 'integer')}
-						</div>
-					</div>
-				</div>
+				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
+					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[0].highlight === 'line'}
 						<HighlightLine {data} {...charts[0].axis && { axis: charts[0].axis}} color="var(--color-blue-500)" />
@@ -263,19 +258,11 @@ docUrl: $docUrl
 				<AreaStack line={{ width: 2 }} />
 			</Svg>
 			<Tooltip let:data mode={charts[1].mode} snapToDataX={charts[1].snapToDataX} snapToDataY={charts[1].snapToDataY} debug={charts[1].debug}>
-				<div class="tooltip">
-					<div class="tooltip-header">
-						{format(data.data.date, 'eee, MMMM do')}
-					</div>
-					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-						{#each keys as key}
-							<div class="tooltip-label">{key}:</div>
-							<div class="tooltip-value">
-								{formatNumberAsStyle(data.data[key], 'integer')}
-							</div>
-						{/each}
-					</div>
-				</div>
+				<TooltipContainer header={format(data.data.date, 'eee, MMMM do')}>
+					{#each keys as key}
+						<TooltipItem label="{key}" value={formatNumberAsStyle(data.data[key], 'integer')} />
+					{/each}
+				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[1].highlight === 'line'}
 						<HighlightLine {data} {...charts[1].axis && { axis: charts[1].axis}} color="var(--color-blue-500)" />
@@ -369,17 +356,9 @@ docUrl: $docUrl
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
 			<Tooltip let:data mode={charts[2].mode} snapToDataX={charts[2].snapToDataX} snapToDataY={charts[2].snapToDataY}  debug={charts[2].debug}>
-				<div class="tooltip">
-					<div class="tooltip-header">
-						{data.name}
-					</div>
-					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-						<div class="tooltip-label">date:</div>
-						<div class="tooltip-value">
-							{format(data.startDate, 'h:mm a')}
-						</div>
-					</div>
-				</div>
+				<TooltipContainer header={data.name}>
+					<TooltipItem label="date" value={format(data.startDate, 'h:mm a')} />
+				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[2].highlight === 'line'}
 						<HighlightLine {data} {...charts[2].axis && { axis: charts[2].axis}} color="var(--color-blue-500)" />
@@ -474,25 +453,14 @@ docUrl: $docUrl
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
 			<Tooltip let:data mode={charts[3].mode} snapToDataX={charts[3].snapToDataX} snapToDataY={charts[3].snapToDataY}  debug={charts[3].debug}>
-				<div class="tooltip">
-					<div class="tooltip-header">
-						{data.name}
-					</div>
-					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-						<div class="tooltip-label">start:</div>
-						<div class="tooltip-value">
-							{format(data.startDate, 'h:mm a')}
-						</div>
-						<div class="tooltip-label">end:</div>
-						<div class="tooltip-value">
-							{format(data.endDate, 'h:mm a')}
-						</div>
-						<div class="tooltip-label">duration:</div>
-						<div class="tooltip-value">
-							<Duration start={data.startDate} end={data.endDate} />
-						</div>
-					</div>
-				</div>
+				<TooltipContainer header={data.name}>
+					<TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
+					<TooltipItem label="end" value={format(data.endDate, 'h:mm a')} />
+					<TooltipSeparator />
+					<TooltipItem label="duration" valueAlign="right">
+						<Duration start={data.startDate} end={data.endDate} />
+					</TooltipItem>
+				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[3].highlight === 'line'}
 						<HighlightLine {data} {...charts[3].axis && { axis: charts[3].axis}} color="var(--color-blue-500)" />
@@ -587,25 +555,14 @@ docUrl: $docUrl
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
 			<Tooltip let:data mode={charts[4].mode} snapToDataX={charts[4].snapToDataX} snapToDataY={charts[4].snapToDataY} debug={charts[4].debug}>
-				<div class="tooltip">
-					<div class="tooltip-header">
-						{data.name}
-					</div>
-					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-						<div class="tooltip-label">start:</div>
-						<div class="tooltip-value">
-							{format(data.startDate, 'h:mm a')}
-						</div>
-						<div class="tooltip-label">end:</div>
-						<div class="tooltip-value">
-							{format(data.endDate, 'h:mm a')}
-						</div>
-						<div class="tooltip-label">duration:</div>
-						<div class="tooltip-value">
-							<Duration start={data.startDate} end={data.endDate} />
-						</div>
-					</div>
-				</div>
+				<TooltipContainer header={data.name}>
+					<TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
+					<TooltipItem label="end" value={format(data.endDate, 'h:mm a')} />
+					<TooltipSeparator />
+					<TooltipItem label="duration" valueAlign="right">
+						<Duration start={data.startDate} end={data.endDate} />
+					</TooltipItem>
+				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[4].highlight === 'line'}
 						<HighlightLine {data} {...charts[4].axis && { axis: charts[4].axis}} color="var(--color-blue-500)" />
@@ -700,17 +657,9 @@ docUrl: $docUrl
 				<Bars radius={4} strokeWidth={1} />
 			</Svg>
 			<Tooltip let:data mode={charts[5].mode} snapToDataX={charts[5].snapToDataX} snapToDataY={charts[5].snapToDataY}  debug={charts[5].debug}>
-				<div class="tooltip">
-					<div class="tooltip-header">
-						{format(data.date, 'eee, MMMM do')}
-					</div>
-					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-						<div class="tooltip-label">value:</div>
-						<div class="tooltip-value">
-							{formatNumberAsStyle(data.value, 'integer')}
-						</div>
-					</div>
-				</div>
+				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
+					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[5].highlight === 'line'}
 						<HighlightLine {data} {...charts[5].axis && { axis: charts[5].axis}} color="var(--color-blue-500)" />
@@ -806,21 +755,10 @@ docUrl: $docUrl
 				<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
 			</Svg>
 			<Tooltip let:data mode={charts[6].mode} snapToDataX={charts[6].snapToDataX} snapToDataY={charts[6].snapToDataY}  debug={charts[6].debug}>
-				<div class="tooltip">
-					<div class="tooltip-header">
-						{format(data.date, 'eee, MMMM do')}
-					</div>
-					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-						<div class="tooltip-label">value:</div>
-						<div class="tooltip-value">
-							{formatNumberAsStyle(data.value, 'integer')}
-						</div>
-						<div class="tooltip-label">baseline:</div>
-						<div class="tooltip-value">
-							{formatNumberAsStyle(data.baseline, 'integer')}
-						</div>
-					</div>
-				</div>
+				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
+					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
+				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[6].highlight === 'line'}
 						<HighlightLine {data} {...charts[6].axis && { axis: charts[6].axis}} color="var(--color-blue-500)" />
@@ -909,15 +847,11 @@ docUrl: $docUrl
 				<AxisX gridlines />
 				<Points class="fill-blue-500 stroke-blue-800" />
 			</Svg>
-			<Tooltip let:data mode={charts[7].mode} snapToDataX={charts[7].snapToDataX} snapToDataY={charts[7].snapToDataY}  debug={charts[7].debug}>
-				<div class="tooltip">
-					<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-						<div class="tooltip-label">x:</div>
-						<div class="tooltip-value">{data.x}</div>
-						<div class="tooltip-label">y:</div>
-						<div class="tooltip-value">{data.y}</div>
-					</div>
-				</div>
+			<Tooltip let:data mode={charts[7].mode} snapToDataX={charts[7].snapToDataX} snapToDataY={charts[7].snapToDataY} debug={charts[7].debug}>
+				<TooltipContainer>
+					<TooltipItem label="x" value={formatNumberAsStyle(data.x, 'decimal')} />
+					<TooltipItem label="y" value={formatNumberAsStyle(data.y, 'decimal')} />
+				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[7].highlight === 'line'}
 						<HighlightLine {data} {...charts[7].axis && { axis: charts[7].axis}} color="var(--color-blue-500)" />
@@ -933,23 +867,3 @@ docUrl: $docUrl
 # API
 
 <ApiDocs {api} />
-
-<style lang="postcss">
-	.tooltip {
-		@apply bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white rounded elevation-1 px-2 py-1;
-	}
-	.tooltip-header {
-		@apply text-center font-semibold pb-1 whitespace-nowrap;
-	}
-	.tooltip-label {
-		@apply text-xs text-white/75 text-right whitespace-nowrap;
-	}
-	.tooltip-value {
-		@apply text-sm text-right;
-	}
-	.tooltip-separator {
-		@apply rounded bg-white/50 my-1;
-		grid-column: 1 / -1;
-		height: 2px;
-	}
-</style>
