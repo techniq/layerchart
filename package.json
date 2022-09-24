@@ -33,6 +33,7 @@
 		"prettier": "^2.7.1",
 		"prettier-plugin-svelte": "^2.7.0",
 		"prism-themes": "^1.9.0",
+		"rehype-slug": "^5.0.1",
 		"svelte": "^3.48.0",
 		"svelte-check": "^2.7.2",
 		"svelte-preprocess": "^4.10.7",
