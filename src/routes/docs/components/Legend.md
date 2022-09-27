@@ -167,6 +167,23 @@ docUrl: $docUrl
 	</div>
 </Preview>
 
+## formatLabel
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="value"
+			r="name"
+			rScale={scaleOrdinal()}
+			rDomain={['one', 'two', 'three']}
+			rRange={['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)']}
+		>
+			<Legend formatLabel={l => l.toUpperCase()} />
+		</Chart>
+	</div>
+</Preview>
+
 # API
 
 <ApiDocs {api} />

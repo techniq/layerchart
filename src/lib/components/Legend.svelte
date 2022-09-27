@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 
+	export let formatLabel: (label: string) => string = (label) => label;
+
 	const { rScale } = getContext('LayerCake');
 
 	const domain = $rScale.domain();
@@ -15,7 +17,7 @@
 		{#each items as { label, color }}
 			<div class="flex items-center gap-1">
 				<div class="h-4 w-4 rounded-full" style:background-color={color} />
-				{label}
+				{formatLabel(label)}
 			</div>
 		{/each}
 	</div>
