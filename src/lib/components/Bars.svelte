@@ -54,11 +54,17 @@
 	// See: https://svelte.dev/repl/7000c5ce05b84cd98ccbfb2768b4be3d?version=3.38.3
 
 	export let groupBy: string = undefined;
+	export let groupPaddingInner = 0.2;
+	export let groupPaddingOuter = 0;
 
 	// 	$: console.log({ $data, $flatData, groupBy, stackBy })
 
 	$: groupKeys = unique($flatData.map((d) => d[groupBy])) as string[];
-	$: x1Scale = scaleBand().domain(groupKeys).range([0, $xScale.bandwidth()]).paddingInner(0.2);
+	$: x1Scale = scaleBand()
+		.domain(groupKeys)
+		.range([0, $xScale.bandwidth()])
+		.paddingInner(groupPaddingInner)
+		.paddingOuter(groupPaddingOuter);
 
 	$: getDimensions = (item) => {
 		// console.log({ item, y: $y(item) });
