@@ -90,6 +90,40 @@ docUrl: $docUrl
 	</div>
 </Preview>
 
+## position (top center)
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="value"
+			r="name"
+			rScale={scaleOrdinal()}
+			rDomain={['one', 'two', 'three']}
+			rRange={['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)']}
+		>
+			<Legend class="flex gap-4 absolute top-0 left-1/2 -translate-x-1/2" />
+		</Chart>
+	</div>
+</Preview>
+
+## position (bottom center)
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="value"
+			r="name"
+			rScale={scaleOrdinal()}
+			rDomain={['one', 'two', 'three']}
+			rRange={['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)']}
+		>
+			<Legend class="flex gap-4 absolute bottom-0 left-1/2 -translate-x-1/2" />
+		</Chart>
+	</div>
+</Preview>
+
 ## slot rendering
 
 <Preview>
