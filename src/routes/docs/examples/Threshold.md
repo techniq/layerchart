@@ -216,7 +216,7 @@ docUrl: $docUrl
 						/>
 					</g>
 				</Threshold>
-				<Labels formatStyle="integer" />
+				<Labels format="integer" />
 			</Svg>
 		</Chart>
 	</div>

@@ -12,11 +12,13 @@
 	import { formatNumberAsStyle, FormatNumberStyle } from 'svelte-ux/utils/number';
 	import { isScaleBand } from '$lib/utils/scales';
 	import { greatestAbs, unique } from 'svelte-ux/utils/array';
+	import { format as formatValue, FormatType } from 'svelte-ux/utils/format';
 
 	const { flatData, xGet, yRange, xScale, yScale, x, y, custom } = getContext('LayerCake');
 
 	export let orientation: 'outside' | 'inside' | 'auto' = 'auto';
 	export let significantDigits = 3;
+	export let format: FormatType = undefined;
 	export let formatStyle: FormatNumberStyle = null;
 	export let overlap = false;
 
@@ -83,10 +85,20 @@
 	$: getValue = (item) => {
 		const value = $y(item);
 
-		const labelValue = Array.isArray(value) ? greatestAbs(value) : value;
-		return labelValue != null
-			? formatNumberAsStyle(labelValue + yBaseline, formatStyle, 0, significantDigits) ?? ''
-			: '';
+		const labelValue = (Array.isArray(value) ? greatestAbs(value) : value) + yBaseline;
+
+		let formattedValue = labelValue;
+		if (labelValue != null) {
+			if (format) {
+				// Apply more versatile formatting first
+				formattedValue = formatValue(labelValue, format ?? $yScale.tickFormat?.());
+			} else {
+				// Deprecated format
+				formattedValue = formatNumberAsStyle(labelValue, formatStyle, 0, significantDigits);
+			}
+		}
+
+		return formattedValue ?? '';
 	};
 </script>
 

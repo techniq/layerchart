@@ -99,7 +99,7 @@ docUrl: $docUrl
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Points class="fill-blue-500 stroke-blue-800" />
-				<Labels formatStyle="integer" verticalAnchor="bottom" />
+				<Labels format="integer" verticalAnchor="bottom" />
 			</Svg>
 		</Chart>
 	</div>

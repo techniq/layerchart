@@ -112,7 +112,7 @@ docUrl: $docUrl
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Area line={{ width: 2 }} />
-				<Labels formatStyle="integer" />
+				<Labels format="integer" />
 			</Svg>
 		</Chart>
 	</div>
@@ -138,7 +138,7 @@ docUrl: $docUrl
 				{#each dataByFruit as [fruit, data]}
 					<Area {data} color={fruitColors[fruit]} line={{ width: 2 }} />
 				{/each}
-				<Labels formatStyle="integer" />
+				<Labels format="integer" />
 			</Svg>
 			<Tooltip let:data mode="voronoi">
 				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
