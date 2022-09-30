@@ -105,11 +105,10 @@
 <g class="label-group">
 	{#each $flatData as item, index}
 		<Text
-			class="group-rect"
 			textAnchor="middle"
 			verticalAnchor="middle"
 			value={getValue(item)}
-			style="font-size: 0.7em; stroke: white; stroke-width: 2px;"
+			class="group-rect text-xs stroke-white [stroke-width: 2px]"
 			{...getDimensions(item)}
 			{...$$restProps}
 		/>
