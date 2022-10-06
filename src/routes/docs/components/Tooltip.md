@@ -11,7 +11,7 @@ docUrl: $docUrl
 	import { stack } from 'd3-shape';
 	import { addHours, addMinutes, format, startOfDay } from 'date-fns';
 
-	import { ApiDocs, Duration, Field, Switch, Tabs, Tab } from 'svelte-ux';
+	import { ApiDocs, Duration, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { flatten } from 'svelte-ux/utils/array';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
@@ -81,54 +81,54 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<Tabs bind:selected={charts[0].mode} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="bisect-x">bisect-x</Tab>
-				<Tab value="bisect-y">bisect-y</Tab>
-				<Tab value="bisect-band">bisect-band</Tab>
-				<Tab value="band">band</Tab>
-				<Tab value="bounds">bounds</Tab>
-				<Tab value="voronoi">voronoi</Tab>
-				<Tab value="quadtree">quadtree</Tab>
+		<ToggleGroup bind:value={charts[0].mode} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="bisect-x">bisect-x</ToggleOption>
+				<ToggleOption value="bisect-y">bisect-y</ToggleOption>
+				<ToggleOption value="bisect-band">bisect-band</ToggleOption>
+				<ToggleOption value="band">band</ToggleOption>
+				<ToggleOption value="bounds">bounds</ToggleOption>
+				<ToggleOption value="voronoi">voronoi</ToggleOption>
+				<ToggleOption value="quadtree">quadtree</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<Tabs bind:selected={charts[0].highlight} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="none">none</Tab>
-				<Tab value="line">line</Tab>
-				<Tab value="rect">rect</Tab>
+		<ToggleGroup bind:value={charts[0].highlight} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="none">none</ToggleOption>
+				<ToggleOption value="line">line</ToggleOption>
+				<ToggleOption value="rect">rect</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<Tabs bind:selected={charts[0].axis} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value={undefined}>default</Tab>
-				<Tab value="x">x</Tab>
-				<Tab value="y">y</Tab>
-				<Tab value="both">both</Tab>
-				<Tab value="none">none</Tab>
+		<ToggleGroup bind:value={charts[0].axis} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value={undefined}>default</ToggleOption>
+				<ToggleOption value="x">x</ToggleOption>
+				<ToggleOption value="y">y</ToggleOption>
+				<ToggleOption value="both">both</ToggleOption>
+				<ToggleOption value="none">none</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<Tabs bind:selected={charts[0].snapToDataX} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[0].snapToDataX} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 			<span>y:</span>
-			<Tabs bind:selected={charts[0].snapToDataY} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[0].snapToDataY} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
@@ -177,54 +177,54 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<Tabs bind:selected={charts[1].mode} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="bisect-x">bisect-x</Tab>
-				<Tab value="bisect-y">bisect-y</Tab>
-				<Tab value="bisect-band">bisect-band</Tab>
-				<Tab value="band">band</Tab>
-				<Tab value="bounds">bounds</Tab>
-				<Tab value="voronoi">voronoi</Tab>
-				<Tab value="quadtree">quadtree</Tab>
+		<ToggleGroup bind:value={charts[1].mode} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="bisect-x">bisect-x</ToggleOption>
+				<ToggleOption value="bisect-y">bisect-y</ToggleOption>
+				<ToggleOption value="bisect-band">bisect-band</ToggleOption>
+				<ToggleOption value="band">band</ToggleOption>
+				<ToggleOption value="bounds">bounds</ToggleOption>
+				<ToggleOption value="voronoi">voronoi</ToggleOption>
+				<ToggleOption value="quadtree">quadtree</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<Tabs bind:selected={charts[1].highlight} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="none">none</Tab>
-				<Tab value="line">line</Tab>
-				<Tab value="rect">rect</Tab>
+		<ToggleGroup bind:value={charts[1].highlight} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="none">none</ToggleOption>
+				<ToggleOption value="line">line</ToggleOption>
+				<ToggleOption value="rect">rect</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<Tabs bind:selected={charts[1].axis} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value={undefined}>default</Tab>
-				<Tab value="x">x</Tab>
-				<Tab value="y">y</Tab>
-				<Tab value="both">both</Tab>
-				<Tab value="none">none</Tab>
+		<ToggleGroup bind:value={charts[1].axis} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value={undefined}>default</ToggleOption>
+				<ToggleOption value="x">x</ToggleOption>
+				<ToggleOption value="y">y</ToggleOption>
+				<ToggleOption value="both">both</ToggleOption>
+				<ToggleOption value="none">none</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<Tabs bind:selected={charts[1].snapToDataX} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[1].snapToDataX} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 			<span>y:</span>
-			<Tabs bind:selected={charts[1].snapToDataY} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[1].snapToDataY} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
@@ -283,54 +283,54 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<Tabs bind:selected={charts[2].mode} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="bisect-x">bisect-x</Tab>
-				<Tab value="bisect-y">bisect-y</Tab>
-				<Tab value="bisect-band">bisect-band</Tab>
-				<Tab value="band">band</Tab>
-				<Tab value="bounds">bounds</Tab>
-				<Tab value="voronoi">voronoi</Tab>
-				<Tab value="quadtree">quadtree</Tab>
+		<ToggleGroup bind:value={charts[2].mode} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="bisect-x">bisect-x</ToggleOption>
+				<ToggleOption value="bisect-y">bisect-y</ToggleOption>
+				<ToggleOption value="bisect-band">bisect-band</ToggleOption>
+				<ToggleOption value="band">band</ToggleOption>
+				<ToggleOption value="bounds">bounds</ToggleOption>
+				<ToggleOption value="voronoi">voronoi</ToggleOption>
+				<ToggleOption value="quadtree">quadtree</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<Tabs bind:selected={charts[2].highlight} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="none">none</Tab>
-				<Tab value="line">line</Tab>
-				<Tab value="rect">rect</Tab>
+		<ToggleGroup bind:value={charts[2].highlight} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="none">none</ToggleOption>
+				<ToggleOption value="line">line</ToggleOption>
+				<ToggleOption value="rect">rect</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<Tabs bind:selected={charts[2].axis} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value={undefined}>default</Tab>
-				<Tab value="x">x</Tab>
-				<Tab value="y">y</Tab>
-				<Tab value="both">both</Tab>
-				<Tab value="none">none</Tab>
+		<ToggleGroup bind:value={charts[2].axis} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value={undefined}>default</ToggleOption>
+				<ToggleOption value="x">x</ToggleOption>
+				<ToggleOption value="y">y</ToggleOption>
+				<ToggleOption value="both">both</ToggleOption>
+				<ToggleOption value="none">none</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 		<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<Tabs bind:selected={charts[2].snapToDataX} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[2].snapToDataX} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 			<span>y:</span>
-			<Tabs bind:selected={charts[2].snapToDataY} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[2].snapToDataY} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
@@ -379,54 +379,54 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<Tabs bind:selected={charts[3].mode} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="bisect-x">bisect-x</Tab>
-				<Tab value="bisect-y">bisect-y</Tab>
-				<Tab value="bisect-band">bisect-band</Tab>
-				<Tab value="band">band</Tab>
-				<Tab value="bounds">bounds</Tab>
-				<Tab value="voronoi">voronoi</Tab>
-				<Tab value="quadtree">quadtree</Tab>
+		<ToggleGroup bind:value={charts[3].mode} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="bisect-x">bisect-x</ToggleOption>
+				<ToggleOption value="bisect-y">bisect-y</ToggleOption>
+				<ToggleOption value="bisect-band">bisect-band</ToggleOption>
+				<ToggleOption value="band">band</ToggleOption>
+				<ToggleOption value="bounds">bounds</ToggleOption>
+				<ToggleOption value="voronoi">voronoi</ToggleOption>
+				<ToggleOption value="quadtree">quadtree</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<Tabs bind:selected={charts[3].highlight} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="none">none</Tab>
-				<Tab value="line">line</Tab>
-				<Tab value="rect">rect</Tab>
+		<ToggleGroup bind:value={charts[3].highlight} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="none">none</ToggleOption>
+				<ToggleOption value="line">line</ToggleOption>
+				<ToggleOption value="rect">rect</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<Tabs bind:selected={charts[3].axis} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value={undefined}>default</Tab>
-				<Tab value="x">x</Tab>
-				<Tab value="y">y</Tab>
-				<Tab value="both">both</Tab>
-				<Tab value="none">none</Tab>
+		<ToggleGroup bind:value={charts[3].axis} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value={undefined}>default</ToggleOption>
+				<ToggleOption value="x">x</ToggleOption>
+				<ToggleOption value="y">y</ToggleOption>
+				<ToggleOption value="both">both</ToggleOption>
+				<ToggleOption value="none">none</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<Tabs bind:selected={charts[3].snapToDataX} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[3].snapToDataX} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 			<span>y:</span>
-			<Tabs bind:selected={charts[3].snapToDataY} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[3].snapToDataY} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
@@ -481,54 +481,54 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<Tabs bind:selected={charts[4].mode} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="bisect-x">bisect-x</Tab>
-				<Tab value="bisect-y">bisect-y</Tab>
-				<Tab value="bisect-band">bisect-band</Tab>
-				<Tab value="band">band</Tab>
-				<Tab value="bounds">bounds</Tab>
-				<Tab value="voronoi">voronoi</Tab>
-				<Tab value="quadtree">quadtree</Tab>
+		<ToggleGroup bind:value={charts[4].mode} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="bisect-x">bisect-x</ToggleOption>
+				<ToggleOption value="bisect-y">bisect-y</ToggleOption>
+				<ToggleOption value="bisect-band">bisect-band</ToggleOption>
+				<ToggleOption value="band">band</ToggleOption>
+				<ToggleOption value="bounds">bounds</ToggleOption>
+				<ToggleOption value="voronoi">voronoi</ToggleOption>
+				<ToggleOption value="quadtree">quadtree</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<Tabs bind:selected={charts[4].highlight} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="none">none</Tab>
-				<Tab value="line">line</Tab>
-				<Tab value="rect">rect</Tab>
+		<ToggleGroup bind:value={charts[4].highlight} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="none">none</ToggleOption>
+				<ToggleOption value="line">line</ToggleOption>
+				<ToggleOption value="rect">rect</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<Tabs bind:selected={charts[4].axis} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value={undefined}>default</Tab>
-				<Tab value="x">x</Tab>
-				<Tab value="y">y</Tab>
-				<Tab value="both">both</Tab>
-				<Tab value="none">none</Tab>
+		<ToggleGroup bind:value={charts[4].axis} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value={undefined}>default</ToggleOption>
+				<ToggleOption value="x">x</ToggleOption>
+				<ToggleOption value="y">y</ToggleOption>
+				<ToggleOption value="both">both</ToggleOption>
+				<ToggleOption value="none">none</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<Tabs bind:selected={charts[4].snapToDataX} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[4].snapToDataX} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 			<span>y:</span>
-			<Tabs bind:selected={charts[4].snapToDataY} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[4].snapToDataY} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
@@ -583,54 +583,54 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<Tabs bind:selected={charts[5].mode} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="bisect-x">bisect-x</Tab>
-				<Tab value="bisect-y">bisect-y</Tab>
-				<Tab value="bisect-band">bisect-band</Tab>
-				<Tab value="band">band</Tab>
-				<Tab value="bounds">bounds</Tab>
-				<Tab value="voronoi">voronoi</Tab>
-				<Tab value="quadtree">quadtree</Tab>
+		<ToggleGroup bind:value={charts[5].mode} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="bisect-x">bisect-x</ToggleOption>
+				<ToggleOption value="bisect-y">bisect-y</ToggleOption>
+				<ToggleOption value="bisect-band">bisect-band</ToggleOption>
+				<ToggleOption value="band">band</ToggleOption>
+				<ToggleOption value="bounds">bounds</ToggleOption>
+				<ToggleOption value="voronoi">voronoi</ToggleOption>
+				<ToggleOption value="quadtree">quadtree</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<Tabs bind:selected={charts[5].highlight} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="none">none</Tab>
-				<Tab value="line">line</Tab>
-				<Tab value="rect">rect</Tab>
+		<ToggleGroup bind:value={charts[5].highlight} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="none">none</ToggleOption>
+				<ToggleOption value="line">line</ToggleOption>
+				<ToggleOption value="rect">rect</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<Tabs bind:selected={charts[5].axis} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value={undefined}>default</Tab>
-				<Tab value="x">x</Tab>
-				<Tab value="y">y</Tab>
-				<Tab value="both">both</Tab>
-				<Tab value="none">none</Tab>
+		<ToggleGroup bind:value={charts[5].axis} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value={undefined}>default</ToggleOption>
+				<ToggleOption value="x">x</ToggleOption>
+				<ToggleOption value="y">y</ToggleOption>
+				<ToggleOption value="both">both</ToggleOption>
+				<ToggleOption value="none">none</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<Tabs bind:selected={charts[5].snapToDataX} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[5].snapToDataX} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 			<span>y:</span>
-			<Tabs bind:selected={charts[5].snapToDataY} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[5].snapToDataY} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
@@ -680,54 +680,54 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<Tabs bind:selected={charts[6].mode} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="bisect-x">bisect-x</Tab>
-				<Tab value="bisect-y">bisect-y</Tab>
-				<Tab value="bisect-band">bisect-band</Tab>
-				<Tab value="band">band</Tab>
-				<Tab value="bounds">bounds</Tab>
-				<Tab value="voronoi">voronoi</Tab>
-				<Tab value="quadtree">quadtree</Tab>
+		<ToggleGroup bind:value={charts[6].mode} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="bisect-x">bisect-x</ToggleOption>
+				<ToggleOption value="bisect-y">bisect-y</ToggleOption>
+				<ToggleOption value="bisect-band">bisect-band</ToggleOption>
+				<ToggleOption value="band">band</ToggleOption>
+				<ToggleOption value="bounds">bounds</ToggleOption>
+				<ToggleOption value="voronoi">voronoi</ToggleOption>
+				<ToggleOption value="quadtree">quadtree</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<Tabs bind:selected={charts[6].highlight} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="none">none</Tab>
-				<Tab value="line">line</Tab>
-				<Tab value="rect">rect</Tab>
+		<ToggleGroup bind:value={charts[6].highlight} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="none">none</ToggleOption>
+				<ToggleOption value="line">line</ToggleOption>
+				<ToggleOption value="rect">rect</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<Tabs bind:selected={charts[6].axis} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value={undefined}>default</Tab>
-				<Tab value="x">x</Tab>
-				<Tab value="y">y</Tab>
-				<Tab value="both">both</Tab>
-				<Tab value="none">none</Tab>
+		<ToggleGroup bind:value={charts[6].axis} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value={undefined}>default</ToggleOption>
+				<ToggleOption value="x">x</ToggleOption>
+				<ToggleOption value="y">y</ToggleOption>
+				<ToggleOption value="both">both</ToggleOption>
+				<ToggleOption value="none">none</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<Tabs bind:selected={charts[6].snapToDataX} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[6].snapToDataX} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 			<span>y:</span>
-			<Tabs bind:selected={charts[6].snapToDataY} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[6].snapToDataY} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
@@ -779,54 +779,54 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<Tabs bind:selected={charts[7].mode} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="bisect-x">bisect-x</Tab>
-				<Tab value="bisect-y">bisect-y</Tab>
-				<Tab value="bisect-band">bisect-band</Tab>
-				<Tab value="band">band</Tab>
-				<Tab value="bounds">bounds</Tab>
-				<Tab value="voronoi">voronoi</Tab>
-				<Tab value="quadtree">quadtree</Tab>
+		<ToggleGroup bind:value={charts[7].mode} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="bisect-x">bisect-x</ToggleOption>
+				<ToggleOption value="bisect-y">bisect-y</ToggleOption>
+				<ToggleOption value="bisect-band">bisect-band</ToggleOption>
+				<ToggleOption value="band">band</ToggleOption>
+				<ToggleOption value="bounds">bounds</ToggleOption>
+				<ToggleOption value="voronoi">voronoi</ToggleOption>
+				<ToggleOption value="quadtree">quadtree</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<Tabs bind:selected={charts[7].highlight} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="none">none</Tab>
-				<Tab value="line">line</Tab>
-				<Tab value="rect">rect</Tab>
+		<ToggleGroup bind:value={charts[7].highlight} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="none">none</ToggleOption>
+				<ToggleOption value="line">line</ToggleOption>
+				<ToggleOption value="rect">rect</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<Tabs bind:selected={charts[7].axis} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value={undefined}>default</Tab>
-				<Tab value="x">x</Tab>
-				<Tab value="y">y</Tab>
-				<Tab value="both">both</Tab>
-				<Tab value="none">none</Tab>
+		<ToggleGroup bind:value={charts[7].axis} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value={undefined}>default</ToggleOption>
+				<ToggleOption value="x">x</ToggleOption>
+				<ToggleOption value="y">y</ToggleOption>
+				<ToggleOption value="both">both</ToggleOption>
+				<ToggleOption value="none">none</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<Tabs bind:selected={charts[7].snapToDataX} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[7].snapToDataX} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 			<span>y:</span>
-			<Tabs bind:selected={charts[7].snapToDataY} contained>
-				<div class="tabList w-full border">
-					<Tab value={false}>off</Tab>
-					<Tab value={true}>on</Tab>
+			<ToggleGroup bind:value={charts[7].snapToDataY} contained>
+				<div class="options w-full border">
+					<ToggleOption value={false}>off</ToggleOption>
+					<ToggleOption value={true}>on</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>

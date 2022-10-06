@@ -10,7 +10,7 @@ docUrl: $docUrl
 	import { extent } from 'd3-array';
 	import { format } from 'date-fns';
 
-	import { Field, Tabs, Tab } from 'svelte-ux';
+	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
@@ -131,33 +131,33 @@ docUrl: $docUrl
 
 <div class="grid grid-flow-col gap-4 mb-4">
 	<Field label="Align">
-		<Tabs bind:selected={nodeAlign} contained class="w-full">
-			<div class="tabList w-full border h-8">
-				<Tab value="justify">Justify</Tab>
-				<Tab value="left">Left</Tab>
-				<Tab value="center">Center</Tab>
-				<Tab value="right">Right</Tab>
+		<ToggleGroup bind:value={nodeAlign} contained class="w-full">
+			<div class="options w-full border h-8">
+				<ToggleOption value="justify">Justify</ToggleOption>
+				<ToggleOption value="left">Left</ToggleOption>
+				<ToggleOption value="center">Center</ToggleOption>
+				<ToggleOption value="right">Right</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Node Color">
-		<Tabs bind:selected={nodeColorBy} contained class="w-full">
-			<div class="tabList w-full border h-8">
-				<Tab value="layer">Layer</Tab>
-				<Tab value="depth">Depth</Tab>
-				<Tab value="height">Height</Tab>
-				<Tab value="index">Index</Tab>
+		<ToggleGroup bind:value={nodeColorBy} contained class="w-full">
+			<div class="options w-full border h-8">
+				<ToggleOption value="layer">Layer</ToggleOption>
+				<ToggleOption value="depth">Depth</ToggleOption>
+				<ToggleOption value="height">Height</ToggleOption>
+				<ToggleOption value="index">Index</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Link Color">
-		<Tabs bind:selected={linkColorBy} contained class="w-full">
-			<div class="tabList w-full border h-8">
-				<Tab value="static">Static</Tab>
-				<Tab value="source">Source</Tab>
-				<Tab value="target">Target</Tab>
+		<ToggleGroup bind:value={linkColorBy} contained class="w-full">
+			<div class="options w-full border h-8">
+				<ToggleOption value="static">Static</ToggleOption>
+				<ToggleOption value="source">Source</ToggleOption>
+				<ToggleOption value="target">Target</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Node Padding">
 		<input type="range" bind:value={nodePadding} max={20} step={1} class="w-full h-8" />
@@ -234,33 +234,33 @@ docUrl: $docUrl
 
 <div class="grid grid-flow-col gap-4 mb-4">
 	<Field label="Align">
-		<Tabs bind:selected={nodeAlign} contained class="w-full">
-			<div class="tabList w-full border h-8">
-				<Tab value="justify">Justify</Tab>
-				<Tab value="left">Left</Tab>
-				<Tab value="center">Center</Tab>
-				<Tab value="right">Right</Tab>
+		<ToggleGroup bind:value={nodeAlign} contained class="w-full">
+			<div class="options w-full border h-8">
+				<ToggleOption value="justify">Justify</ToggleOption>
+				<ToggleOption value="left">Left</ToggleOption>
+				<ToggleOption value="center">Center</ToggleOption>
+				<ToggleOption value="right">Right</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Node Color">
-		<Tabs bind:selected={nodeColorBy} contained class="w-full">
-			<div class="tabList w-full border h-8">
-				<Tab value="layer">Layer</Tab>
-				<Tab value="depth">Depth</Tab>
-				<Tab value="height">Height</Tab>
-				<Tab value="index">Index</Tab>
+		<ToggleGroup bind:value={nodeColorBy} contained class="w-full">
+			<div class="options w-full border h-8">
+				<ToggleOption value="layer">Layer</ToggleOption>
+				<ToggleOption value="depth">Depth</ToggleOption>
+				<ToggleOption value="height">Height</ToggleOption>
+				<ToggleOption value="index">Index</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Link Color">
-		<Tabs bind:selected={linkColorBy} contained class="w-full">
-			<div class="tabList w-full border h-8">
-				<Tab value="static">Static</Tab>
-				<Tab value="source">Source</Tab>
-				<Tab value="target">Target</Tab>
+		<ToggleGroup bind:value={linkColorBy} contained class="w-full">
+			<div class="options w-full border h-8">
+				<ToggleOption value="static">Static</ToggleOption>
+				<ToggleOption value="source">Source</ToggleOption>
+				<ToggleOption value="target">Target</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 	<Field label="Node Padding">
 		<input type="range" bind:value={nodePadding} max={20} step={1} class="w-full h-8" />

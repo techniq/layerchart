@@ -10,7 +10,7 @@ docUrl: $docUrl
 	import { extent } from 'd3-array';
 	import { stackOffsetExpand } from 'd3-shape';
 
-	import { Field, Tabs, Tab } from 'svelte-ux';
+	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
@@ -379,13 +379,13 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,1fr] gap-2 mb-2">
 	<Field label="Mode">
-		<Tabs bind:selected={transitionChartMode} contained class="w-full">
-			<div class="tabList w-full border">
-				<Tab value="group">Grouped</Tab>
-				<Tab value="stack">Stacked</Tab>
-				<Tab value="groupStack">Grouped & Stacked</Tab>
+		<ToggleGroup bind:value={transitionChartMode} contained class="w-full">
+			<div class="options w-full border">
+				<ToggleOption value="group">Grouped</ToggleOption>
+				<ToggleOption value="stack">Stacked</ToggleOption>
+				<ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
 			</div>
-		</Tabs>
+		</ToggleGroup>
 	</Field>
 </div>
 

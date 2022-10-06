@@ -10,7 +10,7 @@ docUrl: $docUrl
 
 	import { mdiArrowULeftTop, mdiMagnifyPlusOutline, mdiMagnifyMinusOutline, mdiImageFilterCenterFocus } from '@mdi/js';
 
-	import { Button, Field, Tabs, Tab, Tooltip } from 'svelte-ux';
+	import { Button, Field, ToggleGroup, ToggleOption, Tooltip } from 'svelte-ux';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Group from '$lib/components/Group.svelte';
@@ -61,31 +61,31 @@ docUrl: $docUrl
 <div class="grid gap-1 mb-4">
 	<div class="grid grid-cols-[1fr,2fr,1fr] gap-1">
 		<Field label="Orientation">
-			<Tabs bind:selected={orientation} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value="horizontal">Horizontal</Tab>
-					<Tab value="vertical">Vertical</Tab>
+			<ToggleGroup bind:value={orientation} contained class="w-full">
+				<div class="options w-full border h-8">
+					<ToggleOption value="horizontal">Horizontal</ToggleOption>
+					<ToggleOption value="vertical">Vertical</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</Field>
 		<Field label="Curve">
-			<Tabs bind:selected={curve} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value={curveBumpX}>BumpX</Tab>
-					<Tab value={curveBumpY}>BumpY</Tab>
-					<Tab value={curveStep}>Step</Tab>
-					<Tab value={curveStepBefore}>Step Before</Tab>
-					<Tab value={curveStepAfter}>Step After</Tab>
+			<ToggleGroup bind:value={curve} contained class="w-full">
+				<div class="options w-full border h-8">
+					<ToggleOption value={curveBumpX}>BumpX</ToggleOption>
+					<ToggleOption value={curveBumpY}>BumpY</ToggleOption>
+					<ToggleOption value={curveStep}>Step</ToggleOption>
+					<ToggleOption value={curveStepBefore}>Step Before</ToggleOption>
+					<ToggleOption value={curveStepAfter}>Step After</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</Field>
 		<Field label="Layout">
-			<Tabs bind:selected={layout} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value="chart">Chart</Tab>
-					<Tab value="node">Node</Tab>
+			<ToggleGroup bind:value={layout} contained class="w-full">
+				<div class="options w-full border h-8">
+					<ToggleOption value="chart">Chart</ToggleOption>
+					<ToggleOption value="node">Node</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</Field>
 	</div>
 </div>

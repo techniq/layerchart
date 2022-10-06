@@ -10,7 +10,7 @@ docUrl: $docUrl
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
 
-	import { Breadcrumb, Button, Field, Tabs, Tab } from 'svelte-ux';
+	import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -59,12 +59,12 @@ docUrl: $docUrl
 <div class="grid grid-flow-col gap-4 mb-4">
 	<div class="grid grid-cols-[1fr,1fr] gap-2">
 		<Field label="Color By">
-			<Tabs bind:selected={colorBy} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value="parent">Parent</Tab>
-					<Tab value="depth">Depth</Tab>
+			<ToggleGroup bind:value={colorBy} contained class="w-full">
+				<div class="options w-full border h-8">
+					<ToggleOption value="parent">Parent</ToggleOption>
+					<ToggleOption value="depth">Depth</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</Field>
 	</div>
 </div>

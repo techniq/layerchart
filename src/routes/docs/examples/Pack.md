@@ -14,7 +14,7 @@ docUrl: $docUrl
 
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
-	import { Breadcrumb, Button, Field, Tabs, Tab } from 'svelte-ux';
+	import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -74,12 +74,12 @@ docUrl: $docUrl
 			<Button icon={mdiChevronRight} on:click={() => padding += 1} class="ml-2" />
 		</Field>
 		<Field label="Color By">
-			<Tabs bind:selected={colorBy} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value="parent">Parent</Tab>
-					<Tab value="depth">Depth</Tab>
+			<ToggleGroup bind:value={colorBy} contained class="w-full">
+				<div class="options w-full border h-8">
+					<ToggleOption value="parent">Parent</ToggleOption>
+					<ToggleOption value="depth">Depth</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</Field>
 	</div>
 </div>

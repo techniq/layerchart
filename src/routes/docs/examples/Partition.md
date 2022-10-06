@@ -14,7 +14,7 @@ docUrl: $docUrl
 
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
-	import { Breadcrumb, Button, Field, Switch, Tabs, Tab } from 'svelte-ux';
+	import { Breadcrumb, Button, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -96,29 +96,29 @@ docUrl: $docUrl
 			<Button icon={mdiChevronRight} on:click={() => padding += 1} class="ml-2" />
 		</Field>
 		<Field label="Full-size Leaf Nodes">
-			<Tabs bind:selected={fullSizeLeafNodes} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value={true}>Yes</Tab>
-					<Tab value={false}>No</Tab>
+			<ToggleGroup bind:value={fullSizeLeafNodes} contained class="w-full">
+				<div class="options w-full border h-8">
+					<ToggleOption value={true}>Yes</ToggleOption>
+					<ToggleOption value={false}>No</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</Field>
 		<Field label="Round">
-			<Tabs bind:selected={round} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value={true}>Yes</Tab>
-					<Tab value={false}>No</Tab>
+			<ToggleGroup bind:value={round} contained class="w-full">
+				<div class="options w-full border h-8">
+					<ToggleOption value={true}>Yes</ToggleOption>
+					<ToggleOption value={false}>No</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</Field>
 		<Field label="Color By">
-			<Tabs bind:selected={colorBy} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value="children">Children</Tab>
-					<Tab value="depth">Depth</Tab>
-					<Tab value="parent">Parent</Tab>
+			<ToggleGroup bind:value={colorBy} contained class="w-full">
+				<div class="options w-full border h-8">
+					<ToggleOption value="children">Children</ToggleOption>
+					<ToggleOption value="depth">Depth</ToggleOption>
+					<ToggleOption value="parent">Parent</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</Field>
 	</div>
 </div>

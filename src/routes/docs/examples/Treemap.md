@@ -14,7 +14,7 @@ docUrl: $docUrl
 
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
-	import { Button, Breadcrumb, Field, Switch, Tabs, Tab } from 'svelte-ux';
+	import { Button, Breadcrumb, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
@@ -112,25 +112,25 @@ docUrl: $docUrl
 <div class="grid gap-1 mb-4">
 	<div class="grid grid-cols-[6fr,3fr] gap-1">
 		<Field label="Tile">
-			<Tabs bind:selected={tile} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value="squarify">Squarify</Tab>
-					<Tab value="resquarify">Resquarify</Tab>
-					<Tab value="binary">Binary</Tab>
-					<Tab value="slice">Slice</Tab>
-					<Tab value="dice">Dice</Tab>
-					<Tab value="sliceDice">Slice / Dice</Tab>
+			<ToggleGroup bind:value={tile} contained class="w-full">
+				<div class="options w-full border h-8">
+					<ToggleOption value="squarify">Squarify</ToggleOption>
+					<ToggleOption value="resquarify">Resquarify</ToggleOption>
+					<ToggleOption value="binary">Binary</ToggleOption>
+					<ToggleOption value="slice">Slice</ToggleOption>
+					<ToggleOption value="dice">Dice</ToggleOption>
+					<ToggleOption value="sliceDice">Slice / Dice</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</Field>
 		<Field label="Color By">
-			<Tabs bind:selected={colorBy} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value="children">Children</Tab>
-					<Tab value="depth">Depth</Tab>
-					<Tab value="parent">Parent</Tab>
+			<ToggleGroup bind:value={colorBy} contained class="w-full">
+				<div class="options w-full border h-8">
+					<ToggleOption value="children">Children</ToggleOption>
+					<ToggleOption value="depth">Depth</ToggleOption>
+					<ToggleOption value="parent">Parent</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</Field>
 	</div>
 	<div class="grid grid-cols-2 gap-2">
@@ -232,25 +232,25 @@ docUrl: $docUrl
 <div class="grid gap-1 mb-4">
 	<div class="grid grid-cols-[6fr,3fr] gap-1">
 		<Field label="Tile">
-			<Tabs bind:selected={tile} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value="squarify">Squarify</Tab>
-					<Tab value="resquarify">Resquarify</Tab>
-					<Tab value="binary">Binary</Tab>
-					<Tab value="slice">Slice</Tab>
-					<Tab value="dice">Dice</Tab>
-					<Tab value="sliceDice">Slice / Dice</Tab>
+			<ToggleGroup bind:value={tile} contained class="w-full">
+				<div class="options w-full border h-8">
+					<ToggleOption value="squarify">Squarify</ToggleOption>
+					<ToggleOption value="resquarify">Resquarify</ToggleOption>
+					<ToggleOption value="binary">Binary</ToggleOption>
+					<ToggleOption value="slice">Slice</ToggleOption>
+					<ToggleOption value="dice">Dice</ToggleOption>
+					<ToggleOption value="sliceDice">Slice / Dice</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</Field>
 		<Field label="Color By">
-			<Tabs bind:selected={colorBy} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value="children">Children</Tab>
-					<Tab value="depth">Depth</Tab>
-					<Tab value="parent">Parent</Tab>
+			<ToggleGroup bind:value={colorBy} contained class="w-full">
+				<div class="options w-full border h-8">
+					<ToggleOption value="children">Children</ToggleOption>
+					<ToggleOption value="depth">Depth</ToggleOption>
+					<ToggleOption value="parent">Parent</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</Field>
 	</div>
 	<div class="grid grid-cols-2 gap-2">
@@ -356,25 +356,25 @@ docUrl: $docUrl
 <div class="grid grid-flow-col gap-4 mb-4">
 	<div class="grid grid-cols-[6fr,3fr] gap-2">
 		<Field label="Tile">
-			<Tabs bind:selected={tile} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value="squarify">Squarify</Tab>
-					<Tab value="resquarify">Resquarify</Tab>
-					<Tab value="binary">Binary</Tab>
-					<Tab value="slice">Slice</Tab>
-					<Tab value="dice">Dice</Tab>
-					<Tab value="sliceDice">Slice / Dice</Tab>
+			<ToggleGroup bind:value={tile} contained class="w-full">
+				<div class="options w-full border h-8">
+					<ToggleOption value="squarify">Squarify</ToggleOption>
+					<ToggleOption value="resquarify">Resquarify</ToggleOption>
+					<ToggleOption value="binary">Binary</ToggleOption>
+					<ToggleOption value="slice">Slice</ToggleOption>
+					<ToggleOption value="dice">Dice</ToggleOption>
+					<ToggleOption value="sliceDice">Slice / Dice</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</Field>
 		<Field label="Color By">
-			<Tabs bind:selected={colorBy} contained class="w-full">
-				<div class="tabList w-full border h-8">
-					<Tab value="children">Children</Tab>
-					<Tab value="depth">Depth</Tab>
-					<Tab value="parent">Parent</Tab>
+			<ToggleGroup bind:value={colorBy} contained class="w-full">
+				<div class="options w-full border h-8">
+					<ToggleOption value="children">Children</ToggleOption>
+					<ToggleOption value="depth">Depth</ToggleOption>
+					<ToggleOption value="parent">Parent</ToggleOption>
 				</div>
-			</Tabs>
+			</ToggleGroup>
 		</Field>
 	</div>
 </div>
