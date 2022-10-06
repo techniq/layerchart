@@ -67,7 +67,6 @@ docUrl: $docUrl
 			{data}
 			x="date"
 			xScale={scaleBand().padding(0.4)}
-			xDomain={data.map((d) => d.date)}
 			y="value"
 			yDomain={[0, null]}
 			yNice
@@ -95,7 +94,6 @@ docUrl: $docUrl
 			xNice
 			y="date"
 			yScale={scaleBand().padding(0.4)}
-			yDomain={data.map((d) => d.date)}
 			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
@@ -117,7 +115,6 @@ docUrl: $docUrl
 			data={negativeData}
 			x="date"
 			xScale={scaleBand().padding(0.4)}
-			xDomain={data.map((d) => d.date)}
 			y="value"
 			yNice
 			padding={{ left: 16, bottom: 24 }}
@@ -140,7 +137,6 @@ docUrl: $docUrl
 			{data}
 			x="date"
 			xScale={scaleBand().padding(0.4)}
-			xDomain={data.map((d) => d.date)}
 			y="value"
 			yDomain={[0, null]}
 			yNice
@@ -172,7 +168,6 @@ docUrl: $docUrl
 			{data}
 			x="date"
 			xScale={scaleBand().padding(0.4)}
-			xDomain={data.map((d) => d.date)}
 			y="value"
 			yDomain={[0, null]}
 			yNice
@@ -197,7 +192,6 @@ docUrl: $docUrl
 			{data}
 			x="date"
 			xScale={scaleBand().padding(0.4)}
-			xDomain={data.map((d) => d.date)}
 			y={d => Math.max(d.value, d.baseline)}
 			yDomain={[0, null]}
 			yNice
@@ -235,7 +229,6 @@ docUrl: $docUrl
 			}}
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-			xDomain={longData.map(d => d.year)}
 			y="values"
 			yNice
 			r={d => d}
@@ -265,7 +258,6 @@ docUrl: $docUrl
 			}}
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-			xDomain={longData.map(d => d.year)}
 			y="values"
 			yNice
 			r={d => d.keys[1]}
@@ -295,7 +287,6 @@ docUrl: $docUrl
 			}}
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-			xDomain={longData.map(d => d.year)}
 			y="values"
 			yNice
 			r={d => d.keys[1]}
@@ -325,7 +316,6 @@ docUrl: $docUrl
 			}}
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-			xDomain={longData.map(d => d.year)}
 			y="values"
 			yNice
 			r={d => d.keys[1]}
@@ -356,7 +346,6 @@ docUrl: $docUrl
 			}}
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-			xDomain={longData.map(d => d.year)}
 			y="values"
 			yNice
 			r={d => d}
@@ -399,7 +388,6 @@ docUrl: $docUrl
 			}}
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-			xDomain={longData.map(d => d.year)}
 			y="values"
 			yNice
 			r={d => {

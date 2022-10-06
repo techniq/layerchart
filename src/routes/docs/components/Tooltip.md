@@ -346,7 +346,6 @@ docUrl: $docUrl
 			xScale={scaleTime()}
 			y="name"
 			yScale={scaleBand()}
-			yDomain={timeSeries.map((x) => x.name)}
 			padding={{ left: 36, bottom: 36 }}
 		>
 			<Svg>
@@ -442,7 +441,6 @@ docUrl: $docUrl
 			xScale={scaleTime()}
 			y="name"
 			yScale={scaleBand()}
-			yDomain={timeSeries.map((x) => x.name)}
 			padding={{ left: 36, bottom: 36 }}
 		>
 			<Svg>
@@ -544,7 +542,6 @@ docUrl: $docUrl
 			xScale={scaleTime()}
 			y="name"
 			yScale={scaleBand()}
-			yDomain={overlapTimeSeries.map((x) => x.name)}
 			padding={{ left: 36, bottom: 36 }}
 		>
 			<Svg>
@@ -644,7 +641,6 @@ docUrl: $docUrl
 			data={dateSeries}
 			x="date"
 			xScale={scaleBand().padding(0.4)}
-			xDomain={dateSeries.map((d) => d.date)}
 			y="value"
 			yDomain={[0, null]}
 			yNice
@@ -741,7 +737,6 @@ docUrl: $docUrl
 			data={dateSeries}
 			x="date"
 			xScale={scaleBand().padding(0.4)}
-			xDomain={dateSeries.map((d) => d.date)}
 			y={d => Math.max(d.value, d.baseline)}
 			yDomain={[0, null]}
 			yNice

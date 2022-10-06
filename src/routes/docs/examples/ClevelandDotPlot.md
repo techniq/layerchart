@@ -68,7 +68,6 @@ docUrl: $docUrl
 			xScale={scaleTime()}
 			y="name"
 			yScale={scaleBand()}
-			yDomain={data.map((x) => x.name).reverse()}
 			padding={{ left: 36, bottom: 36 }}
 		>
 			<Svg>
