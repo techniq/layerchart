@@ -2,7 +2,7 @@
 	import clsx from 'clsx';
 
 	export let label: any;
-	export let value: any;
+	export let value: any = undefined; // Can be pass as slot
 
 	export let valueAlign: 'left' | 'right' | 'center' = 'left';
 </script>
