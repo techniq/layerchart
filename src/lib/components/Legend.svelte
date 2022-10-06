@@ -3,13 +3,12 @@
 
 	export let formatLabel: (label: string) => string = (label) => label;
 
-	const { rScale } = getContext('LayerCake');
+	const { rScale, rDomain, rRange } = getContext('LayerCake');
 
-	const domain = $rScale.domain();
-	const range = $rScale.range();
+	$: console.log({ $rDomain });
 
 	// zip values together
-	export let items = domain.map((d, i) => ({ label: d, color: range[i] }));
+	export let items = $rDomain.map((d, i) => ({ label: d, color: $rRange[i] }));
 </script>
 
 <slot {items} scale={$rScale}>
