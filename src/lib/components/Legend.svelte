@@ -5,8 +5,6 @@
 
 	const { rScale, rDomain, rRange } = getContext('LayerCake');
 
-	$: console.log({ $rDomain });
-
 	// zip values together
 	export let items = $rDomain.map((d, i) => ({ label: d, color: $rRange[i] }));
 </script>
