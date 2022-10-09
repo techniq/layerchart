@@ -31,7 +31,7 @@ docUrl: $docUrl
 		<Chart
 			{data}
 			x="value"
-			r={d => d.date}
+			r="date"
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -51,7 +51,7 @@ docUrl: $docUrl
 			{data}
 			x="value"
 			xRange={[-90, 90]}
-			r={d => d.date}
+			r="date"
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -70,7 +70,7 @@ docUrl: $docUrl
 		<Chart 
 			{data}
 			x="value"
-			r={d => d.date}
+			r="date"
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -89,7 +89,7 @@ docUrl: $docUrl
 		<Chart
 			{data}
 			x="value"
-			r={d => d.date}
+			r="date"
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -108,7 +108,7 @@ docUrl: $docUrl
 		<Chart
 			{data}
 			x="value"
-			r={d => d.date}
+			r="date"
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -129,7 +129,7 @@ docUrl: $docUrl
 		<Chart
 			{data}
 			x="value"
-			r={d => d.date}
+			r="date"
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -148,7 +148,7 @@ docUrl: $docUrl
 		<Chart
 			{data}
 			x="value"
-			r={d => d.date}
+			r="date"
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -167,7 +167,7 @@ docUrl: $docUrl
 		<Chart
 			{data}
 			x="value"
-			r={d => d.date}
+			r="date"
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -186,7 +186,7 @@ docUrl: $docUrl
 		<Chart
 			{data}
 			x="value"
-			r={d => d.date}
+			r="date"
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -205,7 +205,7 @@ docUrl: $docUrl
 		<Chart
 			{data}
 			x="value"
-			r={d => d.date}
+			r="date"
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -225,7 +225,7 @@ docUrl: $docUrl
 		<Chart
 			{data}
 			x="value"
-			r={d => d.date}
+			r="date"
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -244,7 +244,7 @@ docUrl: $docUrl
 		<Chart
 			{data}
 			x="value"
-			r={d => d.date}
+			r="date"
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -263,7 +263,7 @@ docUrl: $docUrl
 		<Chart
 			{data}
 			x="value"
-			r={d => d.date}
+			r="date"
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
