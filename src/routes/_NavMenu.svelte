@@ -3,7 +3,7 @@
 	import { NavItem } from 'svelte-ux';
 </script>
 
-<NavItem text="Home" icon={mdiHome} path="/docs/" class="pl-6 py-2 mt-2" />
+<NavItem text="Home" icon={mdiHome} path="/" class="pl-6 py-2 mt-2" />
 
 <div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Chart Examples</div>
 <NavItem text="Area" path="/docs/examples/Area" class="pl-6 py-2" />
