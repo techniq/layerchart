@@ -157,7 +157,7 @@ docUrl: $docUrl
 					<TooltipItem label="variance" value={formatNumberAsStyle(data.value - data.baseline, 'integer')} />
 				</TooltipContainer>
 				<g slot="highlight">
-					<HighlightRect {data} />
+					<HighlightRect />
 				</g>
 			</Tooltip>
 		</Chart>

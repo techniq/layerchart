@@ -6,27 +6,31 @@
 	import { isScaleBand } from '$lib/utils/scales';
 	import Circle from './Circle.svelte';
 	import Line from './Line.svelte';
+	import { tooltipContext } from './Tooltip.svelte';
 
 	const { xScale, xRange, xGet, yScale, yRange, yGet, zScale } = getContext('LayerCake');
+	const tooltip = tooltipContext();
 
-	export let data;
 	export let color = undefined;
 	export let axis: 'x' | 'y' | 'both' | 'none' = 'x';
 
 	// TODO: Fix circle points being backwards for stack (see AreaStack)
-
-	$: x = $xGet(data);
-	$: xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
-
-	$: y = $yGet(data);
-	$: yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
 
 	function getColor(index) {
 		return color ?? get(zScale)(index) ?? 'var(--color-blue-500)';
 	}
 
 	let lines = [];
-	$: {
+	let points = [];
+
+	$: if ($tooltip.data) {
+		let x = $xGet($tooltip.data);
+		let xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
+
+		let y = $yGet($tooltip.data);
+		let yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
+
+		// Reset lines
 		lines = [];
 
 		if (axis === 'x' || axis === 'both') {
@@ -78,31 +82,30 @@
 				];
 			}
 		}
-	}
 
-	let points = [];
-	$: if (Array.isArray(x)) {
-		// `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
-		points = x.map((xItem, i) => ({
-			x: xItem + xOffset,
-			y: $yGet(data) + yOffset,
-			color: getColor(i)
-		}));
-	} else if (Array.isArray(data)) {
-		// Stack series
-		points = data.map((yValue, i) => ({
-			x: x + xOffset,
-			y: $yScale(yValue) + yOffset,
-			color: getColor(i)
-		}));
-	} else {
-		points = [
-			{
+		if (Array.isArray(x)) {
+			// `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
+			points = x.map((xItem, i) => ({
+				x: xItem + xOffset,
+				y: $yGet($tooltip.data) + yOffset,
+				color: getColor(i)
+			}));
+		} else if (Array.isArray($tooltip.data)) {
+			// Stack series
+			points = $tooltip.data.map((yValue, i) => ({
 				x: x + xOffset,
-				y: $yGet(data) + yOffset,
-				color: getColor(0)
-			}
-		];
+				y: $yScale(yValue) + yOffset,
+				color: getColor(i)
+			}));
+		} else {
+			points = [
+				{
+					x: x + xOffset,
+					y: $yGet($tooltip.data) + yOffset,
+					color: getColor(0)
+				}
+			];
+		}
 	}
 </script>
 

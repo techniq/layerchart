@@ -87,8 +87,8 @@ docUrl: $docUrl
 					</TooltipItem>
 				</TooltipContainer>
 				<g slot="highlight">
-					<HighlightLine {data} color="var(--color-blue-500)" />
-					<HighlightRect {data} color="var(--color-blue-500)" />
+					<HighlightLine color="var(--color-blue-500)" />
+					<HighlightRect color="var(--color-blue-500)" />
 				</g>
 			</Tooltip>
 		</Chart>

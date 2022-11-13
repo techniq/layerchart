@@ -1,7 +1,37 @@
+<script lang="ts" context="module">
+	import type { Readable } from 'svelte/store';
+
+	export const tooltipContextKey = {};
+
+	export type TooltipContext = Readable<{
+		top: number;
+		left: number;
+		data: any;
+	}>;
+
+	export function tooltipContext() {
+		return getContext<TooltipContext>(tooltipContextKey);
+	}
+
+	function setTooltipContext(tooltip: TooltipContext) {
+		setContext(tooltipContextKey, tooltip);
+	}
+</script>
+
 <script lang="ts">
-	import { getContext, createEventDispatcher } from 'svelte';
-	import { spring } from 'svelte/motion';
-	import { fade } from 'svelte/transition';
+	/*
+		TODO:
+		  - [ ] Fix jumping when initally displayed and needs container adjusted
+			  - Consider moving container adjustments within Tooltip and not TooltipContainer.  This might affect Highlight
+			- [ ] Add showTooltip/hideTooltip to context
+			- [ ] Support `events` mode
+			  - Consider only support this mode.  Create Voronoi, Bisect, ..., components
+			- [ ] Add example for other shapes
+			  - [ ] Pie
+				- [ ] Treemap
+				- [ ] ...more...
+	*/
+	import { getContext, setContext, createEventDispatcher } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { bisector, max, min } from 'd3-array';
 	import { Delaunay } from 'd3-delaunay';
@@ -41,40 +71,11 @@
 	export let snapToDataX: boolean = false;
 	export let snapToDataY: boolean = false;
 	export let findTooltipData: 'closest' | 'left' | 'right' = 'closest';
-	export let topOffset = 10;
-	export let leftOffset = 10;
-	export let contained: 'container' | false = 'container'; // TODO: Support 'window' using getBoundingClientRect()
-	export let animate = true;
 	export let radius = Infinity;
 	export let debug = false;
 
-	let tooltip = null;
-	let tooltipWidth = 0;
-	let tooltipHeight = 0;
-
-	let top = animate ? spring(0) : writable(0);
-	$: if (tooltip) {
-		const containerHeight = $height + $padding.bottom;
-
-		if (contained === 'container' && tooltip.top + topOffset + tooltipHeight > containerHeight) {
-			// change side
-			$top = tooltip.top - (topOffset + tooltipHeight);
-		} else {
-			$top = tooltip.top + topOffset;
-		}
-	}
-
-	let left = animate ? spring(0) : writable(0);
-	$: if (tooltip) {
-		const containerWidth = $width + $padding.right;
-
-		if (contained === 'container' && tooltip.left + leftOffset + tooltipWidth > containerWidth) {
-			// change side
-			$left = tooltip.left - (leftOffset + tooltipWidth);
-		} else {
-			$left = tooltip.left + leftOffset;
-		}
-	}
+	const tooltip = writable({ top: 0, left: 0, data: null });
+	setTooltipContext(tooltip);
 
 	$: bisectX = bisector((d) => {
 		const value = $x(d);
@@ -123,7 +124,7 @@
 		}
 	}
 
-	function handleTooltip(event: MouseEvent | TouchEvent, tooltipData: any) {
+	function showTooltip(event: MouseEvent | TouchEvent, tooltipData?: any) {
 		const referenceNode = (event.target as Element).closest('.layercake-container');
 		const point = localPoint(referenceNode, event);
 		const localX = point?.x - $padding.left ?? 0;
@@ -180,19 +181,19 @@
 		}
 
 		if (tooltipData) {
-			tooltip = {
+			$tooltip = {
 				left: snapToDataX ? $xGet(tooltipData) : localX,
 				top: snapToDataY ? $yGet(tooltipData) : localY,
 				data: tooltipData
 			};
 		} else {
 			// Hide tooltip if unable to locate
-			tooltip = null;
+			hideTooltip();
 		}
 	}
 
-	function hideTooltip(event: MouseEvent | TouchEvent) {
-		tooltip = null;
+	function hideTooltip() {
+		$tooltip = { ...$tooltip, data: null };
 	}
 
 	let points;
@@ -298,25 +299,11 @@
 	}
 </script>
 
-{#if tooltip}
-	<Html>
-		<div
-			class="absolute pointer-events-none z-50"
-			style="
-      top: {$top}px;
-      left: {$left}px;
-      max-width: {$width / 2}px;
-    "
-			transition:fade={{ duration: 100 }}
-			bind:clientWidth={tooltipWidth}
-			bind:clientHeight={tooltipHeight}
-		>
-			<slot data={tooltip?.data} />
-		</div>
-	</Html>
+{#if $tooltip.data}
+	<slot data={$tooltip.data} />
 
 	<Svg>
-		<slot name="highlight" data={tooltip?.data} />
+		<slot name="highlight" />
 	</Svg>
 {/if}
 
@@ -325,12 +312,12 @@
 		<div
 			class="absolute"
 			style="width: {$width}px; height: {$height}px; background: _red; z-index: 9999"
-			on:touchstart={handleTooltip}
-			on:touchmove={handleTooltip}
-			on:mousemove={handleTooltip}
+			on:touchstart={showTooltip}
+			on:touchmove={showTooltip}
+			on:mousemove={showTooltip}
 			on:mouseleave={hideTooltip}
 			on:click={(e) => {
-				dispatch('click', { data: tooltip?.data });
+				dispatch('click', { data: $tooltip?.data });
 			}}
 		/>
 	</Html>
@@ -343,7 +330,7 @@
 					style:fill={debug ? 'red' : 'transparent'}
 					style:fill-opacity={debug ? 0.1 : 0}
 					style:stroke={debug ? 'red' : 'transparent'}
-					on:mousemove={(e) => handleTooltip(e, point.data)}
+					on:mousemove={(e) => showTooltip(e, point.data)}
 					on:mouseleave={hideTooltip}
 					on:click={(e) => {
 						dispatch('click', { data: point.data });
@@ -364,7 +351,7 @@
 					style:fill={debug ? 'red' : 'transparent'}
 					style:fill-opacity={debug ? 0.1 : 0}
 					style:stroke={debug ? 'red' : 'transparent'}
-					on:mousemove={(e) => handleTooltip(e, rect.data)}
+					on:mousemove={(e) => showTooltip(e, rect.data)}
 					on:mouseleave={hideTooltip}
 					on:click={(e) => {
 						dispatch('click', { data: rect.data });

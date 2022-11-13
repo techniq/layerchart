@@ -149,9 +149,9 @@ docUrl: $docUrl
 				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[0].highlight === 'line'}
-						<HighlightLine {data} {...charts[0].axis && { axis: charts[0].axis}} color="var(--color-blue-500)" />
+						<HighlightLine {...charts[0].axis && { axis: charts[0].axis}} color="var(--color-blue-500)" />
 					{:else if charts[0].highlight === 'rect'}
-						<HighlightRect {data} {...charts[0].axis && { axis: charts[0].axis}} />
+						<HighlightRect {...charts[0].axis && { axis: charts[0].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
@@ -245,9 +245,9 @@ docUrl: $docUrl
 				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[1].highlight === 'line'}
-						<HighlightLine {data} {...charts[1].axis && { axis: charts[1].axis}} color="var(--color-blue-500)" />
+						<HighlightLine {...charts[1].axis && { axis: charts[1].axis}} color="var(--color-blue-500)" />
 					{:else if charts[1].highlight === 'rect'}
-						<HighlightRect {data} {...charts[1].axis && { axis: charts[1].axis}} />
+						<HighlightRect {...charts[1].axis && { axis: charts[1].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
@@ -330,9 +330,9 @@ docUrl: $docUrl
 				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[2].highlight === 'line'}
-						<HighlightLine {data} {...charts[2].axis && { axis: charts[2].axis}} color="var(--color-blue-500)" />
+						<HighlightLine {...charts[2].axis && { axis: charts[2].axis}} color="var(--color-blue-500)" />
 					{:else if charts[2].highlight === 'rect'}
-						<HighlightRect {data} {...charts[2].axis && { axis: charts[2].axis}} />
+						<HighlightRect {...charts[2].axis && { axis: charts[2].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
@@ -421,9 +421,9 @@ docUrl: $docUrl
 				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[3].highlight === 'line'}
-						<HighlightLine {data} {...charts[3].axis && { axis: charts[3].axis}} color="var(--color-blue-500)" />
+						<HighlightLine {...charts[3].axis && { axis: charts[3].axis}} color="var(--color-blue-500)" />
 					{:else if charts[3].highlight === 'rect'}
-						<HighlightRect {data} {...charts[3].axis && { axis: charts[3].axis}} />
+						<HighlightRect {...charts[3].axis && { axis: charts[3].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
@@ -512,9 +512,9 @@ docUrl: $docUrl
 				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[4].highlight === 'line'}
-						<HighlightLine {data} {...charts[4].axis && { axis: charts[4].axis}} color="var(--color-blue-500)" />
+						<HighlightLine {...charts[4].axis && { axis: charts[4].axis}} color="var(--color-blue-500)" />
 					{:else if charts[4].highlight === 'rect'}
-						<HighlightRect {data} {...charts[4].axis && { axis: charts[4].axis}} />
+						<HighlightRect {...charts[4].axis && { axis: charts[4].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
@@ -598,9 +598,9 @@ docUrl: $docUrl
 				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[5].highlight === 'line'}
-						<HighlightLine {data} {...charts[5].axis && { axis: charts[5].axis}} color="var(--color-blue-500)" />
+						<HighlightLine {...charts[5].axis && { axis: charts[5].axis}} color="var(--color-blue-500)" />
 					{:else if charts[5].highlight === 'rect'}
-						<HighlightRect {data} {...charts[5].axis && { axis: charts[5].axis}} />
+						<HighlightRect {...charts[5].axis && { axis: charts[5].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
@@ -686,9 +686,9 @@ docUrl: $docUrl
 				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[6].highlight === 'line'}
-						<HighlightLine {data} {...charts[6].axis && { axis: charts[6].axis}} color="var(--color-blue-500)" />
+						<HighlightLine {...charts[6].axis && { axis: charts[6].axis}} color="var(--color-blue-500)" />
 					{:else if charts[6].highlight === 'rect'}
-						<HighlightRect {data} {...charts[6].axis && { axis: charts[6].axis}} />
+						<HighlightRect {...charts[6].axis && { axis: charts[6].axis}} />
 					{/if}
 				</g>
 			</Tooltip>
@@ -769,9 +769,9 @@ docUrl: $docUrl
 				</TooltipContainer>
 				<g slot="highlight">
 					{#if charts[7].highlight === 'line'}
-						<HighlightLine {data} {...charts[7].axis && { axis: charts[7].axis}} color="var(--color-blue-500)" />
+						<HighlightLine {...charts[7].axis && { axis: charts[7].axis}} color="var(--color-blue-500)" />
 					{:else if charts[7].highlight === 'rect'}
-						<HighlightRect {data} {...charts[7].axis && { axis: charts[7].axis}} />
+						<HighlightRect {...charts[7].axis && { axis: charts[7].axis}} />
 					{/if}
 				</g>
 			</Tooltip>

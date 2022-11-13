@@ -153,7 +153,7 @@ docUrl: $docUrl
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 				</TooltipContainer>
 				<g slot="highlight">
-					<HighlightRect {data} />
+					<HighlightRect />
 				</g>
 			</Tooltip>
     	</Chart>
@@ -210,7 +210,7 @@ docUrl: $docUrl
 					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
 				</TooltipContainer>
 				<g slot="highlight">
-					<HighlightRect {data} />
+					<HighlightRect />
 				</g>
 			</Tooltip>
 		</Chart>
