@@ -307,7 +307,7 @@
 	</Svg>
 {/if}
 
-{#if ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].indexOf(mode) != -1}
+{#if ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode)}
 	<Html>
 		<div
 			class="absolute"
