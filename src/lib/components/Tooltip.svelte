@@ -7,6 +7,8 @@
 		top: number;
 		left: number;
 		data: any;
+		showTooltip(event: MouseEvent | TouchEvent, tooltipData?: any): any;
+		hideTooltip();
 	}>;
 
 	export function tooltipContext() {
@@ -74,10 +76,10 @@
 	export let radius = Infinity;
 	export let debug = false;
 
-	const tooltip = writable({ top: 0, left: 0, data: null });
+	const tooltip = writable({ top: 0, left: 0, data: null, showTooltip, hideTooltip });
 	setTooltipContext(tooltip);
 
-	let hideTimeout: NodeJS.Timeout;
+	let hideTimeoutId: NodeJS.Timeout;
 
 	$: bisectX = bisector((d) => {
 		const value = $x(d);
@@ -128,7 +130,7 @@
 
 	function showTooltip(event: MouseEvent | TouchEvent, tooltipData?: any) {
 		// Cancel hiding tooltip if from previous event loop
-		clearTimeout(hideTimeout);
+		clearTimeout(hideTimeoutId);
 
 		const referenceNode = (event.target as Element).closest('.layercake-container');
 		const point = localPoint(referenceNode, event);
@@ -199,7 +201,7 @@
 
 	function hideTooltip() {
 		// Wait an event loop tick in case `showTooltip` is called immediately on another element, to allow tweeneing (ex. moving between bands/bars)
-		hideTimeout = setTimeout(() => {
+		hideTimeoutId = setTimeout(() => {
 			$tooltip = { ...$tooltip, data: null };
 		});
 	}
