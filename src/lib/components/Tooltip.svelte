@@ -140,50 +140,62 @@
 		// If tooltipData not provided already (voronoi, etc), attempt to find it
 		// TODO: When using bisect-x/y/band, values should be sorted.  Tyipcally are for `x`, but not `y` (and band depends on if x or y scale)
 		if (tooltipData == null) {
-			if (mode === 'quadtree') {
-				tooltipData = quadtree.find(localX, localY, radius);
-			} else if (mode === 'bisect-band') {
-				// `x` and `y` values at mouse/touch coordinate
-				const xValueAtPoint = scaleInvert($xScale, localX);
-				const yValueAtPoint = scaleInvert($yScale, localY);
-
-				if (isScaleBand($xScale)) {
-					// Find point closest to pointer within the x band
-					const bandData = $flatData
-						.filter((d) => $x(d) === xValueAtPoint)
-						.sort(createSortFunc($y)); // sort for bisect
-					const index = bisectY(bandData, yValueAtPoint, 1);
-					const previousValue = bandData[index - 1];
-					const currentValue = bandData[index];
-					tooltipData = findData(previousValue, currentValue, yValueAtPoint, $y);
-				} else if (isScaleBand($yScale)) {
-					// Find point closest to pointer within the y band
-					const bandData = $flatData
-						.filter((d) => $y(d) === yValueAtPoint)
-						.sort(createSortFunc($x)); // sort for bisect
-					const index = bisectX(bandData, xValueAtPoint, 1);
-					const previousValue = bandData[index - 1];
-					const currentValue = bandData[index];
-					tooltipData = findData(previousValue, currentValue, xValueAtPoint, $x);
-				} else {
-					// TODO: Support `bisect-band` without band?  Fallback to bisect?
+			switch (mode) {
+				case 'quadtree': {
+					tooltipData = quadtree.find(localX, localY, radius);
+					break;
 				}
-			} else if (mode === 'bisect-x') {
-				// `x` value at mouse/touch coordinate
-				const xValueAtPoint = scaleInvert($xScale, localX);
 
-				const index = bisectX($flatData, xValueAtPoint, 1);
-				const previousValue = $flatData[index - 1];
-				const currentValue = $flatData[index];
-				tooltipData = findData(previousValue, currentValue, xValueAtPoint, $x);
-			} else if (mode === 'bisect-y') {
-				// `y` value at mouse/touch coordinate
-				const yValueAtPoint = scaleInvert($yScale, localY);
+				case 'bisect-band': {
+					// `x` and `y` values at mouse/touch coordinate
+					const xValueAtPoint = scaleInvert($xScale, localX);
+					const yValueAtPoint = scaleInvert($yScale, localY);
 
-				const index = bisectY($flatData, yValueAtPoint, 1);
-				const previousValue = $flatData[index - 1];
-				const currentValue = $flatData[index];
-				tooltipData = findData(previousValue, currentValue, yValueAtPoint, $y);
+					if (isScaleBand($xScale)) {
+						// Find point closest to pointer within the x band
+						const bandData = $flatData
+							.filter((d) => $x(d) === xValueAtPoint)
+							.sort(createSortFunc($y)); // sort for bisect
+						const index = bisectY(bandData, yValueAtPoint, 1);
+						const previousValue = bandData[index - 1];
+						const currentValue = bandData[index];
+						tooltipData = findData(previousValue, currentValue, yValueAtPoint, $y);
+					} else if (isScaleBand($yScale)) {
+						// Find point closest to pointer within the y band
+						const bandData = $flatData
+							.filter((d) => $y(d) === yValueAtPoint)
+							.sort(createSortFunc($x)); // sort for bisect
+						const index = bisectX(bandData, xValueAtPoint, 1);
+						const previousValue = bandData[index - 1];
+						const currentValue = bandData[index];
+						tooltipData = findData(previousValue, currentValue, xValueAtPoint, $x);
+					} else {
+						// TODO: Support `bisect-band` without band?  Fallback to bisect?
+					}
+					break;
+				}
+
+				case 'bisect-x': {
+					// `x` value at mouse/touch coordinate
+					const xValueAtPoint = scaleInvert($xScale, localX);
+
+					const index = bisectX($flatData, xValueAtPoint, 1);
+					const previousValue = $flatData[index - 1];
+					const currentValue = $flatData[index];
+					tooltipData = findData(previousValue, currentValue, xValueAtPoint, $x);
+					break;
+				}
+
+				case 'bisect-y': {
+					// `y` value at mouse/touch coordinate
+					const yValueAtPoint = scaleInvert($yScale, localY);
+
+					const index = bisectY($flatData, yValueAtPoint, 1);
+					const previousValue = $flatData[index - 1];
+					const currentValue = $flatData[index];
+					tooltipData = findData(previousValue, currentValue, yValueAtPoint, $y);
+					break;
+				}
 			}
 		}
 
