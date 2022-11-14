@@ -70,15 +70,17 @@ docUrl: $docUrl
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
 		>
-			<Svg>
-				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
-				<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
-				<Baseline y />
-				<ConnectedPoints stroke="#000" />
-				<Points class="fill-blue-500 stroke-blue-800" />
-			</Svg>
 			<Tooltip let:data>
-				<TooltipContainer header={data.name}>
+				<Svg>
+					<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
+					<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
+					<Baseline y />
+					<ConnectedPoints stroke="#000" />
+					<Points class="fill-blue-500 stroke-blue-800" />
+					<HighlightLine color="var(--color-blue-500)" />
+					<HighlightRect color="var(--color-blue-500)" />
+				</Svg>
+				<TooltipContainer header={data => data.name}>
 					<TooltipItem label="start" value={format(data.startDate, 'h:mm:ss')} />
 					<TooltipItem label="end" value={format(data.startDate, 'h:mm:ss')} />
 					<TooltipSeparator />
@@ -86,10 +88,6 @@ docUrl: $docUrl
 						<Duration start={data.startDate} end={data.endDate} />
 					</TooltipItem>
 				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightLine color="var(--color-blue-500)" />
-					<HighlightRect color="var(--color-blue-500)" />
-				</g>
 			</Tooltip>
 		</Chart>
 	</div>

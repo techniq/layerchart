@@ -63,19 +63,17 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Svg>
-				<AxisY gridlines />
-				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<Baseline x y />
-				<Points class="fill-blue-500 stroke-blue-800" />
-			</Svg>
 			<Tooltip let:data>
-				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
+				<Svg>
+					<AxisY gridlines />
+					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+					<Baseline x y />
+					<Points class="fill-blue-500 stroke-blue-800" />
+					<HighlightLine color="var(--color-blue-500)" />
+				</Svg>
+				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')}>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightLine {data} color="var(--color-blue-500)" />
-				</g>
 			</Tooltip>
 		</Chart>
 	</div>

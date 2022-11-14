@@ -12,7 +12,7 @@
 	export let contained: 'container' | false = 'container'; // TODO: Support 'window' using getBoundingClientRect()
 	export let animate = true;
 
-	export let header: any = undefined;
+	export let header: (data: any) => any = undefined;
 
 	const { width, height, padding } = getContext('LayerCake');
 	const tooltip = tooltipContext();
@@ -46,49 +46,35 @@
 </script>
 
 <Html>
-	<div
-		class="absolute pointer-events-none z-50"
-		style="
+	{#if $tooltip.data}
+		<div
+			class="absolute pointer-events-none z-50"
+			style="
 		top: {$top}px;
 		left: {$left}px;
 		max-width: {$width / 2}px;
 	"
-		transition:fade={{ duration: 100 }}
-		bind:clientWidth={tooltipWidth}
-		bind:clientHeight={tooltipHeight}
-	>
-		<!-- <slot data={tooltip?.data} /> -->
-
-		<div
-			class="bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white rounded elevation-1 px-2 py-1"
+			transition:fade={{ duration: 100 }}
+			bind:clientWidth={tooltipWidth}
+			bind:clientHeight={tooltipHeight}
 		>
-			{#if header || $$slots.header}
-				<div class="text-center font-semibold pb-1 whitespace-nowrap">
-					<slot name="header">
-						{header}
-					</slot>
-				</div>
-			{/if}
+			<!-- <slot data={tooltip?.data} /> -->
 
-			<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-				<slot />
+			<div
+				class="bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white rounded elevation-1 px-2 py-1"
+			>
+				{#if header || $$slots.header}
+					<div class="text-center font-semibold pb-1 whitespace-nowrap">
+						<slot name="header">
+							{header($tooltip.data)}
+						</slot>
+					</div>
+				{/if}
+
+				<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
+					<slot data={$tooltip.data} />
+				</div>
 			</div>
 		</div>
-	</div>
-</Html>
-
-<!-- <div
-	class="bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white rounded elevation-1 px-2 py-1"
->
-	{#if header || $$slots.header}
-		<div class="text-center font-semibold pb-1 whitespace-nowrap">
-			<slot name="header">
-				{header}
-			</slot>
-		</div>
 	{/if}
-
-	<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-		<slot />
-	</div>
-</div> -->
+</Html>

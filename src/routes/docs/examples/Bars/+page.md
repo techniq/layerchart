@@ -142,19 +142,17 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Svg>
-				<AxisY gridlines />
-				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<Baseline x y />
-				<Bars radius={4} strokeWidth={1} />
-			</Svg>
 			<Tooltip let:data>
-				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
+				<Svg>
+					<AxisY gridlines />
+					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+					<Baseline x y />
+					<Bars radius={4} strokeWidth={1} />
+					<HighlightRect />
+				</Svg>
+				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')}>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightRect />
-				</g>
 			</Tooltip>
     	</Chart>
     </div>
@@ -197,21 +195,19 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Svg>
-				<AxisY gridlines />
-				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<Baseline x y />
-				<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
-				<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
-			</Svg>
 			<Tooltip let:data>
-				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
+				<Svg>
+					<AxisY gridlines />
+					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+					<Baseline x y />
+					<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
+					<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
+					<HighlightRect />
+				</Svg>
+				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')}>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
 				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightRect />
-				</g>
 			</Tooltip>
 		</Chart>
 	</div>

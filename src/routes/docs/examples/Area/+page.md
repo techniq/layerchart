@@ -76,19 +76,17 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Svg>
-				<AxisY gridlines />
-				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<Baseline x y />
-				<Area line={{ width: 2 }} />
-			</Svg>
 			<Tooltip let:data>
-				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
+				<Svg>
+					<AxisY gridlines />
+					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+					<Baseline x y />
+					<Area line={{ width: 2 }} />
+					<HighlightLine color="var(--color-blue-500)" />
+				</Svg>
+				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')}>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightLine {data} color="var(--color-blue-500)" />
-				</g>
 			</Tooltip>
 		</Chart>
 	</div>
@@ -131,22 +129,20 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Svg>
-				<AxisY gridlines />
-				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<Baseline x y />
-				{#each dataByFruit as [fruit, data]}
-					<Area {data} color={fruitColors[fruit]} line={{ width: 2 }} />
-				{/each}
-				<Labels format="integer" />
-			</Svg>
 			<Tooltip let:data mode="voronoi">
-				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
+				<Svg>
+					<AxisY gridlines />
+					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+					<Baseline x y />
+					{#each dataByFruit as [fruit, data]}
+						<Area {data} color={fruitColors[fruit]} line={{ width: 2 }} />
+					{/each}
+					<Labels format="integer" />
+					<HighlightLine color={fruitColors[data?.fruit]} />
+				</Svg>
+				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')}>
 					<TooltipItem label={data.fruit} value={formatNumberAsStyle(data.value, 'integer')} />
 				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightLine {data} color={fruitColors[data.fruit]} />
-				</g>
 			</Tooltip>
 		</Chart>
 	</div>

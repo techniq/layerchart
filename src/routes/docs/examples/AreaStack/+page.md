@@ -84,21 +84,19 @@ docUrl: $docUrl
 			]}
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Svg>
-				<AxisY gridlines />
-				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<Baseline x y />
-				<AreaStack line={{ width: 2 }} />
-			</Svg>
 			<Tooltip let:data>
-				<TooltipContainer header={format(data.data.date, 'eee, MMMM do')}>
+				<Svg>
+					<AxisY gridlines />
+					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+					<Baseline x y />
+					<AreaStack line={{ width: 2 }} />
+					<HighlightLine {data} color="var(--color-blue-500)" />
+				</Svg>
+				<TooltipContainer header={data => format(data.data.date, 'eee, MMMM do')}>
 					{#each keys as key}
 						<TooltipItem label={key} value={formatNumberAsStyle(data.data[key], 'integer')} />
 					{/each}
 				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightLine {data} color="var(--color-blue-500)" />
-				</g>
 			</Tooltip>
 		</Chart>
 	</div>

@@ -74,6 +74,6 @@
 	}
 </script>
 
-{#if $tooltip.data && Number.isFinite(dimensions.x)}
+{#if $tooltip.data}
 	<Rect spring {...dimensions} fill="rgba(0,0,0,.1)" on:click />
 {/if}

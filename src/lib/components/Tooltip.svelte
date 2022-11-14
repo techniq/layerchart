@@ -77,6 +77,8 @@
 	const tooltip = writable({ top: 0, left: 0, data: null });
 	setTooltipContext(tooltip);
 
+	let hideTimeout: NodeJS.Timeout;
+
 	$: bisectX = bisector((d) => {
 		const value = $x(d);
 		if (Array.isArray(value)) {
@@ -125,6 +127,9 @@
 	}
 
 	function showTooltip(event: MouseEvent | TouchEvent, tooltipData?: any) {
+		// Cancel hiding tooltip if from previous event loop
+		clearTimeout(hideTimeout);
+
 		const referenceNode = (event.target as Element).closest('.layercake-container');
 		const point = localPoint(referenceNode, event);
 		const localX = point?.x - $padding.left ?? 0;
@@ -193,7 +198,10 @@
 	}
 
 	function hideTooltip() {
-		$tooltip = { ...$tooltip, data: null };
+		// Wait an event loop tick in case `showTooltip` is called immediately on another element, to allow tweeneing (ex. moving between bands/bars)
+		hideTimeout = setTimeout(() => {
+			$tooltip = { ...$tooltip, data: null };
+		});
 	}
 
 	let points;
@@ -299,13 +307,7 @@
 	}
 </script>
 
-{#if $tooltip.data}
-	<slot data={$tooltip.data} />
-
-	<Svg>
-		<slot name="highlight" />
-	</Svg>
-{/if}
+<slot data={$tooltip.data} />
 
 {#if ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode)}
 	<Html>

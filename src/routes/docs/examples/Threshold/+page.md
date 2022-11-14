@@ -111,54 +111,52 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Svg>
-				<AxisY gridlines />
-				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<Baseline x y />
-				<Threshold curve={curveStepAfter}>
-					<g
-						slot="pathAbove"
-						let:areaPathData
-						let:clipPath
-						let:linePathData
-					>
-						<Path pathData={linePathData} color="black" width="1.5" />
-						<Area
-							pathData={areaPathData}
-							{clipPath}
-							class="fill-green-500"
-						/>
-					</g>
-					<g
-						slot="pathBelow"
-						let:areaPathData
-						let:clipPath
-						let:linePathData
-					>
-						<Path
-							pathData={linePathData}
-							color="black"
-							width="1"
-							stroke-dasharray="4"
-						/>
-						<Area
-							pathData={areaPathData}
-							{clipPath}
-							class="fill-red-500"
-						/>
-					</g>
-				</Threshold>
-			</Svg>
 			<Tooltip findTooltipData="left" let:data>
-				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
+				<Svg>
+					<AxisY gridlines />
+					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+					<Baseline x y />
+					<Threshold curve={curveStepAfter}>
+						<g
+							slot="pathAbove"
+							let:areaPathData
+							let:clipPath
+							let:linePathData
+						>
+							<Path pathData={linePathData} color="black" width="1.5" />
+							<Area
+								pathData={areaPathData}
+								{clipPath}
+								class="fill-green-500"
+							/>
+						</g>
+						<g
+							slot="pathBelow"
+							let:areaPathData
+							let:clipPath
+							let:linePathData
+						>
+							<Path
+								pathData={linePathData}
+								color="black"
+								width="1"
+								stroke-dasharray="4"
+							/>
+							<Area
+								pathData={areaPathData}
+								{clipPath}
+								class="fill-red-500"
+							/>
+						</g>
+					</Threshold>
+					<HighlightRect />
+				</Svg>
+				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')}>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
 					<TooltipSeparator />
 					<TooltipItem label="variance" value={formatNumberAsStyle(data.value - data.baseline, 'integer')} />
 				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightRect />
-				</g>
 			</Tooltip>
 		</Chart>
 	</div>
