@@ -49,11 +49,8 @@
 	{#if $tooltip.data}
 		<div
 			class="absolute pointer-events-none z-50"
-			style="
-		top: {$top}px;
-		left: {$left}px;
-		max-width: {$width / 2}px;
-	"
+			style:top="{$top}px"
+			style:left="{$left}px"
 			transition:fade={{ duration: 100 }}
 			bind:clientWidth={tooltipWidth}
 			bind:clientHeight={tooltipHeight}
