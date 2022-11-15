@@ -5,7 +5,6 @@
 	import { writable } from 'svelte/store';
 
 	import { tooltipContext } from './Tooltip.svelte';
-	import { Html } from 'layercake';
 
 	export let topOffset = 10;
 	export let leftOffset = 10;
@@ -45,33 +44,31 @@
 	}
 </script>
 
-<Html>
-	{#if $tooltip.data}
+{#if $tooltip.data}
+	<div
+		class="absolute pointer-events-none z-50"
+		style:top="{$top}px"
+		style:left="{$left}px"
+		transition:fade={{ duration: 100 }}
+		bind:clientWidth={tooltipWidth}
+		bind:clientHeight={tooltipHeight}
+	>
+		<!-- <slot data={tooltip?.data} /> -->
+
 		<div
-			class="absolute pointer-events-none z-50"
-			style:top="{$top}px"
-			style:left="{$left}px"
-			transition:fade={{ duration: 100 }}
-			bind:clientWidth={tooltipWidth}
-			bind:clientHeight={tooltipHeight}
+			class="bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white rounded elevation-1 px-2 py-1"
 		>
-			<!-- <slot data={tooltip?.data} /> -->
-
-			<div
-				class="bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white rounded elevation-1 px-2 py-1"
-			>
-				{#if header || $$slots.header}
-					<div class="text-center font-semibold pb-1 whitespace-nowrap">
-						<slot name="header">
-							{header($tooltip.data)}
-						</slot>
-					</div>
-				{/if}
-
-				<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
-					<slot data={$tooltip.data} />
+			{#if header || $$slots.header}
+				<div class="text-center font-semibold pb-1 whitespace-nowrap">
+					<slot name="header">
+						{header($tooltip.data)}
+					</slot>
 				</div>
+			{/if}
+
+			<div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center">
+				<slot data={$tooltip.data} />
 			</div>
 		</div>
-	{/if}
-</Html>
+	</div>
+{/if}
