@@ -281,6 +281,34 @@ docUrl: $docUrl
 							padAngle={arc.padAngle}
 							fill={keyColors[index]}
 							offset={index === 0 ? 16 : 0}
+						/>
+					{/each}
+				</Pie>
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Centroid labels
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="value"
+			r="date"
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
+		>
+			<Svg>
+				<Pie let:arcs>
+					{#each arcs as arc, index}
+						<Arc
+							startAngle={arc.startAngle}
+							endAngle={arc.endAngle}
+							padAngle={arc.padAngle}
+							fill={keyColors[index]}
 							let:centroid
 						>
 							<Text
