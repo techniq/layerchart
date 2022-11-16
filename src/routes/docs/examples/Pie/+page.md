@@ -14,6 +14,9 @@ docUrl: $docUrl
 	import Arc from '$lib/components/Arc.svelte';
 	import Pie from '$lib/components/Pie.svelte';
 	import Text from '$lib/components/Text.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
+	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
+	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import { createDateSeries } from '$lib/utils/genData';
@@ -333,6 +336,36 @@ docUrl: $docUrl
 					{/each}
 				</Pie>
 			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Tooltip
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="value"
+			r="date"
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
+		>
+			<Tooltip mode="manual">
+				<Svg>
+					<Pie />
+				</Svg>
+				<TooltipContainer
+					header={data => format(data.date, 'eee, MMMM do')}
+					let:data
+				>
+					<TooltipItem
+						label="value"
+						value={formatNumberAsStyle(data.value, 'integer')}
+					/>
+				</TooltipContainer>
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>

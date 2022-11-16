@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+	import { getContext, setContext } from 'svelte';
 	import type { Readable } from 'svelte/store';
 
 	export const tooltipContextKey = {};
@@ -11,8 +12,15 @@
 		hideTooltip();
 	}>;
 
+	const defaultContext: TooltipContext = writable({
+		top: 0,
+		left: 0,
+		data: null,
+		showTooltip: () => {},
+		hideTooltip: () => {}
+	});
 	export function tooltipContext() {
-		return getContext<TooltipContext>(tooltipContextKey);
+		return getContext<TooltipContext>(tooltipContextKey) ?? defaultContext;
 	}
 
 	function setTooltipContext(tooltip: TooltipContext) {
@@ -25,15 +33,15 @@
 		TODO:
 		  - [ ] Fix jumping when initally displayed and needs container adjusted
 			  - Consider moving container adjustments within Tooltip and not TooltipContainer.  This might affect Highlight
-			- [ ] Add showTooltip/hideTooltip to context
-			- [ ] Support `events` mode
+			- [x] Add showTooltip/hideTooltip to context
+			- [ ] Support `manual` mode
 			  - Consider only support this mode.  Create Voronoi, Bisect, ..., components
 			- [ ] Add example for other shapes
-			  - [ ] Pie
+			  - [x] Pie
 				- [ ] Treemap
 				- [ ] ...more...
 	*/
-	import { getContext, setContext, createEventDispatcher } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { bisector, max, min } from 'd3-array';
 	import { Delaunay } from 'd3-delaunay';
@@ -69,7 +77,8 @@
 		| 'bisect-band'
 		| 'bounds'
 		| 'voronoi'
-		| 'quadtree' = 'bisect-x';
+		| 'quadtree'
+		| 'manual' = 'bisect-x';
 	export let snapToDataX: boolean = false;
 	export let snapToDataY: boolean = false;
 	export let findTooltipData: 'closest' | 'left' | 'right' = 'closest';
@@ -201,6 +210,7 @@
 
 		if (tooltipData) {
 			$tooltip = {
+				...$tooltip,
 				left: snapToDataX ? $xGet(tooltipData) : localX,
 				top: snapToDataY ? $yGet(tooltipData) : localY,
 				data: tooltipData
