@@ -61,30 +61,24 @@ docUrl: $docUrl
 <div class="grid gap-1 mb-4">
 	<div class="grid grid-cols-[1fr,2fr,1fr] gap-1">
 		<Field label="Orientation">
-			<ToggleGroup bind:value={orientation} contained class="w-full">
-				<div class="options w-full border h-8">
-					<ToggleOption value="horizontal">Horizontal</ToggleOption>
-					<ToggleOption value="vertical">Vertical</ToggleOption>
-				</div>
+			<ToggleGroup bind:value={orientation} contained classes={{ root: 'w-full', options: 'w-full' }}>
+				<ToggleOption value="horizontal">Horizontal</ToggleOption>
+				<ToggleOption value="vertical">Vertical</ToggleOption>
 			</ToggleGroup>
 		</Field>
 		<Field label="Curve">
-			<ToggleGroup bind:value={curve} contained class="w-full">
-				<div class="options w-full border h-8">
-					<ToggleOption value={curveBumpX}>BumpX</ToggleOption>
-					<ToggleOption value={curveBumpY}>BumpY</ToggleOption>
-					<ToggleOption value={curveStep}>Step</ToggleOption>
-					<ToggleOption value={curveStepBefore}>Step Before</ToggleOption>
-					<ToggleOption value={curveStepAfter}>Step After</ToggleOption>
-				</div>
+			<ToggleGroup bind:value={curve} contained classes={{ root: 'w-full', options: 'w-full' }}>
+				<ToggleOption value={curveBumpX}>BumpX</ToggleOption>
+				<ToggleOption value={curveBumpY}>BumpY</ToggleOption>
+				<ToggleOption value={curveStep}>Step</ToggleOption>
+				<ToggleOption value={curveStepBefore}>Step Before</ToggleOption>
+				<ToggleOption value={curveStepAfter}>Step After</ToggleOption>
 			</ToggleGroup>
 		</Field>
 		<Field label="Layout">
-			<ToggleGroup bind:value={layout} contained class="w-full">
-				<div class="options w-full border h-8">
-					<ToggleOption value="chart">Chart</ToggleOption>
-					<ToggleOption value="node">Node</ToggleOption>
-				</div>
+			<ToggleGroup bind:value={layout} contained classes={{ root: 'w-full', options: 'w-full' }}>
+				<ToggleOption value="chart">Chart</ToggleOption>
+				<ToggleOption value="node">Node</ToggleOption>
 			</ToggleGroup>
 		</Field>
 	</div>

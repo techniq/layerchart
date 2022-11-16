@@ -131,32 +131,26 @@ docUrl: $docUrl
 
 <div class="grid grid-flow-col gap-4 mb-4">
 	<Field label="Align">
-		<ToggleGroup bind:value={nodeAlign} contained class="w-full">
-			<div class="options w-full border h-8">
-				<ToggleOption value="justify">Justify</ToggleOption>
-				<ToggleOption value="left">Left</ToggleOption>
-				<ToggleOption value="center">Center</ToggleOption>
-				<ToggleOption value="right">Right</ToggleOption>
-			</div>
+		<ToggleGroup bind:value={nodeAlign} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleOption value="justify">Justify</ToggleOption>
+			<ToggleOption value="left">Left</ToggleOption>
+			<ToggleOption value="center">Center</ToggleOption>
+			<ToggleOption value="right">Right</ToggleOption>
 		</ToggleGroup>
 	</Field>
 	<Field label="Node Color">
-		<ToggleGroup bind:value={nodeColorBy} contained class="w-full">
-			<div class="options w-full border h-8">
-				<ToggleOption value="layer">Layer</ToggleOption>
-				<ToggleOption value="depth">Depth</ToggleOption>
-				<ToggleOption value="height">Height</ToggleOption>
-				<ToggleOption value="index">Index</ToggleOption>
-			</div>
+		<ToggleGroup bind:value={nodeColorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleOption value="layer">Layer</ToggleOption>
+			<ToggleOption value="depth">Depth</ToggleOption>
+			<ToggleOption value="height">Height</ToggleOption>
+			<ToggleOption value="index">Index</ToggleOption>
 		</ToggleGroup>
 	</Field>
 	<Field label="Link Color">
-		<ToggleGroup bind:value={linkColorBy} contained class="w-full">
-			<div class="options w-full border h-8">
-				<ToggleOption value="static">Static</ToggleOption>
-				<ToggleOption value="source">Source</ToggleOption>
-				<ToggleOption value="target">Target</ToggleOption>
-			</div>
+		<ToggleGroup bind:value={linkColorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleOption value="static">Static</ToggleOption>
+			<ToggleOption value="source">Source</ToggleOption>
+			<ToggleOption value="target">Target</ToggleOption>
 		</ToggleGroup>
 	</Field>
 	<Field label="Node Padding">
@@ -234,32 +228,26 @@ docUrl: $docUrl
 
 <div class="grid grid-flow-col gap-4 mb-4">
 	<Field label="Align">
-		<ToggleGroup bind:value={nodeAlign} contained class="w-full">
-			<div class="options w-full border h-8">
-				<ToggleOption value="justify">Justify</ToggleOption>
-				<ToggleOption value="left">Left</ToggleOption>
-				<ToggleOption value="center">Center</ToggleOption>
-				<ToggleOption value="right">Right</ToggleOption>
-			</div>
+		<ToggleGroup bind:value={nodeAlign} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleOption value="justify">Justify</ToggleOption>
+			<ToggleOption value="left">Left</ToggleOption>
+			<ToggleOption value="center">Center</ToggleOption>
+			<ToggleOption value="right">Right</ToggleOption>
 		</ToggleGroup>
 	</Field>
 	<Field label="Node Color">
-		<ToggleGroup bind:value={nodeColorBy} contained class="w-full">
-			<div class="options w-full border h-8">
-				<ToggleOption value="layer">Layer</ToggleOption>
-				<ToggleOption value="depth">Depth</ToggleOption>
-				<ToggleOption value="height">Height</ToggleOption>
-				<ToggleOption value="index">Index</ToggleOption>
-			</div>
+		<ToggleGroup bind:value={nodeColorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleOption value="layer">Layer</ToggleOption>
+			<ToggleOption value="depth">Depth</ToggleOption>
+			<ToggleOption value="height">Height</ToggleOption>
+			<ToggleOption value="index">Index</ToggleOption>
 		</ToggleGroup>
 	</Field>
 	<Field label="Link Color">
-		<ToggleGroup bind:value={linkColorBy} contained class="w-full">
-			<div class="options w-full border h-8">
-				<ToggleOption value="static">Static</ToggleOption>
-				<ToggleOption value="source">Source</ToggleOption>
-				<ToggleOption value="target">Target</ToggleOption>
-			</div>
+		<ToggleGroup bind:value={linkColorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleOption value="static">Static</ToggleOption>
+			<ToggleOption value="source">Source</ToggleOption>
+			<ToggleOption value="target">Target</ToggleOption>
 		</ToggleGroup>
 	</Field>
 	<Field label="Node Padding">

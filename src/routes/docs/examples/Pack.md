@@ -74,11 +74,9 @@ docUrl: $docUrl
 			<Button icon={mdiChevronRight} on:click={() => padding += 1} class="ml-2" />
 		</Field>
 		<Field label="Color By">
-			<ToggleGroup bind:value={colorBy} contained class="w-full">
-				<div class="options w-full border h-8">
-					<ToggleOption value="parent">Parent</ToggleOption>
-					<ToggleOption value="depth">Depth</ToggleOption>
-				</div>
+			<ToggleGroup bind:value={colorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+				<ToggleOption value="parent">Parent</ToggleOption>
+				<ToggleOption value="depth">Depth</ToggleOption>
 			</ToggleGroup>
 		</Field>
 	</div>

@@ -59,11 +59,9 @@ docUrl: $docUrl
 <div class="grid grid-flow-col gap-4 mb-4">
 	<div class="grid grid-cols-[1fr,1fr] gap-2">
 		<Field label="Color By">
-			<ToggleGroup bind:value={colorBy} contained class="w-full">
-				<div class="options w-full border h-8">
-					<ToggleOption value="parent">Parent</ToggleOption>
-					<ToggleOption value="depth">Depth</ToggleOption>
-				</div>
+			<ToggleGroup bind:value={colorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+				<ToggleOption value="parent">Parent</ToggleOption>
+				<ToggleOption value="depth">Depth</ToggleOption>
 			</ToggleGroup>
 		</Field>
 	</div>

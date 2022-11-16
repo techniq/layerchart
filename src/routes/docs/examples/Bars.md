@@ -368,12 +368,10 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,1fr] gap-2 mb-2">
 	<Field label="Mode">
-		<ToggleGroup bind:value={transitionChartMode} contained class="w-full">
-			<div class="options w-full border">
-				<ToggleOption value="group">Grouped</ToggleOption>
-				<ToggleOption value="stack">Stacked</ToggleOption>
-				<ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
-			</div>
+		<ToggleGroup bind:value={transitionChartMode} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleOption value="group">Grouped</ToggleOption>
+			<ToggleOption value="stack">Stacked</ToggleOption>
+			<ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
 		</ToggleGroup>
 	</Field>
 </div>
