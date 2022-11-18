@@ -133,7 +133,7 @@ docUrl: $docUrl
 		>
 			<Svg>
 				<AxisY gridlines />
-				<AxisX ticks={4} formatTick={(d) => formatDate(d, PeriodType.CalendarYear, 'short')} />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				{#each dataByFruit as [fruit, data]}
 					<Area {data} color={fruitColors[fruit]} line={{ width: 2 }} />
