@@ -55,7 +55,7 @@
 				textAnchor="end"
 				verticalAnchor="middle"
 				value={format(tick, formatTick ?? $yScale.tickFormat?.())}
-				class="text-[10px] stroke-white [stroke-width: 2px] font-light"
+				class="text-[10px] stroke-white [stroke-width:2px] font-light"
 				{...labelProps}
 			/>
 		</g>

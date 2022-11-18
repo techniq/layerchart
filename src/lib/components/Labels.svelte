@@ -108,7 +108,7 @@
 			textAnchor="middle"
 			verticalAnchor="middle"
 			value={getValue(item)}
-			class="group-rect text-xs stroke-white [stroke-width: 2px]"
+			class="group-rect text-xs stroke-white [stroke-width:2px]"
 			{...getDimensions(item)}
 			{...$$restProps}
 		/>

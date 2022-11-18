@@ -42,7 +42,7 @@
 				rotate={315}
 				textAnchor="end"
 				verticalAnchor="middle"
-				class="text-[10px] stroke-white [stroke-width: 2px] font-light"
+				class="text-[10px] stroke-white [stroke-width:2px] font-light"
 				value={format(tick, formatTick ?? $xScale.tickFormat?.())}
 				{...labelProps}
 			/>
