@@ -62,6 +62,6 @@
 		"layercake": "^7.1.0",
 		"lodash-es": "^4.17.21",
 		"svelte": "^3.53.1",
-		"svelte-ux": "^0.21.0"
+		"svelte-ux": ">=0.21"
 	}
 }
