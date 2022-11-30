@@ -22,7 +22,7 @@ docUrl: $docUrl
 
 	import Preview from '$lib/docs/Preview.svelte';
 
-	import { complexData } from './data/hierarchy';
+	import { complexData } from '../data/hierarchy';
 
 	let expandedNodeNames = ['flare']
 

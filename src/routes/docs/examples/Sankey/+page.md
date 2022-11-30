@@ -23,8 +23,8 @@ docUrl: $docUrl
 
 	import Preview from '$lib/docs/Preview.svelte';
 
-	import { simpleData, complexData, greenhouse } from './data/graph';
-	import { complexData as hierarchyComplexData } from './data/hierarchy'
+	import { simpleData, complexData, greenhouse } from '../data/graph';
+	import { complexData as hierarchyComplexData } from '../data/hierarchy'
 	import { graphFromHierarchy, graphFromNode } from '$lib/utils/graph';
 
 	const colorScale = scaleSequential(interpolateCool)
