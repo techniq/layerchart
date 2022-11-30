@@ -1,7 +1,13 @@
 <script context="module" lang="ts">
-	import { LayerCake, Svg, Html } from 'layercake';
+	// import { LayerCake, Svg, Html } from 'layercake';
+	// export { Svg, Html };
 
-	export { Svg, Html };
+	// TODO: Workaround for sveld error: `Cannot read properties of null (reading 'type')` in `ComponentParser`
+	// See: https://github.com/carbon-design-system/sveld/issues/104
+	import { LayerCake, Svg as _Svg, Html as _Html } from 'layercake';
+
+	export const Svg = _Svg;
+	export const Html = _Html;
 </script>
 
 <script lang="ts">
