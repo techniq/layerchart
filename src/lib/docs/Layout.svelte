@@ -13,10 +13,10 @@
 
 <script>
 	// frontmatter: https://mdsvex.com/docs#frontmatter-1
-	export let name;
-	export let sourceUrl;
-	export let docUrl;
-	export let description;
+	export let name = undefined;
+	export let sourceUrl = undefined;
+	export let docUrl = undefined;
+	export let description = undefined;
 </script>
 
 {#if name}
