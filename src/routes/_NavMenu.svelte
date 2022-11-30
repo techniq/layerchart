@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { mdiHome } from '@mdi/js';
-	import { NavItem } from 'svelte-ux';
+	import NavItem from 'svelte-ux/components/NavItem.svelte';
 </script>
 
 <NavItem text="Home" icon={mdiHome} path="/" class="pl-6 py-2 mt-2" />
