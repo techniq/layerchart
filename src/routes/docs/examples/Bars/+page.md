@@ -142,7 +142,7 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Tooltip let:data>
+			<Tooltip>
 				<Svg>
 					<AxisY gridlines />
 					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
@@ -150,7 +150,7 @@ docUrl: $docUrl
 					<Bars radius={4} strokeWidth={1} />
 					<HighlightRect />
 				</Svg>
-				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')}>
+				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')} let:data>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 				</TooltipContainer>
 			</Tooltip>
@@ -195,7 +195,7 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Tooltip let:data>
+			<Tooltip>
 				<Svg>
 					<AxisY gridlines />
 					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
@@ -204,7 +204,7 @@ docUrl: $docUrl
 					<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
 					<HighlightRect />
 				</Svg>
-				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')}>
+				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')} let:data>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
 				</TooltipContainer>

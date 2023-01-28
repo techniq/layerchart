@@ -29,18 +29,6 @@
 </script>
 
 <script lang="ts">
-	/*
-		TODO:
-		  - [ ] Fix jumping when initally displayed and needs container adjusted
-			  - Consider moving container adjustments within Tooltip and not TooltipContainer.  This might affect Highlight
-			- [x] Add showTooltip/hideTooltip to context
-			- [ ] Support `manual` mode
-			  - Consider only support this mode.  Create Voronoi, Bisect, ..., components
-			- [ ] Add example for other shapes
-			  - [x] Pie
-				- [ ] Treemap
-				- [ ] ...more...
-	*/
 	import { createEventDispatcher } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { bisector, max, min } from 'd3-array';

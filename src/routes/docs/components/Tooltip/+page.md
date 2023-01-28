@@ -229,7 +229,7 @@ docUrl: $docUrl
 			]}
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Tooltip let:data mode={charts[1].mode} snapToDataX={charts[1].snapToDataX} snapToDataY={charts[1].snapToDataY} debug={charts[1].debug}>
+			<Tooltip mode={charts[1].mode} snapToDataX={charts[1].snapToDataX} snapToDataY={charts[1].snapToDataY} debug={charts[1].debug}>
 				<Svg>
 					<AxisY gridlines />
 					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
@@ -241,7 +241,7 @@ docUrl: $docUrl
 						<HighlightRect {...charts[1].axis && { axis: charts[1].axis}} />
 					{/if}
 				</Svg>
-				<TooltipContainer header={data => format(data.data.date, 'eee, MMMM do')}>
+				<TooltipContainer header={data => format(data.data.date, 'eee, MMMM do')} let:data>
 					{#each keys as key}
 						<TooltipItem label="{key}" value={formatNumberAsStyle(data.data[key], 'integer')} />
 					{/each}
@@ -314,7 +314,7 @@ docUrl: $docUrl
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
 		>
-			<Tooltip let:data mode={charts[2].mode} snapToDataX={charts[2].snapToDataX} snapToDataY={charts[2].snapToDataY}  debug={charts[2].debug}>
+			<Tooltip mode={charts[2].mode} snapToDataX={charts[2].snapToDataX} snapToDataY={charts[2].snapToDataY}  debug={charts[2].debug}>
 				<Svg>
 					<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
 					<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
@@ -326,7 +326,7 @@ docUrl: $docUrl
 						<HighlightRect {...charts[2].axis && { axis: charts[2].axis}} />
 					{/if}
 				</Svg>
-				<TooltipContainer header={data => data.name}>
+				<TooltipContainer header={data => data.name} let:data>
 					<TooltipItem label="date" value={format(data.startDate, 'h:mm a')} />
 				</TooltipContainer>
 			</Tooltip>
@@ -397,7 +397,7 @@ docUrl: $docUrl
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
 		>
-			<Tooltip let:data mode={charts[3].mode} snapToDataX={charts[3].snapToDataX} snapToDataY={charts[3].snapToDataY}  debug={charts[3].debug}>
+			<Tooltip mode={charts[3].mode} snapToDataX={charts[3].snapToDataX} snapToDataY={charts[3].snapToDataY}  debug={charts[3].debug}>
 				<Svg>
 					<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
 					<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
@@ -410,7 +410,7 @@ docUrl: $docUrl
 						<HighlightRect {...charts[3].axis && { axis: charts[3].axis}} />
 					{/if}
 				</Svg>
-				<TooltipContainer header={data => data.name}>
+				<TooltipContainer header={data => data.name} let:data>
 					<TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
 					<TooltipItem label="end" value={format(data.endDate, 'h:mm a')} />
 					<TooltipSeparator />
@@ -486,7 +486,7 @@ docUrl: $docUrl
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
 		>
-			<Tooltip let:data mode={charts[4].mode} snapToDataX={charts[4].snapToDataX} snapToDataY={charts[4].snapToDataY} debug={charts[4].debug}>
+			<Tooltip mode={charts[4].mode} snapToDataX={charts[4].snapToDataX} snapToDataY={charts[4].snapToDataY} debug={charts[4].debug}>
 				<Svg>
 					<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
 					<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
@@ -499,7 +499,7 @@ docUrl: $docUrl
 						<HighlightRect {...charts[4].axis && { axis: charts[4].axis}} />
 					{/if}
 				</Svg>
-				<TooltipContainer header={data => data.name}>
+				<TooltipContainer header={data => data.name} let:data>>
 					<TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
 					<TooltipItem label="end" value={format(data.endDate, 'h:mm a')} />
 					<TooltipSeparator />
@@ -576,7 +576,7 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Tooltip let:data mode={charts[5].mode} snapToDataX={charts[5].snapToDataX} snapToDataY={charts[5].snapToDataY}  debug={charts[5].debug}>
+			<Tooltip mode={charts[5].mode} snapToDataX={charts[5].snapToDataX} snapToDataY={charts[5].snapToDataY}  debug={charts[5].debug}>
 				<Svg>
 					<AxisY gridlines />
 					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
@@ -588,7 +588,7 @@ docUrl: $docUrl
 						<HighlightRect {...charts[5].axis && { axis: charts[5].axis}} />
 					{/if}
 				</Svg>
-				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')}>
+				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')} let:data>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 				</TooltipContainer>
 			</Tooltip>
@@ -660,7 +660,7 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Tooltip let:data mode={charts[6].mode} snapToDataX={charts[6].snapToDataX} snapToDataY={charts[6].snapToDataY}  debug={charts[6].debug}>
+			<Tooltip mode={charts[6].mode} snapToDataX={charts[6].snapToDataX} snapToDataY={charts[6].snapToDataY}  debug={charts[6].debug}>
 				<Svg>
 					<AxisY gridlines />
 					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
@@ -673,7 +673,7 @@ docUrl: $docUrl
 						<HighlightRect {...charts[6].axis && { axis: charts[6].axis}} />
 					{/if}
 				</Svg>
-				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')}>
+				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')} let:data>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
 				</TooltipContainer>
@@ -743,7 +743,7 @@ docUrl: $docUrl
 			y="y"
 			padding={{ left: 30, bottom: 30 }}
 		>
-			<Tooltip let:data mode={charts[7].mode} snapToDataX={charts[7].snapToDataX} snapToDataY={charts[7].snapToDataY} debug={charts[7].debug}>
+			<Tooltip mode={charts[7].mode} snapToDataX={charts[7].snapToDataX} snapToDataY={charts[7].snapToDataY} debug={charts[7].debug}>
 				<Svg>
 					<AxisY gridlines />
 					<AxisX gridlines />
@@ -754,7 +754,7 @@ docUrl: $docUrl
 						<HighlightRect {...charts[7].axis && { axis: charts[7].axis}} />
 					{/if}
 				</Svg>
-				<TooltipContainer>
+				<TooltipContainer let:data>
 					<TooltipItem label="x" value={formatNumberAsStyle(data.x, 'decimal')} />
 					<TooltipItem label="y" value={formatNumberAsStyle(data.y, 'decimal')} />
 				</TooltipContainer>
