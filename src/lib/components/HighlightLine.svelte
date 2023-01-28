@@ -12,7 +12,7 @@
 	const tooltip = tooltipContext();
 
 	export let color: string | ((obj: { value: any; item: any; index: number }) => string) =
-		'var(--color-blue-500)';
+		undefined;
 	export let axis: 'x' | 'y' | 'both' | 'none' = 'x';
 
 	// TODO: Fix circle points being backwards for stack (see AreaStack)
