@@ -50,8 +50,16 @@ docUrl: $docUrl
 	const complexDataHierarchy = hierarchy(hierarchyComplexData)
 		.sum((d) => d.value)
 		.sort((a, b) => b.value - a.value);
-
 	$: hierarchyGraph = graphFromHierarchy(complexDataHierarchy);
+
+
+	let expandedNodeNames = [hierarchyComplexData.name]
+	// let expandedNodeNames = [hierarchyComplexData.name, ...hierarchyComplexData.children.map(d => d.name)]
+	$: expandableHierarchy = hierarchy(hierarchyComplexData, d => expandedNodeNames.includes(d.name) ? d.children : null)
+		.sum((d) => d.value)
+		.sort((a, b) => b.value - a.value);
+	$: expandableHierarchyGraph = graphFromHierarchy(expandableHierarchy);
+	$: console.log({ hierarchyComplexData, expandedNodeNames, expandableHierarchyGraph })
 
 	let selectedNode = null
 	$: selectedNode && console.log(graphFromNode(selectedNode))
@@ -261,6 +269,103 @@ docUrl: $docUrl
 <Preview>
 	<div class="h-[2000px] p-4 border rounded">
 		<Chart data={hierarchyGraph} padding={{ right: 100 }}>
+			<Svg>
+				<Sankey
+					{nodeAlign}
+					{nodePadding}
+					{nodeWidth}
+					let:links
+					let:nodes
+					on:update={e => {
+						// Calculate domain extents from Sankey data
+						// TODO: Update as 'nodeColorBy' changes
+						const extents = extent(e.detail.nodes, d => d[nodeColorBy]);
+						colorScale.domain(extents);
+					}}
+				>
+					{#each links as link, i}
+						<Link
+							sankey
+							data={link}
+							stroke={linkColorBy === 'static' ? "black" : colorScale(link[linkColorBy][nodeColorBy])}
+							stroke-opacity={highlightLinkIndexes.length ? highlightLinkIndexes.includes(i) ? linkOpacity.hover : linkOpacity.other : linkOpacity.default}
+							stroke-width={link.width}
+							on:mouseover={() => highlightLinkIndexes = [i]}
+							on:mouseout={() => highlightLinkIndexes = []}
+							tweened
+						/>
+					{/each}
+					{#each nodes as node}
+						{@const nodeWidth = node.x1 - node.x0}
+						{@const nodeHeight = node.y1 - node.y0}
+						<Group x={node.x0} y={node.y0} tweened>
+							<Rect
+								width={nodeWidth}
+								height={nodeHeight}
+								fill={colorScale(node[nodeColorBy])}
+								fill-opacity={0.5}
+								on:mouseover={() => {
+									highlightLinkIndexes = [
+										...node.sourceLinks.map((l) => l.index),
+										...node.targetLinks.map((l) => l.index),
+									];
+								}}
+								on:mouseout={() => highlightLinkIndexes = []}
+								tweened
+							/>
+							<Text
+								value={node.data.name}
+								x={nodeWidth + 4}
+								y={nodeHeight / 2}
+								dy={-2}
+								verticalAnchor="middle"
+								style="font-size: .6rem"
+							/>
+						</Group>
+					{/each}
+				</Sankey>
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Expandable Hierarchy
+
+<div class="grid grid-flow-col gap-4 mb-4">
+	<Field label="Align">
+		<ToggleGroup bind:value={nodeAlign} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleOption value="justify">Justify</ToggleOption>
+			<ToggleOption value="left">Left</ToggleOption>
+			<ToggleOption value="center">Center</ToggleOption>
+			<ToggleOption value="right">Right</ToggleOption>
+		</ToggleGroup>
+	</Field>
+	<Field label="Node Color">
+		<ToggleGroup bind:value={nodeColorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleOption value="layer">Layer</ToggleOption>
+			<ToggleOption value="depth">Depth</ToggleOption>
+			<ToggleOption value="height">Height</ToggleOption>
+			<ToggleOption value="index">Index</ToggleOption>
+		</ToggleGroup>
+	</Field>
+	<Field label="Link Color">
+		<ToggleGroup bind:value={linkColorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleOption value="static">Static</ToggleOption>
+			<ToggleOption value="source">Source</ToggleOption>
+			<ToggleOption value="target">Target</ToggleOption>
+		</ToggleGroup>
+	</Field>
+	<Field label="Node Padding">
+		<input type="range" bind:value={nodePadding} max={20} step={1} class="w-full h-8" />
+	</Field>
+	<Field label="Node Width">
+		<input type="range" bind:value={nodeWidth} max={20} step={1} class="w-full h-8" />
+	</Field>
+</div>
+
+<Preview>
+	<div class="h-[1000px] p-4 border rounded">
+		<Chart data={expandableHierarchyGraph} padding={{ right: 100 }}>
 			<Svg>
 				<Sankey
 					{nodeAlign}
