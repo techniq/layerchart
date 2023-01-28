@@ -24,6 +24,8 @@ docUrl: $docUrl
 	import Group from '$lib/components/Group.svelte';
 	import Rect from '$lib/components/Rect.svelte';
 	import RectClipPath from '$lib/components/RectClipPath.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
+	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	import Text from '$lib/components/Text.svelte';
 	import Treemap from '$lib/components/Treemap.svelte';
 	import { findAncestor } from '$lib/utils/hierarchy';
@@ -175,13 +177,14 @@ docUrl: $docUrl
 		</Button>
 	</Breadcrumb>
 	<div class="h-[800px] p-4 border rounded">
-		<Chart data={complexDataHierarchy.copy()}>
+		<Chart data={complexDataHierarchy.copy()} tooltip={{ mode: 'manual' }} let:showTooltip let:hideTooltip>
 			<Svg>
 				<Bounds domain={selectedNested} tweened={{ duration: 800, easing: cubicOut }} let:xScale let:yScale>
 					<ChartClipPath>
 						<Treemap let:nodes {tile} bind:selected={selectedNested} {paddingOuter} {paddingInner} {paddingTop} {paddingBottom} {paddingLeft} {paddingRight}>
 							{#each nodes as node}
-								<Group x={xScale(node.x0)} y={yScale(node.y0)} on:click={() => node.children ? selectedNested = node : null}>
+								<Group x={xScale(node.x0)} y={yScale(node.y0)} on:click={() => node.children ? selectedNested = node : null} on:mousemove={e => showTooltip(e, node)}
+	on:mouseleave={hideTooltip}>
 									{@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
 									{@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
 									{@const nodeColor = getNodeColor(node, colorBy)}
@@ -217,6 +220,9 @@ docUrl: $docUrl
 					</ChartClipPath>
 				</Bounds>
 			</Svg>
+			<Tooltip header={data => data.data.name} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
