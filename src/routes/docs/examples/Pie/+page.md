@@ -363,6 +363,12 @@ docUrl: $docUrl
 					<TooltipItem
 						label="value"
 						value={formatNumberAsStyle(data.value, 'integer')}
+						valueAlign="right"
+					/>
+					<TooltipItem
+						label="percent"
+						value={formatNumberAsStyle(data.value / dataSum, 'percent')}
+						valueAlign="right"
 					/>
 				</Tooltip>
 			</TooltipContext>
