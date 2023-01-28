@@ -319,7 +319,7 @@
 	}
 </script>
 
-<slot data={$tooltip.data} />
+<slot data={$tooltip.data} {showTooltip} {hideTooltip} />
 
 {#if ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode)}
 	<Html>
