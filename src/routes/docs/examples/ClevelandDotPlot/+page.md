@@ -22,7 +22,7 @@ docUrl: $docUrl
 	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
 	import TooltipContext from '$lib/components/TooltipContext.svelte';
-	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
@@ -80,14 +80,14 @@ docUrl: $docUrl
 					<HighlightLine color="var(--color-blue-500)" />
 					<HighlightRect color="var(--color-blue-500)" />
 				</Svg>
-				<TooltipContainer header={data => data.name} let:data>
+				<Tooltip header={data => data.name} let:data>
 					<TooltipItem label="start" value={format(data.startDate, 'h:mm:ss')} />
 					<TooltipItem label="end" value={format(data.startDate, 'h:mm:ss')} />
 					<TooltipSeparator />
 					<TooltipItem label="duration" valueAlign="right">
 						<Duration start={data.startDate} end={data.endDate} />
 					</TooltipItem>
-				</TooltipContainer>
+				</Tooltip>
 			</TooltipContext>
 		</Chart>
 	</div>

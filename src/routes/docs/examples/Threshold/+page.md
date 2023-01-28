@@ -22,7 +22,7 @@ docUrl: $docUrl
 	import Path from '$lib/components/Path.svelte';
 	import Threshold from '$lib/components/Threshold.svelte';
 	import TooltipContext from '$lib/components/TooltipContext.svelte';
-	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
@@ -151,12 +151,12 @@ docUrl: $docUrl
 					</Threshold>
 					<HighlightRect />
 				</Svg>
-				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
 					<TooltipSeparator />
 					<TooltipItem label="variance" value={formatNumberAsStyle(data.value - data.baseline, 'integer')} />
-				</TooltipContainer>
+				</Tooltip>
 			</TooltipContext>
 		</Chart>
 	</div>

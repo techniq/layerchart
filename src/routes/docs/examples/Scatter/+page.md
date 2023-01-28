@@ -18,7 +18,7 @@ docUrl: $docUrl
 	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
 	import TooltipContext from '$lib/components/TooltipContext.svelte';
-	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
@@ -71,9 +71,9 @@ docUrl: $docUrl
 					<Points class="fill-blue-500 stroke-blue-800" />
 					<HighlightLine color="var(--color-blue-500)" />
 				</Svg>
-				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-				</TooltipContainer>
+				</Tooltip>
 			</TooltipContext>
 		</Chart>
 	</div>

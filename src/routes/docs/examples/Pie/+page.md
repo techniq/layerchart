@@ -15,7 +15,7 @@ docUrl: $docUrl
 	import Pie from '$lib/components/Pie.svelte';
 	import Text from '$lib/components/Text.svelte';
 	import TooltipContext from '$lib/components/TooltipContext.svelte';
-	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
@@ -356,7 +356,7 @@ docUrl: $docUrl
 				<Svg>
 					<Pie />
 				</Svg>
-				<TooltipContainer
+				<Tooltip
 					header={data => format(data.date, 'eee, MMMM do')}
 					let:data
 				>
@@ -364,7 +364,7 @@ docUrl: $docUrl
 						label="value"
 						value={formatNumberAsStyle(data.value, 'integer')}
 					/>
-				</TooltipContainer>
+				</Tooltip>
 			</TooltipContext>
 		</Chart>
 	</div>

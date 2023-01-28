@@ -22,7 +22,7 @@ docUrl: $docUrl
 	import HighlightRect from '$lib/components/HighlightRect.svelte';
 	import Labels from '$lib/components/Labels.svelte';
 	import TooltipContext from '$lib/components/TooltipContext.svelte';
-	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
@@ -150,9 +150,9 @@ docUrl: $docUrl
 					<Bars radius={4} strokeWidth={1} />
 					<HighlightRect />
 				</Svg>
-				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-				</TooltipContainer>
+				</Tooltip>
 			</TooltipContext>
     	</Chart>
     </div>
@@ -204,10 +204,10 @@ docUrl: $docUrl
 					<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
 					<HighlightRect />
 				</Svg>
-				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
-				</TooltipContainer>
+				</Tooltip>
 			</TooltipContext>
 		</Chart>
 	</div>
