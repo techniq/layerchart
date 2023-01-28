@@ -111,7 +111,7 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Tooltip findTooltipData="left" let:data>
+			<Tooltip findTooltipData="left">
 				<Svg>
 					<AxisY gridlines />
 					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
@@ -151,7 +151,7 @@ docUrl: $docUrl
 					</Threshold>
 					<HighlightRect />
 				</Svg>
-				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')}>
+				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')} let:data>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
 					<TooltipSeparator />

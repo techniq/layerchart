@@ -70,7 +70,7 @@ docUrl: $docUrl
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
 		>
-			<Tooltip let:data>
+			<Tooltip>
 				<Svg>
 					<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
 					<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
@@ -80,7 +80,7 @@ docUrl: $docUrl
 					<HighlightLine color="var(--color-blue-500)" />
 					<HighlightRect color="var(--color-blue-500)" />
 				</Svg>
-				<TooltipContainer header={data => data.name}>
+				<TooltipContainer header={data => data.name} let:data>
 					<TooltipItem label="start" value={format(data.startDate, 'h:mm:ss')} />
 					<TooltipItem label="end" value={format(data.startDate, 'h:mm:ss')} />
 					<TooltipSeparator />
