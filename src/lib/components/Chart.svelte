@@ -11,9 +11,11 @@
 </script>
 
 <script lang="ts">
+	import type { ComponentProps } from 'svelte';
 	import { max, min } from 'd3-array';
 	import { get } from 'lodash-es';
 	import { isScaleBand } from '$lib/utils/scales';
+	import TooltipContext from './TooltipContext.svelte';
 
 	type Accessor = string | ((d: any) => number);
 
@@ -66,6 +68,8 @@
 	 * see: https://github.com/mhkeller/layercake/issues/83
 	 */
 	$: yReverse = yScale ? !isScaleBand(yScale) : true;
+
+	export let tooltip: ComponentProps<TooltipContext> | undefined = undefined;
 </script>
 
 <LayerCake
@@ -84,5 +88,11 @@
 	let:width
 	let:element
 >
-	<slot {aspectRatio} {containerHeight} {containerWidth} {height} {width} {element} />
+	{#if tooltip}
+		<TooltipContext {...tooltip}>
+			<slot {aspectRatio} {containerHeight} {containerWidth} {height} {width} {element} />
+		</TooltipContext>
+	{:else}
+		<slot {aspectRatio} {containerHeight} {containerWidth} {height} {width} {element} />
+	{/if}
 </LayerCake>

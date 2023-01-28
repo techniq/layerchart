@@ -18,7 +18,6 @@ docUrl: $docUrl
 	import Baseline from '$lib/components/Baseline.svelte';
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
 	import Labels from '$lib/components/Labels.svelte';
-	import TooltipContext from '$lib/components/TooltipContext.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -83,21 +82,20 @@ docUrl: $docUrl
 				'var(--color-blue-500)',
 			]}
 			padding={{ left: 16, bottom: 24 }}
+			tooltip
 		>
-			<TooltipContext>
-				<Svg>
-					<AxisY gridlines />
-					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-					<Baseline x y />
-					<AreaStack line={{ width: 2 }} />
-					<HighlightLine color="var(--color-blue-500)" />
-				</Svg>
-				<Tooltip header={data => format(data.data.date, 'eee, MMMM do')} let:data>
-					{#each keys as key}
-						<TooltipItem label={key} value={formatNumberAsStyle(data.data[key], 'integer')} />
-					{/each}
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<AreaStack line={{ width: 2 }} />
+				<HighlightLine color="var(--color-blue-500)" />
+			</Svg>
+			<Tooltip header={data => format(data.data.date, 'eee, MMMM do')} let:data>
+				{#each keys as key}
+					<TooltipItem label={key} value={formatNumberAsStyle(data.data[key], 'integer')} />
+				{/each}
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>

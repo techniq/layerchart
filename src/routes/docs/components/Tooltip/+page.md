@@ -16,7 +16,7 @@ docUrl: $docUrl
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 		
-	import api from '$lib/components/TooltipContext.svelte?raw&sveld';
+	import api from '$lib/components/Tooltip.svelte?raw&sveld';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Area from '$lib/components/Area.svelte';
@@ -30,7 +30,6 @@ docUrl: $docUrl
 	import HighlightRect from '$lib/components/HighlightRect.svelte';
 	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
-	import TooltipContext from '$lib/components/TooltipContext.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
@@ -136,23 +135,27 @@ docUrl: $docUrl
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
+			tooltip={{
+				mode: charts[0].mode,
+				snapToDataX: charts[0].snapToDataX,
+				snapToDataY: charts[0].snapToDataY,
+				debug: charts[0].debug
+			}}
 		>
-			<TooltipContext mode={charts[0].mode} snapToDataX={charts[0].snapToDataX} snapToDataY={charts[0].snapToDataY} debug={charts[0].debug}>
-				<Svg>
-					<AxisY gridlines />
-					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-					<Baseline x y />
-					<Area line={{ width: 2 }} />
-					{#if charts[0].highlight === 'line'}
-						<HighlightLine {...charts[0].axis && { axis: charts[0].axis}} color="var(--color-blue-500)" />
-					{:else if charts[0].highlight === 'rect'}
-						<HighlightRect {...charts[0].axis && { axis: charts[0].axis}} />
-					{/if}
-				</Svg>
-				<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Area line={{ width: 2 }} />
+				{#if charts[0].highlight === 'line'}
+					<HighlightLine {...charts[0].axis && { axis: charts[0].axis}} color="var(--color-blue-500)" />
+				{:else if charts[0].highlight === 'rect'}
+					<HighlightRect {...charts[0].axis && { axis: charts[0].axis}} />
+				{/if}
+			</Svg>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
@@ -228,25 +231,29 @@ docUrl: $docUrl
 				'var(--color-blue-500)',
 			]}
 			padding={{ left: 16, bottom: 24 }}
+			tooltip={{
+				mode: charts[1].mode,
+				snapToDataX: charts[1].snapToDataX,
+				snapToDataY: charts[1].snapToDataY,
+				debug: charts[1].debug
+			}}
 		>
-			<TooltipContext mode={charts[1].mode} snapToDataX={charts[1].snapToDataX} snapToDataY={charts[1].snapToDataY} debug={charts[1].debug}>
-				<Svg>
-					<AxisY gridlines />
-					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-					<Baseline x y />
-					<AreaStack line={{ width: 2 }} />
-					{#if charts[1].highlight === 'line'}
-						<HighlightLine {...charts[1].axis && { axis: charts[1].axis}} color="var(--color-blue-500)" />
-					{:else if charts[1].highlight === 'rect'}
-						<HighlightRect {...charts[1].axis && { axis: charts[1].axis}} />
-					{/if}
-				</Svg>
-				<Tooltip header={data => format(data.data.date, 'eee, MMMM do')} let:data>
-					{#each keys as key}
-						<TooltipItem label="{key}" value={formatNumberAsStyle(data.data[key], 'integer')} />
-					{/each}
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<AreaStack line={{ width: 2 }} />
+				{#if charts[1].highlight === 'line'}
+					<HighlightLine {...charts[1].axis && { axis: charts[1].axis}} color="var(--color-blue-500)" />
+				{:else if charts[1].highlight === 'rect'}
+					<HighlightRect {...charts[1].axis && { axis: charts[1].axis}} />
+				{/if}
+			</Svg>
+			<Tooltip header={data => format(data.data.date, 'eee, MMMM do')} let:data>
+				{#each keys as key}
+					<TooltipItem label="{key}" value={formatNumberAsStyle(data.data[key], 'integer')} />
+				{/each}
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
@@ -313,23 +320,27 @@ docUrl: $docUrl
 			y="name"
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
+			tooltip={{
+				mode: charts[2].mode,
+				snapToDataX: charts[2].snapToDataX,
+				snapToDataY: charts[2].snapToDataY,
+				debug: charts[2].debug
+			}}
 		>
-			<TooltipContext mode={charts[2].mode} snapToDataX={charts[2].snapToDataX} snapToDataY={charts[2].snapToDataY}  debug={charts[2].debug}>
-				<Svg>
-					<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
-					<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
-					<Baseline y />
-					<Points class="fill-blue-500 stroke-blue-800" />
-					{#if charts[2].highlight === 'line'}
-						<HighlightLine {...charts[2].axis && { axis: charts[2].axis}} color="var(--color-blue-500)" />
-					{:else if charts[2].highlight === 'rect'}
-						<HighlightRect {...charts[2].axis && { axis: charts[2].axis}} />
-					{/if}
-				</Svg>
-				<Tooltip header={data => data.name} let:data>
-					<TooltipItem label="date" value={format(data.startDate, 'h:mm a')} />
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
+				<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
+				<Baseline y />
+				<Points class="fill-blue-500 stroke-blue-800" />
+				{#if charts[2].highlight === 'line'}
+					<HighlightLine {...charts[2].axis && { axis: charts[2].axis}} color="var(--color-blue-500)" />
+				{:else if charts[2].highlight === 'rect'}
+					<HighlightRect {...charts[2].axis && { axis: charts[2].axis}} />
+				{/if}
+			</Svg>
+			<Tooltip header={data => data.name} let:data>
+				<TooltipItem label="date" value={format(data.startDate, 'h:mm a')} />
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
@@ -396,29 +407,33 @@ docUrl: $docUrl
 			y="name"
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
+			tooltip={{
+				mode: charts[3].mode,
+				snapToDataX: charts[3].snapToDataX,
+				snapToDataY: charts[3].snapToDataY,
+				debug: charts[3].debug
+			}}
 		>
-			<TooltipContext mode={charts[3].mode} snapToDataX={charts[3].snapToDataX} snapToDataY={charts[3].snapToDataY}  debug={charts[3].debug}>
-				<Svg>
-					<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
-					<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
-					<Baseline y />
-					<ConnectedPoints stroke="#000" />
-					<Points class="fill-blue-500 stroke-blue-800" />
-					{#if charts[3].highlight === 'line'}
-						<HighlightLine {...charts[3].axis && { axis: charts[3].axis}} color="var(--color-blue-500)" />
-					{:else if charts[3].highlight === 'rect'}
-						<HighlightRect {...charts[3].axis && { axis: charts[3].axis}} />
-					{/if}
-				</Svg>
-				<Tooltip header={data => data.name} let:data>
-					<TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
-					<TooltipItem label="end" value={format(data.endDate, 'h:mm a')} />
-					<TooltipSeparator />
-					<TooltipItem label="duration" valueAlign="right">
-						<Duration start={data.startDate} end={data.endDate} />
-					</TooltipItem>
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
+				<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
+				<Baseline y />
+				<ConnectedPoints stroke="#000" />
+				<Points class="fill-blue-500 stroke-blue-800" />
+				{#if charts[3].highlight === 'line'}
+					<HighlightLine {...charts[3].axis && { axis: charts[3].axis}} color="var(--color-blue-500)" />
+				{:else if charts[3].highlight === 'rect'}
+					<HighlightRect {...charts[3].axis && { axis: charts[3].axis}} />
+				{/if}
+			</Svg>
+			<Tooltip header={data => data.name} let:data>
+				<TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
+				<TooltipItem label="end" value={format(data.endDate, 'h:mm a')} />
+				<TooltipSeparator />
+				<TooltipItem label="duration" valueAlign="right">
+					<Duration start={data.startDate} end={data.endDate} />
+				</TooltipItem>
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
@@ -485,29 +500,33 @@ docUrl: $docUrl
 			y="name"
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
+			tooltip={{
+				mode: charts[4].mode,
+				snapToDataX: charts[4].snapToDataX,
+				snapToDataY: charts[4].snapToDataY,
+				debug: charts[4].debug
+			}}
 		>
-			<TooltipContext mode={charts[4].mode} snapToDataX={charts[4].snapToDataX} snapToDataY={charts[4].snapToDataY} debug={charts[4].debug}>
-				<Svg>
-					<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
-					<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
-					<Baseline y />
-					<ConnectedPoints stroke="#000" />
-					<Points class="fill-blue-500 stroke-blue-800" />
-					{#if charts[4].highlight === 'line'}
-						<HighlightLine {...charts[4].axis && { axis: charts[4].axis}} color="var(--color-blue-500)" />
-					{:else if charts[4].highlight === 'rect'}
-						<HighlightRect {...charts[4].axis && { axis: charts[4].axis}} />
-					{/if}
-				</Svg>
-				<Tooltip header={data => data.name} let:data>
-					<TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
-					<TooltipItem label="end" value={format(data.endDate, 'h:mm a')} />
-					<TooltipSeparator />
-					<TooltipItem label="duration" valueAlign="right">
-						<Duration start={data.startDate} end={data.endDate} />
-					</TooltipItem>
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
+				<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
+				<Baseline y />
+				<ConnectedPoints stroke="#000" />
+				<Points class="fill-blue-500 stroke-blue-800" />
+				{#if charts[4].highlight === 'line'}
+					<HighlightLine {...charts[4].axis && { axis: charts[4].axis}} color="var(--color-blue-500)" />
+				{:else if charts[4].highlight === 'rect'}
+					<HighlightRect {...charts[4].axis && { axis: charts[4].axis}} />
+				{/if}
+			</Svg>
+			<Tooltip header={data => data.name} let:data>
+				<TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
+				<TooltipItem label="end" value={format(data.endDate, 'h:mm a')} />
+				<TooltipSeparator />
+				<TooltipItem label="duration" valueAlign="right">
+					<Duration start={data.startDate} end={data.endDate} />
+				</TooltipItem>
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
@@ -575,23 +594,27 @@ docUrl: $docUrl
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
+			tooltip={{
+				mode: charts[5].mode,
+				snapToDataX: charts[5].snapToDataX,
+				snapToDataY: charts[5].snapToDataY,
+				debug: charts[5].debug
+			}}
 		>
-			<TooltipContext mode={charts[5].mode} snapToDataX={charts[5].snapToDataX} snapToDataY={charts[5].snapToDataY}  debug={charts[5].debug}>
-				<Svg>
-					<AxisY gridlines />
-					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-					<Baseline x y />
-					<Bars radius={4} strokeWidth={1} />
-					{#if charts[5].highlight === 'line'}
-						<HighlightLine {...charts[5].axis && { axis: charts[5].axis}} color="var(--color-blue-500)" />
-					{:else if charts[5].highlight === 'rect'}
-						<HighlightRect {...charts[5].axis && { axis: charts[5].axis}} />
-					{/if}
-				</Svg>
-				<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Bars radius={4} strokeWidth={1} />
+				{#if charts[5].highlight === 'line'}
+					<HighlightLine {...charts[5].axis && { axis: charts[5].axis}} color="var(--color-blue-500)" />
+				{:else if charts[5].highlight === 'rect'}
+					<HighlightRect {...charts[5].axis && { axis: charts[5].axis}} />
+				{/if}
+			</Svg>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+			</Tooltip>
     	</Chart>
     </div>
 </Preview>
@@ -659,25 +682,29 @@ docUrl: $docUrl
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
+			tooltip={{
+				mode: charts[6].mode,
+				snapToDataX: charts[6].snapToDataX,
+				snapToDataY: charts[6].snapToDataY,
+				debug: charts[6].debug
+			}}
 		>
-			<TooltipContext mode={charts[6].mode} snapToDataX={charts[6].snapToDataX} snapToDataY={charts[6].snapToDataY}  debug={charts[6].debug}>
-				<Svg>
-					<AxisY gridlines />
-					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-					<Baseline x y />
-					<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
-					<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
-					{#if charts[6].highlight === 'line'}
-						<HighlightLine {...charts[6].axis && { axis: charts[6].axis}} color="var(--color-blue-500)" />
-					{:else if charts[6].highlight === 'rect'}
-						<HighlightRect {...charts[6].axis && { axis: charts[6].axis}} />
-					{/if}
-				</Svg>
-				<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
+				<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
+				{#if charts[6].highlight === 'line'}
+					<HighlightLine {...charts[6].axis && { axis: charts[6].axis}} color="var(--color-blue-500)" />
+				{:else if charts[6].highlight === 'rect'}
+					<HighlightRect {...charts[6].axis && { axis: charts[6].axis}} />
+				{/if}
+			</Svg>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+				<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
@@ -742,23 +769,27 @@ docUrl: $docUrl
 			x="x"
 			y="y"
 			padding={{ left: 30, bottom: 30 }}
+			tooltip={{
+				mode: charts[7].mode,
+				snapToDataX: charts[7].snapToDataX,
+				snapToDataY: charts[7].snapToDataY,
+				debug: charts[7].debug
+			}}
 		>
-			<TooltipContext mode={charts[7].mode} snapToDataX={charts[7].snapToDataX} snapToDataY={charts[7].snapToDataY} debug={charts[7].debug}>
-				<Svg>
-					<AxisY gridlines />
-					<AxisX gridlines />
-					<Points class="fill-blue-500 stroke-blue-800" />
-					{#if charts[7].highlight === 'line'}
-						<HighlightLine {...charts[7].axis && { axis: charts[7].axis}} color="var(--color-blue-500)" />
-					{:else if charts[7].highlight === 'rect'}
-						<HighlightRect {...charts[7].axis && { axis: charts[7].axis}} />
-					{/if}
-				</Svg>
-				<Tooltip let:data>
-					<TooltipItem label="x" value={formatNumberAsStyle(data.x, 'decimal')} />
-					<TooltipItem label="y" value={formatNumberAsStyle(data.y, 'decimal')} />
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX gridlines />
+				<Points class="fill-blue-500 stroke-blue-800" />
+				{#if charts[7].highlight === 'line'}
+					<HighlightLine {...charts[7].axis && { axis: charts[7].axis}} color="var(--color-blue-500)" />
+				{:else if charts[7].highlight === 'rect'}
+					<HighlightRect {...charts[7].axis && { axis: charts[7].axis}} />
+				{/if}
+			</Svg>
+			<Tooltip let:data>
+				<TooltipItem label="x" value={formatNumberAsStyle(data.x, 'decimal')} />
+				<TooltipItem label="y" value={formatNumberAsStyle(data.y, 'decimal')} />
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>

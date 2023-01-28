@@ -21,7 +21,6 @@ docUrl: $docUrl
 	import Bars from '$lib/components/Bars.svelte';
 	import HighlightRect from '$lib/components/HighlightRect.svelte';
 	import Labels from '$lib/components/Labels.svelte';
-	import TooltipContext from '$lib/components/TooltipContext.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -141,19 +140,18 @@ docUrl: $docUrl
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
+			tooltip
 		>
-			<TooltipContext>
-				<Svg>
-					<AxisY gridlines />
-					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-					<Baseline x y />
-					<Bars radius={4} strokeWidth={1} />
-					<HighlightRect />
-				</Svg>
-				<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Bars radius={4} strokeWidth={1} />
+				<HighlightRect />
+			</Svg>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+			</Tooltip>
     	</Chart>
     </div>
 </Preview>
@@ -194,21 +192,20 @@ docUrl: $docUrl
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
+			tooltip
 		>
-			<TooltipContext>
-				<Svg>
-					<AxisY gridlines />
-					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-					<Baseline x y />
-					<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
-					<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
-					<HighlightRect />
-				</Svg>
-				<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
+				<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
+				<HighlightRect />
+			</Svg>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+				<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>

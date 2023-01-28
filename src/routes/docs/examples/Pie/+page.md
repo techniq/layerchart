@@ -14,7 +14,6 @@ docUrl: $docUrl
 	import Arc from '$lib/components/Arc.svelte';
 	import Pie from '$lib/components/Pie.svelte';
 	import Text from '$lib/components/Text.svelte';
-	import TooltipContext from '$lib/components/TooltipContext.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -351,27 +350,26 @@ docUrl: $docUrl
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
+			tooltip={{ mode: 'manual' }}
 		>
-			<TooltipContext mode="manual">
-				<Svg>
-					<Pie />
-				</Svg>
-				<Tooltip
-					header={data => format(data.date, 'eee, MMMM do')}
-					let:data
-				>
-					<TooltipItem
-						label="value"
-						value={formatNumberAsStyle(data.value, 'integer')}
-						valueAlign="right"
-					/>
-					<TooltipItem
-						label="percent"
-						value={formatNumberAsStyle(data.value / dataSum, 'percent')}
-						valueAlign="right"
-					/>
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<Pie />
+			</Svg>
+			<Tooltip
+				header={data => format(data.date, 'eee, MMMM do')}
+				let:data
+			>
+				<TooltipItem
+					label="value"
+					value={formatNumberAsStyle(data.value, 'integer')}
+					valueAlign="right"
+				/>
+				<TooltipItem
+					label="percent"
+					value={formatNumberAsStyle(data.value / dataSum, 'percent')}
+					valueAlign="right"
+				/>
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>

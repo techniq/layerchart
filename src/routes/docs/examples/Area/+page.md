@@ -17,7 +17,6 @@ docUrl: $docUrl
 	import Baseline from '$lib/components/Baseline.svelte';
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
 	import Labels from '$lib/components/Labels.svelte';
-	import TooltipContext from '$lib/components/TooltipContext.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -75,19 +74,18 @@ docUrl: $docUrl
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
+			tooltip
 		>
-			<TooltipContext>
-				<Svg>
-					<AxisY gridlines />
-					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-					<Baseline x y />
-					<Area line={{ width: 2 }} />
-					<HighlightLine color="var(--color-blue-500)" />
-				</Svg>
-				<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Area line={{ width: 2 }} />
+				<HighlightLine color="var(--color-blue-500)" />
+			</Svg>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
@@ -136,22 +134,21 @@ docUrl: $docUrl
 				'var(--color-green-500)',
 			]}
 			padding={{ left: 16, bottom: 24 }}
+			tooltip={{ mode: 'voronoi' }}
 		>
-			<TooltipContext mode="voronoi">
-				<Svg>
-					<AxisY gridlines />
-					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-					<Baseline x y />
-					{#each dataByFruit as [fruit, data]}
-						<Area {data} color={fruitColors[fruit]} line={{ width: 2 }} />
-					{/each}
-					<Labels format="integer" />
-					<HighlightLine />
-				</Svg>
-				<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-					<TooltipItem label={data.fruit} value={formatNumberAsStyle(data.value, 'integer')} />
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				{#each dataByFruit as [fruit, data]}
+					<Area {data} color={fruitColors[fruit]} line={{ width: 2 }} />
+				{/each}
+				<Labels format="integer" />
+				<HighlightLine />
+			</Svg>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label={data.fruit} value={formatNumberAsStyle(data.value, 'integer')} />
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>

@@ -21,7 +21,6 @@ docUrl: $docUrl
 	import HighlightRect from '$lib/components/HighlightRect.svelte';
 	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
-	import TooltipContext from '$lib/components/TooltipContext.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
@@ -69,26 +68,25 @@ docUrl: $docUrl
 			y="name"
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
+			tooltip
 		>
-			<TooltipContext>
-				<Svg>
-					<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
-					<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
-					<Baseline y />
-					<ConnectedPoints stroke="#000" />
-					<Points class="fill-blue-500 stroke-blue-800" />
-					<HighlightLine color="var(--color-blue-500)" />
-					<HighlightRect color="var(--color-blue-500)" />
-				</Svg>
-				<Tooltip header={data => data.name} let:data>
-					<TooltipItem label="start" value={format(data.startDate, 'h:mm:ss')} />
-					<TooltipItem label="end" value={format(data.startDate, 'h:mm:ss')} />
-					<TooltipSeparator />
-					<TooltipItem label="duration" valueAlign="right">
-						<Duration start={data.startDate} end={data.endDate} />
-					</TooltipItem>
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
+				<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
+				<Baseline y />
+				<ConnectedPoints stroke="#000" />
+				<Points class="fill-blue-500 stroke-blue-800" />
+				<HighlightLine color="var(--color-blue-500)" />
+				<HighlightRect color="var(--color-blue-500)" />
+			</Svg>
+			<Tooltip header={data => data.name} let:data>
+				<TooltipItem label="start" value={format(data.startDate, 'h:mm:ss')} />
+				<TooltipItem label="end" value={format(data.startDate, 'h:mm:ss')} />
+				<TooltipSeparator />
+				<TooltipItem label="duration" valueAlign="right">
+					<Duration start={data.startDate} end={data.endDate} />
+				</TooltipItem>
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>

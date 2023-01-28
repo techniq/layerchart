@@ -21,7 +21,6 @@ docUrl: $docUrl
 	import Labels from '$lib/components/Labels.svelte';
 	import Path from '$lib/components/Path.svelte';
 	import Threshold from '$lib/components/Threshold.svelte';
-	import TooltipContext from '$lib/components/TooltipContext.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
@@ -110,54 +109,53 @@ docUrl: $docUrl
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
+			tooltip={{ findTooltipData: 'left' }}
 		>
-			<TooltipContext findTooltipData="left">
-				<Svg>
-					<AxisY gridlines />
-					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-					<Baseline x y />
-					<Threshold curve={curveStepAfter}>
-						<g
-							slot="pathAbove"
-							let:areaPathData
-							let:clipPath
-							let:linePathData
-						>
-							<Path pathData={linePathData} color="black" width="1.5" />
-							<Area
-								pathData={areaPathData}
-								{clipPath}
-								class="fill-green-500"
-							/>
-						</g>
-						<g
-							slot="pathBelow"
-							let:areaPathData
-							let:clipPath
-							let:linePathData
-						>
-							<Path
-								pathData={linePathData}
-								color="black"
-								width="1"
-								stroke-dasharray="4"
-							/>
-							<Area
-								pathData={areaPathData}
-								{clipPath}
-								class="fill-red-500"
-							/>
-						</g>
-					</Threshold>
-					<HighlightRect />
-				</Svg>
-				<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
-					<TooltipSeparator />
-					<TooltipItem label="variance" value={formatNumberAsStyle(data.value - data.baseline, 'integer')} />
-				</Tooltip>
-			</TooltipContext>
+			<Svg>
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+				<Baseline x y />
+				<Threshold curve={curveStepAfter}>
+					<g
+						slot="pathAbove"
+						let:areaPathData
+						let:clipPath
+						let:linePathData
+					>
+						<Path pathData={linePathData} color="black" width="1.5" />
+						<Area
+							pathData={areaPathData}
+							{clipPath}
+							class="fill-green-500"
+						/>
+					</g>
+					<g
+						slot="pathBelow"
+						let:areaPathData
+						let:clipPath
+						let:linePathData
+					>
+						<Path
+							pathData={linePathData}
+							color="black"
+							width="1"
+							stroke-dasharray="4"
+						/>
+						<Area
+							pathData={areaPathData}
+							{clipPath}
+							class="fill-red-500"
+						/>
+					</g>
+				</Threshold>
+				<HighlightRect />
+			</Svg>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+				<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
+				<TooltipSeparator />
+				<TooltipItem label="variance" value={formatNumberAsStyle(data.value - data.baseline, 'integer')} />
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>
