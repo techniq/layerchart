@@ -16,7 +16,7 @@ docUrl: $docUrl
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 		
-	import api from '$lib/components/Tooltip.svelte?raw&sveld';
+	import api from '$lib/components/TooltipContext.svelte?raw&sveld';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Area from '$lib/components/Area.svelte';
@@ -30,7 +30,7 @@ docUrl: $docUrl
 	import HighlightRect from '$lib/components/HighlightRect.svelte';
 	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
-	import Tooltip from '$lib/components/Tooltip.svelte';
+	import TooltipContext from '$lib/components/TooltipContext.svelte';
 	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
@@ -137,7 +137,7 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Tooltip mode={charts[0].mode} snapToDataX={charts[0].snapToDataX} snapToDataY={charts[0].snapToDataY} debug={charts[0].debug}>
+			<TooltipContext mode={charts[0].mode} snapToDataX={charts[0].snapToDataX} snapToDataY={charts[0].snapToDataY} debug={charts[0].debug}>
 				<Svg>
 					<AxisY gridlines />
 					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
@@ -152,7 +152,7 @@ docUrl: $docUrl
 				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')} let:data>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 				</TooltipContainer>
-			</Tooltip>
+			</TooltipContext>
 		</Chart>
 	</div>
 </Preview>
@@ -229,7 +229,7 @@ docUrl: $docUrl
 			]}
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Tooltip mode={charts[1].mode} snapToDataX={charts[1].snapToDataX} snapToDataY={charts[1].snapToDataY} debug={charts[1].debug}>
+			<TooltipContext mode={charts[1].mode} snapToDataX={charts[1].snapToDataX} snapToDataY={charts[1].snapToDataY} debug={charts[1].debug}>
 				<Svg>
 					<AxisY gridlines />
 					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
@@ -246,7 +246,7 @@ docUrl: $docUrl
 						<TooltipItem label="{key}" value={formatNumberAsStyle(data.data[key], 'integer')} />
 					{/each}
 				</TooltipContainer>
-			</Tooltip>
+			</TooltipContext>
 		</Chart>
 	</div>
 </Preview>
@@ -314,7 +314,7 @@ docUrl: $docUrl
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
 		>
-			<Tooltip mode={charts[2].mode} snapToDataX={charts[2].snapToDataX} snapToDataY={charts[2].snapToDataY}  debug={charts[2].debug}>
+			<TooltipContext mode={charts[2].mode} snapToDataX={charts[2].snapToDataX} snapToDataY={charts[2].snapToDataY}  debug={charts[2].debug}>
 				<Svg>
 					<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
 					<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
@@ -329,7 +329,7 @@ docUrl: $docUrl
 				<TooltipContainer header={data => data.name} let:data>
 					<TooltipItem label="date" value={format(data.startDate, 'h:mm a')} />
 				</TooltipContainer>
-			</Tooltip>
+			</TooltipContext>
 		</Chart>
 	</div>
 </Preview>
@@ -397,7 +397,7 @@ docUrl: $docUrl
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
 		>
-			<Tooltip mode={charts[3].mode} snapToDataX={charts[3].snapToDataX} snapToDataY={charts[3].snapToDataY}  debug={charts[3].debug}>
+			<TooltipContext mode={charts[3].mode} snapToDataX={charts[3].snapToDataX} snapToDataY={charts[3].snapToDataY}  debug={charts[3].debug}>
 				<Svg>
 					<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
 					<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
@@ -418,7 +418,7 @@ docUrl: $docUrl
 						<Duration start={data.startDate} end={data.endDate} />
 					</TooltipItem>
 				</TooltipContainer>
-			</Tooltip>
+			</TooltipContext>
 		</Chart>
 	</div>
 </Preview>
@@ -486,7 +486,7 @@ docUrl: $docUrl
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
 		>
-			<Tooltip mode={charts[4].mode} snapToDataX={charts[4].snapToDataX} snapToDataY={charts[4].snapToDataY} debug={charts[4].debug}>
+			<TooltipContext mode={charts[4].mode} snapToDataX={charts[4].snapToDataX} snapToDataY={charts[4].snapToDataY} debug={charts[4].debug}>
 				<Svg>
 					<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
 					<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
@@ -507,7 +507,7 @@ docUrl: $docUrl
 						<Duration start={data.startDate} end={data.endDate} />
 					</TooltipItem>
 				</TooltipContainer>
-			</Tooltip>
+			</TooltipContext>
 		</Chart>
 	</div>
 </Preview>
@@ -576,7 +576,7 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Tooltip mode={charts[5].mode} snapToDataX={charts[5].snapToDataX} snapToDataY={charts[5].snapToDataY}  debug={charts[5].debug}>
+			<TooltipContext mode={charts[5].mode} snapToDataX={charts[5].snapToDataX} snapToDataY={charts[5].snapToDataY}  debug={charts[5].debug}>
 				<Svg>
 					<AxisY gridlines />
 					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
@@ -591,7 +591,7 @@ docUrl: $docUrl
 				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')} let:data>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 				</TooltipContainer>
-			</Tooltip>
+			</TooltipContext>
     	</Chart>
     </div>
 </Preview>
@@ -660,7 +660,7 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Tooltip mode={charts[6].mode} snapToDataX={charts[6].snapToDataX} snapToDataY={charts[6].snapToDataY}  debug={charts[6].debug}>
+			<TooltipContext mode={charts[6].mode} snapToDataX={charts[6].snapToDataX} snapToDataY={charts[6].snapToDataY}  debug={charts[6].debug}>
 				<Svg>
 					<AxisY gridlines />
 					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
@@ -677,7 +677,7 @@ docUrl: $docUrl
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
 				</TooltipContainer>
-			</Tooltip>
+			</TooltipContext>
 		</Chart>
 	</div>
 </Preview>
@@ -743,7 +743,7 @@ docUrl: $docUrl
 			y="y"
 			padding={{ left: 30, bottom: 30 }}
 		>
-			<Tooltip mode={charts[7].mode} snapToDataX={charts[7].snapToDataX} snapToDataY={charts[7].snapToDataY} debug={charts[7].debug}>
+			<TooltipContext mode={charts[7].mode} snapToDataX={charts[7].snapToDataX} snapToDataY={charts[7].snapToDataY} debug={charts[7].debug}>
 				<Svg>
 					<AxisY gridlines />
 					<AxisX gridlines />
@@ -758,7 +758,7 @@ docUrl: $docUrl
 					<TooltipItem label="x" value={formatNumberAsStyle(data.x, 'decimal')} />
 					<TooltipItem label="y" value={formatNumberAsStyle(data.y, 'decimal')} />
 				</TooltipContainer>
-			</Tooltip>
+			</TooltipContext>
 		</Chart>
 	</div>
 </Preview>

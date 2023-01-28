@@ -17,7 +17,7 @@ docUrl: $docUrl
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
 	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
-	import Tooltip from '$lib/components/Tooltip.svelte';
+	import TooltipContext from '$lib/components/TooltipContext.svelte';
 	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -63,7 +63,7 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Tooltip>
+			<TooltipContext>
 				<Svg>
 					<AxisY gridlines />
 					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
@@ -74,7 +74,7 @@ docUrl: $docUrl
 				<TooltipContainer header={data => format(data.date, 'eee, MMMM do')} let:data>
 					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 				</TooltipContainer>
-			</Tooltip>
+			</TooltipContext>
 		</Chart>
 	</div>
 </Preview>

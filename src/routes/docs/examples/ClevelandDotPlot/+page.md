@@ -21,7 +21,7 @@ docUrl: $docUrl
 	import HighlightRect from '$lib/components/HighlightRect.svelte';
 	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
-	import Tooltip from '$lib/components/Tooltip.svelte';
+	import TooltipContext from '$lib/components/TooltipContext.svelte';
 	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
@@ -70,7 +70,7 @@ docUrl: $docUrl
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
 		>
-			<Tooltip>
+			<TooltipContext>
 				<Svg>
 					<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
 					<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
@@ -88,7 +88,7 @@ docUrl: $docUrl
 						<Duration start={data.startDate} end={data.endDate} />
 					</TooltipItem>
 				</TooltipContainer>
-			</Tooltip>
+			</TooltipContext>
 		</Chart>
 	</div>
 </Preview>

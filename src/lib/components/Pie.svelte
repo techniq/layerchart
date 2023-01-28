@@ -8,7 +8,7 @@
 	import Group from './Group.svelte';
 	import { degreesToRadians } from '$lib/utils/math';
 	import { motionStore } from '$lib/stores/motionStore';
-	import { tooltipContext } from './Tooltip.svelte';
+	import { tooltipContext } from './TooltipContext.svelte';
 
 	/*
     TODO:

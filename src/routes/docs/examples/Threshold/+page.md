@@ -21,7 +21,7 @@ docUrl: $docUrl
 	import Labels from '$lib/components/Labels.svelte';
 	import Path from '$lib/components/Path.svelte';
 	import Threshold from '$lib/components/Threshold.svelte';
-	import Tooltip from '$lib/components/Tooltip.svelte';
+	import TooltipContext from '$lib/components/TooltipContext.svelte';
 	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
@@ -111,7 +111,7 @@ docUrl: $docUrl
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<Tooltip findTooltipData="left">
+			<TooltipContext findTooltipData="left">
 				<Svg>
 					<AxisY gridlines />
 					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
@@ -157,7 +157,7 @@ docUrl: $docUrl
 					<TooltipSeparator />
 					<TooltipItem label="variance" value={formatNumberAsStyle(data.value - data.baseline, 'integer')} />
 				</TooltipContainer>
-			</Tooltip>
+			</TooltipContext>
 		</Chart>
 	</div>
 </Preview>

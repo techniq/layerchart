@@ -4,7 +4,7 @@
 	import { fade } from 'svelte/transition';
 	import { writable } from 'svelte/store';
 
-	import { tooltipContext } from './Tooltip.svelte';
+	import { tooltipContext } from './TooltipContext.svelte';
 
 	export let topOffset = 10;
 	export let leftOffset = 10;

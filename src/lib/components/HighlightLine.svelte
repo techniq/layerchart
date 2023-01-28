@@ -6,7 +6,7 @@
 	import { isScaleBand } from '$lib/utils/scales';
 	import Circle from './Circle.svelte';
 	import Line from './Line.svelte';
-	import { tooltipContext } from './Tooltip.svelte';
+	import { tooltipContext } from './TooltipContext.svelte';
 
 	const { xScale, xRange, xGet, yScale, yRange, yGet, zScale } = getContext('LayerCake');
 	const tooltip = tooltipContext();

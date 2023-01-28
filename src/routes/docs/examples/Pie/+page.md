@@ -14,7 +14,7 @@ docUrl: $docUrl
 	import Arc from '$lib/components/Arc.svelte';
 	import Pie from '$lib/components/Pie.svelte';
 	import Text from '$lib/components/Text.svelte';
-	import Tooltip from '$lib/components/Tooltip.svelte';
+	import TooltipContext from '$lib/components/TooltipContext.svelte';
 	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -352,7 +352,7 @@ docUrl: $docUrl
 			rDomain={colorKeys}
 			rRange={keyColors}
 		>
-			<Tooltip mode="manual">
+			<TooltipContext mode="manual">
 				<Svg>
 					<Pie />
 				</Svg>
@@ -365,7 +365,7 @@ docUrl: $docUrl
 						value={formatNumberAsStyle(data.value, 'integer')}
 					/>
 				</TooltipContainer>
-			</Tooltip>
+			</TooltipContext>
 		</Chart>
 	</div>
 </Preview>

@@ -4,7 +4,7 @@
 
 	import { isScaleBand } from '$lib/utils/scales';
 	import Rect from './Rect.svelte';
-	import { tooltipContext } from './Tooltip.svelte';
+	import { tooltipContext } from './TooltipContext.svelte';
 
 	const { flatData, x, xScale, xDomain, xRange, xGet, yScale, yDomain, yRange, yGet } =
 		getContext('LayerCake');
