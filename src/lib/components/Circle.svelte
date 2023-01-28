@@ -18,4 +18,12 @@
 	$: tweened_r.set(r);
 </script>
 
-<circle cx={$tweened_cx} cy={$tweened_cy} r={$tweened_r} {...$$restProps} />
+<circle
+	cx={$tweened_cx}
+	cy={$tweened_cy}
+	r={$tweened_r}
+	{...$$restProps}
+	on:click
+	on:mousemove
+	on:mouseleave
+/>

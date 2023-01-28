@@ -54,4 +54,7 @@
 	fill={color}
 	fill-opacity={opacity}
 	{...$$restProps}
+	on:click
+	on:mousemove
+	on:mouseleave
 />

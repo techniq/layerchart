@@ -21,4 +21,13 @@
 	$: tweened_y2.set(y2);
 </script>
 
-<line x1={$tweened_x1} y1={$tweened_y1} x2={$tweened_x2} y2={$tweened_y2} {...$$restProps} />
+<line
+	x1={$tweened_x1}
+	y1={$tweened_y1}
+	x2={$tweened_x2}
+	y2={$tweened_y2}
+	{...$$restProps}
+	on:click
+	on:mousemove
+	on:mouseleave
+/>
