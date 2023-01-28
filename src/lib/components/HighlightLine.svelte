@@ -8,16 +8,27 @@
 	import Line from './Line.svelte';
 	import { tooltipContext } from './TooltipContext.svelte';
 
-	const { xScale, xRange, xGet, yScale, yRange, yGet, zScale } = getContext('LayerCake');
+	const { xScale, xRange, xGet, yScale, yRange, yGet, rGet, y, config } = getContext('LayerCake');
 	const tooltip = tooltipContext();
 
-	export let color = undefined;
+	export let color: string | ((obj: { value: any; item: any; index: number }) => string) =
+		'var(--color-blue-500)';
 	export let axis: 'x' | 'y' | 'both' | 'none' = 'x';
 
 	// TODO: Fix circle points being backwards for stack (see AreaStack)
 
-	function getColor(index) {
-		return color ?? get(zScale)(index) ?? 'var(--color-blue-500)';
+	function getColor(item: any, index: number = undefined) {
+		if (color) {
+			if (typeof color === 'function') {
+				return color({ value: $y(item), item, index });
+			} else {
+				return color;
+			}
+		} else if ($config.r) {
+			return $rGet(item);
+		} else {
+			return 'var(--color-blue-500)';
+		}
 	}
 
 	let lines = [];
@@ -88,21 +99,22 @@
 			points = x.map((xItem, i) => ({
 				x: xItem + xOffset,
 				y: $yGet($tooltip.data) + yOffset,
-				color: getColor(i)
+				color: getColor($tooltip.data) // TODO: improve
 			}));
 		} else if (Array.isArray($tooltip.data)) {
 			// Stack series
 			points = $tooltip.data.map((yValue, i) => ({
 				x: x + xOffset,
 				y: $yScale(yValue) + yOffset,
-				color: getColor(i)
+				color: getColor($tooltip.data) // TODO: improve
 			}));
 		} else {
 			points = [
 				{
 					x: x + xOffset,
 					y: $yGet($tooltip.data) + yOffset,
-					color: getColor(0)
+					// color: $rGet($tooltip.data) //getColor($tooltip.data)
+					color: getColor($tooltip.data)
 				}
 			];
 		}

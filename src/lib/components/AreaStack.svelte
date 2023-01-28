@@ -5,7 +5,7 @@
 	import Area from './Area.svelte';
 	import Path from './Path.svelte';
 
-	const { data, yScale, zGet } = getContext('LayerCake');
+	const { data, yScale, rGet } = getContext('LayerCake');
 
 	// TODO: Add as generic
 	type Datum = any;
@@ -26,7 +26,7 @@
 			<Path
 				data={seriesData}
 				y={(d) => $yScale(d[1])}
-				color={$zGet(seriesData)}
+				color={$rGet(seriesData)}
 				{curve}
 				{defined}
 				{tweened}
@@ -42,7 +42,7 @@
 			data={seriesData}
 			y0={(d) => $yScale(d[0])}
 			y1={(d) => $yScale(d[1])}
-			color={$zGet(seriesData)}
+			color={$rGet(seriesData)}
 			{curve}
 			{defined}
 			{opacity}

@@ -219,10 +219,10 @@ docUrl: $docUrl
 			xScale={scaleTime()}
 			y={[0,1]}
 			yNice
-			z="key"
-			zScale={scaleOrdinal()}
-			zDomain={keys}
-			zRange={[
+			r="key"
+			rScale={scaleOrdinal()}
+			rDomain={keys}
+			rRange={[
 				'var(--color-red-500)',
 				'var(--color-green-500)',
 				'var(--color-blue-500)',

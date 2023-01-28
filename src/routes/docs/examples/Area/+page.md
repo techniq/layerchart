@@ -127,9 +127,17 @@ docUrl: $docUrl
 			y="value"
 			yDomain={[0, null]}
 			yNice
+			r="fruit"
+			rScale={scaleOrdinal()}
+			rDomain={dataByFruit.map(d => d[0])}
+			rRange={[
+				'var(--color-blue-500)',
+				'var(--color-purple-500)',
+				'var(--color-green-500)',
+			]}
 			padding={{ left: 16, bottom: 24 }}
 		>
-			<TooltipContext let:data mode="voronoi">
+			<TooltipContext mode="voronoi">
 				<Svg>
 					<AxisY gridlines />
 					<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
@@ -138,9 +146,9 @@ docUrl: $docUrl
 						<Area {data} color={fruitColors[fruit]} line={{ width: 2 }} />
 					{/each}
 					<Labels format="integer" />
-					<HighlightLine color={fruitColors[data?.fruit]} />
+					<HighlightLine />
 				</Svg>
-				<Tooltip header={data => format(data.date, 'eee, MMMM do')}>
+				<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
 					<TooltipItem label={data.fruit} value={formatNumberAsStyle(data.value, 'integer')} />
 				</Tooltip>
 			</TooltipContext>
