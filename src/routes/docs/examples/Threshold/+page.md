@@ -22,7 +22,6 @@ docUrl: $docUrl
 	import Path from '$lib/components/Path.svelte';
 	import Threshold from '$lib/components/Threshold.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
-	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
@@ -110,6 +109,7 @@ docUrl: $docUrl
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
+			tooltip={{ findTooltipData: 'left' }}
 		>
 			<Svg>
 				<AxisY gridlines />
@@ -148,17 +148,13 @@ docUrl: $docUrl
 						/>
 					</g>
 				</Threshold>
+				<HighlightRect />
 			</Svg>
-			<Tooltip findTooltipData="left" let:data>
-				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
-					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
-					<TooltipSeparator />
-					<TooltipItem label="variance" value={formatNumberAsStyle(data.value - data.baseline, 'integer')} />
-				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightRect {data} />
-				</g>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+				<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
+				<TooltipSeparator />
+				<TooltipItem label="variance" value={formatNumberAsStyle(data.value - data.baseline, 'integer')} />
 			</Tooltip>
 		</Chart>
 	</div>

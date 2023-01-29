@@ -40,7 +40,16 @@
 	}
 </script>
 
-<path class="path-line" d={$tweened_d} stroke={color} stroke-width={width} {...$$restProps} />
+<path
+	class="path-line"
+	d={$tweened_d}
+	stroke={color}
+	stroke-width={width}
+	{...$$restProps}
+	on:click
+	on:mousemove
+	on:mouseleave
+/>
 
 <style lang="postcss">
 	.path-line {

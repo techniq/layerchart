@@ -22,7 +22,6 @@ docUrl: $docUrl
 	import HighlightRect from '$lib/components/HighlightRect.svelte';
 	import Labels from '$lib/components/Labels.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
-	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
@@ -141,20 +140,17 @@ docUrl: $docUrl
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
+			tooltip
 		>
 			<Svg>
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Bars radius={4} strokeWidth={1} />
+				<HighlightRect />
 			</Svg>
-			<Tooltip let:data>
-				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
-					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightRect {data} />
-				</g>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 			</Tooltip>
     	</Chart>
     </div>
@@ -196,6 +192,7 @@ docUrl: $docUrl
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
+			tooltip
 		>
 			<Svg>
 				<AxisY gridlines />
@@ -203,15 +200,11 @@ docUrl: $docUrl
 				<Baseline x y />
 				<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
 				<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
+				<HighlightRect />
 			</Svg>
-			<Tooltip let:data>
-				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
-					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
-				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightRect {data} />
-				</g>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+				<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
 			</Tooltip>
 		</Chart>
 	</div>

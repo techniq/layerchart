@@ -31,7 +31,6 @@ docUrl: $docUrl
 	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
-	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
@@ -56,16 +55,16 @@ docUrl: $docUrl
 	let showVoronoi = false;
 	let showQuadtree = false;
 
-	let charts = [
-		{ mode: 'bisect-x', highlight: 'line', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
-		{ mode: 'bisect-x', highlight: 'line', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
-		{ mode: 'bisect-x', highlight: 'line', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
-		{ mode: 'bounds', highlight: 'rect', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
-		{ mode: 'bounds', highlight: 'rect', axis: 'both', snapToDataX: false, snapToDataY: false, debug: false },
-		{ mode: 'band', highlight: 'rect', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
-		{ mode: 'band', highlight: 'rect', axis: undefined,  snapToDataX: false, snapToDataY: false, debug: false },
-		{ mode: 'voronoi', highlight: 'line', axis: 'both', snapToDataX: false, snapToDataY: false, debug: false },
-	]
+	let charts = {
+		area: { mode: 'bisect-x', highlight: 'line', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
+		areaStack: { mode: 'voronoi', highlight: 'line', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
+		dateTime: { mode: 'bisect-x', highlight: 'line', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
+		duration: { mode: 'bounds', highlight: 'rect', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
+		multiDuration: { mode: 'bounds', highlight: 'rect', axis: 'both', snapToDataX: false, snapToDataY: false, debug: false },
+		bars: { mode: 'band', highlight: 'rect', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
+		multiBars: { mode: 'band', highlight: 'rect', axis: undefined,  snapToDataX: false, snapToDataY: false, debug: false },
+		scatter: { mode: 'voronoi', highlight: 'line', axis: 'both', snapToDataX: false, snapToDataY: false, debug: false },
+	}
 
 </script>
 
@@ -81,7 +80,7 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<ToggleGroup bind:value={charts[0].mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.area.mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
 			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
 			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
@@ -92,14 +91,14 @@ docUrl: $docUrl
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<ToggleGroup bind:value={charts[0].highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.area.highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="none">none</ToggleOption>
 			<ToggleOption value="line">line</ToggleOption>
 			<ToggleOption value="rect">rect</ToggleOption>
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<ToggleGroup bind:value={charts[0].axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.area.axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value={undefined}>default</ToggleOption>
 			<ToggleOption value="x">x</ToggleOption>
 			<ToggleOption value="y">y</ToggleOption>
@@ -110,19 +109,19 @@ docUrl: $docUrl
 	<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<ToggleGroup bind:value={charts[0].snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.area.snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 			<span>y:</span>
-			<ToggleGroup bind:value={charts[0].snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.area.snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
-		<Switch bind:checked={charts[0].debug} {id} />
+		<Switch bind:checked={charts.area.debug} {id} />
 	</Field>
 </div>
 
@@ -136,24 +135,26 @@ docUrl: $docUrl
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
+			tooltip={{
+				mode: charts.area.mode,
+				snapToDataX: charts.area.snapToDataX,
+				snapToDataY: charts.area.snapToDataY,
+				debug: charts.area.debug
+			}}
 		>
 			<Svg>
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Area line={{ width: 2 }} />
+				{#if charts.area.highlight === 'line'}
+					<HighlightLine {...charts.area.axis && { axis: charts.area.axis}} color="var(--color-blue-500)" />
+				{:else if charts.area.highlight === 'rect'}
+					<HighlightRect {...charts.area.axis && { axis: charts.area.axis}} />
+				{/if}
 			</Svg>
-			<Tooltip let:data mode={charts[0].mode} snapToDataX={charts[0].snapToDataX} snapToDataY={charts[0].snapToDataY} debug={charts[0].debug}>
-				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
-					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-				</TooltipContainer>
-				<g slot="highlight">
-					{#if charts[0].highlight === 'line'}
-						<HighlightLine {data} {...charts[0].axis && { axis: charts[0].axis}} color="var(--color-blue-500)" />
-					{:else if charts[0].highlight === 'rect'}
-						<HighlightRect {data} {...charts[0].axis && { axis: charts[0].axis}} />
-					{/if}
-				</g>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 			</Tooltip>
 		</Chart>
 	</div>
@@ -163,11 +164,11 @@ docUrl: $docUrl
 
 ### x: scaleTime, y: scaleLinear (multi/stack)
 
-### bisect-x recommended. voronoi and quadtree supported. bounds and band to be improved
+### voronoi and quadtree recommended. bisect-x supported. bounds and band to be improved
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<ToggleGroup bind:value={charts[1].mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.areaStack.mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
 			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
 			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
@@ -178,14 +179,14 @@ docUrl: $docUrl
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<ToggleGroup bind:value={charts[1].highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.areaStack.highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="none">none</ToggleOption>
 			<ToggleOption value="line">line</ToggleOption>
 			<ToggleOption value="rect">rect</ToggleOption>
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<ToggleGroup bind:value={charts[1].axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.areaStack.axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value={undefined}>default</ToggleOption>
 			<ToggleOption value="x">x</ToggleOption>
 			<ToggleOption value="y">y</ToggleOption>
@@ -196,19 +197,19 @@ docUrl: $docUrl
 	<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<ToggleGroup bind:value={charts[1].snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.areaStack.snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 			<span>y:</span>
-			<ToggleGroup bind:value={charts[1].snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.areaStack.snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
-		<Switch bind:checked={charts[1].debug} {id} />
+		<Switch bind:checked={charts.areaStack.debug} {id} />
 	</Field>
 </div>
 
@@ -221,35 +222,37 @@ docUrl: $docUrl
 			xScale={scaleTime()}
 			y={[0,1]}
 			yNice
-			z="key"
-			zScale={scaleOrdinal()}
-			zDomain={keys}
-			zRange={[
+			r="key"
+			rScale={scaleOrdinal()}
+			rDomain={keys}
+			rRange={[
 				'var(--color-red-500)',
 				'var(--color-green-500)',
 				'var(--color-blue-500)',
 			]}
 			padding={{ left: 16, bottom: 24 }}
+			tooltip={{
+				mode: charts.areaStack.mode,
+				snapToDataX: charts.areaStack.snapToDataX,
+				snapToDataY: charts.areaStack.snapToDataY,
+				debug: charts.areaStack.debug
+			}}
 		>
 			<Svg>
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<AreaStack line={{ width: 2 }} />
+				{#if charts.areaStack.highlight === 'line'}
+					<HighlightLine {...charts.areaStack.axis && { axis: charts.areaStack.axis}} color="var(--color-blue-500)" />
+				{:else if charts.areaStack.highlight === 'rect'}
+					<HighlightRect {...charts.areaStack.axis && { axis: charts.areaStack.axis}} />
+				{/if}
 			</Svg>
-			<Tooltip let:data mode={charts[1].mode} snapToDataX={charts[1].snapToDataX} snapToDataY={charts[1].snapToDataY} debug={charts[1].debug}>
-				<TooltipContainer header={format(data.data.date, 'eee, MMMM do')}>
-					{#each keys as key}
-						<TooltipItem label="{key}" value={formatNumberAsStyle(data.data[key], 'integer')} />
-					{/each}
-				</TooltipContainer>
-				<g slot="highlight">
-					{#if charts[1].highlight === 'line'}
-						<HighlightLine {data} {...charts[1].axis && { axis: charts[1].axis}} color="var(--color-blue-500)" />
-					{:else if charts[1].highlight === 'rect'}
-						<HighlightRect {data} {...charts[1].axis && { axis: charts[1].axis}} />
-					{/if}
-				</g>
+			<Tooltip header={data => format(data.data.date, 'eee, MMMM do')} let:data>
+				{#each keys as key}
+					<TooltipItem label="{key}" value={formatNumberAsStyle(data.data[key], 'integer')} />
+				{/each}
 			</Tooltip>
 		</Chart>
 	</div>
@@ -263,7 +266,7 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<ToggleGroup bind:value={charts[2].mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.dateTime.mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
 			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
 			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
@@ -274,14 +277,14 @@ docUrl: $docUrl
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<ToggleGroup bind:value={charts[2].highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.dateTime.highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="none">none</ToggleOption>
 			<ToggleOption value="line">line</ToggleOption>
 			<ToggleOption value="rect">rect</ToggleOption>
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<ToggleGroup bind:value={charts[2].axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.dateTime.axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value={undefined}>default</ToggleOption>
 			<ToggleOption value="x">x</ToggleOption>
 			<ToggleOption value="y">y</ToggleOption>
@@ -292,19 +295,19 @@ docUrl: $docUrl
 		<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<ToggleGroup bind:value={charts[2].snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.dateTime.snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 			<span>y:</span>
-			<ToggleGroup bind:value={charts[2].snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.dateTime.snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
-		<Switch bind:checked={charts[2].debug} {id} />
+		<Switch bind:checked={charts.dateTime.debug} {id} />
 	</Field>
 </div>
 
@@ -317,24 +320,26 @@ docUrl: $docUrl
 			y="name"
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
+			tooltip={{
+				mode: charts.dateTime.mode,
+				snapToDataX: charts.dateTime.snapToDataX,
+				snapToDataY: charts.dateTime.snapToDataY,
+				debug: charts.dateTime.debug
+			}}
 		>
 			<Svg>
 				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
 				<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
 				<Baseline y />
 				<Points class="fill-blue-500 stroke-blue-800" />
+				{#if charts.dateTime.highlight === 'line'}
+					<HighlightLine {...charts.dateTime.axis && { axis: charts.dateTime.axis}} color="var(--color-blue-500)" />
+				{:else if charts.dateTime.highlight === 'rect'}
+					<HighlightRect {...charts.dateTime.axis && { axis: charts.dateTime.axis}} />
+				{/if}
 			</Svg>
-			<Tooltip let:data mode={charts[2].mode} snapToDataX={charts[2].snapToDataX} snapToDataY={charts[2].snapToDataY}  debug={charts[2].debug}>
-				<TooltipContainer header={data.name}>
-					<TooltipItem label="date" value={format(data.startDate, 'h:mm a')} />
-				</TooltipContainer>
-				<g slot="highlight">
-					{#if charts[2].highlight === 'line'}
-						<HighlightLine {data} {...charts[2].axis && { axis: charts[2].axis}} color="var(--color-blue-500)" />
-					{:else if charts[2].highlight === 'rect'}
-						<HighlightRect {data} {...charts[2].axis && { axis: charts[2].axis}} />
-					{/if}
-				</g>
+			<Tooltip header={data => data.name} let:data>
+				<TooltipItem label="date" value={format(data.startDate, 'h:mm a')} />
 			</Tooltip>
 		</Chart>
 	</div>
@@ -348,7 +353,7 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<ToggleGroup bind:value={charts[3].mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.duration.mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
 			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
 			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
@@ -359,14 +364,14 @@ docUrl: $docUrl
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<ToggleGroup bind:value={charts[3].highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.duration.highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="none">none</ToggleOption>
 			<ToggleOption value="line">line</ToggleOption>
 			<ToggleOption value="rect">rect</ToggleOption>
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<ToggleGroup bind:value={charts[3].axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.duration.axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value={undefined}>default</ToggleOption>
 			<ToggleOption value="x">x</ToggleOption>
 			<ToggleOption value="y">y</ToggleOption>
@@ -377,19 +382,19 @@ docUrl: $docUrl
 	<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<ToggleGroup bind:value={charts[3].snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.duration.snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 			<span>y:</span>
-			<ToggleGroup bind:value={charts[3].snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.duration.snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
-		<Switch bind:checked={charts[3].debug} {id} />
+		<Switch bind:checked={charts.duration.debug} {id} />
 	</Field>
 </div>
 
@@ -402,6 +407,12 @@ docUrl: $docUrl
 			y="name"
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
+			tooltip={{
+				mode: charts.duration.mode,
+				snapToDataX: charts.duration.snapToDataX,
+				snapToDataY: charts.duration.snapToDataY,
+				debug: charts.duration.debug
+			}}
 		>
 			<Svg>
 				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
@@ -409,23 +420,19 @@ docUrl: $docUrl
 				<Baseline y />
 				<ConnectedPoints stroke="#000" />
 				<Points class="fill-blue-500 stroke-blue-800" />
+				{#if charts.duration.highlight === 'line'}
+					<HighlightLine {...charts.duration.axis && { axis: charts.duration.axis}} color="var(--color-blue-500)" />
+				{:else if charts.duration.highlight === 'rect'}
+					<HighlightRect {...charts.duration.axis && { axis: charts.duration.axis}} />
+				{/if}
 			</Svg>
-			<Tooltip let:data mode={charts[3].mode} snapToDataX={charts[3].snapToDataX} snapToDataY={charts[3].snapToDataY}  debug={charts[3].debug}>
-				<TooltipContainer header={data.name}>
-					<TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
-					<TooltipItem label="end" value={format(data.endDate, 'h:mm a')} />
-					<TooltipSeparator />
-					<TooltipItem label="duration" valueAlign="right">
-						<Duration start={data.startDate} end={data.endDate} />
-					</TooltipItem>
-				</TooltipContainer>
-				<g slot="highlight">
-					{#if charts[3].highlight === 'line'}
-						<HighlightLine {data} {...charts[3].axis && { axis: charts[3].axis}} color="var(--color-blue-500)" />
-					{:else if charts[3].highlight === 'rect'}
-						<HighlightRect {data} {...charts[3].axis && { axis: charts[3].axis}} />
-					{/if}
-				</g>
+			<Tooltip header={data => data.name} let:data>
+				<TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
+				<TooltipItem label="end" value={format(data.endDate, 'h:mm a')} />
+				<TooltipSeparator />
+				<TooltipItem label="duration" valueAlign="right">
+					<Duration start={data.startDate} end={data.endDate} />
+				</TooltipItem>
 			</Tooltip>
 		</Chart>
 	</div>
@@ -439,7 +446,7 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<ToggleGroup bind:value={charts[4].mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.multiDuration.mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
 			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
 			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
@@ -450,14 +457,14 @@ docUrl: $docUrl
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<ToggleGroup bind:value={charts[4].highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.multiDuration.highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="none">none</ToggleOption>
 			<ToggleOption value="line">line</ToggleOption>
 			<ToggleOption value="rect">rect</ToggleOption>
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<ToggleGroup bind:value={charts[4].axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.multiDuration.axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value={undefined}>default</ToggleOption>
 			<ToggleOption value="x">x</ToggleOption>
 			<ToggleOption value="y">y</ToggleOption>
@@ -468,19 +475,19 @@ docUrl: $docUrl
 	<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<ToggleGroup bind:value={charts[4].snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.multiDuration.snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 			<span>y:</span>
-			<ToggleGroup bind:value={charts[4].snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.multiDuration.snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
-		<Switch bind:checked={charts[4].debug} {id} />
+		<Switch bind:checked={charts.multiDuration.debug} {id} />
 	</Field>
 </div>
 
@@ -493,6 +500,12 @@ docUrl: $docUrl
 			y="name"
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
+			tooltip={{
+				mode: charts.multiDuration.mode,
+				snapToDataX: charts.multiDuration.snapToDataX,
+				snapToDataY: charts.multiDuration.snapToDataY,
+				debug: charts.multiDuration.debug
+			}}
 		>
 			<Svg>
 				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
@@ -500,23 +513,19 @@ docUrl: $docUrl
 				<Baseline y />
 				<ConnectedPoints stroke="#000" />
 				<Points class="fill-blue-500 stroke-blue-800" />
+				{#if charts.multiDuration.highlight === 'line'}
+					<HighlightLine {...charts.multiDuration.axis && { axis: charts.multiDuration.axis}} color="var(--color-blue-500)" />
+				{:else if charts.multiDuration.highlight === 'rect'}
+					<HighlightRect {...charts.multiDuration.axis && { axis: charts.multiDuration.axis}} />
+				{/if}
 			</Svg>
-			<Tooltip let:data mode={charts[4].mode} snapToDataX={charts[4].snapToDataX} snapToDataY={charts[4].snapToDataY} debug={charts[4].debug}>
-				<TooltipContainer header={data.name}>
-					<TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
-					<TooltipItem label="end" value={format(data.endDate, 'h:mm a')} />
-					<TooltipSeparator />
-					<TooltipItem label="duration" valueAlign="right">
-						<Duration start={data.startDate} end={data.endDate} />
-					</TooltipItem>
-				</TooltipContainer>
-				<g slot="highlight">
-					{#if charts[4].highlight === 'line'}
-						<HighlightLine {data} {...charts[4].axis && { axis: charts[4].axis}} color="var(--color-blue-500)" />
-					{:else if charts[4].highlight === 'rect'}
-						<HighlightRect {data} {...charts[4].axis && { axis: charts[4].axis}} />
-					{/if}
-				</g>
+			<Tooltip header={data => data.name} let:data>
+				<TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
+				<TooltipItem label="end" value={format(data.endDate, 'h:mm a')} />
+				<TooltipSeparator />
+				<TooltipItem label="duration" valueAlign="right">
+					<Duration start={data.startDate} end={data.endDate} />
+				</TooltipItem>
 			</Tooltip>
 		</Chart>
 	</div>
@@ -530,7 +539,7 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<ToggleGroup bind:value={charts[5].mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.bars.mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
 			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
 			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
@@ -541,14 +550,14 @@ docUrl: $docUrl
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<ToggleGroup bind:value={charts[5].highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.bars.highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="none">none</ToggleOption>
 			<ToggleOption value="line">line</ToggleOption>
 			<ToggleOption value="rect">rect</ToggleOption>
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<ToggleGroup bind:value={charts[5].axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.bars.axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value={undefined}>default</ToggleOption>
 			<ToggleOption value="x">x</ToggleOption>
 			<ToggleOption value="y">y</ToggleOption>
@@ -559,19 +568,19 @@ docUrl: $docUrl
 	<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<ToggleGroup bind:value={charts[5].snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.bars.snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 			<span>y:</span>
-			<ToggleGroup bind:value={charts[5].snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.bars.snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
-		<Switch bind:checked={charts[5].debug} {id} />
+		<Switch bind:checked={charts.bars.debug} {id} />
 	</Field>
 </div>
 
@@ -585,24 +594,26 @@ docUrl: $docUrl
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
+			tooltip={{
+				mode: charts.bars.mode,
+				snapToDataX: charts.bars.snapToDataX,
+				snapToDataY: charts.bars.snapToDataY,
+				debug: charts.bars.debug
+			}}
 		>
 			<Svg>
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Bars radius={4} strokeWidth={1} />
+				{#if charts.bars.highlight === 'line'}
+					<HighlightLine {...charts.bars.axis && { axis: charts.bars.axis}} color="var(--color-blue-500)" />
+				{:else if charts.bars.highlight === 'rect'}
+					<HighlightRect {...charts.bars.axis && { axis: charts.bars.axis}} />
+				{/if}
 			</Svg>
-			<Tooltip let:data mode={charts[5].mode} snapToDataX={charts[5].snapToDataX} snapToDataY={charts[5].snapToDataY}  debug={charts[5].debug}>
-				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
-					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-				</TooltipContainer>
-				<g slot="highlight">
-					{#if charts[5].highlight === 'line'}
-						<HighlightLine {data} {...charts[5].axis && { axis: charts[5].axis}} color="var(--color-blue-500)" />
-					{:else if charts[5].highlight === 'rect'}
-						<HighlightRect {data} {...charts[5].axis && { axis: charts[5].axis}} />
-					{/if}
-				</g>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 			</Tooltip>
     	</Chart>
     </div>
@@ -616,7 +627,7 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<ToggleGroup bind:value={charts[6].mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.multiBars.mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
 			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
 			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
@@ -627,14 +638,14 @@ docUrl: $docUrl
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<ToggleGroup bind:value={charts[6].highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.multiBars.highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="none">none</ToggleOption>
 			<ToggleOption value="line">line</ToggleOption>
 			<ToggleOption value="rect">rect</ToggleOption>
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<ToggleGroup bind:value={charts[6].axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.multiBars.axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value={undefined}>default</ToggleOption>
 			<ToggleOption value="x">x</ToggleOption>
 			<ToggleOption value="y">y</ToggleOption>
@@ -645,19 +656,19 @@ docUrl: $docUrl
 	<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<ToggleGroup bind:value={charts[6].snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.multiBars.snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 			<span>y:</span>
-			<ToggleGroup bind:value={charts[6].snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.multiBars.snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
-		<Switch bind:checked={charts[6].debug} {id} />
+		<Switch bind:checked={charts.multiBars.debug} {id} />
 	</Field>
 </div>
 
@@ -671,6 +682,12 @@ docUrl: $docUrl
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
+			tooltip={{
+				mode: charts.multiBars.mode,
+				snapToDataX: charts.multiBars.snapToDataX,
+				snapToDataY: charts.multiBars.snapToDataY,
+				debug: charts.multiBars.debug
+			}}
 		>
 			<Svg>
 				<AxisY gridlines />
@@ -678,19 +695,15 @@ docUrl: $docUrl
 				<Baseline x y />
 				<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
 				<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
+				{#if charts.multiBars.highlight === 'line'}
+					<HighlightLine {...charts.multiBars.axis && { axis: charts.multiBars.axis}} color="var(--color-blue-500)" />
+				{:else if charts.multiBars.highlight === 'rect'}
+					<HighlightRect {...charts.multiBars.axis && { axis: charts.multiBars.axis}} />
+				{/if}
 			</Svg>
-			<Tooltip let:data mode={charts[6].mode} snapToDataX={charts[6].snapToDataX} snapToDataY={charts[6].snapToDataY}  debug={charts[6].debug}>
-				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
-					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-					<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
-				</TooltipContainer>
-				<g slot="highlight">
-					{#if charts[6].highlight === 'line'}
-						<HighlightLine {data} {...charts[6].axis && { axis: charts[6].axis}} color="var(--color-blue-500)" />
-					{:else if charts[6].highlight === 'rect'}
-						<HighlightRect {data} {...charts[6].axis && { axis: charts[6].axis}} />
-					{/if}
-				</g>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+				<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
 			</Tooltip>
 		</Chart>
 	</div>
@@ -704,7 +717,7 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
-		<ToggleGroup bind:value={charts[7].mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.scatter.mode} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
 			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
 			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
@@ -715,14 +728,14 @@ docUrl: $docUrl
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight">
-		<ToggleGroup bind:value={charts[7].highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.scatter.highlight} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value="none">none</ToggleOption>
 			<ToggleOption value="line">line</ToggleOption>
 			<ToggleOption value="rect">rect</ToggleOption>
 		</ToggleGroup>
 	</Field>
 	<Field label="Highlight Axis">
-		<ToggleGroup bind:value={charts[7].axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup bind:value={charts.scatter.axis} contained classes={{ root: 'w-full', options: 'w-full' }}>
 			<ToggleOption value={undefined}>default</ToggleOption>
 			<ToggleOption value="x">x</ToggleOption>
 			<ToggleOption value="y">y</ToggleOption>
@@ -733,19 +746,19 @@ docUrl: $docUrl
 	<Field label="Snap to Data">
 		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
 			<span>x:</span>
-			<ToggleGroup bind:value={charts[7].snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.scatter.snapToDataX} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 			<span>y:</span>
-			<ToggleGroup bind:value={charts[7].snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup bind:value={charts.scatter.snapToDataY} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={false}>off</ToggleOption>
 				<ToggleOption value={true}>on</ToggleOption>
 			</ToggleGroup>
 		</div>
 	</Field>
 	<Field label="Debug" let:id>
-		<Switch bind:checked={charts[7].debug} {id} />
+		<Switch bind:checked={charts.scatter.debug} {id} />
 	</Field>
 </div>
 
@@ -756,24 +769,26 @@ docUrl: $docUrl
 			x="x"
 			y="y"
 			padding={{ left: 30, bottom: 30 }}
+			tooltip={{
+				mode: charts.scatter.mode,
+				snapToDataX: charts.scatter.snapToDataX,
+				snapToDataY: charts.scatter.snapToDataY,
+				debug: charts.scatter.debug
+			}}
 		>
 			<Svg>
 				<AxisY gridlines />
 				<AxisX gridlines />
 				<Points class="fill-blue-500 stroke-blue-800" />
+				{#if charts.scatter.highlight === 'line'}
+					<HighlightLine {...charts.scatter.axis && { axis: charts.scatter.axis}} color="var(--color-blue-500)" />
+				{:else if charts.scatter.highlight === 'rect'}
+					<HighlightRect {...charts.scatter.axis && { axis: charts.scatter.axis}} />
+				{/if}
 			</Svg>
-			<Tooltip let:data mode={charts[7].mode} snapToDataX={charts[7].snapToDataX} snapToDataY={charts[7].snapToDataY} debug={charts[7].debug}>
-				<TooltipContainer>
-					<TooltipItem label="x" value={formatNumberAsStyle(data.x, 'decimal')} />
-					<TooltipItem label="y" value={formatNumberAsStyle(data.y, 'decimal')} />
-				</TooltipContainer>
-				<g slot="highlight">
-					{#if charts[7].highlight === 'line'}
-						<HighlightLine {data} {...charts[7].axis && { axis: charts[7].axis}} color="var(--color-blue-500)" />
-					{:else if charts[7].highlight === 'rect'}
-						<HighlightRect {data} {...charts[7].axis && { axis: charts[7].axis}} />
-					{/if}
-				</g>
+			<Tooltip let:data>
+				<TooltipItem label="x" value={formatNumberAsStyle(data.x, 'decimal')} />
+				<TooltipItem label="y" value={formatNumberAsStyle(data.y, 'decimal')} />
 			</Tooltip>
 		</Chart>
 	</div>

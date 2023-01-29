@@ -18,7 +18,6 @@ docUrl: $docUrl
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
 	import Labels from '$lib/components/Labels.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
-	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
@@ -75,20 +74,17 @@ docUrl: $docUrl
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
+			tooltip
 		>
 			<Svg>
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Area line={{ width: 2 }} />
+				<HighlightLine color="var(--color-blue-500)" />
 			</Svg>
-			<Tooltip let:data>
-				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
-					<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightLine {data} color="var(--color-blue-500)" />
-				</g>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
 			</Tooltip>
 		</Chart>
 	</div>
@@ -129,7 +125,16 @@ docUrl: $docUrl
 			y="value"
 			yDomain={[0, null]}
 			yNice
+			r="fruit"
+			rScale={scaleOrdinal()}
+			rDomain={dataByFruit.map(d => d[0])}
+			rRange={[
+				'var(--color-blue-500)',
+				'var(--color-purple-500)',
+				'var(--color-green-500)',
+			]}
 			padding={{ left: 16, bottom: 24 }}
+			tooltip={{ mode: 'voronoi' }}
 		>
 			<Svg>
 				<AxisY gridlines />
@@ -139,14 +144,10 @@ docUrl: $docUrl
 					<Area {data} color={fruitColors[fruit]} line={{ width: 2 }} />
 				{/each}
 				<Labels format="integer" />
+				<HighlightLine />
 			</Svg>
-			<Tooltip let:data mode="voronoi">
-				<TooltipContainer header={format(data.date, 'eee, MMMM do')}>
-					<TooltipItem label={data.fruit} value={formatNumberAsStyle(data.value, 'integer')} />
-				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightLine {data} color={fruitColors[data.fruit]} />
-				</g>
+			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label={data.fruit} value={formatNumberAsStyle(data.value, 'integer')} />
 			</Tooltip>
 		</Chart>
 	</div>

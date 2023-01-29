@@ -22,7 +22,6 @@ docUrl: $docUrl
 	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
-	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
@@ -69,6 +68,7 @@ docUrl: $docUrl
 			y="name"
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
+			tooltip
 		>
 			<Svg>
 				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
@@ -76,20 +76,16 @@ docUrl: $docUrl
 				<Baseline y />
 				<ConnectedPoints stroke="#000" />
 				<Points class="fill-blue-500 stroke-blue-800" />
+				<HighlightLine color="var(--color-blue-500)" />
+				<HighlightRect color="var(--color-blue-500)" />
 			</Svg>
-			<Tooltip let:data>
-				<TooltipContainer header={data.name}>
-					<TooltipItem label="start" value={format(data.startDate, 'h:mm:ss')} />
-					<TooltipItem label="end" value={format(data.startDate, 'h:mm:ss')} />
-					<TooltipSeparator />
-					<TooltipItem label="duration" valueAlign="right">
-						<Duration start={data.startDate} end={data.endDate} />
-					</TooltipItem>
-				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightLine {data} color="var(--color-blue-500)" />
-					<HighlightRect {data} color="var(--color-blue-500)" />
-				</g>
+			<Tooltip header={data => data.name} let:data>
+				<TooltipItem label="start" value={format(data.startDate, 'h:mm:ss')} />
+				<TooltipItem label="end" value={format(data.startDate, 'h:mm:ss')} />
+				<TooltipSeparator />
+				<TooltipItem label="duration" valueAlign="right">
+					<Duration start={data.startDate} end={data.endDate} />
+				</TooltipItem>
 			</Tooltip>
 		</Chart>
 	</div>

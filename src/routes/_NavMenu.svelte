@@ -121,6 +121,12 @@
 <div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Interactions</div>
 <NavItem text="Tooltip" currentUrl={$page.url} path="/docs/components/Tooltip" class="pl-6 py-2" />
 <NavItem
+	text="TooltipContext"
+	currentUrl={$page.url}
+	path="/docs/components/TooltipContext"
+	class="pl-6 py-2"
+/>
+<NavItem
 	text="HighlightRect"
 	currentUrl={$page.url}
 	path="/docs/components/HighlightRect"

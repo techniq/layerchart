@@ -14,6 +14,8 @@ docUrl: $docUrl
 	import Arc from '$lib/components/Arc.svelte';
 	import Pie from '$lib/components/Pie.svelte';
 	import Text from '$lib/components/Text.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
+	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import { createDateSeries } from '$lib/utils/genData';
@@ -281,6 +283,34 @@ docUrl: $docUrl
 							padAngle={arc.padAngle}
 							fill={keyColors[index]}
 							offset={index === 0 ? 16 : 0}
+						/>
+					{/each}
+				</Pie>
+			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Centroid labels
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="value"
+			r="date"
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
+		>
+			<Svg>
+				<Pie let:arcs>
+					{#each arcs as arc, index}
+						<Arc
+							startAngle={arc.startAngle}
+							endAngle={arc.endAngle}
+							padAngle={arc.padAngle}
+							fill={keyColors[index]}
 							let:centroid
 						>
 							<Text
@@ -305,6 +335,41 @@ docUrl: $docUrl
 					{/each}
 				</Pie>
 			</Svg>
+		</Chart>
+	</div>
+</Preview>
+
+## Tooltip
+
+<Preview>
+	<div class="h-[300px] p-4 border rounded">
+		<Chart
+			{data}
+			x="value"
+			r="date"
+			rScale={scaleOrdinal()}
+			rDomain={colorKeys}
+			rRange={keyColors}
+			tooltip={{ mode: 'manual' }}
+		>
+			<Svg>
+				<Pie />
+			</Svg>
+			<Tooltip
+				header={data => format(data.date, 'eee, MMMM do')}
+				let:data
+			>
+				<TooltipItem
+					label="value"
+					value={formatNumberAsStyle(data.value, 'integer')}
+					valueAlign="right"
+				/>
+				<TooltipItem
+					label="percent"
+					value={formatNumberAsStyle(data.value / dataSum, 'percent')}
+					valueAlign="right"
+				/>
+			</Tooltip>
 		</Chart>
 	</div>
 </Preview>

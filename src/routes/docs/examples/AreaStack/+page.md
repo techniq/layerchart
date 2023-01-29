@@ -19,7 +19,6 @@ docUrl: $docUrl
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
 	import Labels from '$lib/components/Labels.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
-	import TooltipContainer from '$lib/components/TooltipContainer.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
@@ -43,10 +42,10 @@ docUrl: $docUrl
 			xScale={scaleTime()}
 			y={[0,1]}
 			yNice
-			z="key"
-			zScale={scaleOrdinal()}
-			zDomain={keys}
-			zRange={[
+			r="key"
+			rScale={scaleOrdinal()}
+			rDomain={keys}
+			rRange={[
 				'var(--color-red-500)',
 				'var(--color-green-500)',
 				'var(--color-blue-500)',
@@ -74,31 +73,28 @@ docUrl: $docUrl
 			xScale={scaleTime()}
 			y={[0,1]}
 			yNice
-			z="key"
-			zScale={scaleOrdinal()}
-			zDomain={keys}
-			zRange={[
+			r="key"
+			rScale={scaleOrdinal()}
+			rDomain={keys}
+			rRange={[
 				'var(--color-red-500)',
 				'var(--color-green-500)',
 				'var(--color-blue-500)',
 			]}
 			padding={{ left: 16, bottom: 24 }}
+			tooltip
 		>
 			<Svg>
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<AreaStack line={{ width: 2 }} />
+				<HighlightLine color="var(--color-blue-500)" />
 			</Svg>
-			<Tooltip let:data>
-				<TooltipContainer header={format(data.data.date, 'eee, MMMM do')}>
-					{#each keys as key}
-						<TooltipItem label={key} value={formatNumberAsStyle(data.data[key], 'integer')} />
-					{/each}
-				</TooltipContainer>
-				<g slot="highlight">
-					<HighlightLine {data} color="var(--color-blue-500)" />
-				</g>
+			<Tooltip header={data => format(data.data.date, 'eee, MMMM do')} let:data>
+				{#each keys as key}
+					<TooltipItem label={key} value={formatNumberAsStyle(data.data[key], 'integer')} />
+				{/each}
 			</Tooltip>
 		</Chart>
 	</div>
