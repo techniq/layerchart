@@ -57,7 +57,7 @@ docUrl: $docUrl
 
 	let charts = {
 		area: { mode: 'bisect-x', highlight: 'line', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
-		areaStack: { mode: 'bisect-x', highlight: 'line', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
+		areaStack: { mode: 'voronoi', highlight: 'line', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
 		dateTime: { mode: 'bisect-x', highlight: 'line', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
 		duration: { mode: 'bounds', highlight: 'rect', axis: undefined, snapToDataX: false, snapToDataY: false, debug: false },
 		multiDuration: { mode: 'bounds', highlight: 'rect', axis: 'both', snapToDataX: false, snapToDataY: false, debug: false },
@@ -164,7 +164,7 @@ docUrl: $docUrl
 
 ### x: scaleTime, y: scaleLinear (multi/stack)
 
-### bisect-x recommended. voronoi and quadtree supported. bounds and band to be improved
+### voronoi and quadtree recommended. bisect-x supported. bounds and band to be improved
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
