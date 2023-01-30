@@ -89,17 +89,8 @@
 	let:element
 >
 	{#if tooltip}
-		<TooltipContext {...tooltip} let:showTooltip let:hideTooltip>
-			<slot
-				{aspectRatio}
-				{containerHeight}
-				{containerWidth}
-				{height}
-				{width}
-				{element}
-				{showTooltip}
-				{hideTooltip}
-			/>
+		<TooltipContext {...tooltip} let:tooltip>
+			<slot {aspectRatio} {containerHeight} {containerWidth} {height} {width} {element} {tooltip} />
 		</TooltipContext>
 	{:else}
 		<slot {aspectRatio} {containerHeight} {containerWidth} {height} {width} {element} />

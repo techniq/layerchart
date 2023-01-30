@@ -8,7 +8,7 @@
 	import Group from './Group.svelte';
 	import { degreesToRadians } from '$lib/utils/math';
 	import { motionStore } from '$lib/stores/motionStore';
-	import { tooltipContext } from './TooltipContext.svelte';
+	import type { TooltipContextValue } from './TooltipContext.svelte';
 
 	/*
     TODO:
@@ -63,8 +63,12 @@
 	 */
 	export let offset = 0;
 
+	/**
+	 * Tooltip context to setup mouse events to show tooltip for related data
+	 */
+	export let tooltip: TooltipContextValue | undefined = undefined;
+
 	const { data: contextData, x, y, xRange, rGet, config } = getContext('LayerCake');
-	const tooltip = tooltipContext();
 
 	$: resolved_endAngle = endAngle ?? degreesToRadians($config.xRange ? max($xRange) : max(range));
 	let tweened_endAngle = motionStore(0, { spring, tweened });
@@ -102,8 +106,8 @@
 				{cornerRadius}
 				{offset}
 				fill={getColor(arc.data, index)}
-				on:mousemove={(e) => $tooltip.showTooltip(e, arc.data)}
-				on:mouseleave={$tooltip.hideTooltip}
+				on:mousemove={(e) => tooltip?.show(e, arc.data)}
+				on:mouseleave={(e) => tooltip?.hide()}
 			/>
 		{/each}
 	</slot>

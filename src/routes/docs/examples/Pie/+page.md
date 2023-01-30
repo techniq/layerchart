@@ -351,9 +351,10 @@ docUrl: $docUrl
 			rDomain={colorKeys}
 			rRange={keyColors}
 			tooltip={{ mode: 'manual' }}
+			let:tooltip
 		>
 			<Svg>
-				<Pie />
+				<Pie {tooltip} />
 			</Svg>
 			<Tooltip
 				header={data => format(data.date, 'eee, MMMM do')}

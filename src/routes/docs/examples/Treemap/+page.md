@@ -177,14 +177,14 @@ docUrl: $docUrl
 		</Button>
 	</Breadcrumb>
 	<div class="h-[800px] p-4 border rounded">
-		<Chart data={complexDataHierarchy.copy()} tooltip={{ mode: 'manual' }} let:showTooltip let:hideTooltip>
+		<Chart data={complexDataHierarchy.copy()} tooltip={{ mode: 'manual' }} let:tooltip>
 			<Svg>
 				<Bounds domain={selectedNested} tweened={{ duration: 800, easing: cubicOut }} let:xScale let:yScale>
 					<ChartClipPath>
 						<Treemap let:nodes {tile} bind:selected={selectedNested} {paddingOuter} {paddingInner} {paddingTop} {paddingBottom} {paddingLeft} {paddingRight}>
 							{#each nodes as node}
-								<Group x={xScale(node.x0)} y={yScale(node.y0)} on:click={() => node.children ? selectedNested = node : null} on:mousemove={e => showTooltip(e, node)}
-	on:mouseleave={hideTooltip}>
+								<Group x={xScale(node.x0)} y={yScale(node.y0)} on:click={() => node.children ? selectedNested = node : null} on:mousemove={e => tooltip.show(e, node)}
+	on:mouseleave={tooltip.hide}>
 									{@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
 									{@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
 									{@const nodeColor = getNodeColor(node, colorBy)}

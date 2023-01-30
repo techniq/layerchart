@@ -4,20 +4,22 @@
 
 	export const tooltipContextKey = {};
 
-	export type TooltipContext = Readable<{
+	export type TooltipContextValue = {
 		top: number;
 		left: number;
 		data: any;
-		showTooltip(event: MouseEvent | TouchEvent, tooltipData?: any): any;
-		hideTooltip();
-	}>;
+		show(event: MouseEvent | TouchEvent, tooltipData?: any): any;
+		hide(event?: MouseEvent | TouchEvent);
+	};
+
+	export type TooltipContext = Readable<TooltipContextValue>;
 
 	const defaultContext: TooltipContext = writable({
 		top: 0,
 		left: 0,
 		data: null,
-		showTooltip: () => {},
-		hideTooltip: () => {}
+		show: () => {},
+		hide: () => {}
 	});
 	export function tooltipContext() {
 		return getContext<TooltipContext>(tooltipContextKey) ?? defaultContext;
@@ -73,7 +75,7 @@
 	export let radius = Infinity;
 	export let debug = false;
 
-	const tooltip = writable({ top: 0, left: 0, data: null, showTooltip, hideTooltip });
+	const tooltip = writable({ top: 0, left: 0, data: null, show: showTooltip, hide: hideTooltip });
 	setTooltipContext(tooltip);
 
 	let hideTimeoutId: NodeJS.Timeout;
@@ -319,7 +321,7 @@
 	}
 </script>
 
-<slot data={$tooltip.data} {showTooltip} {hideTooltip} />
+<slot tooltip={$tooltip} />
 
 {#if ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode)}
 	<Html>
