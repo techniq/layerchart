@@ -1,5 +1,5 @@
 <script lang="ts">
-	import clsx from 'clsx';
+	import { cls } from 'svelte-ux/utils/styles';
 
 	export let label: any;
 	export let value: any = undefined; // Can be pass as slot
@@ -12,10 +12,14 @@
 </div>
 
 <div
-	class={clsx('text-sm tabular-nums', {
-		'text-right': valueAlign === 'right',
-		'text-center': valueAlign === 'center'
-	})}
+	class={cls(
+		'text-sm tabular-nums',
+		{
+			'text-right': valueAlign === 'right',
+			'text-center': valueAlign === 'center'
+		},
+		$$props.class
+	)}
 >
 	<slot>{value}</slot>
 </div>
