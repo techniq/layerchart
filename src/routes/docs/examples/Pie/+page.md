@@ -8,7 +8,7 @@ docUrl: $docUrl
 	import { format } from 'date-fns';
 	import { sum } from 'd3-array';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
-	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
+	import { format as formatUtil } from 'svelte-ux/utils/format';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Arc from '$lib/components/Arc.svelte';
@@ -314,7 +314,7 @@ docUrl: $docUrl
 							let:centroid
 						>
 							<Text
-								value={formatNumberAsStyle(data[index].value / dataSum, 'percent')}
+								value={formatUtil(data[index].value / dataSum, 'percent')}
 								x={centroid[0]}
 								y={centroid[1]}
 								dy={-8}
@@ -362,12 +362,14 @@ docUrl: $docUrl
 			>
 				<TooltipItem
 					label="value"
-					value={formatNumberAsStyle(data.value, 'integer')}
+					value={data.value}
+					format="integer"
 					valueAlign="right"
 				/>
 				<TooltipItem
 					label="percent"
-					value={formatNumberAsStyle(data.value / dataSum, 'percent')}
+					value={data.value / dataSum}
+					format="percent"
 					valueAlign="right"
 				/>
 			</Tooltip>

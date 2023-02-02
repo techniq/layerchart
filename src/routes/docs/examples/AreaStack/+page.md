@@ -8,7 +8,6 @@ docUrl: $docUrl
 	import { stack } from 'd3-shape';
 	import { format } from 'date-fns';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
-	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Area from '$lib/components/Area.svelte';
@@ -93,7 +92,7 @@ docUrl: $docUrl
 			</Svg>
 			<Tooltip header={data => format(data.data.date, 'eee, MMMM do')} let:data>
 				{#each keys as key}
-					<TooltipItem label={key} value={formatNumberAsStyle(data.data[key], 'integer')} />
+					<TooltipItem label={key} value={data.data[key]} />
 				{/each}
 			</Tooltip>
 		</Chart>

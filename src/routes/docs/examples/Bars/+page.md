@@ -12,7 +12,6 @@ docUrl: $docUrl
 
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
-	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import AxisX from '$lib/components/AxisX.svelte';
@@ -150,7 +149,7 @@ docUrl: $docUrl
 				<HighlightRect />
 			</Svg>
 			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+				<TooltipItem label="value" value={data.value} />
 			</Tooltip>
     	</Chart>
     </div>
@@ -203,8 +202,8 @@ docUrl: $docUrl
 				<HighlightRect />
 			</Svg>
 			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-				<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
+				<TooltipItem label="value" value={data.value} />
+				<TooltipItem label="baseline" value={data.baseline} />
 			</Tooltip>
 		</Chart>
 	</div>
@@ -289,7 +288,7 @@ docUrl: $docUrl
 			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
-				<AxisY gridlines formatTick={d => formatNumberAsStyle(d, 'percentRound')} />
+				<AxisY gridlines formatTick="percentRound" />
 				<AxisX />
 				<Baseline x y />
 				<Bars getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />

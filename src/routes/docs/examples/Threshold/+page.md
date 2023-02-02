@@ -9,7 +9,6 @@ docUrl: $docUrl
 	import { format } from 'date-fns';
 	import { Field } from 'svelte-ux';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
-	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Area from '$lib/components/Area.svelte';
@@ -151,10 +150,10 @@ docUrl: $docUrl
 				<HighlightRect />
 			</Svg>
 			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-				<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
+				<TooltipItem label="value" value={data.value} />
+				<TooltipItem label="baseline" value={data.baseline} />
 				<TooltipSeparator />
-				<TooltipItem label="variance" value={formatNumberAsStyle(data.value - data.baseline, 'integer')} />
+				<TooltipItem label="variance" value={data.value - data.baseline} />
 			</Tooltip>
 		</Chart>
 	</div>

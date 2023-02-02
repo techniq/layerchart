@@ -16,7 +16,7 @@ docUrl: $docUrl
 
 	import { Button, Breadcrumb, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
-	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
+	import { format } from 'svelte-ux/utils/format';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Bounds from '$lib/components/Bounds.svelte';
@@ -172,7 +172,7 @@ docUrl: $docUrl
 		<Button slot="item" let:item on:click={() => selectedNested = item} base class="px-2 py-1 rounded">
 			<div class="text-left">
 				<div class="text-sm">{item.data.name}</div>
-				<div class="text-xs text-black/50">{formatNumberAsStyle(item.value, 'integer')}</div>
+				<div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
 			</div>
 		</Button>
 	</Breadcrumb>
@@ -200,12 +200,12 @@ docUrl: $docUrl
 											<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
 												<tspan>{node.data.name}</tspan>
 												{#if node.children}
-													<tspan style="font-size: 0.5rem; font-weight: 200">{formatNumberAsStyle(node.value, 'integer')}</tspan>
+													<tspan style="font-size: 0.5rem; font-weight: 200">{format(node.value, 'integer')}</tspan>
 												{/if}
 											</text>
 											{#if !node.children}
 												<Text
-													value={formatNumberAsStyle(node.value, 'integer')}
+													value={format(node.value, 'integer')}
 													style="font-size: 0.5rem; font-weight: 200"
 													verticalAnchor="start"
 													x={4}
@@ -221,7 +221,7 @@ docUrl: $docUrl
 				</Bounds>
 			</Svg>
 			<Tooltip header={data => data.data.name} let:data>
-				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+				<TooltipItem label="value" value={data.value} format="integer" />
 			</Tooltip>
 		</Chart>
 	</div>
@@ -297,7 +297,7 @@ docUrl: $docUrl
 		<Button slot="item" let:item on:click={() => selectedCarNode = item} base class="px-2 py-1 rounded">
 			<div class="text-left">
 				<div class="text-sm">{item.data[0] ?? 'Overall'}</div>
-				<div class="text-xs text-black/50">{formatNumberAsStyle(item.value, 'integer')}</div>
+				<div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
 			</div>
 		</Button>
 	</Breadcrumb>
@@ -324,12 +324,12 @@ docUrl: $docUrl
 										<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
 											<tspan>{node.data[0] ?? 'Overall'}</tspan>
 											{#if node.children}
-												<tspan style="font-size: 0.5rem; font-weight: 200">{formatNumberAsStyle(node.value, 'integer')}</tspan>
+												<tspan style="font-size: 0.5rem; font-weight: 200">{format(node.value, 'integer')}</tspan>
 											{/if}
 										</text>
 										{#if !node.children}
 											<!-- <Text
-												value={formatNumberAsStyle(node.value, 'integer')}
+												value={format(node.value, 'integer')}
 												style="font-size: 0.5rem; font-weight: 200"
 												verticalAnchor="start"
 												x={4}
@@ -378,7 +378,7 @@ docUrl: $docUrl
 		<Button slot="item" let:item on:click={() => selectedZoomable = item} base class="px-2 py-1 rounded">
 			<div class="text-left">
 				<div class="text-sm">{item.data.name}</div>
-				<div class="text-xs text-black/50">{formatNumberAsStyle(item.value, 'integer')}</div>
+				<div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
 			</div>
 		</Button>
 	</Breadcrumb>
@@ -411,7 +411,7 @@ docUrl: $docUrl
 															y={2}
 														/>
 														<Text
-															value={formatNumberAsStyle(node.value, 'integer')}
+															value={format(node.value, 'integer')}
 															style="font-size: 0.5rem; font-weight: 200"
 															verticalAnchor="start"
 															x={4}

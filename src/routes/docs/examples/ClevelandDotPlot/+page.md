@@ -8,7 +8,6 @@ docUrl: $docUrl
 	import { scaleBand, scaleTime } from 'd3-scale';
 	import { addHours, addMinutes, format, startOfDay } from 'date-fns';
 	import { Duration } from 'svelte-ux';
-	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 	import { sort } from 'd3-array';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';

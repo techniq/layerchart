@@ -14,7 +14,6 @@ docUrl: $docUrl
 	import { ApiDocs, Duration, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { flatten } from 'svelte-ux/utils/array';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
-	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 		
 	import api from '$lib/components/Tooltip.svelte?raw&sveld';
 
@@ -154,7 +153,7 @@ docUrl: $docUrl
 				{/if}
 			</Svg>
 			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+				<TooltipItem label="value" value={data.value} />
 			</Tooltip>
 		</Chart>
 	</div>
@@ -251,7 +250,7 @@ docUrl: $docUrl
 			</Svg>
 			<Tooltip header={data => format(data.data.date, 'eee, MMMM do')} let:data>
 				{#each keys as key}
-					<TooltipItem label="{key}" value={formatNumberAsStyle(data.data[key], 'integer')} />
+					<TooltipItem label="{key}" value={data.data[key]} />
 				{/each}
 			</Tooltip>
 		</Chart>
@@ -613,7 +612,7 @@ docUrl: $docUrl
 				{/if}
 			</Svg>
 			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+				<TooltipItem label="value" value={data.value} />
 			</Tooltip>
     	</Chart>
     </div>
@@ -702,8 +701,8 @@ docUrl: $docUrl
 				{/if}
 			</Svg>
 			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
-				<TooltipItem label="baseline" value={formatNumberAsStyle(data.baseline, 'integer')} />
+				<TooltipItem label="value" value={data.value} />
+				<TooltipItem label="baseline" value={data.baseline} />
 			</Tooltip>
 		</Chart>
 	</div>
@@ -787,8 +786,8 @@ docUrl: $docUrl
 				{/if}
 			</Svg>
 			<Tooltip let:data>
-				<TooltipItem label="x" value={formatNumberAsStyle(data.x, 'decimal')} />
-				<TooltipItem label="y" value={formatNumberAsStyle(data.y, 'decimal')} />
+				<TooltipItem label="x" value={data.x} format="decimal" />
+				<TooltipItem label="y" value={data.y} format="decimal" />
 			</Tooltip>
 		</Chart>
 	</div>

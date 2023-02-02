@@ -11,7 +11,7 @@ docUrl: $docUrl
 	import { hsl } from 'd3-color';
 
 	import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
+	import { format } from 'svelte-ux/utils/format';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Arc from '$lib/components/Arc.svelte';
@@ -74,7 +74,7 @@ docUrl: $docUrl
 		<Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded">
 			<div class="text-left">
 				<div class="text-sm">{item.data.name}</div>
-				<div class="text-xs text-black/50">{formatNumberAsStyle(item.value, 'integer')}</div>
+				<div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
 			</div>
 		</Button>
 	</Breadcrumb>

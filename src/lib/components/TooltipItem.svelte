@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { cls } from 'svelte-ux/utils/styles';
+	import { format as formatUtil } from 'svelte-ux/utils/format';
+	import type { FormatType } from 'svelte-ux/utils/format';
 
 	export let label: any;
 	export let value: any = undefined; // Can be pass as slot
+	export let format: FormatType = undefined;
 
 	export let valueAlign: 'left' | 'right' | 'center' = 'left';
 </script>
@@ -21,5 +24,5 @@
 		$$props.class
 	)}
 >
-	<slot>{value}</slot>
+	<slot>{format ? formatUtil(value, format) : value}</slot>
 </div>

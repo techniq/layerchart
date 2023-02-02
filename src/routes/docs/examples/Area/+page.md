@@ -8,7 +8,6 @@ docUrl: $docUrl
 	import { flatGroup } from 'd3-array';
 	import { format, parseISO } from 'date-fns';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
-	import { formatNumberAsStyle } from 'svelte-ux/utils/number';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Area from '$lib/components/Area.svelte';
@@ -84,7 +83,7 @@ docUrl: $docUrl
 				<HighlightLine color="var(--color-blue-500)" />
 			</Svg>
 			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-				<TooltipItem label="value" value={formatNumberAsStyle(data.value, 'integer')} />
+				<TooltipItem label="value" value={data.value} />
 			</Tooltip>
 		</Chart>
 	</div>
@@ -147,7 +146,7 @@ docUrl: $docUrl
 				<HighlightLine />
 			</Svg>
 			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
-				<TooltipItem label={data.fruit} value={formatNumberAsStyle(data.value, 'integer')} />
+				<TooltipItem label={data.fruit} value={data.value} />
 			</Tooltip>
 		</Chart>
 	</div>
