@@ -1,7 +1,7 @@
 import { derived } from 'svelte/store';
 import { tweened, spring } from 'svelte/motion';
 
-import { MotionOptions, motionStore } from '$lib/stores/motionStore';
+import { type MotionOptions, motionStore } from '$lib/stores/motionStore';
 
 /**
  * Implemenation for missing `scaleBand().invert()`
