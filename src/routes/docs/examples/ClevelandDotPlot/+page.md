@@ -67,7 +67,7 @@ docUrl: $docUrl
 			y="name"
 			yScale={scaleBand()}
 			padding={{ left: 36, bottom: 36 }}
-			tooltip
+			tooltip={{ mode: 'bounds' }}
 		>
 			<Svg>
 				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
