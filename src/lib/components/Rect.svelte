@@ -2,8 +2,8 @@
 	import {
 		motionStore,
 		resolveOptions,
-		SpringOptions,
-		TweenedOptions
+		type SpringOptions,
+		type TweenedOptions
 	} from '$lib/stores/motionStore';
 
 	export let x: number = 0;
