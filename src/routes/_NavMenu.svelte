@@ -42,6 +42,9 @@
 <NavItem text="Tree" currentUrl={$page.url} path="/docs/examples/Tree" class="pl-6 py-2" />
 <NavItem text="Treemap" currentUrl={$page.url} path="/docs/examples/Treemap" class="pl-6 py-2" />
 
+<div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Geo Examples</div>
+<NavItem text="GeoPath" currentUrl={$page.url} path="/docs/examples/GeoPath" class="pl-6 py-2" />
+
 <div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Common</div>
 <NavItem text="Chart" currentUrl={$page.url} path="/docs/components/Chart" class="pl-6 py-2" />
 <NavItem text="Axis" currentUrl={$page.url} path="/docs/components/Axis" class="pl-6 py-2" />

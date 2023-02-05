@@ -16,6 +16,7 @@
 	import { get } from 'lodash-es';
 	import { isScaleBand } from '$lib/utils/scales';
 	import TooltipContext from './TooltipContext.svelte';
+	import GeoContext from './GeoContext.svelte';
 
 	type Accessor = string | ((d: any) => number);
 
@@ -70,6 +71,8 @@
 	$: yReverse = yScale ? !isScaleBand(yScale) : true;
 
 	export let tooltip: ComponentProps<TooltipContext> | undefined = undefined;
+
+	export let geo: ComponentProps<GeoContext> | undefined = undefined;
 </script>
 
 <LayerCake
@@ -88,11 +91,21 @@
 	let:width
 	let:element
 >
-	{#if tooltip}
-		<TooltipContext {...tooltip} let:tooltip>
-			<slot {aspectRatio} {containerHeight} {containerWidth} {height} {width} {element} {tooltip} />
-		</TooltipContext>
-	{:else}
-		<slot {aspectRatio} {containerHeight} {containerWidth} {height} {width} {element} />
-	{/if}
+	<GeoContext {...geo}>
+		{#if tooltip}
+			<TooltipContext {...tooltip} let:tooltip>
+				<slot
+					{aspectRatio}
+					{containerHeight}
+					{containerWidth}
+					{height}
+					{width}
+					{element}
+					{tooltip}
+				/>
+			</TooltipContext>
+		{:else}
+			<slot {aspectRatio} {containerHeight} {containerWidth} {height} {width} {element} />
+		{/if}
+	</GeoContext>
 </LayerCake>
