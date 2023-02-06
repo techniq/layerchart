@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { HierarchyPointNode, tree as d3Tree } from 'd3-hierarchy';
+	import { type HierarchyPointNode, tree as d3Tree } from 'd3-hierarchy';
 
 	const { data, width, height, padding } = getContext('LayerCake');
 

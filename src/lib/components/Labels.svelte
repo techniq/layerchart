@@ -9,10 +9,10 @@
 	import { max, min } from 'd3-array';
 
 	import Text from './Text.svelte';
-	import { formatNumberAsStyle, FormatNumberStyle } from 'svelte-ux/utils/number';
+	import { formatNumberAsStyle, type FormatNumberStyle } from 'svelte-ux/utils/number';
 	import { isScaleBand } from '$lib/utils/scales';
 	import { greatestAbs, unique } from 'svelte-ux/utils/array';
-	import { format as formatValue, FormatType } from 'svelte-ux/utils/format';
+	import { format as formatValue, type FormatType } from 'svelte-ux/utils/format';
 
 	const { flatData, xGet, yRange, xScale, yScale, x, y, custom } = getContext('LayerCake');
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import type { tweened as tweenedStore } from 'svelte/motion';
-	import { Area, area as d3Area } from 'd3-shape';
+	import { type Area, area as d3Area } from 'd3-shape';
 	import type { CurveFactory } from 'd3-shape';
 	import { min, max } from 'd3-array';
 
