@@ -4,10 +4,18 @@
 
 	// TODO: Workaround for sveld error: `Cannot read properties of null (reading 'type')` in `ComponentParser`
 	// See: https://github.com/carbon-design-system/sveld/issues/104
-	import { LayerCake, Svg as _Svg, Html as _Html } from 'layercake';
+	import {
+		LayerCake,
+		Svg as _Svg,
+		Html as _Html,
+		Canvas as _Canvas,
+		WebGL as _WebGL
+	} from 'layercake';
 
 	export const Svg = _Svg;
 	export const Html = _Html;
+	export const Canvas = _Canvas;
+	export const WebGL = _WebGL;
 </script>
 
 <script lang="ts">
