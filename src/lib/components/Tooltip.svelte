@@ -13,7 +13,7 @@
 
 	export let header: (data: any) => any = undefined;
 
-	const { width, height, padding } = getContext('LayerCake');
+	const { containerWidth, containerHeight } = getContext('LayerCake');
 	const tooltip = tooltipContext();
 
 	let tooltipWidth = 0;
@@ -21,9 +21,7 @@
 
 	let top = animate ? spring($tooltip.top) : writable($tooltip.top);
 	$: if ($tooltip) {
-		const containerHeight = $height + $padding.bottom;
-
-		if (contained === 'container' && $tooltip.top + topOffset + tooltipHeight > containerHeight) {
+		if (contained === 'container' && $tooltip.top + topOffset + tooltipHeight > $containerHeight) {
 			// change side
 			$top = $tooltip.top - (topOffset + tooltipHeight);
 		} else {
@@ -33,9 +31,7 @@
 
 	let left = animate ? spring($tooltip.left) : writable($tooltip.left);
 	$: if ($tooltip) {
-		const containerWidth = $width + $padding.right;
-
-		if (contained === 'container' && $tooltip.left + leftOffset + tooltipWidth > containerWidth) {
+		if (contained === 'container' && $tooltip.left + leftOffset + tooltipWidth > $containerWidth) {
 			// change side
 			$left = $tooltip.left - (leftOffset + tooltipWidth);
 		} else {
