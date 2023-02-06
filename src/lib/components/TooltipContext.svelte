@@ -31,6 +31,7 @@
 </script>
 
 <script lang="ts">
+	import { raise } from 'layercake';
 	import { createEventDispatcher } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { bisector, max, min } from 'd3-array';
@@ -72,6 +73,10 @@
 	export let snapToDataX: boolean = false;
 	export let snapToDataY: boolean = false;
 	export let findTooltipData: 'closest' | 'left' | 'right' = 'closest';
+
+	/** Similar to d3-selection's raise, re-insert the event.target as the last child of its parent, so to be the top-most element */
+	export let raiseTarget = false;
+
 	export let radius = Infinity;
 	export let debug = false;
 
@@ -199,6 +204,10 @@
 		}
 
 		if (tooltipData) {
+			if (raiseTarget) {
+				raise(event.target);
+			}
+
 			$tooltip = {
 				...$tooltip,
 				left: snapToDataX ? $xGet(tooltipData) : localX,
