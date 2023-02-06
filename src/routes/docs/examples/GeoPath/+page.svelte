@@ -65,6 +65,43 @@
 	</Chart>
 </div>
 
+<h2>Choropleth</h2>
+
+<div class="h-[600px]">
+	<Chart
+		data={states}
+		r={(d) => dataLookup.get(d[mapJoinKey])?.[valueKey] ?? 'white'}
+		rScale={scaleQuantize()}
+		rRange={colors}
+		{flatData}
+		geo={{
+			projection: geoIdentity
+		}}
+		tooltip={{ mode: 'manual', raiseTarget: true }}
+		let:tooltip
+	>
+		<Svg>
+			<g>
+				{#each states.features as feature}
+					<GeoPath geojson={feature} {tooltip} fillScale class="hover:stroke-red-500" />
+				{/each}
+			</g>
+			<g>
+				{#each counties.features as feature}
+					<GeoPath geojson={feature} class="fill-none stroke-black/10 pointer-events-none" />
+				{/each}
+			</g>
+		</Svg>
+		<Tooltip header={(data) => data.properties.name} let:data>
+			<TooltipItem
+				label="value"
+				value={dataLookup.get(data.properties[mapJoinKey])?.[valueKey]}
+				format="currency"
+			/>
+		</Tooltip>
+	</Chart>
+</div>
+
 <h2>Canvas</h2>
 
 <div class="h-[600px] mt-10">
