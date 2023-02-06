@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { index } from 'd3-array';
 	import { scaleQuantize } from 'd3-scale';
+	import { geoIdentity } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import Chart, { Svg } from '$lib/components/Chart.svelte';
+	import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
 	import GeoPath from '$lib/components/GeoPath.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
@@ -12,7 +13,6 @@
 	import statesData from '../data/geo/us-states-data.json';
 
 	import type { PageData } from './$types';
-	import { geoIdentity } from 'd3-geo';
 
 	export let data: PageData;
 
@@ -31,6 +31,8 @@
 
 	const dataLookup = index(statesData, (d) => d[dataJoinKey]);
 </script>
+
+<h2>SVG</h2>
 
 <div class="h-[600px]">
 	<Chart
@@ -60,5 +62,27 @@
 				format="currency"
 			/>
 		</Tooltip>
+	</Chart>
+</div>
+
+<h2>Canvas</h2>
+
+<div class="h-[600px] mt-10">
+	<Chart
+		data={states}
+		r={(d) => dataLookup.get(d[mapJoinKey])?.[valueKey] ?? 'white'}
+		rScale={scaleQuantize()}
+		rRange={colors}
+		{flatData}
+		geo={{
+			projection: geoIdentity
+		}}
+	>
+		<Canvas>
+			<GeoPath geojson={states} fill="white" />
+		</Canvas>
+		<Canvas>
+			<GeoPath geojson={counties} stroke="rgba(0,0,0,.1)" />
+		</Canvas>
 	</Chart>
 </div>
