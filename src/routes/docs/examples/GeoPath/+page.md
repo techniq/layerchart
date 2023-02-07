@@ -19,8 +19,8 @@ docUrl: $docUrl
 	import statesData from '../data/geo/us-states-data.json';
 
 	export let data;
+	// console.log({ data });
 
-	// console.log({ geojson });
 	const states = feature(data.geojson, data.geojson.objects.states);
 	const counties = feature(data.geojson, data.geojson.objects.counties);
 
@@ -41,13 +41,9 @@ docUrl: $docUrl
 <Preview>
 	<div class="h-[600px]">
 		<Chart
-			data={states}
-			r={(d) => dataLookup.get(d[mapJoinKey])?.[valueKey] ?? 'white'}
-			rScale={scaleQuantize()}
-			rRange={colors}
-			{flatData}
 			geo={{
-				projection: geoIdentity
+				projection: geoIdentity,
+				geojson: states
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
@@ -82,7 +78,8 @@ docUrl: $docUrl
 			rRange={colors}
 			{flatData}
 			geo={{
-				projection: geoIdentity
+				projection: geoIdentity,
+				geojson: states
 			}}
 			tooltip={{ mode: 'manual', raiseTarget: true }}
 			let:tooltip
@@ -115,13 +112,9 @@ docUrl: $docUrl
 <Preview>
 	<div class="h-[600px] mt-10">
 		<Chart
-			data={states}
-			r={(d) => dataLookup.get(d[mapJoinKey])?.[valueKey] ?? 'white'}
-			rScale={scaleQuantize()}
-			rRange={colors}
-			{flatData}
 			geo={{
-				projection: geoIdentity
+				projection: geoIdentity,
+				geojson: states
 			}}
 		>
 			<Canvas>

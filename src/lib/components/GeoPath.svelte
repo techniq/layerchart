@@ -1,17 +1,12 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { geoPath as d3geoPath } from 'd3-geo';
+	import { geoPath as d3geoPath, type GeoPermissibleObjects } from 'd3-geo';
 
 	import { geoContext } from './GeoContext.svelte';
 	import type { TooltipContextValue } from './TooltipContext.svelte';
 	import { scaleCanvas } from 'layercake';
 
-	const { rGet, width, height } = getContext('LayerCake');
-
-	const geo = geoContext();
-	$: geoPath = d3geoPath($geo.projection);
-
-	export let geojson: any;
+	export let geojson: GeoPermissibleObjects;
 
 	export let fill: string | undefined = undefined;
 	export let fillScale = false;
@@ -23,7 +18,11 @@
 	 */
 	export let tooltip: TooltipContextValue | undefined = undefined;
 
+	const { rGet, width, height } = getContext('LayerCake');
 	const canvas = getContext('canvas');
+	const geo = geoContext();
+
+	$: geoPath = d3geoPath($geo.projection);
 
 	$: renderContext = canvas ? 'canvas' : 'svg';
 
