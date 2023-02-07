@@ -4,7 +4,7 @@ docUrl: $docUrl
 ---
 
 <script lang="ts">
-	import { geoAlbersUsa, geoAlbers, geoEquirectangular, geoMercator, geoNaturalEarth1, geoOrthographic } from 'd3-geo';
+	import { geoAlbersUsa, geoAlbers, geoEqualEarth, geoEquirectangular, geoMercator, geoNaturalEarth1, geoOrthographic } from 'd3-geo';
 	import { index } from 'd3-array';
 	import { scaleQuantize } from 'd3-scale';
 	import { feature } from 'topojson-client';
@@ -24,6 +24,7 @@ docUrl: $docUrl
 	const projections = [
 		{ name: 'Albers', value: geoAlbers },
 		{ name: 'AlbersUsa', value: geoAlbersUsa },
+		{ name: 'Equal Earth', value: geoEqualEarth },
 		{ name: 'Equirectangular', value: geoEquirectangular },
 		{ name: 'Mercator', value: geoMercator },
 		{ name: 'Natural Earth', value: geoNaturalEarth1 },
@@ -32,8 +33,11 @@ docUrl: $docUrl
 
 	const geojson = feature(data.geojson, data.geojson.objects.countries);
 
-	let yaw = 100;
-	let pitch = -30;
+	// let yaw = 100;
+	// let pitch = -30;
+	// let roll = 0;
+	let yaw = 0;
+	let pitch = 0;
 	let roll = 0;
 </script>
 
