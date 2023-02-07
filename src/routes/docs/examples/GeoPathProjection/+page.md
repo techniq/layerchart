@@ -15,6 +15,7 @@ docUrl: $docUrl
 	import Preview from '$lib/docs/Preview.svelte';
 	import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
 	import GeoPath from '$lib/components/GeoPath.svelte';
+	import Graticule from '$lib/components/Graticule.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -88,6 +89,7 @@ docUrl: $docUrl
 				{#each geojson.features as feature}
 					<GeoPath geojson={feature} {tooltip} class="stroke-black fill-white hover:fill-gray-300" />
 				{/each}
+				<Graticule class="stroke-black/30" />
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data />
 		</Chart>
