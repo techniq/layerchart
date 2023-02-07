@@ -41,7 +41,7 @@ docUrl: $docUrl
 	let roll = 0;
 </script>
 
-## SVG
+## Projections
 
 <div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2 mb-2">
 	<Field label="Projections" let:id>
@@ -84,8 +84,9 @@ docUrl: $docUrl
 			let:tooltip
 		>
 			<Svg>
+				<GeoPath geojson={{ type: 'Sphere' }} class="stroke-black fill-blue-300" />
 				{#each geojson.features as feature}
-					<GeoPath geojson={feature} {tooltip} class="stroke-black hover:fill-gray-300" />
+					<GeoPath geojson={feature} {tooltip} class="stroke-black fill-white hover:fill-gray-300" />
 				{/each}
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data />
