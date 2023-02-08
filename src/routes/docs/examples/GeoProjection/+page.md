@@ -43,9 +43,7 @@ docUrl: $docUrl
 	let roll = 0;
 </script>
 
-## Projections
-
-<div class="grid grid-cols-[1fr,1fr,1fr,1fr,auto] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,1fr,1fr,1fr,auto] gap-2 my-2">
 	<Field label="Projections" let:id>
 		<select bind:value={projection} class="w-full outline-none appearance-none text-sm" {id}>
 			{#each projections as option}
@@ -73,6 +71,8 @@ docUrl: $docUrl
 	</Field>
 </div>
 
+## SVG
+
 <Preview>
 	<div class="h-[600px]">
 		<Chart
@@ -99,6 +99,8 @@ docUrl: $docUrl
 		</Chart>
 	</div>
 </Preview>
+
+## Canvas
 
 <Preview>
 	<div class="h-[600px]">
