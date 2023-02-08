@@ -34,9 +34,6 @@ docUrl: $docUrl
 
 	const geojson = feature(data.geojson, data.geojson.objects.countries);
 
-	// let yaw = 100;
-	// let pitch = -30;
-	// let roll = 0;
 	let yaw = 0;
 	let pitch = 0;
 	let roll = 0;
@@ -89,7 +86,7 @@ docUrl: $docUrl
 				{#each geojson.features as feature}
 					<GeoPath geojson={feature} {tooltip} class="stroke-black fill-white hover:fill-gray-300" />
 				{/each}
-				<Graticule class="stroke-black/30 pointer-events-none" />
+				<Graticule class="stroke-black/20 pointer-events-none" />
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data />
 		</Chart>
@@ -116,7 +113,7 @@ docUrl: $docUrl
 				<GeoPath {geojson} fill="white"/>
 			</Canvas>
 			<Canvas>
-				<Graticule stroke="rgba(0,0,0,.30)" />
+				<Graticule stroke="rgba(0,0,0,.20)" />
 			</Canvas>
 		</Chart>
 	</div>

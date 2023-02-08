@@ -62,7 +62,7 @@ docUrl: $docUrl
 				<GeoPath geojson={{ type: 'Sphere' }} fill="#93c5fd" />
 			</Canvas>
 			<Canvas>
-				<Graticule stroke="rgba(0,0,0,.30)" />
+				<Graticule stroke="rgba(0,0,0,.20)" />
 			</Canvas>
 			<Canvas>
 				<GeoPath {geojson} fill="white"/>
