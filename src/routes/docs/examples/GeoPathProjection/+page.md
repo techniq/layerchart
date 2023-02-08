@@ -89,7 +89,7 @@ docUrl: $docUrl
 				{#each geojson.features as feature}
 					<GeoPath geojson={feature} {tooltip} class="stroke-black fill-white hover:fill-gray-300" />
 				{/each}
-				<Graticule class="stroke-black/30" />
+				<Graticule class="stroke-black/30 pointer-events-none" />
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data />
 		</Chart>
