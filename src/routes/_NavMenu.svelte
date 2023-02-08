@@ -56,6 +56,7 @@
 	path="/docs/examples/AnimatedGlobe"
 	class="pl-6 py-2"
 />
+<NavItem text="State Map" currentUrl={$page.url} path="/docs/examples/StateMap" class="pl-6 py-2" />
 
 <div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Common</div>
 <NavItem text="Chart" currentUrl={$page.url} path="/docs/components/Chart" class="pl-6 py-2" />
