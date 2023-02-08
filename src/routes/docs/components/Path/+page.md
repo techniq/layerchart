@@ -91,9 +91,7 @@ docUrl: $docUrl
 	}
 
 	function next(options, current, value = 'value') {
-		console.log({ options, current })
 		const index = options.findIndex(x => x[value] === current);
-		console.log({ index })
 		if (index === options.length - 1) {
 			return options[0][value]
 		} else {
