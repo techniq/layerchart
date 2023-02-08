@@ -32,19 +32,17 @@
 		scaleCanvas($ctx, $width, $height);
 		$ctx.clearRect(0, 0, $width, $height);
 
-		geojson.features.forEach((feature) => {
-			$ctx.beginPath();
-			// Set the context here since setting it in `$: geoPath` is a circular reference
-			geoPath.context($ctx);
-			geoPath(feature);
+		$ctx.beginPath();
+		// Set the context here since setting it in `$: geoPath` is a circular reference
+		geoPath.context($ctx);
+		geoPath(geojson);
 
-			$ctx.fillStyle = fill || (fillScale && $rGet(feature.properties)) || 'transparent';
-			$ctx.fill();
+		$ctx.fillStyle = fill || (fillScale && $rGet(geojson.properties)) || 'transparent';
+		$ctx.fill();
 
-			$ctx.lineWidth = strokeWidth;
-			$ctx.strokeStyle = stroke;
-			$ctx.stroke();
-		});
+		$ctx.lineWidth = strokeWidth;
+		$ctx.strokeStyle = stroke;
+		$ctx.stroke();
 	}
 </script>
 
