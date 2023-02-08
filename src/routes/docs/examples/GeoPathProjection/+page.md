@@ -10,7 +10,7 @@ docUrl: $docUrl
 	import { feature } from 'topojson-client';
 
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-	import { Button, Field } from 'svelte-ux'
+	import { Button, Field, Switch } from 'svelte-ux'
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
@@ -32,7 +32,11 @@ docUrl: $docUrl
 		{ name: 'Orthographic', value: geoOrthographic },
 	]
 
-	const geojson = feature(data.geojson, data.geojson.objects.countries);
+	let detailed = false;
+
+	$: dataGeoJson = detailed ? data.geojsonDetail : data.geojson;
+
+	$: geojson = feature(dataGeoJson, dataGeoJson.objects.countries);
 
 	let yaw = 0;
 	let pitch = 0;
@@ -41,7 +45,7 @@ docUrl: $docUrl
 
 ## Projections
 
-<div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,1fr,1fr,1fr,auto] gap-2 mb-2">
 	<Field label="Projections" let:id>
 		<select bind:value={projection} class="w-full outline-none appearance-none text-sm" {id}>
 			{#each projections as option}
@@ -63,6 +67,9 @@ docUrl: $docUrl
 		<Button icon={mdiChevronLeft} on:click={() => roll -= 1} class="mr-2" />
 		<input type="range" bind:value={roll} min={-180} max={180} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{roll}</span>
 		<Button icon={mdiChevronRight} on:click={() => roll += 1} class="ml-2" />
+	</Field>
+		<Field label="Detail" let:id>
+		<Switch bind:checked={detailed} {id} />
 	</Field>
 </div>
 
