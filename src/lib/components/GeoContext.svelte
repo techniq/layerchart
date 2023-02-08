@@ -27,6 +27,7 @@
 			/** Gamma */
 			roll: number;
 		};
+		scale?: number;
 	};
 
 	export type GeoContext = Readable<GeoContextValue>;
@@ -53,6 +54,7 @@
 	export let clipAngle: GeoContextValue['clipAngle'];
 	export let clipExtent: GeoContextValue['clipExtent'];
 	export let rotate: GeoContextValue['rotate'];
+	export let scale: GeoContextValue['scale'];
 
 	/** By default, the map fills to fit the $width and $height. If instead you want a fixed-aspect ratio, like for a server-side rendered map, set that here. */
 	export let fixedAspectRatio: number | undefined = undefined;
@@ -63,6 +65,10 @@
 	];
 
 	$: projectionFn = projection().fitSize(fitSizeRange, geojson);
+
+	$: if (scale && 'scale' in projectionFn) {
+		projectionFn.scale(scale);
+	}
 
 	$: if (clipAngle && 'clipAngle' in projectionFn) {
 		projectionFn.clipAngle(clipAngle);

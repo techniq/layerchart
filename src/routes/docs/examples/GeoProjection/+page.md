@@ -41,9 +41,10 @@ docUrl: $docUrl
 	let yaw = 0;
 	let pitch = 0;
 	let roll = 0;
+	let scale = 0;
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,1fr,1fr,auto] gap-2 my-2">
+<div class="grid grid-cols-[1fr,1fr,1fr,1fr,1fr,auto] gap-2 my-2">
 	<Field label="Projections" let:id>
 		<select bind:value={projection} class="w-full outline-none appearance-none text-sm" {id}>
 			{#each projections as option}
@@ -66,7 +67,12 @@ docUrl: $docUrl
 		<input type="range" bind:value={roll} min={-180} max={180} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{roll}</span>
 		<Button icon={mdiChevronRight} on:click={() => roll += 1} class="ml-2" />
 	</Field>
-		<Field label="Detail" let:id>
+	<Field label="Scale" let:id>
+		<Button icon={mdiChevronLeft} on:click={() => scale -= 1} class="mr-2" />
+		<input type="range" bind:value={scale} min={-100} max={3000} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{scale}</span>
+		<Button icon={mdiChevronRight} on:click={() => scale += 1} class="ml-2" />
+	</Field>
+	<Field label="Detail" let:id>
 		<Switch bind:checked={detailed} {id} />
 	</Field>
 </div>
@@ -74,7 +80,7 @@ docUrl: $docUrl
 ## SVG
 
 <Preview>
-	<div class="h-[600px]">
+	<div class="h-[600px] overflow-hidden">
 		<Chart
 			geo={{
 				projection,
@@ -82,8 +88,9 @@ docUrl: $docUrl
 				rotate: {
 					yaw,
 					pitch,
-					roll
-				}
+					roll,
+				},
+				scale
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
@@ -111,8 +118,9 @@ docUrl: $docUrl
 				rotate: {
 					yaw,
 					pitch,
-					roll
-				}
+					roll,
+				},
+				scale
 			}}
 		>
 			<Canvas>
