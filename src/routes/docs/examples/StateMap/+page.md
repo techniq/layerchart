@@ -5,12 +5,12 @@ docUrl: $docUrl
 
 <script lang="ts">
 	import { geoAlbersUsa, geoAlbers, geoEqualEarth, geoEquirectangular, geoMercator, geoNaturalEarth1, geoOrthographic } from 'd3-geo';
-	import { index } from 'd3-array';
+	import { sort } from 'd3-array';
 	import { scaleQuantize } from 'd3-scale';
 	import { feature } from 'topojson-client';
 
-	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 	import { Button, Field } from 'svelte-ux'
+	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
@@ -25,10 +25,11 @@ docUrl: $docUrl
 
 	const counties = feature(data.geojson, data.geojson.objects.counties);
 	const states = feature(data.geojson, data.geojson.objects.states);
-	const stateNames = states.features.map(x => x.properties.name).sort();
-	let selectedState = 'West Virginia';
-	$: selectedStateFeature = states.features.find(f => f.properties.name === selectedState);
-	$: selectedCountiesFeatures = counties.features.filter(f => f.id.slice(0,2) === selectedStateFeature.id);
+
+	const stateOptions = sort(states.features.filter(x => Number(x.id) < 60).map(x => ({ name: x.properties.name, value: x.id })), d => d.value);
+	let selectedStateId = '54'; // 'West Virginia';
+	$: selectedStateFeature = states.features.find(f => f.id === selectedStateId);
+	$: selectedCountiesFeatures = counties.features.filter(f => f.id.slice(0,2) === selectedStateId);
 
 	let projection = geoAlbersUsa;
 	const projections = [
@@ -40,9 +41,9 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2 my-2">
 	<Field label="State" let:id>
-		<select bind:value={selectedState} class="w-full outline-none appearance-none text-sm" {id}>
-			{#each stateNames as option}
-				<option value={option}>{option}</option>
+		<select bind:value={selectedStateId} class="w-full outline-none appearance-none text-sm" {id}>
+			{#each stateOptions as option}
+				<option value={option.value}>{option.name}</option>
 			{/each}
 		</select>
 	</Field>
