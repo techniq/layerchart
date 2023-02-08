@@ -95,3 +95,29 @@ docUrl: $docUrl
 		</Chart>
 	</div>
 </Preview>
+
+<Preview>
+	<div class="h-[600px]">
+		<Chart
+			geo={{
+				projection,
+				geojson,
+				rotate: {
+					yaw,
+					pitch,
+					roll
+				}
+			}}
+		>
+			<Canvas>
+				<GeoPath geojson={{ type: 'Sphere' }} fill="#93c5fd" />
+			</Canvas>
+			<Canvas>
+				<GeoPath {geojson} fill="white"/>
+			</Canvas>
+			<Canvas>
+				<Graticule stroke="rgba(0,0,0,.30)" />
+			</Canvas>
+		</Chart>
+	</div>
+</Preview>
