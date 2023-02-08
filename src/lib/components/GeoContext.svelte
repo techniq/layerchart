@@ -13,6 +13,8 @@
 	export type GeoContextValue = {
 		projection: GeoProjection | GeoIdentityTransform;
 		geojson: GeoPermissibleObjects;
+		clipAngle?: number;
+		clipExtent?: [[number, number], [number, number]];
 		/**
 		 * Set projections three-axis spherical rotation
 		 * see: https://github.com/d3/d3-geo#projection_rotate
@@ -48,6 +50,8 @@
 
 	export let geojson: GeoContextValue['geojson'];
 
+	export let clipAngle: GeoContextValue['clipAngle'];
+	export let clipExtent: GeoContextValue['clipExtent'];
 	export let rotate: GeoContextValue['rotate'];
 
 	/** By default, the map fills to fit the $width and $height. If instead you want a fixed-aspect ratio, like for a server-side rendered map, set that here. */
@@ -59,6 +63,14 @@
 	];
 
 	$: projectionFn = projection().fitSize(fitSizeRange, geojson);
+
+	$: if (clipAngle && 'clipAngle' in projectionFn) {
+		projectionFn.clipAngle(clipAngle);
+	}
+
+	$: if (clipExtent && 'clipExtent' in projectionFn) {
+		projectionFn.clipExtent(clipExtent);
+	}
 
 	$: if (rotate && 'rotate' in projectionFn) {
 		projectionFn.rotate([rotate.yaw, rotate.pitch, rotate.roll]);
