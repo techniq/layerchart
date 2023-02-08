@@ -19,6 +19,8 @@ docUrl: $docUrl
 	import Graticule from '$lib/components/Graticule.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
+	
+	// TODO: Add SVG versoin with country clicking - https://observablehq.com/@benjamesdavis/orthopgragic-map
 
 	export let data;
 
@@ -60,10 +62,10 @@ docUrl: $docUrl
 				<GeoPath geojson={{ type: 'Sphere' }} fill="#93c5fd" />
 			</Canvas>
 			<Canvas>
-				<GeoPath {geojson} fill="white"/>
+				<Graticule stroke="rgba(0,0,0,.30)" />
 			</Canvas>
 			<Canvas>
-				<Graticule stroke="rgba(0,0,0,.30)" />
+				<GeoPath {geojson} fill="white"/>
 			</Canvas>
 		</Chart>
 	</div>
