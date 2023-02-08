@@ -34,8 +34,10 @@ docUrl: $docUrl
 <Button on:click={() => { $yaw = -20; $pitch = 0 }}>Africa</Button>
 <Button on:click={() => { $yaw = 0; $pitch = 90 }}>Antarctica</Button>
 <Button on:click={() => { $yaw = -140; $pitch = 25 }}>Australia</Button>
+<Button on:click={() => { $yaw = -100; $pitch = -30 }}>China</Button>
 <Button on:click={() => { $yaw = -10; $pitch = -45 }}>Europe</Button>
 <Button on:click={() => { $yaw = -140; $pitch = -30 }}>Japan</Button>
+<Button on:click={() => { $yaw = -80; $pitch = -20 }}>India</Button>
 <Button on:click={() => { $yaw = 0; $pitch = -95 }}>North pole</Button>
 <Button on:click={() => { $yaw = 60; $pitch = 25 }}>South America</Button>
 <Button on:click={() => { $yaw = 100; $pitch = -30 }}>United States</Button>
