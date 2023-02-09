@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
-	import { geoPath as d3geoPath, type GeoPermissibleObjects } from 'd3-geo';
+	import { createEventDispatcher, getContext } from 'svelte';
+	import { geoPath as d3geoPath, type GeoPath, type GeoPermissibleObjects } from 'd3-geo';
 
 	import { geoContext } from './GeoContext.svelte';
 	import type { TooltipContextValue } from './TooltipContext.svelte';
@@ -17,6 +17,8 @@
 	 * Tooltip context to setup mouse events to show tooltip for related data
 	 */
 	export let tooltip: TooltipContextValue | undefined = undefined;
+
+	const dispatch = createEventDispatcher<{ click: { geoPath: GeoPath; event: MouseEvent } }>();
 
 	const { rGet, width, height } = getContext('LayerCake');
 	const canvas = getContext('canvas');
@@ -53,6 +55,7 @@
 		stroke={stroke || 'black'}
 		on:mousemove={(e) => tooltip?.show(e, geojson)}
 		on:mouseleave={(e) => tooltip?.hide()}
+		on:click={(event) => dispatch('click', { geoPath, event })}
 		{...$$restProps}
 	/>
 {/if}
