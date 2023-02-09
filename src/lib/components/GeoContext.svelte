@@ -51,10 +51,10 @@
 
 	export let geojson: GeoContextValue['geojson'];
 
-	export let clipAngle: GeoContextValue['clipAngle'];
-	export let clipExtent: GeoContextValue['clipExtent'];
-	export let rotate: GeoContextValue['rotate'];
-	export let scale: GeoContextValue['scale'];
+	export let clipAngle: GeoContextValue['clipAngle'] = undefined;
+	export let clipExtent: GeoContextValue['clipExtent'] = undefined;
+	export let rotate: GeoContextValue['rotate'] = undefined;
+	export let scale: GeoContextValue['scale'] = undefined;
 
 	/** By default, the map fills to fit the $width and $height. If instead you want a fixed-aspect ratio, like for a server-side rendered map, set that here. */
 	export let fixedAspectRatio: number | undefined = undefined;
