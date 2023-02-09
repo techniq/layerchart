@@ -15,19 +15,17 @@ docUrl: $docUrl
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
-	// import geojson from '../data/geo/states-albers-10m.json';
 	import statesData from '../data/geo/us-states-data.json';
 
 	export let data;
-	// console.log({ data });
 
 	const states = feature(data.geojson, data.geojson.objects.states);
 	const counties = feature(data.geojson, data.geojson.objects.counties);
 
 	const flatData = states.features.map((d) => d.properties);
-	// console.log({ flatData });
 
 	const valueKey = 'value';
+	const colors = ['#ffdecc', '#ffc09c', '#ffa06b', '#ff7a33'];
 
 	const dataJoinKey = 'name';
 	const mapJoinKey = 'name';
@@ -40,20 +38,29 @@ docUrl: $docUrl
 <Preview>
 	<div class="h-[600px]">
 		<Chart
+			data={states}
+			r={(d) => dataLookup.get(d[mapJoinKey])?.[valueKey] ?? 'white'}
+			rScale={scaleQuantize()}
+			rRange={colors}
+			{flatData}
 			geo={{
 				projection: geoIdentity,
 				geojson: states
 			}}
-			tooltip={{ mode: 'manual' }}
+			tooltip={{ mode: 'manual', raiseTarget: true }}
 			let:tooltip
 		>
 			<Svg>
-				{#each states.features as feature}
-					<GeoPath geojson={feature} {tooltip} class="fill-white hover:fill-gray-300" />
-				{/each}
-				{#each counties.features as feature}
-					<GeoPath geojson={feature} class="fill-none stroke-black/10 pointer-events-none" />
-				{/each}
+				<g>
+					{#each states.features as feature}
+						<GeoPath geojson={feature} {tooltip} fillScale class="hover:stroke-red-500 hover:stroke-2" />
+					{/each}
+				</g>
+				<g>
+					{#each counties.features as feature}
+						<GeoPath geojson={feature} class="fill-none stroke-black/10 pointer-events-none" />
+					{/each}
+				</g>
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data>
 				<TooltipItem
@@ -71,14 +78,21 @@ docUrl: $docUrl
 <Preview>
 	<div class="h-[600px] mt-10">
 		<Chart
+			data={states}
+			r={(d) => dataLookup.get(d[mapJoinKey])?.[valueKey] ?? 'white'}
+			rScale={scaleQuantize()}
+			rRange={colors}
+			{flatData}
 			geo={{
 				projection: geoIdentity,
 				geojson: states
 			}}
 		>
-			<Canvas>
-				<GeoPath geojson={states} fill="white" />
-			</Canvas>
+				{#each states.features as feature}
+					<Canvas>
+						<GeoPath geojson={feature} fillScale />
+					</Canvas>
+				{/each}
 			<Canvas>
 				<GeoPath geojson={counties} stroke="rgba(0,0,0,.1)" />
 			</Canvas>
