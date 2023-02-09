@@ -8,9 +8,9 @@ docUrl: $docUrl
 	import * as d3shapes from 'd3-shape';
 	import { cubicOut } from 'svelte/easing';
 
-	import { ApiDocs, Button, Field, Switch, Tooltip } from 'svelte-ux';
+	import { ApiDocs, Button, Field, Switch } from 'svelte-ux';
 
-	import { mdiArrowULeftTop, mdiChevronLeft, mdiChevronRight, mdiMagnifyPlusOutline, mdiMagnifyMinusOutline, mdiImageFilterCenterFocus } from '@mdi/js';
+	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
 	import api from '$lib/components/Zoom.svelte?raw&sveld';
 
@@ -21,6 +21,7 @@ docUrl: $docUrl
 	import Zoom from '$lib/components/Zoom.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
+	import ZoomControls from '$lib/docs/ZoomControls.svelte';
 
 	import { getSpiral } from '$lib/utils/genData';
 	import { degreesToRadians } from '$lib/utils/math';
@@ -101,20 +102,7 @@ docUrl: $docUrl
 <Preview>
 	<div class="h-[500px] p-4 border rounded relative overflow-hidden">
 		<div class="absolute top-0 right-0 z-10">
-			<div class="bg-black/5 rounded-full m-1 backdrop-blur">
-				<Tooltip title="Zoom in">
-					<Button icon={mdiMagnifyPlusOutline} on:click={() => zoom.increase()} class="text-black/50 p-2" />
-				</Tooltip>
-				<Tooltip title="Zoom out">
-					<Button icon={mdiMagnifyMinusOutline} on:click={() => zoom.decrease()} class="text-black/50 p-2" />
-				</Tooltip>
-				<Tooltip title="Center">
-					<Button icon={mdiImageFilterCenterFocus} on:click={() => zoom.translateCenter()} class="text-black/50 p-2" />
-				</Tooltip>
-				<Tooltip title="Reset">
-					<Button icon={mdiArrowULeftTop} on:click={() => zoom.reset()} class="text-black/50 p-2" />
-				</Tooltip>
-			</div>
+			<ZoomControls {zoom} />
 		</div>
 		<Chart {data} x="x" y="y">
 			<Svg>
