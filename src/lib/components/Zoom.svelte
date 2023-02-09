@@ -8,6 +8,7 @@
 	export let spring: boolean | Parameters<typeof motionStore>[1]['spring'] = undefined;
 	export let tweened: boolean | Parameters<typeof motionStore>[1]['tweened'] = undefined;
 	export let disablePointer = false;
+	export let scroll: 'scale' | 'translate' | 'none' = 'none';
 
 	let dragging = false;
 
@@ -101,22 +102,33 @@
 	}
 
 	function handleWheel(e) {
-		if (disablePointer) return;
+		if (scroll === 'none' || disablePointer) return;
 
 		e.preventDefault();
-		const scaleBy = -e.deltaY > 0 ? 1.1 : 0.9;
 
-		// TODO: Update to match d3-zoom delta
-		// https://github.com/d3/d3-zoom#zoom_wheelDelta
-		// const scaleBy = -e.deltaY * (e.deltaMode === 1 ? 0.05 : e.deltaMode ? 1 : 0.002);
+		if (scroll === 'scale') {
+			const scaleBy = -e.deltaY > 0 ? 1.1 : 0.9;
 
-		scale.set(
-			{
-				x: $scale.x * scaleBy,
-				y: $scale.y * scaleBy
-			},
-			spring ? { hard: true } : tweened ? { duration: 0 } : undefined
-		);
+			// TODO: Update to match d3-zoom delta
+			// https://github.com/d3/d3-zoom#zoom_wheelDelta
+			// const scaleBy = -e.deltaY * (e.deltaMode === 1 ? 0.05 : e.deltaMode ? 1 : 0.002);
+
+			scale.set(
+				{
+					x: $scale.x * scaleBy,
+					y: $scale.y * scaleBy
+				},
+				spring ? { hard: true } : tweened ? { duration: 0 } : undefined
+			);
+		} else if (scroll === 'translate') {
+			translate.update(
+				(startTranslate) => ({
+					x: startTranslate.x + -e.deltaX / $scale.x,
+					y: startTranslate.y + -e.deltaY / $scale.y
+				}),
+				spring ? { hard: true } : tweened ? { duration: 0 } : undefined
+			);
+		}
 	}
 
 	function localPoint(svgEl, e) {
@@ -156,6 +168,9 @@
 	on:mousedown={handleMouseDown}
 	on:dblclick={handleDoubleClick}
 	on:click
+	on:keydown
+	on:keyup
+	on:keypress
 >
 	<rect
 		x={-$padding.left}
@@ -165,6 +180,6 @@
 		fill="transparent"
 	/>
 	<g transform="translate({newTranslate.x},{newTranslate.y}) scale({$scale.x},{$scale.y})">
-		<slot scale={$scale} />
+		<slot scale={$scale} {zoomTo} />
 	</g>
 </g>
