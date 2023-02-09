@@ -99,7 +99,7 @@
 	let:width
 	let:element
 >
-	<GeoContext {...geo}>
+	<GeoContext {...geo} let:projection>
 		{#if tooltip}
 			<TooltipContext {...tooltip} let:tooltip>
 				<slot
@@ -109,11 +109,20 @@
 					{height}
 					{width}
 					{element}
+					{projection}
 					{tooltip}
 				/>
 			</TooltipContext>
 		{:else}
-			<slot {aspectRatio} {containerHeight} {containerWidth} {height} {width} {element} />
+			<slot
+				{aspectRatio}
+				{containerHeight}
+				{containerWidth}
+				{height}
+				{width}
+				{element}
+				{projection}
+			/>
 		{/if}
 	</GeoContext>
 </LayerCake>

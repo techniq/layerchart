@@ -87,4 +87,4 @@
 	setGeoContext(geo);
 </script>
 
-<slot />
+<slot projection={projectionFn} />
