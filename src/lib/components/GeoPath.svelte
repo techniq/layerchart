@@ -9,7 +9,7 @@
 	export let geojson: GeoPermissibleObjects;
 
 	export let fill: string | undefined = undefined;
-	export let fillScale = false;
+	export let fillScale: Object | undefined = undefined;
 	export let stroke: string | undefined = undefined;
 	export let strokeWidth: number | string | undefined = undefined;
 
@@ -39,7 +39,7 @@
 		geoPath.context($ctx);
 		geoPath(geojson);
 
-		$ctx.fillStyle = fill || (fillScale && $rGet(geojson.properties)) || 'transparent';
+		$ctx.fillStyle = fill || (fillScale && $rGet(fillScale)) || 'transparent';
 		$ctx.fill();
 
 		$ctx.lineWidth = strokeWidth;
@@ -51,7 +51,7 @@
 {#if renderContext === 'svg'}
 	<path
 		d={geoPath(geojson)}
-		fill={fill || (fillScale && $rGet(geojson.properties)) || 'transparent'}
+		fill={fill || (fillScale && $rGet(fillScale)) || 'transparent'}
 		stroke={stroke || 'black'}
 		on:mousemove={(e) => tooltip?.show(e, geojson)}
 		on:mouseleave={(e) => tooltip?.hide()}

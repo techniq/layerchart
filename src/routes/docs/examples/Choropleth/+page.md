@@ -22,15 +22,7 @@ docUrl: $docUrl
 	const states = feature(data.geojson, data.geojson.objects.states);
 	const counties = feature(data.geojson, data.geojson.objects.counties);
 
-	const flatData = states.features.map((d) => d.properties);
-
-	const valueKey = 'value';
-	const colors = ['#ffdecc', '#ffc09c', '#ffa06b', '#ff7a33'];
-
-	const dataJoinKey = 'name';
-	const mapJoinKey = 'name';
-
-	const dataLookup = index(statesData, (d) => d[dataJoinKey]);
+	const dataByStateName = index(statesData, (d) => d.name);
 </script>
 
 ## SVG
@@ -38,11 +30,10 @@ docUrl: $docUrl
 <Preview>
 	<div class="h-[600px]">
 		<Chart
-			data={states}
-			r={(d) => dataLookup.get(d[mapJoinKey])?.[valueKey] ?? 'white'}
+			data={statesData}
+			r={(d) => dataByStateName.get(d.name)?.value}
 			rScale={scaleQuantize()}
-			rRange={colors}
-			{flatData}
+			rRange={['#ffdecc', '#ffc09c', '#ffa06b', '#ff7a33']}
 			geo={{
 				projection: geoIdentity,
 				geojson: states
@@ -53,7 +44,7 @@ docUrl: $docUrl
 			<Svg>
 				<g>
 					{#each states.features as feature}
-						<GeoPath geojson={feature} {tooltip} fillScale class="hover:stroke-red-500 hover:stroke-2" />
+						<GeoPath geojson={feature} {tooltip} fillScale={{ name: feature.properties.name }} class="hover:stroke-red-500 hover:stroke-2" />
 					{/each}
 				</g>
 				<g>
@@ -65,7 +56,7 @@ docUrl: $docUrl
 			<Tooltip header={(data) => data.properties.name} let:data>
 				<TooltipItem
 					label="value"
-					value={dataLookup.get(data.properties[mapJoinKey])?.[valueKey]}
+					value={dataByStateName.get(data.properties.name)?.value}
 					format="currency"
 				/>
 			</Tooltip>
@@ -76,23 +67,22 @@ docUrl: $docUrl
 ## Canvas
 
 <Preview>
-	<div class="h-[600px] mt-10">
+	<div class="h-[600px]">
 		<Chart
-			data={states}
-			r={(d) => dataLookup.get(d[mapJoinKey])?.[valueKey] ?? 'white'}
+			data={statesData}
+			r={(d) => dataByStateName.get(d.name)?.value}
 			rScale={scaleQuantize()}
-			rRange={colors}
-			{flatData}
+			rRange={['#ffdecc', '#ffc09c', '#ffa06b', '#ff7a33']}
 			geo={{
 				projection: geoIdentity,
 				geojson: states
 			}}
 		>
-				{#each states.features as feature}
-					<Canvas>
-						<GeoPath geojson={feature} fillScale />
-					</Canvas>
-				{/each}
+			{#each states.features as feature}
+				<Canvas>
+					<GeoPath geojson={feature} fillScale={{ name: feature.properties.name }} />
+				</Canvas>
+			{/each}
 			<Canvas>
 				<GeoPath geojson={counties} stroke="rgba(0,0,0,.1)" />
 			</Canvas>
