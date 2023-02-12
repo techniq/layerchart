@@ -28,6 +28,7 @@
 			roll: number;
 		};
 		scale?: number;
+		translate?: [number, number];
 	};
 
 	export type GeoContext = Readable<GeoContextValue>;
@@ -55,6 +56,7 @@
 	export let clipExtent: GeoContextValue['clipExtent'] = undefined;
 	export let rotate: GeoContextValue['rotate'] = undefined;
 	export let scale: GeoContextValue['scale'] = undefined;
+	export let translate: GeoContextValue['translate'] = undefined;
 
 	/** By default, the map fills to fit the $width and $height. If instead you want a fixed-aspect ratio, like for a server-side rendered map, set that here. */
 	export let fixedAspectRatio: number | undefined = undefined;
@@ -68,6 +70,10 @@
 
 	$: if (scale && 'scale' in projectionFn) {
 		projectionFn.scale(scale);
+	}
+
+	$: if (translate && 'translate' in projectionFn) {
+		projectionFn.translate(translate);
 	}
 
 	$: if (clipAngle && 'clipAngle' in projectionFn) {
