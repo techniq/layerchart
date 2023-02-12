@@ -24,15 +24,7 @@ docUrl: $docUrl
 	const states = feature(data.geojson, data.geojson.objects.states);
 	const counties = feature(data.geojson, data.geojson.objects.counties);
 
-	const flatData = states.features.map((d) => d.properties);
-	// console.log({ flatData });
-
-	const valueKey = 'value';
-
-	const dataJoinKey = 'name';
-	const mapJoinKey = 'name';
-
-	const dataLookup = index(statesData, (d) => d[dataJoinKey]);
+	const dataByStateName = index(statesData, (d) => d.name);
 </script>
 
 ## SVG
@@ -58,7 +50,7 @@ docUrl: $docUrl
 			<Tooltip header={(data) => data.properties.name} let:data>
 				<TooltipItem
 					label="value"
-					value={dataLookup.get(data.properties[mapJoinKey])?.[valueKey]}
+					value={dataByStateName.get(data.properties.name)?.value}
 					format="currency"
 				/>
 			</Tooltip>
