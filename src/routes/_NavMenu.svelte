@@ -44,6 +44,7 @@
 
 <div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Geo Examples</div>
 <NavItem text="GeoPath" currentUrl={$page.url} path="/docs/examples/GeoPath" class="pl-6 py-2" />
+<NavItem text="GeoPoint" currentUrl={$page.url} path="/docs/examples/GeoPoint" class="pl-6 py-2" />
 <NavItem
 	text="Choropleth"
 	currentUrl={$page.url}
