@@ -81,12 +81,13 @@ docUrl: $docUrl
 			let:tooltip
 		>
 			<Svg>
-				<Zoom bind:this={zoom} tweened={{ duration: 800, easing: cubicOut }} let:zoomTo>
+				<Zoom bind:this={zoom} tweened={{ duration: 800, easing: cubicOut }} let:zoomTo let:scale>
 					{#each filterNonStates(states.features) as feature}
 						<GeoPath
 							geojson={feature}
 							class="fill-white hover:fill-gray-200"
 							{tooltip}
+							stroke-width={1 / scale.x}
 							on:click={e => {
 								const { geoPath, event } = e.detail;
 								event.stopPropagation();
