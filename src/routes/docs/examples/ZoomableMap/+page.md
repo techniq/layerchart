@@ -76,7 +76,6 @@ docUrl: $docUrl
 			geo={{
 				projection,
 				geojson: states,
-				translate: []
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
