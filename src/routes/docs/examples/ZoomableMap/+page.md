@@ -4,23 +4,16 @@ docUrl: $docUrl
 ---
 
 <script lang="ts">
-	import { fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { geoAlbersUsa, geoAlbers, geoMercator } from 'd3-geo';
 	import { sort } from 'd3-array';
-	import { scaleQuantize } from 'd3-scale';
 	import { feature } from 'topojson-client';
 
-	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-	import { Button, Field } from 'svelte-ux'
+	import { Field } from 'svelte-ux'
 
-	import Chart, { Canvas, Svg, Html } from '$lib/components/Chart.svelte';
-	import ChartClipPath from '$lib/components/ChartClipPath.svelte';
-	import ClipPathUse from '$lib/components/ClipPathUse.svelte';
+	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import GeoPath from '$lib/components/GeoPath.svelte';
-	import Graticule from '$lib/components/Graticule.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
-	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	import Zoom from '$lib/components/Zoom.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
