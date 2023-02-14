@@ -21,7 +21,7 @@ docUrl: $docUrl
 	import Preview from '$lib/docs/Preview.svelte';
 	import ZoomControls from '$lib/docs/ZoomControls.svelte';
 
-	import { complexData } from '../data/hierarchy';
+	import { complexData } from '../_data/hierarchy';
 
 	let expandedNodeNames = ['flare']
 

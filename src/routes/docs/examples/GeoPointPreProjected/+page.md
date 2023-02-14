@@ -18,8 +18,8 @@ docUrl: $docUrl
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
-	// import geojson from '../data/geo/states-albers-10m.json';
-	import capitals from '../data/geo/us-state-capitals.csv';
+	// import geojson from '../_data/geo/states-albers-10m.json';
+	import capitals from '../_data/geo/us-state-capitals.csv';
 
 	export let data;
 	// console.log({ data });

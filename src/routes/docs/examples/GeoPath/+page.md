@@ -15,8 +15,8 @@ docUrl: $docUrl
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
-	// import geojson from '../data/geo/states-albers-10m.json';
-	import statesData from '../data/geo/us-states-data.json';
+	// import geojson from '../_data/geo/states-albers-10m.json';
+	import statesData from '../_data/geo/us-states-data.json';
 
 	export let data;
 	// console.log({ data });

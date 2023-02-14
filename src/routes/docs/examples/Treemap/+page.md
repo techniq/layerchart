@@ -33,9 +33,9 @@ docUrl: $docUrl
 
 	import Preview from '$lib/docs/Preview.svelte';
 
-	import { simpleData, complexData } from '../data/hierarchy';
-	import flareCsv from '../data/flare.csv'
-	import carsCsv from '../data/cars.csv'
+	import { simpleData, complexData } from '../_data/hierarchy';
+	import flareCsv from '../_data/flare.csv'
+	import carsCsv from '../_data/cars.csv'
 
 	const complexDataHierarchy = hierarchy(complexData)
 		.sum((d) => d.value)

@@ -14,8 +14,8 @@ docUrl: $docUrl
 	import GeoPoint from '$lib/components/GeoPoint.svelte';
 	import Text from '$lib/components/Text.svelte';
 
-	import geojson from '../data/geo/us-states-topojson.js';
-	import capitals from '../data/geo/us-state-capitals.csv';
+	import geojson from '../_data/geo/us-states-topojson.js';
+	import capitals from '../_data/geo/us-state-capitals.csv';
 
 	const states = feature(geojson, geojson.objects.collection);
 </script>

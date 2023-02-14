@@ -27,7 +27,7 @@ docUrl: $docUrl
 
 	import Preview from '$lib/docs/Preview.svelte';
 
-	import { complexData } from '../data/hierarchy';
+	import { complexData } from '../_data/hierarchy';
 
 	const complexHierarchy = hierarchy(complexData)
 		.sum((d) => d.value)
