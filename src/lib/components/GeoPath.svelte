@@ -13,6 +13,10 @@
 	export let stroke: string | undefined = undefined;
 	export let strokeWidth: number | string | undefined = undefined;
 
+	/** Render to canvas */
+	export let render: ((ctx: CanvasRenderingContext2D, { geoPath: GeoPath }) => any) | undefined =
+		undefined;
+
 	/**
 	 * Tooltip context to setup mouse events to show tooltip for related data
 	 */
@@ -34,28 +38,34 @@
 		scaleCanvas($ctx, $width, $height);
 		$ctx.clearRect(0, 0, $width, $height);
 
-		$ctx.beginPath();
-		// Set the context here since setting it in `$: geoPath` is a circular reference
-		geoPath.context($ctx);
-		geoPath(geojson);
+		if (render) {
+			render($ctx, { geoPath });
+		} else {
+			$ctx.beginPath();
+			// Set the context here since setting it in `$: geoPath` is a circular reference
+			geoPath.context($ctx);
+			geoPath(geojson);
 
-		$ctx.fillStyle = fill || (fillScale && $rGet(fillScale)) || 'transparent';
-		$ctx.fill();
+			$ctx.fillStyle = fill || (fillScale && $rGet(fillScale)) || 'transparent';
+			$ctx.fill();
 
-		$ctx.lineWidth = strokeWidth;
-		$ctx.strokeStyle = stroke;
-		$ctx.stroke();
+			$ctx.lineWidth = strokeWidth;
+			$ctx.strokeStyle = stroke;
+			$ctx.stroke();
+		}
 	}
 </script>
 
 {#if renderContext === 'svg'}
-	<path
-		d={geoPath(geojson)}
-		fill={fill || (fillScale && $rGet(fillScale)) || 'transparent'}
-		stroke={stroke || 'black'}
-		on:mousemove={(e) => tooltip?.show(e, geojson)}
-		on:mouseleave={(e) => tooltip?.hide()}
-		on:click={(event) => dispatch('click', { geoPath, event })}
-		{...$$restProps}
-	/>
+	<slot {geoPath}>
+		<path
+			d={geoPath(geojson)}
+			fill={fill || (fillScale && $rGet(fillScale)) || 'transparent'}
+			stroke={stroke || 'black'}
+			on:mousemove={(e) => tooltip?.show(e, geojson)}
+			on:mouseleave={(e) => tooltip?.hide()}
+			on:click={(event) => dispatch('click', { geoPath, event })}
+			{...$$restProps}
+		/>
+	</slot>
 {/if}

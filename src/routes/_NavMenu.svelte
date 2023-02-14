@@ -59,6 +59,12 @@
 />
 <NavItem text="State Map" currentUrl={$page.url} path="/docs/examples/StateMap" class="pl-6 py-2" />
 <NavItem
+	text="Country Map"
+	currentUrl={$page.url}
+	path="/docs/examples/CountryMap"
+	class="pl-6 py-2"
+/>
+<NavItem
 	text="Animated Globe"
 	currentUrl={$page.url}
 	path="/docs/examples/AnimatedGlobe"
