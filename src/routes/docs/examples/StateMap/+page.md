@@ -34,7 +34,7 @@ docUrl: $docUrl
 	]
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2 my-2">
+<div class="grid grid-cols-[1fr,1fr,1fr] gap-2 my-2">
 	<Field label="State" let:id>
 		<select bind:value={selectedStateId} class="w-full outline-none appearance-none text-sm" {id}>
 			{#each stateOptions as option}

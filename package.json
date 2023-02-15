@@ -62,6 +62,7 @@
 		"d3-scale": "^4.0.2",
 		"d3-scale-chromatic": "^3.0.0",
 		"d3-shape": "^3.2.0",
+		"d3-tile": "^1.0.0",
 		"date-fns": "^2.29.3",
 		"layercake": "^7.2.2",
 		"lodash-es": "^4.17.21",
