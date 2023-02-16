@@ -15,28 +15,22 @@
 	let moved = false;
 
 	const translate = motionStore({ x: 0, y: 0 }, { spring, tweened });
-	const scale = motionStore({ x: 1, y: 1 }, { spring, tweened });
+	const scale = motionStore(1, { spring, tweened });
 	let startPoint;
 	let startTranslate;
 	let svgEl = null;
 
 	export function reset() {
 		$translate = { x: 0, y: 0 };
-		$scale = { x: 1, y: 1 };
+		$scale = 1;
 	}
 
 	export function increase() {
-		$scale = {
-			x: $scale.x * 1.25,
-			y: $scale.y * 1.25
-		};
+		$scale *= 1.25;
 	}
 
 	export function decrease() {
-		$scale = {
-			x: $scale.x * 0.8,
-			y: $scale.y * 0.8
-		};
+		$scale *= 0.8;
 	}
 
 	export function translateCenter() {
@@ -46,20 +40,14 @@
 		};
 	}
 
-	export function zoomTo(
-		newTranslate: { x: number; y: number },
-		newScale?: { x: number; y: number }
-	) {
+	export function zoomTo(newTranslate: { x: number; y: number }, newScale?: number) {
 		$translate = {
 			x: $width / 2 - newTranslate.x,
 			y: $height / 2 - newTranslate.y
 		};
 
 		if (newScale) {
-			$scale = {
-				x: Math.min($width, $height) / newScale.x,
-				y: Math.min($width, $height) / newScale.y
-			};
+			$scale = Math.min($width, $height) / newScale;
 		}
 	}
 
@@ -85,8 +73,8 @@
 
 		translate.set(
 			{
-				x: startTranslate.x + deltaX / $scale.x,
-				y: startTranslate.y + deltaY / $scale.y
+				x: startTranslate.x + deltaX / $scale,
+				y: startTranslate.y + deltaY / $scale
 			},
 			spring ? { hard: true } : tweened ? { duration: 0 } : undefined
 		);
@@ -122,24 +110,19 @@
 		e.preventDefault();
 
 		if (scroll === 'scale') {
-			const scaleBy = -e.deltaY > 0 ? 1.1 : 0.9;
-
-			// TODO: Update to match d3-zoom delta
 			// https://github.com/d3/d3-zoom#zoom_wheelDelta
-			// const scaleBy = -e.deltaY * (e.deltaMode === 1 ? 0.05 : e.deltaMode ? 1 : 0.002);
+			const scaleBy =
+				-e.deltaY * (e.deltaMode === 1 ? 0.05 : e.deltaMode ? 1 : 0.002) * (e.ctrlKey ? 10 : 1);
 
 			scale.set(
-				{
-					x: $scale.x * scaleBy,
-					y: $scale.y * scaleBy
-				},
+				$scale * Math.pow(2, scaleBy),
 				spring ? { hard: true } : tweened ? { duration: 0 } : undefined
 			);
 		} else if (scroll === 'translate') {
 			translate.update(
 				(startTranslate) => ({
-					x: startTranslate.x + -e.deltaX / $scale.x,
-					y: startTranslate.y + -e.deltaY / $scale.y
+					x: startTranslate.x + -e.deltaX / $scale,
+					y: startTranslate.y + -e.deltaY / $scale
 				}),
 				spring ? { hard: true } : tweened ? { duration: 0 } : undefined
 			);
@@ -173,8 +156,8 @@
 	};
 
 	$: newTranslate = {
-		x: $translate.x * $scale.x + center.x - center.x * $scale.x,
-		y: $translate.y * $scale.y + center.y - center.y * $scale.y
+		x: $translate.x * $scale + center.x - center.x * $scale,
+		y: $translate.y * $scale + center.y - center.y * $scale
 	};
 </script>
 
@@ -195,7 +178,7 @@
 		height={$height + $padding.top + $padding.bottom}
 		fill="transparent"
 	/>
-	<g transform="translate({newTranslate.x},{newTranslate.y}) scale({$scale.x},{$scale.y})">
+	<g transform="translate({newTranslate.x},{newTranslate.y}) scale({$scale})">
 		<slot scale={$scale} {zoomTo} />
 	</g>
 </g>

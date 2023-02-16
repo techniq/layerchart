@@ -40,7 +40,7 @@ docUrl: $docUrl
 	let zoom;
 
 	$: if (zoom && selected) {
-		zoom.zoomTo({ x: selected.x, y: selected.y }, { x: selected.r * 2, y: selected.r * 2 })
+		zoom.zoomTo({ x: selected.x, y: selected.y }, selected.r * 2)
 	}
 
 	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu)
@@ -104,6 +104,7 @@ docUrl: $docUrl
 									<Circle
 										r={node.r}
 										stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+										stroke-width={1 / scale}
 										fill={nodeColor}
 										rx={5}
 									/>
@@ -111,7 +112,7 @@ docUrl: $docUrl
 							{/each}
 							<!-- Show text on top of all circles -->
 							{#each selected ? (selected.children ?? [selected]) : [] as node (node.data.name + node.depth)}
-								{@const fontSize = 1 / scale.x}
+								{@const fontSize = 1 / scale}
 								<g in:fade|local>
 									<text
 										x={node.x}

@@ -74,13 +74,13 @@ docUrl: $docUrl
 			let:tooltip
 		>
 			<Svg>
-				<Zoom bind:this={zoom} tweened={{ duration: 800, easing: cubicOut }} let:zoomTo let:scale>
+				<Zoom bind:this={zoom} scroll="scale" tweened={{ duration: 800, easing: cubicOut }} let:zoomTo let:scale>
 					{#each filterNonStates(states.features) as feature}
 						<GeoPath
 							geojson={feature}
 							class="fill-white hover:fill-gray-200"
 							{tooltip}
-							stroke-width={1 / scale.x}
+							stroke-width={1 / scale}
 							on:click={e => {
 								const { geoPath, event } = e.detail;
 								//selectedStateId = feature.id
@@ -91,7 +91,7 @@ docUrl: $docUrl
 								let y = (top + bottom) / 2;
 								//const scale = Math.max(width, height) * 1.2; // make x/y consistent to maintain aspect ratio.  Scale out slightly
 								const scale = 300; // half of height
-								zoomTo({ x, y }, { x: scale, y: scale })
+								zoomTo({ x, y }, scale)
 							}}
 						/>
 					{/each}
