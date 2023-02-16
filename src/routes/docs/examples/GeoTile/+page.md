@@ -21,14 +21,12 @@ docUrl: $docUrl
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	import geojson from '../_data/geo/us-states-topojson.js';
-	import statesData from '../_data/geo/us-states-data.json';
 
 	const states = feature(geojson, geojson.objects.collection);
 
 	$: filteredStates = { ...states, features: states.features.filter(d => d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii' )}
 	// $: filteredStates = { ...states, features: states.features.filter(d => d.properties.name === 'West Virginia')}
-
-	const dataByStateName = index(statesData, (d) => d.name);
+	$: selectedFeature = filteredStates;
 
 	// TODO: Access via context, or possibly global state
 	const ACCESS_TOKEN = 'pk.eyJ1IjoidGVjaG5pcTM1IiwiYSI6ImNsZTR5cDd0ZjAyNm8zdnFvczhzdnFpcXkifQ.-LAr8sl5BZ3y-H0pDyD1qA';
@@ -88,7 +86,7 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection: geoMercator,
-				geojson: filteredStates,
+				geojson: selectedFeature,
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
@@ -97,7 +95,12 @@ docUrl: $docUrl
 			<Svg>
 				<GeoTile url={serviceUrl} {zoomDelta} />
 				{#each filteredStates.features as feature}
-					<GeoPath geojson={feature} {tooltip} class="fill-white/10 stroke-black/20 hover:fill-white/30" />
+					<GeoPath
+						geojson={feature}
+						{tooltip}
+						class="stroke-black/20 hover:fill-white/30"
+						on:click={() => selectedFeature  = selectedFeature === feature ? filteredStates : feature}
+					/>
 				{/each}
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data>
@@ -114,11 +117,11 @@ docUrl: $docUrl
 ## SVG (clipped)
 
 <Preview>
-	<div class="h-[600px]">
+	<div class="h-[600px] overflow-hidden">
 		<Chart
 			geo={{
 				projection: geoMercator,
-				geojson: filteredStates
+				geojson: selectedFeature
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
@@ -127,9 +130,14 @@ docUrl: $docUrl
 				<ClipPathUse refId="clip">
 					<GeoTile url={serviceUrl} {zoomDelta} />
 				</ClipPathUse>
-				<GeoPath geojson={filteredStates} id="clip" class="stroke-none" />
+				<GeoPath geojson={selectedFeature} id="clip" class="stroke-none" />
 				{#each filteredStates.features as feature}
-					<GeoPath geojson={feature} {tooltip} class="fill-white/10 stroke-black/20 hover:fill-white/30" />
+					<GeoPath
+						geojson={feature}
+						{tooltip}
+						class="stroke-black/20 hover:fill-white/30"
+						on:click={() => selectedFeature  = selectedFeature === feature ? filteredStates : feature}
+					/>
 				{/each}
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data>
@@ -150,7 +158,7 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection: geoMercator,
-				geojson: filteredStates
+				geojson: selectedFeature
 			}}
 		>
 			<Canvas>
