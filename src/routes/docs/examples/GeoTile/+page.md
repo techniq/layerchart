@@ -104,10 +104,16 @@ docUrl: $docUrl
 				{/each}
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data>
+				{@const [longitude, latitude] = projection.invert([tooltip.left,tooltip.top])}
 				<TooltipItem
-					label="value"
-					value={dataByStateName.get(data.properties.name)?.value}
-					format="currency"
+					label="longitude"
+					value={longitude}
+					format="decimal"
+				/>
+				<TooltipItem
+					label="latitude"
+					value={latitude}
+					format="decimal"
 				/>
 			</Tooltip>
 		</Chart>
@@ -125,6 +131,7 @@ docUrl: $docUrl
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
+			let:projection
 		>
 			<Svg>
 				<ClipPathUse refId="clip">
@@ -141,10 +148,16 @@ docUrl: $docUrl
 				{/each}
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data>
+				{@const [longitude, latitude] = projection.invert([tooltip.left,tooltip.top])}
 				<TooltipItem
-					label="value"
-					value={dataByStateName.get(data.properties.name)?.value}
-					format="currency"
+					label="longitude"
+					value={longitude}
+					format="decimal"
+				/>
+				<TooltipItem
+					label="latitude"
+					value={latitude}
+					format="decimal"
 				/>
 			</Tooltip>
 		</Chart>
