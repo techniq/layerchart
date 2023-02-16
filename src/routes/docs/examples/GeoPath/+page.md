@@ -16,15 +16,12 @@ docUrl: $docUrl
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	// import geojson from '../_data/geo/states-albers-10m.json';
-	import statesData from '../_data/geo/us-states-data.json';
 
 	export let data;
 	// console.log({ data });
 
 	const states = feature(data.geojson, data.geojson.objects.states);
 	const counties = feature(data.geojson, data.geojson.objects.counties);
-
-	const dataByStateName = index(statesData, (d) => d.name);
 </script>
 
 ## SVG
@@ -36,6 +33,7 @@ docUrl: $docUrl
 				projection: geoIdentity,
 				fitGeojson: states
 			}}
+			let:projection
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
 		>
@@ -48,10 +46,16 @@ docUrl: $docUrl
 				{/each}
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data>
+				{@const [longitude, latitude] = projection.invert([tooltip.left,tooltip.top])}
 				<TooltipItem
-					label="value"
-					value={dataByStateName.get(data.properties.name)?.value}
-					format="currency"
+					label="longitude"
+					value={longitude}
+					format="decimal"
+				/>
+				<TooltipItem
+					label="latitude"
+					value={latitude}
+					format="decimal"
 				/>
 			</Tooltip>
 		</Chart>
