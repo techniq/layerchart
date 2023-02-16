@@ -16,9 +16,9 @@
 
 	const translate = motionStore({ x: 0, y: 0 }, { spring, tweened });
 	const scale = motionStore(1, { spring, tweened });
-	let startPoint;
-	let startTranslate;
-	let svgEl = null;
+	let startPoint: { x: number; y: number } = { x: 0, y: 0 };
+	let startTranslate: { x: number; y: number } = { x: 0, y: 0 };
+	let svgEl: SVGSVGElement | null = null;
 
 	export function reset() {
 		$translate = { x: 0, y: 0 };
@@ -51,12 +51,12 @@
 		}
 	}
 
-	function handleMouseDown(e: MouseEvent) {
+	function handleMouseDown(e: MouseEvent & { currentTarget: SVGElement }) {
 		if (disablePointer) return;
 
 		dragging = true;
 		moved = false;
-		svgEl = e.target.ownerSVGElement;
+		svgEl = e.currentTarget.ownerSVGElement;
 		startPoint = localPoint(svgEl, e);
 		startTranslate = $translate;
 
@@ -129,23 +129,30 @@
 		}
 	}
 
-	function localPoint(svgEl: SVGElement, e: MouseEvent) {
-		const screenCTM = svgEl.getScreenCTM();
+	function localPoint(svgEl: SVGSVGElement | null, e: MouseEvent) {
+		if (svgEl) {
+			const screenCTM = svgEl.getScreenCTM();
 
-		const coords = {
-			x: e.clientX,
-			y: e.clientY
-		};
+			const coords = {
+				x: e.clientX,
+				y: e.clientY
+			};
 
-		let point = svgEl.createSVGPoint();
-		point.x = coords.x;
-		point.y = coords.y;
-		point = point.matrixTransform(screenCTM.inverse());
+			let point = svgEl.createSVGPoint();
+			point.x = coords.x;
+			point.y = coords.y;
+			point = point.matrixTransform(screenCTM?.inverse());
 
-		return {
-			x: point.x,
-			y: point.y
-		};
+			return {
+				x: point.x,
+				y: point.y
+			};
+		} else {
+			return {
+				x: e.clientX,
+				y: e.clientY
+			};
+		}
 	}
 
 	$: center = { x: $width / 2, y: $height / 2 };
