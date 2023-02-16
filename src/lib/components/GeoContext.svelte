@@ -68,30 +68,35 @@
 		number
 	];
 
-	$: projectionFn = projection().fitSize(fitSizeRange, geojson);
+	let projectionFn = projection();
+	$: {
+		projectionFn = projection();
 
-	$: if (scale && 'scale' in projectionFn) {
-		projectionFn.scale(scale);
-	}
+		projectionFn.fitSize(fitSizeRange, geojson);
 
-	$: if (translate && 'translate' in projectionFn) {
-		projectionFn.translate(translate);
-	}
+		if (scale && 'scale' in projectionFn) {
+			projectionFn.scale(scale);
+		}
 
-	$: if (center && 'center' in projectionFn) {
-		projectionFn.center(center);
-	}
+		if (translate && 'translate' in projectionFn) {
+			projectionFn.translate(translate);
+		}
 
-	$: if (clipAngle && 'clipAngle' in projectionFn) {
-		projectionFn.clipAngle(clipAngle);
-	}
+		if (center && 'center' in projectionFn) {
+			projectionFn.center(center);
+		}
 
-	$: if (clipExtent && 'clipExtent' in projectionFn) {
-		projectionFn.clipExtent(clipExtent);
-	}
+		if (clipAngle && 'clipAngle' in projectionFn) {
+			projectionFn.clipAngle(clipAngle);
+		}
 
-	$: if (rotate && 'rotate' in projectionFn) {
-		projectionFn.rotate([rotate.yaw, rotate.pitch, rotate.roll]);
+		if (clipExtent && 'clipExtent' in projectionFn) {
+			projectionFn.clipExtent(clipExtent);
+		}
+
+		if (rotate && 'rotate' in projectionFn) {
+			projectionFn.rotate([rotate.yaw, rotate.pitch, rotate.roll]);
+		}
 	}
 
 	const geo = writable<GeoContextValue>();
