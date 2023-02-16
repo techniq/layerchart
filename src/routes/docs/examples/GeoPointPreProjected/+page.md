@@ -38,7 +38,7 @@ Example mixing pre-projected maps (using geoIdentity) with non-projected points
 				projection: geoAlbersUsa,
 				_scale: 1300,
 				_translate: [487.5, 305],
-				geojson: states,
+				fitGeojson: states,
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip

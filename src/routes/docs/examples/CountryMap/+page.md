@@ -27,7 +27,7 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection: geoAlbersUsa,
-				geojson: states,
+				fitGeojson: states,
 			}}
 		>
 			<Svg>
@@ -56,7 +56,7 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection: geoAlbersUsa,
-				geojson: states,
+				fitGeojson: states,
 			}}
 		>
 			<Canvas>

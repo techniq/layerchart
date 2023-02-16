@@ -12,9 +12,8 @@
 
 	export type GeoContextValue = {
 		projection: GeoProjection | GeoIdentityTransform;
-		geojson: GeoPermissibleObjects;
-		clipAngle?: number;
-		clipExtent?: [[number, number], [number, number]];
+		fitGeojson: GeoPermissibleObjects;
+		scale?: number;
 		/**
 		 * Set projections three-axis spherical rotation
 		 * see: https://github.com/d3/d3-geo#projection_rotate
@@ -27,9 +26,10 @@
 			/** Gamma */
 			roll: number;
 		};
-		scale?: number;
 		translate?: [number, number];
 		center?: [number, number];
+		clipAngle?: number;
+		clipExtent?: [[number, number], [number, number]];
 	};
 
 	export type GeoContext = Readable<GeoContextValue>;
@@ -51,7 +51,7 @@
 	// https://github.com/topojson/us-atlas#us-atlas-topojson
 	// export let projection = geoAlbersUsa().scale(1300).translate([487.5, 305]);
 
-	export let geojson: GeoContextValue['geojson'];
+	export let fitGeojson: GeoContextValue['fitGeojson'];
 
 	export let clipAngle: GeoContextValue['clipAngle'] = undefined;
 	export let clipExtent: GeoContextValue['clipExtent'] = undefined;
@@ -72,10 +72,16 @@
 	$: {
 		projectionFn = projection();
 
-		projectionFn.fitSize(fitSizeRange, geojson);
+		if (fitGeojson) {
+			projectionFn.fitSize(fitSizeRange, fitGeojson);
+		}
 
 		if (scale && 'scale' in projectionFn) {
 			projectionFn.scale(scale);
+		}
+
+		if (rotate && 'rotate' in projectionFn) {
+			projectionFn.rotate([rotate.yaw, rotate.pitch, rotate.roll]);
 		}
 
 		if (translate && 'translate' in projectionFn) {
@@ -93,14 +99,10 @@
 		if (clipExtent && 'clipExtent' in projectionFn) {
 			projectionFn.clipExtent(clipExtent);
 		}
-
-		if (rotate && 'rotate' in projectionFn) {
-			projectionFn.rotate([rotate.yaw, rotate.pitch, rotate.roll]);
-		}
 	}
 
 	const geo = writable<GeoContextValue>();
-	$: $geo = { projection: projectionFn, geojson };
+	$: $geo = { projection: projectionFn, fitGeojson };
 	setGeoContext(geo);
 </script>
 

@@ -86,7 +86,7 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection: geoMercator,
-				geojson: selectedFeature,
+				fitGeojson: selectedFeature,
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
@@ -127,7 +127,7 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection: geoMercator,
-				geojson: selectedFeature
+				fitGeojson: selectedFeature
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
@@ -171,7 +171,7 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection: geoMercator,
-				geojson: selectedFeature
+				fitGeojson: selectedFeature
 			}}
 		>
 			<Canvas>

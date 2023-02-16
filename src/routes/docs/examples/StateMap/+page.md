@@ -58,7 +58,7 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection,
-				geojson: selectedStateFeature,
+				fitGeojson: selectedStateFeature,
 			}}
 		>
 			<Svg>
@@ -75,7 +75,7 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection,
-				geojson: selectedStateFeature,
+				fitGeojson: selectedStateFeature,
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
@@ -98,7 +98,7 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection,
-				geojson: selectedStateFeature,
+				fitGeojson: selectedStateFeature,
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip

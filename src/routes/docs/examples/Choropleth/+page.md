@@ -36,7 +36,7 @@ docUrl: $docUrl
 			rRange={['#ffdecc', '#ffc09c', '#ffa06b', '#ff7a33']}
 			geo={{
 				projection: geoIdentity,
-				geojson: states
+				fitGeojson: states
 			}}
 			tooltip={{ mode: 'manual', raiseTarget: true }}
 			let:tooltip
@@ -75,7 +75,7 @@ docUrl: $docUrl
 			rRange={['#ffdecc', '#ffc09c', '#ffa06b', '#ff7a33']}
 			geo={{
 				projection: geoIdentity,
-				geojson: states
+				fitGeojson: states
 			}}
 		>
 			{#each states.features as feature}

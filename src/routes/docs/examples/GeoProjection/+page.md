@@ -84,7 +84,7 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection,
-				geojson,
+				fitGeojson: geojson,
 				rotate: {
 					yaw,
 					pitch,
@@ -92,6 +92,7 @@ docUrl: $docUrl
 				},
 				scale
 			}}
+			padding={{ left: 100, right: 100 }}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
 		>
@@ -114,7 +115,7 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection,
-				geojson,
+				fitGeojson: geojson,
 				rotate: {
 					yaw,
 					pitch,

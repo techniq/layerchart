@@ -50,7 +50,7 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection: geoOrthographic,
-				geojson,
+				fitGeojson: geojson,
 				rotate: {
 					yaw: $yaw,
 					pitch: $pitch,

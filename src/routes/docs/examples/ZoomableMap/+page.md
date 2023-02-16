@@ -68,7 +68,7 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection,
-				geojson: states,
+				fitGeojson: states,
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
