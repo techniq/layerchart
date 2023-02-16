@@ -83,7 +83,6 @@ docUrl: $docUrl
 							stroke-width={1 / scale.x}
 							on:click={e => {
 								const { geoPath, event } = e.detail;
-								event.stopPropagation();
 								//selectedStateId = feature.id
 								let [[left, top], [right, bottom]] = geoPath.bounds(feature);
 								let width = right - left;

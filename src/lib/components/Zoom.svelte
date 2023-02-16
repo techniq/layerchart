@@ -9,8 +9,10 @@
 	export let tweened: boolean | Parameters<typeof motionStore>[1]['tweened'] = undefined;
 	export let disablePointer = false;
 	export let scroll: 'scale' | 'translate' | 'none' = 'none';
+	export let clickDistance = 10;
 
 	let dragging = false;
+	let moved = false;
 
 	const translate = motionStore({ x: 0, y: 0 }, { spring, tweened });
 	const scale = motionStore({ x: 1, y: 1 }, { spring, tweened });
@@ -61,10 +63,11 @@
 		}
 	}
 
-	function handleMouseDown(e) {
+	function handleMouseDown(e: MouseEvent) {
 		if (disablePointer) return;
 
 		dragging = true;
+		moved = false;
 		svgEl = e.target.ownerSVGElement;
 		startPoint = localPoint(svgEl, e);
 		startTranslate = $translate;
@@ -73,14 +76,7 @@
 		window.addEventListener('mouseup', handleMouseUp);
 	}
 
-	function handleMouseUp(e) {
-		dragging = false;
-
-		window.removeEventListener('mousemove', handleMouseMove);
-		window.removeEventListener('mouseup', handleMouseUp);
-	}
-
-	function handleMouseMove(e) {
+	function handleMouseMove(e: MouseEvent) {
 		if (!dragging) return;
 
 		const endPoint = localPoint(svgEl, e);
@@ -94,6 +90,25 @@
 			},
 			spring ? { hard: true } : tweened ? { duration: 0 } : undefined
 		);
+
+		if (!moved) {
+			// If dragged beyond threshold, disable click propagation
+			moved = deltaX * deltaX + deltaY * deltaY > clickDistance;
+		}
+	}
+
+	function handleMouseUp(e: MouseEvent) {
+		dragging = false;
+
+		window.removeEventListener('mousemove', handleMouseMove);
+		window.removeEventListener('mouseup', handleMouseUp);
+	}
+
+	function handleClick(e: MouseEvent) {
+		if (moved) {
+			// Do not propagate click event to children if drag/moved.  Registered in capture phase (top-down)
+			e.stopPropagation();
+		}
 	}
 
 	function handleDoubleClick() {
@@ -101,7 +116,7 @@
 		increase();
 	}
 
-	function handleWheel(e) {
+	function handleWheel(e: WheelEvent) {
 		if (scroll === 'none' || disablePointer) return;
 
 		e.preventDefault();
@@ -131,7 +146,7 @@
 		}
 	}
 
-	function localPoint(svgEl, e) {
+	function localPoint(svgEl: SVGElement, e: MouseEvent) {
 		const screenCTM = svgEl.getScreenCTM();
 
 		const coords = {
@@ -167,6 +182,7 @@
 	on:mousewheel={handleWheel}
 	on:mousedown={handleMouseDown}
 	on:dblclick={handleDoubleClick}
+	on:click|capture={handleClick}
 	on:click
 	on:keydown
 	on:keyup
