@@ -7,6 +7,7 @@
 
 	export let url: (x: number, y: number, z: number) => string = () => '';
 	export let zoomDelta = 0;
+	export let tileSize = 256;
 
 	const { width, height } = getContext('LayerCake');
 	const canvas = getContext('canvas');
@@ -16,6 +17,7 @@
 		.size([$width, $height])
 		.scale($geo.projection.scale() * 2 * Math.PI)
 		.translate($geo.projection([0, 0]))
+		.tileSize(tileSize)
 		.zoomDelta(zoomDelta);
 
 	$: tiles = tile();
@@ -44,7 +46,7 @@
 
 {#if renderContext === 'svg'}
 	<slot {tiles}>
-		{#each tiles as [x, y, z], i}
+		{#each tiles as [x, y, z] (url(x, y, z))}
 			<!-- To avoid aliasing artifacts (thin white lines) between tiles, two layers of tiles are drawn, with the lower layer’s tiles enlarged by one pixel -->
 			<image
 				xlink:href={url(x, y, z)}
