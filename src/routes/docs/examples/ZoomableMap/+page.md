@@ -9,7 +9,7 @@ docUrl: $docUrl
 	import { sort } from 'd3-array';
 	import { feature } from 'topojson-client';
 
-	import { Field } from 'svelte-ux'
+	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux'
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import GeoPath from '$lib/components/GeoPath.svelte';
@@ -41,6 +41,7 @@ docUrl: $docUrl
 	];
 
 	let zoom;
+	let scrollMode = 'scale';
 </script>
 
 <div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2 my-2">
@@ -58,6 +59,13 @@ docUrl: $docUrl
 			{/each}
 		</select>
 	</Field>
+	<Field label="Scroll mode" let:id>
+		<ToggleGroup bind:value={scrollMode} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleOption value="none">None</ToggleOption>
+			<ToggleOption value="scale">Scale</ToggleOption>
+			<ToggleOption value="translate">Translate</ToggleOption>
+		</ToggleGroup>
+	</Field>
 </div>
 
 <Preview>
@@ -74,7 +82,7 @@ docUrl: $docUrl
 			let:tooltip
 		>
 			<Svg>
-				<Zoom bind:this={zoom} scroll="scale" tweened={{ duration: 800, easing: cubicOut }} let:zoomTo let:scale>
+				<Zoom bind:this={zoom} scroll={scrollMode} tweened={{ duration: 800, easing: cubicOut }} let:zoomTo let:scale>
 					{#each filterNonStates(states.features) as feature}
 						<GeoPath
 							geojson={feature}
