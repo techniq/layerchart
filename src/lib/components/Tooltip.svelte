@@ -49,8 +49,6 @@
 		bind:clientWidth={tooltipWidth}
 		bind:clientHeight={tooltipHeight}
 	>
-		<!-- <slot data={tooltip?.data} /> -->
-
 		<div
 			class="bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white rounded elevation-1 px-2 py-1"
 		>
