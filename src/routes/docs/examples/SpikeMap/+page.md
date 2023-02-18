@@ -84,7 +84,6 @@ docUrl: $docUrl
 						{@const [x,y] = geoPath.centroid(feature)}
 						{@const d = feature.properties.data}
 						{@const height = heightScale(d?.population)}
-						<!-- <circle {cx} {cy} r={rScale(d?.population)} fill={colorScale(d?.percentUnder18)} fill-opacity={0.5} stroke={colorScale(d?.percentUnder18)} stroke-width={0.5} class="pointer-events-none" /> -->
 						<Group {x} {y}>
 							<path d="M{-width / 2},0 L0,{-height} L{width / 2},0" class="stroke-red-500 fill-red-500/25" />
 						</Group>
@@ -130,10 +129,30 @@ docUrl: $docUrl
 			}}
 		>
 			<Canvas>
-				<GeoPath geojson={states} fill="white" />
+				<GeoPath geojson={states} fill="rgba(0,0,0,.1)" stroke="white" />
 			</Canvas>
 			<Canvas>
-				<GeoPath geojson={counties} stroke="rgba(0,0,0,.1)" />
+				<GeoPath geojson={feature} render={(ctx, { geoPath }) => {
+						for (var feature of enrichedCountiesFeatures) {
+							const [x, y] = geoPath.centroid(feature);
+							const d = feature.properties.data;
+							const height = heightScale(d?.population);
+							const color = '#FF0000';
+							const radius = 5;
+							ctx.strokeStyle = color;
+							ctx.fillStyle = '#FF0000' + (256 * 0.25).toString(16);
+							ctx.beginPath();
+							const startPoint = [x - width/2, y]
+							const midPoint = [x, y - height]
+							const endPoint = [x + width/2, y]
+							ctx.moveTo(...startPoint);
+							ctx.lineTo(...midPoint);
+							ctx.lineTo(...endPoint);
+							ctx.fill();
+							ctx.stroke();
+						}
+					}}
+				/>
 			</Canvas>
 		</Chart>
 	</div>

@@ -133,9 +133,8 @@ docUrl: $docUrl
 							const d = feature.properties.data;
 							const radius = rScale(d?.population);
 							const color = colorScale(d?.percentUnder18);
-							console.log({ color })
 							ctx.strokeStyle = color;
-							ctx.fillStyle = color + (126).toString(16);
+							ctx.fillStyle = color + (256 * 0.5).toString(16);
 							ctx.beginPath();
 							ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
 							ctx.fill();
