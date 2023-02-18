@@ -109,7 +109,10 @@
 
 		e.preventDefault();
 
-		if (scroll === 'scale') {
+		// Pinch to zoom is registered as a wheel event with control key
+		const pinchToZoom = e.ctrlKey;
+
+		if (scroll === 'scale' || pinchToZoom) {
 			// https://github.com/d3/d3-zoom#zoom_wheelDelta
 			const scaleBy =
 				-e.deltaY * (e.deltaMode === 1 ? 0.05 : e.deltaMode ? 1 : 0.002) * (e.ctrlKey ? 10 : 1);
