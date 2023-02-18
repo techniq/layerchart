@@ -75,7 +75,7 @@ docUrl: $docUrl
 		>
 			<Svg>
 				{#each states.features as feature}
-					<GeoPath geojson={feature} class="fill-black/10 stroke-white hover:fill-gray-300" />
+					<GeoPath geojson={feature} class="fill-black/10 stroke-white" />
 				{/each}
 				{#each enrichedCountiesFeatures as feature}
 					<GeoPath geojson={feature} let:geoPath>
@@ -124,10 +124,25 @@ docUrl: $docUrl
 			}}
 		>
 			<Canvas>
-				<GeoPath geojson={states} fill="white" />
+				<GeoPath geojson={states} fill="rgba(0,0,0,.1)" stroke="white" />
 			</Canvas>
 			<Canvas>
-				<GeoPath geojson={counties} stroke="rgba(0,0,0,.1)" />
+				<GeoPath geojson={feature} render={(ctx, { geoPath }) => {
+						for (var feature of enrichedCountiesFeatures) {
+							const [x, y] = geoPath.centroid(feature);
+							const d = feature.properties.data;
+							const radius = rScale(d?.population);
+							const color = colorScale(d?.percentUnder18);
+							console.log({ color })
+							ctx.strokeStyle = color;
+							ctx.fillStyle = color + (126).toString(16);
+							ctx.beginPath();
+							ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+							ctx.fill();
+							ctx.stroke();
+						}
+					}}
+				/>
 			</Canvas>
 		</Chart>
 	</div>
