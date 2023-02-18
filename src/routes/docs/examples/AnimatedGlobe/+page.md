@@ -7,7 +7,6 @@ docUrl: $docUrl
 	import { spring } from 'svelte/motion';
 	import { geoOrthographic } from 'd3-geo';
 	import { index } from 'd3-array';
-	import { scaleQuantize } from 'd3-scale';
 	import { feature } from 'topojson-client';
 
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
@@ -20,7 +19,7 @@ docUrl: $docUrl
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	
-	// TODO: Add SVG versoin with country clicking - https://observablehq.com/@benjamesdavis/orthopgragic-map
+	// TODO: Add SVG version with country clicking - https://observablehq.com/@benjamesdavis/orthopgragic-map
 
 	export let data;
 
