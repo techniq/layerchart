@@ -30,7 +30,6 @@ docUrl: $docUrl
 	$: selectedFeature = filteredStates;
 
 	let serviceUrl;
-	
 	let zoomDelta = 0;
 </script>
 

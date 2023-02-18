@@ -47,7 +47,7 @@ docUrl: $docUrl
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data>
 				{@const [longitude, latitude] = projection.invert([tooltip.left,tooltip.top])}
-				<TooltipItem
+				<!-- <TooltipItem
 					label="longitude"
 					value={longitude}
 					format="decimal"
@@ -56,7 +56,7 @@ docUrl: $docUrl
 					label="latitude"
 					value={latitude}
 					format="decimal"
-				/>
+				/> -->
 			</Tooltip>
 		</Chart>
 	</div>
