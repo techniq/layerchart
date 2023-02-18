@@ -11,13 +11,13 @@ docUrl: $docUrl
 
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux'
 
+	import Preview from '$lib/docs/Preview.svelte';
+	import ZoomControls from '$lib/docs/ZoomControls.svelte';
+
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import GeoPath from '$lib/components/GeoPath.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import Zoom from '$lib/components/Zoom.svelte';
-
-	import Preview from '$lib/docs/Preview.svelte';
-	import ZoomControls from '$lib/docs/ZoomControls.svelte';
 
 	export let data;
 
@@ -87,8 +87,8 @@ docUrl: $docUrl
 						<GeoPath
 							geojson={feature}
 							class="fill-white hover:fill-gray-200"
-							{tooltip}
 							stroke-width={1 / scale}
+							{tooltip}
 							on:click={e => {
 								const { geoPath, event } = e.detail;
 								//selectedStateId = feature.id
