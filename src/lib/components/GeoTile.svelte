@@ -5,7 +5,7 @@
 
 	import { geoContext } from './GeoContext.svelte';
 
-	export let url: (x: number, y: number, z: number) => string = () => '';
+	export let url: (x: number, y: number, z: number) => string;
 	export let zoomDelta = 0;
 	export let tileSize = 256;
 
@@ -29,7 +29,7 @@
 	$: renderContext = canvas ? 'canvas' : 'svg';
 
 	$: ctx = canvas?.ctx;
-	$: if (renderContext === 'canvas' && $ctx) {
+	$: if (renderContext === 'canvas' && $ctx && url) {
 		// console.count('render');
 		scaleCanvas($ctx, $width, $height);
 		$ctx.clearRect(0, 0, $width, $height);
@@ -44,7 +44,7 @@
 	}
 </script>
 
-{#if renderContext === 'svg'}
+{#if renderContext === 'svg' && url}
 	<slot {tiles}>
 		{#each tiles as [x, y, z] (url(x, y, z))}
 			<!-- To avoid aliasing artifacts (thin white lines) between tiles, two layers of tiles are drawn, with the lower layer’s tiles enlarged by one pixel -->
