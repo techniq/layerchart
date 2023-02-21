@@ -125,6 +125,12 @@
 	path="/docs/components/ClipPath"
 	class="pl-6 py-2"
 />
+<NavItem
+	text="ColorRamp"
+	currentUrl={$page.url}
+	path="/docs/components/ColorRamp"
+	class="pl-6 py-2"
+/>
 <NavItem text="Group" currentUrl={$page.url} path="/docs/components/Group" class="pl-6 py-2" />
 <NavItem text="Line" currentUrl={$page.url} path="/docs/components/Line" class="pl-6 py-2" />
 <NavItem
