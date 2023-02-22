@@ -14,6 +14,7 @@ docUrl: $docUrl
 	import Preview from '$lib/docs/Preview.svelte';
 	import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
 	import GeoPath from '$lib/components/GeoPath.svelte';
+	import Legend from '$lib/components/Legend.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -69,6 +70,7 @@ docUrl: $docUrl
 				projection: geoIdentity,
 				fitGeojson: states
 			}}
+			padding={{ top: 60 }}
 			let:projection
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
@@ -88,6 +90,7 @@ docUrl: $docUrl
 					<GeoPath geojson={feature} {tooltip} class="stroke-none hover:fill-black/10" />
 				{/each}
 			</Svg>
+			<Legend scale={colorScale} title="Est. Percent under 18" placement="top-left" />
 			<Tooltip header={(data) => data.properties.name + ' - ' + data.properties.data?.state} let:data>
 				{@const d = data.properties.data}
 				<TooltipItem
