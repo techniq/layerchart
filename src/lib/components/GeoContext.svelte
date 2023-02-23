@@ -72,7 +72,7 @@
 	$: {
 		projectionFn = projection();
 
-		if (fitGeojson) {
+		if (fitGeojson && 'fitSize' in projectionFn) {
 			projectionFn.fitSize(fitSizeRange, fitGeojson);
 		}
 
