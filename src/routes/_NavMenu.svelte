@@ -47,15 +47,15 @@
 <NavItem text="GeoPoint" currentUrl={$page.url} path="/docs/examples/GeoPoint" class="pl-6 py-2" />
 <NavItem text="GeoTile" currentUrl={$page.url} path="/docs/examples/GeoTile" class="pl-6 py-2" />
 <NavItem
-	text="Choropleth"
-	currentUrl={$page.url}
-	path="/docs/examples/Choropleth"
-	class="pl-6 py-2"
-/>
-<NavItem
 	text="Projections"
 	currentUrl={$page.url}
 	path="/docs/examples/GeoProjection"
+	class="pl-6 py-2"
+/>
+<NavItem
+	text="Choropleth"
+	currentUrl={$page.url}
+	path="/docs/examples/Choropleth"
 	class="pl-6 py-2"
 />
 <NavItem text="State Map" currentUrl={$page.url} path="/docs/examples/StateMap" class="pl-6 py-2" />

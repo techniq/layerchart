@@ -29,7 +29,7 @@ docUrl: $docUrl
 	let projection = geoAlbersUsa;
 	const projections = [
 		{ name: 'Albers', value: geoAlbers },
-		{ name: 'AlbersUsa', value: geoAlbersUsa },
+		{ name: 'Albers USA', value: geoAlbersUsa },
 		{ name: 'Mercator', value: geoMercator },
 	]
 </script>

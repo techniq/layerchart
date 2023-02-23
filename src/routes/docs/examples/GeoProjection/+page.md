@@ -24,7 +24,7 @@ docUrl: $docUrl
 	let projection = geoOrthographic;
 	const projections = [
 		{ name: 'Albers', value: geoAlbers },
-		{ name: 'AlbersUsa', value: geoAlbersUsa },
+		{ name: 'Albers USA', value: geoAlbersUsa },
 		{ name: 'Equal Earth', value: geoEqualEarth },
 		{ name: 'Equirectangular', value: geoEquirectangular },
 		{ name: 'Mercator', value: geoMercator },
