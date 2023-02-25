@@ -30,6 +30,7 @@ docUrl: $docUrl
 	import Path from '$lib/components/Path.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
+	import RangeField from '$lib/docs/RangeField.svelte';
 
 	let amplitude = 1;
 	let frequency = 10;
@@ -127,11 +128,7 @@ docUrl: $docUrl
 			</select>
 			<Button icon={mdiChevronRight} on:click={() => curve = next(curveOptions, curve)} class="ml-2" />
 		</Field>
-		<Field label="Points" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => pointCount -= (pointCount > 2 ? 1 : 0)} class="mr-2" />
-			<input type="range" bind:value={pointCount} min={2} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{pointCount}</span>
-			<Button icon={mdiChevronRight} on:click={() => pointCount += 1} class="ml-2" />
-		</Field>
+		<RangeField label="Points" bind:value={pointCount} min={2} />
 		<Field label="Show points" let:id>
 			<Switch bind:checked={showPoints} {id} />
 		</Field>
@@ -140,21 +137,9 @@ docUrl: $docUrl
 		</Field>
 	</div>
 	<div class="grid grid-cols-[1fr,1fr,1fr] gap-2">
-		<Field label="Frequency" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => frequency -= 1} class="mr-2" />
-			<input type="range" bind:value={frequency} min={1} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{frequency}</span>
-			<Button icon={mdiChevronRight} on:click={() => frequency += 1} class="ml-2" />
-		</Field>
-		<Field label="Amplitude" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => amplitude -= 1} class="mr-2" />
-			<input type="range" bind:value={amplitude} min={1} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{amplitude}</span>
-			<Button icon={mdiChevronRight} on:click={() => amplitude += 1} class="ml-2" />
-		</Field>
-		<Field label="Phase" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => phase -= 1} class="mr-2" />
-			<input type="range" bind:value={phase} min={1} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{phase}</span>
-			<Button icon={mdiChevronRight} on:click={() => phase += 1} class="ml-2" />
-		</Field>
+		<RangeField label="Frequency" bind:value={frequency} min={1} />
+		<RangeField label="Amplitude" bind:value={amplitude} min={1} />
+		<RangeField label="Phase" bind:value={phase} min={1} />
 	</div>
 </div>
 

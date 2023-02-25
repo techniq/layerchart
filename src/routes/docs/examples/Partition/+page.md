@@ -17,6 +17,9 @@ docUrl: $docUrl
 	import { Breadcrumb, Button, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { format } from 'svelte-ux/utils/format';
 
+	import Preview from '$lib/docs/Preview.svelte';
+	import RangeField from '$lib/docs/RangeField.svelte';
+
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Bounds from '$lib/components/Bounds.svelte';
 	import ChartClipPath from '$lib/components/ChartClipPath.svelte';
@@ -26,8 +29,6 @@ docUrl: $docUrl
 	import Text from '$lib/components/Text.svelte';
 	import Partition from '$lib/components/Partition.svelte';
 	import { findAncestor } from '$lib/utils/hierarchy';
-
-	import Preview from '$lib/docs/Preview.svelte';
 
 	import { complexData } from '../_data/hierarchy';
 	import carsCsv from '../_data/cars.csv'
@@ -90,11 +91,7 @@ docUrl: $docUrl
 
 <div class="grid grid-flow-col gap-4 mb-4">
 	<div class="grid grid-cols-[2fr,1fr,1fr,1fr] gap-2">
-		<Field label="Padding" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => padding -= 1} class="mr-2" />
-			<input type="range" bind:value={padding} min={0} max={20} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{padding}</span>
-			<Button icon={mdiChevronRight} on:click={() => padding += 1} class="ml-2" />
-		</Field>
+		<RangeField label="Padding" bind:value={padding} max={20} />
 		<Field label="Full-size Leaf Nodes">
 			<ToggleGroup bind:value={fullSizeLeafNodes} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value={true}>Yes</ToggleOption>

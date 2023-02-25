@@ -13,6 +13,8 @@ docUrl: $docUrl
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
 	import Preview from '$lib/docs/Preview.svelte';
+	import RangeField from '$lib/docs/RangeField.svelte';
+
 	import TilesetField from '$lib/docs/TilesetField.svelte';
 	import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
 	import ClipPathUse from '$lib/components/ClipPathUse.svelte';
@@ -35,11 +37,7 @@ docUrl: $docUrl
 
 <div class="grid grid-cols-[1fr,1fr,1fr] gap-2 my-2">
 	<TilesetField bind:serviceUrl />
-	<Field label="Zoom delta" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => zoomDelta -= 1} class="mr-2" />
-		<input type="range" bind:value={zoomDelta} min={-5} max={5} step={1} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{zoomDelta}</span>
-		<Button icon={mdiChevronRight} on:click={() => zoomDelta += 1} class="ml-2" />
-	</Field>
+	<RangeField label="Zoom delta" bind:value={zoomDelta} min={-5} max={5} />
 </div>
 
 ## SVG

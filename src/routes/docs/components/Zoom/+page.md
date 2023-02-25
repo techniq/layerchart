@@ -21,6 +21,7 @@ docUrl: $docUrl
 	import Zoom from '$lib/components/Zoom.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
+	import RangeField from '$lib/docs/RangeField.svelte';
 	import ZoomControls from '$lib/docs/ZoomControls.svelte';
 
 	import { getSpiral } from '$lib/utils/genData';
@@ -83,19 +84,11 @@ docUrl: $docUrl
 </div>
 
 <div class="grid grid-cols-[1fr,auto,1fr,auto,1fr,auto] gap-2 mb-2">
-	<Field label="Points" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => pointCount -= (pointCount > 2 ? 1 : 0)} class="mr-2" />
-		<input type="range" bind:value={pointCount} min={1} max={2000} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{pointCount}</span>
-		<Button icon={mdiChevronRight} on:click={() => pointCount += 1} class="ml-2" />
-	</Field>
+	<RangeField label="Points" bind:value={pointCount} min={1} max={2000} />
 	<Field label="Show points" let:id>
 		<Switch bind:checked={showPoints} {id} />
 	</Field>
-	<Field label="Angle" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => angle -= 1} class="mr-2" />
-		<input type="range" bind:value={angle} min={1} max={360} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{angle}</span>
-		<Button icon={mdiChevronRight} on:click={() => angle += 1} class="ml-2" />
-	</Field>
+	<RangeField label="Angle" bind:value={angle} min={1} max={360} />
 	<Field label="Show path" let:id>
 		<Switch bind:checked={showPath} {id} />
 	</Field>

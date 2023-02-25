@@ -12,12 +12,14 @@ docUrl: $docUrl
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 	import { Button, Field, Switch } from 'svelte-ux'
 
-	import Preview from '$lib/docs/Preview.svelte';
 	import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
 	import GeoPath from '$lib/components/GeoPath.svelte';
 	import Graticule from '$lib/components/Graticule.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
+
+	import Preview from '$lib/docs/Preview.svelte';
+	import RangeField from '$lib/docs/RangeField.svelte';
 
 	export let data;
 
@@ -52,26 +54,10 @@ docUrl: $docUrl
 			{/each}
 		</select>
 	</Field>
-	<Field label="Yaw" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => yaw -= 1} class="mr-2" />
-		<input type="range" bind:value={yaw} min={-360} max={360} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{yaw}</span>
-		<Button icon={mdiChevronRight} on:click={() => yaw += 1} class="ml-2" />
-	</Field>
-	<Field label="Pitch" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => pitch -= 1} class="mr-2" />
-		<input type="range" bind:value={pitch} min={-90} max={90} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{pitch}</span>
-		<Button icon={mdiChevronRight} on:click={() => pitch += 1} class="ml-2" />
-	</Field>
-	<Field label="Roll" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => roll -= 1} class="mr-2" />
-		<input type="range" bind:value={roll} min={-180} max={180} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{roll}</span>
-		<Button icon={mdiChevronRight} on:click={() => roll += 1} class="ml-2" />
-	</Field>
-	<Field label="Scale" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => scale -= 1} class="mr-2" />
-		<input type="range" bind:value={scale} min={-100} max={3000} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{scale}</span>
-		<Button icon={mdiChevronRight} on:click={() => scale += 1} class="ml-2" />
-	</Field>
+	<RangeField label="Yaw" bind:value={yaw} min={-360} max={360} />
+	<RangeField label="Pitch" bind:value={pitch} min={-90} max={90} />
+	<RangeField label="Roll" bind:value={roll} min={-180} max={180} />
+	<RangeField label="Scale" bind:value={scale} min={-100} max={3000} />
 	<Field label="Detail" let:id>
 		<Switch bind:checked={detailed} {id} />
 	</Field>

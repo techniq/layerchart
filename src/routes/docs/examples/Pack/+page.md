@@ -17,6 +17,9 @@ docUrl: $docUrl
 	import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { format } from 'svelte-ux/utils/format';
 
+	import Preview from '$lib/docs/Preview.svelte';
+	import RangeField from '$lib/docs/RangeField.svelte';
+
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Group from '$lib/components/Group.svelte';
 	import Circle from '$lib/components/Circle.svelte';
@@ -24,8 +27,6 @@ docUrl: $docUrl
 	import Zoom from '$lib/components/Zoom.svelte';
 
 	import { findAncestor } from '$lib/utils/hierarchy';
-
-	import Preview from '$lib/docs/Preview.svelte';
 
 	import { complexData } from '../_data/hierarchy';
 
@@ -68,11 +69,7 @@ docUrl: $docUrl
 
 <div class="grid grid-flow-col gap-4 mb-4">
 	<div class="grid grid-cols-[2fr,1fr,1fr] gap-2">
-		<Field label="Padding" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => padding -= 1} class="mr-2" />
-			<input type="range" bind:value={padding} min={0} max={50} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{padding}</span>
-			<Button icon={mdiChevronRight} on:click={() => padding += 1} class="ml-2" />
-		</Field>
+		<RangeField label="Padding" bind:value={padding} max={50} />
 		<Field label="Color By">
 			<ToggleGroup bind:value={colorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value="parent">Parent</ToggleOption>

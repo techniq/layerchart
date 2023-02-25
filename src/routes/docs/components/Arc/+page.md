@@ -5,8 +5,6 @@ docUrl: $docUrl
 ---
 
 <script lang="ts">
-	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-
 	import {
 		ApiDocs,
 		Button,
@@ -24,6 +22,7 @@ docUrl: $docUrl
 	import Text from '$lib/components/Text.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
+	import RangeField from '$lib/docs/RangeField.svelte';
 
 	let value = 50;
 	// let value = 100;
@@ -67,16 +66,10 @@ docUrl: $docUrl
 </script>
 
 <div class="grid grid-cols-[1fr,1fr,1fr,1fr] gap-2 sticky top-0 z-10">
-	<Field label="Value" let:id class="col-span-3">
-		<Button icon={mdiChevronLeft} on:click={() => value -= 1} class="mr-2" />
-		<input type="range" bind:value={value} min={domain[0]} max={domain[1]} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{value}</span>
-		<Button icon={mdiChevronRight} on:click={() => value += 1} class="ml-2" />
-	</Field>
-	<!--  -->
+	<RangeField label="Value" bind:value={value} min={domain[0]} max={domain[1]} class="col-span-3" />
 	<Field label="Use spring" let:id>
 		<Switch bind:checked={spring} {id} />
 	</Field>
-	<!--  -->
 	<!-- <Field label="Label" let:id>
 		<Button icon={mdiChevronLeft} on:click={() => label = prev(labelOptions, label)} class="mr-2" />
 		<select bind:value={label} class="w-full outline-none appearance-none text-sm" {id}>
@@ -86,60 +79,15 @@ docUrl: $docUrl
 		</select>
 		<Button icon={mdiChevronRight} on:click={() => label = next(labelOptions, label)} class="ml-2" />
 	</Field> -->
-	<!--  -->
-	<Field label="Domain Min" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => domain[0] -= 1} class="mr-2" />
-		<input type="range" bind:value={domain[0]} min={0} max={domain[1]} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{domain[0]}</span>
-		<Button icon={mdiChevronRight} on:click={() => domain[0] += 1} class="ml-2" />
-	</Field>
-	<!--  -->
-	<Field label="Domain Max" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => domain[1] -= 1} class="mr-2" />
-		<input type="range" bind:value={domain[1]} min={0} max={1000} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{domain[1]}</span>
-		<Button icon={mdiChevronRight} on:click={() => domain[1] += 1} class="ml-2" />
-	</Field>
-	<!--  -->
-	<Field label="Range Min (degrees)" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => range[0] -= 1} class="mr-2" />
-		<input type="range" bind:value={range[0]} min={-360} max={360} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{range[0]}</span>
-		<Button icon={mdiChevronRight} on:click={() => range[0] += 1} class="ml-2" />
-	</Field>
-	<!--  -->
-	<Field label="Range Max (degrees)" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => range[1] -= 1} class="mr-2" />
-		<input type="range" bind:value={range[1]} min={-360} max={360} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{range[1]}</span>
-		<Button icon={mdiChevronRight} on:click={() => range[1] += 1} class="ml-2" />
-	</Field>
-	<!--  -->
-	<Field label="Inner radius" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => innerRadius -= 1} class="mr-2" />
-		<input type="range" bind:value={innerRadius} min={0} max={outerRadius} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{innerRadius}</span>
-		<Button icon={mdiChevronRight} on:click={() => innerRadius += 1} class="ml-2" />
-	</Field>
-	<!--  -->
-	<Field label="Outer radius" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => outerRadius -= 1} class="mr-2" />
-		<input type="range" bind:value={outerRadius} min={innerRadius} max={200} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{outerRadius}</span>
-		<Button icon={mdiChevronRight} on:click={() => outerRadius += 1} class="ml-2" />
-	</Field>
-	<!--  -->
-	<Field label="Corner radius" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => cornerRadius -= 1} class="mr-2" />
-		<input type="range" bind:value={cornerRadius} min={0} max={(outerRadius - innerRadius) / 2} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{cornerRadius}</span>
-		<Button icon={mdiChevronRight} on:click={() => cornerRadius += 1} class="ml-2" />
-	</Field>
-	<!--  -->
-	<Field label="Pad angle" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => padAngle -= 0.1} class="mr-2" />
-		<input type="range" bind:value={padAngle} min={0} max={2} step={0.1} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{padAngle}</span>
-		<Button icon={mdiChevronRight} on:click={() => padAngle += 0.1} class="ml-2" />
-	</Field>
-	<!--  -->
-	<!-- <Field label="Pad radius" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => padRadius -= 0.1} class="mr-2" />
-		<input type="range" bind:value={padRadius} min={0} max={2} step={0.1} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{padRadius}</span>
-		<Button icon={mdiChevronRight} on:click={() => padRadius += 0.1} class="ml-2" />
-	</Field> -->
+	<RangeField label="Domain Min" bind:value={domain[0]} max={domain[1]} />
+	<RangeField label="Domain Max" bind:value={domain[1]} max={1000} />
+	<RangeField label="Range Min (degrees)" bind:value={range[0]} min={-360} max={360} />
+	<RangeField label="Range Max (degrees)" bind:value={range[1]} min={-360} max={360} />
+	<RangeField label="Inner radius" bind:value={innerRadius} max={outerRadius} />
+	<RangeField label="Outer radius" bind:value={outerRadius} min={innerRadius} max={200} />
+	<RangeField label="Corner radius" bind:value={cornerRadius} max={(outerRadius - innerRadius) / 2} />
+	<RangeField label="Pad angle" bind:value={padAngle} max={2} step={0.1} />
+	<!-- <RangeField label="Pad radius" bind:value={padRadius} max={2} step={0.1} /> -->
 </div>
 
 ## Playground
