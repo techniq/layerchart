@@ -101,7 +101,10 @@ docUrl: $docUrl
 					{/each}
 					{#each selectedCountiesFeatures as feature (feature.id)}
 						<g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}>
-							<GeoPath geojson={feature} stroke-width={1 / scale} class="fill-none stroke-black/10" />
+							<GeoPath geojson={feature} {tooltip} stroke-width={1 / scale} class="fill-white stroke-black/10 hover:fill-gray-200" on:click={() => {
+									selectedStateId = null;
+									resetZoom();
+							}} />
 						</g>
 					{/each}
 				</Zoom>
