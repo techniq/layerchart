@@ -40,14 +40,17 @@
 		};
 	}
 
-	export function zoomTo(newTranslate: { x: number; y: number }, newScale?: number) {
+	export function zoomTo(
+		center: { x: number; y: number },
+		rect?: { width: number; height: number }
+	) {
 		$translate = {
-			x: $width / 2 - newTranslate.x,
-			y: $height / 2 - newTranslate.y
+			x: $width / 2 - center.x,
+			y: $height / 2 - center.y
 		};
 
-		if (newScale) {
-			$scale = Math.min($width, $height) / newScale;
+		if (rect) {
+			$scale = $width < $height ? $width / rect.width : $height / rect.height;
 		}
 	}
 
@@ -189,6 +192,6 @@
 		fill="transparent"
 	/>
 	<g transform="translate({newTranslate.x},{newTranslate.y}) scale({$scale})">
-		<slot scale={$scale} {zoomTo} />
+		<slot scale={$scale} {zoomTo} {reset} />
 	</g>
 </g>

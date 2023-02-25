@@ -41,7 +41,8 @@ docUrl: $docUrl
 	let zoom;
 
 	$: if (zoom && selected) {
-		zoom.zoomTo({ x: selected.x, y: selected.y }, selected.r * 2)
+		const diameter = selected.r * 2
+		zoom.zoomTo({ x: selected.x, y: selected.y }, { width: diameter, height: diameter })
 	}
 
 	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu)

@@ -82,7 +82,7 @@ docUrl: $docUrl
 			let:tooltip
 		>
 			<Svg>
-				<Zoom bind:this={zoom} scroll={scrollMode} tweened={{ duration: 800, easing: cubicOut }} let:zoomTo let:scale>
+				<Zoom bind:this={zoom} scroll={scrollMode} tweened={{ duration: 800, easing: cubicOut }} let:zoomTo let:reset={resetZoom} let:scale>
 					{#each filterNonStates(states.features) as feature}
 						<GeoPath
 							geojson={feature}
@@ -97,9 +97,8 @@ docUrl: $docUrl
 								let height = bottom - top;
 								let x = (left + right) / 2;
 								let y = (top + bottom) / 2;
-								//const scale = Math.max(width, height) * 1.2; // make x/y consistent to maintain aspect ratio.  Scale out slightly
-								const scale = 300; // half of height
-								zoomTo({ x, y }, scale)
+								const padding = 20;
+								zoomTo({ x, y }, { width: width + padding, height: height + padding })
 							}}
 						/>
 					{/each}
