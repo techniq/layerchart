@@ -4,6 +4,7 @@ docUrl: $docUrl
 ---
 
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { geoAlbersUsa, geoAlbers, geoMercator } from 'd3-geo';
 	import { sort } from 'd3-array';
@@ -21,18 +22,6 @@ docUrl: $docUrl
 
 	export let data;
 
-	const counties = feature(data.geojson, data.geojson.objects.counties);
-	const states = feature(data.geojson, data.geojson.objects.states);
-
-	function filterNonStates(features) {
-		return features.filter(x => Number(x.id) < 60)
-	}
-
-	const stateOptions = sort(filterNonStates(states.features).map(x => ({ name: x.properties.name, value: x.id })), d => d.value);
-	let selectedStateId = '54'; // 'West Virginia';
-	$: selectedStateFeature = states.features.find(f => f.id === selectedStateId);
-	$: selectedCountiesFeatures = counties.features.filter(f => f.id.slice(0,2) === selectedStateId);
-
 	let projection = geoAlbersUsa;
 	const projections = [
 		{ name: 'Albers', value: geoAlbers },
@@ -40,18 +29,21 @@ docUrl: $docUrl
 		{ name: 'Mercator', value: geoMercator },
 	];
 
+	const counties = feature(data.geojson, data.geojson.objects.counties);
+	const states = feature(data.geojson, data.geojson.objects.states);
+
+	function filterNonStates(features) {
+		return features.filter(x => Number(x.id) < 60)
+	}
+
+	let selectedStateId = null;
+	$: selectedCountiesFeatures = selectedStateId ? counties.features.filter(f => f.id.slice(0,2) === selectedStateId) : [];
+
 	let zoom;
 	let scrollMode = 'scale';
 </script>
 
 <div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2 my-2">
-	<!-- <Field label="State" let:id>
-		<select bind:value={selectedStateId} class="w-full outline-none appearance-none text-sm" {id}>
-			{#each stateOptions as option}
-				<option value={option.value}>{option.name}</option>
-			{/each}
-		</select>
-	</Field> -->
 	<Field label="Projection" let:id>
 		<select bind:value={projection} class="w-full outline-none appearance-none text-sm" {id}>
 			{#each projections as option}
@@ -91,24 +83,27 @@ docUrl: $docUrl
 							{tooltip}
 							on:click={e => {
 								const { geoPath, event } = e.detail;
-								//selectedStateId = feature.id
 								let [[left, top], [right, bottom]] = geoPath.bounds(feature);
-								let width = right - left;
-								let height = bottom - top;
-								let x = (left + right) / 2;
-								let y = (top + bottom) / 2;
-								const padding = 20;
-								zoomTo({ x, y }, { width: width + padding, height: height + padding })
+								if (selectedStateId === feature.id) {
+									selectedStateId = null;
+									resetZoom();
+								} else {
+									selectedStateId = feature.id;
+									let width = right - left;
+									let height = bottom - top;
+									let x = (left + right) / 2;
+									let y = (top + bottom) / 2;
+									const padding = 20;
+									zoomTo({ x, y }, { width: width + padding, height: height + padding })
+								}
 							}}
 						/>
 					{/each}
-					<!--
 					{#each selectedCountiesFeatures as feature (feature.id)}
-						<g transition:fade={{ duration: 300 }}>
-							<GeoPath geojson={feature} class="fill-none stroke-black/10" />
+						<g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}>
+							<GeoPath geojson={feature} stroke-width={1 / scale} class="fill-none stroke-black/10" />
 						</g>
 					{/each}
-					-->
 				</Zoom>
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} />
