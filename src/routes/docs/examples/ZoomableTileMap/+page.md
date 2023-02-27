@@ -56,9 +56,7 @@ docUrl: $docUrl
 
 <Preview>
 	<div class="h-[600px] relative overflow-hidden">
-		<div class="absolute top-0 right-0 z-10">
-			<ZoomControls {zoom} />
-		</div>
+		<ZoomControls {zoom} />
 		<Chart
 			geo={{
 				projection: geoMercator,

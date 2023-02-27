@@ -85,9 +85,7 @@ docUrl: $docUrl
 
 <Preview>
 	<div class="h-[800px] p-4 border rounded overflow-hidden relative">
-		<div class="absolute top-0 right-0 z-10">
-			<ZoomControls {zoom} />
-		</div>
+		<ZoomControls {zoom} orientation="horizontal" />
 		<Chart data={complexDataHierarchy} padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}>
 			<Svg>
 				<Zoom bind:this={zoom} tweened={{ duration: 800, easing: cubicOut }}>

@@ -105,9 +105,7 @@ docUrl: $docUrl
 
 <Preview>
 	<div class="h-[500px] p-4 border rounded relative overflow-hidden">
-		<div class="absolute top-0 right-0 z-10">
-			<ZoomControls {zoom} />
-		</div>
+		<ZoomControls {zoom} />
 		<Chart {data} x="x" y="y">
 			<Svg>
 				<Zoom bind:this={zoom} scroll={scrollMode} tweened={{ duration: 800, easing: cubicOut }}>
