@@ -28,7 +28,7 @@
 	const canvas = getContext('canvas');
 	const geo = geoContext();
 
-	$: geoPath = d3geoPath($geo.projection);
+	$: geoPath = d3geoPath($geo);
 
 	$: renderContext = canvas ? 'canvas' : 'svg';
 

@@ -15,8 +15,8 @@
 
 	$: tile = d3Tile()
 		.size([$width, $height])
-		.scale($geo.projection.scale() * 2 * Math.PI)
-		.translate($geo.projection([0, 0]))
+		.scale($geo.scale() * 2 * Math.PI)
+		.translate($geo([0, 0]))
 		.tileSize(tileSize)
 		.zoomDelta(zoomDelta);
 

@@ -19,7 +19,7 @@
 	const canvas = getContext('canvas');
 	const geo = geoContext();
 
-	$: [x, y] = $geo.projection([long, lat]) ?? [0, 0];
+	$: [x, y] = $geo([long, lat]) ?? [0, 0];
 
 	$: renderContext = canvas ? 'canvas' : 'svg';
 

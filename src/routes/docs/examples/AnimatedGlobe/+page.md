@@ -67,7 +67,6 @@ docUrl: $docUrl
 					roll: $roll
 				}
 			}}
-			let:projection
 		>
 			<Svg>
 				<GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-300" />
