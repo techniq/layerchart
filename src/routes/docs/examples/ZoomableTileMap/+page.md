@@ -7,12 +7,13 @@ docUrl: $docUrl
 	import { cubicOut } from 'svelte/easing';
 	import { index } from 'd3-array';
 	import { scaleQuantize } from 'd3-scale';
-	import { geoMercator } from 'd3-geo';
+	import { geoMercator, geoBounds, geoCentroid } from 'd3-geo';
 	import { feature } from 'topojson-client';
 	
-	import { Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+	import { Button, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
+	import GeoDebug from '$lib/docs/GeoDebug.svelte';
 	import Preview from '$lib/docs/Preview.svelte';
 	import RangeField from '$lib/docs/RangeField.svelte';
 	import TilesetField from '$lib/docs/TilesetField.svelte';
@@ -34,13 +35,15 @@ docUrl: $docUrl
 	// $: filteredStates = { ...states, features: states.features.filter(d => d.properties.name === 'West Virginia')}
 	$: selectedFeature = filteredStates;
 
+	let selectedStateName = null;
 	let serviceUrl;
 	let zoomDelta = 0;
 	let zoom;
 	let scrollMode = 'scale';
+	let debug = false;
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,1fr] gap-2 my-2">
+<div class="grid grid-cols-[1fr,1fr,1fr,auto] gap-2 my-2">
 	<TilesetField bind:serviceUrl />
 	<RangeField label="Zoom delta" bind:value={zoomDelta} min={-5} max={5} />
 	<Field label="Scroll mode" let:id>
@@ -49,6 +52,9 @@ docUrl: $docUrl
 			<ToggleOption value="scale">Scale</ToggleOption>
 			<ToggleOption value="translate">Translate</ToggleOption>
 		</ToggleGroup>
+	</Field>
+	<Field label="Debug" let:id>
+		<Switch bind:checked={debug} {id} />
 	</Field>
 </div>
 
@@ -60,22 +66,49 @@ docUrl: $docUrl
 		<Chart
 			geo={{
 				projection: geoMercator,
-				fitGeojson: selectedFeature,
+				_fitGeojson: selectedFeature,
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
 			let:projection
 		>
-			{console.log('projection', { translate: projection.translate(), scale: projection.scale(), center: projection.center() }) || ''}
+			{#if debug}
+				<GeoDebug class="absolute top-0 left-0 z-10" />
+			{/if}
 			<Svg>
-				<Zoom bind:this={zoom} scroll={scrollMode} tweened={{ duration: 800, easing: cubicOut }} let:zoomTo let:scale>
+				<Zoom mode="projection" bind:this={zoom} scroll={scrollMode} tweened={{ duration: 800, easing: cubicOut }} let:zoomTo let:reset={resetZoom}>
 					<GeoTile url={serviceUrl} {zoomDelta} />
 					{#each filteredStates.features as feature}
 						<GeoPath
 							geojson={feature}
-							class="stroke-black/20 hover:fill-white/30"
-							stroke-width={1 / scale}
+							class="stroke-black/20"
 							{tooltip}
+							on:click={e => {
+								const { geoPath, event } = e.detail;
+								console.log({ selectedStateName, feature })
+								/*
+								if (selectedStateName === feature.properties.name) {
+									selectedStateName = null;
+									resetZoom();
+								} else {
+								*/
+									selectedStateName = feature.properties.name;
+									// let [[left, top], [right, bottom]] = geoPath.bounds(feature);
+									console.log(geoPath.bounds(feature));
+									let [minLongLat, maxLongLat] = geoBounds(feature);
+									// Convert lat/long to screen x/y
+									const [left, top] = projection(minLongLat)
+									const [right, bottom] = projection(maxLongLat)
+									let width = right - left;
+									let height = bottom - top;
+									//let x = (left + right) / 2;
+									//let y = (top + bottom) / 2;
+									let x = (left + right) / 2 + projection.translate()[0];
+									let y = (top + bottom) / 2 + projection.translate()[1];
+									const padding = 20;
+									//zoomTo({ x, y }, { width: width + padding, height: height + padding })
+								//}
+							}}
 						/>
 					{/each}
 				</Zoom>
@@ -93,69 +126,6 @@ docUrl: $docUrl
 					format="decimal"
 				/>
 			</Tooltip>
-		</Chart>
-	</div>
-</Preview>
-
-## SVG (clipped)
-
-<Preview>
-	<div class="h-[600px] overflow-hidden">
-		<Chart
-			geo={{
-				projection: geoMercator,
-				fitGeojson: selectedFeature
-			}}
-			tooltip={{ mode: 'manual' }}
-			let:tooltip
-			let:projection
-		>
-			<Svg>
-				<ClipPathUse refId="clip">
-					<GeoTile url={serviceUrl} {zoomDelta} />
-				</ClipPathUse>
-				<GeoPath geojson={selectedFeature} id="clip" class="stroke-none" />
-				{#each filteredStates.features as feature}
-					<GeoPath
-						geojson={feature}
-						{tooltip}
-						class="stroke-black/20 hover:fill-white/30"
-					/>
-				{/each}
-			</Svg>
-			<Tooltip header={(data) => data.properties.name} let:data>
-				{@const [longitude, latitude] = projection.invert([tooltip.left,tooltip.top])}
-				<TooltipItem
-					label="longitude"
-					value={longitude}
-					format="decimal"
-				/>
-				<TooltipItem
-					label="latitude"
-					value={latitude}
-					format="decimal"
-				/>
-			</Tooltip>
-		</Chart>
-	</div>
-</Preview>
-
-## Canvas
-
-<Preview>
-	<div class="h-[600px]">
-		<Chart
-			geo={{
-				projection: geoMercator,
-				fitGeojson: selectedFeature
-			}}
-		>
-			<Canvas>
-				<GeoTile url={serviceUrl} {zoomDelta} />
-			</Canvas>
-			<Canvas>
-				<GeoPath geojson={filteredStates} stroke="rgba(0,0,0,.2)" />
-			</Canvas>
 		</Chart>
 	</div>
 </Preview>
