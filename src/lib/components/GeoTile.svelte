@@ -8,6 +8,7 @@
 	export let url: (x: number, y: number, z: number) => string;
 	export let zoomDelta = 0;
 	export let tileSize = 256;
+	export let debug = false;
 
 	const { width, height } = getContext('LayerCake');
 	const canvas = getContext('canvas');
@@ -56,6 +57,15 @@
 				height={k + 1}
 			/>
 			<image xlink:href={url(x, y, z)} x={(x + tx) * k} y={(y + ty) * k} width={k} height={k} />
+			{#if debug}
+				<rect
+					x={(x + tx) * k}
+					y={(y + ty) * k}
+					width={k}
+					height={k}
+					class="stroke-red-500/50 fill-none"
+				/>
+			{/if}
 		{/each}
 	</slot>
 {/if}
