@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { format } from 'svelte-ux';
+	import { format, Checkbox } from 'svelte-ux';
 	import { cls } from 'svelte-ux/utils/styles';
 
 	import { geoContext } from '$lib/components/GeoContext.svelte';
 
 	const { width, height } = getContext('LayerCake');
 	const geo = geoContext();
+
+	let showCenter = false;
 </script>
 
 <div class={cls('bg-black/5 rounded m-1 backdrop-blur p-2', $$props.class)}>
@@ -30,7 +32,7 @@
 		<div><span class="text-black/50">center:</span> {$geo.center?.()}</div>
 
 		<div>
-			<span class="text-black/50">long/lat:</span>
+			<span class="text-black/50">long/lat: <Checkbox bind:checked={showCenter} size="xs" /></span>
 			{#each $geo.invert?.([$width / 2, $height / 2]) as coord}
 				<div class="ml-2">{format.format(coord, 'decimal')}</div>
 			{/each}
@@ -38,7 +40,8 @@
 	</div>
 </div>
 
-<!-- Center point -->
-<!-- <div
-	class="absolute w-2 h-2 bg-red-500/80 rounded-full z-[1] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-/> -->
+{#if showCenter}
+	<div
+		class="absolute w-2 h-2 bg-red-500/80 rounded-full z-[1] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+	/>
+{/if}
