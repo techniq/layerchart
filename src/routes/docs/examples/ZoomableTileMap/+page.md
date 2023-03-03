@@ -81,7 +81,7 @@ docUrl: $docUrl
 					{#each filteredStates.features as feature}
 						<GeoPath
 							geojson={feature}
-							class="stroke-black/20"
+							class="stroke-none"
 							{tooltip}
 							on:click={e => {
 								const { geoPath, event } = e.detail;
