@@ -4,10 +4,12 @@
 	import { tile as d3Tile } from 'd3-tile';
 
 	import { geoContext } from './GeoContext.svelte';
+	import TileImage from './TileImage.svelte';
 
 	export let url: (x: number, y: number, z: number) => string;
 	export let zoomDelta = 0;
 	export let tileSize = 256;
+	export let disableCache = false;
 	export let debug = false;
 
 	const { width, height } = getContext('LayerCake');
@@ -48,24 +50,7 @@
 {#if renderContext === 'svg' && url}
 	<slot {tiles}>
 		{#each tiles as [x, y, z] (url(x, y, z))}
-			<!-- To avoid aliasing artifacts (thin white lines) between tiles, two layers of tiles are drawn, with the lower layer’s tiles enlarged by one pixel -->
-			<image
-				xlink:href={url(x, y, z)}
-				x={(x + tx) * k - 0.5}
-				y={(y + ty) * k - 0.5}
-				width={k + 1}
-				height={k + 1}
-			/>
-			<image xlink:href={url(x, y, z)} x={(x + tx) * k} y={(y + ty) * k} width={k} height={k} />
-			{#if debug}
-				<rect
-					x={(x + tx) * k}
-					y={(y + ty) * k}
-					width={k}
-					height={k}
-					class="stroke-red-500/50 fill-none"
-				/>
-			{/if}
+			<TileImage {url} {x} {y} {z} {tx} {ty} {k} {disableCache} {debug} />
 		{/each}
 	</slot>
 {/if}
