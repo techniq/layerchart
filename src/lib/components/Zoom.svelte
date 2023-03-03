@@ -33,11 +33,11 @@
 	}
 
 	export function increase() {
-		$scale *= 1.25;
+		scaleTo(1.25, { x: $width / 2, y: $height / 2 });
 	}
 
 	export function decrease() {
-		$scale *= 0.8;
+		scaleTo(0.8, { x: $width / 2, y: $height / 2 });
 	}
 
 	export function translateCenter() {
@@ -111,9 +111,10 @@
 		}
 	}
 
-	function onDoubleClick() {
+	function onDoubleClick(e) {
 		if (disablePointer) return;
-		increase();
+		const point = localPoint(svgEl, e);
+		scaleTo(e.shiftKey ? 0.5 : 2, point);
 	}
 
 	function onWheel(e: WheelEvent) {
@@ -132,27 +133,11 @@
 			const scaleBy =
 				-e.deltaY * (e.deltaMode === 1 ? 0.05 : e.deltaMode ? 1 : 0.002) * (e.ctrlKey ? 10 : 1);
 
-			const currentScale = $scale;
-			const newScale = $scale * Math.pow(2, scaleBy);
-			scale.set(newScale, spring ? { hard: true } : tweened ? { duration: 0 } : undefined);
-
-			if (mode === 'projection') {
-				// Maintain focus point while zooming in/out
-				const invertTransformPoint = {
-					x: (point.x - $translate.x) / currentScale,
-					y: (point.y - $translate.y) / currentScale
-				};
-				const newTranslate = {
-					x: point.x - invertTransformPoint.x * newScale,
-					y: point.y - invertTransformPoint.y * newScale
-				};
-				translate.set(
-					newTranslate,
-					spring ? { hard: true } : tweened ? { duration: 0 } : undefined
-				);
-			} else {
-				// TOOD: Support `mode === 'svg'` (currently zooms to center)
-			}
+			scaleTo(
+				Math.pow(2, scaleBy),
+				point,
+				spring ? { hard: true } : tweened ? { duration: 0 } : undefined
+			);
 		} else if (scroll === 'translate') {
 			translate.update(
 				(startTranslate) => ({
@@ -161,6 +146,32 @@
 				}),
 				spring ? { hard: true } : tweened ? { duration: 0 } : undefined
 			);
+		}
+	}
+
+	/**
+	 * Apply scale and translate towards point
+	 */
+	function scaleTo(
+		value: number,
+		point: { x: number; y: number },
+		options: Parameters<typeof motionStore>[1] | undefined = undefined
+	) {
+		const currentScale = $scale;
+		const newScale = $scale * value;
+		scale.set(newScale, options);
+
+		if (mode === 'projection') {
+			// Maintain center while zooming in/out
+			const invertTransformPoint = {
+				x: (point.x - $translate.x) / currentScale,
+				y: (point.y - $translate.y) / currentScale
+			};
+			const newTranslate = {
+				x: point.x - invertTransformPoint.x * newScale,
+				y: point.y - invertTransformPoint.y * newScale
+			};
+			translate.set(newTranslate, options);
 		}
 	}
 
