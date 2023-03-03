@@ -3,6 +3,8 @@
 </script>
 
 <script lang="ts">
+	import Text from './Text.svelte';
+
 	export let x: number;
 	export let y: number;
 	export let z: number;
@@ -74,5 +76,14 @@
 		width={k}
 		height={k}
 		class="stroke-red-500/50 fill-none"
+	/>
+	<Text
+		x={(x + tx) * k}
+		y={(y + ty) * k}
+		verticalAnchor="start"
+		dx={2}
+		dy={-2}
+		value="{x}-{y}-{z}"
+		class="text-[8px] fill-black/50"
 	/>
 {/if}
