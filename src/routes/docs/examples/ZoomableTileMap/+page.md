@@ -77,7 +77,7 @@ docUrl: $docUrl
 			{/if}
 			<Svg>
 				<Zoom mode="projection" bind:this={zoom} scroll={scrollMode} tweened={{ duration: 800, easing: cubicOut }} let:zoomTo let:reset={resetZoom}>
-					<GeoTile url={serviceUrl} {zoomDelta} />
+					<GeoTile url={serviceUrl} {zoomDelta} {debug} />
 					{#each filteredStates.features as feature}
 						<GeoPath
 							geojson={feature}
