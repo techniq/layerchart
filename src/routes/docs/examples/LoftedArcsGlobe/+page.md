@@ -19,6 +19,7 @@ reference: https://observablehq.com/@armollica/globe-with-lofted-arcs
 
 	import GeoDebug from '$lib/docs/GeoDebug.svelte';
 	import Preview from '$lib/docs/Preview.svelte';
+
 	import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
 	import GeoPath from '$lib/components/GeoPath.svelte';
 	import Graticule from '$lib/components/Graticule.svelte';
@@ -107,7 +108,7 @@ reference: https://observablehq.com/@armollica/globe-with-lofted-arcs
 							<circle cx={source[0]} cy={source[1]} r={2} class="fill-black-500" />>
 							<circle cx={target[0]} cy={target[1]} r={2} class="fill-black-500" />>
 							<Path data={pathData} x={d => d[0]} y={d => d[1]} defined={d => projection.invert(d)} curve={curveNatural} class="fill-none stroke-red-500 stroke-2" />
-							<GeoPath geojson={link.feature} class="stroke-gray-500/50" />
+							<GeoPath geojson={link.feature} class="stroke-gray-500/30 stroke-2" />
 						</EdgeFade>
 					{/each}
 				</Zoom>
