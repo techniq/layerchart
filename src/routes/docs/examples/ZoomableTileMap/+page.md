@@ -41,6 +41,9 @@ docUrl: $docUrl
 	let zoom;
 	let scrollMode = 'scale';
 	let debug = false;
+
+	let scale = 0;
+	let translate = { x: 480, y: 300 }
 </script>
 
 <div class="grid grid-cols-[1fr,1fr,1fr,auto] gap-2 my-2">
@@ -67,6 +70,8 @@ docUrl: $docUrl
 			geo={{
 				projection: geoMercator,
 				_fitGeojson: selectedFeature,
+				scale,
+				translate: [translate.x, translate.y]
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
@@ -76,7 +81,18 @@ docUrl: $docUrl
 				<GeoDebug class="absolute top-0 left-0 z-10" />
 			{/if}
 			<Svg>
-				<Zoom mode="projection" bind:this={zoom} scroll={scrollMode} tweened={{ duration: 800, easing: cubicOut }} let:zoomTo let:reset={resetZoom}>
+				<Zoom
+					mode="manual"
+					translateOnScale
+					initialScale={projection.scale()}
+					initialTranslate={{ x: projection.translate()[0], y: projection.translate()[1] }}
+					scroll={scrollMode}
+					tweened={{ duration: 800, easing: cubicOut }}
+					let:zoomTo
+					let:reset={resetZoom}
+					on:zoom={(e) => { scale = e.detail.scale, translate = e.detail.translate }}
+					bind:this={zoom}
+				>
 					<GeoTile url={serviceUrl} {zoomDelta} {debug} />
 					{#each filteredStates.features as feature}
 						<GeoPath

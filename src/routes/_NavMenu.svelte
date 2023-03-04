@@ -52,12 +52,6 @@
 	path="/docs/examples/GeoProjection"
 	class="pl-6 py-2"
 />
-<NavItem
-	text="Choropleth"
-	currentUrl={$page.url}
-	path="/docs/examples/Choropleth"
-	class="pl-6 py-2"
-/>
 <NavItem text="State Map" currentUrl={$page.url} path="/docs/examples/StateMap" class="pl-6 py-2" />
 <NavItem
 	text="Country Map"
@@ -66,11 +60,18 @@
 	class="pl-6 py-2"
 />
 <NavItem
-	text="Animated Globe"
+	text="Choropleth"
 	currentUrl={$page.url}
-	path="/docs/examples/AnimatedGlobe"
+	path="/docs/examples/Choropleth"
 	class="pl-6 py-2"
 />
+<NavItem
+	text="Bubble Map"
+	currentUrl={$page.url}
+	path="/docs/examples/BubbleMap"
+	class="pl-6 py-2"
+/>
+<NavItem text="Spike Map" currentUrl={$page.url} path="/docs/examples/SpikeMap" class="pl-6 py-2" />
 <NavItem
 	text="Zoomable Map"
 	currentUrl={$page.url}
@@ -84,12 +85,17 @@
 	class="pl-6 py-2"
 />
 <NavItem
-	text="Bubble Map"
+	text="Animated Globe"
 	currentUrl={$page.url}
-	path="/docs/examples/BubbleMap"
+	path="/docs/examples/AnimatedGlobe"
 	class="pl-6 py-2"
 />
-<NavItem text="Spike Map" currentUrl={$page.url} path="/docs/examples/SpikeMap" class="pl-6 py-2" />
+<NavItem
+	text="Draggable Globe"
+	currentUrl={$page.url}
+	path="/docs/examples/DraggableGlobe"
+	class="pl-6 py-2"
+/>
 
 <div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Common</div>
 <NavItem text="Chart" currentUrl={$page.url} path="/docs/components/Chart" class="pl-6 py-2" />

@@ -1,28 +1,31 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
+	import { getContext, createEventDispatcher } from 'svelte';
 
 	import { motionStore } from '$lib/stores/motionStore';
-	import { geoContext } from './GeoContext.svelte';
 
 	const { width, height, padding } = getContext('LayerCake');
-	const geo = geoContext();
 
-	export let mode: 'svg' | 'projection' = 'svg';
+	export let mode: 'svg' | 'manual' = 'svg';
+	export let translateOnScale: false;
 	export let spring: boolean | Parameters<typeof motionStore>[1]['spring'] = undefined;
 	export let tweened: boolean | Parameters<typeof motionStore>[1]['tweened'] = undefined;
 	export let disablePointer = false;
 	export let scroll: 'scale' | 'translate' | 'none' = 'none';
 	export let clickDistance = 10;
 
+	const dispatch = createEventDispatcher<{
+		zoom: { scale: number; translate: { x: number; y: number } };
+	}>();
+
 	let dragging = false;
 	let moved = false;
 
-	const initialTranslate =
-		mode === 'projection' ? { x: $geo.translate()[0], y: $geo.translate()[1] } : { x: 0, y: 0 };
+	export let initialTranslate = { x: 0, y: 0 };
 	const translate = motionStore(initialTranslate, { spring, tweened });
 
-	const initialScale = mode === 'projection' ? $geo.scale() : 1;
+	export let initialScale = 1;
 	const scale = motionStore(initialScale, { spring, tweened });
+
 	let startPoint: { x: number; y: number } = { x: 0, y: 0 };
 	let startTranslate: { x: number; y: number } = { x: 0, y: 0 };
 	let svgEl: SVGSVGElement | null = null;
@@ -51,7 +54,7 @@
 		center: { x: number; y: number },
 		rect?: { width: number; height: number }
 	) {
-		// TODO: Improve mode="projection"
+		// TODO: Improve with geo/projection
 
 		$translate = {
 			x: $width / 2 - center.x,
@@ -85,8 +88,8 @@
 
 		translate.set(
 			{
-				x: startTranslate.x + deltaX / (mode === 'projection' ? 1 : $scale),
-				y: startTranslate.y + deltaY / (mode === 'projection' ? 1 : $scale)
+				x: startTranslate.x + deltaX / (mode === 'manual' ? 1 : $scale),
+				y: startTranslate.y + deltaY / (mode === 'manual' ? 1 : $scale)
 			},
 			spring ? { hard: true } : tweened ? { duration: 0 } : undefined
 		);
@@ -141,8 +144,8 @@
 		} else if (scroll === 'translate') {
 			translate.update(
 				(startTranslate) => ({
-					x: startTranslate.x + -e.deltaX / (mode === 'projection' ? 1 : $scale),
-					y: startTranslate.y + -e.deltaY / (mode === 'projection' ? 1 : $scale)
+					x: startTranslate.x + -e.deltaX / (mode === 'manual' ? 1 : $scale),
+					y: startTranslate.y + -e.deltaY / (mode === 'manual' ? 1 : $scale)
 				}),
 				spring ? { hard: true } : tweened ? { duration: 0 } : undefined
 			);
@@ -161,8 +164,8 @@
 		const newScale = $scale * value;
 		scale.set(newScale, options);
 
-		if (mode === 'projection') {
-			// Maintain center while zooming in/out
+		if (translateOnScale) {
+			// Translate towards point (ex. mouse cursor/center) while zooming in/out
 			const invertTransformPoint = {
 				x: (point.x - $translate.x) / currentScale,
 				y: (point.y - $translate.y) / currentScale
@@ -203,23 +206,16 @@
 		y: center.y - $translate.y
 	};
 
-	$: newTranslate = {
-		x: $translate.x * $scale + center.x - center.x * $scale,
-		y: $translate.y * $scale + center.y - center.y * $scale
-	};
-
-	$: if (mode === 'projection') {
-		geo.update((geo) => {
-			if ($translate) {
-				// console.log({ $scale, $translate });
-				geo.scale($scale).translate([$translate.x, $translate.y]);
-			}
-			return geo;
-		});
+	let transform = '';
+	$: if (mode === 'svg') {
+		const newTranslate = {
+			x: $translate.x * $scale + center.x - center.x * $scale,
+			y: $translate.y * $scale + center.y - center.y * $scale
+		};
+		transform = `translate(${newTranslate.x},${newTranslate.y}) scale(${$scale})`;
 	}
 
-	$: transform =
-		mode === 'projection' ? '' : `translate(${newTranslate.x},${newTranslate.y}) scale(${$scale})`;
+	$: dispatch('zoom', { scale: $scale, translate: $translate });
 </script>
 
 <g
