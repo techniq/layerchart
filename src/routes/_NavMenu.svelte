@@ -91,9 +91,9 @@
 	class="pl-6 py-2"
 />
 <NavItem
-	text="Draggable Globe"
+	text="Lofted Arcs Globe"
 	currentUrl={$page.url}
-	path="/docs/examples/DraggableGlobe"
+	path="/docs/examples/LoftedArcsGlobe"
 	class="pl-6 py-2"
 />
 
