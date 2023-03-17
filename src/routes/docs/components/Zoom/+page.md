@@ -8,9 +8,9 @@ docUrl: $docUrl
 	import * as d3shapes from 'd3-shape';
 	import { cubicOut } from 'svelte/easing';
 
-	import { ApiDocs, Button, Field, Switch, Tooltip } from 'svelte-ux';
+	import { ApiDocs, Button, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
-	import { mdiArrowULeftTop, mdiChevronLeft, mdiChevronRight, mdiMagnifyPlusOutline, mdiMagnifyMinusOutline, mdiImageFilterCenterFocus } from '@mdi/js';
+	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
 	import api from '$lib/components/Zoom.svelte?raw&sveld';
 
@@ -21,6 +21,8 @@ docUrl: $docUrl
 	import Zoom from '$lib/components/Zoom.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
+	import RangeField from '$lib/docs/RangeField.svelte';
+	import ZoomControls from '$lib/docs/ZoomControls.svelte';
 
 	import { getSpiral } from '$lib/utils/genData';
 	import { degreesToRadians } from '$lib/utils/math';
@@ -31,6 +33,7 @@ docUrl: $docUrl
 	let showPoints = true;
 	let showPath = false;
 	let tweened = true;
+	let scrollMode = 'scale';
 
 	$: data = getSpiral({ angle, radius: 10, count: pointCount, width: 500, height: 500 })
 
@@ -67,20 +70,25 @@ docUrl: $docUrl
 
 # Examples
 
-<div class="grid grid-cols-[1fr,1fr,auto,auto,1fr,auto] gap-2 mb-2">
-	<Field label="Points" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => pointCount -= (pointCount > 2 ? 1 : 0)} class="mr-2" />
-		<input type="range" bind:value={pointCount} min={1} max={2000} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{pointCount}</span>
-		<Button icon={mdiChevronRight} on:click={() => pointCount += 1} class="ml-2" />
+<div class="grid grid-cols-[1fr,auto,2fr] gap-2 mb-2">
+	<Field label="Scroll mode" let:id>
+		<ToggleGroup bind:value={scrollMode} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleOption value="none">None</ToggleOption>
+			<ToggleOption value="scale">Scale</ToggleOption>
+			<ToggleOption value="translate">Translate</ToggleOption>
+		</ToggleGroup>
 	</Field>
-	<Field label="Angle" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => angle -= 1} class="mr-2" />
-		<input type="range" bind:value={angle} min={1} max={360} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{angle}</span>
-		<Button icon={mdiChevronRight} on:click={() => angle += 1} class="ml-2" />
+	<Field label="Tweened" let:id>
+		<Switch bind:checked={tweened} {id} />
 	</Field>
+</div>
+
+<div class="grid grid-cols-[1fr,auto,1fr,auto,1fr,auto] gap-2 mb-2">
+	<RangeField label="Points" bind:value={pointCount} min={1} max={2000} />
 	<Field label="Show points" let:id>
 		<Switch bind:checked={showPoints} {id} />
 	</Field>
+	<RangeField label="Angle" bind:value={angle} min={1} max={360} />
 	<Field label="Show path" let:id>
 		<Switch bind:checked={showPath} {id} />
 	</Field>
@@ -93,32 +101,14 @@ docUrl: $docUrl
 		</select>
 		<Button icon={mdiChevronRight} on:click={() => curve = next(curveOptions, curve)} class="ml-2" />
 	</Field>
-	<Field label="Tweened" let:id>
-		<Switch bind:checked={tweened} {id} />
-	</Field>
 </div>
 
 <Preview>
 	<div class="h-[500px] p-4 border rounded relative overflow-hidden">
-		<div class="absolute top-0 right-0 z-10">
-			<div class="bg-black/5 rounded-full m-1 backdrop-blur">
-				<Tooltip title="Zoom in">
-					<Button icon={mdiMagnifyPlusOutline} on:click={() => zoom.increase()} class="text-black/50 p-2" />
-				</Tooltip>
-				<Tooltip title="Zoom out">
-					<Button icon={mdiMagnifyMinusOutline} on:click={() => zoom.decrease()} class="text-black/50 p-2" />
-				</Tooltip>
-				<Tooltip title="Center">
-					<Button icon={mdiImageFilterCenterFocus} on:click={() => zoom.translateCenter()} class="text-black/50 p-2" />
-				</Tooltip>
-				<Tooltip title="Reset">
-					<Button icon={mdiArrowULeftTop} on:click={() => zoom.reset()} class="text-black/50 p-2" />
-				</Tooltip>
-			</div>
-		</div>
+		<ZoomControls {zoom} />
 		<Chart {data} x="x" y="y">
 			<Svg>
-				<Zoom bind:this={zoom} tweened={{ duration: 800, easing: cubicOut }}>
+				<Zoom bind:this={zoom} scroll={scrollMode} tweened={{ duration: 800, easing: cubicOut }}>
 					{#if showPath}
 						<Path curve={curve} {tweened} />
 					{/if}

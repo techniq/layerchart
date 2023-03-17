@@ -30,6 +30,7 @@ docUrl: $docUrl
 	import Path from '$lib/components/Path.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
+	import RangeField from '$lib/docs/RangeField.svelte';
 
 	let easing = easings['sineInOut'];
 	let pointCount = 10;
@@ -101,11 +102,7 @@ docUrl: $docUrl
 		</select>
 		<Button icon={mdiChevronRight} on:click={() => curve = next(curveOptions, curve)} class="ml-2" />
 	</Field>
-	<Field label="Points" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => pointCount -= (pointCount > 2 ? 1 : 0)} class="mr-2" />
-		<input type="range" bind:value={pointCount} min={2} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{pointCount}</span>
-		<Button icon={mdiChevronRight} on:click={() => pointCount += 1} class="ml-2" />
-	</Field>
+	<RangeField label="Points" bind:value={pointCount} min={2} />
 	<Field label="Show points" let:id>
 		<Switch bind:checked={showPoints} {id} />
 	</Field>

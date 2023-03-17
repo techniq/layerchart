@@ -5,7 +5,33 @@ docUrl: $docUrl
 ---
 
 <script lang="ts">
-	import { scaleOrdinal } from 'd3-scale';
+	import { range } from 'd3-array';
+	import { randomNormal } from 'd3-random';
+
+	import {
+		scaleSequential,
+		scaleSequentialSqrt,
+		scaleDiverging,
+		scaleDivergingSqrt,
+		scaleSequentialLog,
+		scaleSequentialQuantile,
+		scaleSqrt,
+		scaleQuantize,
+		scaleQuantile,
+		scaleThreshold,
+		scaleOrdinal,
+	} from 'd3-scale';
+
+	import {
+		interpolateViridis,
+		interpolateTurbo,
+		interpolatePiYG,
+		interpolateRdBu,
+		interpolateBlues,
+		schemePurples,
+		schemeSpectral,
+		schemeRdBu,
+	} from 'd3-scale-chromatic';
 
 	import { ApiDocs } from 'svelte-ux';
 
@@ -22,166 +48,124 @@ docUrl: $docUrl
 
 # Examples
 
-## vertical (default)
+## scaleSequential
 
 <Preview>
-	<div class="h-[300px] p-4 border rounded">
+	<Legend scale={scaleSequential([0, 100], interpolateViridis)} title="Temperature (°F)" />
+</Preview>
+
+## scaleSequentialSqrt
+
+<Preview>
+	<Legend scale={scaleSequentialSqrt([0, 1], interpolateTurbo)} title="Speed (kts)" />
+</Preview>
+
+## scaleDiverging
+
+<Preview>
+	<Legend scale={scaleDiverging([-0.1, 0, 0.1], interpolatePiYG)} title="Daily change" tickFormat="percentRound" />
+</Preview>
+
+## scaleDivergingSqrt
+
+<Preview>
+	<Legend scale={scaleDivergingSqrt([-0.1, 0, 0.1], interpolateRdBu)} title="Daily change" tickFormat="percentRound" />
+</Preview>
+
+## scaleSequentialLog
+
+<Preview>
+	<Legend scale={scaleSequentialLog([1, 100], interpolateBlues)} title="Energy (joules)" ticks={10} />
+</Preview>
+
+## scaleSequentialQuantile
+
+<Preview>
+	<Legend scale={scaleSequentialQuantile(range(100).map(() => Math.random() ** 2), interpolateBlues)} title="Quantile" tickFormat="decimal" />
+</Preview>
+
+## scaleSqrt
+
+<Preview>
+	<Legend scale={scaleSqrt([-100, 0, 100], ["blue", "white", "red"])} title="Temperature (°C)" />
+</Preview>
+
+## scaleQuantize
+
+<Preview>
+	<Legend scale={scaleQuantize([1, 10], schemePurples[9])} title="Unemployment rate (%)" />
+</Preview>
+
+## scaleQuantile
+
+<Preview>
+	<Legend scale={scaleQuantile(range(1000).map(randomNormal(100, 20)), schemeSpectral[9])} title="Height (cm)" tickFormat="integer" />
+</Preview>
+
+## scaleThreshold
+
+<Preview>
+	<Legend scale={scaleThreshold([2.5, 3.1, 3.5, 3.9, 6, 7, 8, 9.5], schemeRdBu[9])} title="Unemployment rate (%)" tickSize={0} />
+</Preview>
+
+## scaleOrdinal
+
+<Preview>
+	<Legend scale={scaleOrdinal(["<10", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "≥80"], schemeSpectral[10])} title="Age (years)" tickSize={0} />
+</Preview>
+
+## Chart integration
+
+<Preview>
+	<Chart
+		data={[{ name: 'One' }, { name: 'Two' }, { name: 'Three' }]}
+		r="name"
+		rScale={scaleOrdinal()}
+		rRange={['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)']}
+	>
+		<Legend title="I am Legend" />
+	</Chart>
+</Preview>
+
+## Chart placement
+
+<Preview>
+	<div class="h-[300px]">
 		<Chart
-			{data}
-			x="value"
+			data={[{ name: 'One' }, { name: 'Two' }, { name: 'Three' }]}
 			r="name"
 			rScale={scaleOrdinal()}
-			rDomain={['one', 'two', 'three']}
 			rRange={['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)']}
 		>
-			<Legend />
+			<Legend title="top-left" placement="top-left"  />
+			<Legend title="top" placement="top"  />
+			<Legend title="top-right" placement="top-right"  />
+			<Legend title="left" placement="left"  />
+			<Legend title="center" placement="center"  />
+			<Legend title="right" placement="right"  />
+			<Legend title="bottom-left" placement="bottom-left"  />
+			<Legend title="bottom" placement="bottom"  />
+			<Legend title="bottom-right" placement="bottom-right" />
+			
 		</Chart>
 	</div>
 </Preview>
 
-## horizontal
+## Styling
 
 <Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="name"
-			rScale={scaleOrdinal()}
-			rDomain={['one', 'two', 'three']}
-			rRange={['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)']}
-		>
-			<Legend class="inline-flex gap-2" />
-		</Chart>
-	</div>
-</Preview>
-
-## position (bottom right)
-
-<Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="name"
-			rScale={scaleOrdinal()}
-			rDomain={['one', 'two', 'three']}
-			rRange={['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)']}
-		>
-			<Legend class="absolute bottom-0 right-0" />
-		</Chart>
-	</div>
-</Preview>
-
-## position (center right)
-
-<Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="name"
-			rScale={scaleOrdinal()}
-			rDomain={['one', 'two', 'three']}
-			rRange={['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)']}
-		>
-			<Legend class="absolute top-1/2 right-0 -translate-y-1/2" />
-		</Chart>
-	</div>
-</Preview>
-
-## position (top center)
-
-<Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="name"
-			rScale={scaleOrdinal()}
-			rDomain={['one', 'two', 'three']}
-			rRange={['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)']}
-		>
-			<Legend class="flex gap-4 absolute top-0 left-1/2 -translate-x-1/2" />
-		</Chart>
-	</div>
-</Preview>
-
-## position (bottom center)
-
-<Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="name"
-			rScale={scaleOrdinal()}
-			rDomain={['one', 'two', 'three']}
-			rRange={['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)']}
-		>
-			<Legend class="flex gap-4 absolute bottom-0 left-1/2 -translate-x-1/2" />
-		</Chart>
-	</div>
-</Preview>
-
-## slot rendering
-
-<Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="name"
-			rScale={scaleOrdinal()}
-			rDomain={['one', 'two', 'three']}
-			rRange={['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)']}
-		>
-			<Legend let:items>
-				<div class="inline-flex flex-col gap-2">
-					{#each items as { label, color }}
-						<div class="flex items-center gap-1">
-							<div class="h-8 w-8 text-md" style:background-color={color} />
-							{label}
-						</div>
-					{/each}
-				</div>
-			</Legend>
-		</Chart>
-	</div>
-</Preview>
-
-## custom items
-
-<Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-		>
-			<Legend items={[
-				{ label: 'uno', color: 'var(--color-red-500)' },
-				{ label: 'dos', color: 'var(--color-orange-500)' },
-				{ label: 'tres', color: 'var(--color-yellow-500)' }
-			]} />
-		</Chart>
-	</div>
-</Preview>
-
-## formatLabel
-
-<Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="name"
-			rScale={scaleOrdinal()}
-			rDomain={['one', 'two', 'three']}
-			rRange={['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)']}
-		>
-			<Legend formatLabel={l => l.toUpperCase()} />
-		</Chart>
-	</div>
+	<Legend
+		scale={scaleSequential([0, 100], interpolateViridis)}
+		title="Temperature (°F)"
+		width={600}
+		tickFontSize={12}
+		classes={{
+			root: 'ml-10',
+			title: 'text-lg text-center',
+			label: 'fill-black/50',
+			tick: 'stroke-white'
+		}}
+	/>
 </Preview>
 
 # API

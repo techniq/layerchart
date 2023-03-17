@@ -53,19 +53,19 @@ docUrl: $docUrl
 
     	<label class="block">
     		x:
-    		<input type="range" min={0} max={224} bind:value={x} />
+    		<input type="range" max={224} bind:value={x} />
     		<input type="text" bind:value={x} class="border w-12" />
     	</label>
 
     	<label class="block">
     		y:
-    		<input type="range" min={0} max={224} bind:value={y} />
+    		<input type="range" max={224} bind:value={y} />
     		<input type="text" bind:value={y} class="border w-12" />
     	</label>
 
     	<label class="block">
     		width:
-    		<input type="range" min={0} max={224} bind:value={width} />
+    		<input type="range" max={224} bind:value={width} />
     	</label>
 
     	<div class="block">
@@ -107,7 +107,7 @@ docUrl: $docUrl
 
     	<label class="block">
     		rotate:
-    		<input type="range" min={0} max={360} bind:value={rotate} />
+    		<input type="range" max={360} bind:value={rotate} />
     	</label>
 
     	<label class="block">

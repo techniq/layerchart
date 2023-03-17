@@ -13,6 +13,9 @@ docUrl: $docUrl
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 
+	import Preview from '$lib/docs/Preview.svelte';
+	import RangeField from '$lib/docs/RangeField.svelte';
+
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Group from '$lib/components/Group.svelte';
 	import Link from '$lib/components/Link.svelte';
@@ -20,10 +23,8 @@ docUrl: $docUrl
 	import Sankey from '$lib/components/Sankey.svelte';
 	import Text from '$lib/components/Text.svelte';
 
-	import Preview from '$lib/docs/Preview.svelte';
-
-	import { simpleData, complexData, greenhouse } from '../data/graph';
-	import { complexData as hierarchyComplexData } from '../data/hierarchy'
+	import { simpleData, complexData, greenhouse } from '../_data/graph';
+	import { complexData as hierarchyComplexData } from '../_data/hierarchy'
 	import { graphFromHierarchy, graphFromNode } from '$lib/utils/graph';
 
 	const colorScale = scaleSequential(interpolateCool)
@@ -152,12 +153,8 @@ docUrl: $docUrl
 			<ToggleOption value="target">Target</ToggleOption>
 		</ToggleGroup>
 	</Field>
-	<Field label="Node Padding">
-		<input type="range" bind:value={nodePadding} max={20} step={1} class="w-full h-8" />
-	</Field>
-	<Field label="Node Width">
-		<input type="range" bind:value={nodeWidth} max={20} step={1} class="w-full h-8" />
-	</Field>
+	<RangeField label="Node Padding" bind:value={nodePadding} max={20} />
+	<RangeField label="Node Width" bind:value={nodeWidth} max={20} />
 </div>
 
 <Preview>
@@ -249,12 +246,8 @@ docUrl: $docUrl
 			<ToggleOption value="target">Target</ToggleOption>
 		</ToggleGroup>
 	</Field>
-	<Field label="Node Padding">
-		<input type="range" bind:value={nodePadding} max={20} step={1} class="w-full h-8" />
-	</Field>
-	<Field label="Node Width">
-		<input type="range" bind:value={nodeWidth} max={20} step={1} class="w-full h-8" />
-	</Field>
+	<RangeField label="Node Padding" bind:value={nodePadding} max={20} />
+	<RangeField label="Node Width" bind:value={nodeWidth} max={20} />
 </div>
 
 <Preview>

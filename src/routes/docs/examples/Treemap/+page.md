@@ -18,6 +18,9 @@ docUrl: $docUrl
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { format } from 'svelte-ux/utils/format';
 
+	import Preview from '$lib/docs/Preview.svelte';
+	import RangeField from '$lib/docs/RangeField.svelte';
+
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Bounds from '$lib/components/Bounds.svelte';
 	import ChartClipPath from '$lib/components/ChartClipPath.svelte';
@@ -31,11 +34,9 @@ docUrl: $docUrl
 	import { findAncestor } from '$lib/utils/hierarchy';
 	import { isNodeVisible } from '$lib/utils/treemap';
 
-	import Preview from '$lib/docs/Preview.svelte';
-
-	import { simpleData, complexData } from '../data/hierarchy';
-	import flareCsv from '../data/flare.csv'
-	import carsCsv from '../data/cars.csv'
+	import { simpleData, complexData } from '../_data/hierarchy';
+	import flareCsv from '../_data/flare.csv'
+	import carsCsv from '../_data/cars.csv'
 
 	const complexDataHierarchy = hierarchy(complexData)
 		.sum((d) => d.value)
@@ -132,38 +133,14 @@ docUrl: $docUrl
 		</Field>
 	</div>
 	<div class="grid grid-cols-2 gap-2">
-		<Field label="Padding Outer" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingOuter -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingOuter} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingOuter}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingOuter += 1} class="ml-2" />
-		</Field>
-		<Field label="Padding Inner" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingInner -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingInner} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingInner}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingInner += 1} class="ml-2" />
-		</Field>
+		<RangeField label="Padding Outer" bind:value={paddingOuter} />
+		<RangeField label="Padding Inner" bind:value={paddingInner} />
 	</div>
 	<div class="grid grid-cols-4 gap-2">
-		<Field label="Padding Top" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingTop -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingTop} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingTop}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingTop += 1} class="ml-2" />
-		</Field>
-		<Field label="Padding Bottom" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingBottom -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingBottom} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingBottom}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingBottom += 1} class="ml-2" />
-		</Field>
-		<Field label="Padding Left" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingLeft -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingLeft} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingLeft}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingLeft += 1} class="ml-2" />
-		</Field>
-		<Field label="Padding Right" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingRight -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingRight} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingRight}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingRight += 1} class="ml-2" />
-		</Field>
+		<RangeField label="Padding Top" bind:value={paddingTop} />
+		<RangeField label="Padding Bottom" bind:value={paddingBottom} />
+		<RangeField label="Padding Left" bind:value={paddingLeft} />
+		<RangeField label="Padding Right" bind:value={paddingRight} />
 	</div>
 </div>
 
@@ -252,38 +229,14 @@ docUrl: $docUrl
 		</Field>
 	</div>
 	<div class="grid grid-cols-2 gap-2">
-		<Field label="Padding Outer" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingOuter -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingOuter} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingOuter}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingOuter += 1} class="ml-2" />
-		</Field>
-		<Field label="Padding Inner" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingInner -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingInner} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingInner}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingInner += 1} class="ml-2" />
-		</Field>
+		<RangeField label="Padding Outer" bind:value={paddingOuter} />
+		<RangeField label="Padding Inner" bind:value={paddingInner} />
 	</div>
 	<div class="grid grid-cols-4 gap-2">
-		<Field label="Padding Top" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingTop -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingTop} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingTop}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingTop += 1} class="ml-2" />
-		</Field>
-		<Field label="Padding Bottom" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingBottom -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingBottom} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingBottom}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingBottom += 1} class="ml-2" />
-		</Field>
-		<Field label="Padding Left" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingLeft -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingLeft} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingLeft}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingLeft += 1} class="ml-2" />
-		</Field>
-		<Field label="Padding Right" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => paddingRight -= 1} class="mr-2" />
-			<input type="range" bind:value={paddingRight} min={0} max={100} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{paddingRight}</span>
-			<Button icon={mdiChevronRight} on:click={() => paddingRight += 1} class="ml-2" />
-		</Field>
+		<RangeField label="Padding Top" bind:value={paddingTop} />
+		<RangeField label="Padding Bottom" bind:value={paddingBottom} />
+		<RangeField label="Padding Left" bind:value={paddingLeft} />
+		<RangeField label="Padding Right" bind:value={paddingRight} />
 	</div>
 	<div class="grid grid-cols-4 gap-2">
 		<Field label="Apply Partial Filter" let:id>

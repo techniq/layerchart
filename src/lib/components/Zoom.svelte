@@ -1,39 +1,46 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
+	import { getContext, createEventDispatcher } from 'svelte';
 
 	import { motionStore } from '$lib/stores/motionStore';
 
 	const { width, height, padding } = getContext('LayerCake');
 
+	export let mode: 'svg' | 'manual' = 'svg';
+	export let translateOnScale: false;
 	export let spring: boolean | Parameters<typeof motionStore>[1]['spring'] = undefined;
 	export let tweened: boolean | Parameters<typeof motionStore>[1]['tweened'] = undefined;
 	export let disablePointer = false;
+	export let scroll: 'scale' | 'translate' | 'none' = 'none';
+	export let clickDistance = 10;
+
+	const dispatch = createEventDispatcher<{
+		zoom: { scale: number; translate: { x: number; y: number } };
+	}>();
 
 	let dragging = false;
+	let moved = false;
 
-	const translate = motionStore({ x: 0, y: 0 }, { spring, tweened });
-	const scale = motionStore({ x: 1, y: 1 }, { spring, tweened });
-	let startPoint;
-	let startTranslate;
-	let svgEl = null;
+	export let initialTranslate = { x: 0, y: 0 };
+	const translate = motionStore(initialTranslate, { spring, tweened });
+
+	export let initialScale = 1;
+	const scale = motionStore(initialScale, { spring, tweened });
+
+	let startPoint: { x: number; y: number } = { x: 0, y: 0 };
+	let startTranslate: { x: number; y: number } = { x: 0, y: 0 };
+	let svgEl: SVGSVGElement | null = null;
 
 	export function reset() {
-		$translate = { x: 0, y: 0 };
-		$scale = { x: 1, y: 1 };
+		$translate = initialTranslate;
+		$scale = initialScale;
 	}
 
 	export function increase() {
-		$scale = {
-			x: $scale.x * 1.25,
-			y: $scale.y * 1.25
-		};
+		scaleTo(1.25, { x: $width / 2, y: $height / 2 });
 	}
 
 	export function decrease() {
-		$scale = {
-			x: $scale.x * 0.8,
-			y: $scale.y * 0.8
-		};
+		scaleTo(0.8, { x: $width / 2, y: $height / 2 });
 	}
 
 	export function translateCenter() {
@@ -44,42 +51,35 @@
 	}
 
 	export function zoomTo(
-		newTranslate: { x: number; y: number },
-		newScale?: { x: number; y: number }
+		center: { x: number; y: number },
+		rect?: { width: number; height: number }
 	) {
+		// TODO: Improve with geo/projection
+
 		$translate = {
-			x: $width / 2 - newTranslate.x,
-			y: $height / 2 - newTranslate.y
+			x: $width / 2 - center.x,
+			y: $height / 2 - center.y
 		};
 
-		if (newScale) {
-			$scale = {
-				x: Math.min($width, $height) / newScale.x,
-				y: Math.min($width, $height) / newScale.y
-			};
+		if (rect) {
+			$scale = $width < $height ? $width / rect.width : $height / rect.height;
 		}
 	}
 
-	function handleMouseDown(e) {
+	function onMouseDown(e: MouseEvent & { currentTarget: SVGElement }) {
 		if (disablePointer) return;
 
 		dragging = true;
-		svgEl = e.target.ownerSVGElement;
+		moved = false;
+		svgEl = e.currentTarget.ownerSVGElement; // capture for reference in mousemove event
 		startPoint = localPoint(svgEl, e);
 		startTranslate = $translate;
 
-		window.addEventListener('mousemove', handleMouseMove);
-		window.addEventListener('mouseup', handleMouseUp);
+		window.addEventListener('mousemove', onMouseMove);
+		window.addEventListener('mouseup', onMouseUp);
 	}
 
-	function handleMouseUp(e) {
-		dragging = false;
-
-		window.removeEventListener('mousemove', handleMouseMove);
-		window.removeEventListener('mouseup', handleMouseUp);
-	}
-
-	function handleMouseMove(e) {
+	function onMouseMove(e: MouseEvent) {
 		if (!dragging) return;
 
 		const endPoint = localPoint(svgEl, e);
@@ -88,54 +88,115 @@
 
 		translate.set(
 			{
-				x: startTranslate.x + deltaX / $scale.x,
-				y: startTranslate.y + deltaY / $scale.y
+				x: startTranslate.x + deltaX / (mode === 'manual' ? 1 : $scale),
+				y: startTranslate.y + deltaY / (mode === 'manual' ? 1 : $scale)
 			},
 			spring ? { hard: true } : tweened ? { duration: 0 } : undefined
 		);
+
+		if (!moved) {
+			// If dragged beyond threshold, disable click propagation
+			moved = deltaX * deltaX + deltaY * deltaY > clickDistance;
+		}
 	}
 
-	function handleDoubleClick() {
-		if (disablePointer) return;
-		increase();
+	function onMouseUp(e: MouseEvent) {
+		dragging = false;
+
+		window.removeEventListener('mousemove', onMouseMove);
+		window.removeEventListener('mouseup', onMouseUp);
 	}
 
-	function handleWheel(e) {
+	function onClick(e: MouseEvent) {
+		if (moved) {
+			// Do not propagate click event to children if drag/moved.  Registered in capture phase (top-down)
+			e.stopPropagation();
+		}
+	}
+
+	function onDoubleClick(e) {
 		if (disablePointer) return;
+		const point = localPoint(svgEl, e);
+		scaleTo(e.shiftKey ? 0.5 : 2, point);
+	}
+
+	function onWheel(e: WheelEvent) {
+		if (scroll === 'none' || disablePointer) return;
 
 		e.preventDefault();
-		const scaleBy = -e.deltaY > 0 ? 1.1 : 0.9;
 
-		// TODO: Update to match d3-zoom delta
-		// https://github.com/d3/d3-zoom#zoom_wheelDelta
-		// const scaleBy = -e.deltaY * (e.deltaMode === 1 ? 0.05 : e.deltaMode ? 1 : 0.002);
+		svgEl = e.currentTarget.ownerSVGElement;
+		const point = (startPoint = localPoint(svgEl, e));
 
-		scale.set(
-			{
-				x: $scale.x * scaleBy,
-				y: $scale.y * scaleBy
-			},
-			spring ? { hard: true } : tweened ? { duration: 0 } : undefined
-		);
+		// Pinch to zoom is registered as a wheel event with control key
+		const pinchToZoom = e.ctrlKey;
+
+		if (scroll === 'scale' || pinchToZoom) {
+			// https://github.com/d3/d3-zoom#zoom_wheelDelta
+			const scaleBy =
+				-e.deltaY * (e.deltaMode === 1 ? 0.05 : e.deltaMode ? 1 : 0.002) * (e.ctrlKey ? 10 : 1);
+
+			scaleTo(
+				Math.pow(2, scaleBy),
+				point,
+				spring ? { hard: true } : tweened ? { duration: 0 } : undefined
+			);
+		} else if (scroll === 'translate') {
+			translate.update(
+				(startTranslate) => ({
+					x: startTranslate.x + -e.deltaX / (mode === 'manual' ? 1 : $scale),
+					y: startTranslate.y + -e.deltaY / (mode === 'manual' ? 1 : $scale)
+				}),
+				spring ? { hard: true } : tweened ? { duration: 0 } : undefined
+			);
+		}
 	}
 
-	function localPoint(svgEl, e) {
-		const screenCTM = svgEl.getScreenCTM();
+	/**
+	 * Apply scale and translate towards point
+	 */
+	function scaleTo(
+		value: number,
+		point: { x: number; y: number },
+		options: Parameters<typeof motionStore>[1] | undefined = undefined
+	) {
+		const currentScale = $scale;
+		const newScale = $scale * value;
+		scale.set(newScale, options);
 
-		const coords = {
-			x: e.clientX,
-			y: e.clientY
-		};
+		if (translateOnScale) {
+			// Translate towards point (ex. mouse cursor/center) while zooming in/out
+			const invertTransformPoint = {
+				x: (point.x - $translate.x) / currentScale,
+				y: (point.y - $translate.y) / currentScale
+			};
+			const newTranslate = {
+				x: point.x - invertTransformPoint.x * newScale,
+				y: point.y - invertTransformPoint.y * newScale
+			};
+			translate.set(newTranslate, options);
+		}
+	}
 
-		let point = svgEl.createSVGPoint();
-		point.x = coords.x;
-		point.y = coords.y;
-		point = point.matrixTransform(screenCTM.inverse());
+	function localPoint(svgEl: SVGSVGElement | null, e: MouseEvent) {
+		if (svgEl) {
+			const screenCTM = svgEl.getScreenCTM();
 
-		return {
-			x: point.x,
-			y: point.y
-		};
+			let point = svgEl.createSVGPoint();
+			point.x = e.clientX;
+			point.y = e.clientY;
+			point = point.matrixTransform(screenCTM?.inverse());
+
+			return {
+				x: point.x,
+				y: point.y
+			};
+		} else {
+			return {
+				x: e.clientX,
+				y: e.clientY
+			};
+		}
 	}
 
 	$: center = { x: $width / 2, y: $height / 2 };
@@ -145,17 +206,27 @@
 		y: center.y - $translate.y
 	};
 
-	$: newTranslate = {
-		x: $translate.x * $scale.x + center.x - center.x * $scale.x,
-		y: $translate.y * $scale.y + center.y - center.y * $scale.y
-	};
+	let transform = '';
+	$: if (mode === 'svg') {
+		const newTranslate = {
+			x: $translate.x * $scale + center.x - center.x * $scale,
+			y: $translate.y * $scale + center.y - center.y * $scale
+		};
+		transform = `translate(${newTranslate.x},${newTranslate.y}) scale(${$scale})`;
+	}
+
+	$: dispatch('zoom', { scale: $scale, translate: $translate });
 </script>
 
 <g
-	on:mousewheel={handleWheel}
-	on:mousedown={handleMouseDown}
-	on:dblclick={handleDoubleClick}
+	on:mousewheel={onWheel}
+	on:mousedown={onMouseDown}
+	on:dblclick={onDoubleClick}
+	on:click|capture={onClick}
 	on:click
+	on:keydown
+	on:keyup
+	on:keypress
 >
 	<rect
 		x={-$padding.left}
@@ -164,7 +235,7 @@
 		height={$height + $padding.top + $padding.bottom}
 		fill="transparent"
 	/>
-	<g transform="translate({newTranslate.x},{newTranslate.y}) scale({$scale.x},{$scale.y})">
-		<slot scale={$scale} />
+	<g {transform}>
+		<slot scale={$scale} {zoomTo} {reset} />
 	</g>
 </g>

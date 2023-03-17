@@ -17,6 +17,9 @@ docUrl: $docUrl
 	import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { format } from 'svelte-ux/utils/format';
 
+	import Preview from '$lib/docs/Preview.svelte';
+	import RangeField from '$lib/docs/RangeField.svelte';
+
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Group from '$lib/components/Group.svelte';
 	import Circle from '$lib/components/Circle.svelte';
@@ -25,9 +28,7 @@ docUrl: $docUrl
 
 	import { findAncestor } from '$lib/utils/hierarchy';
 
-	import Preview from '$lib/docs/Preview.svelte';
-
-	import { complexData } from '../data/hierarchy';
+	import { complexData } from '../_data/hierarchy';
 
 	const complexHierarchy = hierarchy(complexData)
 		.sum((d) => d.value)
@@ -40,7 +41,8 @@ docUrl: $docUrl
 	let zoom;
 
 	$: if (zoom && selected) {
-		zoom.zoomTo({ x: selected.x, y: selected.y }, { x: selected.r * 2, y: selected.r * 2 })
+		const diameter = selected.r * 2
+		zoom.zoomTo({ x: selected.x, y: selected.y }, { width: diameter, height: diameter })
 	}
 
 	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu)
@@ -68,11 +70,7 @@ docUrl: $docUrl
 
 <div class="grid grid-flow-col gap-4 mb-4">
 	<div class="grid grid-cols-[2fr,1fr,1fr] gap-2">
-		<Field label="Padding" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => padding -= 1} class="mr-2" />
-			<input type="range" bind:value={padding} min={0} max={50} {id} class="h-6 w-full" /> <span class="ml-4 text-sm text-black/50">{padding}</span>
-			<Button icon={mdiChevronRight} on:click={() => padding += 1} class="ml-2" />
-		</Field>
+		<RangeField label="Padding" bind:value={padding} max={50} />
 		<Field label="Color By">
 			<ToggleGroup bind:value={colorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
 				<ToggleOption value="parent">Parent</ToggleOption>
@@ -104,6 +102,7 @@ docUrl: $docUrl
 									<Circle
 										r={node.r}
 										stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+										stroke-width={1 / scale}
 										fill={nodeColor}
 										rx={5}
 									/>
@@ -111,7 +110,7 @@ docUrl: $docUrl
 							{/each}
 							<!-- Show text on top of all circles -->
 							{#each selected ? (selected.children ?? [selected]) : [] as node (node.data.name + node.depth)}
-								{@const fontSize = 1 / scale.x}
+								{@const fontSize = 1 / scale}
 								<g in:fade|local>
 									<text
 										x={node.x}

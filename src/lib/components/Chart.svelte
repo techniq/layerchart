@@ -4,10 +4,18 @@
 
 	// TODO: Workaround for sveld error: `Cannot read properties of null (reading 'type')` in `ComponentParser`
 	// See: https://github.com/carbon-design-system/sveld/issues/104
-	import { LayerCake, Svg as _Svg, Html as _Html } from 'layercake';
+	import {
+		LayerCake,
+		Svg as _Svg,
+		Html as _Html,
+		Canvas as _Canvas,
+		WebGL as _WebGL
+	} from 'layercake';
 
 	export const Svg = _Svg;
 	export const Html = _Html;
+	export const Canvas = _Canvas;
+	export const WebGL = _WebGL;
 </script>
 
 <script lang="ts">
@@ -16,6 +24,7 @@
 	import { get } from 'lodash-es';
 	import { isScaleBand } from '$lib/utils/scales';
 	import TooltipContext from './TooltipContext.svelte';
+	import GeoContext from './GeoContext.svelte';
 
 	type Accessor = string | ((d: any) => number);
 
@@ -70,6 +79,8 @@
 	$: yReverse = yScale ? !isScaleBand(yScale) : true;
 
 	export let tooltip: ComponentProps<TooltipContext> | undefined = undefined;
+
+	export let geo: ComponentProps<GeoContext> | undefined = undefined;
 </script>
 
 <LayerCake
@@ -88,11 +99,30 @@
 	let:width
 	let:element
 >
-	{#if tooltip}
-		<TooltipContext {...tooltip} let:tooltip>
-			<slot {aspectRatio} {containerHeight} {containerWidth} {height} {width} {element} {tooltip} />
-		</TooltipContext>
-	{:else}
-		<slot {aspectRatio} {containerHeight} {containerWidth} {height} {width} {element} />
-	{/if}
+	<GeoContext {...geo} let:projection>
+		{#if tooltip}
+			<TooltipContext {...tooltip} let:tooltip>
+				<slot
+					{aspectRatio}
+					{containerHeight}
+					{containerWidth}
+					{height}
+					{width}
+					{element}
+					{projection}
+					{tooltip}
+				/>
+			</TooltipContext>
+		{:else}
+			<slot
+				{aspectRatio}
+				{containerHeight}
+				{containerWidth}
+				{height}
+				{width}
+				{element}
+				{projection}
+			/>
+		{/if}
+	</GeoContext>
 </LayerCake>

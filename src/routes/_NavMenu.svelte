@@ -42,6 +42,61 @@
 <NavItem text="Tree" currentUrl={$page.url} path="/docs/examples/Tree" class="pl-6 py-2" />
 <NavItem text="Treemap" currentUrl={$page.url} path="/docs/examples/Treemap" class="pl-6 py-2" />
 
+<div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Geo Examples</div>
+<NavItem text="GeoPath" currentUrl={$page.url} path="/docs/examples/GeoPath" class="pl-6 py-2" />
+<NavItem text="GeoPoint" currentUrl={$page.url} path="/docs/examples/GeoPoint" class="pl-6 py-2" />
+<NavItem text="GeoTile" currentUrl={$page.url} path="/docs/examples/GeoTile" class="pl-6 py-2" />
+<NavItem
+	text="Projections"
+	currentUrl={$page.url}
+	path="/docs/examples/GeoProjection"
+	class="pl-6 py-2"
+/>
+<NavItem text="State Map" currentUrl={$page.url} path="/docs/examples/StateMap" class="pl-6 py-2" />
+<NavItem
+	text="Country Map"
+	currentUrl={$page.url}
+	path="/docs/examples/CountryMap"
+	class="pl-6 py-2"
+/>
+<NavItem
+	text="Choropleth"
+	currentUrl={$page.url}
+	path="/docs/examples/Choropleth"
+	class="pl-6 py-2"
+/>
+<NavItem
+	text="Bubble Map"
+	currentUrl={$page.url}
+	path="/docs/examples/BubbleMap"
+	class="pl-6 py-2"
+/>
+<NavItem text="Spike Map" currentUrl={$page.url} path="/docs/examples/SpikeMap" class="pl-6 py-2" />
+<NavItem
+	text="Zoomable Map"
+	currentUrl={$page.url}
+	path="/docs/examples/ZoomableMap"
+	class="pl-6 py-2"
+/>
+<NavItem
+	text="Zoomable Tile Map"
+	currentUrl={$page.url}
+	path="/docs/examples/ZoomableTileMap"
+	class="pl-6 py-2"
+/>
+<NavItem
+	text="Animated Globe"
+	currentUrl={$page.url}
+	path="/docs/examples/AnimatedGlobe"
+	class="pl-6 py-2"
+/>
+<NavItem
+	text="Lofted Arcs Globe"
+	currentUrl={$page.url}
+	path="/docs/examples/LoftedArcsGlobe"
+	class="pl-6 py-2"
+/>
+
 <div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">Common</div>
 <NavItem text="Chart" currentUrl={$page.url} path="/docs/components/Chart" class="pl-6 py-2" />
 <NavItem text="Axis" currentUrl={$page.url} path="/docs/components/Axis" class="pl-6 py-2" />
@@ -74,6 +129,12 @@
 	text="ClipPath"
 	currentUrl={$page.url}
 	path="/docs/components/ClipPath"
+	class="pl-6 py-2"
+/>
+<NavItem
+	text="ColorRamp"
+	currentUrl={$page.url}
+	path="/docs/components/ColorRamp"
 	class="pl-6 py-2"
 />
 <NavItem text="Group" currentUrl={$page.url} path="/docs/components/Group" class="pl-6 py-2" />

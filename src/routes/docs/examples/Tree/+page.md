@@ -8,9 +8,7 @@ docUrl: $docUrl
 	import { hierarchy } from 'd3-hierarchy';
 	import { curveBumpX, curveBumpY, curveStep, curveStepBefore, curveStepAfter } from 'd3-shape';
 
-	import { mdiArrowULeftTop, mdiMagnifyPlusOutline, mdiMagnifyMinusOutline, mdiImageFilterCenterFocus } from '@mdi/js';
-
-	import { Button, Field, ToggleGroup, ToggleOption, Tooltip } from 'svelte-ux';
+	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Group from '$lib/components/Group.svelte';
@@ -21,8 +19,9 @@ docUrl: $docUrl
 	import Zoom from '$lib/components/Zoom.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
+	import ZoomControls from '$lib/docs/ZoomControls.svelte';
 
-	import { complexData } from '../data/hierarchy';
+	import { complexData } from '../_data/hierarchy';
 
 	let expandedNodeNames = ['flare']
 
@@ -86,22 +85,7 @@ docUrl: $docUrl
 
 <Preview>
 	<div class="h-[800px] p-4 border rounded overflow-hidden relative">
-		<div class="absolute top-0 right-0 z-10">
-			<div class="bg-black/5 rounded-full m-1 backdrop-blur">
-				<Tooltip title="Zoom in">
-					<Button icon={mdiMagnifyPlusOutline} on:click={() => zoom.increase()} class="text-black/50 p-2" />
-				</Tooltip>
-				<Tooltip title="Zoom out">
-					<Button icon={mdiMagnifyMinusOutline} on:click={() => zoom.decrease()} class="text-black/50 p-2" />
-				</Tooltip>
-				<Tooltip title="Center">
-					<Button icon={mdiImageFilterCenterFocus} on:click={() => zoom.translateCenter()} class="text-black/50 p-2" />
-				</Tooltip>
-				<Tooltip title="Reset">
-					<Button icon={mdiArrowULeftTop} on:click={() => zoom.reset()} class="text-black/50 p-2" />
-				</Tooltip>
-			</div>
-		</div>
+		<ZoomControls {zoom} orientation="horizontal" />
 		<Chart data={complexDataHierarchy} padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}>
 			<Svg>
 				<Zoom bind:this={zoom} tweened={{ duration: 800, easing: cubicOut }}>
