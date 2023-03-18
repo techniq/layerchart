@@ -10,7 +10,7 @@ docUrl: $docUrl
 	import { feature } from 'topojson-client';
 
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-	import { Button, Field, Switch } from 'svelte-ux'
+	import { Button, Field, Switch } from 'svelte-ux';
 
 	import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
 	import GeoPath from '$lib/components/GeoPath.svelte';
@@ -37,8 +37,8 @@ docUrl: $docUrl
 	let detailed = false;
 
 	$: dataGeoJson = detailed ? data.geojsonDetail : data.geojson;
-
 	$: geojson = feature(dataGeoJson, dataGeoJson.objects.countries);
+	$: features = projection === geoAlbersUsa ? geojson.features.filter(f => f.properties.name === 'United States of America') : geojson.features;
 
 	let yaw = 0;
 	let pitch = 0;
@@ -84,7 +84,7 @@ docUrl: $docUrl
 		>
 			<Svg>
 				<GeoPath geojson={{ type: 'Sphere' }} class="stroke-black fill-blue-300" />
-				{#each geojson.features as feature}
+				{#each features as feature}
 					<GeoPath geojson={feature} {tooltip} class="stroke-black fill-white hover:fill-gray-300" />
 				{/each}
 				<Graticule class="stroke-black/20 pointer-events-none" />
