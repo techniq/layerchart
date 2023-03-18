@@ -9,7 +9,7 @@ docUrl: $docUrl
 	import { geoMercator } from 'd3-geo';
 	import { feature } from 'topojson-client';
 	
-	import { Button, Field } from 'svelte-ux';
+	import { Button, Field, Switch } from 'svelte-ux';
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
 	import Preview from '$lib/docs/Preview.svelte';
@@ -33,11 +33,15 @@ docUrl: $docUrl
 
 	let serviceUrl;
 	let zoomDelta = 0;
+	let debug = false;
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,1fr] gap-2 my-2">
+<div class="grid grid-cols-[1fr,1fr,auto] gap-2 my-2">
 	<TilesetField bind:serviceUrl />
 	<RangeField label="Zoom delta" bind:value={zoomDelta} min={-5} max={5} />
+	<Field label="Debug" let:id>
+		<Switch bind:checked={debug} {id} />
+	</Field>
 </div>
 
 ## SVG
@@ -54,7 +58,7 @@ docUrl: $docUrl
 			let:projection
 		>
 			<Svg>
-				<GeoTile url={serviceUrl} {zoomDelta} />
+				<GeoTile url={serviceUrl} {zoomDelta} {debug} />
 				{#each filteredStates.features as feature}
 					<GeoPath
 						geojson={feature}
