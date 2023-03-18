@@ -42,6 +42,7 @@
 		Primatives: [
 			'Arc',
 			'Area',
+			'Blur',
 			'Bounds',
 			'ChartClipPath',
 			'Circle',
@@ -58,7 +59,8 @@
 			'Text'
 		],
 		'Data-driven': ['AreaStack', 'Bars', 'ConnectedPoints', 'Labels', 'Points', 'Threshold'],
-		Interactions: ['Tooltip', 'TooltipContext', 'HighlightRect', 'HighlightLine', 'Zoom']
+		Interactions: ['Tooltip', 'TooltipContext', 'HighlightRect', 'HighlightLine', 'Zoom'],
+		Geo: ['GeoContext', 'GeoPath', 'GeoPoint', 'GeoTile', 'Graticule', 'TileImage']
 	};
 
 	const utils = ['pivot'];
