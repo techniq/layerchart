@@ -1,9 +1,4 @@
-import {
-	isSVGElement,
-	isSVGGraphicsElement,
-	isSVGSVGElement,
-	isTouchEvent
-} from 'svelte-ux/types/typeGuards';
+import { isSVGElement, isSVGGraphicsElement, isSVGSVGElement, isTouchEvent } from 'svelte-ux';
 
 // See: https://github.com/airbnb/visx/blob/master/packages/visx-event/src/localPointGeneric.ts
 // TODO: Matches event.layerX/Y, but are deprecated (https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/layerX).

@@ -1,8 +1,7 @@
 import vercelAdapter from '@sveltejs/adapter-vercel';
 import sveltePreprocess from 'svelte-preprocess';
 import { mdsvex } from 'mdsvex';
-import sveld from 'vite-plugin-sveld';
-import { markdownToc } from 'svelte-ux/plugins/svelte';
+import { markdownToc } from 'svelte-ux/plugins/svelte.js';
 
 import mdsvexConfig from './mdsvex.config.js';
 

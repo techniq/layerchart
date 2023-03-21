@@ -1,5 +1,5 @@
 import slug from 'rehype-slug';
-import { codePreview } from 'svelte-ux/plugins/remark';
+import { codePreview } from 'svelte-ux/plugins/remark.js';
 
 export default {
 	extensions: ['.md', '.svx'],
