@@ -13,7 +13,7 @@ import { format } from 'date-fns';
 import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 import { getDuration } from 'svelte-ux/utils/duration';
 import type { Duration } from 'svelte-ux/utils/duration';
-import { fail } from 'svelte-ux/types';
+import { fail } from 'svelte-ux';
 
 // TODO: Use PeriodType along with Duration to format (and possibly select intervals)
 
