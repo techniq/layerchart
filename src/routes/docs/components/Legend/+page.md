@@ -146,7 +146,6 @@ docUrl: $docUrl
 			<Legend title="bottom-left" placement="bottom-left"  />
 			<Legend title="bottom" placement="bottom"  />
 			<Legend title="bottom-right" placement="bottom-right" />
-			
 		</Chart>
 	</div>
 </Preview>
@@ -166,6 +165,24 @@ docUrl: $docUrl
 			tick: 'stroke-white'
 		}}
 	/>
+</Preview>
+
+## slot override
+
+<Preview>
+	<Legend scale={scaleOrdinal(["<10", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "≥80"], schemeSpectral[10])} title="Age (years)" let:values let:scale>
+		<div class="flex gap-4">
+			{#each values as value}
+				<div class="flex gap-1">
+					<div
+						class="h-4 w-4 rounded-full"
+						style:background-color={scale(value)}
+					/>
+					<div class="text-xs text-black/50">{value}</div>
+				</div>
+			{/each}
+		</div>
+	</Legend>
 </Preview>
 
 # API

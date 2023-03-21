@@ -28,8 +28,8 @@
 	export let width = 320;
 	export let height = 10;
 	export let ticks = width / 64;
-	export let tickFormat: FormatType;
-	export let tickValues: any[];
+	export let tickFormat: FormatType = undefined;
+	export let tickValues: any[] | undefined = undefined;
 	export let tickFontSize = 10;
 	export let tickSize = 4;
 	export let placement: Placement | undefined = undefined;
@@ -149,44 +149,46 @@
 	{...$$restProps}
 >
 	<div class={cls('text-[10px] font-semibold', classes.title)}>{title}</div>
-	<svg
-		{width}
-		height={height + tickSize + tickFontSize}
-		viewBox="0 0 {width} {height + tickSize + tickFontSize}"
-		class="overflow-visible"
-	>
-		<g>
-			{#if interpolator}
-				<ColorRamp {width} {height} {interpolator} />
-			{:else if swatches}
-				{#each swatches as swatch, i}
-					<rect {...swatch} />
-				{/each}
-			{/if}
-		</g>
-
-		<g>
-			{#each tickValues ?? xScale?.ticks?.(ticks) ?? [] as tick, i}
-				<text
-					text-anchor="middle"
-					x={xScale(tick) + tickLabelOffset}
-					y={height + tickSize + tickFontSize}
-					style:font-size={tickFontSize}
-					class={classes.label}
-				>
-					{tickFormat ? format(tick, tickFormat) : tick}
-				</text>
-
-				{#if tickLine}
-					<line
-						x1={xScale(tick)}
-						y1={0}
-						x2={xScale(tick)}
-						y2={height + tickSize}
-						class={cls('stroke-black', classes.tick)}
-					/>
+	<slot values={tickValues} {scale}>
+		<svg
+			{width}
+			height={height + tickSize + tickFontSize}
+			viewBox="0 0 {width} {height + tickSize + tickFontSize}"
+			class="overflow-visible"
+		>
+			<g>
+				{#if interpolator}
+					<ColorRamp {width} {height} {interpolator} />
+				{:else if swatches}
+					{#each swatches as swatch, i}
+						<rect {...swatch} />
+					{/each}
 				{/if}
-			{/each}
-		</g>
-	</svg>
+			</g>
+
+			<g>
+				{#each tickValues ?? xScale?.ticks?.(ticks) ?? [] as tick, i}
+					<text
+						text-anchor="middle"
+						x={xScale(tick) + tickLabelOffset}
+						y={height + tickSize + tickFontSize}
+						style:font-size={tickFontSize}
+						class={classes.label}
+					>
+						{tickFormat ? format(tick, tickFormat) : tick}
+					</text>
+
+					{#if tickLine}
+						<line
+							x1={xScale(tick)}
+							y1={0}
+							x2={xScale(tick)}
+							y2={height + tickSize}
+							class={cls('stroke-black', classes.tick)}
+						/>
+					{/if}
+				{/each}
+			</g>
+		</svg>
+	</slot>
 </div>
