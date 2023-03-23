@@ -110,7 +110,6 @@
 		};
 	} else {
 		// Ordinal
-		console.log({ title });
 		xScale = scaleBand().domain(scale.domain()).rangeRound([0, width]);
 
 		swatches = scale.domain().map((d: any) => {
