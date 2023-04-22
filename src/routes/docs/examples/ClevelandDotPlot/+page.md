@@ -53,7 +53,6 @@ docUrl: $docUrl
 	*/
 
 	$: yDomain = data.map((x) => x.name).reverse()
-	//$: console.log({ data, yDomain })
 </script>
 
 ## Basic
@@ -80,7 +79,7 @@ docUrl: $docUrl
 			</Svg>
 			<Tooltip header={data => data.name} let:data>
 				<TooltipItem label="start" value={format(data.startDate, 'h:mm:ss')} />
-				<TooltipItem label="end" value={format(data.startDate, 'h:mm:ss')} />
+				<TooltipItem label="end" value={format(data.endDate, 'h:mm:ss')} />
 				<TooltipSeparator />
 				<TooltipItem label="duration" valueAlign="right">
 					<Duration start={data.startDate} end={data.endDate} />
