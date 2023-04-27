@@ -1,9 +1,14 @@
 <script lang="ts">
+	import { inject } from '@vercel/analytics';
 	import { mdiGithub } from '@mdi/js';
 	import 'prism-themes/themes/prism-vsc-dark-plus.css';
-
 	import { AppBar, AppLayout, Button, Tooltip } from 'svelte-ux';
+
+	import { dev } from '$app/environment';
+
 	import NavMenu from './_NavMenu.svelte';
+
+	inject({ mode: dev ? 'development' : 'production' });
 </script>
 
 <AppLayout>

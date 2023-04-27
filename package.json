@@ -54,6 +54,7 @@
 	"type": "module",
 	"dependencies": {
 		"@mdi/js": "^7.2.96",
+		"@vercel/analytics": "^1.0.0",
 		"d3-array": "^3.2.3",
 		"d3-delaunay": "^6.0.2",
 		"d3-dsv": "^3.0.1",
