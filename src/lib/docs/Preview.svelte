@@ -32,6 +32,7 @@
 				<Button
 					icon={mdiContentCopy}
 					class=" text-white/70 hover:bg-white/20 py-1"
+					size="sm"
 					on:click={() => navigator.clipboard.writeText(code)}
 				>
 					Copy

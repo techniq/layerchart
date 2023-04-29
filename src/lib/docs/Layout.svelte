@@ -19,44 +19,52 @@
 	export let description = undefined;
 </script>
 
-{#if name}
-	<div class="flex items-center gap-2">
-		<span class="text-2xl font-bold">{name}</span>
-		{#if sourceUrl}
-			<Tooltip title="View source">
-				<Button
-					class="text-black/50"
-					icon={mdiCodeTags}
-					href="https://github.com/techniq/layerchart/blob/master/{sourceUrl}"
-					target="_blank"
-				/>
-			</Tooltip>
+<div class="grid grid-rows-[auto,1fr] h-full p-4">
+	<div>
+		{#if name}
+			<div class="flex items-center gap-2 _border-b border-black/10">
+				<span class="text-2xl font-bold">{name}</span>
+				{#if sourceUrl}
+					<Tooltip title="View source">
+						<Button
+							class="text-black/50 p-1"
+							icon={mdiCodeTags}
+							href="https://github.com/techniq/svelte-ux/blob/master/{sourceUrl}"
+							target="_blank"
+						/>
+					</Tooltip>
+				{/if}
+
+				{#if docUrl}
+					<Tooltip title="Edit this page">
+						<Button
+							class="text-black/50 p-1"
+							icon={mdiFileDocumentEditOutline}
+							href="https://github.com/techniq/svelte-ux/blob/master/{docUrl}"
+							target="_blank"
+						/>
+					</Tooltip>
+				{/if}
+			</div>
+
+			{#if description}
+				<div class="text-sm text-black/60">
+					{description}
+				</div>
+			{/if}
 		{/if}
-
-		{#if docUrl}
-			<Tooltip title="Edit this page">
-				<Button
-					class="text-black/50"
-					icon={mdiFileDocumentEditOutline}
-					href="https://github.com/techniq/layerchart/blob/master/{docUrl}"
-					target="_blank"
-				/>
-			</Tooltip>
-		{/if}
 	</div>
-{/if}
 
-{#if description}
-	<div class="text-sm text-black/50">
-		{description}
+	<div class="grid grid-cols-[1fr,auto] gap-6 pt-2 pb-4">
+		<div>
+			<slot />
+		</div>
+
+		<div class="hidden lg:block w-[200px]">
+			<div class="sticky top-0 pr-2">
+				<div class="text-xs uppercase leading-8 tracking-widest text-black/50">On this page</div>
+				<slot name="toc" />
+			</div>
+		</div>
 	</div>
-{/if}
-
-{#if $$slots.toc}
-	<div class="text-xs uppercase text-black/50 leading-8 tracking-widest mt-4">Contents</div>
-	<div class="border border-black/20 rounded bg-white">
-		<slot name="toc" />
-	</div>
-{/if}
-
-<slot />
+</div>
