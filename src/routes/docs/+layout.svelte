@@ -21,7 +21,7 @@
 						<Button
 							class="text-black/50 p-1"
 							icon={mdiCodeTags}
-							href="https://github.com/techniq/svelte-ux/blob/master/{sourceUrl}"
+							href="https://github.com/techniq/layerchart/blob/master/{sourceUrl}"
 							target="_blank"
 						/>
 					</Tooltip>
@@ -32,7 +32,7 @@
 						<Button
 							class="text-black/50 p-1"
 							icon={mdiFileDocumentEditOutline}
-							href="https://github.com/techniq/svelte-ux/blob/master/{docUrl}"
+							href="https://github.com/techniq/layerchart/blob/master/{docUrl}"
 							target="_blank"
 						/>
 					</Tooltip>
