@@ -1,9 +1,3 @@
----
-name: $name
-sourceUrl: $sourceUrl
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import * as easings from 'svelte/easing';
 	import * as d3shapes from 'd3-shape';
@@ -142,6 +136,8 @@ docUrl: $docUrl
 		<RangeField label="Phase" bind:value={phase} min={1} />
 	</div>
 </div>
+
+# Examples
 
 ## Playground
 

@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { geoAlbersUsa, geoAlbers, geoEqualEarth, geoEquirectangular, geoMercator, geoNaturalEarth1, geoOrthographic } from 'd3-geo';
 	import { index } from 'd3-array';
@@ -62,6 +57,8 @@ docUrl: $docUrl
 		<Switch bind:checked={detailed} {id} />
 	</Field>
 </div>
+
+# Examples
 
 ## SVG
 

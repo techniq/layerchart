@@ -1,9 +1,3 @@
----
-name: $name
-sourceUrl: $sourceUrl
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import Preview from '$lib/docs/Preview.svelte';
 	import { pivotLonger, pivotWider } from '$lib/utils/pivot';
@@ -19,29 +13,29 @@ docUrl: $docUrl
 	const pivotWiderDisplay = JSON.stringify(pivotWiderResult, null, 2);
 </script>
 
-## pivotLonger
+# pivotLonger
 
-### Before
+## Before
 
 <Preview code={wideDataDisplay} highlight showCode>
   wideData
 </Preview>
 
-### After
+## After
 
 <Preview code={pivotLongerDisplay} highlight showCode>
 	pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'dates'], 'fruit', 'value')
 </Preview>
 
-## pivotWider
+# pivotWider
 
-### Before
+## Before
 
 <Preview code={longDataDisplay} highlight showCode>
   longData
 </Preview>
 
-### After
+## After
 
 <Preview code={pivotWiderDisplay} highlight showCode>
 	pivotWider(longData, 'year', 'fruit', 'value')

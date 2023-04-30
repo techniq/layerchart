@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { spring } from 'svelte/motion';
 	import { geoOrthographic, geoCentroid } from 'd3-geo';
@@ -42,6 +37,8 @@ docUrl: $docUrl
 	// https://www.youtube.com/watch?v=BoaLSUKeGWw
 	// https://www.youtube.com/watch?v=5pOFKmk7ytU
 </script>
+
+# Examples
 
 ## SVG
 

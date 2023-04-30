@@ -1,9 +1,3 @@
----
-name: $name
-sourceUrl: $sourceUrl
-docUrl: $docUrl
----
-
 <script>
 	import { ApiDocs } from 'svelte-ux';
 
@@ -23,6 +17,8 @@ docUrl: $docUrl
 	let showAnchor = true;
 	let resizeSvg = true;
 </script>
+
+# Examples
 
 ## Playground
 

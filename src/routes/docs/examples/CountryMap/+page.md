@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { index } from 'd3-array';
 	import { geoAlbersUsa } from 'd3-geo';
@@ -19,6 +14,8 @@ docUrl: $docUrl
 
 	const states = feature(geojson, geojson.objects.collection);
 </script>
+
+# Examples
 
 ## SVG
 

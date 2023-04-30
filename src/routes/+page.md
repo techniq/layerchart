@@ -1,7 +1,3 @@
----
-title: LayerChart
----
-
 <div class="bg-white p-2 m-2 rounded shadow-lg border">
 <div class="prose">
 

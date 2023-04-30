@@ -1,9 +1,3 @@
----
-component: $component
-filename: $filename
-description: Convenient way to clip specific components (axis labels, etc) within chart while still allowing some to overflow (tooltips, etc)
----
-
 <script lang="ts">
 	import { ApiDocs } from 'svelte-ux';
 

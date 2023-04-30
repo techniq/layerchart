@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { index, max } from 'd3-array';
 	import { scaleQuantile } from 'd3-scale';
@@ -53,6 +48,8 @@ docUrl: $docUrl
 
 	const format = d3format('.2s');
 </script>
+
+# Examples
 
 ## SVG
 

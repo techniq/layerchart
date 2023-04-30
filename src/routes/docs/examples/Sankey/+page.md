@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { scaleTime, scaleSequential } from 'd3-scale';
 	import { hierarchy } from 'd3-hierarchy';
@@ -56,6 +51,8 @@ docUrl: $docUrl
 	let selectedNode = null
 	$: selectedNode && console.log(graphFromNode(selectedNode))
 </script>
+
+# Examples
 
 ## Simple
 

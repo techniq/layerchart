@@ -1,9 +1,3 @@
----
-name: $name
-sourceUrl: $sourceUrl
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import * as d3shapes from 'd3-shape';
 	import { cubicOut } from 'svelte/easing';

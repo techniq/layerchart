@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { cubicOut } from 'svelte/easing';
 	import { hierarchy } from 'd3-hierarchy';
@@ -54,6 +49,8 @@ docUrl: $docUrl
 	const nodeParentGap = 100 
 	$: nodeSize = orientation === 'horizontal' ? [nodeHeight + nodeSiblingGap, nodeWidth + nodeParentGap] : [nodeWidth + nodeSiblingGap, nodeHeight + nodeParentGap] 
 </script>
+
+# Examples
 
 ## Basic
 

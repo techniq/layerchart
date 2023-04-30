@@ -1,9 +1,3 @@
----
-name: $name
-sourceUrl: $sourceUrl
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { get } from 'svelte/store';
 	import { extent, sort } from 'd3-array';
@@ -68,8 +62,6 @@ docUrl: $docUrl
 </script>
 
 # Examples
-
----
 
 ## Area
 

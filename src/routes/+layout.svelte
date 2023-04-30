@@ -29,7 +29,7 @@
 		</div>
 	</AppBar>
 
-	<main class="p-4 scroll-smooth">
+	<main class="scroll-smooth">
 		<slot />
 	</main>
 </AppLayout>
@@ -41,6 +41,10 @@
 
 	:global(body) {
 		@apply bg-black/10;
+	}
+
+	:global(h1) {
+		@apply text-xl font-semibold mt-8 mb-2 ml-2 border-b border-gray-400 pb-1;
 	}
 
 	:global(h2) {

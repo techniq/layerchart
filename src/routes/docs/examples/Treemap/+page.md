@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { cubicOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
@@ -107,6 +102,8 @@ docUrl: $docUrl
 		}
 	}
 </script>
+
+# Examples
 
 ## Nested
 

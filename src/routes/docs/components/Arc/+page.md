@@ -1,9 +1,3 @@
----
-name: $name
-sourceUrl: $sourceUrl
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import {
 		ApiDocs,
@@ -89,6 +83,8 @@ docUrl: $docUrl
 	<RangeField label="Pad angle" bind:value={padAngle} max={2} step={0.1} />
 	<!-- <RangeField label="Pad radius" bind:value={padRadius} max={2} step={0.1} /> -->
 </div>
+
+# Examples
 
 ## Playground
 

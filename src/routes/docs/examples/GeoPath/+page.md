@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { index } from 'd3-array';
 	import { scaleQuantize } from 'd3-scale';
@@ -23,6 +18,8 @@ docUrl: $docUrl
 	const states = feature(data.geojson, data.geojson.objects.states);
 	const counties = feature(data.geojson, data.geojson.objects.counties);
 </script>
+
+# Examples
 
 ## SVG
 

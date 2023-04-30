@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { cubicOut } from 'svelte/easing';
 	import { hierarchy } from 'd3-hierarchy';
@@ -66,6 +61,8 @@ docUrl: $docUrl
 		</Field>
 	</div>
 </div>
+
+# Examples
 
 ## Suburst
 

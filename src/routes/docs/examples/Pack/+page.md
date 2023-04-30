@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { cubicOut } from 'svelte/easing';
@@ -79,6 +74,8 @@ docUrl: $docUrl
 		</Field>
 	</div>
 </div>
+
+# Examples
 
 ## General
 

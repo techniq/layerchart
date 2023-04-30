@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { cubicInOut } from 'svelte/easing';
 	import { scaleBand, scaleOrdinal } from 'd3-scale';
@@ -56,6 +51,8 @@ docUrl: $docUrl
 	$: transitionData = createStackData(longData, { xKey: 'year', groupBy: transitionChart.groupBy, stackBy: transitionChart.stackBy })
 	// $: console.log({ transitionData })
 </script>
+
+# Examples
 
 ## Vertical (Column)
 

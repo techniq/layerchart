@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { geoAlbersUsa, geoAlbers, geoMercator } from 'd3-geo';
 	import { sort } from 'd3-array';
@@ -50,6 +45,8 @@ docUrl: $docUrl
 		</select>
 	</Field>
 </div>
+
+# Examples
 
 ## State only
 

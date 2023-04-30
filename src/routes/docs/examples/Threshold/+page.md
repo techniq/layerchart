@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { scaleTime } from 'd3-scale';
 	import { curveLinear, curveStepAfter, curveBumpX, curveMonotoneX } from 'd3-shape';
@@ -40,6 +35,8 @@ docUrl: $docUrl
 		<option value={curveMonotoneX}>curveMonotoneX</option>
 	</select>
 </Field>
+
+# Examples
 
 ## Basic
 

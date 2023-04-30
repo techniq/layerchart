@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { scaleOrdinal, scaleTime } from 'd3-scale';
 	import { flatGroup } from 'd3-array';
@@ -37,6 +32,8 @@ docUrl: $docUrl
 		oranges: 'var(--color-green-500)',
 	}
 </script>
+
+# Examples
 
 ## Basic
 

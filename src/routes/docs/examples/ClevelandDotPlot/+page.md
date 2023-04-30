@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { get } from 'svelte/store';
 	import { scaleBand, scaleTime } from 'd3-scale';
@@ -54,6 +49,8 @@ docUrl: $docUrl
 
 	$: yDomain = data.map((x) => x.name).reverse()
 </script>
+
+# Examples
 
 ## Basic
 

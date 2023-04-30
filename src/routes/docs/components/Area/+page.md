@@ -1,9 +1,3 @@
----
-name: $name
-sourceUrl: $sourceUrl
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import * as easings from 'svelte/easing';
 	import * as d3shapes from 'd3-shape';
@@ -113,6 +107,8 @@ docUrl: $docUrl
 		<Switch bind:checked={tweened} {id} />
 	</Field>
 </div>
+
+# Examples
 
 ## Playground
 

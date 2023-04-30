@@ -1,9 +1,6 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
+	// WIP: Example mixing pre-projected maps (using geoIdentity) with non-projected points
+
 	import { index } from 'd3-array';
 	import { scaleQuantize } from 'd3-scale';
 	import { geoIdentity, geoAlbersUsa } from 'd3-geo';
@@ -27,7 +24,7 @@ docUrl: $docUrl
 	const states = feature(data.geojson, data.geojson.objects.states);
 </script>
 
-Example mixing pre-projected maps (using geoIdentity) with non-projected points
+# Examples
 
 ## SVG
 

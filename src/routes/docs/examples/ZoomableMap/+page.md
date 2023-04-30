@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
@@ -59,6 +54,10 @@ docUrl: $docUrl
 		</ToggleGroup>
 	</Field>
 </div>
+
+# Examples
+
+## SVG
 
 <Preview>
 	<div class="h-[600px] relative overflow-hidden">

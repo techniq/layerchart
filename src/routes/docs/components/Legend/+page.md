@@ -1,9 +1,3 @@
----
-name: $name
-sourceUrl: $sourceUrl
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { range } from 'd3-array';
 	import { randomNormal } from 'd3-random';

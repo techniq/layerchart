@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { index } from 'd3-array';
 	import { scaleQuantize } from 'd3-scale';
@@ -43,6 +38,8 @@ docUrl: $docUrl
 		<Switch bind:checked={debug} {id} />
 	</Field>
 </div>
+
+# Examples
 
 ## SVG
 

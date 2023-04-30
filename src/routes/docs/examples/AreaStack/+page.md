@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { scaleOrdinal, scaleTime } from 'd3-scale';
 	import { stack } from 'd3-shape';
@@ -29,6 +24,8 @@ docUrl: $docUrl
 	const stackData = stack().keys(keys)(data);
 	// console.log({ data, stackData })
 </script>
+
+# Examples
 
 ## Basic
 

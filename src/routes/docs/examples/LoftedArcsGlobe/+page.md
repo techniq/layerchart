@@ -1,9 +1,3 @@
----
-name: $name
-docUrl: $docUrl
-reference: https://observablehq.com/@armollica/globe-with-lofted-arcs
----
-
 <script lang="ts">
 	import { spring } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
@@ -48,6 +42,8 @@ reference: https://observablehq.com/@armollica/globe-with-lofted-arcs
 	let scrollMode = 'scale';
 	let debug = false;
 </script>
+
+# Examples
 
 ## SVG
 

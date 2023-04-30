@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { index, max, sort, descending } from 'd3-array';
 	import { geoIdentity } from 'd3-geo';
@@ -61,6 +56,8 @@ docUrl: $docUrl
 		}
 	}).sort((a,b) => descending(a.properties.data?.population, b.properties.data?.population))
 </script>
+
+# Examples
 
 ## SVG
 

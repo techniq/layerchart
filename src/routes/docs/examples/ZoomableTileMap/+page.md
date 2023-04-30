@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { cubicOut } from 'svelte/easing';
 	import { index } from 'd3-array';
@@ -60,6 +55,8 @@ docUrl: $docUrl
 		<Switch bind:checked={debug} {id} />
 	</Field>
 </div>
+
+# Examples
 
 ## SVG
 

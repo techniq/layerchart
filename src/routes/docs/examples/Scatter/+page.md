@@ -1,8 +1,3 @@
----
-name: $name
-docUrl: $docUrl
----
-
 <script lang="ts">
 	import { scaleTime, scaleThreshold } from 'd3-scale';
 	import { format } from 'date-fns';
@@ -24,6 +19,8 @@ docUrl: $docUrl
 
 	const data = createDateSeries({ min: 10, max: 100, value: 'integer' });
 </script>
+
+# Examples
 
 ## Basic
 
