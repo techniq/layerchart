@@ -98,7 +98,9 @@
 	let tweened = true;
 </script>
 
-<div class="grid gap-2 sticky top-0 z-10">
+# Examples
+
+<div class="grid gap-2">
 	<div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2">
 		<Field label="Path Example" let:id>
 			<Button icon={mdiChevronLeft} on:click={() => pathName = prev(pathOptions, pathName, 'name')} class="mr-2" />
@@ -136,8 +138,6 @@
 		<RangeField label="Phase" bind:value={phase} min={1} />
 	</div>
 </div>
-
-# Examples
 
 ## Playground
 

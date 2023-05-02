@@ -77,7 +77,9 @@
 	let tweened = true;
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,1fr,auto,auto,auto] gap-2 sticky top-0 z-10">
+# Examples
+
+<div class="grid grid-cols-[1fr,1fr,1fr,auto,auto,auto] gap-2">
 	<Field label="Path Example" let:id>
 		<Button icon={mdiChevronLeft} on:click={() => easing = prev(easingOptions, easing)} class="mr-2" />
 		<select bind:value={easing} class="w-full outline-none appearance-none text-sm" {id}>
@@ -107,8 +109,6 @@
 		<Switch bind:checked={tweened} {id} />
 	</Field>
 </div>
-
-# Examples
 
 ## Playground
 

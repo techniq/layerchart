@@ -1,7 +1,7 @@
 <script>
 	import { mdiCodeTags, mdiFileDocumentEditOutline } from '@mdi/js';
 
-	import { Button, TableOfContents, Tooltip } from 'svelte-ux';
+	import { Button, Code, TableOfContents, Tooltip } from 'svelte-ux';
 
 	import { page } from '$app/stores';
 
@@ -50,7 +50,14 @@
 	</div>
 
 	<div class="grid grid-cols-[1fr,auto] gap-6 pt-2 pb-4">
-		<div>
+		<div class="overflow-auto">
+			{#if type === 'components'}
+				{#key $page.route.id}
+					<h1>Usage</h1>
+					<Code code={`import { ${name} } from 'layerchart';`} language="javascript" />
+				{/key}
+			{/if}
+
 			<slot />
 		</div>
 
