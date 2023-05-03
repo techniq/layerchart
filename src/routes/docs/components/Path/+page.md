@@ -103,7 +103,7 @@
 <div class="grid gap-2">
 	<div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2">
 		<Field label="Path Example" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => pathName = prev(pathOptions, pathName, 'name')} class="mr-2" />
+			<Button icon={mdiChevronLeft} on:click={() => pathName = prev(pathOptions, pathName, 'name')} class="mr-2" size="sm" />
 			<select bind:value={pathName} class="w-full outline-none appearance-none text-sm" {id}>
 				{#each [...pathOptionsByGroup] as [group, options]}
 					<optgroup label={group}>
@@ -113,16 +113,16 @@
 					</optgroup>
 				{/each}
 			</select>
-			<Button icon={mdiChevronRight} on:click={() => pathName = next(pathOptions, pathName, 'name')} class="ml-2" />
+			<Button icon={mdiChevronRight} on:click={() => pathName = next(pathOptions, pathName, 'name')} class="ml-2" size="sm" />
 		</Field>
 		<Field label="Curve" let:id>
-			<Button icon={mdiChevronLeft} on:click={() => curve = prev(curveOptions, curve)} class="mr-2" />
+			<Button icon={mdiChevronLeft} on:click={() => curve = prev(curveOptions, curve)} class="mr-2" size="sm" />
 			<select bind:value={curve} class="w-full outline-none appearance-none text-sm" {id}>
 				{#each curveOptions as option}
 					<option value={option.value}>{option.name}</option>
 				{/each}
 			</select>
-			<Button icon={mdiChevronRight} on:click={() => curve = next(curveOptions, curve)} class="ml-2" />
+			<Button icon={mdiChevronRight} on:click={() => curve = next(curveOptions, curve)} class="ml-2" size="sm" />
 		</Field>
 		<RangeField label="Points" bind:value={pointCount} min={2} />
 		<Field label="Show points" let:id>

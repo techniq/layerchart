@@ -87,13 +87,13 @@
 		<Switch bind:checked={showPath} {id} />
 	</Field>
 		<Field label="Curve" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => curve = prev(curveOptions, curve)} class="mr-2" />
+		<Button icon={mdiChevronLeft} on:click={() => curve = prev(curveOptions, curve)} class="mr-2" size="sm" />
 		<select bind:value={curve} class="w-full outline-none appearance-none text-sm" {id}>
 			{#each curveOptions as option}
 				<option value={option.value}>{option.name}</option>
 			{/each}
 		</select>
-		<Button icon={mdiChevronRight} on:click={() => curve = next(curveOptions, curve)} class="ml-2" />
+		<Button icon={mdiChevronRight} on:click={() => curve = next(curveOptions, curve)} class="ml-2" size="sm" />
 	</Field>
 </div>
 

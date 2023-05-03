@@ -81,22 +81,22 @@
 
 <div class="grid grid-cols-[1fr,1fr,1fr,auto,auto,auto] gap-2">
 	<Field label="Path Example" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => easing = prev(easingOptions, easing)} class="mr-2" />
+		<Button icon={mdiChevronLeft} on:click={() => easing = prev(easingOptions, easing)} class="mr-2" size="sm" />
 		<select bind:value={easing} class="w-full outline-none appearance-none text-sm" {id}>
 			{#each easingOptions as option}
 				<option value={option.value}>{option.name}</option>
 			{/each}
 		</select>
-		<Button icon={mdiChevronRight} on:click={() => easing = next(easingOptions, easing)} class="ml-2" />
+		<Button icon={mdiChevronRight} on:click={() => easing = next(easingOptions, easing)} class="ml-2" size="sm" />
 	</Field>
 	<Field label="Curve" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => curve = prev(curveOptions, curve)} class="mr-2" />
+		<Button icon={mdiChevronLeft} on:click={() => curve = prev(curveOptions, curve)} class="mr-2" size="sm" />
 		<select bind:value={curve} class="w-full outline-none appearance-none text-sm" {id}>
 			{#each curveOptions as option}
 				<option value={option.value}>{option.name}</option>
 			{/each}
 		</select>
-		<Button icon={mdiChevronRight} on:click={() => curve = next(curveOptions, curve)} class="ml-2" />
+		<Button icon={mdiChevronRight} on:click={() => curve = next(curveOptions, curve)} class="ml-2" size="sm" />
 	</Field>
 	<RangeField label="Points" bind:value={pointCount} min={2} />
 	<Field label="Show points" let:id>
