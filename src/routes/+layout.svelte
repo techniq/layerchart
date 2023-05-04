@@ -2,13 +2,26 @@
 	import { inject } from '@vercel/analytics';
 	import { mdiGithub } from '@mdi/js';
 	import 'prism-themes/themes/prism-vsc-dark-plus.css';
-	import { AppBar, AppLayout, Button, Tooltip } from 'svelte-ux';
+	import { AppBar, AppLayout, Button, QuickSearch, Tooltip } from 'svelte-ux';
 
 	import { dev } from '$app/environment';
+	import { goto } from '$app/navigation';
 
 	import NavMenu from './_NavMenu.svelte';
 
 	inject({ mode: dev ? 'development' : 'production' });
+
+	const quickSearchOptions = Object.entries(
+		import.meta.glob('./docs/**/+page.md', { as: 'raw', eager: true })
+	).flatMap(([file, source]) => {
+		const url = file.replace('.', '').replace('/+page.md', '');
+		const [_, docs, group, name] = url.split('/');
+		return {
+			name,
+			value: url,
+			group: group
+		};
+	});
 </script>
 
 <AppLayout>
@@ -18,6 +31,8 @@
 
 	<AppBar title="LayerChart">
 		<div slot="actions">
+			<QuickSearch options={quickSearchOptions} on:change={(e) => goto(e.detail.value)} />
+
 			<Tooltip title="View repository" placement="left" offset={2}>
 				<Button
 					icon={mdiGithub}

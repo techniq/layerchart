@@ -11,6 +11,7 @@
 		? `src/lib/${type}/${name}.${type === 'components' ? 'svelte' : 'ts'}`
 		: null;
 	$: description = $page.data.meta?.description;
+	$: hideUsage = $page.data.meta?.hideUsage;
 </script>
 
 <div class="grid grid-rows-[auto,1fr] h-full p-4">
@@ -51,7 +52,7 @@
 
 	<div class="grid grid-cols-[1fr,auto] gap-6 pt-2 pb-4">
 		<div class="overflow-auto">
-			{#if type === 'components'}
+			{#if type === 'components' && !hideUsage}
 				{#key $page.route.id}
 					<h1>Usage</h1>
 					<Code code={`import { ${name} } from 'layerchart';`} language="javascript" />
