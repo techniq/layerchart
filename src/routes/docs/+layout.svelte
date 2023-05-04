@@ -1,7 +1,8 @@
 <script>
 	import { mdiCodeTags, mdiFileDocumentEditOutline } from '@mdi/js';
 
-	import { Button, Code, TableOfContents, Tooltip } from 'svelte-ux';
+	import { Button, TableOfContents, Tooltip } from 'svelte-ux';
+	import Code from '$lib/docs/Code.svelte';
 
 	import { page } from '$app/stores';
 
