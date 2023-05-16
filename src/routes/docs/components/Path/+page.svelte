@@ -4,7 +4,7 @@
 	import { group } from 'd3-array';
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
-	import { ApiDocs, Button, Field, SelectField, Switch } from 'svelte-ux';
+	import { ApiDocs, Button, Field, Switch } from 'svelte-ux';
 
 	import api from '$lib/components/Path.svelte?raw&sveld';
 
@@ -12,8 +12,6 @@
 	import AxisX from '$lib/components/AxisX.svelte';
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
-	import HighlightLine from '$lib/components/HighlightLine.svelte';
-	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
 	import Path from '$lib/components/Path.svelte';
 

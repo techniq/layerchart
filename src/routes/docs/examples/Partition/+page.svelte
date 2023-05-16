@@ -7,8 +7,6 @@
 	import { hsl } from 'd3-color';
 	import { rollup } from 'd3-array';
 
-	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-
 	import { Breadcrumb, Button, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { format } from 'svelte-ux/utils/format';
 

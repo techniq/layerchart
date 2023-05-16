@@ -12,7 +12,6 @@
 	import Arc from '$lib/components/Arc.svelte';
 	import Bounds from '$lib/components/Bounds.svelte';
 	import Group from '$lib/components/Group.svelte';
-	import Text from '$lib/components/Text.svelte';
 	import Partition from '$lib/components/Partition.svelte';
 	import { findAncestor } from '$lib/utils/hierarchy';
 

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { index } from 'd3-array';
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
 

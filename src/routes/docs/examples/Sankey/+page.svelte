@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { scaleTime, scaleSequential } from 'd3-scale';
+	import { scaleSequential } from 'd3-scale';
 	import { hierarchy } from 'd3-hierarchy';
 	import { interpolateCool } from 'd3-scale-chromatic';
 	import { extent } from 'd3-array';
-	import { format } from 'date-fns';
 
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import RangeField from '$lib/docs/RangeField.svelte';

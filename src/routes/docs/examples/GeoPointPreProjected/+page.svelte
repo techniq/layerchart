@@ -1,8 +1,6 @@
 <script lang="ts">
 	// WIP: Example mixing pre-projected maps (using geoIdentity) with non-projected points
 
-	import { index } from 'd3-array';
-	import { scaleQuantize } from 'd3-scale';
 	import { geoIdentity, geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
@@ -12,8 +10,6 @@
 	import GeoPath from '$lib/components/GeoPath.svelte';
 	import GeoPoint from '$lib/components/GeoPoint.svelte';
 	import Text from '$lib/components/Text.svelte';
-	import Tooltip from '$lib/components/Tooltip.svelte';
-	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	// import geojson from '../_data/geo/states-albers-10m.json';
 	import capitals from '../_data/geo/us-state-capitals.csv';

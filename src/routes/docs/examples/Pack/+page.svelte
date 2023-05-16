@@ -7,8 +7,6 @@
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
 
-	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-
 	import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { format } from 'svelte-ux/utils/format';
 

@@ -1,19 +1,15 @@
 <script lang="ts">
-	import { get } from 'svelte/store';
 	import { scaleBand, scaleTime } from 'd3-scale';
-	import { addHours, addMinutes, format, startOfDay } from 'date-fns';
+	import { addMinutes, format, startOfDay } from 'date-fns';
 	import { Duration } from 'svelte-ux';
-	import { sort } from 'd3-array';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
-	import Area from '$lib/components/Area.svelte';
 	import AxisX from '$lib/components/AxisX.svelte';
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
 	import ConnectedPoints from '$lib/components/ConnectedPoints.svelte';
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
 	import HighlightRect from '$lib/components/HighlightRect.svelte';
-	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';

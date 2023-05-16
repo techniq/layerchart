@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { index, max, sort, descending } from 'd3-array';
+	import { index, max, descending } from 'd3-array';
 	import { geoIdentity } from 'd3-geo';
-	import { scaleSqrt, scaleQuantize, scaleThreshold } from 'd3-scale';
+	import { scaleSqrt, scaleThreshold } from 'd3-scale';
 	import { interpolateViridis } from 'd3-scale-chromatic';
 	import { quantize } from 'd3-interpolate';
 	import { feature } from 'topojson-client';

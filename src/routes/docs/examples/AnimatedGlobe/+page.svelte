@@ -1,20 +1,16 @@
 <script lang="ts">
 	import { spring } from 'svelte/motion';
 	import { geoOrthographic, geoCentroid } from 'd3-geo';
-	import { index } from 'd3-array';
 	import { feature } from 'topojson-client';
 
-	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-	import { Button, Field, scrollIntoView } from 'svelte-ux';
+	import { Button, scrollIntoView } from 'svelte-ux';
 	import { cls } from 'svelte-ux/utils/styles';
-	import { createPropertySortFunc, createSortFunc } from 'svelte-ux/utils/sort';
+	import { createPropertySortFunc } from 'svelte-ux/utils/sort';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
 	import GeoPath from '$lib/components/GeoPath.svelte';
 	import Graticule from '$lib/components/Graticule.svelte';
-	import Tooltip from '$lib/components/Tooltip.svelte';
-	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	export let data;
 

@@ -33,7 +33,6 @@
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Legend from '$lib/components/Legend.svelte';
-	import Pie from '$lib/components/Pie.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
 

@@ -5,13 +5,11 @@
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
-	import Area from '$lib/components/Area.svelte';
 	import AreaStack from '$lib/components/AreaStack.svelte';
 	import AxisX from '$lib/components/AxisX.svelte';
 	import AxisY from '$lib/components/AxisY.svelte';
 	import Baseline from '$lib/components/Baseline.svelte';
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
-	import Labels from '$lib/components/Labels.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
 

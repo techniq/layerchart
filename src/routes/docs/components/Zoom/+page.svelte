@@ -19,7 +19,6 @@
 	import ZoomControls from '$lib/docs/ZoomControls.svelte';
 
 	import { getSpiral } from '$lib/utils/genData';
-	import { degreesToRadians } from '$lib/utils/math';
 
 	let zoom;
 	let pointCount = 500;

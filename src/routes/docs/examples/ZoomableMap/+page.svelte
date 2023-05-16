@@ -2,7 +2,6 @@
 	import { fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { geoAlbersUsa, geoAlbers, geoMercator } from 'd3-geo';
-	import { sort } from 'd3-array';
 	import { feature } from 'topojson-client';
 
 	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';

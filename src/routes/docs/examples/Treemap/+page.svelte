@@ -7,10 +7,7 @@
 	import { hsl } from 'd3-color';
 	import { rollup } from 'd3-array';
 
-	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-
 	import { Button, Breadcrumb, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { format } from 'svelte-ux/utils/format';
 
 	import Preview from '$lib/docs/Preview.svelte';
@@ -29,7 +26,7 @@
 	import { findAncestor } from '$lib/utils/hierarchy';
 	import { isNodeVisible } from '$lib/utils/treemap';
 
-	import { simpleData, complexData } from '../_data/hierarchy';
+	import { complexData } from '../_data/hierarchy';
 	import flareCsv from '../_data/flare.csv';
 	import carsCsv from '../_data/cars.csv';
 

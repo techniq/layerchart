@@ -5,7 +5,6 @@
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 
-	import Arc from '$lib/components/Arc.svelte';
 	import LinearGradient from '$lib/components/LinearGradient.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';

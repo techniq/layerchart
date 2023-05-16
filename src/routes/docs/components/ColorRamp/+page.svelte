@@ -4,10 +4,8 @@
 	import { interpolateRgb, interpolateLab, interpolateHclLong } from 'd3-interpolate';
 	import * as d3chromatic from 'd3-scale-chromatic';
 	import { scaleQuantize } from 'd3-scale';
-	import { range } from 'd3-array';
 
-	import { Button, NumberStepper, TextField } from 'svelte-ux';
-	import { mdiMinus, mdiPlus } from '@mdi/js';
+	import { NumberStepper } from 'svelte-ux';
 
 	import api from '$lib/components/ColorRamp.svelte?raw&sveld';
 

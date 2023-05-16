@@ -1,15 +1,10 @@
 <script lang="ts">
-	import { spring } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
-	import { geoOrthographic, geoCentroid, geoInterpolate } from 'd3-geo';
-	import { index } from 'd3-array';
+	import { geoOrthographic, geoInterpolate } from 'd3-geo';
 	import { curveNatural } from 'd3-shape';
 	import { feature } from 'topojson-client';
 
-	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-	import { Button, Field, ToggleGroup, ToggleOption, Switch, scrollIntoView } from 'svelte-ux';
-	import { cls } from 'svelte-ux/utils/styles';
-	import { createPropertySortFunc, createSortFunc } from 'svelte-ux/utils/sort';
+	import { Field, Switch } from 'svelte-ux';
 
 	import GeoDebug from '$lib/docs/GeoDebug.svelte';
 	import Preview from '$lib/docs/Preview.svelte';
@@ -18,8 +13,6 @@
 	import GeoPath from '$lib/components/GeoPath.svelte';
 	import Graticule from '$lib/components/Graticule.svelte';
 	import Path from '$lib/components/Path.svelte';
-	import Tooltip from '$lib/components/Tooltip.svelte';
-	import TooltipItem from '$lib/components/TooltipItem.svelte';
 	import Zoom from '$lib/components/Zoom.svelte';
 
 	import EdgeFade from './EdgeFade.svelte';

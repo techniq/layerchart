@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { get } from 'svelte/store';
-	import { extent, sort } from 'd3-array';
 	import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
 	import { stack } from 'd3-shape';
-	import { addHours, addMinutes, format, startOfDay } from 'date-fns';
+	import { format } from 'date-fns';
 
 	import { ApiDocs, Duration, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { flatten } from 'svelte-ux/utils/array';
@@ -21,7 +19,6 @@
 	import ConnectedPoints from '$lib/components/ConnectedPoints.svelte';
 	import HighlightLine from '$lib/components/HighlightLine.svelte';
 	import HighlightRect from '$lib/components/HighlightRect.svelte';
-	import Labels from '$lib/components/Labels.svelte';
 	import Points from '$lib/components/Points.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';

@@ -2,7 +2,6 @@
 	import { scaleOrdinal } from 'd3-scale';
 	import { format } from 'date-fns';
 	import { sum } from 'd3-array';
-	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 	import { format as formatUtil } from 'svelte-ux/utils/format';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';

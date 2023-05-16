@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { scaleOrdinal, scaleTime } from 'd3-scale';
 	import { flatGroup } from 'd3-array';
-	import { format, parseISO } from 'date-fns';
+	import { format } from 'date-fns';
 	import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -17,7 +17,6 @@
 	import Preview from '$lib/docs/Preview.svelte';
 	import { createDateSeries } from '$lib/utils/genData';
 	import { pivotLonger } from '$lib/utils/pivot';
-	import { createPropertySortFunc } from 'svelte-ux/utils/sort';
 
 	const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
 

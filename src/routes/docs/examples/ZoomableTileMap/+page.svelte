@@ -1,12 +1,9 @@
 <script lang="ts">
 	import { cubicOut } from 'svelte/easing';
-	import { index } from 'd3-array';
-	import { scaleQuantize } from 'd3-scale';
 	import { geoMercator, geoBounds, geoCentroid } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Button, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
+	import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
 	import GeoDebug from '$lib/docs/GeoDebug.svelte';
 	import Preview from '$lib/docs/Preview.svelte';
@@ -15,7 +12,6 @@
 	import ZoomControls from '$lib/docs/ZoomControls.svelte';
 
 	import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
-	import ClipPathUse from '$lib/components/ClipPathUse.svelte';
 	import GeoPath from '$lib/components/GeoPath.svelte';
 	import GeoTile from '$lib/components/GeoTile.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';

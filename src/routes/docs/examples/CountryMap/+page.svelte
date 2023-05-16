@@ -1,16 +1,13 @@
 <script lang="ts">
-	import { index } from 'd3-array';
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
 	import GeoPath from '$lib/components/GeoPath.svelte';
-	import GeoPoint from '$lib/components/GeoPoint.svelte';
 	import Text from '$lib/components/Text.svelte';
 
 	import geojson from '../_data/geo/us-states-topojson.js';
-	import capitals from '../_data/geo/us-state-capitals.csv';
 
 	const states = feature(geojson, geojson.objects.collection);
 </script>

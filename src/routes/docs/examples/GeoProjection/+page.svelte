@@ -8,18 +8,14 @@
 		geoNaturalEarth1,
 		geoOrthographic
 	} from 'd3-geo';
-	import { index } from 'd3-array';
-	import { scaleQuantize } from 'd3-scale';
 	import { feature } from 'topojson-client';
 
-	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-	import { Button, Field, Switch } from 'svelte-ux';
+	import { Field, Switch } from 'svelte-ux';
 
 	import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
 	import GeoPath from '$lib/components/GeoPath.svelte';
 	import Graticule from '$lib/components/Graticule.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
-	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import RangeField from '$lib/docs/RangeField.svelte';

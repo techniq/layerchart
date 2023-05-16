@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { index, max } from 'd3-array';
+	import { index } from 'd3-array';
 	import { scaleQuantile } from 'd3-scale';
-	import { schemeBlues, interpolateBlues } from 'd3-scale-chromatic';
+	import { schemeBlues } from 'd3-scale-chromatic';
 	import { geoIdentity } from 'd3-geo';
 	import { feature } from 'topojson-client';
 	import { format as d3format } from 'd3-format';

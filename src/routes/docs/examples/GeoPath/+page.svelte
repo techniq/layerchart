@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { index } from 'd3-array';
-	import { scaleQuantize } from 'd3-scale';
 	import { geoIdentity } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
@@ -8,7 +6,6 @@
 	import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
 	import GeoPath from '$lib/components/GeoPath.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
-	import TooltipItem from '$lib/components/TooltipItem.svelte';
 
 	// import geojson from '../_data/geo/states-albers-10m.json';
 

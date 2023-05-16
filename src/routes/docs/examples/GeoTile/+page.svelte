@@ -1,11 +1,8 @@
 <script lang="ts">
-	import { index } from 'd3-array';
-	import { scaleQuantize } from 'd3-scale';
 	import { geoMercator } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Button, Field, Switch } from 'svelte-ux';
-	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
+	import { Field, Switch } from 'svelte-ux';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import RangeField from '$lib/docs/RangeField.svelte';
