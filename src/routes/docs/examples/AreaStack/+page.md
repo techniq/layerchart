@@ -25,9 +25,9 @@
 	// console.log({ data, stackData })
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## Basic
+<h2>Basic</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -58,7 +58,7 @@
 	</div>
 </Preview>
 
-## With Tooltip and HighlightLine
+<h2>With Tooltip and HighlightLine</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">

@@ -11,9 +11,9 @@
 	import Preview from '$lib/docs/Preview.svelte';
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## Direction and custom colors
+<h2>Direction and custom colors</h2>
 
 <Preview>
 	<div class="h-[334px] p-4 border rounded">
@@ -44,7 +44,7 @@
     </div>
 </Preview>
 
-## Tailwind colors
+<h2>Tailwind colors</h2>
 
 <Preview>
 	<div class="h-[334px] p-4 border rounded">
@@ -67,6 +67,6 @@
 	</div>
 </Preview>
 
-# API
+<h1>API</h1>
 
 <ApiDocs {api} />

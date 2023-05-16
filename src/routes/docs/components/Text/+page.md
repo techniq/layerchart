@@ -18,9 +18,9 @@
 	let resizeSvg = true;
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## Playground
+<h2>Playground</h2>
 
 <div class="flex items-center justify-between bg-white p-4">
 	<svg width={resizeSvg ? width : 224} class="h-56 border">
@@ -124,6 +124,6 @@
 
 </div>
 
-# API
+<h1>API</h1>
 
 <ApiDocs {api} />

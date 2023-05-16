@@ -62,7 +62,7 @@
 	}
 </script>
 
-# Examples
+<h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr,auto,2fr] gap-2 mb-2">
 	<Field label="Scroll mode" let:id>
@@ -119,6 +119,6 @@
 	</div>
 </Preview>
 
-# API
+<h1>API</h1>
 
 <ApiDocs {api} />

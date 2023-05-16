@@ -56,9 +56,9 @@
 	}).sort((a,b) => descending(a.properties.data?.population, b.properties.data?.population))
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## SVG
+<h2>SVG</h2>
 
 <Preview>
 	<div class="h-[600px]">
@@ -113,7 +113,7 @@
 	</div>
 </Preview>
 
-## Canvas
+<h2>Canvas</h2>
 
 <Preview>
 	<div class="h-[600px] mt-10">

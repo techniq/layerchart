@@ -24,9 +24,9 @@
 	const states = feature(data.geojson, data.geojson.objects.states);
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## SVG
+<h2>SVG</h2>
 
 <Preview>
 	<div class="h-[600px]">

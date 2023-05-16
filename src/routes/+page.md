@@ -1,9 +1,9 @@
 <div class="bg-white p-2 m-2 rounded shadow-lg border">
 <div class="prose">
 
-# Welcome to LayerChart
+<h1>Welcome to LayerChart</h1>
 
-## Common
+<h2>Common</h2>
 
 - Chart
   - Uses LakerCake to setup context
@@ -15,7 +15,7 @@
 - Baseline
   - Compliments Axis by showing `0` baseline as solid line
 
-## Primatives
+<h2>Primatives</h2>
 
 - Circle
   - `<circle>` with tweened `x`, `y`, and `r` using `motionStore`
@@ -33,7 +33,7 @@
   - Scale to fit
   - Easy offset with `dx` and `dy`
 
-## Data-driven (context)
+<h2>Data-driven (context)</h2>
 
 - Area
   - Easily add line (same curve, color, etc)
@@ -46,7 +46,7 @@
   - Calculates line, area, and clip path data to show colored areas above/below
   - `y={[actual, baseline/threshold]}`
 
-## Interations
+<h2>Interations</h2>
 
 - HighlightRect
 - HighlightLine
@@ -55,7 +55,7 @@
   - Animated location
   - Smart container positioning
 
-## Todo
+<h2>Todo</h2>
 
 - [ ] Add basic line charge (data-driven)
   - Differentiate with Path and Line, although could probbaly just use Path, although might be confusing
@@ -68,7 +68,7 @@
   - vs
   - `<Circle radius={10} strokeWidth={2} />`
 
-## Principals
+<h2>Principals</h2>
 
 - Use `r` scale for color, but allow `color` prop directly on item (with access to item, value, index, etc)
 - Use `x`, `y`, and `z` scales for dimensions

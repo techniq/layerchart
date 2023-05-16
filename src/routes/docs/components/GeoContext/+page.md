@@ -9,10 +9,10 @@
 	import Blockquote from '$lib/docs/Blockquote.svelte';
 </script>
 
-# Examples
+<h1>Examples</h1>
 
 <Blockquote>TODO</Blockquote>
 
-# API
+<h1>API</h1>
 
 <ApiDocs {api} />

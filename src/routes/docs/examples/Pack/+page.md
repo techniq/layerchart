@@ -75,9 +75,9 @@
 	</div>
 </div>
 
-# Examples
+<h1>Examples</h1>
 
-## General
+<h2>General</h2>
 
 <Preview>
 	<Breadcrumb items={selected?.ancestors().reverse() ?? []}>

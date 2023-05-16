@@ -31,9 +31,9 @@
 		.filter(([key, value]) => key.startsWith('scheme'));
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## Basic
+<h2>Basic</h2>
 
 <Preview>
 	<div class="grid gap-4">
@@ -48,7 +48,7 @@
 	</div>
 </Preview>
 
-## Pixelated
+<h2>Pixelated</h2>
 
 <div class="inline-flex gap-3 items-center mb-1 ml-4">
 	<span class="text-sm text-black/50">Steps:</span>
@@ -75,7 +75,7 @@
 	</div>
 </Preview>
 
-## Schemes
+<h2>Schemes</h2>
 
 <Preview>
 	<div class="grid gap-4">
@@ -103,6 +103,6 @@
 	</div>
 </Preview>
 
-# API
+<h1>API</h1>
 
 <ApiDocs {api} />

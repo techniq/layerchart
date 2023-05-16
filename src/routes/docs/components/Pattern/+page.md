@@ -12,9 +12,9 @@
 	import Preview from '$lib/docs/Preview.svelte';
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## Lines
+<h2>Lines</h2>
 
 <Preview>
 	<div class="h-[334px] p-4 border rounded">
@@ -48,7 +48,7 @@
     </div>
 </Preview>
 
-## Circles
+<h2>Circles</h2>
 
 <Preview>
 	<div class="h-[334px] p-4 border rounded">
@@ -88,7 +88,7 @@
     </div>
 </Preview>
 
-## With Fill color
+<h2>With Fill color</h2>
 
 <Preview>
 	<div class="h-[334px] p-4 border rounded">
@@ -135,7 +135,7 @@
     </div>
 </Preview>
 
-## With LinearGradient
+<h2>With LinearGradient</h2>
 
 <Preview>
 	<div class="h-[334px] p-4 border rounded">
@@ -183,7 +183,7 @@
     </div>
 </Preview>
 
-## LinearGradient as Pattern
+<h2>LinearGradient as Pattern</h2>
 
 <Preview>
 	<div class="h-[334px] p-4 border rounded">
@@ -215,6 +215,6 @@
     </div>
 </Preview>
 
-# API
+<h1>API</h1>
 
 <ApiDocs {api} />

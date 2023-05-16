@@ -10,16 +10,16 @@
 	import Blockquote from '$lib/docs/Blockquote.svelte';
 </script>
 
-# Examples
+<h1>Examples</h1>
 
 <Blockquote>TODO</Blockquote>
 
-# API
+<h1>API</h1>
 
-## Axis X
+<h2>Axis X</h2>
 
 <ApiDocs api={apiAxisX} />
 
-## Axis Y
+<h2>Axis Y</h2>
 
 <ApiDocs api={apiAxisY} />

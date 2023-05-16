@@ -58,9 +58,9 @@
 	</Field>
 </div>
 
-# Examples
+<h1>Examples</h1>
 
-## SVG
+<h2>SVG</h2>
 
 <Preview>
 	<div class="h-[600px] overflow-hidden">
@@ -91,7 +91,7 @@
 	</div>
 </Preview>
 
-## Canvas
+<h2>Canvas</h2>
 
 <Preview>
 	<div class="h-[600px]">

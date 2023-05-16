@@ -52,9 +52,9 @@
 	$: selectedNode && console.log(graphFromNode(selectedNode))
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## Simple
+<h2>Simple</h2>
 
 <Preview>
 	<div class="h-[400px] p-4 border rounded">
@@ -88,7 +88,7 @@
 	</div>
 </Preview>
 
-## Selected
+<h2>Selected</h2>
 
 <Preview>
 	<div class="h-[600px] p-4 border rounded">
@@ -124,7 +124,7 @@
     </div>
 </Preview>
 
-## Complex
+<h2>Complex</h2>
 
 <div class="grid grid-flow-col gap-4 mb-4">
 	<Field label="Align">
@@ -217,7 +217,7 @@
 	</div>
 </Preview>
 
-## Hierarchy
+<h2>Hierarchy</h2>
 
 <div class="grid grid-flow-col gap-4 mb-4">
 	<Field label="Align">

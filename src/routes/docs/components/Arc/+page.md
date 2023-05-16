@@ -59,7 +59,7 @@
 	}
 </script>
 
-# Examples
+<h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr,1fr,1fr,1fr] gap-2 sticky top-2 z-10">
 	<RangeField label="Value" bind:value={value} min={domain[0]} max={domain[1]} class="col-span-3" />
@@ -86,7 +86,7 @@
 	<!-- <RangeField label="Pad radius" bind:value={padRadius} max={2} step={0.1} /> -->
 </div>
 
-## Playground
+<h2>Playground</h2>
 
 <Preview>
 	<div class="h-[200px] p-4 border rounded">
@@ -130,7 +130,7 @@
 	</div>
 </Preview>
 
-## Partial Arc
+<h2>Partial Arc</h2>
 
 <Preview>
 	<div class="h-[200px] p-4 border rounded">
@@ -165,7 +165,7 @@
 	</div>
 </Preview>
 
-## Label location
+<h2>Label location</h2>
 
 <!-- {#if label === 'svg-center'}
 	<text dy={16}>
@@ -225,6 +225,6 @@
 	</div>
 </Preview>
 
-# API
+<h1>API</h1>
 
 <ApiDocs {api} />

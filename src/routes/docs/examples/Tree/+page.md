@@ -50,9 +50,9 @@
 	$: nodeSize = orientation === 'horizontal' ? [nodeHeight + nodeSiblingGap, nodeWidth + nodeParentGap] : [nodeWidth + nodeSiblingGap, nodeHeight + nodeParentGap] 
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## Basic
+<h2>Basic</h2>
 
 <div class="grid gap-1 mb-4">
 	<div class="grid grid-cols-[1fr,2fr,1fr] gap-1">

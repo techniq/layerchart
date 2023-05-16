@@ -109,9 +109,9 @@
 	</div>
 </div>
 
-# Examples
+<h1>Examples</h1>
 
-## Horizontal
+<h2>Horizontal</h2>
 
 <Preview>
 	<Breadcrumb items={selectedHorizontal?.ancestors().reverse() ?? []}>
@@ -163,7 +163,7 @@
 	</div>
 </Preview>
 
-## Vertical
+<h2>Vertical</h2>
 
 <Preview>
 	<Breadcrumb items={selectedVertical?.ancestors().reverse() ?? []}>
@@ -225,7 +225,7 @@
 	</div>
 </Preview>
 
-## Filterable
+<h2>Filterable</h2>
 
 <div class="grid gap-1 mb-4">
 	<div class="grid grid-cols-4 gap-2">

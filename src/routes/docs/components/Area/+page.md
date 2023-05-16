@@ -77,7 +77,7 @@
 	let tweened = true;
 </script>
 
-# Examples
+<h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr,1fr,1fr,auto,auto,auto] gap-2">
 	<Field label="Path Example" let:id>
@@ -110,7 +110,7 @@
 	</Field>
 </div>
 
-## Playground
+<h2>Playground</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -134,6 +134,6 @@
 	</div>
 </Preview>
 
-# API
+<h1>API</h1>
 
 <ApiDocs {api} />

@@ -52,9 +52,9 @@
 	// $: console.log({ transitionData })
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## Vertical (Column)
+<h2>Vertical (Column)</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -78,7 +78,7 @@
 </Preview>
 
 <!--
-## Horizontal (Bar)
+<h2>Horizontal (Bar)</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -102,7 +102,7 @@
 </Preview>
 -->
 
-## Negative data
+<h2>Negative data</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -124,7 +124,7 @@
 	</div>
 </Preview>
 
-## With Tooltip and HighlightRect
+<h2>With Tooltip and HighlightRect</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -152,7 +152,7 @@
     </div>
 </Preview>
 
-## With Labels
+<h2>With Labels</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -176,7 +176,7 @@
 	</div>
 </Preview>
 
-## Multiple (overlapping)
+<h2>Multiple (overlapping)</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -206,7 +206,7 @@
 	</div>
 </Preview>
 
-## Grouped
+<h2>Grouped</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -236,7 +236,7 @@
 	</div>
 </Preview>
 
-## Stacked
+<h2>Stacked</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -265,7 +265,7 @@
 	</div>
 </Preview>
 
-## Stacked (Percent)
+<h2>Stacked (Percent)</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -294,7 +294,7 @@
 	</div>
 </Preview>
 
-## Stack (Separated)
+<h2>Stack (Separated)</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -323,7 +323,7 @@
 	</div>
 </Preview>
 
-## Grouped and Stacked
+<h2>Grouped and Stacked</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -353,7 +353,7 @@
 	</div>
 </Preview>
 
-## Grouped, Stacked, or Both (transition)
+<h2>Grouped, Stacked, or Both (transition)</h2>
 
 <div class="grid grid-cols-[1fr,1fr] gap-2 mb-2">
 	<Field label="Mode">

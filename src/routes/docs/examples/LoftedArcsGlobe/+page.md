@@ -43,9 +43,9 @@
 	let debug = false;
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## SVG
+<h2>SVG</h2>
 
 <div class="grid grid-cols-[auto,1fr] gap-2 my-2">
 	<Field label="Debug" let:id>

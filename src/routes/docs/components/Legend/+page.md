@@ -40,75 +40,75 @@
 	const data = [];
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## scaleSequential
+<h2>scaleSequential</h2>
 
 <Preview>
 	<Legend scale={scaleSequential([0, 100], interpolateViridis)} title="Temperature (°F)" />
 </Preview>
 
-## scaleSequentialSqrt
+<h2>scaleSequentialSqrt</h2>
 
 <Preview>
 	<Legend scale={scaleSequentialSqrt([0, 1], interpolateTurbo)} title="Speed (kts)" />
 </Preview>
 
-## scaleDiverging
+<h2>scaleDiverging</h2>
 
 <Preview>
 	<Legend scale={scaleDiverging([-0.1, 0, 0.1], interpolatePiYG)} title="Daily change" tickFormat="percentRound" />
 </Preview>
 
-## scaleDivergingSqrt
+<h2>scaleDivergingSqrt</h2>
 
 <Preview>
 	<Legend scale={scaleDivergingSqrt([-0.1, 0, 0.1], interpolateRdBu)} title="Daily change" tickFormat="percentRound" />
 </Preview>
 
-## scaleSequentialLog
+<h2>scaleSequentialLog</h2>
 
 <Preview>
 	<Legend scale={scaleSequentialLog([1, 100], interpolateBlues)} title="Energy (joules)" ticks={10} />
 </Preview>
 
-## scaleSequentialQuantile
+<h2>scaleSequentialQuantile</h2>
 
 <Preview>
 	<Legend scale={scaleSequentialQuantile(range(100).map(() => Math.random() ** 2), interpolateBlues)} title="Quantile" tickFormat="decimal" />
 </Preview>
 
-## scaleSqrt
+<h2>scaleSqrt</h2>
 
 <Preview>
 	<Legend scale={scaleSqrt([-100, 0, 100], ["blue", "white", "red"])} title="Temperature (°C)" />
 </Preview>
 
-## scaleQuantize
+<h2>scaleQuantize</h2>
 
 <Preview>
 	<Legend scale={scaleQuantize([1, 10], schemePurples[9])} title="Unemployment rate (%)" />
 </Preview>
 
-## scaleQuantile
+<h2>scaleQuantile</h2>
 
 <Preview>
 	<Legend scale={scaleQuantile(range(1000).map(randomNormal(100, 20)), schemeSpectral[9])} title="Height (cm)" tickFormat="integer" />
 </Preview>
 
-## scaleThreshold
+<h2>scaleThreshold</h2>
 
 <Preview>
 	<Legend scale={scaleThreshold([2.5, 3.1, 3.5, 3.9, 6, 7, 8, 9.5], schemeRdBu[9])} title="Unemployment rate (%)" tickSize={0} />
 </Preview>
 
-## scaleOrdinal
+<h2>scaleOrdinal</h2>
 
 <Preview>
 	<Legend scale={scaleOrdinal(["<10", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "≥80"], schemeSpectral[10])} title="Age (years)" tickSize={0} />
 </Preview>
 
-## Chart integration
+<h2>Chart integration</h2>
 
 <Preview>
 	<Chart
@@ -121,7 +121,7 @@
 	</Chart>
 </Preview>
 
-## Chart placement
+<h2>Chart placement</h2>
 
 <Preview>
 	<div class="h-[300px]">
@@ -144,7 +144,7 @@
 	</div>
 </Preview>
 
-## Styling
+<h2>Styling</h2>
 
 <Preview>
 	<Legend
@@ -161,7 +161,7 @@
 	/>
 </Preview>
 
-## slot override
+<h2>slot override</h2>
 
 <Preview>
 	<Legend scale={scaleOrdinal(["<10", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "≥80"], schemeSpectral[10])} title="Age (years)" let:values let:scale>
@@ -179,6 +179,6 @@
 	</Legend>
 </Preview>
 
-# API
+<h1>API</h1>
 
 <ApiDocs {api} />

@@ -61,13 +61,13 @@
 
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## Area
+<h2>Area</h2>
 
-### x: scaleTime, y: scaleLinear
+<h3>x: scaleTime, y: scaleLinear</h3>
 
-### bisect-x recommended. voronoi and quadtree supported. bounds and band to be improved
+<h3>bisect-x recommended. voronoi and quadtree supported. bounds and band to be improved</h3>
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
@@ -151,11 +151,11 @@
 	</div>
 </Preview>
 
-## Stacked Area
+<h2>Stacked Area</h2>
 
-### x: scaleTime, y: scaleLinear (multi/stack)
+<h3>x: scaleTime, y: scaleLinear (multi/stack)</h3>
 
-### voronoi and quadtree recommended. bisect-x supported. bounds and band to be improved
+<h3>voronoi and quadtree recommended. bisect-x supported. bounds and band to be improved</h3>
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
@@ -249,11 +249,11 @@
 	</div>
 </Preview>
 
-## Single Date / Time
+<h2>Single Date / Time</h2>
 
-### x: scaleTime, y: scaleBand
+<h3>x: scaleTime, y: scaleBand</h3>
 
-### bisect-x recommended. band, voronoi, and quadtree supported.
+<h3>bisect-x recommended. band, voronoi, and quadtree supported.</h3>
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
@@ -336,11 +336,11 @@
 	</div>
 </Preview>
 
-## Duration
+<h2>Duration</h2>
 
-### x: scaleTime (multi), y: scaleBand
+<h3>x: scaleTime (multi), y: scaleBand</h3>
 
-### bisect-band or bounds recommended. band supported (when no overlap on same band). bisect supported (when no overlap on time scale). voronoi and quadtree partially supported (using first point)
+<h3>bisect-band or bounds recommended. band supported (when no overlap on same band). bisect supported (when no overlap on time scale). voronoi and quadtree partially supported (using first point)</h3>
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
@@ -429,11 +429,11 @@
 	</div>
 </Preview>
 
-## Multiple (overlapping) Durations
+<h2>Multiple (overlapping) Durations</h2>
 
-### x: scaleTime (multi), y: scaleBand
+<h3>x: scaleTime (multi), y: scaleBand</h3>
 
-### bounds recommends. voronoi and quadtree partially supported (using first point)
+<h3>bounds recommends. voronoi and quadtree partially supported (using first point)</h3>
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
@@ -522,11 +522,11 @@
 	</div>
 </Preview>
 
-## Simple Bars
+<h2>Simple Bars</h2>
 
-### x: scaleBand, y: scaleLinear
+<h3>x: scaleBand, y: scaleLinear</h3>
 
-### band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using value / bar top)
+<h3>band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using value / bar top)</h3>
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
@@ -610,11 +610,11 @@
     </div>
 </Preview>
 
-## Multiple (overlapping) Bars
+<h2>Multiple (overlapping) Bars</h2>
 
-### x: scaleBand, y: scaleLinear
+<h3>x: scaleBand, y: scaleLinear</h3>
 
-### band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using value / bar top)
+<h3>band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using value / bar top)</h3>
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
@@ -700,11 +700,11 @@
 	</div>
 </Preview>
 
-## Scatter Plot
+<h2>Scatter Plot</h2>
 
-### x: scaleLinear, y: scaleLinear
+<h3>x: scaleLinear, y: scaleLinear</h3>
 
-### voronoi or quadtree recommended
+<h3>voronoi or quadtree recommended</h3>
 
 <div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
 	<Field label="Mode">
@@ -785,6 +785,6 @@
 	</div>
 </Preview>
 
-# API
+<h1>API</h1>
 
 <ApiDocs {api} />

@@ -20,9 +20,9 @@
 	const data = createDateSeries({ min: 10, max: 100, value: 'integer' });
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## Basic
+<h2>Basic</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -45,7 +45,7 @@
 	</div>
 </Preview>
 
-## With Tooltip and HighlightLine
+<h2>With Tooltip and HighlightLine</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -73,7 +73,7 @@
 	</div>
 </Preview>
 
-## With Labels
+<h2>With Labels</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -97,7 +97,7 @@
 	</div>
 </Preview>
 
-## Color (function)
+<h2>Color (function)</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -120,9 +120,9 @@
 	</div>
 </Preview>
 
-## Color (scale)
+<h2>Color (scale)</h2>
 
-### red (0-49), yellow (50-89), green (90+)
+<h3>red (0-49), yellow (50-89), green (90+)</h3>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">

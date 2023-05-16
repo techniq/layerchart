@@ -13,29 +13,29 @@
 	const pivotWiderDisplay = JSON.stringify(pivotWiderResult, null, 2);
 </script>
 
-# pivotLonger
+<h1>pivotLonger</h1>
 
-## Before
+<h2>Before</h2>
 
 <Preview code={wideDataDisplay} highlight showCode>
   wideData
 </Preview>
 
-## After
+<h2>After</h2>
 
 <Preview code={pivotLongerDisplay} highlight showCode>
 	pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'dates'], 'fruit', 'value')
 </Preview>
 
-# pivotWider
+<h1>pivotWider</h1>
 
-## Before
+<h2>Before</h2>
 
 <Preview code={longDataDisplay} highlight showCode>
   longData
 </Preview>
 
-## After
+<h2>After</h2>
 
 <Preview code={pivotWiderDisplay} highlight showCode>
 	pivotWider(longData, 'year', 'fruit', 'value')

@@ -62,9 +62,9 @@
 	</div>
 </div>
 
-# Examples
+<h1>Examples</h1>
 
-## Suburst
+<h2>Suburst</h2>
 
 <Preview>
 	<Breadcrumb items={selected?.ancestors().reverse() ?? []}>

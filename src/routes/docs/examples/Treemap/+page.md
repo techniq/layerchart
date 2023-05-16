@@ -103,11 +103,11 @@
 	}
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## Nested
+<h2>Nested</h2>
 
-### Zoomable
+<h3>Zoomable</h3>
 
 <div class="grid gap-1 mb-4">
 	<div class="grid grid-cols-[6fr,3fr] gap-1">
@@ -201,9 +201,9 @@
 	</div>
 </Preview>
 
-## Nested
+<h2>Nested</h2>
 
-### Grouped and Filterable
+<h3>Grouped and Filterable</h3>
 
 <div class="grid gap-1 mb-4">
 	<div class="grid grid-cols-[6fr,3fr] gap-1">
@@ -297,9 +297,9 @@
 	</div>
 </Preview>
 
-## Stacked
+<h2>Stacked</h2>
 
-### Zoomable
+<h3>Zoomable</h3>
 
 <div class="grid grid-flow-col gap-4 mb-4">
 	<div class="grid grid-cols-[6fr,3fr] gap-2">

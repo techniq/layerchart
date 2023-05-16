@@ -25,9 +25,9 @@
 	const keyColors = ['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)', 'var(--color-orange-500)'];
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## Basic
+<h2>Basic</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -46,7 +46,7 @@
 	</div>
 </Preview>
 
-## Partial range (Chart xRange)
+<h2>Partial range (Chart xRange)</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -66,7 +66,7 @@
 	</div>
 </Preview>
 
-## Partial range (range prop)
+<h2>Partial range (range prop)</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -85,7 +85,7 @@
 	</div>
 </Preview>
 
-## Pad angle
+<h2>Pad angle</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -104,7 +104,7 @@
 	</div>
 </Preview>
 
-## Pad angle
+<h2>Pad angle</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -123,9 +123,9 @@
 	</div>
 </Preview>
 
-## Inner radius
+<h2>Inner radius</h2>
 
-### If value >= 1, value will be treated as discrete
+<h3>If value >= 1, value will be treated as discrete</h3>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -144,7 +144,7 @@
 	</div>
 </Preview>
 
-### If value >= 0 and less than 1, value will be treated as a percentage of outerRadius
+<h3>If value >= 0 and less than 1, value will be treated as a percentage of outerRadius</h3>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -163,7 +163,7 @@
 	</div>
 </Preview>
 
-### If value less than 0, value will be treated as a offset of outerRadius
+<h3>If value less than 0, value will be treated as a offset of outerRadius</h3>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -182,7 +182,7 @@
 	</div>
 </Preview>
 
-## Outer radius
+<h2>Outer radius</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -201,7 +201,7 @@
 	</div>
 </Preview>
 
-## Multiple (data prop)
+<h2>Multiple (data prop)</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -221,7 +221,7 @@
 	</div>
 </Preview>
 
-## Tweened
+<h2>Tweened</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -240,7 +240,7 @@
 	</div>
 </Preview>
 
-## Offset
+<h2>Offset</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -259,7 +259,7 @@
 	</div>
 </Preview>
 
-## default slot / render each `<Arc>`
+<h2>default slot / render each `<Arc>`</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -288,7 +288,7 @@
 	</div>
 </Preview>
 
-## Centroid labels
+<h2>Centroid labels</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -336,7 +336,7 @@
 	</div>
 </Preview>
 
-## Tooltip
+<h2>Tooltip</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">

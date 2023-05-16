@@ -46,9 +46,9 @@
 	</Field>
 </div>
 
-# Examples
+<h1>Examples</h1>
 
-## State only
+<h2>State only</h2>
 
 <Preview>
 	<div class="h-[600px]">
@@ -65,7 +65,7 @@
 	</div>
 </Preview>
 
-## State with counties
+<h2>State with counties</h2>
 
 <Preview>
 	<div class="h-[600px]">
@@ -88,7 +88,7 @@
 	</div>
 </Preview>
 
-## State with surrounding states (via ChartClipPath)
+<h2>State with surrounding states (via ChartClipPath)</h2>
 
 <Preview>
 	<div class="h-[600px]">

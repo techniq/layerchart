@@ -38,9 +38,9 @@
 	// https://www.youtube.com/watch?v=5pOFKmk7ytU
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## SVG
+<h2>SVG</h2>
 
 <Preview>
 	<div class="h-[600px] grid grid-cols-[224px,1fr]">
@@ -76,7 +76,7 @@
 	</div>
 </Preview>
 
-## Canvas
+<h2>Canvas</h2>
 
 <Preview>
 	<div class="h-[600px] grid grid-cols-[224px,1fr]">

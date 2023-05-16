@@ -36,9 +36,9 @@
 	</select>
 </Field>
 
-# Examples
+<h1>Examples</h1>
 
-## Basic
+<h2>Basic</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -93,7 +93,7 @@
 	</div>
 </Preview>
 
-## With Tooltip and HighlightRect
+<h2>With Tooltip and HighlightRect</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -156,9 +156,9 @@
 	</div>
 </Preview>
 
-## With Labels
+<h2>With Labels</h2>
 
-### TODO: Show label for both value and baseline (above and below)
+<h3>TODO: Show label for both value and baseline (above and below)</h3>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">

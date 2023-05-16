@@ -15,9 +15,9 @@
 	const states = feature(geojson, geojson.objects.collection);
 </script>
 
-# Examples
+<h1>Examples</h1>
 
-## SVG
+<h2>SVG</h2>
 
 <Preview>
 	<div class="h-[600px]">
@@ -46,7 +46,7 @@
 	</div>
 </Preview>
 
-## Canvas
+<h2>Canvas</h2>
 
 <Preview>
 	<div class="h-[600px]">
