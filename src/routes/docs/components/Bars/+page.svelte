@@ -13,6 +13,6 @@
 
 <Blockquote>TODO</Blockquote>
 
-<h1>API</h1>
+<h1>API2</h1>
 
 <ApiDocs {api} />

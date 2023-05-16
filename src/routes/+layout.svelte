@@ -12,9 +12,9 @@
 	inject({ mode: dev ? 'development' : 'production' });
 
 	const quickSearchOptions = Object.entries(
-		import.meta.glob('./docs/**/+page.md', { as: 'raw', eager: true })
+		import.meta.glob('./docs/**/+page.(md|svelte)', { as: 'raw', eager: true })
 	).flatMap(([file, source]) => {
-		const url = file.replace('.', '').replace('/+page.md', '');
+		const url = file.replace('.', '').replace(/\/\+page.(md|svelte)/, '');
 		const [_, docs, group, name] = url.split('/');
 		return {
 			name,
