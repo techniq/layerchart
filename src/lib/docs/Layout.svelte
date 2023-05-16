@@ -7,7 +7,7 @@
 	export { a, blockquote };
 </script>
 
-<script>
+<script lang="ts">
 	// frontmatter: https://mdsvex.com/docs#frontmatter-1
 	// export let name = undefined;
 	// export let sourceUrl = undefined;

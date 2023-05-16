@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { SectionDivider } from 'svelte-ux';
 </script>
 

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { mdiCodeTags, mdiFileDocumentEditOutline } from '@mdi/js';
 
 	import { Button, TableOfContents, Tooltip } from 'svelte-ux';

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Prism from 'prismjs';
 	import 'prism-svelte';
 	import { mdiContentCopy } from '@mdi/js';
