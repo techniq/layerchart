@@ -47,7 +47,7 @@
 	})
 	*/
 
-	$: yDomain = data.map((x) => x.name).reverse()
+	$: yDomain = data.map((x) => x.name).reverse();
 </script>
 
 <h1>Examples</h1>
@@ -74,7 +74,7 @@
 				<HighlightLine color="var(--color-blue-500)" />
 				<HighlightRect color="var(--color-blue-500)" />
 			</Svg>
-			<Tooltip header={data => data.name} let:data>
+			<Tooltip header={(data) => data.name} let:data>
 				<TooltipItem label="start" value={format(data.startDate, 'h:mm:ss')} />
 				<TooltipItem label="end" value={format(data.endDate, 'h:mm:ss')} />
 				<TooltipSeparator />

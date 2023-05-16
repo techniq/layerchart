@@ -4,7 +4,7 @@
 	import { scaleQuantize } from 'd3-scale';
 	import { geoMercator, geoBounds, geoCentroid } from 'd3-geo';
 	import { feature } from 'topojson-client';
-	
+
 	import { Button, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
@@ -26,7 +26,12 @@
 
 	const states = feature(geojson, geojson.objects.collection);
 
-	$: filteredStates = { ...states, features: states.features.filter(d => d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii' )}
+	$: filteredStates = {
+		...states,
+		features: states.features.filter(
+			(d) => d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii'
+		)
+	};
 	// $: filteredStates = { ...states, features: states.features.filter(d => d.properties.name === 'West Virginia')}
 	$: selectedFeature = filteredStates;
 
@@ -38,7 +43,7 @@
 	let debug = false;
 
 	let scale = 0;
-	let translate = { x: 480, y: 300 }
+	let translate = { x: 480, y: 300 };
 </script>
 
 <div class="grid grid-cols-[1fr,1fr,1fr,auto] gap-2 my-2">
@@ -87,7 +92,9 @@
 					tweened={{ duration: 800, easing: cubicOut }}
 					let:zoomTo
 					let:reset={resetZoom}
-					on:zoom={(e) => { scale = e.detail.scale, translate = e.detail.translate }}
+					on:zoom={(e) => {
+						(scale = e.detail.scale), (translate = e.detail.translate);
+					}}
 					bind:this={zoom}
 				>
 					<GeoTile url={serviceUrl} {zoomDelta} {debug} />
@@ -96,30 +103,30 @@
 							geojson={feature}
 							class="stroke-none"
 							{tooltip}
-							on:click={e => {
+							on:click={(e) => {
 								const { geoPath, event } = e.detail;
-								console.log({ selectedStateName, feature })
+								console.log({ selectedStateName, feature });
 								/*
 								if (selectedStateName === feature.properties.name) {
 									selectedStateName = null;
 									resetZoom();
 								} else {
 								*/
-									selectedStateName = feature.properties.name;
-									// let [[left, top], [right, bottom]] = geoPath.bounds(feature);
-									console.log(geoPath.bounds(feature));
-									let [minLongLat, maxLongLat] = geoBounds(feature);
-									// Convert lat/long to screen x/y
-									const [left, top] = projection(minLongLat)
-									const [right, bottom] = projection(maxLongLat)
-									let width = right - left;
-									let height = bottom - top;
-									//let x = (left + right) / 2;
-									//let y = (top + bottom) / 2;
-									let x = (left + right) / 2 + projection.translate()[0];
-									let y = (top + bottom) / 2 + projection.translate()[1];
-									const padding = 20;
-									//zoomTo({ x, y }, { width: width + padding, height: height + padding })
+								selectedStateName = feature.properties.name;
+								// let [[left, top], [right, bottom]] = geoPath.bounds(feature);
+								console.log(geoPath.bounds(feature));
+								let [minLongLat, maxLongLat] = geoBounds(feature);
+								// Convert lat/long to screen x/y
+								const [left, top] = projection(minLongLat);
+								const [right, bottom] = projection(maxLongLat);
+								let width = right - left;
+								let height = bottom - top;
+								//let x = (left + right) / 2;
+								//let y = (top + bottom) / 2;
+								let x = (left + right) / 2 + projection.translate()[0];
+								let y = (top + bottom) / 2 + projection.translate()[1];
+								const padding = 20;
+								//zoomTo({ x, y }, { width: width + padding, height: height + padding })
 								//}
 							}}
 						/>
@@ -127,17 +134,9 @@
 				</Zoom>
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data>
-				{@const [longitude, latitude] = projection.invert([tooltip.left,tooltip.top])}
-				<TooltipItem
-					label="longitude"
-					value={longitude}
-					format="decimal"
-				/>
-				<TooltipItem
-					label="latitude"
-					value={latitude}
-					format="decimal"
-				/>
+				{@const [longitude, latitude] = projection.invert([tooltip.left, tooltip.top])}
+				<TooltipItem label="longitude" value={longitude} format="decimal" />
+				<TooltipItem label="latitude" value={latitude} format="decimal" />
 			</Tooltip>
 		</Chart>
 	</div>

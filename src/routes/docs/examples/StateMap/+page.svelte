@@ -3,7 +3,7 @@
 	import { sort } from 'd3-array';
 	import { feature } from 'topojson-client';
 
-	import { Field } from 'svelte-ux'
+	import { Field } from 'svelte-ux';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -16,17 +16,24 @@
 	const counties = feature(data.geojson, data.geojson.objects.counties);
 	const states = feature(data.geojson, data.geojson.objects.states);
 
-	const stateOptions = sort(states.features.filter(x => Number(x.id) < 60).map(x => ({ name: x.properties.name, value: x.id })), d => d.value);
+	const stateOptions = sort(
+		states.features
+			.filter((x) => Number(x.id) < 60)
+			.map((x) => ({ name: x.properties.name, value: x.id })),
+		(d) => d.value
+	);
 	let selectedStateId = '54'; // 'West Virginia';
-	$: selectedStateFeature = states.features.find(f => f.id === selectedStateId);
-	$: selectedCountiesFeatures = counties.features.filter(f => f.id.slice(0,2) === selectedStateId);
+	$: selectedStateFeature = states.features.find((f) => f.id === selectedStateId);
+	$: selectedCountiesFeatures = counties.features.filter(
+		(f) => f.id.slice(0, 2) === selectedStateId
+	);
 
 	let projection = geoAlbersUsa;
 	const projections = [
 		{ name: 'Albers', value: geoAlbers },
 		{ name: 'Albers USA', value: geoAlbersUsa },
-		{ name: 'Mercator', value: geoMercator },
-	]
+		{ name: 'Mercator', value: geoMercator }
+	];
 </script>
 
 <div class="grid grid-cols-[1fr,1fr,1fr] gap-2 my-2">
@@ -37,7 +44,7 @@
 			{/each}
 		</select>
 	</Field>
-		<Field label="Projections" let:id>
+	<Field label="Projections" let:id>
 		<select bind:value={projection} class="w-full outline-none appearance-none text-sm" {id}>
 			{#each projections as option}
 				<option value={option.value}>{option.name}</option>
@@ -55,7 +62,7 @@
 		<Chart
 			geo={{
 				projection,
-				fitGeojson: selectedStateFeature,
+				fitGeojson: selectedStateFeature
 			}}
 		>
 			<Svg>
@@ -72,14 +79,18 @@
 		<Chart
 			geo={{
 				projection,
-				fitGeojson: selectedStateFeature,
+				fitGeojson: selectedStateFeature
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
 		>
 			<Svg>
 				{#each selectedCountiesFeatures as feature}
-					<GeoPath geojson={feature} class="fill-white stroke-black/10 hover:fill-gray-200" {tooltip} />
+					<GeoPath
+						geojson={feature}
+						class="fill-white stroke-black/10 hover:fill-gray-200"
+						{tooltip}
+					/>
 				{/each}
 				<GeoPath geojson={selectedStateFeature} class="fill-none pointer-events-none" />
 			</Svg>
@@ -95,7 +106,7 @@
 		<Chart
 			geo={{
 				projection,
-				fitGeojson: selectedStateFeature,
+				fitGeojson: selectedStateFeature
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
@@ -103,7 +114,11 @@
 			<Svg>
 				<ChartClipPath>
 					{#each counties.features as feature}
-						<GeoPath geojson={feature} class="fill-white stroke-black/5 hover:fill-gray-200" {tooltip} />
+						<GeoPath
+							geojson={feature}
+							class="fill-white stroke-black/5 hover:fill-gray-200"
+							{tooltip}
+						/>
 					{/each}
 					{#each states.features as feature}
 						<GeoPath geojson={feature} class="fill-none pointer-events-none stroke-black/10" />

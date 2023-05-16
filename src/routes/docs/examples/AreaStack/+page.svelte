@@ -19,7 +19,7 @@
 	import { createDateSeries } from '$lib/utils/genData';
 	import { flatten } from 'svelte-ux/utils/array';
 
-	const keys = ['apples', 'bananas', 'oranges']
+	const keys = ['apples', 'bananas', 'oranges'];
 	const data = createDateSeries({ min: 50, max: 100, value: 'integer', keys });
 	const stackData = stack().keys(keys)(data);
 	// console.log({ data, stackData })
@@ -34,18 +34,14 @@
 		<Chart
 			data={stackData}
 			flatData={flatten(stackData)}
-			x={d => d.data.date}
+			x={(d) => d.data.date}
 			xScale={scaleTime()}
-			y={[0,1]}
+			y={[0, 1]}
 			yNice
 			r="key"
 			rScale={scaleOrdinal()}
 			rDomain={keys}
-			rRange={[
-				'var(--color-red-500)',
-				'var(--color-green-500)',
-				'var(--color-blue-500)',
-			]}
+			rRange={['var(--color-red-500)', 'var(--color-green-500)', 'var(--color-blue-500)']}
 			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
@@ -65,18 +61,14 @@
 		<Chart
 			data={stackData}
 			flatData={flatten(stackData)}
-			x={d => d.data.date}
+			x={(d) => d.data.date}
 			xScale={scaleTime()}
-			y={[0,1]}
+			y={[0, 1]}
 			yNice
 			r="key"
 			rScale={scaleOrdinal()}
 			rDomain={keys}
-			rRange={[
-				'var(--color-red-500)',
-				'var(--color-green-500)',
-				'var(--color-blue-500)',
-			]}
+			rRange={['var(--color-red-500)', 'var(--color-green-500)', 'var(--color-blue-500)']}
 			padding={{ left: 16, bottom: 24 }}
 			tooltip
 		>
@@ -87,7 +79,7 @@
 				<AreaStack line={{ width: 2 }} />
 				<HighlightLine color="var(--color-blue-500)" />
 			</Svg>
-			<Tooltip header={data => format(data.data.date, 'eee, MMMM do')} let:data>
+			<Tooltip header={(data) => format(data.data.date, 'eee, MMMM do')} let:data>
 				{#each keys as key}
 					<TooltipItem label={key} value={data.data[key]} />
 				{/each}

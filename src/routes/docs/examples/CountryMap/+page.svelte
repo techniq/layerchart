@@ -24,7 +24,7 @@
 		<Chart
 			geo={{
 				projection: geoAlbersUsa,
-				fitGeojson: states,
+				fitGeojson: states
 			}}
 		>
 			<Svg>
@@ -36,8 +36,15 @@
 				<g class="labels pointer-events-none">
 					{#each states.features as feature}
 						<GeoPath geojson={feature} let:geoPath>
-							{@const [x,y] = geoPath.centroid(feature)}
-							<Text {x} {y} value={feature.properties.name} textAnchor="middle" verticalAnchor="middle" class="text-[8px] stroke-white [stroke-width:2px]" />
+							{@const [x, y] = geoPath.centroid(feature)}
+							<Text
+								{x}
+								{y}
+								value={feature.properties.name}
+								textAnchor="middle"
+								verticalAnchor="middle"
+								class="text-[8px] stroke-white [stroke-width:2px]"
+							/>
 						</GeoPath>
 					{/each}
 				</g>
@@ -53,7 +60,7 @@
 		<Chart
 			geo={{
 				projection: geoAlbersUsa,
-				fitGeojson: states,
+				fitGeojson: states
 			}}
 		>
 			<Canvas>
@@ -61,10 +68,12 @@
 			</Canvas>
 			{#each states.features as feature}
 				<Canvas>
-					<GeoPath geojson={feature} render={(ctx, { geoPath }) => {
+					<GeoPath
+						geojson={feature}
+						render={(ctx, { geoPath }) => {
 							const [x, y] = geoPath.centroid(feature);
-							ctx.font = "8px sans-serif";
-							ctx.textAlign = "center";
+							ctx.font = '8px sans-serif';
+							ctx.textAlign = 'center';
 							ctx.strokeStyle = 'white';
 							ctx.lineWidth = 2;
 							ctx.fillStyle = 'black';

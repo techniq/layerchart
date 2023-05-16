@@ -5,7 +5,7 @@
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
-	import { rollup } from 'd3-array'
+	import { rollup } from 'd3-array';
 
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
@@ -30,49 +30,50 @@
 	import { isNodeVisible } from '$lib/utils/treemap';
 
 	import { simpleData, complexData } from '../_data/hierarchy';
-	import flareCsv from '../_data/flare.csv'
-	import carsCsv from '../_data/cars.csv'
+	import flareCsv from '../_data/flare.csv';
+	import carsCsv from '../_data/cars.csv';
 
 	const complexDataHierarchy = hierarchy(complexData)
 		.sum((d) => d.value)
 		.sort((a, b) => b.value - a.value);
 
-	const processedFlareCsv = flareCsv
-		.map(d => {
-			return {
-				...d,
-				name: d.name.split(".").pop(),
-				path: d.name.replace(/\./g, '/')
-			}
-		})
-	const flareCsvHierarchy = stratify().path(d => d.path)(processedFlareCsv)
-		.sum(d => d.size)
+	const processedFlareCsv = flareCsv.map((d) => {
+		return {
+			...d,
+			name: d.name.split('.').pop(),
+			path: d.name.replace(/\./g, '/')
+		};
+	});
+	const flareCsvHierarchy = stratify()
+		.path((d) => d.path)(processedFlareCsv)
+		.sum((d) => d.size)
 		.sort((a, b) => b.value - a.value);
 
 	let isFiltered = false;
 	$: groupedCars = rollup(
 		carsCsv
 			// Limit dataset
-			.filter(d => ['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.Make))
+			.filter((d) =>
+				['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.Make)
+			)
 			// Hide some models in each group to show transitions
-			.filter(d => isFiltered ? d.Year > 2010 : true)
+			.filter((d) => (isFiltered ? d.Year > 2010 : true))
 			// Apply `Make` selection
-			.filter(d => {
+			.filter((d) => {
 				if (selectedCarNode?.depth === 1) {
-					return d.Make === selectedCarNode.data[0]
+					return d.Make === selectedCarNode.data[0];
 				} else {
-					return true
+					return true;
 				}
 			}),
-		items => items[0],//.slice(0, 3),
-		d => d.Make,
-		d => d.Model,
+		(items) => items[0], //.slice(0, 3),
+		(d) => d.Make,
+		(d) => d.Model
 		// d => d.Year,
-	)
-	$: groupedHierarchy = hierarchy(groupedCars)
-		.count()
+	);
+	$: groupedHierarchy = hierarchy(groupedCars).count();
 
-	let tile = 'squarify'
+	let tile = 'squarify';
 	let colorBy = 'children';
 
 	let selectedNested = null;
@@ -85,20 +86,24 @@
 	let paddingLeft = 0;
 	let paddingRight = 0;
 
-	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu)
+	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
 	// filter out hard to see yellow and green
-	const ordinalColor = scaleOrdinal(chromatic.schemeSpectral[9].filter(c => hsl(c).h < 60 || hsl(c).h > 90))
+	const ordinalColor = scaleOrdinal(
+		chromatic.schemeSpectral[9].filter((c) => hsl(c).h < 60 || hsl(c).h > 90)
+	);
 	// const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
 
 	function getNodeColor(node, colorBy) {
 		switch (colorBy) {
 			case 'children':
-				return node.children ? '#ccc' : '#ddd'
+				return node.children ? '#ccc' : '#ddd';
 			case 'depth':
 				return sequentialColor(node.depth);
 			case 'parent':
-				const colorParent = findAncestor(node, n => n.depth === 1)
-				return colorParent ? hsl(ordinalColor((colorParent).data.name)).brighter(node.depth * .3) : '#ddd'
+				const colorParent = findAncestor(node, (n) => n.depth === 1);
+				return colorParent
+					? hsl(ordinalColor(colorParent.data.name)).brighter(node.depth * 0.3)
+					: '#ddd';
 		}
 	}
 </script>
@@ -143,7 +148,13 @@
 
 <Preview>
 	<Breadcrumb items={selectedNested?.ancestors().reverse() ?? []}>
-		<Button slot="item" let:item on:click={() => selectedNested = item} base class="px-2 py-1 rounded">
+		<Button
+			slot="item"
+			let:item
+			on:click={() => (selectedNested = item)}
+			base
+			class="px-2 py-1 rounded"
+		>
 			<div class="text-left">
 				<div class="text-sm">{item.data.name}</div>
 				<div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
@@ -153,12 +164,32 @@
 	<div class="h-[800px] p-4 border rounded">
 		<Chart data={complexDataHierarchy.copy()} tooltip={{ mode: 'manual' }} let:tooltip>
 			<Svg>
-				<Bounds domain={selectedNested} tweened={{ duration: 800, easing: cubicOut }} let:xScale let:yScale>
+				<Bounds
+					domain={selectedNested}
+					tweened={{ duration: 800, easing: cubicOut }}
+					let:xScale
+					let:yScale
+				>
 					<ChartClipPath>
-						<Treemap let:nodes {tile} bind:selected={selectedNested} {paddingOuter} {paddingInner} {paddingTop} {paddingBottom} {paddingLeft} {paddingRight}>
+						<Treemap
+							let:nodes
+							{tile}
+							bind:selected={selectedNested}
+							{paddingOuter}
+							{paddingInner}
+							{paddingTop}
+							{paddingBottom}
+							{paddingLeft}
+							{paddingRight}
+						>
 							{#each nodes as node}
-								<Group x={xScale(node.x0)} y={yScale(node.y0)} on:click={() => node.children ? selectedNested = node : null} on:mousemove={e => tooltip.show(e, node)}
-	on:mouseleave={tooltip.hide}>
+								<Group
+									x={xScale(node.x0)}
+									y={yScale(node.y0)}
+									on:click={() => (node.children ? (selectedNested = node) : null)}
+									on:mousemove={(e) => tooltip.show(e, node)}
+									on:mouseleave={tooltip.hide}
+								>
 									{@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
 									{@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
 									{@const nodeColor = getNodeColor(node, colorBy)}
@@ -174,7 +205,9 @@
 											<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
 												<tspan>{node.data.name}</tspan>
 												{#if node.children}
-													<tspan style="font-size: 0.5rem; font-weight: 200">{format(node.value, 'integer')}</tspan>
+													<tspan style="font-size: 0.5rem; font-weight: 200"
+														>{format(node.value, 'integer')}</tspan
+													>
 												{/if}
 											</text>
 											{#if !node.children}
@@ -194,7 +227,7 @@
 					</ChartClipPath>
 				</Bounds>
 			</Svg>
-			<Tooltip header={data => data.data.name} let:data>
+			<Tooltip header={(data) => data.data.name} let:data>
 				<TooltipItem label="value" value={data.value} format="integer" />
 			</Tooltip>
 		</Chart>
@@ -244,7 +277,13 @@
 
 <Preview>
 	<Breadcrumb items={(selectedCarNode ?? groupedHierarchy).ancestors().reverse()}>
-		<Button slot="item" let:item on:click={() => selectedCarNode = item} base class="px-2 py-1 rounded">
+		<Button
+			slot="item"
+			let:item
+			on:click={() => (selectedCarNode = item)}
+			base
+			class="px-2 py-1 rounded"
+		>
 			<div class="text-left">
 				<div class="text-sm">{item.data[0] ?? 'Overall'}</div>
 				<div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
@@ -254,10 +293,32 @@
 	<div class="h-[800px] p-4 border rounded">
 		<Chart data={groupedHierarchy}>
 			<Svg>
-				<Bounds domain={selectedNested} tweened={{ duration: 800, easing: cubicOut }} let:xScale let:yScale>
-					<Treemap let:nodes {tile} {paddingOuter} {paddingInner} {paddingTop} {paddingBottom} {paddingLeft} {paddingRight}>
-						{#each nodes as node (node.ancestors().map(n => n.data[0]).join('_'))}
-							<Group x={xScale(node.x0)} y={yScale(node.y0)} on:click={() => node.children ? selectedCarNode = node : null} tweened={{ delay: 600 }}>
+				<Bounds
+					domain={selectedNested}
+					tweened={{ duration: 800, easing: cubicOut }}
+					let:xScale
+					let:yScale
+				>
+					<Treemap
+						let:nodes
+						{tile}
+						{paddingOuter}
+						{paddingInner}
+						{paddingTop}
+						{paddingBottom}
+						{paddingLeft}
+						{paddingRight}
+					>
+						{#each nodes as node (node
+							.ancestors()
+							.map((n) => n.data[0])
+							.join('_'))}
+							<Group
+								x={xScale(node.x0)}
+								y={yScale(node.y0)}
+								on:click={() => (node.children ? (selectedCarNode = node) : null)}
+								tweened={{ delay: 600 }}
+							>
 								{@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
 								{@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
 								{@const nodeColor = getNodeColor(node, colorBy)}
@@ -274,7 +335,9 @@
 										<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
 											<tspan>{node.data[0] ?? 'Overall'}</tspan>
 											{#if node.children}
-												<tspan style="font-size: 0.5rem; font-weight: 200">{format(node.value, 'integer')}</tspan>
+												<tspan style="font-size: 0.5rem; font-weight: 200"
+													>{format(node.value, 'integer')}</tspan
+												>
 											{/if}
 										</text>
 										{#if !node.children}
@@ -325,57 +388,72 @@
 
 <Preview>
 	<Breadcrumb items={selectedZoomable?.ancestors().reverse() ?? []}>
-		<Button slot="item" let:item on:click={() => selectedZoomable = item} base class="px-2 py-1 rounded">
+		<Button
+			slot="item"
+			let:item
+			on:click={() => (selectedZoomable = item)}
+			base
+			class="px-2 py-1 rounded"
+		>
 			<div class="text-left">
 				<div class="text-sm">{item.data.name}</div>
 				<div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
 			</div>
 		</Button>
 	</Breadcrumb>
-    <div class="h-[600px] p-4 border rounded">
-    	<Chart data={complexDataHierarchy.copy()}>
-    		<Svg>
-					<Bounds domain={selectedZoomable} tweened={{ duration: 800, easing: cubicOut }} let:xScale let:yScale>
-						<ChartClipPath>
-							<Treemap let:nodes {tile} bind:selected={selectedZoomable}>
-								{#each nodes as node}
-									<Group x={xScale(node.x0)} y={yScale(node.y0)} on:click={() => node.children ? selectedZoomable = node : null}>
-										{@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
-										{@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
-										<RectClipPath width={nodeWidth} height={nodeHeight}>
-											{@const nodeColor = getNodeColor(node, colorBy)}
-											{#if isNodeVisible(node, selectedZoomable)}
-												<g transition:fade={{ duration: 600 }}>
-													<Rect
-														width={nodeWidth}
-														height={nodeHeight}
-														stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
-														fill={nodeColor}
-														rx={5}
-													/>
-														<Text
-															value="{node.data.name} ({node.children?.length ?? 0})"
-															style="font-size: 0.6rem; font-weight: 500"
-															verticalAnchor="start"
-															x={4}
-															y={2}
-														/>
-														<Text
-															value={format(node.value, 'integer')}
-															style="font-size: 0.5rem; font-weight: 200"
-															verticalAnchor="start"
-															x={4}
-															y={16}
-														/>
-												</g>
-											{/if}
-										</RectClipPath>
-									</Group>
-								{/each}
-							</Treemap>
-						</ChartClipPath>
-					</Bounds>
-    		</Svg>
-    	</Chart>
-    </div>
+	<div class="h-[600px] p-4 border rounded">
+		<Chart data={complexDataHierarchy.copy()}>
+			<Svg>
+				<Bounds
+					domain={selectedZoomable}
+					tweened={{ duration: 800, easing: cubicOut }}
+					let:xScale
+					let:yScale
+				>
+					<ChartClipPath>
+						<Treemap let:nodes {tile} bind:selected={selectedZoomable}>
+							{#each nodes as node}
+								<Group
+									x={xScale(node.x0)}
+									y={yScale(node.y0)}
+									on:click={() => (node.children ? (selectedZoomable = node) : null)}
+								>
+									{@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
+									{@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
+									<RectClipPath width={nodeWidth} height={nodeHeight}>
+										{@const nodeColor = getNodeColor(node, colorBy)}
+										{#if isNodeVisible(node, selectedZoomable)}
+											<g transition:fade={{ duration: 600 }}>
+												<Rect
+													width={nodeWidth}
+													height={nodeHeight}
+													stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+													fill={nodeColor}
+													rx={5}
+												/>
+												<Text
+													value="{node.data.name} ({node.children?.length ?? 0})"
+													style="font-size: 0.6rem; font-weight: 500"
+													verticalAnchor="start"
+													x={4}
+													y={2}
+												/>
+												<Text
+													value={format(node.value, 'integer')}
+													style="font-size: 0.5rem; font-weight: 200"
+													verticalAnchor="start"
+													x={4}
+													y={16}
+												/>
+											</g>
+										{/if}
+									</RectClipPath>
+								</Group>
+							{/each}
+						</Treemap>
+					</ChartClipPath>
+				</Bounds>
+			</Svg>
+		</Chart>
+	</div>
 </Preview>

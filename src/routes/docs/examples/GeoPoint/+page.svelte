@@ -24,7 +24,7 @@
 		<Chart
 			geo={{
 				projection: geoAlbersUsa,
-				fitGeojson: states,
+				fitGeojson: states
 			}}
 		>
 			<Svg>
@@ -37,7 +37,12 @@
 					{#each capitals as capital}
 						<GeoPoint lat={capital.latitude} long={capital.longitude}>
 							<circle r="2" class="fill-white stroke-red-500" />
-							<Text y="-6" value={capital.description} textAnchor="middle" class="text-[8px] stroke-white [stroke-width:2px]" />
+							<Text
+								y="-6"
+								value={capital.description}
+								textAnchor="middle"
+								class="text-[8px] stroke-white [stroke-width:2px]"
+							/>
 						</GeoPoint>
 					{/each}
 				</g>
@@ -53,7 +58,7 @@
 		<Chart
 			geo={{
 				projection: geoAlbersUsa,
-				fitGeojson: states,
+				fitGeojson: states
 			}}
 		>
 			<Canvas>
@@ -61,24 +66,28 @@
 			</Canvas>
 			{#each capitals as capital}
 				<Canvas>
-					<GeoPoint lat={capital.latitude} long={capital.longitude} render={(ctx, { x, y }) => {
-						// point
-						const radius = 2 
-						ctx.strokeStyle = 'red';
-						ctx.fillStyle = 'white';
-						ctx.beginPath();
-						ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
-						ctx.fill();
-						ctx.stroke();
-						// label
-						ctx.font = "8px sans-serif";
-						ctx.textAlign = "center";
-						ctx.strokeStyle = 'white';
-						ctx.lineWidth = 2;
-						ctx.fillStyle = 'black';
-						ctx.strokeText(capital.description, x, y - 6);
-						ctx.fillText(capital.description, x, y - 6);
-					}} />
+					<GeoPoint
+						lat={capital.latitude}
+						long={capital.longitude}
+						render={(ctx, { x, y }) => {
+							// point
+							const radius = 2;
+							ctx.strokeStyle = 'red';
+							ctx.fillStyle = 'white';
+							ctx.beginPath();
+							ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+							ctx.fill();
+							ctx.stroke();
+							// label
+							ctx.font = '8px sans-serif';
+							ctx.textAlign = 'center';
+							ctx.strokeStyle = 'white';
+							ctx.lineWidth = 2;
+							ctx.fillStyle = 'black';
+							ctx.strokeText(capital.description, x, y - 6);
+							ctx.fillText(capital.description, x, y - 6);
+						}}
+					/>
 				</Canvas>
 			{/each}
 		</Chart>

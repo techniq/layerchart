@@ -21,16 +21,16 @@
 
 	const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
 
-	const keys = ['apples', 'bananas', 'oranges']
+	const keys = ['apples', 'bananas', 'oranges'];
 	const multiSeriesData = createDateSeries({ min: 10, max: 100, value: 'integer', keys });
 	const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
-	const dataByFruit = flatGroup(multiSeriesFlatData, d => d.fruit);
+	const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 
 	const fruitColors = {
 		apples: 'var(--color-blue-500)',
 		bananas: 'var(--color-purple-500)',
-		oranges: 'var(--color-green-500)',
-	}
+		oranges: 'var(--color-green-500)'
+	};
 </script>
 
 <h1>Examples</h1>
@@ -79,7 +79,7 @@
 				<Area line={{ width: 2 }} />
 				<HighlightLine color="var(--color-blue-500)" />
 			</Svg>
-			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+			<Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
 				<TooltipItem label="value" value={data.value} />
 			</Tooltip>
 		</Chart>
@@ -123,12 +123,8 @@
 			yNice
 			r="fruit"
 			rScale={scaleOrdinal()}
-			rDomain={dataByFruit.map(d => d[0])}
-			rRange={[
-				'var(--color-blue-500)',
-				'var(--color-purple-500)',
-				'var(--color-green-500)',
-			]}
+			rDomain={dataByFruit.map((d) => d[0])}
+			rRange={['var(--color-blue-500)', 'var(--color-purple-500)', 'var(--color-green-500)']}
 			padding={{ left: 16, bottom: 24 }}
 			tooltip={{ mode: 'voronoi' }}
 		>
@@ -142,7 +138,7 @@
 				<Labels format="integer" />
 				<HighlightLine />
 			</Svg>
-			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+			<Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
 				<TooltipItem label={data.fruit} value={data.value} />
 			</Tooltip>
 		</Chart>

@@ -19,32 +19,32 @@
 	const states = feature(data.geojson, data.geojson.objects.states);
 	const counties = feature(data.geojson, data.geojson.objects.counties);
 
-	const statesById = index(states.features, d => d.id)
+	const statesById = index(states.features, (d) => d.id);
 
-	const population = _population.map(d => {
+	const population = _population.map((d) => {
 		return {
 			id: d.state + d.county,
 			state: statesById.get(d.state).properties.name,
 			population: +d.DP05_0001E,
 			populationUnder18: +d.DP05_0019E,
 			percentUnder18: +d.DP05_0019PE
-		}
-	}) 
-	const populationByFips = index(population, (d) => d.id)
+		};
+	});
+	const populationByFips = index(population, (d) => d.id);
 
-	$: enrichedCountiesFeatures = counties.features.map(feature => {
+	$: enrichedCountiesFeatures = counties.features.map((feature) => {
 		return {
 			...feature,
 			properties: {
 				...feature.properties,
 				data: populationByFips.get(feature.id)
 			}
-		}
+		};
 	});
 
 	$: colorScale = scaleQuantile()
-		.domain(population.map(d => d.population))
-		.range(schemeBlues[9])
+		.domain(population.map((d) => d.population))
+		.range(schemeBlues[9]);
 
 	const format = d3format('.2s');
 </script>
@@ -67,7 +67,12 @@
 			<Svg>
 				<g>
 					{#each enrichedCountiesFeatures as feature}
-						<GeoPath geojson={feature} {tooltip} fill={colorScale(feature.properties.data?.population)} class="stroke-none hover:stroke-white hover:stroke-2" />
+						<GeoPath
+							geojson={feature}
+							{tooltip}
+							fill={colorScale(feature.properties.data?.population)}
+							class="stroke-none hover:stroke-white hover:stroke-2"
+						/>
 					{/each}
 				</g>
 				<g>
@@ -77,7 +82,10 @@
 				</g>
 			</Svg>
 			<Legend scale={colorScale} title="Population" tickFormat={format} />
-			<Tooltip header={(data) => data.properties.name + ' - ' + data.properties.data?.state} let:data>
+			<Tooltip
+				header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
+				let:data
+			>
 				{@const d = populationByFips.get(data.id)}
 				<TooltipItem
 					label="Total Population"
@@ -121,7 +129,9 @@
 			{/each}
 			-->
 			<Canvas>
-				<GeoPath geojson={feature} render={(ctx, { geoPath }) => {
+				<GeoPath
+					geojson={feature}
+					render={(ctx, { geoPath }) => {
 						for (var feature of enrichedCountiesFeatures) {
 							ctx.beginPath();
 							geoPath.context(ctx);

@@ -19,41 +19,43 @@
 	const states = feature(data.geojson, data.geojson.objects.states);
 	const counties = feature(data.geojson, data.geojson.objects.counties);
 
-	const statesById = index(states.features, d => d.id)
+	const statesById = index(states.features, (d) => d.id);
 
-	const population = _population.map(d => {
+	const population = _population.map((d) => {
 		return {
 			fips: d.state + d.county,
 			state: statesById.get(d.state).properties.name,
 			population: +d.DP05_0001E,
 			populationUnder18: +d.DP05_0019E,
 			percentUnder18: +d.DP05_0019PE
-		}
-	}) 
-	const populationByFips = index(population, (d) => d.fips)
+		};
+	});
+	const populationByFips = index(population, (d) => d.fips);
 
 	const maxRadius = 40;
 	$: rScale = scaleSqrt()
-		.domain([0, max(population, d => d.population)])
-		.range([0, maxRadius])
-	
-	$: colors = quantize(interpolateViridis, 5)
+		.domain([0, max(population, (d) => d.population)])
+		.range([0, maxRadius]);
+
+	$: colors = quantize(interpolateViridis, 5);
 	// $: colorScale = scaleQuantize()
 	// 	.domain([0, max(population, d => d.percentUnder18)])
 	// 	.range(colors)
 	$: colorScale = scaleThreshold()
-		.domain([16, 20, 24, 28, Math.ceil(max(population, d => d.percentUnder18))])
-		.range(colors)
+		.domain([16, 20, 24, 28, Math.ceil(max(population, (d) => d.percentUnder18))])
+		.range(colors);
 
-	$: enrichedCountiesFeatures = counties.features.map(feature => {
-		return {
-			...feature,
-			properties: {
-				...feature.properties,
-				data: populationByFips.get(feature.id)
-			}
-		}
-	}).sort((a,b) => descending(a.properties.data?.population, b.properties.data?.population))
+	$: enrichedCountiesFeatures = counties.features
+		.map((feature) => {
+			return {
+				...feature,
+				properties: {
+					...feature.properties,
+					data: populationByFips.get(feature.id)
+				}
+			};
+		})
+		.sort((a, b) => descending(a.properties.data?.population, b.properties.data?.population));
 </script>
 
 <h1>Examples</h1>
@@ -78,9 +80,18 @@
 				{/each}
 				{#each enrichedCountiesFeatures as feature}
 					<GeoPath geojson={feature} let:geoPath>
-						{@const [cx,cy] = geoPath.centroid(feature)}
+						{@const [cx, cy] = geoPath.centroid(feature)}
 						{@const d = feature.properties.data}
-						<circle {cx} {cy} r={rScale(d?.population)} fill={colorScale(d?.percentUnder18)} fill-opacity={0.5} stroke={colorScale(d?.percentUnder18)} stroke-width={0.5} class="pointer-events-none" />
+						<circle
+							{cx}
+							{cy}
+							r={rScale(d?.population)}
+							fill={colorScale(d?.percentUnder18)}
+							fill-opacity={0.5}
+							stroke={colorScale(d?.percentUnder18)}
+							stroke-width={0.5}
+							class="pointer-events-none"
+						/>
 					</GeoPath>
 				{/each}
 				{#each enrichedCountiesFeatures as feature}
@@ -88,7 +99,10 @@
 				{/each}
 			</Svg>
 			<Legend scale={colorScale} title="Est. Percent under 18" placement="top-left" />
-			<Tooltip header={(data) => data.properties.name + ' - ' + data.properties.data?.state} let:data>
+			<Tooltip
+				header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
+				let:data
+			>
 				{@const d = data.properties.data}
 				<TooltipItem
 					label="Total Population"
@@ -127,7 +141,9 @@
 				<GeoPath geojson={states} fill="rgba(0,0,0,.1)" stroke="white" />
 			</Canvas>
 			<Canvas>
-				<GeoPath geojson={feature} render={(ctx, { geoPath }) => {
+				<GeoPath
+					geojson={feature}
+					render={(ctx, { geoPath }) => {
 						for (var feature of enrichedCountiesFeatures) {
 							const [x, y] = geoPath.centroid(feature);
 							const d = feature.properties.data;

@@ -6,7 +6,12 @@
 	const wideDataDisplay = JSON.stringify(wideData, null, 2);
 	const longDataDisplay = JSON.stringify(longData, null, 2);
 
-	const pivotLongerResult = pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'dates'], 'fruit', 'value');
+	const pivotLongerResult = pivotLonger(
+		wideData,
+		['apples', 'bananas', 'cherries', 'dates'],
+		'fruit',
+		'value'
+	);
 	const pivotLongerDisplay = JSON.stringify(pivotLongerResult, null, 2);
 
 	const pivotWiderResult = pivotWider(longData, 'year', 'fruit', 'value');
@@ -17,9 +22,7 @@
 
 <h2>Before</h2>
 
-<Preview code={wideDataDisplay} highlight showCode>
-  wideData
-</Preview>
+<Preview code={wideDataDisplay} highlight showCode>wideData</Preview>
 
 <h2>After</h2>
 
@@ -31,9 +34,7 @@
 
 <h2>Before</h2>
 
-<Preview code={longDataDisplay} highlight showCode>
-  longData
-</Preview>
+<Preview code={longDataDisplay} highlight showCode>longData</Preview>
 
 <h2>After</h2>
 

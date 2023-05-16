@@ -5,7 +5,7 @@
 	import { scaleSequential, scaleOrdinal } from 'd3-scale';
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
-	import { rollup } from 'd3-array'
+	import { rollup } from 'd3-array';
 
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
@@ -26,36 +26,38 @@
 	import { findAncestor } from '$lib/utils/hierarchy';
 
 	import { complexData } from '../_data/hierarchy';
-	import carsCsv from '../_data/cars.csv'
+	import carsCsv from '../_data/cars.csv';
 
 	const complexHierarchy = hierarchy(complexData)
 		.sum((d) => d.value)
 		.sort((a, b) => b.value - a.value);
 
-	const horizontalHierarchy = complexHierarchy.copy()
-	const verticalHierarchy = complexHierarchy.copy()
+	const horizontalHierarchy = complexHierarchy.copy();
+	const verticalHierarchy = complexHierarchy.copy();
 
 	let isFiltered = false;
 	$: groupedCars = rollup(
 		carsCsv
 			// Limit dataset
-			.filter(d => ['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.Make))
+			.filter((d) =>
+				['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.Make)
+			)
 			// Hide some models in each group to show transitions
-			.filter(d => isFiltered ? d.Year > 2010 : true)
+			.filter((d) => (isFiltered ? d.Year > 2010 : true))
 			// Apply `Make` selection
-			.filter(d => {
+			.filter((d) => {
 				if (selectedCarNode?.depth === 1) {
-					return d.Make === selectedCarNode.data[0]
+					return d.Make === selectedCarNode.data[0];
 				} else {
-					return true
+					return true;
 				}
 			}),
-		items => items[0],//.slice(0, 3),
-		d => d.Make,
-		d => d.Model,
+		(items) => items[0], //.slice(0, 3),
+		(d) => d.Make,
+		(d) => d.Model
 		// d => d.Year,
-	)
-	$: groupedHierarchy = hierarchy(groupedCars).count()
+	);
+	$: groupedHierarchy = hierarchy(groupedCars).count();
 
 	let colorBy = 'children';
 
@@ -66,20 +68,24 @@
 	let selectedVertical = verticalHierarchy; // select root initially
 	let selectedCarNode = groupedHierarchy;
 
-	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu)
+	const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
 	// filter out hard to see yellow and green
-	const ordinalColor = scaleOrdinal(chromatic.schemeSpectral[9].filter(c => hsl(c).h < 60 || hsl(c).h > 90))
+	const ordinalColor = scaleOrdinal(
+		chromatic.schemeSpectral[9].filter((c) => hsl(c).h < 60 || hsl(c).h > 90)
+	);
 	// const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
 
 	function getNodeColor(node, colorBy) {
 		switch (colorBy) {
 			case 'children':
-				return node.children ? '#ccc' : '#ddd'
+				return node.children ? '#ccc' : '#ddd';
 			case 'depth':
 				return sequentialColor(node.depth);
 			case 'parent':
-				const colorParent = findAncestor(node, n => n.depth === 1)
-				return colorParent ? hsl(ordinalColor((colorParent).data.name)).brighter(node.depth * .3) : '#ddd'
+				const colorParent = findAncestor(node, (n) => n.depth === 1);
+				return colorParent
+					? hsl(ordinalColor(colorParent.data.name)).brighter(node.depth * 0.3)
+					: '#ddd';
 		}
 	}
 </script>
@@ -88,7 +94,11 @@
 	<div class="grid grid-cols-[2fr,1fr,1fr,1fr] gap-2">
 		<RangeField label="Padding" bind:value={padding} max={20} />
 		<Field label="Full-size Leaf Nodes">
-			<ToggleGroup bind:value={fullSizeLeafNodes} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup
+				bind:value={fullSizeLeafNodes}
+				contained
+				classes={{ root: 'w-full', options: 'w-full' }}
+			>
 				<ToggleOption value={true}>Yes</ToggleOption>
 				<ToggleOption value={false}>No</ToggleOption>
 			</ToggleGroup>
@@ -115,7 +125,13 @@
 
 <Preview>
 	<Breadcrumb items={selectedHorizontal?.ancestors().reverse() ?? []}>
-		<Button slot="item" let:item on:click={() => selectedHorizontal = item} base class="px-2 py-1 rounded">
+		<Button
+			slot="item"
+			let:item
+			on:click={() => (selectedHorizontal = item)}
+			base
+			class="px-2 py-1 rounded"
+		>
 			<div class="text-left">
 				<div class="text-sm">{item.data.name}</div>
 				<div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
@@ -128,15 +144,26 @@
 				<Bounds
 					let:xScale
 					let:yScale
-					domain={{ x0: selectedHorizontal?.y0, y0: selectedHorizontal?.x0, y1: selectedHorizontal?.x1 }}
+					domain={{
+						x0: selectedHorizontal?.y0,
+						y0: selectedHorizontal?.x0,
+						y1: selectedHorizontal?.x1
+					}}
 					tweened={{ duration: 800, easing: cubicOut }}
 				>
 					<ChartClipPath>
 						<Partition {padding} {round} let:nodes>
 							{#each nodes as node}
-								{@const nodeWidth = node.children || !fullSizeLeafNodes ? xScale(node.y1) - xScale(node.y0) : width - xScale(node.y0)}
+								{@const nodeWidth =
+									node.children || !fullSizeLeafNodes
+										? xScale(node.y1) - xScale(node.y0)
+										: width - xScale(node.y0)}
 								{@const nodeHeight = yScale(node.x1) - yScale(node.x0)}
-								<Group x={xScale(node.y0)} y={yScale(node.x0)} on:click={() => selectedHorizontal = node}>
+								<Group
+									x={xScale(node.y0)}
+									y={yScale(node.x0)}
+									on:click={() => (selectedHorizontal = node)}
+								>
 									<RectClipPath width={nodeWidth} height={nodeHeight}>
 										{@const nodeColor = getNodeColor(node, colorBy)}
 										<g transition:fade={{ duration: 600 }}>
@@ -147,10 +174,12 @@
 												fill={nodeColor}
 												rx={5}
 											/>
-												<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
-													<tspan>{node.data.name}</tspan>
-													<tspan style="font-size: 0.5rem; font-weight: 200">{format(node.value, 'integer')}</tspan>
-												</text>
+											<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
+												<tspan>{node.data.name}</tspan>
+												<tspan style="font-size: 0.5rem; font-weight: 200"
+													>{format(node.value, 'integer')}</tspan
+												>
+											</text>
 										</g>
 									</RectClipPath>
 								</Group>
@@ -167,7 +196,13 @@
 
 <Preview>
 	<Breadcrumb items={selectedVertical?.ancestors().reverse() ?? []}>
-		<Button slot="item" let:item on:click={() => selectedVertical = item} base class="px-2 py-1 rounded">
+		<Button
+			slot="item"
+			let:item
+			on:click={() => (selectedVertical = item)}
+			base
+			class="px-2 py-1 rounded"
+		>
 			<div class="text-left">
 				<div class="text-sm">{item.data.name}</div>
 				<div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
@@ -187,8 +222,15 @@
 						<Partition orientation="vertical" {padding} {round} let:nodes>
 							{#each nodes as node}
 								{@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
-								{@const nodeHeight = node.children || !fullSizeLeafNodes ? yScale(node.y1) - yScale(node.y0) : height - yScale(node.y0)}
-								<Group x={xScale(node.x0)} y={yScale(node.y0)} on:click={() => selectedVertical = node}>
+								{@const nodeHeight =
+									node.children || !fullSizeLeafNodes
+										? yScale(node.y1) - yScale(node.y0)
+										: height - yScale(node.y0)}
+								<Group
+									x={xScale(node.x0)}
+									y={yScale(node.y0)}
+									on:click={() => (selectedVertical = node)}
+								>
 									<RectClipPath width={nodeWidth} height={nodeHeight}>
 										{@const nodeColor = getNodeColor(node, colorBy)}
 										<g transition:fade={{ duration: 600 }}>
@@ -199,20 +241,20 @@
 												fill={nodeColor}
 												rx={5}
 											/>
-												<Text
-													value={node.data.name}
-													style="font-size: 0.6rem; font-weight: 500"
-													verticalAnchor="start"
-													x={4}
-													y={2}
-												/>
-												<Text
-													value={format(node.value, 'integer')}
-													style="font-size: 0.5rem; font-weight: 200"
-													verticalAnchor="start"
-													x={4}
-													y={16}
-												/>
+											<Text
+												value={node.data.name}
+												style="font-size: 0.6rem; font-weight: 500"
+												verticalAnchor="start"
+												x={4}
+												y={2}
+											/>
+											<Text
+												value={format(node.value, 'integer')}
+												style="font-size: 0.5rem; font-weight: 200"
+												verticalAnchor="start"
+												x={4}
+												y={16}
+											/>
 										</g>
 									</RectClipPath>
 								</Group>
@@ -237,7 +279,13 @@
 
 <Preview>
 	<Breadcrumb items={selectedCarNode?.ancestors().reverse() ?? []}>
-		<Button slot="item" let:item on:click={() => selectedCarNode = item} base class="px-2 py-1 rounded">
+		<Button
+			slot="item"
+			let:item
+			on:click={() => (selectedCarNode = item)}
+			base
+			class="px-2 py-1 rounded"
+		>
 			<div class="text-left">
 				<div class="text-sm">{item.data[0] ?? 'Overall'}</div>
 				<div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
@@ -254,8 +302,16 @@
 				>
 					<ChartClipPath>
 						<Partition {padding} {round} let:nodes>
-							{#each nodes as node (node.ancestors().map(n => n.data[0]).join('_'))}
-								<Group x={xScale(node.y0)} y={yScale(node.x0)} on:click={() => selectedCarNode = node} tweened={{ delay: 600 }}>
+							{#each nodes as node (node
+								.ancestors()
+								.map((n) => n.data[0])
+								.join('_'))}
+								<Group
+									x={xScale(node.y0)}
+									y={yScale(node.x0)}
+									on:click={() => (selectedCarNode = node)}
+									tweened={{ delay: 600 }}
+								>
 									{@const nodeWidth = xScale(node.y1) - xScale(node.y0)}
 									{@const nodeHeight = yScale(node.x1) - yScale(node.x0)}
 									{@const nodeColor = getNodeColor(node, colorBy)}
@@ -272,7 +328,9 @@
 											<text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
 												<tspan>{node.data[0] ?? 'Overall'}</tspan>
 												{#if node.children}
-													<tspan style="font-size: 0.5rem; font-weight: 200">{format(node.value, 'integer')}</tspan>
+													<tspan style="font-size: 0.5rem; font-weight: 200"
+														>{format(node.value, 'integer')}</tspan
+													>
 												{/if}
 											</text>
 										</RectClipPath>

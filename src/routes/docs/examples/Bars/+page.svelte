@@ -22,33 +22,66 @@
 	import { createStackData, stackOffsetSeparated } from '$lib/utils/stack';
 	import { createDateSeries, longData } from '$lib/utils/genData';
 
-	const data = createDateSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] });
+	const data = createDateSeries({
+		min: 20,
+		max: 100,
+		value: 'integer',
+		keys: ['value', 'baseline']
+	});
 	const negativeData = createDateSeries({ min: -20, max: 50, value: 'integer' });
 
-	const groupedData = createStackData(longData, { xKey: 'year', groupBy: 'fruit' })
-	const stackedData = createStackData(longData, { xKey: 'year', stackBy: 'fruit' })
-	const groupedStackedData = createStackData(longData, { xKey: 'year', groupBy: 'basket', stackBy: 'fruit' })
-	const stackedPercentData = createStackData(longData, { xKey: 'year', stackBy: 'fruit', offset: stackOffsetExpand })
-	const stackedSeperatedData = createStackData(longData, { xKey: 'year', stackBy: 'fruit', offset: stackOffsetSeparated })
-
-	const colorKeys = [...new Set(longData.map(x => x.fruit))]
-	const keyColors = ['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)', 'var(--color-orange-500)'];
-
-	let transitionChartMode = "group"
-	$: transitionChart = transitionChartMode === 'group' ? {
-		groupBy: 'fruit',
-		stackBy: undefined
-	} : transitionChartMode === 'stack' ? {
-		groupBy: undefined,
-		stackBy: 'fruit'
-	} : transitionChartMode === 'groupStack' ? {
+	const groupedData = createStackData(longData, { xKey: 'year', groupBy: 'fruit' });
+	const stackedData = createStackData(longData, { xKey: 'year', stackBy: 'fruit' });
+	const groupedStackedData = createStackData(longData, {
+		xKey: 'year',
 		groupBy: 'basket',
 		stackBy: 'fruit'
-	} : {
-		groupBy: undefined,
-		stackBy: undefined
-	}
-	$: transitionData = createStackData(longData, { xKey: 'year', groupBy: transitionChart.groupBy, stackBy: transitionChart.stackBy })
+	});
+	const stackedPercentData = createStackData(longData, {
+		xKey: 'year',
+		stackBy: 'fruit',
+		offset: stackOffsetExpand
+	});
+	const stackedSeperatedData = createStackData(longData, {
+		xKey: 'year',
+		stackBy: 'fruit',
+		offset: stackOffsetSeparated
+	});
+
+	const colorKeys = [...new Set(longData.map((x) => x.fruit))];
+	const keyColors = [
+		'var(--color-blue-500)',
+		'var(--color-green-500)',
+		'var(--color-purple-500)',
+		'var(--color-orange-500)'
+	];
+
+	let transitionChartMode = 'group';
+	$: transitionChart =
+		transitionChartMode === 'group'
+			? {
+					groupBy: 'fruit',
+					stackBy: undefined
+			  }
+			: transitionChartMode === 'stack'
+			? {
+					groupBy: undefined,
+					stackBy: 'fruit'
+			  }
+			: transitionChartMode === 'groupStack'
+			? {
+					groupBy: 'basket',
+					stackBy: 'fruit'
+			  }
+			: {
+					groupBy: undefined,
+					stackBy: undefined
+			  };
+	$: transitionData = createStackData(longData, {
+		xKey: 'year',
+		groupBy: transitionChart.groupBy,
+		stackBy: transitionChart.stackBy
+	});
 	// $: console.log({ transitionData })
 </script>
 
@@ -145,11 +178,11 @@
 				<Bars radius={4} strokeWidth={1} />
 				<HighlightRect />
 			</Svg>
-			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+			<Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
 				<TooltipItem label="value" value={data.value} />
 			</Tooltip>
-    	</Chart>
-    </div>
+		</Chart>
+	</div>
 </Preview>
 
 <h2>With Labels</h2>
@@ -184,7 +217,7 @@
 			{data}
 			x="date"
 			xScale={scaleBand().padding(0.4)}
-			y={d => Math.max(d.value, d.baseline)}
+			y={(d) => Math.max(d.value, d.baseline)}
 			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
@@ -198,7 +231,7 @@
 				<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
 				<HighlightRect />
 			</Svg>
-			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+			<Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
 				<TooltipItem label="value" value={data.value} />
 				<TooltipItem label="baseline" value={data.baseline} />
 			</Tooltip>
@@ -214,13 +247,13 @@
 			data={groupedData}
 			flatData={longData}
 			extents={{
-				y: extent(groupedData.flatMap(d => d.values))
+				y: extent(groupedData.flatMap((d) => d.values))
 			}}
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
 			y="values"
 			yNice
-			r={d => d}
+			r={(d) => d}
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -230,7 +263,7 @@
 				<AxisY gridlines />
 				<AxisX />
 				<Baseline x y />
-				<Bars groupBy="fruit" getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+				<Bars groupBy="fruit" getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
 	</div>
@@ -243,13 +276,13 @@
 		<Chart
 			data={stackedData}
 			extents={{
-				y: extent(stackedData.flatMap(d => d.values))
+				y: extent(stackedData.flatMap((d) => d.values))
 			}}
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
 			y="values"
 			yNice
-			r={d => d.keys[1]}
+			r={(d) => d.keys[1]}
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -259,7 +292,7 @@
 				<AxisY gridlines />
 				<AxisX />
 				<Baseline x y />
-				<Bars getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+				<Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
 	</div>
@@ -272,13 +305,13 @@
 		<Chart
 			data={stackedPercentData}
 			extents={{
-				y: extent(stackedPercentData.flatMap(d => d.values))
+				y: extent(stackedPercentData.flatMap((d) => d.values))
 			}}
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
 			y="values"
 			yNice
-			r={d => d.keys[1]}
+			r={(d) => d.keys[1]}
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -288,7 +321,7 @@
 				<AxisY gridlines formatTick="percentRound" />
 				<AxisX />
 				<Baseline x y />
-				<Bars getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+				<Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
 	</div>
@@ -301,13 +334,13 @@
 		<Chart
 			data={stackedSeperatedData}
 			extents={{
-				y: extent(stackedSeperatedData.flatMap(d => d.values))
+				y: extent(stackedSeperatedData.flatMap((d) => d.values))
 			}}
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
 			y="values"
 			yNice
-			r={d => d.keys[1]}
+			r={(d) => d.keys[1]}
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -317,7 +350,7 @@
 				<AxisY gridlines />
 				<AxisX />
 				<Baseline x y />
-				<Bars getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+				<Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
 	</div>
@@ -331,13 +364,13 @@
 			data={groupedStackedData}
 			flatData={longData}
 			extents={{
-				y: extent(groupedStackedData.flatMap(d => d.values))
+				y: extent(groupedStackedData.flatMap((d) => d.values))
 			}}
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
 			y="values"
 			yNice
-			r={d => d}
+			r={(d) => d}
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -347,7 +380,7 @@
 				<AxisY gridlines />
 				<AxisX />
 				<Baseline x y />
-				<Bars groupBy="basket" getKey={item => item.keys.join('-')} radius={4} strokeWidth={1} />
+				<Bars groupBy="basket" getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
 	</div>
@@ -357,7 +390,11 @@
 
 <div class="grid grid-cols-[1fr,1fr] gap-2 mb-2">
 	<Field label="Mode">
-		<ToggleGroup bind:value={transitionChartMode} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup
+			bind:value={transitionChartMode}
+			contained
+			classes={{ root: 'w-full', options: 'w-full' }}
+		>
 			<ToggleOption value="group">Grouped</ToggleOption>
 			<ToggleOption value="stack">Stacked</ToggleOption>
 			<ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
@@ -367,17 +404,17 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-	<!-- Always use stackedData for extents for consistent scale -->
+		<!-- Always use stackedData for extents for consistent scale -->
 		<Chart
 			data={transitionData}
 			extents={{
-				y: extent(stackedData.flatMap(d => d.values))
+				y: extent(stackedData.flatMap((d) => d.values))
 			}}
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
 			y="values"
 			yNice
-			r={d => {
+			r={(d) => {
 				// Color by fruit (last key)
 				return d.keys.at(-1);
 			}}
@@ -392,14 +429,14 @@
 				<Baseline x y />
 				<Bars
 					groupBy={transitionChart.groupBy}
-					getKey={item => item.keys.at(0) + '-' + item.keys.at(-1)}
+					getKey={(item) => item.keys.at(0) + '-' + item.keys.at(-1)}
 					radius={4}
 					strokeWidth={1}
 					tweened={{
-						x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0: 300 },
+						x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
 						y: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
 						width: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-						height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
+						height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 }
 					}}
 				/>
 			</Svg>

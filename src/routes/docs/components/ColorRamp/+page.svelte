@@ -20,15 +20,14 @@
 	let height = 20;
 	let steps = 5;
 
-	const interpolators = Object.entries(d3chromatic)
-		.filter(([key, value]) => key.startsWith('interpolate'));
-	interpolators.push([`interpolateRgb('red', 'blue')`, interpolateRgb('red', 'blue')])
-	interpolators.push([`interpolateLab('red', 'blue')`, interpolateLab('red', 'blue')])
-	interpolators.push([`interpolateHclLong('red', 'blue')`, interpolateHclLong('red', 'blue')])
-	
+	const interpolators = Object.entries(d3chromatic).filter(([key, value]) =>
+		key.startsWith('interpolate')
+	);
+	interpolators.push([`interpolateRgb('red', 'blue')`, interpolateRgb('red', 'blue')]);
+	interpolators.push([`interpolateLab('red', 'blue')`, interpolateLab('red', 'blue')]);
+	interpolators.push([`interpolateHclLong('red', 'blue')`, interpolateHclLong('red', 'blue')]);
 
-	const schemes = Object.entries(d3chromatic)
-		.filter(([key, value]) => key.startsWith('scheme'));
+	const schemes = Object.entries(d3chromatic).filter(([key, value]) => key.startsWith('scheme'));
 </script>
 
 <h1>Examples</h1>
@@ -77,7 +76,12 @@
 				<div>
 					<div class="text-sm">{name}</div>
 					<svg {width} {height}>
-						<ColorRamp interpolator={scaleQuantize([0,1], scheme)} {width} {height} style="image-rendering: pixelated" />
+						<ColorRamp
+							interpolator={scaleQuantize([0, 1], scheme)}
+							{width}
+							{height}
+							style="image-rendering: pixelated"
+						/>
 					</svg>
 				</div>
 			{:else}
@@ -86,7 +90,12 @@
 						<div>
 							<div class="text-sm">{name}[{i}]</div>
 							<svg {width} {height}>
-								<ColorRamp interpolator={scaleQuantize([0,1], s)} {width} {height} style="image-rendering: pixelated" />
+								<ColorRamp
+									interpolator={scaleQuantize([0, 1], s)}
+									{width}
+									{height}
+									style="image-rendering: pixelated"
+								/>
 							</svg>
 						</div>
 					{/if}

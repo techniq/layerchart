@@ -5,7 +5,7 @@
 	import { feature } from 'topojson-client';
 
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-	import { Button, Field, scrollIntoView } from 'svelte-ux'
+	import { Button, Field, scrollIntoView } from 'svelte-ux';
 	import { cls } from 'svelte-ux/utils/styles';
 	import { createPropertySortFunc, createSortFunc } from 'svelte-ux/utils/sort';
 
@@ -15,12 +15,12 @@
 	import Graticule from '$lib/components/Graticule.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import TooltipItem from '$lib/components/TooltipItem.svelte';
-	
+
 	export let data;
 
 	const countries = feature(data.geojson, data.geojson.objects.countries);
 
-	const springOptions = { stiffness: .04 }
+	const springOptions = { stiffness: 0.04 };
 	const yaw = spring(0, springOptions);
 	const pitch = spring(0, springOptions);
 	const roll = spring(0, springOptions);
@@ -48,7 +48,11 @@
 			{#each countries.features.sort(createPropertySortFunc('properties.name')) as country}
 				{@const isSelected = selectedFeature === country}
 				<div use:scrollIntoView={{ condition: isSelected }}>
-					<Button fullWidth class={cls(isSelected && 'text-red-500')} on:click={() => selectedFeature = country}>
+					<Button
+						fullWidth
+						class={cls(isSelected && 'text-red-500')}
+						on:click={() => (selectedFeature = country)}
+					>
 						{country.properties.name}
 					</Button>
 				</div>
@@ -69,7 +73,14 @@
 				<GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-300" />
 				<Graticule class="stroke-black/20" />
 				{#each countries.features as country}
-					<GeoPath geojson={country} class={cls('fill-white', selectedFeature === country ? 'fill-red-400' : 'hover:fill-gray-200')} on:click={e => selectedFeature = country} />
+					<GeoPath
+						geojson={country}
+						class={cls(
+							'fill-white',
+							selectedFeature === country ? 'fill-red-400' : 'hover:fill-gray-200'
+						)}
+						on:click={(e) => (selectedFeature = country)}
+					/>
 				{/each}
 			</Svg>
 		</Chart>
@@ -84,7 +95,7 @@
 			{#each countries.features.sort(createPropertySortFunc('properties.name')) as country}
 				{@const isSelected = selectedFeature === country}
 				<div use:scrollIntoView={{ condition: isSelected }}>
-					<Button _base fullWidth on:click={() => selectedFeature = country}>
+					<Button _base fullWidth on:click={() => (selectedFeature = country)}>
 						{country.properties.name}
 					</Button>
 				</div>
@@ -108,7 +119,7 @@
 				<Graticule stroke="rgba(0,0,0,.20)" />
 			</Canvas>
 			<Canvas>
-				<GeoPath geojson={countries} fill="white"/>
+				<GeoPath geojson={countries} fill="white" />
 			</Canvas>
 		</Chart>
 	</div>

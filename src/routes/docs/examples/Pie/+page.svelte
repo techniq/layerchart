@@ -15,14 +15,18 @@
 	import Preview from '$lib/docs/Preview.svelte';
 	import { createDateSeries } from '$lib/utils/genData';
 
-
 	const data = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
 	const data2 = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
 
-	$: dataSum = sum(data, d => d.value);
+	$: dataSum = sum(data, (d) => d.value);
 
-	const colorKeys = [...new Set(data.map(d => d.date))]
-	const keyColors = ['var(--color-blue-500)', 'var(--color-green-500)', 'var(--color-purple-500)', 'var(--color-orange-500)'];
+	const colorKeys = [...new Set(data.map((d) => d.date))];
+	const keyColors = [
+		'var(--color-blue-500)',
+		'var(--color-green-500)',
+		'var(--color-purple-500)',
+		'var(--color-orange-500)'
+	];
 </script>
 
 <h1>Examples</h1>
@@ -31,14 +35,7 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="date"
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-		>
+		<Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
 			<Svg>
 				<Pie />
 			</Svg>
@@ -70,14 +67,7 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart 
-			{data}
-			x="value"
-			r="date"
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-		>
+		<Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
 			<Svg>
 				<Pie range={[-90, 90]} color="var(--color-blue-500)" />
 			</Svg>
@@ -89,14 +79,7 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="date"
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-		>
+		<Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
 			<Svg>
 				<Pie padAngle={0.05} />
 			</Svg>
@@ -108,14 +91,7 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="date"
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-		>
+		<Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
 			<Svg>
 				<Pie innerRadius={100} padAngle={0.03} />
 			</Svg>
@@ -129,14 +105,7 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="date"
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-		>
+		<Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
 			<Svg>
 				<Pie innerRadius={100} />
 			</Svg>
@@ -148,16 +117,9 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="date"
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-		>
+		<Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
 			<Svg>
-				<Pie innerRadius={.9} />
+				<Pie innerRadius={0.9} />
 			</Svg>
 		</Chart>
 	</div>
@@ -167,14 +129,7 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="date"
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-		>
+		<Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
 			<Svg>
 				<Pie innerRadius={-30} />
 			</Svg>
@@ -186,14 +141,7 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="date"
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-		>
+		<Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
 			<Svg>
 				<Pie outerRadius={100} />
 			</Svg>
@@ -205,14 +153,7 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="date"
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-		>
+		<Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
 			<Svg>
 				<Pie innerRadius={100} {data} />
 				<Pie outerRadius={90} data={data2} />
@@ -225,14 +166,7 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="date"
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-		>
+		<Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
 			<Svg>
 				<Pie tweened />
 			</Svg>
@@ -244,14 +178,7 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="date"
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-		>
+		<Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
 			<Svg>
 				<Pie offset={4} />
 			</Svg>
@@ -263,14 +190,7 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="date"
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-		>
+		<Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
 			<Svg>
 				<Pie let:arcs>
 					{#each arcs as arc, index}
@@ -292,14 +212,7 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="value"
-			r="date"
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-		>
+		<Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
 			<Svg>
 				<Pie let:arcs>
 					{#each arcs as arc, index}
@@ -318,7 +231,7 @@
 								textAnchor="middle"
 								verticalAnchor="middle"
 								class="text-lg"
-              />
+							/>
 							<Text
 								value={data[index].value}
 								x={centroid[0]}
@@ -327,7 +240,7 @@
 								textAnchor="middle"
 								verticalAnchor="middle"
 								class="text-sm fill-black/50"
-              />
+							/>
 						</Arc>
 					{/each}
 				</Pie>
@@ -353,16 +266,8 @@
 			<Svg>
 				<Pie {tooltip} />
 			</Svg>
-			<Tooltip
-				header={data => format(data.date, 'eee, MMMM do')}
-				let:data
-			>
-				<TooltipItem
-					label="value"
-					value={data.value}
-					format="integer"
-					valueAlign="right"
-				/>
+			<Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+				<TooltipItem label="value" value={data.value} format="integer" valueAlign="right" />
 				<TooltipItem
 					label="percent"
 					value={data.value / dataSum}

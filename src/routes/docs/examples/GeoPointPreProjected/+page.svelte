@@ -35,7 +35,7 @@
 				projection: geoAlbersUsa,
 				_scale: 1300,
 				_translate: [487.5, 305],
-				fitGeojson: states,
+				fitGeojson: states
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
@@ -48,9 +48,12 @@
 					projection={geoIdentity}
 					_scale={projection.scale()}
 					scale={projection.scale() / 1300}
-					_translate={[487.5 * (487.5 / projection.translate()[0]), 305 * (305 / projection.translate()[1])]}
+					_translate={[
+						487.5 * (487.5 / projection.translate()[0]),
+						305 * (305 / projection.translate()[1])
+					]}
 					__translate={[256.43 * 0.96, -13.11 * 0.96]}
-					___translate={[240,5]}
+					___translate={[240, 5]}
 					____translate={[projection.translate()[0] - 487.5, projection.translate()[1] - 305]}
 					geojson={states}
 					let:projection

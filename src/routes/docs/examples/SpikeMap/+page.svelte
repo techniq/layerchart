@@ -19,42 +19,44 @@
 	const states = feature(data.geojson, data.geojson.objects.states);
 	const counties = feature(data.geojson, data.geojson.objects.counties);
 
-	const statesById = index(states.features, d => d.id)
+	const statesById = index(states.features, (d) => d.id);
 
-	const population = _population.map(d => {
+	const population = _population.map((d) => {
 		return {
 			fips: d.state + d.county,
 			state: statesById.get(d.state).properties.name,
 			population: +d.DP05_0001E,
 			populationUnder18: +d.DP05_0019E,
 			percentUnder18: +d.DP05_0019PE
-		}
-	}) 
-	const populationByFips = index(population, (d) => d.fips)
+		};
+	});
+	const populationByFips = index(population, (d) => d.fips);
 
 	const width = 7;
 	const maxHeight = 200;
 	$: heightScale = scaleLinear()
-		.domain([0, max(population, d => d.population)])
-		.range([0, maxHeight])
-	
-	$: colors = quantize(interpolateViridis, 5)
+		.domain([0, max(population, (d) => d.population)])
+		.range([0, maxHeight]);
+
+	$: colors = quantize(interpolateViridis, 5);
 	// $: colorScale = scaleQuantize()
 	// 	.domain([0, max(population, d => d.percentUnder18)])
 	// 	.range(colors)
 	$: colorScale = scaleThreshold()
-		.domain([16, 20, 24, 28, Math.ceil(max(population, d => d.percentUnder18))])
-		.range(colors)
+		.domain([16, 20, 24, 28, Math.ceil(max(population, (d) => d.percentUnder18))])
+		.range(colors);
 
-	$: enrichedCountiesFeatures = counties.features.map(feature => {
-		return {
-			...feature,
-			properties: {
-				...feature.properties,
-				data: populationByFips.get(feature.id)
-			}
-		}
-	}).sort((a,b) => descending(a.properties.data?.population, b.properties.data?.population))
+	$: enrichedCountiesFeatures = counties.features
+		.map((feature) => {
+			return {
+				...feature,
+				properties: {
+					...feature.properties,
+					data: populationByFips.get(feature.id)
+				}
+			};
+		})
+		.sort((a, b) => descending(a.properties.data?.population, b.properties.data?.population));
 </script>
 
 <h1>Examples</h1>
@@ -78,11 +80,14 @@
 				{/each}
 				{#each enrichedCountiesFeatures as feature}
 					<GeoPath geojson={feature} let:geoPath>
-						{@const [x,y] = geoPath.centroid(feature)}
+						{@const [x, y] = geoPath.centroid(feature)}
 						{@const d = feature.properties.data}
 						{@const height = heightScale(d?.population)}
 						<Group {x} {y}>
-							<path d="M{-width / 2},0 L0,{-height} L{width / 2},0" class="stroke-red-500 fill-red-500/25" />
+							<path
+								d="M{-width / 2},0 L0,{-height} L{width / 2},0"
+								class="stroke-red-500 fill-red-500/25"
+							/>
 						</Group>
 					</GeoPath>
 				{/each}
@@ -90,7 +95,10 @@
 					<GeoPath geojson={feature} {tooltip} class="stroke-none hover:fill-black/10" />
 				{/each}
 			</Svg>
-			<Tooltip header={(data) => data.properties.name + ' - ' + data.properties.data?.state} let:data>
+			<Tooltip
+				header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
+				let:data
+			>
 				{@const d = data.properties.data}
 				<TooltipItem
 					label="Total Population"
@@ -129,7 +137,9 @@
 				<GeoPath geojson={states} fill="rgba(0,0,0,.1)" stroke="white" />
 			</Canvas>
 			<Canvas>
-				<GeoPath geojson={feature} render={(ctx, { geoPath }) => {
+				<GeoPath
+					geojson={feature}
+					render={(ctx, { geoPath }) => {
 						for (var feature of enrichedCountiesFeatures) {
 							const [x, y] = geoPath.centroid(feature);
 							const d = feature.properties.data;
@@ -139,9 +149,9 @@
 							ctx.strokeStyle = color;
 							ctx.fillStyle = '#FF0000' + (256 * 0.25).toString(16);
 							ctx.beginPath();
-							const startPoint = [x - width/2, y]
-							const midPoint = [x, y - height]
-							const endPoint = [x + width/2, y]
+							const startPoint = [x - width / 2, y];
+							const midPoint = [x, y - height];
+							const endPoint = [x + width / 2, y];
 							ctx.moveTo(...startPoint);
 							ctx.lineTo(...midPoint);
 							ctx.lineTo(...endPoint);

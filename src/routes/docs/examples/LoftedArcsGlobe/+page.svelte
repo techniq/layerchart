@@ -7,7 +7,7 @@
 	import { feature } from 'topojson-client';
 
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-	import { Button, Field, ToggleGroup, ToggleOption, Switch, scrollIntoView } from 'svelte-ux'
+	import { Button, Field, ToggleGroup, ToggleOption, Switch, scrollIntoView } from 'svelte-ux';
 	import { cls } from 'svelte-ux/utils/styles';
 	import { createPropertySortFunc, createSortFunc } from 'svelte-ux/utils/sort';
 
@@ -29,8 +29,10 @@
 
 	const countries = feature(data.geojson, data.geojson.objects.countries);
 
-	const translate = [480,350]
-	const loftedProjection = geoOrthographic().translate(translate).scale(249.50 * 1.3);
+	const translate = [480, 350];
+	const loftedProjection = geoOrthographic()
+		.translate(translate)
+		.scale(249.5 * 1.3);
 
 	let scale = 0;
 	let yaw = 0;
@@ -86,11 +88,11 @@
 						//scale = e.detail.scale;
 						const scale = 250;
 						yaw = e.detail.translate.x * (sensitivity / scale);
-						pitch = -e.detail.translate.y * (sensitivity / scale)
-						loftedProjection.rotate([yaw, pitch])
+						pitch = -e.detail.translate.y * (sensitivity / scale);
+						loftedProjection.rotate([yaw, pitch]);
 					}}
 				>
-					<GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-300" on:click={() => yaw += 1} />
+					<GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-300" on:click={() => (yaw += 1)} />
 					<Graticule class="stroke-black/20 fill-none pointer-events-none" />
 					{#each countries.features as country}
 						<GeoPath geojson={country} class="fill-white pointer-events-none" />
@@ -103,7 +105,14 @@
 						<EdgeFade {link}>
 							<circle cx={source[0]} cy={source[1]} r={2} class="fill-black-500" />>
 							<circle cx={target[0]} cy={target[1]} r={2} class="fill-black-500" />>
-							<Path data={pathData} x={d => d[0]} y={d => d[1]} defined={d => projection.invert(d)} curve={curveNatural} class="fill-none stroke-red-500 stroke-2" />
+							<Path
+								data={pathData}
+								x={(d) => d[0]}
+								y={(d) => d[1]}
+								defined={(d) => projection.invert(d)}
+								curve={curveNatural}
+								class="fill-none stroke-red-500 stroke-2"
+							/>
 							<GeoPath geojson={link.feature} class="stroke-gray-500/30 stroke-2" />
 						</EdgeFade>
 					{/each}

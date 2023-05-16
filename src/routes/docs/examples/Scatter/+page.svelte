@@ -66,7 +66,7 @@
 				<Points class="fill-blue-500 stroke-blue-800" />
 				<HighlightLine color="var(--color-blue-500)" />
 			</Svg>
-			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+			<Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
 				<TooltipItem label="value" value={data.value} />
 			</Tooltip>
 		</Chart>
@@ -114,7 +114,10 @@
 				<AxisY gridlines />
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Points color={({ value }) => value >= 50 ? 'var(--color-green-500)' : 'var(--color-red-500)'} class="stroke-black/50" />
+				<Points
+					color={({ value }) => (value >= 50 ? 'var(--color-green-500)' : 'var(--color-red-500)')}
+					class="stroke-black/50"
+				/>
 			</Svg>
 		</Chart>
 	</div>
@@ -136,11 +139,7 @@
 			r="value"
 			rScale={scaleThreshold()}
 			rDomain={[50, 90]}
-			rRange={[
-				'var(--color-red-500)',
-				'var(--color-yellow-500)',
-				'var(--color-green-500)',
-			]}
+			rRange={['var(--color-red-500)', 'var(--color-yellow-500)', 'var(--color-green-500)']}
 			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>

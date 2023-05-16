@@ -3,13 +3,7 @@
 	import * as d3shapes from 'd3-shape';
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
-	import {
-		ApiDocs,
-		Button,
-		Field,
-		SelectField,
-		Switch
-	} from 'svelte-ux';
+	import { ApiDocs, Button, Field, SelectField, Switch } from 'svelte-ux';
 
 	import api from '$lib/components/Area.svelte?raw&sveld';
 
@@ -32,43 +26,42 @@
 		return {
 			x: i + 1,
 			y: easing?.(i / pointCount) ?? i
-		}
-	})
+		};
+	});
 
 	const easingOptions = Object.entries(easings).map(([key, value]) => {
 		return {
 			name: key,
 			value
-		}
-	})
+		};
+	});
 
 	let curve = d3shapes['curveLinear'];
-	const curveOptions = Object
-		.keys(d3shapes)
-		.filter(key => key.startsWith('curve'))
-		.filter(key => !key.endsWith('Open') && !key.endsWith('Closed') && !key.endsWith('Bundle'))
-		.map(key => {
+	const curveOptions = Object.keys(d3shapes)
+		.filter((key) => key.startsWith('curve'))
+		.filter((key) => !key.endsWith('Open') && !key.endsWith('Closed') && !key.endsWith('Bundle'))
+		.map((key) => {
 			return {
 				name: key,
 				value: d3shapes[key]
-			}
-		})
+			};
+		});
 
 	function prev(options, current) {
-		const index = options.findIndex(x => x.value === current);
+		const index = options.findIndex((x) => x.value === current);
 		if (index === 0) {
-			return options[options.length - 1].value
+			return options[options.length - 1].value;
 		} else {
-			return options[index - 1].value
+			return options[index - 1].value;
 		}
 	}
 
 	function next(options, current) {
-		const index = options.findIndex(x => x.value === current);
+		const index = options.findIndex((x) => x.value === current);
 		if (index === options.length - 1) {
-			return options[0].value
+			return options[0].value;
 		} else {
-			return options[index + 1].value
+			return options[index + 1].value;
 		}
 	}
 
@@ -81,22 +74,42 @@
 
 <div class="grid grid-cols-[1fr,1fr,1fr,auto,auto,auto] gap-2">
 	<Field label="Path Example" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => easing = prev(easingOptions, easing)} class="mr-2" size="sm" />
+		<Button
+			icon={mdiChevronLeft}
+			on:click={() => (easing = prev(easingOptions, easing))}
+			class="mr-2"
+			size="sm"
+		/>
 		<select bind:value={easing} class="w-full outline-none appearance-none text-sm" {id}>
 			{#each easingOptions as option}
 				<option value={option.value}>{option.name}</option>
 			{/each}
 		</select>
-		<Button icon={mdiChevronRight} on:click={() => easing = next(easingOptions, easing)} class="ml-2" size="sm" />
+		<Button
+			icon={mdiChevronRight}
+			on:click={() => (easing = next(easingOptions, easing))}
+			class="ml-2"
+			size="sm"
+		/>
 	</Field>
 	<Field label="Curve" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => curve = prev(curveOptions, curve)} class="mr-2" size="sm" />
+		<Button
+			icon={mdiChevronLeft}
+			on:click={() => (curve = prev(curveOptions, curve))}
+			class="mr-2"
+			size="sm"
+		/>
 		<select bind:value={curve} class="w-full outline-none appearance-none text-sm" {id}>
 			{#each curveOptions as option}
 				<option value={option.value}>{option.name}</option>
 			{/each}
 		</select>
-		<Button icon={mdiChevronRight} on:click={() => curve = next(curveOptions, curve)} class="ml-2" size="sm" />
+		<Button
+			icon={mdiChevronRight}
+			on:click={() => (curve = next(curveOptions, curve))}
+			class="ml-2"
+			size="sm"
+		/>
 	</Field>
 	<RangeField label="Points" bind:value={pointCount} min={2} />
 	<Field label="Show points" let:id>
@@ -114,13 +127,7 @@
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x="x"
-			y="y"
-			yNice
-			padding={{ left: 16, bottom: 24 }}
-		>
+		<Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
 			<Svg>
 				<AxisY gridlines />
 				<AxisX />

@@ -3,7 +3,7 @@
 	import { scaleQuantize } from 'd3-scale';
 	import { geoMercator } from 'd3-geo';
 	import { feature } from 'topojson-client';
-	
+
 	import { Button, Field, Switch } from 'svelte-ux';
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
@@ -22,7 +22,12 @@
 
 	const states = feature(geojson, geojson.objects.collection);
 
-	$: filteredStates = { ...states, features: states.features.filter(d => d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii' )}
+	$: filteredStates = {
+		...states,
+		features: states.features.filter(
+			(d) => d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii'
+		)
+	};
 	// $: filteredStates = { ...states, features: states.features.filter(d => d.properties.name === 'West Virginia')}
 	$: selectedFeature = filteredStates;
 
@@ -48,7 +53,7 @@
 		<Chart
 			geo={{
 				projection: geoMercator,
-				fitGeojson: selectedFeature,
+				fitGeojson: selectedFeature
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
@@ -61,22 +66,15 @@
 						geojson={feature}
 						{tooltip}
 						class="stroke-black/20 hover:fill-white/30"
-						on:click={() => selectedFeature  = selectedFeature === feature ? filteredStates : feature}
+						on:click={() =>
+							(selectedFeature = selectedFeature === feature ? filteredStates : feature)}
 					/>
 				{/each}
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data>
-				{@const [longitude, latitude] = projection.invert([tooltip.left,tooltip.top])}
-				<TooltipItem
-					label="longitude"
-					value={longitude}
-					format="decimal"
-				/>
-				<TooltipItem
-					label="latitude"
-					value={latitude}
-					format="decimal"
-				/>
+				{@const [longitude, latitude] = projection.invert([tooltip.left, tooltip.top])}
+				<TooltipItem label="longitude" value={longitude} format="decimal" />
+				<TooltipItem label="latitude" value={latitude} format="decimal" />
 			</Tooltip>
 		</Chart>
 	</div>
@@ -105,22 +103,15 @@
 						geojson={feature}
 						{tooltip}
 						class="stroke-black/20 hover:fill-white/30"
-						on:click={() => selectedFeature  = selectedFeature === feature ? filteredStates : feature}
+						on:click={() =>
+							(selectedFeature = selectedFeature === feature ? filteredStates : feature)}
 					/>
 				{/each}
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data>
-				{@const [longitude, latitude] = projection.invert([tooltip.left,tooltip.top])}
-				<TooltipItem
-					label="longitude"
-					value={longitude}
-					format="decimal"
-				/>
-				<TooltipItem
-					label="latitude"
-					value={latitude}
-					format="decimal"
-				/>
+				{@const [longitude, latitude] = projection.invert([tooltip.left, tooltip.top])}
+				<TooltipItem label="longitude" value={longitude} format="decimal" />
+				<TooltipItem label="latitude" value={latitude} format="decimal" />
 			</Tooltip>
 		</Chart>
 	</div>

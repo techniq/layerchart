@@ -5,7 +5,7 @@
 	import { sort } from 'd3-array';
 	import { feature } from 'topojson-client';
 
-	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux'
+	import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import ZoomControls from '$lib/docs/ZoomControls.svelte';
@@ -21,18 +21,20 @@
 	const projections = [
 		{ name: 'Albers', value: geoAlbers },
 		{ name: 'Albers USA', value: geoAlbersUsa },
-		{ name: 'Mercator', value: geoMercator },
+		{ name: 'Mercator', value: geoMercator }
 	];
 
 	const counties = feature(data.geojson, data.geojson.objects.counties);
 	const states = feature(data.geojson, data.geojson.objects.states);
 
 	function filterNonStates(features) {
-		return features.filter(x => Number(x.id) < 60)
+		return features.filter((x) => Number(x.id) < 60);
 	}
 
 	let selectedStateId = null;
-	$: selectedCountiesFeatures = selectedStateId ? counties.features.filter(f => f.id.slice(0,2) === selectedStateId) : [];
+	$: selectedCountiesFeatures = selectedStateId
+		? counties.features.filter((f) => f.id.slice(0, 2) === selectedStateId)
+		: [];
 
 	let zoom;
 	let scrollMode = 'scale';
@@ -65,20 +67,27 @@
 		<Chart
 			geo={{
 				projection,
-				fitGeojson: states,
+				fitGeojson: states
 			}}
 			tooltip={{ mode: 'manual' }}
 			let:tooltip
 		>
 			<Svg>
-				<Zoom bind:this={zoom} scroll={scrollMode} tweened={{ duration: 800, easing: cubicOut }} let:zoomTo let:reset={resetZoom} let:scale>
+				<Zoom
+					bind:this={zoom}
+					scroll={scrollMode}
+					tweened={{ duration: 800, easing: cubicOut }}
+					let:zoomTo
+					let:reset={resetZoom}
+					let:scale
+				>
 					{#each filterNonStates(states.features) as feature}
 						<GeoPath
 							geojson={feature}
 							class="fill-white hover:fill-gray-200"
 							stroke-width={1 / scale}
 							{tooltip}
-							on:click={e => {
+							on:click={(e) => {
 								const { geoPath, event } = e.detail;
 								let [[left, top], [right, bottom]] = geoPath.bounds(feature);
 								if (selectedStateId === feature.id) {
@@ -91,17 +100,23 @@
 									let x = (left + right) / 2;
 									let y = (top + bottom) / 2;
 									const padding = 20;
-									zoomTo({ x, y }, { width: width + padding, height: height + padding })
+									zoomTo({ x, y }, { width: width + padding, height: height + padding });
 								}
 							}}
 						/>
 					{/each}
 					{#each selectedCountiesFeatures as feature (feature.id)}
 						<g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}>
-							<GeoPath geojson={feature} {tooltip} stroke-width={1 / scale} class="fill-white stroke-black/10 hover:fill-gray-200" on:click={() => {
+							<GeoPath
+								geojson={feature}
+								{tooltip}
+								stroke-width={1 / scale}
+								class="fill-white stroke-black/10 hover:fill-gray-200"
+								on:click={() => {
 									selectedStateId = null;
 									resetZoom();
-							}} />
+								}}
+							/>
 						</g>
 					{/each}
 				</Zoom>

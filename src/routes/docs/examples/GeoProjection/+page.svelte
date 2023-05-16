@@ -1,5 +1,13 @@
 <script lang="ts">
-	import { geoAlbersUsa, geoAlbers, geoEqualEarth, geoEquirectangular, geoMercator, geoNaturalEarth1, geoOrthographic } from 'd3-geo';
+	import {
+		geoAlbersUsa,
+		geoAlbers,
+		geoEqualEarth,
+		geoEquirectangular,
+		geoMercator,
+		geoNaturalEarth1,
+		geoOrthographic
+	} from 'd3-geo';
 	import { index } from 'd3-array';
 	import { scaleQuantize } from 'd3-scale';
 	import { feature } from 'topojson-client';
@@ -26,14 +34,17 @@
 		{ name: 'Equirectangular', value: geoEquirectangular },
 		{ name: 'Mercator', value: geoMercator },
 		{ name: 'Natural Earth', value: geoNaturalEarth1 },
-		{ name: 'Orthographic', value: geoOrthographic },
-	]
+		{ name: 'Orthographic', value: geoOrthographic }
+	];
 
 	let detailed = false;
 
 	$: dataGeoJson = detailed ? data.geojsonDetail : data.geojson;
 	$: geojson = feature(dataGeoJson, dataGeoJson.objects.countries);
-	$: features = projection === geoAlbersUsa ? geojson.features.filter(f => f.properties.name === 'United States of America') : geojson.features;
+	$: features =
+		projection === geoAlbersUsa
+			? geojson.features.filter((f) => f.properties.name === 'United States of America')
+			: geojson.features;
 
 	let yaw = 0;
 	let pitch = 0;
@@ -71,7 +82,7 @@
 				rotate: {
 					yaw,
 					pitch,
-					roll,
+					roll
 				},
 				scale
 			}}
@@ -82,7 +93,11 @@
 			<Svg>
 				<GeoPath geojson={{ type: 'Sphere' }} class="stroke-black fill-blue-300" />
 				{#each features as feature}
-					<GeoPath geojson={feature} {tooltip} class="stroke-black fill-white hover:fill-gray-300" />
+					<GeoPath
+						geojson={feature}
+						{tooltip}
+						class="stroke-black fill-white hover:fill-gray-300"
+					/>
 				{/each}
 				<Graticule class="stroke-black/20 pointer-events-none" />
 			</Svg>
@@ -102,7 +117,7 @@
 				rotate: {
 					yaw,
 					pitch,
-					roll,
+					roll
 				},
 				scale
 			}}
@@ -111,7 +126,7 @@
 				<GeoPath geojson={{ type: 'Sphere' }} fill="#93c5fd" />
 			</Canvas>
 			<Canvas>
-				<GeoPath {geojson} fill="white"/>
+				<GeoPath {geojson} fill="white" />
 			</Canvas>
 			<Canvas>
 				<Graticule stroke="rgba(0,0,0,.20)" />

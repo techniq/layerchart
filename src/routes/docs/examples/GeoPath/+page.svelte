@@ -43,7 +43,7 @@
 				{/each}
 			</Svg>
 			<Tooltip header={(data) => data.properties.name} let:data>
-				{@const [longitude, latitude] = projection.invert([tooltip.left,tooltip.top])}
+				{@const [longitude, latitude] = projection.invert([tooltip.left, tooltip.top])}
 				<!-- <TooltipItem
 					label="longitude"
 					value={longitude}

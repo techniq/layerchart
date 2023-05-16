@@ -19,11 +19,11 @@
 	import Text from '$lib/components/Text.svelte';
 
 	import { simpleData, complexData, greenhouse } from '../_data/graph';
-	import { complexData as hierarchyComplexData } from '../_data/hierarchy'
+	import { complexData as hierarchyComplexData } from '../_data/hierarchy';
 	import { graphFromHierarchy, graphFromNode } from '$lib/utils/graph';
 
-	const colorScale = scaleSequential(interpolateCool)
-	
+	const colorScale = scaleSequential(interpolateCool);
+
 	let highlightLinkIndexes = [];
 	let nodeAlign = 'justify';
 	let nodePadding = 4;
@@ -31,16 +31,18 @@
 	let nodeColorBy = 'layer';
 	let linkColorBy = 'static';
 
-	$: linkOpacity = linkColorBy === 'static' ? 
-	{
-		default: 0.1,
-		hover: 0.1,
-		other: 0.01,
-	} : {
-		default: 0.2,
-		hover: 0.2,
-		other: 0.01,
-	};
+	$: linkOpacity =
+		linkColorBy === 'static'
+			? {
+					default: 0.1,
+					hover: 0.1,
+					other: 0.01
+			  }
+			: {
+					default: 0.2,
+					hover: 0.2,
+					other: 0.01
+			  };
 
 	const complexDataHierarchy = hierarchy(hierarchyComplexData)
 		.sum((d) => d.value)
@@ -48,8 +50,8 @@
 
 	$: hierarchyGraph = graphFromHierarchy(complexDataHierarchy);
 
-	let selectedNode = null
-	$: selectedNode && console.log(graphFromNode(selectedNode))
+	let selectedNode = null;
+	$: selectedNode && console.log(graphFromNode(selectedNode));
 </script>
 
 <h1>Examples</h1>
@@ -60,7 +62,7 @@
 	<div class="h-[400px] p-4 border rounded">
 		<Chart data={simpleData}>
 			<Svg>
-				<Sankey nodeId={d => d.id} let:links let:nodes>
+				<Sankey nodeId={(d) => d.id} let:links let:nodes>
 					{#each links as link}
 						<Link sankey data={link} stroke="#ddd" stroke-opacity={0.5} stroke-width={link.width} />
 					{/each}
@@ -68,11 +70,7 @@
 						{@const nodeWidth = node.x1 - node.x0}
 						{@const nodeHeight = node.y1 - node.y0}
 						<Group x={node.x0} y={node.y0}>
-							<Rect
-								width={nodeWidth}
-								height={nodeHeight}
-								class="fill-blue-500"
-							/>
+							<Rect width={nodeWidth} height={nodeHeight} class="fill-blue-500" />
 							<Text
 								value={node.id}
 								x={node.height === 0 ? -4 : nodeWidth + 4}
@@ -94,34 +92,42 @@
 	<div class="h-[600px] p-4 border rounded">
 		<Chart data={selectedNode ? graphFromNode(selectedNode) : greenhouse}>
 			<Svg>
-				<Sankey nodeId={d => d.name} nodeWidth={8} let:links let:nodes>
-    				{#each links as link (link.source.name + '-' + link.target.name)}
-    					<Link sankey data={link} stroke="#ddd" stroke-opacity={0.5} stroke-width={link.width} tweened />
-    				{/each}
-    				{#each nodes as node (node.name)}
-    					{@const nodeWidth = node.x1 - node.x0}
-    					{@const nodeHeight = node.y1 - node.y0}
-    					<Group x={node.x0} y={node.y0} tweened on:click={() => {
-								selectedNode = (node === selectedNode || node.sourceLinks.length === 0) ? null : node}}>
-    						<Rect
-    							width={nodeWidth}
-    							height={nodeHeight}
-    							class="fill-blue-500"
-									tweened
-    						/>
-    						<Text
-    							value={node.name}
-    							x={node.height === 0 ? -4 : nodeWidth + 4}
-    							y={nodeHeight / 2}
-    							textAnchor={node.height === 0 ? 'end' : 'start'}
-    							verticalAnchor="middle"
-    						/>
-    					</Group>
-    				{/each}
-    			</Sankey>
-    		</Svg>
-    	</Chart>
-    </div>
+				<Sankey nodeId={(d) => d.name} nodeWidth={8} let:links let:nodes>
+					{#each links as link (link.source.name + '-' + link.target.name)}
+						<Link
+							sankey
+							data={link}
+							stroke="#ddd"
+							stroke-opacity={0.5}
+							stroke-width={link.width}
+							tweened
+						/>
+					{/each}
+					{#each nodes as node (node.name)}
+						{@const nodeWidth = node.x1 - node.x0}
+						{@const nodeHeight = node.y1 - node.y0}
+						<Group
+							x={node.x0}
+							y={node.y0}
+							tweened
+							on:click={() => {
+								selectedNode = node === selectedNode || node.sourceLinks.length === 0 ? null : node;
+							}}
+						>
+							<Rect width={nodeWidth} height={nodeHeight} class="fill-blue-500" tweened />
+							<Text
+								value={node.name}
+								x={node.height === 0 ? -4 : nodeWidth + 4}
+								y={nodeHeight / 2}
+								textAnchor={node.height === 0 ? 'end' : 'start'}
+								verticalAnchor="middle"
+							/>
+						</Group>
+					{/each}
+				</Sankey>
+			</Svg>
+		</Chart>
+	</div>
 </Preview>
 
 <h2>Complex</h2>
@@ -164,10 +170,10 @@
 					{nodeWidth}
 					let:links
 					let:nodes
-					on:update={e => {
+					on:update={(e) => {
 						// Calculate domain extents from Sankey data
 						// TODO: Update as 'nodeColorBy' changes
-						const extents = extent(e.detail.nodes, d => d[nodeColorBy]);
+						const extents = extent(e.detail.nodes, (d) => d[nodeColorBy]);
 						colorScale.domain(extents);
 					}}
 				>
@@ -175,11 +181,17 @@
 						<Link
 							sankey
 							data={link}
-							stroke={linkColorBy === 'static' ? "black" : colorScale(link[linkColorBy][nodeColorBy])}
-							stroke-opacity={highlightLinkIndexes.length ? highlightLinkIndexes.includes(i) ? linkOpacity.hover : linkOpacity.other : linkOpacity.default}
+							stroke={linkColorBy === 'static'
+								? 'black'
+								: colorScale(link[linkColorBy][nodeColorBy])}
+							stroke-opacity={highlightLinkIndexes.length
+								? highlightLinkIndexes.includes(i)
+									? linkOpacity.hover
+									: linkOpacity.other
+								: linkOpacity.default}
 							stroke-width={link.width}
-							on:mouseover={() => highlightLinkIndexes = [i]}
-							on:mouseout={() => highlightLinkIndexes = []}
+							on:mouseover={() => (highlightLinkIndexes = [i])}
+							on:mouseout={() => (highlightLinkIndexes = [])}
 							tweened
 						/>
 					{/each}
@@ -195,10 +207,10 @@
 								on:mouseover={() => {
 									highlightLinkIndexes = [
 										...node.sourceLinks.map((l) => l.index),
-										...node.targetLinks.map((l) => l.index),
+										...node.targetLinks.map((l) => l.index)
 									];
 								}}
-								on:mouseout={() => highlightLinkIndexes = []}
+								on:mouseout={() => (highlightLinkIndexes = [])}
 								tweened
 							/>
 							<Text
@@ -257,10 +269,10 @@
 					{nodeWidth}
 					let:links
 					let:nodes
-					on:update={e => {
+					on:update={(e) => {
 						// Calculate domain extents from Sankey data
 						// TODO: Update as 'nodeColorBy' changes
-						const extents = extent(e.detail.nodes, d => d[nodeColorBy]);
+						const extents = extent(e.detail.nodes, (d) => d[nodeColorBy]);
 						colorScale.domain(extents);
 					}}
 				>
@@ -268,11 +280,17 @@
 						<Link
 							sankey
 							data={link}
-							stroke={linkColorBy === 'static' ? "black" : colorScale(link[linkColorBy][nodeColorBy])}
-							stroke-opacity={highlightLinkIndexes.length ? highlightLinkIndexes.includes(i) ? linkOpacity.hover : linkOpacity.other : linkOpacity.default}
+							stroke={linkColorBy === 'static'
+								? 'black'
+								: colorScale(link[linkColorBy][nodeColorBy])}
+							stroke-opacity={highlightLinkIndexes.length
+								? highlightLinkIndexes.includes(i)
+									? linkOpacity.hover
+									: linkOpacity.other
+								: linkOpacity.default}
 							stroke-width={link.width}
-							on:mouseover={() => highlightLinkIndexes = [i]}
-							on:mouseout={() => highlightLinkIndexes = []}
+							on:mouseover={() => (highlightLinkIndexes = [i])}
+							on:mouseout={() => (highlightLinkIndexes = [])}
 							tweened
 						/>
 					{/each}
@@ -288,10 +306,10 @@
 								on:mouseover={() => {
 									highlightLinkIndexes = [
 										...node.sourceLinks.map((l) => l.index),
-										...node.targetLinks.map((l) => l.index),
+										...node.targetLinks.map((l) => l.index)
 									];
 								}}
-								on:mouseout={() => highlightLinkIndexes = []}
+								on:mouseout={() => (highlightLinkIndexes = [])}
 								tweened
 							/>
 							<Text

@@ -24,7 +24,12 @@
 
 	let selectedCurve = curveLinear;
 
-	const data = createDateSeries({ min: 50, max: 100, value: 'integer', keys: ['value', 'baseline'] });
+	const data = createDateSeries({
+		min: 50,
+		max: 100,
+		value: 'integer',
+		keys: ['value', 'baseline']
+	});
 </script>
 
 <Field label="Curve" let:id>
@@ -56,36 +61,13 @@
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Threshold curve={selectedCurve}>
-					<g
-						slot="pathAbove"
-						let:areaPathData
-						let:clipPath
-						let:linePathData
-					>
+					<g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
 						<Path pathData={linePathData} color="black" width="1.5" />
-						<Area
-							pathData={areaPathData}
-							{clipPath}
-							class="fill-green-500"
-						/>
+						<Area pathData={areaPathData} {clipPath} class="fill-green-500" />
 					</g>
-					<g
-						slot="pathBelow"
-						let:areaPathData
-						let:clipPath
-						let:linePathData
-					>
-						<Path
-							pathData={linePathData}
-							color="black"
-							width="1"
-							stroke-dasharray="4"
-						/>
-						<Area
-							pathData={areaPathData}
-							{clipPath}
-							class="fill-red-500"
-						/>
+					<g slot="pathBelow" let:areaPathData let:clipPath let:linePathData>
+						<Path pathData={linePathData} color="black" width="1" stroke-dasharray="4" />
+						<Area pathData={areaPathData} {clipPath} class="fill-red-500" />
 					</g>
 				</Threshold>
 			</Svg>
@@ -112,41 +94,18 @@
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Threshold curve={curveStepAfter}>
-					<g
-						slot="pathAbove"
-						let:areaPathData
-						let:clipPath
-						let:linePathData
-					>
+					<g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
 						<Path pathData={linePathData} color="black" width="1.5" />
-						<Area
-							pathData={areaPathData}
-							{clipPath}
-							class="fill-green-500"
-						/>
+						<Area pathData={areaPathData} {clipPath} class="fill-green-500" />
 					</g>
-					<g
-						slot="pathBelow"
-						let:areaPathData
-						let:clipPath
-						let:linePathData
-					>
-						<Path
-							pathData={linePathData}
-							color="black"
-							width="1"
-							stroke-dasharray="4"
-						/>
-						<Area
-							pathData={areaPathData}
-							{clipPath}
-							class="fill-red-500"
-						/>
+					<g slot="pathBelow" let:areaPathData let:clipPath let:linePathData>
+						<Path pathData={linePathData} color="black" width="1" stroke-dasharray="4" />
+						<Area pathData={areaPathData} {clipPath} class="fill-red-500" />
 					</g>
 				</Threshold>
 				<HighlightRect />
 			</Svg>
-			<Tooltip header={data => format(data.date, 'eee, MMMM do')} let:data>
+			<Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
 				<TooltipItem label="value" value={data.value} />
 				<TooltipItem label="baseline" value={data.baseline} />
 				<TooltipSeparator />
@@ -176,36 +135,13 @@
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Threshold>
-					<g
-						slot="pathAbove"
-						let:areaPathData
-						let:clipPath
-						let:linePathData
-					>
+					<g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
 						<Path pathData={linePathData} color="black" width="1.5" />
-						<Area
-							pathData={areaPathData}
-							{clipPath}
-							class="fill-green-500"
-						/>
+						<Area pathData={areaPathData} {clipPath} class="fill-green-500" />
 					</g>
-					<g
-						slot="pathBelow"
-						let:areaPathData
-						let:clipPath
-						let:linePathData
-					>
-						<Path
-							pathData={linePathData}
-							color="black"
-							width="1"
-							stroke-dasharray="4"
-						/>
-						<Area
-							pathData={areaPathData}
-							{clipPath}
-							class="fill-red-500"
-						/>
+					<g slot="pathBelow" let:areaPathData let:clipPath let:linePathData>
+						<Path pathData={linePathData} color="black" width="1" stroke-dasharray="4" />
+						<Area pathData={areaPathData} {clipPath} class="fill-red-500" />
 					</g>
 				</Threshold>
 				<Labels format="integer" />

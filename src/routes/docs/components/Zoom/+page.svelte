@@ -23,41 +23,40 @@
 
 	let zoom;
 	let pointCount = 500;
-	let angle = 137.5; // 
+	let angle = 137.5; //
 	let showPoints = true;
 	let showPath = false;
 	let tweened = true;
 	let scrollMode = 'scale';
 
-	$: data = getSpiral({ angle, radius: 10, count: pointCount, width: 500, height: 500 })
+	$: data = getSpiral({ angle, radius: 10, count: pointCount, width: 500, height: 500 });
 
 	let curve = d3shapes['curveLinear'];
-	const curveOptions = Object
-		.keys(d3shapes)
-		.filter(key => key.startsWith('curve'))
-		.filter(key => !key.endsWith('Open') && !key.endsWith('Closed'))
-		.map(key => {
+	const curveOptions = Object.keys(d3shapes)
+		.filter((key) => key.startsWith('curve'))
+		.filter((key) => !key.endsWith('Open') && !key.endsWith('Closed'))
+		.map((key) => {
 			return {
 				name: key.replace('curve', ''),
 				value: d3shapes[key]
-			}
-		})
+			};
+		});
 
 	function prev(options, current) {
-		const index = options.findIndex(x => x.value === current);
+		const index = options.findIndex((x) => x.value === current);
 		if (index === 0) {
-			return options[options.length - 1].value
+			return options[options.length - 1].value;
 		} else {
-			return options[index - 1].value
+			return options[index - 1].value;
 		}
 	}
 
 	function next(options, current) {
-		const index = options.findIndex(x => x.value === current);
+		const index = options.findIndex((x) => x.value === current);
 		if (index === options.length - 1) {
-			return options[0].value
+			return options[0].value;
 		} else {
-			return options[index + 1].value
+			return options[index + 1].value;
 		}
 	}
 </script>
@@ -86,14 +85,24 @@
 	<Field label="Show path" let:id>
 		<Switch bind:checked={showPath} {id} />
 	</Field>
-		<Field label="Curve" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => curve = prev(curveOptions, curve)} class="mr-2" size="sm" />
+	<Field label="Curve" let:id>
+		<Button
+			icon={mdiChevronLeft}
+			on:click={() => (curve = prev(curveOptions, curve))}
+			class="mr-2"
+			size="sm"
+		/>
 		<select bind:value={curve} class="w-full outline-none appearance-none text-sm" {id}>
 			{#each curveOptions as option}
 				<option value={option.value}>{option.name}</option>
 			{/each}
 		</select>
-		<Button icon={mdiChevronRight} on:click={() => curve = next(curveOptions, curve)} class="ml-2" size="sm" />
+		<Button
+			icon={mdiChevronRight}
+			on:click={() => (curve = next(curveOptions, curve))}
+			class="ml-2"
+			size="sm"
+		/>
 	</Field>
 </div>
 
@@ -104,12 +113,18 @@
 			<Svg>
 				<Zoom bind:this={zoom} scroll={scrollMode} tweened={{ duration: 800, easing: cubicOut }}>
 					{#if showPath}
-						<Path curve={curve} {tweened} />
+						<Path {curve} {tweened} />
 					{/if}
 					{#if showPoints}
 						<Points let:points>
 							{#each points as point, index}
-								<Circle cx={point.x} cy={point.y} r={2} class={index % 2 ? "fill-blue-500" : "fill-green-500"} {tweened} />
+								<Circle
+									cx={point.x}
+									cy={point.y}
+									r={2}
+									class={index % 2 ? 'fill-blue-500' : 'fill-green-500'}
+									{tweened}
+								/>
 							{/each}
 						</Points>
 					{/if}

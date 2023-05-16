@@ -18,11 +18,13 @@
 
 	import { complexData } from '../_data/hierarchy';
 
-	let expandedNodeNames = ['flare']
+	let expandedNodeNames = ['flare'];
 
-	$: complexDataHierarchy = hierarchy(complexData, d => expandedNodeNames.includes(d.name) ? d.children : null)
-		// .sum((d) => d.value)
-		// .sort((a, b) => b.value - a.value);
+	$: complexDataHierarchy = hierarchy(complexData, (d) =>
+		expandedNodeNames.includes(d.name) ? d.children : null
+	);
+	// .sum((d) => d.value)
+	// .sort((a, b) => b.value - a.value);
 
 	let orientation = 'horizontal';
 	let curve = curveBumpX;
@@ -45,9 +47,12 @@
 
 	const nodeWidth = 100;
 	const nodeHeight = 20;
-	const nodeSiblingGap = 20 
-	const nodeParentGap = 100 
-	$: nodeSize = orientation === 'horizontal' ? [nodeHeight + nodeSiblingGap, nodeWidth + nodeParentGap] : [nodeWidth + nodeSiblingGap, nodeHeight + nodeParentGap] 
+	const nodeSiblingGap = 20;
+	const nodeParentGap = 100;
+	$: nodeSize =
+		orientation === 'horizontal'
+			? [nodeHeight + nodeSiblingGap, nodeWidth + nodeParentGap]
+			: [nodeWidth + nodeSiblingGap, nodeHeight + nodeParentGap];
 </script>
 
 <h1>Examples</h1>
@@ -57,7 +62,11 @@
 <div class="grid gap-1 mb-4">
 	<div class="grid grid-cols-[1fr,2fr,1fr] gap-1">
 		<Field label="Orientation">
-			<ToggleGroup bind:value={orientation} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup
+				bind:value={orientation}
+				contained
+				classes={{ root: 'w-full', options: 'w-full' }}
+			>
 				<ToggleOption value="horizontal">Horizontal</ToggleOption>
 				<ToggleOption value="vertical">Vertical</ToggleOption>
 			</ToggleGroup>
@@ -83,27 +92,24 @@
 <Preview>
 	<div class="h-[800px] p-4 border rounded overflow-hidden relative">
 		<ZoomControls {zoom} orientation="horizontal" />
-		<Chart data={complexDataHierarchy} padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}>
+		<Chart
+			data={complexDataHierarchy}
+			padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}
+		>
 			<Svg>
 				<Zoom bind:this={zoom} tweened={{ duration: 800, easing: cubicOut }}>
 					<Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : null}>
 						{#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
-							<Link
-								data={link}
-								{orientation}
-								{curve}
-								tweened
-								class="stroke-gray-300"
-							/>
+							<Link data={link} {orientation} {curve} tweened class="stroke-gray-300" />
 						{/each}
 						{#each nodes as node (getNodeKey(node))}
 							<Group
-								x={(orientation === 'horizontal' ? node.y : node.x) - (nodeWidth / 2)}
-								y={(orientation === 'horizontal' ? node.x : node.y) - (nodeHeight / 2)}
+								x={(orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
+								y={(orientation === 'horizontal' ? node.x : node.y) - nodeHeight / 2}
 								tweened
 								on:click={() => {
 									if (expandedNodeNames.includes(node.data.name)) {
-										expandedNodeNames = expandedNodeNames.filter(name => name !== node.data.name);
+										expandedNodeNames = expandedNodeNames.filter((name) => name !== node.data.name);
 									} else {
 										expandedNodeNames = [...expandedNodeNames, node.data.name];
 									}

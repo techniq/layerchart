@@ -1,11 +1,5 @@
 <script lang="ts">
-	import {
-		ApiDocs,
-		Button,
-		Field,
-		SelectField,
-		Switch
-	} from 'svelte-ux';
+	import { ApiDocs, Button, Field, SelectField, Switch } from 'svelte-ux';
 
 	import api from '$lib/components/Arc.svelte?raw&sveld';
 
@@ -33,28 +27,28 @@
 
 	const labelOptions = [
 		{ name: 'None', value: undefined },
-		{ name: 'SVG Center', value: 'svg-center'},
-		{ name: 'Arc Center', value: 'arc-center'},
-		{ name: 'Arc Bottom', value: 'arc-bottom'},
-		{ name: 'Arc Centroid', value: 'arc-centroid'},
-	]
+		{ name: 'SVG Center', value: 'svg-center' },
+		{ name: 'Arc Center', value: 'arc-center' },
+		{ name: 'Arc Bottom', value: 'arc-bottom' },
+		{ name: 'Arc Centroid', value: 'arc-centroid' }
+	];
 	let label = 'svg-center';
 
 	function prev(options, current) {
-		const index = options.findIndex(x => x.value === current);
+		const index = options.findIndex((x) => x.value === current);
 		if (index === 0) {
-			return options[options.length - 1].value
+			return options[options.length - 1].value;
 		} else {
-			return options[index - 1].value
+			return options[index - 1].value;
 		}
 	}
 
 	function next(options, current) {
-		const index = options.findIndex(x => x.value === current);
+		const index = options.findIndex((x) => x.value === current);
 		if (index === options.length - 1) {
-			return options[0].value
+			return options[0].value;
 		} else {
-			return options[index + 1].value
+			return options[index + 1].value;
 		}
 	}
 </script>
@@ -62,7 +56,7 @@
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr,1fr,1fr,1fr] gap-2 sticky top-2 z-10">
-	<RangeField label="Value" bind:value={value} min={domain[0]} max={domain[1]} class="col-span-3" />
+	<RangeField label="Value" bind:value min={domain[0]} max={domain[1]} class="col-span-3" />
 	<Field label="Use spring" let:id>
 		<Switch bind:checked={spring} {id} />
 	</Field>
@@ -81,7 +75,11 @@
 	<RangeField label="Range Max (degrees)" bind:value={range[1]} min={-360} max={360} />
 	<RangeField label="Inner radius" bind:value={innerRadius} max={outerRadius} />
 	<RangeField label="Outer radius" bind:value={outerRadius} min={innerRadius} max={200} />
-	<RangeField label="Corner radius" bind:value={cornerRadius} max={(outerRadius - innerRadius) / 2} />
+	<RangeField
+		label="Corner radius"
+		bind:value={cornerRadius}
+		max={(outerRadius - innerRadius) / 2}
+	/>
 	<RangeField label="Pad angle" bind:value={padAngle} max={2} step={0.1} />
 	<!-- <RangeField label="Pad radius" bind:value={padRadius} max={2} step={0.1} /> -->
 </div>
@@ -92,12 +90,7 @@
 	<div class="h-[200px] p-4 border rounded">
 		<Chart>
 			<Svg>
-				<LinearGradient
-					id="arcGradient"
-					from="hsl(60 100% 50%)"
-					to="hsl(140 100% 50%)"
-					vertical
-				/>
+				<LinearGradient id="arcGradient" from="hsl(60 100% 50%)" to="hsl(140 100% 50%)" vertical />
 				<Group center>
 					{#key spring}
 						<Arc
@@ -196,8 +189,24 @@
 		<Chart>
 			<Svg>
 				<Group center>
-					<LinearGradient id="arcGradient3" from="hsl(80, 100%, 50%)" to="hsl(200, 100%, 50%)" vertical />
-					<Arc {value} {domain} {range} {innerRadius} {outerRadius} {cornerRadius} {padAngle} {label} let:boundingBox fill="url(#arcGradient3)">
+					<LinearGradient
+						id="arcGradient3"
+						from="hsl(80, 100%, 50%)"
+						to="hsl(200, 100%, 50%)"
+						vertical
+					/>
+					<Arc
+						{value}
+						{domain}
+						{range}
+						{innerRadius}
+						{outerRadius}
+						{cornerRadius}
+						{padAngle}
+						{label}
+						let:boundingBox
+						fill="url(#arcGradient3)"
+					>
 						<!-- svg center -->
 						<!-- <Text
 							value={Math.round(value)}

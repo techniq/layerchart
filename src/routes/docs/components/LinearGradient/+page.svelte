@@ -19,29 +19,27 @@
 	<div class="h-[334px] p-4 border rounded">
 		<Chart>
 			<Svg>
-				<LinearGradient
-					id="gradient-1"
-					from="hsl(60 100% 50%)"
-					to="hsl(30 100% 40%)"
-				/>
+				<LinearGradient id="gradient-1" from="hsl(60 100% 50%)" to="hsl(30 100% 40%)" />
 				<LinearGradient
 					id="gradient-2"
 					from="hsl(60 100% 50%)"
 					to="hsl(140 100% 40%)"
 					rotate={45}
 				/>
-				<LinearGradient
-					id="gradient-3"
-					from="hsl(195 100% 50%)"
-					to="hsl(270 100% 30%)"
-					vertical
-				/>
+				<LinearGradient id="gradient-3" from="hsl(195 100% 50%)" to="hsl(270 100% 30%)" vertical />
 				{#each { length: 3 } as _, i}
-					<rect x={0 + (i * 120)} y={0} width={100} height={300} rx={8} fill="url(#gradient-{i + 1})" />
+					<rect
+						x={0 + i * 120}
+						y={0}
+						width={100}
+						height={300}
+						rx={8}
+						fill="url(#gradient-{i + 1})"
+					/>
 				{/each}
-    		</Svg>
-    	</Chart>
-    </div>
+			</Svg>
+		</Chart>
+	</div>
 </Preview>
 
 <h2>Tailwind colors</h2>
@@ -60,7 +58,7 @@
 				<LinearGradient id="tw-8" from to class="from-red-500 to-red-800" vertical />
 				<LinearGradient id="tw-9" from to class="from-blue-400 to-emerald-400" vertical />
 				{#each { length: 9 } as _, i}
-					<rect x={0 + (i * 120)} y={0} width={100} height={300} rx={8} fill="url(#tw-{i + 1})" />
+					<rect x={0 + i * 120} y={0} width={100} height={300} rx={8} fill="url(#tw-{i + 1})" />
 				{/each}
 			</Svg>
 		</Chart>
