@@ -6,7 +6,7 @@
 	import { scaleQuantize } from 'd3-scale';
 	import { range } from 'd3-array';
 
-	import { Button, TextField } from 'svelte-ux';
+	import { Button, NumberStepper, TextField } from 'svelte-ux';
 	import { mdiMinus, mdiPlus } from '@mdi/js';
 
 	import api from '$lib/components/ColorRamp.svelte?raw&sveld';
@@ -52,14 +52,7 @@
 
 <div class="inline-flex gap-3 items-center mb-1 ml-4">
 	<span class="text-sm text-black/50">Steps:</span>
-	<TextField type="integer" bind:value={steps} align="center" class="w-24">
-		<div slot="prepend" class="flex">
-			<Button icon={mdiMinus} on:click={() => (steps -= 1)} />
-		</div>
-		<div slot="append" class="flex">
-			<Button icon={mdiPlus} on:click={() => (steps += 1)} />
-		</div>
-	</TextField>
+	<NumberStepper bind:value={steps} />
 </div>
 
 <Preview>
