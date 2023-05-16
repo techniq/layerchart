@@ -8,7 +8,7 @@
 
 	import { Button } from 'svelte-ux';
 
-	export let code = null;
+	export let code: string | undefined = undefined;
 	export let language = 'svelte';
 	export let highlightedCode = Prism.highlight(code, Prism.languages.svelte, language);
 	export let showCode = false;
