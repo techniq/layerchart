@@ -259,7 +259,7 @@
 	</div>
 </Preview>
 
-<h2>default slot / render each `<Arc>`</h2>
+<h2>default slot / render each `Arc`</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
