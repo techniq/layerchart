@@ -18,37 +18,37 @@
 	/** text value */
 	export let value: string | number = 0;
 
-	/** Maximum width to occupy (approximate as words are not split). */
+	/** Maximum width to occupy (approximate as words are not split) */
 	export let width: number = undefined;
 
-	/** x position of the text. */
+	/** x position of the text */
 	export let x: string | number = 0;
 
-	/** y position of the text. */
+	/** y position of the text */
 	export let y: string | number = 0;
 
-	/** dx offset of the text. */
+	/** dx offset of the text */
 	export let dx: string | number = 0;
 
-	/** dy offset of the text. */
+	/** dy offset of the text */
 	export let dy: string | number = 0;
 
-	/** Desired "line height" of the text, implemented as y offsets. */
+	/** Desired "line height" of the text, implemented as y offsets */
 	export let lineHeight = '1em';
 
-	/** Cap height of the text. */
+	/** Cap height of the text */
 	export let capHeight = '0.71em'; // Magic number from d3
 
-	/** Whether to scale the fontSize to accommodate the specified width.  */
+	/** Whether to scale the fontSize to accommodate the specified width  */
 	export let scaleToFit: boolean = false;
 
-	/** Horizontal text anchor. */
+	/** Horizontal text anchor */
 	export let textAnchor: 'start' | 'middle' | 'end' | 'inherit' = 'start';
 
-	/** Vertical text anchor. */
+	/** Vertical text anchor */
 	export let verticalAnchor: 'start' | 'middle' | 'end' | 'inherit' = 'end'; // default SVG behavior
 
-	/** Rotational angle of the text. */
+	/** Rotational angle of the text */
 	export let rotate: number = undefined;
 
 	let wordsByLines: { words: string[]; width?: number }[] = [];
