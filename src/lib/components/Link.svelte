@@ -23,7 +23,7 @@
 	export let data: any = undefined; // TODO: Update Type
 	export let orientation: 'vertical' | 'horizontal' = 'horizontal';
 	/**
-	 * Update source and target accessors to be compatibke with d3-sankey.  see: https://github.com/d3/d3-sankey#sankeyLinkHorizontal
+	 * Update source and target accessors to be compatible with d3-sankey.  see: https://github.com/d3/d3-sankey#sankeyLinkHorizontal
 	 */
 	export let sankey = false;
 	export let source = sankey ? (d) => [d.source.x1, d.y0] : (d) => d.source;

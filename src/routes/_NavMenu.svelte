@@ -52,6 +52,7 @@
 			'Group',
 			'Line',
 			'LinearGradient',
+			'Link',
 			'Path',
 			'Pattern',
 			'Rect',
@@ -60,7 +61,8 @@
 		],
 		'Data-driven': ['AreaStack', 'Bars', 'ConnectedPoints', 'Labels', 'Points', 'Threshold'],
 		Interactions: ['Tooltip', 'TooltipContext', 'HighlightRect', 'HighlightLine', 'Zoom'],
-		Geo: ['GeoContext', 'GeoPath', 'GeoPoint', 'GeoTile', 'Graticule', 'TileImage']
+		Geo: ['GeoContext', 'GeoPath', 'GeoPoint', 'GeoTile', 'Graticule', 'TileImage'],
+		Hierarchy: ['Pack', 'Partition', 'Sankey']
 	};
 
 	const utils = ['pivot'];
