@@ -56,7 +56,7 @@
 				<ConnectedPoints stroke="#000" />
 				<Points class="fill-blue-500 stroke-blue-800" />
 				<HighlightLine color="var(--color-blue-500)" />
-				<HighlightRect color="var(--color-blue-500)" />
+				<HighlightRect />
 			</Svg>
 			<Tooltip header={(data) => data.name} let:data>
 				<TooltipItem label="start" value={format(data.startDate, 'h:mm:ss')} />

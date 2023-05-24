@@ -60,8 +60,8 @@
 						/>
 					{/each}
 				</Points>
-				<HighlightRect color="var(--color-blue-500)" axis="x" />
-				<HighlightRect color="var(--color-blue-500)" axis="y" />
+				<HighlightRect axis="x" />
+				<HighlightRect axis="y" />
 			</Svg>
 			<Tooltip header={(d) => formatDate(d.date, PeriodType.Day)} let:data>
 				<TooltipItem label="duration" value={data.value} valueAlign="right" />
