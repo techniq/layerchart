@@ -12,6 +12,7 @@
 			'ClevelandDotPlot',
 			'Pack',
 			'Partition',
+			'PunchCard',
 			'Pie',
 			'Sankey',
 			'Scatter',

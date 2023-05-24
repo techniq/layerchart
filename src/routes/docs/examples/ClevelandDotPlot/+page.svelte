@@ -16,9 +16,7 @@
 	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
 	import Preview from '$lib/docs/Preview.svelte';
-	import { createDateSeries, getRandomInteger } from '$lib/utils/genData';
-
-	// const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
+	import { getRandomInteger } from '$lib/utils/genData';
 
 	const count = 10;
 	const now = startOfDay(new Date());
@@ -34,16 +32,6 @@
 			endDate
 		};
 	});
-
-	/*
-	data.push({
-		name: 'Item 2',
-		startDate: addMinutes(now, 30),
-		endDate: addMinutes(now, 160),
-	})
-	*/
-
-	$: yDomain = data.map((x) => x.name).reverse();
 </script>
 
 <h1>Examples</h1>

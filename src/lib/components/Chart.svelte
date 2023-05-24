@@ -98,6 +98,8 @@
 	let:height
 	let:width
 	let:element
+	let:xScale
+	let:yScale
 >
 	<GeoContext {...geo} let:projection>
 		{#if tooltip}
@@ -111,6 +113,8 @@
 					{element}
 					{projection}
 					{tooltip}
+					{xScale}
+					{yScale}
 				/>
 			</TooltipContext>
 		{:else}
@@ -122,6 +126,8 @@
 				{width}
 				{element}
 				{projection}
+				{xScale}
+				{yScale}
 			/>
 		{/if}
 	</GeoContext>
