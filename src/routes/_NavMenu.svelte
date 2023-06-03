@@ -34,7 +34,8 @@
 			'ZoomableMap',
 			'ZoomableTileMap',
 			'AnimatedGlobe',
-			'LoftedArcsGlobe'
+			'LoftedArcsGlobe',
+			'Shapefile'
 		]
 	};
 
