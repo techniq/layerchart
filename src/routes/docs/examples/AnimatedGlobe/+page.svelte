@@ -40,13 +40,14 @@
 
 <Preview>
 	<div class="h-[600px] grid grid-cols-[224px,1fr]">
-		<div class="overflow-auto">
+		<div class="overflow-auto scrollbar-none">
 			{#each countries.features.sort(createPropertySortFunc('properties.name')) as country}
 				{@const isSelected = selectedFeature === country}
 				<div use:scrollIntoView={{ condition: isSelected }}>
 					<Button
+						variant={isSelected ? 'fill-light' : 'text'}
+						color={isSelected ? 'red' : 'default'}
 						fullWidth
-						class={cls(isSelected && 'text-red-500')}
 						on:click={() => (selectedFeature = country)}
 					>
 						{country.properties.name}
