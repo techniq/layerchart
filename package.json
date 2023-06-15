@@ -3,7 +3,7 @@
 	"author": "Sean Lynch <techniq35@gmail.com>",
 	"license": "MIT",
 	"repository": "techniq/layerchart",
-	"version": "0.15.6",
+	"version": "0.16.0",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
