@@ -7,7 +7,7 @@
 	import { page } from '$app/stores';
 
 	$: [path, type, name] = $page.url.pathname.match('.*/(.*)/(.*)');
-	$: docUrl = `src/routes/docs/${type}/${name}/+page.md?plain=1`;
+	$: docUrl = `src/routes/docs/${type}/${name}/+page.svelte?plain=1`;
 	$: sourceUrl = ['components', 'utils'].includes(type)
 		? `src/lib/${type}/${name}.${type === 'components' ? 'svelte' : 'ts'}`
 		: null;
