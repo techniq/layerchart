@@ -2,8 +2,8 @@
 	import Prism from 'prismjs';
 	import 'prism-svelte';
 	import { mdiContentCopy } from '@mdi/js';
-	import { Button } from 'svelte-ux';
-	import { cls } from 'svelte-ux/utils/styles';
+	import { Button, cls } from 'svelte-ux';
+
 	export let code = null;
 	export let language = 'svelte';
 	export let highlightedCode = code

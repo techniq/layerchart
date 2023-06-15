@@ -3,11 +3,11 @@
 	import { scaleBand, scaleLinear } from 'd3-scale';
 	import { quantize, interpolate, interpolateRound } from 'd3-interpolate';
 	import { quantile, range } from 'd3-array';
-	import { format, type FormatType } from 'svelte-ux/utils/format';
+	import { format, type FormatType } from 'svelte-ux';
 	import type { SVGAttributes } from 'svelte/elements';
 
 	import ColorRamp from './ColorRamp.svelte';
-	import { cls } from 'svelte-ux/utils/styles';
+	import { cls } from 'svelte-ux';
 
 	const { rScale } = getContext('LayerCake') ?? {};
 

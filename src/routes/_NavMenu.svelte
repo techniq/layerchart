@@ -70,13 +70,9 @@
 	const utils = ['pivot'];
 </script>
 
-<NavItem text="Home" icon={mdiHome} currentUrl={$page.url} path="/" class="pl-6 py-2 mt-2" />
+<NavItem text="Home" icon={mdiHome} currentUrl={$page.url} path="/" />
 
-<div
-	class="py-2 pl-4 mt-4 text-sm text-gray-200 font-bold bg-black/20 border-t border-b border-white/10"
->
-	Examples
-</div>
+<h1>Examples</h1>
 {#each Object.entries(examples) as [header, items]}
 	<div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">{header}</div>
 	{#each items as item}
@@ -98,11 +94,7 @@
 	{/each}
 {/each}
 
-<div
-	class="py-2 pl-4 mt-4 text-sm text-gray-200 font-bold bg-black/20 border-t border-b border-white/10"
->
-	Components
-</div>
+<h1>Components</h1>
 {#each Object.entries(components) as [header, items]}
 	<div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">{header}</div>
 	{#each items as item}
@@ -124,11 +116,7 @@
 	{/each}
 {/each}
 
-<div
-	class="py-2 pl-4 mt-4 text-sm text-gray-200 font-bold bg-black/20 border-t border-b border-white/10"
->
-	Utils
-</div>
+<h1>Utils</h1>
 {#each utils as item}
 	<NavItem text={item} currentUrl={$page.url} path="/docs/utils/{item}" class="pl-6 py-2" />
 {/each}

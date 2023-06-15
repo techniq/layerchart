@@ -64,7 +64,11 @@
 
 <div class="grid grid-cols-[1fr,auto,2fr] gap-2 mb-2">
 	<Field label="Scroll mode" let:id>
-		<ToggleGroup bind:value={scrollMode} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup
+			bind:value={scrollMode}
+			variant="contained"
+			classes={{ root: 'w-full', options: 'w-full' }}
+		>
 			<ToggleOption value="none">None</ToggleOption>
 			<ToggleOption value="scale">Scale</ToggleOption>
 			<ToggleOption value="translate">Translate</ToggleOption>

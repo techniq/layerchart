@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { cls } from 'svelte-ux/utils/styles';
-	import { format as formatUtil } from 'svelte-ux/utils/format';
-	import type { FormatType } from 'svelte-ux/utils/format';
+	import { cls, format as formatUtil, type FormatType } from 'svelte-ux';
 
 	export let label: any;
 	export let value: any = undefined; // Can be pass as slot

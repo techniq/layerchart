@@ -7,8 +7,7 @@
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
 
-	import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-	import { format } from 'svelte-ux/utils/format';
+	import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption, format } from 'svelte-ux';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import RangeField from '$lib/docs/RangeField.svelte';
@@ -69,7 +68,11 @@
 	<div class="grid grid-cols-[2fr,1fr,1fr] gap-2">
 		<RangeField label="Padding" bind:value={padding} max={50} />
 		<Field label="Color By">
-			<ToggleGroup bind:value={colorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup
+				bind:value={colorBy}
+				variant="contained"
+				classes={{ root: 'w-full', options: 'w-full' }}
+			>
 				<ToggleOption value="parent">Parent</ToggleOption>
 				<ToggleOption value="depth">Depth</ToggleOption>
 			</ToggleGroup>

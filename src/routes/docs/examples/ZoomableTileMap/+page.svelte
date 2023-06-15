@@ -46,7 +46,11 @@
 	<TilesetField bind:serviceUrl />
 	<RangeField label="Zoom delta" bind:value={zoomDelta} min={-5} max={5} />
 	<Field label="Scroll mode" let:id>
-		<ToggleGroup bind:value={scrollMode} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup
+			bind:value={scrollMode}
+			variant="contained"
+			classes={{ root: 'w-full', options: 'w-full' }}
+		>
 			<ToggleOption value="none">None</ToggleOption>
 			<ToggleOption value="scale">Scale</ToggleOption>
 			<ToggleOption value="translate">Translate</ToggleOption>

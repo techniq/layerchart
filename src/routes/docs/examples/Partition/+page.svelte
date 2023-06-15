@@ -7,8 +7,7 @@
 	import { hsl } from 'd3-color';
 	import { rollup } from 'd3-array';
 
-	import { Breadcrumb, Button, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-	import { format } from 'svelte-ux/utils/format';
+	import { Breadcrumb, Button, Field, Switch, ToggleGroup, ToggleOption, format } from 'svelte-ux';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import RangeField from '$lib/docs/RangeField.svelte';
@@ -94,7 +93,7 @@
 		<Field label="Full-size Leaf Nodes">
 			<ToggleGroup
 				bind:value={fullSizeLeafNodes}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={true}>Yes</ToggleOption>
@@ -102,13 +101,21 @@
 			</ToggleGroup>
 		</Field>
 		<Field label="Round">
-			<ToggleGroup bind:value={round} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup
+				bind:value={round}
+				variant="contained"
+				classes={{ root: 'w-full', options: 'w-full' }}
+			>
 				<ToggleOption value={true}>Yes</ToggleOption>
 				<ToggleOption value={false}>No</ToggleOption>
 			</ToggleGroup>
 		</Field>
 		<Field label="Color By">
-			<ToggleGroup bind:value={colorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup
+				bind:value={colorBy}
+				variant="contained"
+				classes={{ root: 'w-full', options: 'w-full' }}
+			>
 				<ToggleOption value="children">Children</ToggleOption>
 				<ToggleOption value="depth">Depth</ToggleOption>
 				<ToggleOption value="parent">Parent</ToggleOption>

@@ -3,8 +3,7 @@
 	import { geoOrthographic, geoCentroid } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import { Button, scrollIntoView } from 'svelte-ux';
-	import { cls } from 'svelte-ux/utils/styles';
+	import { Button, scrollIntoView, cls } from 'svelte-ux';
 	import { createPropertySortFunc } from 'svelte-ux/utils/sort';
 
 	import Preview from '$lib/docs/Preview.svelte';

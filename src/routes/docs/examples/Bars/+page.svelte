@@ -392,7 +392,7 @@
 	<Field label="Mode">
 		<ToggleGroup
 			bind:value={transitionChartMode}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="group">Grouped</ToggleOption>

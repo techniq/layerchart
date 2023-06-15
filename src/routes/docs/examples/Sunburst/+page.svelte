@@ -5,8 +5,7 @@
 	import * as chromatic from 'd3-scale-chromatic';
 	import { hsl } from 'd3-color';
 
-	import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-	import { format } from 'svelte-ux/utils/format';
+	import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption, format } from 'svelte-ux';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Arc from '$lib/components/Arc.svelte';
@@ -53,7 +52,11 @@
 <div class="grid grid-flow-col gap-4 mb-4">
 	<div class="grid grid-cols-[1fr,1fr] gap-2">
 		<Field label="Color By">
-			<ToggleGroup bind:value={colorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup
+				bind:value={colorBy}
+				variant="contained"
+				classes={{ root: 'w-full', options: 'w-full' }}
+			>
 				<ToggleOption value="parent">Parent</ToggleOption>
 				<ToggleOption value="depth">Depth</ToggleOption>
 			</ToggleGroup>

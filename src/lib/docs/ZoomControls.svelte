@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Button, Tooltip } from 'svelte-ux';
-	import { cls } from 'svelte-ux/utils/styles';
+	import { Button, Tooltip, cls } from 'svelte-ux';
 
 	import {
 		mdiArrowULeftTop,

@@ -45,7 +45,7 @@
 		<Field label="textAnchor">
 			<ToggleGroup
 				bind:value={textAnchor}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value="start">start</ToggleOption>
@@ -57,7 +57,7 @@
 		<Field label="verticalAnchor">
 			<ToggleGroup
 				bind:value={verticalAnchor}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value="start">start</ToggleOption>

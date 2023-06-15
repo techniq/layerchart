@@ -64,7 +64,7 @@
 		<Field label="Orientation">
 			<ToggleGroup
 				bind:value={orientation}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value="horizontal">Horizontal</ToggleOption>
@@ -72,7 +72,11 @@
 			</ToggleGroup>
 		</Field>
 		<Field label="Curve">
-			<ToggleGroup bind:value={curve} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup
+				bind:value={curve}
+				variant="contained"
+				classes={{ root: 'w-full', options: 'w-full' }}
+			>
 				<ToggleOption value={curveBumpX}>BumpX</ToggleOption>
 				<ToggleOption value={curveBumpY}>BumpY</ToggleOption>
 				<ToggleOption value={curveStep}>Step</ToggleOption>
@@ -81,7 +85,11 @@
 			</ToggleGroup>
 		</Field>
 		<Field label="Layout">
-			<ToggleGroup bind:value={layout} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup
+				bind:value={layout}
+				variant="contained"
+				classes={{ root: 'w-full', options: 'w-full' }}
+			>
 				<ToggleOption value="chart">Chart</ToggleOption>
 				<ToggleOption value="node">Node</ToggleOption>
 			</ToggleGroup>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 
-	import { uniqueId } from 'svelte-ux/utils/string';
+	import { uniqueId } from 'svelte-ux';
 
 	import ClipPath from './ClipPath.svelte';
 	import Circle from './Circle.svelte';

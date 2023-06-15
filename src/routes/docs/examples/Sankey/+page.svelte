@@ -132,7 +132,11 @@
 
 <div class="grid grid-flow-col gap-4 mb-4">
 	<Field label="Align">
-		<ToggleGroup bind:value={nodeAlign} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup
+			bind:value={nodeAlign}
+			variant="contained"
+			classes={{ root: 'w-full', options: 'w-full' }}
+		>
 			<ToggleOption value="justify">Justify</ToggleOption>
 			<ToggleOption value="left">Left</ToggleOption>
 			<ToggleOption value="center">Center</ToggleOption>
@@ -140,7 +144,11 @@
 		</ToggleGroup>
 	</Field>
 	<Field label="Node Color">
-		<ToggleGroup bind:value={nodeColorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup
+			bind:value={nodeColorBy}
+			variant="contained"
+			classes={{ root: 'w-full', options: 'w-full' }}
+		>
 			<ToggleOption value="layer">Layer</ToggleOption>
 			<ToggleOption value="depth">Depth</ToggleOption>
 			<ToggleOption value="height">Height</ToggleOption>
@@ -148,7 +156,11 @@
 		</ToggleGroup>
 	</Field>
 	<Field label="Link Color">
-		<ToggleGroup bind:value={linkColorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup
+			bind:value={linkColorBy}
+			variant="contained"
+			classes={{ root: 'w-full', options: 'w-full' }}
+		>
 			<ToggleOption value="static">Static</ToggleOption>
 			<ToggleOption value="source">Source</ToggleOption>
 			<ToggleOption value="target">Target</ToggleOption>
@@ -231,7 +243,11 @@
 
 <div class="grid grid-flow-col gap-4 mb-4">
 	<Field label="Align">
-		<ToggleGroup bind:value={nodeAlign} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup
+			bind:value={nodeAlign}
+			variant="contained"
+			classes={{ root: 'w-full', options: 'w-full' }}
+		>
 			<ToggleOption value="justify">Justify</ToggleOption>
 			<ToggleOption value="left">Left</ToggleOption>
 			<ToggleOption value="center">Center</ToggleOption>
@@ -239,7 +255,11 @@
 		</ToggleGroup>
 	</Field>
 	<Field label="Node Color">
-		<ToggleGroup bind:value={nodeColorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup
+			bind:value={nodeColorBy}
+			variant="contained"
+			classes={{ root: 'w-full', options: 'w-full' }}
+		>
 			<ToggleOption value="layer">Layer</ToggleOption>
 			<ToggleOption value="depth">Depth</ToggleOption>
 			<ToggleOption value="height">Height</ToggleOption>
@@ -247,7 +267,11 @@
 		</ToggleGroup>
 	</Field>
 	<Field label="Link Color">
-		<ToggleGroup bind:value={linkColorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+		<ToggleGroup
+			bind:value={linkColorBy}
+			variant="contained"
+			classes={{ root: 'w-full', options: 'w-full' }}
+		>
 			<ToggleOption value="static">Static</ToggleOption>
 			<ToggleOption value="source">Source</ToggleOption>
 			<ToggleOption value="target">Target</ToggleOption>

@@ -140,7 +140,7 @@
 	<Field label="Mode">
 		<ToggleGroup
 			bind:value={charts.area.mode}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
@@ -155,7 +155,7 @@
 	<Field label="Highlight">
 		<ToggleGroup
 			bind:value={charts.area.highlight}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="none">none</ToggleOption>
@@ -166,7 +166,7 @@
 	<Field label="Highlight Axis">
 		<ToggleGroup
 			bind:value={charts.area.axis}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value={undefined}>default</ToggleOption>
@@ -181,7 +181,7 @@
 			<span>x:</span>
 			<ToggleGroup
 				bind:value={charts.area.snapToDataX}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -190,7 +190,7 @@
 			<span>y:</span>
 			<ToggleGroup
 				bind:value={charts.area.snapToDataY}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -251,7 +251,7 @@
 	<Field label="Mode">
 		<ToggleGroup
 			bind:value={charts.areaStack.mode}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
@@ -266,7 +266,7 @@
 	<Field label="Highlight">
 		<ToggleGroup
 			bind:value={charts.areaStack.highlight}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="none">none</ToggleOption>
@@ -277,7 +277,7 @@
 	<Field label="Highlight Axis">
 		<ToggleGroup
 			bind:value={charts.areaStack.axis}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value={undefined}>default</ToggleOption>
@@ -292,7 +292,7 @@
 			<span>x:</span>
 			<ToggleGroup
 				bind:value={charts.areaStack.snapToDataX}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -301,7 +301,7 @@
 			<span>y:</span>
 			<ToggleGroup
 				bind:value={charts.areaStack.snapToDataY}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -368,7 +368,7 @@
 	<Field label="Mode">
 		<ToggleGroup
 			bind:value={charts.dateTime.mode}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
@@ -383,7 +383,7 @@
 	<Field label="Highlight">
 		<ToggleGroup
 			bind:value={charts.dateTime.highlight}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="none">none</ToggleOption>
@@ -394,7 +394,7 @@
 	<Field label="Highlight Axis">
 		<ToggleGroup
 			bind:value={charts.dateTime.axis}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value={undefined}>default</ToggleOption>
@@ -409,7 +409,7 @@
 			<span>x:</span>
 			<ToggleGroup
 				bind:value={charts.dateTime.snapToDataX}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -418,7 +418,7 @@
 			<span>y:</span>
 			<ToggleGroup
 				bind:value={charts.dateTime.snapToDataY}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -481,7 +481,7 @@
 	<Field label="Mode">
 		<ToggleGroup
 			bind:value={charts.duration.mode}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
@@ -496,7 +496,7 @@
 	<Field label="Highlight">
 		<ToggleGroup
 			bind:value={charts.duration.highlight}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="none">none</ToggleOption>
@@ -507,7 +507,7 @@
 	<Field label="Highlight Axis">
 		<ToggleGroup
 			bind:value={charts.duration.axis}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value={undefined}>default</ToggleOption>
@@ -522,7 +522,7 @@
 			<span>x:</span>
 			<ToggleGroup
 				bind:value={charts.duration.snapToDataX}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -531,7 +531,7 @@
 			<span>y:</span>
 			<ToggleGroup
 				bind:value={charts.duration.snapToDataY}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -597,7 +597,7 @@
 	<Field label="Mode">
 		<ToggleGroup
 			bind:value={charts.multiDuration.mode}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
@@ -612,7 +612,7 @@
 	<Field label="Highlight">
 		<ToggleGroup
 			bind:value={charts.multiDuration.highlight}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="none">none</ToggleOption>
@@ -623,7 +623,7 @@
 	<Field label="Highlight Axis">
 		<ToggleGroup
 			bind:value={charts.multiDuration.axis}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value={undefined}>default</ToggleOption>
@@ -638,7 +638,7 @@
 			<span>x:</span>
 			<ToggleGroup
 				bind:value={charts.multiDuration.snapToDataX}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -647,7 +647,7 @@
 			<span>y:</span>
 			<ToggleGroup
 				bind:value={charts.multiDuration.snapToDataY}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -716,7 +716,7 @@
 	<Field label="Mode">
 		<ToggleGroup
 			bind:value={charts.bars.mode}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
@@ -731,7 +731,7 @@
 	<Field label="Highlight">
 		<ToggleGroup
 			bind:value={charts.bars.highlight}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="none">none</ToggleOption>
@@ -742,7 +742,7 @@
 	<Field label="Highlight Axis">
 		<ToggleGroup
 			bind:value={charts.bars.axis}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value={undefined}>default</ToggleOption>
@@ -757,7 +757,7 @@
 			<span>x:</span>
 			<ToggleGroup
 				bind:value={charts.bars.snapToDataX}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -766,7 +766,7 @@
 			<span>y:</span>
 			<ToggleGroup
 				bind:value={charts.bars.snapToDataY}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -830,7 +830,7 @@
 	<Field label="Mode">
 		<ToggleGroup
 			bind:value={charts.multiBars.mode}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
@@ -845,7 +845,7 @@
 	<Field label="Highlight">
 		<ToggleGroup
 			bind:value={charts.multiBars.highlight}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="none">none</ToggleOption>
@@ -856,7 +856,7 @@
 	<Field label="Highlight Axis">
 		<ToggleGroup
 			bind:value={charts.multiBars.axis}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value={undefined}>default</ToggleOption>
@@ -871,7 +871,7 @@
 			<span>x:</span>
 			<ToggleGroup
 				bind:value={charts.multiBars.snapToDataX}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -880,7 +880,7 @@
 			<span>y:</span>
 			<ToggleGroup
 				bind:value={charts.multiBars.snapToDataY}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -943,7 +943,7 @@
 	<Field label="Mode">
 		<ToggleGroup
 			bind:value={charts.scatter.mode}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
@@ -958,7 +958,7 @@
 	<Field label="Highlight">
 		<ToggleGroup
 			bind:value={charts.scatter.highlight}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value="none">none</ToggleOption>
@@ -969,7 +969,7 @@
 	<Field label="Highlight Axis">
 		<ToggleGroup
 			bind:value={charts.scatter.axis}
-			contained
+			variant="contained"
 			classes={{ root: 'w-full', options: 'w-full' }}
 		>
 			<ToggleOption value={undefined}>default</ToggleOption>
@@ -984,7 +984,7 @@
 			<span>x:</span>
 			<ToggleGroup
 				bind:value={charts.scatter.snapToDataX}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>
@@ -993,7 +993,7 @@
 			<span>y:</span>
 			<ToggleGroup
 				bind:value={charts.scatter.snapToDataY}
-				contained
+				variant="contained"
 				classes={{ root: 'w-full', options: 'w-full' }}
 			>
 				<ToggleOption value={false}>off</ToggleOption>

@@ -7,8 +7,7 @@
 	import { hsl } from 'd3-color';
 	import { rollup } from 'd3-array';
 
-	import { Button, Breadcrumb, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-	import { format } from 'svelte-ux/utils/format';
+	import { Button, Breadcrumb, Field, Switch, ToggleGroup, ToggleOption, format } from 'svelte-ux';
 
 	import Preview from '$lib/docs/Preview.svelte';
 	import RangeField from '$lib/docs/RangeField.svelte';
@@ -114,7 +113,11 @@
 <div class="grid gap-1 mb-4">
 	<div class="grid grid-cols-[6fr,3fr] gap-1">
 		<Field label="Tile">
-			<ToggleGroup bind:value={tile} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup
+				bind:value={tile}
+				variant="contained"
+				classes={{ root: 'w-full', options: 'w-full' }}
+			>
 				<ToggleOption value="squarify">Squarify</ToggleOption>
 				<ToggleOption value="resquarify">Resquarify</ToggleOption>
 				<ToggleOption value="binary">Binary</ToggleOption>
@@ -124,7 +127,11 @@
 			</ToggleGroup>
 		</Field>
 		<Field label="Color By">
-			<ToggleGroup bind:value={colorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup
+				bind:value={colorBy}
+				variant="contained"
+				classes={{ root: 'w-full', options: 'w-full' }}
+			>
 				<ToggleOption value="children">Children</ToggleOption>
 				<ToggleOption value="depth">Depth</ToggleOption>
 				<ToggleOption value="parent">Parent</ToggleOption>
@@ -238,7 +245,11 @@
 <div class="grid gap-1 mb-4">
 	<div class="grid grid-cols-[6fr,3fr] gap-1">
 		<Field label="Tile">
-			<ToggleGroup bind:value={tile} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup
+				bind:value={tile}
+				variant="contained"
+				classes={{ root: 'w-full', options: 'w-full' }}
+			>
 				<ToggleOption value="squarify">Squarify</ToggleOption>
 				<ToggleOption value="resquarify">Resquarify</ToggleOption>
 				<ToggleOption value="binary">Binary</ToggleOption>
@@ -248,7 +259,11 @@
 			</ToggleGroup>
 		</Field>
 		<Field label="Color By">
-			<ToggleGroup bind:value={colorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup
+				bind:value={colorBy}
+				variant="contained"
+				classes={{ root: 'w-full', options: 'w-full' }}
+			>
 				<ToggleOption value="children">Children</ToggleOption>
 				<ToggleOption value="depth">Depth</ToggleOption>
 				<ToggleOption value="parent">Parent</ToggleOption>
@@ -364,7 +379,11 @@
 <div class="grid grid-flow-col gap-4 mb-4">
 	<div class="grid grid-cols-[6fr,3fr] gap-2">
 		<Field label="Tile">
-			<ToggleGroup bind:value={tile} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup
+				bind:value={tile}
+				variant="contained"
+				classes={{ root: 'w-full', options: 'w-full' }}
+			>
 				<ToggleOption value="squarify">Squarify</ToggleOption>
 				<ToggleOption value="resquarify">Resquarify</ToggleOption>
 				<ToggleOption value="binary">Binary</ToggleOption>
@@ -374,7 +393,11 @@
 			</ToggleGroup>
 		</Field>
 		<Field label="Color By">
-			<ToggleGroup bind:value={colorBy} contained classes={{ root: 'w-full', options: 'w-full' }}>
+			<ToggleGroup
+				bind:value={colorBy}
+				variant="contained"
+				classes={{ root: 'w-full', options: 'w-full' }}
+			>
 				<ToggleOption value="children">Children</ToggleOption>
 				<ToggleOption value="depth">Depth</ToggleOption>
 				<ToggleOption value="parent">Parent</ToggleOption>

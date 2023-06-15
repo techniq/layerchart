@@ -2,7 +2,7 @@
 	import { scaleOrdinal } from 'd3-scale';
 	import { format } from 'date-fns';
 	import { sum } from 'd3-array';
-	import { format as formatUtil } from 'svelte-ux/utils/format';
+	import { format as formatUtil } from 'svelte-ux';
 
 	import Chart, { Svg } from '$lib/components/Chart.svelte';
 	import Arc from '$lib/components/Arc.svelte';

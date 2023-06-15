@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { min, max } from 'd3-array';
 	import { getContext } from 'svelte';
-	import { cls } from 'svelte-ux/utils/styles';
+	import { cls } from 'svelte-ux';
 
 	import { isScaleBand } from '$lib/utils/scales';
 

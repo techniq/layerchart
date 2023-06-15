@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { uniqueId } from 'svelte-ux/utils/string';
+	import { uniqueId } from 'svelte-ux';
 
 	export let id: string = uniqueId('blur-');
 	export let stdDeviation = 5;

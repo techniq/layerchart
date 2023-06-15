@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { uniqueId } from 'svelte-ux/utils/string';
+	import { uniqueId } from 'svelte-ux';
 
 	/** Unique id for clipPath */
 	export let id: string = uniqueId('clipPath-');

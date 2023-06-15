@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { getContext, SvelteComponentTyped } from 'svelte';
-	import { format } from 'svelte-ux/utils/format';
-	import type { FormatType } from 'svelte-ux/utils/format';
+	import { getContext } from 'svelte';
+	import { format, type FormatType } from 'svelte-ux';
 	import { min, max } from 'd3-array';
 
 	import Text from './Text.svelte';
