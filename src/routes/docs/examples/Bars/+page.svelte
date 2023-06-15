@@ -203,7 +203,7 @@
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Bars radius={4} strokeWidth={1} />
-				<Labels />
+				<Labels format="integer" />
 			</Svg>
 		</Chart>
 	</div>

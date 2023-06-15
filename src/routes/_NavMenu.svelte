@@ -74,7 +74,7 @@
 
 <h1>Examples</h1>
 {#each Object.entries(examples) as [header, items]}
-	<div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">{header}</div>
+	<h2>{header}</h2>
 	{#each items as item}
 		{#if typeof item === 'object'}
 			<NavItem
@@ -96,7 +96,7 @@
 
 <h1>Components</h1>
 {#each Object.entries(components) as [header, items]}
-	<div class="pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold">{header}</div>
+	<h2>{header}</h2>
 	{#each items as item}
 		{#if typeof item === 'object'}
 			<NavItem
