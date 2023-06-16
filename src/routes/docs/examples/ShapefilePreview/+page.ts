@@ -4,6 +4,9 @@ export async function load({ url }) {
 	const file = url.searchParams.get('file');
 	return {
 		file,
-		geojson: file ? read(file) : null
+		geojson: file ? read(file) : null,
+		meta: {
+			hideTableOfContents: true
+		}
 	};
 }
