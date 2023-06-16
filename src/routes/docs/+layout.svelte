@@ -1,7 +1,12 @@
 <script lang="ts">
-	import { mdiCodeTags, mdiFileDocumentEditOutline } from '@mdi/js';
+	import {
+		mdiCheckCircle,
+		mdiChevronRight,
+		mdiCodeTags,
+		mdiFileDocumentEditOutline
+	} from '@mdi/js';
 
-	import { Button, TableOfContents, Tooltip } from 'svelte-ux';
+	import { Button, Icon, TableOfContents, Tooltip } from 'svelte-ux';
 	import Code from '$lib/docs/Code.svelte';
 
 	import { page } from '$app/stores';
@@ -11,8 +16,12 @@
 	$: sourceUrl = ['components', 'utils'].includes(type)
 		? `src/lib/${type}/${name}.${type === 'components' ? 'svelte' : 'ts'}`
 		: null;
-	$: description = $page.data.meta?.description;
-	$: hideUsage = $page.data.meta?.hideUsage;
+	$: ({ description, features, related, hideUsage, hideTableOfContents } = $page.data.meta ?? {});
+
+	function getRelated(r: string) {
+		const [type, name] = r.split('/');
+		return { type, name, url: `/docs/${type}/${name}` };
+	}
 </script>
 
 <div class="grid grid-rows-[auto,1fr] h-full p-4">
@@ -60,17 +69,45 @@
 				{/key}
 			{/if}
 
+			{#if features}
+				{#key $page.route.id}
+					<h1 id="features">Features</h1>
+					<ul class="pl-4 text-gray-700 divide-y-4">
+						{#each features as feature}
+							<li class="grid grid-cols-[auto,1fr] gap-2">
+								<Icon data={mdiCheckCircle} class="text-emerald-600 pt-1" />
+								<span>{feature}</span>
+							</li>
+						{/each}
+					</ul>
+				{/key}
+			{/if}
+
 			<slot />
+
+			{#if related}
+				<h1 id="related">Related</h1>
+				{#each related.map(getRelated) as r}
+					<div class="flex mb-1">
+						<Icon data={mdiChevronRight} class="text-black/30" />
+						<h2 class="text-base m-0">
+							<a href={r.url}>{r.name}</a>
+						</h2>
+					</div>
+				{/each}
+			{/if}
 		</div>
 
-		<div class="hidden lg:block w-[224px]">
-			<div class="sticky top-0 pr-2">
-				<div class="text-xs uppercase leading-8 tracking-widest text-black/50">On this page</div>
-				<!-- Rebuild toc when page changes -->
-				{#key $page.route.id}
-					<TableOfContents />
-				{/key}
+		{#if !hideTableOfContents}
+			<div class="hidden lg:block w-[224px]">
+				<div class="sticky top-0 pr-2">
+					<div class="text-xs uppercase leading-8 tracking-widest text-black/50">On this page</div>
+					<!-- Rebuild toc when page changes -->
+					{#key $page.route.id}
+						<TableOfContents />
+					{/key}
+				</div>
 			</div>
-		</div>
+		{/if}
 	</div>
 </div>
