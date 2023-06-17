@@ -23,8 +23,8 @@ export function createDateSeries(options: {
 	count?: number;
 	min: number;
 	max: number;
-	keys: Array<string>;
-	value: 'number' | 'integer';
+	keys?: Array<string>;
+	value?: 'number' | 'integer';
 }) {
 	const now = startOfToday();
 

@@ -5,7 +5,7 @@
 
 	import { isScaleBand } from '$lib/utils/scales';
 
-	const { xRange, yScale, yRange } = getContext('LayerCake');
+	const { xScale, yScale, xRange, yRange } = getContext('LayerCake');
 
 	export let x = false;
 	export let y = false;
@@ -24,8 +24,8 @@
 
 	{#if y}
 		<line
-			x1={0}
-			x2={0}
+			x1={isScaleBand($xScale) ? max($xRange) : $xScale(0) || 0}
+			x2={isScaleBand($xScale) ? max($xRange) : $xScale(0) || 0}
 			y1={min($yRange) || 0}
 			y2={max($yRange) || 0}
 			class={cls('stroke-gray-400', $$props.class)}

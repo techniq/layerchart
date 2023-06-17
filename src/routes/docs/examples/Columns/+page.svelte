@@ -93,16 +93,16 @@
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			{data}
-			x="value"
-			xDomain={[0, null]}
-			xNice
-			y="date"
-			yScale={scaleBand().padding(0.4)}
-			padding={{ left: 20, bottom: 20 }}
+			x="date"
+			xScale={scaleBand().padding(0.4)}
+			y="value"
+			yDomain={[0, null]}
+			yNice
+			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
-				<AxisY formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<AxisX gridlines />
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Bars radius={4} strokeWidth={1} />
 			</Svg>
@@ -116,15 +116,15 @@
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			data={negativeData}
-			x="value"
-			xNice
-			y="date"
-			yScale={scaleBand().padding(0.4)}
+			x="date"
+			xScale={scaleBand().padding(0.4)}
+			y="value"
+			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
-				<AxisY formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<AxisX gridlines />
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Bars radius={4} strokeWidth={1} />
 			</Svg>
@@ -132,23 +132,23 @@
 	</div>
 </Preview>
 
-<h2>with Tooltip and HighlightRect</h2>
+<h2>With Tooltip and HighlightRect</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			{data}
-			x="value"
-			xDomain={[0, null]}
-			xNice
-			y="date"
-			yScale={scaleBand().padding(0.4)}
+			x="date"
+			xScale={scaleBand().padding(0.4)}
+			y="value"
+			yDomain={[0, null]}
+			yNice
 			padding={{ left: 16, bottom: 24 }}
-			tooltip={{ mode: 'band' }}
+			tooltip
 		>
 			<Svg>
-				<AxisY formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<AxisX gridlines />
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Bars radius={4} strokeWidth={1} />
 				<HighlightRect />
@@ -160,51 +160,50 @@
 	</div>
 </Preview>
 
-<!-- TODO: Update Legend to support yScale.bandwidth -->
-<!-- <h2>with Labels</h2>
+<h2>With Labels</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			{data}
-			x="value"
-			xDomain={[0, null]}
-			xNice
-			y="date"
-			yScale={scaleBand().padding(0.4)}
+			x="date"
+			xScale={scaleBand().padding(0.4)}
+			y="value"
+			yDomain={[0, null]}
+			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
-				<AxisY formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<AxisX gridlines />
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Bars radius={4} strokeWidth={1} />
 				<Labels format="integer" />
 			</Svg>
 		</Chart>
 	</div>
-</Preview> -->
+</Preview>
 
 <h2>Multiple (overlapping)</h2>
 
 <Preview>
-	<div class="h-[500px] p-4 border rounded">
+	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			{data}
-			x={(d) => Math.max(d.value, d.baseline)}
-			xDomain={[0, null]}
-			xNice
-			y="date"
-			yScale={scaleBand().padding(0.4)}
+			x="date"
+			xScale={scaleBand().padding(0.4)}
+			y={(d) => Math.max(d.value, d.baseline)}
+			yDomain={[0, null]}
+			yNice
 			padding={{ left: 16, bottom: 24 }}
-			tooltip={{ mode: 'band' }}
+			tooltip
 		>
 			<Svg>
-				<AxisY formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<AxisX gridlines />
+				<AxisY gridlines />
+				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
-				<Bars x="baseline" radius={4} strokeWidth={1} color="#ddd" />
-				<Bars x="value" radius={4} strokeWidth={1} heightOffset={-16} />
+				<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
+				<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
 				<HighlightRect />
 			</Svg>
 			<Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
@@ -218,17 +217,17 @@
 <h2>Grouped</h2>
 
 <Preview>
-	<div class="h-[400px] p-4 border rounded">
+	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			data={groupedData}
 			flatData={longData}
 			extents={{
-				x: extent(groupedData.flatMap((d) => d.values))
+				y: extent(groupedData.flatMap((d) => d.values))
 			}}
-			x="values"
-			xNice
-			y="year"
-			yScale={scaleBand().paddingInner(0.3).paddingOuter(0.1)}
+			x="year"
+			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+			y="values"
+			yNice
 			r={(d) => d}
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
@@ -236,8 +235,8 @@
 			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
-				<AxisY />
-				<AxisX gridlines />
+				<AxisY gridlines />
+				<AxisX />
 				<Baseline x y />
 				<Bars groupBy="fruit" getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
@@ -252,12 +251,12 @@
 		<Chart
 			data={stackedData}
 			extents={{
-				x: extent(stackedData.flatMap((d) => d.values))
+				y: extent(stackedData.flatMap((d) => d.values))
 			}}
-			y="year"
-			yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-			x="values"
-			xNice
+			x="year"
+			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+			y="values"
+			yNice
 			r={(d) => d.keys[1]}
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
@@ -265,8 +264,8 @@
 			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
-				<AxisY />
-				<AxisX gridlines />
+				<AxisY gridlines />
+				<AxisX />
 				<Baseline x y />
 				<Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
@@ -281,12 +280,12 @@
 		<Chart
 			data={stackedPercentData}
 			extents={{
-				x: extent(stackedPercentData.flatMap((d) => d.values))
+				y: extent(stackedPercentData.flatMap((d) => d.values))
 			}}
-			x="values"
-			xNice
-			y="year"
-			yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+			x="year"
+			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+			y="values"
+			yNice
 			r={(d) => d.keys[1]}
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
@@ -294,8 +293,8 @@
 			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
-				<AxisY />
-				<AxisX gridlines formatTick="percentRound" />
+				<AxisY gridlines formatTick="percentRound" />
+				<AxisX />
 				<Baseline x y />
 				<Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
@@ -303,19 +302,19 @@
 	</div>
 </Preview>
 
-<!-- <h2>Stack (Separated)</h2>
+<h2>Stack (Separated)</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			data={stackedSeperatedData}
 			extents={{
-				x: extent(stackedSeperatedData.flatMap((d) => d.values))
+				y: extent(stackedSeperatedData.flatMap((d) => d.values))
 			}}
-			x="values"
-			xNice
-			y="year"
-			yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+			x="year"
+			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+			y="values"
+			yNice
 			r={(d) => d.keys[1]}
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
@@ -323,14 +322,14 @@
 			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
-				<AxisY />
-				<AxisX gridlines />
+				<AxisY gridlines />
+				<AxisX />
 				<Baseline x y />
 				<Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
 	</div>
-</Preview> -->
+</Preview>
 
 <h2>Grouped and Stacked</h2>
 
@@ -340,12 +339,12 @@
 			data={groupedStackedData}
 			flatData={longData}
 			extents={{
-				x: extent(groupedStackedData.flatMap((d) => d.values))
+				y: extent(groupedStackedData.flatMap((d) => d.values))
 			}}
-			x="values"
-			xNice
-			y="year"
-			yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+			x="year"
+			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+			y="values"
+			yNice
 			r={(d) => d}
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
@@ -353,8 +352,8 @@
 			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
-				<AxisY />
-				<AxisX gridlines />
+				<AxisY gridlines />
+				<AxisX />
 				<Baseline x y />
 				<Bars groupBy="basket" getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
@@ -379,17 +378,17 @@
 </div>
 
 <Preview>
-	<div class="h-[400px] p-4 border rounded">
+	<div class="h-[300px] p-4 border rounded">
 		<!-- Always use stackedData for extents for consistent scale -->
 		<Chart
 			data={transitionData}
 			extents={{
-				x: extent(stackedData.flatMap((d) => d.values))
+				y: extent(stackedData.flatMap((d) => d.values))
 			}}
-			x="values"
-			xNice
-			y="year"
-			yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
+			x="year"
+			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+			y="values"
+			yNice
 			r={(d) => {
 				// Color by fruit (last key)
 				return d.keys.at(-1);
@@ -400,8 +399,8 @@
 			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
-				<AxisY />
-				<AxisX gridlines />
+				<AxisY gridlines />
+				<AxisX />
 				<Baseline x y />
 				<Bars
 					groupBy={transitionChart.groupBy}

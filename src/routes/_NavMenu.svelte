@@ -8,7 +8,8 @@
 		Chart: [
 			'Area',
 			'AreaStack',
-			'Bars',
+			{ label: 'Bar Chart (Vertical)', value: 'Columns' },
+			{ label: 'Bar Chart (Horizontal)', value: 'Bars' },
 			'ClevelandDotPlot',
 			'Pack',
 			'Partition',
