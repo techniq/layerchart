@@ -24,8 +24,8 @@
 
 	{#if y}
 		<line
-			x1={isScaleBand($xScale) ? max($xRange) : $xScale(0) || 0}
-			x2={isScaleBand($xScale) ? max($xRange) : $xScale(0) || 0}
+			x1={isScaleBand($xScale) ? min($xRange) : $xScale(0) || 0}
+			x2={isScaleBand($xScale) ? min($xRange) : $xScale(0) || 0}
 			y1={min($yRange) || 0}
 			y2={max($yRange) || 0}
 			class={cls('stroke-gray-400', $$props.class)}
