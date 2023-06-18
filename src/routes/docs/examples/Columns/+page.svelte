@@ -110,30 +110,7 @@
 	</div>
 </Preview>
 
-<h2>Negative data</h2>
-
-<Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			data={negativeData}
-			x="date"
-			xScale={scaleBand().padding(0.4)}
-			y="value"
-			yNice
-			padding={{ left: 16, bottom: 24 }}
-		>
-			<Svg>
-				<AxisY gridlines />
-				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<Baseline x y />
-				<Bars radius={4} strokeWidth={1} />
-				<Labels format="integer" />
-			</Svg>
-		</Chart>
-	</div>
-</Preview>
-
-<h2>With Tooltip and HighlightRect</h2>
+<h2>with Tooltip and HighlightRect</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -161,16 +138,15 @@
 	</div>
 </Preview>
 
-<h2>With Labels</h2>
+<h2>with Labels and negative data</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
-			{data}
+			data={negativeData}
 			x="date"
 			xScale={scaleBand().padding(0.4)}
 			y="value"
-			yDomain={[0, null]}
 			yNice
 			padding={{ left: 16, bottom: 24 }}
 		>
@@ -303,7 +279,7 @@
 	</div>
 </Preview>
 
-<h2>Stack (Separated)</h2>
+<!-- <h2>Stack (Separated)</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -330,7 +306,7 @@
 			</Svg>
 		</Chart>
 	</div>
-</Preview>
+</Preview> -->
 
 <h2>Grouped and Stacked</h2>
 

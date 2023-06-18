@@ -12,7 +12,7 @@
 	import { format as formatValue, type FormatType } from 'svelte-ux';
 	import { formatNumberAsStyle, type FormatNumberStyle } from 'svelte-ux/utils/number';
 	import { greatestAbs, unique } from 'svelte-ux/utils/array';
-	import { isScaleBand } from '$lib/utils/scales';
+	import { groupScaleBand, isScaleBand } from '$lib/utils/scales';
 
 	const { flatData, xGet, yRange, xScale, yScale, x, y, custom } = getContext('LayerCake');
 
@@ -25,16 +25,26 @@
 	$: yBaseline = $custom?.yBaseline ?? 0;
 
 	export let groupBy: string = undefined;
+	export let groupPaddingInner = 0.2;
+	export let groupPaddingOuter = 0;
 
-	const x1Scale = scaleBand();
-	$: if (isScaleBand($xScale) && groupBy) {
-		const groupKeys = unique($flatData.map((d) => d[groupBy])) as string[];
-		x1Scale.domain(groupKeys).range([0, $xScale.bandwidth()]).paddingInner(0.2);
-	}
+	$: x1Scale =
+		isScaleBand($xScale) && groupBy
+			? groupScaleBand($xScale, $flatData, groupBy, {
+					inner: groupPaddingInner,
+					outer: groupPaddingOuter
+			  })
+			: null;
+
+	$: y1Scale =
+		isScaleBand($yScale) && groupBy
+			? groupScaleBand($yScale, $flatData, groupBy, {
+					inner: groupPaddingInner,
+					outer: groupPaddingOuter
+			  })
+			: null;
 
 	$: getDimensions = (item) => {
-		// console.log({ item, y: $y(item) });
-
 		let x = $xGet(item);
 		let width = 0;
 		if (isScaleBand($xScale)) {
@@ -43,31 +53,32 @@
 		}
 
 		const yValue = $y(item);
-		let yTop = 0;
-		let yBottom = 0;
+
+		let top = 0;
+		let bottom = 0;
 		if (Array.isArray(yValue)) {
 			// Array contains both top and bottom values;
-			yTop = max(yValue);
-			yBottom = min(yValue);
+			top = max(yValue);
+			bottom = min(yValue);
 		} else if (yValue == null) {
 			// null/undefined value
-			yTop = 0;
-			yBottom = 0;
+			top = 0;
+			bottom = 0;
 		} else if (yValue > 0) {
 			// Positive value
-			yTop = yValue;
-			yBottom = min($yRange); // or `0`?
+			top = yValue;
+			bottom = min($yRange); // or `0`?
 		} else {
 			// Negative value
-			yTop = min($yRange); // or `0`?
-			yBottom = yValue;
+			top = min($yRange); // or `0`?
+			bottom = yValue;
 		}
 
-		if (yBottom < 0) {
+		if (bottom < 0) {
 			// Show label below
 			return {
 				x,
-				y: $yScale(yBottom),
+				y: $yScale(bottom),
 				dy: '0.5em',
 				width
 			};
@@ -75,7 +86,7 @@
 			// Show label above
 			return {
 				x,
-				y: $yScale(yTop),
+				y: $yScale(top),
 				dy: '-0.6em',
 				width
 			};
@@ -83,7 +94,7 @@
 	};
 
 	$: getValue = (item) => {
-		const value = $y(item);
+		const value = isScaleBand($yScale) ? $x(item) : $y(item);
 
 		const labelValue = (Array.isArray(value) ? greatestAbs(value) : value) + yBaseline;
 
@@ -102,13 +113,13 @@
 	};
 </script>
 
-<g class="label-group">
+<g class="Labels">
 	{#each $flatData as item, index}
 		<Text
 			textAnchor="middle"
 			verticalAnchor="middle"
 			value={getValue(item)}
-			class="group-rect text-xs stroke-white [stroke-width:2px]"
+			class="text-xs stroke-white [stroke-width:2px]"
 			{...getDimensions(item)}
 			{...$$restProps}
 		/>

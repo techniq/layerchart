@@ -2,6 +2,8 @@ import { derived } from 'svelte/store';
 import { tweened, spring } from 'svelte/motion';
 
 import { type MotionOptions, motionStore } from '$lib/stores/motionStore';
+import { scaleBand, type ScaleBand } from 'd3-scale';
+import { unique } from 'svelte-ux/utils/array';
 
 /**
  * Implemenation for missing `scaleBand().invert()`
@@ -39,6 +41,30 @@ export function scaleInvert(scale, value: number) {
 	} else {
 		return scale.invert(value);
 	}
+}
+
+/** Create a `scaleBand()` within another scaleBand()'s bandwidth (typically a x1 of an x0 scale, used for grouping) */
+export function groupScaleBand<Domain extends { toString(): string }>(
+	scale: ScaleBand<Domain>,
+	flatData: any[],
+	groupBy: string,
+	padding?: { inner?: number; outer?: number }
+) {
+	//
+	const groupKeys = unique(flatData.map((d) => d[groupBy])) as string[];
+
+	let newScale = scaleBand().domain(groupKeys).range([0, scale.bandwidth()]);
+
+	if (padding) {
+		if (padding.inner) {
+			newScale = newScale.paddingInner(padding.inner);
+		}
+		if (padding.outer) {
+			newScale = newScale.paddingOuter(padding.outer);
+		}
+	}
+
+	return newScale;
 }
 
 /**

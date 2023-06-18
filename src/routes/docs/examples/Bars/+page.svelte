@@ -110,28 +110,6 @@
 	</div>
 </Preview>
 
-<h2>Negative data</h2>
-
-<Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			data={negativeData}
-			x="value"
-			xNice
-			y="date"
-			yScale={scaleBand().padding(0.4)}
-			padding={{ left: 16, bottom: 24 }}
-		>
-			<Svg>
-				<AxisY formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-				<AxisX gridlines />
-				<Baseline x y />
-				<Bars radius={4} strokeWidth={1} />
-			</Svg>
-		</Chart>
-	</div>
-</Preview>
-
 <h2>with Tooltip and HighlightRect</h2>
 
 <Preview>
@@ -160,15 +138,15 @@
 	</div>
 </Preview>
 
-<!-- TODO: Update Legend to support yScale.bandwidth -->
-<!-- <h2>with Labels</h2>
+<!-- TODO: Update Labels to support horizontal bands -->
+<!-- <h2>with Labels and negative data</h2> -->
+<h2>with negative data</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
-			{data}
+			data={negativeData}
 			x="value"
-			xDomain={[0, null]}
 			xNice
 			y="date"
 			yScale={scaleBand().padding(0.4)}
@@ -179,11 +157,11 @@
 				<AxisX gridlines />
 				<Baseline x y />
 				<Bars radius={4} strokeWidth={1} />
-				<Labels format="integer" />
+				<!-- <Labels format="integer" /> -->
 			</Svg>
 		</Chart>
 	</div>
-</Preview> -->
+</Preview>
 
 <h2>Multiple (overlapping)</h2>
 

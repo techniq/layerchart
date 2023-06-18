@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
-	import { scaleBand } from 'd3-scale';
 	import { max, min } from 'd3-array';
-	import { unique } from 'svelte-ux/utils/array';
 
 	import Rect from './Rect.svelte';
+	import { groupScaleBand, isScaleBand } from '$lib/utils/scales';
 
 	const {
 		data,
@@ -50,7 +49,7 @@
 		$xScale.bandwidth ? _x(item) : _y(item);
 	export let getProps: ((obj: { value: any; item: any; index: number }) => any) | undefined =
 		undefined;
-	// TODO: change to offset?
+	/** Inset the rect for amount of padding.  Useful with multiple bars (bullet, overlap, etc) */
 	export let padding = 0;
 
 	export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
@@ -62,31 +61,27 @@
 	export let groupPaddingInner = 0.2;
 	export let groupPaddingOuter = 0;
 
-	// 	$: console.log({ $data, $flatData, groupBy, stackBy })
+	$: x1Scale =
+		isScaleBand($xScale) && groupBy
+			? groupScaleBand($xScale, $flatData, groupBy, {
+					inner: groupPaddingInner,
+					outer: groupPaddingOuter
+			  })
+			: null;
 
-	$: groupKeys = unique($flatData.map((d) => d[groupBy])) as string[];
-
-	$: x1Scale = $xScale.bandwidth
-		? scaleBand()
-				.domain(groupKeys)
-				.range([0, $xScale.bandwidth()])
-				.paddingInner(groupPaddingInner)
-				.paddingOuter(groupPaddingOuter)
-		: null;
-
-	$: y1Scale = $yScale.bandwidth
-		? scaleBand()
-				.domain(groupKeys)
-				.range([0, $yScale.bandwidth()])
-				.paddingInner(groupPaddingInner)
-				.paddingOuter(groupPaddingOuter)
-		: null;
+	$: y1Scale =
+		isScaleBand($yScale) && groupBy
+			? groupScaleBand($yScale, $flatData, groupBy, {
+					inner: groupPaddingInner,
+					outer: groupPaddingOuter
+			  })
+			: null;
 
 	// TODO: Simplify and reuse in Labels, etc
 	$: getDimensions = (item) => {
-		if ($xScale.bandwidth) {
+		if (isScaleBand($xScale)) {
 			return getDimensionsVertical(item);
-		} else if ($yScale.bandwidth) {
+		} else if (isScaleBand($yScale)) {
 			return getDimensionsHorizontal(item);
 		} else {
 			// TODO: Handle both $xScale.bandwidth and $yScale.bandwidth?
@@ -97,71 +92,71 @@
 	$: getDimensionsVertical = (item) => {
 		// console.log({ item, y: $y(item) });
 
-		const x = $xGet(item) + (groupBy ? x1Scale(item[groupBy]) : 0) + padding / 2;
-		const width = Math.max(0, (groupBy ? x1Scale.bandwidth() : $xScale.bandwidth()) - padding);
+		const x = $xGet(item) + (x1Scale ? x1Scale(item[groupBy]) : 0) + padding / 2;
+		const width = Math.max(0, (x1Scale ? x1Scale.bandwidth() : $xScale.bandwidth()) - padding);
 
 		const yValue = _y(item);
 
-		let yTop = 0;
-		let yBottom = 0;
+		let top = 0;
+		let bottom = 0;
 		if (Array.isArray(yValue)) {
 			// Array contains both top and bottom values (stack, etc);
-			yTop = max(yValue);
-			yBottom = min(yValue);
+			top = max(yValue);
+			bottom = min(yValue);
 		} else if (yValue == null) {
 			// null/undefined value
-			yTop = 0;
-			yBottom = 0;
+			top = 0;
+			bottom = 0;
 		} else if (yValue > 0) {
 			// Positive value
-			yTop = yValue;
-			yBottom = min($yRange); // or `0`?
+			top = yValue;
+			bottom = min($yRange); // or `0`?
 		} else {
 			// Negative value
-			yTop = min($yRange); // or `0`?
-			yBottom = yValue;
+			top = min($yRange); // or `0`?
+			bottom = yValue;
 		}
 
 		return {
 			x,
-			y: $yScale(yTop),
+			y: $yScale(top),
 			width,
-			height: $yScale(yBottom) - $yScale(yTop)
+			height: $yScale(bottom) - $yScale(top)
 		};
 	};
 
 	$: getDimensionsHorizontal = (item) => {
 		// console.log({ item, y: $y(item) });
 
-		const y = $yGet(item) + (groupBy ? y1Scale(item[groupBy]) : 0) + padding / 2;
-		const height = Math.max(0, (groupBy ? y1Scale.bandwidth() : $yScale.bandwidth()) - padding);
+		const y = $yGet(item) + (y1Scale ? y1Scale(item[groupBy]) : 0) + padding / 2;
+		const height = Math.max(0, (y1Scale ? y1Scale.bandwidth() : $yScale.bandwidth()) - padding);
 
 		const xValue = _x(item);
 
-		let xLeft = 0;
-		let xRight = 0;
+		let left = 0;
+		let right = 0;
 		if (Array.isArray(xValue)) {
 			// Array contains both top and bottom values (stack, etc);
-			xLeft = min(xValue);
-			xRight = max(xValue);
+			left = min(xValue);
+			right = max(xValue);
 		} else if (xValue == null) {
 			// null/undefined value
-			xLeft = 0;
-			xRight = 0;
+			left = 0;
+			right = 0;
 		} else if (xValue > 0) {
 			// Positive value
-			xLeft = min($xRange); // or `0`?
-			xRight = xValue;
+			left = min($xRange); // or `0`?
+			right = xValue;
 		} else {
 			// Negative value
-			xLeft = xValue;
-			xRight = min($xRange); // or `0`?
+			left = xValue;
+			right = min($xRange); // or `0`?
 		}
 
 		return {
-			x: $xScale(xLeft),
+			x: $xScale(left),
 			y,
-			width: $xScale(xRight) - $xScale(xLeft),
+			width: $xScale(right) - $xScale(left),
 			height
 		};
 	};
@@ -177,10 +172,9 @@
 	}
 </script>
 
-<g class="column-group">
+<g class="Bars">
 	{#each $data as item, index (getKey(item, index))}
 		<Rect
-			class="group-rect"
 			data-id={index}
 			fill={getColor(item, index)}
 			fill-opacity={opacity}
