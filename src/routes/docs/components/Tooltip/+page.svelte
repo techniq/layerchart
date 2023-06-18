@@ -915,7 +915,7 @@
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
-				<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
+				<Bars y="value" radius={4} strokeWidth={1} padding={16} />
 				{#if charts.multiBars.highlight === 'line'}
 					<HighlightLine
 						{...charts.multiBars.axis && { axis: charts.multiBars.axis }}

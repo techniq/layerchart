@@ -204,7 +204,7 @@
 				<AxisX gridlines />
 				<Baseline x y />
 				<Bars x="baseline" radius={4} strokeWidth={1} color="#ddd" />
-				<Bars x="value" radius={4} strokeWidth={1} heightOffset={-16} />
+				<Bars x="value" radius={4} strokeWidth={1} padding={16} />
 				<HighlightRect />
 			</Svg>
 			<Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>

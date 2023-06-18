@@ -51,8 +51,7 @@
 	export let getProps: ((obj: { value: any; item: any; index: number }) => any) | undefined =
 		undefined;
 	// TODO: change to offset?
-	export let widthOffset = 0;
-	export let heightOffset = 0;
+	export let padding = 0;
 
 	export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
 	export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -98,9 +97,8 @@
 	$: getDimensionsVertical = (item) => {
 		// console.log({ item, y: $y(item) });
 
-		const x = $xGet(item) + (groupBy ? x1Scale(item[groupBy]) : 0) - widthOffset / 2;
-
-		const width = Math.max(0, (groupBy ? x1Scale.bandwidth() : $xScale.bandwidth()) + widthOffset);
+		const x = $xGet(item) + (groupBy ? x1Scale(item[groupBy]) : 0) + padding / 2;
+		const width = Math.max(0, (groupBy ? x1Scale.bandwidth() : $xScale.bandwidth()) - padding);
 
 		const yValue = _y(item);
 
@@ -135,12 +133,8 @@
 	$: getDimensionsHorizontal = (item) => {
 		// console.log({ item, y: $y(item) });
 
-		const y = $yGet(item) + (groupBy ? y1Scale(item[groupBy]) : 0) - heightOffset / 2;
-
-		const height = Math.max(
-			0,
-			(groupBy ? y1Scale.bandwidth() : $yScale.bandwidth()) + heightOffset
-		);
+		const y = $yGet(item) + (groupBy ? y1Scale(item[groupBy]) : 0) + padding / 2;
+		const height = Math.max(0, (groupBy ? y1Scale.bandwidth() : $yScale.bandwidth()) - padding);
 
 		const xValue = _x(item);
 

@@ -127,6 +127,7 @@
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Bars radius={4} strokeWidth={1} />
+				<Labels format="integer" />
 			</Svg>
 		</Chart>
 	</div>
@@ -203,7 +204,7 @@
 				<AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
 				<Baseline x y />
 				<Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
-				<Bars y="value" radius={4} strokeWidth={1} widthOffset={-16} />
+				<Bars y="value" radius={4} strokeWidth={1} padding={16} />
 				<HighlightRect />
 			</Svg>
 			<Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
