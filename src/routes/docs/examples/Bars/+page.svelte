@@ -138,9 +138,7 @@
 	</div>
 </Preview>
 
-<!-- TODO: Update Labels to support horizontal bands -->
-<!-- <h2>with Labels and negative data</h2> -->
-<h2>with negative data</h2>
+<h2>with Labels and negative data</h2>
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -157,7 +155,7 @@
 				<AxisX gridlines />
 				<Baseline x y />
 				<Bars radius={4} strokeWidth={1} />
-				<!-- <Labels format="integer" /> -->
+				<Labels format="integer" />
 			</Svg>
 		</Chart>
 	</div>

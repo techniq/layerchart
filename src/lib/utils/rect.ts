@@ -34,60 +34,15 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
 		[flatData, xGet, yGet, xRange, yRange, xScale, yScale, xAccessor, yAccessor],
 		([$flatData, $xGet, $yGet, $xRange, $yRange, $xScale, $yScale, $xAccessor, $yAccessor]) => {
 			return function getter(item) {
-				if (isScaleBand($xScale)) {
-					// Vertical
-					const x1Scale = groupBy
-						? groupScaleBand($xScale, $flatData, groupBy, options?.groupPadding)
-						: null;
-
-					const x = $xGet(item) + (x1Scale ? x1Scale(item[groupBy]) : 0) + padding / 2;
-					const width = Math.max(
-						0,
-						(x1Scale ? x1Scale.bandwidth() : $xScale.bandwidth()) - padding
-					);
-
-					const _y = options?.y
-						? typeof options.y === 'string'
-							? (d) => d[options.y]
-							: options?.y
-						: $yAccessor;
-					const yValue = _y(item);
-
-					let top = 0;
-					let bottom = 0;
-					if (Array.isArray(yValue)) {
-						// Array contains both top and bottom values (stack, etc);
-						top = max(yValue);
-						bottom = min(yValue);
-					} else if (yValue == null) {
-						// null/undefined value
-						top = 0;
-						bottom = 0;
-					} else if (yValue > 0) {
-						// Positive value
-						top = yValue;
-						bottom = min($yRange); // or `0`?
-					} else {
-						// Negative value
-						top = min($yRange); // or `0`?
-						bottom = yValue;
-					}
-
-					return {
-						x,
-						y: $yScale(top),
-						width,
-						height: $yScale(bottom) - $yScale(top)
-					};
-				} else if (isScaleBand($yScale)) {
-					// Horizontal
+				if (isScaleBand($yScale)) {
+					// Horizontal band
 					const y1Scale = groupBy
 						? groupScaleBand($yScale, $flatData, groupBy, options?.groupPadding)
 						: null;
 					const y = $yGet(item) + (y1Scale ? y1Scale(item[groupBy]) : 0) + padding / 2;
 					const height = Math.max(
 						0,
-						(y1Scale ? y1Scale.bandwidth() : $yScale.bandwidth()) - padding
+						$yScale.bandwidth ? (y1Scale ? y1Scale.bandwidth() : $yScale.bandwidth()) - padding : 0
 					);
 
 					const _x = options?.x
@@ -124,8 +79,50 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
 						height
 					};
 				} else {
-					// TODO: Handle both $xScale.bandwidth and $yScale.bandwidth?
-					// TODO: Handle neither $xScale.bandwidth or $yScale.bandwidth? `Math.max(0, $xGet(d)[1] - $xGet(d)[0])` instead of `$xScale.bandwidth()`
+					// Vertical band or linear
+					const x1Scale = groupBy
+						? groupScaleBand($xScale, $flatData, groupBy, options?.groupPadding)
+						: null;
+
+					const x = $xGet(item) + (x1Scale ? x1Scale(item[groupBy]) : 0) + padding / 2;
+					const width = Math.max(
+						0,
+						$xScale.bandwidth ? (x1Scale ? x1Scale.bandwidth() : $xScale.bandwidth()) - padding : 0
+					);
+
+					const _y = options?.y
+						? typeof options.y === 'string'
+							? (d) => d[options.y]
+							: options?.y
+						: $yAccessor;
+					const yValue = _y(item);
+
+					let top = 0;
+					let bottom = 0;
+					if (Array.isArray(yValue)) {
+						// Array contains both top and bottom values (stack, etc);
+						top = max(yValue);
+						bottom = min(yValue);
+					} else if (yValue == null) {
+						// null/undefined value
+						top = 0;
+						bottom = 0;
+					} else if (yValue > 0) {
+						// Positive value
+						top = yValue;
+						bottom = min($yRange); // or `0`?
+					} else {
+						// Negative value
+						top = min($yRange); // or `0`?
+						bottom = yValue;
+					}
+
+					return {
+						x,
+						y: $yScale(top),
+						width,
+						height: $yScale(bottom) - $yScale(top)
+					};
 				}
 			};
 		}
