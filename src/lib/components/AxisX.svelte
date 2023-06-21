@@ -1,22 +1,22 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
+	import { getContext, type ComponentProps } from 'svelte';
+	import type { SVGAttributes } from 'svelte/elements';
 	import { format, type FormatType } from 'svelte-ux';
 	import { max } from 'd3-array';
 
 	import Text from './Text.svelte';
 	import { isScaleBand } from '$lib/utils/scales';
-	import type { ComponentProps } from 'svelte-ux';
 
 	const { height, xScale, yRange } = getContext('LayerCake');
 
-	export let gridlines: boolean | svelte.JSX.SVGProps<SVGLineElement> = false;
+	export let gridlines: boolean | SVGAttributes<SVGLineElement> = false;
 	export let formatTick: FormatType = undefined;
-	export let ticks = undefined;
-	export let xTick = undefined;
+	export let ticks: number | Function | undefined = undefined;
+	export let xTick: number | undefined = undefined;
 	export let yTick = 8;
 	export let dxTick = 0;
 	export let dyTick = 0;
-	export let labelProps: ComponentProps<Text> = undefined;
+	export let labelProps: ComponentProps<Text> | undefined = undefined;
 
 	$: isBand = isScaleBand($xScale);
 

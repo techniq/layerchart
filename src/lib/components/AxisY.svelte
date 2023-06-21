@@ -1,22 +1,22 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
+	import { getContext, type ComponentProps } from 'svelte';
+	import type { SVGAttributes } from 'svelte/elements';
 	import { format, type FormatType } from 'svelte-ux';
 	import { min, max } from 'd3-array';
 
 	import Text from './Text.svelte';
 	import { isScaleBand } from '$lib/utils/scales';
-	import type { ComponentProps } from 'svelte-ux';
 
 	const { padding, xRange, yScale, width } = getContext('LayerCake');
 
-	export let gridlines: boolean | svelte.JSX.SVGProps<SVGLineElement> = false;
-	export let ticks: number | Function = 4;
+	export let gridlines: boolean | SVGAttributes<SVGLineElement> = false;
 	export let formatTick: FormatType = undefined;
+	export let ticks: number | Function = 4;
 	export let xTick = 0;
 	export let yTick = 0;
 	export let dxTick = 0;
 	export let dyTick = -3; // TODO: Maualliy tweak based on font-size until <Text /> handles custom styles
-	export let labelProps: ComponentProps<Text> = undefined;
+	export let labelProps: ComponentProps<Text> | undefined = undefined;
 
 	$: isBand = isScaleBand($yScale);
 

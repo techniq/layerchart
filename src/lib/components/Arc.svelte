@@ -18,6 +18,7 @@
 	// https://codepen.io/simeydotme/pen/rrOEmO/
 
 	import { getContext } from 'svelte';
+	import type { SVGAttributes } from 'svelte/elements';
 	import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 	import { arc as d3arc } from 'd3-shape';
 	import { scaleLinear } from 'd3-scale';
@@ -66,7 +67,7 @@
 	export let padAngle = 0;
 	// export let padRadius = 0;
 
-	export let track: boolean | svelte.JSX.SVGProps<SVGPathElement> = false;
+	export let track: boolean | SVGAttributes<SVGPathElement> = false;
 
 	const { yRange } = getContext('LayerCake');
 
