@@ -210,8 +210,8 @@
 
 			$tooltip = {
 				...$tooltip,
-				left: snapToDataX ? $xGet(tooltipData) : localX,
-				top: snapToDataY ? $yGet(tooltipData) : localY,
+				left: snapToDataX ? $xGet(tooltipData) + $padding.left : localX,
+				top: snapToDataY ? $yGet(tooltipData) + $padding.top : localY,
 				data: tooltipData
 			};
 		} else {
