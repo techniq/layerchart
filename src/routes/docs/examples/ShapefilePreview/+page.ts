@@ -1,3 +1,4 @@
+import pageSource from './+page.svelte?raw';
 import { read } from 'shapefile';
 
 export async function load({ url }) {
@@ -6,6 +7,7 @@ export async function load({ url }) {
     file,
     geojson: file ? read(file) : null,
     meta: {
+      pageSource,
       hideTableOfContents: true
     }
   };
