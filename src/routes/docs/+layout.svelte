@@ -65,7 +65,7 @@
 			{#if type === 'components' && !hideUsage}
 				{#key $page.route.id}
 					<h1>Usage</h1>
-					<Code code={`import { ${name} } from 'layerchart';`} language="javascript" />
+					<Code source={`import { ${name} } from 'layerchart';`} language="javascript" />
 				{/key}
 			{/if}
 
