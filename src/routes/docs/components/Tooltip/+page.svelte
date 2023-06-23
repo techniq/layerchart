@@ -124,11 +124,10 @@
 
 <h1>Examples</h1>
 
-<h2>Area</h2>
-
-<h3>x: scaleTime, y: scaleLinear</h3>
-
-<h3>bisect-x recommended. voronoi and quadtree supported. bounds and band to be improved</h3>
+<h2>Area <small>x: scaleTime, y: scaleLinear</small></h2>
+<small class="block -mt-1 mb-1">
+	bisect-x recommended. voronoi and quadtree supported. bounds and band to be improved
+</small>
 
 <TooltipControls bind:settings={charts.area} />
 <Preview>
@@ -169,11 +168,10 @@
 	</div>
 </Preview>
 
-<h2>Stacked Area</h2>
-
-<h3>x: scaleTime, y: scaleLinear (multi/stack)</h3>
-
-<h3>voronoi and quadtree recommended. bisect-x supported. bounds and band to be improved</h3>
+<h2>Stacked Area <small>x: scaleTime, y: scaleLinear (multi/stack)</small></h2>
+<small class="block -mt-1 mb-1">
+	voronoi and quadtree recommended. bisect-x supported. bounds and band to be improved
+</small>
 
 <TooltipControls bind:settings={charts.areaStack} />
 <Preview>
@@ -220,11 +218,10 @@
 	</div>
 </Preview>
 
-<h2>Single Date / Time</h2>
-
-<h3>x: scaleTime, y: scaleBand</h3>
-
-<h3>bisect-x recommended. band, voronoi, and quadtree supported.</h3>
+<h2>Single Date / Time <small>x: scaleTime, y: scaleBand</small></h2>
+<small class="block -mt-1 mb-1">
+	bisect-x recommended. band, voronoi, and quadtree supported
+</small>
 
 <TooltipControls bind:settings={charts.dateTime} />
 <Preview>
@@ -264,14 +261,11 @@
 	</div>
 </Preview>
 
-<h2>Duration</h2>
-
-<h3>x: scaleTime (multi), y: scaleBand</h3>
-
-<h3>
+<h2>Duration <small>x: scaleTime (multi), y: scaleBand</small></h2>
+<small class="block -mt-1 mb-1">
 	bisect-band or bounds recommended. band supported (when no overlap on same band). bisect supported
 	(when no overlap on time scale). voronoi and quadtree partially supported (using first point)
-</h3>
+</small>
 
 <TooltipControls bind:settings={charts.duration} />
 
@@ -318,11 +312,10 @@
 	</div>
 </Preview>
 
-<h2>Multiple (overlapping) Durations</h2>
-
-<h3>x: scaleTime (multi), y: scaleBand</h3>
-
-<h3>bounds recommends. voronoi and quadtree partially supported (using first point)</h3>
+<h2>Multiple (overlapping) Durations <small>x: scaleTime (multi), y: scaleBand</small></h2>
+<small class="block -mt-1 mb-1">
+	bounds recommended. voronoi and quadtree partially supported (using first point)
+</small>
 
 <TooltipControls bind:settings={charts.multiDuration} />
 
@@ -369,14 +362,11 @@
 	</div>
 </Preview>
 
-<h2>Simple Bars</h2>
-
-<h3>x: scaleBand, y: scaleLinear</h3>
-
-<h3>
+<h2>Simple Bars <small>x: scaleBand, y: scaleLinear</small></h2>
+<small class="block -mt-1 mb-1">
 	band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using
 	value / bar top)
-</h3>
+</small>
 
 <TooltipControls bind:settings={charts.bars} />
 
@@ -418,14 +408,12 @@
 	</div>
 </Preview>
 
-<h2>Multiple (overlapping) Bars</h2>
+<h2>Multiple (overlapping) Bars <small>x: scaleBand, y: scaleLinear</small></h2>
 
-<h3>x: scaleBand, y: scaleLinear</h3>
-
-<h3>
+<small class="block -mt-1 mb-1">
 	band or bounds recommended. bisect-x supported. voronoi and quadtree partially support (using
 	value / bar top)
-</h3>
+</small>
 
 <TooltipControls bind:settings={charts.multiBars} />
 
@@ -469,11 +457,9 @@
 	</div>
 </Preview>
 
-<h2>Scatter Plot</h2>
+<h2>Scatter Plot <small>x: scaleLinear, y: scaleLinear</small></h2>
 
-<h3>x: scaleLinear, y: scaleLinear</h3>
-
-<h3>voronoi or quadtree recommended</h3>
+<small class="block -mt-1 mb-1"> voronoi or quadtree recommended </small>
 
 <TooltipControls bind:settings={charts.scatter} />
 
