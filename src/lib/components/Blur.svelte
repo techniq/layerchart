@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { uniqueId } from 'svelte-ux';
+  import { uniqueId } from 'svelte-ux';
 
-	export let id: string = uniqueId('blur-');
-	export let stdDeviation = 5;
+  export let id: string = uniqueId('blur-');
+  export let stdDeviation = 5;
 </script>
 
 <defs>
-	<filter {id}>
-		<feGaussianBlur in="SourceGraphic" {stdDeviation} />
-	</filter>
+  <filter {id}>
+    <feGaussianBlur in="SourceGraphic" {stdDeviation} />
+  </filter>
 </defs>
 
 {#if $$slots.default}
-	<g filter="url(#{id})">
-		<slot {id} />
-	</g>
+  <g filter="url(#{id})">
+    <slot {id} />
+  </g>
 {/if}

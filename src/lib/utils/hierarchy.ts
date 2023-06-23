@@ -5,12 +5,12 @@ import type { HierarchyNode } from 'd3-hierarchy';
  *  Similar to `node.find()` (https://github.com/d3/d3-hierarchy#node_find) but checks ancestors instead of descendants
  */
 export function findAncestor<T = any>(node: HierarchyNode<T>, filter: (node) => boolean) {
-	while (node) {
-		if (filter(node)) {
-			return node;
-		}
-		node = node.parent;
-	}
+  while (node) {
+    if (filter(node)) {
+      return node;
+    }
+    node = node.parent;
+  }
 
-	return null;
+  return null;
 }

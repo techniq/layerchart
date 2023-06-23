@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { uniqueId } from 'svelte-ux';
+  import { uniqueId } from 'svelte-ux';
 
-	/** Unique id for clipPath */
-	export let id: string = uniqueId('clipPath-');
+  /** Unique id for clipPath */
+  export let id: string = uniqueId('clipPath-');
 </script>
 
 <defs>
-	<clipPath {id} {...$$restProps}>
-		<slot {id} />
-	</clipPath>
+  <clipPath {id} {...$$restProps}>
+    <slot {id} />
+  </clipPath>
 </defs>

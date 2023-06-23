@@ -1,37 +1,37 @@
 <script lang="ts">
-	import { scaleBand, scaleTime } from 'd3-scale';
-	import { addMinutes, format, startOfDay } from 'date-fns';
-	import { Duration } from 'svelte-ux';
+  import { scaleBand, scaleTime } from 'd3-scale';
+  import { addMinutes, format, startOfDay } from 'date-fns';
+  import { Duration } from 'svelte-ux';
 
-	import Chart, { Svg } from '$lib/components/Chart.svelte';
-	import AxisX from '$lib/components/AxisX.svelte';
-	import AxisY from '$lib/components/AxisY.svelte';
-	import Baseline from '$lib/components/Baseline.svelte';
-	import ConnectedPoints from '$lib/components/ConnectedPoints.svelte';
-	import HighlightLine from '$lib/components/HighlightLine.svelte';
-	import HighlightRect from '$lib/components/HighlightRect.svelte';
-	import Points from '$lib/components/Points.svelte';
-	import Tooltip from '$lib/components/Tooltip.svelte';
-	import TooltipItem from '$lib/components/TooltipItem.svelte';
-	import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
+  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import AxisX from '$lib/components/AxisX.svelte';
+  import AxisY from '$lib/components/AxisY.svelte';
+  import Baseline from '$lib/components/Baseline.svelte';
+  import ConnectedPoints from '$lib/components/ConnectedPoints.svelte';
+  import HighlightLine from '$lib/components/HighlightLine.svelte';
+  import HighlightRect from '$lib/components/HighlightRect.svelte';
+  import Points from '$lib/components/Points.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
+  import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
-	import Preview from '$lib/docs/Preview.svelte';
-	import { getRandomInteger } from '$lib/utils/genData';
+  import Preview from '$lib/docs/Preview.svelte';
+  import { getRandomInteger } from '$lib/utils/genData';
 
-	const count = 10;
-	const now = startOfDay(new Date());
-	let lastStartDate = now;
+  const count = 10;
+  const now = startOfDay(new Date());
+  let lastStartDate = now;
 
-	const data = Array.from({ length: count }).map((_, i) => {
-		const startDate = addMinutes(lastStartDate, getRandomInteger(0, 60));
-		const endDate = addMinutes(startDate, getRandomInteger(0, 60));
-		lastStartDate = startDate;
-		return {
-			name: `Item ${i + 1}`,
-			startDate,
-			endDate
-		};
-	});
+  const data = Array.from({ length: count }).map((_, i) => {
+    const startDate = addMinutes(lastStartDate, getRandomInteger(0, 60));
+    const endDate = addMinutes(startDate, getRandomInteger(0, 60));
+    lastStartDate = startDate;
+    return {
+      name: `Item ${i + 1}`,
+      startDate,
+      endDate
+    };
+  });
 </script>
 
 <h1>Examples</h1>
@@ -39,33 +39,33 @@
 <h2>Basic</h2>
 
 <Preview>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			{data}
-			x={['startDate', 'endDate']}
-			xScale={scaleTime()}
-			y="name"
-			yScale={scaleBand()}
-			padding={{ left: 36, bottom: 36 }}
-			tooltip={{ mode: 'bounds' }}
-		>
-			<Svg>
-				<AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
-				<AxisX formatTick={(d) => format(d, 'h:mm aa')} />
-				<Baseline y />
-				<ConnectedPoints stroke="#000" />
-				<Points class="fill-blue-500 stroke-blue-800" />
-				<HighlightLine color="var(--color-blue-500)" />
-				<HighlightRect />
-			</Svg>
-			<Tooltip header={(data) => data.name} let:data>
-				<TooltipItem label="start" value={format(data.startDate, 'h:mm:ss')} />
-				<TooltipItem label="end" value={format(data.endDate, 'h:mm:ss')} />
-				<TooltipSeparator />
-				<TooltipItem label="duration" valueAlign="right">
-					<Duration start={data.startDate} end={data.endDate} />
-				</TooltipItem>
-			</Tooltip>
-		</Chart>
-	</div>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x={['startDate', 'endDate']}
+      xScale={scaleTime()}
+      y="name"
+      yScale={scaleBand()}
+      padding={{ left: 36, bottom: 36 }}
+      tooltip={{ mode: 'bounds' }}
+    >
+      <Svg>
+        <AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
+        <AxisX formatTick={(d) => format(d, 'h:mm aa')} />
+        <Baseline y />
+        <ConnectedPoints stroke="#000" />
+        <Points class="fill-blue-500 stroke-blue-800" />
+        <HighlightLine color="var(--color-blue-500)" />
+        <HighlightRect />
+      </Svg>
+      <Tooltip header={(data) => data.name} let:data>
+        <TooltipItem label="start" value={format(data.startDate, 'h:mm:ss')} />
+        <TooltipItem label="end" value={format(data.endDate, 'h:mm:ss')} />
+        <TooltipSeparator />
+        <TooltipItem label="duration" valueAlign="right">
+          <Duration start={data.startDate} end={data.endDate} />
+        </TooltipItem>
+      </Tooltip>
+    </Chart>
+  </div>
 </Preview>

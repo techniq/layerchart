@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { SectionDivider } from 'svelte-ux';
+  import { SectionDivider } from 'svelte-ux';
 </script>
 
 <!--
@@ -10,5 +10,5 @@
         - Example: `#API { id: 'api' }
 -->
 <SectionDivider {...$$restProps}>
-	<slot />
+  <slot />
 </SectionDivider>

@@ -7,12 +7,12 @@ import mdsvexConfig from './mdsvex.config.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	extensions: ['.svelte', ...mdsvexConfig.extensions],
-	preprocess: [mdsvex(mdsvexConfig), sveltePreprocess(), codePreview()],
+  extensions: ['.svelte', ...mdsvexConfig.extensions],
+  preprocess: [mdsvex(mdsvexConfig), sveltePreprocess(), codePreview()],
 
-	kit: {
-		adapter: vercelAdapter()
-	}
+  kit: {
+    adapter: vercelAdapter()
+  }
 };
 
 export default config;
