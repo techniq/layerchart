@@ -1,4 +1,4 @@
-import source from '$lib/components/Axis.svelte?raw';
+import source from '$lib/components/AxisX.svelte?raw';
 import pageSource from './+page.svelte?raw';
 
 export async function load() {
