@@ -336,7 +336,9 @@
 	<Html>
 		<div
 			class="absolute"
-			style="width: {$width}px; height: {$height}px; background: _rgba(255 0 0 / .25); z-index: 9999"
+			style:width="{$width}px"
+			style:height="{$height}px"
+			style:background={debug ? 'rgba(255 0 0 / .1)' : undefined}
 			on:touchstart={showTooltip}
 			on:touchmove={showTooltip}
 			on:mousemove={showTooltip}
