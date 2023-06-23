@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
-	import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+	import { Field, MenuField, Switch } from 'svelte-ux';
 
 	import type TooltipContext from '$lib/components/TooltipContext.svelte';
 	import type HighlightRect from '$lib/components/HighlightRect.svelte';
@@ -18,69 +18,81 @@
 	};
 </script>
 
-<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
-	<Field label="Mode">
-		<ToggleGroup
-			bind:value={settings.mode}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
-			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
-			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
-			<ToggleOption value="band">band</ToggleOption>
-			<ToggleOption value="bounds">bounds</ToggleOption>
-			<ToggleOption value="voronoi">voronoi</ToggleOption>
-			<ToggleOption value="quadtree">quadtree</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight">
-		<ToggleGroup
-			bind:value={settings.highlight}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="none">none</ToggleOption>
-			<ToggleOption value="line">line</ToggleOption>
-			<ToggleOption value="rect">rect</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight Axis">
-		<ToggleGroup
-			bind:value={settings.axis}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value={undefined}>default</ToggleOption>
-			<ToggleOption value="x">x</ToggleOption>
-			<ToggleOption value="y">y</ToggleOption>
-			<ToggleOption value="both">both</ToggleOption>
-			<ToggleOption value="none">none</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Snap to Data">
-		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
-			<span>x:</span>
-			<ToggleGroup
-				bind:value={settings.snapToDataX}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-			<span>y:</span>
-			<ToggleGroup
-				bind:value={settings.snapToDataY}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-		</div>
-	</Field>
+<div class="grid grid-cols-[1fr,1fr,1fr,1fr,64px] gap-2 mb-2">
+	<MenuField
+		label="Mode"
+		bind:value={settings.mode}
+		options={[
+			{ label: 'bisect-x', value: 'bisect-x' },
+			{ label: 'bisect-y', value: 'bisect-y' },
+			{ label: 'bisect-band', value: 'bisect-band' },
+			{ label: 'band', value: 'band' },
+			{ label: 'bounds', value: 'bounds' },
+			{ label: 'voronoi', value: 'voronoi' },
+			{ label: 'quadtree', value: 'quadtree' }
+		]}
+	/>
+
+	<MenuField
+		label="Highlight"
+		bind:value={settings.highlight}
+		options={[
+			{ label: 'off', value: 'off' },
+			{ label: 'line', value: 'line' },
+			{ label: 'rect', value: 'rect' }
+		]}
+	/>
+
+	<MenuField
+		label="Highlight axis"
+		bind:value={settings.axis}
+		options={[
+			{ label: 'default', value: null },
+			{ label: 'x', value: 'x' },
+			{ label: 'y', value: 'y' },
+			{ label: 'both', value: 'both' },
+			{ label: 'none', value: 'none' }
+		]}
+	/>
+
+	<MenuField
+		label="Snap to Data"
+		value={settings.snapToDataX && settings.snapToDataY
+			? 'both'
+			: settings.snapToDataX
+			? 'x-only'
+			: settings.snapToDataY
+			? 'y-only'
+			: 'off'}
+		on:change={(e) => {
+			switch (e.detail.value) {
+				case 'off':
+					settings.snapToDataX = false;
+					settings.snapToDataY = false;
+					break;
+				case 'x-only':
+					settings.snapToDataX = true;
+					settings.snapToDataY = false;
+					break;
+				case 'y-only':
+					settings.snapToDataX = false;
+					settings.snapToDataY = true;
+					break;
+				case 'both':
+					settings.snapToDataX = true;
+					settings.snapToDataY = true;
+					break;
+			}
+		}}
+		options={[
+			{ label: 'off', value: 'off' },
+			{ label: 'x-only', value: 'x-only' },
+			{ label: 'y-only', value: 'y-only' },
+			{ label: 'both', value: 'both' }
+		]}
+	/>
+
 	<Field label="Debug" let:id>
-		<Switch bind:checked={settings.debug} {id} />
+		<Switch bind:checked={settings.debug} {id} size="md" />
 	</Field>
 </div>
