@@ -26,12 +26,9 @@
 
 	import Preview from '$lib/docs/Preview.svelte';
 
-	import {
-		createDateSeries,
-		createTimeSeries,
-		getRandomInteger,
-		getSpiral
-	} from '$lib/utils/genData';
+	import { createDateSeries, createTimeSeries, getSpiral } from '$lib/utils/genData';
+	import TooltipControls from './TooltipControls.svelte';
+	import type { ComponentProps } from 'svelte';
 
 	const dateSeries = createDateSeries({
 		min: 20,
@@ -56,9 +53,6 @@
 	const stackData = stack().keys(keys)(stackDateSeries);
 
 	const spiralData = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
-
-	let showVoronoi = false;
-	let showQuadtree = false;
 
 	let charts = {
 		area: {
@@ -125,7 +119,7 @@
 			snapToDataY: false,
 			debug: false
 		}
-	};
+	} satisfies Record<string, ComponentProps<TooltipControls>['settings']>;
 </script>
 
 <h1>Examples</h1>
@@ -136,73 +130,7 @@
 
 <h3>bisect-x recommended. voronoi and quadtree supported. bounds and band to be improved</h3>
 
-<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
-	<Field label="Mode">
-		<ToggleGroup
-			bind:value={charts.area.mode}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
-			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
-			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
-			<ToggleOption value="band">band</ToggleOption>
-			<ToggleOption value="bounds">bounds</ToggleOption>
-			<ToggleOption value="voronoi">voronoi</ToggleOption>
-			<ToggleOption value="quadtree">quadtree</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight">
-		<ToggleGroup
-			bind:value={charts.area.highlight}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="none">none</ToggleOption>
-			<ToggleOption value="line">line</ToggleOption>
-			<ToggleOption value="rect">rect</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight Axis">
-		<ToggleGroup
-			bind:value={charts.area.axis}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value={undefined}>default</ToggleOption>
-			<ToggleOption value="x">x</ToggleOption>
-			<ToggleOption value="y">y</ToggleOption>
-			<ToggleOption value="both">both</ToggleOption>
-			<ToggleOption value="none">none</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Snap to Data">
-		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
-			<span>x:</span>
-			<ToggleGroup
-				bind:value={charts.area.snapToDataX}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-			<span>y:</span>
-			<ToggleGroup
-				bind:value={charts.area.snapToDataY}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-		</div>
-	</Field>
-	<Field label="Debug" let:id>
-		<Switch bind:checked={charts.area.debug} {id} />
-	</Field>
-</div>
-
+<TooltipControls bind:settings={charts.area} />
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
@@ -247,73 +175,7 @@
 
 <h3>voronoi and quadtree recommended. bisect-x supported. bounds and band to be improved</h3>
 
-<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
-	<Field label="Mode">
-		<ToggleGroup
-			bind:value={charts.areaStack.mode}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
-			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
-			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
-			<ToggleOption value="band">band</ToggleOption>
-			<ToggleOption value="bounds">bounds</ToggleOption>
-			<ToggleOption value="voronoi">voronoi</ToggleOption>
-			<ToggleOption value="quadtree">quadtree</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight">
-		<ToggleGroup
-			bind:value={charts.areaStack.highlight}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="none">none</ToggleOption>
-			<ToggleOption value="line">line</ToggleOption>
-			<ToggleOption value="rect">rect</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight Axis">
-		<ToggleGroup
-			bind:value={charts.areaStack.axis}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value={undefined}>default</ToggleOption>
-			<ToggleOption value="x">x</ToggleOption>
-			<ToggleOption value="y">y</ToggleOption>
-			<ToggleOption value="both">both</ToggleOption>
-			<ToggleOption value="none">none</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Snap to Data">
-		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
-			<span>x:</span>
-			<ToggleGroup
-				bind:value={charts.areaStack.snapToDataX}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-			<span>y:</span>
-			<ToggleGroup
-				bind:value={charts.areaStack.snapToDataY}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-		</div>
-	</Field>
-	<Field label="Debug" let:id>
-		<Switch bind:checked={charts.areaStack.debug} {id} />
-	</Field>
-</div>
-
+<TooltipControls bind:settings={charts.areaStack} />
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
@@ -364,73 +226,7 @@
 
 <h3>bisect-x recommended. band, voronoi, and quadtree supported.</h3>
 
-<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
-	<Field label="Mode">
-		<ToggleGroup
-			bind:value={charts.dateTime.mode}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
-			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
-			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
-			<ToggleOption value="band">band</ToggleOption>
-			<ToggleOption value="bounds">bounds</ToggleOption>
-			<ToggleOption value="voronoi">voronoi</ToggleOption>
-			<ToggleOption value="quadtree">quadtree</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight">
-		<ToggleGroup
-			bind:value={charts.dateTime.highlight}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="none">none</ToggleOption>
-			<ToggleOption value="line">line</ToggleOption>
-			<ToggleOption value="rect">rect</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight Axis">
-		<ToggleGroup
-			bind:value={charts.dateTime.axis}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value={undefined}>default</ToggleOption>
-			<ToggleOption value="x">x</ToggleOption>
-			<ToggleOption value="y">y</ToggleOption>
-			<ToggleOption value="both">both</ToggleOption>
-			<ToggleOption value="none">none</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Snap to Data">
-		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
-			<span>x:</span>
-			<ToggleGroup
-				bind:value={charts.dateTime.snapToDataX}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-			<span>y:</span>
-			<ToggleGroup
-				bind:value={charts.dateTime.snapToDataY}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-		</div>
-	</Field>
-	<Field label="Debug" let:id>
-		<Switch bind:checked={charts.dateTime.debug} {id} />
-	</Field>
-</div>
-
+<TooltipControls bind:settings={charts.dateTime} />
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
@@ -477,72 +273,7 @@
 	(when no overlap on time scale). voronoi and quadtree partially supported (using first point)
 </h3>
 
-<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
-	<Field label="Mode">
-		<ToggleGroup
-			bind:value={charts.duration.mode}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
-			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
-			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
-			<ToggleOption value="band">band</ToggleOption>
-			<ToggleOption value="bounds">bounds</ToggleOption>
-			<ToggleOption value="voronoi">voronoi</ToggleOption>
-			<ToggleOption value="quadtree">quadtree</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight">
-		<ToggleGroup
-			bind:value={charts.duration.highlight}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="none">none</ToggleOption>
-			<ToggleOption value="line">line</ToggleOption>
-			<ToggleOption value="rect">rect</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight Axis">
-		<ToggleGroup
-			bind:value={charts.duration.axis}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value={undefined}>default</ToggleOption>
-			<ToggleOption value="x">x</ToggleOption>
-			<ToggleOption value="y">y</ToggleOption>
-			<ToggleOption value="both">both</ToggleOption>
-			<ToggleOption value="none">none</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Snap to Data">
-		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
-			<span>x:</span>
-			<ToggleGroup
-				bind:value={charts.duration.snapToDataX}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-			<span>y:</span>
-			<ToggleGroup
-				bind:value={charts.duration.snapToDataY}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-		</div>
-	</Field>
-	<Field label="Debug" let:id>
-		<Switch bind:checked={charts.duration.debug} {id} />
-	</Field>
-</div>
+<TooltipControls bind:settings={charts.duration} />
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -593,72 +324,7 @@
 
 <h3>bounds recommends. voronoi and quadtree partially supported (using first point)</h3>
 
-<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
-	<Field label="Mode">
-		<ToggleGroup
-			bind:value={charts.multiDuration.mode}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
-			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
-			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
-			<ToggleOption value="band">band</ToggleOption>
-			<ToggleOption value="bounds">bounds</ToggleOption>
-			<ToggleOption value="voronoi">voronoi</ToggleOption>
-			<ToggleOption value="quadtree">quadtree</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight">
-		<ToggleGroup
-			bind:value={charts.multiDuration.highlight}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="none">none</ToggleOption>
-			<ToggleOption value="line">line</ToggleOption>
-			<ToggleOption value="rect">rect</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight Axis">
-		<ToggleGroup
-			bind:value={charts.multiDuration.axis}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value={undefined}>default</ToggleOption>
-			<ToggleOption value="x">x</ToggleOption>
-			<ToggleOption value="y">y</ToggleOption>
-			<ToggleOption value="both">both</ToggleOption>
-			<ToggleOption value="none">none</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Snap to Data">
-		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
-			<span>x:</span>
-			<ToggleGroup
-				bind:value={charts.multiDuration.snapToDataX}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-			<span>y:</span>
-			<ToggleGroup
-				bind:value={charts.multiDuration.snapToDataY}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-		</div>
-	</Field>
-	<Field label="Debug" let:id>
-		<Switch bind:checked={charts.multiDuration.debug} {id} />
-	</Field>
-</div>
+<TooltipControls bind:settings={charts.multiDuration} />
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -712,72 +378,7 @@
 	value / bar top)
 </h3>
 
-<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
-	<Field label="Mode">
-		<ToggleGroup
-			bind:value={charts.bars.mode}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
-			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
-			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
-			<ToggleOption value="band">band</ToggleOption>
-			<ToggleOption value="bounds">bounds</ToggleOption>
-			<ToggleOption value="voronoi">voronoi</ToggleOption>
-			<ToggleOption value="quadtree">quadtree</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight">
-		<ToggleGroup
-			bind:value={charts.bars.highlight}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="none">none</ToggleOption>
-			<ToggleOption value="line">line</ToggleOption>
-			<ToggleOption value="rect">rect</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight Axis">
-		<ToggleGroup
-			bind:value={charts.bars.axis}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value={undefined}>default</ToggleOption>
-			<ToggleOption value="x">x</ToggleOption>
-			<ToggleOption value="y">y</ToggleOption>
-			<ToggleOption value="both">both</ToggleOption>
-			<ToggleOption value="none">none</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Snap to Data">
-		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
-			<span>x:</span>
-			<ToggleGroup
-				bind:value={charts.bars.snapToDataX}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-			<span>y:</span>
-			<ToggleGroup
-				bind:value={charts.bars.snapToDataY}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-		</div>
-	</Field>
-	<Field label="Debug" let:id>
-		<Switch bind:checked={charts.bars.debug} {id} />
-	</Field>
-</div>
+<TooltipControls bind:settings={charts.bars} />
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -826,72 +427,7 @@
 	value / bar top)
 </h3>
 
-<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
-	<Field label="Mode">
-		<ToggleGroup
-			bind:value={charts.multiBars.mode}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
-			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
-			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
-			<ToggleOption value="band">band</ToggleOption>
-			<ToggleOption value="bounds">bounds</ToggleOption>
-			<ToggleOption value="voronoi">voronoi</ToggleOption>
-			<ToggleOption value="quadtree">quadtree</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight">
-		<ToggleGroup
-			bind:value={charts.multiBars.highlight}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="none">none</ToggleOption>
-			<ToggleOption value="line">line</ToggleOption>
-			<ToggleOption value="rect">rect</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight Axis">
-		<ToggleGroup
-			bind:value={charts.multiBars.axis}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value={undefined}>default</ToggleOption>
-			<ToggleOption value="x">x</ToggleOption>
-			<ToggleOption value="y">y</ToggleOption>
-			<ToggleOption value="both">both</ToggleOption>
-			<ToggleOption value="none">none</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Snap to Data">
-		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
-			<span>x:</span>
-			<ToggleGroup
-				bind:value={charts.multiBars.snapToDataX}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-			<span>y:</span>
-			<ToggleGroup
-				bind:value={charts.multiBars.snapToDataY}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-		</div>
-	</Field>
-	<Field label="Debug" let:id>
-		<Switch bind:checked={charts.multiBars.debug} {id} />
-	</Field>
-</div>
+<TooltipControls bind:settings={charts.multiBars} />
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
@@ -939,72 +475,7 @@
 
 <h3>voronoi or quadtree recommended</h3>
 
-<div class="grid grid-cols-[1fr,148px,248px,248px,100px] gap-2 mb-2">
-	<Field label="Mode">
-		<ToggleGroup
-			bind:value={charts.scatter.mode}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="bisect-x">bisect-x</ToggleOption>
-			<ToggleOption value="bisect-y">bisect-y</ToggleOption>
-			<ToggleOption value="bisect-band">bisect-band</ToggleOption>
-			<ToggleOption value="band">band</ToggleOption>
-			<ToggleOption value="bounds">bounds</ToggleOption>
-			<ToggleOption value="voronoi">voronoi</ToggleOption>
-			<ToggleOption value="quadtree">quadtree</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight">
-		<ToggleGroup
-			bind:value={charts.scatter.highlight}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value="none">none</ToggleOption>
-			<ToggleOption value="line">line</ToggleOption>
-			<ToggleOption value="rect">rect</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Highlight Axis">
-		<ToggleGroup
-			bind:value={charts.scatter.axis}
-			variant="contained"
-			classes={{ root: 'w-full', options: 'w-full' }}
-		>
-			<ToggleOption value={undefined}>default</ToggleOption>
-			<ToggleOption value="x">x</ToggleOption>
-			<ToggleOption value="y">y</ToggleOption>
-			<ToggleOption value="both">both</ToggleOption>
-			<ToggleOption value="none">none</ToggleOption>
-		</ToggleGroup>
-	</Field>
-	<Field label="Snap to Data">
-		<div class="grid grid-cols-[auto,1fr,auto,1fr] items-center gap-1 w-full">
-			<span>x:</span>
-			<ToggleGroup
-				bind:value={charts.scatter.snapToDataX}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-			<span>y:</span>
-			<ToggleGroup
-				bind:value={charts.scatter.snapToDataY}
-				variant="contained"
-				classes={{ root: 'w-full', options: 'w-full' }}
-			>
-				<ToggleOption value={false}>off</ToggleOption>
-				<ToggleOption value={true}>on</ToggleOption>
-			</ToggleGroup>
-		</div>
-	</Field>
-	<Field label="Debug" let:id>
-		<Switch bind:checked={charts.scatter.debug} {id} />
-	</Field>
-</div>
+<TooltipControls bind:settings={charts.scatter} />
 
 <Preview>
 	<div class="h-[300px] p-4 border rounded">
