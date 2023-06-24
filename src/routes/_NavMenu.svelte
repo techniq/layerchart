@@ -5,23 +5,18 @@
   import { page } from '$app/stores';
 
   const examples = {
-    Chart: [
+    'Cartesian & Polar': [
       'Area',
       'AreaStack',
       { label: 'Bar Chart (Vertical)', value: 'Columns' },
       { label: 'Bar Chart (Horizontal)', value: 'Bars' },
       'ClevelandDotPlot',
-      'Pack',
-      'Partition',
       'PunchCard',
       'Pie',
-      'Sankey',
       'Scatter',
-      'Sunburst',
-      'Threshold',
-      'Tree',
-      'Treemap'
+      'Threshold'
     ],
+    Hierarchy: ['Pack', 'Partition', 'Sankey', 'Sunburst', 'Tree', 'Treemap'],
     Geo: [
       'GeoPath',
       'GeoPoint',
