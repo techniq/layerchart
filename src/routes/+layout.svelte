@@ -12,14 +12,7 @@
   inject({ mode: dev ? 'development' : 'production' });
 
   createTheme({
-    AppBar: 'bg-accent-500 text-white shadow-md',
-    AppLayout: {
-      nav: 'bg-neutral-800 py-4'
-    },
-    NavItem: {
-      root: 'text-gray-400 hover:text-white hover:bg-gray-300/10 [&:where(.is-active)]:text-sky-400 [&:where(.is-active)]:bg-gray-500/10 pl-6 py-2',
-      indicator: 'bg-sky-500'
-    }
+    // AppBar: 'bg-accent-500 text-white shadow-md',
   });
 
   let mainEl: HTMLElement;
@@ -71,10 +64,6 @@
   @tailwind components;
   @tailwind utilities;
 
-  :global(body) {
-    @apply bg-black/10;
-  }
-
   :global(main h1:not(.prose *, .ApiDocs *)) {
     @apply text-xl font-semibold mt-8 mb-2 border-b border-gray-400 pb-1;
   }
@@ -98,11 +87,37 @@
     @apply hidden;
   }
 
+  /* Theme */
+
+  :global(body) {
+    @apply bg-neutral-200;
+  }
+
+  :global(nav) {
+    @apply bg-neutral-800 py-2;
+  }
+
   :global(nav h1) {
     @apply py-2 pl-4 mt-4 text-sm text-gray-200 font-bold bg-black/20 border-t border-b border-white/10;
   }
 
   :global(nav h2) {
     @apply pt-4 pb-2 pl-4 text-xs text-gray-200 font-bold;
+  }
+
+  :global(nav .NavItem) {
+    @apply text-sm text-gray-400 pl-5 py-2 border-l-4 border-transparent;
+
+    &:hover {
+      @apply text-white bg-gray-300/10;
+    }
+
+    &.is-active {
+      @apply text-sky-400 bg-gray-500/10 border-sky-500;
+    }
+  }
+
+  :global(.AppBar) {
+    @apply bg-accent-500 text-white shadow-md;
   }
 </style>
