@@ -13,10 +13,10 @@
   <Toggle let:on={open} let:toggle>
     <Button {icon} on:click={toggle} variant="fill-light" color="blue" size="sm">{label}</Button>
     <Dialog {open} on:close={toggle}>
-      <div class="grid grid-cols-[1fr,auto] gap-1 items-center p-4">
-        <div>
+      <div class="grid grid-cols-[1fr,auto] gap-3 items-center p-4">
+        <div class="overflow-auto">
           <div class="text-lg font-semibold">{label}</div>
-          <div class="text-xs text-black/50">{href}</div>
+          <div class="text-xs text-black/50 truncate">{href}</div>
         </div>
 
         {#if href}
@@ -26,7 +26,7 @@
         {/if}
       </div>
 
-      <div class="max-h-[80vh] w-[70vw] overflow-auto">
+      <div class="max-h-[80vh] overflow-auto">
         <Code {source} language={source.startsWith('<script') ? 'svelte' : 'js'} />
       </div>
 
