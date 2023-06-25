@@ -5,7 +5,8 @@ export async function load() {
   return {
     meta: {
       source,
-      pageSource
+      pageSource,
+      related: ['examples/ClevelandDotPlot']
     }
   };
 }
