@@ -1,11 +1,11 @@
 <script lang="ts">
   import { scaleBand, scaleLinear } from 'd3-scale';
+  import { max, range } from 'd3-array';
   import { getDay, getWeek } from 'date-fns';
-  import { formatDate, PeriodType } from 'svelte-ux/utils/date';
+  import { formatDate, PeriodType } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import AxisX from '$lib/components/AxisX.svelte';
-  import AxisY from '$lib/components/AxisY.svelte';
+  import Axis from '$lib/components/Axis.svelte';
   import Baseline from '$lib/components/Baseline.svelte';
   import HighlightRect from '$lib/components/HighlightRect.svelte';
   import Points from '$lib/components/Points.svelte';
@@ -14,7 +14,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData';
-  import { max, range } from 'd3-array';
   import Circle from '$lib/components/Circle.svelte';
 
   const data = createDateSeries({ count: 60, min: 10, max: 100, value: 'integer' });
@@ -47,8 +46,12 @@
         .domain([0, maxValue])
         .range([0, minBandwidth / 2 - 5])}
       <Svg>
-        <AxisY formatTick={(d) => daysOfWeek[d]} gridlines={{ style: 'stroke-dasharray: 2' }} />
-        <AxisX formatTick={(d) => 'Week ' + d} />
+        <Axis
+          placement="left"
+          format={(d) => daysOfWeek[d]}
+          gridlines={{ style: 'stroke-dasharray: 2' }}
+        />
+        <Axis placement="bottom" format={(d) => 'Week ' + d} />
         <Baseline y />
         <Points let:points>
           {#each points as point, index}

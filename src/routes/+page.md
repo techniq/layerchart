@@ -8,7 +8,7 @@
 - Chart
   - Uses LakerCake to setup context
   - Adds support for x and y baseline (always show 0, etc)
-- AxisX and AxisY
+- Axis
   - Easily add gridlines
   - Custom tick format
   - Tick control (see also `getMajorTicks` / `getMinorTicks` utils)

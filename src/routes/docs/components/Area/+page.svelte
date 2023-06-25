@@ -9,8 +9,7 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
-  import AxisX from '$lib/components/AxisX.svelte';
-  import AxisY from '$lib/components/AxisY.svelte';
+  import Axis from '$lib/components/Axis.svelte';
   import Baseline from '$lib/components/Baseline.svelte';
   import Points from '$lib/components/Points.svelte';
 
@@ -126,8 +125,8 @@
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
       <Svg>
-        <AxisY gridlines />
-        <AxisX />
+        <Axis placement="left" gridlines />
+        <Axis placement="bottom" />
         <Baseline x y />
         <Area {curve} line={showLine} {tweened} />
         {#if showPoints}

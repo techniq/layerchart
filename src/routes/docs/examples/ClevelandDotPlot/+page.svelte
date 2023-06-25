@@ -4,8 +4,7 @@
   import { Duration } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import AxisX from '$lib/components/AxisX.svelte';
-  import AxisY from '$lib/components/AxisY.svelte';
+  import Axis from '$lib/components/Axis.svelte';
   import Baseline from '$lib/components/Baseline.svelte';
   import ConnectedPoints from '$lib/components/ConnectedPoints.svelte';
   import HighlightLine from '$lib/components/HighlightLine.svelte';
@@ -50,8 +49,8 @@
       tooltip={{ mode: 'bounds' }}
     >
       <Svg>
-        <AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
-        <AxisX formatTick={(d) => format(d, 'h:mm aa')} />
+        <Axis placement="left" gridlines={{ style: 'stroke-dasharray: 2' }} />
+        <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
         <Baseline y />
         <ConnectedPoints stroke="#000" />
         <Points class="fill-blue-500 stroke-blue-800" />

@@ -12,8 +12,7 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
   import AreaStack from '$lib/components/AreaStack.svelte';
-  import AxisX from '$lib/components/AxisX.svelte';
-  import AxisY from '$lib/components/AxisY.svelte';
+  import Axis from '$lib/components/Axis.svelte';
   import Bars from '$lib/components/Bars.svelte';
   import Baseline from '$lib/components/Baseline.svelte';
   import ConnectedPoints from '$lib/components/ConnectedPoints.svelte';
@@ -148,8 +147,8 @@
       }}
     >
       <Svg>
-        <AxisY gridlines />
-        <AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="left" gridlines />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
         <Baseline x y />
         <Area line={{ width: 2 }} />
         {#if charts.area.highlight === 'line'}
@@ -196,8 +195,8 @@
       }}
     >
       <Svg>
-        <AxisY gridlines />
-        <AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="left" gridlines />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
         <Baseline x y />
         <AreaStack line={{ width: 2 }} />
         {#if charts.areaStack.highlight === 'line'}
@@ -241,8 +240,8 @@
       }}
     >
       <Svg>
-        <AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
-        <AxisX formatTick={(d) => format(d, 'h:mm aa')} />
+        <Axis placement="left" gridlines={{ style: 'stroke-dasharray: 2' }} />
+        <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
         <Baseline y />
         <Points class="fill-blue-500 stroke-blue-800" />
         {#if charts.dateTime.highlight === 'line'}
@@ -286,8 +285,8 @@
       }}
     >
       <Svg>
-        <AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
-        <AxisX formatTick={(d) => format(d, 'h:mm aa')} />
+        <Axis placement="left" gridlines={{ style: 'stroke-dasharray: 2' }} />
+        <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
         <Baseline y />
         <ConnectedPoints stroke="#000" />
         <Points class="fill-blue-500 stroke-blue-800" />
@@ -336,8 +335,8 @@
       }}
     >
       <Svg>
-        <AxisY gridlines={{ style: 'stroke-dasharray: 2' }} />
-        <AxisX formatTick={(d) => format(d, 'h:mm aa')} />
+        <Axis placement="left" gridlines={{ style: 'stroke-dasharray: 2' }} />
+        <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
         <Baseline y />
         <ConnectedPoints stroke="#000" />
         <Points class="fill-blue-500 stroke-blue-800" />
@@ -388,8 +387,8 @@
       }}
     >
       <Svg>
-        <AxisY gridlines />
-        <AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="left" gridlines />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
         <Baseline x y />
         <Bars radius={4} strokeWidth={1} />
         {#if charts.bars.highlight === 'line'}
@@ -435,8 +434,8 @@
       }}
     >
       <Svg>
-        <AxisY gridlines />
-        <AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="left" gridlines />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
         <Baseline x y />
         <Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
         <Bars y="value" radius={4} strokeWidth={1} padding={16} />
@@ -478,8 +477,8 @@
       }}
     >
       <Svg>
-        <AxisY gridlines />
-        <AxisX gridlines />
+        <Axis placement="left" gridlines />
+        <Axis placement="bottom" gridlines />
         <Points class="fill-blue-500 stroke-blue-800" />
         {#if charts.scatter.highlight === 'line'}
           <HighlightLine

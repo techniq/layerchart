@@ -5,12 +5,10 @@
   import { extent } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
 
-  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { formatDate, PeriodType } from 'svelte-ux/utils/date';
+  import { Field, ToggleGroup, ToggleOption, formatDate, PeriodType } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import AxisX from '$lib/components/AxisX.svelte';
-  import AxisY from '$lib/components/AxisY.svelte';
+  import Axis from '$lib/components/Axis.svelte';
   import Baseline from '$lib/components/Baseline.svelte';
   import Bars from '$lib/components/Bars.svelte';
   import HighlightRect from '$lib/components/HighlightRect.svelte';
@@ -101,8 +99,8 @@
       padding={{ left: 20, bottom: 20 }}
     >
       <Svg>
-        <AxisY formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <AxisX gridlines />
+        <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="bottom" gridlines />
         <Baseline x y />
         <Bars radius={4} strokeWidth={1} />
       </Svg>
@@ -125,8 +123,8 @@
       tooltip={{ mode: 'band' }}
     >
       <Svg>
-        <AxisY formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <AxisX gridlines />
+        <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="bottom" gridlines />
         <Baseline x y />
         <Bars radius={4} strokeWidth={1} />
         <HighlightRect />
@@ -151,8 +149,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <AxisY formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <AxisX gridlines />
+        <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="bottom" gridlines />
         <Baseline x y />
         <Bars radius={4} strokeWidth={1} />
         <Labels format="integer" />
@@ -176,8 +174,8 @@
       tooltip={{ mode: 'band' }}
     >
       <Svg>
-        <AxisY formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <AxisX gridlines />
+        <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="bottom" gridlines />
         <Baseline x y />
         <Bars x="baseline" radius={4} strokeWidth={1} color="#ddd" />
         <Bars x="value" radius={4} strokeWidth={1} padding={16} />
@@ -212,8 +210,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <AxisY />
-        <AxisX gridlines />
+        <Axis placement="left" />
+        <Axis placement="bottom" gridlines />
         <Baseline x y />
         <Bars groupBy="fruit" getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
       </Svg>
@@ -241,8 +239,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <AxisY />
-        <AxisX gridlines />
+        <Axis placement="left" />
+        <Axis placement="bottom" gridlines />
         <Baseline x y />
         <Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
       </Svg>
@@ -270,8 +268,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <AxisY />
-        <AxisX gridlines formatTick="percentRound" />
+        <Axis placement="left" />
+        <Axis placement="bottom" gridlines format="percentRound" />
         <Baseline x y />
         <Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
       </Svg>
@@ -299,8 +297,8 @@
 			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
-				<AxisY />
-				<AxisX gridlines />
+				<Axis placement="left" />
+				<Axis placement="bottom" gridlines />
 				<Baseline x y />
 				<Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
@@ -329,8 +327,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <AxisY />
-        <AxisX gridlines />
+        <Axis placement="left" />
+        <Axis placement="bottom" gridlines />
         <Baseline x y />
         <Bars groupBy="basket" getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
       </Svg>
@@ -376,8 +374,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <AxisY />
-        <AxisX gridlines />
+        <Axis placement="left" />
+        <Axis placement="bottom" gridlines />
         <Baseline x y />
         <Bars
           groupBy={transitionChart.groupBy}

@@ -1,8 +1,7 @@
 export { default as Arc } from './Arc.svelte';
 export { default as Area } from './Area.svelte';
 export { default as AreaStack } from './AreaStack.svelte';
-export { default as AxisX } from './AxisX.svelte';
-export { default as AxisY } from './AxisY.svelte';
+export { default as Axis } from './Axis.svelte';
 export { default as Bars } from './Bars.svelte';
 export { default as Baseline } from './Baseline.svelte';
 export { default as Blur } from './Blur.svelte';

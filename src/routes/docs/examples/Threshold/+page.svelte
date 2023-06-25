@@ -2,13 +2,11 @@
   import { scaleTime } from 'd3-scale';
   import { curveLinear, curveStepAfter, curveBumpX, curveMonotoneX } from 'd3-shape';
   import { format } from 'date-fns';
-  import { Field } from 'svelte-ux';
-  import { formatDate, PeriodType } from 'svelte-ux/utils/date';
+  import { Field, formatDate, PeriodType } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
-  import AxisX from '$lib/components/AxisX.svelte';
-  import AxisY from '$lib/components/AxisY.svelte';
+  import Axis from '$lib/components/Axis.svelte';
   import Baseline from '$lib/components/Baseline.svelte';
   import HighlightRect from '$lib/components/HighlightRect.svelte';
   import Labels from '$lib/components/Labels.svelte';
@@ -56,8 +54,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <AxisY gridlines />
-        <AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="left" gridlines />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
         <Baseline x y />
         <Threshold curve={selectedCurve}>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
@@ -89,8 +87,8 @@
       tooltip={{ findTooltipData: 'left' }}
     >
       <Svg>
-        <AxisY gridlines />
-        <AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="left" gridlines />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
         <Baseline x y />
         <Threshold curve={curveStepAfter}>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
@@ -130,8 +128,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <AxisY gridlines />
-        <AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="left" gridlines />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
         <Baseline x y />
         <Threshold>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>

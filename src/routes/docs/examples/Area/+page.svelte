@@ -6,8 +6,7 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
-  import AxisX from '$lib/components/AxisX.svelte';
-  import AxisY from '$lib/components/AxisY.svelte';
+  import Axis from '$lib/components/Axis.svelte';
   import Baseline from '$lib/components/Baseline.svelte';
   import HighlightLine from '$lib/components/HighlightLine.svelte';
   import Labels from '$lib/components/Labels.svelte';
@@ -48,8 +47,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <AxisY gridlines />
-        <AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="left" gridlines />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
         <Baseline x y />
         <Area line={{ width: 2 }} />
       </Svg>
@@ -72,8 +71,8 @@
       tooltip
     >
       <Svg>
-        <AxisY gridlines />
-        <AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="left" gridlines />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
         <Baseline x y />
         <Area line={{ width: 2 }} />
         <HighlightLine color="var(--color-blue-500)" />
@@ -99,8 +98,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <AxisY gridlines />
-        <AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="left" gridlines />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
         <Baseline x y />
         <Area line={{ width: 2 }} />
         <Labels format="integer" />
@@ -128,8 +127,8 @@
       tooltip={{ mode: 'voronoi' }}
     >
       <Svg>
-        <AxisY gridlines />
-        <AxisX formatTick={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="left" gridlines />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
         <Baseline x y />
         {#each dataByFruit as [fruit, data]}
           <Area {data} color={fruitColors[fruit]} line={{ width: 2 }} />
