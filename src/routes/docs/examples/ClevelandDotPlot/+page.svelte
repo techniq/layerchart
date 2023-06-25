@@ -1,7 +1,7 @@
 <script lang="ts">
   import { scaleBand, scaleTime } from 'd3-scale';
   import { addMinutes, format, startOfDay } from 'date-fns';
-  import { Duration } from 'svelte-ux';
+  import { Duration, dateDisplay } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
@@ -46,7 +46,7 @@
       y="name"
       yScale={scaleBand()}
       padding={{ left: 36, bottom: 36 }}
-      tooltip={{ mode: 'bounds' }}
+      tooltip={{ mode: 'band' }}
     >
       <Svg>
         <Axis placement="left" gridlines={{ style: 'stroke-dasharray: 2' }} />
@@ -58,8 +58,8 @@
         <HighlightRect />
       </Svg>
       <Tooltip header={(data) => data.name} let:data>
-        <TooltipItem label="start" value={format(data.startDate, 'h:mm:ss')} />
-        <TooltipItem label="end" value={format(data.endDate, 'h:mm:ss')} />
+        <TooltipItem label="start" value={dateDisplay(data.startDate, { format: 'h:mm:ss' })} />
+        <TooltipItem label="end" value={dateDisplay(data.endDate, { format: 'h:mm:ss' })} />
         <TooltipSeparator />
         <TooltipItem label="duration" valueAlign="right">
           <Duration start={data.startDate} end={data.endDate} />
