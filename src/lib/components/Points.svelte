@@ -3,7 +3,7 @@
 
   import Circle from './Circle.svelte';
   import { isScaleBand } from '../utils/scales';
-  import type { ScaleBand } from 'd3-scale';
+  import { notNull } from 'svelte-ux';
 
   const context = getContext('LayerCake') as any;
   const { data, xGet, y, yGet, xScale, yScale, rGet, config } = context;
@@ -45,25 +45,29 @@
 				x={["prop1" ,"prop2"]}
 				y="prop3"
 			*/
-      return $xGet(d).map((x) => {
-        return {
-          x: x + getOffset(x, offsetX, $xScale),
-          y: $yGet(d) + getOffset($yGet(d), offsetY, $yScale),
-          data: d
-        };
-      });
+      return $xGet(d)
+        .filter(notNull)
+        .map((x) => {
+          return {
+            x: x + getOffset(x, offsetX, $xScale),
+            y: $yGet(d) + getOffset($yGet(d), offsetY, $yScale),
+            data: d
+          };
+        });
     } else if (Array.isArray($config.y)) {
       /*
 				x="prop1"
 				y={["prop2" ,"prop3"]}
 			*/
-      return $yGet(d).map((y) => {
-        return {
-          x: $xGet(d) + getOffset($xGet(d), offsetX, $xScale),
-          y: y + getOffset(y, offsetY, $yScale),
-          data: d
-        };
-      });
+      return $yGet(d)
+        .filter(notNull)
+        .map((y) => {
+          return {
+            x: $xGet(d) + getOffset($xGet(d), offsetX, $xScale),
+            y: y + getOffset(y, offsetY, $yScale),
+            data: d
+          };
+        });
     } else {
       /*
 				x="prop1"

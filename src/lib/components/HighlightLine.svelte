@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import { get } from 'svelte/store';
   import { max } from 'd3-array';
+  import { notNull } from 'svelte-ux';
 
   import { isScaleBand } from '$lib/utils/scales';
   import Circle from './Circle.svelte';
@@ -17,7 +17,7 @@
 
   // TODO: Fix circle points being backwards for stack (see AreaStack)
 
-  function getColor(item: any, index: number = undefined) {
+  function getColor(item: any, index: number = -1) {
     if (color) {
       if (typeof color === 'function') {
         return color({ value: $y(item), item, index });
@@ -49,7 +49,7 @@
         // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
         lines = [
           ...lines,
-          ...x.map((xItem, i) => ({
+          ...x.filter(notNull).map((xItem, i) => ({
             x1: xItem + xOffset,
             y1: 0,
             x2: xItem + xOffset,
@@ -74,7 +74,7 @@
         // `y` accessor with multiple properties (ex. `y={['start', 'end']})`)
         lines = [
           ...lines,
-          ...y.map((yItem, i) => ({
+          ...y.filter(notNull).map((yItem, i) => ({
             x1: 0,
             y1: yItem + yOffset,
             x2: max($xRange),
@@ -96,7 +96,7 @@
 
     if (Array.isArray(x)) {
       // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
-      points = x.map((xItem, i) => ({
+      points = x.filter(notNull).map((xItem, i) => ({
         x: xItem + xOffset,
         y: $yGet($tooltip.data) + yOffset,
         color: getColor($tooltip.data) // TODO: improve

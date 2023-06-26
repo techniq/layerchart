@@ -1,7 +1,7 @@
 <script lang="ts">
   import { scaleBand, scaleTime } from 'd3-scale';
   import { addMinutes, format, startOfDay } from 'date-fns';
-  import { Duration, dateDisplay } from 'svelte-ux';
+  import { Duration, DurationUnits, dateDisplay } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
@@ -62,7 +62,7 @@
         <TooltipItem label="end" value={dateDisplay(data.endDate, { format: 'h:mm:ss' })} />
         <TooltipSeparator />
         <TooltipItem label="duration" valueAlign="right">
-          <Duration start={data.startDate} end={data.endDate} />
+          <Duration start={data.startDate} end={data.endDate} totalUnits={2} />
         </TooltipItem>
       </Tooltip>
     </Chart>
