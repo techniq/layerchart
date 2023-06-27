@@ -3,6 +3,7 @@
   import { spring } from 'svelte/motion';
   import { fade } from 'svelte/transition';
   import { writable } from 'svelte/store';
+  import { cls } from 'svelte-ux';
 
   import { tooltipContext } from './TooltipContext.svelte';
 
@@ -22,8 +23,8 @@
   let top = animate ? spring($tooltip.top) : writable($tooltip.top);
   $: if ($tooltip) {
     if (contained === 'container' && $tooltip.top + topOffset + tooltipHeight > $containerHeight) {
-      // change side
-      $top = $tooltip.top - (topOffset + tooltipHeight);
+      // Change side.  Do not allow tooltip to go above the top
+      $top = Math.max($tooltip.top - (topOffset + tooltipHeight), 0);
     } else {
       $top = $tooltip.top + topOffset;
     }
@@ -32,8 +33,8 @@
   let left = animate ? spring($tooltip.left) : writable($tooltip.left);
   $: if ($tooltip) {
     if (contained === 'container' && $tooltip.left + leftOffset + tooltipWidth > $containerWidth) {
-      // change side
-      $left = $tooltip.left - (leftOffset + tooltipWidth);
+      // Change side
+      $left = Math.max($tooltip.left - (leftOffset + tooltipWidth), 0);
     } else {
       $left = $tooltip.left + leftOffset;
     }
@@ -42,7 +43,7 @@
 
 {#if $tooltip.data}
   <div
-    class="absolute pointer-events-none z-50"
+    class={cls('absolute pointer-events-none z-50', $$props.class)}
     style:top="{$top}px"
     style:left="{$left}px"
     transition:fade={{ duration: 100 }}
@@ -50,7 +51,7 @@
     bind:clientHeight={tooltipHeight}
   >
     <div
-      class="bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white rounded elevation-1 px-2 py-1"
+      class="bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white rounded elevation-1 px-2 py-1 h-full"
     >
       {#if header || $$slots.header}
         <div class="text-center font-semibold whitespace-nowrap">
