@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext, type ComponentProps } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
-  import { format as formatValue, type FormatType } from 'svelte-ux';
+  import { format as formatValue, type FormatType, cls } from 'svelte-ux';
   import { max, min } from 'd3-array';
 
   import Text from './Text.svelte';
@@ -97,14 +97,15 @@
     {@const tickCoords = getCoords(tick)}
     <g>
       {#if gridlines !== false}
+        {@const lineProps = typeof gridlines === 'object' ? gridlines : null}
         {#if orientation === 'horizontal'}
           <line
             x1={tickCoords.x}
             y1={min($yRange)}
             x2={tickCoords.x}
             y2={max($yRange)}
-            class="gridline stroke-gray-200"
-            {...gridlines}
+            {...lineProps}
+            class={cls('gridline stroke-gray-200', lineProps?.class)}
           />
         {:else if orientation === 'vertical'}
           <line
@@ -112,8 +113,8 @@
             y1={tickCoords.y}
             x2={$width}
             y2={tickCoords.y}
-            class="gridline stroke-gray-200"
-            {...gridlines}
+            {...lineProps}
+            class={cls('gridline stroke-gray-200', lineProps?.class)}
           />
         {/if}
       {/if}
