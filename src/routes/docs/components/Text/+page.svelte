@@ -30,7 +30,7 @@
     <RangeField label="y" bind:value={y} min={-300} max={300} />
     <RangeField label="width" bind:value={width} max={300} />
 
-    <Field label="textAnchor">
+    <Field label="textAnchor" classes={{ input: 'mt-[6px] mb-1' }}>
       <ToggleGroup
         bind:value={textAnchor}
         variant="contained"
@@ -42,7 +42,7 @@
       </ToggleGroup>
     </Field>
 
-    <Field label="verticalAnchor">
+    <Field label="verticalAnchor" classes={{ input: 'mt-[6px] mb-1' }}>
       <ToggleGroup
         bind:value={verticalAnchor}
         variant="contained"
