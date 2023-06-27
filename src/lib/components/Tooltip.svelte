@@ -54,7 +54,7 @@
     >
       {#if header || $$slots.header}
         <div class="text-center font-semibold whitespace-nowrap">
-          <slot name="header">
+          <slot name="header" data={$tooltip.data}>
             {header($tooltip.data)}
           </slot>
         </div>

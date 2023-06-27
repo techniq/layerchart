@@ -4,6 +4,8 @@
   import { hierarchy } from 'd3-hierarchy';
   import { interpolateCool } from 'd3-scale-chromatic';
   import { extent } from 'd3-array';
+  import { Icon } from 'svelte-ux';
+  import { mdiArrowRightBold } from '@mdi/js';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -13,11 +15,14 @@
   import Rect from '$lib/components/Rect.svelte';
   import Sankey from '$lib/components/Sankey.svelte';
   import Text from '$lib/components/Text.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
+  import TooltipItem from '$lib/components/TooltipItem.svelte';
 
   import { simpleData, complexData, greenhouse } from '../_data/graph';
   import { complexData as hierarchyComplexData } from '../_data/hierarchy';
   import { graphFromHierarchy, graphFromNode } from '$lib/utils/graph';
   import SankeyControls from './SankeyControls.svelte';
+  import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
   const colorScale = scaleSequential(interpolateCool);
 
@@ -85,7 +90,84 @@
   </div>
 </Preview>
 
-<h2>Selected</h2>
+<h2>Tooltip</h2>
+
+<Preview>
+  <div class="h-[800px] p-4 border rounded">
+    <Chart data={structuredClone(greenhouse)} tooltip={{ mode: 'manual' }} let:tooltip>
+      <Svg>
+        <Sankey nodeId={(d) => d.name} nodeWidth={8} let:links let:nodes>
+          {#each links as link}
+            <Link
+              sankey
+              data={link}
+              stroke="#ddd"
+              stroke-opacity={0.5}
+              stroke-width={link.width}
+              on:mousemove={(e) => tooltip.show(e, { link })}
+              on:mouseleave={tooltip.hide}
+            />
+          {/each}
+          {#each nodes as node (node.name)}
+            {@const nodeWidth = node.x1 - node.x0}
+            {@const nodeHeight = node.y1 - node.y0}
+            <Group x={node.x0} y={node.y0}>
+              <Rect
+                width={nodeWidth}
+                height={nodeHeight}
+                class="fill-blue-500"
+                on:mousemove={(e) => tooltip.show(e, { node })}
+                on:mouseleave={tooltip.hide}
+              />
+              <Text
+                value={node.name}
+                x={node.height === 0 ? -4 : nodeWidth + 4}
+                y={nodeHeight / 2}
+                textAnchor={node.height === 0 ? 'end' : 'start'}
+                verticalAnchor="middle"
+              />
+            </Group>
+          {/each}
+        </Sankey>
+      </Svg>
+      <Tooltip let:data>
+        <div slot="header" let:data>
+          {#if data.node}
+            {data.node.name}
+          {:else if data.link}
+            {data.link.source.name}
+            <Icon data={mdiArrowRightBold} class="text-white/50" />
+            {data.link.target.name}
+          {/if}
+        </div>
+
+        {#if data.node}
+          <TooltipItem label="Total" value={data.node.value} format="decimal" />
+
+          {#if data.node.targetLinks.length}
+            <TooltipSeparator />
+            <div class="col-span-full text-sm">Sources</div>
+            {#each data.node.targetLinks as link}
+              <TooltipItem label={link.source.name} value={link.value} format="decimal" />
+            {/each}
+          {/if}
+
+          {#if data.node.sourceLinks.length}
+            <TooltipSeparator />
+            <div class="col-span-full text-sm">Targets</div>
+            {#each data.node.sourceLinks as link}
+              <TooltipItem label={link.target.name} value={link.value} format="decimal" />
+            {/each}
+          {/if}
+        {:else if data.link}
+          <TooltipItem label="Value" value={data.link.value} format="decimal" />
+        {/if}
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Node select</h2>
 
 <Preview>
   <div class="h-[600px] p-4 border rounded">
@@ -113,7 +195,12 @@
                 selectedNode = node === selectedNode || node.sourceLinks.length === 0 ? null : node;
               }}
             >
-              <Rect width={nodeWidth} height={nodeHeight} class="fill-blue-500" tweened />
+              <Rect
+                width={nodeWidth}
+                height={nodeHeight}
+                class="fill-blue-500 hover:fill-blue-400 hover:cursor-pointer"
+                tweened
+              />
               <Text
                 value={node.name}
                 x={node.height === 0 ? -4 : nodeWidth + 4}
@@ -135,7 +222,7 @@
 
 <Preview>
   <div class="h-[800px] p-4 border rounded">
-    <Chart data={complexData} padding={{ right: 100 }}>
+    <Chart data={complexData} padding={{ right: 164 }} tooltip={{ mode: 'manual' }} let:tooltip>
       <Svg>
         <Sankey
           {nodeAlign}
@@ -164,7 +251,11 @@
                 : linkOpacity.default}
               stroke-width={link.width}
               on:mouseover={() => (highlightLinkIndexes = [i])}
-              on:mouseout={() => (highlightLinkIndexes = [])}
+              on:mousemove={(e) => tooltip.show(e, { link })}
+              on:mouseout={() => {
+                highlightLinkIndexes = [];
+                tooltip.hide();
+              }}
               tweened
             />
           {/each}
@@ -183,7 +274,11 @@
                     ...node.targetLinks.map((l) => l.index)
                   ];
                 }}
-                on:mouseout={() => (highlightLinkIndexes = [])}
+                on:mousemove={(e) => tooltip.show(e, { node })}
+                on:mouseout={() => {
+                  highlightLinkIndexes = [];
+                  tooltip.hide();
+                }}
                 tweened
               />
               <Text
@@ -193,11 +288,45 @@
                 dy={-2}
                 verticalAnchor="middle"
                 style="font-size: .6rem"
+                class="pointer-events-none"
               />
             </Group>
           {/each}
         </Sankey>
       </Svg>
+      <Tooltip let:data>
+        <div slot="header" let:data>
+          {#if data.node}
+            {data.node.name}
+          {:else if data.link}
+            {data.link.source.name}
+            <Icon data={mdiArrowRightBold} class="text-white/50" />
+            {data.link.target.name}
+          {/if}
+        </div>
+
+        {#if data.node}
+          <TooltipItem label="Total" value={data.node.value} format="decimal" />
+
+          {#if data.node.targetLinks.length}
+            <TooltipSeparator />
+            <div class="col-span-full text-sm">Sources</div>
+            {#each data.node.targetLinks as link}
+              <TooltipItem label={link.source.name} value={link.value} format="decimal" />
+            {/each}
+          {/if}
+
+          {#if data.node.sourceLinks.length}
+            <TooltipSeparator />
+            <div class="col-span-full text-sm">Targets</div>
+            {#each data.node.sourceLinks as link}
+              <TooltipItem label={link.target.name} value={link.value} format="decimal" />
+            {/each}
+          {/if}
+        {:else if data.link}
+          <TooltipItem label="Value" value={data.link.value} format="decimal" />
+        {/if}
+      </Tooltip>
     </Chart>
   </div>
 </Preview>

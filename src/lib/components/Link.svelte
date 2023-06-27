@@ -55,6 +55,8 @@
   fill="none"
   on:click
   on:mouseover
+  on:mousemove
   on:mouseout
+  on:mouseleave
   {...$$restProps}
 />
