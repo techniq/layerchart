@@ -9,7 +9,7 @@
   export let step = 1;
 </script>
 
-<Field let:id {...$$restProps}>
+<Field let:id classes={{ input: 'mt-[6px] mb-1' }} {...$$restProps}>
   <Button
     icon={mdiChevronLeft}
     on:click={() => (value -= value > min ? step : 0)}
