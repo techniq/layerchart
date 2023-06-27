@@ -125,11 +125,13 @@
                 y={nodeHeight / 2}
                 textAnchor={node.height === 0 ? 'end' : 'start'}
                 verticalAnchor="middle"
+                class="pointer-events-none"
               />
             </Group>
           {/each}
         </Sankey>
       </Svg>
+
       <Tooltip let:data>
         <div slot="header" let:data>
           {#if data.node}
@@ -294,6 +296,7 @@
           {/each}
         </Sankey>
       </Svg>
+
       <Tooltip let:data>
         <div slot="header" let:data>
           {#if data.node}

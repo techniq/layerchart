@@ -159,6 +159,52 @@
   </div>
 </Preview>
 
+<h2>with gridlines on top</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="value"
+      xDomain={[0, null]}
+      xNice
+      y="date"
+      yScale={scaleBand().padding(0.4)}
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Bars radius={4} strokeWidth={1} />
+        <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="bottom" gridlines={{ class: 'stroke-white' }} />
+        <Baseline x y />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>with gridlines on top (mix-blend)</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="value"
+      xDomain={[0, null]}
+      xNice
+      y="date"
+      yScale={scaleBand().padding(0.4)}
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Bars radius={4} strokeWidth={1} />
+        <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Axis placement="bottom" gridlines={{ class: 'mix-blend-multiply' }} />
+        <Baseline x y />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Multiple (overlapping)</h2>
 
 <Preview>
