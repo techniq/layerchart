@@ -19,18 +19,6 @@
   let resizeSvg = true;
 </script>
 
-<h1>Features</h1>
-
-<div class="prose max-w-none">
-  <ul>
-    <li>Rotate (based on origin)</li>
-    <li>Multiline wrapping</li>
-    <li>Scale to fit</li>
-    <li>Adjustable anchor/origin point (center horizontally and vertically)</li>
-    <li>Easy offset with `dx` and `dy`</li>
-  </ul>
-</div>
-
 <h1>Examples</h1>
 
 <h2>Playground</h2>
