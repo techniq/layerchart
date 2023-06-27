@@ -1,13 +1,11 @@
 <script lang="ts">
+  import type { ComponentProps } from 'svelte';
   import { scaleSequential } from 'd3-scale';
   import { hierarchy } from 'd3-hierarchy';
   import { interpolateCool } from 'd3-scale-chromatic';
   import { extent } from 'd3-array';
 
-  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-
   import Preview from '$lib/docs/Preview.svelte';
-  import RangeField from '$lib/docs/RangeField.svelte';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Group from '$lib/components/Group.svelte';
@@ -19,15 +17,18 @@
   import { simpleData, complexData, greenhouse } from '../_data/graph';
   import { complexData as hierarchyComplexData } from '../_data/hierarchy';
   import { graphFromHierarchy, graphFromNode } from '$lib/utils/graph';
+  import SankeyControls from './SankeyControls.svelte';
 
   const colorScale = scaleSequential(interpolateCool);
 
-  let highlightLinkIndexes = [];
-  let nodeAlign = 'justify';
-  let nodePadding = 4;
-  let nodeWidth = 10;
-  let nodeColorBy = 'layer';
-  let linkColorBy = 'static';
+  type SankeyControlsProps = ComponentProps<SankeyControls>;
+
+  let highlightLinkIndexes: number[] = [];
+  let nodeAlign: SankeyControlsProps['nodeAlign'] = 'justify';
+  let nodePadding: SankeyControlsProps['nodePadding'] = 4;
+  let nodeWidth: SankeyControlsProps['nodeWidth'] = 10;
+  let nodeColorBy: SankeyControlsProps['nodeColorBy'] = 'layer';
+  let linkColorBy: SankeyControlsProps['linkColorBy'] = 'static';
 
   $: linkOpacity =
     linkColorBy === 'static'
@@ -130,45 +131,7 @@
 
 <h2>Complex</h2>
 
-<div class="grid grid-flow-col gap-4 mb-4">
-  <Field label="Align">
-    <ToggleGroup
-      bind:value={nodeAlign}
-      variant="contained"
-      classes={{ root: 'w-full', options: 'w-full' }}
-    >
-      <ToggleOption value="justify">Justify</ToggleOption>
-      <ToggleOption value="left">Left</ToggleOption>
-      <ToggleOption value="center">Center</ToggleOption>
-      <ToggleOption value="right">Right</ToggleOption>
-    </ToggleGroup>
-  </Field>
-  <Field label="Node Color">
-    <ToggleGroup
-      bind:value={nodeColorBy}
-      variant="contained"
-      classes={{ root: 'w-full', options: 'w-full' }}
-    >
-      <ToggleOption value="layer">Layer</ToggleOption>
-      <ToggleOption value="depth">Depth</ToggleOption>
-      <ToggleOption value="height">Height</ToggleOption>
-      <ToggleOption value="index">Index</ToggleOption>
-    </ToggleGroup>
-  </Field>
-  <Field label="Link Color">
-    <ToggleGroup
-      bind:value={linkColorBy}
-      variant="contained"
-      classes={{ root: 'w-full', options: 'w-full' }}
-    >
-      <ToggleOption value="static">Static</ToggleOption>
-      <ToggleOption value="source">Source</ToggleOption>
-      <ToggleOption value="target">Target</ToggleOption>
-    </ToggleGroup>
-  </Field>
-  <RangeField label="Node Padding" bind:value={nodePadding} max={20} />
-  <RangeField label="Node Width" bind:value={nodeWidth} max={20} />
-</div>
+<SankeyControls bind:nodeAlign bind:nodeColorBy bind:linkColorBy bind:nodePadding bind:nodeWidth />
 
 <Preview>
   <div class="h-[800px] p-4 border rounded">
@@ -241,45 +204,7 @@
 
 <h2>Hierarchy</h2>
 
-<div class="grid grid-flow-col gap-4 mb-4">
-  <Field label="Align">
-    <ToggleGroup
-      bind:value={nodeAlign}
-      variant="contained"
-      classes={{ root: 'w-full', options: 'w-full' }}
-    >
-      <ToggleOption value="justify">Justify</ToggleOption>
-      <ToggleOption value="left">Left</ToggleOption>
-      <ToggleOption value="center">Center</ToggleOption>
-      <ToggleOption value="right">Right</ToggleOption>
-    </ToggleGroup>
-  </Field>
-  <Field label="Node Color">
-    <ToggleGroup
-      bind:value={nodeColorBy}
-      variant="contained"
-      classes={{ root: 'w-full', options: 'w-full' }}
-    >
-      <ToggleOption value="layer">Layer</ToggleOption>
-      <ToggleOption value="depth">Depth</ToggleOption>
-      <ToggleOption value="height">Height</ToggleOption>
-      <ToggleOption value="index">Index</ToggleOption>
-    </ToggleGroup>
-  </Field>
-  <Field label="Link Color">
-    <ToggleGroup
-      bind:value={linkColorBy}
-      variant="contained"
-      classes={{ root: 'w-full', options: 'w-full' }}
-    >
-      <ToggleOption value="static">Static</ToggleOption>
-      <ToggleOption value="source">Source</ToggleOption>
-      <ToggleOption value="target">Target</ToggleOption>
-    </ToggleGroup>
-  </Field>
-  <RangeField label="Node Padding" bind:value={nodePadding} max={20} />
-  <RangeField label="Node Width" bind:value={nodeWidth} max={20} />
-</div>
+<SankeyControls bind:nodeAlign bind:nodeColorBy bind:linkColorBy bind:nodePadding bind:nodeWidth />
 
 <Preview>
   <div class="h-[2000px] p-4 border rounded">
