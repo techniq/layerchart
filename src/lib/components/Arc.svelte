@@ -43,12 +43,12 @@
   /**
    * Start angle in radians
    */
-  export let startAngle: number = undefined;
+  export let startAngle: number | undefined = undefined;
 
   /**
    * End angle in radians
    */
-  export let endAngle: number = undefined;
+  export let endAngle: number | undefined = undefined;
 
   /**
    * Define innerRadius. Defaults to yRange min
@@ -56,12 +56,18 @@
    *   • value < 1: percent of `outerRadius`
    *   • value < 0: offset of `outerRadius`
    */
-  export let innerRadius = undefined;
+  export let innerRadius: number | undefined = undefined;
 
   /**
    * Define outerRadius.  Defaults to yRange max / 2 (ie. chart height / 2)
    */
-  export let outerRadius = undefined;
+  /**
+   * Define outerRadius. Defaults to yRange max (ie. chart height / 2)
+   *   • value >= 1: discrete value
+   *   • value < 1: percent of chart height / 2
+   *   • value < 0: offset of chart height / 2
+   */
+  export let outerRadius: number | undefined = undefined;
 
   export let cornerRadius = 0;
   export let padAngle = 0;
@@ -73,15 +79,44 @@
 
   $: scale = scaleLinear().domain(domain).range(range);
 
-  $: _outerRadius = outerRadius ?? max($yRange) / 2;
-  $: _innerRadius =
-    (innerRadius > 1
-      ? innerRadius
-      : innerRadius > 0
-      ? _outerRadius * innerRadius
-      : innerRadius < 0
-      ? _outerRadius - innerRadius
-      : innerRadius) ?? min($yRange);
+  function getOuterRadius(outerRadius: number | undefined, chartRadius: number) {
+    if (outerRadius == null) {
+      return chartRadius;
+    } else if (outerRadius > 1) {
+      // discrete value
+      return outerRadius;
+    } else if (outerRadius > 0) {
+      // percent of `chartRadius`
+      return chartRadius * outerRadius;
+    } else if (outerRadius < 0) {
+      // offset of `chartRadius`
+      return chartRadius + outerRadius;
+    } else {
+      // 0
+      return outerRadius;
+    }
+  }
+
+  $: _outerRadius = getOuterRadius(outerRadius, max($yRange) / 2);
+
+  function getInnerRadius(innerRadius: number | undefined, outerRadius: number) {
+    if (innerRadius == null) {
+      return Math.min(...$yRange);
+    } else if (innerRadius > 1) {
+      // discrete value
+      return innerRadius;
+    } else if (innerRadius > 0) {
+      // percent of `outerRadius`
+      return outerRadius * innerRadius;
+    } else if (innerRadius < 0) {
+      // offset of `outerRadius`
+      return outerRadius + innerRadius;
+    } else {
+      // 0
+      return innerRadius;
+    }
+  }
+  $: _innerRadius = getInnerRadius(innerRadius, _outerRadius);
 
   $: arc = d3arc()
     .innerRadius(_innerRadius)

@@ -158,81 +158,119 @@
   </div>
 </Preview>
 
-<h2>Label location</h2>
-
-<!-- {#if label === 'svg-center'}
-	<text dy={16}>
-		{Math.round($tweened_value)}
-	</text>
-{/if} -->
-
-<!-- {#if label === 'arc-center'}
-	<text x={labelArcCenterOffset.x} y={labelArcCenterOffset.y} dy={16}>
-		{Math.round($tweened_value)}
-	</text>
-{/if} -->
-
-<!-- {#if label === 'arc-bottom'}
-	<text x={labelArcBottomOffset.x} y={labelArcBottomOffset.y} dy={0}>
-		{Math.round($tweened_value)}
-	</text>
-{/if} -->
-
-<!-- {#if label === 'arc-centroid'}
-	<text x={trackArcCentroid[0]} y={trackArcCentroid[1]} dy={16}>
-		{Math.round($tweened_value)}
-	</text>
-{/if} -->
+<h2>Fitness rings</h2>
 
 <Preview>
   <div class="h-[200px] p-4 border rounded">
     <Chart>
       <Svg>
         <Group center>
-          <LinearGradient
-            id="arcGradient3"
-            from="hsl(80, 100%, 50%)"
-            to="hsl(200, 100%, 50%)"
-            vertical
+          <Arc
+            value={40}
+            innerRadius={-20}
+            cornerRadius={10}
+            class="fill-red-500"
+            track={{ class: 'fill-red-100' }}
           />
           <Arc
-            {value}
-            {domain}
-            {range}
-            {innerRadius}
-            {outerRadius}
-            {cornerRadius}
-            {padAngle}
-            {label}
-            let:boundingBox
-            fill="url(#arcGradient3)"
-          >
-            <!-- svg center -->
-            <!-- <Text
+            value={60}
+            outerRadius={-25}
+            innerRadius={-20}
+            cornerRadius={10}
+            class="fill-lime-400"
+            track={{ class: 'fill-lime-100' }}
+          />
+          <Arc
+            value={80}
+            outerRadius={-50}
+            innerRadius={-20}
+            cornerRadius={10}
+            class="fill-cyan-400"
+            track={{ class: 'fill-cyan-100' }}
+          />
+        </Group>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+{#if false}
+  <h2>Label location</h2>
+
+  <!-- {#if label === 'svg-center'}
+	<text dy={16}>
+		{Math.round($tweened_value)}
+	</text>
+{/if} -->
+
+  <!-- {#if label === 'arc-center'}
+	<text x={labelArcCenterOffset.x} y={labelArcCenterOffset.y} dy={16}>
+		{Math.round($tweened_value)}
+	</text>
+{/if} -->
+
+  <!-- {#if label === 'arc-bottom'}
+	<text x={labelArcBottomOffset.x} y={labelArcBottomOffset.y} dy={0}>
+		{Math.round($tweened_value)}
+	</text>
+{/if} -->
+
+  <!-- {#if label === 'arc-centroid'}
+	<text x={trackArcCentroid[0]} y={trackArcCentroid[1]} dy={16}>
+		{Math.round($tweened_value)}
+	</text>
+{/if} -->
+
+  <Preview>
+    <div class="h-[200px] p-4 border rounded">
+      <Chart>
+        <Svg>
+          <Group center>
+            <LinearGradient
+              id="arcGradient3"
+              from="hsl(80, 100%, 50%)"
+              to="hsl(200, 100%, 50%)"
+              vertical
+            />
+            <Arc
+              {value}
+              {domain}
+              {range}
+              {innerRadius}
+              {outerRadius}
+              {cornerRadius}
+              {padAngle}
+              {label}
+              let:boundingBox
+              fill="url(#arcGradient3)"
+            >
+              <!-- svg center -->
+              <!-- <Text
 							value={Math.round(value)}
 							textAnchor="middle"
 							verticalAnchor="middle"
 							style="font-size: 2.25em"
 							dy={8}
 						/> -->
-            <!-- arc center -->
-            <Text
-              value={Math.round(value)}
-              textAnchor="middle"
-              verticalAnchor="middle"
-              style="font-size: 2.25em"
-              x={outerRadius - boundingBox.width / 2}
-              y={(outerRadius - boundingBox.height / 2) * -1}
-              dy={8}
-            />
-            <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-4xl" capHeight="1.5rem" /> -->
-            <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" style="font-size: 4.5em" capHeight="3.1em" /> -->
-          </Arc>
-        </Group>
-      </Svg>
-    </Chart>
-  </div>
-</Preview>
+              <!-- arc center -->
+              <Text
+                value={Math.round(value)}
+                textAnchor="middle"
+                verticalAnchor="middle"
+                style="font-size: 2.25em"
+                x={outerRadius - boundingBox.width / 2}
+                y={(outerRadius - boundingBox.height / 2) * -1}
+                dy={8}
+              />
+              <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-4xl" capHeight="1.5rem" /> -->
+              <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" style="font-size: 4.5em" capHeight="3.1em" /> -->
+            </Arc>
+          </Group>
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+{/if}
 
 <h1>API</h1>
 
