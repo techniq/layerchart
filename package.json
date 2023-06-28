@@ -71,11 +71,11 @@
     "d3-shape": "^3.2.0",
     "d3-tile": "^1.0.0",
     "date-fns": "^2.30.0",
-    "layercake": "^7.5.0",
+    "layercake": "^7.6.0",
     "lodash-es": "^4.17.21",
     "shapefile": "^0.6.6",
     "svelte": "^3.59.1",
-    "svelte-ux": "^0.43.2",
+    "svelte-ux": "^0.43.3",
     "topojson-client": "^3.1.0"
   },
   "main": "./dist/index.js",
