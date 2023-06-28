@@ -158,7 +158,7 @@
   </div>
 </Preview>
 
-<h2>Fitness rings</h2>
+<h2>Concentric</h2>
 
 <Preview>
   <div class="h-[200px] p-4 border rounded">
