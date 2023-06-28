@@ -2,7 +2,7 @@
   export let id: string;
 
   export let from: string | boolean;
-  export let via: string; // TODO: Currently --tw-gradient-via is not the color but the full stops
+  export let via: string | undefined = undefined; // TODO: Currently --tw-gradient-via is not the color but the full stops
   export let to: string | boolean;
 
   export let vertical = false;
