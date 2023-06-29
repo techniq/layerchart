@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
+  import type { SankeyNode } from 'd3-sankey';
   import { scaleSequential } from 'd3-scale';
   import { hierarchy } from 'd3-hierarchy';
   import { interpolateCool } from 'd3-scale-chromatic';
@@ -52,8 +53,16 @@
 
   $: hierarchyGraph = graphFromHierarchy(complexDataHierarchy);
 
-  let selectedNode = null;
-  $: selectedNode && console.log(graphFromNode(selectedNode));
+  let selectedNode: SankeyNode<{}, {}> | null = null;
+
+  type HierarchySankeyNodeProperties = {
+    data: { name: string };
+    parent?: HierarchySankeyNodeProperties;
+  };
+  type HierarchySankeyNode = SankeyNode<HierarchySankeyNodeProperties, {}>;
+  function getHierarchyNodeKey(node: HierarchySankeyNode) {
+    return [node.data.name, node.parent?.data.name].join('_');
+  }
 </script>
 
 <h1>Examples</h1>
@@ -65,7 +74,7 @@
     <Chart data={simpleData}>
       <Svg>
         <Sankey nodeId={(d) => d.id} let:links let:nodes>
-          {#each links as link}
+          {#each links as link ([link.source.id, link.target.id].join('_'))}
             <Link sankey data={link} stroke="#ddd" stroke-opacity={0.5} stroke-width={link.width} />
           {/each}
           {#each nodes as node (node.id)}
@@ -95,7 +104,7 @@
     <Chart data={structuredClone(greenhouse)} tooltip={{ mode: 'manual' }} let:tooltip>
       <Svg>
         <Sankey nodeId={(d) => d.name} nodeWidth={8} let:links let:nodes>
-          {#each links as link}
+          {#each links as link ([link.source.name, link.target.name].join('_'))}
             <Link
               sankey
               data={link}
@@ -106,6 +115,7 @@
               on:mouseleave={tooltip.hide}
             />
           {/each}
+
           {#each nodes as node (node.name)}
             {@const nodeWidth = node.x1 - node.x0}
             {@const nodeHeight = node.y1 - node.y0}
@@ -174,7 +184,7 @@
     <Chart data={selectedNode ? graphFromNode(selectedNode) : greenhouse}>
       <Svg>
         <Sankey nodeId={(d) => d.name} nodeWidth={8} let:links let:nodes>
-          {#each links as link (link.source.name + '-' + link.target.name)}
+          {#each links as link ([link.source.name, link.target.name].join('_'))}
             <Link
               sankey
               data={link}
@@ -184,6 +194,7 @@
               tweened
             />
           {/each}
+
           {#each nodes as node (node.name)}
             {@const nodeWidth = node.x1 - node.x0}
             {@const nodeHeight = node.y1 - node.y0}
@@ -237,7 +248,7 @@
             colorScale.domain(extents);
           }}
         >
-          {#each links as link}
+          {#each links as link ([link.source.name, link.target.name].join('_'))}
             <Link
               sankey
               data={link}
@@ -258,7 +269,8 @@
               tweened
             />
           {/each}
-          {#each nodes as node}
+
+          {#each nodes as node (node.name)}
             {@const nodeWidth = node.x1 - node.x0}
             {@const nodeHeight = node.y1 - node.y0}
             <Group x={node.x0} y={node.y0} tweened>
@@ -352,7 +364,7 @@
             colorScale.domain(extents);
           }}
         >
-          {#each links as link}
+          {#each links as link ([getHierarchyNodeKey(link.source), getHierarchyNodeKey(link.target)].join('_'))}
             <Link
               sankey
               data={link}
@@ -369,7 +381,8 @@
               tweened
             />
           {/each}
-          {#each nodes as node}
+
+          {#each nodes as node (getHierarchyNodeKey(node))}
             {@const nodeWidth = node.x1 - node.x0}
             {@const nodeHeight = node.y1 - node.y0}
             <Group x={node.x0} y={node.y0} tweened>
