@@ -1,5 +1,5 @@
 import { csvParseRows } from 'd3-dsv';
-import type { SankeyGraph, SankeyNodeMinimal } from 'd3-sankey';
+import type { SankeyExtraProperties, SankeyGraph, SankeyLink, SankeyNodeMinimal } from 'd3-sankey';
 import type { hierarchy as d3Hierarchy } from 'd3-hierarchy';
 
 /**
@@ -18,16 +18,7 @@ export function graphFromCsv(csv: string): SankeyGraph<any, any> {
       : null
   );
 
-  const nodeByName = new Map();
-  for (const link of links) {
-    if (!nodeByName.has(link.source)) {
-      nodeByName.set(link.source, { name: link.source });
-    }
-    if (!nodeByName.has(link.target)) {
-      nodeByName.set(link.target, { name: link.target });
-    }
-  }
-  return { nodes: Array.from(nodeByName.values()), links };
+  return { nodes: nodesFromLinks(links), links };
 }
 
 /**
@@ -70,4 +61,22 @@ export function graphFromNode(node: SankeyNodeMinimal<any, any>) {
   });
 
   return { nodes, links };
+}
+
+/**
+ * Get distinct nodes from link.source and link.target
+ */
+export function nodesFromLinks<N extends SankeyExtraProperties, L extends SankeyExtraProperties>(
+  links: Array<SankeyLink<N, L>>
+) {
+  const nodesByName = new Map();
+  for (const link of links) {
+    if (!nodesByName.has(link.source)) {
+      nodesByName.set(link.source, { name: link.source });
+    }
+    if (!nodesByName.has(link.target)) {
+      nodesByName.set(link.target, { name: link.target });
+    }
+  }
+  return Array.from(nodesByName.values());
 }
