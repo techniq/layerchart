@@ -260,6 +260,7 @@
                 ? linkOpacity.inactive
                 : linkOpacity.default}
               stroke-width={link.width}
+              class="transition[stroke-opacity] duration-300"
               on:mouseover={() => (highlightLinkIndexes = [link.index])}
               on:mousemove={(e) => tooltip.show(e, { link })}
               on:mouseout={() => {
@@ -376,6 +377,7 @@
                 ? linkOpacity.inactive
                 : linkOpacity.default}
               stroke-width={link.width}
+              class="transition[stroke-opacity] duration-300"
               on:mouseover={() => (highlightLinkIndexes = [link.index])}
               on:mouseout={() => (highlightLinkIndexes = [])}
               tweened
