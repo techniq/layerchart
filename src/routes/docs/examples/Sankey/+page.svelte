@@ -28,7 +28,7 @@
 
   type SankeyControlsProps = ComponentProps<SankeyControls>;
 
-  let highlightLinkIndexes: number[] = [];
+  let highlightLinkIndexes: Array<number | undefined> = [];
   let nodeAlign: SankeyControlsProps['nodeAlign'] = 'justify';
   let nodePadding: SankeyControlsProps['nodePadding'] = 4;
   let nodeWidth: SankeyControlsProps['nodeWidth'] = 10;
@@ -39,13 +39,11 @@
     linkColorBy === 'static'
       ? {
           default: 0.1,
-          hover: 0.1,
-          other: 0.01
+          inactive: 0.01
         }
       : {
           default: 0.2,
-          hover: 0.2,
-          other: 0.01
+          inactive: 0.01
         };
 
   const complexDataHierarchy = hierarchy(hierarchyComplexData)
@@ -239,20 +237,19 @@
             colorScale.domain(extents);
           }}
         >
-          {#each links as link, i}
+          {#each links as link}
             <Link
               sankey
               data={link}
               stroke={linkColorBy === 'static'
                 ? 'black'
                 : colorScale(link[linkColorBy][nodeColorBy])}
-              stroke-opacity={highlightLinkIndexes.length
-                ? highlightLinkIndexes.includes(i)
-                  ? linkOpacity.hover
-                  : linkOpacity.other
+              stroke-opacity={highlightLinkIndexes.length &&
+              !highlightLinkIndexes.includes(link.index)
+                ? linkOpacity.inactive
                 : linkOpacity.default}
               stroke-width={link.width}
-              on:mouseover={() => (highlightLinkIndexes = [i])}
+              on:mouseover={() => (highlightLinkIndexes = [link.index])}
               on:mousemove={(e) => tooltip.show(e, { link })}
               on:mouseout={() => {
                 highlightLinkIndexes = [];
@@ -355,20 +352,19 @@
             colorScale.domain(extents);
           }}
         >
-          {#each links as link, i}
+          {#each links as link}
             <Link
               sankey
               data={link}
               stroke={linkColorBy === 'static'
                 ? 'black'
                 : colorScale(link[linkColorBy][nodeColorBy])}
-              stroke-opacity={highlightLinkIndexes.length
-                ? highlightLinkIndexes.includes(i)
-                  ? linkOpacity.hover
-                  : linkOpacity.other
+              stroke-opacity={highlightLinkIndexes.length &&
+              !highlightLinkIndexes.includes(link.index)
+                ? linkOpacity.inactive
                 : linkOpacity.default}
               stroke-width={link.width}
-              on:mouseover={() => (highlightLinkIndexes = [i])}
+              on:mouseover={() => (highlightLinkIndexes = [link.index])}
               on:mouseout={() => (highlightLinkIndexes = [])}
               tweened
             />
