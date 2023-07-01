@@ -12,10 +12,11 @@
       { label: 'Bar Chart (Horizontal)', value: 'Bars' },
       'ClevelandDotPlot',
       'PunchCard',
+      'Rings',
       'Scatter',
       'Threshold'
     ],
-    Hierarchy: ['Pack', 'Partition', 'Sankey', 'Sunburst', 'Tree', 'Treemap'],
+    'Hierarchy & Graph': ['Pack', 'Partition', 'Sankey', 'Sunburst', 'Tree', 'Treemap'],
     Geo: [
       'GeoPath',
       'GeoPoint',

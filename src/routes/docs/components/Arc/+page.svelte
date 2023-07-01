@@ -158,42 +158,6 @@
   </div>
 </Preview>
 
-<h2>Concentric</h2>
-
-<Preview>
-  <div class="h-[200px] p-4 border rounded">
-    <Chart>
-      <Svg>
-        <Group center>
-          <Arc
-            value={40}
-            innerRadius={-20}
-            cornerRadius={10}
-            class="fill-red-500"
-            track={{ class: 'fill-red-100' }}
-          />
-          <Arc
-            value={60}
-            outerRadius={-25}
-            innerRadius={-20}
-            cornerRadius={10}
-            class="fill-lime-400"
-            track={{ class: 'fill-lime-100' }}
-          />
-          <Arc
-            value={80}
-            outerRadius={-50}
-            innerRadius={-20}
-            cornerRadius={10}
-            class="fill-cyan-400"
-            track={{ class: 'fill-cyan-100' }}
-          />
-        </Group>
-      </Svg>
-    </Chart>
-  </div>
-</Preview>
-
 {#if false}
   <h2>Label location</h2>
 
