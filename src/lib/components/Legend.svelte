@@ -67,7 +67,6 @@
         return [0, width];
       }
     });
-
     interpolator = scale.interpolator();
 
     // scaleSequentialQuantile doesn’t implement ticks or tickFormat.
@@ -132,17 +131,20 @@
 <div
   class={cls(
     'inline-block',
-    {
-      'top-left': 'absolute top-0 left-0',
-      top: 'absolute top-0 left-1/2 -translate-x-1/2',
-      'top-right': 'absolute top-0 right-0',
-      left: 'absolute top-1/2 left-0 -translate-y-1/2',
-      center: 'absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2',
-      right: 'absolute top-1/2 right-0 -translate-y-1/2',
-      'bottom-left': 'absolute bottom-0 left-0',
-      bottom: 'absolute bottom-0 left-1/2 -translate-x-1/2',
-      'bottom-right': 'absolute bottom-0 right-0'
-    }[placement],
+    placement && [
+      'absolute',
+      {
+        'top-left': 'top-0 left-0',
+        top: 'top-0 left-1/2 -translate-x-1/2',
+        'top-right': 'top-0 right-0',
+        left: 'top-1/2 left-0 -translate-y-1/2',
+        center: 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
+        right: 'top-1/2 right-0 -translate-y-1/2',
+        'bottom-left': 'bottom-0 left-0',
+        bottom: 'bottom-0 left-1/2 -translate-x-1/2',
+        'bottom-right': 'bottom-0 right-0'
+      }[placement]
+    ],
     classes.root
   )}
   {...$$restProps}
