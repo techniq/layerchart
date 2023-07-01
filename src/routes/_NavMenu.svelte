@@ -12,7 +12,6 @@
       { label: 'Bar Chart (Horizontal)', value: 'Bars' },
       'ClevelandDotPlot',
       'PunchCard',
-      'Pie',
       'Scatter',
       'Threshold'
     ],
@@ -54,6 +53,7 @@
       'Link',
       'Path',
       'Pattern',
+      'Pie',
       'Rect',
       'RectClipPath',
       'Text'
