@@ -1,16 +1,21 @@
 <script lang="ts">
+  import { flatGroup } from 'd3-array';
   import {
     mdiCheckCircle,
     mdiChevronRight,
+    mdiCodeBraces,
     mdiCodeTags,
-    mdiFileDocumentEditOutline
+    mdiDatabaseOutline,
+    mdiFileDocumentEditOutline,
+    mdiLink
   } from '@mdi/js';
 
-  import { ApiDocs, Icon, TableOfContents } from 'svelte-ux';
+  import { ApiDocs, Icon, ListItem, TableOfContents } from 'svelte-ux';
   import Code from '$lib/docs/Code.svelte';
   import ViewSourceButton from '$lib/docs/ViewSourceButton.svelte';
 
   import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
 
   $: [path, type, name] = $page.url.pathname.match('.*/(.*)/(.*)');
   $: title = $page.data.meta?.title ?? name;
@@ -91,14 +96,39 @@
 
       {#if related}
         <h1 id="related">Related</h1>
-        {#each related.map(getRelated) as r}
-          <div class="flex items-center gap-1 ml-2">
-            <Icon data={mdiChevronRight} class="text-black/30" />
-            <h2 class="text-base !m-0">
-              <a href={r.url}>{r.name}</a>
+        <div class="related">
+          {#each flatGroup(related.map(getRelated), (d) => d.type) as [type, items]}
+            <h2
+              id="related-{type}"
+              class="text-xs uppercase leading-8 tracking-widest text-black/50"
+            >
+              {type}
             </h2>
-          </div>
-        {/each}
+            <div>
+              {#each items as item}
+                {@const icon =
+                  item.type === 'components' || item.type === 'examples'
+                    ? mdiCodeTags
+                    : item.type === 'stores'
+                    ? mdiDatabaseOutline
+                    : item.type === 'actions'
+                    ? mdiCodeBraces
+                    : mdiLink}
+                <ListItem
+                  title={item.name}
+                  {icon}
+                  avatar={{ size: 'sm', class: 'text-xs text-white bg-accent-500' }}
+                  on:click={() => goto(item.url)}
+                  class="hover:bg-accent-50 cursor-pointer"
+                >
+                  <div slot="actions">
+                    <Icon data={mdiChevronRight} class="text-black/50" />
+                  </div>
+                </ListItem>
+              {/each}
+            </div>
+          {/each}
+        </div>
       {/if}
 
       {#if api}

@@ -51,9 +51,9 @@
   }
 </script>
 
-<h1>Examples</h1>
+<h1>Playground</h1>
 
-<div class="grid grid-cols-[1fr,1fr,1fr,1fr] gap-2 sticky top-2 z-10">
+<div class="grid grid-cols-[1fr,1fr,1fr,1fr] gap-2 mb-2">
   <RangeField label="Value" bind:value min={domain[0]} max={domain[1]} class="col-span-3" />
   <Field label="Use spring" let:id>
     <Switch bind:checked={spring} {id} />
@@ -81,8 +81,6 @@
   <RangeField label="Pad angle" bind:value={padAngle} max={2} step={0.1} />
   <!-- <RangeField label="Pad radius" bind:value={padRadius} max={2} step={0.1} /> -->
 </div>
-
-<h2>Playground</h2>
 
 <Preview>
   <div class="h-[200px] p-4 border rounded">

@@ -67,15 +67,15 @@
   @tailwind components;
   @tailwind utilities;
 
-  :global(main h1:not(.prose *, .ApiDocs *)) {
+  :global(main h1:not(.prose *, .related *, .ApiDocs *)) {
     @apply text-xl font-semibold mt-8 mb-2 border-b border-gray-400 pb-1;
   }
 
-  :global(main h2:not(.prose *, .ApiDocs *)) {
+  :global(main h2:not(.prose *, .related *, .ApiDocs *)) {
     @apply text-lg font-semibold mt-4 mb-1;
   }
 
-  :global(main h3:not(.prose *)) {
+  :global(main h3:not(.prose *, .related *, .ApiDocs *)) {
     @apply text-xs text-black/50 mb-1;
   }
   :global(main :not(.prose) h2 + h3) {
