@@ -1,8 +1,5 @@
 <script lang="ts">
   import { scaleTime } from 'd3-scale';
-  import { ApiDocs, PeriodType, formatDate } from 'svelte-ux';
-
-  import api from '$lib/components/Axis.svelte?raw&sveld';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Preview from '$lib/docs/Preview.svelte';
@@ -139,7 +136,3 @@
     </Chart>
   </div>
 </Preview>
-
-<h1>API</h1>
-
-<ApiDocs {api} />

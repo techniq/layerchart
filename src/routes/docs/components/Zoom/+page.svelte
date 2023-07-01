@@ -2,11 +2,9 @@
   import * as d3shapes from 'd3-shape';
   import { cubicOut } from 'svelte/easing';
 
-  import { ApiDocs, Button, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Button, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-
-  import api from '$lib/components/Zoom.svelte?raw&sveld';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Circle from '$lib/components/Circle.svelte';
@@ -136,7 +134,3 @@
     </Chart>
   </div>
 </Preview>
-
-<h1>API</h1>
-
-<ApiDocs {api} />

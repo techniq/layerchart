@@ -3,9 +3,7 @@
   import * as d3shapes from 'd3-shape';
   import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
-  import { ApiDocs, Button, Field, SelectField, Switch } from 'svelte-ux';
-
-  import api from '$lib/components/Area.svelte?raw&sveld';
+  import { Button, Field, Switch } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
@@ -136,7 +134,3 @@
     </Chart>
   </div>
 </Preview>
-
-<h1>API</h1>
-
-<ApiDocs {api} />

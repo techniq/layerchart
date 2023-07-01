@@ -1,3 +1,5 @@
+/// <reference types="vite-plugin-sveld" />
+
 declare global {
   namespace App {
     // interface Error {}

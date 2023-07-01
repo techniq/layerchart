@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { ApiDocs, Button, Field, SelectField, Switch } from 'svelte-ux';
-
-  import api from '$lib/components/Arc.svelte?raw&sveld';
+  import { Field, Switch } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Arc from '$lib/components/Arc.svelte';
@@ -123,41 +121,6 @@
   </div>
 </Preview>
 
-<h2>Partial Arc</h2>
-
-<Preview>
-  <div class="h-[200px] p-4 border rounded">
-    <Chart>
-      <Svg>
-        <LinearGradient id="arcGradient2" from="hsl(80 100% 50%)" to="hsl(200 100% 50%)" />
-        <Group center>
-          <Arc
-            {value}
-            {domain}
-            range={[-120, 120]}
-            {innerRadius}
-            {outerRadius}
-            {cornerRadius}
-            {padAngle}
-            {label}
-            spring
-            let:value
-            fill="url(#arcGradient2)"
-            track={{ fill: 'none', stroke: 'hsl(0 0% 0% / 10%)' }}
-          >
-            <Text
-              value={Math.round(value)}
-              textAnchor="middle"
-              verticalAnchor="middle"
-              style="font-size: 2.25em"
-            />
-          </Arc>
-        </Group>
-      </Svg>
-    </Chart>
-  </div>
-</Preview>
-
 {#if false}
   <h2>Label location</h2>
 
@@ -235,7 +198,3 @@
     </div>
   </Preview>
 {/if}
-
-<h1>API</h1>
-
-<ApiDocs {api} />

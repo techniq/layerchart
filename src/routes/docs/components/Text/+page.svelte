@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { ApiDocs, Field, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
-
-  import api from '$lib/components/Text.svelte?raw&sveld';
+  import { Field, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Text from '$lib/components/Text.svelte';
   import RangeField from '$lib/docs/RangeField.svelte';
@@ -91,7 +89,3 @@
     {/if}
   </svg>
 </div>
-
-<h1>API</h1>
-
-<ApiDocs {api} />

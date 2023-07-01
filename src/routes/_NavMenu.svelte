@@ -6,13 +6,13 @@
 
   const examples = {
     'Cartesian & Polar': [
+      'Arc',
       'Area',
       'AreaStack',
       { label: 'Bar Chart (Vertical)', value: 'Columns' },
       { label: 'Bar Chart (Horizontal)', value: 'Bars' },
       'ClevelandDotPlot',
       'PunchCard',
-      'Rings',
       'Scatter',
       'Threshold'
     ],

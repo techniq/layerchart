@@ -4,9 +4,7 @@
   import { group } from 'd3-array';
   import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
-  import { ApiDocs, Button, Field, Switch } from 'svelte-ux';
-
-  import api from '$lib/components/Path.svelte?raw&sveld';
+  import { Button, Field, Switch } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
@@ -166,7 +164,3 @@
     </Chart>
   </div>
 </Preview>
-
-<h1>API</h1>
-
-<ApiDocs {api} />

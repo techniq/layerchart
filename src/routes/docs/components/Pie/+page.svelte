@@ -4,10 +4,6 @@
   import { sum } from 'd3-array';
   import { format as formatUtil } from 'svelte-ux';
 
-  import { ApiDocs } from 'svelte-ux';
-
-  import api from '$lib/components/Pie.svelte?raw&sveld';
-
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Arc from '$lib/components/Arc.svelte';
   import Pie from '$lib/components/Pie.svelte';
@@ -281,7 +277,3 @@
     </Chart>
   </div>
 </Preview>
-
-<h1>API</h1>
-
-<ApiDocs {api} />

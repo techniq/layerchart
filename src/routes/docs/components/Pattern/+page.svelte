@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { ApiDocs } from 'svelte-ux';
 
-  import api from '$lib/components/Pattern.svelte?raw&sveld';
+
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
 
@@ -272,7 +271,3 @@
     </Chart>
   </div>
 </Preview>
-
-<h1>API</h1>
-
-<ApiDocs {api} />

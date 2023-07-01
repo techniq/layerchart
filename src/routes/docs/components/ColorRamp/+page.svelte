@@ -1,13 +1,9 @@
 <script lang="ts">
-  import { ApiDocs } from 'svelte-ux';
-
   import { interpolateRgb, interpolateLab, interpolateHclLong } from 'd3-interpolate';
   import * as d3chromatic from 'd3-scale-chromatic';
   import { scaleQuantize } from 'd3-scale';
 
   import { NumberStepper } from 'svelte-ux';
-
-  import api from '$lib/components/ColorRamp.svelte?raw&sveld';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import ColorRamp from '$lib/components/ColorRamp.svelte';
@@ -102,7 +98,3 @@
     {/each}
   </div>
 </Preview>
-
-<h1>API</h1>
-
-<ApiDocs {api} />

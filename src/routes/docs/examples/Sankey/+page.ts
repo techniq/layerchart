@@ -3,7 +3,8 @@ import pageSource from './+page.svelte?raw';
 export async function load() {
   return {
     meta: {
-      pageSource
+      pageSource,
+      related: ['components/Sankey', 'components/Link']
     }
   };
 }

@@ -3,11 +3,8 @@
   import { stack } from 'd3-shape';
   import { format } from 'date-fns';
 
-  import { ApiDocs, Duration, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Duration, formatDate, PeriodType } from 'svelte-ux';
   import { flatten } from 'svelte-ux/utils/array';
-  import { formatDate, PeriodType } from 'svelte-ux/utils/date';
-
-  import api from '$lib/components/Tooltip.svelte?raw&sveld';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
@@ -496,7 +493,3 @@
     </Chart>
   </div>
 </Preview>
-
-<h1>API</h1>
-
-<ApiDocs {api} />

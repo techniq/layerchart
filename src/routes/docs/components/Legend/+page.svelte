@@ -27,10 +27,6 @@
     schemeRdBu
   } from 'd3-scale-chromatic';
 
-  import { ApiDocs } from 'svelte-ux';
-
-  import api from '$lib/components/Legend.svelte?raw&sveld';
-
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Legend from '$lib/components/Legend.svelte';
 
@@ -216,7 +212,3 @@
     </div>
   </Legend>
 </Preview>
-
-<h1>API</h1>
-
-<ApiDocs {api} />
