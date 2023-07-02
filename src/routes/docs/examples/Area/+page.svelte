@@ -7,7 +7,7 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import Baseline from '$lib/components/Baseline.svelte';
+  import Rule from '$lib/components/Rule.svelte';
   import HighlightLine from '$lib/components/HighlightLine.svelte';
   import Labels from '$lib/components/Labels.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
@@ -49,7 +49,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y />
         <Area line={{ width: 2 }} />
       </Svg>
     </Chart>
@@ -73,7 +73,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y />
         <Area line={{ width: 2 }} />
         <HighlightLine color="var(--color-blue-500)" />
       </Svg>
@@ -100,7 +100,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y />
         <Area line={{ width: 2 }} />
         <Labels format="integer" />
       </Svg>
@@ -129,7 +129,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y />
         {#each dataByFruit as [fruit, data]}
           <Area {data} color={fruitColors[fruit]} line={{ width: 2 }} />
         {/each}

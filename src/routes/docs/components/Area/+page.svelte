@@ -8,7 +8,7 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import Baseline from '$lib/components/Baseline.svelte';
+  import Rule from '$lib/components/Rule.svelte';
   import Points from '$lib/components/Points.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -125,7 +125,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" />
-        <Baseline x y />
+        <Rule x y />
         <Area {curve} line={showLine} {tweened} />
         {#if showPoints}
           <Points {tweened} />

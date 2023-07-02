@@ -7,7 +7,7 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import Baseline from '$lib/components/Baseline.svelte';
+  import Rule from '$lib/components/Rule.svelte';
   import HighlightRect from '$lib/components/HighlightRect.svelte';
   import Labels from '$lib/components/Labels.svelte';
   import Path from '$lib/components/Path.svelte';
@@ -56,7 +56,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y />
         <Threshold curve={selectedCurve}>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
             <Path pathData={linePathData} color="black" width="1.5" />
@@ -89,7 +89,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y />
         <Threshold curve={curveStepAfter}>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
             <Path pathData={linePathData} color="black" width="1.5" />
@@ -130,7 +130,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y />
         <Threshold>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
             <Path pathData={linePathData} color="black" width="1.5" />

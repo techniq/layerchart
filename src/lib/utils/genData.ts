@@ -19,6 +19,33 @@ export function getRandomInteger(min: number, max: number, includeMax = true) {
   return Math.floor(Math.random() * (max - min + (includeMax ? 1 : 0)) + min);
 }
 
+export function createSeries(options: {
+  count?: number;
+  min: number;
+  max: number;
+  keys?: Array<string>;
+  value?: 'number' | 'integer';
+}) {
+  const count = options.count ?? 10;
+  const min = options.min;
+  const max = options.max;
+  const keys = options.keys ?? ['y'];
+
+  return Array.from({ length: count }).map((_, i) => {
+    return {
+      x: options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max),
+      ...Object.fromEntries(
+        keys.map((key) => {
+          return [
+            key,
+            options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max)
+          ];
+        })
+      )
+    };
+  });
+}
+
 export function createDateSeries(options: {
   count?: number;
   min: number;

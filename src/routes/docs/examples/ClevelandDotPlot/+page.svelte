@@ -5,7 +5,7 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import Baseline from '$lib/components/Baseline.svelte';
+  import Rule from '$lib/components/Rule.svelte';
   import ConnectedPoints from '$lib/components/ConnectedPoints.svelte';
   import HighlightLine from '$lib/components/HighlightLine.svelte';
   import HighlightRect from '$lib/components/HighlightRect.svelte';
@@ -51,7 +51,7 @@
       <Svg>
         <Axis placement="left" gridlines={{ style: 'stroke-dasharray: 2' }} />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
-        <Baseline y />
+        <Rule x />
         <ConnectedPoints stroke="#000" />
         <Points class="fill-blue-500 stroke-blue-800" />
         <HighlightLine color="var(--color-blue-500)" />

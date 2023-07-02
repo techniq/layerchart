@@ -7,7 +7,7 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import AreaStack from '$lib/components/AreaStack.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import Baseline from '$lib/components/Baseline.svelte';
+  import Rule from '$lib/components/Rule.svelte';
   import HighlightLine from '$lib/components/HighlightLine.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
@@ -44,7 +44,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y />
         <AreaStack line={{ width: 2 }} />
       </Svg>
     </Chart>
@@ -72,7 +72,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y />
         <AreaStack line={{ width: 2 }} />
         <HighlightLine color="var(--color-blue-500)" />
       </Svg>

@@ -8,7 +8,7 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import Baseline from '$lib/components/Baseline.svelte';
+  import Rule from '$lib/components/Rule.svelte';
   import Points from '$lib/components/Points.svelte';
   import Path from '$lib/components/Path.svelte';
 
@@ -155,7 +155,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" />
-        <Baseline x y />
+        <Rule x y />
         <Path {curve} {tweened} />
         {#if showPoints}
           <Points {tweened} />

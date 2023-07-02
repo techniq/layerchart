@@ -2,14 +2,14 @@
   import { cubicInOut } from 'svelte/easing';
   import { scaleBand, scaleOrdinal } from 'd3-scale';
   import { format } from 'date-fns';
-  import { extent } from 'd3-array';
+  import { extent, median } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
 
   import { Field, ToggleGroup, ToggleOption, formatDate, PeriodType } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import Baseline from '$lib/components/Baseline.svelte';
+  import Rule from '$lib/components/Rule.svelte';
   import Bars from '$lib/components/Bars.svelte';
   import HighlightRect from '$lib/components/HighlightRect.svelte';
   import Labels from '$lib/components/Labels.svelte';
@@ -101,7 +101,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y />
         <Bars radius={4} strokeWidth={1} />
       </Svg>
     </Chart>
@@ -125,7 +125,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y />
         <Bars radius={4} strokeWidth={1} />
         <HighlightRect />
       </Svg>
@@ -151,9 +151,33 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y={0} />
         <Bars radius={4} strokeWidth={1} />
         <Labels format="integer" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Average annotation Rule</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleBand().padding(0.4)}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Axis placement="left" gridlines />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
+        <Rule x y />
+        <Bars radius={4} strokeWidth={1} />
+        <Rule y={median(data, (d) => d.value)} class="stroke-red-400 [stroke-dasharray:2]" />
       </Svg>
     </Chart>
   </div>
@@ -176,7 +200,7 @@
         <Bars radius={4} strokeWidth={1} />
         <Axis placement="left" gridlines={{ class: 'stroke-white' }} />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y />
       </Svg>
     </Chart>
   </div>
@@ -199,7 +223,7 @@
         <Bars radius={4} strokeWidth={1} />
         <Axis placement="left" gridlines={{ class: 'mix-blend-multiply' }} />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y />
       </Svg>
     </Chart>
   </div>
@@ -222,7 +246,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Baseline x y />
+        <Rule x y />
         <Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
         <Bars y="value" radius={4} strokeWidth={1} padding={16} />
         <HighlightRect />
@@ -258,7 +282,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" />
-        <Baseline x y />
+        <Rule x y />
         <Bars groupBy="fruit" getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
       </Svg>
     </Chart>
@@ -287,7 +311,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" />
-        <Baseline x y />
+        <Rule x y />
         <Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
       </Svg>
     </Chart>
@@ -316,7 +340,7 @@
       <Svg>
         <Axis placement="left" gridlines format="percentRound" />
         <Axis placement="bottom" />
-        <Baseline x y />
+        <Rule x y />
         <Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
       </Svg>
     </Chart>
@@ -345,7 +369,7 @@
 			<Svg>
 				<Axis placement="left" gridlines />
 				<Axis placement="bottom" />
-				<Baseline x y />
+				<Rule x y />
 				<Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
@@ -375,7 +399,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" />
-        <Baseline x y />
+        <Rule x y />
         <Bars groupBy="basket" getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
       </Svg>
     </Chart>
@@ -422,7 +446,7 @@
       <Svg>
         <Axis placement="left" gridlines />
         <Axis placement="bottom" />
-        <Baseline x y />
+        <Rule x y />
         <Bars
           groupBy={transitionChart.groupBy}
           getKey={(item) => item.keys.at(0) + '-' + item.keys.at(-1)}

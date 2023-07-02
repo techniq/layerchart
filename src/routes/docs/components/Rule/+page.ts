@@ -1,5 +1,5 @@
-import api from '$lib/components/Axis.svelte?raw&sveld';
-import source from '$lib/components/Axis.svelte?raw';
+import api from '$lib/components/Rule.svelte?raw&sveld';
+import source from '$lib/components/Rule.svelte?raw';
 import pageSource from './+page.svelte?raw';
 
 export async function load() {
@@ -8,7 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
-      related: ['components/Rule']
+      related: ['components/Axis']
     }
   };
 }

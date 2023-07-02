@@ -12,7 +12,7 @@
   - Easily add gridlines
   - Custom tick format
   - Tick control (see also `getMajorTicks` / `getMinorTicks` utils)
-- Baseline
+- Rule
   - Compliments Axis by showing `0` baseline as solid line
 
 <h2>Primatives</h2>
