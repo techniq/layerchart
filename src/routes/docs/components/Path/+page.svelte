@@ -8,7 +8,6 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import Rule from '$lib/components/Rule.svelte';
   import Points from '$lib/components/Points.svelte';
   import Path from '$lib/components/Path.svelte';
 
@@ -153,9 +152,8 @@
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule />
         <Path {curve} {tweened} />
         {#if showPoints}
           <Points {tweened} />

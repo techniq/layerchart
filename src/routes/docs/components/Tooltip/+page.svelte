@@ -11,7 +11,6 @@
   import AreaStack from '$lib/components/AreaStack.svelte';
   import Axis from '$lib/components/Axis.svelte';
   import Bars from '$lib/components/Bars.svelte';
-  import Rule from '$lib/components/Rule.svelte';
   import ConnectedPoints from '$lib/components/ConnectedPoints.svelte';
   import HighlightLine from '$lib/components/HighlightLine.svelte';
   import HighlightRect from '$lib/components/HighlightRect.svelte';
@@ -144,9 +143,8 @@
       }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Area line={{ width: 2 }} />
         {#if charts.area.highlight === 'line'}
           <HighlightLine
@@ -192,9 +190,8 @@
       }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <AreaStack line={{ width: 2 }} />
         {#if charts.areaStack.highlight === 'line'}
           <HighlightLine
@@ -237,9 +234,8 @@
       }}
     >
       <Svg>
-        <Axis placement="left" gridlines={{ style: 'stroke-dasharray: 2' }} />
+        <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
-        <Rule x />
         <Points class="fill-blue-500 stroke-blue-800" />
         {#if charts.dateTime.highlight === 'line'}
           <HighlightLine
@@ -282,9 +278,8 @@
       }}
     >
       <Svg>
-        <Axis placement="left" gridlines={{ style: 'stroke-dasharray: 2' }} />
+        <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
-        <Rule x />
         <ConnectedPoints stroke="#000" />
         <Points class="fill-blue-500 stroke-blue-800" />
         {#if charts.duration.highlight === 'line'}
@@ -332,9 +327,8 @@
       }}
     >
       <Svg>
-        <Axis placement="left" gridlines={{ style: 'stroke-dasharray: 2' }} />
+        <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
-        <Rule x />
         <ConnectedPoints stroke="#000" />
         <Points class="fill-blue-500 stroke-blue-800" />
         {#if charts.multiDuration.highlight === 'line'}
@@ -384,9 +378,8 @@
       }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars radius={4} strokeWidth={1} />
         {#if charts.bars.highlight === 'line'}
           <HighlightLine
@@ -431,9 +424,8 @@
       }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
         <Bars y="value" radius={4} strokeWidth={1} padding={16} />
         {#if charts.multiBars.highlight === 'line'}
@@ -474,8 +466,8 @@
       }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" gridlines />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" grid rule />
         <Points class="fill-blue-500 stroke-blue-800" />
         {#if charts.scatter.highlight === 'line'}
           <HighlightLine

@@ -12,7 +12,7 @@
 
 <h1>Examples</h1>
 
-<h2>x baseline</h2>
+<h2>x and y baselines</h2>
 
 <Preview>
   <div class="h-[300px] p-4 border rounded">
@@ -28,7 +28,29 @@
       <Svg>
         <Axis placement="bottom" />
         <Axis placement="left" />
-        <Rule x />
+        <Rule x y />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>top right x and y baselines</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={[]}
+      x="x"
+      xDomain={[0, 100]}
+      y="y"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis placement="top" />
+        <Axis placement="right" />
+        <Rule x="right" y="top" />
       </Svg>
     </Chart>
   </div>
@@ -70,32 +92,9 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="bottom" />
-        <Axis placement="left" />
-        <Rule x />
+        <Axis placement="bottom" rule />
+        <Axis placement="left" rule />
         <Rule x={70} class="stroke-red-400 [stroke-dasharray:2]" />
-      </Svg>
-    </Chart>
-  </div>
-</Preview>
-
-<h2>y baseline</h2>
-
-<Preview>
-  <div class="h-[300px] p-4 border rounded">
-    <Chart
-      data={[]}
-      x="x"
-      xDomain={[0, 100]}
-      y="y"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
-      <Svg>
-        <Axis placement="bottom" />
-        <Axis placement="left" />
-        <Rule y />
       </Svg>
     </Chart>
   </div>
@@ -123,28 +122,6 @@
   </div>
 </Preview>
 
-<h2>y baseline with time scale</h2>
-
-<Preview>
-  <div class="h-[300px] p-4 border rounded">
-    <Chart
-      {data}
-      x="date"
-      xScale={scaleTime()}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
-      <Svg>
-        <Axis placement="bottom" />
-        <Axis placement="left" />
-        <Rule y />
-      </Svg>
-    </Chart>
-  </div>
-</Preview>
-
 <h2>y annotation</h2>
 
 <Preview>
@@ -159,54 +136,9 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="bottom" />
-        <Axis placement="left" />
-        <Rule y />
+        <Axis placement="bottom" rule />
+        <Axis placement="left" rule />
         <Rule y={70} class="stroke-red-400 [stroke-dasharray:2]" />
-      </Svg>
-    </Chart>
-  </div>
-</Preview>
-
-<h2>x and y baselines</h2>
-
-<Preview>
-  <div class="h-[300px] p-4 border rounded">
-    <Chart
-      data={[]}
-      x="x"
-      xDomain={[0, 100]}
-      y="y"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
-      <Svg>
-        <Axis placement="bottom" />
-        <Axis placement="left" />
-        <Rule x y />
-      </Svg>
-    </Chart>
-  </div>
-</Preview>
-
-<h2>top right x and y baselines</h2>
-
-<Preview>
-  <div class="h-[300px] p-4 border rounded">
-    <Chart
-      data={[]}
-      x="x"
-      xDomain={[0, 100]}
-      y="y"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
-      <Svg>
-        <Axis placement="top" />
-        <Axis placement="right" />
-        <Rule x="right" y="top" />
       </Svg>
     </Chart>
   </div>

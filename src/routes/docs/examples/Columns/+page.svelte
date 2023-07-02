@@ -99,9 +99,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars radius={4} strokeWidth={1} />
       </Svg>
     </Chart>
@@ -123,9 +122,8 @@
       tooltip
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars radius={4} strokeWidth={1} />
         <HighlightRect />
       </Svg>
@@ -149,9 +147,9 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y={0} />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Rule y={0} />
         <Bars radius={4} strokeWidth={1} />
         <Labels format="integer" />
       </Svg>
@@ -173,9 +171,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars radius={4} strokeWidth={1} />
         <Rule y={median(data, (d) => d.value)} class="stroke-red-400 [stroke-dasharray:2]" />
       </Svg>
@@ -183,7 +180,7 @@
   </div>
 </Preview>
 
-<h2>with gridlines on top</h2>
+<h2>with grid on top</h2>
 
 <Preview>
   <div class="h-[300px] p-4 border rounded">
@@ -198,15 +195,14 @@
     >
       <Svg>
         <Bars radius={4} strokeWidth={1} />
-        <Axis placement="left" gridlines={{ class: 'stroke-white' }} />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid={{ class: 'stroke-white' }} rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
       </Svg>
     </Chart>
   </div>
 </Preview>
 
-<h2>with gridlines on top (mix-blend)</h2>
+<h2>with grid on top (mix-blend)</h2>
 
 <Preview>
   <div class="h-[300px] p-4 border rounded">
@@ -221,9 +217,8 @@
     >
       <Svg>
         <Bars radius={4} strokeWidth={1} />
-        <Axis placement="left" gridlines={{ class: 'mix-blend-multiply' }} />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid={{ class: 'mix-blend-multiply' }} rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
       </Svg>
     </Chart>
   </div>
@@ -244,9 +239,8 @@
       tooltip
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
         <Bars y="value" radius={4} strokeWidth={1} padding={16} />
         <HighlightRect />
@@ -280,9 +274,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule />
         <Bars groupBy="fruit" getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
       </Svg>
     </Chart>
@@ -309,9 +302,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule />
         <Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
       </Svg>
     </Chart>
@@ -338,9 +330,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines format="percentRound" />
-        <Axis placement="bottom" />
-        <Rule x y />
+        <Axis placement="left" grid rule format="percentRound" />
+        <Axis placement="bottom" rule />
         <Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
       </Svg>
     </Chart>
@@ -367,9 +358,8 @@
 			padding={{ left: 16, bottom: 24 }}
 		>
 			<Svg>
-				<Axis placement="left" gridlines />
-				<Axis placement="bottom" />
-				<Rule x y />
+				<Axis placement="left" grid rule />
+				<Axis placement="bottom" rule />
 				<Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
@@ -397,9 +387,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule />
         <Bars groupBy="basket" getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
       </Svg>
     </Chart>
@@ -444,9 +433,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule />
         <Bars
           groupBy={transitionChart.groupBy}
           getKey={(item) => item.keys.at(0) + '-' + item.keys.at(-1)}

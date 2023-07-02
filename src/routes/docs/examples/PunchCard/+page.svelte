@@ -6,7 +6,6 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import Rule from '$lib/components/Rule.svelte';
   import HighlightRect from '$lib/components/HighlightRect.svelte';
   import Points from '$lib/components/Points.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
@@ -49,10 +48,10 @@
         <Axis
           placement="left"
           format={(d) => daysOfWeek[d]}
-          gridlines={{ style: 'stroke-dasharray: 2' }}
+          grid={{ style: 'stroke-dasharray: 2' }}
+          rule
         />
         <Axis placement="bottom" format={(d) => 'Week ' + d} />
-        <Rule x />
         <Points let:points>
           {#each points as point, index}
             <Circle

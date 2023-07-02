@@ -7,7 +7,6 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import Rule from '$lib/components/Rule.svelte';
   import HighlightRect from '$lib/components/HighlightRect.svelte';
   import Labels from '$lib/components/Labels.svelte';
   import Path from '$lib/components/Path.svelte';
@@ -54,9 +53,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Threshold curve={selectedCurve}>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
             <Path pathData={linePathData} color="black" width="1.5" />
@@ -87,9 +85,8 @@
       tooltip={{ findTooltipData: 'left' }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Threshold curve={curveStepAfter}>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
             <Path pathData={linePathData} color="black" width="1.5" />
@@ -128,9 +125,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Threshold>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
             <Path pathData={linePathData} color="black" width="1.5" />

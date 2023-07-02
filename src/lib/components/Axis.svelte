@@ -2,26 +2,35 @@
   import { getContext, type ComponentProps } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import { format as formatValue, type FormatType, cls } from 'svelte-ux';
-  import { max, min } from 'd3-array';
+  import { extent } from 'd3-array';
 
   import Text from './Text.svelte';
   import { isScaleBand } from '$lib/utils/scales';
 
   const { xScale, yScale, xRange, yRange, width } = getContext('LayerCake');
 
+  /** Location of axis */
   export let placement: 'top' | 'bottom' | 'left' | 'right';
+
+  /** Draw a rule line.  Use Rule component for greater rendering order control */
+  export let rule: boolean | SVGAttributes<SVGLineElement> = false;
+
+  /** Draw a grid lines */
+  export let grid: boolean | SVGAttributes<SVGLineElement> = false;
 
   /** Control the number of ticks*/
   export let ticks: number | Function | undefined =
     placement === 'left' || placement === 'right' ? 4 : undefined;
 
-  export let gridlines: boolean | SVGAttributes<SVGLineElement> = false;
   export let tickSize = 4;
   export let format: FormatType = undefined;
   export let labelProps: ComponentProps<Text> | undefined = undefined;
 
   $: orientation = ['top', 'bottom'].includes(placement) ? 'horizontal' : 'vertical';
   $: scale = orientation === 'horizontal' ? $xScale : $yScale;
+
+  $: [xRangeMin, xRangeMax] = extent($xRange);
+  $: [yRangeMin, yRangeMax] = extent($yRange);
 
   $: tickVals = Array.isArray(ticks)
     ? ticks
@@ -34,24 +43,24 @@
       case 'top':
         return {
           x: $xScale(tick) + (isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0),
-          y: min($yRange)
+          y: xRangeMin
         };
 
       case 'bottom':
         return {
           x: $xScale(tick) + (isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0),
-          y: max($yRange)
+          y: yRangeMax
         };
 
       case 'left':
         return {
-          x: min($xRange),
+          x: xRangeMin,
           y: $yScale(tick) + (isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0)
         };
 
       case 'right':
         return {
-          x: max($xRange),
+          x: xRangeMax,
           y: $yScale(tick) + (isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0)
         };
     }
@@ -93,19 +102,44 @@
 </script>
 
 <g class="Axis placement-{placement}">
+  {#if rule !== false}
+    {@const lineProps = typeof rule === 'object' ? rule : null}
+    {#if orientation === 'vertical'}
+      <line
+        x1={placement === 'right' ? xRangeMax : xRangeMin}
+        x2={placement === 'right' ? xRangeMax : xRangeMin}
+        y1={$yRange[0] || 0}
+        y2={$yRange[1] || 0}
+        {...lineProps}
+        class={cls('rule stroke-gray-400', lineProps?.class)}
+      />
+    {/if}
+
+    {#if orientation === 'horizontal'}
+      <line
+        x1={$xRange[0] || 0}
+        x2={$xRange[1] || 0}
+        y1={placement === 'top' ? yRangeMin : yRangeMax}
+        y2={placement === 'top' ? yRangeMin : yRangeMax}
+        {...lineProps}
+        class={cls('rule stroke-gray-400', lineProps?.class)}
+      />
+    {/if}
+  {/if}
+
   {#each tickVals as tick, i}
     {@const tickCoords = getCoords(tick)}
     <g>
-      {#if gridlines !== false}
-        {@const lineProps = typeof gridlines === 'object' ? gridlines : null}
+      {#if grid !== false}
+        {@const lineProps = typeof grid === 'object' ? grid : null}
         {#if orientation === 'horizontal'}
           <line
             x1={tickCoords.x}
-            y1={min($yRange)}
+            y1={yRangeMin}
             x2={tickCoords.x}
-            y2={max($yRange)}
+            y2={yRangeMax}
             {...lineProps}
-            class={cls('gridline stroke-gray-200', lineProps?.class)}
+            class={cls('grid stroke-gray-200', lineProps?.class)}
           />
         {:else if orientation === 'vertical'}
           <line
@@ -114,11 +148,12 @@
             x2={$width}
             y2={tickCoords.y}
             {...lineProps}
-            class={cls('gridline stroke-gray-200', lineProps?.class)}
+            class={cls('grid stroke-gray-200', lineProps?.class)}
           />
         {/if}
       {/if}
 
+      <!-- Tick marks -->
       {#if orientation === 'horizontal'}
         <line
           x1={tickCoords.x}

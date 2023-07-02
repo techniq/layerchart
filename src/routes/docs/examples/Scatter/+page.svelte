@@ -5,7 +5,6 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import Rule from '$lib/components/Rule.svelte';
   import HighlightLine from '$lib/components/HighlightLine.svelte';
   import Labels from '$lib/components/Labels.svelte';
   import Points from '$lib/components/Points.svelte';
@@ -34,9 +33,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Points class="fill-blue-500 stroke-blue-800" />
       </Svg>
     </Chart>
@@ -58,9 +56,8 @@
       tooltip
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Points class="fill-blue-500 stroke-blue-800" />
         <HighlightLine color="var(--color-blue-500)" />
       </Svg>
@@ -85,9 +82,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Points class="fill-blue-500 stroke-blue-800" />
         <Labels format="integer" verticalAnchor="bottom" />
       </Svg>
@@ -109,9 +105,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Points
           color={({ value }) => (value >= 50 ? 'var(--color-green-500)' : 'var(--color-red-500)')}
           class="stroke-black/50"
@@ -141,9 +136,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Points class="stroke-black/50" />
       </Svg>
     </Chart>

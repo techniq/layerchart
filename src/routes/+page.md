@@ -9,7 +9,7 @@
   - Uses LakerCake to setup context
   - Adds support for x and y baseline (always show 0, etc)
 - Axis
-  - Easily add gridlines
+  - Easily add grid lines
   - Custom tick format
   - Tick control (see also `getMajorTicks` / `getMinorTicks` utils)
 - Rule

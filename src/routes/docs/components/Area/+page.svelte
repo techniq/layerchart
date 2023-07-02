@@ -8,7 +8,6 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import Rule from '$lib/components/Rule.svelte';
   import Points from '$lib/components/Points.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -64,9 +63,9 @@
   let tweened = true;
 </script>
 
-<h1>Examples</h1>
+<h1>Playground</h1>
 
-<div class="grid grid-cols-[1fr,1fr,1fr,auto,auto,auto] gap-2">
+<div class="grid grid-cols-[1fr,1fr,1fr,auto,auto,auto] gap-2 mb-2">
   <Field label="Path Example" let:id>
     <Button
       icon={mdiChevronLeft}
@@ -117,15 +116,12 @@
   </Field>
 </div>
 
-<h2>Playground</h2>
-
 <Preview>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule />
         <Area {curve} line={showLine} {tweened} />
         {#if showPoints}
           <Points {tweened} />

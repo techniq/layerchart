@@ -7,7 +7,6 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import Rule from '$lib/components/Rule.svelte';
   import HighlightLine from '$lib/components/HighlightLine.svelte';
   import Labels from '$lib/components/Labels.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
@@ -47,9 +46,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Area line={{ width: 2 }} />
       </Svg>
     </Chart>
@@ -71,9 +69,8 @@
       tooltip
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Area line={{ width: 2 }} />
         <HighlightLine color="var(--color-blue-500)" />
       </Svg>
@@ -98,9 +95,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Area line={{ width: 2 }} />
         <Labels format="integer" />
       </Svg>
@@ -127,9 +123,8 @@
       tooltip={{ mode: 'voronoi' }}
     >
       <Svg>
-        <Axis placement="left" gridlines />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} />
-        <Rule x y />
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
           <Area {data} color={fruitColors[fruit]} line={{ width: 2 }} />
         {/each}
