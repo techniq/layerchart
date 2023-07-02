@@ -37,7 +37,7 @@
   };
 
   const components = {
-    Common: ['Chart', 'Axis', 'Legend', 'Rule'],
+    Common: ['Chart', 'Axis', 'Frame', 'Legend', 'Rule'],
     Primatives: [
       'Arc',
       'Area',
