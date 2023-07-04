@@ -241,7 +241,7 @@
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Bars x="baseline" radius={4} strokeWidth={1} color="#ddd" />
+        <Bars x="baseline" radius={4} strokeWidth={1} class="fill-gray-200" />
         <Bars x="value" radius={4} strokeWidth={1} padding={16} />
         <HighlightRect />
       </Svg>
