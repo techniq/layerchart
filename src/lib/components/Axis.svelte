@@ -19,7 +19,7 @@
   export let grid: boolean | SVGAttributes<SVGLineElement> = false;
 
   /** Control the number of ticks*/
-  export let ticks: number | Function | undefined =
+  export let ticks: number | any[] | Function | undefined =
     placement === 'left' || placement === 'right' ? 4 : undefined;
 
   export let tickSize = 4;
