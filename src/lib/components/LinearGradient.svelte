@@ -11,7 +11,7 @@
   export let x2 = vertical ? '0%' : '100%';
   export let y2 = vertical ? '100%' : '0%';
 
-  export let rotate: number = undefined;
+  export let rotate: number | undefined = undefined;
 </script>
 
 <defs>
