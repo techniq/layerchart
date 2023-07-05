@@ -110,8 +110,8 @@
       mode: 'voronoi',
       highlight: 'line',
       axis: 'both',
-      snapToDataX: false,
-      snapToDataY: false,
+      snapToDataX: true,
+      snapToDataY: true,
       debug: false
     }
   } satisfies Record<string, ComponentProps<TooltipControls>['settings']>;
