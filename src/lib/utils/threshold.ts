@@ -1,12 +1,13 @@
-import { range } from 'd3-array';
+import { range, type ThresholdNumberArrayGenerator } from 'd3-array';
 import { scaleTime } from 'd3-scale';
 
 /**
- * Useful threshold function when using Date
+ * Useful threshold function when using Dates
  * https://observablehq.com/@d3/d3-bin-time-thresholds
  */
-function thresholdTime(n: number) {
-  return (data: Date[], min: Date, max: Date) => {
+export function thresholdTime(n: number): ThresholdNumberArrayGenerator<number> {
+  // TODO: Unable to satifiy `ThresholdNumberArrayGenerator<Value extends number>` with `Date`
+  return (data, min, max) => {
     return scaleTime().domain([min, max]).ticks(n);
   };
 }
