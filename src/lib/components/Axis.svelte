@@ -22,6 +22,7 @@
   export let ticks: number | any[] | Function | undefined =
     placement === 'left' || placement === 'right' ? 4 : undefined;
 
+  /** Length of the tick line */
   export let tickSize = 4;
   export let format: FormatType = undefined;
   export let labelProps: ComponentProps<Text> | undefined = undefined;

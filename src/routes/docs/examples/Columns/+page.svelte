@@ -119,7 +119,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip
+      tooltip={{ mode: 'band' }}
     >
       <Svg>
         <Axis placement="left" grid rule />

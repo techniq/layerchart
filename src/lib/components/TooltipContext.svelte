@@ -45,6 +45,7 @@
   import { isScaleBand, scaleInvert } from '$lib/utils/scales';
   import { quadtreeRects } from '$lib/utils/quadtree';
   import { createPropertySortFunc, createSortFunc } from 'svelte-ux/utils/sort';
+  import { firstValue } from '$lib/utils/rect';
 
   const dispatch = createEventDispatcher<{ click: { data: any } }>();
 
@@ -284,8 +285,8 @@
   $: if (mode === 'bounds' || mode === 'band') {
     rects = $flatData
       .map((d) => {
-        const xValue = $xGet(d);
-        const yValue = $yGet(d);
+        const xValue = firstValue($xGet(d));
+        const yValue = firstValue($yGet(d));
 
         const x = Array.isArray(xValue) ? min(xValue) : xValue;
         const y = Array.isArray(yValue) ? max(yValue) : yValue;

@@ -5,6 +5,7 @@
   import { isScaleBand } from '$lib/utils/scales';
   import Rect from './Rect.svelte';
   import { tooltipContext } from './TooltipContext.svelte';
+  import { firstValue } from '$lib/utils/rect';
 
   const { flatData, x, xScale, xDomain, xRange, xGet, yScale, yDomain, yRange, yGet } =
     getContext('LayerCake');
@@ -20,8 +21,8 @@
   };
   $: {
     if ($tooltip.data) {
-      let xCoord = $xGet($tooltip.data);
-      let yCoord = $yGet($tooltip.data);
+      let xCoord = firstValue($xGet($tooltip.data));
+      let yCoord = firstValue($yGet($tooltip.data));
 
       if (axis === 'x' || axis === 'both') {
         if (isScaleBand($xScale)) {

@@ -39,7 +39,7 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
           const y1Scale = groupBy
             ? groupScaleBand($yScale, $flatData, groupBy, options?.groupPadding)
             : null;
-          const y = $yGet(item) + (y1Scale ? y1Scale(item[groupBy]) : 0) + padding / 2;
+          const y = firstValue($yGet(item)) + (y1Scale ? y1Scale(item[groupBy]) : 0) + padding / 2;
           const height = Math.max(
             0,
             $yScale.bandwidth ? (y1Scale ? y1Scale.bandwidth() : $yScale.bandwidth()) - padding : 0
@@ -84,7 +84,7 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
             ? groupScaleBand($xScale, $flatData, groupBy, options?.groupPadding)
             : null;
 
-          const x = $xGet(item) + (x1Scale ? x1Scale(item[groupBy]) : 0) + padding / 2;
+          const x = firstValue($xGet(item)) + (x1Scale ? x1Scale(item[groupBy]) : 0) + padding / 2;
           const width = Math.max(
             0,
             $xScale.bandwidth ? (x1Scale ? x1Scale.bandwidth() : $xScale.bandwidth()) - padding : 0
@@ -127,4 +127,12 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
       };
     }
   );
+}
+
+/**
+ * If value is an array, returns first item, else returns original value
+ * Useful when x/y getters for band scale are an array (such as for histograms)
+ */
+export function firstValue(value: number | number[]) {
+  return Array.isArray(value) ? value[0] : value;
 }
