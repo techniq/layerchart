@@ -1,5 +1,11 @@
 # layerchart
 
+## 0.18.2
+
+### Patch Changes
+
+- Support styling Tooltip via `classes` prop ([`60e2361`](https://github.com/techniq/layerchart/commit/60e236114323c6394eecdbaa4b93b6de041c1d80))
+
 ## 0.18.1
 
 ### Patch Changes
