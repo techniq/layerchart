@@ -36,6 +36,7 @@
     "@types/d3-scale": "^4.0.3",
     "@types/d3-shape": "^3.1.1",
     "@types/lodash-es": "^4.17.7",
+    "@types/marked": "^5.0.0",
     "@types/shapefile": "^0.6.1",
     "@types/topojson-client": "^3.1.1",
     "autoprefixer": "^10.4.14",
