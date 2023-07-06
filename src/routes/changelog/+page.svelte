@@ -1,11 +1,11 @@
 <script lang="ts">
   import { marked } from 'marked';
 
-  export let data;
+  import changelog from '../../../CHANGELOG.md?raw';
 </script>
 
 <div class="bg-white p-2 m-2 rounded shadow-lg border">
   <div class="prose px-4">
-    {@html marked.parse(data.changelog)}
+    {@html marked.parse(changelog)}
   </div>
 </div>
