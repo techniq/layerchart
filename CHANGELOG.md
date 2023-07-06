@@ -1,5 +1,13 @@
 # layerchart
 
+## 0.18.1
+
+### Patch Changes
+
+- Add bin/histogram support and examples ([`da358ab`](https://github.com/techniq/layerchart/commit/da358ab87edf7814050d3b531cd7e2e20e8c630c))
+
+- Update dependencies ([`c0e67b4`](https://github.com/techniq/layerchart/commit/c0e67b443a9c7858a46d1f7da49bf3a64dbbb0eb))
+
 ## 0.18.0
 
 ### Minor Changes
