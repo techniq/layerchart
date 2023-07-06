@@ -2,7 +2,8 @@
   import { cls, format as formatUtil, type FormatType } from 'svelte-ux';
 
   export let label: any;
-  export let value: any = undefined; // Can be pass as slot
+  /** Value to be formatted and displayed.  Can also be passed as default slot */
+  export let value: any = undefined;
   export let format: FormatType = undefined;
 
   export let valueAlign: 'left' | 'right' | 'center' = 'left';
