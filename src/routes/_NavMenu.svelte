@@ -1,6 +1,6 @@
 <script lang="ts">
   import { NavItem } from 'svelte-ux';
-  import { mdiHome } from '@mdi/js';
+  import { mdiFormatListBulleted, mdiHome } from '@mdi/js';
 
   import { page } from '$app/stores';
 
@@ -70,6 +70,7 @@
 </script>
 
 <NavItem text="Home" icon={mdiHome} currentUrl={$page.url} path="/" />
+<NavItem text="Changelog" icon={mdiFormatListBulleted} currentUrl={$page.url} path="/changelog" />
 
 <h1>Examples</h1>
 {#each Object.entries(examples) as [header, items]}
