@@ -6,9 +6,14 @@
   export let format: FormatType = undefined;
 
   export let valueAlign: 'left' | 'right' | 'center' = 'left';
+
+  export let classes: {
+    label?: string;
+    value?: string;
+  } = {};
 </script>
 
-<div class="text-xs text-white/75 text-right whitespace-nowrap">
+<div class={cls('text-xs text-white/75 text-right whitespace-nowrap', classes.label)}>
   <slot name="label">{label}:</slot>
 </div>
 
@@ -19,6 +24,7 @@
       'text-right': valueAlign === 'right',
       'text-center': valueAlign === 'center'
     },
+    classes.value,
     $$props.class
   )}
 >

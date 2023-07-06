@@ -119,6 +119,65 @@
 
 <h1>Examples</h1>
 
+<h2>Basic</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeries}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Area line={{ width: 2 }} />
+        <HighlightLine color="var(--color-blue-500)" />
+      </Svg>
+      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+        <TooltipItem label="value" value={data.value} />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Style</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeries}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Area line={{ width: 2 }} />
+        <HighlightLine color="var(--color-blue-500)" />
+      </Svg>
+      <Tooltip class="bg-white text-gray-800 border border-gray-700" let:data>
+        <div slot="header" class="font-semibold text-center">
+          {format(data.date, 'eee, MMMM do')}
+        </div>
+        <TooltipItem label="value" value={data.value} classes={{ label: 'text-gray-500' }} />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h1>Chart types</h1>
+
 <h2>Area <small>x: scaleTime, y: scaleLinear</small></h2>
 <small class="block -mt-1 mb-1">
   bisect-x recommended. voronoi and quadtree supported. bounds and band to be improved

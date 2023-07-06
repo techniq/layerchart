@@ -12,7 +12,14 @@
   export let contained: 'container' | false = 'container'; // TODO: Support 'window' using getBoundingClientRect()
   export let animate = true;
 
-  export let header: (data: any) => any = undefined;
+  export let header: ((data: any) => any) | undefined = undefined;
+
+  export let classes: {
+    root?: string;
+    container?: string;
+    header?: string;
+    content?: string;
+  } = {};
 
   const { containerWidth, containerHeight } = getContext('LayerCake');
   const tooltip = tooltipContext();
@@ -43,7 +50,7 @@
 
 {#if $tooltip.data}
   <div
-    class={cls('absolute pointer-events-none z-50', $$props.class)}
+    class={cls('absolute pointer-events-none z-50', classes.root)}
     style:top="{$top}px"
     style:left="{$left}px"
     transition:fade={{ duration: 100 }}
@@ -51,18 +58,27 @@
     bind:clientHeight={tooltipHeight}
   >
     <div
-      class="bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white rounded elevation-1 px-2 py-1 h-full"
+      class={cls(
+        'bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white rounded elevation-1 px-2 py-1 h-full',
+        classes.container,
+        $$props.class
+      )}
     >
       {#if header || $$slots.header}
-        <div class="text-center font-semibold whitespace-nowrap">
+        <div class={cls('text-center font-semibold whitespace-nowrap', classes.header)}>
           <slot name="header" data={$tooltip.data}>
-            {header($tooltip.data)}
+            {header?.($tooltip.data)}
           </slot>
         </div>
       {/if}
 
       {#if $$slots.default}
-        <div class="grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center pt-1">
+        <div
+          class={cls(
+            'grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center pt-1',
+            classes.content
+          )}
+        >
           <slot data={$tooltip.data} />
         </div>
       {/if}
