@@ -94,7 +94,7 @@
       <Svg>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
-        <Rule x={70} class="stroke-red-400 [stroke-dasharray:2]" />
+        <Rule x={70} class="stroke-2 stroke-red-400 [stroke-dasharray:4] [stroke-linecap:round] " />
       </Svg>
     </Chart>
   </div>
@@ -138,7 +138,7 @@
       <Svg>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
-        <Rule y={70} class="stroke-red-400 [stroke-dasharray:2]" />
+        <Rule y={70} class="stroke-2 stroke-red-400 [stroke-dasharray:4] [stroke-linecap:round] " />
       </Svg>
     </Chart>
   </div>

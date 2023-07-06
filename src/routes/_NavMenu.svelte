@@ -38,7 +38,7 @@
   };
 
   const components = {
-    Common: ['Chart', 'Axis', 'Frame', 'Legend', 'Rule'],
+    Common: ['Chart', 'Axis', 'Frame', 'Legend'],
     Primatives: ['Arc', 'Circle', 'Group', 'Line', 'Rect', 'Text'],
     'Data-driven': [
       'Area',
@@ -50,6 +50,7 @@
       'Path',
       'Pie',
       'Points',
+      'Rule',
       'Threshold'
     ],
     Interactions: ['Tooltip', 'TooltipContext', 'HighlightRect', 'HighlightLine', 'Zoom'],

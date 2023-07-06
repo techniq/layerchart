@@ -174,7 +174,10 @@
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars radius={4} strokeWidth={1} />
-        <Rule x={median(data, (d) => d.value)} class="stroke-red-400 [stroke-dasharray:2]" />
+        <Rule
+          x={median(data, (d) => d.value)}
+          class="stroke-2 stroke-red-400 [stroke-dasharray:4] [stroke-linecap:round] "
+        />
       </Svg>
     </Chart>
   </div>
