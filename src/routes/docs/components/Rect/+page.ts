@@ -8,7 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
-      description: '`<rect>` with tweened `x`, `y`, `width` and `height` using `motionStore`'
+      description: '`<rect>` element with tweened properties using `motionStore`'
     }
   };
 }

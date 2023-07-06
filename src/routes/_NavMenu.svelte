@@ -39,31 +39,24 @@
 
   const components = {
     Common: ['Chart', 'Axis', 'Frame', 'Legend', 'Rule'],
-    Primatives: [
-      'Arc',
+    Primatives: ['Arc', 'Circle', 'Group', 'Line', 'Rect', 'Text'],
+    'Data-driven': [
       'Area',
-      'Blur',
-      'Bounds',
-      'ChartClipPath',
-      'Circle',
-      'CircleClipPath',
-      'ClipPath',
-      'ColorRamp',
-      'Group',
-      'Line',
-      'LinearGradient',
+      'AreaStack',
+      'Bars',
+      'ConnectedPoints',
+      'Labels',
       'Link',
       'Path',
-      'Pattern',
       'Pie',
-      'Rect',
-      'RectClipPath',
-      'Text'
+      'Points',
+      'Threshold'
     ],
-    'Data-driven': ['AreaStack', 'Bars', 'ConnectedPoints', 'Labels', 'Points', 'Threshold'],
     Interactions: ['Tooltip', 'TooltipContext', 'HighlightRect', 'HighlightLine', 'Zoom'],
     Geo: ['GeoContext', 'GeoPath', 'GeoPoint', 'GeoTile', 'Graticule', 'TileImage'],
-    Hierarchy: ['Pack', 'Partition', 'Sankey']
+    Hierarchy: ['Pack', 'Partition', 'Sankey'],
+    Clipping: ['ClipPath', 'ChartClipPath', 'CircleClipPath', 'ClipPathUse', 'RectClipPath'],
+    Other: ['Blur', 'Bounds', 'ColorRamp', 'LinearGradient', 'Pattern', 'RectClipPath']
   };
 
   const utils = ['pivot'];
