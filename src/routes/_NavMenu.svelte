@@ -39,7 +39,7 @@
 
   const components = {
     Common: ['Chart', 'Axis', 'Frame', 'Legend'],
-    Primatives: ['Arc', 'Circle', 'Group', 'Line', 'Rect', 'Text'],
+    Primatives: ['Arc', 'Circle', 'Group', 'Line', 'Point', 'Rect', 'Text'],
     'Data-driven': [
       'Area',
       'AreaStack',

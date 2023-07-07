@@ -31,6 +31,7 @@ export { default as Partition } from './Partition.svelte';
 export { default as Path } from './Path.svelte';
 export { default as Pattern } from './Pattern.svelte';
 export { default as Pie } from './Pie.svelte';
+export { default as Point } from './Point.svelte';
 export { default as Points } from './Points.svelte';
 export { default as Rect } from './Rect.svelte';
 export { default as RectClipPath } from './RectClipPath.svelte';

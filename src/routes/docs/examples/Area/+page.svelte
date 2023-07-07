@@ -9,6 +9,8 @@
   import Axis from '$lib/components/Axis.svelte';
   import HighlightLine from '$lib/components/HighlightLine.svelte';
   import Labels from '$lib/components/Labels.svelte';
+  import Point from '$lib/components/Point.svelte';
+  import Text from '$lib/components/Text.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -105,6 +107,52 @@
 </Preview>
 
 <h2>Multiple series</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={multiSeriesFlatData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      r="fruit"
+      rScale={scaleOrdinal()}
+      rDomain={dataByFruit.map((d) => d[0])}
+      rRange={['var(--color-blue-500)', 'var(--color-purple-500)', 'var(--color-green-500)']}
+      padding={{ left: 16, bottom: 24, right: 48 }}
+      tooltip={{ mode: 'voronoi' }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        {#each dataByFruit as [fruit, data]}
+          <Area {data} color={fruitColors[fruit]} line={{ width: 2 }} />
+          <Point d={data[data.length - 1]} let:x let:y>
+            <circle cx={x} cy={y} r={4} fill={fruitColors[fruit]} />
+            <Text
+              {x}
+              {y}
+              value={fruit}
+              verticalAnchor="middle"
+              dx={6}
+              dy={-2}
+              class="text-xs"
+              style="fill:{fruitColors[fruit]}"
+            />
+          </Point>
+        {/each}
+        <HighlightLine />
+      </Svg>
+      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+        <TooltipItem label={data.fruit} value={data.value} />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Multiple series with labels</h2>
 
 <Preview>
   <div class="h-[300px] p-4 border rounded">
