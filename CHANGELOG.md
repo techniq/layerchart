@@ -1,5 +1,15 @@
 # layerchart
 
+## 0.19.0
+
+### Minor Changes
+
+- Consolidate <ClipPathUse> use case into <ClipPath> and simplify other ClipPath components with refined slots ([`badd391`](https://github.com/techniq/layerchart/commit/badd391cecbc4aeb526b297e57d77ab4f5debcbf))
+
+### Patch Changes
+
+- Add Point component as a convenient way to translate a data item to SVG x/y coordinates ([`fa48561`](https://github.com/techniq/layerchart/commit/fa4856125f55db126eba6ac21faee99c9f2a7506))
+
 ## 0.18.2
 
 ### Patch Changes
