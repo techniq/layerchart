@@ -18,12 +18,6 @@
 </script>
 
 <ClipPath {id}>
-  <Rect {x} {y} {width} {height} {spring} {tweened} />
+  <Rect slot="clip" {x} {y} {width} {height} {spring} {tweened} />
+  <slot {id} />
 </ClipPath>
-
-{#if $$slots.default}
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <g style="clip-path: url(#{id})" on:click on:mousemove on:mouseleave>
-    <slot {id} />
-  </g>
-{/if}

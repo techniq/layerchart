@@ -56,7 +56,7 @@
     Interactions: ['Tooltip', 'TooltipContext', 'HighlightRect', 'HighlightLine', 'Zoom'],
     Geo: ['GeoContext', 'GeoPath', 'GeoPoint', 'GeoTile', 'Graticule', 'TileImage'],
     Hierarchy: ['Pack', 'Partition', 'Sankey'],
-    Clipping: ['ClipPath', 'ChartClipPath', 'CircleClipPath', 'ClipPathUse', 'RectClipPath'],
+    Clipping: ['ClipPath', 'ChartClipPath', 'CircleClipPath', 'RectClipPath'],
     Other: ['Blur', 'Bounds', 'ColorRamp', 'LinearGradient', 'Pattern', 'RectClipPath']
   };
 

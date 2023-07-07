@@ -18,7 +18,6 @@
   const keys = ['apples', 'bananas', 'oranges'];
   const data = createDateSeries({ min: 50, max: 100, value: 'integer', keys });
   const stackData = stack().keys(keys)(data);
-  // console.log({ data, stackData })
 </script>
 
 <h1>Examples</h1>

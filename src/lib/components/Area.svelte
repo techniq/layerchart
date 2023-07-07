@@ -18,12 +18,12 @@
   export let x: any = undefined; // TODO: Update Type
   export let y0: any = undefined; // TODO: Update Type
   export let y1: any = undefined; // TODO: Update Type
-  export let pathData: string = undefined;
-  export let clipPath: string = undefined;
+  export let pathData: string | undefined = undefined;
+  export let clipPath: string | undefined = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
-  export let curve: CurveFactory = undefined;
-  export let defined: Parameters<Area<any>['defined']>[0] = undefined;
+  export let curve: CurveFactory | undefined = undefined;
+  export let defined: Parameters<Area<any>['defined']>[0] | undefined = undefined;
   export let color = 'var(--color-blue-500)';
   export let opacity = 0.3;
   export let line: boolean | any = false;

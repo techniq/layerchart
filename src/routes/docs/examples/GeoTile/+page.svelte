@@ -9,7 +9,7 @@
 
   import TilesetField from '$lib/docs/TilesetField.svelte';
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
-  import ClipPathUse from '$lib/components/ClipPathUse.svelte';
+  import ClipPath from '$lib/components/ClipPath.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import GeoTile from '$lib/components/GeoTile.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
@@ -91,9 +91,9 @@
       let:projection
     >
       <Svg>
-        <ClipPathUse refId="clip">
+        <ClipPath useId="clip">
           <GeoTile url={serviceUrl} {zoomDelta} />
-        </ClipPathUse>
+        </ClipPath>
         <GeoPath geojson={selectedFeature} id="clip" class="stroke-none" />
         {#each filteredStates.features as feature}
           <GeoPath

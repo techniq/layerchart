@@ -18,11 +18,11 @@
   export let data: any = undefined; // TODO: Update Type
   export let x: any = undefined; // TODO: Update Type
   export let y: any = undefined; // TODO: Update Type
-  export let pathData: string = undefined;
+  export let pathData: string | undefined = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
-  export let curve: CurveFactory | CurveFactoryLineOnly = undefined;
-  export let defined: Parameters<Line<any>['defined']>[0] = undefined;
+  export let curve: CurveFactory | CurveFactoryLineOnly | undefined = undefined;
+  export let defined: Parameters<Line<any>['defined']>[0] | undefined = undefined;
   export let color = 'black';
   export let width = undefined;
 

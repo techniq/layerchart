@@ -7,7 +7,13 @@ export async function load() {
     meta: {
       api,
       source,
-      pageSource
+      pageSource,
+      related: [
+        'components/ChartClipPath',
+        'components/CircleClipPath',
+        'components/RectClipPath',
+        'examples/GeoTile'
+      ]
     }
   };
 }

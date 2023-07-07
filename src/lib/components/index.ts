@@ -10,7 +10,6 @@ export { default as ChartClipPath } from './ChartClipPath.svelte';
 export { default as Circle } from './Circle.svelte';
 export { default as CircleClipPath } from './CircleClipPath.svelte';
 export { default as ClipPath } from './ClipPath.svelte';
-export { default as ClipPathUse } from './ClipPathUse.svelte';
 export { default as ColorRamp } from './ColorRamp.svelte';
 export { default as ConnectedPoints } from './ConnectedPoints.svelte';
 export { default as Frame } from './Frame.svelte';

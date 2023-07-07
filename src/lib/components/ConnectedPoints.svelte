@@ -15,8 +15,8 @@
 
   type Offset = number | ((value: number, context: any) => number);
 
-  export let offsetX: Offset = undefined;
-  export let offsetY: Offset = undefined;
+  export let offsetX: Offset | undefined = undefined;
+  export let offsetY: Offset | undefined = undefined;
 
   function getOffset(value, offset: Offset, scale: any) {
     if (typeof offset === 'function') {

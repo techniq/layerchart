@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
+  import { getContext, type ComponentProps } from 'svelte';
+  import type { tweened as tweenedStore } from 'svelte/motion';
   import type { CurveFactory } from 'd3-shape';
 
   import Area from './Area.svelte';
@@ -10,8 +11,8 @@
   // TODO: Add as generic
   type Datum = any;
 
-  export let curve: CurveFactory = undefined;
-  export let defined: (d: Datum, index: number, data: Datum[]) => boolean = undefined;
+  export let curve: CurveFactory | undefined = undefined;
+  export let defined: ComponentProps<Path>['defined'] | undefined = undefined;
   export let opacity = 0.3;
   export let line: boolean | any = false;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;

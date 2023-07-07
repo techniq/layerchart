@@ -17,11 +17,6 @@
 </script>
 
 <ClipPath {id}>
-  <Circle {cx} {cy} {r} {spring} {tweened} />
+  <Circle slot="clip" {cx} {cy} {r} {spring} {tweened} />
+  <slot {id} />
 </ClipPath>
-
-{#if $$slots.default}
-  <g style="clip-path: url(#{id})" on:click on:mousemove on:mouseleave>
-    <slot {id} />
-  </g>
-{/if}
