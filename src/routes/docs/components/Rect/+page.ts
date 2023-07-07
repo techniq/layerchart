@@ -8,7 +8,16 @@ export async function load() {
       api,
       source,
       pageSource,
-      description: '`<rect>` element with tweened properties using `motionStore`'
+      description: '`<rect>` element with tweened properties using `motionStore`',
+      related: [
+        'components/Bars',
+        'components/HighlightRect',
+        'components/RectClipPath',
+        'examples/Partition',
+        'examples/Sankey',
+        'examples/Tree',
+        'examples/Treemap'
+      ]
     }
   };
 }

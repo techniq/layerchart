@@ -8,7 +8,8 @@ export async function load() {
       api,
       source,
       pageSource,
-      description: '`<circle>` element with tweened properties using `motionStore`'
+      description: '`<circle>` element with tweened properties using `motionStore`',
+      related: ['components/Points', 'examples/Pack', 'examples/PunchCard']
     }
   };
 }

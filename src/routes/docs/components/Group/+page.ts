@@ -7,7 +7,16 @@ export async function load() {
     meta: {
       api,
       source,
-      pageSource
+      pageSource,
+      related: [
+        'examples/Pack',
+        'examples/Partition',
+        'examples/Sankey',
+        'examples/SpikeMap',
+        'examples/Sunburst',
+        'examples/Tree',
+        'examples/Treemap'
+      ]
     }
   };
 }

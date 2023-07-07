@@ -17,12 +17,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded">
     <Chart
-      data={[]}
-      x="x"
       xDomain={[0, 100]}
-      y="y"
       yDomain={[0, 100]}
-      yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
@@ -39,12 +35,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded">
     <Chart
-      data={[]}
-      x="x"
       xDomain={[0, 100]}
-      y="y"
       yDomain={[0, 100]}
-      yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
@@ -61,12 +53,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded">
     <Chart
-      data={[]}
-      x="x"
       xDomain={[-20, 100]}
-      y="y"
       yDomain={[0, 100]}
-      yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
@@ -83,12 +71,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded">
     <Chart
-      data={[]}
-      x="x"
       xDomain={[0, 100]}
-      y="y"
       yDomain={[0, 100]}
-      yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
@@ -106,11 +90,8 @@
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={[]}
-      x="x"
       xDomain={[0, 100]}
-      y="y"
       yDomain={[-20, 100]}
-      yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
@@ -127,12 +108,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded">
     <Chart
-      data={[]}
-      x="x"
       xDomain={[0, 100]}
-      y="y"
       yDomain={[0, 100]}
-      yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
