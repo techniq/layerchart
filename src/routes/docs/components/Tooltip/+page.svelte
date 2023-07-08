@@ -136,7 +136,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Area line={{ width: 2 }} />
+        <Area class="fill-blue-500/30" line={{ class: 'stroke-blue-500 stroke-2' }} />
         <HighlightLine color="var(--color-blue-500)" />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
@@ -163,7 +163,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Area line={{ width: 2 }} />
+        <Area class="fill-blue-500/30" line={{ class: 'stroke-blue-500 stroke-2' }} />
         <HighlightLine color="var(--color-blue-500)" />
       </Svg>
       <Tooltip class="bg-white text-gray-800 border border-gray-700" let:data>
@@ -204,7 +204,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Area line={{ width: 2 }} />
+        <Area class="fill-blue-500/30" line={{ class: 'stroke-blue-500 stroke-2' }} />
         {#if charts.area.highlight === 'line'}
           <HighlightLine
             {...charts.area.axis && { axis: charts.area.axis }}
@@ -251,7 +251,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <AreaStack line={{ width: 2 }} />
+        <AreaStack line={{ class: 'stroke-2' }} />
         {#if charts.areaStack.highlight === 'line'}
           <HighlightLine
             {...charts.areaStack.axis && { axis: charts.areaStack.axis }}

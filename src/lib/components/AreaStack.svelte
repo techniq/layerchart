@@ -27,7 +27,7 @@
       <Path
         data={seriesData}
         y={(d) => $yScale(d[1])}
-        color={$rGet(seriesData)}
+        stroke={$rGet(seriesData)}
         {curve}
         {defined}
         {tweened}
@@ -43,7 +43,7 @@
       data={seriesData}
       y0={(d) => $yScale(d[0])}
       y1={(d) => $yScale(d[1])}
-      color={$rGet(seriesData)}
+      fill={$rGet(seriesData)}
       {curve}
       {defined}
       {opacity}

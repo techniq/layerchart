@@ -42,7 +42,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <AreaStack line={{ width: 2 }} />
+        <AreaStack line={{ 'stroke-width': 2 }} />
       </Svg>
     </Chart>
   </div>
@@ -69,7 +69,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <AreaStack line={{ width: 2 }} />
+        <AreaStack line={{ 'stroke-width': 2 }} />
         <HighlightLine color="var(--color-blue-500)" />
       </Svg>
       <Tooltip header={(data) => format(data.data.date, 'eee, MMMM do')} let:data>

@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
+  import { getContext, type ComponentProps } from 'svelte';
   import type { tweened as tweenedStore } from 'svelte/motion';
   import { type Area, area as d3Area } from 'd3-shape';
   import type { CurveFactory } from 'd3-shape';
-  import { min, max } from 'd3-array';
-
+  import { max } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
+
+  import { cls } from 'svelte-ux';
 
   import { motionStore } from '$lib/stores/motionStore';
 
@@ -13,20 +14,30 @@
 
   const { data: contextData, xGet, yGet, yRange } = getContext('LayerCake');
 
-  // Properties to override what is used from context
-  export let data: any = undefined; // TODO: Update Type
+  /** Override data instead of using context */
+  export let data: any = undefined;
+
+  /** Pass `<path d={...} />` explicitly instead of calculating from data / context */
+  export let pathData: string | undefined | null = undefined;
+
+  /** Override x accessor */
   export let x: any = undefined; // TODO: Update Type
+
+  /** Override y0 accessor.  Defaults to max($yRange) */
   export let y0: any = undefined; // TODO: Update Type
+  /** Override y1 accessor.  Defaults to y accessor */
   export let y1: any = undefined; // TODO: Update Type
-  export let pathData: string | undefined = undefined;
-  export let clipPath: string | undefined = undefined;
+
+  /** Interpolate path data using d3-interpolate-path */
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
+
+  export let clipPath: string | undefined = undefined;
 
   export let curve: CurveFactory | undefined = undefined;
   export let defined: Parameters<Area<any>['defined']>[0] | undefined = undefined;
-  export let color = 'var(--color-blue-500)';
-  export let opacity = 0.3;
-  export let line: boolean | any = false;
+
+  /** Enable showing line */
+  export let line: boolean | ComponentProps<Path> = false;
 
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
@@ -44,16 +55,14 @@
 </script>
 
 {#if line}
-  <Path {data} {curve} {defined} {color} {tweened} {...line} />
+  <Path {data} {curve} {defined} {tweened} {...typeof line === 'object' ? line : null} />
 {/if}
 
 <path
-  class="path-area"
   d={$tweened_d}
   clip-path={clipPath}
-  fill={color}
-  fill-opacity={opacity}
   {...$$restProps}
+  class={cls('path-area', $$props.class)}
   on:click
   on:mousemove
   on:mouseleave

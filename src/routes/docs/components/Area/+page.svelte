@@ -122,7 +122,12 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-        <Area {curve} line={showLine} {tweened} />
+        <Area
+          {curve}
+          line={showLine && { class: 'stroke-blue-500' }}
+          {tweened}
+          class="fill-blue-500/30"
+        />
         {#if showPoints}
           <Points {tweened} />
         {/if}

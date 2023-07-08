@@ -50,7 +50,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Area line={{ width: 2 }} />
+        <Area line={{ class: 'stroke-2 stroke-blue-500' }} class="fill-blue-500/30" />
       </Svg>
     </Chart>
   </div>
@@ -73,7 +73,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Area line={{ width: 2 }} />
+        <Area line={{ class: 'stroke-2 stroke-blue-500' }} class="fill-blue-500/30" />
         <HighlightLine color="var(--color-blue-500)" />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
@@ -99,7 +99,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Area line={{ width: 2 }} />
+        <Area line={{ class: 'stroke-2 stroke-blue-500' }} class="fill-blue-500/30" />
         <Labels format="integer" />
       </Svg>
     </Chart>
@@ -128,9 +128,15 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
-          <Area {data} color={fruitColors[fruit]} line={{ width: 2 }} />
+          {@const color = fruitColors[fruit]}
+          <Area
+            {data}
+            fill={color}
+            fill-opacity={0.3}
+            line={{ class: 'stroke-2', stroke: color }}
+          />
           <Point d={data[data.length - 1]} let:x let:y>
-            <circle cx={x} cy={y} r={4} fill={fruitColors[fruit]} />
+            <circle cx={x} cy={y} r={4} fill={color} />
             <Text
               {x}
               {y}
@@ -139,7 +145,7 @@
               dx={6}
               dy={-2}
               class="text-xs"
-              style="fill:{fruitColors[fruit]}"
+              style="fill:{color}"
             />
           </Point>
         {/each}
@@ -174,7 +180,13 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
-          <Area {data} color={fruitColors[fruit]} line={{ width: 2 }} />
+          {@const color = fruitColors[fruit]}
+          <Area
+            {data}
+            fill={color}
+            fill-opacity={0.3}
+            line={{ class: 'stroke-2', stroke: color }}
+          />
         {/each}
         <Labels format="integer" />
         <HighlightLine />

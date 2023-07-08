@@ -83,12 +83,13 @@
 
   let showPoints = false;
   let tweened = true;
+  let draw = false;
 </script>
 
 <h1>Examples</h1>
 
 <div class="grid gap-2">
-  <div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2">
+  <div class="grid grid-cols-[1fr,1fr,1fr,auto] gap-2">
     <Field label="Path Example" let:id>
       <Button
         icon={mdiChevronLeft}
@@ -135,14 +136,20 @@
     <Field label="Show points" let:id>
       <Switch bind:checked={showPoints} {id} />
     </Field>
-    <Field label="Tweened" let:id>
-      <Switch bind:checked={tweened} {id} />
-    </Field>
   </div>
   <div class="grid grid-cols-[1fr,1fr,1fr] gap-2">
     <RangeField label="Frequency" bind:value={frequency} min={1} />
     <RangeField label="Amplitude" bind:value={amplitude} min={1} />
     <RangeField label="Phase" bind:value={phase} min={1} />
+  </div>
+
+  <div class="grid grid-cols-[auto,auto] gap-2">
+    <Field label="Draw" let:id>
+      <Switch bind:checked={draw} {id} />
+    </Field>
+    <Field label="Tweened" let:id>
+      <Switch bind:checked={tweened} {id} />
+    </Field>
   </div>
 </div>
 
@@ -154,7 +161,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-        <Path {curve} {tweened} />
+        <Path {curve} {tweened} {draw} />
         {#if showPoints}
           <Points {tweened} />
         {/if}
