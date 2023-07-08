@@ -30,6 +30,8 @@
       endDate
     };
   });
+
+  // TODO: Update to use better data example: https://observablehq.com/@d3/dot-plot
 </script>
 
 <h1>Examples</h1>
