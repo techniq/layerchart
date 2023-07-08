@@ -12,7 +12,11 @@
 {#if source}
   <Toggle let:on={open} let:toggle>
     <Button {icon} on:click={toggle} variant="fill-light" color="blue" size="sm">{label}</Button>
-    <Dialog {open} on:close={toggle}>
+    <Dialog
+      {open}
+      on:close={toggle}
+      class="max-h-[98vh] md:max-h-[90vh] max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto,1fr,auto]"
+    >
       <div class="grid grid-cols-[1fr,auto] gap-3 items-center p-4">
         <div class="overflow-auto">
           <div class="text-lg font-semibold">{label}</div>
@@ -26,7 +30,7 @@
         {/if}
       </div>
 
-      <div class="max-h-[80vh] overflow-auto">
+      <div class="overflow-auto">
         <Code {source} language={source.startsWith('<script') ? 'svelte' : 'js'} />
       </div>
 
