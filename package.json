@@ -41,6 +41,7 @@
     "@types/shapefile": "^0.6.1",
     "@types/topojson-client": "^3.1.1",
     "autoprefixer": "^10.4.14",
+    "execa": "^7.1.1",
     "marked": "^5.1.0",
     "mdsvex": "^0.11.0",
     "prettier": "^2.8.8",
@@ -82,7 +83,7 @@
     "lodash-es": "^4.17.21",
     "shapefile": "^0.6.6",
     "svelte": "^3.59.1",
-    "svelte-ux": "^0.43.5",
+    "svelte-ux": "^0.43.6",
     "topojson-client": "^3.1.0"
   },
   "main": "./dist/index.js",

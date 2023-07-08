@@ -1,38 +1,67 @@
-# layerchart
+## next
+
+### Commits
+
+- [ViewSourceButton] Improve code example dialogs on mobile ([3b3c77](https://github.com/techniq/svelte-ux/commit/3b3c77702b9f36e29166692afe68b5acee0e6ed7))
+- Add `npm run publish` to run `changeset publish` ([07c1fa](https://github.com/techniq/svelte-ux/commit/07c1fa6e7599e864c34fdf6bf8cda609f40adfe0))
 
 ## 0.19.0
 
-### Minor Changes
+### Commits
 
-- Consolidate <ClipPathUse> use case into <ClipPath> and simplify other ClipPath components with refined slots ([`badd391`](https://github.com/techniq/layerchart/commit/badd391cecbc4aeb526b297e57d77ab4f5debcbf))
-
-### Patch Changes
-
-- Add Point component as a convenient way to translate a data item to SVG x/y coordinates ([`fa48561`](https://github.com/techniq/layerchart/commit/fa4856125f55db126eba6ac21faee99c9f2a7506))
+- Add Point component as a convenient way to translate a data item to SVG x/y coordinates ([fa4856](https://github.com/techniq/svelte-ux/commit/fa4856125f55db126eba6ac21faee99c9f2a7506))
+- Consolidate <ClipPathUse> use case into <ClipPath> and simplify other ClipPath components with refined slots ([badd39](https://github.com/techniq/svelte-ux/commit/badd391cecbc4aeb526b297e57d77ab4f5debcbf))
+- Add examples and related links to all primative components ([f183f6](https://github.com/techniq/svelte-ux/commit/f183f62f3f9d14909475982ccb227c86d06cf0f0))
+- Move Rule to data-driven category ([eb00e0](https://github.com/techniq/svelte-ux/commit/eb00e09ad4f3b4fede1a7d0d2fbcd892bd7fe71a))
+- Move to jsdoc comment ([fe1da2](https://github.com/techniq/svelte-ux/commit/fe1da2605f8dc883fb7adb8a0803034c25e41cf1))
 
 ## 0.18.2
 
-### Patch Changes
+### Commits
 
-- Support styling Tooltip via `classes` prop ([`60e2361`](https://github.com/techniq/layerchart/commit/60e236114323c6394eecdbaa4b93b6de041c1d80))
+- Improve docs ([bae351](https://github.com/techniq/svelte-ux/commit/bae35117c6933546a6a6a7c3d4a14f4ab9bd5f1c))
+- [Tooltip] Support styling via classes ([60e236](https://github.com/techniq/svelte-ux/commit/60e236114323c6394eecdbaa4b93b6de041c1d80))
+- Add TableOfContents to changelog ([23ad04](https://github.com/techniq/svelte-ux/commit/23ad04689e2819f8d584d23b73fbd84bac1c81a8))
+- Add @types/marked ([8901b7](https://github.com/techniq/svelte-ux/commit/8901b7c1e965831227ee270b40120095384106ec))
+- Read CHANGELOG.md using vite ?raw import ([37c42d](https://github.com/techniq/svelte-ux/commit/37c42d89a460c2d9e2b696ba984b342a35d06c69))
+- Prerender, take 2 ([cd06e4](https://github.com/techniq/svelte-ux/commit/cd06e40defb0433a81038345851a382cf883dd70))
+- Prerender /changelog route ([e62455](https://github.com/techniq/svelte-ux/commit/e62455fdcf088c3ca1caebb682c82f25a9e2699e))
+- Expose CHANGELOG.md as route ([d714e8](https://github.com/techniq/svelte-ux/commit/d714e8d10d31e7c6299c90bee77ee5caf07e303e))
 
 ## 0.18.1
 
-### Patch Changes
+### Commits
 
-- Add bin/histogram support and examples ([`da358ab`](https://github.com/techniq/layerchart/commit/da358ab87edf7814050d3b531cd7e2e20e8c630c))
-
-- Update dependencies ([`c0e67b4`](https://github.com/techniq/layerchart/commit/c0e67b443a9c7858a46d1f7da49bf3a64dbbb0eb))
+- Update dependencies ([c0e67b](https://github.com/techniq/svelte-ux/commit/c0e67b443a9c7858a46d1f7da49bf3a64dbbb0eb))
+- Add additional bin/histogram examples ([da358a](https://github.com/techniq/svelte-ux/commit/da358ab87edf7814050d3b531cd7e2e20e8c630c))
+- Add basic histogram example ([f939dc](https://github.com/techniq/svelte-ux/commit/f939dc081f019a97ba9c2906092c5ecde1355008))
+- [Tooltip] Turn on scatter plot data snapping by default ([f7c6a2](https://github.com/techniq/svelte-ux/commit/f7c6a224966664dec1c1f1dc88bc8db241d39890))
+- [Frame] Add border and gradient background examples ([36c13d](https://github.com/techniq/svelte-ux/commit/36c13dce5030cca82bad62ac4692c2faa39526b0))
+- [Axis] Update ticks type to support passing an array of values ([33bdcc](https://github.com/techniq/svelte-ux/commit/33bdcc591941e9081457cbd8c1a71e7f6367ed3a))
+- Rename "npm run version-package" to just "npm run version" ([70097f](https://github.com/techniq/svelte-ux/commit/70097f5958def77c7d624a890ef6dd73d8238df7))
+- Fix changeset access (restricted => public) ([3c565d](https://github.com/techniq/svelte-ux/commit/3c565dd3c0f966db76aa43c6190b0c1f0013323f))
 
 ## 0.18.0
 
-### Minor Changes
+### Commits
 
-- Add `rule` prop to `Axis` component to simplify adding axis rule lines. Rename `gridlines` prop to `grid` ([`c98773b`](https://github.com/techniq/layerchart/commit/c98773b13776a3ca757ab445641704b1fc38db9d))
-
-- Rename `Baseline` to `Rule`, supporting value annotations. Invert x/y meaning. Also fixes usage with scaleTime() ([`9f3598d`](https://github.com/techniq/layerchart/commit/9f3598dc3000fa7207822d0b20d1a13f12eed489))
-
-- Add Frame component ([`8d2020d`](https://github.com/techniq/layerchart/commit/8d2020ddb3fa21fa7e460b03d1e38b014f1c8cc6))
+- Use class fill color ([b9b49e](https://github.com/techniq/svelte-ux/commit/b9b49ea68f83dee3ae9795cefad445c39fdc7458))
+- Add Frame component ([8d2020](https://github.com/techniq/svelte-ux/commit/8d2020ddb3fa21fa7e460b03d1e38b014f1c8cc6))
+- [Axis] Add `rule` prop to easily add axis rules.  Rename `gridlines` to `grid`.  Simplify examples ([c98773](https://github.com/techniq/svelte-ux/commit/c98773b13776a3ca757ab445641704b1fc38db9d))
+- Rename `Baseline` to `Rule`, supporting value annotations ([9f3598](https://github.com/techniq/svelte-ux/commit/9f3598dc3000fa7207822d0b20d1a13f12eed489))
+- Improve display of related components/etc ([4d60fd](https://github.com/techniq/svelte-ux/commit/4d60fd90a7247c0bc21a4046f7393c0efae70989))
+- Import api (sveld) docs from each load() and handle via docs +layout.svelte to simplify all examples ([ce3d3b](https://github.com/techniq/svelte-ux/commit/ce3d3bc1974155f9a4efce7f0303bdf01550608c))
+- Move Arc examples from component docs ([32836f](https://github.com/techniq/svelte-ux/commit/32836fc812513b777571dd6787f603086ca95086))
+- Move Pie from examples to components.  Add source and API docs ([72d922](https://github.com/techniq/svelte-ux/commit/72d922eb19f93bdbb0b5489292c4dad81bc5ea6a))
+- Setup changesets ([2bb10d](https://github.com/techniq/svelte-ux/commit/2bb10db81cc62aa47defab4eb99e2c07018e0c4e))
+- [Legend] Simplify classes ([82aad9](https://github.com/techniq/svelte-ux/commit/82aad9a713989a597d98dbdbe143095066d03e5d))
+- Add a transition to stroke-opacity changes ([3890f9](https://github.com/techniq/svelte-ux/commit/3890f9e8dc1c47b78b49a12d8a8b3b4b01c5f11a))
+- [Sankey example] Add keys for all link/node {#each} ([649503](https://github.com/techniq/svelte-ux/commit/6495035eace422254ce15cbf8bcca59c93f865f9))
+- Simplify highlightLinkIndexes ([678af8](https://github.com/techniq/svelte-ux/commit/678af8b90a4ae2dc5a7190ce8b73595e2495930e))
+- Add nodesFromLinks() util ([70f464](https://github.com/techniq/svelte-ux/commit/70f4642ed44a3e437b4ed49afa507f463975b8b0))
+- Simplify util exports ([55a78d](https://github.com/techniq/svelte-ux/commit/55a78d8086b4a5a1049e0407f6541319902b9f84))
+- Remove `index.js` from export paths ([473853](https://github.com/techniq/svelte-ux/commit/473853fde680e30775585c01d4a823819b14a04e))
+- Rename example ([dd0606](https://github.com/techniq/svelte-ux/commit/dd06063f8a2741f9f1241c03a45c4b0400b8b772))
 
 ## 0.17.2
 
@@ -42,7 +71,7 @@
 - Cleanup some types ([71f84c](https://github.com/techniq/svelte-ux/commit/71f84c90d81161619ce43b1ea1d7f6c4f9489a44))
 - [Arc] outerRadius can be defined as discrete value (>=1), percert of chart height (<1) or offset of chart height (<0) ([212a8c](https://github.com/techniq/svelte-ux/commit/212a8c4d581c5f80ed775cca39fcfb5de29eebdb))
 - [Bars] Add gridline on top examples ([a65d10](https://github.com/techniq/svelte-ux/commit/a65d10b02474ab32b118ad5c2a07b5f8523c746c))
-- [Tooltip] Support passing class. Do not allow top/left to exceed container when changing sides (ignore negative values) ([c9d584](https://github.com/techniq/svelte-ux/commit/c9d584db32904e55c310e22591501dad9767c187))
+- [Tooltip] Support passing class.  Do not allow top/left to exceed container when changing sides (ignore negative values) ([c9d584](https://github.com/techniq/svelte-ux/commit/c9d584db32904e55c310e22591501dad9767c187))
 - [Axis] Allow passing class to gridlines without overriding default classes ([b1c8e5](https://github.com/techniq/svelte-ux/commit/b1c8e5b321c2f5ad3b830aae084ae3ac84c42cab))
 - [Sankey] Add tooltip examples ([b03572](https://github.com/techniq/svelte-ux/commit/b035723fd397d0cf1c3a5be13bd87f6273089c60))
 - Tigthen up controls ([f198bd](https://github.com/techniq/svelte-ux/commit/f198bda822ef215125478e62c65a5b3172d76626))
@@ -67,7 +96,7 @@
 ### Commits
 
 - Update svelte-ux ([9ce958](https://github.com/techniq/svelte-ux/commit/9ce9585c4557753308fb6bca0f17195af8c10629))
-- Replace AxisX/Y with single Axis component. Support top/right along with existing left/bottom placements. Add tick lines (shown by default). Update props ([76f77c](https://github.com/techniq/svelte-ux/commit/76f77cb532d9d9f9b858426d6fccce239f07ecf8))
+- Replace AxisX/Y with single Axis component.  Support top/right along with existing left/bottom placements.  Add tick lines (shown by default).  Update props ([76f77c](https://github.com/techniq/svelte-ux/commit/76f77cb532d9d9f9b858426d6fccce239f07ecf8))
 - Organize example menu items ([1198a5](https://github.com/techniq/svelte-ux/commit/1198a512db4b65a229a1c5c42737a0898b854745))
 - Fix Axis page source (use AxisX until unified component) ([8c6349](https://github.com/techniq/svelte-ux/commit/8c63493ccde1fac1ebce18a1f9a9787741430ed1))
 - Support viewing component and doc page source easily, with link to github to edit ([e08373](https://github.com/techniq/svelte-ux/commit/e0837360b4beb8da262339eb550df50b79e8d3d7))
@@ -75,7 +104,7 @@
 - Rename `<Code code={} />` to `<Code source={} />` ([0517ab](https://github.com/techniq/svelte-ux/commit/0517ab943466e6bfb838207537476e1770d50dd0))
 - [Tooltip] Improve example headers ([086f79](https://github.com/techniq/svelte-ux/commit/086f79388456f4ab83f40f22dae6e899772cf6e8))
 - [TooltipControls] Use MenuField instead of ToggleGroup for better consistency and support smaller viewports ([43db5a](https://github.com/techniq/svelte-ux/commit/43db5ab914ba7051329fd2f9ba1360f77d5ea9bd))
-- [TooltipContext] Remove z-index for bisect-\* overlay to fix overlap with MenuField, etc, and highlight with `debug=true` ([409d1f](https://github.com/techniq/svelte-ux/commit/409d1f5a825e7eec1a4ee44556e8f6af2456bdd8))
+- [TooltipContext]  Remove z-index for bisect-* overlay to fix overlap with MenuField, etc, and highlight with `debug=true` ([409d1f](https://github.com/techniq/svelte-ux/commit/409d1f5a825e7eec1a4ee44556e8f6af2456bdd8))
 - Extract common TooltipControls component ([7adc1b](https://github.com/techniq/svelte-ux/commit/7adc1bfa0c8b85dcc4bd2dfa42f8c536aaff2f36))
 - [TooltipContext] Fix tooltip snapping not accounting for padding ([57fbdb](https://github.com/techniq/svelte-ux/commit/57fbdb916712cca00a932be938d9a0c627b4519b))
 - Update to use ComponentProps type from svelte and SVGAttributes from svelte/elements ([49efe8](https://github.com/techniq/svelte-ux/commit/49efe81f8b43abbe53f5d381a5cd9b2f629a0039))
@@ -84,7 +113,7 @@
 - General cleanup of Bars ([0399e1](https://github.com/techniq/svelte-ux/commit/0399e10b3be135682aa9733872e6ff6edf2b7d09))
 - Fix Baseline y ([8e8a73](https://github.com/techniq/svelte-ux/commit/8e8a73e2fbaa14a153f345a3e5fac55cd460e35b))
 - [Bars] Rename widthOffset/heightOffset to single padding property ([5ea940](https://github.com/techniq/svelte-ux/commit/5ea940884b77cfd3eadf22c226c9efc287f57440))
-- Add horizontal bar chart support. Issue #21 ([f781f6](https://github.com/techniq/svelte-ux/commit/f781f6f1cf615323d106c6ddf09a90a1718a21c1))
+- Add horizontal bar chart support.  Issue #21 ([f781f6](https://github.com/techniq/svelte-ux/commit/f781f6f1cf615323d106c6ddf09a90a1718a21c1))
 - Add GeoJSON preview (WIP) ([8360fe](https://github.com/techniq/svelte-ux/commit/8360fe0e66483132f483f62d4a56c8edb047fc1d))
 - Support showing features, related, and hiding table of contents ([7367ef](https://github.com/techniq/svelte-ux/commit/7367ef6e416feb59a4f8905bc6e0cb748d610513))
 - Point docs url to `+page.svelte` (instead of `+page.md`) ([4e40ef](https://github.com/techniq/svelte-ux/commit/4e40ef6faf5d9bc8dd9463f003431ae81d2cfc81))
@@ -94,16 +123,16 @@
 ### Commits
 
 - Format Bar label example and use global styles for nav menu secondary headers ([56c32a](https://github.com/techniq/svelte-ux/commit/56c32a67bbb32b3b6c5ee740261658df3111ef15))
-- Upgrade dependencies including svelte-ux (with createTheme() support). Scroll main to top on navigate ([378e18](https://github.com/techniq/svelte-ux/commit/378e184a369e6b1c96b889f5bb2f9995479eaacf))
+- Upgrade dependencies including svelte-ux (with createTheme() support).  Scroll main to top on navigate ([378e18](https://github.com/techniq/svelte-ux/commit/378e184a369e6b1c96b889f5bb2f9995479eaacf))
 - Improve selected animated globe country ([bc5f29](https://github.com/techniq/svelte-ux/commit/bc5f29be38466ac02113e94cd36828fc9241c14d))
-- Update dependencies. Add shapefile loading example ([de9c79](https://github.com/techniq/svelte-ux/commit/de9c79f8e7c6d773ee8c23ba2c8c9cf40d1cc5a2))
+- Update dependencies.  Add shapefile loading example ([de9c79](https://github.com/techniq/svelte-ux/commit/de9c79f8e7c6d773ee8c23ba2c8c9cf40d1cc5a2))
 - Cleanup examples ([f0f3bf](https://github.com/techniq/svelte-ux/commit/f0f3bf220b3a0e348136890a3c2a91eb5637fb35))
 - Add PunchCard example ([ca2427](https://github.com/techniq/svelte-ux/commit/ca24270369632dac983ff0b3b797a696fd2087d3))
 - Add missing docs pages ([64d207](https://github.com/techniq/svelte-ux/commit/64d207d3eafac1ef1f6355d34d7f758366cc85e5))
 - Improve primative docs ([9a6537](https://github.com/techniq/svelte-ux/commit/9a653737ad379721d4dc096b90828836c368e8e3))
 - Improve Text docs ([27cd69](https://github.com/techniq/svelte-ux/commit/27cd69ffc2232d208c044dac70084f451137dad7))
 - Change layout.js to layout.ts ([2b416e](https://github.com/techniq/svelte-ux/commit/2b416e881bd6e2f3d1b7f749fbe78cfdb242b417))
-- Cleanup imports on docs ([ed1528](https://github.com/techniq/svelte-ux/commit/ed1528504e29afa1d2eaec242fa1d84454fd0c9c))
+- Cleanup imports  on docs ([ed1528](https://github.com/techniq/svelte-ux/commit/ed1528504e29afa1d2eaec242fa1d84454fd0c9c))
 - Run prettier foramt ([a0a639](https://github.com/techniq/svelte-ux/commit/a0a639357fa07886bd847932cb8122698bbc32b2))
 - Add `lang="ts"` to remaining <script> blocks ([f76932](https://github.com/techniq/svelte-ux/commit/f769329d02544ac000fb3b749db3e58b0d82bf49))
 - Add .vercel to gitignore (npm run build) ([d481df](https://github.com/techniq/svelte-ux/commit/d481df7782cea2cf780082e15b3bdbb8e27bbbad))
@@ -151,7 +180,7 @@
 ### Commits
 
 - Update dependencies ([c7cf53](https://github.com/techniq/svelte-ux/commit/c7cf5313311426b0367d4558ea1ca79ed3d96565))
-- Upgrade svelte-ux (improves ApiDocs wrapping). and add Quick Search ([bf581c](https://github.com/techniq/svelte-ux/commit/bf581c7c23382dff98cd072cdfb79af5611d7dae))
+- Upgrade svelte-ux (improves ApiDocs wrapping).  and add Quick Search ([bf581c](https://github.com/techniq/svelte-ux/commit/bf581c7c23382dff98cd072cdfb79af5611d7dae))
 - Fix RangeField (and similar) button sizes ([d415b9](https://github.com/techniq/svelte-ux/commit/d415b9cee2af0bee1840e972c3d3ab4343fa4c8d))
 - Upgrade svelte-ux ([d2c61f](https://github.com/techniq/svelte-ux/commit/d2c61fe5db287bec2f3577d092c55d9a83f9ac0f))
 - Add usage examples to all components, and add overflow-auto to main docs container ([d0b401](https://github.com/techniq/svelte-ux/commit/d0b401d44309a4fd1df09c7b2e5fc08d12dd3e6b))
@@ -159,7 +188,7 @@
 - Remove load() explicit types ([404676](https://github.com/techniq/svelte-ux/commit/404676dd305cf1df180e72026b28b8c95d064f91))
 - Remove source links from examples (just doc links) ([04485b](https://github.com/techniq/svelte-ux/commit/04485b741c1bf2dc837e48aba2d663f0f2775108))
 - Fix component source/doc links ([3c55c4](https://github.com/techniq/svelte-ux/commit/3c55c40c33b36deba6269e3e1fb6d79bd486a628))
-- Replace `markdownToc()` svelte preprocessor with `TableOfContents` component and simplier $page.url.pathname regex and page load() for extra meta properties (description). Remove all mdx frontmatter. Fix heading hierarchy (always have h1 before h2) ([12c704](https://github.com/techniq/svelte-ux/commit/12c704d7e50bdf7cdfda0736ca8d5e6cdb3da4ea))
+- Replace `markdownToc()` svelte preprocessor with `TableOfContents` component and simplier $page.url.pathname regex and page load() for extra meta properties (description).  Remove all mdx frontmatter.  Fix heading hierarchy (always have h1 before h2) ([12c704](https://github.com/techniq/svelte-ux/commit/12c704d7e50bdf7cdfda0736ca8d5e6cdb3da4ea))
 - Improve layout by moving toc to right (sticky on scroll) ([78d3df](https://github.com/techniq/svelte-ux/commit/78d3df6a506fb2502cdb179b4db79d4e6bbfa9fd))
 
 ## 0.15.0
@@ -198,7 +227,7 @@
 - Merge pull request #36 from techniq/geo ([aa2deb](https://github.com/techniq/svelte-ux/commit/aa2debc220a911841db8329c06cf2546773ee79c))
 - Add Blur component ([7332ab](https://github.com/techniq/svelte-ux/commit/7332ab43c1abaf1d93e41f3422f410fddec3b5af))
 - Update draggable globe with lofted arcs ([461cdb](https://github.com/techniq/svelte-ux/commit/461cdb38cbc66a2d67709993918ff5e173cdabda))
-- [Zoom] Relace "projection" mode with "manual". Add DraggableGlobe example ([0606ab](https://github.com/techniq/svelte-ux/commit/0606ab9c0ee0aec355a70933af335c39c1e8b082))
+- [Zoom] Relace "projection" mode with "manual".  Add DraggableGlobe example ([0606ab](https://github.com/techniq/svelte-ux/commit/0606ab9c0ee0aec355a70933af335c39c1e8b082))
 - [Zoom] Maintain center when zooming with increase/decrease buttons, and zoom towards mouse when double clicking, including zooming out with shift. ([a7f380](https://github.com/techniq/svelte-ux/commit/a7f38064713c2f3fe12b0ee63a3e32b62048382e))
 - [ZoomableTileMap] Remove outline ([a4bdee](https://github.com/techniq/svelte-ux/commit/a4bdeed3b4b9a6a51d318ebe90e525e18ffeedf0))
 - [TileImage] Add tile coords as debug text ([e8ace9](https://github.com/techniq/svelte-ux/commit/e8ace91fa8a3f4515da3ec9366cfe13a8c52690a))
@@ -210,19 +239,19 @@
 - [GeoDebug] Add helpful component to inspect geo/projection ([a9c163](https://github.com/techniq/svelte-ux/commit/a9c1630de1470a05519c7d0525c609403ef157df))
 - [GeoContext] Only store projection in store ([27c141](https://github.com/techniq/svelte-ux/commit/27c141692421f5f38820a4dbd2276c38d62c4593))
 - Fix typo ([9af701](https://github.com/techniq/svelte-ux/commit/9af701cd58e91d422edbeaab3ab7ae248932832e))
-- [ZoomContols] Add placement and orientation props to simplify usage. Default to vertical top-right ([1babe5](https://github.com/techniq/svelte-ux/commit/1babe527ea4a934753485ebdc3e777b9706cfae9))
+- [ZoomContols] Add placement and orientation props to simplify usage.  Default to vertical top-right ([1babe5](https://github.com/techniq/svelte-ux/commit/1babe527ea4a934753485ebdc3e777b9706cfae9))
 - [ZoomableMap] Add tooltip and hover state to counties ([ed9180](https://github.com/techniq/svelte-ux/commit/ed9180cdcfbae9f3f0251090b62e42ab61954871))
-- [ZoomableMap] Show county details on selected state. Support resetting zoom if selected same state ([0fdc7d](https://github.com/techniq/svelte-ux/commit/0fdc7d7da04b5f25b87f4699c23764bfe0cbb7b0))
+- [ZoomableMap] Show county details on selected state.  Support resetting zoom if selected same state ([0fdc7d](https://github.com/techniq/svelte-ux/commit/0fdc7d7da04b5f25b87f4699c23764bfe0cbb7b0))
 - [Zoom] Improve `zoomTo()` by passing bounding rect ([52a753](https://github.com/techniq/svelte-ux/commit/52a75340d67e287de47fe466ffab2073f32d5000))
 - [RangeField] Add invisible min/max values overlayed on value to fix range input resizing as value changes (causing jank) ([f1d1e1](https://github.com/techniq/svelte-ux/commit/f1d1e104aba044b853f214f130fb557f158496ae))
 - Add RangeField to simplify usage and apply improvements consistently ([d86527](https://github.com/techniq/svelte-ux/commit/d8652786e6038cb4b751c69cee15fc1c2d761eed))
-- [AnimatedGlobe] Add SVG version. Support clicking on countries, list all countries, and highlight selected (selected from list or from globe) ([61f4ef](https://github.com/techniq/svelte-ux/commit/61f4efcf02e54c61b6afb4c48576b9f257c8bd52))
+- [AnimatedGlobe] Add SVG version.  Support clicking on countries, list all countries, and highlight selected (selected from list or from globe) ([61f4ef](https://github.com/techniq/svelte-ux/commit/61f4efcf02e54c61b6afb4c48576b9f257c8bd52))
 - Improve Choropleth examples ([47afc1](https://github.com/techniq/svelte-ux/commit/47afc150c4e8c716c07aba6f0c5ee1fd66253554))
 - Add 2016 county unemployement data ([3adeb6](https://github.com/techniq/svelte-ux/commit/3adeb6d66faf3435d0d81d1bdb2c08ad4bd37b66))
 - Update NavMenu order and adjust Albers USA display name ([38e3bb](https://github.com/techniq/svelte-ux/commit/38e3bb10db6711518e59a409b0921c6677fb8387))
 - [GeoContext] Verify projection has fitSize before calling (custom projections) ([2d025d](https://github.com/techniq/svelte-ux/commit/2d025dd319fdf9fa5c9a6f341d21db4804f2c5c7))
 - Add Legend to Bubble Map example ([29072e](https://github.com/techniq/svelte-ux/commit/29072e9f26ac49e2bcbb41c0eb2e4d55c9877522))
-- Add new Legand impl. with support for most color scales (not just ordinal). Add `placement` prop, and additional styling options ([ef0280](https://github.com/techniq/svelte-ux/commit/ef028077ff03a29c28714cde2c4993cf4e74da46))
+- Add new Legand impl. with support for most color scales (not just ordinal).  Add `placement` prop, and additional styling options ([ef0280](https://github.com/techniq/svelte-ux/commit/ef028077ff03a29c28714cde2c4993cf4e74da46))
 - [ColorRamp] Add chromatic scheme and d3-interpolate examples ([63a371](https://github.com/techniq/svelte-ux/commit/63a371c58d371a4f05a05c39de1d398c139ca87f))
 - Add ColorRamp ([c962a2](https://github.com/techniq/svelte-ux/commit/c962a2c4da4d7c6d7c47f040400201a9b1519d05))
 - Add Spike Map Canvas example ([34a69c](https://github.com/techniq/svelte-ux/commit/34a69c4456af61d4244b40c27bf8f45af2eca6bf))
@@ -247,8 +276,8 @@
 - Add GeoTile ([ebe0ad](https://github.com/techniq/svelte-ux/commit/ebe0adefc03cbda61780ce2c994848f1394dc0d8))
 - [GeoContext] Add support for center projection ([50c7fb](https://github.com/techniq/svelte-ux/commit/50c7fb0937d1a58bfea942d74f98b7c26b7da02f))
 - Cleanup some imports ([377bb6](https://github.com/techniq/svelte-ux/commit/377bb6ab636167669dfade4d9677968c04e87fa1))
-- [GeoPath] Support overriding slot (SVG) or render (Canvas) to access centroid of path for labels, etc. Add County Map example with state names at centroid of state path. ([672f3b](https://github.com/techniq/svelte-ux/commit/672f3bcdf7a9139c6f67217685d866950c78d5b6))
-- Move docs/examples/data to \_data ([0919e0](https://github.com/techniq/svelte-ux/commit/0919e06b6da17ccce7fc68c60fa7e31fc8520894))
+- [GeoPath] Support overriding slot (SVG) or render (Canvas) to access centroid of path for labels, etc.  Add County Map example with state names at centroid of state path. ([672f3b](https://github.com/techniq/svelte-ux/commit/672f3bcdf7a9139c6f67217685d866950c78d5b6))
+- Move docs/examples/data to _data ([0919e0](https://github.com/techniq/svelte-ux/commit/0919e06b6da17ccce7fc68c60fa7e31fc8520894))
 - [ZoomableMap] Scale stroke width based on zoom/scale ([b07a12](https://github.com/techniq/svelte-ux/commit/b07a12e4de148a7606f9a9d7f13855de21748395))
 - Fix ZoomableMap example ([633393](https://github.com/techniq/svelte-ux/commit/633393a11a34ebe545a8a39bf23bffcb2e5ae0c6))
 - WIP mixing pre-projected maps (using geoIdentity) with non-projected points ([7a2194](https://github.com/techniq/svelte-ux/commit/7a2194edaae0374779a250cb9ab72b87b12c9167))
@@ -260,17 +289,17 @@
 - [Chart] Expose the geo projection as a slot prop ([112f2d](https://github.com/techniq/svelte-ux/commit/112f2dc2725a20f656d76926b4f31e18f7ff7212))
 - [GeoPath] Add click event, currently passing geoPath function and original event ([65bb18](https://github.com/techniq/svelte-ux/commit/65bb1828a89903a78223c540fe63a5b727f8dd76))
 - Add ZoomControls for docs (remove redundancy) ([083ab8](https://github.com/techniq/svelte-ux/commit/083ab804044637ae7b4b51a8bb2740259bf24545))
-- [Zoom] Add `scroll` prop to control how mousewheel/scroll is handled. Add support for scroll="translate" and scroll="none" (new default). Add `zoomTo` as slot prop and forward more events ([6f5d76](https://github.com/techniq/svelte-ux/commit/6f5d76e98094397ab84cc0948016b7fcc4057a72))
-- Move Choropleth as separate example. Add Canvas example ([fcf471](https://github.com/techniq/svelte-ux/commit/fcf4715814fc7ec39674ccf47c4ec502292fb5ea))
+- [Zoom] Add `scroll` prop to control how mousewheel/scroll is handled.  Add support for scroll="translate" and scroll="none" (new default).  Add `zoomTo` as slot prop and forward more events ([6f5d76](https://github.com/techniq/svelte-ux/commit/6f5d76e98094397ab84cc0948016b7fcc4057a72))
+- Move Choropleth as separate example.  Add Canvas example ([fcf471](https://github.com/techniq/svelte-ux/commit/fcf4715814fc7ec39674ccf47c4ec502292fb5ea))
 - [GeoContext] Set optional props as undefined by default ([8e9de9](https://github.com/techniq/svelte-ux/commit/8e9de9c4769f1d7d146d66837c6009b084f7e5a9))
 - [GeoContext] Add scale support ([1edf70](https://github.com/techniq/svelte-ux/commit/1edf7063d163c858b53f8b2074b6e2a6a1db5c59))
-- [StateMap] Use state FIPS id for selection instead of name. Remove non-states ([9af7f7](https://github.com/techniq/svelte-ux/commit/9af7f794af6514cad359ddd23971926b39ae72cf))
+- [StateMap] Use state FIPS id for selection instead of name.  Remove non-states ([9af7f7](https://github.com/techniq/svelte-ux/commit/9af7f794af6514cad359ddd23971926b39ae72cf))
 - Rename GeoPathProjection to GeoProjection and simplify menu name ([f7650a](https://github.com/techniq/svelte-ux/commit/f7650a8583b20065efb4d418181068d2328b4dfe))
 - Support toggling between detail (1:50) and simple (1:110) scales ([d21be1](https://github.com/techniq/svelte-ux/commit/d21be113aae0ed5874576b127185d14f96951a4a))
 - [AnimatedGlobe] Use 1:110 scale to reduce draw time and improve animation performance ([37bdc3](https://github.com/techniq/svelte-ux/commit/37bdc356674618d62879f4c118cd2cca5d336740))
 - Lighten up Graticule lines 10% ([ec892c](https://github.com/techniq/svelte-ux/commit/ec892c040c3e4ca6b70010c863e08c1a04d0ad2e))
 - [AnimatedGlobe] Move graticule under countries/land ([f67e0e](https://github.com/techniq/svelte-ux/commit/f67e0e169e86205497acf142932dc2b46f55198f))
-- [StateMap] Remove useless projections, filter counties by FIPS instead of flip path. Add more examples ([d0572e](https://github.com/techniq/svelte-ux/commit/d0572e8cbe949e486937accb9e78c46a86931df2))
+- [StateMap] Remove useless projections, filter counties by FIPS instead of flip path.  Add more examples ([d0572e](https://github.com/techniq/svelte-ux/commit/d0572e8cbe949e486937accb9e78c46a86931df2))
 - Add State map example ([78603e](https://github.com/techniq/svelte-ux/commit/78603ecd89bd5f3cb4932a240add44ffca8aafaa))
 - Add ClipPathUse component to conveniently reference another path by id to use as clip-path ([5d9475](https://github.com/techniq/svelte-ux/commit/5d9475e1c38eba68a82debbf9621b311f6aea99c))
 - [GeoContext] Add clipAngle and clipExtent ([6f4d46](https://github.com/techniq/svelte-ux/commit/6f4d461709a2d6f8122dfbc3f8c8bee3ae5b1ad9))
@@ -287,7 +316,7 @@
 - [GeoPath] Fix browser projections, support rotation, add examples ([495426](https://github.com/techniq/svelte-ux/commit/4954268bcf193e8368e0003ca35ff3318776d463))
 - Move GeoPath example to markdown with Preview component ([392f5e](https://github.com/techniq/svelte-ux/commit/392f5e176c0ef0a50b39138064a9801b5f5368a2))
 - [GeoPath] Add Choropleth example ([b20901](https://github.com/techniq/svelte-ux/commit/b2090105ca50a7014d8e2aa0fde235c34278b2f1))
-- [TooltipContext] Add `raiseTarget` to re-insert event.target as last child. Helpful for maps ([6bcb74](https://github.com/techniq/svelte-ux/commit/6bcb74778cd87088d44d63b4d15b404535182583))
+- [TooltipContext] Add `raiseTarget` to re-insert event.target as last child.  Helpful for maps ([6bcb74](https://github.com/techniq/svelte-ux/commit/6bcb74778cd87088d44d63b4d15b404535182583))
 - [GeoPath] Support Canvas render context ([be3173](https://github.com/techniq/svelte-ux/commit/be317300c6137a287c7b3f4a590961593241a9d4))
 - [Chart] Add re-exports for Canvas and WebGL (like Html and Svg) ([8c8f7c](https://github.com/techniq/svelte-ux/commit/8c8f7c49a8e975bf8b22f06eadb6247c349d15a1))
 - Add GeoContext and GeoPath (WIP) ([febdf6](https://github.com/techniq/svelte-ux/commit/febdf66aa7e3b98b782aa5d81f5da5e34a9442fb))
@@ -313,7 +342,7 @@
 
 - [TooltipContext] Fix tooltip positioning by remove padding left/top offsets from localPoint since Tooltip no longer in LayerCake Html layer ([d7da65](https://github.com/techniq/svelte-ux/commit/d7da6588d8826d967094de7f60387f56ef022b69))
 - Update ClevelandDotPlot tooltip example to use `bounds` mode ([41bf55](https://github.com/techniq/svelte-ux/commit/41bf55d1e0da1a99f1063a7eebd2a278a3e0b511))
-- [TooltipItem] Add `format` for easy formatting. Also replace most usage of formatNumberAsStyle() with format() (or remove if not needed) to simplify examples. ([598e9c](https://github.com/techniq/svelte-ux/commit/598e9c8a6dabd8662f274ed3ab33436940ba8c3f))
+- [TooltipItem] Add `format` for easy formatting.  Also replace most usage of formatNumberAsStyle() with format() (or remove if not needed) to simplify examples. ([598e9c](https://github.com/techniq/svelte-ux/commit/598e9c8a6dabd8662f274ed3ab33436940ba8c3f))
 - Update `tsconfig.json` to match current new SvelteKit project, and fix typing of `./$types` ([38a4f7](https://github.com/techniq/svelte-ux/commit/38a4f7e919201e30a6683a1746ffe072d29a3eb5))
 
 ## 0.13.1
@@ -321,14 +350,14 @@
 ### Commits
 
 - [Baseline] Support passing `class` prop ([1ac147](https://github.com/techniq/svelte-ux/commit/1ac147e3baaf9102620cca4688e7174649ad48df))
-- [TooltipItem] Use svelte-ux's `cls()` instead of `clsx()` directly. Support passing `class` ([953e9d](https://github.com/techniq/svelte-ux/commit/953e9da598db0970def05facfb3223e7e3bb26d7))
+- [TooltipItem] Use svelte-ux's `cls()` instead of `clsx()` directly.  Support passing `class` ([953e9d](https://github.com/techniq/svelte-ux/commit/953e9da598db0970def05facfb3223e7e3bb26d7))
 
 ## 0.13.0
 
 ### Commits
 
 - Update dependencies ([159097](https://github.com/techniq/svelte-ux/commit/1590979183e1ba5b6f7606b1b91d9e551b31ae64))
-- [Chart] Pass tooltip instance instead of showTooltip/hideTooltip. Rename tooltip showTooltip/hideTooltip to just show/hide. Update Pie to require instanced passed before registering mouse events (to control which shapes trigger tooltip if more than one) ([c66394](https://github.com/techniq/svelte-ux/commit/c66394c8ed075f5587a7ee7458f11be1e82bef3f))
+- [Chart] Pass tooltip instance instead of showTooltip/hideTooltip.  Rename tooltip showTooltip/hideTooltip to just show/hide.  Update Pie to require instanced passed before registering mouse events (to control which shapes trigger tooltip if more than one) ([c66394](https://github.com/techniq/svelte-ux/commit/c66394c8ed075f5587a7ee7458f11be1e82bef3f))
 - Merge pull request #32 from techniq/tooltip-rework ([904bc7](https://github.com/techniq/svelte-ux/commit/904bc71d6ffee1a1b0d8442503f683fb28672fb9))
 - Recommend `voronoi` / `quadtree` for stacked area charts (better highlight line / point detection) ([e0d087](https://github.com/techniq/svelte-ux/commit/e0d087783ff12d54b18c71b377fba207e31409a7))
 - [Tooltip] Update examples to use named instead of positional settings ([e78ee0](https://github.com/techniq/svelte-ux/commit/e78ee0535e7416d287d93166f39e0187e04657f0))
@@ -338,22 +367,22 @@
 - [HighlightLine] Fix multi-series coloring using rScale ([a9bc26](https://github.com/techniq/svelte-ux/commit/a9bc26724af24e5cc41ec9c261fb6d6dac437676))
 - Add TooltipContext docs ([23e7c6](https://github.com/techniq/svelte-ux/commit/23e7c6d206591332b455d683163e3093cadcde1c))
 - Move TooltipContext component (context handling) into Chart ([3ce668](https://github.com/techniq/svelte-ux/commit/3ce6685acf24612322672bcd2cbdbe0c8723bc6b))
-- Update Highlightline to use rScale for color. Update AreaStack to use rScale instead of zScale for color ([0c86a9](https://github.com/techniq/svelte-ux/commit/0c86a951b6b19d5f1d848db8dd67822f9bbd8bb8))
+- Update Highlightline to use rScale for color.  Update AreaStack to use rScale instead of zScale for color ([0c86a9](https://github.com/techniq/svelte-ux/commit/0c86a951b6b19d5f1d848db8dd67822f9bbd8bb8))
 - [Pie] Add percent to tooltip example ([8334c7](https://github.com/techniq/svelte-ux/commit/8334c7eba5d2de6d2f6b5ad912a765499651122f))
 - Rename TooltipContainer to Tooltip ([7c9928](https://github.com/techniq/svelte-ux/commit/7c992871cac0e5fe7de083c92922b722eeb29100))
 - Rename Tooltip to TooltipContext ([c89487](https://github.com/techniq/svelte-ux/commit/c894878c47120c0b2d2afd597e885759e61fb748))
 - Merge branch 'tooltip-rework' of https://github.com/techniq/layerchart into tooltip-rework ([ed893e](https://github.com/techniq/svelte-ux/commit/ed893e5d83283d2ef641dbc26ef02f939b630199))
 - Move tooltip data slot prop access from Tooltip (context) to TooltipContainer (rendering) in preparation for further refactoring ([8086b3](https://github.com/techniq/svelte-ux/commit/8086b30d50d7f4ca50dd1a3f037d4997d8925e5e))
 - Move tooltip data slot prop access from Tooltip (context) to TooltipContainer (rendering) in preparation for further refactoring ([a23b41](https://github.com/techniq/svelte-ux/commit/a23b417b7d1af901bc6119090673b0ddce136845))
-- [Tooltip] Add manual mode (name WIP) which requires calling showTooltip/hideTooltip. Add Pie tooltip example ([26b2a3](https://github.com/techniq/svelte-ux/commit/26b2a33c5f9a5d686d9e1bf082400e8128f61157))
+- [Tooltip] Add manual mode (name WIP) which requires calling showTooltip/hideTooltip.  Add Pie tooltip example ([26b2a3](https://github.com/techniq/svelte-ux/commit/26b2a33c5f9a5d686d9e1bf082400e8128f61157))
 - [Pie] Add centroid labels ([c88c48](https://github.com/techniq/svelte-ux/commit/c88c4886df24aa034763a784d596ffa961c306a3))
 - [TooltipContainer] Remove unneccessary Html wrapper (also fixes pointerEvents reaching Svg layers below) ([49fadf](https://github.com/techniq/svelte-ux/commit/49fadfaff1f650f5287d0921a5b026c822a50254))
 - [TooltipContainer] Use style directive and emove max-width ([5a9c5c](https://github.com/techniq/svelte-ux/commit/5a9c5c369a04de1d0df9fd5c74c2f5c1ed764ba6))
 - [Tooltip] Use switch statement to improve readability ([5f88b8](https://github.com/techniq/svelte-ux/commit/5f88b8e77fc5de363a3f128bd9c77826b2a9457b))
 - Add showTooltip() and hideTooltip() to TooltipContext ([8b7abd](https://github.com/techniq/svelte-ux/commit/8b7abda1f58bde13cbe4827aec013e26ece69dc6))
-- [Tooltip] Move context component around all layers. Update examples ([d755ea](https://github.com/techniq/svelte-ux/commit/d755ea800b7fb57baa47455c7b9800de65d2066f))
+- [Tooltip] Move context component around all layers.  Update examples ([d755ea](https://github.com/techniq/svelte-ux/commit/d755ea800b7fb57baa47455c7b9800de65d2066f))
 - Use includes instead of indexOf ([cea801](https://github.com/techniq/svelte-ux/commit/cea8018f7475310117ce60280a2f5e95a605b37f))
-- [Tooltip] Use context to pass data. TooltipContainer now handles positioning within chart container. Other improvements ([60d38b](https://github.com/techniq/svelte-ux/commit/60d38be0cc4d954c421e13782d0f2ed9cd0fab80))
+- [Tooltip] Use context to pass data.  TooltipContainer now handles positioning within chart container.  Other improvements ([60d38b](https://github.com/techniq/svelte-ux/commit/60d38be0cc4d954c421e13782d0f2ed9cd0fab80))
 - Update svelte-ux with fixed sourceUrl after SvelteKit upgrade ([287617](https://github.com/techniq/svelte-ux/commit/28761762f9722d1df9d10f90cafa187fd09d7825))
 
 ## 0.12.1
@@ -425,13 +454,13 @@
 ### Commits
 
 - [Chart] Do not require x, y, or yScale props ([7d8626](https://github.com/techniq/svelte-ux/commit/7d8626c2ca63becef8fce01896c0c1f20d4e7734))
-- [Axis] Support passing labelProps. Move all styling to class prop (instead of style prop and component classes) to allow easy overwriting. Increase default label font-weight from 200 to 300. ([0dc042](https://github.com/techniq/svelte-ux/commit/0dc04266136f22090f618b2eced36a92b7de7191))
+- [Axis] Support passing labelProps.  Move all styling to class prop (instead of style prop and component classes) to allow easy overwriting.  Increase default label font-weight from 200 to 300. ([0dc042](https://github.com/techniq/svelte-ux/commit/0dc04266136f22090f618b2eced36a92b7de7191))
 
 ## 0.8.0
 
 ### Commits
 
-- Add simple Legend. Issue #22 ([a60864](https://github.com/techniq/svelte-ux/commit/a60864f5ba6b777ac5df36867cb4be24f687f845))
+- Add simple Legend.  Issue #22 ([a60864](https://github.com/techniq/svelte-ux/commit/a60864f5ba6b777ac5df36867cb4be24f687f845))
 - [Partition] Add full size leaf nodes to examples ([215b2c](https://github.com/techniq/svelte-ux/commit/215b2c77f2b4cd2168c50a728f2eaf6b1c8bacd0))
 - [Chart] Expose slot props from LayerCake ([2352dd](https://github.com/techniq/svelte-ux/commit/2352ddacce302d73fe9627eff944998f13833783))
 
@@ -443,7 +472,7 @@
 - [Labels] Iterate flatData instead of data ([f3a357](https://github.com/techniq/svelte-ux/commit/f3a3573f506b07bd41287f6f881bc805aa0217f5))
 - [Area] Pass data prop to Path (in case overridden from context) ([464809](https://github.com/techniq/svelte-ux/commit/46480920df0b741fcaa90b4148881490c4fbe0d0))
 - [Path] Remove unused context accessor ([8f8de3](https://github.com/techniq/svelte-ux/commit/8f8de351c028cf605f71568ee566fd85378bb12c))
-- Update svelte-ux with improved frontmatter replacement. Add frontmatter to examples and utils docs. ([1adefc](https://github.com/techniq/svelte-ux/commit/1adefcb26f3fe003fc7029fa4891fdf0a3d5e009))
+- Update svelte-ux with improved frontmatter replacement.  Add frontmatter to examples and utils docs. ([1adefc](https://github.com/techniq/svelte-ux/commit/1adefcb26f3fe003fc7029fa4891fdf0a3d5e009))
 
 ## 0.7.5
 
@@ -455,9 +484,9 @@
 
 ### Commits
 
-- [scaleBandInvert] Properly capture paddingOuter pixel value instead of using `scale(domain[0])` or `scale(min(domain))`, which fixes <Tooltip mode="bisect-band"> in some cases. Issue #29 ([81fade](https://github.com/techniq/svelte-ux/commit/81fadec5068d5aad4036266db06470906004034e))
-- [Bars] Add group/stack/group and stack transition example. Issue #21 ([ca8c83](https://github.com/techniq/svelte-ux/commit/ca8c838cfe30eed496eaebcce4088677d190285a))
-- [Rect] Support passing per-property motion options. Issue #21 ([4a0c5c](https://github.com/techniq/svelte-ux/commit/4a0c5c5c0c042333d0bdd28403980f967a1d78d4))
+- [scaleBandInvert] Properly capture paddingOuter pixel value instead of using `scale(domain[0])` or `scale(min(domain))`, which fixes <Tooltip mode="bisect-band"> in some cases.  Issue #29 ([81fade](https://github.com/techniq/svelte-ux/commit/81fadec5068d5aad4036266db06470906004034e))
+- [Bars] Add group/stack/group and stack transition example.  Issue #21 ([ca8c83](https://github.com/techniq/svelte-ux/commit/ca8c838cfe30eed496eaebcce4088677d190285a))
+- [Rect] Support passing per-property motion options.  Issue #21 ([4a0c5c](https://github.com/techniq/svelte-ux/commit/4a0c5c5c0c042333d0bdd28403980f967a1d78d4))
 
 ## 0.7.3
 
@@ -465,11 +494,11 @@
 
 - [Tooltip] Add "Snap to data" options to examples ([09a92a](https://github.com/techniq/svelte-ux/commit/09a92a7b985259db2e350b26b4fd606294e69fa8))
 - [Tooltip] Fix tooltip position for non-bisect modes (band, voronoi, etc) as event.target != inner chart container ([df81fa](https://github.com/techniq/svelte-ux/commit/df81fa1ea659a5e242dc7b199f5f6196717d1622))
-- [Baseline] Fix non-bandwidth scale y-axis alignment (use `0` not max/bottom). Issue #29 ([e33168](https://github.com/techniq/svelte-ux/commit/e33168600484b979bd3c40d656891bbc7fe9e804))
+- [Baseline] Fix non-bandwidth scale y-axis alignment (use `0` not max/bottom).  Issue #29 ([e33168](https://github.com/techniq/svelte-ux/commit/e33168600484b979bd3c40d656891bbc7fe9e804))
 - [Zoom] Add gap below controls on example ([409f1f](https://github.com/techniq/svelte-ux/commit/409f1ff72586dba495067c5c9497ef0450e96078))
 - [Tooltip] Improve example descriptions ([858e83](https://github.com/techniq/svelte-ux/commit/858e83e71e1cacfa1c999d48ae8a4a529e5f088b))
 - Upgrade svelte-ux with improve code preview. ([a65d55](https://github.com/techniq/svelte-ux/commit/a65d556a6ce7d27c137e7540afc169c3e1bdfc75))
-- Move component docs to "docs" subfolder so svelte-ux's markdownToc() preprocessor is used. Update all docs to have component name and link to source / page. Other minor tweaks ([9a901c](https://github.com/techniq/svelte-ux/commit/9a901c17a2d9bf50a75728d78b11170ad227907f))
+- Move component docs to "docs" subfolder so svelte-ux's markdownToc() preprocessor is used.  Update all docs to have component name and link to source / page.  Other minor tweaks ([9a901c](https://github.com/techniq/svelte-ux/commit/9a901c17a2d9bf50a75728d78b11170ad227907f))
 
 ## 0.7.2
 
@@ -490,15 +519,15 @@
 
 ### Commits
 
-- Rename bisect to bisect-x and support bisect-y (although needs sorted). Add bisect-band for better overlapping duration support. Issue #28 ([9e6b88](https://github.com/techniq/svelte-ux/commit/9e6b88768718b967dd277057416414abbeae310e))
+- Rename bisect to bisect-x and support bisect-y (although needs sorted).  Add bisect-band for better overlapping duration support.  Issue #28 ([9e6b88](https://github.com/techniq/svelte-ux/commit/9e6b88768718b967dd277057416414abbeae310e))
 - [Tooltip] Sort bounds and bands rects by `x` to render later rects on top ([af8551](https://github.com/techniq/svelte-ux/commit/af85519132faf2b4613ff2e21a86ca88d3841a47))
-- Do not reverse yDomain for scaleBand after Chart update to no longer set yReverse={true} for yScale={scaleBand}. ssue 29. ([4950ca](https://github.com/techniq/svelte-ux/commit/4950ca965e077d16ffcf2c15a24efdc48e057a15))
+- Do not reverse yDomain for scaleBand after Chart update to no longer set yReverse={true} for yScale={scaleBand}.   ssue 29. ([4950ca](https://github.com/techniq/svelte-ux/commit/4950ca965e077d16ffcf2c15a24efdc48e057a15))
 - [Tooltip] Add low opacity red fill to debug shapes to better see overlap ([5b45f0](https://github.com/techniq/svelte-ux/commit/5b45f05ed13ca0fcdc388d321bbc90d33d69ad66))
-- [Chart] Do not set yReverse={true} if using scaleBand. Displays yDomain values top-down instead of bottom-up. Issue 29. Issue mhkeller/layercake#83 ([cfa11b](https://github.com/techniq/svelte-ux/commit/cfa11b0f62a91729ce45c3256223022c8e68e2ab))
-- Use min/max instaed of [0]/[1] when accessing range values. Closes #29 ([c1a2c5](https://github.com/techniq/svelte-ux/commit/c1a2c560b6bd05c7c922019f01ff0d8605d99bb7))
-- [AxisX] Always use smallest value (not always guaranteed to be the first value). Issue #29 ([16042b](https://github.com/techniq/svelte-ux/commit/16042b05e071c135a3db7be5a8d4574b771a5593))
-- [HighlightRect] Always use smallest value (not always guaranteed to be the first value). Issue #29 ([046314](https://github.com/techniq/svelte-ux/commit/04631411c08cf85042b2f03dc984262b2dd6210c))
-- Update scaleBandInvert() to always use smallest value (not always guaranteed to be the first value). Issue #29 ([bf9843](https://github.com/techniq/svelte-ux/commit/bf984326f3e4ee713097a413b5d2f7427ffd1174))
+- [Chart] Do not set yReverse={true} if using scaleBand.  Displays yDomain values top-down instead of bottom-up.  Issue 29.  Issue mhkeller/layercake#83 ([cfa11b](https://github.com/techniq/svelte-ux/commit/cfa11b0f62a91729ce45c3256223022c8e68e2ab))
+- Use min/max instaed of [0]/[1] when accessing range values.  Closes #29 ([c1a2c5](https://github.com/techniq/svelte-ux/commit/c1a2c560b6bd05c7c922019f01ff0d8605d99bb7))
+- [AxisX] Always use smallest value (not always guaranteed to be the first value).  Issue #29 ([16042b](https://github.com/techniq/svelte-ux/commit/16042b05e071c135a3db7be5a8d4574b771a5593))
+- [HighlightRect] Always use smallest value (not always guaranteed to be the first value).  Issue #29 ([046314](https://github.com/techniq/svelte-ux/commit/04631411c08cf85042b2f03dc984262b2dd6210c))
+- Update scaleBandInvert() to always use smallest value (not always guaranteed to be the first value).  Issue #29 ([bf9843](https://github.com/techniq/svelte-ux/commit/bf984326f3e4ee713097a413b5d2f7427ffd1174))
 
 ## 0.6.9
 
@@ -519,9 +548,9 @@
 
 ### Commits
 
-- [HighlightLines] Support "both" axis (useful for crosshairs on scatter plots). Issue #28 ([4a1073](https://github.com/techniq/svelte-ux/commit/4a10737d9fc3b18a48384313aa37cd0d5148d049))
-- [HighlightRect] Support "both" axis (useful for durations). Issue #28 ([01dc7e](https://github.com/techniq/svelte-ux/commit/01dc7e9489e1b0e04f79d18d3f4866b96990c36e))
-- [HighlightRect] Support "y" axis highlighting (useful when yScale={scaleBand()}. Default to axis with scaleBand, but can be overridden. Issue #28 ([8cc897](https://github.com/techniq/svelte-ux/commit/8cc897a0a45bbe767aad6c85d744135644d993bf))
+- [HighlightLines] Support "both" axis (useful for crosshairs on scatter plots).  Issue #28 ([4a1073](https://github.com/techniq/svelte-ux/commit/4a10737d9fc3b18a48384313aa37cd0d5148d049))
+- [HighlightRect] Support "both" axis (useful for durations).  Issue #28 ([01dc7e](https://github.com/techniq/svelte-ux/commit/01dc7e9489e1b0e04f79d18d3f4866b96990c36e))
+- [HighlightRect] Support "y" axis highlighting (useful when yScale={scaleBand()}.  Default to axis with scaleBand, but can be overridden.  Issue #28 ([8cc897](https://github.com/techniq/svelte-ux/commit/8cc897a0a45bbe767aad6c85d744135644d993bf))
 - [Tooltip] Document recommend / supported modes based on scales ([39218b](https://github.com/techniq/svelte-ux/commit/39218bdbd07329f7bf4d5d88ee5b06c46cf8cb73))
 - [Tooltip] Improve support for using voronoi/quadtree with Area Stack ([f8d6a0](https://github.com/techniq/svelte-ux/commit/f8d6a0f38935871dc98e9b637c88866c96425a0a))
 - [HighlightRect] Handle last point on continuous xScale (time, linear) ([4bfcc1](https://github.com/techniq/svelte-ux/commit/4bfcc19615e6c61d237c028f6f2fc5571d42de6b))
@@ -531,15 +560,15 @@
 ### Commits
 
 - Add scaleInvert() scale util ([8bfa2e](https://github.com/techniq/svelte-ux/commit/8bfa2e7f5f57ed4bd1ee45f523edb96131455ea1))
-- [Tooltip] Add TODO to set default mode from scales (if possible). ([adaade](https://github.com/techniq/svelte-ux/commit/adaade52488a2fd7f407d72bd043bd2acfc6a213))
+- [Tooltip] Add TODO  to set default mode from scales (if possible). ([adaade](https://github.com/techniq/svelte-ux/commit/adaade52488a2fd7f407d72bd043bd2acfc6a213))
 - [Tooltip] Allow changing highlight type (line, rect) in examples ([66d1d2](https://github.com/techniq/svelte-ux/commit/66d1d2da7e03c2282e065438a836f32471f6a2a2))
-- Improve multiple (overlapping) bar chart examples. Simplifies and improves Tooltip mode="bounds" ([8bf42c](https://github.com/techniq/svelte-ux/commit/8bf42c29a026684c8a7bc2fa03b2eb3d58cf6703))
-- [Tooltip] Rename "rect" mode to "bounds". Add "band" mode. Update voronoi to partially handle array getters. ([8a72a7](https://github.com/techniq/svelte-ux/commit/8a72a764afab82552a4629833f34bc8b971a3d9c))
+- Improve multiple (overlapping) bar chart examples.  Simplifies and improves Tooltip mode="bounds" ([8bf42c](https://github.com/techniq/svelte-ux/commit/8bf42c29a026684c8a7bc2fa03b2eb3d58cf6703))
+- [Tooltip] Rename "rect" mode to "bounds".  Add "band" mode.  Update voronoi to partially handle array getters. ([8a72a7](https://github.com/techniq/svelte-ux/commit/8a72a764afab82552a4629833f34bc8b971a3d9c))
 - [Points] Allow setting color via rScale or color function/constant (or slot) ([535acd](https://github.com/techniq/svelte-ux/commit/535acdd36caea44cfeb86fee22d7ae311febb5c8))
-- [Tooltip] Add rect mode (WIP). Update examples to change modes/toggle debug. Issue #28 ([45bd1b](https://github.com/techniq/svelte-ux/commit/45bd1b9910dc5276ac2f2b95f5cabd82f49b2e6c))
+- [Tooltip] Add rect mode (WIP).  Update examples to change modes/toggle debug.  Issue #28 ([45bd1b](https://github.com/techniq/svelte-ux/commit/45bd1b9910dc5276ac2f2b95f5cabd82f49b2e6c))
 - [genData] Add createTimeSeries() ([3dfe8b](https://github.com/techniq/svelte-ux/commit/3dfe8b1061f3f53aaab79b31ee84fb634e8756da))
-- [Tooltip] Add quadtree mode. Add debug prop to visualize voronoi and quadtree. Issue #28 ([cbb77c](https://github.com/techniq/svelte-ux/commit/cbb77c1ba3abb603a180afb708fcb65ab819bc60))
-- [Tooltip] Add voronoi mode. Issue #28 ([7e7be9](https://github.com/techniq/svelte-ux/commit/7e7be9712b27f24a4ba11fcc7192dded7ecb5ac6))
+- [Tooltip] Add quadtree mode.  Add debug prop to visualize voronoi and quadtree.  Issue #28 ([cbb77c](https://github.com/techniq/svelte-ux/commit/cbb77c1ba3abb603a180afb708fcb65ab819bc60))
+- [Tooltip] Add voronoi mode.  Issue #28 ([7e7be9](https://github.com/techniq/svelte-ux/commit/7e7be9712b27f24a4ba11fcc7192dded7ecb5ac6))
 - Add link to repository in AppBar ([25fc7b](https://github.com/techniq/svelte-ux/commit/25fc7b2eaa60c7ee085ac26bcb9d63986b002256))
 - [Tooltip] Add single time chart example ([c3a97f](https://github.com/techniq/svelte-ux/commit/c3a97ff661324d3cb7860bc79445740521a7e11a))
 
@@ -549,8 +578,8 @@
 
 - [AxisY] Fix location when using yScale={scaleBand()) ([ddb7ba](https://github.com/techniq/svelte-ux/commit/ddb7ba878e020bc01f731ef04a067af1ef9f2bdd))
 - [Tooltip] Add examples (consolidated from each chart example) ([1adebc](https://github.com/techniq/svelte-ux/commit/1adebc948cb9a778236b8c6441897532adf33f1e))
-- [Tooltip] Handle `x` accessor with multiple properties (ex. `x={['start', 'end']})`). Issue #28 ([bc453c](https://github.com/techniq/svelte-ux/commit/bc453c2b4291b23b8fb5039e8b3c0b3a61240aa3))
-- Add back explicit springScale (to match tweenedScale). Still have motionStore which will use the applicable store based on MotionOptions ([c9b4f2](https://github.com/techniq/svelte-ux/commit/c9b4f2f220b8710d2351d6c50569ac1125b11314))
+- [Tooltip] Handle `x` accessor with multiple properties (ex. `x={['start', 'end']})`).  Issue #28 ([bc453c](https://github.com/techniq/svelte-ux/commit/bc453c2b4291b23b8fb5039e8b3c0b3a61240aa3))
+- Add back explicit springScale (to match tweenedScale).  Still have motionStore which will use the applicable store based on MotionOptions ([c9b4f2](https://github.com/techniq/svelte-ux/commit/c9b4f2f220b8710d2351d6c50569ac1125b11314))
 
 ## 0.6.4
 
@@ -566,7 +595,7 @@
 
 ### Commits
 
-- [Zoom] Add wrapping <g> for mouse events so drag is propagated from <slot> objects (Tree nodes, etc). Issue #16 ([a5559c](https://github.com/techniq/svelte-ux/commit/a5559ccdc6a80cf8ec4c5372b2565b9c0481f9b0))
+- [Zoom] Add wrapping <g> for mouse events so drag is propagated from <slot> objects (Tree nodes, etc).  Issue #16 ([a5559c](https://github.com/techniq/svelte-ux/commit/a5559ccdc6a80cf8ec4c5372b2565b9c0481f9b0))
 - [Tree] Update zoom reset icon and adjust order to match other examples ([f602ac](https://github.com/techniq/svelte-ux/commit/f602ac6f76093499e69a6f6e86d27dcb8047b3a6))
 - Forward click event from clip paths and Zoom ([9936cd](https://github.com/techniq/svelte-ux/commit/9936cd1e0c89473678c662158da56255932cea2b))
 
@@ -574,9 +603,9 @@
 
 ### Commits
 
-- [Pack] Disable Zoom pointer on example. Allow clicking outside to select root. ([26500f](https://github.com/techniq/svelte-ux/commit/26500ff026448d2334a0af0c48cbe3c3e8f7de37))
-- [Zoom] Add disablePointer to remove dragging/mousewheel/etc. Can still be controlled programmatically (zoomTo(), etc) ([e678ee](https://github.com/techniq/svelte-ux/commit/e678eeb630b99a25c6233e34cd9cf743b29c405d))
-- [Pack] Add stroke to text for better readability. Issue #27 ([3f3f13](https://github.com/techniq/svelte-ux/commit/3f3f1358dde6b151f53d78317c21831ff2916bdc))
+- [Pack] Disable Zoom pointer on example.  Allow clicking outside to select root. ([26500f](https://github.com/techniq/svelte-ux/commit/26500ff026448d2334a0af0c48cbe3c3e8f7de37))
+- [Zoom] Add disablePointer to remove dragging/mousewheel/etc.  Can still be controlled programmatically (zoomTo(), etc) ([e678ee](https://github.com/techniq/svelte-ux/commit/e678eeb630b99a25c6233e34cd9cf743b29c405d))
+- [Pack] Add stroke to text for better readability.  Issue #27 ([3f3f13](https://github.com/techniq/svelte-ux/commit/3f3f1358dde6b151f53d78317c21831ff2916bdc))
 
 ## 0.6.1
 
@@ -591,13 +620,13 @@
 - Remove unneeded <g> with transition ([d87cc1](https://github.com/techniq/svelte-ux/commit/d87cc16d4c55bd17d586582e0570354476675cb1))
 - Add Circle Pack ([3e75a4](https://github.com/techniq/svelte-ux/commit/3e75a4b215e02bbf43a10503380d1ea50f788aaf))
 - [Zoom] Hard set values when using tweened() store (like spring()) ([3fb791](https://github.com/techniq/svelte-ux/commit/3fb791eec3d9e47e064539178c7362524f5b734b))
-- [Zoom] Add zoomTo(). Comment out on Tree example until expanded/selected work better together ([128026](https://github.com/techniq/svelte-ux/commit/128026e492bab753a73eaf0c595d1f59b25ddb31))
+- [Zoom] Add zoomTo().  Comment out on Tree example until expanded/selected work better together ([128026](https://github.com/techniq/svelte-ux/commit/128026e492bab753a73eaf0c595d1f59b25ddb31))
 - Add backdrop-blur to zoom controls ([1c47f2](https://github.com/techniq/svelte-ux/commit/1c47f20fe9e120e50cbd8aa95ca6ff7bad4ceded))
 - [Zoom] Now requires opting in to transitions, but supports configuration (tweened or spring, with options) ([89704e](https://github.com/techniq/svelte-ux/commit/89704e32ec04050b60fecfdc20ea239a41da99f4))
 - [Tree] Pass orientation to layout (example) ([28b3c8](https://github.com/techniq/svelte-ux/commit/28b3c8294fba8378a3470d2f751a385c240fa686))
 - [Circle] Default cx / cy to to align with Rect x / y, fix console warnings ([9b97a3](https://github.com/techniq/svelte-ux/commit/9b97a3185e0ac79654f994f9b0f316051a70ed75))
 - Use const for stores to represent intent ([84a171](https://github.com/techniq/svelte-ux/commit/84a1716d016d1a64dbc7ae1c82aed3a2b8a7c015))
-- [Treemap] Simplify by using `root.descendants()` and passing to default slot (matching other hierarchy layout components). Saves group() iteration and removes `nodeKey()` prop (provided at usage). ([d226c7](https://github.com/techniq/svelte-ux/commit/d226c7743ed890392258da74189d49ed85716b7f))
+- [Treemap] Simplify by using `root.descendants()` and passing to default slot (matching other hierarchy layout components).  Saves group() iteration and removes `nodeKey()` prop (provided at usage). ([d226c7](https://github.com/techniq/svelte-ux/commit/d226c7743ed890392258da74189d49ed85716b7f))
 
 ## 0.5.2
 
@@ -605,7 +634,7 @@
 
 - [Partition] Add filterable example ([99cb58](https://github.com/techniq/svelte-ux/commit/99cb58910e6b3277e4bff15d6ea3f58fd6fb92ad))
 - [Partition] Update Horizontal example to always show values to right for better visibility for small values/heights ([8d3971](https://github.com/techniq/svelte-ux/commit/8d3971222128c488e33397416eda4f899fc8b5c8))
-- Consolidate tweenedScale() and springScale() to motionScale(), working similar to motionStore() (and using under the hood). Update Bounds to require opt-in to tweened (and also support spring). Improves performance of filterable treemap / partition, etc ([b4ea2d](https://github.com/techniq/svelte-ux/commit/b4ea2d26c5e749e68e5fef49476ffa5140cbad00))
+- Consolidate tweenedScale() and springScale() to motionScale(), working similar to motionStore() (and using under the hood).  Update Bounds to require opt-in to tweened (and also support spring).  Improves performance of filterable treemap / partition, etc ([b4ea2d](https://github.com/techniq/svelte-ux/commit/b4ea2d26c5e749e68e5fef49476ffa5140cbad00))
 - Rename createMotionStore() to just motionStore() ([80a246](https://github.com/techniq/svelte-ux/commit/80a246b64664e0c681454f89961afe31a6a65ba1))
 
 ## 0.5.1
@@ -619,22 +648,22 @@
 ### Commits
 
 - [Sunburst] Use <Bounds> instead of direct use of tweenedScale for xScale/yScale ([6b85bb](https://github.com/techniq/svelte-ux/commit/6b85bb82e3578877b9c770a1722726b6780103d4))
-- [Bounds] Support passing function to domain/range with access to $width/$height to calculate. Needed for Sunburst (height / 2) ([0accab](https://github.com/techniq/svelte-ux/commit/0accab5b23e1050144c83b6a6004a4bf9ff73ce5))
+- [Bounds] Support passing function to domain/range with access to $width/$height to calculate.  Needed for Sunburst (height / 2) ([0accab](https://github.com/techniq/svelte-ux/commit/0accab5b23e1050144c83b6a6004a4bf9ff73ce5))
 - [Bounds] Rename `extents` to `domain` and expose setting `range` ([073525](https://github.com/techniq/svelte-ux/commit/07352567c0f0ae76360b0b2e767acbfc56ca7864))
 - Adjust stroke color ([6bf7cd](https://github.com/techniq/svelte-ux/commit/6bf7cdcdccfd45d20ed6d30b5032ef8ce78b4a89))
 - Add SunBurst WIP ([2d2588](https://github.com/techniq/svelte-ux/commit/2d2588f1cf56f1d27232013708915cfa92aeeb1b))
 - [Partition] Support passing in size (override back to default [1,1], for example) ([ff9f2f](https://github.com/techniq/svelte-ux/commit/ff9f2f0f4391eac293612e781261efb1f73fc395))
 - [Arc] Add on:click event forwarding ([5f9e03](https://github.com/techniq/svelte-ux/commit/5f9e03ed5012145e9b75145ba835609307c63d7d))
 - [Partition] Minor cleanup ([7cad93](https://github.com/techniq/svelte-ux/commit/7cad933c5d597fbb112586a1ea7517dbc979b0cd))
-- [Treemap] Require user to wrap with ChartClipPath as needed, instead of always. Not always needed (see filterable treemap) and matches Partition usage ([e31057](https://github.com/techniq/svelte-ux/commit/e310574a87c36987bd290528393d2fec3052f960))
+- [Treemap] Require user to wrap with ChartClipPath as needed, instead of always.  Not always needed (see filterable treemap) and matches Partition usage ([e31057](https://github.com/techniq/svelte-ux/commit/e310574a87c36987bd290528393d2fec3052f960))
 - [Partition] Add selection zooming using Bounds and ChartClipPath ([f55a0a](https://github.com/techniq/svelte-ux/commit/f55a0a2c5690fed12a8594ce3a78684d04c4973e))
 - [Partition] Cleanup example ([3732c4](https://github.com/techniq/svelte-ux/commit/3732c4ff5ab7f4f05fb1cee6082b6ed4547c294b))
 - [TreeMap] Use Bounds directly instead of within Treemap, which allows removing `rect` slot prop ([b1082b](https://github.com/techniq/svelte-ux/commit/b1082b717b32d8d3d29de6584229906482d821c6))
-- Add Bounds component to simplify using tweenedScales to "zoom in". Use with Treemap (and soon Partition) ([f92811](https://github.com/techniq/svelte-ux/commit/f9281174873b53fb0384cff1e30e97e4948ae749))
+- Add Bounds component to simplify using tweenedScales to "zoom in".  Use with Treemap (and soon Partition) ([f92811](https://github.com/techniq/svelte-ux/commit/f9281174873b53fb0384cff1e30e97e4948ae749))
 - Add tweenedScale() and springScale() and use to simplify Treemap transitions ([b8d505](https://github.com/techniq/svelte-ux/commit/b8d505aa47c7c232633be2c7d4fae8f81bfe8b41))
 - [Treemap] Simplify updating tweened extents ([72e262](https://github.com/techniq/svelte-ux/commit/72e2629d5a31379c6b2b24450e61e4895f5d136e))
 - [Treemap] Use new ChartClipPath instead of RectClipPath to simplify ([0d22fc](https://github.com/techniq/svelte-ux/commit/0d22fcd71ae3d2d3839d4af963f0da1f61ae7b6b))
-- Add Partition layout. Issue #10 ([6c9051](https://github.com/techniq/svelte-ux/commit/6c9051fdcbc3bbae7f3b4cb46c71d7495a41ea9a))
+- Add Partition layout.  Issue #10 ([6c9051](https://github.com/techniq/svelte-ux/commit/6c9051fdcbc3bbae7f3b4cb46c71d7495a41ea9a))
 
 ## 0.4.1
 
@@ -650,23 +679,23 @@
 
 - Upgrade svelte-ux, which replaces "tailwindcss-elevation" with "svelte-ux/plugin/tailwind" ([427653](https://github.com/techniq/svelte-ux/commit/4276538b5b23725e92f350f5fc3c3fd4f8d7166d))
 - [Zoom] Immediately set translate and zoom when dragging or using wheel ([3e3a93](https://github.com/techniq/svelte-ux/commit/3e3a9380fbe6e9b1558b28fab5ab2d51d2509e35))
-- [Zoom] Add interactive example using getSpiral(). Issue #16 ([5e2cfb](https://github.com/techniq/svelte-ux/commit/5e2cfb32ea33327683ad83209e1d073772e39024))
+- [Zoom] Add interactive example using getSpiral().  Issue #16 ([5e2cfb](https://github.com/techniq/svelte-ux/commit/5e2cfb32ea33327683ad83209e1d073772e39024))
 - Add getSpiral() and specific getPhyllotaxis() data generators ([3b5d3b](https://github.com/techniq/svelte-ux/commit/3b5d3bb62832f712cdc43c80d26c8da800195dc0))
 - [Points] Allow passing <slot /> to override full override rendering ([00b595](https://github.com/techniq/svelte-ux/commit/00b5954ec19f2ae489e3d590bc5557803cf41763))
-- [Zoom] Use spring() to tween scale and translate values. Issue #16 ([67585c](https://github.com/techniq/svelte-ux/commit/67585c2f84b5899e692d63d4dc33ea73da7995fc))
+- [Zoom] Use spring() to tween scale and translate values.  Issue #16 ([67585c](https://github.com/techniq/svelte-ux/commit/67585c2f84b5899e692d63d4dc33ea73da7995fc))
 - Add radiansToDegrees() math util ([4ac9bf](https://github.com/techniq/svelte-ux/commit/4ac9bf19983c703cdc97f12ea4b3c4b027f7b64a))
 - [Tree] Add top padding to not overlap controls ([48932a](https://github.com/techniq/svelte-ux/commit/48932a1b76dc79b45b575da6049d4f49e0e13abe))
 - Add Zoom docs placeholder ([1ea051](https://github.com/techniq/svelte-ux/commit/1ea051d99e53c9a8e754afd226f1e804ed811fa9))
-- Add Zoom component (WIP). Issue #16 ([49272f](https://github.com/techniq/svelte-ux/commit/49272fe9f2a47b10154bbc4a5240685e9b23c323))
+- Add Zoom component (WIP).  Issue #16 ([49272f](https://github.com/techniq/svelte-ux/commit/49272fe9f2a47b10154bbc4a5240685e9b23c323))
 - [Tree] Hide overflow in example ([35eb19](https://github.com/techniq/svelte-ux/commit/35eb194da8f3dec99f0216429c355a02641444ec))
 - Add ChartClipPath ([ef6ba1](https://github.com/techniq/svelte-ux/commit/ef6ba1a3b7e9aecd137be66abefa4e0dad8f13d6))
 - [Tree] Remove unneccessary tweened in example ([26fcbb](https://github.com/techniq/svelte-ux/commit/26fcbb47465b0ce81652836729325cc32149ebf7))
 - Remove (WIP) from Tree example menu item ([2498df](https://github.com/techniq/svelte-ux/commit/2498dfc1623e14c804f4355c598ec9f7817e2704))
-- [Tree] Support passing nodeSize for sizing (vs using chart size). Add to example ([6e8fd1](https://github.com/techniq/svelte-ux/commit/6e8fd1f4b197077bdce132a60a759a9d3c798b09))
+- [Tree] Support passing nodeSize for sizing (vs using chart size).  Add to example ([6e8fd1](https://github.com/techniq/svelte-ux/commit/6e8fd1f4b197077bdce132a60a759a9d3c798b09))
 - [Tree] Add expandable nodes to example ([d9ffef](https://github.com/techniq/svelte-ux/commit/d9ffefd27588bb4183b4f238aad4d495b7778ca4))
 - Cleanup Tree example ([26763c](https://github.com/techniq/svelte-ux/commit/26763c29fa2aa6d5b2006454f861a5e978b4a8a0))
 - [Tree/Link] Support changing curve ([e3fea3](https://github.com/techniq/svelte-ux/commit/e3fea31bdfb5574aa7b4c7e5c2ea76c916ed78b1))
-- Set Link x/y getters based on orientation. Cleanup Tree example and allow changing orientation. ([0bd95c](https://github.com/techniq/svelte-ux/commit/0bd95c0ef0cbee4f6814e65c5546774f566ff663))
+- Set Link x/y getters based on orientation.  Cleanup Tree example and allow changing orientation. ([0bd95c](https://github.com/techniq/svelte-ux/commit/0bd95c0ef0cbee4f6814e65c5546774f566ff663))
 - Add Tree component WIP ([bd7452](https://github.com/techniq/svelte-ux/commit/bd7452c75bfb8bf5cd7e1f79994146fb99ba677a))
 - [Link] Support orientation to specify curve and update/expose x/y props for getters (support sankey and non-sankey) ([56088a](https://github.com/techniq/svelte-ux/commit/56088a860d2be9f003a3b9405058b4ea9040ecae))
 - Fix menu text for CircleClipPath ([6fb7ec](https://github.com/techniq/svelte-ux/commit/6fb7ecf91a643cd043a560adffca494133bae8b5))
@@ -676,10 +705,10 @@
 ### Commits
 
 - Add cereal dataset ([0b723d](https://github.com/techniq/svelte-ux/commit/0b723d7134738b1a565cbfcc4bbfcc894d5cebe3))
-- [Treemap] Rename key prop to nodeKey. Show rootNode breadcrumb if none initially selected ([046ec7](https://github.com/techniq/svelte-ux/commit/046ec7d93bbd6c405102e7861e38c2fb5e057f59))
-- [Treemap] Add filterable treemap example with transitions. Add large cars.csv dataset ([8c3673](https://github.com/techniq/svelte-ux/commit/8c3673f65914ae9059db67c016969eb5b34632c6))
+- [Treemap] Rename key prop to nodeKey.  Show rootNode breadcrumb if none initially selected ([046ec7](https://github.com/techniq/svelte-ux/commit/046ec7d93bbd6c405102e7861e38c2fb5e057f59))
+- [Treemap] Add filterable treemap example with transitions.  Add large cars.csv dataset ([8c3673](https://github.com/techniq/svelte-ux/commit/8c3673f65914ae9059db67c016969eb5b34632c6))
 - [Treemap] Support passing key lookup ([6450b1](https://github.com/techniq/svelte-ux/commit/6450b13686b462fd5d49e7064e31cf285387170b))
-- Setup @rollup/plugin-dsv to support csv import. Add Treemap CSV example ([0012ae](https://github.com/techniq/svelte-ux/commit/0012ae26fc83c17f200e7496b317a24871d4c548))
+- Setup @rollup/plugin-dsv to support csv import.  Add Treemap CSV example ([0012ae](https://github.com/techniq/svelte-ux/commit/0012ae26fc83c17f200e7496b317a24871d4c548))
 
 ## 0.3.5
 
@@ -692,7 +721,7 @@
 ### Commits
 
 - Move isNodeVisible() to treemap utils ([298e13](https://github.com/techniq/svelte-ux/commit/298e13ae74632e8e5f07e8bf7933c687274e8aa7))
-- [Treemap] Update after prop changes (padding, etc). Add controls to Nested example to control padding ([f9b33e](https://github.com/techniq/svelte-ux/commit/f9b33e147d47cc4928eb696c8f5c1dbfcd63623f))
+- [Treemap] Update after prop changes (padding, etc).  Add controls to Nested example to control padding ([f9b33e](https://github.com/techniq/svelte-ux/commit/f9b33e147d47cc4928eb696c8f5c1dbfcd63623f))
 - [Threshold] Use Field on curve selection example ([1eff12](https://github.com/techniq/svelte-ux/commit/1eff125713aa62e674b04469f420c4c17c609fcf))
 - [Treemap] Improve color by option width and filter out hard to see yellow and green from schemeSpectral ([9a2075](https://github.com/techniq/svelte-ux/commit/9a2075dd3dd9d4effefc3521a9b58caa488d7526))
 
@@ -700,7 +729,7 @@
 
 ### Commits
 
-- [Treemap] No longer clip nodes by default to give better control. Fix clipping half of stroke for example. Change to named "node" slot instead of default to allow overwritting nodes iteration (if <slot /> ever added) ([52a6de](https://github.com/techniq/svelte-ux/commit/52a6de54f3ffb2ff2c2dbb08d53af3c0847c2f83))
+- [Treemap] No longer clip nodes by default to give better control.  Fix clipping half of stroke for example.  Change to named "node" slot instead of default to allow overwritting nodes iteration (if <slot /> ever added) ([52a6de](https://github.com/techniq/svelte-ux/commit/52a6de54f3ffb2ff2c2dbb08d53af3c0847c2f83))
 
 ## 0.3.2
 
@@ -722,7 +751,7 @@
 - [Bars] Add commented-out Horizontal example (to fix) ([e63b0e](https://github.com/techniq/svelte-ux/commit/e63b0edebf7f93d6e8976f1e5f35df76b8a60028))
 - [Bars] Do not allow negative width (from negative widthOffset) ([d6246f](https://github.com/techniq/svelte-ux/commit/d6246ffcef2d86924d1e871398c8178d7fc1e644))
 - Add documentation placeholders for ClipPath, RectClipPath, and CircleClipPath ([f57664](https://github.com/techniq/svelte-ux/commit/f57664bdf99b831a3f90b5ca98bba6ba9a53d96c))
-- Simplify Treemap implementation. Remove zoomable prop, use consist height-based render regardless, handle node layout/clipping. ([830d53](https://github.com/techniq/svelte-ux/commit/830d53d21e7fdd01db30b1a8f9567d71ac0c1d95))
+- Simplify Treemap implementation.  Remove zoomable prop, use consist height-based render regardless, handle node layout/clipping. ([830d53](https://github.com/techniq/svelte-ux/commit/830d53d21e7fdd01db30b1a8f9567d71ac0c1d95))
 - [Sankey] Improve showing text to left if right-most node ([bbb4be](https://github.com/techniq/svelte-ux/commit/bbb4be9f3a95c1fa5d27638a1c8f8a8f2f280226))
 - [Sankey] Improve selected example (handle duplicate links, use unique data source due to mutation by d3-sankey) ([2f68a3](https://github.com/techniq/svelte-ux/commit/2f68a3cb3c7149d50b76a2d5bde01d18f1f660ba))
 - Add more example graph data ([f00255](https://github.com/techniq/svelte-ux/commit/f0025555f983d52b32a788f37d1784a31136d04e))
@@ -734,7 +763,7 @@
 - Remove prototyping remnants ([5f64c2](https://github.com/techniq/svelte-ux/commit/5f64c2869fdf60ef09d4cf433ed4338bd9d8315f))
 - Consolidate Treemap and NestedTreemap into same component ([d2e1cf](https://github.com/techniq/svelte-ux/commit/d2e1cfa7bcb0614b377ed6e462acb8b80d077512))
 - Tween overlooked RectClipPath in Nested Treemap example ([f2dcbc](https://github.com/techniq/svelte-ux/commit/f2dcbc55c36c757ae5313c02a9ff49cacb4c92c3))
-- Support tweened RectClipPath and CircleClipPath. Update Nested Treemap example to tween transitions ([757e6b](https://github.com/techniq/svelte-ux/commit/757e6b2d921f43c33e6f588cb7c625ecb90dd8ab))
+- Support tweened RectClipPath and CircleClipPath.  Update Nested Treemap example to tween transitions ([757e6b](https://github.com/techniq/svelte-ux/commit/757e6b2d921f43c33e6f588cb7c625ecb90dd8ab))
 - Add NestedTreemap example ([f00514](https://github.com/techniq/svelte-ux/commit/f00514cba61a4740eabc2e9fb0f92872ee5742a2))
 - Use d3-hierarchy's node.ancestors() to simplify breadcrumb ([c87a24](https://github.com/techniq/svelte-ux/commit/c87a24713d36d9c9d8d20b8aa02f75ecd47aea57))
 - Add value to breadcrumb ([0ca251](https://github.com/techniq/svelte-ux/commit/0ca251adf7552a3d3e772836da5dd41b1db92061))
@@ -748,7 +777,7 @@
 - [Rect] Default x/y to 0 to remove console errors when not used (width/height only required) ([ff0fde](https://github.com/techniq/svelte-ux/commit/ff0fdeb0809e4e93088d775d3e5dd4abd6e1499c))
 - Remove console.log ([ca9a91](https://github.com/techniq/svelte-ux/commit/ca9a91123415e593c9b45b2382534d3c85251a28))
 - [Sankey] Add color by option to example ([bb229e](https://github.com/techniq/svelte-ux/commit/bb229e844074f703e32979a4c5e4bf7a03610684))
-- Update Sankey examples to use Group for Rect/Text transitions. Use @const to remove redundancy. Remove unnecessary imports. Issue ([879b15](https://github.com/techniq/svelte-ux/commit/879b1594fc5207768ef1f6ea584db362a5823234))
+- Update Sankey examples to use Group for Rect/Text transitions.  Use @const to remove redundancy.    Remove unnecessary imports.  Issue ([879b15](https://github.com/techniq/svelte-ux/commit/879b1594fc5207768ef1f6ea584db362a5823234))
 - [Group] Support tweened/spring props to animate x/y changes ([24fa31](https://github.com/techniq/svelte-ux/commit/24fa3154f5b96e5f457526d8e721388c44f7e3dd))
 - Switch from static to vercel adapter in attempt to fix SSR initial page views ([184b68](https://github.com/techniq/svelte-ux/commit/184b687d3ab18b59b387fe85816edc12fc290188))
 - Improve Sankey highlight example and add simpleData hierarchy example ([cc344c](https://github.com/techniq/svelte-ux/commit/cc344c3f688e837fcb5172ee3a2beb5177729773))
@@ -766,12 +795,13 @@
 
 ### Commits
 
+
 ## 0.2.1
 
 ### Commits
 
 - [Text] Add `paint-order: stroke` to easily support outlines ([a2a28c](https://github.com/techniq/svelte-ux/commit/a2a28c84ab385fde90f6f26e9cb226aac71eb51f))
-- [Points / ConnectedPoints] Center within band scale by default (set offsetY). Resolves #18 ([5a9e8d](https://github.com/techniq/svelte-ux/commit/5a9e8df41f46b249bd79474bc760c8b232f55a65))
+- [Points / ConnectedPoints] Center within band scale by default (set offsetY).  Resolves #18 ([5a9e8d](https://github.com/techniq/svelte-ux/commit/5a9e8df41f46b249bd79474bc760c8b232f55a65))
 
 ## 0.2.0
 
@@ -780,13 +810,13 @@
 - Upgrade LayerCake and remaining dependencies ([553978](https://github.com/techniq/svelte-ux/commit/5539782e44ef9e33d61ec1220075ea97db07ddb2))
 - Fix location of hooks.ts ([f03d97](https://github.com/techniq/svelte-ux/commit/f03d97c5c9fbacc17752ac3c79d6aff247c4a4c1))
 - Upgrade SvelteKit and non-major semver dependencies ([af5d27](https://github.com/techniq/svelte-ux/commit/af5d2725de106feb51f64fbbbc4d48aa57c901dd))
-- Add comment about why offsetY is set. Issue #18 ([ec2250](https://github.com/techniq/svelte-ux/commit/ec22507cdafbe93baa6ecaa636bd76e6d6037be0))
+- Add comment about why offsetY is set.  Issue #18 ([ec2250](https://github.com/techniq/svelte-ux/commit/ec22507cdafbe93baa6ecaa636bd76e6d6037be0))
 - Move chart examples to top of menu ([bc0a76](https://github.com/techniq/svelte-ux/commit/bc0a76ce221c84c645f5cdb3c8476766afc7fb7a))
 - [Pattern] Add diagonal grid example ([d72396](https://github.com/techniq/svelte-ux/commit/d72396456464629b8de6cbd0448e7038bb89fa5a))
 - Add Pattern component ([60ec74](https://github.com/techniq/svelte-ux/commit/60ec746752c01cd86b87df0188d4e1009605a474))
 - [LinearGradient] Tighten up preview heights ([78b99d](https://github.com/techniq/svelte-ux/commit/78b99d7d66802c0d7a082953dde89e80088955f1))
 - [Path] Simplify curve names in docs ([88d774](https://github.com/techniq/svelte-ux/commit/88d7749d9f007e4d37419a6d1bb6bff438fea62d))
-- Add api docs. Issue #6 ([fde315](https://github.com/techniq/svelte-ux/commit/fde31567b8bef47d87b777beb1ae3d9eb9f6d3a5))
+- Add api docs.  Issue #6 ([fde315](https://github.com/techniq/svelte-ux/commit/fde31567b8bef47d87b777beb1ae3d9eb9f6d3a5))
 - [Arc/Pie] Add offset (explode) and allow declaring arcs directly in Pie default slot ([d48743](https://github.com/techniq/svelte-ux/commit/d48743d4f8c90f971d9791ff9eb2e1453aa92132))
 - Add TODO ([ae115b](https://github.com/techniq/svelte-ux/commit/ae115b313eb94d853cf923f15d6111f5c7b2d2aa))
 - Update TODOs ([759e8f](https://github.com/techniq/svelte-ux/commit/759e8f2ff08c439e031f3a0223ba85ad356e5c10))
@@ -840,8 +870,8 @@
 - [Area] Support tweened path and add example docs ([560d00](https://github.com/techniq/svelte-ux/commit/560d00498f9cb8c4418acb0d16bc9c812fbda7fc))
 - [Path] Consolidate examples (add tweened playground option) ([50f509](https://github.com/techniq/svelte-ux/commit/50f5098a0c945d8b42257aec68aaa06c7927ca07))
 - Add TODO ([61060f](https://github.com/techniq/svelte-ux/commit/61060f8ddd6132c975bb7b331da697249d07ce17))
-- [Arc] Use LinearGradient on examples. Allow track to be configurable via prop (including enabled/disabled). Issue #4 ([39d5c1](https://github.com/techniq/svelte-ux/commit/39d5c1804ba5f56ad8cd2820d2328c2b88b86b4d))
-- Add LinearGradient component. Closes #4 ([a32821](https://github.com/techniq/svelte-ux/commit/a328211a9d354959ed7b92f059a11785998a2e6d))
+- [Arc] Use LinearGradient on examples.  Allow track to be  configurable via prop (including enabled/disabled).  Issue #4 ([39d5c1](https://github.com/techniq/svelte-ux/commit/39d5c1804ba5f56ad8cd2820d2328c2b88b86b4d))
+- Add LinearGradient component.  Closes #4 ([a32821](https://github.com/techniq/svelte-ux/commit/a328211a9d354959ed7b92f059a11785998a2e6d))
 - Rename HighlightBar to HighlightRect ([b42579](https://github.com/techniq/svelte-ux/commit/b42579941b4e56da94b9279f3ebf3cbf5983d400))
 - Rename Bar to Bars ([903b33](https://github.com/techniq/svelte-ux/commit/903b337a1583baff6f5a958a00fbad50c018e4df))
 - Rename Label to Labels ([1392ac](https://github.com/techniq/svelte-ux/commit/1392ac1087e40d15cdaf057e0d7cab5f8d069dd5))
@@ -852,7 +882,7 @@
 - Reduce max number of point counts allowed ([6a3e02](https://github.com/techniq/svelte-ux/commit/6a3e028d6dbf7bd70c4ae376ebc9cce95197bf6b))
 - Add Arc component WIP ([8627f9](https://github.com/techniq/svelte-ux/commit/8627f9938aaa564f75e41966f07fc124887e6636))
 - [Path] Remove curve variants ending in "Open" and "Closed", add next/prev to point count, rename label, and improve label ([330b2d](https://github.com/techniq/svelte-ux/commit/330b2d28841a2a567673fe0372d9d63ee343eb36))
-- [Path] Support tweened prop. Resolves #2 ([72e0ad](https://github.com/techniq/svelte-ux/commit/72e0ad46bc50d6209eaf2b0f02bac1b500679a3a))
+- [Path] Support tweened prop.  Resolves #2 ([72e0ad](https://github.com/techniq/svelte-ux/commit/72e0ad46bc50d6209eaf2b0f02bac1b500679a3a))
 - [Path] Improve selection of easings and curves ([96a94a](https://github.com/techniq/svelte-ux/commit/96a94aeba388bd0682001e512203b252e6c4a148))
 - [motionStore] Update options to allow passing spring or tweened optionally ([77dea8](https://github.com/techniq/svelte-ux/commit/77dea8034244251696703d877e156dc6f9ed157a))
 - [Path] Add docs example ([a430de](https://github.com/techniq/svelte-ux/commit/a430debd691157bdd86b8b6ab8cbbf7e6fcf0ee6))
@@ -864,11 +894,11 @@
 - Support passing props to AxisX/Y gridlines ([434d1a](https://github.com/techniq/svelte-ux/commit/434d1a70a6e7737f08f4ec033afb2bda56ca9569))
 - Update TODO ([63509a](https://github.com/techniq/svelte-ux/commit/63509a3e4faf29de1814141a1bde571f784030db))
 - Add ConnectedPoints and use to replace ClevelandDotPlot with Points/ConnectedPoints combination. ([70c5a5](https://github.com/techniq/svelte-ux/commit/70c5a5a79af222127a564b6b9acbbcaf213a10f0))
-- [Points] Support multiple per axis (ex. x={"prop1", "prop2"]). Pass context to function offsets for access to scales ([fd7f42](https://github.com/techniq/svelte-ux/commit/fd7f42d2e23dddf7f4e05b251fcd9764b1da34e6))
+- [Points] Support multiple per axis (ex. x={"prop1", "prop2"]).  Pass context to function offsets for access to scales ([fd7f42](https://github.com/techniq/svelte-ux/commit/fd7f42d2e23dddf7f4e05b251fcd9764b1da34e6))
 - Fix Threshold title ([5210e5](https://github.com/techniq/svelte-ux/commit/5210e5e163b9d71fcd660bf2bc2251fbeef56560))
-- Rename Scatter to Points and use Circle (for animated layout). Add simple Scatter examples ([5f0e09](https://github.com/techniq/svelte-ux/commit/5f0e09aade84dade76f15b38cece44c7a77efc4c))
-- Add TODO to update stackOffsetSeparated() to work with createStackData() ([b41240](https://github.com/techniq/svelte-ux/commit/b4124067e85a1698de6a9efe0a25bbdccfb84889))
-- Support passing offset to createStackData. Add stacked expand/percent example ([ee4dc0](https://github.com/techniq/svelte-ux/commit/ee4dc0d9db3b710f0533a5ad73991782069704ca))
+- Rename Scatter to Points and use Circle (for animated layout).  Add simple Scatter examples ([5f0e09](https://github.com/techniq/svelte-ux/commit/5f0e09aade84dade76f15b38cece44c7a77efc4c))
+- Add TODO to update stackOffsetSeparated() to work with  createStackData() ([b41240](https://github.com/techniq/svelte-ux/commit/b4124067e85a1698de6a9efe0a25bbdccfb84889))
+- Support passing offset to createStackData.  Add stacked expand/percent example ([ee4dc0](https://github.com/techniq/svelte-ux/commit/ee4dc0d9db3b710f0533a5ad73991782069704ca))
 - Move all Bar-based examples under Bar ([d2421e](https://github.com/techniq/svelte-ux/commit/d2421e413933cb042521f04ecaa34d879024e6b0))
 - Rename variable to reduce confusion / be more consistent ([5f6cdf](https://github.com/techniq/svelte-ux/commit/5f6cdf570e445e9f982c70ea30da226f7cb9ce65))
 - Set extents on multiple bar chart example ([c9e4f9](https://github.com/techniq/svelte-ux/commit/c9e4f9613234f0409e4fdde9c3c215ee43cdd151))
@@ -917,13 +947,14 @@
 - Fix whitespace and add jsdoc for xBaseline/yBaseline ([be96bd](https://github.com/techniq/svelte-ux/commit/be96bd895c13d05df0ce6f1bf981aa2e35169167))
 - Refine chart example padding ([83a733](https://github.com/techniq/svelte-ux/commit/83a73352396146ee588a54ef964823abec6f04f5))
 - Extract createDateSeries() util ([f288a5](https://github.com/techniq/svelte-ux/commit/f288a5cbfec8c43f4b098641961d03db0269c72a))
-- Fix code previews. Use frontmatter for AppBar ([98ac12](https://github.com/techniq/svelte-ux/commit/98ac128d0a4c67db313d8abd8c068e9a4cd49da3))
+- Fix code previews.  Use frontmatter for AppBar ([98ac12](https://github.com/techniq/svelte-ux/commit/98ac128d0a4c67db313d8abd8c068e9a4cd49da3))
 - Add prism theme ([c2b2c2](https://github.com/techniq/svelte-ux/commit/c2b2c21ee678ecaa6ef6dbf05cdae95e411a9c7b))
 - Add .md extensions to Tailwind processing ([361c5e](https://github.com/techniq/svelte-ux/commit/361c5e62b401e6f1cc8e3c908cf6bec548897d86))
 - Upgardde Text.svelte route ([392441](https://github.com/techniq/svelte-ux/commit/392441d89de66e047913247698d4756036be07a4))
 - Fix AreaChart app bar ([b557d9](https://github.com/techniq/svelte-ux/commit/b557d919fde56a700374b67ef1ffe073be3499e9))
 - Add AreaChart example ([de99fe](https://github.com/techniq/svelte-ux/commit/de99fe376bec0ddc9643c6b9a4f0d1d145325027))
-- Add more components. Begin setting up mdsvex ([8047ce](https://github.com/techniq/svelte-ux/commit/8047ce3ef9b35abc96ad77f82c92ce243739adfb))
+- Add more components.  Begin setting up mdsvex ([8047ce](https://github.com/techniq/svelte-ux/commit/8047ce3ef9b35abc96ad77f82c92ce243739adfb))
 - Add initial components and utils ([c6d795](https://github.com/techniq/svelte-ux/commit/c6d795bc3bb36c8d2539b6545c029078ab9ac462))
-- Upgrade SvelteKit. Setup svelte-ux and tailwind ([c41b98](https://github.com/techniq/svelte-ux/commit/c41b9819eeecbc1f1064677cda71877a5f572ed5))
+- Upgrade SvelteKit.  Setup svelte-ux and tailwind ([c41b98](https://github.com/techniq/svelte-ux/commit/c41b9819eeecbc1f1064677cda71877a5f572ed5))
 - Initial commit ([c0e8e9](https://github.com/techniq/svelte-ux/commit/c0e8e93a7c31d2804c1e91bfc233829c44c5d538))
+
