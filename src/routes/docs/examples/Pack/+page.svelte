@@ -132,9 +132,9 @@
                   x={node.x}
                   y={node.y}
                   dy={fontSize * 8}
-                  class="stroke-white/70"
-                  style="font-size: {fontSize}rem; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke-width: {fontSize *
-                    2}px"
+                  class="stroke-white/70 pointer-events-none [text-anchor:middle] [paint-order:stroke]"
+                  style:font-size="{fontSize}rem"
+                  style:stroke-width="{fontSize * 2}px"
                 >
                   {node.data.name}
                 </text>

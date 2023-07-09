@@ -145,7 +145,7 @@
               dx={6}
               dy={-2}
               class="text-xs"
-              style="fill:{color}"
+              fill={color}
             />
           </Point>
         {/each}

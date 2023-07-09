@@ -108,7 +108,7 @@
                 value={Math.round(value)}
                 textAnchor="middle"
                 verticalAnchor="middle"
-                style="font-size: 2.25em"
+                class="text-4xl"
                 dy={8}
               />
             </Arc>
@@ -174,7 +174,7 @@
 							value={Math.round(value)}
 							textAnchor="middle"
 							verticalAnchor="middle"
-							style="font-size: 2.25em"
+              class="text-4xl"
 							dy={8}
 						/> -->
               <!-- arc center -->
@@ -182,13 +182,13 @@
                 value={Math.round(value)}
                 textAnchor="middle"
                 verticalAnchor="middle"
-                style="font-size: 2.25em"
+                class="text-4xl"
                 x={outerRadius - boundingBox.width / 2}
                 y={(outerRadius - boundingBox.height / 2) * -1}
                 dy={8}
               />
               <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-4xl" capHeight="1.5rem" /> -->
-              <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" style="font-size: 4.5em" capHeight="3.1em" /> -->
+              <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-7xl" capHeight="3.1em" /> -->
             </Arc>
           </Group>
         </Svg>

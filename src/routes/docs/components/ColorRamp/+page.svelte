@@ -54,7 +54,7 @@
       <div>
         <div class="text-sm">{name}</div>
         <svg {width} {height}>
-          <ColorRamp {interpolator} {width} {height} {steps} style="image-rendering: pixelated" />
+          <ColorRamp {interpolator} {width} {height} {steps} class="[image-rendering:pixelated]" />
         </svg>
       </div>
     {/each}
@@ -74,7 +74,7 @@
               interpolator={scaleQuantize([0, 1], scheme)}
               {width}
               {height}
-              style="image-rendering: pixelated"
+              class="[image-rendering:pixelated]"
             />
           </svg>
         </div>
@@ -88,7 +88,7 @@
                   interpolator={scaleQuantize([0, 1], s)}
                   {width}
                   {height}
-                  style="image-rendering: pixelated"
+                  class="[image-rendering:pixelated]"
                 />
               </svg>
             </div>

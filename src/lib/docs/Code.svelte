@@ -15,8 +15,8 @@
   {#if source}
     <div class="relative">
       <pre class="language-{language} rounded" style="margin: 0; white-space: normal;">
-            <code class="language-{language}">{@html highlightedSource}</code>
-        </pre>
+        <code class="language-{language}">{@html highlightedSource}</code>
+      </pre>
 
       <div class="absolute top-0 right-0 p-2">
         <Button

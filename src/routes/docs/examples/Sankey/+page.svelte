@@ -299,8 +299,7 @@
                 y={nodeHeight / 2}
                 dy={-2}
                 verticalAnchor="middle"
-                style="font-size: .6rem"
-                class="pointer-events-none"
+                class="pointer-events-none text-[10px]"
               />
             </Group>
           {/each}
@@ -408,7 +407,7 @@
                 y={nodeHeight / 2}
                 dy={-2}
                 verticalAnchor="middle"
-                style="font-size: .6rem"
+                class="text-[10px] stroke-white stroke-2"
               />
             </Group>
           {/each}

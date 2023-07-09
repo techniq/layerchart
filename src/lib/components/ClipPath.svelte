@@ -19,7 +19,7 @@
 </defs>
 
 {#if $$slots.default}
-  <g style="clip-path: url(#{id})" on:click on:mousemove on:mouseleave on:keydown>
+  <g style:clip-path="url(#{id})" on:click on:mousemove on:mouseleave on:keydown>
     <slot {id} {useId} />
   </g>
 {/if}

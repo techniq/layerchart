@@ -206,18 +206,18 @@
                       rx={5}
                     />
                     <RectClipPath width={nodeWidth} height={nodeHeight}>
-                      <text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
+                      <text x={4} y={16 * 0.6 + 4} class="text-[10px] font-medium">
                         <tspan>{node.data.name}</tspan>
                         {#if node.children}
-                          <tspan style="font-size: 0.5rem; font-weight: 200"
-                            >{format(node.value, 'integer')}</tspan
-                          >
+                          <tspan class="text-[8px] font-extralight">
+                            {format(node.value, 'integer')}
+                          </tspan>
                         {/if}
                       </text>
                       {#if !node.children}
                         <Text
                           value={format(node.value, 'integer')}
-                          style="font-size: 0.5rem; font-weight: 200"
+                          class="text-[8px] font-extralight"
                           verticalAnchor="start"
                           x={4}
                           y={16}
@@ -344,10 +344,10 @@
                     tweened={{ delay: 600 }}
                   />
                   <RectClipPath width={nodeWidth} height={nodeHeight} tweened={{ delay: 600 }}>
-                    <text x={4} y={16 * 0.6 + 4} style="font-size: 0.6rem; font-weight: 500">
+                    <text x={4} y={16 * 0.6 + 4} class="text-[10px] font-medium">
                       <tspan>{node.data[0] ?? 'Overall'}</tspan>
                       {#if node.children}
-                        <tspan style="font-size: 0.5rem; font-weight: 200"
+                        <tspan class="text-[8px] font-extralight"
                           >{format(node.value, 'integer')}</tspan
                         >
                       {/if}
@@ -355,7 +355,7 @@
                     {#if !node.children}
                       <!-- <Text
 												value={format(node.value, 'integer')}
-												style="font-size: 0.5rem; font-weight: 200"
+                        class="text-[8px] font-extralight"
 												verticalAnchor="start"
 												x={4}
 												y={16}
@@ -453,14 +453,14 @@
                         />
                         <Text
                           value="{node.data.name} ({node.children?.length ?? 0})"
-                          style="font-size: 0.6rem; font-weight: 500"
+                          class="text-[10px] font-medium"
                           verticalAnchor="start"
                           x={4}
                           y={2}
                         />
                         <Text
                           value={format(node.value, 'integer')}
-                          style="font-size: 0.5rem; font-weight: 200"
+                          class="text-[8px] font-extralight"
                           verticalAnchor="start"
                           x={4}
                           y={16}

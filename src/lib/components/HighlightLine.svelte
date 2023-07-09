@@ -129,10 +129,7 @@
       y1={line.y1}
       x2={line.x2}
       y2={line.y2}
-      stroke="rgba(0,0,0,.5)"
-      stroke-width={2}
-      style="pointerEvents: none"
-      stroke-dasharray="2,2"
+      class="stroke-black/50 stroke-2 [stroke-dasharray:2,2] pointer-events-none"
     />
   {/each}
 
@@ -142,9 +139,8 @@
       cx={point.x}
       cy={point.y}
       r={7}
-      fill="rgba(255,255,255,.9)"
+      class="fill-white/90 stroke-2"
       stroke={point.color}
-      stroke-width={2}
     />
     <Circle spring cx={point.x} cy={point.y} r={3} fill={point.color} />
   {/each}
