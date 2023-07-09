@@ -1,10 +1,8 @@
 <script lang="ts">
-  import * as d3shapes from 'd3-shape';
+  import type { ComponentProps } from 'svelte';
   import { cubicOut } from 'svelte/easing';
 
-  import { Button, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-
-  import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
+  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Circle from '$lib/components/Circle.svelte';
@@ -17,6 +15,7 @@
   import ZoomControls from '$lib/docs/ZoomControls.svelte';
 
   import { getSpiral } from '$lib/utils/genData';
+  import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
   let zoom;
   let pointCount = 500;
@@ -28,34 +27,7 @@
 
   $: data = getSpiral({ angle, radius: 10, count: pointCount, width: 500, height: 500 });
 
-  let curve = d3shapes['curveLinear'];
-  const curveOptions = Object.keys(d3shapes)
-    .filter((key) => key.startsWith('curve'))
-    .filter((key) => !key.endsWith('Open') && !key.endsWith('Closed'))
-    .map((key) => {
-      return {
-        name: key.replace('curve', ''),
-        value: d3shapes[key]
-      };
-    });
-
-  function prev(options, current) {
-    const index = options.findIndex((x) => x.value === current);
-    if (index === 0) {
-      return options[options.length - 1].value;
-    } else {
-      return options[index - 1].value;
-    }
-  }
-
-  function next(options, current) {
-    const index = options.findIndex((x) => x.value === current);
-    if (index === options.length - 1) {
-      return options[0].value;
-    } else {
-      return options[index + 1].value;
-    }
-  }
+  let curve: ComponentProps<CurveMenuField>['value'] = undefined;
 </script>
 
 <h1>Examples</h1>
@@ -73,38 +45,20 @@
     </ToggleGroup>
   </Field>
   <Field label="Tweened" let:id>
-    <Switch bind:checked={tweened} {id} />
-  </Field>
-</div>
-
-<div class="grid grid-cols-[1fr,auto,1fr,auto,1fr,auto] gap-2 mb-2">
-  <RangeField label="Points" bind:value={pointCount} min={1} max={2000} />
-  <Field label="Show points" let:id>
-    <Switch bind:checked={showPoints} {id} />
+    <Switch bind:checked={tweened} {id} size="md" />
   </Field>
   <RangeField label="Angle" bind:value={angle} min={1} max={360} />
+</div>
+
+<div class="grid grid-cols-[auto,1fr,auto,1fr] gap-2 mb-2">
+  <Field label="Show points" let:id>
+    <Switch bind:checked={showPoints} {id} size="md" />
+  </Field>
+  <RangeField label="Points" bind:value={pointCount} min={1} max={2000} />
   <Field label="Show path" let:id>
-    <Switch bind:checked={showPath} {id} />
+    <Switch bind:checked={showPath} {id} size="md" />
   </Field>
-  <Field label="Curve" let:id>
-    <Button
-      icon={mdiChevronLeft}
-      on:click={() => (curve = prev(curveOptions, curve))}
-      class="mr-2"
-      size="sm"
-    />
-    <select bind:value={curve} class="w-full outline-none appearance-none text-sm" {id}>
-      {#each curveOptions as option}
-        <option value={option.value}>{option.name}</option>
-      {/each}
-    </select>
-    <Button
-      icon={mdiChevronRight}
-      on:click={() => (curve = next(curveOptions, curve))}
-      class="ml-2"
-      size="sm"
-    />
-  </Field>
+  <CurveMenuField bind:value={curve} />
 </div>
 
 <Preview>
