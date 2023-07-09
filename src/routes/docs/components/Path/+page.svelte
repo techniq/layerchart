@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
 
-  import { Field, Switch } from 'svelte-ux';
+  import { Field, Switch, Toggle } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
@@ -76,3 +76,59 @@
     </Chart>
   </div>
 </Preview>
+
+<h1>Examples</h1>
+
+<h2>Draw</h2>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+    <Field label="Show" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+    <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
+    <CurveMenuField bind:value={curve} />
+    <RangeField label="Points" bind:value={pointCount} min={2} />
+  </div>
+
+  <Preview>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          {#if show}
+            <Path {curve} draw />
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
+
+<h2>Tweened</h2>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+    <Field label="Show" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+    <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
+    <CurveMenuField bind:value={curve} />
+    <RangeField label="Points" bind:value={pointCount} min={2} />
+  </div>
+
+  <Preview>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          {#if show}
+            <Path {curve} tweened />
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
