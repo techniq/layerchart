@@ -13,6 +13,7 @@
       { label: 'Bar Chart (Horizontal)', value: 'Bars' },
       'DotPlot',
       'Histogram',
+      'Line',
       'PunchCard',
       'Scatter',
       'Threshold'
