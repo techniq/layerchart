@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-Rename Path to LinePath to better represent usage
+Rename `Path` to `Spline` to better represent usage

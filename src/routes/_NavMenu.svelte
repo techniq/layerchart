@@ -47,11 +47,11 @@
       'Bars',
       'ConnectedPoints',
       'Labels',
-      'LinePath',
       'Link',
       'Pie',
       'Points',
       'Rule',
+      'Spline',
       'Threshold'
     ],
     Interactions: ['Tooltip', 'TooltipContext', 'HighlightRect', 'HighlightLine', 'Zoom'],

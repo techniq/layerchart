@@ -1,5 +1,5 @@
-import api from '$lib/components/LinePath.svelte?raw&sveld';
-import source from '$lib/components/LinePath.svelte?raw';
+import api from '$lib/components/Spline.svelte?raw&sveld';
+import source from '$lib/components/Spline.svelte?raw';
 import pageSource from './+page.svelte?raw';
 
 export async function load() {

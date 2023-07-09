@@ -6,7 +6,7 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Circle from '$lib/components/Circle.svelte';
-  import LinePath from '$lib/components/LinePath.svelte';
+  import Spline from '$lib/components/Spline.svelte';
   import Points from '$lib/components/Points.svelte';
   import Zoom from '$lib/components/Zoom.svelte';
 
@@ -68,7 +68,7 @@
       <Svg>
         <Zoom bind:this={zoom} scroll={scrollMode} tweened={{ duration: 800, easing: cubicOut }}>
           {#if showPath}
-            <LinePath {curve} {tweened} />
+            <Spline {curve} {tweened} />
           {/if}
           {#if showPoints}
             <Points let:points>

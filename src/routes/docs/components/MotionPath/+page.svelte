@@ -6,7 +6,7 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import LinePath from '$lib/components/LinePath.svelte';
+  import Spline from '$lib/components/Spline.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -54,7 +54,7 @@
           <Axis placement="bottom" rule />
           {#if show}
             <MotionPath duration="3s" let:pathId let:objectId>
-              <LinePath id={pathId} {curve} draw={{ duration: 3000, easing: linear }} />
+              <Spline id={pathId} {curve} draw={{ duration: 3000, easing: linear }} />
               <circle id={objectId} r={5} class="fill-white stroke-black" />
             </MotionPath>
           {/if}
@@ -84,7 +84,7 @@
           <Axis placement="bottom" rule />
           {#if show}
             <MotionPath duration="3s" repeatCount="indefinite" let:pathId let:objectId>
-              <LinePath id={pathId} {curve} />
+              <Spline id={pathId} {curve} />
               <circle id={objectId} r={5} class="fill-white stroke-black" />
             </MotionPath>
           {/if}

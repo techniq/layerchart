@@ -5,8 +5,8 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import LinePath from '$lib/components/LinePath.svelte';
   import Points from '$lib/components/Points.svelte';
+  import Spline from '$lib/components/Spline.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -68,7 +68,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-        <LinePath {curve} {tweened} {draw} />
+        <Spline {curve} {tweened} {draw} />
         {#if showPoints}
           <Points {tweened} />
         {/if}
@@ -98,7 +98,7 @@
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
-            <LinePath {curve} draw />
+            <Spline {curve} draw />
           {/if}
         </Svg>
       </Chart>
@@ -125,7 +125,7 @@
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
-            <LinePath {curve} tweened />
+            <Spline {curve} tweened />
           {/if}
         </Svg>
       </Chart>

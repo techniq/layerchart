@@ -8,9 +8,9 @@
   import Axis from '$lib/components/Axis.svelte';
   import HighlightLine from '$lib/components/HighlightLine.svelte';
   import Labels from '$lib/components/Labels.svelte';
-  import LinePath from '$lib/components/LinePath.svelte';
   import Point from '$lib/components/Point.svelte';
   import Text from '$lib/components/Text.svelte';
+  import Spline from '$lib/components/Spline.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -50,7 +50,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <LinePath class="stroke-2 stroke-blue-500" />
+        <Spline class="stroke-2 stroke-blue-500" />
       </Svg>
     </Chart>
   </div>
@@ -73,7 +73,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <LinePath class="stroke-2 stroke-blue-500" />
+        <Spline class="stroke-2 stroke-blue-500" />
         <HighlightLine color="var(--color-blue-500)" />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
@@ -99,7 +99,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <LinePath class="stroke-2 stroke-blue-500" />
+        <Spline class="stroke-2 stroke-blue-500" />
         <Labels format="integer" />
       </Svg>
     </Chart>
@@ -129,7 +129,7 @@
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
           {@const color = fruitColors[fruit]}
-          <LinePath {data} class="stroke-2" stroke={color} />
+          <Spline {data} class="stroke-2" stroke={color} />
           <Point d={data[data.length - 1]} let:x let:y>
             <circle cx={x} cy={y} r={4} fill={color} />
             <Text
@@ -174,7 +174,7 @@
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
           {@const color = fruitColors[fruit]}
-          <LinePath {data} class="stroke-2" stroke={color} />
+          <Spline {data} class="stroke-2" stroke={color} />
           <Point d={data[data.length - 1]} let:x let:y>
             <circle cx={x} cy={y} r={4} fill={color} />
             <Text
@@ -221,7 +221,7 @@
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
           {@const color = fruitColors[fruit]}
-          <LinePath {data} class="stroke-2" stroke={color} />
+          <Spline {data} class="stroke-2" stroke={color} />
         {/each}
         <Labels format="integer" />
         <HighlightLine />
