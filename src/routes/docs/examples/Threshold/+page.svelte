@@ -9,7 +9,7 @@
   import Axis from '$lib/components/Axis.svelte';
   import HighlightRect from '$lib/components/HighlightRect.svelte';
   import Labels from '$lib/components/Labels.svelte';
-  import Path from '$lib/components/Path.svelte';
+  import LinePath from '$lib/components/LinePath.svelte';
   import Threshold from '$lib/components/Threshold.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
@@ -57,11 +57,11 @@
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Threshold curve={selectedCurve}>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
-            <Path pathData={linePathData} stroke-width="1.5" />
+            <LinePath pathData={linePathData} stroke-width="1.5" />
             <Area pathData={areaPathData} {clipPath} class="fill-green-500/30" />
           </g>
           <g slot="pathBelow" let:areaPathData let:clipPath let:linePathData>
-            <Path pathData={linePathData} stroke-dasharray="4" />
+            <LinePath pathData={linePathData} stroke-dasharray="4" />
             <Area pathData={areaPathData} {clipPath} class="fill-red-500/30" />
           </g>
         </Threshold>
@@ -89,11 +89,11 @@
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Threshold curve={curveStepAfter}>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
-            <Path pathData={linePathData} color="black" width="1.5" />
+            <LinePath pathData={linePathData} color="black" width="1.5" />
             <Area pathData={areaPathData} {clipPath} class="fill-green-500/30" />
           </g>
           <g slot="pathBelow" let:areaPathData let:clipPath let:linePathData>
-            <Path pathData={linePathData} color="black" width="1" stroke-dasharray="4" />
+            <LinePath pathData={linePathData} color="black" width="1" stroke-dasharray="4" />
             <Area pathData={areaPathData} {clipPath} class="fill-red-500/30" />
           </g>
         </Threshold>
@@ -129,11 +129,11 @@
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Threshold>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
-            <Path pathData={linePathData} color="black" width="1.5" />
+            <LinePath pathData={linePathData} color="black" width="1.5" />
             <Area pathData={areaPathData} {clipPath} class="fill-green-500/30" />
           </g>
           <g slot="pathBelow" let:areaPathData let:clipPath let:linePathData>
-            <Path pathData={linePathData} color="black" width="1" stroke-dasharray="4" />
+            <LinePath pathData={linePathData} color="black" width="1" stroke-dasharray="4" />
             <Area pathData={areaPathData} {clipPath} class="fill-red-500/30" />
           </g>
         </Threshold>

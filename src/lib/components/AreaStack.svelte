@@ -4,7 +4,7 @@
   import type { CurveFactory } from 'd3-shape';
 
   import Area from './Area.svelte';
-  import Path from './Path.svelte';
+  import LinePath from './LinePath.svelte';
 
   const { data, yScale, rGet } = getContext('LayerCake');
 
@@ -12,7 +12,7 @@
   type Datum = any;
 
   export let curve: CurveFactory | undefined = undefined;
-  export let defined: ComponentProps<Path>['defined'] | undefined = undefined;
+  export let defined: ComponentProps<LinePath>['defined'] | undefined = undefined;
   export let opacity = 0.3;
   export let line: boolean | any = false;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -24,7 +24,7 @@
 {#if line}
   <g class="line-group">
     {#each lineData as seriesData}
-      <Path
+      <LinePath
         data={seriesData}
         y={(d) => $yScale(d[1])}
         stroke={$rGet(seriesData)}

@@ -10,7 +10,7 @@
 
   import { motionStore } from '$lib/stores/motionStore';
 
-  import Path from './Path.svelte';
+  import LinePath from './LinePath.svelte';
 
   const { data: contextData, xGet, yGet, yRange } = getContext('LayerCake');
 
@@ -37,7 +37,7 @@
   export let defined: Parameters<Area<any>['defined']>[0] | undefined = undefined;
 
   /** Enable showing line */
-  export let line: boolean | ComponentProps<Path> = false;
+  export let line: boolean | ComponentProps<LinePath> = false;
 
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
@@ -55,7 +55,7 @@
 </script>
 
 {#if line}
-  <Path {data} {curve} {defined} {tweened} {...typeof line === 'object' ? line : null} />
+  <LinePath {data} {curve} {defined} {tweened} {...typeof line === 'object' ? line : null} />
 {/if}
 
 <path

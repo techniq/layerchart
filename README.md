@@ -14,7 +14,7 @@ Interactions
 
 SVG
 
-- Basic (Arc, Circle, Group, Line, Path, Text)
+- Basic (Arc, Circle, Group, Line, LinePath, Text)
 - Gradients and Patterns
 - ClipPath
 - Multi-line text

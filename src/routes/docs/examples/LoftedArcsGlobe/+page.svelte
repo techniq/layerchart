@@ -12,7 +12,7 @@
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Graticule from '$lib/components/Graticule.svelte';
-  import Path from '$lib/components/Path.svelte';
+  import LinePath from '$lib/components/LinePath.svelte';
   import Zoom from '$lib/components/Zoom.svelte';
 
   import EdgeFade from './EdgeFade.svelte';
@@ -98,7 +98,7 @@
             <EdgeFade {link}>
               <circle cx={source[0]} cy={source[1]} r={2} class="fill-black-500" />>
               <circle cx={target[0]} cy={target[1]} r={2} class="fill-black-500" />>
-              <Path
+              <LinePath
                 data={pathData}
                 x={(d) => d[0]}
                 y={(d) => d[1]}
