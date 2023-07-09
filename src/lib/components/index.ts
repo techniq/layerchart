@@ -27,6 +27,7 @@ export { default as Line } from './Line.svelte';
 export { default as LinePath } from './LinePath.svelte';
 export { default as LinearGradient } from './LinearGradient.svelte';
 export { default as Link } from './Link.svelte';
+export { default as MotionPath } from './MotionPath.svelte';
 export { default as Pack } from './Pack.svelte';
 export { default as Partition } from './Partition.svelte';
 export { default as Pattern } from './Pattern.svelte';

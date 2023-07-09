@@ -58,7 +58,15 @@
     Geo: ['GeoContext', 'GeoPath', 'GeoPoint', 'GeoTile', 'Graticule', 'TileImage'],
     Hierarchy: ['Pack', 'Partition', 'Sankey'],
     Clipping: ['ClipPath', 'ChartClipPath', 'CircleClipPath', 'RectClipPath'],
-    Other: ['Blur', 'Bounds', 'ColorRamp', 'LinearGradient', 'Pattern', 'RectClipPath']
+    Other: [
+      'Blur',
+      'Bounds',
+      'ColorRamp',
+      'LinearGradient',
+      'MotionPath',
+      'Pattern',
+      'RectClipPath'
+    ]
   };
 
   const utils = ['pivot'];
