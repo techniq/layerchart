@@ -9,7 +9,7 @@
   export let step = 1;
 </script>
 
-<Field let:id classes={{ input: 'mt-[6px] mb-1' }} {...$$restProps}>
+<Field let:id classes={{ input: 'mt-2 mb-1' }} {...$$restProps}>
   <span slot="prepend">
     <Button
       icon={mdiChevronLeft}
