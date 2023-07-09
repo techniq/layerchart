@@ -16,6 +16,7 @@
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
     "changeset": "changeset",
     "version": "changeset version",
+    "version-status": "changeset status -v",
     "publish": "changeset publish"
   },
   "devDependencies": {
