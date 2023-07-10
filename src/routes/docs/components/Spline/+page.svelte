@@ -135,7 +135,7 @@
   </Preview>
 </Toggle>
 
-<h2>start and end slots</h2>
+<h2>basic start and end slots</h2>
 
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
@@ -165,7 +165,7 @@
   </Preview>
 </Toggle>
 
-<h2>Label using start/end slots</h2>
+<h2>label using start/end slots</h2>
 
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">

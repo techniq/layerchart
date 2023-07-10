@@ -143,6 +143,7 @@
       x="date"
       xScale={scaleBand().padding(0.4)}
       y="value"
+      yBaseline={0}
       yNice
       padding={{ left: 16, bottom: 24 }}
     >

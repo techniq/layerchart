@@ -9,7 +9,7 @@ export async function load() {
       source,
       pageSource,
       description: '`<line>` element with tweened properties using `motionStore`',
-      related: ['components/Rule']
+      related: ['components/Rule', 'components/Spline']
     }
   };
 }

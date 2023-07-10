@@ -45,27 +45,27 @@
 
   export let data: any[] = [];
 
-  export let x: Accessor | Accessor[] = undefined;
-  export let y: Accessor | Accessor[] = undefined;
-  export let yScale: Function = undefined;
+  export let x: Accessor | Accessor[] | undefined = undefined;
+  export let y: Accessor | Accessor[] | undefined = undefined;
+  export let yScale: Function | undefined = undefined;
 
   /**
-   * xBaseline guaranteed to be visible in xDomain
+   * x value guaranteed to be visible in xDomain.  Useful with optional negative values since `xDomain={[0, null]}` would ignore negative values
    */
   export let xBaseline: number | null = null;
 
-  let xDomain = undefined;
+  let xDomain: [number, number] | undefined = undefined;
   $: if (xBaseline != null) {
     const xValues = data.flatMap((d) => getValue(x, d));
     xDomain = [min([xBaseline, ...xValues]), max([xBaseline, ...xValues])];
   }
 
   /**
-   * yBaseline guaranteed to be visible in yDomain
+   * y value guaranteed to be visible in yDomain.  Useful with optional negative values since `yDomain={[0, null]}` would ignore negative values
    */
   export let yBaseline: number | null = null;
 
-  let yDomain = undefined;
+  let yDomain: [number, number] | undefined = undefined;
   $: if (yBaseline != null) {
     const yValues = data.flatMap((d) => getValue(y, d));
     yDomain = [min([yBaseline, ...yValues]), max([yBaseline, ...yValues])];
