@@ -7,9 +7,11 @@
   import Axis from '$lib/components/Axis.svelte';
   import Points from '$lib/components/Points.svelte';
   import Spline from '$lib/components/Spline.svelte';
+  import Text from '$lib/components/Text.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
 
+  import Blockquote from '$lib/docs/Blockquote.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
   import RangeField from '$lib/docs/RangeField.svelte';
@@ -79,7 +81,7 @@
 
 <h1>Examples</h1>
 
-<h2>Draw</h2>
+<h2>draw</h2>
 
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
@@ -106,7 +108,7 @@
   </Preview>
 </Toggle>
 
-<h2>Tweened</h2>
+<h2>tweened</h2>
 
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
@@ -132,3 +134,104 @@
     </div>
   </Preview>
 </Toggle>
+
+<h2>start and end slots</h2>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+    <Field label="Show" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+    <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
+    <CurveMenuField bind:value={curve} />
+    <RangeField label="Points" bind:value={pointCount} min={2} />
+  </div>
+
+  <Preview>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          {#if show}
+            <Spline {curve}>
+              <circle slot="start" r={5} />
+              <circle slot="end" r={5} />
+            </Spline>
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
+
+<h2>Label using start/end slots</h2>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+    <Field label="Show" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+    <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
+    <CurveMenuField bind:value={curve} />
+    <RangeField label="Points" bind:value={pointCount} min={2} />
+  </div>
+
+  <Preview>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart {data} x="x" y="y" yNice padding={{ left: 48, bottom: 24, right: 48 }}>
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          {#if show}
+            <Spline {curve}>
+              <svelte:fragment slot="start">
+                <circle r={5} />
+                <Text value="start" textAnchor="end" verticalAnchor="middle" dx={-8} />
+              </svelte:fragment>
+
+              <svelte:fragment slot="end">
+                <circle r={5} />
+                <Text value="end" verticalAnchor="middle" dx={8} />
+              </svelte:fragment>
+            </Spline>
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
+
+<h2>end slot with draw</h2>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+    <Field label="Show" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+    <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
+    <CurveMenuField bind:value={curve} />
+    <RangeField label="Points" bind:value={pointCount} min={2} />
+  </div>
+
+  <Preview>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          {#if show}
+            <Spline {curve} draw={{ duration: 3000 }}>
+              <circle slot="end" r={5} />
+            </Spline>
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
+
+<Blockquote>
+  Because the draw transition and tweened store use different timers, there is no guarantee they
+  will start at the same time
+</Blockquote>

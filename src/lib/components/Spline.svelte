@@ -1,15 +1,18 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import type { tweened as tweenedStore } from 'svelte/motion';
+  import { getContext, tick } from 'svelte';
+  import { writable } from 'svelte/store';
+  import { tweened as tweenedStore } from 'svelte/motion';
   import { draw as _drawTransition } from 'svelte/transition';
+  import { cubicInOut } from 'svelte/easing';
 
   import { line as d3Line } from 'd3-shape';
   import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
   // import { interpolateString } from 'd3-interpolate';
   import { interpolatePath } from 'd3-interpolate-path';
+  import { cls } from 'svelte-ux';
 
   import { motionStore } from '$lib/stores/motionStore';
-  import { cls } from 'svelte-ux';
+  import Group from './Group.svelte';
 
   const { data: contextData, xGet, yGet } = getContext('LayerCake');
 
@@ -32,6 +35,7 @@
   export let curve: CurveFactory | CurveFactoryLineOnly | undefined = undefined;
   export let defined: Parameters<Line<any>['defined']>[0] | undefined = undefined;
 
+  let d: string | null = '';
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
   $: {
@@ -41,7 +45,7 @@
     if (curve) path.curve(curve);
     if (defined) path.defined(defined);
 
-    const d = pathData ?? path(data ?? $contextData);
+    d = pathData ?? path(data ?? $contextData);
     tweened_d.set(d);
   }
 
@@ -52,6 +56,39 @@
     // Anytime the path data changes, redraw
     $tweened_d;
     key = Symbol();
+  }
+
+  let pathEl: SVGPathElement | undefined = undefined;
+  const startPoint = writable<DOMPoint | undefined>(undefined);
+  $: endPoint = motionStore<DOMPoint | undefined>(undefined, {
+    tweened: draw
+      ? {
+          duration: (typeof draw === 'object' && draw.duration) || 800,
+          easing: (typeof draw === 'object' && draw.easing) || cubicInOut,
+          interpolate(a, b) {
+            return (t: number) => {
+              const totalLength = pathEl.getTotalLength();
+              const point = pathEl.getPointAtLength(totalLength * t);
+              return point;
+            };
+          }
+        }
+      : false
+  });
+
+  $: {
+    if ($$slots.start || $$slots.end) {
+      // Wait for path data to update DOM, then update
+      d;
+      tick().then(() => {
+        if (pathEl) {
+          startPoint.set(pathEl.getPointAtLength(0));
+
+          const totalLength = pathEl.getTotalLength();
+          endPoint.set(pathEl.getPointAtLength(totalLength));
+        }
+      });
+    }
   }
 </script>
 
@@ -64,5 +101,18 @@
     on:click
     on:mousemove
     on:mouseleave
+    bind:this={pathEl}
   />
+
+  {#if $$slots.start && $startPoint}
+    <Group x={$startPoint.x} y={$startPoint.y}>
+      <slot name="start" point={$startPoint} />
+    </Group>
+  {/if}
+
+  {#if $$slots.end && $endPoint}
+    <Group x={$endPoint.x} y={$endPoint.y}>
+      <slot name="end" point={$endPoint} />
+    </Group>
+  {/if}
 {/key}
