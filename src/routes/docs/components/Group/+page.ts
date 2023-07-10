@@ -8,6 +8,8 @@ export async function load() {
       api,
       source,
       pageSource,
+      description:
+        '`<g>` element with convenient x/y and center placement along with tweened properties using `motionStore`',
       related: [
         'examples/Pack',
         'examples/Partition',
