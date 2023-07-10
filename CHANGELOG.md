@@ -1,5 +1,19 @@
 # layerchart
 
+## 0.20.0
+
+### Minor Changes
+
+- Area improvements and simplification. Use `fill` and `class` instead of `color`. Remove default color and opacity. Improve docs ([`97175f6`](https://github.com/techniq/layerchart/commit/97175f611787ffd03bf6bcb6aa7beb7b8a036648))
+
+- Path improvements including `draw` prop, use `stroke` and `class` instead of `color` and `width` properties. Improve docs ([`97175f6`](https://github.com/techniq/layerchart/commit/97175f611787ffd03bf6bcb6aa7beb7b8a036648))
+
+- Rename `Path` to `Spline` to better represent usage ([`ab384bd`](https://github.com/techniq/layerchart/commit/ab384bdceeb577de3e1623abd61a0c654b828a6e))
+
+### Patch Changes
+
+- Add MotionPath component ([`ebd32e6`](https://github.com/techniq/layerchart/commit/ebd32e63e2424332e4fcc0c3b7a67bff0bed26f1))
+
 ## 0.19.0
 
 ### Minor Changes
