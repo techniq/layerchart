@@ -8,7 +8,8 @@ export async function load() {
       api,
       source,
       pageSource,
-      description: 'Animate an object along a path'
+      description: 'Animate an object along a path',
+      related: ['components/Spline']
     }
   };
 }
