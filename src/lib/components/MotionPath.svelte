@@ -12,12 +12,15 @@
   export let duration: string;
 
   /** Number of times the animation will occur */
-  export let repeatCount: number | 'indefinite' | undefined = 1;
+  export let repeatCount: number | 'indefinite' | undefined = undefined;
 
   /** Final state of the animation.  Freeze (last frame) or remove (first frame)
    * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill#animate
    * */
   export let fill: 'freeze' | 'remove' = 'freeze';
+
+  /** Rotation applied to the element animated along a path, usually to make it pointing in the direction of the animation */
+  export let rotate: number | 'auto' | 'auto-reverse' | undefined = undefined;
 
   // TODO: Investigate `calcMode:spline`, `keyTimes`, and `keySplines` to work with `svelte/easing`
   // https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/calcMode
@@ -33,7 +36,14 @@
 </script>
 
 <defs>
-  <animateMotion href="#{objectId}" dur={duration} {repeatCount} {fill} bind:this={animateEl}>
+  <animateMotion
+    href="#{objectId}"
+    dur={duration}
+    {repeatCount}
+    {fill}
+    {rotate}
+    bind:this={animateEl}
+  >
     <mpath href="#{pathId}" />
   </animateMotion>
 </defs>
