@@ -17,13 +17,13 @@ export type PropMotionOptions = {
 /**
  * Convenient wrapper to create a motion store (spring(), tweened()) based on properties, or fall back to basic writable() store
  */
-export function motionStore(value: any, options: MotionOptions) {
+export function motionStore<T = any>(value: any, options: MotionOptions) {
   if (options.spring) {
-    return spring(value, options.spring === true ? undefined : options.spring);
+    return spring<T>(value, options.spring === true ? undefined : options.spring);
   } else if (options.tweened) {
-    return tweened(value, options.tweened === true ? undefined : options.tweened);
+    return tweened<T>(value, options.tweened === true ? undefined : options.tweened);
   } else {
-    return writable(value);
+    return writable<T>(value);
   }
 }
 
