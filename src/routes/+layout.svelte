@@ -116,7 +116,7 @@
     }
 
     &.is-active {
-      @apply text-accent-300 bg-gray-500/10 border-accent-400;
+      @apply text-accent-100 bg-gray-500/10 border-accent-500;
     }
   }
 
