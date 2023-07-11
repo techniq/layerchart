@@ -15,8 +15,8 @@
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Circle cx={100} cy={100} r={20} />
-        <Circle cx={200} cy={200} r={20} class="fill-blue-500" />
-        <Circle cx={300} cy={150} r={20} class="stroke-2 stroke-blue-500 fill-blue-100" />
+        <Circle cx={200} cy={200} r={20} class="fill-accent-500" />
+        <Circle cx={300} cy={150} r={20} class="stroke-2 stroke-accent-500 fill-accent-100" />
       </Svg>
     </Chart>
   </div>

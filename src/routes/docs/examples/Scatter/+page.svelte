@@ -35,7 +35,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Points class="fill-blue-500 stroke-blue-800" />
+        <Points class="fill-accent-400 stroke-accent-800" />
       </Svg>
     </Chart>
   </div>
@@ -58,8 +58,8 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Points class="fill-blue-500 stroke-blue-800" />
-        <HighlightLine color="var(--color-blue-500)" />
+        <Points class="fill-accent-400 stroke-accent-800" />
+        <HighlightLine color="var(--color-accent-500)" />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />
@@ -84,7 +84,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Points class="fill-blue-500 stroke-blue-800" />
+        <Points class="fill-accent-400 stroke-accent-800" />
         <Labels format="integer" verticalAnchor="bottom" />
       </Svg>
     </Chart>

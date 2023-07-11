@@ -128,7 +128,7 @@
                 <Rect
                   width={nodeWidth}
                   height={nodeHeight}
-                  class="fill-blue-50 stroke-blue-400"
+                  class="fill-accent-50 stroke-accent-400"
                   stroke-width={node.data.children ? 2 : 1}
                   rx={10}
                 />
@@ -139,7 +139,7 @@
                   dy={-2}
                   textAnchor="middle"
                   verticalAnchor="middle"
-                  class="text-xs fill-blue-500"
+                  class="text-xs fill-accent-500"
                 />
               </Group>
             {/each}

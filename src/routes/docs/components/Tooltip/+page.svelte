@@ -136,8 +136,8 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Area class="fill-blue-500/30" line={{ class: 'stroke-blue-500 stroke-2' }} />
-        <HighlightLine color="var(--color-blue-500)" />
+        <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
+        <HighlightLine color="var(--color-accent-500)" />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />
@@ -163,8 +163,8 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Area class="fill-blue-500/30" line={{ class: 'stroke-blue-500 stroke-2' }} />
-        <HighlightLine color="var(--color-blue-500)" />
+        <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
+        <HighlightLine color="var(--color-accent-500)" />
       </Svg>
       <Tooltip class="bg-white text-gray-800 border border-gray-700" let:data>
         <div slot="header" class="font-semibold text-center">
@@ -204,11 +204,11 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Area class="fill-blue-500/30" line={{ class: 'stroke-blue-500 stroke-2' }} />
+        <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
         {#if charts.area.highlight === 'line'}
           <HighlightLine
             {...charts.area.axis && { axis: charts.area.axis }}
-            color="var(--color-blue-500)"
+            color="var(--color-accent-500)"
           />
         {:else if charts.area.highlight === 'rect'}
           <HighlightRect {...charts.area.axis && { axis: charts.area.axis }} />
@@ -295,11 +295,11 @@
       <Svg>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
-        <Points class="fill-blue-500 stroke-blue-800" />
+        <Points class="fill-accent-500 stroke-accent-800" />
         {#if charts.dateTime.highlight === 'line'}
           <HighlightLine
             {...charts.dateTime.axis && { axis: charts.dateTime.axis }}
-            color="var(--color-blue-500)"
+            color="var(--color-accent-500)"
           />
         {:else if charts.dateTime.highlight === 'rect'}
           <HighlightRect {...charts.dateTime.axis && { axis: charts.dateTime.axis }} />
@@ -340,11 +340,11 @@
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
         <ConnectedPoints stroke="#000" />
-        <Points class="fill-blue-500 stroke-blue-800" />
+        <Points class="fill-accent-500 stroke-accent-800" />
         {#if charts.duration.highlight === 'line'}
           <HighlightLine
             {...charts.duration.axis && { axis: charts.duration.axis }}
-            color="var(--color-blue-500)"
+            color="var(--color-accent-500)"
           />
         {:else if charts.duration.highlight === 'rect'}
           <HighlightRect {...charts.duration.axis && { axis: charts.duration.axis }} />
@@ -389,11 +389,11 @@
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
         <ConnectedPoints stroke="#000" />
-        <Points class="fill-blue-500 stroke-blue-800" />
+        <Points class="fill-accent-500 stroke-accent-800" />
         {#if charts.multiDuration.highlight === 'line'}
           <HighlightLine
             {...charts.multiDuration.axis && { axis: charts.multiDuration.axis }}
-            color="var(--color-blue-500)"
+            color="var(--color-accent-500)"
           />
         {:else if charts.multiDuration.highlight === 'rect'}
           <HighlightRect {...charts.multiDuration.axis && { axis: charts.multiDuration.axis }} />
@@ -527,11 +527,11 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" grid rule />
-        <Points class="fill-blue-500 stroke-blue-800" />
+        <Points class="fill-accent-500 stroke-accent-800" />
         {#if charts.scatter.highlight === 'line'}
           <HighlightLine
             {...charts.scatter.axis && { axis: charts.scatter.axis }}
-            color="var(--color-blue-500)"
+            color="var(--color-accent-500)"
           />
         {:else if charts.scatter.highlight === 'rect'}
           <HighlightRect {...charts.scatter.axis && { axis: charts.scatter.axis }} />

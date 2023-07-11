@@ -7,7 +7,7 @@ module.exports = {
     extend: {
       colors: {
         'color-var': 'var(--color)',
-        accent: colors.blue
+        accent: colors.indigo
       }
     }
   },

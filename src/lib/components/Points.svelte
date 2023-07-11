@@ -14,7 +14,7 @@
   export let offsetX: Offset = undefined;
   export let offsetY: Offset = undefined;
   export let color: string | ((obj: { value: any; item: any; index: number }) => string) =
-    'var(--color-blue-500)';
+    'var(--color-accent-500)';
 
   function getOffset(value, offset: Offset, scale: any) {
     if (typeof offset === 'function') {

@@ -53,8 +53,8 @@
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
         <ConnectedPoints stroke="#000" />
-        <Points class="fill-blue-500 stroke-blue-800" />
-        <HighlightLine color="var(--color-blue-500)" />
+        <Points class="fill-accent-400 stroke-accent-800" />
+        <HighlightLine color="var(--color-accent-500)" />
         <HighlightRect />
       </Svg>
       <Tooltip header={(data) => data.name} let:data>

@@ -27,7 +27,7 @@
     } else if ($config.r) {
       return $rGet(item);
     } else {
-      return 'var(--color-blue-500)';
+      return 'var(--color-accent-500)';
     }
   }
 

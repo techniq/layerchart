@@ -21,7 +21,7 @@
   $: _y = y ? (typeof y === 'string' ? (d) => d[y] : y) : $yContext;
 
   export let color: string | ((obj: { value: any; item: any; index: number }) => string) =
-    'var(--color-blue-500)';
+    'var(--color-accent-500)';
   export let opacity = 1;
   export let stroke = 'black';
   export let strokeWidth = 0;

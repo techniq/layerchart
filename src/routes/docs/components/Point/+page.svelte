@@ -23,8 +23,8 @@
         <Point d={{ x: 50, y: 50 }} let:x let:y>
           <circle cx={x} cy={y} r={10} />
         </Point>
-        <Point d={{ x: 10, y: 10 }} let:x let:y>
-          <circle cx={x} cy={y} r={5} class="fill-blue-500" />
+        <Point d={{ x: 20, y: 20 }} let:x let:y>
+          <circle cx={x} cy={y} r={15} class="fill-accent-500" />
         </Point>
       </Svg>
     </Chart>

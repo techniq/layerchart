@@ -11,7 +11,7 @@
 
 {#if source}
   <Toggle let:on={open} let:toggle>
-    <Button {icon} on:click={toggle} variant="fill-light" color="blue" size="sm">{label}</Button>
+    <Button {icon} on:click={toggle} variant="fill-light" color="accent" size="sm">{label}</Button>
     <Dialog
       {open}
       on:close={toggle}
@@ -35,13 +35,13 @@
       </div>
 
       <div slot="actions">
-        <Button variant="fill" color="blue">Close</Button>
+        <Button variant="fill" color="accent">Close</Button>
       </div>
     </Dialog>
   </Toggle>
 {:else if href}
   <Tooltip title="Edit this page">
-    <Button {icon} {href} target="_blank" variant="fill-light" color="blue" size="sm">
+    <Button {icon} {href} target="_blank" variant="fill-light" color="accent" size="sm">
       {label}
     </Button>
   </Tooltip>

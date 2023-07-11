@@ -47,7 +47,7 @@
       <div>
         <div class="inline-block text-xs font-bold text-gray-500 capitalize">Docs</div>
         <Icon path={mdiChevronRight} class="divider opacity-25" />
-        <div class="inline-block text-xs font-bold text-blue-500 capitalize">
+        <div class="inline-block text-xs font-bold text-accent-500 capitalize">
           {type}
         </div>
       </div>
@@ -83,7 +83,7 @@
               showTableOfContents = !showTableOfContents;
             }}
             variant="fill-light"
-            color="blue"
+            color="accent"
             size="sm"
           >
             On this page

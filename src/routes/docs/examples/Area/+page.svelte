@@ -50,7 +50,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Area line={{ class: 'stroke-2 stroke-blue-500' }} class="fill-blue-500/30" />
+        <Area line={{ class: 'stroke-2 stroke-accent-500' }} class="fill-accent-500/30" />
       </Svg>
     </Chart>
   </div>
@@ -73,8 +73,8 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Area line={{ class: 'stroke-2 stroke-blue-500' }} class="fill-blue-500/30" />
-        <HighlightLine color="var(--color-blue-500)" />
+        <Area line={{ class: 'stroke-2 stroke-accent-500' }} class="fill-accent-500/30" />
+        <HighlightLine color="var(--color-accent-500)" />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />
@@ -99,7 +99,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Area line={{ class: 'stroke-2 stroke-blue-500' }} class="fill-blue-500/30" />
+        <Area line={{ class: 'stroke-2 stroke-accent-500' }} class="fill-accent-500/30" />
         <Labels format="integer" />
       </Svg>
     </Chart>
