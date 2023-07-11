@@ -70,7 +70,7 @@
   </div>
 </div>
 
-<div class="flex items-center justify-between bg-white p-4">
+<div class="flex items-center justify-center bg-white p-4">
   <svg width={resizeSvg ? width : 300} class="h-56 border">
     <Text
       {value}
