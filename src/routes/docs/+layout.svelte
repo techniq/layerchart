@@ -1,7 +1,11 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+  import { fade, slide } from 'svelte/transition';
   import { flatGroup } from 'd3-array';
+
   import {
     mdiCheckCircle,
+    mdiChevronDown,
     mdiChevronRight,
     mdiCodeBraces,
     mdiCodeTags,
@@ -10,10 +14,10 @@
     mdiLink
   } from '@mdi/js';
 
-  import { ApiDocs, Icon, ListItem, TableOfContents } from 'svelte-ux';
+  import { ApiDocs, Button, Icon, ListItem, TableOfContents, xlScreen } from 'svelte-ux';
+
   import Code from '$lib/docs/Code.svelte';
   import ViewSourceButton from '$lib/docs/ViewSourceButton.svelte';
-
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
 
@@ -25,6 +29,11 @@
     : null;
   $: ({ description, features, related, hideUsage, hideTableOfContents, source, pageSource, api } =
     $page.data.meta ?? {});
+
+  $: showTableOfContents = false;
+  onMount(() => {
+    showTableOfContents = !hideTableOfContents && $xlScreen;
+  });
 
   function getRelated(r: string) {
     const [type, name] = r.split('/');
@@ -65,11 +74,34 @@
           href={pageUrl ? `https://github.com/techniq/layerchart/blob/master/${pageUrl}` : ''}
           icon={mdiFileDocumentEditOutline}
         />
+
+        {#if !hideTableOfContents}
+          <Button
+            icon={mdiChevronDown}
+            on:click={() => {
+              console.log('click');
+              showTableOfContents = !showTableOfContents;
+            }}
+            variant="fill-light"
+            color="blue"
+            size="sm"
+          >
+            On this page
+          </Button>
+        {/if}
       </div>
     {/if}
   </div>
 
-  <div class="grid grid-cols-[1fr,auto] gap-6 pt-2 pb-4">
+  {#if showTableOfContents && !$xlScreen}
+    <div transition:fade class="mt-3">
+      {#key $page.route.id}
+        <TableOfContents />
+      {/key}
+    </div>
+  {/if}
+
+  <div class="grid xl:grid-cols-[1fr,auto] gap-6 pt-2 pb-4">
     <div class="overflow-auto">
       {#if type === 'components' && !hideUsage}
         {#key $page.route.id}
@@ -137,9 +169,9 @@
       {/if}
     </div>
 
-    {#if !hideTableOfContents}
-      <div class="hidden lg:block w-[224px]">
-        <div class="sticky top-0 pr-2 max-h-[calc(100vh-64px)] overflow-auto">
+    {#if showTableOfContents && $xlScreen}
+      <div transition:slide={{ axis: 'x' }}>
+        <div class="w-[224px] sticky top-0 pr-2 max-h-[calc(100vh-64px)] overflow-auto">
           <div class="text-xs uppercase leading-8 tracking-widest text-black/50">On this page</div>
           <!-- Rebuild toc when page changes -->
           {#key $page.route.id}
