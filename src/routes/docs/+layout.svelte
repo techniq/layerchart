@@ -11,6 +11,7 @@
     mdiCodeTags,
     mdiDatabaseOutline,
     mdiFileDocumentEditOutline,
+    mdiGithub,
     mdiLink
   } from '@mdi/js';
 
@@ -21,7 +22,7 @@
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
 
-  $: [path, type, name] = $page.url.pathname.match('.*/(.*)/(.*)');
+  $: [path, type, name] = $page.url.pathname.match('.*/(.*)/(.*)') ?? [];
   $: title = $page.data.meta?.title ?? name;
   $: pageUrl = `src/routes/docs/${type}/${name}/+page.svelte?plain=1`;
   $: sourceUrl = ['components', 'utils'].includes(type)
@@ -36,12 +37,21 @@
   });
 
   function getRelated(r: string) {
-    const [type, name] = r.split('/');
-    return { type, name, url: `/docs/${type}/${name}` };
+    if (r.startsWith('http')) {
+      var url = new URL(r);
+      if (url.hostname.includes('github.com')) {
+        return { type: 'github', name: url.pathname.slice(1), url };
+      } else {
+        return { type: 'website', name: url, url };
+      }
+    } else {
+      const [type, name] = r.split('/');
+      return { type, name, url: `/docs/${type}/${name}` };
+    }
   }
 </script>
 
-<div class="grid grid-rows-[auto,1fr] h-full p-4">
+<div class="p-4">
   <div>
     {#if title}
       <div>
@@ -94,7 +104,7 @@
   </div>
 
   {#if showTableOfContents && !$xlScreen}
-    <div transition:fade class="mt-3">
+    <div transition:fade|local class="mt-3">
       {#key $page.route.id}
         <TableOfContents />
       {/key}
@@ -145,12 +155,22 @@
                     ? mdiDatabaseOutline
                     : item.type === 'actions'
                     ? mdiCodeBraces
+                    : item.type === 'github'
+                    ? mdiGithub
                     : mdiLink}
                 <ListItem
                   title={item.name}
                   {icon}
                   avatar={{ size: 'sm', class: 'text-xs text-white bg-accent-500' }}
-                  on:click={() => goto(item.url)}
+                  on:click={() => {
+                    if (item.url instanceof URL) {
+                      // open in new window
+                      window.open(item.url);
+                    } else {
+                      // go to route
+                      goto(item.url);
+                    }
+                  }}
                   class="hover:bg-accent-50 cursor-pointer"
                 >
                   <div slot="actions">
@@ -170,7 +190,7 @@
     </div>
 
     {#if showTableOfContents && $xlScreen}
-      <div transition:slide={{ axis: 'x' }}>
+      <div transition:slide|local={{ axis: 'x' }}>
         <div class="w-[224px] sticky top-0 pr-2 max-h-[calc(100vh-64px)] overflow-auto">
           <div class="text-xs uppercase leading-8 tracking-widest text-black/50">On this page</div>
           <!-- Rebuild toc when page changes -->
