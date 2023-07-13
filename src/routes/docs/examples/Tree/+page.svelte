@@ -62,21 +62,13 @@
 <div class="grid gap-1 mb-4">
   <div class="grid grid-cols-[1fr,2fr,1fr] gap-1">
     <Field label="Orientation">
-      <ToggleGroup
-        bind:value={orientation}
-        variant="contained"
-        classes={{ root: 'w-full', options: 'w-full' }}
-      >
+      <ToggleGroup bind:value={orientation} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="horizontal">Horizontal</ToggleOption>
         <ToggleOption value="vertical">Vertical</ToggleOption>
       </ToggleGroup>
     </Field>
     <Field label="Curve">
-      <ToggleGroup
-        bind:value={curve}
-        variant="contained"
-        classes={{ root: 'w-full', options: 'w-full' }}
-      >
+      <ToggleGroup bind:value={curve} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value={curveBumpX}>BumpX</ToggleOption>
         <ToggleOption value={curveBumpY}>BumpY</ToggleOption>
         <ToggleOption value={curveStep}>Step</ToggleOption>
@@ -85,11 +77,7 @@
       </ToggleGroup>
     </Field>
     <Field label="Layout">
-      <ToggleGroup
-        bind:value={layout}
-        variant="contained"
-        classes={{ root: 'w-full', options: 'w-full' }}
-      >
+      <ToggleGroup bind:value={layout} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="chart">Chart</ToggleOption>
         <ToggleOption value="node">Node</ToggleOption>
       </ToggleGroup>

@@ -29,11 +29,7 @@
     <RangeField label="width" bind:value={width} max={300} />
 
     <Field label="textAnchor" classes={{ input: 'mt-[6px] mb-1' }}>
-      <ToggleGroup
-        bind:value={textAnchor}
-        variant="contained"
-        classes={{ root: 'w-full', options: 'w-full' }}
-      >
+      <ToggleGroup bind:value={textAnchor} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="start">start</ToggleOption>
         <ToggleOption value="middle">middle</ToggleOption>
         <ToggleOption value="end">end</ToggleOption>
@@ -41,11 +37,7 @@
     </Field>
 
     <Field label="verticalAnchor" classes={{ input: 'mt-[6px] mb-1' }}>
-      <ToggleGroup
-        bind:value={verticalAnchor}
-        variant="contained"
-        classes={{ root: 'w-full', options: 'w-full' }}
-      >
+      <ToggleGroup bind:value={verticalAnchor} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="start">start</ToggleOption>
         <ToggleOption value="middle">middle</ToggleOption>
         <ToggleOption value="end">end</ToggleOption>

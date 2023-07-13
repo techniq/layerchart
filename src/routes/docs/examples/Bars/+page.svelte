@@ -402,11 +402,7 @@
 
 <div class="grid grid-cols-[1fr,1fr] gap-2 mb-2">
   <Field label="Mode">
-    <ToggleGroup
-      bind:value={transitionChartMode}
-      variant="contained"
-      classes={{ root: 'w-full', options: 'w-full' }}
-    >
+    <ToggleGroup bind:value={transitionChartMode} variant="outline" size="sm" inset class="w-full">
       <ToggleOption value="group">Grouped</ToggleOption>
       <ToggleOption value="stack">Stacked</ToggleOption>
       <ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>

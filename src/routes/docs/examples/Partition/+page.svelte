@@ -91,31 +91,19 @@
   <div class="grid grid-cols-[2fr,1fr,1fr,1fr] gap-2">
     <RangeField label="Padding" bind:value={padding} max={20} />
     <Field label="Full-size Leaf Nodes">
-      <ToggleGroup
-        bind:value={fullSizeLeafNodes}
-        variant="contained"
-        classes={{ root: 'w-full', options: 'w-full' }}
-      >
+      <ToggleGroup bind:value={fullSizeLeafNodes} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value={true}>Yes</ToggleOption>
         <ToggleOption value={false}>No</ToggleOption>
       </ToggleGroup>
     </Field>
     <Field label="Round">
-      <ToggleGroup
-        bind:value={round}
-        variant="contained"
-        classes={{ root: 'w-full', options: 'w-full' }}
-      >
+      <ToggleGroup bind:value={round} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value={true}>Yes</ToggleOption>
         <ToggleOption value={false}>No</ToggleOption>
       </ToggleGroup>
     </Field>
     <Field label="Color By">
-      <ToggleGroup
-        bind:value={colorBy}
-        variant="contained"
-        classes={{ root: 'w-full', options: 'w-full' }}
-      >
+      <ToggleGroup bind:value={colorBy} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="children">Children</ToggleOption>
         <ToggleOption value="depth">Depth</ToggleOption>
         <ToggleOption value="parent">Parent</ToggleOption>

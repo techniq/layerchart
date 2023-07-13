@@ -65,14 +65,10 @@
 </script>
 
 <div class="grid grid-flow-col gap-4 mb-4">
-  <div class="grid grid-cols-[2fr,1fr,1fr] gap-2">
+  <div class="grid grid-cols-[2fr,1fr] gap-2">
     <RangeField label="Padding" bind:value={padding} max={50} />
     <Field label="Color By">
-      <ToggleGroup
-        bind:value={colorBy}
-        variant="contained"
-        classes={{ root: 'w-full', options: 'w-full' }}
-      >
+      <ToggleGroup bind:value={colorBy} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="parent">Parent</ToggleOption>
         <ToggleOption value="depth">Depth</ToggleOption>
       </ToggleGroup>
