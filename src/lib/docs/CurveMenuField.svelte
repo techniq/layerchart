@@ -9,6 +9,7 @@
   const options = Object.keys(d3shapes)
     .filter((key) => key.startsWith('curve'))
     .filter((key) => !key.endsWith('Open') && !key.endsWith('Closed'))
+    .filter((key) => !key.includes('Bundle')) // Not compatibile with area
     .map((key) => {
       return {
         label: key.replace('curve', ''),
