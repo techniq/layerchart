@@ -1,5 +1,13 @@
 # layerchart
 
+## 0.20.1
+
+### Patch Changes
+
+- Bump all non-major dependencies ([`7849bd3`](https://github.com/techniq/layerchart/commit/7849bd3fb8d9579f9bf83f42c8c9bb55d15fd909))
+
+- Documentation improvements
+
 ## 0.20.0
 
 ### Minor Changes
