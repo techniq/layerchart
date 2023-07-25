@@ -61,7 +61,6 @@
     <TextField
       label="GeoJSON"
       bind:value={geojsonStr}
-      shrinkLabel
       placeholder="Please enter valid geojson"
       multiline
       actions={(node) => [autoHeight(node)]}
