@@ -19,7 +19,7 @@
     left: 0,
     data: null,
     show: () => {},
-    hide: () => {}
+    hide: () => {},
   });
   export function tooltipContext() {
     return getContext<TooltipContext>(tooltipContextKey) ?? defaultContext;
@@ -45,7 +45,6 @@
   import { isScaleBand, scaleInvert } from '$lib/utils/scales';
   import { quadtreeRects } from '$lib/utils/quadtree';
   import { createPropertySortFunc, createSortFunc } from 'svelte-ux/utils/sort';
-  import { firstValue } from '$lib/utils/rect';
 
   const dispatch = createEventDispatcher<{ click: { data: any } }>();
 
@@ -213,7 +212,7 @@
         ...$tooltip,
         left: snapToDataX ? $xGet(tooltipData) + $padding.left : localX,
         top: snapToDataY ? $yGet(tooltipData) + $padding.top : localY,
-        data: tooltipData
+        data: tooltipData,
       };
     } else {
       // Hide tooltip if unable to locate
@@ -250,7 +249,7 @@
     quadtree = d3Quadtree()
       .extent([
         [0, 0],
-        [$width, $height]
+        [$width, $height],
       ])
       .x((d) => {
         const value = $xGet(d);
@@ -285,11 +284,11 @@
   $: if (mode === 'bounds' || mode === 'band') {
     rects = $flatData
       .map((d) => {
-        const xValue = firstValue($xGet(d));
-        const yValue = firstValue($yGet(d));
+        const xValue = $xGet(d);
+        const yValue = $yGet(d);
 
-        const x = Array.isArray(xValue) ? min(xValue) : xValue;
-        const y = Array.isArray(yValue) ? max(yValue) : yValue;
+        const x = Array.isArray(xValue) ? xValue[0] : xValue;
+        const y = Array.isArray(yValue) ? yValue[0] : yValue;
 
         const xOffset = isScaleBand($xScale) ? ($xScale.padding() * $xScale.step()) / 2 : 0;
         const yOffset = isScaleBand($yScale) ? ($yScale.padding() * $yScale.step()) / 2 : 0;
@@ -304,7 +303,7 @@
             y: isScaleBand($yScale) ? y - yOffset : min($yRange),
             width: isScaleBand($xScale) ? $xScale.step() : fullWidth,
             height: isScaleBand($yScale) ? $yScale.step() : fullHeight,
-            data: d
+            data: d,
           };
         } else if (mode === 'bounds') {
           return {
@@ -322,7 +321,7 @@
               : isScaleBand($yScale)
               ? $yScale.step()
               : max($yRange) - y,
-            data: d
+            data: d,
           };
         }
       })
