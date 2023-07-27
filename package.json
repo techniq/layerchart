@@ -85,7 +85,7 @@
     "lodash-es": "^4.17.21",
     "shapefile": "^0.6.6",
     "svelte": "^3.59.1",
-    "svelte-ux": "^0.47.0",
+    "svelte-ux": "^0.47.1",
     "topojson-client": "^3.1.0"
   },
   "main": "./dist/index.js",
