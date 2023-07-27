@@ -90,7 +90,7 @@ export function tweenedScale(scale, tweenedOptions: Parameters<typeof tweened>[1
   return {
     subscribe: tweenedScale.subscribe,
     domain: (values) => tweenedDomain.set(values),
-    range: (values) => tweenedRange.set(values)
+    range: (values) => tweenedRange.set(values),
   };
 }
 
@@ -117,7 +117,7 @@ export function springScale(scale, springOptions: Parameters<typeof spring>[1] =
   return {
     subscribe: tweenedScale.subscribe,
     domain: (values) => domainStore.set(values),
-    range: (values) => rangeStore.set(values)
+    range: (values) => rangeStore.set(values),
   };
 }
 
@@ -144,6 +144,6 @@ export function motionScale(scale, options: MotionOptions) {
   return {
     subscribe: tweenedScale.subscribe,
     domain: (values) => domainStore.set(values),
-    range: (values) => rangeStore.set(values)
+    range: (values) => rangeStore.set(values),
   };
 }

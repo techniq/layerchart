@@ -16,8 +16,8 @@ export async function load() {
         'examples/Partition',
         'examples/Sankey',
         'examples/Tree',
-        'examples/Treemap'
-      ]
-    }
+        'examples/Treemap',
+      ],
+    },
   };
 }

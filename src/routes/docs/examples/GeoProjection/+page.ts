@@ -9,7 +9,7 @@ export async function load({ fetch }) {
       await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json')
     ).json(),
     meta: {
-      pageSource
-    }
+      pageSource,
+    },
   };
 }

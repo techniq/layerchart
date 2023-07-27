@@ -8,7 +8,7 @@ export async function load({ url }) {
     geojson: file ? read(file) : null,
     meta: {
       pageSource,
-      hideTableOfContents: true
-    }
+      hideTableOfContents: true,
+    },
   };
 }

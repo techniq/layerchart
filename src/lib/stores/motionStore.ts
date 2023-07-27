@@ -43,6 +43,6 @@ export function resolveOptions(prop: string, options: PropMotionOptions) {
         ? options.tweened
         : prop in options.tweened
         ? options.tweened[prop]
-        : options.tweened
+        : options.tweened,
   };
 }

@@ -42,7 +42,7 @@ export function createStackData(
           return {
             ...itemData[0], // TODO: More than one should use stacks or aggregate values?
             keys: options.stackBy ? [...groupKeys, series.key] : groupKeys,
-            values: options.stackBy ? [s[0], s[1]] : [0, sum(itemData, (d) => d.value)]
+            values: options.stackBy ? [s[0], s[1]] : [0, sum(itemData, (d) => d.value)],
           };
         });
       });
@@ -63,7 +63,7 @@ export function createStackData(
         return {
           ...s.data,
           keys: [s.data[options.xKey], series.key],
-          values: [s[0], s[1]]
+          values: [s[0], s[1]],
         };
       });
     });
@@ -77,7 +77,7 @@ export function createStackData(
         (items) => {
           return {
             keys: [items[0][options.xKey]],
-            values: [0, sum(items, (d) => d.value)]
+            values: [0, sum(items, (d) => d.value)],
           };
         },
         (d) => d[options.xKey]

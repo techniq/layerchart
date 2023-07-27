@@ -20,7 +20,7 @@ export function localPoint(node: Element, event: MouseEvent | TouchEvent) {
 
     return {
       x: point.x,
-      y: point.y
+      y: point.y,
     };
   }
 
@@ -29,7 +29,7 @@ export function localPoint(node: Element, event: MouseEvent | TouchEvent) {
 
   return {
     x: coords.x - rect.left - node.clientLeft,
-    y: coords.y - rect.top - node.clientTop
+    y: coords.y - rect.top - node.clientTop,
   };
 }
 
@@ -40,13 +40,13 @@ function getPointFromEvent(event?: MouseEvent | TouchEvent) {
     return event.changedTouches.length > 0
       ? {
           x: event.changedTouches[0].clientX,
-          y: event.changedTouches[0].clientY
+          y: event.changedTouches[0].clientY,
         }
       : { x: 0, y: 0 };
   }
 
   return {
     x: event.clientX,
-    y: event.clientY
+    y: event.clientY,
   };
 }

@@ -4,7 +4,7 @@ export async function load() {
   return {
     meta: {
       pageSource,
-      related: ['components/Sankey', 'components/Link']
-    }
+      related: ['components/Sankey', 'components/Link'],
+    },
   };
 }

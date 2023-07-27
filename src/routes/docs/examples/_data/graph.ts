@@ -16,7 +16,7 @@ export const simpleData = {
     { id: 'C2' },
     { id: 'C3' },
     { id: 'D1' },
-    { id: 'D2' }
+    { id: 'D2' },
   ],
   links: [
     { source: 'A1', target: 'B1', value: 27 },
@@ -31,8 +31,8 @@ export const simpleData = {
     { source: 'B4', target: 'C3', value: 2 },
     { source: 'B1', target: 'D1', value: 4 },
     { source: 'C3', target: 'D1', value: 1 },
-    { source: 'C3', target: 'D2', value: 1 }
-  ]
+    { source: 'C3', target: 'D2', value: 1 },
+  ],
 };
 
 export const complexData = {
@@ -84,7 +84,7 @@ export const complexData = {
     { name: 'Tidal' },
     { name: 'UK land based bioenergy' },
     { name: 'Wave' },
-    { name: 'Wind' }
+    { name: 'Wind' },
   ],
   links: [
     { source: 0, target: 1, value: 124.729 },
@@ -154,178 +154,178 @@ export const complexData = {
     { source: 44, target: 15, value: 9.452 },
     { source: 45, target: 1, value: 182.01 },
     { source: 46, target: 15, value: 19.013 },
-    { source: 47, target: 15, value: 289.366 }
-  ]
+    { source: 47, target: 15, value: 289.366 },
+  ],
 };
 
 // https://www.fusioncharts.com/charts/sankey-diagram/vertical-sankey-diagram?framework=javascript
 export const bilateralTradeValue2013 = {
   nodes: [
     {
-      label: 'Netherlands'
+      label: 'Netherlands',
     },
     {
-      label: 'Canada'
+      label: 'Canada',
     },
     {
-      label: 'Belgium'
+      label: 'Belgium',
     },
     {
-      label: 'Italy'
+      label: 'Italy',
     },
     {
-      label: 'Mexico'
+      label: 'Mexico',
     },
     {
-      label: 'Russia'
+      label: 'Russia',
     },
     {
-      label: 'Spain'
+      label: 'Spain',
     },
     {
-      label: 'South Korea'
+      label: 'South Korea',
     },
     {
-      label: 'Germany'
+      label: 'Germany',
     },
     {
-      label: 'China'
+      label: 'China',
     },
     {
-      label: 'European Union'
+      label: 'European Union',
     },
     {
-      label: 'Japan'
+      label: 'Japan',
     },
     {
-      label: 'United Kingdom'
+      label: 'United Kingdom',
     },
     {
-      label: 'United States'
+      label: 'United States',
     },
     {
-      label: 'France'
+      label: 'France',
     },
     {
-      label: 'Hong Kong'
+      label: 'Hong Kong',
     },
     {
-      label: 'Switzerland'
+      label: 'Switzerland',
     },
     {
-      label: 'Austria'
+      label: 'Austria',
     },
     {
-      label: 'Sweden'
-    }
+      label: 'Sweden',
+    },
   ],
   links: [
     {
       from: 'Netherlands',
       to: 'European Union',
-      value: 798744
+      value: 798744,
     },
     {
       from: 'Germany',
       to: 'European Union',
-      value: 1468990
+      value: 1468990,
     },
     {
       from: 'European Union',
       to: 'France',
-      value: 745931
+      value: 745931,
     },
     {
       from: 'European Union',
       to: 'United States',
-      value: 660541
+      value: 660541,
     },
     {
       from: 'Canada',
       to: 'United States',
-      value: 594546
+      value: 594546,
     },
     {
       from: 'Belgium',
       to: 'European Union',
-      value: 628796
+      value: 628796,
     },
     {
       from: 'China',
       to: 'Hong Kong',
-      value: 400571
+      value: 400571,
     },
     {
       from: 'China',
       to: 'United States',
-      value: 526454
+      value: 526454,
     },
     {
       from: 'European Union',
       to: 'United Kingdom',
-      value: 520318
+      value: 520318,
     },
     {
       from: 'China',
       to: 'European Union',
-      value: 560536
+      value: 560536,
     },
     {
       from: 'Italy',
       to: 'European Union',
-      value: 539556
+      value: 539556,
     },
     {
       from: 'Mexico',
       to: 'United States',
-      value: 492715
+      value: 492715,
     },
     {
       from: 'Russia',
       to: 'European Union',
-      value: 385778
+      value: 385778,
     },
     {
       from: 'Spain',
       to: 'European Union',
-      value: 365191
+      value: 365191,
     },
     {
       from: 'China',
       to: 'Japan',
-      value: 312062
+      value: 312062,
     },
     {
       from: 'European Union',
       to: 'Switzerland',
-      value: 328609
+      value: 328609,
     },
     {
       from: 'South Korea',
       to: 'China',
-      value: 229073
+      value: 229073,
     },
     {
       from: 'European Union',
       to: 'Austria',
-      value: 244913
+      value: 244913,
     },
     {
       from: 'Japan',
       to: 'United States',
-      value: 206091
+      value: 206091,
     },
     {
       from: 'European Union',
       to: 'Sweden',
-      value: 204849
+      value: 204849,
     },
     {
       from: 'Germany',
       to: 'United States',
-      value: 184287
-    }
-  ]
+      value: 184287,
+    },
+  ],
 };
 
 // https://bl.ocks.org/d3noob/5028304
@@ -415,7 +415,7 @@ export const greenhouse = {
     { source: 'Waste', target: 'Landfills', value: '1.7' },
     { source: 'Waste', target: 'Waste water - Other Waste', value: '1.5' },
     { source: 'Waste water - Other Waste', target: 'Methane', value: '1.2' },
-    { source: 'Waste water - Other Waste', target: 'Nitrous Oxide', value: '0.3' }
+    { source: 'Waste water - Other Waste', target: 'Nitrous Oxide', value: '0.3' },
   ],
   nodes: [
     { name: 'Energy' },
@@ -457,6 +457,6 @@ export const greenhouse = {
     { name: 'Carbon Dioxide' },
     { name: 'HFCs - PFCs' },
     { name: 'Methane' },
-    { name: 'Nitrous Oxide' }
-  ]
+    { name: 'Nitrous Oxide' },
+  ],
 };

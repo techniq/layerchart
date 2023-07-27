@@ -8,7 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
-      related: ['components/Axis', 'components/Line']
-    }
+      related: ['components/Axis', 'components/Line'],
+    },
   };
 }

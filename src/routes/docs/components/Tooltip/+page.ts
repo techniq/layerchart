@@ -7,7 +7,7 @@ export async function load() {
     meta: {
       api,
       source,
-      pageSource
-    }
+      pageSource,
+    },
   };
 }

@@ -6,7 +6,7 @@ export async function load({ fetch }) {
   return {
     geojson: (await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-albers-10m.json')).json(),
     meta: {
-      pageSource
-    }
+      pageSource,
+    },
   };
 }

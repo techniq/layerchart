@@ -8,7 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
-      related: ['examples/Area']
-    }
+      related: ['examples/Area'],
+    },
   };
 }

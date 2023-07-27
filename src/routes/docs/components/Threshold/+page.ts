@@ -8,7 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
-      related: ['examples/Threshold']
-    }
+      related: ['examples/Threshold'],
+    },
   };
 }

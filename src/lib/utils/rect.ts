@@ -24,7 +24,7 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
     xScale,
     yScale,
     x: xAccessor,
-    y: yAccessor
+    y: yAccessor,
   } = context;
 
   const groupBy = options?.groupBy;
@@ -76,7 +76,7 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
             x: $xScale(left),
             y,
             width: $xScale(right) - $xScale(left),
-            height
+            height,
           };
         } else {
           // Vertical band or linear
@@ -121,7 +121,7 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
             x,
             y: $yScale(top),
             width,
-            height: $yScale(bottom) - $yScale(top)
+            height: $yScale(bottom) - $yScale(top),
           };
         }
       };

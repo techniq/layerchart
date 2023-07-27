@@ -18,7 +18,7 @@ for (const log of logs) {
     const commits = commitsByVersion.get(currentVersion);
     commits.push({
       sha,
-      message
+      message,
     });
   }
 }

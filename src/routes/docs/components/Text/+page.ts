@@ -10,11 +10,11 @@ export async function load() {
         'Rotate (based on origin)',
         'Multiline wrapping',
         'Scale to fit',
-        'Easy offset with `dx` and `dy`'
+        'Easy offset with `dx` and `dy`',
       ],
       api,
       source,
-      pageSource
-    }
+      pageSource,
+    },
   };
 }

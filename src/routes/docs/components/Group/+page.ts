@@ -17,8 +17,8 @@ export async function load() {
         'examples/SpikeMap',
         'examples/Sunburst',
         'examples/Tree',
-        'examples/Treemap'
-      ]
-    }
+        'examples/Treemap',
+      ],
+    },
   };
 }

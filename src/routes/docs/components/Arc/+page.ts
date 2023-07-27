@@ -8,7 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
-      related: ['components/Pie', 'examples/Arc']
-    }
+      related: ['components/Pie', 'examples/Arc'],
+    },
   };
 }

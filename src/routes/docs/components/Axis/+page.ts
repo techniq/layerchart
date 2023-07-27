@@ -8,7 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
-      related: ['components/Rule']
-    }
+      related: ['components/Rule'],
+    },
   };
 }

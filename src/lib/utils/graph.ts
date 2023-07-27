@@ -12,7 +12,7 @@ export function graphFromCsv(csv: string): SankeyGraph<any, any> {
           source,
           target,
           // @ts-ignore
-          value: !value || isNaN((value = +value)) ? 1 : value
+          value: !value || isNaN((value = +value)) ? 1 : value,
           // color: linkColor,
         }
       : null
@@ -27,7 +27,7 @@ export function graphFromCsv(csv: string): SankeyGraph<any, any> {
 export function graphFromHierarchy(hierarchy: ReturnType<typeof d3Hierarchy>) {
   return {
     nodes: hierarchy.descendants(),
-    links: hierarchy.links().map((link) => ({ ...link, value: link.target.value }))
+    links: hierarchy.links().map((link) => ({ ...link, value: link.target.value })),
   };
 }
 

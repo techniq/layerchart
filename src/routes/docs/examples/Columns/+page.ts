@@ -4,7 +4,7 @@ export async function load() {
   return {
     meta: {
       pageSource,
-      related: ['components/Bars', 'examples/Bars', 'examples/Histogram']
-    }
+      related: ['components/Bars', 'examples/Bars', 'examples/Histogram'],
+    },
   };
 }

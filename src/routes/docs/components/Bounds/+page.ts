@@ -8,7 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
-      related: ['examples/Partition', 'examples/Sunburst', 'examples/Treemap']
-    }
+      related: ['examples/Partition', 'examples/Sunburst', 'examples/Treemap'],
+    },
   };
 }

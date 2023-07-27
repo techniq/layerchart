@@ -10,7 +10,7 @@ export async function load() {
       pageSource,
       description:
         'Convenient way to clip specific components (axis labels, etc) within chart while still allowing some to overflow (tooltips, etc)',
-      related: ['examples/Partition', 'examples/StateMap', 'examples/Treemap']
-    }
+      related: ['examples/Partition', 'examples/StateMap', 'examples/Treemap'],
+    },
   };
 }

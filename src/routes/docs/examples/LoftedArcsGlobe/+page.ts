@@ -7,7 +7,7 @@ export async function load({ fetch }) {
     geojson: (await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')).json(),
     meta: {
       pageSource,
-      reference: 'https://observablehq.com/@armollica/globe-with-lofted-arcs'
-    }
+      reference: 'https://observablehq.com/@armollica/globe-with-lofted-arcs',
+    },
   };
 }

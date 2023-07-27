@@ -12,8 +12,8 @@ export async function load() {
         'components/ChartClipPath',
         'components/CircleClipPath',
         'components/RectClipPath',
-        'examples/GeoTile'
-      ]
-    }
+        'examples/GeoTile',
+      ],
+    },
   };
 }

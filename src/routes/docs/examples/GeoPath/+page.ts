@@ -9,7 +9,7 @@ export async function load({ fetch }) {
       await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/counties-albers-10m.json')
     ).json(),
     meta: {
-      pageSource
-    }
+      pageSource,
+    },
   };
 }

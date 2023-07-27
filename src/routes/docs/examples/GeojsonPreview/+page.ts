@@ -4,7 +4,7 @@ export async function load({ url }) {
   return {
     meta: {
       pageSource,
-      hideTableOfContents: true
-    }
+      hideTableOfContents: true,
+    },
   };
 }

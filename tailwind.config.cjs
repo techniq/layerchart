@@ -7,12 +7,12 @@ module.exports = {
     extend: {
       colors: {
         'color-var': 'var(--color)',
-        accent: colors.indigo
-      }
-    }
+        accent: colors.indigo,
+      },
+    },
   },
   variants: {
-    extend: {}
+    extend: {},
   },
   plugins: [
     require('@tailwindcss/typography'),
@@ -34,8 +34,8 @@ module.exports = {
       }
 
       addBase({
-        ':root': extractColorVars(theme('colors'))
+        ':root': extractColorVars(theme('colors')),
       });
-    })
-  ]
+    }),
+  ],
 };

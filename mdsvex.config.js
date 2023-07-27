@@ -3,6 +3,6 @@ import slug from 'rehype-slug';
 export default {
   extensions: ['.md', '.svx'],
   layout: './src/lib/docs/Layout.svelte',
-  rehypePlugins: [slug]
+  rehypePlugins: [slug],
   // highlight: false
 };

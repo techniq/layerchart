@@ -8,7 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
-      related: ['components/Arc', 'examples/Arc']
-    }
+      related: ['components/Arc', 'examples/Arc'],
+    },
   };
 }

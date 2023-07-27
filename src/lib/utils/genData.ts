@@ -38,10 +38,10 @@ export function createSeries(options: {
         keys.map((key) => {
           return [
             key,
-            options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max)
+            options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max),
           ];
         })
-      )
+      ),
     };
   });
 }
@@ -67,10 +67,10 @@ export function createDateSeries(options: {
         keys.map((key) => {
           return [
             key,
-            options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max)
+            options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max),
           ];
         })
-      )
+      ),
     };
   });
 }
@@ -101,10 +101,10 @@ export function createTimeSeries(options: {
         keys.map((key) => {
           return [
             key,
-            options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max)
+            options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max),
           ];
         })
-      )
+      ),
     };
   });
 
@@ -115,7 +115,7 @@ export const wideData = [
   { year: '2019', apples: 3840, bananas: 1920, cherries: 960, dates: 400 },
   { year: '2018', apples: 1600, bananas: 1440, cherries: 960, dates: 400 },
   { year: '2017', apples: 820, bananas: 1000, cherries: 640, dates: 400 },
-  { year: '2016', apples: 820, bananas: 560, cherries: 720, dates: 400 }
+  { year: '2016', apples: 820, bananas: 560, cherries: 720, dates: 400 },
 ];
 
 export const longData = [
@@ -137,7 +137,7 @@ export const longData = [
   { year: '2016', basket: 1, fruit: 'apples', value: 820 },
   { year: '2016', basket: 1, fruit: 'bananas', value: 560 },
   { year: '2016', basket: 2, fruit: 'cherries', value: 720 },
-  { year: '2016', basket: 2, fruit: 'dates', value: 400 }
+  { year: '2016', basket: 2, fruit: 'dates', value: 400 },
 ];
 
 export function getPhyllotaxis({ radius, count, width, height }) {
@@ -152,7 +152,7 @@ export function getSpiral({ angle, radius, count, width, height }) {
     const a = degreesToRadians(angle * i);
     return {
       x: width / 2 + r * Math.cos(a),
-      y: height / 2 + r * Math.sin(a)
+      y: height / 2 + r * Math.sin(a),
     };
   });
 }

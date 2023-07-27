@@ -9,7 +9,7 @@ export async function load() {
       source,
       pageSource,
       description: 'Animate an object along a path',
-      related: ['components/Spline']
-    }
+      related: ['components/Spline'],
+    },
   };
 }

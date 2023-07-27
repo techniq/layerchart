@@ -11,8 +11,8 @@ const config = {
   preprocess: [mdsvex(mdsvexConfig), sveltePreprocess(), codePreview()],
 
   kit: {
-    adapter: vercelAdapter()
-  }
+    adapter: vercelAdapter(),
+  },
 };
 
 export default config;

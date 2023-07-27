@@ -16,7 +16,7 @@ export default [
     weight: 1,
     cups: 0.33,
     rating: 68.402973,
-    brand: 'Nabisco'
+    brand: 'Nabisco',
   },
   {
     name: '100% Natural Bran',
@@ -35,7 +35,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 33.983679,
-    brand: 'Quaker Oats'
+    brand: 'Quaker Oats',
   },
   {
     name: 'All-Bran',
@@ -54,7 +54,7 @@ export default [
     weight: 1,
     cups: 0.33,
     rating: 59.425505,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'All-Bran with Extra Fiber',
@@ -73,7 +73,7 @@ export default [
     weight: 1,
     cups: 0.5,
     rating: 93.704912,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Almond Delight',
@@ -92,7 +92,7 @@ export default [
     weight: 1,
     cups: 0.75,
     rating: 34.384843,
-    brand: 'Ralston Purina'
+    brand: 'Ralston Purina',
   },
   {
     name: 'Apple Cinnamon Cheerios',
@@ -111,7 +111,7 @@ export default [
     weight: 1,
     cups: 0.75,
     rating: 29.509541,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Apple Jacks',
@@ -130,7 +130,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 33.174094,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Basic 4',
@@ -149,7 +149,7 @@ export default [
     weight: 1.33,
     cups: 0.75,
     rating: 37.038562,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Bran Chex',
@@ -168,7 +168,7 @@ export default [
     weight: 1,
     cups: 0.67,
     rating: 49.120253,
-    brand: 'Ralston Purina'
+    brand: 'Ralston Purina',
   },
   {
     name: 'Bran Flakes',
@@ -187,7 +187,7 @@ export default [
     weight: 1,
     cups: 0.67,
     rating: 53.313813,
-    brand: 'Post'
+    brand: 'Post',
   },
   {
     name: "Cap'n'Crunch",
@@ -206,7 +206,7 @@ export default [
     weight: 1,
     cups: 0.75,
     rating: 18.042851,
-    brand: 'Quaker Oats'
+    brand: 'Quaker Oats',
   },
   {
     name: 'Cheerios',
@@ -225,7 +225,7 @@ export default [
     weight: 1,
     cups: 1.25,
     rating: 50.764999,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Cinnamon Toast Crunch',
@@ -244,7 +244,7 @@ export default [
     weight: 1,
     cups: 0.75,
     rating: 19.823573,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Clusters',
@@ -263,7 +263,7 @@ export default [
     weight: 1,
     cups: 0.5,
     rating: 40.400208,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Cocoa Puffs',
@@ -282,7 +282,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 22.736446,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Corn Chex',
@@ -301,7 +301,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 41.445019,
-    brand: 'Ralston Purina'
+    brand: 'Ralston Purina',
   },
   {
     name: 'Corn Flakes',
@@ -320,7 +320,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 45.863324,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Corn Pops',
@@ -339,7 +339,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 35.782791,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Count Chocula',
@@ -358,7 +358,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 22.396513,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: "Cracklin' Oat Bran",
@@ -377,7 +377,7 @@ export default [
     weight: 1,
     cups: 0.5,
     rating: 40.448772,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Cream of Wheat (Quick)',
@@ -396,7 +396,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 64.533816,
-    brand: 'Nabisco'
+    brand: 'Nabisco',
   },
   {
     name: 'Crispix',
@@ -415,7 +415,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 46.895644,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Crispy Wheat & Raisins',
@@ -434,7 +434,7 @@ export default [
     weight: 1,
     cups: 0.75,
     rating: 36.176196,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Double Chex',
@@ -453,7 +453,7 @@ export default [
     weight: 1,
     cups: 0.75,
     rating: 44.330856,
-    brand: 'Ralston Purina'
+    brand: 'Ralston Purina',
   },
   {
     name: 'Froot Loops',
@@ -472,7 +472,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 32.207582,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Frosted Flakes',
@@ -491,7 +491,7 @@ export default [
     weight: 1,
     cups: 0.75,
     rating: 31.435973,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Frosted Mini-Wheats',
@@ -510,7 +510,7 @@ export default [
     weight: 1,
     cups: 0.8,
     rating: 58.345141,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Fruit & Fibre Dates; Walnuts; and Oats',
@@ -529,7 +529,7 @@ export default [
     weight: 1.25,
     cups: 0.67,
     rating: 40.917047,
-    brand: 'Post'
+    brand: 'Post',
   },
   {
     name: 'Fruitful Bran',
@@ -548,7 +548,7 @@ export default [
     weight: 1.33,
     cups: 0.67,
     rating: 41.015492,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Fruity Pebbles',
@@ -567,7 +567,7 @@ export default [
     weight: 1,
     cups: 0.75,
     rating: 28.025765,
-    brand: 'Post'
+    brand: 'Post',
   },
   {
     name: 'Golden Crisp',
@@ -586,7 +586,7 @@ export default [
     weight: 1,
     cups: 0.88,
     rating: 35.252444,
-    brand: 'Post'
+    brand: 'Post',
   },
   {
     name: 'Golden Grahams',
@@ -605,7 +605,7 @@ export default [
     weight: 1,
     cups: 0.75,
     rating: 23.804043,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Grape Nuts Flakes',
@@ -624,7 +624,7 @@ export default [
     weight: 1,
     cups: 0.88,
     rating: 52.076897,
-    brand: 'Post'
+    brand: 'Post',
   },
   {
     name: 'Grape-Nuts',
@@ -643,7 +643,7 @@ export default [
     weight: 1,
     cups: 0.25,
     rating: 53.371007,
-    brand: 'Post'
+    brand: 'Post',
   },
   {
     name: 'Great Grains Pecan',
@@ -662,7 +662,7 @@ export default [
     weight: 1,
     cups: 0.33,
     rating: 45.811716,
-    brand: 'Post'
+    brand: 'Post',
   },
   {
     name: 'Honey Graham Ohs',
@@ -681,7 +681,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 21.871292,
-    brand: 'Quaker Oats'
+    brand: 'Quaker Oats',
   },
   {
     name: 'Honey Nut Cheerios',
@@ -700,7 +700,7 @@ export default [
     weight: 1,
     cups: 0.75,
     rating: 31.072217,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Honey-comb',
@@ -719,7 +719,7 @@ export default [
     weight: 1,
     cups: 1.33,
     rating: 28.742414,
-    brand: 'Post'
+    brand: 'Post',
   },
   {
     name: 'Just Right Crunchy  Nuggets',
@@ -738,7 +738,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 36.523683,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Just Right Fruit & Nut',
@@ -757,7 +757,7 @@ export default [
     weight: 1.3,
     cups: 0.75,
     rating: 36.471512,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Kix',
@@ -776,7 +776,7 @@ export default [
     weight: 1,
     cups: 1.5,
     rating: 39.241114,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Life',
@@ -795,7 +795,7 @@ export default [
     weight: 1,
     cups: 0.67,
     rating: 45.328074,
-    brand: 'Quaker Oats'
+    brand: 'Quaker Oats',
   },
   {
     name: 'Lucky Charms',
@@ -814,7 +814,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 26.734515,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Maypo',
@@ -833,7 +833,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 54.850917,
-    brand: 'American Home Food Products'
+    brand: 'American Home Food Products',
   },
   {
     name: 'Muesli Raisins; Dates; & Almonds',
@@ -852,7 +852,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 37.136863,
-    brand: 'Ralston Purina'
+    brand: 'Ralston Purina',
   },
   {
     name: 'Muesli Raisins; Peaches; & Pecans',
@@ -871,7 +871,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 34.139765,
-    brand: 'Ralston Purina'
+    brand: 'Ralston Purina',
   },
   {
     name: 'Mueslix Crispy Blend',
@@ -890,7 +890,7 @@ export default [
     weight: 1.5,
     cups: 0.67,
     rating: 30.313351,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Multi-Grain Cheerios',
@@ -909,7 +909,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 40.105965,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Nut&Honey Crunch',
@@ -928,7 +928,7 @@ export default [
     weight: 1,
     cups: 0.67,
     rating: 29.924285,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Nutri-Grain Almond-Raisin',
@@ -947,7 +947,7 @@ export default [
     weight: 1.33,
     cups: 0.67,
     rating: 40.69232,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Nutri-grain Wheat',
@@ -966,7 +966,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 59.642837,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Oatmeal Raisin Crisp',
@@ -985,7 +985,7 @@ export default [
     weight: 1.25,
     cups: 0.5,
     rating: 30.450843,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Post Nat. Raisin Bran',
@@ -1004,7 +1004,7 @@ export default [
     weight: 1.33,
     cups: 0.67,
     rating: 37.840594,
-    brand: 'Post'
+    brand: 'Post',
   },
   {
     name: 'Product 19',
@@ -1023,7 +1023,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 41.50354,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Puffed Rice',
@@ -1042,7 +1042,7 @@ export default [
     weight: 0.5,
     cups: 1,
     rating: 60.756112,
-    brand: 'Quaker Oats'
+    brand: 'Quaker Oats',
   },
   {
     name: 'Puffed Wheat',
@@ -1061,7 +1061,7 @@ export default [
     weight: 0.5,
     cups: 1,
     rating: 63.005645,
-    brand: 'Quaker Oats'
+    brand: 'Quaker Oats',
   },
   {
     name: 'Quaker Oat Squares',
@@ -1080,7 +1080,7 @@ export default [
     weight: 1,
     cups: 0.5,
     rating: 49.511874,
-    brand: 'Quaker Oats'
+    brand: 'Quaker Oats',
   },
   {
     name: 'Quaker Oatmeal',
@@ -1099,7 +1099,7 @@ export default [
     weight: 1,
     cups: 0.67,
     rating: 50.828392,
-    brand: 'Quaker Oats'
+    brand: 'Quaker Oats',
   },
   {
     name: 'Raisin Bran',
@@ -1118,7 +1118,7 @@ export default [
     weight: 1.33,
     cups: 0.75,
     rating: 39.259197,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Raisin Nut Bran',
@@ -1137,7 +1137,7 @@ export default [
     weight: 1,
     cups: 0.5,
     rating: 39.7034,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Raisin Squares',
@@ -1156,7 +1156,7 @@ export default [
     weight: 1,
     cups: 0.5,
     rating: 55.333142,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Rice Chex',
@@ -1175,7 +1175,7 @@ export default [
     weight: 1,
     cups: 1.13,
     rating: 41.998933,
-    brand: 'Ralston Purina'
+    brand: 'Ralston Purina',
   },
   {
     name: 'Rice Krispies',
@@ -1194,7 +1194,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 40.560159,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Shredded Wheat',
@@ -1213,7 +1213,7 @@ export default [
     weight: 0.83,
     cups: 1,
     rating: 68.235885,
-    brand: 'Nabisco'
+    brand: 'Nabisco',
   },
   {
     name: "Shredded Wheat 'n'Bran",
@@ -1232,7 +1232,7 @@ export default [
     weight: 1,
     cups: 0.67,
     rating: 74.472949,
-    brand: 'Nabisco'
+    brand: 'Nabisco',
   },
   {
     name: 'Shredded Wheat spoon size',
@@ -1251,7 +1251,7 @@ export default [
     weight: 1,
     cups: 0.67,
     rating: 72.801787,
-    brand: 'Nabisco'
+    brand: 'Nabisco',
   },
   {
     name: 'Smacks',
@@ -1270,7 +1270,7 @@ export default [
     weight: 1,
     cups: 0.75,
     rating: 31.230054,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Special K',
@@ -1289,7 +1289,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 53.131324,
-    brand: 'Kelloggs'
+    brand: 'Kelloggs',
   },
   {
     name: 'Strawberry Fruit Wheats',
@@ -1308,7 +1308,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 59.363993,
-    brand: 'Nabisco'
+    brand: 'Nabisco',
   },
   {
     name: 'Total Corn Flakes',
@@ -1327,7 +1327,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 38.839746,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Total Raisin Bran',
@@ -1346,7 +1346,7 @@ export default [
     weight: 1.5,
     cups: 1,
     rating: 28.592785,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Total Whole Grain',
@@ -1365,7 +1365,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 46.658844,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Triples',
@@ -1384,7 +1384,7 @@ export default [
     weight: 1,
     cups: 0.75,
     rating: 39.106174,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Trix',
@@ -1403,7 +1403,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 27.753301,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Wheat Chex',
@@ -1422,7 +1422,7 @@ export default [
     weight: 1,
     cups: 0.67,
     rating: 49.787445,
-    brand: 'Ralston Purina'
+    brand: 'Ralston Purina',
   },
   {
     name: 'Wheaties',
@@ -1441,7 +1441,7 @@ export default [
     weight: 1,
     cups: 1,
     rating: 51.592193,
-    brand: 'General Mills'
+    brand: 'General Mills',
   },
   {
     name: 'Wheaties Honey Gold',
@@ -1460,6 +1460,6 @@ export default [
     weight: 1,
     cups: 0.75,
     rating: 36.187559,
-    brand: 'General Mills'
-  }
+    brand: 'General Mills',
+  },
 ];
