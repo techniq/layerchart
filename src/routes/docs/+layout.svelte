@@ -12,7 +12,7 @@
     mdiDatabaseOutline,
     mdiFileDocumentEditOutline,
     mdiGithub,
-    mdiLink
+    mdiLink,
   } from '@mdi/js';
 
   import { ApiDocs, Button, Icon, ListItem, TableOfContents, xlScreen } from 'svelte-ux';
@@ -89,7 +89,6 @@
           <Button
             icon={mdiChevronDown}
             on:click={() => {
-              console.log('click');
               showTableOfContents = !showTableOfContents;
             }}
             variant="fill-light"
