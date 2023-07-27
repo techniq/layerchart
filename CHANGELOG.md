@@ -1,5 +1,11 @@
 # layerchart
 
+## 0.20.2
+
+### Patch Changes
+
+- Update prettier to v3 along with minor dependencies ([`4b274a8`](https://github.com/techniq/layerchart/commit/4b274a87037473753da07b47382d560d541bf0ae))
+
 ## 0.20.1
 
 ### Patch Changes
