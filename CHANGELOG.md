@@ -1,5 +1,11 @@
 # layerchart
 
+## 0.21.1
+
+### Patch Changes
+
+- Fix TooltipContext `mode="bounds"` with array of points (ex. duration) ([`80f3e56`](https://github.com/techniq/layerchart/commit/80f3e56f1f4b35a359f457e3fa165be2c95d9cea))
+
 ## 0.21.0
 
 ### Minor Changes
