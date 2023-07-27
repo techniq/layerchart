@@ -33,9 +33,6 @@
   export let curve = orientation === 'horizontal' ? curveBumpX : curveBumpY;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
-  export let color = 'black';
-  export let width = undefined;
-
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
   $: {
@@ -50,8 +47,6 @@
 <path
   class="path-link"
   d={$tweened_d}
-  stroke={color}
-  stroke-width={width}
   fill="none"
   on:click
   on:mouseover
