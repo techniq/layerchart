@@ -24,7 +24,7 @@
     min: 20,
     max: 100,
     value: 'integer',
-    keys: ['value', 'baseline']
+    keys: ['value', 'baseline'],
   });
   const negativeData = createDateSeries({ min: -20, max: 50, value: 'integer' });
 
@@ -33,17 +33,17 @@
   const groupedStackedData = createStackData(longData, {
     xKey: 'year',
     groupBy: 'basket',
-    stackBy: 'fruit'
+    stackBy: 'fruit',
   });
   const stackedPercentData = createStackData(longData, {
     xKey: 'year',
     stackBy: 'fruit',
-    offset: stackOffsetExpand
+    offset: stackOffsetExpand,
   });
   const stackedSeperatedData = createStackData(longData, {
     xKey: 'year',
     stackBy: 'fruit',
-    offset: stackOffsetSeparated
+    offset: stackOffsetSeparated,
   });
 
   const colorKeys = [...new Set(longData.map((x) => x.fruit))];
@@ -51,7 +51,7 @@
     'var(--color-blue-500)',
     'var(--color-green-500)',
     'var(--color-purple-500)',
-    'var(--color-orange-500)'
+    'var(--color-orange-500)',
   ];
 
   let transitionChartMode = 'group';
@@ -59,26 +59,26 @@
     transitionChartMode === 'group'
       ? {
           groupBy: 'fruit',
-          stackBy: undefined
+          stackBy: undefined,
         }
       : transitionChartMode === 'stack'
       ? {
           groupBy: undefined,
-          stackBy: 'fruit'
+          stackBy: 'fruit',
         }
       : transitionChartMode === 'groupStack'
       ? {
           groupBy: 'basket',
-          stackBy: 'fruit'
+          stackBy: 'fruit',
         }
       : {
           groupBy: undefined,
-          stackBy: undefined
+          stackBy: undefined,
         };
   $: transitionData = createStackData(longData, {
     xKey: 'year',
     groupBy: transitionChart.groupBy,
-    stackBy: transitionChart.stackBy
+    stackBy: transitionChart.stackBy,
   });
   // $: console.log({ transitionData })
 </script>
@@ -101,7 +101,7 @@
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Bars radius={4} strokeWidth={1} />
+        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
       </Svg>
     </Chart>
   </div>
@@ -124,7 +124,7 @@
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Bars radius={4} strokeWidth={1} />
+        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
         <HighlightRect />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
@@ -150,7 +150,7 @@
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Rule x={0} />
-        <Bars radius={4} strokeWidth={1} />
+        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
         <Labels format="integer" />
       </Svg>
     </Chart>
@@ -173,7 +173,7 @@
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Bars radius={4} strokeWidth={1} />
+        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
         <Rule
           x={median(data, (d) => d.value)}
           class="stroke-2 stroke-red-400 [stroke-dasharray:4] [stroke-linecap:round] "
@@ -197,7 +197,7 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Bars radius={4} strokeWidth={1} />
+        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
         <Axis placement="bottom" grid={{ class: 'stroke-white' }} rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
       </Svg>
@@ -219,7 +219,7 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Bars radius={4} strokeWidth={1} />
+        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
         <Axis placement="bottom" grid={{ class: 'mix-blend-multiply' }} rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
       </Svg>
@@ -245,7 +245,7 @@
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars x="baseline" radius={4} strokeWidth={1} class="fill-gray-200" />
-        <Bars x="value" radius={4} strokeWidth={1} padding={16} />
+        <Bars x="value" radius={4} strokeWidth={1} padding={16} class="fill-accent-500" />
         <HighlightRect />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
@@ -264,7 +264,7 @@
       data={groupedData}
       flatData={longData}
       extents={{
-        x: extent(groupedData.flatMap((d) => d.values))
+        x: extent(groupedData.flatMap((d) => d.values)),
       }}
       x="values"
       xNice
@@ -292,7 +292,7 @@
     <Chart
       data={stackedData}
       extents={{
-        x: extent(stackedData.flatMap((d) => d.values))
+        x: extent(stackedData.flatMap((d) => d.values)),
       }}
       y="year"
       yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
@@ -320,7 +320,7 @@
     <Chart
       data={stackedPercentData}
       extents={{
-        x: extent(stackedPercentData.flatMap((d) => d.values))
+        x: extent(stackedPercentData.flatMap((d) => d.values)),
       }}
       x="values"
       xNice
@@ -377,7 +377,7 @@
       data={groupedStackedData}
       flatData={longData}
       extents={{
-        x: extent(groupedStackedData.flatMap((d) => d.values))
+        x: extent(groupedStackedData.flatMap((d) => d.values)),
       }}
       x="values"
       xNice
@@ -416,7 +416,7 @@
     <Chart
       data={transitionData}
       extents={{
-        x: extent(stackedData.flatMap((d) => d.values))
+        x: extent(stackedData.flatMap((d) => d.values)),
       }}
       x="values"
       xNice
@@ -443,7 +443,7 @@
             x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
             y: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
             width: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-            height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 }
+            height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
           }}
         />
       </Svg>

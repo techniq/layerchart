@@ -29,18 +29,18 @@
     min: 20,
     max: 100,
     value: 'integer',
-    keys: ['value', 'baseline']
+    keys: ['value', 'baseline'],
   });
 
   const timeSeries = createTimeSeries({
     min: 20,
     max: 100,
     value: 'integer',
-    keys: ['value', 'baseline']
+    keys: ['value', 'baseline'],
   });
   const overlapTimeSeries = [
     ...createTimeSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] }),
-    ...createTimeSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] })
+    ...createTimeSeries({ min: 20, max: 100, value: 'integer', keys: ['value', 'baseline'] }),
   ];
 
   const keys = ['apples', 'bananas', 'oranges'];
@@ -56,7 +56,7 @@
       axis: undefined,
       snapToDataX: false,
       snapToDataY: false,
-      debug: false
+      debug: false,
     },
     areaStack: {
       mode: 'voronoi',
@@ -64,7 +64,7 @@
       axis: undefined,
       snapToDataX: false,
       snapToDataY: false,
-      debug: false
+      debug: false,
     },
     dateTime: {
       mode: 'bisect-x',
@@ -72,7 +72,7 @@
       axis: undefined,
       snapToDataX: false,
       snapToDataY: false,
-      debug: false
+      debug: false,
     },
     duration: {
       mode: 'bounds',
@@ -80,7 +80,7 @@
       axis: undefined,
       snapToDataX: false,
       snapToDataY: false,
-      debug: false
+      debug: false,
     },
     multiDuration: {
       mode: 'bounds',
@@ -88,7 +88,7 @@
       axis: 'both',
       snapToDataX: false,
       snapToDataY: false,
-      debug: false
+      debug: false,
     },
     bars: {
       mode: 'band',
@@ -96,7 +96,7 @@
       axis: undefined,
       snapToDataX: false,
       snapToDataY: false,
-      debug: false
+      debug: false,
     },
     multiBars: {
       mode: 'band',
@@ -104,7 +104,7 @@
       axis: undefined,
       snapToDataX: false,
       snapToDataY: false,
-      debug: false
+      debug: false,
     },
     scatter: {
       mode: 'voronoi',
@@ -112,8 +112,8 @@
       axis: 'both',
       snapToDataX: true,
       snapToDataY: true,
-      debug: false
-    }
+      debug: false,
+    },
   } satisfies Record<string, ComponentProps<TooltipControls>['settings']>;
 </script>
 
@@ -198,7 +198,7 @@
         mode: charts.area.mode,
         snapToDataX: charts.area.snapToDataX,
         snapToDataY: charts.area.snapToDataY,
-        debug: charts.area.debug
+        debug: charts.area.debug,
       }}
     >
       <Svg>
@@ -245,7 +245,7 @@
         mode: charts.areaStack.mode,
         snapToDataX: charts.areaStack.snapToDataX,
         snapToDataY: charts.areaStack.snapToDataY,
-        debug: charts.areaStack.debug
+        debug: charts.areaStack.debug,
       }}
     >
       <Svg>
@@ -289,7 +289,7 @@
         mode: charts.dateTime.mode,
         snapToDataX: charts.dateTime.snapToDataX,
         snapToDataY: charts.dateTime.snapToDataY,
-        debug: charts.dateTime.debug
+        debug: charts.dateTime.debug,
       }}
     >
       <Svg>
@@ -333,7 +333,7 @@
         mode: charts.duration.mode,
         snapToDataX: charts.duration.snapToDataX,
         snapToDataY: charts.duration.snapToDataY,
-        debug: charts.duration.debug
+        debug: charts.duration.debug,
       }}
     >
       <Svg>
@@ -382,7 +382,7 @@
         mode: charts.multiDuration.mode,
         snapToDataX: charts.multiDuration.snapToDataX,
         snapToDataY: charts.multiDuration.snapToDataY,
-        debug: charts.multiDuration.debug
+        debug: charts.multiDuration.debug,
       }}
     >
       <Svg>
@@ -433,13 +433,13 @@
         mode: charts.bars.mode,
         snapToDataX: charts.bars.snapToDataX,
         snapToDataY: charts.bars.snapToDataY,
-        debug: charts.bars.debug
+        debug: charts.bars.debug,
       }}
     >
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Bars radius={4} strokeWidth={1} />
+        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
         {#if charts.bars.highlight === 'line'}
           <HighlightLine
             {...charts.bars.axis && { axis: charts.bars.axis }}
@@ -479,14 +479,14 @@
         mode: charts.multiBars.mode,
         snapToDataX: charts.multiBars.snapToDataX,
         snapToDataY: charts.multiBars.snapToDataY,
-        debug: charts.multiBars.debug
+        debug: charts.multiBars.debug,
       }}
     >
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Bars y="baseline" radius={4} strokeWidth={1} color="#ddd" />
-        <Bars y="value" radius={4} strokeWidth={1} padding={16} />
+        <Bars y="baseline" radius={4} strokeWidth={1} class="fill-gray-200" />
+        <Bars y="value" radius={4} strokeWidth={1} padding={16} class="fill-accent-500" />
         {#if charts.multiBars.highlight === 'line'}
           <HighlightLine
             {...charts.multiBars.axis && { axis: charts.multiBars.axis }}
@@ -521,7 +521,7 @@
         mode: charts.scatter.mode,
         snapToDataX: charts.scatter.snapToDataX,
         snapToDataY: charts.scatter.snapToDataY,
-        debug: charts.scatter.debug
+        debug: charts.scatter.debug,
       }}
     >
       <Svg>

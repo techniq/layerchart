@@ -53,8 +53,6 @@
   export let padAngle = 0;
   // export let padRadius = 0;
 
-  export let color: string | ((obj: { value: any; item: any; index: number }) => string) = 'black';
-
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
@@ -82,16 +80,6 @@
 
   $: arcs = pie(data ?? $contextData);
   // $: console.log({ arcs, $yRange });
-
-  function getColor(item: any, index: number) {
-    if (typeof color === 'function') {
-      return color({ value: $y(item), item, index });
-    } else if ($config.r) {
-      return $rGet(item);
-    } else {
-      return color;
-    }
-  }
 </script>
 
 <Group center>
@@ -105,7 +93,7 @@
         {outerRadius}
         {cornerRadius}
         {offset}
-        fill={getColor(arc.data, index)}
+        fill={$config.r ? $rGet(arc.data) : null}
         on:mousemove={(e) => tooltip?.show(e, arc.data)}
         on:mouseleave={(e) => tooltip?.hide()}
       />

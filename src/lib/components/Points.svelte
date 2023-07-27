@@ -13,8 +13,6 @@
   export let r = 5;
   export let offsetX: Offset = undefined;
   export let offsetY: Offset = undefined;
-  export let color: string | ((obj: { value: any; item: any; index: number }) => string) =
-    'var(--color-accent-500)';
 
   function getOffset(value, offset: Offset, scale: any) {
     if (typeof offset === 'function') {
@@ -25,17 +23,6 @@
       return scale.bandwidth() / 2;
     } else {
       return 0;
-    }
-  }
-
-  function getColor(item: any, index: number) {
-    if (typeof color === 'function') {
-      return color({ value: $y(item), item, index });
-    } else if ($config.r) {
-      // console.log({ item, value: $rGet(item), scale: $rGet.domain() });
-      return $rGet(item);
-    } else {
-      return color;
     }
   }
 
@@ -51,7 +38,7 @@
           return {
             x: x + getOffset(x, offsetX, $xScale),
             y: $yGet(d) + getOffset($yGet(d), offsetY, $yScale),
-            data: d
+            data: d,
           };
         });
     } else if (Array.isArray($config.y)) {
@@ -65,7 +52,7 @@
           return {
             x: $xGet(d) + getOffset($xGet(d), offsetX, $xScale),
             y: y + getOffset(y, offsetY, $yScale),
-            data: d
+            data: d,
           };
         });
     } else {
@@ -76,7 +63,7 @@
       return {
         x: $xGet(d) + getOffset($xGet(d), offsetX, $xScale),
         y: $yGet(d) + getOffset($yGet(d), offsetY, $yScale),
-        data: d
+        data: d,
       };
     }
   });
@@ -85,7 +72,13 @@
 <slot {points}>
   <g class="point-group">
     {#each points as point, index}
-      <Circle cx={point.x} cy={point.y} {r} fill={getColor(point.data, index)} {...$$restProps} />
+      <Circle
+        cx={point.x}
+        cy={point.y}
+        {r}
+        fill={$config.r ? $rGet(point.data) : null}
+        {...$$restProps}
+      />
     {/each}
   </g>
 </slot>

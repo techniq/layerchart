@@ -20,9 +20,6 @@
   export let y = $yContext;
   $: _y = y ? (typeof y === 'string' ? (d) => d[y] : y) : $yContext;
 
-  export let color: string | ((obj: { value: any; item: any; index: number }) => string) =
-    'var(--color-accent-500)';
-  export let opacity = 1;
   export let stroke = 'black';
   export let strokeWidth = 0;
   export let radius = 0;
@@ -49,27 +46,16 @@
     padding,
     groupPadding: {
       inner: groupPaddingInner,
-      outer: groupPaddingOuter
-    }
+      outer: groupPaddingOuter,
+    },
   });
-
-  function getColor(item: any, index: number) {
-    if (typeof color === 'function') {
-      return color({ value: _y(item), item, index });
-    } else if ($config.r) {
-      return $rGet(item);
-    } else {
-      return color;
-    }
-  }
 </script>
 
 <g class="Bars">
   {#each $data as item, index (getKey(item, index))}
     <Rect
       data-id={index}
-      fill={getColor(item, index)}
-      fill-opacity={opacity}
+      fill={$config.r ? $rGet(item) : null}
       {stroke}
       stroke-width={strokeWidth}
       rx={radius}

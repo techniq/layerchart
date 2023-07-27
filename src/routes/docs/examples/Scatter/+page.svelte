@@ -91,32 +91,7 @@
   </div>
 </Preview>
 
-<h2>Color (function)</h2>
-
-<Preview>
-  <div class="h-[300px] p-4 border rounded">
-    <Chart
-      {data}
-      x="date"
-      xScale={scaleTime()}
-      y="value"
-      yDomain={[0, null]}
-      yNice
-      padding={{ left: 16, bottom: 24 }}
-    >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Points
-          color={({ value }) => (value >= 50 ? 'var(--color-green-500)' : 'var(--color-red-500)')}
-          class="stroke-black/50"
-        />
-      </Svg>
-    </Chart>
-  </div>
-</Preview>
-
-<h2>Color (scale)</h2>
+<h2>Color via scale</h2>
 
 <h3>red (0-49), yellow (50-89), green (90+)</h3>
 
