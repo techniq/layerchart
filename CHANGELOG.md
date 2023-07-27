@@ -1,5 +1,11 @@
 # layerchart
 
+## 0.21.0
+
+### Minor Changes
+
+- Remove color prop from `Bars`, `Points`, `Pie`, and `Link`. Use `rScale` or `fill`, `stroke`, or `class` prop to define ([`13b7688`](https://github.com/techniq/layerchart/commit/13b76884ee7d5a51d98d0eebb379beb42e1b300d))
+
 ## 0.20.2
 
 ### Patch Changes
