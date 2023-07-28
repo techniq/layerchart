@@ -5,7 +5,6 @@
   import { isScaleBand } from '$lib/utils/scales';
   import Rect from './Rect.svelte';
   import { tooltipContext } from './TooltipContext.svelte';
-  import { firstValue } from '$lib/utils/rect';
 
   const { flatData, x, xScale, xDomain, xRange, xGet, yScale, yDomain, yRange, yGet } =
     getContext('LayerCake');
@@ -17,21 +16,21 @@
     x: 0,
     y: 0,
     width: 0,
-    height: 0
+    height: 0,
   };
   $: {
     if ($tooltip.data) {
-      let xCoord = firstValue($xGet($tooltip.data));
-      let yCoord = firstValue($yGet($tooltip.data));
+      let xCoord = $xGet($tooltip.data);
+      let yCoord = $yGet($tooltip.data);
 
       if (axis === 'x' || axis === 'both') {
-        if (isScaleBand($xScale)) {
-          dimensions.width = $xScale.step();
-        } else if (Array.isArray(xCoord)) {
+        if (Array.isArray(xCoord)) {
           // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
           // Use first/last values for width
           dimensions.width = max(xCoord) - min(xCoord);
           xCoord = min(xCoord); // Use left-most value for top left of rect
+        } else if (isScaleBand($xScale)) {
+          dimensions.width = $xScale.step();
         } else {
           // Find width to next data point
           const index = $flatData.findIndex((d) => Number($x(d)) === Number($x($tooltip.data)));
@@ -49,13 +48,13 @@
       }
 
       if (axis === 'y' || axis === 'both') {
-        if (isScaleBand($yScale)) {
-          dimensions.height = $yScale.step();
-        } else if (Array.isArray(xCoord)) {
+        if (Array.isArray(yCoord)) {
           // `y` accessor with multiple properties (ex. `y={['start', 'end']})`)
           // Use first/last values for width
           dimensions.height = max(yCoord) - min(yCoord);
           yCoord = min(yCoord); // Use left-most value for top left of rect
+        } else if (isScaleBand($yScale)) {
+          dimensions.height = $yScale.step();
         } else {
           // Find width to next data point
           const index = $flatData.findIndex((d) => Number($x(d)) === Number($x($tooltip.data)));
