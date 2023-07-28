@@ -39,7 +39,6 @@
   - Easily add line (same curve, color, etc)
 - AreaStack
 - Bars
-- ConnectedPoints
 - Labels
 - Points
 - Threshold

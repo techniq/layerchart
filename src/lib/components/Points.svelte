@@ -1,18 +1,23 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
+  import { getContext, type ComponentProps } from 'svelte';
+  import { extent } from 'd3-array';
+  import { notNull } from 'svelte-ux';
 
   import Circle from './Circle.svelte';
+  import Link from './Link.svelte';
   import { isScaleBand } from '../utils/scales';
-  import { notNull } from 'svelte-ux';
 
   const context = getContext('LayerCake') as any;
   const { data, xGet, y, yGet, xScale, yScale, rGet, config } = context;
 
-  type Offset = number | ((value: number, context: any) => number);
+  type Offset = number | ((value: number, context: any) => number) | undefined;
 
   export let r = 5;
   export let offsetX: Offset = undefined;
   export let offsetY: Offset = undefined;
+
+  /** Enable showing links between related points (array x/y accessors) */
+  export let links: boolean | ComponentProps<Link> = false;
 
   function getOffset(value, offset: Offset, scale: any) {
     if (typeof offset === 'function') {
@@ -67,11 +72,57 @@
       };
     }
   });
+
+  $: _links = $data.flatMap((d) => {
+    if (Array.isArray($config.x)) {
+      /*
+				x={["prop1" ,"prop2"]}
+				y="prop3"
+			*/
+      const [xMin, xMax] = extent($xGet(d));
+      const y = $yGet(d) + getOffset($yGet(d), offsetY, $yScale);
+      return {
+        source: {
+          x: xMin + getOffset(xMin, offsetX, $xScale),
+          y,
+        },
+        target: {
+          x: xMax + getOffset(xMax, offsetX, $xScale),
+          y: y,
+        },
+      };
+    } else if (Array.isArray($config.y)) {
+      /*
+				x="prop1"
+				y={["prop2" ,"prop3"]}
+			*/
+      const x = $xGet(d) + getOffset($xGet(d), offsetX, $xScale);
+      const [yMin, yMax] = extent($yGet(d));
+      return {
+        source: {
+          x: x,
+          y: yMin + getOffset(yMin, offsetY, $yScale),
+        },
+        target: {
+          x: x,
+          y: yMax + getOffset(yMax, offsetY, $yScale),
+        },
+      };
+    }
+  });
 </script>
 
 <slot {points}>
+  {#if links}
+    <g class="link-group">
+      {#each _links as link}
+        <Link data={link} stroke="black" {...typeof links === 'object' ? links : null} />
+      {/each}
+    </g>
+  {/if}
+
   <g class="point-group">
-    {#each points as point, index}
+    {#each points as point}
       <Circle
         cx={point.x}
         cy={point.y}

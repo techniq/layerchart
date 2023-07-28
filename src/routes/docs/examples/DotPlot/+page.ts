@@ -4,7 +4,7 @@ export async function load() {
   return {
     meta: {
       pageSource,
-      related: ['components/ConnectedPoints'],
+      related: ['components/Points', 'components/Link'],
     },
   };
 }

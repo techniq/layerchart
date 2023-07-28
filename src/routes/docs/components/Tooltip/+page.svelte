@@ -11,7 +11,6 @@
   import AreaStack from '$lib/components/AreaStack.svelte';
   import Axis from '$lib/components/Axis.svelte';
   import Bars from '$lib/components/Bars.svelte';
-  import ConnectedPoints from '$lib/components/ConnectedPoints.svelte';
   import HighlightLine from '$lib/components/HighlightLine.svelte';
   import HighlightRect from '$lib/components/HighlightRect.svelte';
   import Points from '$lib/components/Points.svelte';
@@ -339,8 +338,7 @@
       <Svg>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
-        <ConnectedPoints stroke="#000" />
-        <Points class="fill-accent-500 stroke-accent-800" />
+        <Points class="fill-accent-500 stroke-accent-800" links />
         {#if charts.duration.highlight === 'line'}
           <HighlightLine
             {...charts.duration.axis && { axis: charts.duration.axis }}
@@ -388,8 +386,7 @@
       <Svg>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
-        <ConnectedPoints stroke="#000" />
-        <Points class="fill-accent-500 stroke-accent-800" />
+        <Points class="fill-accent-500 stroke-accent-800" links />
         {#if charts.multiDuration.highlight === 'line'}
           <HighlightLine
             {...charts.multiDuration.axis && { axis: charts.multiDuration.axis }}

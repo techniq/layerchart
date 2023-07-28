@@ -45,7 +45,6 @@
       'Area',
       'AreaStack',
       'Bars',
-      'ConnectedPoints',
       'Labels',
       'Link',
       'Pie',

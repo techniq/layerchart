@@ -5,7 +5,6 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import ConnectedPoints from '$lib/components/ConnectedPoints.svelte';
   import HighlightLine from '$lib/components/HighlightLine.svelte';
   import HighlightRect from '$lib/components/HighlightRect.svelte';
   import Points from '$lib/components/Points.svelte';
@@ -27,7 +26,7 @@
     return {
       name: `Item ${i + 1}`,
       startDate,
-      endDate
+      endDate,
     };
   });
 
@@ -52,8 +51,7 @@
       <Svg>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
-        <ConnectedPoints stroke="#000" />
-        <Points class="fill-accent-400 stroke-accent-800" />
+        <Points class="fill-accent-400 stroke-accent-800" links={{ class: 'stroke-accent-800' }} />
         <HighlightLine color="var(--color-accent-500)" />
         <HighlightRect />
       </Svg>
