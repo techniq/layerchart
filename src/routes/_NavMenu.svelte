@@ -16,7 +16,7 @@
       'Line',
       'PunchCard',
       'Scatter',
-      'Threshold'
+      'Threshold',
     ],
     'Hierarchy & Graph': ['Pack', 'Partition', 'Sankey', 'Sunburst', 'Tree', 'Treemap'],
     Geo: [
@@ -34,12 +34,12 @@
       'AnimatedGlobe',
       'LoftedArcsGlobe',
       'GeojsonPreview',
-      'ShapefilePreview'
-    ]
+      'ShapefilePreview',
+    ],
   };
 
   const components = {
-    Common: ['Chart', 'Axis', 'Frame', 'Legend'],
+    Common: ['Chart', 'Axis', 'Frame', 'Legend', 'Rule'],
     Primatives: ['Arc', 'Circle', 'Group', 'Line', 'Point', 'Rect', 'Text'],
     'Data-driven': [
       'Area',
@@ -50,9 +50,8 @@
       'Link',
       'Pie',
       'Points',
-      'Rule',
       'Spline',
-      'Threshold'
+      'Threshold',
     ],
     Interactions: ['Tooltip', 'TooltipContext', 'HighlightRect', 'HighlightLine', 'Zoom'],
     Geo: ['GeoContext', 'GeoPath', 'GeoPoint', 'GeoTile', 'Graticule', 'TileImage'],
@@ -65,8 +64,8 @@
       'LinearGradient',
       'MotionPath',
       'Pattern',
-      'RectClipPath'
-    ]
+      'RectClipPath',
+    ],
   };
 
   const utils = ['pivot'];

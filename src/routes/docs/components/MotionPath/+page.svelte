@@ -28,7 +28,7 @@
   $: data = Array.from({ length: pointCount }).map((_, i) => {
     return {
       x: i + 1,
-      y: pathGenerator(i / pointCount) ?? i
+      y: pathGenerator(i / pointCount) ?? i,
     };
   });
 </script>
@@ -139,6 +139,6 @@
 </Toggle>
 
 <Blockquote>
-  Because the draw transition and `<animateMotion />` using different timers, there is no guarantee
-  they will start at the same time
+  Because the draw transition and `animateMotion` using different timers, there is no guarantee they
+  will start at the same time
 </Blockquote>
