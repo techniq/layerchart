@@ -5,11 +5,11 @@
    *   - [ ] Support multiple values (threshold, stacks, etc)
    */
   import { getContext, type ComponentProps } from 'svelte';
-
-  import Text from './Text.svelte';
-  import { format as formatValue, type FormatType, type StoresValues } from 'svelte-ux';
+  import { format as formatValue, type FormatType } from 'svelte-ux';
   import { formatNumberAsStyle, type FormatNumberStyle } from 'svelte-ux/utils/number';
   import { greatestAbs } from 'svelte-ux/utils/array';
+
+  import Text from './Text.svelte';
   import { isScaleBand } from '$lib/utils/scales';
   import { createDimensionGetter } from '$lib/utils/rect';
 
@@ -34,8 +34,8 @@
     // padding,
     groupPadding: {
       inner: groupPaddingInner,
-      outer: groupPaddingOuter
-    }
+      outer: groupPaddingOuter,
+    },
   });
 
   $: getValue = (item) => (isScaleBand($yScale) ? $x(item) : $y(item));
@@ -74,7 +74,7 @@
           y: dimensions?.y + (dimensions?.height ?? 0) / 2,
           textAnchor: 'end',
           verticalAnchor: 'middle',
-          capHeight: '.6rem'
+          capHeight: '.6rem',
         };
       } else {
         // right
@@ -83,7 +83,7 @@
           y: dimensions?.y + (dimensions?.height ?? 0) / 2,
           textAnchor: 'start',
           verticalAnchor: 'middle',
-          capHeight: '.6rem'
+          capHeight: '.6rem',
         };
       }
     } else {
@@ -95,7 +95,7 @@
           y: dimensions?.y + dimensions?.height,
           dy: '0.5em',
           textAnchor: 'middle',
-          verticalAnchor: 'middle'
+          verticalAnchor: 'middle',
         };
       } else {
         // top
@@ -104,7 +104,7 @@
           y: dimensions?.y,
           dy: '-0.6em',
           textAnchor: 'middle',
-          verticalAnchor: 'middle'
+          verticalAnchor: 'middle',
         };
       }
     }
