@@ -11,7 +11,7 @@
   import Axis from '$lib/components/Axis.svelte';
   import Rule from '$lib/components/Rule.svelte';
   import Bars from '$lib/components/Bars.svelte';
-  import HighlightRect from '$lib/components/HighlightRect.svelte';
+  import Highlight from '$lib/components/Highlight.svelte';
   import Labels from '$lib/components/Labels.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
@@ -107,7 +107,7 @@
   </div>
 </Preview>
 
-<h2>with Tooltip and HighlightRect</h2>
+<h2>with Tooltip and Highlight</h2>
 
 <Preview>
   <div class="h-[300px] p-4 border rounded">
@@ -125,7 +125,7 @@
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
-        <HighlightRect />
+        <Highlight area />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />
@@ -246,7 +246,7 @@
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars x="baseline" radius={4} strokeWidth={1} class="fill-gray-200" />
         <Bars x="value" radius={4} strokeWidth={1} padding={16} class="fill-accent-500" />
-        <HighlightRect />
+        <Highlight area />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />

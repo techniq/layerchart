@@ -7,7 +7,7 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import HighlightRect from '$lib/components/HighlightRect.svelte';
+  import Highlight from '$lib/components/Highlight.svelte';
   import Labels from '$lib/components/Labels.svelte';
   import Spline from '$lib/components/Spline.svelte';
   import Threshold from '$lib/components/Threshold.svelte';
@@ -24,7 +24,7 @@
     min: 50,
     max: 100,
     value: 'integer',
-    keys: ['value', 'baseline']
+    keys: ['value', 'baseline'],
   });
 </script>
 
@@ -70,7 +70,7 @@
   </div>
 </Preview>
 
-<h2>With Tooltip and HighlightRect</h2>
+<h2>With Tooltip and Highlight</h2>
 
 <Preview>
   <div class="h-[300px] p-4 border rounded">
@@ -97,7 +97,7 @@
             <Area pathData={areaPathData} {clipPath} class="fill-red-500/30" />
           </g>
         </Threshold>
-        <HighlightRect />
+        <Highlight area />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />

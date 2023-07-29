@@ -5,8 +5,7 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import HighlightLine from '$lib/components/HighlightLine.svelte';
-  import HighlightRect from '$lib/components/HighlightRect.svelte';
+  import Highlight from '$lib/components/Highlight.svelte';
   import Points from '$lib/components/Points.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
@@ -52,8 +51,8 @@
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
         <Points class="fill-accent-400 stroke-accent-800" links={{ class: 'stroke-accent-800' }} />
-        <HighlightLine color="var(--color-accent-500)" />
-        <HighlightRect />
+        <Highlight area />
+        <Highlight points lines axis="x" />
       </Svg>
       <Tooltip header={(data) => data.name} let:data>
         <TooltipItem label="start" value={dateDisplay(data.startDate, { format: 'h:mm:ss' })} />

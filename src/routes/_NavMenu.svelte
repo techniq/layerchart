@@ -52,7 +52,7 @@
       'Spline',
       'Threshold',
     ],
-    Interactions: ['Tooltip', 'TooltipContext', 'HighlightRect', 'HighlightLine', 'Zoom'],
+    Interactions: ['Tooltip', 'TooltipContext', 'Highlight', 'Zoom'],
     Geo: ['GeoContext', 'GeoPath', 'GeoPoint', 'GeoTile', 'Graticule', 'TileImage'],
     Hierarchy: ['Pack', 'Partition', 'Sankey'],
     Clipping: ['ClipPath', 'ChartClipPath', 'CircleClipPath', 'RectClipPath'],

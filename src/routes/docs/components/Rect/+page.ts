@@ -11,7 +11,7 @@ export async function load() {
       description: '`<rect>` element with tweened properties using `motionStore`',
       related: [
         'components/Bars',
-        'components/HighlightRect',
+        'components/Highlight',
         'components/RectClipPath',
         'examples/Partition',
         'examples/Sankey',

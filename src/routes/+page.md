@@ -47,12 +47,11 @@
 
 <h2>Interations</h2>
 
-- HighlightRect
-- HighlightLine
 - Tooltip
   - Data selection
   - Animated location
   - Smart container positioning
+- Highlight
 
 <h2>Todo</h2>
 
@@ -61,7 +60,6 @@
 - [ ] Add examples with animated Circle, Rect, and Line
 - [ ] Consider updating Circle, Rect, and Line to support xGet/yGet with data, along with explicit `cx`/`cy`
 - [x] Consider renaming `Label` to `Mark` (or at least call `Labels`)
-- [x] Consider renaming `HighlightRect` to `HighlightRect`
 - [ ] Should some props be renamed/aliased or always passed through
   - `<Circle r={10} stroke-width={2} />`
   - vs

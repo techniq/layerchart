@@ -7,7 +7,7 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import HighlightLine from '$lib/components/HighlightLine.svelte';
+  import Highlight from '$lib/components/Highlight.svelte';
   import Labels from '$lib/components/Labels.svelte';
   import Point from '$lib/components/Point.svelte';
   import Text from '$lib/components/Text.svelte';
@@ -28,7 +28,7 @@
   const fruitColors = {
     apples: 'var(--color-blue-500)',
     bananas: 'var(--color-purple-500)',
-    oranges: 'var(--color-green-500)'
+    oranges: 'var(--color-green-500)',
   };
 </script>
 
@@ -56,7 +56,7 @@
   </div>
 </Preview>
 
-<h2>With Tooltip and HighlightLine</h2>
+<h2>With Tooltip and Highlight</h2>
 
 <Preview>
   <div class="h-[300px] p-4 border rounded">
@@ -74,7 +74,7 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Area line={{ class: 'stroke-2 stroke-accent-500' }} class="fill-accent-500/30" />
-        <HighlightLine color="var(--color-accent-500)" />
+        <Highlight points lines />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />
@@ -149,7 +149,7 @@
             />
           </Point>
         {/each}
-        <HighlightLine />
+        <Highlight points lines />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label={data.fruit} value={data.value} />
@@ -189,7 +189,7 @@
           />
         {/each}
         <Labels format="integer" />
-        <HighlightLine />
+        <Highlight points lines />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label={data.fruit} value={data.value} />

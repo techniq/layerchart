@@ -1,17 +1,17 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
-  import { Field, MenuField, Switch } from 'svelte-ux';
+  import { Field, MenuField, MultiSelectField, Switch } from 'svelte-ux';
 
   import type TooltipContext from '$lib/components/TooltipContext.svelte';
-  import type HighlightRect from '$lib/components/HighlightRect.svelte';
+  import type Highlight from '$lib/components/Highlight.svelte';
 
   type TooltipContextProps = ComponentProps<TooltipContext>;
-  type HighlightRectProps = ComponentProps<HighlightRect>;
+  type HighlightProps = ComponentProps<Highlight>;
 
   export let settings: {
     mode: TooltipContextProps['mode'];
-    highlight: 'none' | 'line' | 'rect';
-    axis: HighlightRectProps['axis'];
+    highlight: Array<'none' | 'points' | 'lines' | 'area'>;
+    axis: HighlightProps['axis'];
     snapToDataX: TooltipContextProps['snapToDataX'];
     snapToDataY: TooltipContextProps['snapToDataX'];
     debug: TooltipContextProps['debug'];
@@ -29,18 +29,19 @@
       { label: 'band', value: 'band' },
       { label: 'bounds', value: 'bounds' },
       { label: 'voronoi', value: 'voronoi' },
-      { label: 'quadtree', value: 'quadtree' }
+      { label: 'quadtree', value: 'quadtree' },
     ]}
   />
 
-  <MenuField
+  <MultiSelectField
     label="Highlight"
     bind:value={settings.highlight}
     options={[
-      { label: 'off', value: 'off' },
-      { label: 'line', value: 'line' },
-      { label: 'rect', value: 'rect' }
+      { name: 'points', value: 'points' },
+      { name: 'lines', value: 'lines' },
+      { name: 'area', value: 'area' },
     ]}
+    formatSelected={({ options }) => options.map((x) => x.name).join(', ')}
   />
 
   <MenuField
@@ -51,7 +52,7 @@
       { label: 'x', value: 'x' },
       { label: 'y', value: 'y' },
       { label: 'both', value: 'both' },
-      { label: 'none', value: 'none' }
+      { label: 'none', value: 'none' },
     ]}
   />
 
@@ -88,7 +89,7 @@
       { label: 'off', value: 'off' },
       { label: 'x-only', value: 'x-only' },
       { label: 'y-only', value: 'y-only' },
-      { label: 'both', value: 'both' }
+      { label: 'both', value: 'both' },
     ]}
   />
 

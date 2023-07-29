@@ -7,7 +7,7 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import AreaStack from '$lib/components/AreaStack.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import HighlightLine from '$lib/components/HighlightLine.svelte';
+  import Highlight from '$lib/components/Highlight.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -48,7 +48,7 @@
   </div>
 </Preview>
 
-<h2>With Tooltip and HighlightLine</h2>
+<h2>With Tooltip and Highlight</h2>
 
 <Preview>
   <div class="h-[300px] p-4 border rounded">
@@ -70,7 +70,7 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <AreaStack line={{ 'stroke-width': 2 }} />
-        <HighlightLine color="var(--color-blue-500)" />
+        <Highlight points lines />
       </Svg>
       <Tooltip header={(data) => format(data.data.date, 'eee, MMMM do')} let:data>
         {#each keys as key}

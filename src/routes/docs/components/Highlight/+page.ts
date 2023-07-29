@@ -1,5 +1,5 @@
-import api from '$lib/components/HighlightRect.svelte?raw&sveld';
-import source from '$lib/components/HighlightRect.svelte?raw';
+import api from '$lib/components/Highlight.svelte?raw&sveld';
+import source from '$lib/components/Highlight.svelte?raw';
 import pageSource from './+page.svelte?raw';
 
 export async function load() {

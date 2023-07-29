@@ -1,0 +1,237 @@
+<script lang="ts">
+  import { getContext, type ComponentProps } from 'svelte';
+  import { max, min } from 'd3-array';
+  import { cls, notNull } from 'svelte-ux';
+
+  import { isScaleBand } from '$lib/utils/scales';
+  import Circle from './Circle.svelte';
+  import Line from './Line.svelte';
+  import Rect from './Rect.svelte';
+  import { tooltipContext } from './TooltipContext.svelte';
+
+  const {
+    flatData,
+    x,
+    xDomain,
+    xScale,
+    xRange,
+    xGet,
+    y,
+    yDomain,
+    yScale,
+    yRange,
+    yGet,
+    rGet,
+    config,
+  } = getContext('LayerCake');
+  const tooltip = tooltipContext();
+
+  export let axis: 'x' | 'y' | 'both' | 'none' | undefined = undefined;
+
+  /** Show points and pass props to Circles */
+  export let points: boolean | ComponentProps<Circle> = false;
+
+  /** Show lines and pass props to Lines */
+  export let lines: boolean | ComponentProps<Line> = false;
+
+  /** Show area and pass props to Rect */
+  export let area: boolean | ComponentProps<Rect> = false;
+
+  // TODO: Fix circle points being backwards for stack (see AreaStack)
+
+  let _points = [];
+  let _lines = [];
+  let _area = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  };
+
+  $: if ($tooltip.data) {
+    let xCoord = $xGet($tooltip.data);
+    let xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
+
+    let yCoord = $yGet($tooltip.data);
+    let yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
+
+    // Reset lines
+    _lines = [];
+
+    const defaultAxis = isScaleBand($yScale) ? 'y' : 'x';
+    if (axis == null) {
+      axis = defaultAxis;
+    }
+
+    if (axis === 'x' || axis === 'both') {
+      // x lines
+      if (Array.isArray(xCoord)) {
+        // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
+        _lines = [
+          ..._lines,
+          ...xCoord.filter(notNull).map((xItem, i) => ({
+            x1: xItem + xOffset,
+            y1: 0,
+            x2: xItem + xOffset,
+            y2: max($yRange),
+          })),
+        ];
+      } else {
+        _lines = [
+          ..._lines,
+          {
+            x1: xCoord + xOffset,
+            y1: 0,
+            x2: xCoord + xOffset,
+            y2: max($yRange),
+          },
+        ];
+      }
+
+      // x area
+      if (Array.isArray(xCoord)) {
+        // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
+        _area.width = max(xCoord) - min(xCoord); // Use first/last values for width
+      } else if (isScaleBand($xScale)) {
+        _area.width = $xScale.step();
+      } else {
+        // Find width to next data point
+        const index = $flatData.findIndex((d) => Number($x(d)) === Number($x($tooltip.data)));
+        const isLastPoint = index + 1 === $flatData.length;
+        const nextDataPoint = isLastPoint ? max($xDomain) : $x($flatData[index + 1]);
+        _area.width = ($xScale(nextDataPoint) ?? 0) - (xCoord ?? 0);
+      }
+
+      // If array, use left-most value for top left of rect
+      _area.x =
+        (Array.isArray(xCoord) ? min(xCoord) : xCoord) -
+        (isScaleBand($xScale) ? ($xScale.padding() * $xScale.step()) / 2 : 0);
+
+      if (axis === 'x') {
+        _area.height = max($yRange);
+      }
+    }
+
+    if (axis === 'y' || axis === 'both') {
+      // y lines
+      if (Array.isArray(yCoord)) {
+        // `y` accessor with multiple properties (ex. `y={['start', 'end']})`)
+        _lines = [
+          ..._lines,
+          ...yCoord.filter(notNull).map((yItem, i) => ({
+            x1: 0,
+            y1: yItem + yOffset,
+            x2: max($xRange),
+            y2: yItem + yOffset,
+          })),
+        ];
+      } else {
+        _lines = [
+          ..._lines,
+          {
+            x1: 0,
+            y1: yCoord + yOffset,
+            x2: max($xRange),
+            y2: yCoord + yOffset,
+          },
+        ];
+      }
+
+      // y area
+      if (Array.isArray(yCoord)) {
+        // `y` accessor with multiple properties (ex. `y={['start', 'end']})`)
+        _area.height = max(yCoord) - min(yCoord); // Use first/last values for width
+      } else if (isScaleBand($yScale)) {
+        _area.height = $yScale.step();
+      } else {
+        // Find width to next data point
+        const index = $flatData.findIndex((d) => Number($x(d)) === Number($x($tooltip.data)));
+        const isLastPoint = index + 1 === $flatData.length;
+        const nextDataPoint = isLastPoint ? max($yDomain) : $x($flatData[index + 1]);
+        _area.height = ($yScale(nextDataPoint) ?? 0) - (yCoord ?? 0);
+      }
+
+      // If array, use left-most value for top left of rect
+      _area.y =
+        (Array.isArray(yCoord) ? min(yCoord) : yCoord) -
+        (isScaleBand($yScale) ? ($yScale.padding() * $yScale.step()) / 2 : 0);
+
+      if (axis === 'y') {
+        _area.width = max($xRange);
+      }
+    }
+
+    // points
+    if (Array.isArray(xCoord)) {
+      // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
+      _points = xCoord.filter(notNull).map((xItem, i) => ({
+        x: xItem + xOffset,
+        y: $yGet($tooltip.data) + yOffset,
+      }));
+    } else if (Array.isArray($tooltip.data)) {
+      // Stack series
+      _points = $tooltip.data.map((yValue, i) => ({
+        x: xCoord + xOffset,
+        y: $yScale(yValue) + yOffset,
+      }));
+    } else {
+      _points = [
+        {
+          x: xCoord + xOffset,
+          y: $yGet($tooltip.data) + yOffset,
+        },
+      ];
+    }
+  }
+</script>
+
+{#if $tooltip.data}
+  {#if area}
+    <slot name="area" area={_area}>
+      <Rect
+        spring
+        {..._area}
+        fill="rgba(0,0,0,.1)"
+        on:click
+        {...typeof area === 'object' ? area : null}
+      />
+    </slot>
+  {/if}
+
+  {#if lines}
+    <slot name="lines" lines={_lines}>
+      {#each _lines as line}
+        <Line
+          spring
+          x1={line.x1}
+          y1={line.y1}
+          x2={line.x2}
+          y2={line.y2}
+          class="stroke-black/50 stroke-2 [stroke-dasharray:2,2] pointer-events-none"
+          {...typeof lines === 'object' ? lines : null}
+        />
+      {/each}
+    </slot>
+  {/if}
+
+  {#if points}
+    <slot name="points" points={_points}>
+      {#each _points as point}
+        <!-- TODO: Improve color with stacked data -->
+        {@const fill = $config.r ? $rGet($tooltip.data) : null}
+        <Circle
+          spring
+          cx={point.x}
+          cy={point.y}
+          r={4}
+          {fill}
+          class={cls(
+            'stroke-[6] stroke-white [paint-order:stroke] drop-shadow',
+            !fill && 'fill-accent-500'
+          )}
+          {...typeof points === 'object' ? points : null}
+        />
+      {/each}
+    </slot>
+  {/if}
+{/if}

@@ -16,7 +16,7 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
   import Bars from '$lib/components/Bars.svelte';
-  import HighlightRect from '$lib/components/HighlightRect.svelte';
+  import Highlight from '$lib/components/Highlight.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
   import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
@@ -80,7 +80,7 @@
         <Axis placement="left" grid rule format="metric" />
         <Axis placement="bottom" rule ticks={4} />
         <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
-        <HighlightRect />
+        <Highlight area />
       </Svg>
       <Tooltip header={(data) => data.x0 + ' - ' + (data.x1 - 1)} let:data>
         <TooltipItem label="count" value={data.length} format="integer" />
@@ -115,7 +115,7 @@
         <Axis placement="left" rule />
         <Axis placement="bottom" grid rule />
         <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
-        <HighlightRect />
+        <Highlight area />
       </Svg>
       <Tooltip header={(data) => data.x0 + ' - ' + (data.x1 - 1)} let:data>
         <TooltipItem label="count" value={data.length} format="integer" />
@@ -207,7 +207,7 @@
         <Axis placement="left" grid rule format="metric" />
         <Axis placement="bottom" rule ticks={4} />
         <Bars radius={4} strokeWidth={1} tweened getKey={(d) => d.x0} class="fill-accent-500" />
-        <HighlightRect />
+        <Highlight area />
       </Svg>
       <Tooltip header={(data) => data.x0 + ' - ' + (data.x1 - 0.01)} let:data>
         <TooltipItem label="count" value={data.length} format="integer" />
@@ -253,7 +253,7 @@
           labelProps={{ rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 }}
         />
         <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
-        <HighlightRect />
+        <Highlight area />
       </Svg>
       <Tooltip
         header={(data) =>

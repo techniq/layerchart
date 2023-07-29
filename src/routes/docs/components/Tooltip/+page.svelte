@@ -11,8 +11,7 @@
   import AreaStack from '$lib/components/AreaStack.svelte';
   import Axis from '$lib/components/Axis.svelte';
   import Bars from '$lib/components/Bars.svelte';
-  import HighlightLine from '$lib/components/HighlightLine.svelte';
-  import HighlightRect from '$lib/components/HighlightRect.svelte';
+  import Highlight from '$lib/components/Highlight.svelte';
   import Points from '$lib/components/Points.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
@@ -51,7 +50,7 @@
   let charts = {
     area: {
       mode: 'bisect-x',
-      highlight: 'line',
+      highlight: ['points', 'lines'],
       axis: undefined,
       snapToDataX: false,
       snapToDataY: false,
@@ -59,7 +58,7 @@
     },
     areaStack: {
       mode: 'voronoi',
-      highlight: 'line',
+      highlight: ['points', 'lines'],
       axis: undefined,
       snapToDataX: false,
       snapToDataY: false,
@@ -67,15 +66,15 @@
     },
     dateTime: {
       mode: 'bisect-x',
-      highlight: 'line',
-      axis: undefined,
+      highlight: ['points', 'lines'],
+      axis: 'x',
       snapToDataX: false,
       snapToDataY: false,
       debug: false,
     },
     duration: {
-      mode: 'bounds',
-      highlight: 'rect',
+      mode: 'band',
+      highlight: ['area'],
       axis: undefined,
       snapToDataX: false,
       snapToDataY: false,
@@ -83,7 +82,7 @@
     },
     multiDuration: {
       mode: 'bounds',
-      highlight: 'rect',
+      highlight: ['area'],
       axis: 'both',
       snapToDataX: false,
       snapToDataY: false,
@@ -91,7 +90,7 @@
     },
     bars: {
       mode: 'band',
-      highlight: 'rect',
+      highlight: ['area'],
       axis: undefined,
       snapToDataX: false,
       snapToDataY: false,
@@ -99,7 +98,7 @@
     },
     multiBars: {
       mode: 'band',
-      highlight: 'rect',
+      highlight: ['area'],
       axis: undefined,
       snapToDataX: false,
       snapToDataY: false,
@@ -107,7 +106,7 @@
     },
     scatter: {
       mode: 'voronoi',
-      highlight: 'line',
+      highlight: ['points', 'lines'],
       axis: 'both',
       snapToDataX: true,
       snapToDataY: true,
@@ -136,7 +135,7 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
-        <HighlightLine color="var(--color-accent-500)" />
+        <Highlight points lines />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />
@@ -163,7 +162,7 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
-        <HighlightLine color="var(--color-accent-500)" />
+        <Highlight points lines />
       </Svg>
       <Tooltip class="bg-white text-gray-800 border border-gray-700" let:data>
         <div slot="header" class="font-semibold text-center">
@@ -204,14 +203,12 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
-        {#if charts.area.highlight === 'line'}
-          <HighlightLine
-            {...charts.area.axis && { axis: charts.area.axis }}
-            color="var(--color-accent-500)"
-          />
-        {:else if charts.area.highlight === 'rect'}
-          <HighlightRect {...charts.area.axis && { axis: charts.area.axis }} />
-        {/if}
+        <Highlight
+          points={charts.area.highlight.includes('points')}
+          lines={charts.area.highlight.includes('lines')}
+          area={charts.area.highlight.includes('area')}
+          axis={charts.area.axis}
+        />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />
@@ -251,14 +248,12 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <AreaStack line={{ class: 'stroke-2' }} />
-        {#if charts.areaStack.highlight === 'line'}
-          <HighlightLine
-            {...charts.areaStack.axis && { axis: charts.areaStack.axis }}
-            color="var(--color-blue-500)"
-          />
-        {:else if charts.areaStack.highlight === 'rect'}
-          <HighlightRect {...charts.areaStack.axis && { axis: charts.areaStack.axis }} />
-        {/if}
+        <Highlight
+          points={charts.areaStack.highlight.includes('points')}
+          lines={charts.areaStack.highlight.includes('lines')}
+          area={charts.areaStack.highlight.includes('area')}
+          axis={charts.areaStack.axis}
+        />
       </Svg>
       <Tooltip header={(data) => format(data.data.date, 'eee, MMMM do')} let:data>
         {#each keys as key}
@@ -295,14 +290,12 @@
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
         <Points class="fill-accent-500 stroke-accent-800" />
-        {#if charts.dateTime.highlight === 'line'}
-          <HighlightLine
-            {...charts.dateTime.axis && { axis: charts.dateTime.axis }}
-            color="var(--color-accent-500)"
-          />
-        {:else if charts.dateTime.highlight === 'rect'}
-          <HighlightRect {...charts.dateTime.axis && { axis: charts.dateTime.axis }} />
-        {/if}
+        <Highlight
+          points={charts.dateTime.highlight.includes('points')}
+          lines={charts.dateTime.highlight.includes('lines')}
+          area={charts.dateTime.highlight.includes('area')}
+          axis={charts.dateTime.axis}
+        />
       </Svg>
       <Tooltip header={(data) => data.name} let:data>
         <TooltipItem label="date" value={format(data.startDate, 'h:mm a')} />
@@ -339,14 +332,12 @@
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
         <Points class="fill-accent-500 stroke-accent-800" links />
-        {#if charts.duration.highlight === 'line'}
-          <HighlightLine
-            {...charts.duration.axis && { axis: charts.duration.axis }}
-            color="var(--color-accent-500)"
-          />
-        {:else if charts.duration.highlight === 'rect'}
-          <HighlightRect {...charts.duration.axis && { axis: charts.duration.axis }} />
-        {/if}
+        <Highlight
+          points={charts.duration.highlight.includes('points')}
+          lines={charts.duration.highlight.includes('lines')}
+          area={charts.duration.highlight.includes('area')}
+          axis={charts.duration.axis}
+        />
       </Svg>
       <Tooltip header={(data) => data.name} let:data>
         <TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
@@ -387,14 +378,12 @@
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
         <Points class="fill-accent-500 stroke-accent-800" links />
-        {#if charts.multiDuration.highlight === 'line'}
-          <HighlightLine
-            {...charts.multiDuration.axis && { axis: charts.multiDuration.axis }}
-            color="var(--color-accent-500)"
-          />
-        {:else if charts.multiDuration.highlight === 'rect'}
-          <HighlightRect {...charts.multiDuration.axis && { axis: charts.multiDuration.axis }} />
-        {/if}
+        <Highlight
+          points={charts.multiDuration.highlight.includes('points')}
+          lines={charts.multiDuration.highlight.includes('lines')}
+          area={charts.multiDuration.highlight.includes('area')}
+          axis={charts.multiDuration.axis}
+        />
       </Svg>
       <Tooltip header={(data) => data.name} let:data>
         <TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
@@ -437,14 +426,12 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
-        {#if charts.bars.highlight === 'line'}
-          <HighlightLine
-            {...charts.bars.axis && { axis: charts.bars.axis }}
-            color="var(--color-blue-500)"
-          />
-        {:else if charts.bars.highlight === 'rect'}
-          <HighlightRect {...charts.bars.axis && { axis: charts.bars.axis }} />
-        {/if}
+        <Highlight
+          points={charts.bars.highlight.includes('points')}
+          lines={charts.bars.highlight.includes('lines')}
+          area={charts.bars.highlight.includes('area')}
+          axis={charts.bars.axis}
+        />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />
@@ -484,14 +471,12 @@
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars y="baseline" radius={4} strokeWidth={1} class="fill-gray-200" />
         <Bars y="value" radius={4} strokeWidth={1} padding={16} class="fill-accent-500" />
-        {#if charts.multiBars.highlight === 'line'}
-          <HighlightLine
-            {...charts.multiBars.axis && { axis: charts.multiBars.axis }}
-            color="var(--color-blue-500)"
-          />
-        {:else if charts.multiBars.highlight === 'rect'}
-          <HighlightRect {...charts.multiBars.axis && { axis: charts.multiBars.axis }} />
-        {/if}
+        <Highlight
+          points={charts.multiBars.highlight.includes('points')}
+          lines={charts.multiBars.highlight.includes('lines')}
+          area={charts.multiBars.highlight.includes('area')}
+          axis={charts.multiBars.axis}
+        />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />
@@ -525,14 +510,12 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" grid rule />
         <Points class="fill-accent-500 stroke-accent-800" />
-        {#if charts.scatter.highlight === 'line'}
-          <HighlightLine
-            {...charts.scatter.axis && { axis: charts.scatter.axis }}
-            color="var(--color-accent-500)"
-          />
-        {:else if charts.scatter.highlight === 'rect'}
-          <HighlightRect {...charts.scatter.axis && { axis: charts.scatter.axis }} />
-        {/if}
+        <Highlight
+          points={charts.scatter.highlight.includes('points')}
+          lines={charts.scatter.highlight.includes('lines')}
+          area={charts.scatter.highlight.includes('area')}
+          axis={charts.scatter.axis}
+        />
       </Svg>
       <Tooltip let:data>
         <TooltipItem label="x" value={data.x} format="decimal" />

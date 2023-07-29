@@ -6,7 +6,7 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
-  import HighlightRect from '$lib/components/HighlightRect.svelte';
+  import Highlight from '$lib/components/Highlight.svelte';
   import Points from '$lib/components/Points.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
@@ -62,8 +62,8 @@
             />
           {/each}
         </Points>
-        <HighlightRect axis="x" />
-        <HighlightRect axis="y" />
+        <Highlight area axis="x" />
+        <Highlight area axis="y" />
       </Svg>
       <Tooltip header={(d) => formatDate(d.date, PeriodType.Day)} let:data>
         <TooltipItem label="duration" value={data.value} valueAlign="right" />
