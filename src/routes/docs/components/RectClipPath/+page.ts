@@ -8,6 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
+      related: ['components/ChartClipPath', 'examples/Partition', 'examples/Treemap'],
     },
   };
 }
