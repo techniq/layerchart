@@ -1,5 +1,8 @@
 <script lang="ts">
-  export let id: string;
+  import { uniqueId } from 'svelte-ux';
+
+  /** Unique id for linearGradient */
+  export let id: string = uniqueId('linearGradient-');
 
   export let from: string | boolean;
   export let via: string | undefined = undefined; // TODO: Currently --tw-gradient-via is not the color but the full stops
@@ -24,7 +27,7 @@
     gradientTransform={rotate ? `rotate(${rotate})` : ''}
     {...$$restProps}
   >
-    <slot>
+    <slot name="stops">
       {#if from}
         <stop offset="0%" stop-color={from === true ? 'var(--tw-gradient-from)' : from} />
       {/if}
@@ -40,3 +43,5 @@
     </slot>
   </linearGradient>
 </defs>
+
+<slot {id} />
