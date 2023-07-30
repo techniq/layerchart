@@ -17,7 +17,7 @@
   // https://svelte.dev/repl/09711e43a1264ba18945d7db7cab9335?version=3.38.2
   // https://codepen.io/simeydotme/pen/rrOEmO/
 
-  import { getContext } from 'svelte';
+  import { getContext, tick } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { arc as d3arc } from 'd3-shape';
@@ -30,8 +30,12 @@
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
   export let value = 0;
-  let tweened_value = motionStore(value, { spring, tweened });
-  $: tweened_value.set(value);
+  export let initialValue = value;
+  let tweened_value = motionStore(initialValue, { spring, tweened });
+
+  $: tick().then(() => {
+    tweened_value.set(value);
+  });
 
   export let domain = [0, 100];
 
@@ -146,7 +150,7 @@
   $: labelArcCenterOffset = {
     x: outerRadius - boundingBox.width / 2,
     // x: 0,
-    y: (outerRadius - boundingBox.height / 2) * -1
+    y: (outerRadius - boundingBox.height / 2) * -1,
   };
   // $: console.log(labelArcCenterOffset)
 
@@ -155,7 +159,7 @@
     x: outerRadius - boundingBox.width / 2,
     // x: 0,
     // y: (outerRadius - boundingBox.height) * -1
-    y: (outerRadius - boundingBox.height) * -1
+    y: (outerRadius - boundingBox.height) * -1,
   };
   // $: console.log(labelArcBottomOffset)
 

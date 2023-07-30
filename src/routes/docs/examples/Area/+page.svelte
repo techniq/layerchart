@@ -1,12 +1,15 @@
 <script lang="ts">
+  import { cubicInOut } from 'svelte/easing';
   import { scaleOrdinal, scaleTime } from 'd3-scale';
   import { flatGroup } from 'd3-array';
   import { format } from 'date-fns';
+  import { Field, Switch, Toggle } from 'svelte-ux';
   import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
   import Axis from '$lib/components/Axis.svelte';
+  import ChartClipPath from '$lib/components/ChartClipPath.svelte';
   import Highlight from '$lib/components/Highlight.svelte';
   import Labels from '$lib/components/Labels.svelte';
   import Point from '$lib/components/Point.svelte';
@@ -197,3 +200,40 @@
     </Chart>
   </div>
 </Preview>
+
+<h2>Clip tweeen on mount</h2>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto,1fr] gap-2 mb-2">
+    <Field label="Show area" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+  </div>
+
+  <Preview>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart
+        {data}
+        x="date"
+        xScale={scaleTime()}
+        y="value"
+        yDomain={[0, null]}
+        yNice
+        padding={{ left: 16, bottom: 24 }}
+      >
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+          {#if show}
+            <ChartClipPath
+              initialWidth={0}
+              tweened={{ width: { duration: 1000, easing: cubicInOut } }}
+            >
+              <Area line={{ class: 'stroke-2 stroke-accent-500' }} class="fill-accent-500/30" />
+            </ChartClipPath>
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>

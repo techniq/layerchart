@@ -1,24 +1,35 @@
 <script lang="ts">
+  import { tick } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 
   import { motionStore } from '$lib/stores/motionStore';
 
   export let x1: number;
+  export let initialX1 = x1;
+
   export let y1: number;
+  export let initialY1 = x1;
+
   export let x2: number;
+  export let initialX2 = x2;
+
   export let y2: number;
+  export let initialY2 = y2;
+
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
-  let tweened_x1 = motionStore(x1, { spring, tweened });
-  let tweened_y1 = motionStore(y1, { spring, tweened });
-  let tweened_x2 = motionStore(x2, { spring, tweened });
-  let tweened_y2 = motionStore(y2, { spring, tweened });
+  let tweened_x1 = motionStore(initialX1, { spring, tweened });
+  let tweened_y1 = motionStore(initialY1, { spring, tweened });
+  let tweened_x2 = motionStore(initialX2, { spring, tweened });
+  let tweened_y2 = motionStore(initialY2, { spring, tweened });
 
-  $: tweened_x1.set(x1);
-  $: tweened_y1.set(y1);
-  $: tweened_x2.set(x2);
-  $: tweened_y2.set(y2);
+  $: tick().then(() => {
+    tweened_x1.set(x1);
+    tweened_y1.set(y1);
+    tweened_x2.set(x2);
+    tweened_y2.set(y2);
+  });
 </script>
 
 <line

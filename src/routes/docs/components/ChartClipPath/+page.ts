@@ -13,6 +13,7 @@ export async function load() {
       related: [
         'components/RectClipPath',
         'components/Rect',
+        'examples/Area',
         'examples/Partition',
         'examples/StateMap',
         'examples/Treemap',

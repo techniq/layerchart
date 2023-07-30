@@ -1,27 +1,38 @@
 <script lang="ts">
+  import { tick } from 'svelte';
   import {
     motionStore,
     resolveOptions,
     type SpringOptions,
-    type TweenedOptions
+    type TweenedOptions,
   } from '$lib/stores/motionStore';
 
-  export let x: number = 0;
-  export let y: number = 0;
+  export let x = 0;
+  export let initialX = x;
+
+  export let y = 0;
+  export let initialY = y;
+
   export let width: number;
+  export let initialWidth = width;
+
   export let height: number;
+  export let initialHeight = height;
+
   export let spring: boolean | SpringOptions | { [prop: string]: SpringOptions } = undefined;
   export let tweened: boolean | TweenedOptions | { [prop: string]: TweenedOptions } = undefined;
 
-  let tweened_x = motionStore(x, resolveOptions('x', { spring, tweened }));
-  let tweened_y = motionStore(y, resolveOptions('y', { spring, tweened }));
-  let tweened_width = motionStore(width, resolveOptions('width', { spring, tweened }));
-  let tweened_height = motionStore(height, resolveOptions('height', { spring, tweened }));
+  let tweened_x = motionStore(initialX, resolveOptions('x', { spring, tweened }));
+  let tweened_y = motionStore(initialY, resolveOptions('y', { spring, tweened }));
+  let tweened_width = motionStore(initialWidth, resolveOptions('width', { spring, tweened }));
+  let tweened_height = motionStore(initialHeight, resolveOptions('height', { spring, tweened }));
 
-  $: tweened_x.set(x);
-  $: tweened_y.set(y);
-  $: tweened_width.set(width);
-  $: tweened_height.set(height);
+  $: tick().then(() => {
+    tweened_x.set(x);
+    tweened_y.set(y);
+    tweened_width.set(width);
+    tweened_height.set(height);
+  });
 </script>
 
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->

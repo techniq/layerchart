@@ -5,7 +5,15 @@
   import { extent, median } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
 
-  import { Field, ToggleGroup, ToggleOption, formatDate, PeriodType } from 'svelte-ux';
+  import {
+    Field,
+    ToggleGroup,
+    ToggleOption,
+    formatDate,
+    PeriodType,
+    Toggle,
+    Switch,
+  } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
@@ -255,6 +263,48 @@
     </Chart>
   </div>
 </Preview>
+
+<h2>Tween on mount</h2>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto,1fr] gap-2 mb-2">
+    <Field label="Show bars" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+  </div>
+
+  <Preview>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart
+        {data}
+        x="value"
+        xDomain={[0, null]}
+        xNice
+        y="date"
+        yScale={scaleBand().padding(0.4)}
+        padding={{ left: 16, bottom: 24 }}
+      >
+        <Svg>
+          <Axis placement="bottom" grid rule />
+          <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+          {#if show}
+            <Bars
+              initialX={0}
+              initialWidth={0}
+              tweened={{
+                x: { duration: 500, easing: cubicInOut },
+                width: { duration: 500, easing: cubicInOut },
+              }}
+              radius={4}
+              strokeWidth={1}
+              class="fill-accent-500"
+            />
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
 
 <h2>Grouped</h2>
 
