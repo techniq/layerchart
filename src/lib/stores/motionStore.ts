@@ -37,12 +37,12 @@ export function resolveOptions(prop: string, options: PropMotionOptions) {
         ? options.spring
         : prop in options.spring
         ? options.spring[prop]
-        : options.spring,
+        : false,
     tweened:
       typeof options.tweened === 'boolean' || options.tweened == null
         ? options.tweened
         : prop in options.tweened
         ? options.tweened[prop]
-        : options.tweened,
+        : false,
   };
 }
