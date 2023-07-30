@@ -17,6 +17,6 @@
 </script>
 
 <ClipPath {id}>
-  <Circle slot="clip" {cx} {cy} {r} {spring} {tweened} />
+  <Circle slot="clip" {cx} {cy} {r} {spring} {tweened} {...$$restProps} />
   <slot {id} />
 </ClipPath>

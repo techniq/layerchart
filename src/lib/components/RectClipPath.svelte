@@ -18,6 +18,6 @@
 </script>
 
 <ClipPath {id}>
-  <Rect slot="clip" {x} {y} {width} {height} {spring} {tweened} />
+  <Rect slot="clip" {x} {y} {width} {height} {spring} {tweened} {...$$restProps} />
   <slot {id} />
 </ClipPath>
