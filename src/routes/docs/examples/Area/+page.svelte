@@ -20,6 +20,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData';
   import { pivotLonger } from '$lib/utils/pivot';
+  import Spline from '$lib/components/Spline.svelte';
 
   const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
 
@@ -230,6 +231,82 @@
               tweened={{ width: { duration: 1000, easing: cubicInOut } }}
             >
               <Area line={{ class: 'stroke-2 stroke-accent-500' }} class="fill-accent-500/30" />
+            </ChartClipPath>
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto,1fr] gap-2 mb-2">
+    <Field label="Show area" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+  </div>
+
+  <Preview>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart
+        {data}
+        x="date"
+        xScale={scaleTime()}
+        y="value"
+        yDomain={[0, null]}
+        yNice
+        padding={{ left: 16, bottom: 24 }}
+      >
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+          {#if show}
+            <Spline draw={{ easing: cubicInOut, delay: 700 }} class="stroke-2 stroke-accent-500" />
+            <ChartClipPath
+              initialWidth={0}
+              tweened={{ width: { duration: 1000, easing: cubicInOut } }}
+            >
+              <Area class="fill-accent-500/30" />
+            </ChartClipPath>
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto,1fr] gap-2 mb-2">
+    <Field label="Show area" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+  </div>
+
+  <Preview>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart
+        {data}
+        x="date"
+        xScale={scaleTime()}
+        y="value"
+        yDomain={[0, null]}
+        yNice
+        padding={{ left: 16, bottom: 24 }}
+      >
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+          {#if show}
+            <Spline draw={{ easing: cubicInOut }} class="stroke-2 stroke-accent-500" />
+            <ChartClipPath
+              initialY={300}
+              initialHeight={0}
+              tweened={{
+                y: { duration: 1000, easing: cubicInOut, delay: 500 },
+                height: { duration: 1000, easing: cubicInOut },
+              }}
+            >
+              <Area class="fill-accent-500/30" />
             </ChartClipPath>
           {/if}
         </Svg>
