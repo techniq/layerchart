@@ -57,3 +57,25 @@
     </Chart>
   </div>
 </Preview>
+
+<h2>units <small>objectBoundingBox (default) and userSpaceOnUse</small></h2>
+
+<Preview>
+  <div class="h-[334px] p-4 border rounded">
+    <Chart>
+      <Svg>
+        <LinearGradient from to class="from-green-500 to-blue-500" units="objectBoundingBox" let:id>
+          {#each { length: 6 } as _, i}
+            <rect x={0 + i * 120} y={0} width={100} height={140} rx={8} fill="url(#{id})" />
+          {/each}
+        </LinearGradient>
+
+        <LinearGradient from to class="from-green-500 to-blue-500" units="userSpaceOnUse" let:id>
+          {#each { length: 6 } as _, i}
+            <rect x={0 + i * 120} y={160} width={100} height={140} rx={8} fill="url(#{id})" />
+          {/each}
+        </LinearGradient>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>

@@ -5,7 +5,7 @@
   export let id: string = uniqueId('linearGradient-');
 
   export let from: string | boolean;
-  export let via: string | undefined = undefined; // TODO: Currently --tw-gradient-via is not the color but the full stops
+  export let via: string | boolean | undefined = undefined; // TODO: Currently --tw-gradient-via is not the color but the full stops
   export let to: string | boolean;
 
   export let vertical = false;
@@ -15,6 +15,9 @@
   export let y2 = vertical ? '100%' : '0%';
 
   export let rotate: number | undefined = undefined;
+
+  /** Define the coordinate system for attributes (i.e. gradientUnits) */
+  export let units: 'objectBoundingBox' | 'userSpaceOnUse' = 'objectBoundingBox';
 </script>
 
 <defs>
@@ -25,6 +28,7 @@
     {x2}
     {y2}
     gradientTransform={rotate ? `rotate(${rotate})` : ''}
+    gradientUnits={units}
     {...$$restProps}
   >
     <slot name="stops">
