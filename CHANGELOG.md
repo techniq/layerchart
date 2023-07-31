@@ -1,5 +1,31 @@
 # layerchart
 
+## 0.22.0
+
+### Minor Changes
+
+- Add `initial*` values to all primative components' (Arc, Rect, Group, Line, Rect) tweened properties (x, y, width, height, value, etc) which enables initial mount transitions (see added examples). ([`6f8cfb0`](https://github.com/techniq/layerchart/commit/6f8cfb05d9925ad6c9da7b53d021f366870bc52a))
+
+- Remove `ConnectedPoints` component and replace with `links` prop on `<Points>` ([`f514bb6`](https://github.com/techniq/layerchart/commit/f514bb69fa99c6243958cf9a620ca24a137b1d6d))
+
+- Highlight overhaul ([`d9dd4bf`](https://github.com/techniq/layerchart/commit/d9dd4bf38f17530950d29eb6edff400a7d6dff02))
+
+  - Consolidate HighlightLine and HighlightRect
+  - Support enabling `points`, `lines`, and `area` individually
+  - Support passing props to underlying Line, Circle, and Rect
+  - Support overriding with slots
+  - Remove `color` prop
+
+### Patch Changes
+
+- [motionStore] Fix resolving per-property options (do not enable tweened height with default options if only height is enabled) ([`b930ef7`](https://github.com/techniq/layerchart/commit/b930ef78abd0713a8acb7c688574ebb6f2c838b5))
+
+- [LinearGradient] Generate `id` by default and change default slot to render contexts with `id` passed (like ClipPath) ([`476f03a`](https://github.com/techniq/layerchart/commit/476f03a8dcd809dd23079912dc16f145eca82147))
+
+- [HighlightRect] Fix usage with scaleBand yScale's without breaking histogram usage ([`53a1fff`](https://github.com/techniq/layerchart/commit/53a1fffa1ac357fa0070a9492ae88c9cc26ab29b))
+
+- [LinearGradient] Add `units` prop to support defining coordinate system for attributes ([`5e58b98`](https://github.com/techniq/layerchart/commit/5e58b985090a9039e8837214a46ef038a85771b8))
+
 ## 0.21.1
 
 ### Patch Changes
