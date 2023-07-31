@@ -1,5 +1,13 @@
 # layerchart
 
+## 0.22.1
+
+### Patch Changes
+
+- [Line] Fix initializing `y1` with wrong value ([`3f6a661`](https://github.com/techniq/layerchart/commit/3f6a661ef0b59e0312bcf828dbaa2cfb978d21db))
+
+- [Highlight] Support setting classes on points/lines/area without overriding all default class ([`77e6808`](https://github.com/techniq/layerchart/commit/77e68081919db1877896602b7a7134f69e0f8daf))
+
 ## 0.22.0
 
 ### Minor Changes
