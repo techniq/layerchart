@@ -47,7 +47,7 @@
     "marked": "^5.1.2",
     "mdsvex": "^0.11.0",
     "prettier": "^3.0.0",
-    "prettier-plugin-svelte": "^3.0.1",
+    "prettier-plugin-svelte": "^3.0.3",
     "prism-themes": "^1.9.0",
     "rehype-slug": "^5.1.0",
     "svelte-check": "^3.4.6",
@@ -85,7 +85,7 @@
     "lodash-es": "^4.17.21",
     "shapefile": "^0.6.6",
     "svelte": "^3.59.1",
-    "svelte-ux": "^0.47.1",
+    "svelte-ux": "^0.47.3",
     "topojson-client": "^3.1.0"
   },
   "main": "./dist/index.js",
