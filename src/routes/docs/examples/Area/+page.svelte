@@ -12,7 +12,9 @@
   import ChartClipPath from '$lib/components/ChartClipPath.svelte';
   import Highlight from '$lib/components/Highlight.svelte';
   import Labels from '$lib/components/Labels.svelte';
+  import LinearGradient from '$lib/components/LinearGradient.svelte';
   import Point from '$lib/components/Point.svelte';
+  import Spline from '$lib/components/Spline.svelte';
   import Text from '$lib/components/Text.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
@@ -20,7 +22,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData';
   import { pivotLonger } from '$lib/utils/pivot';
-  import Spline from '$lib/components/Spline.svelte';
 
   const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
 
@@ -105,6 +106,30 @@
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Area line={{ class: 'stroke-2 stroke-accent-500' }} class="fill-accent-500/30" />
         <Labels format="integer" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Gradient</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <LinearGradient from to class="from-accent-500/50 to-accent-500/0" vertical let:id>
+          <Area line={{ class: 'stroke-2 stroke-accent-500' }} fill="url(#{id})" />
+        </LinearGradient>
       </Svg>
     </Chart>
   </div>
@@ -303,7 +328,7 @@
               initialHeight={0}
               tweened={{
                 y: { duration: 1000, easing: cubicInOut, delay: 500 },
-                height: { duration: 1000, easing: cubicInOut },
+                height: { duration: 1000, easing: cubicInOut, delay: 500 },
               }}
             >
               <Area class="fill-accent-500/30" />

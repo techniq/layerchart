@@ -21,6 +21,7 @@
   import Bars from '$lib/components/Bars.svelte';
   import Highlight from '$lib/components/Highlight.svelte';
   import Labels from '$lib/components/Labels.svelte';
+  import LinearGradient from '$lib/components/LinearGradient.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -161,6 +162,37 @@
         <Rule y={0} />
         <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
         <Labels format="integer" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Gradient</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleBand().padding(0.4)}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <LinearGradient
+          from
+          to
+          class="from-blue-500 to-green-400"
+          vertical
+          units="userSpaceOnUse"
+          let:id
+        >
+          <Bars radius={4} strokeWidth={1} fill="url(#{id})" class="stroke-blue-900" />
+        </LinearGradient>
       </Svg>
     </Chart>
   </div>
