@@ -8,7 +8,7 @@
   export let initialX1 = x1;
 
   export let y1: number;
-  export let initialY1 = x1;
+  export let initialY1 = y1;
 
   export let x2: number;
   export let initialX2 = x2;
