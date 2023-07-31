@@ -191,9 +191,9 @@
       <Rect
         spring
         {..._area}
-        fill="rgba(0,0,0,.1)"
-        on:click
         {...typeof area === 'object' ? area : null}
+        class={cls(!area.fill && 'fill-black/10', typeof area === 'object' ? area.class : null)}
+        on:click
       />
     </slot>
   {/if}
@@ -207,8 +207,11 @@
           y1={line.y1}
           x2={line.x2}
           y2={line.y2}
-          class="stroke-black/50 stroke-2 [stroke-dasharray:2,2] pointer-events-none"
           {...typeof lines === 'object' ? lines : null}
+          class={cls(
+            'stroke-black/20 stroke-2 [stroke-dasharray:2,2] pointer-events-none',
+            typeof lines === 'object' ? lines.class : null
+          )}
         />
       {/each}
     </slot>
@@ -225,11 +228,12 @@
           cy={point.y}
           r={4}
           {fill}
+          {...typeof points === 'object' ? points : null}
           class={cls(
             'stroke-[6] stroke-white [paint-order:stroke] drop-shadow',
-            !fill && 'fill-accent-500'
+            !fill && 'fill-accent-500',
+            typeof points === 'object' ? points.class : null
           )}
-          {...typeof points === 'object' ? points : null}
         />
       {/each}
     </slot>
