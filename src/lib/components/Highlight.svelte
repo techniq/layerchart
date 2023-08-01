@@ -192,7 +192,7 @@
         spring
         {..._area}
         {...typeof area === 'object' ? area : null}
-        class={cls(!area.fill && 'fill-black/10', typeof area === 'object' ? area.class : null)}
+        class={cls(!area.fill && 'fill-black/5', typeof area === 'object' ? area.class : null)}
         on:click
       />
     </slot>
