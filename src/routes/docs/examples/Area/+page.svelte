@@ -29,7 +29,6 @@
   const multiSeriesData = createDateSeries({ min: 10, max: 100, value: 'integer', keys });
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
-
   const fruitColors = {
     apples: 'var(--color-blue-500)',
     bananas: 'var(--color-purple-500)',
@@ -148,16 +147,17 @@
       yNice
       r="fruit"
       rScale={scaleOrdinal()}
-      rDomain={dataByFruit.map((d) => d[0])}
-      rRange={['var(--color-blue-500)', 'var(--color-purple-500)', 'var(--color-green-500)']}
+      rDomain={Object.keys(fruitColors)}
+      rRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
       tooltip={{ mode: 'voronoi' }}
+      let:rScale
     >
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
-          {@const color = fruitColors[fruit]}
+          {@const color = rScale(fruit)}
           <Area
             {data}
             fill={color}
@@ -200,16 +200,17 @@
       yNice
       r="fruit"
       rScale={scaleOrdinal()}
-      rDomain={dataByFruit.map((d) => d[0])}
-      rRange={['var(--color-blue-500)', 'var(--color-purple-500)', 'var(--color-green-500)']}
+      rDomain={Object.keys(fruitColors)}
+      rRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'voronoi' }}
+      let:rScale
     >
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
-          {@const color = fruitColors[fruit]}
+          {@const color = rScale(fruit)}
           <Area
             {data}
             fill={color}

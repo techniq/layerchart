@@ -9,7 +9,7 @@
     Svg as _Svg,
     Html as _Html,
     Canvas as _Canvas,
-    WebGL as _WebGL
+    WebGL as _WebGL,
   } from 'layercake';
 
   export const Svg = _Svg;
@@ -100,6 +100,8 @@
   let:element
   let:xScale
   let:yScale
+  let:zScale
+  let:rScale
 >
   <GeoContext {...geo} let:projection>
     {#if tooltip}
@@ -115,6 +117,8 @@
           {tooltip}
           {xScale}
           {yScale}
+          {zScale}
+          {rScale}
         />
       </TooltipContext>
     {:else}
@@ -128,6 +132,8 @@
         {projection}
         {xScale}
         {yScale}
+        {zScale}
+        {rScale}
       />
     {/if}
   </GeoContext>

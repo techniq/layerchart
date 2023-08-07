@@ -118,16 +118,17 @@
       yNice
       r="fruit"
       rScale={scaleOrdinal()}
-      rDomain={dataByFruit.map((d) => d[0])}
-      rRange={['var(--color-blue-500)', 'var(--color-purple-500)', 'var(--color-green-500)']}
+      rDomain={Object.keys(fruitColors)}
+      rRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
       tooltip={{ mode: 'voronoi' }}
+      let:rScale
     >
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
-          {@const color = fruitColors[fruit]}
+          {@const color = rScale(fruit)}
           <Spline {data} class="stroke-2" stroke={color}>
             <svelte:fragment slot="end">
               <circle r={4} fill={color} />
@@ -164,16 +165,17 @@
       yNice
       r="fruit"
       rScale={scaleOrdinal()}
-      rDomain={dataByFruit.map((d) => d[0])}
-      rRange={['var(--color-blue-500)', 'var(--color-purple-500)', 'var(--color-green-500)']}
+      rDomain={Object.keys(fruitColors)}
+      rRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'voronoi' }}
+      let:rScale
     >
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
-          {@const color = fruitColors[fruit]}
+          {@const color = rScale(fruit)}
           <Spline {data} class="stroke-2" stroke={color} />
         {/each}
         <Labels format="integer" />
