@@ -1,4 +1,4 @@
-# layerchart
+# LayerChart
 
 ## 0.22.1
 

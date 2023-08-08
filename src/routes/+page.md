@@ -1,5 +1,4 @@
-<div class="bg-white p-3 px-5 m-2 rounded shadow-lg border">
-<div class="prose">
+<div class="prose max-w-none bg-white p-3 px-5 m-2 rounded shadow-lg border">
 
 <h1>Welcome to LayerChart</h1>
 
@@ -28,5 +27,4 @@ npm install layerchart
 
 Lastly, take a look at the complement project [svelte-ux](https://svelte-ux.techniq.dev/) for a large collection of Svelte components, actions, stores, and utilities to build highly interactive applications.
 
-</div>
 </div>
