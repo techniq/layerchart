@@ -8,6 +8,9 @@ export async function load() {
       api,
       source,
       pageSource,
+      description: 'Setup LakerCake chart context, along with tooltip and geo contexts',
+      features: ['Adds support for x and y baselines (always show 0, etc)'],
+      related: ['components/TooltipContext', 'components/GeoContext'],
     },
   };
 }

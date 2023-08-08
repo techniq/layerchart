@@ -8,6 +8,8 @@ export async function load() {
       api,
       source,
       pageSource,
+      description:
+        'Areas between two values (`y={["value", "baseline"]}`) depending on which is greater (ex. green/red)',
       related: ['examples/Threshold'],
     },
   };

@@ -8,6 +8,9 @@ export async function load() {
       api,
       source,
       pageSource,
+      description:
+        'Setup geo context, particularly the projection used by other geo components.  Typically used indirectly via the `geo` prop on Chart',
+      related: ['components/Chart'],
     },
   };
 }

@@ -8,6 +8,9 @@ export async function load() {
       api,
       source,
       pageSource,
+      description:
+        'Setup tooltip context, include mode to identify related data based on pointer position.  Typically used indirectly via the `tooltip` prop Chart',
+      related: ['components/Chart', 'components/Tooltip', 'components/Highlight'],
     },
   };
 }

@@ -1,78 +1,32 @@
-<div class="bg-white p-2 m-2 rounded shadow-lg border">
+<div class="bg-white p-3 px-5 m-2 rounded shadow-lg border">
 <div class="prose">
 
 <h1>Welcome to LayerChart</h1>
 
-<h2>Common</h2>
+LayerChart is a large collection of visualization components and utilities for [Svelte](https://svelte.dev/), built upon the wonderful [Layer Cake](https://layercake.graphics/) framework.
 
-- Chart
-  - Uses LakerCake to setup context
-  - Adds support for x and y baseline (always show 0, etc)
-- Axis
-  - Easily add grid lines
-  - Custom tick format
-  - Tick control (see also `getMajorTicks` / `getMinorTicks` utils)
-- Rule
-  - Compliments Axis by showing `0` baseline as solid line
+The goal is to provide a collection of useful but mostly opinionated components as building blocks for a wide range of visualizations, such as:
 
-<h2>Primatives</h2>
+- Cartesian (Bar, Area, Stack, Scatter)
+- Radial (Pie, Arc, Sunburst)
+- Hierarchy (Pack, Tree, Treemap, Sunburst)
+- Graph (Sankey)
+- Geo (Choropleth, Spike, Bubble, Point, Globe)
 
-- Circle
-  - `<circle>` with tweened `x`, `y`, and `r` using `motionStore`
-- Rect
-  - `<rect>` with tweened `x`, `y`, `width` and `height` using `motionStore`
-- Line
-  - `<line>` with tweened `x`, `y`, `width` and `height` using `motionStore`
-- Path
-  - Uses `d3-shape` line generator to support `curve` and `defined`
-  - Worked as data-driven (context) or can take data as prop
-- Text
-  - Adjustable anchor/origin point (center horizontally and vertically)
-  - Rotate (based on origin)
-  - Multiline
-  - Scale to fit
-  - Easy offset with `dx` and `dy`
+The library also provides a number of primatives:
 
-<h2>Data-driven (context)</h2>
+- Interaction (tooltip, pan/zoom)
+- Motion-enabled SVG primatives (Rect, Circle, Arc, Group)
+- SVG utilities (gradient/patterns, clipping, multi-line SVG text)
+- Legends, annotations, and more.
 
-- Area
-  - Easily add line (same curve, color, etc)
-- AreaStack
-- Bars
-- Labels
-- Points
-- Threshold
-  - Calculates line, area, and clip path data to show colored areas above/below
-  - `y={[actual, baseline/threshold]}`
+Take a look at the various examples to or jump in installing the `layerchart` package
 
-<h2>Interations</h2>
+```sh
+npm install layerchart
+```
 
-- Tooltip
-  - Data selection
-  - Animated location
-  - Smart container positioning
-- Highlight
-
-<h2>Todo</h2>
-
-- [ ] Add basic line charge (data-driven)
-  - Differentiate with Path and Line, although could probbaly just use Path, although might be confusing
-- [ ] Add examples with animated Circle, Rect, and Line
-- [ ] Consider updating Circle, Rect, and Line to support xGet/yGet with data, along with explicit `cx`/`cy`
-- [x] Consider renaming `Label` to `Mark` (or at least call `Labels`)
-- [ ] Should some props be renamed/aliased or always passed through
-  - `<Circle r={10} stroke-width={2} />`
-  - vs
-  - `<Circle radius={10} strokeWidth={2} />`
-
-<h2>Principals</h2>
-
-- Use `r` scale for color, but allow `color` prop directly on item (with access to item, value, index, etc)
-- Use `x`, `y`, and `z` scales for dimensions
-  - `z` for size (depth) of circles, etc
-- Read data from context, or override with prop
-  - See Path, Area, Threshold
-  - Add to Pie, Bars, etc
+Lastly, take a look at the complement project [svelte-ux](https://svelte-ux.techniq.dev/) for a large collection of Svelte components, actions, stores, and utilities to build highly interactive applications.
 
 </div>
 </div>

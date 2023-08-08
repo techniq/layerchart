@@ -8,6 +8,13 @@ export async function load() {
       api,
       source,
       pageSource,
+      related: [
+        'examples/Pack',
+        'examples/Tree',
+        'examples/ZoomableMap',
+        'examples/ZoomableTileMap',
+        'examples/LoftedArcsGlobe',
+      ],
     },
   };
 }
