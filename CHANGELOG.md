@@ -1,5 +1,13 @@
 # LayerChart
 
+## 0.22.2
+
+### Patch Changes
+
+- [Chart] Expose `zScale` and `rScale` as slot props ([`f1e532a`](https://github.com/techniq/layerchart/commit/f1e532aec0a6a36db6d88c0e212303b15fb697e4))
+
+- Update non-major dependencies ([`a20c74a`](https://github.com/techniq/layerchart/commit/a20c74ac6bcf59d5f4ae2800fd66bae37a58d99a))
+
 ## 0.22.1
 
 ### Patch Changes
