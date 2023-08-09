@@ -12,6 +12,8 @@
   import Bounds from '$lib/components/Bounds.svelte';
   import Group from '$lib/components/Group.svelte';
   import Partition from '$lib/components/Partition.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
+  import TooltipItem from '$lib/components/TooltipItem.svelte';
   import { findAncestor } from '$lib/utils/hierarchy';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -74,7 +76,7 @@
     </Button>
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded">
-    <Chart data={complexHierarchy}>
+    <Chart data={complexHierarchy} tooltip={{ mode: 'manual' }} let:tooltip>
       <Svg>
         <Bounds
           domain={{ x0: selected?.x0 ?? 0, x1: selected?.x1 ?? 1, y0: selected?.y0 ?? 0, y1: 1 }}
@@ -82,7 +84,7 @@
             x0: 0,
             x1: 2 * Math.PI,
             y0: selected?.y0 ? 20 : 0,
-            y1: height / 2
+            y1: height / 2,
           })}
           tweened={{ duration: 800, easing: cubicOut }}
           let:xScale
@@ -106,6 +108,8 @@
                   on:click={() => {
                     selected = node;
                   }}
+                  on:mousemove={(e) => tooltip.show(e, node)}
+                  on:mouseleave={tooltip.hide}
                 >
                   <!-- <text x={centroid[0]} y={centroid[1]}>{node.data.name}</text> -->
                 </Arc>
@@ -114,6 +118,9 @@
           </Partition>
         </Bounds>
       </Svg>
+      <Tooltip header={(data) => data.data.name} let:data>
+        <TooltipItem label="value" value={data.value} format="integer" />
+      </Tooltip>
     </Chart>
   </div>
 </Preview>
