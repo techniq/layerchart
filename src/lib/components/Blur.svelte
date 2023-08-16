@@ -13,6 +13,6 @@
 
 {#if $$slots.default}
   <g filter="url(#{id})">
-    <slot {id} />
+    <slot {id} url="url(#{id})" />
   </g>
 {/if}

@@ -189,9 +189,9 @@
           class="from-blue-500 to-green-400"
           vertical
           units="userSpaceOnUse"
-          let:id
+          let:url
         >
-          <Bars radius={4} strokeWidth={1} fill="url(#{id})" class="stroke-blue-900" />
+          <Bars radius={4} strokeWidth={1} fill={url} class="stroke-blue-900" />
         </LinearGradient>
       </Svg>
     </Chart>

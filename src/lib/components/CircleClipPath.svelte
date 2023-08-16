@@ -16,7 +16,7 @@
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 </script>
 
-<ClipPath {id}>
+<ClipPath {id} let:url>
   <Circle slot="clip" {cx} {cy} {r} {spring} {tweened} {...$$restProps} />
-  <slot {id} />
+  <slot {id} {url} />
 </ClipPath>

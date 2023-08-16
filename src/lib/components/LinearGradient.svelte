@@ -48,4 +48,4 @@
   </linearGradient>
 </defs>
 
-<slot {id} />
+<slot {id} url="url(#{id})" />

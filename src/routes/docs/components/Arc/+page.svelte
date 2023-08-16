@@ -28,27 +28,9 @@
     { name: 'SVG Center', value: 'svg-center' },
     { name: 'Arc Center', value: 'arc-center' },
     { name: 'Arc Bottom', value: 'arc-bottom' },
-    { name: 'Arc Centroid', value: 'arc-centroid' }
+    { name: 'Arc Centroid', value: 'arc-centroid' },
   ];
   let label = 'svg-center';
-
-  function prev(options, current) {
-    const index = options.findIndex((x) => x.value === current);
-    if (index === 0) {
-      return options[options.length - 1].value;
-    } else {
-      return options[index - 1].value;
-    }
-  }
-
-  function next(options, current) {
-    const index = options.findIndex((x) => x.value === current);
-    if (index === options.length - 1) {
-      return options[0].value;
-    } else {
-      return options[index + 1].value;
-    }
-  }
 </script>
 
 <h1>Playground</h1>
@@ -58,15 +40,6 @@
   <Field label="Use spring" let:id>
     <Switch bind:checked={spring} {id} />
   </Field>
-  <!-- <Field label="Label" let:id>
-		<Button icon={mdiChevronLeft} on:click={() => label = prev(labelOptions, label)} class="mr-2" />
-		<select bind:value={label} class="w-full outline-none appearance-none text-sm" {id}>
-			{#each labelOptions as option}
-				<option value={option.value}>{option.name}</option>
-			{/each}
-		</select>
-		<Button icon={mdiChevronRight} on:click={() => label = next(labelOptions, label)} class="ml-2" />
-	</Field> -->
   <RangeField label="Domain Min" bind:value={domain[0]} max={domain[1]} />
   <RangeField label="Domain Max" bind:value={domain[1]} max={1000} />
   <RangeField label="Range Min (degrees)" bind:value={range[0]} min={-360} max={360} />
@@ -86,32 +59,33 @@
   <div class="h-[200px] p-4 border rounded">
     <Chart>
       <Svg>
-        <LinearGradient id="arcGradient" from="hsl(60 100% 50%)" to="hsl(140 100% 50%)" vertical />
         <Group center>
           {#key spring}
-            <Arc
-              {value}
-              {domain}
-              {range}
-              {innerRadius}
-              {outerRadius}
-              {cornerRadius}
-              {padAngle}
-              {label}
-              {spring}
-              let:value
-              let:boundingBox
-              fill="url(#arcGradient)"
-              track={{ fill: 'hsl(0 0% 0% / 6% )' }}
-            >
-              <Text
-                value={Math.round(value)}
-                textAnchor="middle"
-                verticalAnchor="middle"
-                class="text-4xl"
-                dy={8}
-              />
-            </Arc>
+            <LinearGradient from="hsl(60 100% 50%)" to="hsl(140 100% 50%)" vertical let:url>
+              <Arc
+                {value}
+                {domain}
+                {range}
+                {innerRadius}
+                {outerRadius}
+                {cornerRadius}
+                {padAngle}
+                {label}
+                {spring}
+                let:value
+                let:boundingBox
+                fill={url}
+                track={{ fill: 'hsl(0 0% 0% / 6% )' }}
+              >
+                <Text
+                  value={Math.round(value)}
+                  textAnchor="middle"
+                  verticalAnchor="middle"
+                  class="text-4xl"
+                  dy={8}
+                />
+              </Arc>
+            </LinearGradient>
           {/key}
         </Group>
       </Svg>
@@ -151,45 +125,41 @@
       <Chart>
         <Svg>
           <Group center>
-            <LinearGradient
-              id="arcGradient3"
-              from="hsl(80, 100%, 50%)"
-              to="hsl(200, 100%, 50%)"
-              vertical
-            />
-            <Arc
-              {value}
-              {domain}
-              {range}
-              {innerRadius}
-              {outerRadius}
-              {cornerRadius}
-              {padAngle}
-              {label}
-              let:boundingBox
-              fill="url(#arcGradient3)"
-            >
-              <!-- svg center -->
-              <!-- <Text
+            <LinearGradient from="hsl(80, 100%, 50%)" to="hsl(200, 100%, 50%)" vertical let:url>
+              <Arc
+                {value}
+                {domain}
+                {range}
+                {innerRadius}
+                {outerRadius}
+                {cornerRadius}
+                {padAngle}
+                {label}
+                let:boundingBox
+                fill={url}
+              >
+                <!-- svg center -->
+                <!-- <Text
 							value={Math.round(value)}
 							textAnchor="middle"
 							verticalAnchor="middle"
               class="text-4xl"
 							dy={8}
 						/> -->
-              <!-- arc center -->
-              <Text
-                value={Math.round(value)}
-                textAnchor="middle"
-                verticalAnchor="middle"
-                class="text-4xl"
-                x={outerRadius - boundingBox.width / 2}
-                y={(outerRadius - boundingBox.height / 2) * -1}
-                dy={8}
-              />
-              <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-4xl" capHeight="1.5rem" /> -->
-              <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-7xl" capHeight="3.1em" /> -->
-            </Arc>
+                <!-- arc center -->
+                <Text
+                  value={Math.round(value)}
+                  textAnchor="middle"
+                  verticalAnchor="middle"
+                  class="text-4xl"
+                  x={outerRadius - boundingBox.width / 2}
+                  y={(outerRadius - boundingBox.height / 2) * -1}
+                  dy={8}
+                />
+                <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-4xl" capHeight="1.5rem" /> -->
+                <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-7xl" capHeight="3.1em" /> -->
+              </Arc>
+            </LinearGradient>
           </Group>
         </Svg>
       </Chart>

@@ -126,8 +126,8 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <LinearGradient from to class="from-accent-500/50 to-accent-500/0" vertical let:id>
-          <Area line={{ class: 'stroke-2 stroke-accent-500' }} fill="url(#{id})" />
+        <LinearGradient from to class="from-accent-500/50 to-accent-500/0" vertical let:url>
+          <Area line={{ class: 'stroke-2 stroke-accent-500' }} fill={url} />
         </LinearGradient>
       </Svg>
     </Chart>

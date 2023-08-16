@@ -20,6 +20,6 @@
 
 {#if $$slots.default}
   <g style:clip-path="url(#{id})" on:click on:mousemove on:mouseleave on:keydown>
-    <slot {id} {useId} />
+    <slot {id} url="url(#{id})" {useId} />
   </g>
 {/if}

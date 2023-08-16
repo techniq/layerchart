@@ -1,7 +1,4 @@
 <script lang="ts">
-
-
-
   import Chart, { Svg } from '$lib/components/Chart.svelte';
 
   import LinearGradient from '$lib/components/LinearGradient.svelte';
@@ -243,20 +240,20 @@
         />
         <LinearGradient id="gradient-3" from="hsl(195 100% 50%)" to="hsl(270 100% 30%)" vertical />
         <Pattern id="gradient-pattern-1" width={4} height={4}>
-          <rect width={4} height={4} fill="url(#gradient-1)" /></Pattern
-        >
+          <rect width={4} height={4} fill="url(#gradient-1)" />
+        </Pattern>
         <Pattern id="gradient-pattern-2" width={4} height={4}>
-          <rect width={4} height={4} fill="url(#gradient-2)" /></Pattern
-        >
+          <rect width={4} height={4} fill="url(#gradient-2)" />
+        </Pattern>
         <Pattern id="gradient-pattern-3" width={4} height={4}>
-          <rect width={4} height={4} fill="url(#gradient-3)" /></Pattern
-        >
+          <rect width={4} height={4} fill="url(#gradient-3)" />
+        </Pattern>
         <Pattern id="gradient-pattern-4" width={8} height={8}>
-          <rect width={8} height={8} fill="url(#gradient-1)" /></Pattern
-        >
+          <rect width={8} height={8} fill="url(#gradient-1)" />
+        </Pattern>
         <Pattern id="gradient-pattern-5" width={8} height={8}>
-          <rect width={8} height={8} fill="url(#gradient-2)" /></Pattern
-        >
+          <rect width={8} height={8} fill="url(#gradient-2)" />
+        </Pattern>
         {#each { length: 5 } as _, i}
           <rect
             x={0 + i * 120}

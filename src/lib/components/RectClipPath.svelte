@@ -17,7 +17,7 @@
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 </script>
 
-<ClipPath {id}>
+<ClipPath {id} let:url>
   <Rect slot="clip" {x} {y} {width} {height} {spring} {tweened} {...$$restProps} />
-  <slot {id} />
+  <slot {id} {url} />
 </ClipPath>
