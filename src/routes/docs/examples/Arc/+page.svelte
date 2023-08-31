@@ -10,8 +10,29 @@
   import LinearGradient from '$lib/components/LinearGradient.svelte';
   import Text from '$lib/components/Text.svelte';
   import RangeField from '$lib/docs/RangeField.svelte';
+  import { radiansToDegrees } from '$lib/utils/math';
 
   let value = 75;
+
+  // color wheel
+  const layerCount = 6;
+  const divisions = 12;
+
+  function wheelSegmentColor(
+    startAngle: number, // in radians
+    layer: number,
+    type: 'saturation' | 'lightness' | 'alpha' = 'alpha'
+  ) {
+    const angle = radiansToDegrees(startAngle);
+    switch (type) {
+      case 'saturation':
+        return `hsla(${angle}, ${100 - 10 * layer}%, 50%, 1)`;
+      case 'lightness':
+        return `hsla(${angle}, 100%, ${100 - 10 * layer}%, 1)`;
+      case 'alpha':
+        return `hsla(${angle}, 100%, 50%, ${layer / layerCount})`;
+    }
+  }
 </script>
 
 <h1>Examples</h1>
@@ -139,3 +160,34 @@
     </div>
   </Preview>
 </Toggle>
+
+<h2>Color wheel</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart>
+      <Svg>
+        <Group center>
+          {#each { length: layerCount } as _, layerIndex}
+            {@const layer = layerIndex + 1}
+            {#each { length: divisions } as _, segmentIndex}
+              {@const segmentAngle = (2 * Math.PI) / divisions}
+              {@const startAngle = segmentIndex * segmentAngle}
+              {@const endAngle = (segmentIndex + 1) * segmentAngle}
+              {@const color = wheelSegmentColor(startAngle, layer)}
+              <Arc
+                {startAngle}
+                {endAngle}
+                outerRadius={layer / layerCount}
+                innerRadius={-20}
+                cornerRadius={4}
+                padAngle={0.02}
+                fill={color}
+              />
+            {/each}
+          {/each}
+        </Group>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
