@@ -24,7 +24,7 @@
     'var(--color-blue-500)',
     'var(--color-green-500)',
     'var(--color-purple-500)',
-    'var(--color-orange-500)'
+    'var(--color-orange-500)',
   ];
 </script>
 
@@ -68,7 +68,7 @@
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
       <Svg>
-        <Pie range={[-90, 90]} color="var(--color-blue-500)" />
+        <Pie range={[-90, 90]} />
       </Svg>
     </Chart>
   </div>
