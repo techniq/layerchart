@@ -1,6 +1,6 @@
 <script lang="ts">
   import { inject } from '@vercel/analytics';
-  import { mdiGithub } from '@mdi/js';
+  import { mdiGithub, mdiOpenInNew } from '@mdi/js';
   import 'prism-themes/themes/prism-vsc-dark-plus.css';
   import { AppBar, AppLayout, Button, QuickSearch, Tooltip, createTheme } from 'svelte-ux';
 
@@ -31,7 +31,7 @@
       return {
         name,
         value: url,
-        group: group
+        group: group,
       };
     })
     .sort((a, b) => groups.indexOf(a.group) - groups.indexOf(b.group));
@@ -43,7 +43,11 @@
   </nav>
 
   <AppBar title="LayerChart">
-    <div slot="actions">
+    <div slot="actions" class="flex gap-3">
+      <Button href="https://svelte-ux.techniq.dev" icon={mdiOpenInNew} target="_blank" class="p-2">
+        svelte-ux
+      </Button>
+
       <QuickSearch options={quickSearchOptions} on:change={(e) => goto(e.detail.value)} />
 
       <Tooltip title="View repository" placement="left" offset={2}>
