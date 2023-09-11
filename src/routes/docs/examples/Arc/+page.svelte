@@ -183,6 +183,8 @@
                 cornerRadius={4}
                 padAngle={0.02}
                 fill={color}
+                class="hover:scale-90 origin-center [transform-box:fill-box] transition-transform cursor-pointer"
+                on:click={() => alert(color)}
               />
             {/each}
           {/each}
