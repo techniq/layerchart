@@ -45,6 +45,7 @@
       'Area',
       'AreaStack',
       'Bars',
+      'Calendar',
       'Labels',
       'Link',
       'Pie',
