@@ -11,7 +11,7 @@
   export let end: Date;
 
   /**
-   * Size of cell.  If `number`, sets width/height as same value (square).  If array, sets as [width,height].  If undefined, is based on Chart width/height
+   * Size of cell.  If `number`, sets width/height as same value (square).  If array, sets as [width,height].  If undefined, is derived from Chart width/height
    */
   export let cellSize: number | [number, number] | undefined = undefined;
 
