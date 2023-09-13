@@ -24,11 +24,20 @@
 
 <h1>Examples</h1>
 
-<h2>Cell size based on chart</h2>
+<h2>Cell size based on chart (default)</h2>
 
 <Preview>
   <div class="h-[200px] p-4 border rounded">
-    <Chart tooltip={{ mode: 'manual' }} let:tooltip>
+    <Chart
+      {data}
+      x={(d) => d.date}
+      r={(d) => d.value}
+      rScale={scaleThreshold().unknown('transparent')}
+      rDomain={[25, 50, 75]}
+      rRange={['#9be9a8', '#40c463', '#30a14e', '#216e39']}
+      tooltip={{ mode: 'manual' }}
+      let:tooltip
+    >
       <Svg>
         <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltip} />
       </Svg>
@@ -42,7 +51,16 @@
 
 <Preview>
   <div class="h-[200px] p-4 border rounded overflow-hidden">
-    <Chart tooltip={{ mode: 'manual' }} let:tooltip>
+    <Chart
+      {data}
+      x={(d) => d.date}
+      r={(d) => d.value}
+      rScale={scaleThreshold().unknown('transparent')}
+      rDomain={[25, 50, 75]}
+      rRange={['#9be9a8', '#40c463', '#30a14e', '#216e39']}
+      tooltip={{ mode: 'manual' }}
+      let:tooltip
+    >
       <Svg>
         <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltip} cellSize={16} />
       </Svg>
