@@ -85,7 +85,7 @@
             innerRadius={-20}
             cornerRadius={10}
             class="fill-red-500"
-            track={{ class: 'fill-red-100' }}
+            track={{ class: 'fill-red-50' }}
           />
           <Arc
             value={60}
@@ -93,7 +93,7 @@
             innerRadius={-20}
             cornerRadius={10}
             class="fill-lime-400"
-            track={{ class: 'fill-lime-100' }}
+            track={{ class: 'fill-lime-50' }}
           />
           <Arc
             value={80}
@@ -101,7 +101,7 @@
             innerRadius={-20}
             cornerRadius={10}
             class="fill-cyan-400"
-            track={{ class: 'fill-cyan-100' }}
+            track={{ class: 'fill-cyan-50' }}
           />
         </Group>
       </Svg>
@@ -130,7 +130,7 @@
                 innerRadius={-20}
                 cornerRadius={10}
                 class="fill-red-500"
-                track={{ class: 'fill-red-100' }}
+                track={{ class: 'fill-red-50' }}
                 tweened={{ duration: 1000, easing: cubicInOut }}
               />
               <Arc
@@ -140,7 +140,7 @@
                 innerRadius={-20}
                 cornerRadius={10}
                 class="fill-lime-400"
-                track={{ class: 'fill-lime-100' }}
+                track={{ class: 'fill-lime-50' }}
                 tweened={{ duration: 1000, easing: cubicInOut }}
               />
               <Arc
@@ -150,7 +150,7 @@
                 innerRadius={-20}
                 cornerRadius={10}
                 class="fill-cyan-400"
-                track={{ class: 'fill-cyan-100' }}
+                track={{ class: 'fill-cyan-50' }}
                 tweened={{ duration: 1000, easing: cubicInOut }}
               />
             {/if}
