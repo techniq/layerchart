@@ -19,7 +19,14 @@
   const firstDayOfYear = startOfYear(now);
   const lastDayOfYear = endOfYear(now);
 
-  const data = createDateSeries({ count: 365 * 4, min: 10, max: 100, value: 'integer' });
+  const data = createDateSeries({ count: 365 * 4, min: 10, max: 100, value: 'integer' }).map(
+    (d) => {
+      return {
+        ...d,
+        value: Math.random() > 0.2 ? d.value : null, // set null for some values
+      };
+    }
+  );
 </script>
 
 <h1>Examples</h1>
