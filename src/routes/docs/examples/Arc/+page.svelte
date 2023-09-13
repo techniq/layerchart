@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cubicInOut } from 'svelte/easing';
-  import { Field, Switch, Toggle } from 'svelte-ux';
+  import { Field, Switch, Toggle, round } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -9,6 +9,7 @@
   import Group from '$lib/components/Group.svelte';
   import LinearGradient from '$lib/components/LinearGradient.svelte';
   import Text from '$lib/components/Text.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
   import RangeField from '$lib/docs/RangeField.svelte';
   import { radiansToDegrees } from '$lib/utils/math';
 
@@ -23,14 +24,14 @@
     layer: number,
     type: 'saturation' | 'lightness' | 'alpha' = 'alpha'
   ) {
-    const angle = radiansToDegrees(startAngle);
+    const angle = Math.round(radiansToDegrees(startAngle));
     switch (type) {
       case 'saturation':
-        return `hsla(${angle}, ${100 - 10 * layer}%, 50%, 1)`;
+        return `hsla(${angle}, ${Math.round((layer / layerCount) * 100)}%, 50%, 1)`;
       case 'lightness':
         return `hsla(${angle}, 100%, ${100 - 10 * layer}%, 1)`;
       case 'alpha':
-        return `hsla(${angle}, 100%, 50%, ${layer / layerCount})`;
+        return `hsla(${angle}, 100%, 50%, ${round(layer / layerCount, 2)})`;
     }
   }
 </script>
@@ -81,14 +82,16 @@
       <Svg>
         <Group center>
           <Arc
-            value={40}
+            value={400}
+            domain={[0, 1000]}
             innerRadius={-20}
             cornerRadius={10}
             class="fill-red-500"
             track={{ class: 'fill-red-50' }}
           />
           <Arc
-            value={60}
+            value={20}
+            domain={[0, 30]}
             outerRadius={-25}
             innerRadius={-20}
             cornerRadius={10}
@@ -96,7 +99,8 @@
             track={{ class: 'fill-lime-50' }}
           />
           <Arc
-            value={80}
+            value={10}
+            domain={[0, 12]}
             outerRadius={-50}
             innerRadius={-20}
             cornerRadius={10}
@@ -165,7 +169,7 @@
 
 <Preview>
   <div class="h-[300px] p-4 border rounded">
-    <Chart>
+    <Chart tooltip={{ mode: 'manual' }} let:tooltip>
       <Svg>
         <Group center>
           {#each { length: layerCount } as _, layerIndex}
@@ -183,13 +187,15 @@
                 cornerRadius={4}
                 padAngle={0.02}
                 fill={color}
-                class="hover:scale-90 origin-center [transform-box:fill-box] transition-transform cursor-pointer"
-                on:click={() => alert(color)}
+                class="hover:scale-90 origin-center [transform-box:fill-box] transition-transform"
+                on:mousemove={(e) => tooltip?.show(e, color)}
+                on:mouseleave={(e) => tooltip?.hide()}
               />
             {/each}
           {/each}
         </Group>
       </Svg>
+      <Tooltip header={(data) => data} />
     </Chart>
   </div>
 </Preview>
