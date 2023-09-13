@@ -73,14 +73,17 @@
 
   :global(main h1:not(.prose *, .related *, .ApiDocs *)) {
     @apply text-xl font-semibold mt-8 mb-2 border-b border-gray-400 pb-1;
+    scroll-margin-top: 128px; /* sticky header */
   }
 
   :global(main h2:not(.prose *, .related *, .ApiDocs *)) {
     @apply text-lg font-semibold mt-4 mb-1;
+    scroll-margin-top: 128px; /* sticky header */
   }
 
   :global(main h3:not(.prose *, .related *, .ApiDocs *)) {
     @apply text-xs text-black/50 mb-1;
+    scroll-margin-top: 128px; /* sticky header */
   }
   :global(main :not(.prose) h2 + h3) {
     @apply -mt-1;
