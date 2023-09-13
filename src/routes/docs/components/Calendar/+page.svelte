@@ -24,7 +24,7 @@
 
 <h1>Examples</h1>
 
-<h2>Cell size based on chart (default)</h2>
+<h2>Responsive cell size (default)</h2>
 
 <Preview>
   <div class="h-[200px] p-4 border rounded">
@@ -39,7 +39,7 @@
       let:tooltip
     >
       <Svg>
-        <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltip} />
+        <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltip} monthPath />
       </Svg>
 
       <Tooltip header={(d) => format(d.date, PeriodType.Day)} />
@@ -47,7 +47,7 @@
   </div>
 </Preview>
 
-<h2>Fixed cell size (same width/height)</h2>
+<h2>Fixed cell size</h2>
 
 <Preview>
   <div class="h-[200px] p-4 border rounded overflow-hidden">
@@ -62,7 +62,7 @@
       let:tooltip
     >
       <Svg>
-        <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltip} cellSize={16} />
+        <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltip} cellSize={16} monthPath />
       </Svg>
 
       <Tooltip header={(d) => format(d.date, PeriodType.Day)} />
@@ -99,7 +99,7 @@
               textAnchor="middle"
               verticalAnchor="start"
             />
-            <Calendar {start} {end} {tooltip} cellSize={16} />
+            <Calendar {start} {end} {tooltip} cellSize={16} monthPath />
           </Group>
         {/each}
       </Svg>

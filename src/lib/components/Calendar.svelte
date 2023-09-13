@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
+  import { getContext, type ComponentProps } from 'svelte';
   import { timeDays, timeMonths, timeWeek, timeYear } from 'd3-time';
 
   import Rect from './Rect.svelte';
@@ -14,6 +14,9 @@
    * Size of cell.  If `number`, sets width/height as same value (square).  If array, sets as [width,height].  If undefined, is based on Chart width/height
    */
   export let cellSize: number | [number, number] | undefined = undefined;
+
+  /** Enable drawing path around each month.  If object, pass as props to underlying <path> */
+  export let monthPath: boolean | ComponentProps<MonthPath> = false;
 
   /**
    * Tooltip context to setup mouse events to show tooltip for related data
@@ -37,22 +40,42 @@
     : [chartCellSize, chartCellSize];
 
   $: dataByDate = data && $config.x ? index($data, (d) => $x(d)) : new Map();
+
+  $: cells = yearDays.map((date) => {
+    const cellData = dataByDate.get(date) ?? { date };
+    return {
+      x: timeWeek.count(timeYear(date), date) * cellWidth,
+      y: date.getDay() * cellHeight,
+      width: cellWidth,
+      height: cellHeight,
+      color: $config.r ? $rGet(cellData) : 'transparent',
+      data: cellData,
+    };
+  });
 </script>
 
-{#each yearDays as date}
-  {@const data = dataByDate.get(date) ?? { date }}
-  <Rect
-    fill={$config.r ? $rGet(data) : 'transparent'}
-    stroke="#ddd"
-    width={cellWidth}
-    height={cellHeight}
-    x={timeWeek.count(timeYear(date), date) * cellWidth}
-    y={date.getDay() * cellHeight}
-    on:mousemove={(e) => tooltip?.show(e, data)}
-    on:mouseleave={(e) => tooltip?.hide()}
-  />
-{/each}
+<slot {cells}>
+  {#each cells as cell}
+    <Rect
+      x={cell.x}
+      y={cell.y}
+      width={cell.width}
+      height={cell.height}
+      fill={cell.color}
+      on:mousemove={(e) => tooltip?.show(e, cell.data)}
+      on:mouseleave={(e) => tooltip?.hide()}
+      class="stroke-black/5"
+      {...$$restProps}
+    />
+  {/each}
+</slot>
 
-{#each yearMonths as date}
-  <MonthPath {date} cellSize={[cellWidth, cellHeight]} />
-{/each}
+{#if monthPath}
+  {#each yearMonths as date}
+    <MonthPath
+      {date}
+      cellSize={[cellWidth, cellHeight]}
+      {...typeof monthPath === 'object' ? monthPath : null}
+    />
+  {/each}
+{/if}
