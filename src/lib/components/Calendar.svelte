@@ -22,22 +22,25 @@
 
   const { width, height, x, rGet, data, config } = getContext('LayerCake');
 
+  $: yearDays = timeDays(start, end);
+  $: yearMonths = timeMonths(start, end);
+  $: yearWeeks = timeWeek.count(start, end);
+
+  $: chartCellWidth = $width / (yearWeeks + 1);
+  $: chartCellHeight = $height / 7;
+  $: chartCellSize = Math.min(chartCellWidth, chartCellHeight); // Use smallest to fit, and keep square aspect
+
   $: [cellWidth, cellHeight] = Array.isArray(cellSize)
     ? cellSize
     : typeof cellSize === 'number'
     ? [cellSize, cellSize]
-    : [$width / (yearWeeks + 1), $height / 7];
-
-  const yearDays = timeDays(start, end);
-  const yearMonths = timeMonths(start, end);
-  const yearWeeks = timeWeek.count(start, end);
+    : [chartCellSize, chartCellSize];
 
   $: dataByDate = data && $config.x ? index($data, (d) => $x(d)) : new Map();
 </script>
 
 {#each yearDays as date}
   {@const data = dataByDate.get(date) ?? { date }}
-  {console.log({ data, color: $config.x && $rGet(data) })}
   <Rect
     fill={$config.r ? $rGet(data) : 'transparent'}
     stroke="#ddd"
