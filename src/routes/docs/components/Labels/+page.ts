@@ -8,6 +8,14 @@ export async function load() {
       api,
       source,
       pageSource,
+      related: [
+        'examples/Area',
+        'examples/Bars',
+        'examples/Columns',
+        'examples/Line',
+        'examples/Scatter',
+        'examples/Threshold',
+      ],
     },
   };
 }

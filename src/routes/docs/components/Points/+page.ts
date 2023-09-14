@@ -8,6 +8,15 @@ export async function load() {
       api,
       source,
       pageSource,
+      related: [
+        'components/Area',
+        'components/Spline',
+        'components/Tooltip',
+        'components/Zoom',
+        'examples/DotPlot',
+        'examples/PunchCard',
+        'examples/Scatter',
+      ],
     },
   };
 }
