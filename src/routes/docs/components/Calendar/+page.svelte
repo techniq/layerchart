@@ -3,6 +3,7 @@
   import { startOfYear, endOfYear } from 'date-fns';
   import { scaleThreshold } from 'd3-scale';
   import { range } from 'd3-array';
+  import { schemeGreens } from 'd3-scale-chromatic';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -64,7 +65,7 @@
       r={(d) => d.value}
       rScale={scaleThreshold().unknown('transparent')}
       rDomain={[25, 50, 75]}
-      rRange={['#9be9a8', '#40c463', '#30a14e', '#216e39']}
+      rRange={schemeGreens[4]}
       tooltip={{ mode: 'manual' }}
       let:tooltip
     >
