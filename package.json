@@ -43,13 +43,14 @@
     "@types/shapefile": "^0.6.1",
     "@types/topojson-client": "^3.1.2",
     "autoprefixer": "^10.4.15",
-    "execa": "^7.2.0",
-    "marked": "^5.1.2",
+    "execa": "^8.0.1",
+    "marked": "^9.0.0",
     "mdsvex": "^0.11.0",
     "prettier": "^3.0.3",
     "prettier-plugin-svelte": "^3.0.3",
     "prism-themes": "^1.9.0",
-    "rehype-slug": "^5.1.0",
+    "rehype-slug": "^6.0.0",
+    "svelte": "^4.2.0",
     "svelte-check": "^3.5.1",
     "svelte-preprocess": "^5.0.4",
     "svelte2tsx": "^0.6.21",
@@ -58,8 +59,7 @@
     "typescript": "^5.2.2",
     "unist-util-visit": "^5.0.0",
     "us-atlas": "^3.0.1",
-    "vite": "^4.4.9",
-    "vite-plugin-sveld": "^1.1.0"
+    "vite": "^4.4.9"
   },
   "type": "module",
   "dependencies": {
@@ -86,9 +86,11 @@
     "layercake": "^7.6.1",
     "lodash-es": "^4.17.21",
     "shapefile": "^0.6.6",
-    "svelte": "^3.59.1",
-    "svelte-ux": "^0.48.3",
+    "svelte-ux": "^0.49.0",
     "topojson-client": "^3.1.0"
+  },
+  "peerDependencies": {
+    "svelte": "^3.56.0 || ^4.0.0"
   },
   "main": "./dist/index.js",
   "exports": {

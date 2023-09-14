@@ -1,5 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import sveld from 'vite-plugin-sveld';
+import { sveld } from 'svelte-ux/plugins/vite';
 import dsv from '@rollup/plugin-dsv';
 import { autoType } from 'd3-dsv';
 
