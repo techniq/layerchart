@@ -1,5 +1,19 @@
 # LayerChart
 
+## 0.23.0
+
+### Minor Changes
+
+- Update major dependencies, including `svelte` to 4.x. Change svelte to `peerDependency` ([`ff4b907`](https://github.com/techniq/layerchart/commit/ff4b907b895d2096d2a468bf7a8f60ab9a3fd638))
+
+### Patch Changes
+
+- Add `url` slot prop to LinearGradient, Blur, and ClipPaths to simplify usage ([`fa805e0`](https://github.com/techniq/layerchart/commit/fa805e0cf34f85ed77c1cff8de7ef8c78ed34f38))
+
+- Add Arc color wheel example ([`4b0285e`](https://github.com/techniq/layerchart/commit/4b0285ead74a8e872ed962be7a98125db84a6632))
+
+- Add Calendar component ([`8ba2b5f`](https://github.com/techniq/layerchart/commit/8ba2b5f22a4c2d08edfb6a35f7093e04beb49a91))
+
 ## 0.22.2
 
 ### Patch Changes
