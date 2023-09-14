@@ -42,7 +42,7 @@
       r={(d) => d.value}
       rScale={scaleThreshold().unknown('transparent')}
       rDomain={[25, 50, 75]}
-      rRange={['#9be9a8', '#40c463', '#30a14e', '#216e39']}
+      rRange={schemeGreens[4]}
       tooltip={{ mode: 'manual' }}
       let:tooltip
     >
@@ -88,7 +88,7 @@
       r={(d) => d.value}
       rScale={scaleThreshold().unknown('transparent')}
       rDomain={[25, 50, 75]}
-      rRange={['#9be9a8', '#40c463', '#30a14e', '#216e39']}
+      rRange={schemeGreens[4]}
       padding={{ left: 20 }}
       tooltip={{ mode: 'manual' }}
       let:tooltip
