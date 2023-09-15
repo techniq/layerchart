@@ -165,7 +165,7 @@
         <Highlight points lines />
       </Svg>
       <Tooltip class="bg-white text-gray-800 border border-gray-700" let:data>
-        <div slot="header" class="font-semibold text-center">
+        <div slot="header" class="font-semibold text-center" let:data>
           {format(data.date, 'eee, MMMM do')}
         </div>
         <TooltipItem label="value" value={data.value} classes={{ label: 'text-gray-500' }} />
