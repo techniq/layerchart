@@ -8,6 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
+      related: ['examples/AnimatedGlobe', 'examples/GeoProjection', 'examples/LoftedArcsGlobe'],
     },
   };
 }

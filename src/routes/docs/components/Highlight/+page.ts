@@ -8,7 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
-      related: ['components/TooltipContext', 'components/Highlight'],
+      related: ['components/Tooltip', 'components/TooltipContext'],
     },
   };
 }

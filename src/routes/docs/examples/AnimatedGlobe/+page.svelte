@@ -44,7 +44,7 @@
         {@const isSelected = selectedFeature === country}
         <div use:scrollIntoView={{ condition: isSelected }}>
           <Button
-            variant={isSelected ? 'fill-light' : 'text'}
+            variant={isSelected ? 'fill-light' : 'default'}
             color={isSelected ? 'red' : 'default'}
             fullWidth
             on:click={() => (selectedFeature = country)}
@@ -61,8 +61,8 @@
         rotate: {
           yaw: $yaw,
           pitch: $pitch,
-          roll: $roll
-        }
+          roll: $roll,
+        },
       }}
     >
       <Svg>
@@ -91,7 +91,12 @@
       {#each countries.features.sort(createPropertySortFunc('properties.name')) as country}
         {@const isSelected = selectedFeature === country}
         <div use:scrollIntoView={{ condition: isSelected }}>
-          <Button _base fullWidth on:click={() => (selectedFeature = country)}>
+          <Button
+            variant={isSelected ? 'fill-light' : 'default'}
+            color={isSelected ? 'red' : 'default'}
+            fullWidth
+            on:click={() => (selectedFeature = country)}
+          >
             {country.properties.name}
           </Button>
         </div>
@@ -104,8 +109,8 @@
         rotate: {
           yaw: $yaw,
           pitch: $pitch,
-          roll: $roll
-        }
+          roll: $roll,
+        },
       }}
     >
       <Canvas>
