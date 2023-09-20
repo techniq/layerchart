@@ -16,6 +16,7 @@
       'Line',
       'PunchCard',
       'Scatter',
+      'Sparkline',
       'Threshold',
     ],
     'Hierarchy & Graph': ['Pack', 'Partition', 'Sankey', 'Sunburst', 'Tree', 'Treemap'],
