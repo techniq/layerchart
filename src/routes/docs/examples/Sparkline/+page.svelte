@@ -1,14 +1,10 @@
 <script lang="ts">
-  import { scaleOrdinal, scaleTime } from 'd3-scale';
-  import { flatGroup } from 'd3-array';
+  import { scaleTime } from 'd3-scale';
   import { format } from 'date-fns';
-  import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Axis from '$lib/components/Axis.svelte';
   import Highlight from '$lib/components/Highlight.svelte';
-  import Labels from '$lib/components/Labels.svelte';
-  import Text from '$lib/components/Text.svelte';
+
   import Spline from '$lib/components/Spline.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
