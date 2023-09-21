@@ -7,8 +7,12 @@
 
   import { tooltipContext } from './TooltipContext.svelte';
 
-  export let topOffset = 10;
-  export let leftOffset = 10;
+  /** Use fixed `top` position instead of calculating based on data and mouse position */
+  export let top: number | undefined = undefined;
+  /** Use fixed `left` position instead of calculating based on data and mouse position */
+  export let left: number | undefined = undefined;
+  export let topOffset = top ? 0 : 10;
+  export let leftOffset = left ? 0 : 10;
   export let contained: 'container' | false = 'container'; // TODO: Support 'window' using getBoundingClientRect()
   export let animate = true;
 
@@ -27,23 +31,33 @@
   let tooltipWidth = 0;
   let tooltipHeight = 0;
 
-  let top = animate ? spring($tooltip.top) : writable($tooltip.top);
+  let topPos = animate ? spring($tooltip.top) : writable($tooltip.top);
   $: if ($tooltip) {
-    if (contained === 'container' && $tooltip.top + topOffset + tooltipHeight > $containerHeight) {
+    if (top != null) {
+      $topPos = top;
+    } else if (
+      contained === 'container' &&
+      $tooltip.top + topOffset + tooltipHeight > $containerHeight
+    ) {
       // Change side.  Do not allow tooltip to go above the top
-      $top = Math.max($tooltip.top - (topOffset + tooltipHeight), 0);
+      $topPos = Math.max($tooltip.top - (topOffset + tooltipHeight), 0);
     } else {
-      $top = $tooltip.top + topOffset;
+      $topPos = $tooltip.top + topOffset;
     }
   }
 
-  let left = animate ? spring($tooltip.left) : writable($tooltip.left);
+  let leftPos = animate ? spring($tooltip.left) : writable($tooltip.left);
   $: if ($tooltip) {
-    if (contained === 'container' && $tooltip.left + leftOffset + tooltipWidth > $containerWidth) {
+    if (left != null) {
+      $leftPos = left;
+    } else if (
+      contained === 'container' &&
+      $tooltip.left + leftOffset + tooltipWidth > $containerWidth
+    ) {
       // Change side
-      $left = Math.max($tooltip.left - (leftOffset + tooltipWidth), 0);
+      $leftPos = Math.max($tooltip.left - (leftOffset + tooltipWidth), 0);
     } else {
-      $left = $tooltip.left + leftOffset;
+      $leftPos = $tooltip.left + leftOffset;
     }
   }
 </script>
@@ -51,8 +65,8 @@
 {#if $tooltip.data}
   <div
     class={cls('absolute pointer-events-none z-50', classes.root)}
-    style:top="{$top}px"
-    style:left="{$left}px"
+    style:top="{$topPos}px"
+    style:left="{$leftPos}px"
     transition:fade={{ duration: 100 }}
     bind:clientWidth={tooltipWidth}
     bind:clientHeight={tooltipHeight}
