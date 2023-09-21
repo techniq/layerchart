@@ -4,6 +4,7 @@ export async function load() {
   return {
     meta: {
       pageSource,
+      related: ['components/Spline'],
     },
   };
 }

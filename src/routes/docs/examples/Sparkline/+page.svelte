@@ -27,7 +27,6 @@
         x="date"
         xScale={scaleTime()}
         y="value"
-        yDomain={[null, null]}
       >
         <Svg>
           <Spline class="stroke-1 stroke-accent-500" />
@@ -48,7 +47,6 @@
         x="date"
         xScale={scaleTime()}
         y="value"
-        yDomain={[null, null]}
       >
         <Svg>
           <Spline class="stroke-1 stroke-accent-500" />
@@ -87,7 +85,6 @@
       x="date"
       xScale={scaleTime()}
       y="value"
-      yDomain={[null, null]}
       tooltip
     >
       <Svg>
@@ -95,6 +92,7 @@
         <Highlight points lines />
       </Svg>
       <Tooltip class="text-xs opacity-75"
+        contained={false}
         header={(data) => format(data.date, 'eee, MMM do')} let:data>
         <TooltipItem label="value" value={data.value}>
         </TooltipItem>
