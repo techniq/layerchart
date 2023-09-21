@@ -77,7 +77,6 @@
 
 
 <h2>With Tooltip and Highlight</h2>
-
 <Preview>
   <div class="w-[125px] h-[25px]">
     <Chart
@@ -93,10 +92,75 @@
       </Svg>
       <Tooltip class="text-xs opacity-75"
         contained={false}
-        header={(data) => format(data.date, 'eee, MMM do')} let:data>
-        <TooltipItem label="value" value={data.value}>
-        </TooltipItem>
+        header={(data) => format(data.date, 'eee, MMM do')}
+        let:data
+      >
+        <TooltipItem label="value" value={data.value} />
       </Tooltip>
     </Chart>
+  </div>
+</Preview>
+
+
+<h2>With Tooltip and Highlight (fixed position)</h2>
+<Preview>
+  <div class="w-[125px] h-[25px]">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      tooltip
+      let:containerWidth
+    >
+      <Svg>
+        <Spline class="stroke-1 stroke-accent-500" />
+        <Highlight points lines />
+      </Svg>
+      <Tooltip
+        class="text-xs opacity-75"
+        contained={false}
+        header={(data) => format(data.date, 'eee, MMM do')}
+        top={-12}
+        left={containerWidth + 8}
+        let:data
+      >
+        <TooltipItem label="value" value={data.value} />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+
+<h2>Within a paragraph with Tooltip and Highlight</h2>
+<Preview>
+  <div>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pretium, ligula ac sollicitudin ullamcorper, leo justo pretium tellus, at gravida ex quam et orci.
+    <span class="w-[125px] h-[18px] inline-block">
+      <Chart
+        {data}
+        x="date"
+        xScale={scaleTime()}
+        y="value"
+        tooltip
+        let:containerHeight
+      >
+        <Svg>
+          <Spline class="stroke-1 stroke-accent-500" />
+          <Highlight points lines />
+        </Svg>
+        <Tooltip
+          class="text-xs opacity-75"
+          contained={false}
+          header={(data) => format(data.date, 'eee, MMM do')}
+          top={containerHeight + 4}
+          leftOffset={0}
+          let:data
+        >
+          <TooltipItem label="value" value={data.value} />
+        </Tooltip>
+      </Chart>
+    </span>  Sed ipsum justo, facilisis id tempor hendrerit, suscipit eu ipsum. Mauris ut sapien quis nibh volutpat venenatis. Ut viverra justo varius sapien convallis venenatis vel faucibus urna.
+    </p>
   </div>
 </Preview>
