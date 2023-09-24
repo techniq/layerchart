@@ -152,42 +152,6 @@
   </div>
 </Preview>
 
-<h2>Multiple series with labels</h2>
-
-<Preview>
-  <div class="h-[300px] p-4 border rounded">
-    <Chart
-      data={multiSeriesFlatData}
-      x="date"
-      xScale={scaleTime()}
-      y="value"
-      yDomain={[0, null]}
-      yNice
-      r="fruit"
-      rScale={scaleOrdinal()}
-      rDomain={Object.keys(fruitColors)}
-      rRange={Object.values(fruitColors)}
-      padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'voronoi' }}
-      let:rScale
-    >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        {#each dataByFruit as [fruit, data]}
-          {@const color = rScale(fruit)}
-          <Spline {data} class="stroke-2" stroke={color} />
-        {/each}
-        <Labels format="integer" />
-        <Highlight points lines />
-      </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label={data.fruit} value={data.value} />
-      </Tooltip>
-    </Chart>
-  </div>
-</Preview>
-
 <h2>Multiple series (highlight on hover)</h2>
 
 <Preview>
@@ -228,6 +192,42 @@
             </svelte:fragment>
           </Spline>
         {/each}
+        <Highlight points lines />
+      </Svg>
+      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+        <TooltipItem label={data.fruit} value={data.value} />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Multiple series with labels</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={multiSeriesFlatData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      r="fruit"
+      rScale={scaleOrdinal()}
+      rDomain={Object.keys(fruitColors)}
+      rRange={Object.values(fruitColors)}
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'voronoi' }}
+      let:rScale
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        {#each dataByFruit as [fruit, data]}
+          {@const color = rScale(fruit)}
+          <Spline {data} class="stroke-2" stroke={color} />
+        {/each}
+        <Labels format="integer" />
         <Highlight points lines />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
