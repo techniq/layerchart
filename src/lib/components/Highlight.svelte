@@ -3,6 +3,7 @@
   import { max, min } from 'd3-array';
   import { cls, notNull } from 'svelte-ux';
 
+  import { createDimensionGetter } from '$lib/utils/rect';
   import { isScaleBand } from '$lib/utils/scales';
   import Circle from './Circle.svelte';
   import Line from './Line.svelte';
@@ -36,6 +37,29 @@
 
   /** Show area and pass props to Rect */
   export let area: boolean | ComponentProps<Rect> = false;
+
+  /** Show bar and pass props to Rect */
+  export let bar: boolean | ComponentProps<Rect> = false;
+
+  export let padding = 0;
+  export let groupBy: string | undefined = undefined;
+  export let groupPaddingInner = 0.2;
+  export let groupPaddingOuter = 0;
+
+  export let stroke = 'black';
+  export let strokeWidth = 0;
+  export let radius = 0;
+
+  $: getDimensions = createDimensionGetter(getContext('LayerCake'), {
+    $x,
+    $y,
+    groupBy,
+    padding,
+    groupPadding: {
+      inner: groupPaddingInner,
+      outer: groupPaddingOuter,
+    },
+  });
 
   // TODO: Fix circle points being backwards for stack (see AreaStack)
 
@@ -183,6 +207,7 @@
       ];
     }
   }
+
 </script>
 
 {#if $tooltip.data}
@@ -197,6 +222,22 @@
       />
     </slot>
   {/if}
+
+  {#if bar}
+    <slot name="bar" bar={bar}>
+      <Rect
+        spring
+        {stroke}
+        stroke-width={strokeWidth}
+        rx={radius}
+        {...$getDimensions($tooltip.data)}
+        {...typeof bar === 'object' ? bar : null}
+        class={cls(!bar.fill && 'fill-accent-500', typeof bar === 'object' ? bar.class : null)}
+        on:click
+      />
+    </slot>
+  {/if}
+
 
   {#if lines}
     <slot name="lines" lines={_lines}>
