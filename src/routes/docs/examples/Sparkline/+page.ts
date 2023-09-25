@@ -4,7 +4,7 @@ export async function load() {
   return {
     meta: {
       pageSource,
-      related: ['components/Spline', 'components/Tooltip', 'components/Highlight'],
+      related: ['components/Spline', 'components/Tooltip', 'components/Highlight', 'examples/Sparkbar'],
     },
   };
 }
