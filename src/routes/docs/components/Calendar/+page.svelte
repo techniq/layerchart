@@ -81,7 +81,7 @@
 <h2>Multiple Years</h2>
 
 <Preview>
-  <div class="h-[656px] p-4 border rounded overflow-hidden">
+  <div class="h-[716px] p-4 border rounded overflow-hidden">
     <Chart
       {data}
       x={(d) => d.date}
@@ -97,7 +97,7 @@
         {#each range(2019, 2024) as year, i}
           {@const start = new Date(year, 0, 1)}
           {@const end = endOfYear(start)}
-          <Group y={128 * i}>
+          <Group y={140 * i}>
             <Text
               value={year}
               class="text-xs"

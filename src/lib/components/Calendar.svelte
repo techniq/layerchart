@@ -1,11 +1,13 @@
 <script lang="ts">
   import { getContext, type ComponentProps } from 'svelte';
-  import { timeDays, timeMonths, timeWeek, timeYear } from 'd3-time';
+  import { timeDays, timeMonths, timeWeek, timeYear, utcYear } from 'd3-time';
+  import { index } from 'd3-array';
+  import { format } from 'date-fns';
 
   import Rect from './Rect.svelte';
   import type { TooltipContextValue } from './TooltipContext.svelte';
   import MonthPath from './MonthPath.svelte';
-  import { index } from 'd3-array';
+  import Text from './Text.svelte';
 
   export let start: Date;
   export let end: Date;
@@ -46,8 +48,6 @@
     return {
       x: timeWeek.count(timeYear(date), date) * cellWidth,
       y: date.getDay() * cellHeight,
-      width: cellWidth,
-      height: cellHeight,
       color: $config.r ? $rGet(cellData) : 'transparent',
       data: cellData,
     };
@@ -59,8 +59,8 @@
     <Rect
       x={cell.x}
       y={cell.y}
-      width={cell.width}
-      height={cell.height}
+      width={cellWidth}
+      height={cellHeight}
       fill={cell.color}
       on:mousemove={(e) => tooltip?.show(e, cell.data)}
       on:mouseleave={(e) => tooltip?.hide()}
@@ -76,6 +76,13 @@
       {date}
       cellSize={[cellWidth, cellHeight]}
       {...typeof monthPath === 'object' ? monthPath : null}
+    />
+
+    <Text
+      x={timeWeek.count(timeYear.floor(date), timeWeek.ceil(date)) * cellWidth}
+      y={-4}
+      value={format(date, 'MMM')}
+      class="text-xs"
     />
   {/each}
 {/if}
