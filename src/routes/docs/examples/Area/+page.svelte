@@ -283,7 +283,7 @@
   </div>
 </Preview>
 
-<h2>Clip tweeen on mount</h2>
+<h2>Clip tween on mount</h2>
 
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[auto,1fr] gap-2 mb-2">
