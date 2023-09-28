@@ -13,6 +13,7 @@
   import Labels from '$lib/components/Labels.svelte';
   import LinearGradient from '$lib/components/LinearGradient.svelte';
   import Point from '$lib/components/Point.svelte';
+  import RectClipPath from '$lib/components/RectClipPath.svelte';
   import Spline from '$lib/components/Spline.svelte';
   import Text from '$lib/components/Text.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
@@ -21,6 +22,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData';
   import { pivotLonger } from '$lib/utils/pivot';
+  import { appleStock } from '../_data/dateSeries';
 
   const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
 
@@ -394,3 +396,41 @@
     </div>
   </Preview>
 </Toggle>
+
+<h2>Clipped area</h2>
+
+<Preview>
+  <div class="h-[300px] border rounded">
+    <Chart
+      data={appleStock}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ top: 48 }}
+      tooltip={{ snapToDataX: true }}
+      let:width
+      let:height
+      let:tooltip
+    >
+      <Svg>
+        <LinearGradient from to class="from-accent-500/50 to-accent-500/0" vertical let:url>
+          <Area line={{ class: 'stroke-2 stroke-accent-500 opacity-20' }} fill={url} />
+          <RectClipPath x={0} y={0} width={tooltip.data ? tooltip.left : width} {height} spring>
+            <Area line={{ class: 'stroke-2 stroke-accent-500' }} fill={url} />
+          </RectClipPath>
+        </LinearGradient>
+        <Highlight points lines={{ class: 'stroke-accent-500 [stroke-dasharray:unset]' }} />
+      </Svg>
+
+      <Tooltip top={4} left={4} let:data>
+        {formatDate(data.date, 'eee, MMMM do')}
+      </Tooltip>
+
+      <Tooltip top={48} let:data>
+        {format(data.value, 'currency')}
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
