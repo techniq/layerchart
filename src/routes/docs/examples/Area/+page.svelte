@@ -2,9 +2,8 @@
   import { cubicInOut } from 'svelte/easing';
   import { scaleOrdinal, scaleTime } from 'd3-scale';
   import { flatGroup } from 'd3-array';
-  import { format } from 'date-fns';
-  import { Field, Switch, Toggle } from 'svelte-ux';
-  import { formatDate, PeriodType } from 'svelte-ux/utils/date';
+  import { format as formatDate } from 'date-fns';
+  import { format, Field, Switch, Toggle, PeriodType } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
@@ -53,7 +52,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
         <Area line={{ class: 'stroke-2 stroke-accent-500' }} class="fill-accent-500/30" />
       </Svg>
     </Chart>
@@ -76,11 +75,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
         <Area line={{ class: 'stroke-2 stroke-accent-500' }} class="fill-accent-500/30" />
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />
       </Tooltip>
     </Chart>
@@ -102,7 +101,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
         <Area line={{ class: 'stroke-2 stroke-accent-500' }} class="fill-accent-500/30" />
         <Labels format="integer" />
       </Svg>
@@ -125,7 +124,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
         <LinearGradient from to class="from-accent-500/50 to-accent-500/0" vertical let:url>
           <Area line={{ class: 'stroke-2 stroke-accent-500' }} fill={url} />
         </LinearGradient>
@@ -155,7 +154,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
           {@const color = rScale(fruit)}
           <Area
@@ -180,7 +179,7 @@
         {/each}
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label={data.fruit} value={data.value} />
       </Tooltip>
     </Chart>
@@ -209,7 +208,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
           {@const color =
             tooltip.data == null || tooltip.data.fruit === fruit ? rScale(fruit) : '#ddd'}
@@ -235,7 +234,7 @@
         {/each}
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label={data.fruit} value={data.value} />
       </Tooltip>
     </Chart>
@@ -263,7 +262,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
           {@const color = rScale(fruit)}
           <Area
@@ -276,7 +275,7 @@
         <Labels format="integer" />
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label={data.fruit} value={data.value} />
       </Tooltip>
     </Chart>
@@ -305,7 +304,7 @@
       >
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+          <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
           {#if show}
             <ChartClipPath
               initialWidth={0}
@@ -340,7 +339,7 @@
       >
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+          <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
           {#if show}
             <Spline draw={{ easing: cubicInOut, delay: 700 }} class="stroke-2 stroke-accent-500" />
             <ChartClipPath
@@ -376,7 +375,7 @@
       >
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+          <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
           {#if show}
             <Spline draw={{ easing: cubicInOut }} class="stroke-2 stroke-accent-500" />
             <ChartClipPath
