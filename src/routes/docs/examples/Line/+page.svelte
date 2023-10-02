@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { scaleOrdinal, scaleTime } from 'd3-scale';
-  import { flatGroup } from 'd3-array';
+  import { scaleOrdinal, scaleSequential, scaleTime } from 'd3-scale';
+  import { extent, flatGroup, range, ticks } from 'd3-array';
+  import { interpolateTurbo } from 'd3-scale-chromatic';
   import { format } from 'date-fns';
   import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 
@@ -8,6 +9,8 @@
   import Axis from '$lib/components/Axis.svelte';
   import Highlight from '$lib/components/Highlight.svelte';
   import Labels from '$lib/components/Labels.svelte';
+  import Legend from '$lib/components/Legend.svelte';
+  import LinearGradient from '$lib/components/LinearGradient.svelte';
   import Text from '$lib/components/Text.svelte';
   import Spline from '$lib/components/Spline.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
@@ -16,7 +19,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData';
   import { pivotLonger } from '$lib/utils/pivot';
-  import LinearGradient from '$lib/components/LinearGradient.svelte';
+  import { temperature as temperatureData } from '../_data/dateSeries';
 
   const data = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
 
@@ -36,6 +39,11 @@
     bananas: 'var(--color-purple-500)',
     oranges: 'var(--color-green-500)',
   };
+
+  const temperatureColor = scaleSequential(
+    extent(temperatureData, (d) => d.value) as [number, number],
+    interpolateTurbo
+  );
 </script>
 
 <h1>Examples</h1>
@@ -107,6 +115,75 @@
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Spline class="stroke-2 stroke-accent-500" />
         <Labels format="integer" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Gradient encoding</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={temperatureData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <LinearGradient
+          stops={ticks(0, 1, 10).map(temperatureColor.interpolator())}
+          vertical
+          let:url
+        >
+          <Spline class="stroke-2" stroke={url} />
+        </LinearGradient>
+      </Svg>
+      <Legend
+        scale={temperatureColor}
+        title="Temperature (°F)"
+        placement="top-right"
+        width={240}
+        class="-top-[14px]"
+      />
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Gradient threshold</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={temperatureData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      let:yScale
+      let:height
+      let:padding
+    >
+      {@const thresholdOffset = (yScale(50) / (height + padding.bottom)) * 100 + '%'}
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <LinearGradient
+          stops={[
+            [thresholdOffset, 'black'],
+            [thresholdOffset, 'red'],
+          ]}
+          units="userSpaceOnUse"
+          vertical
+          let:url
+        >
+          <Spline class="stroke-2" stroke={url} />
+        </LinearGradient>
       </Svg>
     </Chart>
   </div>

@@ -102,6 +102,7 @@
   let:yScale
   let:zScale
   let:rScale
+  let:padding
 >
   <GeoContext {...geo} let:projection>
     {#if tooltip}
@@ -119,6 +120,7 @@
           {yScale}
           {zScale}
           {rScale}
+          {padding}
         />
       </TooltipContext>
     {:else}
@@ -134,6 +136,7 @@
         {yScale}
         {zScale}
         {rScale}
+        {padding}
       />
     {/if}
   </GeoContext>
