@@ -65,7 +65,7 @@
     xScale = Object.assign(scale.copy().interpolator(interpolateRound(0, width)), {
       range() {
         return [0, width];
-      }
+      },
     });
     interpolator = scale.interpolator();
 
@@ -98,7 +98,7 @@
         y: 0,
         width: xScale(i) - xScale(i - 1),
         height,
-        fill: d
+        fill: d,
       };
     });
 
@@ -117,7 +117,7 @@
         y: 0,
         width: Math.max(0, xScale.bandwidth() - 1),
         height,
-        fill: scale(d)
+        fill: scale(d),
       };
     });
 
@@ -129,6 +129,7 @@
 </script>
 
 <div
+  {...$$restProps}
   class={cls(
     'inline-block',
     placement && [
@@ -142,12 +143,12 @@
         right: 'top-1/2 right-0 -translate-y-1/2',
         'bottom-left': 'bottom-0 left-0',
         bottom: 'bottom-0 left-1/2 -translate-x-1/2',
-        'bottom-right': 'bottom-0 right-0'
-      }[placement]
+        'bottom-right': 'bottom-0 right-0',
+      }[placement],
     ],
+    $$restProps.class,
     classes.root
   )}
-  {...$$restProps}
 >
   <div class={cls('text-[10px] font-semibold', classes.title)}>{title}</div>
   <slot values={tickValues} {scale}>
