@@ -61,7 +61,7 @@
       <Svg>
         <Group center>
           {#key spring}
-            <LinearGradient from="hsl(60 100% 50%)" to="hsl(140 100% 50%)" vertical let:url>
+            <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(140 100% 50%)']} vertical let:url>
               <Arc
                 {value}
                 {domain}
@@ -125,7 +125,7 @@
       <Chart>
         <Svg>
           <Group center>
-            <LinearGradient from="hsl(80, 100%, 50%)" to="hsl(200, 100%, 50%)" vertical let:url>
+            <LinearGradient stops={['hsl(80, 100%, 50%)', 'hsl(200, 100%, 50%)']} vertical let:url>
               <Arc
                 {value}
                 {domain}

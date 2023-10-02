@@ -48,7 +48,7 @@
     <Chart>
       <Svg>
         <Group center>
-          <LinearGradient from="hsl(80 100% 50%)" to="hsl(200 100% 50%)" let:url>
+          <LinearGradient stops={['hsl(80 100% 50%)', 'hsl(200 100% 50%)']} let:url>
             <Arc
               {value}
               range={[-120, 120]}

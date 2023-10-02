@@ -159,22 +159,28 @@
   <div class="h-[334px] p-4 border rounded">
     <Chart>
       <Svg>
-        <LinearGradient id="gradient-1" from="hsl(60 100% 50%)" to="hsl(30 100% 40%)" />
+        <LinearGradient id="gradient-1" stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']} />
         <LinearGradient
           id="gradient-2"
-          from="hsl(60 100% 50%)"
-          to="hsl(140 100% 40%)"
+          stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']}
           rotate={45}
         />
-        <LinearGradient id="gradient-3" from="hsl(195 100% 50%)" to="hsl(270 100% 30%)" vertical />
-        <LinearGradient id="gradient-4" from="hsl(60 100% 50%)" to="hsl(30 100% 40%)" />
+        <LinearGradient
+          id="gradient-3"
+          stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']}
+          vertical
+        />
+        <LinearGradient id="gradient-4" stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']} />
         <LinearGradient
           id="gradient-5"
-          from="hsl(60 100% 50%)"
-          to="hsl(140 100% 40%)"
+          stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']}
           rotate={45}
         />
-        <LinearGradient id="gradient-6" from="hsl(195 100% 50%)" to="hsl(270 100% 30%)" vertical />
+        <LinearGradient
+          id="gradient-6"
+          stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']}
+          vertical
+        />
         <Pattern id="gradient-with-pattern-1" width={4} height={4}>
           <circle cx={2} cy={2} r={1} fill="#fff9" />
         </Pattern>
@@ -231,14 +237,17 @@
   <div class="h-[334px] p-4 border rounded">
     <Chart>
       <Svg>
-        <LinearGradient id="gradient-1" from="hsl(60 100% 50%)" to="hsl(30 100% 40%)" />
+        <LinearGradient id="gradient-1" stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']} />
         <LinearGradient
           id="gradient-2"
-          from="hsl(60 100% 50%)"
-          to="hsl(140 100% 40%)"
+          stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']}
           rotate={45}
         />
-        <LinearGradient id="gradient-3" from="hsl(195 100% 50%)" to="hsl(270 100% 30%)" vertical />
+        <LinearGradient
+          id="gradient-3"
+          stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']}
+          vertical
+        />
         <Pattern id="gradient-pattern-1" width={4} height={4}>
           <rect width={4} height={4} fill="url(#gradient-1)" />
         </Pattern>

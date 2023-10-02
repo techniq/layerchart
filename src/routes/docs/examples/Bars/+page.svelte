@@ -183,7 +183,7 @@
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <LinearGradient from to class="from-green-400 to-blue-500" units="userSpaceOnUse" let:url>
+        <LinearGradient class="from-green-400 to-blue-500" units="userSpaceOnUse" let:url>
           <Bars radius={4} strokeWidth={1} fill={url} class="stroke-blue-900" />
         </LinearGradient>
       </Svg>

@@ -4,9 +4,11 @@
   /** Unique id for linearGradient */
   export let id: string = uniqueId('linearGradient-');
 
-  export let from: string | boolean;
-  export let via: string | boolean | undefined = undefined; // TODO: Currently --tw-gradient-via is not the color but the full stops
-  export let to: string | boolean;
+  /** Array array of strings (colors), will equally distributed from 0-100%.  If array of tuples, will use first value as the offset, and second as color */
+  export let stops: string[] | [string | number, string][] = [
+    'var(--tw-gradient-from)',
+    'var(--tw-gradient-to)',
+  ];
 
   export let vertical = false;
   export let x1 = '0%';
@@ -32,17 +34,14 @@
     {...$$restProps}
   >
     <slot name="stops">
-      {#if from}
-        <stop offset="0%" stop-color={from === true ? 'var(--tw-gradient-from)' : from} />
-      {/if}
-
-      {#if via}
-        <!-- <stop offset="50%" stop-color={via === true ? 'var(--tw-gradient-via)' : via} /> -->
-        <stop offset="50%" stop-color={via} />
-      {/if}
-
-      {#if to}
-        <stop offset="100%" stop-color={to === true ? 'var(--tw-gradient-to)' : to} />
+      {#if stops}
+        {#each stops as stop, i}
+          {#if Array.isArray(stop)}
+            <stop offset={stop[0]} stop-color={stop[1]} />
+          {:else}
+            <stop offset="{i * (100 / (stops.length - 1))}%" stop-color={stop} />
+          {/if}
+        {/each}
       {/if}
     </slot>
   </linearGradient>

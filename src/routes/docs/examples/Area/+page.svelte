@@ -133,7 +133,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
-        <LinearGradient from to class="from-accent-500/50 to-accent-500/0" vertical let:url>
+        <LinearGradient class="from-accent-500/50 to-accent-500/0" vertical let:url>
           <Area line={{ class: 'stroke-2 stroke-accent-500' }} fill={url} />
         </LinearGradient>
       </Svg>
@@ -421,7 +421,7 @@
       let:tooltip
     >
       <Svg>
-        <LinearGradient from to class="from-accent-500/50 to-accent-500/0" vertical let:url>
+        <LinearGradient class="from-accent-500/50 to-accent-500/0" vertical let:url>
           <Area line={{ class: 'stroke-2 stroke-accent-500 opacity-20' }} fill={url} />
           <RectClipPath x={0} y={0} width={tooltip.data ? tooltip.left : width} {height} spring>
             <Area line={{ class: 'stroke-2 stroke-accent-500' }} fill={url} />
