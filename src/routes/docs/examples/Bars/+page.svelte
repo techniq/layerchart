@@ -30,6 +30,7 @@
   import { createDateSeries, longData } from '$lib/utils/genData';
 
   const data = createDateSeries({
+    count: 30,
     min: 20,
     max: 100,
     value: 'integer',

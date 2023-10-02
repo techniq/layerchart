@@ -16,11 +16,18 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData';
   import { pivotLonger } from '$lib/utils/pivot';
+  import LinearGradient from '$lib/components/LinearGradient.svelte';
 
-  const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
+  const data = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
 
   const keys = ['apples', 'bananas', 'oranges'];
-  const multiSeriesData = createDateSeries({ min: 10, max: 100, value: 'integer', keys });
+  const multiSeriesData = createDateSeries({
+    count: 30,
+    min: 10,
+    max: 100,
+    value: 'integer',
+    keys,
+  });
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 

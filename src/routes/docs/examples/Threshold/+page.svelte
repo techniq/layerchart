@@ -21,6 +21,7 @@
   let selectedCurve = curveLinear;
 
   const data = createDateSeries({
+    count: 30,
     min: 50,
     max: 100,
     value: 'integer',
@@ -111,7 +112,7 @@
 
 <h2>With Labels</h2>
 
-<h3>TODO: Show label for both value and baseline (above and below)</h3>
+<!-- TODO: Show label for both value and baseline (above and below) -->
 
 <Preview>
   <div class="h-[300px] p-4 border rounded">

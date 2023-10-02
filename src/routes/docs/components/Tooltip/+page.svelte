@@ -24,6 +24,7 @@
   import type { ComponentProps } from 'svelte';
 
   const dateSeries = createDateSeries({
+    count: 30,
     min: 20,
     max: 100,
     value: 'integer',
@@ -42,7 +43,13 @@
   ];
 
   const keys = ['apples', 'bananas', 'oranges'];
-  const stackDateSeries = createDateSeries({ min: 50, max: 100, value: 'integer', keys });
+  const stackDateSeries = createDateSeries({
+    count: 30,
+    min: 50,
+    max: 100,
+    value: 'integer',
+    keys,
+  });
   const stackData = stack().keys(keys)(stackDateSeries);
 
   const spiralData = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
@@ -470,7 +477,7 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars y="baseline" radius={4} strokeWidth={1} class="fill-gray-200" />
-        <Bars y="value" radius={4} strokeWidth={1} padding={16} class="fill-accent-500" />
+        <Bars y="value" radius={4} strokeWidth={1} padding={8} class="fill-accent-500" />
         <Highlight
           points={charts.multiBars.highlight.includes('points')}
           lines={charts.multiBars.highlight.includes('lines')}

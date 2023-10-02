@@ -30,12 +30,13 @@
   import { createDateSeries, longData } from '$lib/utils/genData';
 
   const data = createDateSeries({
+    count: 30,
     min: 20,
     max: 100,
     value: 'integer',
     keys: ['value', 'baseline'],
   });
-  const negativeData = createDateSeries({ min: -20, max: 50, value: 'integer' });
+  const negativeData = createDateSeries({ count: 30, min: -20, max: 50, value: 'integer' });
 
   const groupedData = createStackData(longData, { xKey: 'year', groupBy: 'fruit' });
   const stackedData = createStackData(longData, { xKey: 'year', stackBy: 'fruit' });
@@ -286,7 +287,7 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars y="baseline" radius={4} strokeWidth={1} class="fill-gray-200" />
-        <Bars y="value" radius={4} strokeWidth={1} padding={16} class="fill-accent-500" />
+        <Bars y="value" radius={4} strokeWidth={1} padding={8} class="fill-accent-500" />
         <Highlight area />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>

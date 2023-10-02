@@ -16,7 +16,7 @@
   import { flatten } from 'svelte-ux/utils/array';
 
   const keys = ['apples', 'bananas', 'oranges'];
-  const data = createDateSeries({ min: 50, max: 100, value: 'integer', keys });
+  const data = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer', keys });
   const stackData = stack().keys(keys)(data);
 </script>
 
