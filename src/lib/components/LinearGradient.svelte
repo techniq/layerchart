@@ -10,6 +10,7 @@
     'var(--tw-gradient-to)',
   ];
 
+  /** Apply color stops top-to-bottom (true) or left-to-right (false) */
   export let vertical = false;
   export let x1 = '0%';
   export let y1 = '0%';

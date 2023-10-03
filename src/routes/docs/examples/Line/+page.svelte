@@ -1,6 +1,6 @@
 <script lang="ts">
   import { scaleOrdinal, scaleSequential, scaleTime } from 'd3-scale';
-  import { extent, flatGroup, range, ticks } from 'd3-array';
+  import { extent, flatGroup, ticks } from 'd3-array';
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { format } from 'date-fns';
   import { formatDate, PeriodType } from 'svelte-ux/utils/date';
@@ -136,7 +136,7 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <LinearGradient
-          stops={ticks(0, 1, 10).map(temperatureColor.interpolator())}
+          stops={ticks(1, 0, 10).map(temperatureColor.interpolator())}
           vertical
           let:url
         >
