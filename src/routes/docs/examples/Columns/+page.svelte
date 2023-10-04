@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { cls } from 'svelte-ux';
   import { cubicInOut } from 'svelte/easing';
   import { scaleBand, scaleOrdinal } from 'd3-scale';
   import { format } from 'date-fns';
@@ -133,7 +134,8 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
+        <Bars radius={4} strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
+        <Highlight radius={4} strokeWidth={1} bar={{class: "fill-accent-500 stroke-gray-400"}} />
         <Highlight area />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>

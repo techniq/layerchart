@@ -1,6 +1,7 @@
 <script lang="ts">
   import { scaleBand } from 'd3-scale';
   import { format } from 'date-fns';
+  import { cls } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Bars from '$lib/components/Bars.svelte';
@@ -95,10 +96,19 @@
       y="value"
       yDomain={[0, null]}
       tooltip
+      let:tooltip
     >
       <Svg>
-        <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
-        <Highlight bar={{class: "fill-accent-500 stroke-gray-600"}} strokeWidth={1} />
+        <Bars strokeWidth={1}
+          getProps={(obj) => {
+            return {
+              class: cls(
+                tooltip.data === obj.item ? 'fill-green-500' : 'fill-gray-200',
+                "stroke-gray-400"
+              ),
+            };
+          }}
+        />
       </Svg>
       <Tooltip
         class="text-xs"
