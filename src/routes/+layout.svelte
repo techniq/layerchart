@@ -1,6 +1,6 @@
 <script lang="ts">
   import { inject } from '@vercel/analytics';
-  import { mdiGithub, mdiOpenInNew } from '@mdi/js';
+  import { mdiGithub, mdiOpenInNew, mdiTwitter } from '@mdi/js';
   import 'prism-themes/themes/prism-vsc-dark-plus.css';
   import { AppBar, AppLayout, Button, QuickSearch, Tooltip, createTheme } from 'svelte-ux';
 
@@ -49,6 +49,15 @@
       </Button>
 
       <QuickSearch options={quickSearchOptions} on:change={(e) => goto(e.detail.value)} />
+
+      <Tooltip title="Open Twitter / X" placement="left" offset={2}>
+        <Button
+          icon={mdiTwitter}
+          href="https://twitter.com/techniq35"
+          class="p-2"
+          target="_blank"
+        />
+      </Tooltip>
 
       <Tooltip title="View repository" placement="left" offset={2}>
         <Button
