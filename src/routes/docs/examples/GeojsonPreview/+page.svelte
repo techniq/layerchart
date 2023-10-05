@@ -8,7 +8,7 @@
     geoNaturalEarth1,
     geoOrthographic,
     geoIdentity,
-    type GeoPermissibleObjects
+    type GeoPermissibleObjects,
   } from 'd3-geo';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -38,7 +38,7 @@
     { name: 'Equirectangular', value: geoEquirectangular },
     { name: 'Mercator', value: geoMercator },
     { name: 'Natural Earth', value: geoNaturalEarth1 },
-    { name: 'Orthographic', value: geoOrthographic }
+    { name: 'Orthographic', value: geoOrthographic },
   ];
 
   let serviceUrl;
@@ -69,12 +69,13 @@
   </div>
 
   {#if geojson}
-    <div class="h-[600px] bg-white/50 border rounded-lg">
+    <div class="h-[600px] bg-white/50 border border-gray-400 rounded-lg overflow-hidden">
       <Chart
         geo={{
           projection,
-          fitGeojson: geojson
+          fitGeojson: geojson,
         }}
+        padding={{ top: 8, bottom: 8, left: 8, right: 8 }}
       >
         <Svg>
           <GeoTile url={serviceUrl} {zoomDelta} />
