@@ -1,5 +1,6 @@
 {
   "name": "layerchart",
+  "description": "Composable Svelte chart components to build a wide range of visualizations",
   "author": "Sean Lynch <techniq35@gmail.com>",
   "license": "MIT",
   "repository": "techniq/layerchart",
