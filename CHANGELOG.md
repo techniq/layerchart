@@ -1,5 +1,25 @@
 # LayerChart
 
+## 0.24.0
+
+### Minor Changes
+
+- [LinearGradient] Replace `from`/`to` with `stops` prop, which both simplifies tailwind color usage, and simplifies more complex cases (gradient encoding). Also support passing tuple values for explicit offsets (gradient threshold) ([`97098fd`](https://github.com/techniq/layerchart/commit/97098fd0d4fbbc9d549b9257e60d627922a4dd53))
+
+### Patch Changes
+
+- [Calendar] Add month labels ([`68e4694`](https://github.com/techniq/layerchart/commit/68e46949ceb8844553ab7f49a8bf2014c66a63b9))
+
+- Added Sparkline examples ([#44](https://github.com/techniq/layerchart/pull/44))
+
+- [Tooltip] Support passing explicit `top` and/or `left` for fixed position ([`4681c7f`](https://github.com/techniq/layerchart/commit/4681c7fd2a4b4f75d20f1808c0809e177c6ba164))
+
+- [Legend] Support passing `class` without overriding built-in classes ([`cbc0249`](https://github.com/techniq/layerchart/commit/cbc0249bb227109da17a106d21baabd8ee182480))
+
+- Add highlight on hover examples for multi-series Area and Line ([`b9e4722`](https://github.com/techniq/layerchart/commit/b9e4722ac544b26ae546d9cccbe91ea10bd8e911))
+
+- [Line] Add "gradient encoding" and "gradient threshold" examples ([`b171e8e`](https://github.com/techniq/layerchart/commit/b171e8e5c8eda8d398274ea9ae02f075e3b51389))
+
 ## 0.23.0
 
 ### Minor Changes
