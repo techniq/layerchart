@@ -15,7 +15,7 @@
     <Dialog
       {open}
       on:close={toggle}
-      class="max-h-[98vh] md:max-h-[90vh] max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto,1fr,auto]"
+      class="max-h-[98dvh] md:max-h-[90dvh] max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto,1fr,auto]"
     >
       <div class="grid grid-cols-[1fr,auto] gap-3 items-center p-4">
         <div class="overflow-auto">
