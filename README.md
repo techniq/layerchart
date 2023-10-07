@@ -23,6 +23,8 @@ Others
 
 - Legends including ColorRamps
 
+See also [Svelte UX](http://svelte-ux.techniq.dev) for a large collection of components, actions, stores, and utilities to build highly interactive applications.
+
 ## Publishing
 
 - `npm run changeset` for each changelog worthy change
