@@ -63,7 +63,7 @@
       </div>
     </div>
 
-    <div class="text-2xl font-bold mb-3">{title}</div>
+    <div class="text-2xl font-bold">{title}</div>
 
     {#if description}
       <div class="text-sm text-black/60">
@@ -71,7 +71,7 @@
       </div>
     {/if}
 
-    <div class="flex gap-2 mt-2">
+    <div class="flex gap-2 mt-3">
       <ViewSourceButton
         label="Source"
         {source}
