@@ -44,30 +44,32 @@
   <RangeField label="Value" bind:value />
 </div>
 <Preview>
-  <div class="h-[200px] p-4 border rounded">
+  <div class="h-[120px] p-4 border rounded">
     <Chart>
       <Svg>
         <Group center>
-          <LinearGradient stops={['hsl(80 100% 50%)', 'hsl(200 100% 50%)']} let:url>
-            <Arc
-              {value}
-              range={[-120, 120]}
-              outerRadius={60}
-              innerRadius={50}
-              cornerRadius={5}
-              spring
-              let:value
-              fill={url}
-              track={{ fill: 'none', stroke: 'hsl(0 0% 0% / 10%)' }}
-            >
-              <Text
-                value={Math.round(value) + '%'}
-                textAnchor="middle"
-                verticalAnchor="middle"
-                class="text-3xl tabular-nums"
-              />
-            </Arc>
-          </LinearGradient>
+          <Group y={16}>
+            <LinearGradient stops={['hsl(80 100% 50%)', 'hsl(200 100% 50%)']} let:url>
+              <Arc
+                {value}
+                range={[-120, 120]}
+                outerRadius={60}
+                innerRadius={50}
+                cornerRadius={5}
+                spring
+                let:value
+                fill={url}
+                track={{ fill: 'none', stroke: 'hsl(0 0% 0% / 10%)' }}
+              >
+                <Text
+                  value={Math.round(value) + '%'}
+                  textAnchor="middle"
+                  verticalAnchor="middle"
+                  class="text-3xl tabular-nums"
+                />
+              </Arc>
+            </LinearGradient>
+          </Group>
         </Group>
       </Svg>
     </Chart>
