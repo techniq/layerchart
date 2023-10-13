@@ -147,7 +147,7 @@
 <h2>with Tooltip and Bar Highlight</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded group">
     <Chart
       {data}
       x="value"
@@ -161,7 +161,11 @@
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Bars radius={4} strokeWidth={1} class="fill-gray-300" />
+        <Bars
+          radius={4}
+          strokeWidth={1}
+          class="fill-accent-500 group-hover:fill-gray-300 transition-colors"
+        />
         <Highlight area bar={{ class: 'fill-accent-500', strokeWidth: 1, radius: 4 }} />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
