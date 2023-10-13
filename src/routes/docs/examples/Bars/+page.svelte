@@ -30,7 +30,7 @@
   import { createDateSeries, longData } from '$lib/utils/genData';
 
   const data = createDateSeries({
-    count: 30,
+    count: 10,
     min: 20,
     max: 100,
     value: 'integer',
@@ -162,7 +162,7 @@
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars radius={4} strokeWidth={1} class="fill-gray-300" />
-        <Highlight area bar={{class: "fill-accent-500", strokeWidth: 1, radius: 4}} />
+        <Highlight area bar={{ class: 'fill-accent-500', strokeWidth: 1, radius: 4 }} />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />
@@ -170,7 +170,6 @@
     </Chart>
   </div>
 </Preview>
-
 
 <h2>with Labels and negative data</h2>
 
