@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.24.2
+
+### Patch Changes
+
+- Update svelte-ux to latest (with new top-level sort utils) ([`e3e3ba1`](https://github.com/techniq/layerchart/commit/e3e3ba1eefcd1b2638b9cb6728db32ee9e9cc257))
+
 ## 0.24.1
 
 ### Patch Changes
