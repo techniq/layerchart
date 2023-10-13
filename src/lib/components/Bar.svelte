@@ -35,6 +35,8 @@
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
+  $: if (stroke === null || stroke === undefined) stroke = 'black';
+
   $: getDimensions = createDimensionGetter(getContext('LayerCake'), {
     x,
     y,

@@ -96,19 +96,10 @@
       y="value"
       yDomain={[0, null]}
       tooltip
-      let:tooltip
     >
       <Svg>
-        <Bars strokeWidth={1}
-          getProps={(obj) => {
-            return {
-              class: cls(
-                tooltip.data === obj.item ? 'fill-green-500' : 'fill-gray-200',
-                "stroke-gray-400"
-              ),
-            };
-          }}
-        />
+        <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
+        <Highlight bar={{strokeWidth: 1}} />
       </Svg>
       <Tooltip
         class="text-xs"
@@ -139,7 +130,7 @@
     >
       <Svg>
         <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
-        <Highlight bar={{class: "fill-accent-500 stroke-gray-600"}} strokeWidth={1} />
+        <Highlight bar={{strokeWidth: 1}} />
       </Svg>
       <Tooltip
         class="text-xs"
@@ -175,7 +166,7 @@
         >
           <Svg>
             <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
-            <Highlight bar={{class: "fill-accent-500 stroke-gray-600"}} strokeWidth={1} />
+            <Highlight bar={{strokeWidth: 1}} />
           </Svg>
           <Tooltip
             class="text-xs"

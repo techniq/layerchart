@@ -41,10 +41,6 @@
   /** Show bar and pass props to Rect */
   export let bar: boolean | ComponentProps<Rect> = false;
 
-  export let stroke = 'black';
-  export let strokeWidth = 0;
-  export let radius = 0;
-
   // TODO: Fix circle points being backwards for stack (see AreaStack)
 
   let _points = [];
@@ -192,6 +188,7 @@
     }
   }
 
+  $: if ($tooltip.data && bar) console.log(bar)
 </script>
 
 {#if $tooltip.data}
@@ -211,9 +208,12 @@
     <slot name="bar" bar={bar}>
       <Bar
         spring
-        {stroke}
-        {strokeWidth}
-        {radius}
+        x={typeof bar === 'object' ? bar.x : null}
+        y={typeof bar === 'object' ? bar.y : null}
+        padding={typeof bar === 'object' ? bar.padding : null}
+        stroke={typeof bar === 'object' ? bar.stroke : null}
+        strokeWidth={typeof bar === 'object' ? bar.strokeWidth : null}
+        radius={typeof bar === 'object' ? bar.radius : null}
         bar={$tooltip.data}
         class={cls(!bar.fill && 'fill-accent-500', typeof bar === 'object' ? bar.class : null)}
         on:click

@@ -135,7 +135,7 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars radius={4} strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
-        <Highlight radius={4} strokeWidth={1} bar={{class: "fill-accent-500 stroke-gray-400"}} />
+        <Highlight bar={{class: "fill-accent-500", stroke: 'black', strokeWidth: 1, radius: 4}} />
         <Highlight area />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
@@ -163,7 +163,7 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
-        <Highlight bar={{class: "fill-green-400"}} strokeWidth={1} radius={4}  />
+        <Highlight bar={{class: "fill-green-400", strokeWidth: 1, radius: 4}} />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />

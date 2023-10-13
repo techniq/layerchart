@@ -430,6 +430,7 @@
           points={charts.bars.highlight.includes('points')}
           lines={charts.bars.highlight.includes('lines')}
           area={charts.bars.highlight.includes('area')}
+          bar={charts.bars.highlight.includes('bar') ? {radius: 4, class: 'fill-accent-800'} : false}
           axis={charts.bars.axis}
         />
       </Svg>
@@ -475,7 +476,11 @@
           points={charts.multiBars.highlight.includes('points')}
           lines={charts.multiBars.highlight.includes('lines')}
           area={charts.multiBars.highlight.includes('area')}
+          bar={charts.multiBars.highlight.includes('bar') ? {y: "baseline", radius: 4, strokeWidth: 1, class: "fill-gray-400"} : false}
           axis={charts.multiBars.axis}
+        />
+        <Highlight
+          bar={charts.multiBars.highlight.includes('bar') ? {y: "value", radius: 4, padding: 16, strokeWidth: 1, class: "fill-accent-800"} : false}
         />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
