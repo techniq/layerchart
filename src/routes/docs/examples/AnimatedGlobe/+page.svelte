@@ -3,8 +3,7 @@
   import { geoOrthographic, geoCentroid } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Button, scrollIntoView, cls } from 'svelte-ux';
-  import { createPropertySortFunc } from 'svelte-ux/utils/sort';
+  import { Button, scrollIntoView, cls, sortFunc } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
@@ -40,7 +39,7 @@
 <Preview>
   <div class="h-[600px] grid grid-cols-[224px,1fr]">
     <div class="overflow-auto scrollbar-none">
-      {#each countries.features.sort(createPropertySortFunc('properties.name')) as country}
+      {#each countries.features.sort(sortFunc('properties.name')) as country}
         {@const isSelected = selectedFeature === country}
         <div use:scrollIntoView={{ condition: isSelected }}>
           <Button
@@ -88,7 +87,7 @@
 <Preview>
   <div class="h-[600px] grid grid-cols-[224px,1fr]">
     <div class="overflow-auto">
-      {#each countries.features.sort(createPropertySortFunc('properties.name')) as country}
+      {#each countries.features.sort(sortFunc('properties.name')) as country}
         {@const isSelected = selectedFeature === country}
         <div use:scrollIntoView={{ condition: isSelected }}>
           <Button

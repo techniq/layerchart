@@ -37,6 +37,7 @@
   import { bisector, max, min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
   import { quadtree as d3Quadtree } from 'd3-quadtree';
+  import { sortFunc } from 'svelte-ux';
 
   import { Svg, Html } from '$lib/components/Chart.svelte';
   import ChartClipPath from '$lib/components/ChartClipPath.svelte';
@@ -44,7 +45,6 @@
   import { localPoint } from '$lib/utils/event';
   import { isScaleBand, scaleInvert } from '$lib/utils/scales';
   import { quadtreeRects } from '$lib/utils/quadtree';
-  import { createPropertySortFunc, createSortFunc } from 'svelte-ux/utils/sort';
 
   const dispatch = createEventDispatcher<{ click: { data: any } }>();
 
@@ -157,18 +157,14 @@
 
           if (isScaleBand($xScale)) {
             // Find point closest to pointer within the x band
-            const bandData = $flatData
-              .filter((d) => $x(d) === xValueAtPoint)
-              .sort(createSortFunc($y)); // sort for bisect
+            const bandData = $flatData.filter((d) => $x(d) === xValueAtPoint).sort(sortFunc($y)); // sort for bisect
             const index = bisectY(bandData, yValueAtPoint, 1);
             const previousValue = bandData[index - 1];
             const currentValue = bandData[index];
             tooltipData = findData(previousValue, currentValue, yValueAtPoint, $y);
           } else if (isScaleBand($yScale)) {
             // Find point closest to pointer within the y band
-            const bandData = $flatData
-              .filter((d) => $y(d) === yValueAtPoint)
-              .sort(createSortFunc($x)); // sort for bisect
+            const bandData = $flatData.filter((d) => $y(d) === yValueAtPoint).sort(sortFunc($x)); // sort for bisect
             const index = bisectX(bandData, xValueAtPoint, 1);
             const previousValue = bandData[index - 1];
             const currentValue = bandData[index];
@@ -325,7 +321,7 @@
           };
         }
       })
-      .sort(createPropertySortFunc('x'));
+      .sort(sortFunc('x'));
     // console.log({ rects });
   }
 </script>

@@ -88,7 +88,7 @@
     "layercake": "^8.0.0",
     "lodash-es": "^4.17.21",
     "shapefile": "^0.6.6",
-    "svelte-ux": "^0.52.1",
+    "svelte-ux": "^0.53.0",
     "topojson-client": "^3.1.0"
   },
   "peerDependencies": {
