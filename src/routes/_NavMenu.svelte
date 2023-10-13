@@ -16,6 +16,7 @@
       'Line',
       'PunchCard',
       'Scatter',
+      'Sparkbar',
       'Sparkline',
       'Threshold',
     ],

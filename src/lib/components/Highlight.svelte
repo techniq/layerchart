@@ -6,6 +6,7 @@
   import { isScaleBand } from '$lib/utils/scales';
   import Circle from './Circle.svelte';
   import Line from './Line.svelte';
+  import Bar from './Bar.svelte';
   import Rect from './Rect.svelte';
   import { tooltipContext } from './TooltipContext.svelte';
 
@@ -36,6 +37,9 @@
 
   /** Show area and pass props to Rect */
   export let area: boolean | ComponentProps<Rect> = false;
+
+  /** Show bar and pass props to Rect */
+  export let bar: boolean | ComponentProps<Rect> = false;
 
   // TODO: Fix circle points being backwards for stack (see AreaStack)
 
@@ -197,6 +201,24 @@
       />
     </slot>
   {/if}
+
+  {#if bar}
+    <slot name="bar" bar={bar}>
+      <Bar
+        spring
+        x={typeof bar === 'object' ? bar.x : null}
+        y={typeof bar === 'object' ? bar.y : null}
+        padding={typeof bar === 'object' ? bar.padding : null}
+        stroke={typeof bar === 'object' ? bar.stroke : null}
+        strokeWidth={typeof bar === 'object' ? bar.strokeWidth : null}
+        radius={typeof bar === 'object' ? bar.radius : null}
+        bar={$tooltip.data}
+        class={cls(!bar.fill && 'fill-accent-500', typeof bar === 'object' ? bar.class : null)}
+        on:click
+      />
+    </slot>
+  {/if}
+
 
   {#if lines}
     <slot name="lines" lines={_lines}>

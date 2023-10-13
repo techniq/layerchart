@@ -40,6 +40,7 @@
       { name: 'points', value: 'points' },
       { name: 'lines', value: 'lines' },
       { name: 'area', value: 'area' },
+      { name: 'bar', value: 'bar' },
     ]}
     formatSelected={({ options }) => options.map((x) => x.name).join(', ')}
   />

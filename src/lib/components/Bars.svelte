@@ -2,29 +2,23 @@
   import { getContext } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 
-  import Rect from './Rect.svelte';
-  import { createDimensionGetter } from '$lib/utils/rect';
+  import Bar from './Bar.svelte';
 
-  const { data, xScale, x: xContext, y: yContext, rGet, config } = getContext('LayerCake');
+  const { data, rGet, config } = getContext('LayerCake');
 
   /**
    * Override `x` from context.  Useful for multiple Bar instances
    */
-  export let x = $xContext;
-  // Convert x to function
-  $: _x = x ? (typeof x === 'string' ? (d) => d[x] : x) : $xContext;
+  export let x: any = undefined; // TODO: Update Type
 
   /**
    * Override `y` from context.  Useful for multiple Bar instances
    */
-  export let y = $yContext;
-  $: _y = y ? (typeof y === 'string' ? (d) => d[y] : y) : $yContext;
+  export let y: any = undefined; // TODO: Update Type
 
   export let stroke = 'black';
   export let strokeWidth = 0;
   export let radius = 0;
-  export let getKey: (item: any, index: number) => any = (item) =>
-    $xScale.bandwidth ? _x(item) : _y(item);
   export let getProps: ((obj: { value: any; item: any; index: number }) => any) | undefined =
     undefined;
   /** Inset the rect for amount of padding.  Useful with multiple bars (bullet, overlap, etc) */
@@ -39,31 +33,27 @@
   export let groupPaddingInner = 0.2;
   export let groupPaddingOuter = 0;
 
-  $: getDimensions = createDimensionGetter(getContext('LayerCake'), {
-    x,
-    y,
-    groupBy,
-    padding,
-    groupPadding: {
-      inner: groupPaddingInner,
-      outer: groupPaddingOuter,
-    },
-  });
 </script>
 
 <g class="Bars">
-  {#each $data as item, index (getKey(item, index))}
-    <Rect
-      data-id={index}
-      fill={$config.r ? $rGet(item) : null}
-      {stroke}
-      stroke-width={strokeWidth}
-      rx={radius}
-      {spring}
-      {tweened}
-      {...$getDimensions(item)}
-      {...getProps?.({ value: _y(item), item, index })}
-      {...$$restProps}
-    />
-  {/each}
+  <slot name="bars">
+    {#each $data as item, index}
+      <Bar
+        bar={item}
+        {x}
+        {y}
+        fill={$config.r ? $rGet(item) : null}
+        {stroke}
+        {strokeWidth}
+        {radius}
+        {spring}
+        {tweened}
+        {groupBy}
+        {padding}
+        {groupPaddingInner}
+        {groupPaddingOuter}
+        {...$$restProps}
+      />
+    {/each}
+  </slot>
 </g>
