@@ -187,8 +187,6 @@
       ];
     }
   }
-
-  $: if ($tooltip.data && bar) console.log(bar)
 </script>
 
 {#if $tooltip.data}
