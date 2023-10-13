@@ -143,6 +143,34 @@
   </div>
 </Preview>
 
+<h2>with Tooltip and Bar Highlight</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="value"
+      xDomain={[0, null]}
+      xNice
+      y="date"
+      yScale={scaleBand().padding(0.4)}
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'band' }}
+    >
+      <Svg>
+        <Axis placement="bottom" grid rule />
+        <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Bars radius={4} strokeWidth={1} class="fill-gray-300" />
+        <Highlight area bar={{class: "fill-accent-500", strokeWidth: 1, radius: 4}} />
+      </Svg>
+      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+        <TooltipItem label="value" value={data.value} />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+
 <h2>with Labels and negative data</h2>
 
 <Preview>
