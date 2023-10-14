@@ -13,6 +13,14 @@
   export let language = 'svelte';
   export let highlightedCode = Prism.highlight(code, Prism.languages.svelte, language);
   export let showCode = false;
+
+  let copyValue: string | null = null;
+  try {
+    // TODO: Improve handling of circular structures
+    copyValue = JSON.stringify(data, null, 2);
+  } catch (e) {
+    console.error('Error capturing value to copy', e);
+  }
 </script>
 
 <div class="border border-black/20 rounded bg-white">
@@ -62,9 +70,11 @@
           <div class="text-lg font-semibold">Chart data</div>
         </div>
 
-        <Tooltip title="Copy">
-          <CopyButton value={JSON.stringify(data, null, 2)} variant="fill-light" color="accent" />
-        </Tooltip>
+        {#if copyValue}
+          <Tooltip title="Copy">
+            <CopyButton value={copyValue} variant="fill-light" color="accent" />
+          </Tooltip>
+        {/if}
       </div>
 
       <div class="overflow-auto px-4 py-2 bg-[#1e1e1e]">
