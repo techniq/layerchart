@@ -26,7 +26,7 @@
     ...states,
     features: states.features.filter(
       (d) => d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii'
-    )
+    ),
   };
   // $: filteredStates = { ...states, features: states.features.filter(d => d.properties.name === 'West Virginia')}
   $: selectedFeature = filteredStates;
@@ -61,7 +61,7 @@
 
 <h2>SVG</h2>
 
-<Preview>
+<Preview data={filteredStates}>
   <div class="h-[600px] relative overflow-hidden">
     <ZoomControls {zoom} />
     <Chart
@@ -69,7 +69,7 @@
         projection: geoMercator,
         _fitGeojson: selectedFeature,
         scale,
-        translate: [translate.x, translate.y]
+        translate: [translate.x, translate.y],
       }}
       tooltip={{ mode: 'manual' }}
       let:tooltip

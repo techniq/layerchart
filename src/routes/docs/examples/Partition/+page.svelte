@@ -116,7 +116,7 @@
 
 <h2>Horizontal</h2>
 
-<Preview>
+<Preview data={horizontalHierarchy}>
   <Breadcrumb items={selectedHorizontal?.ancestors().reverse() ?? []}>
     <Button
       slot="item"
@@ -140,7 +140,7 @@
           domain={{
             x0: selectedHorizontal?.y0,
             y0: selectedHorizontal?.x0,
-            y1: selectedHorizontal?.x1
+            y1: selectedHorizontal?.x1,
           }}
           tweened={{ duration: 800, easing: cubicOut }}
         >
@@ -187,7 +187,7 @@
 
 <h2>Vertical</h2>
 
-<Preview>
+<Preview data={verticalHierarchy}>
   <Breadcrumb items={selectedVertical?.ancestors().reverse() ?? []}>
     <Button
       slot="item"
@@ -270,7 +270,7 @@
   </div>
 </div>
 
-<Preview>
+<Preview data={groupedHierarchy}>
   <Breadcrumb items={selectedCarNode?.ancestors().reverse() ?? []}>
     <Button
       slot="item"

@@ -57,7 +57,7 @@
   <CurveMenuField bind:value={curve} />
 </div>
 
-<Preview>
+<Preview {data}>
   <div class="h-[500px] p-4 border rounded relative overflow-hidden">
     <ZoomControls {zoom} />
     <Chart {data} x="x" y="y">

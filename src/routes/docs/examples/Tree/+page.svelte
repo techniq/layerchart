@@ -85,7 +85,7 @@
   </div>
 </div>
 
-<Preview>
+<Preview data={complexDataHierarchy}>
   <div class="h-[800px] p-4 border rounded overflow-hidden relative">
     <ZoomControls {zoom} orientation="horizontal" />
     <Chart

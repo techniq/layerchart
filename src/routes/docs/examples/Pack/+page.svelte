@@ -80,7 +80,7 @@
 
 <h2>General</h2>
 
-<Preview>
+<Preview data={complexHierarchy}>
   <Breadcrumb items={selected?.ancestors().reverse() ?? []}>
     <Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded">
       <div class="text-left">

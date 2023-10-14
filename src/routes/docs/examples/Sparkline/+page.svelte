@@ -18,7 +18,7 @@
 <h1>Examples</h1>
 
 <h2>Basic</h2>
-<Preview>
+<Preview {data}>
   <div>
     <div class="w-[125px] h-[18px]">
       <Chart {data} x="date" xScale={scaleTime()} y="value">
@@ -31,7 +31,7 @@
 </Preview>
 
 <h2>Basic within a paragraph</h2>
-<Preview>
+<Preview {data}>
   <div>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pretium, ligula ac sollicitudin
@@ -49,7 +49,7 @@
 </Preview>
 
 <h2>Basic zero axis</h2>
-<Preview>
+<Preview {data}>
   <div class="w-[125px] h-[20px] inline-block">
     <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, null]}>
       <Svg>
@@ -60,7 +60,7 @@
 </Preview>
 
 <h2>With Tooltip and Highlight</h2>
-<Preview>
+<Preview {data}>
   <div class="w-[125px] h-[25px]">
     <Chart {data} x="date" xScale={scaleTime()} y="value" tooltip>
       <Svg>
@@ -80,7 +80,7 @@
 </Preview>
 
 <h2>With Tooltip and Highlight (fixed position)</h2>
-<Preview>
+<Preview {data}>
   <div class="w-[125px] h-[25px]">
     <Chart {data} x="date" xScale={scaleTime()} y="value" tooltip let:containerWidth>
       <Svg>
@@ -102,7 +102,7 @@
 </Preview>
 
 <h2>Within a paragraph with Tooltip and Highlight</h2>
-<Preview>
+<Preview {data}>
   <div>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pretium, ligula ac sollicitudin

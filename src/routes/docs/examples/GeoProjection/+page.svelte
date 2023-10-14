@@ -6,7 +6,7 @@
     geoEquirectangular,
     geoMercator,
     geoNaturalEarth1,
-    geoOrthographic
+    geoOrthographic,
   } from 'd3-geo';
   import { feature } from 'topojson-client';
 
@@ -30,7 +30,7 @@
     { name: 'Equirectangular', value: geoEquirectangular },
     { name: 'Mercator', value: geoMercator },
     { name: 'Natural Earth', value: geoNaturalEarth1 },
-    { name: 'Orthographic', value: geoOrthographic }
+    { name: 'Orthographic', value: geoOrthographic },
   ];
 
   let detailed = false;
@@ -69,7 +69,7 @@
 
 <h2>SVG</h2>
 
-<Preview>
+<Preview data={geojson}>
   <div class="h-[600px] overflow-hidden">
     <Chart
       geo={{
@@ -78,9 +78,9 @@
         rotate: {
           yaw,
           pitch,
-          roll
+          roll,
         },
-        scale
+        scale,
       }}
       padding={{ left: 100, right: 100 }}
       tooltip={{ mode: 'manual' }}
@@ -104,7 +104,7 @@
 
 <h2>Canvas</h2>
 
-<Preview>
+<Preview data={geojson}>
   <div class="h-[600px]">
     <Chart
       geo={{
@@ -113,9 +113,9 @@
         rotate: {
           yaw,
           pitch,
-          roll
+          roll,
         },
-        scale
+        scale,
       }}
     >
       <Canvas>

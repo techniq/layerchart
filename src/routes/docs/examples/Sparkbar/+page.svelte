@@ -26,15 +26,9 @@
 
 <h2>Basic</h2>
 
-<Preview>
+<Preview {data}>
   <div class="w-[125px] h-[18px]">
-    <Chart
-      {data}
-      x="date"
-      xScale={scaleBand()}
-      y="value"
-      yDomain={[0, null]}
-    >
+    <Chart {data} x="date" xScale={scaleBand()} y="value" yDomain={[0, null]}>
       <Svg>
         <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
       </Svg>
@@ -43,19 +37,13 @@
 </Preview>
 
 <h2>Basic within a paragraph</h2>
-<Preview>
+<Preview {data}>
   <div>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pretium, ligula ac sollicitudin
       ullamcorper, leo justo pretium tellus, at gravida ex quam et orci.
       <span class="w-[125px] h-[18px] inline-block">
-        <Chart
-          {data}
-          x="date"
-          xScale={scaleBand()}
-          y="value"
-          yDomain={[0, null]}
-        >
+        <Chart {data} x="date" xScale={scaleBand()} y="value" yDomain={[0, null]}>
           <Svg>
             <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
           </Svg>
@@ -66,17 +54,11 @@
   </div>
 </Preview>
 
-
 <h2>Basic negative data</h2>
 
-<Preview>
+<Preview data={negativeData}>
   <div class="w-[125px] h-[18px]">
-    <Chart
-      data={negativeData}
-      x="date"
-      xScale={scaleBand()}
-      y="value"
-    >
+    <Chart data={negativeData} x="date" xScale={scaleBand()} y="value">
       <Svg>
         <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
       </Svg>
@@ -84,22 +66,14 @@
   </div>
 </Preview>
 
-
 <h2>With Tooltip and Highlight</h2>
 
-<Preview>
+<Preview {data}>
   <div class="w-[125px] h-[18px]">
-    <Chart
-      {data}
-      x="date"
-      xScale={scaleBand()}
-      y="value"
-      yDomain={[0, null]}
-      tooltip
-    >
+    <Chart {data} x="date" xScale={scaleBand()} y="value" yDomain={[0, null]} tooltip>
       <Svg>
         <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
-        <Highlight bar={{strokeWidth: 1}} />
+        <Highlight bar={{ strokeWidth: 1 }} />
       </Svg>
       <Tooltip
         class="text-xs"
@@ -110,14 +84,12 @@
         <TooltipItem label="value" value={data.value} />
       </Tooltip>
     </Chart>
-
   </div>
 </Preview>
 
-
 <h2>With Tooltip and Highlight (fixed position)</h2>
 
-<Preview>
+<Preview {data}>
   <div class="w-[125px] h-[18px]">
     <Chart
       {data}
@@ -130,7 +102,7 @@
     >
       <Svg>
         <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
-        <Highlight bar={{strokeWidth: 1}} />
+        <Highlight bar={{ strokeWidth: 1 }} />
       </Svg>
       <Tooltip
         class="text-xs"
@@ -143,13 +115,11 @@
         <TooltipItem label="value" value={data.value} />
       </Tooltip>
     </Chart>
-
   </div>
 </Preview>
 
-
 <h2>Basic within a paragraph with Tooltip and Highlight</h2>
-<Preview>
+<Preview {data}>
   <div>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pretium, ligula ac sollicitudin
@@ -166,7 +136,7 @@
         >
           <Svg>
             <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
-            <Highlight bar={{strokeWidth: 1}} />
+            <Highlight bar={{ strokeWidth: 1 }} />
           </Svg>
           <Tooltip
             class="text-xs"

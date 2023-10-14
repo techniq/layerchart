@@ -126,7 +126,7 @@
 
 <h2>Basic</h2>
 
-<Preview>
+<Preview data={dateSeries}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={dateSeries}
@@ -153,7 +153,7 @@
 
 <h2>Style</h2>
 
-<Preview>
+<Preview data={dateSeries}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={dateSeries}
@@ -189,7 +189,7 @@
 </small>
 
 <TooltipControls bind:settings={charts.area} />
-<Preview>
+<Preview data={dateSeries}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={dateSeries}
@@ -230,7 +230,7 @@
 </small>
 
 <TooltipControls bind:settings={charts.areaStack} />
-<Preview>
+<Preview data={dateSeries}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={stackData}
@@ -277,7 +277,7 @@
 </small>
 
 <TooltipControls bind:settings={charts.dateTime} />
-<Preview>
+<Preview data={timeSeries}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={timeSeries}
@@ -319,7 +319,7 @@
 
 <TooltipControls bind:settings={charts.duration} />
 
-<Preview>
+<Preview data={timeSeries}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={timeSeries}
@@ -365,7 +365,7 @@
 
 <TooltipControls bind:settings={charts.multiDuration} />
 
-<Preview>
+<Preview data={overlapTimeSeries}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={overlapTimeSeries}
@@ -412,7 +412,7 @@
 
 <TooltipControls bind:settings={charts.bars} />
 
-<Preview>
+<Preview data={dateSeries}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={dateSeries}
@@ -437,7 +437,9 @@
           points={charts.bars.highlight.includes('points')}
           lines={charts.bars.highlight.includes('lines')}
           area={charts.bars.highlight.includes('area')}
-          bar={charts.bars.highlight.includes('bar') ? {radius: 4, class: 'fill-accent-800'} : false}
+          bar={charts.bars.highlight.includes('bar')
+            ? { radius: 4, class: 'fill-accent-800' }
+            : false}
           axis={charts.bars.axis}
         />
       </Svg>
@@ -457,7 +459,7 @@
 
 <TooltipControls bind:settings={charts.multiBars} />
 
-<Preview>
+<Preview data={dateSeries}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={dateSeries}
@@ -483,11 +485,15 @@
           points={charts.multiBars.highlight.includes('points')}
           lines={charts.multiBars.highlight.includes('lines')}
           area={charts.multiBars.highlight.includes('area')}
-          bar={charts.multiBars.highlight.includes('bar') ? {y: "baseline", radius: 4, strokeWidth: 1, class: "fill-gray-400"} : false}
+          bar={charts.multiBars.highlight.includes('bar')
+            ? { y: 'baseline', radius: 4, strokeWidth: 1, class: 'fill-gray-400' }
+            : false}
           axis={charts.multiBars.axis}
         />
         <Highlight
-          bar={charts.multiBars.highlight.includes('bar') ? {y: "value", radius: 4, padding: 16, strokeWidth: 1, class: "fill-accent-800"} : false}
+          bar={charts.multiBars.highlight.includes('bar')
+            ? { y: 'value', radius: 4, padding: 16, strokeWidth: 1, class: 'fill-accent-800' }
+            : false}
         />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
@@ -504,7 +510,7 @@
 
 <TooltipControls bind:settings={charts.scatter} />
 
-<Preview>
+<Preview data={spiralData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={spiralData}

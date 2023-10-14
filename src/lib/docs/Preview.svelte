@@ -1,14 +1,15 @@
 <script lang="ts">
+  import { slide } from 'svelte/transition';
   // TODO: No longer copy from svelte-ux after prismjs is migrated to ESM (commonjs causes issue with Vite from another library)
   import Prism from 'prismjs';
   import 'prism-svelte';
-  import { mdiCodeTags, mdiContentCopy } from '@mdi/js';
+  import { mdiCodeTags, mdiContentCopy, mdiTable } from '@mdi/js';
+  import JsonTree from 'svelte-json-tree';
 
-  import { slide } from 'svelte/transition';
-
-  import { Button } from 'svelte-ux';
+  import { Button, CopyButton, Dialog, Toggle, Tooltip } from 'svelte-ux';
 
   export let code: string | undefined = undefined;
+  export let data: any | undefined = undefined;
   export let language = 'svelte';
   export let highlightedCode = Prism.highlight(code, Prism.languages.svelte, language);
   export let showCode = false;
@@ -43,7 +44,52 @@
 </div>
 
 {#if code}
-  <Button icon={mdiCodeTags} class=" text-black/70 py-1" on:click={() => (showCode = !showCode)}>
-    {showCode ? 'Hide' : 'Show'} Code
+  <Button icon={mdiCodeTags} class=" text-black/60 py-1" on:click={() => (showCode = !showCode)}>
+    {showCode ? 'Hide' : 'Show'} code
   </Button>
+{/if}
+
+{#if data}
+  <Toggle let:on={open} let:toggle>
+    <Button icon={mdiTable} class=" text-black/60 py-1" on:click={toggle}>View data</Button>
+    <Dialog
+      {open}
+      on:close={toggle}
+      class="max-h-[98dvh] md:max-h-[90dvh] max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto,1fr,auto]"
+    >
+      <div class="grid grid-cols-[1fr,auto] gap-3 items-center p-4">
+        <div class="overflow-auto">
+          <div class="text-lg font-semibold">Chart data</div>
+        </div>
+
+        <Tooltip title="Copy">
+          <CopyButton value={JSON.stringify(data, null, 2)} variant="fill-light" color="accent" />
+        </Tooltip>
+      </div>
+
+      <div class="overflow-auto px-4 py-2 bg-[#1e1e1e]">
+        <JsonTree
+          value={data}
+          defaultExpandedPaths={['$']}
+          --json-tree-property-color="#72a2d3"
+          --json-tree-string-color="#6cd1c7"
+          --json-tree-symbol-color="#6cd1c7"
+          --json-tree-boolean-color="#9681f7"
+          --json-tree-function-color="#e59b6f"
+          --json-tree-number-color="#9681f7"
+          --json-tree-label-color="#9ca0a5"
+          --json-tree-arrow-color="#e8eaed"
+          --json-tree-null-color="#81868a"
+          --json-tree-undefined-color="#81868a"
+          --json-tree-date-color="#9ca0a5"
+          --json-tree-operator-color="#e8eaed"
+          --json-tree-regex-color="#6cd1c7"
+        />
+      </div>
+
+      <div slot="actions">
+        <Button variant="fill" color="accent">Close</Button>
+      </div>
+    </Dialog>
+  </Toggle>
 {/if}

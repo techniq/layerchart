@@ -48,7 +48,7 @@
   </Field>
 </div>
 
-<Preview>
+<Preview data={countries}>
   <div class="h-[600px] overflow-hidden">
     <Chart
       geo={{
@@ -57,10 +57,10 @@
         rotate: {
           yaw,
           pitch,
-          roll
+          roll,
         },
         _scale: scale,
-        translate: translate
+        translate: translate,
       }}
       let:projection
     >

@@ -24,7 +24,7 @@
 
 <h2>Basic</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}

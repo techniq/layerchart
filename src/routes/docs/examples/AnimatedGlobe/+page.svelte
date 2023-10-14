@@ -36,7 +36,7 @@
 
 <h2>SVG</h2>
 
-<Preview>
+<Preview data={countries}>
   <div class="h-[600px] grid grid-cols-[224px,1fr]">
     <div class="overflow-auto scrollbar-none">
       {#each countries.features.sort(sortFunc('properties.name')) as country}
@@ -84,7 +84,7 @@
 
 <h2>Canvas</h2>
 
-<Preview>
+<Preview data={countries}>
   <div class="h-[600px] grid grid-cols-[224px,1fr]">
     <div class="overflow-auto">
       {#each countries.features.sort(sortFunc('properties.name')) as country}

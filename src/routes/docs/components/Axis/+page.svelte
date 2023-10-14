@@ -16,7 +16,7 @@
 
 <h2>left / bottom placement</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -37,7 +37,7 @@
 
 <h2>top / right placement</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -58,7 +58,7 @@
 
 <h2>rule (left/bottom placement)</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -79,7 +79,7 @@
 
 <h2>rule (top/right placement)</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -100,7 +100,7 @@
 
 <h2>grid</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -121,7 +121,7 @@
 
 <h2>dashed grid lines</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -142,7 +142,7 @@
 
 <h2>multiple axis grids with single rule</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -165,7 +165,7 @@
 
 <h2>multiple axis grids and rules</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -189,7 +189,7 @@
 
 <h2>rotated labels</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -210,7 +210,7 @@
 
 <h2>hidden ticks</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}

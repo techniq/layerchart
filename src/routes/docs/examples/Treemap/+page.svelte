@@ -37,7 +37,7 @@
     return {
       ...d,
       name: d.name.split('.').pop(),
-      path: d.name.replace(/\./g, '/')
+      path: d.name.replace(/\./g, '/'),
     };
   });
   const flareCsvHierarchy = stratify()
@@ -142,7 +142,7 @@
   </div>
 </div>
 
-<Preview>
+<Preview data={complexDataHierarchy.copy()}>
   <Breadcrumb items={selectedNested?.ancestors().reverse() ?? []}>
     <Button
       slot="item"
@@ -271,7 +271,7 @@
   </div>
 </div>
 
-<Preview>
+<Preview data={groupedHierarchy}>
   <Breadcrumb items={(selectedCarNode ?? groupedHierarchy).ancestors().reverse()}>
     <Button
       slot="item"
@@ -382,7 +382,7 @@
   </div>
 </div>
 
-<Preview>
+<Preview data={complexDataHierarchy.copy()}>
   <Breadcrumb items={selectedZoomable?.ancestors().reverse() ?? []}>
     <Button
       slot="item"

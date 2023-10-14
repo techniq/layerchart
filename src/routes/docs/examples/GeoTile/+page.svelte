@@ -23,7 +23,7 @@
     ...states,
     features: states.features.filter(
       (d) => d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii'
-    )
+    ),
   };
   // $: filteredStates = { ...states, features: states.features.filter(d => d.properties.name === 'West Virginia')}
   $: selectedFeature = filteredStates;
@@ -45,12 +45,12 @@
 
 <h2>SVG</h2>
 
-<Preview>
+<Preview data={filteredStates}>
   <div class="h-[600px] overflow-hidden">
     <Chart
       geo={{
         projection: geoMercator,
-        fitGeojson: selectedFeature
+        fitGeojson: selectedFeature,
       }}
       tooltip={{ mode: 'manual' }}
       let:tooltip
@@ -79,12 +79,12 @@
 
 <h2>SVG (clipped)</h2>
 
-<Preview>
+<Preview data={filteredStates}>
   <div class="h-[600px] overflow-hidden">
     <Chart
       geo={{
         projection: geoMercator,
-        fitGeojson: selectedFeature
+        fitGeojson: selectedFeature,
       }}
       tooltip={{ mode: 'manual' }}
       let:tooltip
@@ -116,12 +116,12 @@
 
 <h2>Canvas</h2>
 
-<Preview>
+<Preview data={filteredStates}>
   <div class="h-[600px]">
     <Chart
       geo={{
         projection: geoMercator,
-        fitGeojson: selectedFeature
+        fitGeojson: selectedFeature,
       }}
     >
       <Canvas>

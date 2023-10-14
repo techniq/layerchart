@@ -32,7 +32,7 @@
   const projections = [
     { name: 'Albers', value: geoAlbers },
     { name: 'Albers USA', value: geoAlbersUsa },
-    { name: 'Mercator', value: geoMercator }
+    { name: 'Mercator', value: geoMercator },
   ];
 </script>
 
@@ -57,12 +57,12 @@
 
 <h2>State only</h2>
 
-<Preview>
+<Preview data={selectedStateFeature}>
   <div class="h-[600px]">
     <Chart
       geo={{
         projection,
-        fitGeojson: selectedStateFeature
+        fitGeojson: selectedStateFeature,
       }}
     >
       <Svg>
@@ -74,12 +74,12 @@
 
 <h2>State with counties</h2>
 
-<Preview>
+<Preview data={selectedStateFeature}>
   <div class="h-[600px]">
     <Chart
       geo={{
         projection,
-        fitGeojson: selectedStateFeature
+        fitGeojson: selectedStateFeature,
       }}
       tooltip={{ mode: 'manual' }}
       let:tooltip
@@ -101,12 +101,12 @@
 
 <h2>State with surrounding states (via ChartClipPath)</h2>
 
-<Preview>
+<Preview data={selectedStateFeature}>
   <div class="h-[600px]">
     <Chart
       geo={{
         projection,
-        fitGeojson: selectedStateFeature
+        fitGeojson: selectedStateFeature,
       }}
       tooltip={{ mode: 'manual' }}
       let:tooltip

@@ -50,7 +50,7 @@
 
 <h2>Basic</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -72,7 +72,7 @@
 
 <h2>With Tooltip and Highlight</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -99,7 +99,7 @@
 
 <h2>With Labels</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -122,7 +122,7 @@
 
 <h2>Gradient encoding</h2>
 
-<Preview>
+<Preview data={temperatureData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={temperatureData}
@@ -156,7 +156,7 @@
 
 <h2>Gradient threshold</h2>
 
-<Preview>
+<Preview data={temperatureData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={temperatureData}
@@ -191,7 +191,7 @@
 
 <h2>Multiple series</h2>
 
-<Preview>
+<Preview data={multiSeriesFlatData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={multiSeriesFlatData}
@@ -238,7 +238,7 @@
 
 <h2>Multiple series (highlight on hover)</h2>
 
-<Preview>
+<Preview data={multiSeriesFlatData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={multiSeriesFlatData}
@@ -287,7 +287,7 @@
 
 <h2>Multiple series with labels</h2>
 
-<Preview>
+<Preview data={multiSeriesFlatData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={multiSeriesFlatData}

@@ -27,7 +27,7 @@
       state: statesById.get(d.state).properties.name,
       population: +d.DP05_0001E,
       populationUnder18: +d.DP05_0019E,
-      percentUnder18: +d.DP05_0019PE
+      percentUnder18: +d.DP05_0019PE,
     };
   });
   const populationByFips = index(population, (d) => d.id);
@@ -37,8 +37,8 @@
       ...feature,
       properties: {
         ...feature.properties,
-        data: populationByFips.get(feature.id)
-      }
+        data: populationByFips.get(feature.id),
+      },
     };
   });
 
@@ -53,12 +53,12 @@
 
 <h2>SVG</h2>
 
-<Preview>
+<Preview data={states}>
   <div class="h-[600px]">
     <Chart
       geo={{
         projection: geoIdentity,
-        fitGeojson: states
+        fitGeojson: states,
       }}
       padding={{ top: 60 }}
       tooltip={{ mode: 'manual', raiseTarget: true }}
@@ -112,12 +112,12 @@
 
 <h2>Canvas</h2>
 
-<Preview>
+<Preview data={states}>
   <div class="h-[600px]">
     <Chart
       geo={{
         projection: geoIdentity,
-        fitGeojson: states
+        fitGeojson: states,
       }}
     >
       <!-- TODO: Determine how to support without bringing the browser to it's knees -->

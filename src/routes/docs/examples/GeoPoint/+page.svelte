@@ -18,12 +18,12 @@
 
 <h2>SVG</h2>
 
-<Preview>
+<Preview data={states}>
   <div class="h-[600px]">
     <Chart
       geo={{
         projection: geoAlbersUsa,
-        fitGeojson: states
+        fitGeojson: states,
       }}
     >
       <Svg>
@@ -52,12 +52,12 @@
 
 <h2>Canvas</h2>
 
-<Preview>
+<Preview data={states}>
   <div class="h-[600px]">
     <Chart
       geo={{
         projection: geoAlbersUsa,
-        fitGeojson: states
+        fitGeojson: states,
       }}
     >
       <Canvas>

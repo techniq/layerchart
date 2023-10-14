@@ -7,7 +7,7 @@
     geoMercator,
     geoNaturalEarth1,
     geoOrthographic,
-    geoIdentity
+    geoIdentity,
   } from 'd3-geo';
 
   import { goto } from '$app/navigation';
@@ -23,7 +23,7 @@
     Menu,
     MenuItem,
     TextField,
-    Toggle
+    Toggle,
   } from 'svelte-ux';
   import { mdiChevronDown } from '@mdi/js';
 
@@ -43,7 +43,7 @@
     { name: 'Equirectangular', value: geoEquirectangular },
     { name: 'Mercator', value: geoMercator },
     { name: 'Natural Earth', value: geoNaturalEarth1 },
-    { name: 'Orthographic', value: geoOrthographic }
+    { name: 'Orthographic', value: geoOrthographic },
   ];
 
   function loadFile() {
@@ -98,12 +98,12 @@
 {#if geojson}
   <h2>Canvas</h2>
 
-  <Preview>
+  <Preview data={geojson}>
     <div class="h-[600px] mt-10">
       <Chart
         geo={{
           projection,
-          fitGeojson: geojson
+          fitGeojson: geojson,
         }}
       >
         <Canvas>

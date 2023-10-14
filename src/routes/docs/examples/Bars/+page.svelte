@@ -97,7 +97,7 @@
 
 <h2>Basic</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -119,7 +119,7 @@
 
 <h2>with Tooltip and Highlight</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -146,7 +146,7 @@
 
 <h2>with Tooltip and Bar Highlight</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded group">
     <Chart
       {data}
@@ -177,7 +177,7 @@
 
 <h2>with Labels and negative data</h2>
 
-<Preview>
+<Preview data={negativeData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={negativeData}
@@ -200,7 +200,7 @@
 
 <h2>Gradient</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -224,7 +224,7 @@
 
 <h2>Average annotation Rule</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -250,7 +250,7 @@
 
 <h2>with grid on top</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -272,7 +272,7 @@
 
 <h2>with grid on top (mix-blend)</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -294,7 +294,7 @@
 
 <h2>Multiple (overlapping)</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[500px] p-4 border rounded">
     <Chart
       {data}
@@ -330,7 +330,7 @@
     </Field>
   </div>
 
-  <Preview>
+  <Preview {data}>
     <div class="h-[300px] p-4 border rounded">
       <Chart
         {data}
@@ -365,7 +365,7 @@
 
 <h2>Grouped</h2>
 
-<Preview>
+<Preview data={groupedData}>
   <div class="h-[400px] p-4 border rounded">
     <Chart
       data={groupedData}
@@ -394,7 +394,7 @@
 
 <h2>Stacked</h2>
 
-<Preview>
+<Preview data={stackedData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={stackedData}
@@ -422,7 +422,7 @@
 
 <h2>Stacked (Percent)</h2>
 
-<Preview>
+<Preview data={stackedPercentData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={stackedPercentData}
@@ -450,7 +450,7 @@
 
 <!-- <h2>Stack (Separated)</h2>
 
-<Preview>
+<Preview data={stackedSeperatedData}>
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			data={stackedSeperatedData}
@@ -478,7 +478,7 @@
 
 <h2>Grouped and Stacked</h2>
 
-<Preview>
+<Preview data={groupedStackedData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={groupedStackedData}
@@ -517,7 +517,7 @@
   </Field>
 </div>
 
-<Preview>
+<Preview data={transitionData}>
   <div class="h-[400px] p-4 border rounded">
     <!-- Always use stackedData for extents for consistent scale -->
     <Chart

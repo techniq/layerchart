@@ -64,7 +64,7 @@
 
 <h2>Vertical</h2>
 
-<Preview>
+<Preview data={olympiansBins}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={olympiansBins}
@@ -99,7 +99,7 @@
 
 <h2>Horizontal</h2>
 
-<Preview>
+<Preview data={olympiansBins}>
   <div class="p-4 border rounded" style:height="{16 + 24 + olympiansBins.length * 20}px">
     <Chart
       data={olympiansBins}
@@ -191,7 +191,7 @@
 
 <h2>Random distribution</h2>
 
-<Preview>
+<Preview data={randomBins}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={randomBins}
@@ -231,7 +231,7 @@
   <NumberStepper label="Thresholds" bind:value={dateThresholds} class="w-full" />
 </div>
 
-<Preview>
+<Preview data={timeBins}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={timeBins}

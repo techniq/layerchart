@@ -20,7 +20,7 @@
   const projections = [
     { name: 'Albers', value: geoAlbers },
     { name: 'Albers USA', value: geoAlbersUsa },
-    { name: 'Mercator', value: geoMercator }
+    { name: 'Mercator', value: geoMercator },
   ];
 
   const counties = feature(data.geojson, data.geojson.objects.counties);
@@ -60,13 +60,13 @@
 
 <h2>SVG</h2>
 
-<Preview>
+<Preview data={states}>
   <div class="h-[600px] relative overflow-hidden">
     <ZoomControls {zoom} />
     <Chart
       geo={{
         projection,
-        fitGeojson: states
+        fitGeojson: states,
       }}
       tooltip={{ mode: 'manual' }}
       let:tooltip

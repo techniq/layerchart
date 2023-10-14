@@ -20,12 +20,12 @@
 
 <h2>SVG</h2>
 
-<Preview>
+<Preview data={states}>
   <div class="h-[600px]">
     <Chart
       geo={{
         projection: geoIdentity,
-        fitGeojson: states
+        fitGeojson: states,
       }}
       let:projection
       tooltip={{ mode: 'manual' }}
@@ -58,12 +58,12 @@
 
 <h2>Canvas</h2>
 
-<Preview>
+<Preview data={states}>
   <div class="h-[600px] mt-10">
     <Chart
       geo={{
         projection: geoIdentity,
-        fitGeojson: states
+        fitGeojson: states,
       }}
     >
       <Canvas>

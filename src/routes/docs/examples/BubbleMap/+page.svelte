@@ -27,7 +27,7 @@
       state: statesById.get(d.state).properties.name,
       population: +d.DP05_0001E,
       populationUnder18: +d.DP05_0019E,
-      percentUnder18: +d.DP05_0019PE
+      percentUnder18: +d.DP05_0019PE,
     };
   });
   const populationByFips = index(population, (d) => d.fips);
@@ -51,8 +51,8 @@
         ...feature,
         properties: {
           ...feature.properties,
-          data: populationByFips.get(feature.id)
-        }
+          data: populationByFips.get(feature.id),
+        },
       };
     })
     .sort((a, b) => descending(a.properties.data?.population, b.properties.data?.population));
@@ -62,12 +62,12 @@
 
 <h2>SVG</h2>
 
-<Preview>
+<Preview data={states}>
   <div class="h-[600px]">
     <Chart
       geo={{
         projection: geoIdentity,
-        fitGeojson: states
+        fitGeojson: states,
       }}
       padding={{ top: 60 }}
       let:projection
@@ -129,12 +129,12 @@
 
 <h2>Canvas</h2>
 
-<Preview>
+<Preview data={states}>
   <div class="h-[600px] mt-10">
     <Chart
       geo={{
         projection: geoIdentity,
-        fitGeojson: states
+        fitGeojson: states,
       }}
     >
       <Canvas>

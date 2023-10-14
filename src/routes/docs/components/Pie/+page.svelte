@@ -32,7 +32,7 @@
 
 <h2>Basic</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
       <Svg>
@@ -44,7 +44,7 @@
 
 <h2>Partial range (Chart xRange)</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -64,7 +64,7 @@
 
 <h2>Partial range (range prop)</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
       <Svg>
@@ -76,7 +76,7 @@
 
 <h2>Pad angle</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
       <Svg>
@@ -88,7 +88,7 @@
 
 <h2>Pad angle</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
       <Svg>
@@ -102,7 +102,7 @@
 
 <h3>If value >= 1, value will be treated as discrete</h3>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
       <Svg>
@@ -114,7 +114,7 @@
 
 <h3>If value >= 0 and less than 1, value will be treated as a percentage of outerRadius</h3>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
       <Svg>
@@ -126,7 +126,7 @@
 
 <h3>If value less than 0, value will be treated as a offset of outerRadius</h3>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
       <Svg>
@@ -138,7 +138,7 @@
 
 <h2>Outer radius</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
       <Svg>
@@ -150,7 +150,7 @@
 
 <h2>Multiple (data prop)</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
       <Svg>
@@ -163,7 +163,7 @@
 
 <h2>Tweened</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
       <Svg>
@@ -175,7 +175,7 @@
 
 <h2>Offset</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
       <Svg>
@@ -187,7 +187,7 @@
 
 <h2>default slot / render each `Arc`</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
       <Svg>
@@ -209,7 +209,7 @@
 
 <h2>Centroid labels</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
       <Svg>
@@ -250,7 +250,7 @@
 
 <h2>Tooltip</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}

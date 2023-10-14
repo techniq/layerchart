@@ -47,7 +47,7 @@
     <RangeField label="Points" bind:value={pointCount} min={2} />
   </div>
 
-  <Preview>
+  <Preview {data}>
     <div class="h-[300px] p-4 border rounded">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
         <Svg>
@@ -77,7 +77,7 @@
     <RangeField label="Points" bind:value={pointCount} min={2} />
   </div>
 
-  <Preview>
+  <Preview {data}>
     <div class="h-[300px] p-4 border rounded">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
         <Svg>
@@ -120,7 +120,7 @@
     <RangeField label="Points" bind:value={pointCount} min={2} />
   </div>
 
-  <Preview>
+  <Preview {data}>
     <div class="h-[300px] p-4 border rounded">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
         <Svg>

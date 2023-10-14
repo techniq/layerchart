@@ -42,7 +42,7 @@
 
 <h2>Basic</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -73,7 +73,7 @@
 
 <h2>With Tooltip and Highlight</h2>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}
@@ -114,7 +114,7 @@
 
 <!-- TODO: Show label for both value and baseline (above and below) -->
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       {data}

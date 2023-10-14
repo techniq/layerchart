@@ -20,7 +20,7 @@
   $: data = Array.from({ length: pointCount }).map((_, i) => {
     return {
       x: i + 1,
-      y: pathGenerator?.(i / pointCount) ?? i
+      y: pathGenerator?.(i / pointCount) ?? i,
     };
   });
 
@@ -51,7 +51,7 @@
   </div>
 </div>
 
-<Preview>
+<Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
       <Svg>

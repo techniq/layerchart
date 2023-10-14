@@ -40,11 +40,11 @@
     linkColorBy === 'static'
       ? {
           default: 0.1,
-          inactive: 0.01
+          inactive: 0.01,
         }
       : {
           default: 0.2,
-          inactive: 0.01
+          inactive: 0.01,
         };
 
   const complexDataHierarchy = hierarchy(hierarchyComplexData)
@@ -69,7 +69,7 @@
 
 <h2>Simple</h2>
 
-<Preview>
+<Preview data={simpleData}>
   <div class="h-[400px] p-4 border rounded">
     <Chart data={simpleData}>
       <Svg>
@@ -99,7 +99,7 @@
 
 <h2>Tooltip</h2>
 
-<Preview>
+<Preview data={structuredClone(greenhouse)}>
   <div class="h-[800px] p-4 border rounded">
     <Chart data={structuredClone(greenhouse)} tooltip={{ mode: 'manual' }} let:tooltip>
       <Svg>
@@ -179,7 +179,7 @@
 
 <h2>Node select</h2>
 
-<Preview>
+<Preview data={selectedNode ? graphFromNode(selectedNode) : greenhouse}>
   <div class="h-[600px] p-4 border rounded">
     <Chart data={selectedNode ? graphFromNode(selectedNode) : greenhouse}>
       <Svg>
@@ -231,7 +231,7 @@
 
 <SankeyControls bind:nodeAlign bind:nodeColorBy bind:linkColorBy bind:nodePadding bind:nodeWidth />
 
-<Preview>
+<Preview data={complexData}>
   <div class="h-[800px] p-4 border rounded">
     <Chart data={complexData} padding={{ right: 164 }} tooltip={{ mode: 'manual' }} let:tooltip>
       <Svg>
@@ -283,7 +283,7 @@
                 on:mouseover={() => {
                   highlightLinkIndexes = [
                     ...node.sourceLinks.map((l) => l.index),
-                    ...node.targetLinks.map((l) => l.index)
+                    ...node.targetLinks.map((l) => l.index),
                   ];
                 }}
                 on:mousemove={(e) => tooltip.show(e, { node })}
@@ -347,7 +347,7 @@
 
 <SankeyControls bind:nodeAlign bind:nodeColorBy bind:linkColorBy bind:nodePadding bind:nodeWidth />
 
-<Preview>
+<Preview data={hierarchyGraph}>
   <div class="h-[2000px] p-4 border rounded">
     <Chart data={hierarchyGraph} padding={{ right: 100 }}>
       <Svg>
@@ -395,7 +395,7 @@
                 on:mouseover={() => {
                   highlightLinkIndexes = [
                     ...node.sourceLinks.map((l) => l.index),
-                    ...node.targetLinks.map((l) => l.index)
+                    ...node.targetLinks.map((l) => l.index),
                   ];
                 }}
                 on:mouseout={() => (highlightLinkIndexes = [])}
