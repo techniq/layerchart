@@ -71,9 +71,9 @@
               const point = pathEl.getPointAtLength(totalLength * t);
               return point;
             };
-          }
+          },
         }
-      : false
+      : false,
   });
 
   $: {
@@ -97,7 +97,7 @@
     d={$tweened_d}
     {...$$restProps}
     class={cls('path-line fill-none', !$$props.stroke && 'stroke-black', $$props.class)}
-    in:drawTransition={typeof draw === 'object' ? draw : undefined}
+    in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
     on:click
     on:mousemove
     on:mouseleave
