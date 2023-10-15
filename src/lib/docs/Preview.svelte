@@ -81,6 +81,7 @@
         <JsonTree
           value={data}
           defaultExpandedPaths={['$']}
+          shouldTreatIterableAsObject
           --json-tree-property-color="#72a2d3"
           --json-tree-string-color="#6cd1c7"
           --json-tree-symbol-color="#6cd1c7"
