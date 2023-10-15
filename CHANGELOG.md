@@ -1,5 +1,15 @@
 # LayerChart
 
+## 0.24.3
+
+### Patch Changes
+
+- [Spline] Fix `draw` transition when using Svelte 4 ([`22e5a82`](https://github.com/techniq/layerchart/commit/22e5a82bcb90ccff5f08f3fede08799774bfbff9))
+
+- Update Layer Chart to 8.0.2 (fix sorted ordinal regression)
+
+- [Preview] Add "View data" button/dialog ([`f91b006`](https://github.com/techniq/layerchart/commit/f91b0060892f63b2326edfba3d41a5379be8e203))
+
 ## 0.24.2
 
 ### Patch Changes
