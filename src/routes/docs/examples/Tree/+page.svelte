@@ -24,7 +24,7 @@
     expandedNodeNames.includes(d.name) ? d.children : null
   );
   // .sum((d) => d.value)
-  // .sort((a, b) => b.value - a.value);
+  // .sort(sortFunc('value', 'desc'));
 
   let orientation = 'horizontal';
   let curve = curveBumpX;

@@ -5,7 +5,7 @@
   import { hierarchy } from 'd3-hierarchy';
   import { interpolateCool } from 'd3-scale-chromatic';
   import { extent } from 'd3-array';
-  import { Icon } from 'svelte-ux';
+  import { Icon, sortFunc } from 'svelte-ux';
   import { mdiArrowRightBold } from '@mdi/js';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -49,7 +49,7 @@
 
   const complexDataHierarchy = hierarchy(hierarchyComplexData)
     .sum((d) => d.value)
-    .sort((a, b) => b.value - a.value);
+    .sort(sortFunc('value', 'desc'));
 
   $: hierarchyGraph = graphFromHierarchy(complexDataHierarchy);
 

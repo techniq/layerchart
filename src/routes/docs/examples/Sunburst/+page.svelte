@@ -5,7 +5,16 @@
   import * as chromatic from 'd3-scale-chromatic';
   import { hsl } from 'd3-color';
 
-  import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption, format } from 'svelte-ux';
+  import {
+    Breadcrumb,
+    Button,
+    Field,
+    ToggleGroup,
+    ToggleOption,
+    compoundSortFunc,
+    format,
+    sortFunc,
+  } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Arc from '$lib/components/Arc.svelte';
@@ -22,8 +31,7 @@
 
   const complexHierarchy = hierarchy(complexData)
     .sum((d) => d.value)
-    // .sort((a, b) => b.value - a.value);
-    .sort((a, b) => b.height - a.height || (b.value ?? 0) - (a.value ?? 0));
+    .sort(compoundSortFunc(sortFunc('height', 'desc'), sortFunc('value', 'desc')));
 
   let colorBy = 'parent';
 

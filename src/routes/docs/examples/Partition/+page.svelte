@@ -7,7 +7,16 @@
   import { hsl } from 'd3-color';
   import { rollup } from 'd3-array';
 
-  import { Breadcrumb, Button, Field, Switch, ToggleGroup, ToggleOption, format } from 'svelte-ux';
+  import {
+    Breadcrumb,
+    Button,
+    Field,
+    Switch,
+    ToggleGroup,
+    ToggleOption,
+    format,
+    sortFunc,
+  } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import RangeField from '$lib/docs/RangeField.svelte';
@@ -27,7 +36,7 @@
 
   const complexHierarchy = hierarchy(complexData)
     .sum((d) => d.value)
-    .sort((a, b) => b.value - a.value);
+    .sort(sortFunc('value', 'desc'));
 
   const horizontalHierarchy = complexHierarchy.copy();
   const verticalHierarchy = complexHierarchy.copy();

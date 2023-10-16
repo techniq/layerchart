@@ -7,7 +7,16 @@
   import { hsl } from 'd3-color';
   import { rollup } from 'd3-array';
 
-  import { Button, Breadcrumb, Field, Switch, ToggleGroup, ToggleOption, format } from 'svelte-ux';
+  import {
+    Button,
+    Breadcrumb,
+    Field,
+    Switch,
+    ToggleGroup,
+    ToggleOption,
+    format,
+    sortFunc,
+  } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import RangeField from '$lib/docs/RangeField.svelte';
@@ -31,7 +40,7 @@
 
   const complexDataHierarchy = hierarchy(complexData)
     .sum((d) => d.value)
-    .sort((a, b) => b.value - a.value);
+    .sort(sortFunc('value', 'desc'));
 
   const processedFlareCsv = flareCsv.map((d) => {
     return {
@@ -43,7 +52,7 @@
   const flareCsvHierarchy = stratify()
     .path((d) => d.path)(processedFlareCsv)
     .sum((d) => d.size)
-    .sort((a, b) => b.value - a.value);
+    .sort(sortFunc('value', 'desc'));
 
   let isFiltered = false;
   $: groupedCars = rollup(

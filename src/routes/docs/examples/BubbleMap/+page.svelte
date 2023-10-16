@@ -5,6 +5,7 @@
   import { interpolateViridis } from 'd3-scale-chromatic';
   import { quantize } from 'd3-interpolate';
   import { feature } from 'topojson-client';
+  import { sortFunc } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
@@ -55,7 +56,7 @@
         },
       };
     })
-    .sort((a, b) => descending(a.properties.data?.population, b.properties.data?.population));
+    .sort(sortFunc('properties.data.population', 'desc'));
 </script>
 
 <h1>Examples</h1>

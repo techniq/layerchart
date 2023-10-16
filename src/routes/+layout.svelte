@@ -2,7 +2,15 @@
   import { inject } from '@vercel/analytics';
   import { mdiGithub, mdiOpenInNew, mdiTwitter } from '@mdi/js';
   import 'prism-themes/themes/prism-vsc-dark-plus.css';
-  import { AppBar, AppLayout, Button, QuickSearch, Tooltip, createTheme } from 'svelte-ux';
+  import {
+    AppBar,
+    AppLayout,
+    Button,
+    QuickSearch,
+    Tooltip,
+    createTheme,
+    sortFunc,
+  } from 'svelte-ux';
 
   import { dev } from '$app/environment';
   import { afterNavigate, goto } from '$app/navigation';
@@ -34,7 +42,7 @@
         group: group,
       };
     })
-    .sort((a, b) => groups.indexOf(a.group) - groups.indexOf(b.group));
+    .sort(sortFunc((d) => groups.indexOf(d.group)));
 </script>
 
 <AppLayout>
