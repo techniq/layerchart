@@ -104,15 +104,21 @@
         <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
         <Highlight bar={{ strokeWidth: 1 }} />
       </Svg>
+
       <Tooltip
         class="text-xs"
         contained={false}
-        header={(data) => format(data.date, 'eee, MMM do')}
-        top={-12}
+        top={-10}
         left={containerWidth + 8}
+        variant="none"
         let:data
       >
-        <TooltipItem label="value" value={data.value} />
+        <div class="whitespace-nowrap">
+          {format(data.date, 'eee, MMM do')}
+        </div>
+        <div class="font-semibold">
+          {data.value}
+        </div>
       </Tooltip>
     </Chart>
   </div>

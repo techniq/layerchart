@@ -65,7 +65,7 @@
     <Chart {data} x="date" xScale={scaleTime()} y="value" tooltip>
       <Svg>
         <Spline class="stroke-1 stroke-accent-500" />
-        <Highlight points lines />
+        <Highlight points={{ r: 3, class: 'stroke-none' }} />
       </Svg>
       <Tooltip
         class="text-xs"
@@ -85,17 +85,23 @@
     <Chart {data} x="date" xScale={scaleTime()} y="value" tooltip let:containerWidth>
       <Svg>
         <Spline class="stroke-1 stroke-accent-500" />
-        <Highlight points lines />
+        <Highlight points={{ r: 3, class: 'stroke-none' }} />
       </Svg>
+
       <Tooltip
         class="text-xs"
         contained={false}
-        header={(data) => format(data.date, 'eee, MMM do')}
-        top={-12}
+        top={-3}
         left={containerWidth + 8}
+        variant="none"
         let:data
       >
-        <TooltipItem label="value" value={data.value} />
+        <div class="whitespace-nowrap">
+          {format(data.date, 'eee, MMM do')}
+        </div>
+        <div class="font-semibold">
+          {data.value}
+        </div>
       </Tooltip>
     </Chart>
   </div>

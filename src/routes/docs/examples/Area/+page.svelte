@@ -430,11 +430,17 @@
         <Highlight points lines={{ class: 'stroke-accent-500 [stroke-dasharray:unset]' }} />
       </Svg>
 
-      <Tooltip top={4} left={4} let:data>
+      <Tooltip top={4} left={4} variant="none" class="text-sm font-semibold leading-3" let:data>
         {formatDate(data.date, 'eee, MMMM do')}
       </Tooltip>
 
-      <Tooltip top={48} let:data>
+      <Tooltip
+        top={48}
+        leftOffset={4}
+        variant="none"
+        class="text-sm font-semibold text-accent-700 leading-3"
+        let:data
+      >
         {format(data.value, 'currency')}
       </Tooltip>
     </Chart>
