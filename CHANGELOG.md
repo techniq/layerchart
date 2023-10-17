@@ -1,5 +1,13 @@
 # LayerChart
 
+## 0.24.4
+
+### Patch Changes
+
+- [TooltipContext] Fix bisect-x/bisect-y pointer handling with chart left/top padding ([`d69295a0`](https://github.com/techniq/layerchart/commit/d69295a0ec77894e0daf1c1ec08ef337a6eb9460))
+
+- [Tooltip] Add `variant` support with 'light', 'dark', and 'none' ([`c464874`](https://github.com/techniq/layerchart/commit/c464874568892735af0851692db0e6e9dac6b5f0))
+
 ## 0.24.3
 
 ### Patch Changes
