@@ -124,11 +124,14 @@
       {#if features}
         {#key $page.route.id}
           <h1 id="features">Features</h1>
-          <ul class="pl-4 text-gray-700 divide-y-4">
-            {#each features as feature}
-              <li class="grid grid-cols-[auto,1fr] gap-2">
+          <ul class="pl-3 text-gray-700">
+            {#each features.flatMap( (feature) => (Array.isArray(feature) ? feature.map( (f) => ({ description: f, depth: 1 }) ) : { description: feature, depth: 0 }) ) as feature}
+              <li
+                class="grid grid-cols-[auto,1fr] gap-2"
+                style:margin-left="{feature.depth * 16}px"
+              >
                 <Icon data={mdiCheckCircle} class="text-emerald-600 pt-1" />
-                <span>{@html feature}</span>
+                <span>{@html feature.description}</span>
               </li>
             {/each}
           </ul>
