@@ -61,6 +61,10 @@
 		- scaleBand, scaleLinear: band (or bounds) - multiple (overlapping) bars
 		- scaleLinear, scaleLinear: voronoi (or quadtree)
 	*/
+
+  /**
+   * @type {'bisect-x' | 'bisect-y' | 'band' | 'bisect-band' | 'bounds' | 'voronoi' | 'quadtree' | 'manual'}
+   */
   export let mode:
     | 'bisect-x'
     | 'bisect-y'
@@ -72,12 +76,19 @@
     | 'manual' = 'bisect-x';
   export let snapToDataX: boolean = false;
   export let snapToDataY: boolean = false;
+  /**
+   * @type {'closest' | 'left' | 'right'}
+   */
   export let findTooltipData: 'closest' | 'left' | 'right' = 'closest';
 
   /** Similar to d3-selection's raise, re-insert the event.target as the last child of its parent, so to be the top-most element */
   export let raiseTarget = false;
 
-  export let radius = Infinity;
+  /** quadtree search radius
+   * @type {number}
+   */
+  export let radius: number = Infinity;
+  /** Enable debug view (show hit targets, etc) */
   export let debug = false;
 
   const tooltip = writable({ top: 0, left: 0, data: null, show: showTooltip, hide: hideTooltip });
