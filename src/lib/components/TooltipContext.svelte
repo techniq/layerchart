@@ -177,7 +177,7 @@
 
         case 'bisect-x': {
           // `x` value at mouse/touch coordinate
-          const xValueAtPoint = scaleInvert($xScale, localX);
+          const xValueAtPoint = scaleInvert($xScale, localX - $padding.left);
 
           const index = bisectX($flatData, xValueAtPoint, 1);
           const previousValue = $flatData[index - 1];
@@ -188,7 +188,7 @@
 
         case 'bisect-y': {
           // `y` value at mouse/touch coordinate
-          const yValueAtPoint = scaleInvert($yScale, localY);
+          const yValueAtPoint = scaleInvert($yScale, localY - $padding.left);
 
           const index = bisectY($flatData, yValueAtPoint, 1);
           const previousValue = $flatData[index - 1];
@@ -331,7 +331,7 @@
 {#if ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode)}
   <Html>
     <div
-      class="absolute"
+      class="tooltip-trigger absolute"
       style:width="{$width}px"
       style:height="{$height}px"
       style:background={debug ? 'rgba(255 0 0 / .1)' : undefined}
