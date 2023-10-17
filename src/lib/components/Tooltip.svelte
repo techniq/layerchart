@@ -92,7 +92,12 @@
       )}
     >
       {#if header || $$slots.header}
-        <div class={cls('text-center font-semibold whitespace-nowrap', classes.header)}>
+        <div
+          class={cls(
+            variant !== 'none' && 'text-center font-semibold whitespace-nowrap',
+            classes.header
+          )}
+        >
           <slot name="header" data={$tooltip.data}>
             {header?.($tooltip.data)}
           </slot>
@@ -102,7 +107,7 @@
       {#if $$slots.default}
         <div
           class={cls(
-            'grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center pt-1',
+            variant !== 'none' && 'grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center pt-1',
             classes.content
           )}
         >
