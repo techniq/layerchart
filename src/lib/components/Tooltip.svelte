@@ -15,6 +15,7 @@
   export let leftOffset = left ? 0 : 10;
   export let contained: 'container' | false = 'container'; // TODO: Support 'window' using getBoundingClientRect()
   export let animate = true;
+  export let variant: 'dark' | 'light' | 'none' = 'dark';
 
   export let header: ((data: any) => any) | undefined = undefined;
 
@@ -73,7 +74,19 @@
   >
     <div
       class={cls(
-        'bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white rounded elevation-1 px-2 py-1 h-full',
+        variant !== 'none' && [
+          'px-2 py-1 h-full rounded elevation-1',
+          '[&_.label]:text-xs [&_.label]:text-right [&_.label]:whitespace-nowrap',
+          ['[&_.value]:text-sm [&_.value]:tabular-nums'],
+        ],
+        {
+          dark: [
+            'bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white',
+            '[&_.label]:text-white/75',
+          ],
+          light: ['bg-white text-gray-800 border border-gray-500', '[&_.label]:text-black/50'],
+          none: '',
+        }[variant],
         classes.container,
         $$props.class
       )}

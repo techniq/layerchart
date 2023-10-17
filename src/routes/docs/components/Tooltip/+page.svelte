@@ -151,7 +151,7 @@
   </div>
 </Preview>
 
-<h2>Style</h2>
+<h2>Light Variant</h2>
 
 <Preview data={dateSeries}>
   <div class="h-[300px] p-4 border rounded">
@@ -171,11 +171,11 @@
         <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
         <Highlight points lines />
       </Svg>
-      <Tooltip class="bg-white text-gray-800 border border-gray-700" let:data>
+      <Tooltip variant="light" let:data>
         <div slot="header" class="font-semibold text-center" let:data>
           {format(data.date, 'eee, MMMM do')}
         </div>
-        <TooltipItem label="value" value={data.value} classes={{ label: 'text-gray-500' }} />
+        <TooltipItem label="value" value={data.value} />
       </Tooltip>
     </Chart>
   </div>

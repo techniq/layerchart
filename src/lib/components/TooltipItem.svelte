@@ -5,7 +5,6 @@
   /** Value to be formatted and displayed.  Can also be passed as default slot */
   export let value: any = undefined;
   export let format: FormatType = undefined;
-
   export let valueAlign: 'left' | 'right' | 'center' = 'left';
 
   export let classes: {
@@ -14,16 +13,16 @@
   } = {};
 </script>
 
-<div class={cls('text-xs text-white/75 text-right whitespace-nowrap', classes.label)}>
+<div class={cls('label', classes.label)}>
   <slot name="label">{label}:</slot>
 </div>
 
 <div
   class={cls(
-    'text-sm tabular-nums',
+    'value',
     {
       'text-right': valueAlign === 'right',
-      'text-center': valueAlign === 'center'
+      'text-center': valueAlign === 'center',
     },
     classes.value,
     $$props.class
