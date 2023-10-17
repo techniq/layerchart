@@ -199,7 +199,7 @@
 
         case 'bisect-y': {
           // `y` value at mouse/touch coordinate
-          const yValueAtPoint = scaleInvert($yScale, localY - $padding.left);
+          const yValueAtPoint = scaleInvert($yScale, localY - $padding.top);
 
           const index = bisectY($flatData, yValueAtPoint, 1);
           const previousValue = $flatData[index - 1];
