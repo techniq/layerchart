@@ -70,7 +70,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-        <Spline {curve} {tweened} {draw} />
+        <Spline {curve} {tweened} {draw} class="stroke-accent-500 stroke-2" />
         {#if showPoints}
           <Points {tweened} />
         {/if}
@@ -100,7 +100,7 @@
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
-            <Spline {curve} draw />
+            <Spline {curve} draw class="stroke-accent-500 stroke-2" />
           {/if}
         </Svg>
       </Chart>
@@ -127,7 +127,7 @@
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
-            <Spline {curve} tweened />
+            <Spline {curve} tweened class="stroke-accent-500 stroke-2" />
           {/if}
         </Svg>
       </Chart>
@@ -154,9 +154,9 @@
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
-            <Spline {curve}>
-              <circle slot="start" r={5} />
-              <circle slot="end" r={5} />
+            <Spline {curve} class="stroke-accent-500 stroke-2">
+              <circle slot="start" r={5} class="fill-accent-500" />
+              <circle slot="end" r={5} class="fill-accent-500" />
             </Spline>
           {/if}
         </Svg>
@@ -184,14 +184,14 @@
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
-            <Spline {curve}>
+            <Spline {curve} class="stroke-accent-500 stroke-2">
               <svelte:fragment slot="start">
-                <circle r={5} />
+                <circle r={5} class="fill-accent-500" />
                 <Text value="start" textAnchor="end" verticalAnchor="middle" dx={-8} />
               </svelte:fragment>
 
               <svelte:fragment slot="end">
-                <circle r={5} />
+                <circle r={5} class="fill-accent-500" />
                 <Text value="end" verticalAnchor="middle" dx={8} />
               </svelte:fragment>
             </Spline>
@@ -221,8 +221,8 @@
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
-            <Spline {curve} draw={{ duration: 3000 }}>
-              <circle slot="end" r={5} />
+            <Spline {curve} draw={{ duration: 3000 }} class="stroke-accent-500 stroke-2">
+              <circle slot="end" r={5} class="fill-accent-500" />
             </Spline>
           {/if}
         </Svg>
