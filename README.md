@@ -1,5 +1,6 @@
 # LayerChart
 
+![](https://img.shields.io/github/license/techniq/svelte-ux?style=flat)
 [![](https://img.shields.io/npm/v/layerchart?style=flat)](https://www.npmjs.com/package/layerchart)
 ![npm](https://img.shields.io/npm/dw/layerchart?style=flat&color=orange)
 
