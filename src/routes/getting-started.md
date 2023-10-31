@@ -29,11 +29,11 @@ The library accomplishes this through a large assortment of components:
 
 ## Installation
 
-* Install layerchart
+* Install LayerChart
 ```sh
 npm install layerchart
 ```
-* Update tailwind.config.js
+* Update Tailwind configuration
   * Make sure Tailwind picks up styles from *layerchart* and *svelte-ux*
   * Add accent color used by *layerchart*
   * Add *svelte-ux* plugin that has some extra utilties classes
@@ -67,9 +67,9 @@ import {Chart, Svg, Axis, Bars} from 'layerchart'
 ## Using Examples
 This site has many examples of creating visuzliations using LayerChart components. Below each example is a **< > Show code** link that displays the code for that visualization.
 
-The examples do not show importing of LayerChart components and utilties and external libraries. You can view the source for the entire page top of each docs page. This will show you all of the imports used for the page.
+The examples do not show importing of LayerChart components and utilties and external libraries. You can view the **Page source** for the entire page top of each examples page. This will show you all of the imports used for that page.
 
-**Note: This site is built from layerchart's codebase and does not npm install layerchart. Therefore it imports layechart components differently.**
+**Note: This site is built directly from LayerChart's codebase and does not *npm install layerchart*. Therefore it imports components from LayerChart differently.**
 
 The page source will show:
 
