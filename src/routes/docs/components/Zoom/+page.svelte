@@ -2,7 +2,7 @@
   import type { ComponentProps } from 'svelte';
   import { cubicOut } from 'svelte/easing';
 
-  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Circle from '$lib/components/Circle.svelte';
@@ -11,7 +11,6 @@
   import Zoom from '$lib/components/Zoom.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import RangeField from '$lib/docs/RangeField.svelte';
   import ZoomControls from '$lib/docs/ZoomControls.svelte';
 
   import { getSpiral } from '$lib/utils/genData';

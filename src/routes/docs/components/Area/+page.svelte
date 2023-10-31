@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
 
-  import { Field, Switch } from 'svelte-ux';
+  import { Field, RangeField, Switch } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
@@ -9,7 +9,6 @@
   import Points from '$lib/components/Points.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import RangeField from '$lib/docs/RangeField.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 

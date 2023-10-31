@@ -11,6 +11,7 @@
     Breadcrumb,
     Button,
     Field,
+    RangeField,
     Switch,
     ToggleGroup,
     ToggleOption,
@@ -19,7 +20,6 @@
   } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import RangeField from '$lib/docs/RangeField.svelte';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Bounds from '$lib/components/Bounds.svelte';

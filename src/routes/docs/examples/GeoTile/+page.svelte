@@ -2,10 +2,9 @@
   import { geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Field, Switch } from 'svelte-ux';
+  import { Field, RangeField, Switch } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import RangeField from '$lib/docs/RangeField.svelte';
 
   import TilesetField from '$lib/docs/TilesetField.svelte';
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';

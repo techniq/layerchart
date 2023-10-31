@@ -11,7 +11,7 @@
   } from 'd3-random';
   import { subDays } from 'date-fns';
 
-  import { MenuField, NumberStepper, PeriodType, dateDisplay, formatDate } from 'svelte-ux';
+  import { MenuField, RangeField, NumberStepper, dateDisplay } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
@@ -21,7 +21,6 @@
   import TooltipItem from '$lib/components/TooltipItem.svelte';
   import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
-  import RangeField from '$lib/docs/RangeField.svelte';
   import { thresholdTime } from '$lib/utils/threshold';
 
   import Preview from '$lib/docs/Preview.svelte';

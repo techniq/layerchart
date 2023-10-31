@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { Field, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Text from '$lib/components/Text.svelte';
-  import RangeField from '$lib/docs/RangeField.svelte';
 
   let value = 'This is really long text';
   let x = 0;

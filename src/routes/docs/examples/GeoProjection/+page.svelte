@@ -10,7 +10,7 @@
   } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Field, Switch } from 'svelte-ux';
+  import { Field, RangeField, Switch } from 'svelte-ux';
 
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
@@ -18,7 +18,6 @@
   import Tooltip from '$lib/components/Tooltip.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import RangeField from '$lib/docs/RangeField.svelte';
 
   export let data;
 

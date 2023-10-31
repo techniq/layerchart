@@ -1,8 +1,7 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
-  import { Field, MenuField, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { RangeField, MenuField } from 'svelte-ux';
 
-  import RangeField from '$lib/docs/RangeField.svelte';
   import type Sankey from '$lib/components/Sankey.svelte';
 
   type SankeyProps = ComponentProps<Sankey>;
@@ -22,7 +21,7 @@
       { label: 'justify', value: 'justify' },
       { label: 'left', value: 'left' },
       { label: 'center', value: 'center' },
-      { label: 'right', value: 'right' }
+      { label: 'right', value: 'right' },
     ]}
   />
 
@@ -33,7 +32,7 @@
       { label: 'layer', value: 'layer' },
       { label: 'depth', value: 'depth' },
       { label: 'height', value: 'height' },
-      { label: 'index', value: 'index' }
+      { label: 'index', value: 'index' },
     ]}
   />
 
@@ -43,7 +42,7 @@
     options={[
       { label: 'static', value: 'static' },
       { label: 'source', value: 'source' },
-      { label: 'target', value: 'target' }
+      { label: 'target', value: 'target' },
     ]}
   />
 

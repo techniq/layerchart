@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Field, Switch } from 'svelte-ux';
+  import { Field, RangeField, Switch } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Arc from '$lib/components/Arc.svelte';
@@ -8,7 +8,6 @@
   import Text from '$lib/components/Text.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import RangeField from '$lib/docs/RangeField.svelte';
 
   let value = 50;
   // let value = 100;

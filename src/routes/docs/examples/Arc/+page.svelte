@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cubicInOut } from 'svelte/easing';
-  import { Field, Switch, Toggle, round } from 'svelte-ux';
+  import { Field, RangeField, Switch, Toggle, round } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -10,7 +10,6 @@
   import LinearGradient from '$lib/components/LinearGradient.svelte';
   import Text from '$lib/components/Text.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
-  import RangeField from '$lib/docs/RangeField.svelte';
   import { radiansToDegrees } from '$lib/utils/math';
 
   let value = 75;

@@ -2,7 +2,7 @@
   import type { ComponentProps } from 'svelte';
   import { linear } from 'svelte/easing';
 
-  import { Field, Switch, Toggle } from 'svelte-ux';
+  import { Field, RangeField, Switch, Toggle } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
@@ -13,7 +13,6 @@
 
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
-  import RangeField from '$lib/docs/RangeField.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
 
   let pointCount = 100;

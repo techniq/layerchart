@@ -11,12 +11,12 @@
     type GeoPermissibleObjects,
   } from 'd3-geo';
 
+  import { EmptyMessage, Field, RangeField, TextField, autoHeight } from 'svelte-ux';
+
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
-  import { EmptyMessage, Field, TextField, autoHeight } from 'svelte-ux';
   import GeoTile from '$lib/components/GeoTile.svelte';
   import TilesetField from '$lib/docs/TilesetField.svelte';
-  import RangeField from '$lib/docs/RangeField.svelte';
 
   let geojsonStr = '';
   let geojson: GeoPermissibleObjects;
