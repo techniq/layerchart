@@ -205,7 +205,7 @@
       <Svg>
         <Axis placement="left" grid rule format="metric" />
         <Axis placement="bottom" rule ticks={4} />
-        <Bars radius={4} strokeWidth={1} tweened getKey={(d) => d.x0} class="fill-accent-500" />
+        <Bars radius={4} strokeWidth={1} tweened class="fill-accent-500" />
         <Highlight area />
       </Svg>
       <Tooltip header={(data) => data.x0 + ' - ' + (data.x1 - 0.01)} let:data>

@@ -5,14 +5,14 @@
   import { createDimensionGetter } from '$lib/utils/rect';
   import Rect from './Rect.svelte';
 
-  const {x: xContext, y: yContext, rGet, config } = getContext('LayerCake');
+  const { x: xContext, y: yContext, rGet, config } = getContext('LayerCake');
 
   export let bar: Object;
 
   /**
    * Override `x` from context.  Useful for multiple Bar instances
    */
-   export let x = $xContext;
+  export let x = $xContext;
 
   /**
    * Override `y` from context.  Useful for multiple Bar instances
@@ -23,9 +23,6 @@
   export let stroke = 'black';
   export let strokeWidth = 0;
   export let radius = 0;
-
-  export let getProps: ((obj: { value: any; item: any; index: number }) => any) | undefined =
-    undefined;
 
   export let padding = 0;
   export let groupBy: string | undefined = undefined;

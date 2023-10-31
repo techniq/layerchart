@@ -19,8 +19,7 @@
   export let stroke = 'black';
   export let strokeWidth = 0;
   export let radius = 0;
-  export let getProps: ((obj: { value: any; item: any; index: number }) => any) | undefined =
-    undefined;
+
   /** Inset the rect for amount of padding.  Useful with multiple bars (bullet, overlap, etc) */
   export let padding = 0;
 

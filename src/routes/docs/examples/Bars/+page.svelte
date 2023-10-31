@@ -386,7 +386,7 @@
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
-        <Bars groupBy="fruit" getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
+        <Bars groupBy="fruit" radius={4} strokeWidth={1} />
       </Svg>
     </Chart>
   </div>
@@ -414,7 +414,7 @@
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
-        <Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
+        <Bars radius={4} strokeWidth={1} />
       </Svg>
     </Chart>
   </div>
@@ -442,7 +442,7 @@
       <Svg>
         <Axis placement="bottom" grid rule format="percentRound" />
         <Axis placement="left" rule />
-        <Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
+        <Bars radius={4} strokeWidth={1} />
       </Svg>
     </Chart>
   </div>
@@ -470,7 +470,7 @@
 			<Svg>
         <Axis placement="bottom" grid rule />
 				<Axis placement="left" rule />
-				<Bars getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
+				<Bars radius={4} strokeWidth={1} />
 			</Svg>
 		</Chart>
 	</div>
@@ -499,7 +499,7 @@
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
-        <Bars groupBy="basket" getKey={(item) => item.keys.join('-')} radius={4} strokeWidth={1} />
+        <Bars groupBy="basket" radius={4} strokeWidth={1} />
       </Svg>
     </Chart>
   </div>
@@ -543,7 +543,6 @@
         <Axis placement="left" rule />
         <Bars
           groupBy={transitionChart.groupBy}
-          getKey={(item) => item.keys.at(0) + '-' + item.keys.at(-1)}
           radius={4}
           strokeWidth={1}
           tweened={{
