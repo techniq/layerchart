@@ -32,7 +32,6 @@
   export let groupBy: string | undefined = undefined;
   export let groupPaddingInner = 0.2;
   export let groupPaddingOuter = 0;
-
 </script>
 
 <g class="Bars">

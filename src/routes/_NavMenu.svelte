@@ -11,6 +11,7 @@
       'AreaStack',
       { label: 'Bar Chart (Vertical)', value: 'Columns' },
       { label: 'Bar Chart (Horizontal)', value: 'Bars' },
+      'Candlestick',
       'DotPlot',
       'Histogram',
       'Line',
