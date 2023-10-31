@@ -21,14 +21,8 @@ The library accomplishes this through a large assortment of components:
 - Hierarchy layout and geo projections
 - Legends, annotations, and many more!
 
-Take a look at the various examples to understand the capabilities and then install the `layerchart` package to get started
+## Getting Started
+Take a look at the various examples to understand the capabilities and go to [Getting Started](/getting-started) to install it for yourself.
 
-```sh
-npm install layerchart
-```
-
-It is also recommmended to read through [Layer Cake](https://layercake.graphics/)'s documentation for a deeper understanding of how LayerChart works.
-
-Lastly, take a look at the complement project [svelte-ux](https://svelte-ux.techniq.dev/) for a large collection of Svelte components, actions, stores, and utilities to build highly interactive applications.
 
 </div>
