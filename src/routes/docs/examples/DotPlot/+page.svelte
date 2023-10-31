@@ -44,6 +44,7 @@
       xScale={scaleTime()}
       y="name"
       yScale={scaleBand()}
+      yDomain={[...new Set(data.map((d) => d.name))]}
       padding={{ left: 36, bottom: 36 }}
       tooltip={{ mode: 'band' }}
     >
