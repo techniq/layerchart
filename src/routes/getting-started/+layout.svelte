@@ -1,17 +1,10 @@
 <script lang="ts">
-  import { marked } from 'marked';
   import { TableOfContents } from 'svelte-ux';
-
-  import markdownString from './getting-started.md?raw';
-
-  function sanitize(str: string) {
-    return str.replace(/</g, '\\<').replace(/>/g, '\\>');
-  }
 </script>
 
 <div class="grid grid-cols-[1fr,auto] gap-6 pt-2 pb-4">
   <div class="prose max-w-none px-4 bg-white p-2 m-2 rounded shadow-lg border overflow-auto">
-    {@html marked.parse(sanitize(markdownString))}
+    <slot></slot>
   </div>
 
   <div class="hidden lg:block w-[224px]">
