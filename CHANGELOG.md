@@ -1,5 +1,21 @@
 # LayerChart
 
+## 0.25.0
+
+### Minor Changes
+
+- [Bar / Bars] Rename `padding` to `inset` ([`006daae`](https://github.com/techniq/layerchart/commit/006daaec02691cef82afc6eeda3cea57c67c0cd8))
+
+### Patch Changes
+
+- [TooltipContext] Fix bisect-y padding adjustment ([`5f078cf`](https://github.com/techniq/layerchart/commit/5f078cf1b025c1606860888c14eb591ebbbfacfa))
+
+- Add Candlestick example ([`665ebef`](https://github.com/techniq/layerchart/commit/665ebef3b7cbff0e79c5d56c54cfd982745afcb2))
+
+- Update dependencies ([`ca79b59`](https://github.com/techniq/layerchart/commit/ca79b59e818ef86bd1b54c083e5c51d5acf8d93e))
+
+- [Bars] Remove no longer used `getProps` and `getKey` (can now use `Bar` component and slot) ([`5a57e63`](https://github.com/techniq/layerchart/commit/5a57e6353feb3292e776283817c15b4e3a6b2307))
+
 ## 0.24.4
 
 ### Patch Changes
