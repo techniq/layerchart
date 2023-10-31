@@ -9,7 +9,7 @@ type DimensionGetterOptions = {
   /** Override `y` accessor from context */
   y?: (item: any) => any;
   groupBy?: string;
-  padding?: number;
+  inset?: number;
   groupPadding?: { inner?: number; outer?: number };
 };
 
@@ -28,7 +28,7 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
   } = context;
 
   const groupBy = options?.groupBy;
-  const padding = options?.padding ?? 0;
+  const inset = options?.inset ?? 0;
 
   return derived(
     [flatData, xGet, yGet, xRange, yRange, xScale, yScale, xAccessor, yAccessor],
@@ -39,10 +39,10 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
           const y1Scale = groupBy
             ? groupScaleBand($yScale, $flatData, groupBy, options?.groupPadding)
             : null;
-          const y = firstValue($yGet(item)) + (y1Scale ? y1Scale(item[groupBy]) : 0) + padding / 2;
+          const y = firstValue($yGet(item)) + (y1Scale ? y1Scale(item[groupBy]) : 0) + inset / 2;
           const height = Math.max(
             0,
-            $yScale.bandwidth ? (y1Scale ? y1Scale.bandwidth() : $yScale.bandwidth()) - padding : 0
+            $yScale.bandwidth ? (y1Scale ? y1Scale.bandwidth() : $yScale.bandwidth()) - inset : 0
           );
 
           const _x = options?.x
@@ -84,10 +84,10 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
             ? groupScaleBand($xScale, $flatData, groupBy, options?.groupPadding)
             : null;
 
-          const x = firstValue($xGet(item)) + (x1Scale ? x1Scale(item[groupBy]) : 0) + padding / 2;
+          const x = firstValue($xGet(item)) + (x1Scale ? x1Scale(item[groupBy]) : 0) + inset / 2;
           const width = Math.max(
             0,
-            $xScale.bandwidth ? (x1Scale ? x1Scale.bandwidth() : $xScale.bandwidth()) - padding : 0
+            $xScale.bandwidth ? (x1Scale ? x1Scale.bandwidth() : $xScale.bandwidth()) - inset : 0
           );
 
           const _y = options?.y

@@ -21,7 +21,7 @@
   export let radius = 0;
 
   /** Inset the rect for amount of padding.  Useful with multiple bars (bullet, overlap, etc) */
-  export let padding = 0;
+  export let inset = 0;
 
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -35,7 +35,7 @@
 
 <g class="Bars">
   <slot name="bars">
-    {#each $data as item, index}
+    {#each $data as item}
       <Bar
         bar={item}
         {x}
@@ -47,7 +47,7 @@
         {spring}
         {tweened}
         {groupBy}
-        {padding}
+        {inset}
         {groupPaddingInner}
         {groupPaddingOuter}
         {...$$restProps}

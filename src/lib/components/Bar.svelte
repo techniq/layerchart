@@ -24,7 +24,7 @@
   export let strokeWidth = 0;
   export let radius = 0;
 
-  export let padding = 0;
+  export let inset = 0;
   export let groupBy: string | undefined = undefined;
   export let groupPaddingInner = 0.2;
   export let groupPaddingOuter = 0;
@@ -38,7 +38,7 @@
     x,
     y,
     groupBy,
-    padding,
+    inset,
     groupPadding: {
       inner: groupPaddingInner,
       outer: groupPaddingOuter,

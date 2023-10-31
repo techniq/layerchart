@@ -203,12 +203,12 @@
   {/if}
 
   {#if bar}
-    <slot name="bar" bar={bar}>
+    <slot name="bar" {bar}>
       <Bar
         spring
         x={typeof bar === 'object' ? bar.x : null}
         y={typeof bar === 'object' ? bar.y : null}
-        padding={typeof bar === 'object' ? bar.padding : null}
+        inset={typeof bar === 'object' ? bar.inset : null}
         stroke={typeof bar === 'object' ? bar.stroke : null}
         strokeWidth={typeof bar === 'object' ? bar.strokeWidth : null}
         radius={typeof bar === 'object' ? bar.radius : null}
@@ -218,7 +218,6 @@
       />
     </slot>
   {/if}
-
 
   {#if lines}
     <slot name="lines" lines={_lines}>

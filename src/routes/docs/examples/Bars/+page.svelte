@@ -310,7 +310,7 @@
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars x="baseline" radius={4} strokeWidth={1} class="fill-gray-200" />
-        <Bars x="value" radius={4} strokeWidth={1} padding={16} class="fill-accent-500" />
+        <Bars x="value" radius={4} strokeWidth={1} inset={16} class="fill-accent-500" />
         <Highlight area />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>

@@ -483,7 +483,7 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars y="baseline" radius={4} strokeWidth={1} class="fill-gray-200" />
-        <Bars y="value" radius={4} strokeWidth={1} padding={8} class="fill-accent-500" />
+        <Bars y="value" radius={4} strokeWidth={1} inset={8} class="fill-accent-500" />
         <Highlight
           points={charts.multiBars.highlight.includes('points')}
           lines={charts.multiBars.highlight.includes('lines')}
