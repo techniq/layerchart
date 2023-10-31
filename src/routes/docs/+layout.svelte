@@ -52,7 +52,7 @@
 </script>
 
 <div
-  class="sticky top-0 z-20 bg-neutral-200/90 backdrop-blur px-5 py-4 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)calc(100%-4px),rgba(0,0,0,0))]"
+  class="md:sticky top-0 z-20 bg-neutral-200/90 backdrop-blur px-5 py-4 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)calc(100%-4px),rgba(0,0,0,0))]"
 >
   {#if title}
     <div>
