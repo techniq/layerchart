@@ -44,25 +44,25 @@
       case 'top':
         return {
           x: $xScale(tick) + (isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0),
-          y: xRangeMin
+          y: xRangeMin,
         };
 
       case 'bottom':
         return {
           x: $xScale(tick) + (isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0),
-          y: yRangeMax
+          y: yRangeMax,
         };
 
       case 'left':
         return {
           x: xRangeMin,
-          y: $yScale(tick) + (isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0)
+          y: $yScale(tick) + (isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0),
         };
 
       case 'right':
         return {
           x: xRangeMax,
-          y: $yScale(tick) + (isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0)
+          y: $yScale(tick) + (isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0),
         };
     }
   }
@@ -73,14 +73,14 @@
         return {
           textAnchor: 'middle',
           verticalAnchor: 'end',
-          dy: -6 // manually adjusted until Text supports custom styles
+          dy: -6, // manually adjusted until Text supports custom styles
         };
 
       case 'bottom':
         return {
           textAnchor: 'middle',
           verticalAnchor: 'start',
-          dy: 4 // manually adjusted until Text supports custom styles
+          dy: 4, // manually adjusted until Text supports custom styles
         };
 
       case 'left':
@@ -88,7 +88,7 @@
           textAnchor: 'end',
           verticalAnchor: 'middle',
           dx: -4,
-          dy: -2 // manually adjusted until Text supports custom styles
+          dy: -2, // manually adjusted until Text supports custom styles
         };
 
       case 'right':
@@ -96,7 +96,7 @@
           textAnchor: 'start',
           verticalAnchor: 'middle',
           dx: 4,
-          dy: -2 // manually adjusted until Text supports custom styles
+          dy: -2, // manually adjusted until Text supports custom styles
         };
     }
   }
@@ -176,10 +176,13 @@
       <Text
         x={tickCoords.x}
         y={tickCoords.y}
-        class="label text-[10px] stroke-white [stroke-width:2px] font-light"
         value={formatValue(tick, format ?? scale.tickFormat?.())}
         {...getDefaultLabelProps()}
         {...labelProps}
+        class={cls(
+          'label text-[10px] stroke-white [stroke-width:2px] font-light',
+          labelProps?.class
+        )}
       />
     </g>
   {/each}

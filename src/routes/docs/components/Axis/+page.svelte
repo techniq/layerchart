@@ -187,7 +187,7 @@
 
 <Blockquote>Top-most axis must have separate rule due to SVG rendering order</Blockquote>
 
-<h2>rotated labels</h2>
+<h2>rotated labels and styling</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
@@ -198,10 +198,18 @@
       y="value"
       yDomain={[0, null]}
       yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+      padding={{ top: 20, bottom: 36, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="bottom" labelProps={{ rotate: 315, textAnchor: 'end' }} />
+        <Axis
+          placement="bottom"
+          rule={{ class: 'stroke-red-500' }}
+          labelProps={{
+            rotate: 315,
+            textAnchor: 'end',
+            class: 'fill-red-500 font-semibold',
+          }}
+        />
         <Axis placement="left" />
       </Svg>
     </Chart>
