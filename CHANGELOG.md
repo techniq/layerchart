@@ -1,5 +1,13 @@
 # LayerChart
 
+## 0.25.1
+
+### Patch Changes
+
+- [Text] Fix display of `0` value when number (and not string) ([`c1e20dc`](https://github.com/techniq/layerchart/commit/c1e20dcb94671de407adf270c7e13fd3bbf89678))
+
+- [Axis] Do not replace all default classes when setting labelsProps={{ class: '...' }} ([`fc9e281`](https://github.com/techniq/layerchart/commit/fc9e281f66889c8b4ab98ac502a5095e8e714db8))
+
 ## 0.25.0
 
 ### Minor Changes
