@@ -151,7 +151,6 @@
           {/each}
         </Group>
       </Svg>
-      <Tooltip header={(data) => data} />
     </Chart>
   </div>
 </Preview>
