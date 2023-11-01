@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cubicInOut } from 'svelte/easing';
-  import { Field, RangeField, Switch, Toggle, round } from 'svelte-ux';
+  import { Field, RangeField, Switch, Toggle, cls, round } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -13,6 +13,8 @@
   import { radiansToDegrees } from '$lib/utils/math';
 
   let value = 75;
+
+  const segments = 60;
 
   // color wheel
   const layerCount = 6;
@@ -114,6 +116,81 @@
   </div>
 </Preview>
 
+<h2>Segmented Arc</h2>
+
+<div class="mb-2">
+  <RangeField label="Value" bind:value />
+</div>
+<Preview>
+  <div class="h-[240px] p-4 border rounded bg-neutral-900">
+    <Chart>
+      <Svg>
+        <Group center>
+          {#each { length: segments } as _, segmentIndex}
+            {@const segmentAngle = (2 * Math.PI) / segments}
+            {@const startAngle = segmentIndex * segmentAngle}
+            {@const endAngle = (segmentIndex + 1) * segmentAngle}
+            <Arc
+              {startAngle}
+              {endAngle}
+              innerRadius={-20}
+              cornerRadius={4}
+              padAngle={0.02}
+              class={cls(
+                (segmentIndex / segments) * 100 <= value ? 'fill-emerald-300' : 'fill-gray-700'
+              )}
+            >
+              <Text
+                value={Math.round(value)}
+                textAnchor="middle"
+                verticalAnchor="middle"
+                dy={16}
+                class="text-6xl tabular-nums fill-white"
+              />
+            </Arc>
+          {/each}
+        </Group>
+      </Svg>
+      <Tooltip header={(data) => data} />
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Color wheel</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart tooltip={{ mode: 'manual' }} let:tooltip>
+      <Svg>
+        <Group center>
+          {#each { length: layerCount } as _, layerIndex}
+            {@const layer = layerIndex + 1}
+            {#each { length: divisions } as _, segmentIndex}
+              {@const segmentAngle = (2 * Math.PI) / divisions}
+              {@const startAngle = segmentIndex * segmentAngle}
+              {@const endAngle = (segmentIndex + 1) * segmentAngle}
+              {@const color = wheelSegmentColor(startAngle, layer)}
+              <Arc
+                {startAngle}
+                {endAngle}
+                outerRadius={layer / layerCount}
+                innerRadius={-20}
+                cornerRadius={4}
+                padAngle={0.02}
+                fill={color}
+                class="hover:scale-90 origin-center [transform-box:fill-box] transition-transform"
+                on:mousemove={(e) => tooltip?.show(e, color)}
+                on:mouseleave={(e) => tooltip?.hide()}
+              />
+            {/each}
+          {/each}
+        </Group>
+      </Svg>
+      <Tooltip header={(data) => data} />
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Tween value on mount</h2>
 
 <Toggle on let:on={show} let:toggle>
@@ -165,38 +242,3 @@
     </div>
   </Preview>
 </Toggle>
-
-<h2>Color wheel</h2>
-
-<Preview>
-  <div class="h-[300px] p-4 border rounded">
-    <Chart tooltip={{ mode: 'manual' }} let:tooltip>
-      <Svg>
-        <Group center>
-          {#each { length: layerCount } as _, layerIndex}
-            {@const layer = layerIndex + 1}
-            {#each { length: divisions } as _, segmentIndex}
-              {@const segmentAngle = (2 * Math.PI) / divisions}
-              {@const startAngle = segmentIndex * segmentAngle}
-              {@const endAngle = (segmentIndex + 1) * segmentAngle}
-              {@const color = wheelSegmentColor(startAngle, layer)}
-              <Arc
-                {startAngle}
-                {endAngle}
-                outerRadius={layer / layerCount}
-                innerRadius={-20}
-                cornerRadius={4}
-                padAngle={0.02}
-                fill={color}
-                class="hover:scale-90 origin-center [transform-box:fill-box] transition-transform"
-                on:mousemove={(e) => tooltip?.show(e, color)}
-                on:mouseleave={(e) => tooltip?.hide()}
-              />
-            {/each}
-          {/each}
-        </Group>
-      </Svg>
-      <Tooltip header={(data) => data} />
-    </Chart>
-  </div>
-</Preview>
