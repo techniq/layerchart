@@ -57,11 +57,11 @@
 
   let style: CSSStyleDeclaration = undefined; // TODO: read from DOM?
 
-  $: words = value ? value.toString().split(/(?:(?!\u00A0+)\s+)/) : [];
+  $: words = value != null ? value.toString().split(/(?:(?!\u00A0+)\s+)/) : [];
 
   $: wordsWithWidth = words.map((word) => ({
     word,
-    width: getStringWidth(word, style) || 0
+    width: getStringWidth(word, style) || 0,
   }));
 
   $: spaceWidth = getStringWidth('\u00A0', style) || 0;

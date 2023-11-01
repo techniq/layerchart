@@ -141,7 +141,7 @@
               )}
             >
               <Text
-                value={Math.round(value)}
+                {value}
                 textAnchor="middle"
                 verticalAnchor="middle"
                 dy={16}
