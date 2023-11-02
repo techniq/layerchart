@@ -13,8 +13,7 @@
   import { radiansToDegrees } from '$lib/utils/math';
 
   let value = 75;
-
-  const segments = 60;
+  let segments = 60;
 
   // color wheel
   const layerCount = 6;
@@ -118,8 +117,9 @@
 
 <h2>Segmented Arc</h2>
 
-<div class="mb-2">
+<div class="grid grid-flow-col gap-3 mb-2">
   <RangeField label="Value" bind:value />
+  <RangeField label="Segments" bind:value={segments} min={2} />
 </div>
 <Preview>
   <div class="h-[240px] p-4 border rounded bg-neutral-900">
@@ -138,7 +138,7 @@
                 cornerRadius={4}
                 padAngle={0.02}
                 class={cls(
-                  (segmentIndex / segments) * 100 <= value ? 'fill-emerald-300' : 'fill-gray-700'
+                  (segmentIndex / segments) * 100 < value ? 'fill-emerald-300' : 'fill-gray-700'
                 )}
               >
                 <Text
