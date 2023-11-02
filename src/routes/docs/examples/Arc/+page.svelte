@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cubicInOut } from 'svelte/easing';
-  import { Field, RangeField, Switch, Toggle, cls, round } from 'svelte-ux';
+  import { Field, RangeField, SpringValue, Switch, Toggle, cls, round } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -130,24 +130,26 @@
             {@const segmentAngle = (2 * Math.PI) / segments}
             {@const startAngle = segmentIndex * segmentAngle}
             {@const endAngle = (segmentIndex + 1) * segmentAngle}
-            <Arc
-              {startAngle}
-              {endAngle}
-              innerRadius={-20}
-              cornerRadius={4}
-              padAngle={0.02}
-              class={cls(
-                (segmentIndex / segments) * 100 <= value ? 'fill-emerald-300' : 'fill-gray-700'
-              )}
-            >
-              <Text
-                {value}
-                textAnchor="middle"
-                verticalAnchor="middle"
-                dy={16}
-                class="text-6xl tabular-nums fill-white"
-              />
-            </Arc>
+            <SpringValue {value} let:value>
+              <Arc
+                {startAngle}
+                {endAngle}
+                innerRadius={-20}
+                cornerRadius={4}
+                padAngle={0.02}
+                class={cls(
+                  (segmentIndex / segments) * 100 <= value ? 'fill-emerald-300' : 'fill-gray-700'
+                )}
+              >
+                <Text
+                  value={Math.round(value)}
+                  textAnchor="middle"
+                  verticalAnchor="middle"
+                  dy={16}
+                  class="text-6xl tabular-nums fill-white"
+                />
+              </Arc>
+            </SpringValue>
           {/each}
         </Group>
       </Svg>
