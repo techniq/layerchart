@@ -21,6 +21,7 @@
   } catch (e) {
     console.error('Error capturing value to copy', e);
   }
+  let btnText="Code";
 </script>
 
 <div class="border border-black/20 rounded bg-white">
@@ -40,11 +41,17 @@
       <div class="absolute top-0 right-0 p-2">
         <Button
           icon={mdiContentCopy}
-          class=" text-white/70 hover:bg-white/20 py-1"
+          class=" text-white/70 hover:bg-white/20 py-1 "
           size="sm"
-          on:click={() => navigator.clipboard.writeText(code)}
+          on:click={() => {
+            navigator.clipboard.writeText(code)
+            btnText="Copied!"
+            setTimeout(() => {
+              btnText="Code"
+            }, 1200);
+          }}
         >
-          Copy
+          {btnText}
         </Button>
       </div>
     </div>
