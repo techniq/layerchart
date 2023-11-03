@@ -38,14 +38,7 @@
       </pre>
 
       <div class="absolute top-0 right-0 p-2">
-        <Button
-          icon={mdiContentCopy}
-          class=" text-white/70 hover:bg-white/20 py-1"
-          size="sm"
-          on:click={() => navigator.clipboard.writeText(code)}
-        >
-          Copy
-        </Button>
+        <CopyButton value={code} class="text-white/70 hover:bg-white/20 py-1" size="sm" />
       </div>
     </div>
   {/if}
