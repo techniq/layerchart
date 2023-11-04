@@ -1,8 +1,7 @@
 <script lang="ts">
   import Prism from 'prismjs';
   import 'prism-svelte';
-  import { mdiContentCopy } from '@mdi/js';
-  import { Button, cls } from 'svelte-ux';
+  import { CopyButton, cls } from 'svelte-ux';
 
   export let source: string | null = null;
   export let language = 'svelte';
@@ -19,14 +18,7 @@
       </pre>
 
       <div class="absolute top-0 right-0 p-2">
-        <Button
-          icon={mdiContentCopy}
-          class="text-white/70 hover:bg-white/20 py-1"
-          size="sm"
-          on:click={() => navigator.clipboard.writeText(source ?? '')}
-        >
-          Copy
-        </Button>
+        <CopyButton value={source} class="text-white/70 hover:bg-white/20 py-1" size="sm" />
       </div>
     </div>
   {/if}
