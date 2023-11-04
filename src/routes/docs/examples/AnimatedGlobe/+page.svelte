@@ -9,6 +9,7 @@
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Graticule from '$lib/components/Graticule.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
 
   export let data;
 
@@ -63,6 +64,8 @@
           roll: $roll,
         },
       }}
+      tooltip={{ mode: 'manual' }}
+      let:tooltip
     >
       <Svg>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-300" />
@@ -71,13 +74,18 @@
           <GeoPath
             geojson={country}
             class={cls(
-              'fill-white',
+              'fill-white cursor-pointer',
               selectedFeature === country ? 'fill-red-400' : 'hover:fill-gray-200'
             )}
             on:click={(e) => (selectedFeature = country)}
+            {tooltip}
           />
         {/each}
       </Svg>
+
+      <Tooltip>
+        <div slot="header" let:data>{data.properties.name}</div>
+      </Tooltip>
     </Chart>
   </div>
 </Preview>
