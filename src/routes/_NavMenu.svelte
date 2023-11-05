@@ -15,6 +15,7 @@
       'DotPlot',
       'Histogram',
       'Line',
+      'Oscilloscope',
       'PunchCard',
       'Scatter',
       'Sparkbar',
@@ -67,7 +68,12 @@
 </script>
 
 <NavItem text="Home" icon={mdiHome} currentUrl={$page.url} path="/" />
-<NavItem text="Getting Started" icon={mdiPlayCircle} currentUrl={$page.url} path="/getting-started" />
+<NavItem
+  text="Getting Started"
+  icon={mdiPlayCircle}
+  currentUrl={$page.url}
+  path="/getting-started"
+/>
 <NavItem text="Changelog" icon={mdiFormatListBulleted} currentUrl={$page.url} path="/changelog" />
 
 <h1>Examples</h1>
