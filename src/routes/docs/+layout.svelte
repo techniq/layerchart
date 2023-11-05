@@ -142,46 +142,48 @@
 
       {#if related}
         <h1 id="related">Related</h1>
-        <div class="related">
+        <div class="related grid gap-3">
           {#each flatGroup(related.map(getRelated), (d) => d.type) as [type, items]}
-            <h2
-              id="related-{type}"
-              class="text-xs uppercase leading-8 tracking-widest text-black/50"
-            >
-              {type}
-            </h2>
             <div>
-              {#each items as item}
-                {@const icon =
-                  item.type === 'components' || item.type === 'examples'
-                    ? mdiCodeTags
-                    : item.type === 'stores'
-                    ? mdiDatabaseOutline
-                    : item.type === 'actions'
-                    ? mdiCodeBraces
-                    : item.type === 'github'
-                    ? mdiGithub
-                    : mdiLink}
-                <ListItem
-                  title={item.name}
-                  {icon}
-                  avatar={{ size: 'sm', class: 'text-xs text-white bg-accent-500' }}
-                  on:click={() => {
-                    if (item.url instanceof URL) {
-                      // open in new window
-                      window.open(item.url);
-                    } else {
-                      // go to route
-                      goto(item.url);
-                    }
-                  }}
-                  class="hover:bg-accent-50 cursor-pointer"
-                >
-                  <div slot="actions">
-                    <Icon data={mdiChevronRight} class="text-black/50" />
-                  </div>
-                </ListItem>
-              {/each}
+              <h2
+                id="related-{type}"
+                class="text-xs uppercase leading-8 tracking-widest text-black/50"
+              >
+                {type}
+              </h2>
+              <div>
+                {#each items as item}
+                  {@const icon =
+                    item.type === 'components' || item.type === 'examples'
+                      ? mdiCodeTags
+                      : item.type === 'stores'
+                      ? mdiDatabaseOutline
+                      : item.type === 'actions'
+                      ? mdiCodeBraces
+                      : item.type === 'github'
+                      ? mdiGithub
+                      : mdiLink}
+                  <ListItem
+                    title={item.name}
+                    {icon}
+                    avatar={{ size: 'sm', class: 'text-xs text-white bg-accent-500' }}
+                    on:click={() => {
+                      if (item.url instanceof URL) {
+                        // open in new window
+                        window.open(item.url);
+                      } else {
+                        // go to route
+                        goto(item.url);
+                      }
+                    }}
+                    class="hover:bg-accent-50 cursor-pointer"
+                  >
+                    <div slot="actions">
+                      <Icon data={mdiChevronRight} class="text-black/50" />
+                    </div>
+                  </ListItem>
+                {/each}
+              </div>
             </div>
           {/each}
         </div>
