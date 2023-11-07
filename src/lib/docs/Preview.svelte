@@ -3,10 +3,11 @@
   // TODO: No longer copy from svelte-ux after prismjs is migrated to ESM (commonjs causes issue with Vite from another library)
   import Prism from 'prismjs';
   import 'prism-svelte';
-  import { mdiCodeTags, mdiContentCopy, mdiTable } from '@mdi/js';
-  import JsonTree from 'svelte-json-tree';
+  import { mdiCodeTags, mdiTable } from '@mdi/js';
 
   import { Button, CopyButton, Dialog, Toggle, Tooltip } from 'svelte-ux';
+
+  import Json from './Json.svelte';
 
   export let code: string | undefined = undefined;
   export let data: any | undefined = undefined;
@@ -70,26 +71,7 @@
         {/if}
       </div>
 
-      <div class="overflow-auto px-4 py-2 bg-[#1e1e1e]">
-        <JsonTree
-          value={data}
-          defaultExpandedPaths={['$']}
-          shouldTreatIterableAsObject
-          --json-tree-property-color="#72a2d3"
-          --json-tree-string-color="#6cd1c7"
-          --json-tree-symbol-color="#6cd1c7"
-          --json-tree-boolean-color="#9681f7"
-          --json-tree-function-color="#e59b6f"
-          --json-tree-number-color="#9681f7"
-          --json-tree-label-color="#9ca0a5"
-          --json-tree-arrow-color="#e8eaed"
-          --json-tree-null-color="#81868a"
-          --json-tree-undefined-color="#81868a"
-          --json-tree-date-color="#9ca0a5"
-          --json-tree-operator-color="#e8eaed"
-          --json-tree-regex-color="#6cd1c7"
-        />
-      </div>
+      <Json value={data} />
 
       <div slot="actions">
         <Button variant="fill" color="accent">Close</Button>
