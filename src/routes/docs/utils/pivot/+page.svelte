@@ -22,25 +22,25 @@
 
 <h1>pivotLonger</h1>
 
+<Code
+  source="pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'dates'], 'fruit', 'value')"
+  language="js"
+/>
+
 <h2>Before</h2>
 
 <Json value={wideData} class="rounded" />
 
 <h2>After</h2>
 
-<div class="grid gap-2">
-  <Code
-    source="pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'dates'], 'fruit', 'value')"
-    language="js"
-  />
-
-  <Json
-    value={pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'dates'], 'fruit', 'value')}
-    class="rounded"
-  />
-</div>
+<Json
+  value={pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'dates'], 'fruit', 'value')}
+  class="rounded"
+/>
 
 <h1>pivotWider</h1>
+
+<Code source="pivotWider(longData, 'year', 'fruit', 'value')" language="js" />
 
 <h2>Before</h2>
 
@@ -48,8 +48,4 @@
 
 <h2>After</h2>
 
-<div class="grid gap-2">
-  <Code source="pivotWider(longData, 'year', 'fruit', 'value')" language="js" />
-
-  <Json value={pivotWider(longData, 'year', 'fruit', 'value')} class="rounded" />
-</div>
+<Json value={pivotWider(longData, 'year', 'fruit', 'value')} class="rounded" />
