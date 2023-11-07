@@ -13,7 +13,7 @@
   import Spline from '$lib/components/Spline.svelte';
   import { curveCardinal } from 'd3-shape';
 
-  // Inspired by: https://observablehq.com/@visnup/microphone-oscilloscope
+  // Inspired by: https://observablehq.com/@visnup/microphone-oscilloscope and https://codepen.io/agalliat/pen/PoZLBxP
 
   let timeData: { key: number; value: number }[] = [];
   let frequencyData: { key: number; value: number }[] = [];
