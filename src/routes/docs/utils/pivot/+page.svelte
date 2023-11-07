@@ -1,7 +1,9 @@
 <script lang="ts">
+  import Json from '$lib/docs/Json.svelte';
   import Preview from '$lib/docs/Preview.svelte';
   import { pivotLonger, pivotWider } from '$lib/utils/pivot';
   import { wideData, longData } from '$lib/utils/genData';
+  import Code from '$lib/docs/Code.svelte';
 
   const wideDataDisplay = JSON.stringify(wideData, null, 2);
   const longDataDisplay = JSON.stringify(longData, null, 2);
@@ -22,22 +24,32 @@
 
 <h2>Before</h2>
 
-<Preview code={wideDataDisplay} highlight showCode>wideData</Preview>
+<Json value={wideData} class="rounded" />
 
 <h2>After</h2>
 
-<Preview code={pivotLongerDisplay} highlight showCode>
-  pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'dates'], 'fruit', 'value')
-</Preview>
+<div class="grid gap-2">
+  <Code
+    source="pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'dates'], 'fruit', 'value')"
+    language="js"
+  />
+
+  <Json
+    value={pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'dates'], 'fruit', 'value')}
+    class="rounded"
+  />
+</div>
 
 <h1>pivotWider</h1>
 
 <h2>Before</h2>
 
-<Preview code={longDataDisplay} highlight showCode>longData</Preview>
+<Json value={longData} class="rounded" />
 
 <h2>After</h2>
 
-<Preview code={pivotWiderDisplay} highlight showCode>
-  pivotWider(longData, 'year', 'fruit', 'value')
-</Preview>
+<div class="grid gap-2">
+  <Code source="pivotWider(longData, 'year', 'fruit', 'value')" language="js" />
+
+  <Json value={pivotWider(longData, 'year', 'fruit', 'value')} class="rounded" />
+</div>
