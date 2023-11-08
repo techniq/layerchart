@@ -6,28 +6,16 @@
 
   import { mdiPlay, mdiStop } from '@mdi/js';
 
-  import {
-    Button,
-    scrollIntoView,
-    cls,
-    sortFunc,
-    ButtonGroup,
-    timerStore,
-    Duration,
-  } from 'svelte-ux';
+  import { Button, scrollIntoView, cls, sortFunc, ButtonGroup, timerStore } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Graticule from '$lib/components/Graticule.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
-  import { timings } from './song.js';
+  import { timings } from './timings.js';
 
   export let data;
-
-  function delay(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
@@ -43,42 +31,50 @@
     $pitch = -centroid[1];
   }
 
-  // TODO: Animate to Yakko's song
+  // Animate to Yakko's song
   // https://animaniacs.fandom.com/wiki/Yakko%27s_World_(song)#New_Updated_Verse
   // https://www.youtube.com/watch?v=BoaLSUKeGWw
   // https://www.youtube.com/watch?v=5pOFKmk7ytU
 
-  const audioFile = new Audio('/audio/yakko_world.mp3');
-  const audioCurrentTime = timerStore({ initial: 0, onTick: () => audioFile.currentTime });
-
   const countryFeaturesByName = index(countries.features, (f) => f.properties.name);
 
-  const skipIntro = true;
+  const countryTimings = Object.entries(timings).map(([timing, country], index) => {
+    const [hours, minutes, seconds, milli] = timing.split(':');
+
+    return {
+      country,
+      audioTime: +hours * 60 * 60 + +minutes * 60 + +seconds + +milli / 1000,
+    };
+  });
+
+  // Set to jump to a country
+  let currentIndex = -1;
   let isPlaying = false;
+
+  $: if (isPlaying && $audioCurrentTime >= countryTimings[currentIndex + 1].audioTime) {
+    const countryName = countryTimings[currentIndex + 1].country;
+    selectedFeature = countryFeaturesByName.get(countryName);
+    currentIndex += 1;
+  }
+
+  const audioFile = new Audio('/audio/yakko_world.mp3');
+  const audioCurrentTime = timerStore({
+    initial: 0,
+    delay: 100,
+    onTick: () => audioFile.currentTime,
+  });
 
   async function play() {
     isPlaying = true;
-    audioFile.currentTime = skipIntro ? 10 : 0;
+    audioFile.currentTime = currentIndex !== -1 ? countryTimings[currentIndex].audioTime : 0;
     audioFile.play();
-
-    for (const timing of timings) {
-      if (skipIntro) {
-        delay(10000);
-      }
-
-      await delay(timing.delay);
-
-      if (!isPlaying) {
-        return;
-      }
-      selectedFeature = countryFeaturesByName.get(timing.name);
-    }
   }
 
   function stop() {
     isPlaying = false;
     audioFile.pause();
     audioFile.currentTime = 0;
+    currentIndex = -1;
     selectedFeature = null;
   }
 </script>
@@ -89,15 +85,15 @@
 
 <Preview data={countries}>
   <div class="h-[600px] grid grid-cols-[224px,1fr] relative">
-    <div class="absolute top-0 left-0 bg-gray-100 w-full text-lg font-semibold">
-      {selectedFeature?.properties.name ?? ''}
-    </div>
-
     <div class="absolute top-0 right-0 z-10 flex items-center gap-3">
-      <!-- <Duration duration={{ seconds: $audioCurrentTime }} class="text-sm text-black/50" /> -->
+      {#if isPlaying}
+        <span class="text-sm px-2 py-1 font-semibold text-blue-500 bg-blue-50 rounded-full">
+          {selectedFeature?.properties.name ?? ''}
+        </span>
+      {/if}
       <ButtonGroup variant="fill-light" color="blue" size="sm">
-        <Button icon={mdiPlay} on:click={play} />
-        <Button icon={mdiStop} on:click={stop} />
+        <Button icon={mdiPlay} on:click={play} disabled={isPlaying} />
+        <Button icon={mdiStop} on:click={stop} disabled={!isPlaying} />
       </ButtonGroup>
     </div>
 
