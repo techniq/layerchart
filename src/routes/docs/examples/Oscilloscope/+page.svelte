@@ -31,7 +31,9 @@
   onMount(async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    analyser = ctx.createMediaStreamSource(stream).connect(new AnalyserNode(ctx, { fftSize: 256 }));
+    analyser = ctx
+      .createMediaStreamSource(stream)
+      .connect(new AnalyserNode(ctx, { fftSize: 2048 }));
 
     const time = new Uint8Array(analyser.fftSize);
     const frequency = new Uint8Array(analyser.frequencyBinCount);
