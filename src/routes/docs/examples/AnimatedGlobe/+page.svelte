@@ -129,6 +129,9 @@
       <Canvas>
         <GeoPath geojson={countries} fill="white" />
       </Canvas>
+      <Canvas>
+        <GeoPath geojson={selectedFeature} fill="#f87171" />
+      </Canvas>
     </Chart>
   </div>
 </Preview>
