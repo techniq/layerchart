@@ -5,7 +5,7 @@
 ![npm](https://img.shields.io/npm/dw/layerchart?style=flat&color=orange)
 
 ![](https://img.shields.io/github/license/layerchart?style=flat)
-[![](https://dcbadge.vercel.app/api/server/b94Kmm88?style=flat)](https://discord.gg/b94Kmm88)
+[![](https://dcbadge.vercel.app/api/server/CuEcjdJb?style=flat)](https://discord.gg/CuEcjdJb)
 
 A large collection of composable Svelte chart components to build a wide range of visualizations
 
