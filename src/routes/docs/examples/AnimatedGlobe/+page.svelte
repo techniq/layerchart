@@ -51,13 +51,15 @@
   let currentIndex = -1;
   let isPlaying = false;
 
-  $: if (isPlaying && $audioCurrentTime >= countryTimings[currentIndex + 1].audioTime) {
+  $: if (isPlaying && $audioCurrentTime >= countryTimings[currentIndex + 1]?.audioTime) {
     const countryName = countryTimings[currentIndex + 1].country;
     selectedFeature = countryFeaturesByName.get(countryName);
     currentIndex += 1;
   }
 
   const audioFile = new Audio('/audio/yakko_world.mp3');
+  audioFile.addEventListener('ended', () => stop());
+
   const audioCurrentTime = timerStore({
     initial: 0,
     delay: 100,
@@ -86,7 +88,7 @@
 <Preview data={countries}>
   <div class="h-[600px] grid grid-cols-[224px,1fr] relative">
     <div class="absolute top-0 right-0 z-10 flex items-center gap-3">
-      {#if isPlaying}
+      {#if isPlaying && selectedFeature}
         <span class="text-sm px-2 py-1 font-semibold text-blue-500 bg-blue-50 rounded-full">
           {selectedFeature?.properties.name ?? ''}
         </span>
@@ -152,15 +154,15 @@
 
 <Preview data={countries}>
   <div class="h-[600px] grid grid-cols-[224px,1fr] relative">
-    <div class="absolute top-0 left-0 bg-gray-100 w-full text-lg font-semibold">
-      {selectedFeature?.properties.name ?? ''}
-    </div>
-
     <div class="absolute top-0 right-0 z-10 flex items-center gap-3">
-      <!-- <Duration duration={{ seconds: $audioCurrentTime }} class="text-sm text-black/50" /> -->
+      {#if isPlaying && selectedFeature}
+        <span class="text-sm px-2 py-1 font-semibold text-blue-500 bg-blue-50 rounded-full">
+          {selectedFeature?.properties.name ?? ''}
+        </span>
+      {/if}
       <ButtonGroup variant="fill-light" color="blue" size="sm">
-        <Button icon={mdiPlay} on:click={play} />
-        <Button icon={mdiStop} on:click={stop} />
+        <Button icon={mdiPlay} on:click={play} disabled={isPlaying} />
+        <Button icon={mdiStop} on:click={stop} disabled={!isPlaying} />
       </ButtonGroup>
     </div>
 
