@@ -1,6 +1,6 @@
 <script lang="ts">
   import { inject } from '@vercel/analytics';
-  import { mdiGithub, mdiOpenInNew, mdiTwitter } from '@mdi/js';
+  import { mdiArrowTopRight, mdiGithub, mdiTwitter } from '@mdi/js';
   import 'prism-themes/themes/prism-vsc-dark-plus.css';
   import {
     AppBar,
@@ -56,11 +56,11 @@
     <div slot="actions" class="flex gap-3">
       <Button
         href="https://svelte-ux.techniq.dev"
-        icon={mdiOpenInNew}
+        icon={{ data: mdiArrowTopRight, class: 'opacity-50' }}
         target="_blank"
-        class="p-2 max-md:hidden"
+        class="p-2 max-md:hidden flex-row-reverse"
       >
-        svelte-ux
+        Svelte UX
       </Button>
 
       <QuickSearch options={quickSearchOptions} on:change={(e) => goto(e.detail.value)} />
