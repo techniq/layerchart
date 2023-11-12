@@ -32,9 +32,29 @@ Others
 
 See also [Svelte UX](http://svelte-ux.techniq.dev) for a large collection of components, actions, stores, and utilities to build highly interactive applications.
 
+## Contributing
+
+### Install dependencies
+
+```
+pnpm i
+```
+
+### Run dev server for `layerchart` package
+
+```
+cd packages/svelte-ux
+pnpm dev
+```
+
+### Add changeset to include change in changelog and determine next version
+
+```
+pnpm changeset
+```
+
 ## Publishing
 
-- `npm run changeset` for each changelog worthy change
 - `npm run version` to bump `package.json` version based on changesets, materialize changesets into CHANGELOG.md
 - Commit as `Version bump to x.y.z` (TODO: automate)
 - `npm run publish` to publish version to npm
