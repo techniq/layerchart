@@ -1,3 +1,0 @@
-# layerchart
-
-WIP
