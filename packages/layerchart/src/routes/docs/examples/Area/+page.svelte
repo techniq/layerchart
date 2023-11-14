@@ -414,10 +414,11 @@
       y="value"
       yDomain={[0, null]}
       yNice
-      padding={{ top: 48 }}
+      padding={{ top: 48, bottom: 24 }}
       tooltip={{ snapToDataX: true }}
       let:width
       let:height
+      let:padding
       let:tooltip
     >
       <Svg>
@@ -428,11 +429,8 @@
           </RectClipPath>
         </LinearGradient>
         <Highlight points lines={{ class: 'stroke-accent-500 [stroke-dasharray:unset]' }} />
+        <Axis placement="bottom" />
       </Svg>
-
-      <Tooltip top={4} left={4} variant="none" class="text-sm font-semibold leading-3" let:data>
-        {formatDate(data.date, 'eee, MMMM do')}
-      </Tooltip>
 
       <Tooltip
         top={48}
@@ -442,6 +440,34 @@
         let:data
       >
         {format(data.value, 'currency')}
+      </Tooltip>
+
+      <!-- Fixed location -->
+      <Tooltip top={4} left={4} variant="none" class="text-sm font-semibold leading-3" let:data>
+        {formatDate(data.date, 'eee, MMMM do')}
+      </Tooltip>
+
+      <!-- Contained within Chart -->
+      <!-- <Tooltip
+        top={height + padding.top + 2}
+        leftOffset={0}
+        variant="none"
+        class="text-sm font-semibold bg-accent-500 text-white leading-3 px-2 py-1 rounded"
+        let:data
+      >
+        {formatDate(data.date, 'eee, MMMM do')}
+      </Tooltip> -->
+
+      <!-- Centered on value -->
+      <Tooltip
+        top={height + padding.top + 2}
+        leftOffset={0}
+        contained={false}
+        variant="none"
+        class="text-sm font-semibold bg-accent-500 text-white leading-3 px-2 py-1 rounded -translate-x-1/2 whitespace-nowrap"
+        let:data
+      >
+        {formatDate(data.date, 'eee, MMMM do')}
       </Tooltip>
     </Chart>
   </div>
