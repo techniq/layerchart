@@ -30,7 +30,7 @@ Others
 
 - Legends including ColorRamps
 
-See also [Svelte UX](http://svelte-ux.techniq.dev) for a large collection of components, actions, stores, and utilities to build highly interactive applications.
+See also the companion library [Svelte UX](http://svelte-ux.techniq.dev) for a large collection of components, actions, stores, and utilities to build highly interactive applications.
 
 ## Contributing
 
