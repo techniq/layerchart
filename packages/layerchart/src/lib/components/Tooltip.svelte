@@ -7,12 +7,25 @@
 
   import { tooltipContext } from './TooltipContext.svelte';
 
-  /** Use fixed `top` position instead of calculating based on data and mouse position */
-  export let top: number | undefined = undefined;
-  /** Use fixed `left` position instead of calculating based on data and mouse position */
-  export let left: number | undefined = undefined;
-  export let topOffset = top ? 0 : 10;
-  export let leftOffset = left ? 0 : 10;
+  // TODO:
+  // [x] Update `top`/`left` to support `'pointer' | 'data' | number` (remove snapToDataX/Y from TooltipContext)
+  // [x] Add `center` prop
+  // [ ] Support `bottom` and `right` props
+  // [ ] Rename `topOffset` => `yOffset`, and `leftOffset` => `xOffset`
+
+  /** Top position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
+  export let top: 'pointer' | 'data' | number | undefined = 'pointer';
+  /** Left position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
+  export let left: 'pointer' | 'data' | number | undefined = 'pointer';
+
+  /** Offset added to `top` position */
+  export let topOffset = typeof top === 'number' || typeof left === 'number' ? 0 : 10;
+  /** Offset added to `left` position */
+  export let leftOffset = typeof top === 'number' || typeof left === 'number' ? 0 : 10;
+
+  /** Position based on center instead of top left corner */
+  export let center = false;
+
   export let contained: 'container' | false = 'container'; // TODO: Support 'window' using getBoundingClientRect()
   export let animate = true;
   export let variant: 'dark' | 'light' | 'none' = 'dark';
@@ -26,39 +39,53 @@
     content?: string;
   } = {};
 
-  const { containerWidth, containerHeight } = getContext('LayerCake');
+  const { padding, xGet, yGet, containerWidth, containerHeight } = getContext('LayerCake');
   const tooltip = tooltipContext();
 
   let tooltipWidth = 0;
   let tooltipHeight = 0;
 
   let topPos = animate ? spring($tooltip.top) : writable($tooltip.top);
-  $: if ($tooltip) {
-    if (top != null) {
-      $topPos = top;
+  $: if ($tooltip?.data) {
+    const topValue =
+      typeof top === 'number'
+        ? top
+        : top === 'data'
+        ? $yGet($tooltip.data) + $padding.top
+        : $tooltip.top;
+
+    if (typeof top === 'number') {
+      $topPos = topValue; // TODO: Should this still take container into consideration?
     } else if (
       contained === 'container' &&
-      $tooltip.top + topOffset + tooltipHeight > $containerHeight
+      topValue + topOffset + (center ? tooltipHeight / 2 : tooltipHeight) > $containerHeight
     ) {
       // Change side.  Do not allow tooltip to go above the top
-      $topPos = Math.max($tooltip.top - (topOffset + tooltipHeight), 0);
+      $topPos = Math.max(topValue - (topOffset + tooltipHeight), 0);
     } else {
-      $topPos = $tooltip.top + topOffset;
+      $topPos = topValue + topOffset - (center ? tooltipHeight / 2 : 0);
     }
   }
 
   let leftPos = animate ? spring($tooltip.left) : writable($tooltip.left);
-  $: if ($tooltip) {
-    if (left != null) {
-      $leftPos = left;
+  $: if ($tooltip?.data) {
+    const leftValue =
+      typeof left === 'number'
+        ? left
+        : left === 'data'
+        ? $xGet($tooltip.data) + $padding.left
+        : $tooltip.left;
+
+    if (typeof left === 'number') {
+      $leftPos = leftValue;
     } else if (
       contained === 'container' &&
-      $tooltip.left + leftOffset + tooltipWidth > $containerWidth
+      leftValue + leftOffset + (center ? tooltipWidth / 2 : tooltipWidth) > $containerWidth
     ) {
       // Change side
-      $leftPos = Math.max($tooltip.left - (leftOffset + tooltipWidth), 0);
+      $leftPos = Math.max(leftValue - (leftOffset + tooltipWidth), 0);
     } else {
-      $leftPos = $tooltip.left + leftOffset;
+      $leftPos = leftValue + leftOffset - (center ? tooltipWidth / 2 : 0);
     }
   }
 </script>

@@ -74,8 +74,6 @@
     | 'voronoi'
     | 'quadtree'
     | 'manual' = 'bisect-x';
-  export let snapToDataX: boolean = false;
-  export let snapToDataY: boolean = false;
   /**
    * @type {'closest' | 'left' | 'right'}
    */
@@ -217,8 +215,8 @@
 
       $tooltip = {
         ...$tooltip,
-        left: snapToDataX ? $xGet(tooltipData) + $padding.left : localX,
-        top: snapToDataY ? $yGet(tooltipData) + $padding.top : localY,
+        left: localX,
+        top: localY,
         data: tooltipData,
       };
     } else {
