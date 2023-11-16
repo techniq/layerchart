@@ -209,7 +209,34 @@
   </div>
 </Preview>
 
-<h3>Multiple fixed single axis</h3>
+<h3>Data snapping</h3>
+
+<Preview data={dateSeries}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeries}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
+        <Highlight points lines />
+      </Svg>
+      <Tooltip top="data" left="data" header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+        <TooltipItem label="value" value={data.value} />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h3>Multiple tooltips with fixed single axis</h3>
 
 <Preview data={dateSeries}>
   <div class="h-[300px] p-4 border rounded">
@@ -223,6 +250,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip
       let:height
+      let:padding
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -233,8 +261,9 @@
 
       <Tooltip
         top="data"
-        left={-10}
-        center
+        left={padding.left}
+        topAlign="center"
+        leftAlign="end"
         variant="none"
         class="text-[10px] font-semibold text-accent-700 bg-accent-50 mt-[2px] px-2 py-[2px] border border-accent-500 rounded whitespace-nowrap"
         let:data
@@ -245,7 +274,7 @@
       <Tooltip
         top={height}
         left="data"
-        center
+        leftAlign="center"
         variant="none"
         class="text-[10px] font-semibold text-accent-700 bg-accent-50 mt-[2px] px-2 py-[2px] border border-accent-500 rounded whitespace-nowrap"
         let:data

@@ -8,8 +8,6 @@
   import { tooltipContext } from './TooltipContext.svelte';
 
   // TODO:
-  // [x] Update `top`/`left` to support `'pointer' | 'data' | number` (remove snapToDataX/Y from TooltipContext)
-  // [x] Add `center` prop
   // [ ] Support `bottom` and `right` props
   // [ ] Rename `topOffset` => `yOffset`, and `leftOffset` => `xOffset`
 
@@ -23,8 +21,11 @@
   /** Offset added to `left` position */
   export let leftOffset = typeof top === 'number' || typeof left === 'number' ? 0 : 10;
 
-  /** Position based on center instead of top left corner */
-  export let center = false;
+  /** Align based on edge of tooltip */
+  export let topAlign: 'start' | 'center' | 'end' = 'start';
+
+  /** Align based on edge of tooltip */
+  export let leftAlign: 'start' | 'center' | 'end' = 'start';
 
   export let contained: 'container' | false = 'container'; // TODO: Support 'window' using getBoundingClientRect()
   export let animate = true;
@@ -45,7 +46,9 @@
   let tooltipWidth = 0;
   let tooltipHeight = 0;
 
-  let topPos = animate ? spring($tooltip.top) : writable($tooltip.top);
+  const topPos = animate ? spring($tooltip.top) : writable($tooltip.top);
+  const leftPos = animate ? spring($tooltip.left) : writable($tooltip.left);
+
   $: if ($tooltip?.data) {
     const topValue =
       typeof top === 'number'
@@ -54,21 +57,6 @@
         ? $yGet($tooltip.data) + $padding.top
         : $tooltip.top;
 
-    if (typeof top === 'number') {
-      $topPos = topValue; // TODO: Should this still take container into consideration?
-    } else if (
-      contained === 'container' &&
-      topValue + topOffset + (center ? tooltipHeight / 2 : tooltipHeight) > $containerHeight
-    ) {
-      // Change side.  Do not allow tooltip to go above the top
-      $topPos = Math.max(topValue - (topOffset + tooltipHeight), 0);
-    } else {
-      $topPos = topValue + topOffset - (center ? tooltipHeight / 2 : 0);
-    }
-  }
-
-  let leftPos = animate ? spring($tooltip.left) : writable($tooltip.left);
-  $: if ($tooltip?.data) {
     const leftValue =
       typeof left === 'number'
         ? left
@@ -76,17 +64,32 @@
         ? $xGet($tooltip.data) + $padding.left
         : $tooltip.left;
 
-    if (typeof left === 'number') {
-      $leftPos = leftValue;
-    } else if (
-      contained === 'container' &&
-      leftValue + leftOffset + (center ? tooltipWidth / 2 : tooltipWidth) > $containerWidth
-    ) {
-      // Change side
-      $leftPos = Math.max(leftValue - (leftOffset + tooltipWidth), 0);
-    } else {
-      $leftPos = leftValue + leftOffset - (center ? tooltipWidth / 2 : 0);
+    const topAlignOffset =
+      topAlign === 'center' ? tooltipHeight / 2 : topAlign === 'end' ? tooltipHeight : 0;
+    const leftAlignOffset =
+      leftAlign === 'center' ? tooltipWidth / 2 : leftAlign === 'end' ? tooltipWidth : 0;
+
+    const rect = {
+      top: topValue + topOffset - topAlignOffset,
+      bottom: topValue + topOffset - topAlignOffset + tooltipHeight,
+      left: leftValue + leftOffset - leftAlignOffset,
+      right: leftValue + leftOffset - leftAlignOffset + tooltipWidth,
+    };
+
+    if ((contained === 'container' && rect.top < 0) || rect.bottom > $containerHeight) {
+      // Change side.  Do not allow tooltip to go above the top
+      rect.top = Math.max(topValue - (topOffset + tooltipHeight), 0);
+      rect.bottom = rect.top + tooltipHeight;
     }
+
+    if ((contained === 'container' && rect.left < 0) || rect.right > $containerWidth) {
+      // Change side.  Do not allow tooltip to go above the left
+      rect.left = Math.max(leftValue - (leftOffset + tooltipWidth), 0);
+      rect.right = rect.left + tooltipWidth;
+    }
+
+    $topPos = rect.top;
+    $leftPos = rect.left;
   }
 </script>
 
