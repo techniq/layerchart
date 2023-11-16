@@ -22,6 +22,7 @@
   import Highlight from '$lib/components/Highlight.svelte';
   import Labels from '$lib/components/Labels.svelte';
   import LinearGradient from '$lib/components/LinearGradient.svelte';
+  import RectClipPath from '$lib/components/RectClipPath.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -117,7 +118,7 @@
   </div>
 </Preview>
 
-<h2>with Tooltip and Highlight</h2>
+<h2>Tooltip and Highlight</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
@@ -144,7 +145,7 @@
   </div>
 </Preview>
 
-<h2>with Tooltip and Bar Highlight</h2>
+<h2>Tooltip and Bar Highlight</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded group">
@@ -175,7 +176,44 @@
   </div>
 </Preview>
 
-<h2>with Labels and negative data</h2>
+<h2>Tooltip and Clipped Highlight</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded group">
+    <Chart
+      {data}
+      x="value"
+      xDomain={[0, null]}
+      xNice
+      y="date"
+      yScale={scaleBand().padding(0.4)}
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'band' }}
+    >
+      <Svg>
+        <Axis placement="bottom" grid rule />
+        <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Bars
+          radius={4}
+          strokeWidth={1}
+          class="fill-accent-500 group-hover:fill-gray-300 transition-colors"
+        />
+        <Highlight area>
+          <svelte:fragment slot="area" let:area>
+            <RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} spring>
+              <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
+            </RectClipPath>
+          </svelte:fragment>
+        </Highlight>
+      </Svg>
+      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+        <TooltipItem label="value" value={data.value} />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Labels and negative data</h2>
 
 <Preview data={negativeData}>
   <div class="h-[300px] p-4 border rounded">
