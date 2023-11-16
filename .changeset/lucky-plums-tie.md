@@ -9,7 +9,7 @@
 Before:
 
 ```svelte
-<Chart tooltip={{ snapToDataX: true, snapToDataX: true }}>
+<Chart tooltip={{ snapToDataX: true, snapToDataY: true }}>
   <Tooltip>
     ...
   </Tooltip>
