@@ -4,7 +4,7 @@
   import { flatGroup } from 'd3-array';
 
   import {
-    mdiCheckCircle,
+    mdiCheck,
     mdiChevronDown,
     mdiChevronRight,
     mdiCodeBraces,
@@ -15,7 +15,7 @@
     mdiLink,
   } from '@mdi/js';
 
-  import { ApiDocs, Button, Icon, ListItem, TableOfContents, xlScreen } from 'svelte-ux';
+  import { ApiDocs, Button, Icon, ListItem, TableOfContents, cls, xlScreen } from 'svelte-ux';
 
   import Code from '$lib/docs/Code.svelte';
   import ViewSourceButton from '$lib/docs/ViewSourceButton.svelte';
@@ -124,15 +124,14 @@
       {#if features}
         {#key $page.route.id}
           <h1 id="features">Features</h1>
-          <ul class="pl-3 text-gray-700">
+          <ul>
             {#each features.flatMap( (feature) => (Array.isArray(feature) ? feature.map( (f) => ({ description: f, depth: 1 }) ) : { description: feature, depth: 0 }) ) as feature}
-              <li
-                class="grid grid-cols-[auto,1fr] gap-2"
-                style:margin-left="{feature.depth * 16}px"
-              >
-                <Icon data={mdiCheckCircle} class="text-emerald-600 pt-1" />
-                <span>{@html feature.description}</span>
-              </li>
+              <ListItem
+                title={feature.description}
+                icon={mdiCheck}
+                avatar={{ size: 'sm', class: 'text-xs text-white bg-emerald-600' }}
+                classes={{ root: feature.depth && 'pl-12', title: 'text-sm' }}
+              />
             {/each}
           </ul>
         {/key}
