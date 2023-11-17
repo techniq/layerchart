@@ -19,6 +19,7 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
   import Rule from '$lib/components/Rule.svelte';
+  import Bar from '$lib/components/Bar.svelte';
   import Bars from '$lib/components/Bars.svelte';
   import Highlight from '$lib/components/Highlight.svelte';
   import Labels from '$lib/components/Labels.svelte';
@@ -577,21 +578,31 @@
       rDomain={colorKeys}
       rRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
+      let:data
+      let:rScale
     >
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-        <Bars
-          groupBy={transitionChart.groupBy}
-          radius={4}
-          strokeWidth={1}
-          tweened={{
-            x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-            y: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
-            width: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-            height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
-          }}
-        />
+        <g>
+          {#each data as bar (bar.keys.filter((key) => typeof key !== 'number').join('-'))}
+            <Bar
+              {bar}
+              groupBy={transitionChart.groupBy}
+              groupPaddingInner={0.2}
+              groupPaddingOuter={0}
+              fill={rScale(bar.keys.at(-1))}
+              radius={4}
+              strokeWidth={1}
+              tweened={{
+                x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
+                y: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
+                width: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
+                height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
+              }}
+            />
+          {/each}
+        </g>
       </Svg>
     </Chart>
   </div>

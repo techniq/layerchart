@@ -34,7 +34,7 @@
 </script>
 
 <g class="Bars">
-  <slot name="bars">
+  <slot>
     {#each $data as item}
       <Bar
         bar={item}
