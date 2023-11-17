@@ -75,14 +75,18 @@
       <ViewSourceButton
         label="Source"
         {source}
-        href={sourceUrl ? `https://github.com/techniq/layerchart/blob/master/${sourceUrl}` : ''}
+        href={sourceUrl
+          ? `https://github.com/techniq/layerchart/blob/main/packages/layerchart/${sourceUrl}`
+          : ''}
         icon={mdiCodeTags}
       />
 
       <ViewSourceButton
         label="Page source"
         source={pageSource}
-        href={pageUrl ? `https://github.com/techniq/layerchart/blob/master/${pageUrl}` : ''}
+        href={pageUrl
+          ? `https://github.com/techniq/layerchart/blob/main/packages/layerchart/${pageUrl}`
+          : ''}
         icon={mdiFileDocumentEditOutline}
       />
 

@@ -25,7 +25,7 @@
 
         {#if href}
           <Button icon={mdiGithub} variant="fill-light" color="accent" {href} target="_blank">
-            Edit on Github
+            View on Github
           </Button>
         {/if}
       </div>
