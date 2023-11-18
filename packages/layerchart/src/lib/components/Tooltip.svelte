@@ -8,7 +8,6 @@
   import { tooltipContext } from './TooltipContext.svelte';
 
   // TODO:
-  // [ ] Support `bottom` and `right` props
   // [ ] Rename `topOffset` => `yOffset`, and `leftOffset` => `xOffset`
 
   /** Top position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
@@ -22,10 +21,21 @@
   export let leftOffset = typeof top === 'number' || typeof left === 'number' ? 0 : 10;
 
   /** Align based on edge of tooltip */
-  export let topAlign: 'start' | 'center' | 'end' = 'start';
-
-  /** Align based on edge of tooltip */
-  export let leftAlign: 'start' | 'center' | 'end' = 'start';
+  type Placement =
+    | 'top-start'
+    | 'top'
+    | 'top-end'
+    | 'left-start'
+    | 'left'
+    | 'left-end'
+    | 'center'
+    | 'right-start'
+    | 'right'
+    | 'right-end'
+    | 'bottom-start'
+    | 'bottom'
+    | 'bottom-end';
+  export let anchor: Placement = 'top-start';
 
   export let contained: 'container' | false = 'container'; // TODO: Support 'window' using getBoundingClientRect()
   export let animate = true;
@@ -64,8 +74,57 @@
         ? $xGet($tooltip.data) + $padding.left
         : $tooltip.left;
 
+    let topAlign: 'start' | 'center' | 'end' = 'start';
+    switch (anchor) {
+      case 'top-start':
+      case 'top':
+      case 'top-end':
+      case 'left-start':
+      case 'right-start':
+        topAlign = 'start';
+        break;
+
+      case 'left':
+      case 'center':
+      case 'right':
+        topAlign = 'center';
+        break;
+
+      case 'bottom-start':
+      case 'bottom':
+      case 'bottom-end':
+      case 'left-end':
+      case 'right-end':
+        topAlign = 'end';
+        break;
+    }
     const topAlignOffset =
       topAlign === 'center' ? tooltipHeight / 2 : topAlign === 'end' ? tooltipHeight : 0;
+
+    let leftAlign: 'start' | 'center' | 'end' = 'start';
+    switch (anchor) {
+      case 'left-start':
+      case 'left':
+      case 'left-end':
+      case 'top-start':
+      case 'bottom-start':
+        leftAlign = 'start';
+        break;
+
+      case 'top':
+      case 'center':
+      case 'bottom':
+        leftAlign = 'center';
+        break;
+
+      case 'right-start':
+      case 'right':
+      case 'right-end':
+      case 'bottom-end':
+      case 'top-end':
+        leftAlign = 'end';
+        break;
+    }
     const leftAlignOffset =
       leftAlign === 'center' ? tooltipWidth / 2 : leftAlign === 'end' ? tooltipWidth : 0;
 

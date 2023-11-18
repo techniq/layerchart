@@ -449,7 +449,7 @@
       <Tooltip
         top={height + padding.top + 2}
         left="data"
-        leftAlign="center"
+        anchor="top"
         variant="none"
         class="text-sm font-semibold bg-accent-500 text-white leading-3 px-2 py-1 rounded whitespace-nowrap"
         let:data

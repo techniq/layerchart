@@ -256,16 +256,16 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
-        <Highlight points lines />
+        <Highlight points lines axis="both" />
       </Svg>
 
       <Tooltip
         top="data"
         left={padding.left}
-        topAlign="center"
-        leftAlign="end"
+        anchor="right"
+        contained={false}
         variant="none"
-        class="text-[10px] font-semibold text-accent-700 bg-accent-50 mt-[2px] px-2 py-[2px] border border-accent-500 rounded whitespace-nowrap"
+        class="text-[10px] font-semibold text-accent-700 bg-accent-50 mt-[2px] px-1 py-[2px] border border-accent-500 rounded whitespace-nowrap"
         let:data
       >
         {data.value}
@@ -274,7 +274,7 @@
       <Tooltip
         top={height}
         left="data"
-        leftAlign="center"
+        anchor="top"
         variant="none"
         class="text-[10px] font-semibold text-accent-700 bg-accent-50 mt-[2px] px-2 py-[2px] border border-accent-500 rounded whitespace-nowrap"
         let:data

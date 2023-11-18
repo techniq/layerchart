@@ -2,7 +2,7 @@
 'layerchart': minor
 ---
 
-[Tooltip] Replace TooltipContext's snapToDataX/Y with `<Tooltip top="data" left="data" />`. Add `topAlign` / `leftAlign` props to position based on start/center/end instead of always top-left corner. Add more tooltip examples. Issue #51
+[Tooltip] Replace TooltipContext's snapToDataX/Y with `<Tooltip top="data" left="data" />`. Add `anchor` prop to align based on corner/edge/center (13 points) of tooltip instead of always top-left corner. Add more tooltip examples.
 
 **Breaking Change**
 
