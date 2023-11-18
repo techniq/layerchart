@@ -3,7 +3,7 @@
   import { stack } from 'd3-shape';
   import { format } from 'date-fns';
 
-  import { Duration, formatDate, PeriodType } from 'svelte-ux';
+  import { Button, cls, Duration, Field, formatDate, Menu, PeriodType, Toggle } from 'svelte-ux';
   import { flatten } from 'svelte-ux/utils/array';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -120,6 +120,23 @@
       debug: false,
     },
   } satisfies Record<string, ComponentProps<TooltipControls>['settings']>;
+
+  const anchorOptions = [
+    'top-start',
+    'top',
+    'top-end',
+    'left-start',
+    'center',
+    'right-start',
+    'left',
+    'right',
+    'left-end',
+    'right-end',
+    'bottom-start',
+    'bottom',
+    'bottom-end',
+  ] as const;
+  let anchor: ComponentProps<Tooltip>['anchor'] = 'top-start';
 </script>
 
 <h1>Examples</h1>
@@ -280,6 +297,63 @@
         let:data
       >
         {formatDate(data.date, PeriodType.Day)}
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Anchor location</h2>
+
+<div class="mb-2">
+  <Toggle let:on={open} let:toggle>
+    <Field label="Anchor" class="cursor-pointer" on:click={toggle}>
+      <span class="text-sm">
+        {anchor}
+      </span>
+    </Field>
+    <Menu {open} on:close={toggle} placement="bottom-start">
+      <div class="grid grid-cols-3 grid-rows-5 gap-1 p-1">
+        {#each anchorOptions as option}
+          <Button
+            variant="outline"
+            color={option === anchor ? 'blue' : 'default'}
+            on:click={() => (anchor = option)}
+            class={cls(option === 'center' && 'row-span-3')}
+          >
+            {option}
+          </Button>
+        {/each}
+      </div>
+    </Menu>
+  </Toggle>
+</div>
+
+<Preview data={dateSeries}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeries}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
+        <Highlight points lines />
+      </Svg>
+      <Tooltip
+        {anchor}
+        topOffset={0}
+        leftOffset={0}
+        header={(data) => format(data.date, 'eee, MMMM do')}
+        let:data
+      >
+        <TooltipItem label="value" value={data.value} />
       </Tooltip>
     </Chart>
   </div>
