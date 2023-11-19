@@ -7,18 +7,15 @@
 
   import { tooltipContext } from './TooltipContext.svelte';
 
-  // TODO:
-  // [ ] Rename `topOffset` => `yOffset`, and `leftOffset` => `xOffset`
+  /** `x` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
+  export let x: 'pointer' | 'data' | number | undefined = 'pointer';
+  /** `y` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
+  export let y: 'pointer' | 'data' | number | undefined = 'pointer';
 
-  /** Top position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
-  export let top: 'pointer' | 'data' | number | undefined = 'pointer';
-  /** Left position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
-  export let left: 'pointer' | 'data' | number | undefined = 'pointer';
-
-  /** Offset added to `top` position */
-  export let topOffset = typeof top === 'number' || typeof left === 'number' ? 0 : 10;
-  /** Offset added to `left` position */
-  export let leftOffset = typeof top === 'number' || typeof left === 'number' ? 0 : 10;
+  /** Offset added to `x` position */
+  export let xOffset = typeof x === 'number' || typeof y === 'number' ? 0 : 10;
+  /** Offset added to `y` position */
+  export let yOffset = typeof x === 'number' || typeof y === 'number' ? 0 : 10;
 
   /** Align based on edge of tooltip */
   type Placement =
@@ -52,99 +49,91 @@
   let tooltipWidth = 0;
   let tooltipHeight = 0;
 
-  const topPos = animate ? spring($tooltip.top) : writable($tooltip.top);
-  const leftPos = animate ? spring($tooltip.left) : writable($tooltip.left);
+  const xPos = animate ? spring($tooltip.x) : writable($tooltip.x);
+  const yPos = animate ? spring($tooltip.y) : writable($tooltip.y);
 
   $: if ($tooltip?.data) {
-    const topValue =
-      typeof top === 'number'
-        ? top
-        : top === 'data'
-        ? $yGet($tooltip.data) + $padding.top
-        : $tooltip.top;
+    const xValue =
+      typeof x === 'number' ? x : x === 'data' ? $xGet($tooltip.data) + $padding.left : $tooltip.x;
 
-    const leftValue =
-      typeof left === 'number'
-        ? left
-        : left === 'data'
-        ? $xGet($tooltip.data) + $padding.left
-        : $tooltip.left;
+    const yValue =
+      typeof y === 'number' ? y : y === 'data' ? $yGet($tooltip.data) + $padding.top : $tooltip.y;
 
-    let topAlign: 'top' | 'center' | 'bottom' = 'top';
+    let yAlign: 'top' | 'center' | 'bottom' = 'top';
     switch (anchor) {
       case 'top-left':
       case 'top':
       case 'top-right':
-        topAlign = 'top';
+        yAlign = 'top';
         break;
 
       case 'left':
       case 'center':
       case 'right':
-        topAlign = 'center';
+        yAlign = 'center';
         break;
 
       case 'bottom-left':
       case 'bottom':
       case 'bottom-right':
-        topAlign = 'bottom';
+        yAlign = 'bottom';
         break;
     }
-    const topAlignOffset =
-      topAlign === 'center' ? tooltipHeight / 2 : topAlign === 'bottom' ? tooltipHeight : 0;
+    const yAlignOffset =
+      yAlign === 'center' ? tooltipHeight / 2 : yAlign === 'bottom' ? tooltipHeight : 0;
 
-    let leftAlign: 'left' | 'center' | 'right' = 'left';
+    let xAlign: 'left' | 'center' | 'right' = 'left';
     switch (anchor) {
       case 'top-left':
       case 'left':
       case 'bottom-left':
-        leftAlign = 'left';
+        xAlign = 'left';
         break;
 
       case 'top':
       case 'center':
       case 'bottom':
-        leftAlign = 'center';
+        xAlign = 'center';
         break;
 
       case 'top-right':
       case 'right':
       case 'bottom-right':
-        leftAlign = 'right';
+        xAlign = 'right';
         break;
     }
-    const leftAlignOffset =
-      leftAlign === 'center' ? tooltipWidth / 2 : leftAlign === 'right' ? tooltipWidth : 0;
+    const xAlignOffset =
+      xAlign === 'center' ? tooltipWidth / 2 : xAlign === 'right' ? tooltipWidth : 0;
 
     const rect = {
-      top: topValue + topOffset - topAlignOffset,
-      bottom: topValue + topOffset - topAlignOffset + tooltipHeight,
-      left: leftValue + leftOffset - leftAlignOffset,
-      right: leftValue + leftOffset - leftAlignOffset + tooltipWidth,
+      top: yValue + yOffset - yAlignOffset,
+      bottom: yValue + yOffset - yAlignOffset + tooltipHeight,
+      left: xValue + xOffset - xAlignOffset,
+      right: xValue + xOffset - xAlignOffset + tooltipWidth,
     };
 
-    if ((contained === 'container' && rect.top < 0) || rect.bottom > $containerHeight) {
+    if (contained === 'container' && (rect.top < 0 || rect.bottom > $containerHeight)) {
       // Change side.  Do not allow tooltip to go above the top
-      rect.top = Math.max(topValue - (topOffset + tooltipHeight), 0);
+      rect.top = Math.max(yValue - (yOffset + tooltipHeight), 0);
       rect.bottom = rect.top + tooltipHeight;
     }
 
-    if ((contained === 'container' && rect.left < 0) || rect.right > $containerWidth) {
+    if (contained === 'container' && (rect.left < 0 || rect.right > $containerWidth)) {
       // Change side.  Do not allow tooltip to go above the left
-      rect.left = Math.max(leftValue - (leftOffset + tooltipWidth), 0);
+      rect.left = Math.max(xValue - (xOffset + tooltipWidth), 0);
       rect.right = rect.left + tooltipWidth;
     }
 
-    $topPos = rect.top;
-    $leftPos = rect.left;
+    $yPos = rect.top;
+    $xPos = rect.left;
   }
 </script>
 
 {#if $tooltip.data}
   <div
     class={cls('absolute pointer-events-none z-50', classes.root)}
-    style:top="{$topPos}px"
-    style:left="{$leftPos}px"
+    style:top="{$yPos}px"
+    style:left="{$xPos}px"
     transition:fade={{ duration: 100 }}
     bind:clientWidth={tooltipWidth}
     bind:clientHeight={tooltipHeight}

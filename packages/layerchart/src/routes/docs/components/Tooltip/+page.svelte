@@ -252,7 +252,7 @@
         <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
         <Highlight points lines />
       </Svg>
-      <Tooltip top="data" left="data" header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+      <Tooltip y="data" x="data" header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />
       </Tooltip>
     </Chart>
@@ -283,8 +283,8 @@
       </Svg>
 
       <Tooltip
-        top="data"
-        left={padding.left}
+        x={padding.left}
+        y="data"
         anchor="right"
         contained={false}
         variant="none"
@@ -295,8 +295,8 @@
       </Tooltip>
 
       <Tooltip
-        top={height}
-        left="data"
+        x="data"
+        y={height}
         anchor="top"
         variant="none"
         class="text-[10px] font-semibold text-accent-700 bg-accent-50 mt-[2px] px-2 py-[2px] border border-accent-500 rounded whitespace-nowrap"
@@ -363,8 +363,8 @@
       </Svg>
       <Tooltip
         {anchor}
-        top={snap}
-        left={snap}
+        x={snap}
+        y={snap}
         header={(data) => format(data.date, 'eee, MMMM do')}
         let:data
       >
@@ -409,8 +409,8 @@
         />
       </Svg>
       <Tooltip
-        top={charts.area.snapToDataY ? 'data' : 'pointer'}
-        left={charts.area.snapToDataX ? 'data' : 'pointer'}
+        x={charts.area.snapToDataX ? 'data' : 'pointer'}
+        y={charts.area.snapToDataY ? 'data' : 'pointer'}
         header={(data) => format(data.date, 'eee, MMMM do')}
         let:data
       >
@@ -457,8 +457,8 @@
         />
       </Svg>
       <Tooltip
-        top={charts.areaStack.snapToDataY ? 'data' : 'pointer'}
-        left={charts.areaStack.snapToDataX ? 'data' : 'pointer'}
+        x={charts.areaStack.snapToDataX ? 'data' : 'pointer'}
+        y={charts.areaStack.snapToDataY ? 'data' : 'pointer'}
         header={(data) => format(data.data.date, 'eee, MMMM do')}
         let:data
       >
@@ -503,8 +503,8 @@
         />
       </Svg>
       <Tooltip
-        top={charts.dateTime.snapToDataY ? 'data' : 'pointer'}
-        left={charts.dateTime.snapToDataX ? 'data' : 'pointer'}
+        x={charts.dateTime.snapToDataX ? 'data' : 'pointer'}
+        y={charts.dateTime.snapToDataY ? 'data' : 'pointer'}
         header={(data) => data.name}
         let:data
       >
@@ -549,8 +549,8 @@
         />
       </Svg>
       <Tooltip
-        top={charts.duration.snapToDataY ? 'data' : 'pointer'}
-        left={charts.duration.snapToDataX ? 'data' : 'pointer'}
+        x={charts.duration.snapToDataX ? 'data' : 'pointer'}
+        y={charts.duration.snapToDataY ? 'data' : 'pointer'}
         header={(data) => data.name}
         let:data
       >
@@ -599,8 +599,8 @@
         />
       </Svg>
       <Tooltip
-        top={charts.multiDuration.snapToDataY ? 'data' : 'pointer'}
-        left={charts.multiDuration.snapToDataX ? 'data' : 'pointer'}
+        x={charts.multiDuration.snapToDataX ? 'data' : 'pointer'}
+        y={charts.multiDuration.snapToDataY ? 'data' : 'pointer'}
         header={(data) => data.name}
         let:data
       >
@@ -653,8 +653,8 @@
         />
       </Svg>
       <Tooltip
-        top={charts.bars.snapToDataY ? 'data' : 'pointer'}
-        left={charts.bars.snapToDataX ? 'data' : 'pointer'}
+        x={charts.bars.snapToDataX ? 'data' : 'pointer'}
+        y={charts.bars.snapToDataY ? 'data' : 'pointer'}
         header={(data) => format(data.date, 'eee, MMMM do')}
         let:data
       >
@@ -709,8 +709,8 @@
         />
       </Svg>
       <Tooltip
-        top={charts.multiBars.snapToDataY ? 'data' : 'pointer'}
-        left={charts.multiBars.snapToDataX ? 'data' : 'pointer'}
+        x={charts.multiBars.snapToDataX ? 'data' : 'pointer'}
+        y={charts.multiBars.snapToDataY ? 'data' : 'pointer'}
         header={(data) => format(data.date, 'eee, MMMM do')}
         let:data
       >
@@ -751,8 +751,8 @@
         />
       </Svg>
       <Tooltip
-        top={charts.scatter.snapToDataY ? 'data' : 'pointer'}
-        left={charts.scatter.snapToDataX ? 'data' : 'pointer'}
+        x={charts.scatter.snapToDataX ? 'data' : 'pointer'}
+        y={charts.scatter.snapToDataY ? 'data' : 'pointer'}
         let:data
       >
         <TooltipItem label="x" value={data.x} format="decimal" />

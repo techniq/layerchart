@@ -129,7 +129,7 @@
         </Zoom>
       </Svg>
       <Tooltip header={(data) => data.properties.name} let:data>
-        {@const [longitude, latitude] = projection.invert([tooltip.left, tooltip.top])}
+        {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
         <TooltipItem label="longitude" value={longitude} format="decimal" />
         <TooltipItem label="latitude" value={latitude} format="decimal" />
       </Tooltip>

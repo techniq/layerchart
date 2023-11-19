@@ -424,7 +424,7 @@
       <Svg>
         <LinearGradient class="from-accent-500/50 to-accent-500/0" vertical let:url>
           <Area line={{ class: 'stroke-2 stroke-accent-500 opacity-20' }} fill={url} />
-          <RectClipPath x={0} y={0} width={tooltip.data ? tooltip.left : width} {height} spring>
+          <RectClipPath x={0} y={0} width={tooltip.data ? tooltip.x : width} {height} spring>
             <Area line={{ class: 'stroke-2 stroke-accent-500' }} fill={url} />
           </RectClipPath>
         </LinearGradient>
@@ -433,8 +433,8 @@
       </Svg>
 
       <Tooltip
-        top={48}
-        leftOffset={4}
+        y={48}
+        xOffset={4}
         variant="none"
         class="text-sm font-semibold text-accent-700 leading-3"
         let:data
@@ -442,13 +442,13 @@
         {format(data.value, 'currency')}
       </Tooltip>
 
-      <Tooltip top={4} left={4} variant="none" class="text-sm font-semibold leading-3" let:data>
+      <Tooltip x={4} y={4} variant="none" class="text-sm font-semibold leading-3" let:data>
         {format(data.date, PeriodType.Day)}
       </Tooltip>
 
       <Tooltip
-        top={height + padding.top + 2}
-        left="data"
+        x="data"
+        y={height + padding.top + 2}
         anchor="top"
         variant="none"
         class="text-sm font-semibold bg-accent-500 text-white leading-3 px-2 py-1 rounded whitespace-nowrap"

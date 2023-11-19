@@ -2,7 +2,13 @@
 'layerchart': minor
 ---
 
-[Tooltip] Replace TooltipContext's snapToDataX/Y with `<Tooltip top="data" left="data" />`. Add `anchor` prop to align based on corner/edge/center (13 points) of tooltip instead of always top-left corner. Add more tooltip examples.
+[Tooltip] Position improvements
+
+- Replace TooltipContext's `snapToDataX/Y`` with `<Tooltip x="data" y="data" />`.
+- Add `anchor` prop to align based on corner/edge/center (9 points) of tooltip instead of always top-left corner.
+- Rename TooltipContext's `top`/`left` to `x`/`y`
+- Rename `<Tooltip left={...} top={...} />` to `<Tooltip x={...} y={...} />`
+- Add more tooltip examples
 
 **Breaking Change**
 
@@ -20,7 +26,7 @@ After:
 
 ```svelte
 <Chart tooltip>
-  <Tooltip left="data" top="data">
+  <Tooltip x="data" y="data">
     ...
   </Tooltip>
 </Chart>
