@@ -364,7 +364,9 @@
       <Tooltip
         {anchor}
         x={snap}
+        xOffset={['top', 'center', 'bottom'].includes(anchor) ? 0 : 10}
         y={snap}
+        yOffset={['left', 'center', 'right'].includes(anchor) ? 0 : 10}
         header={(data) => format(data.date, 'eee, MMMM do')}
         let:data
       >

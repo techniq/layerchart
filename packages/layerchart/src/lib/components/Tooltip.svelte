@@ -53,35 +53,9 @@
   const yPos = animate ? spring($tooltip.y) : writable($tooltip.y);
 
   $: if ($tooltip?.data) {
+    /* xAlign and offset */
     const xValue =
       typeof x === 'number' ? x : x === 'data' ? $xGet($tooltip.data) + $padding.left : $tooltip.x;
-
-    const yValue =
-      typeof y === 'number' ? y : y === 'data' ? $yGet($tooltip.data) + $padding.top : $tooltip.y;
-
-    let yAlign: 'top' | 'center' | 'bottom' = 'top';
-    switch (anchor) {
-      case 'top-left':
-      case 'top':
-      case 'top-right':
-        yAlign = 'top';
-        break;
-
-      case 'left':
-      case 'center':
-      case 'right':
-        yAlign = 'center';
-        break;
-
-      case 'bottom-left':
-      case 'bottom':
-      case 'bottom-right':
-        yAlign = 'bottom';
-        break;
-    }
-    const yAlignOffset =
-      yAlign === 'center' ? tooltipHeight / 2 : yAlign === 'bottom' ? tooltipHeight : 0;
-
     let xAlign: 'left' | 'center' | 'right' = 'left';
     switch (anchor) {
       case 'top-left':
@@ -105,21 +79,50 @@
     const xAlignOffset =
       xAlign === 'center' ? tooltipWidth / 2 : xAlign === 'right' ? tooltipWidth : 0;
 
+    /* yAlign and offset */
+    const yValue =
+      typeof y === 'number' ? y : y === 'data' ? $yGet($tooltip.data) + $padding.top : $tooltip.y;
+    let yAlign: 'top' | 'center' | 'bottom' = 'top';
+    switch (anchor) {
+      case 'top-left':
+      case 'top':
+      case 'top-right':
+        yAlign = 'top';
+        break;
+
+      case 'left':
+      case 'center':
+      case 'right':
+        yAlign = 'center';
+        break;
+
+      case 'bottom-left':
+      case 'bottom':
+      case 'bottom-right':
+        yAlign = 'bottom';
+        break;
+    }
+    const yAlignOffset =
+      yAlign === 'center' ? tooltipHeight / 2 : yAlign === 'bottom' ? tooltipHeight : 0;
+
     const rect = {
-      top: yValue + yOffset - yAlignOffset,
-      bottom: yValue + yOffset - yAlignOffset + tooltipHeight,
-      left: xValue + xOffset - xAlignOffset,
-      right: xValue + xOffset - xAlignOffset + tooltipWidth,
+      top: yValue + (yAlign === 'bottom' ? -yOffset : yOffset) - yAlignOffset,
+      left: xValue + (xAlign === 'right' ? -xOffset : xOffset) - xAlignOffset,
+      // set below
+      bottom: 0,
+      right: 0,
     };
+    rect.bottom = rect.top + tooltipHeight;
+    rect.right = rect.left + tooltipWidth;
 
     if (contained === 'container' && (rect.top < 0 || rect.bottom > $containerHeight)) {
-      // Change side.  Do not allow tooltip to go above the top
+      // Change side.  Do not allow tooltip to go beyond the Chart's top edge
       rect.top = Math.max(yValue - (yOffset + tooltipHeight), 0);
       rect.bottom = rect.top + tooltipHeight;
     }
 
     if (contained === 'container' && (rect.left < 0 || rect.right > $containerWidth)) {
-      // Change side.  Do not allow tooltip to go above the left
+      // Change side.  Do not allow tooltip to go beyond the Chart's left edge
       rect.left = Math.max(xValue - (xOffset + tooltipWidth), 0);
       rect.right = rect.left + tooltipWidth;
     }
