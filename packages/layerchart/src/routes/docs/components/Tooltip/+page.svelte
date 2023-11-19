@@ -125,13 +125,9 @@
     'top-start',
     'top',
     'top-end',
-    'left-start',
-    'center',
-    'right-start',
     'left',
+    'center',
     'right',
-    'left-end',
-    'right-end',
     'bottom-start',
     'bottom',
     'bottom-end',
@@ -312,13 +308,12 @@
       </span>
     </Field>
     <Menu {open} on:close={toggle} placement="bottom-start">
-      <div class="grid grid-cols-3 grid-rows-5 gap-1 p-1">
+      <div class="grid grid-cols-3 gap-1 p-1">
         {#each anchorOptions as option}
           <Button
             variant="outline"
             color={option === anchor ? 'blue' : 'default'}
             on:click={() => (anchor = option)}
-            class={cls(option === 'center' && 'row-span-3')}
           >
             {option}
           </Button>

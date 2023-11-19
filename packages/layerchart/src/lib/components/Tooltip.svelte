@@ -25,13 +25,9 @@
     | 'top-start'
     | 'top'
     | 'top-end'
-    | 'left-start'
     | 'left'
-    | 'left-end'
     | 'center'
-    | 'right-start'
     | 'right'
-    | 'right-end'
     | 'bottom-start'
     | 'bottom'
     | 'bottom-end';
@@ -79,8 +75,6 @@
       case 'top-start':
       case 'top':
       case 'top-end':
-      case 'left-start':
-      case 'right-start':
         topAlign = 'start';
         break;
 
@@ -93,8 +87,6 @@
       case 'bottom-start':
       case 'bottom':
       case 'bottom-end':
-      case 'left-end':
-      case 'right-end':
         topAlign = 'end';
         break;
     }
@@ -103,10 +95,8 @@
 
     let leftAlign: 'start' | 'center' | 'end' = 'start';
     switch (anchor) {
-      case 'left-start':
-      case 'left':
-      case 'left-end':
       case 'top-start':
+      case 'left':
       case 'bottom-start':
         leftAlign = 'start';
         break;
@@ -117,11 +107,9 @@
         leftAlign = 'center';
         break;
 
-      case 'right-start':
-      case 'right':
-      case 'right-end':
-      case 'bottom-end':
       case 'top-end':
+      case 'right':
+      case 'bottom-end':
         leftAlign = 'end';
         break;
     }
