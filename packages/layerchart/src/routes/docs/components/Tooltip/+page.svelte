@@ -122,17 +122,17 @@
   } satisfies Record<string, ComponentProps<TooltipControls>['settings']>;
 
   const anchorOptions = [
-    'top-start',
+    'top-left',
     'top',
-    'top-end',
+    'top-right',
     'left',
     'center',
     'right',
-    'bottom-start',
+    'bottom-left',
     'bottom',
-    'bottom-end',
+    'bottom-right',
   ] as const;
-  let anchor: ComponentProps<Tooltip>['anchor'] = 'top-start';
+  let anchor: ComponentProps<Tooltip>['anchor'] = 'top-left';
 </script>
 
 <h1>Examples</h1>
