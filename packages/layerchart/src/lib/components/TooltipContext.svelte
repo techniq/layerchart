@@ -5,8 +5,8 @@
   export const tooltipContextKey = {};
 
   export type TooltipContextValue = {
-    top: number;
-    left: number;
+    x: number;
+    y: number;
     data: any;
     show(event: MouseEvent | TouchEvent, tooltipData?: any): any;
     hide(event?: MouseEvent | TouchEvent);
@@ -15,8 +15,8 @@
   export type TooltipContext = Readable<TooltipContextValue>;
 
   const defaultContext: TooltipContext = writable({
-    top: 0,
-    left: 0,
+    x: 0,
+    y: 0,
     data: null,
     show: () => {},
     hide: () => {},
@@ -74,8 +74,6 @@
     | 'voronoi'
     | 'quadtree'
     | 'manual' = 'bisect-x';
-  export let snapToDataX: boolean = false;
-  export let snapToDataY: boolean = false;
   /**
    * @type {'closest' | 'left' | 'right'}
    */
@@ -91,7 +89,7 @@
   /** Enable debug view (show hit targets, etc) */
   export let debug = false;
 
-  const tooltip = writable({ top: 0, left: 0, data: null, show: showTooltip, hide: hideTooltip });
+  const tooltip = writable({ y: 0, x: 0, data: null, show: showTooltip, hide: hideTooltip });
   setTooltipContext(tooltip);
 
   let hideTimeoutId: NodeJS.Timeout;
@@ -217,8 +215,8 @@
 
       $tooltip = {
         ...$tooltip,
-        left: snapToDataX ? $xGet(tooltipData) + $padding.left : localX,
-        top: snapToDataY ? $yGet(tooltipData) + $padding.top : localY,
+        x: localX,
+        y: localY,
         data: tooltipData,
       };
     } else {

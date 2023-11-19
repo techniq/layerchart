@@ -108,8 +108,8 @@
       <Tooltip
         class="text-xs"
         contained={false}
-        top={-10}
-        left={containerWidth + 8}
+        y={-10}
+        x={containerWidth + 8}
         variant="none"
         let:data
       >
@@ -148,8 +148,8 @@
             class="text-xs"
             contained={false}
             header={(data) => format(data.date, 'eee, MMM do')}
-            top={containerHeight + 4}
-            leftOffset={0}
+            y={containerHeight + 4}
+            xOffset={0}
             let:data
           >
             <TooltipItem label="value" value={data.value} />

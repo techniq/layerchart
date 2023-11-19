@@ -3,7 +3,16 @@
   import { stack } from 'd3-shape';
   import { format } from 'date-fns';
 
-  import { Duration, formatDate, PeriodType } from 'svelte-ux';
+  import {
+    Button,
+    Duration,
+    Field,
+    formatDate,
+    Menu,
+    MenuField,
+    PeriodType,
+    Toggle,
+  } from 'svelte-ux';
   import { flatten } from 'svelte-ux/utils/array';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -120,6 +129,20 @@
       debug: false,
     },
   } satisfies Record<string, ComponentProps<TooltipControls>['settings']>;
+
+  const anchorOptions = [
+    'top-left',
+    'top',
+    'top-right',
+    'left',
+    'center',
+    'right',
+    'bottom-left',
+    'bottom',
+    'bottom-right',
+  ] as const;
+  let anchor: ComponentProps<Tooltip>['anchor'] = 'top-left';
+  let snap: 'pointer' | 'data' = 'pointer';
 </script>
 
 <h1>Examples</h1>
@@ -151,7 +174,7 @@
   </div>
 </Preview>
 
-<h2>Light Variant</h2>
+<h2>Light variant</h2>
 
 <Preview data={dateSeries}>
   <div class="h-[300px] p-4 border rounded">
@@ -181,6 +204,178 @@
   </div>
 </Preview>
 
+<h2>Position</h2>
+<h3>Default (mouse position with offset)</h3>
+
+<Preview data={dateSeries}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeries}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
+        <Highlight points lines />
+      </Svg>
+      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+        <TooltipItem label="value" value={data.value} />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h3>Data snapping</h3>
+
+<Preview data={dateSeries}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeries}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
+        <Highlight points lines />
+      </Svg>
+      <Tooltip y="data" x="data" header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+        <TooltipItem label="value" value={data.value} />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h3>Multiple tooltips with fixed single axis</h3>
+
+<Preview data={dateSeries}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeries}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip
+      let:height
+      let:padding
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
+        <Highlight points lines axis="both" />
+      </Svg>
+
+      <Tooltip
+        x={padding.left}
+        y="data"
+        anchor="right"
+        contained={false}
+        variant="none"
+        class="text-[10px] font-semibold text-accent-700 bg-accent-50 mt-[2px] px-1 py-[2px] border border-accent-500 rounded whitespace-nowrap"
+        let:data
+      >
+        {data.value}
+      </Tooltip>
+
+      <Tooltip
+        x="data"
+        y={height}
+        anchor="top"
+        variant="none"
+        class="text-[10px] font-semibold text-accent-700 bg-accent-50 mt-[2px] px-2 py-[2px] border border-accent-500 rounded whitespace-nowrap"
+        let:data
+      >
+        {formatDate(data.date, PeriodType.Day)}
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Anchor location</h2>
+
+<div class="grid grid-cols-2 gap-2 mb-2">
+  <Toggle let:on={open} let:toggle>
+    <Field label="Anchor" class="cursor-pointer" on:click={toggle}>
+      <span class="text-sm">
+        {anchor}
+      </span>
+    </Field>
+
+    <MenuField
+      label="Snap"
+      bind:value={snap}
+      options={[
+        { label: 'pointer', value: 'pointer' },
+        { label: 'data', value: 'data' },
+      ]}
+    />
+
+    <Menu {open} on:close={toggle} placement="bottom-start">
+      <div class="grid grid-cols-3 gap-1 p-1">
+        {#each anchorOptions as option}
+          <Button
+            variant="outline"
+            color={option === anchor ? 'blue' : 'default'}
+            on:click={() => (anchor = option)}
+          >
+            {option}
+          </Button>
+        {/each}
+      </div>
+    </Menu>
+  </Toggle>
+</div>
+
+<Preview data={dateSeries}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeries}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Area class="fill-accent-500/30" line={{ class: 'stroke-accent-500 stroke-2' }} />
+        <Highlight points lines />
+      </Svg>
+      <Tooltip
+        {anchor}
+        x={snap}
+        xOffset={['top', 'center', 'bottom'].includes(anchor) ? 0 : 10}
+        y={snap}
+        yOffset={['left', 'center', 'right'].includes(anchor) ? 0 : 10}
+        header={(data) => format(data.date, 'eee, MMMM do')}
+        let:data
+      >
+        <TooltipItem label="value" value={data.value} />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
 <h1>Chart types</h1>
 
 <h2>Area <small>x: scaleTime, y: scaleLinear</small></h2>
@@ -201,8 +396,6 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{
         mode: charts.area.mode,
-        snapToDataX: charts.area.snapToDataX,
-        snapToDataY: charts.area.snapToDataY,
         debug: charts.area.debug,
       }}
     >
@@ -217,7 +410,12 @@
           axis={charts.area.axis}
         />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+      <Tooltip
+        x={charts.area.snapToDataX ? 'data' : 'pointer'}
+        y={charts.area.snapToDataY ? 'data' : 'pointer'}
+        header={(data) => format(data.date, 'eee, MMMM do')}
+        let:data
+      >
         <TooltipItem label="value" value={data.value} />
       </Tooltip>
     </Chart>
@@ -246,8 +444,6 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{
         mode: charts.areaStack.mode,
-        snapToDataX: charts.areaStack.snapToDataX,
-        snapToDataY: charts.areaStack.snapToDataY,
         debug: charts.areaStack.debug,
       }}
     >
@@ -262,7 +458,12 @@
           axis={charts.areaStack.axis}
         />
       </Svg>
-      <Tooltip header={(data) => format(data.data.date, 'eee, MMMM do')} let:data>
+      <Tooltip
+        x={charts.areaStack.snapToDataX ? 'data' : 'pointer'}
+        y={charts.areaStack.snapToDataY ? 'data' : 'pointer'}
+        header={(data) => format(data.data.date, 'eee, MMMM do')}
+        let:data
+      >
         {#each keys as key}
           <TooltipItem label={key} value={data.data[key]} />
         {/each}
@@ -289,8 +490,6 @@
       padding={{ left: 36, bottom: 36 }}
       tooltip={{
         mode: charts.dateTime.mode,
-        snapToDataX: charts.dateTime.snapToDataX,
-        snapToDataY: charts.dateTime.snapToDataY,
         debug: charts.dateTime.debug,
       }}
     >
@@ -305,7 +504,12 @@
           axis={charts.dateTime.axis}
         />
       </Svg>
-      <Tooltip header={(data) => data.name} let:data>
+      <Tooltip
+        x={charts.dateTime.snapToDataX ? 'data' : 'pointer'}
+        y={charts.dateTime.snapToDataY ? 'data' : 'pointer'}
+        header={(data) => data.name}
+        let:data
+      >
         <TooltipItem label="date" value={format(data.startDate, 'h:mm a')} />
       </Tooltip>
     </Chart>
@@ -332,8 +536,6 @@
       padding={{ left: 36, bottom: 36 }}
       tooltip={{
         mode: charts.duration.mode,
-        snapToDataX: charts.duration.snapToDataX,
-        snapToDataY: charts.duration.snapToDataY,
         debug: charts.duration.debug,
       }}
     >
@@ -348,7 +550,12 @@
           axis={charts.duration.axis}
         />
       </Svg>
-      <Tooltip header={(data) => data.name} let:data>
+      <Tooltip
+        x={charts.duration.snapToDataX ? 'data' : 'pointer'}
+        y={charts.duration.snapToDataY ? 'data' : 'pointer'}
+        header={(data) => data.name}
+        let:data
+      >
         <TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
         <TooltipItem label="end" value={format(data.endDate, 'h:mm a')} />
         <TooltipSeparator />
@@ -379,8 +586,6 @@
       padding={{ left: 36, bottom: 36 }}
       tooltip={{
         mode: charts.multiDuration.mode,
-        snapToDataX: charts.multiDuration.snapToDataX,
-        snapToDataY: charts.multiDuration.snapToDataY,
         debug: charts.multiDuration.debug,
       }}
     >
@@ -395,7 +600,12 @@
           axis={charts.multiDuration.axis}
         />
       </Svg>
-      <Tooltip header={(data) => data.name} let:data>
+      <Tooltip
+        x={charts.multiDuration.snapToDataX ? 'data' : 'pointer'}
+        y={charts.multiDuration.snapToDataY ? 'data' : 'pointer'}
+        header={(data) => data.name}
+        let:data
+      >
         <TooltipItem label="start" value={format(data.startDate, 'h:mm a')} />
         <TooltipItem label="end" value={format(data.endDate, 'h:mm a')} />
         <TooltipSeparator />
@@ -427,8 +637,6 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{
         mode: charts.bars.mode,
-        snapToDataX: charts.bars.snapToDataX,
-        snapToDataY: charts.bars.snapToDataY,
         debug: charts.bars.debug,
       }}
     >
@@ -446,7 +654,12 @@
           axis={charts.bars.axis}
         />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+      <Tooltip
+        x={charts.bars.snapToDataX ? 'data' : 'pointer'}
+        y={charts.bars.snapToDataY ? 'data' : 'pointer'}
+        header={(data) => format(data.date, 'eee, MMMM do')}
+        let:data
+      >
         <TooltipItem label="value" value={data.value} />
       </Tooltip>
     </Chart>
@@ -474,8 +687,6 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{
         mode: charts.multiBars.mode,
-        snapToDataX: charts.multiBars.snapToDataX,
-        snapToDataY: charts.multiBars.snapToDataY,
         debug: charts.multiBars.debug,
       }}
     >
@@ -499,7 +710,12 @@
             : false}
         />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+      <Tooltip
+        x={charts.multiBars.snapToDataX ? 'data' : 'pointer'}
+        y={charts.multiBars.snapToDataY ? 'data' : 'pointer'}
+        header={(data) => format(data.date, 'eee, MMMM do')}
+        let:data
+      >
         <TooltipItem label="value" value={data.value} />
         <TooltipItem label="baseline" value={data.baseline} />
       </Tooltip>
@@ -522,8 +738,6 @@
       padding={{ left: 30, bottom: 30 }}
       tooltip={{
         mode: charts.scatter.mode,
-        snapToDataX: charts.scatter.snapToDataX,
-        snapToDataY: charts.scatter.snapToDataY,
         debug: charts.scatter.debug,
       }}
     >
@@ -538,7 +752,11 @@
           axis={charts.scatter.axis}
         />
       </Svg>
-      <Tooltip let:data>
+      <Tooltip
+        x={charts.scatter.snapToDataX ? 'data' : 'pointer'}
+        y={charts.scatter.snapToDataY ? 'data' : 'pointer'}
+        let:data
+      >
         <TooltipItem label="x" value={data.x} format="decimal" />
         <TooltipItem label="y" value={data.y} format="decimal" />
       </Tooltip>

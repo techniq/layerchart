@@ -7,12 +7,29 @@
 
   import { tooltipContext } from './TooltipContext.svelte';
 
-  /** Use fixed `top` position instead of calculating based on data and mouse position */
-  export let top: number | undefined = undefined;
-  /** Use fixed `left` position instead of calculating based on data and mouse position */
-  export let left: number | undefined = undefined;
-  export let topOffset = top ? 0 : 10;
-  export let leftOffset = left ? 0 : 10;
+  /** `x` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
+  export let x: 'pointer' | 'data' | number | undefined = 'pointer';
+  /** `y` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
+  export let y: 'pointer' | 'data' | number | undefined = 'pointer';
+
+  /** Offset added to `x` position */
+  export let xOffset = typeof x === 'number' || typeof y === 'number' ? 0 : 10;
+  /** Offset added to `y` position */
+  export let yOffset = typeof x === 'number' || typeof y === 'number' ? 0 : 10;
+
+  /** Align based on edge of tooltip */
+  type Placement =
+    | 'top-left'
+    | 'top'
+    | 'top-right'
+    | 'left'
+    | 'center'
+    | 'right'
+    | 'bottom-left'
+    | 'bottom'
+    | 'bottom-right';
+  export let anchor: Placement = 'top-left';
+
   export let contained: 'container' | false = 'container'; // TODO: Support 'window' using getBoundingClientRect()
   export let animate = true;
   export let variant: 'dark' | 'light' | 'none' = 'dark';
@@ -26,48 +43,110 @@
     content?: string;
   } = {};
 
-  const { containerWidth, containerHeight } = getContext('LayerCake');
+  const { padding, xGet, yGet, containerWidth, containerHeight } = getContext('LayerCake');
   const tooltip = tooltipContext();
 
   let tooltipWidth = 0;
   let tooltipHeight = 0;
 
-  let topPos = animate ? spring($tooltip.top) : writable($tooltip.top);
-  $: if ($tooltip) {
-    if (top != null) {
-      $topPos = top;
-    } else if (
-      contained === 'container' &&
-      $tooltip.top + topOffset + tooltipHeight > $containerHeight
-    ) {
-      // Change side.  Do not allow tooltip to go above the top
-      $topPos = Math.max($tooltip.top - (topOffset + tooltipHeight), 0);
-    } else {
-      $topPos = $tooltip.top + topOffset;
-    }
+  const xPos = animate ? spring($tooltip.x) : writable($tooltip.x);
+  const yPos = animate ? spring($tooltip.y) : writable($tooltip.y);
+
+  type Align = 'start' | 'center' | 'end';
+
+  function alignValue(value: number, align: Align, tooltipSize: number) {
+    const alignOffset = align === 'center' ? tooltipSize / 2 : align === 'end' ? tooltipSize : 0;
+    return value + (align === 'end' ? -yOffset : yOffset) - alignOffset;
   }
 
-  let leftPos = animate ? spring($tooltip.left) : writable($tooltip.left);
-  $: if ($tooltip) {
-    if (left != null) {
-      $leftPos = left;
-    } else if (
-      contained === 'container' &&
-      $tooltip.left + leftOffset + tooltipWidth > $containerWidth
-    ) {
-      // Change side
-      $leftPos = Math.max($tooltip.left - (leftOffset + tooltipWidth), 0);
-    } else {
-      $leftPos = $tooltip.left + leftOffset;
+  $: if ($tooltip?.data) {
+    const xValue: number =
+      typeof x === 'number' ? x : x === 'data' ? $xGet($tooltip.data) + $padding.left : $tooltip.x;
+
+    let xAlign: Align = 'start';
+    switch (anchor) {
+      case 'top-left':
+      case 'left':
+      case 'bottom-left':
+        xAlign = 'start';
+        break;
+
+      case 'top':
+      case 'center':
+      case 'bottom':
+        xAlign = 'center';
+        break;
+
+      case 'top-right':
+      case 'right':
+      case 'bottom-right':
+        xAlign = 'end';
+        break;
     }
+
+    const yValue: number =
+      typeof y === 'number' ? y : y === 'data' ? $yGet($tooltip.data) + $padding.top : $tooltip.y;
+
+    let yAlign: Align = 'start';
+    switch (anchor) {
+      case 'top-left':
+      case 'top':
+      case 'top-right':
+        yAlign = 'start';
+        break;
+
+      case 'left':
+      case 'center':
+      case 'right':
+        yAlign = 'center';
+        break;
+
+      case 'bottom-left':
+      case 'bottom':
+      case 'bottom-right':
+        yAlign = 'end';
+        break;
+    }
+
+    const rect = {
+      top: alignValue(yValue, yAlign, tooltipHeight),
+      left: alignValue(xValue, xAlign, tooltipWidth),
+      // set below
+      bottom: 0,
+      right: 0,
+    };
+    rect.bottom = rect.top + tooltipHeight;
+    rect.right = rect.left + tooltipWidth;
+
+    // Check if outside of container and swap align side accordingly
+    if (contained === 'container') {
+      if ((xAlign === 'start' || xAlign === 'center') && rect.right > $containerWidth) {
+        rect.left = alignValue(xValue, 'end', tooltipWidth);
+      }
+      if ((xAlign === 'end' || xAlign === 'center') && rect.left < $padding.left) {
+        rect.left = alignValue(xValue, 'start', tooltipWidth);
+      }
+      rect.right = rect.left + tooltipWidth;
+
+      if ((yAlign === 'start' || yAlign === 'center') && rect.bottom > $containerHeight) {
+        rect.top = alignValue(yValue, 'end', tooltipHeight);
+      }
+      if ((yAlign === 'end' || yAlign === 'center') && rect.top < $padding.top) {
+        rect.top = alignValue(yValue, 'start', tooltipHeight);
+      }
+      rect.bottom = rect.top + tooltipHeight;
+    }
+
+    $yPos = rect.top;
+    $xPos = rect.left;
   }
 </script>
 
 {#if $tooltip.data}
   <div
     class={cls('absolute pointer-events-none z-50', classes.root)}
-    style:top="{$topPos}px"
-    style:left="{$leftPos}px"
+    style:top="{$yPos}px"
+    style:left="{$xPos}px"
     transition:fade={{ duration: 100 }}
     bind:clientWidth={tooltipWidth}
     bind:clientHeight={tooltipHeight}
