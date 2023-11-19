@@ -3,7 +3,16 @@
   import { stack } from 'd3-shape';
   import { format } from 'date-fns';
 
-  import { Button, cls, Duration, Field, formatDate, Menu, PeriodType, Toggle } from 'svelte-ux';
+  import {
+    Button,
+    Duration,
+    Field,
+    formatDate,
+    Menu,
+    MenuField,
+    PeriodType,
+    Toggle,
+  } from 'svelte-ux';
   import { flatten } from 'svelte-ux/utils/array';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -133,6 +142,7 @@
     'bottom-right',
   ] as const;
   let anchor: ComponentProps<Tooltip>['anchor'] = 'top-left';
+  let snap: 'pointer' | 'data' = 'pointer';
 </script>
 
 <h1>Examples</h1>
@@ -300,13 +310,23 @@
 
 <h2>Anchor location</h2>
 
-<div class="mb-2">
+<div class="grid grid-cols-2 gap-2 mb-2">
   <Toggle let:on={open} let:toggle>
     <Field label="Anchor" class="cursor-pointer" on:click={toggle}>
       <span class="text-sm">
         {anchor}
       </span>
     </Field>
+
+    <MenuField
+      label="Snap"
+      bind:value={snap}
+      options={[
+        { label: 'pointer', value: 'pointer' },
+        { label: 'data', value: 'data' },
+      ]}
+    />
+
     <Menu {open} on:close={toggle} placement="bottom-start">
       <div class="grid grid-cols-3 gap-1 p-1">
         {#each anchorOptions as option}
@@ -343,8 +363,8 @@
       </Svg>
       <Tooltip
         {anchor}
-        topOffset={0}
-        leftOffset={0}
+        top={snap}
+        left={snap}
         header={(data) => format(data.date, 'eee, MMMM do')}
         let:data
       >
