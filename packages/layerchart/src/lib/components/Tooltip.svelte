@@ -54,9 +54,9 @@
 
   type Align = 'start' | 'center' | 'end';
 
-  function alignValue(value: number, align: Align, tooltipSize: number) {
+  function alignValue(value: number, align: Align, addlOffset: number, tooltipSize: number) {
     const alignOffset = align === 'center' ? tooltipSize / 2 : align === 'end' ? tooltipSize : 0;
-    return value + (align === 'end' ? -yOffset : yOffset) - alignOffset;
+    return value + (align === 'end' ? -addlOffset : addlOffset) - alignOffset;
   }
 
   $: if ($tooltip?.data) {
@@ -109,8 +109,8 @@
     }
 
     const rect = {
-      top: alignValue(yValue, yAlign, tooltipHeight),
-      left: alignValue(xValue, xAlign, tooltipWidth),
+      top: alignValue(yValue, yAlign, yOffset, tooltipHeight),
+      left: alignValue(xValue, xAlign, xOffset, tooltipWidth),
       // set below
       bottom: 0,
       right: 0,
@@ -121,18 +121,18 @@
     // Check if outside of container and swap align side accordingly
     if (contained === 'container') {
       if ((xAlign === 'start' || xAlign === 'center') && rect.right > $containerWidth) {
-        rect.left = alignValue(xValue, 'end', tooltipWidth);
+        rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
       }
       if ((xAlign === 'end' || xAlign === 'center') && rect.left < $padding.left) {
-        rect.left = alignValue(xValue, 'start', tooltipWidth);
+        rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
       }
       rect.right = rect.left + tooltipWidth;
 
       if ((yAlign === 'start' || yAlign === 'center') && rect.bottom > $containerHeight) {
-        rect.top = alignValue(yValue, 'end', tooltipHeight);
+        rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
       }
       if ((yAlign === 'end' || yAlign === 'center') && rect.top < $padding.top) {
-        rect.top = alignValue(yValue, 'start', tooltipHeight);
+        rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
       }
       rect.bottom = rect.top + tooltipHeight;
     }
