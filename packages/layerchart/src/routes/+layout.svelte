@@ -2,15 +2,7 @@
   import { inject } from '@vercel/analytics';
   import { mdiArrowTopRight, mdiGithub, mdiTwitter } from '@mdi/js';
   import 'prism-themes/themes/prism-vsc-dark-plus.css';
-  import {
-    AppBar,
-    AppLayout,
-    Button,
-    QuickSearch,
-    Tooltip,
-    createTheme,
-    sortFunc,
-  } from 'svelte-ux';
+  import { AppBar, AppLayout, Button, QuickSearch, Tooltip, settings, sortFunc } from 'svelte-ux';
 
   import { dev } from '$app/environment';
   import { afterNavigate, goto } from '$app/navigation';
@@ -19,8 +11,10 @@
 
   inject({ mode: dev ? 'development' : 'production' });
 
-  createTheme({
-    // AppBar: 'bg-accent-500 text-white shadow-md',
+  settings({
+    theme: {
+      // AppBar: 'bg-accent-500 text-white shadow-md',
+    },
   });
 
   let mainEl: HTMLElement;
