@@ -1,5 +1,75 @@
 # LayerChart
 
+## 0.26.0
+
+### Minor Changes
+
+- [Tooltip] Position improvements including `anchor` support ([#72](https://github.com/techniq/layerchart/pull/72))
+
+  **Breaking Change**
+
+  ## Replace TooltipContext's `snapToDataX/Y` with `<Tooltip x="data" y="data" />`
+
+  Before:
+
+  ```svelte
+  <Chart tooltip={{ snapToDataX: true, snapToDataY: true }}>
+    <Tooltip>
+      ...
+    </Tooltip>
+  </Chart>
+  ```
+
+  After:
+
+  ```svelte
+  <Chart tooltip>
+    <Tooltip x="data" y="data">
+      ...
+    </Tooltip>
+  </Chart>
+  ```
+
+  ## Rename `<Tooltip left={...} top={...} />` to `<Tooltip x={...} y={...} />`
+
+  Before:
+
+  ```svelte
+  <Chart tooltip>
+    <Tooltip left={0} top={0}>
+      ...
+    </Tooltip>
+  </Chart>
+  ```
+
+  After:
+
+  ```svelte
+  <Chart tooltip>
+    <Tooltip x={0} left={0}>
+      ...
+    </Tooltip>
+  </Chart>
+  ```
+
+  ## Additional
+
+  - Rename tooltipContext's `top`/`left` to `x`/`y`
+  - Add `anchor` prop to align based on corner/edge/center (9 points) of tooltip instead of always top-left corner.
+  - Add more tooltip examples
+
+- [Labels] Remove old `formatStyle` prop since Svelte UX `format` now covers all use cases ([`06d9bde`](https://github.com/techniq/layerchart/commit/06d9bde8397be2e315c625528e8b83072a2f343b))
+
+- Setup as monorepo using pnpm workspace ([#69](https://github.com/techniq/layerchart/pull/69))
+
+### Patch Changes
+
+- Expose `data` and `flatData` as Chart slot props ([`97e812d`](https://github.com/techniq/layerchart/commit/97e812da7229c693f4aac67e29f3cc0e7703ebc3))
+
+- [Bars] Change named `bars` slot to default. Update group/stacked transition examples to use <Bar> directly and set {#each} key ([`7fd24a5`](https://github.com/techniq/layerchart/commit/7fd24a5efba48dc1c51b097a6385fc415a3cee18))
+
+- Update dependencies ([#73](https://github.com/techniq/layerchart/pull/73))
+
 ## 0.25.1
 
 ### Patch Changes
