@@ -18,7 +18,8 @@
     "changeset": "changeset",
     "version": "changeset version",
     "version-status": "changeset status -v",
-    "publish": "changeset publish"
+    "publish": "changeset publish",
+    "prepare": "svelte-kit sync"
   },
   "devDependencies": {
     "@rollup/plugin-dsv": "^3.0.4",
