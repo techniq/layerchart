@@ -6,7 +6,6 @@
    */
   import { getContext, type ComponentProps } from 'svelte';
   import { format as formatValue, type FormatType } from 'svelte-ux';
-  import { formatNumberAsStyle, type FormatNumberStyle } from 'svelte-ux/utils/number';
   import { greatestAbs } from 'svelte-ux/utils/array';
 
   import Text from './Text.svelte';
@@ -17,8 +16,7 @@
 
   // export let orientation: 'outside' | 'inside' | 'auto' = 'auto';
   export let significantDigits = 3;
-  export let format: FormatType = undefined;
-  export let formatStyle: FormatNumberStyle = null;
+  export let format: FormatType | undefined = undefined;
   // export let overlap = false;
 
   $: yBaseline = $custom?.yBaseline ?? 0;
@@ -52,9 +50,6 @@
       if (format) {
         // Apply more versatile formatting first
         formattedValue = formatValue(labelValue, format ?? $yScale.tickFormat?.());
-      } else {
-        // Deprecated format
-        formattedValue = formatNumberAsStyle(labelValue, formatStyle, 0, significantDigits);
       }
     }
 
