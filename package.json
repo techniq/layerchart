@@ -12,12 +12,12 @@
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "changeset:release": "changeset publish",
-    "up-dep": "pnpm -r up --latest"
+    "up-deps": "pnpm update -r -i --latest"
   },
   "devDependencies": {
-    "@changesets/cli": "2.26.1",
+    "@changesets/cli": "2.26.2",
     "@svitejs/changesets-changelog-github-compact": "^1.1.0",
-    "rimraf": "5.0.0"
+    "rimraf": "5.0.5"
   },
   "packageManager": "pnpm@8.6.3"
 }
