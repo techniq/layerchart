@@ -2,7 +2,7 @@
   import { getContext, setContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export const tooltipContextKey = {};
+  export const tooltipContextKey = Symbol();
 
   export type TooltipContextValue = {
     x: number;

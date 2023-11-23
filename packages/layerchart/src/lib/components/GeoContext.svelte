@@ -5,10 +5,10 @@
     geoMercator,
     type GeoIdentityTransform,
     type GeoPermissibleObjects,
-    type GeoProjection
+    type GeoProjection,
   } from 'd3-geo';
 
-  export const geoContextKey = {};
+  export const geoContextKey = Symbol();
 
   export type GeoContext = Writable<GeoProjection | GeoIdentityTransform>;
 
