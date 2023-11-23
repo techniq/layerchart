@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.26.2
+
+### Patch Changes
+
+- Use Symbol() instead of empty object for context keys ([`c676611`](https://github.com/techniq/layerchart/commit/c676611a86c142892a1683e56961a9fd9c633967))
+
 ## 0.26.1
 
 ### Patch Changes
