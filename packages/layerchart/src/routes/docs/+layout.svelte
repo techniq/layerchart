@@ -52,7 +52,7 @@
 </script>
 
 <div
-  class="md:sticky top-0 z-20 bg-neutral-200/90 backdrop-blur px-5 py-4 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)calc(100%-4px),rgba(0,0,0,0))]"
+  class="[@media(min-height:900px)]:sticky top-0 z-20 bg-neutral-200/90 backdrop-blur px-5 py-4 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)calc(100%-4px),rgba(0,0,0,0))]"
 >
   {#if title}
     <div>
@@ -160,12 +160,12 @@
                     item.type === 'components' || item.type === 'examples'
                       ? mdiCodeTags
                       : item.type === 'stores'
-                      ? mdiDatabaseOutline
-                      : item.type === 'actions'
-                      ? mdiCodeBraces
-                      : item.type === 'github'
-                      ? mdiGithub
-                      : mdiLink}
+                        ? mdiDatabaseOutline
+                        : item.type === 'actions'
+                          ? mdiCodeBraces
+                          : item.type === 'github'
+                            ? mdiGithub
+                            : mdiLink}
                   <ListItem
                     title={item.name}
                     {icon}
