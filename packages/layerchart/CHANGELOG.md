@@ -20,9 +20,9 @@
 
 - [Tooltip] Position improvements including `anchor` support ([#72](https://github.com/techniq/layerchart/pull/72))
 
-  **Breaking Change**
+  **Breaking Changes**
 
-  ## Replace TooltipContext's `snapToDataX/Y` with `<Tooltip x="data" y="data" />`
+  **Replace TooltipContext's `snapToDataX/Y` with `<Tooltip x="data" y="data" />`**
 
   Before:
 
@@ -44,7 +44,7 @@
   </Chart>
   ```
 
-  ## Rename `<Tooltip left={...} top={...} />` to `<Tooltip x={...} y={...} />`
+  **Rename `<Tooltip left={...} top={...} />` to `<Tooltip x={...} y={...} />`**
 
   Before:
 
@@ -66,7 +66,7 @@
   </Chart>
   ```
 
-  ## Additional
+  **Additional**
 
   - Rename tooltipContext's `top`/`left` to `x`/`y`
   - Add `anchor` prop to align based on corner/edge/center (9 points) of tooltip instead of always top-left corner.
