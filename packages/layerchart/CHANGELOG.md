@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.27.0
+
+### Minor Changes
+
+- [TooltipContext] Replace `on:click` event handler with `onClick` prop (easier to consume when using `<Chart tooltip={{ onClick(e) => { ... } }} />`) ([`ee80654`](https://github.com/techniq/layerchart/commit/ee80654c1e14857c2d47dea791390a717c9921eb))
+
 ## 0.26.2
 
 ### Patch Changes
