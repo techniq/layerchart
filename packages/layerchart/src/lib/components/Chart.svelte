@@ -108,7 +108,8 @@
 >
   <GeoContext {...geo} let:projection>
     {#if tooltip}
-      <TooltipContext {...tooltip} let:tooltip>
+      {@const tooltipProps = typeof tooltip === 'object' ? tooltip : {}}
+      <TooltipContext {...tooltipProps} let:tooltip>
         <slot
           {aspectRatio}
           {containerHeight}

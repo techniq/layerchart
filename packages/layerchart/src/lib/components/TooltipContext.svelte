@@ -32,7 +32,6 @@
 
 <script lang="ts">
   import { raise } from 'layercake';
-  import { createEventDispatcher } from 'svelte';
   import { writable } from 'svelte/store';
   import { bisector, max, min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
@@ -45,8 +44,6 @@
   import { localPoint } from '$lib/utils/event';
   import { isScaleBand, scaleInvert } from '$lib/utils/scales';
   import { quadtreeRects } from '$lib/utils/quadtree';
-
-  const dispatch = createEventDispatcher<{ click: { data: any } }>();
 
   const { flatData, x, xScale, xGet, xRange, y, yScale, yGet, yRange, width, height, padding } =
     getContext('LayerCake');
@@ -88,6 +85,8 @@
   export let radius: number = Infinity;
   /** Enable debug view (show hit targets, etc) */
   export let debug = false;
+
+  export let onClick: ({ data }: { data: any }) => any = () => {};
 
   const tooltip = writable({ y: 0, x: 0, data: null, show: showTooltip, hide: hideTooltip });
   setTooltipContext(tooltip);
@@ -319,13 +318,13 @@
             width: Array.isArray(xValue)
               ? xValue[1] - xValue[0]
               : isScaleBand($xScale)
-              ? $xScale.step()
-              : min($xRange) + x,
+                ? $xScale.step()
+                : min($xRange) + x,
             height: Array.isArray(yValue)
               ? yValue[1] - yValue[0]
               : isScaleBand($yScale)
-              ? $yScale.step()
-              : max($yRange) - y,
+                ? $yScale.step()
+                : max($yRange) - y,
             data: d,
           };
         }
@@ -349,7 +348,7 @@
       on:mousemove={showTooltip}
       on:mouseleave={hideTooltip}
       on:click={(e) => {
-        dispatch('click', { data: $tooltip?.data });
+        onClick({ data: $tooltip?.data });
       }}
     />
   </Html>
@@ -365,7 +364,7 @@
           on:mousemove={(e) => showTooltip(e, point.data)}
           on:mouseleave={hideTooltip}
           on:click={(e) => {
-            dispatch('click', { data: point.data });
+            onClick({ data: point.data });
           }}
         />
       </g>
@@ -386,7 +385,7 @@
           on:mousemove={(e) => showTooltip(e, rect.data)}
           on:mouseleave={hideTooltip}
           on:click={(e) => {
-            dispatch('click', { data: rect.data });
+            onClick({ data: rect.data });
           }}
         />
       {/each}
