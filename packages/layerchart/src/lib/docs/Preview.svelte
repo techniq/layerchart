@@ -66,7 +66,7 @@
 
         {#if copyValue}
           <Tooltip title="Copy">
-            <CopyButton value={copyValue} variant="fill-light" color="accent" />
+            <CopyButton value={copyValue} variant="fill-light" color="primary" />
           </Tooltip>
         {/if}
       </div>
@@ -74,7 +74,7 @@
       <Json value={data} />
 
       <div slot="actions">
-        <Button variant="fill" color="accent">Close</Button>
+        <Button variant="fill" color="primary">Close</Button>
       </div>
     </Dialog>
   </Toggle>
