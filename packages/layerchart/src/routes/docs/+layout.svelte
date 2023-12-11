@@ -97,7 +97,7 @@
             showTableOfContents = !showTableOfContents;
           }}
           variant="fill-light"
-          color="accent"
+          color="primary"
           size="sm"
         >
           On this page

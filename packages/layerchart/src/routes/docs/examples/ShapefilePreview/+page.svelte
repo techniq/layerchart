@@ -54,7 +54,7 @@
 <div class="grid grid-cols-[1fr,auto] gap-2 items-center">
   <TextField label="File" bind:value={file} placeholder="Please specify a file or load an example">
     <div slot="append">
-      <ButtonGroup variant="fill-outline" color="accent">
+      <ButtonGroup variant="fill-outline" color="primary">
         <Button on:click={() => loadFile()}>Load file</Button>
         <Toggle let:on={open} let:toggle>
           <span>
