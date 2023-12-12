@@ -28,8 +28,17 @@
   $: sourceUrl = ['components', 'utils'].includes(type)
     ? `src/lib/${type}/${name}.${type === 'components' ? 'svelte' : 'ts'}`
     : null;
-  $: ({ description, features, related, hideUsage, hideTableOfContents, source, pageSource, api } =
-    $page.data.meta ?? {});
+  $: ({
+    description,
+    features,
+    related,
+    hideUsage,
+    hideTableOfContents,
+    source,
+    pageSource,
+    api,
+    status,
+  } = $page.data.meta ?? {});
 
   $: showTableOfContents = false;
   onMount(() => {
@@ -44,6 +53,8 @@
       } else {
         return { type: 'website', name: url, url };
       }
+    } else if (r.startsWith('/')) {
+      return { type: 'docs', name: toTitleCase(r.slice(1)), url: r };
     } else {
       const [type, name] = r.split('/');
       return { type, name, url: `/docs/${type}/${name}` };
@@ -52,21 +63,34 @@
 </script>
 
 <div
-  class="[@media(min-height:900px)]:sticky top-0 z-20 bg-neutral-200/90 backdrop-blur px-5 py-4 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)calc(100%-4px),rgba(0,0,0,0))]"
+  class="[@media(min-height:900px)]:sticky top-0 z-20 bg-surface-200/90 backdrop-blur px-5 py-4 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)calc(100%-4px),rgba(0,0,0,0))]"
 >
   {#if title}
     <div>
-      <div class="inline-block text-xs font-bold text-gray-500 capitalize">Docs</div>
+      <div class="inline-block text-xs font-bold text-surface-content/50 capitalize">Docs</div>
       <Icon path={mdiChevronRight} class="divider opacity-25" />
-      <div class="inline-block text-xs font-bold text-accent-500 capitalize">
+      <div class="inline-block text-xs font-bold text-primary capitalize">
         {type}
       </div>
     </div>
 
-    <div class="text-2xl font-bold">{title}</div>
+    <div class="text-2xl font-bold">
+      {title}
+      {#if status}
+        <span
+          class={cls(
+            'text-sm  px-2 rounded',
+            status === 'beta' && 'bg-yellow-500/20 text-yellow-800',
+            status === 'deprecated' && 'bg-red-500/20 text-red-900'
+          )}
+        >
+          {status}
+        </span>
+      {/if}
+    </div>
 
     {#if description}
-      <div class="text-sm text-black/60">
+      <div class="text-sm text-surface-content/60">
         {description}
       </div>
     {/if}
@@ -109,9 +133,9 @@
 
 <div class="px-4">
   {#if showTableOfContents && !$xlScreen}
-    <div transition:fade|local class="mt-3">
+    <div transition:fade class="mt-3">
       {#key $page.route.id}
-        <TableOfContents />
+        <TableOfContents class="text-surface-content" />
       {/key}
     </div>
   {/if}
@@ -133,7 +157,7 @@
               <ListItem
                 title={feature.description}
                 icon={mdiCheck}
-                avatar={{ size: 'sm', class: 'text-xs text-white bg-emerald-600' }}
+                avatar={{ size: 'sm', class: 'text-xs text-white bg-success' }}
                 classes={{ root: feature.depth && 'pl-12', title: 'text-sm' }}
               />
             {/each}
@@ -150,7 +174,7 @@
             <div>
               <h2
                 id="related-{type}"
-                class="text-xs uppercase leading-8 tracking-widest text-black/50"
+                class="text-xs uppercase leading-8 tracking-widest text-surface-content/50"
               >
                 {type}
               </h2>
@@ -169,7 +193,7 @@
                   <ListItem
                     title={item.name}
                     {icon}
-                    avatar={{ size: 'sm', class: 'text-xs text-white bg-accent-500' }}
+                    avatar={{ size: 'sm', class: 'text-xs text-white bg-primary' }}
                     on:click={() => {
                       if (item.url instanceof URL) {
                         // open in new window
@@ -179,10 +203,10 @@
                         goto(item.url);
                       }
                     }}
-                    class="hover:bg-accent-50 cursor-pointer"
+                    class="hover:bg-surface-200 cursor-pointer"
                   >
                     <div slot="actions">
-                      <Icon data={mdiChevronRight} class="text-black/50" />
+                      <Icon data={mdiChevronRight} class="text-surface-content/50" />
                     </div>
                   </ListItem>
                 {/each}
@@ -199,12 +223,14 @@
     </div>
 
     {#if showTableOfContents && $xlScreen}
-      <div transition:slide|local={{ axis: 'x' }}>
-        <div class="w-[224px] sticky top-[16px] pr-2 max-h-[calc(100vh-64px)] overflow-auto z-20">
-          <div class="text-xs uppercase leading-8 tracking-widest text-black/50">On this page</div>
+      <div transition:slide={{ axis: 'x' }}>
+        <div class="w-[224px] sticky top-[16px] pr-2 max-h-[calc(100dvh-64px)] overflow-auto z-20">
+          <div class="text-xs uppercase leading-8 tracking-widest text-surface-content/50">
+            On this page
+          </div>
           <!-- Rebuild toc when page changes -->
           {#key $page.route.id}
-            <TableOfContents />
+            <TableOfContents class="text-surface-content" />
           {/key}
         </div>
       </div>

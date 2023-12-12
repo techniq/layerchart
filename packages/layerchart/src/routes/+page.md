@@ -1,4 +1,4 @@
-<div class="prose max-w-none bg-white p-3 px-5 m-2 rounded shadow-lg border">
+<div class="prose max-w-none bg-surface-100 p-3 px-5 m-2 rounded shadow-lg border">
 
 <h1>Welcome to LayerChart</h1>
 
@@ -22,7 +22,7 @@ The library accomplishes this through a large assortment of components:
 - Legends, annotations, and many more!
 
 ## Getting Started
-Take a look at the various examples to understand the capabilities and go to [Getting Started](/getting-started) to install it for yourself.
 
+Take a look at the various examples to understand the capabilities and go to [Getting Started](/getting-started) to install it for yourself.
 
 </div>
