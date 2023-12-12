@@ -29,4 +29,4 @@
   `;
 </script>
 
-<path d={pathData} fill="none" stroke="black" {...$$restProps} />
+<path d={pathData} fill="none" class="stroke-surface-content/20" {...$$restProps} />
