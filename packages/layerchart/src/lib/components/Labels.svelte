@@ -111,7 +111,7 @@
     <!-- TODO: Add labels for each item when array/stack?  Use `getValue(item)` instead and iterate -->
     <Text
       value={getFormattedValue(item)}
-      class="text-xs stroke-white [stroke-width:2px]"
+      class="text-xs stroke-surface-100 [stroke-width:2px]"
       {...getTextProps(item)}
       {...$$restProps}
     />
