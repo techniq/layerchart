@@ -79,7 +79,7 @@
     <Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded">
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
-        <div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
+        <div class="text-xs text-surface-content/50">{format(item.value, 'integer')}</div>
       </div>
     </Button>
   </Breadcrumb>

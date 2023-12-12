@@ -85,8 +85,8 @@
     const thresholds = scale.thresholds
       ? scale.thresholds() // scaleQuantize
       : scale.quantiles
-      ? scale.quantiles() // scaleQuantile
-      : scale.domain(); // scaleThreshold
+        ? scale.quantiles() // scaleQuantile
+        : scale.domain(); // scaleThreshold
 
     xScale = scaleLinear()
       .domain([-1, scale.range().length - 1])
@@ -175,7 +175,7 @@
             x={xScale(tick) + tickLabelOffset}
             y={height + tickSize + tickFontSize}
             style:font-size={tickFontSize}
-            class={classes.label}
+            class={cls('fill-surface-content', classes.label)}
           >
             {tickFormat ? format(tick, tickFormat) : tick}
           </text>
@@ -186,7 +186,7 @@
               y1={0}
               x2={xScale(tick)}
               y2={height + tickSize}
-              class={cls('stroke-black', classes.tick)}
+              class={cls('stroke-surface-content', classes.tick)}
             />
           {/if}
         {/each}

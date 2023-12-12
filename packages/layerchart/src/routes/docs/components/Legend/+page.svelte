@@ -13,7 +13,7 @@
     scaleQuantize,
     scaleQuantile,
     scaleThreshold,
-    scaleOrdinal
+    scaleOrdinal,
   } from 'd3-scale';
 
   import {
@@ -24,7 +24,7 @@
     interpolateBlues,
     schemePurples,
     schemeSpectral,
-    schemeRdBu
+    schemeRdBu,
   } from 'd3-scale-chromatic';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -185,7 +185,7 @@
       root: 'ml-10',
       title: 'text-lg text-center',
       label: 'fill-black/50',
-      tick: 'stroke-white'
+      tick: 'stroke-white',
     }}
   />
 </Preview>
@@ -206,7 +206,7 @@
       {#each values as value}
         <div class="flex gap-1">
           <div class="h-4 w-4 rounded-full" style:background-color={scale(value)} />
-          <div class="text-xs text-black/50">{value}</div>
+          <div class="text-xs text-surface-content/50">{value}</div>
         </div>
       {/each}
     </div>

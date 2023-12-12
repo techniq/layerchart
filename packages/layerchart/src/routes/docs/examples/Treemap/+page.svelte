@@ -162,7 +162,7 @@
     >
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
-        <div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
+        <div class="text-xs text-surface-content/50">{format(item.value, 'integer')}</div>
       </div>
     </Button>
   </Breadcrumb>
@@ -291,7 +291,7 @@
     >
       <div class="text-left">
         <div class="text-sm">{item.data[0] ?? 'Overall'}</div>
-        <div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
+        <div class="text-xs text-surface-content/50">{format(item.value, 'integer')}</div>
       </div>
     </Button>
   </Breadcrumb>
@@ -402,7 +402,7 @@
     >
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
-        <div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
+        <div class="text-xs text-surface-content/50">{format(item.value, 'integer')}</div>
       </div>
     </Button>
   </Breadcrumb>

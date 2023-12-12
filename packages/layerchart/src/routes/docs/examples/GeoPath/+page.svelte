@@ -29,10 +29,17 @@
     >
       <Svg>
         {#each states.features as feature}
-          <GeoPath geojson={feature} {tooltip} class="fill-white hover:fill-gray-300" />
+          <GeoPath
+            geojson={feature}
+            {tooltip}
+            class="stroke-surface-content fill-surface-100 hover:fill-surface-content/20"
+          />
         {/each}
         {#each counties.features as feature}
-          <GeoPath geojson={feature} class="fill-none stroke-black/10 pointer-events-none" />
+          <GeoPath
+            geojson={feature}
+            class="fill-none stroke-surface-content/10 pointer-events-none"
+          />
         {/each}
       </Svg>
       <Tooltip header={(data) => data.properties.name} let:data>
