@@ -40,7 +40,7 @@
 {#if code}
   <Button
     icon={mdiCodeTags}
-    class=" text-surface-content/70 py-1"
+    class="text-surface-content/70 py-1"
     on:click={() => (showCode = !showCode)}
   >
     {showCode ? 'Hide' : 'Show'} Code
@@ -49,7 +49,8 @@
 
 {#if data}
   <Toggle let:on={open} let:toggle>
-    <Button icon={mdiTable} class=" text-black/60 py-1" on:click={toggle}>View data</Button>
+    <Button icon={mdiTable} class="text-surface-content/70 py-1" on:click={toggle}>View data</Button
+    >
     <Dialog
       {open}
       on:close={toggle}
