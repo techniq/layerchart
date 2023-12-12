@@ -196,7 +196,10 @@
         spring
         {..._area}
         {...typeof area === 'object' ? area : null}
-        class={cls(!area.fill && 'fill-black/5', typeof area === 'object' ? area.class : null)}
+        class={cls(
+          !area.fill && 'fill-surface-content/5',
+          typeof area === 'object' ? area.class : null
+        )}
         on:click
       />
     </slot>
@@ -230,7 +233,7 @@
           y2={line.y2}
           {...typeof lines === 'object' ? lines : null}
           class={cls(
-            'stroke-black/20 stroke-2 [stroke-dasharray:2,2] pointer-events-none',
+            'stroke-surface-content/20 stroke-2 [stroke-dasharray:2,2] pointer-events-none',
             typeof lines === 'object' ? lines.class : null
           )}
         />

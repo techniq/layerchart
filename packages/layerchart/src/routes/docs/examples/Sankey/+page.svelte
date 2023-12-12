@@ -407,7 +407,7 @@
                 y={nodeHeight / 2}
                 dy={-2}
                 verticalAnchor="middle"
-                class="text-[10px] stroke-white stroke-2"
+                class="text-[10px] stroke-surface-100 stroke-2"
               />
             </Group>
           {/each}

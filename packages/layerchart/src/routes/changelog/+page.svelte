@@ -16,7 +16,9 @@
 
   <div class="hidden lg:block w-[224px]">
     <div class="sticky top-0 pr-2 max-h-[calc(100vh-64px)] overflow-auto">
-      <div class="text-xs uppercase leading-8 tracking-widest text-black/50">On this page</div>
+      <div class="text-xs uppercase leading-8 tracking-widest text-surface-content/50">
+        On this page
+      </div>
       <TableOfContents maxDepth={2} />
     </div>
   </div>

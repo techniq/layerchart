@@ -66,7 +66,7 @@
       }}
     >
       <Svg>
-        <GeoPath geojson={selectedStateFeature} />
+        <GeoPath geojson={selectedStateFeature} class="stroke-surface-content" />
       </Svg>
     </Chart>
   </div>
@@ -88,11 +88,14 @@
         {#each selectedCountiesFeatures as feature}
           <GeoPath
             geojson={feature}
-            class="fill-white stroke-black/10 hover:fill-gray-200"
+            class="fill-surface-100 stroke-surface-content/10 hover:fill-surface-content/20"
             {tooltip}
           />
         {/each}
-        <GeoPath geojson={selectedStateFeature} class="fill-none pointer-events-none" />
+        <GeoPath
+          geojson={selectedStateFeature}
+          class="fill-none stroke-surface-content pointer-events-none"
+        />
       </Svg>
       <Tooltip header={(data) => data.properties.name} />
     </Chart>
@@ -116,14 +119,20 @@
           {#each counties.features as feature}
             <GeoPath
               geojson={feature}
-              class="fill-white stroke-black/5 hover:fill-gray-200"
+              class="fill-surface-100 stroke-surface-content/10 hover:fill-surface-content/20"
               {tooltip}
             />
           {/each}
           {#each states.features as feature}
-            <GeoPath geojson={feature} class="fill-none pointer-events-none stroke-black/10" />
+            <GeoPath
+              geojson={feature}
+              class="fill-none pointer-events-none stroke-surface-content/10"
+            />
           {/each}
-          <GeoPath geojson={selectedStateFeature} class="fill-none pointer-events-none" />
+          <GeoPath
+            geojson={selectedStateFeature}
+            class="fill-none stroke-surface-content pointer-events-none"
+          />
         </ChartClipPath>
       </Svg>
       <Tooltip header={(data) => data.properties.name} />

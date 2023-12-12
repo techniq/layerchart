@@ -136,7 +136,7 @@
     >
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
-        <div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
+        <div class="text-xs text-surface-content/50">{format(item.value, 'integer')}</div>
       </div>
     </Button>
   </Breadcrumb>
@@ -207,7 +207,7 @@
     >
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
-        <div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
+        <div class="text-xs text-surface-content/50">{format(item.value, 'integer')}</div>
       </div>
     </Button>
   </Breadcrumb>
@@ -245,14 +245,14 @@
                       />
                       <Text
                         value={node.data.name}
-                        class="text-[10px] font-medium"
+                        class="text-[10px] font-medium fill-black"
                         verticalAnchor="start"
                         x={4}
                         y={2}
                       />
                       <Text
                         value={format(node.value, 'integer')}
-                        class="text-[8px] font-extralight"
+                        class="text-[8px] font-extralight fill-black"
                         verticalAnchor="start"
                         x={4}
                         y={16}
@@ -290,7 +290,7 @@
     >
       <div class="text-left">
         <div class="text-sm">{item.data[0] ?? 'Overall'}</div>
-        <div class="text-xs text-black/50">{format(item.value, 'integer')}</div>
+        <div class="text-xs text-surface-content/50">{format(item.value, 'integer')}</div>
       </div>
     </Button>
   </Breadcrumb>

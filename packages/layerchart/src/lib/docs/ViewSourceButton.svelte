@@ -20,7 +20,7 @@
       <div class="grid grid-cols-[1fr,auto] gap-3 items-center p-4">
         <div class="overflow-auto">
           <div class="text-lg font-semibold">{label}</div>
-          <div class="text-xs text-black/50 truncate">{href}</div>
+          <div class="text-xs text-surface-content/50 truncate">{href}</div>
         </div>
 
         {#if href}

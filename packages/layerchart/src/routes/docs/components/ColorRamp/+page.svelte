@@ -44,7 +44,7 @@
 <h2>Pixelated</h2>
 
 <div class="inline-flex gap-3 items-center mb-1 ml-4">
-  <span class="text-sm text-black/50">Steps:</span>
+  <span class="text-sm text-surface-content/50">Steps:</span>
   <NumberStepper bind:value={steps} />
 </div>
 
