@@ -37,9 +37,9 @@
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
   const fruitColors = {
-    apples: 'var(--color-blue-500)',
-    bananas: 'var(--color-purple-500)',
-    oranges: 'var(--color-green-500)',
+    apples: 'oklch(var(--color-info))',
+    bananas: 'oklch(var(--color-success))',
+    oranges: 'oklch(var(--color-warning))',
   };
 </script>
 
