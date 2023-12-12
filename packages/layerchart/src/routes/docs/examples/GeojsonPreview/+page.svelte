@@ -69,7 +69,7 @@
   </div>
 
   {#if geojson}
-    <div class="h-[600px] bg-white/50 border border-gray-400 rounded-lg overflow-hidden">
+    <div class="h-[600px] bg-surface-100/50 border rounded-lg overflow-hidden">
       <Chart
         geo={{
           projection,

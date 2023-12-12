@@ -61,8 +61,8 @@
   </div>
 </div>
 
-<div class="flex items-center justify-center bg-white p-4">
-  <svg width={resizeSvg ? width : 300} class="h-56 border">
+<div class="flex items-center justify-center bg-surface-100 p-4">
+  <svg width={resizeSvg ? width : 300} class="h-56 border border-surface-content/10">
     <Text
       {value}
       {x}
