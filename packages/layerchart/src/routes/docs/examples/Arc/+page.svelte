@@ -49,7 +49,7 @@
       <Svg>
         <Group center>
           <Group y={16}>
-            <LinearGradient stops={['hsl(80 100% 50%)', 'hsl(200 100% 50%)']} let:url>
+            <LinearGradient class="from-secondary to-primary" let:url>
               <Arc
                 {value}
                 range={[-120, 120]}
@@ -59,7 +59,7 @@
                 spring
                 let:value
                 fill={url}
-                track={{ fill: 'none', stroke: 'hsl(0 0% 0% / 10%)' }}
+                track={{ class: 'fill-none stroke-surface-content/10' }}
               >
                 <Text
                   value={Math.round(value) + '%'}
@@ -89,7 +89,7 @@
             innerRadius={-20}
             cornerRadius={10}
             class="fill-red-500"
-            track={{ class: 'fill-red-50' }}
+            track={{ class: 'fill-red-500/10' }}
           />
           <Arc
             value={20}
@@ -98,7 +98,7 @@
             innerRadius={-20}
             cornerRadius={10}
             class="fill-lime-400"
-            track={{ class: 'fill-lime-50' }}
+            track={{ class: 'fill-lime-400/10' }}
           />
           <Arc
             value={10}
@@ -107,7 +107,7 @@
             innerRadius={-20}
             cornerRadius={10}
             class="fill-cyan-400"
-            track={{ class: 'fill-cyan-50' }}
+            track={{ class: 'fill-cyan-500/10' }}
           />
         </Group>
       </Svg>
@@ -213,7 +213,7 @@
                 innerRadius={-20}
                 cornerRadius={10}
                 class="fill-red-500"
-                track={{ class: 'fill-red-50' }}
+                track={{ class: 'fill-red-500/10' }}
                 tweened={{ duration: 1000, easing: cubicInOut }}
               />
               <Arc
@@ -223,7 +223,7 @@
                 innerRadius={-20}
                 cornerRadius={10}
                 class="fill-lime-400"
-                track={{ class: 'fill-lime-50' }}
+                track={{ class: 'fill-lime-400/10' }}
                 tweened={{ duration: 1000, easing: cubicInOut }}
               />
               <Arc
@@ -233,7 +233,7 @@
                 innerRadius={-20}
                 cornerRadius={10}
                 class="fill-cyan-400"
-                track={{ class: 'fill-cyan-50' }}
+                track={{ class: 'fill-cyan-500/10' }}
                 tweened={{ duration: 1000, easing: cubicInOut }}
               />
             {/if}
