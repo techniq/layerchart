@@ -25,14 +25,14 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import olympians from '../_data/olympians.json';
+  export let data;
 
   let thresholds = 10;
 
   $: binByWeight = d3bin()
     .value((d) => d.weight)
     .thresholds(thresholds);
-  $: olympiansBins = binByWeight(olympians);
+  $: olympiansBins = binByWeight(data.olympians);
 
   let selectedGenerator = 'normal';
   let randomCount = 1000;
