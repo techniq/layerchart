@@ -31,8 +31,8 @@
 
   /** Convenient property to swap x/y accessor logic */
   export let orientation: 'vertical' | 'horizontal' = sankey ? 'horizontal' : 'vertical';
-  export let x = sankey ? (d) => d[0] : (d) => (orientation === 'horizontal' ? d.y : d.x);
-  export let y = sankey ? (d) => d[1] : (d) => (orientation === 'horizontal' ? d.x : d.y);
+  export let x = (d) => (sankey ? d[0] : orientation === 'horizontal' ? d.y : d.x);
+  export let y = (d) => (sankey ? d[1] : orientation === 'horizontal' ? d.x : d.y);
   export let curve = orientation === 'horizontal' ? curveBumpX : curveBumpY;
 
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;

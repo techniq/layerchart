@@ -14,8 +14,8 @@
       <Svg>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
-        <Line x1={100} y1={100} x2={200} y2={200} class="stroke-2 stroke-blue-500" />
-        <Line x1={50} y1={150} x2={400} y2={150} class="stroke-2 stroke-red-500" />
+        <Line x1={100} y1={100} x2={200} y2={200} class="stroke-2 stroke-primary" />
+        <Line x1={50} y1={150} x2={400} y2={150} class="stroke-2 stroke-secondary" />
       </Svg>
     </Chart>
   </div>

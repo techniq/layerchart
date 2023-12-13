@@ -96,7 +96,7 @@
         <Zoom bind:this={zoom} tweened={{ duration: 800, easing: cubicOut }}>
           <Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : null}>
             {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
-              <Link data={link} {orientation} {curve} tweened class="stroke-gray-300" />
+              <Link data={link} {orientation} {curve} tweened class="stroke-surface-content/30" />
             {/each}
             {#each nodes as node (getNodeKey(node))}
               <Group
@@ -113,10 +113,12 @@
                 }}
                 class={node.data.children ? 'cursor-pointer' : ''}
               >
+                <!-- Solid background to hide link -->
+                <!-- <Rect width={nodeWidth} height={nodeHeight} class="fill-surface-100" rx={10} /> -->
                 <Rect
                   width={nodeWidth}
                   height={nodeHeight}
-                  class="fill-accent-50 stroke-accent-400"
+                  class="fill-primary/5 stroke-primary"
                   stroke-width={node.data.children ? 2 : 1}
                   rx={10}
                 />
@@ -127,7 +129,7 @@
                   dy={-2}
                   textAnchor="middle"
                   verticalAnchor="middle"
-                  class="text-xs fill-accent-500"
+                  class="text-xs fill-primary"
                 />
               </Group>
             {/each}

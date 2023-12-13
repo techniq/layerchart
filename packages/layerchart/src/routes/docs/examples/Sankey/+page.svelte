@@ -81,7 +81,7 @@
             {@const nodeWidth = node.x1 - node.x0}
             {@const nodeHeight = node.y1 - node.y0}
             <Group x={node.x0} y={node.y0}>
-              <Rect width={nodeWidth} height={nodeHeight} class="fill-accent-500" />
+              <Rect width={nodeWidth} height={nodeHeight} class="fill-primary" />
               <Text
                 value={node.id}
                 x={node.height === 0 ? -4 : nodeWidth + 4}
@@ -123,7 +123,7 @@
               <Rect
                 width={nodeWidth}
                 height={nodeHeight}
-                class="fill-accent-500"
+                class="fill-primary"
                 on:mousemove={(e) => tooltip.show(e, { node })}
                 on:mouseleave={tooltip.hide}
               />
@@ -209,7 +209,7 @@
               <Rect
                 width={nodeWidth}
                 height={nodeHeight}
-                class="fill-accent-500 hover:fill-accent-400 hover:cursor-pointer"
+                class="fill-primary hover:fill-primary/90 hover:cursor-pointer"
                 tweened
               />
               <Text

@@ -60,7 +60,7 @@
       <Svg>
         <Group center>
           {#key spring}
-            <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(140 100% 50%)']} vertical let:url>
+            <LinearGradient class="from-secondary to-primary" vertical let:url>
               <Arc
                 {value}
                 {domain}
@@ -74,7 +74,7 @@
                 let:value
                 let:boundingBox
                 fill={url}
-                track={{ fill: 'hsl(0 0% 0% / 6% )' }}
+                track={{ class: 'fill-surface-content/5' }}
               >
                 <Text
                   value={Math.round(value)}

@@ -23,7 +23,7 @@
     <div class="w-[125px] h-[18px]">
       <Chart {data} x="date" xScale={scaleTime()} y="value">
         <Svg>
-          <Spline class="stroke-1 stroke-accent-500" />
+          <Spline class="stroke-1 stroke-primary" />
         </Svg>
       </Chart>
     </div>
@@ -39,7 +39,7 @@
       <span class="w-[125px] h-[18px] inline-block">
         <Chart {data} x="date" xScale={scaleTime()} y="value">
           <Svg>
-            <Spline class="stroke-1 stroke-accent-500" />
+            <Spline class="stroke-1 stroke-primary" />
           </Svg>
         </Chart>
       </span> Sed ipsum justo, facilisis id tempor hendrerit, suscipit eu ipsum. Mauris ut sapien quis
@@ -53,7 +53,7 @@
   <div class="w-[125px] h-[20px] inline-block">
     <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, null]}>
       <Svg>
-        <Spline class="stroke-1 stroke-accent-500" />
+        <Spline class="stroke-1 stroke-primary" />
       </Svg>
     </Chart>
   </div>
@@ -64,7 +64,7 @@
   <div class="w-[125px] h-[25px]">
     <Chart {data} x="date" xScale={scaleTime()} y="value" tooltip>
       <Svg>
-        <Spline class="stroke-1 stroke-accent-500" />
+        <Spline class="stroke-1 stroke-primary" />
         <Highlight points={{ r: 3, class: 'stroke-none' }} />
       </Svg>
       <Tooltip
@@ -84,7 +84,7 @@
   <div class="w-[125px] h-[25px]">
     <Chart {data} x="date" xScale={scaleTime()} y="value" tooltip let:containerWidth>
       <Svg>
-        <Spline class="stroke-1 stroke-accent-500" />
+        <Spline class="stroke-1 stroke-primary" />
         <Highlight points={{ r: 3, class: 'stroke-none' }} />
       </Svg>
 
@@ -116,7 +116,7 @@
       <span class="w-[125px] h-[18px] inline-block">
         <Chart {data} x="date" xScale={scaleTime()} y="value" tooltip let:containerHeight>
           <Svg>
-            <Spline class="stroke-1 stroke-accent-500" />
+            <Spline class="stroke-1 stroke-primary" />
             <Highlight points lines />
           </Svg>
           <Tooltip

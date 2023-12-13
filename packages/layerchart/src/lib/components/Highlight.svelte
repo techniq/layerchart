@@ -216,7 +216,7 @@
         strokeWidth={typeof bar === 'object' ? bar.strokeWidth : null}
         radius={typeof bar === 'object' ? bar.radius : null}
         bar={$tooltip.data}
-        class={cls(!bar.fill && 'fill-accent-500', typeof bar === 'object' ? bar.class : null)}
+        class={cls(!bar.fill && 'fill-primary', typeof bar === 'object' ? bar.class : null)}
         on:click
       />
     </slot>
@@ -255,7 +255,7 @@
           {...typeof points === 'object' ? points : null}
           class={cls(
             'stroke-[6] stroke-white [paint-order:stroke] drop-shadow',
-            !fill && 'fill-accent-500',
+            !fill && 'fill-primary',
             typeof points === 'object' ? points.class : null
           )}
         />

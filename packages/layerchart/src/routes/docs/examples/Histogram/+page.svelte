@@ -78,7 +78,7 @@
       <Svg>
         <Axis placement="left" grid rule format="metric" />
         <Axis placement="bottom" rule ticks={4} />
-        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Highlight area />
       </Svg>
       <Tooltip header={(data) => data.x0 + ' - ' + (data.x1 - 1)} let:data>
@@ -113,7 +113,7 @@
       <Svg>
         <Axis placement="left" rule />
         <Axis placement="bottom" grid rule />
-        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Highlight area />
       </Svg>
       <Tooltip header={(data) => data.x0 + ' - ' + (data.x1 - 1)} let:data>
@@ -205,7 +205,7 @@
       <Svg>
         <Axis placement="left" grid rule format="metric" />
         <Axis placement="bottom" rule ticks={4} />
-        <Bars radius={4} strokeWidth={1} tweened class="fill-accent-500" />
+        <Bars radius={4} strokeWidth={1} tweened class="fill-primary" />
         <Highlight area />
       </Svg>
       <Tooltip header={(data) => data.x0 + ' - ' + (data.x1 - 0.01)} let:data>
@@ -251,7 +251,7 @@
           format={(d) => dateDisplay(d, { format: 'M/d/yy' })}
           labelProps={{ rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 }}
         />
-        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Highlight area />
       </Svg>
       <Tooltip

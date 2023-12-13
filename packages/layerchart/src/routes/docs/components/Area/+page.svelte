@@ -58,9 +58,9 @@
         <Axis placement="bottom" rule />
         <Area
           {curve}
-          line={showLine && { class: 'stroke-accent-500 stroke-2' }}
+          line={showLine && { class: 'stroke-primary stroke-2' }}
           {tweened}
-          class="fill-accent-500/30"
+          class="fill-primary/30"
         />
         {#if showPoints}
           <Points {tweened} />

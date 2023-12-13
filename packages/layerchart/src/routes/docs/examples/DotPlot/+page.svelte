@@ -51,7 +51,7 @@
       <Svg>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
-        <Points class="fill-accent-400 stroke-accent-800" links={{ class: 'stroke-accent-800' }} />
+        <Points class="fill-primary/10 stroke-primary" links={{ class: 'stroke-primary' }} />
         <Highlight area />
         <Highlight points lines axis="x" />
       </Svg>

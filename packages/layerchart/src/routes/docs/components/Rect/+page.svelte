@@ -15,8 +15,8 @@
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Rect x={50} y={50} width={100} height={150} />
-        <Rect x={90} y={80} width={200} height={100} class="fill-accent-500" />
-        <Rect x={125} y={40} width={200} height={100} class="stroke-accent-500 fill-none" />
+        <Rect x={90} y={80} width={200} height={100} class="fill-primary" />
+        <Rect x={125} y={40} width={200} height={100} class="stroke-primary fill-none" />
       </Svg>
     </Chart>
   </div>
