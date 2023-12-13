@@ -64,7 +64,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Spline class="stroke-2 stroke-accent-500" />
+        <Spline class="stroke-2 stroke-primary" />
       </Svg>
     </Chart>
   </div>
@@ -87,7 +87,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Spline class="stroke-2 stroke-accent-500" />
+        <Spline class="stroke-2 stroke-primary" />
         <Highlight points lines />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
@@ -113,7 +113,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Spline class="stroke-2 stroke-accent-500" />
+        <Spline class="stroke-2 stroke-primary" />
         <Labels format="integer" />
       </Svg>
     </Chart>

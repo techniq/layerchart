@@ -4,13 +4,6 @@ const plugin = require('tailwindcss/plugin');
 module.exports = {
   content: ['./src/**/*.{html,svelte,md}', './node_modules/svelte-ux/**/*.{svelte,js,md}'],
   theme: {
-    extend: {
-      colors: {
-        accent: colors.indigo,
-      },
-    },
-  },
-  variants: {
     extend: {},
   },
   plugins: [

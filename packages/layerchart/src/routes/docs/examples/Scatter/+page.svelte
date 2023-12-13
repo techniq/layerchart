@@ -35,7 +35,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Points class="fill-accent-400 stroke-accent-800" />
+        <Points class="fill-primary/10 stroke-primary" />
       </Svg>
     </Chart>
   </div>
@@ -58,7 +58,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Points class="fill-accent-400 stroke-accent-800" />
+        <Points class="fill-primary/10 stroke-primary" />
         <Highlight points lines />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
@@ -84,7 +84,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Points class="fill-accent-400 stroke-accent-800" />
+        <Points class="fill-primary/10 stroke-primary" />
         <Labels format="integer" verticalAnchor="bottom" />
       </Svg>
     </Chart>
@@ -107,7 +107,11 @@
       r="value"
       rScale={scaleThreshold()}
       rDomain={[50, 90]}
-      rRange={['var(--color-red-500)', 'var(--color-yellow-500)', 'var(--color-green-500)']}
+      rRange={[
+        'oklch(var(--color-error))',
+        'oklch(var(--color-warning))',
+        'oklch(var(--color-success))',
+      ]}
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>

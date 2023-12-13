@@ -58,7 +58,7 @@
               cx={point.x}
               cy={point.y}
               r={rScale(point.data.value)}
-              class="fill-accent-400 stroke-accent-600"
+              class="fill-primary/10 stroke-primary"
             />
           {/each}
         </Points>

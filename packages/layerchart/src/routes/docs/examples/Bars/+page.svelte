@@ -74,19 +74,19 @@
           stackBy: undefined,
         }
       : transitionChartMode === 'stack'
-      ? {
-          groupBy: undefined,
-          stackBy: 'fruit',
-        }
-      : transitionChartMode === 'groupStack'
-      ? {
-          groupBy: 'basket',
-          stackBy: 'fruit',
-        }
-      : {
-          groupBy: undefined,
-          stackBy: undefined,
-        };
+        ? {
+            groupBy: undefined,
+            stackBy: 'fruit',
+          }
+        : transitionChartMode === 'groupStack'
+          ? {
+              groupBy: 'basket',
+              stackBy: 'fruit',
+            }
+          : {
+              groupBy: undefined,
+              stackBy: undefined,
+            };
   $: transitionData = createStackData(longData, {
     xKey: 'year',
     groupBy: transitionChart.groupBy,
@@ -113,7 +113,7 @@
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
       </Svg>
     </Chart>
   </div>
@@ -136,7 +136,7 @@
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Highlight area />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
@@ -166,9 +166,9 @@
         <Bars
           radius={4}
           strokeWidth={1}
-          class="fill-accent-500 group-hover:fill-gray-300 transition-colors"
+          class="fill-primary group-hover:fill-gray-300 transition-colors"
         />
-        <Highlight area bar={{ class: 'fill-accent-500', strokeWidth: 1, radius: 4 }} />
+        <Highlight area bar={{ class: 'fill-primary', strokeWidth: 1, radius: 4 }} />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />
@@ -197,12 +197,12 @@
         <Bars
           radius={4}
           strokeWidth={1}
-          class="fill-accent-500 group-hover:fill-gray-300 transition-colors"
+          class="fill-primary group-hover:fill-gray-300 transition-colors"
         />
         <Highlight area>
           <svelte:fragment slot="area" let:area>
             <RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} spring>
-              <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
+              <Bars radius={4} strokeWidth={1} class="fill-primary" />
             </RectClipPath>
           </svelte:fragment>
         </Highlight>
@@ -230,7 +230,7 @@
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Rule x={0} />
-        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Labels format="integer" />
       </Svg>
     </Chart>
@@ -277,7 +277,7 @@
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Rule
           x={median(data, (d) => d.value)}
           class="stroke-2 stroke-red-400 [stroke-dasharray:4] [stroke-linecap:round] "
@@ -301,7 +301,7 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Axis placement="bottom" grid={{ class: 'stroke-white' }} rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
       </Svg>
@@ -323,7 +323,7 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Bars radius={4} strokeWidth={1} class="fill-accent-500" />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Axis placement="bottom" grid={{ class: 'mix-blend-multiply' }} rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
       </Svg>
@@ -349,7 +349,7 @@
         <Axis placement="bottom" grid rule />
         <Axis placement="left" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         <Bars x="baseline" radius={4} strokeWidth={1} class="fill-gray-200" />
-        <Bars x="value" radius={4} strokeWidth={1} inset={16} class="fill-accent-500" />
+        <Bars x="value" radius={4} strokeWidth={1} inset={16} class="fill-primary" />
         <Highlight area />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
@@ -393,7 +393,7 @@
               }}
               radius={4}
               strokeWidth={1}
-              class="fill-accent-500"
+              class="fill-primary"
             />
           {/if}
         </Svg>
