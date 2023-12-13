@@ -1,13 +1,14 @@
 <script lang="ts">
   import { mdiInformation } from '@mdi/js';
-  import { Icon } from 'svelte-ux';
-
-  // console.log($$props, $$slots);
+  import { Icon, cls } from 'svelte-ux';
 </script>
 
 <div
-  class="bg-accent-500/10 border-l-[6px] border-l-accent-500 border-accent-500/30 text-accent-900 px-4 py-2 border my-4 rounded flex items-center gap-2 text-sm"
+  class={cls(
+    'bg-primary/10 border border-l-[6px] border-primary/30 border-l-primary text-primary px-4 py-2 my-4 rounded flex items-center gap-2 text-sm',
+    '[&>a]:font-medium [&>a]:underline [&>a]:decoration-dashed [&>a]:decoration-primary/50 [&>a]:underline-offset-2'
+  )}
 >
-  <Icon data={mdiInformation} class="text-accent-500" />
+  <Icon data={mdiInformation} class="text-primary" />
   <slot />
 </div>

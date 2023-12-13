@@ -89,11 +89,11 @@
   <div class="h-[600px] grid grid-cols-[224px,1fr] relative">
     <div class="absolute top-0 right-0 z-10 flex items-center gap-3">
       {#if isPlaying && selectedFeature}
-        <span class="text-sm px-2 py-1 font-semibold text-blue-500 bg-blue-50 rounded-full">
+        <span class="text-sm px-2 py-1 font-semibold text-primary bg-primary/5 rounded-full">
           {selectedFeature?.properties.name ?? ''}
         </span>
       {/if}
-      <ButtonGroup variant="fill-light" color="blue" size="sm">
+      <ButtonGroup variant="fill-light" color="primary" size="sm">
         <Button icon={mdiPlay} on:click={play} disabled={isPlaying} />
         <Button icon={mdiStop} on:click={stop} disabled={!isPlaying} />
       </ButtonGroup>
@@ -105,7 +105,7 @@
         <div use:scrollIntoView={{ condition: isSelected }}>
           <Button
             variant={isSelected ? 'fill-light' : 'default'}
-            color={isSelected ? 'red' : 'default'}
+            color={isSelected ? 'error' : 'default'}
             fullWidth
             on:click={() => (selectedFeature = country)}
           >
@@ -135,7 +135,7 @@
             geojson={country}
             class={cls(
               'fill-white cursor-pointer',
-              selectedFeature === country ? 'fill-red-400' : 'hover:fill-gray-200'
+              selectedFeature === country ? 'fill-error' : 'hover:fill-gray-200'
             )}
             on:click={(e) => (selectedFeature = country)}
             {tooltip}
@@ -156,11 +156,11 @@
   <div class="h-[600px] grid grid-cols-[224px,1fr] relative">
     <div class="absolute top-0 right-0 z-10 flex items-center gap-3">
       {#if isPlaying && selectedFeature}
-        <span class="text-sm px-2 py-1 font-semibold text-blue-500 bg-blue-50 rounded-full">
+        <span class="text-sm px-2 py-1 font-semibold text-primary bg-primary/5 rounded-full">
           {selectedFeature?.properties.name ?? ''}
         </span>
       {/if}
-      <ButtonGroup variant="fill-light" color="blue" size="sm">
+      <ButtonGroup variant="fill-light" color="primary" size="sm">
         <Button icon={mdiPlay} on:click={play} disabled={isPlaying} />
         <Button icon={mdiStop} on:click={stop} disabled={!isPlaying} />
       </ButtonGroup>
@@ -172,7 +172,7 @@
         <div use:scrollIntoView={{ condition: isSelected }}>
           <Button
             variant={isSelected ? 'fill-light' : 'default'}
-            color={isSelected ? 'red' : 'default'}
+            color={isSelected ? 'error' : 'default'}
             fullWidth
             on:click={() => (selectedFeature = country)}
           >
