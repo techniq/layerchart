@@ -22,7 +22,7 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Frame class="fill-red-50" />
+        <Frame class="fill-error/5" />
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
       </Svg>
@@ -44,7 +44,7 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Frame class="fill-red-50" full />
+        <Frame class="fill-error/5" full />
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
       </Svg>
@@ -66,7 +66,7 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Frame class="stroke-gray-400 fill-none" />
+        <Frame class="stroke-surface-content/50 fill-none" />
         <Axis placement="bottom" />
         <Axis placement="left" />
       </Svg>
@@ -88,8 +88,8 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <LinearGradient class="from-blue-400 to-emerald-400" vertical let:url>
-          <Frame class="stroke-blue-500" fill={url} />
+        <LinearGradient class="from-primary/10 to-secondary/10" vertical let:url>
+          <Frame class="stroke-primary/10" fill={url} />
         </LinearGradient>
         <Axis placement="bottom" />
         <Axis placement="left" />

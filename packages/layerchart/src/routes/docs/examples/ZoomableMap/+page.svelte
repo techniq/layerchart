@@ -83,7 +83,7 @@
           {#each filterNonStates(states.features) as feature}
             <GeoPath
               geojson={feature}
-              class="fill-white hover:fill-gray-200"
+              class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
               stroke-width={1 / scale}
               {tooltip}
               on:click={(e) => {
@@ -104,13 +104,14 @@
               }}
             />
           {/each}
+
           {#each selectedCountiesFeatures as feature (feature.id)}
             <g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}>
               <GeoPath
                 geojson={feature}
                 {tooltip}
                 stroke-width={1 / scale}
-                class="fill-white stroke-black/10 hover:fill-gray-200"
+                class="stroke-surface-content/10 hover:fill-surface-content/10"
                 on:click={() => {
                   selectedStateId = null;
                   resetZoom();

@@ -77,7 +77,7 @@
     >
       <Svg>
         {#each states.features as feature}
-          <GeoPath geojson={feature} class="fill-black/10 stroke-white" />
+          <GeoPath geojson={feature} class="fill-surface-content/10 stroke-surface-100" />
         {/each}
         {#each enrichedCountiesFeatures as feature}
           <GeoPath geojson={feature} let:geoPath>
@@ -96,7 +96,7 @@
           </GeoPath>
         {/each}
         {#each enrichedCountiesFeatures as feature}
-          <GeoPath geojson={feature} {tooltip} class="stroke-none hover:fill-black/10" />
+          <GeoPath geojson={feature} {tooltip} class="stroke-none hover:fill-surface-content/10" />
         {/each}
       </Svg>
       <Legend scale={colorScale} title="Est. Percent under 18" placement="top-left" />

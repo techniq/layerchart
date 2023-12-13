@@ -81,7 +81,9 @@
           {/each}
         </g>
       </Svg>
+
       <Legend scale={colorScale} title="Population" tickFormat={format} />
+
       <Tooltip
         header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
         let:data
