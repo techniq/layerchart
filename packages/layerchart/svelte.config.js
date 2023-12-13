@@ -1,4 +1,4 @@
-import vercelAdapter from '@sveltejs/adapter-vercel';
+import cloudflareAdapter from '@sveltejs/adapter-cloudflare';
 import sveltePreprocess from 'svelte-preprocess';
 import { mdsvex } from 'mdsvex';
 import { codePreview } from 'svelte-ux/plugins/svelte.js';
@@ -11,7 +11,7 @@ const config = {
   preprocess: [mdsvex(mdsvexConfig), sveltePreprocess(), codePreview()],
 
   kit: {
-    adapter: vercelAdapter(),
+    adapter: cloudflareAdapter(),
   },
 };
 
