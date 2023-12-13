@@ -304,7 +304,7 @@
     >
       <Svg>
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
-        <Axis placement="left" grid={{ class: 'stroke-white' }} rule />
+        <Axis placement="left" grid={{ class: 'stroke-surface-100' }} rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
       </Svg>
     </Chart>
