@@ -7,9 +7,8 @@
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Text from '$lib/components/Text.svelte';
 
-  import geojson from '../_data/geo/us-states-topojson.js';
-
-  const states = feature(geojson, geojson.objects.collection);
+  export let data;
+  const states = feature(data.geojson, data.geojson.objects.states);
 </script>
 
 <h1>Examples</h1>

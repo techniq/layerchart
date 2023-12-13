@@ -7,11 +7,7 @@
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
 
-  // import geojson from '../_data/geo/states-albers-10m.json';
-
   export let data;
-  // console.log({ data });
-
   const states = feature(data.geojson, data.geojson.objects.states);
   const counties = feature(data.geojson, data.geojson.objects.counties);
 </script>

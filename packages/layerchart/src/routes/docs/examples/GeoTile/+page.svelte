@@ -14,14 +14,13 @@
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
-  import geojson from '../_data/geo/us-states-topojson.js';
-
-  const states = feature(geojson, geojson.objects.collection);
+  export let data;
+  const states = feature(data.geojson, data.geojson.objects.states);
 
   $: filteredStates = {
     ...states,
     features: states.features.filter(
-      (d) => d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii'
+      (d) => d.id < 60 && d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii'
     ),
   };
   // $: filteredStates = { ...states, features: states.features.filter(d => d.properties.name === 'West Virginia')}

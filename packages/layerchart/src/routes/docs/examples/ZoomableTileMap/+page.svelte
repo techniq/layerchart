@@ -17,9 +17,8 @@
   import TooltipItem from '$lib/components/TooltipItem.svelte';
   import Zoom from '$lib/components/Zoom.svelte';
 
-  import geojson from '../_data/geo/us-states-topojson.js';
-
-  const states = feature(geojson, geojson.objects.collection);
+  export let data;
+  const states = feature(data.geojson, data.geojson.objects.states);
 
   $: filteredStates = {
     ...states,
