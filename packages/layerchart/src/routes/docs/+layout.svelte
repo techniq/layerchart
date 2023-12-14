@@ -22,7 +22,7 @@
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
 
-  $: [path, type, name] = $page.url.pathname.match('.*/(.*)/(.*)') ?? [];
+  $: [type, name] = $page.url.pathname.split('/').slice(2) ?? [];
   $: title = $page.data.meta?.title ?? name;
   $: pageUrl = `src/routes/docs/${type}/${name}/+page.svelte?plain=1`;
   $: sourceUrl = ['components', 'utils'].includes(type)
