@@ -66,7 +66,6 @@
     "@changesets/cli": "^2.26.2",
     "@mdi/js": "^7.3.67",
     "@types/d3-time": "^3.0.2",
-    "@vercel/analytics": "^1.1.1",
     "d3-array": "^3.2.4",
     "d3-delaunay": "^6.0.4",
     "d3-dsv": "^3.0.1",
@@ -85,6 +84,7 @@
     "date-fns": "^2.30.0",
     "layercake": "^8.0.2",
     "lodash-es": "^4.17.21",
+    "posthog-js": "^1.95.1",
     "shapefile": "^0.6.6",
     "svelte-ux": "^0.56.0",
     "topojson-client": "^3.1.0"

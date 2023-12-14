@@ -1,15 +1,16 @@
 <script lang="ts">
-  import { inject } from '@vercel/analytics';
+  import { onMount } from 'svelte';
+  import posthog from 'posthog-js';
+
   import { mdiArrowTopRight, mdiGithub, mdiTwitter } from '@mdi/js';
   import 'prism-themes/themes/prism-vsc-dark-plus.css';
   import { AppBar, AppLayout, Button, QuickSearch, Tooltip, settings, sortFunc } from 'svelte-ux';
 
   import { dev } from '$app/environment';
   import { afterNavigate, goto } from '$app/navigation';
+  import { page } from '$app/stores';
 
   import NavMenu from './_NavMenu.svelte';
-
-  inject({ mode: dev ? 'development' : 'production' });
 
   settings({
     theme: {
@@ -37,6 +38,32 @@
       };
     })
     .sort(sortFunc((d) => groups.indexOf(d.group)));
+
+  let currentPath = '';
+  onMount(() => {
+    // Posthog analytics
+    if (!dev) {
+      const unsubscribePage = page.subscribe(($page) => {
+        if (currentPath && currentPath !== $page.url.pathname) {
+          // Page navigated away
+          posthog.capture('$pageleave');
+        }
+        console.log('entering');
+        // Page entered
+        currentPath = $page.url.pathname;
+        posthog.capture('$pageview');
+      });
+      const handleBeforeUnload = () => {
+        // Hard reloads or browser exit
+        posthog.capture('$pageleave');
+      };
+      window.addEventListener('beforeunload', handleBeforeUnload);
+      return () => {
+        unsubscribePage();
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+      };
+    }
+  });
 </script>
 
 <AppLayout>
