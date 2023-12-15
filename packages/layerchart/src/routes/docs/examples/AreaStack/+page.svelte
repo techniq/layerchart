@@ -36,7 +36,11 @@
       r="key"
       rScale={scaleOrdinal()}
       rDomain={keys}
-      rRange={['var(--color-red-500)', 'var(--color-green-500)', 'var(--color-blue-500)']}
+      rRange={[
+        'oklch(var(--color-error))',
+        'oklch(var(--color-success))',
+        'oklch(var(--color-info))',
+      ]}
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
@@ -62,7 +66,11 @@
       r="key"
       rScale={scaleOrdinal()}
       rDomain={keys}
-      rRange={['var(--color-red-500)', 'var(--color-green-500)', 'var(--color-blue-500)']}
+      rRange={[
+        'oklch(var(--color-error))',
+        'oklch(var(--color-success))',
+        'oklch(var(--color-info))',
+      ]}
       padding={{ left: 16, bottom: 24 }}
       tooltip
     >

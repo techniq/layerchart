@@ -219,7 +219,9 @@
         <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
           {@const color =
-            tooltip.data == null || tooltip.data.fruit === fruit ? rScale(fruit) : '#ddd'}
+            tooltip.data == null || tooltip.data.fruit === fruit
+              ? rScale(fruit)
+              : 'oklch(var(--color-surface-content) / 20%)'}
           <Area
             {data}
             fill={color}

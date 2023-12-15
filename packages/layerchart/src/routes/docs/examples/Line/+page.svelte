@@ -35,9 +35,9 @@
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 
   const fruitColors = {
-    apples: 'var(--color-blue-500)',
-    bananas: 'var(--color-purple-500)',
-    oranges: 'var(--color-green-500)',
+    apples: 'oklch(var(--color-info))',
+    bananas: 'oklch(var(--color-success))',
+    oranges: 'oklch(var(--color-warning))',
   };
 
   const temperatureColor = scaleSequential(
@@ -261,7 +261,9 @@
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
         {#each dataByFruit as [fruit, data]}
           {@const color =
-            tooltip.data == null || tooltip.data.fruit === fruit ? rScale(fruit) : '#ddd'}
+            tooltip.data == null || tooltip.data.fruit === fruit
+              ? rScale(fruit)
+              : 'oklch(var(--color-surface-content) / 20%)'}
           <Spline {data} class="stroke-2" stroke={color}>
             <svelte:fragment slot="end">
               <circle r={4} fill={color} />

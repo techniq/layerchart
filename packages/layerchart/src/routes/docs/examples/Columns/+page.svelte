@@ -61,10 +61,10 @@
 
   const colorKeys = [...new Set(longData.map((x) => x.fruit))];
   const keyColors = [
-    'var(--color-blue-500)',
-    'var(--color-green-500)',
-    'var(--color-purple-500)',
-    'var(--color-orange-500)',
+    'oklch(var(--color-info))',
+    'oklch(var(--color-success))',
+    'oklch(var(--color-warning))',
+    'oklch(var(--color-error))',
   ];
 
   let transitionChartMode = 'group';
@@ -350,7 +350,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Bars y="baseline" radius={4} strokeWidth={1} class="fill-gray-200" />
+        <Bars y="baseline" radius={4} strokeWidth={1} class="fill-surface-content/20" />
         <Bars y="value" radius={4} strokeWidth={1} inset={8} class="fill-primary" />
         <Highlight area />
       </Svg>
