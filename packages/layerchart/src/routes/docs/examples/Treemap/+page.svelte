@@ -17,6 +17,7 @@
     ToggleOption,
     format,
     sortFunc,
+    cls,
   } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -101,7 +102,9 @@
   function getNodeColor(node, colorBy) {
     switch (colorBy) {
       case 'children':
-        return node.children ? '#ccc' : '#ddd';
+        return node.children
+          ? 'oklch(var(--color-primary) / 50%)'
+          : 'oklch(var(--color-surface-100) / 20%)';
       case 'depth':
         return sequentialColor(node.depth);
       case 'parent':
@@ -202,12 +205,22 @@
                     <Rect
                       width={nodeWidth}
                       height={nodeHeight}
-                      stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+                      stroke={colorBy === 'children'
+                        ? 'oklch(var(--color-primary-content))'
+                        : hsl(nodeColor).darker(1)}
+                      stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                       fill={nodeColor}
                       rx={5}
                     />
                     <RectClipPath width={nodeWidth} height={nodeHeight}>
-                      <text x={4} y={16 * 0.6 + 4} class="text-[10px] font-medium">
+                      <text
+                        x={4}
+                        y={16 * 0.6 + 4}
+                        class={cls(
+                          'text-[10px] font-medium',
+                          colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                        )}
+                      >
                         <tspan>{node.data.name}</tspan>
                         {#if node.children}
                           <tspan class="text-[8px] font-extralight">
@@ -218,7 +231,10 @@
                       {#if !node.children}
                         <Text
                           value={format(node.value, 'integer')}
-                          class="text-[8px] font-extralight"
+                          class={cls(
+                            'text-[8px] font-extralight',
+                            colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                          )}
                           verticalAnchor="start"
                           x={4}
                           y={16}
@@ -331,13 +347,23 @@
                   <Rect
                     width={nodeWidth}
                     height={nodeHeight}
-                    stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+                    stroke={colorBy === 'children'
+                      ? 'oklch(var(--color-primary-content))'
+                      : hsl(nodeColor).darker(1)}
+                    stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                     fill={nodeColor}
                     rx={5}
                     tweened={{ delay: 600 }}
                   />
                   <RectClipPath width={nodeWidth} height={nodeHeight} tweened={{ delay: 600 }}>
-                    <text x={4} y={16 * 0.6 + 4} class="text-[10px] font-medium">
+                    <text
+                      x={4}
+                      y={16 * 0.6 + 4}
+                      class={cls(
+                        'text-[10px] font-medium',
+                        colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                      )}
+                    >
                       <tspan>{node.data[0] ?? 'Overall'}</tspan>
                       {#if node.children}
                         <tspan class="text-[8px] font-extralight"
@@ -432,20 +458,29 @@
                         <Rect
                           width={nodeWidth}
                           height={nodeHeight}
-                          stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+                          stroke={colorBy === 'children'
+                            ? 'oklch(var(--color-primary-content))'
+                            : hsl(nodeColor).darker(1)}
+                          stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                           fill={nodeColor}
                           rx={5}
                         />
                         <Text
                           value="{node.data.name} ({node.children?.length ?? 0})"
-                          class="text-[10px] font-medium"
+                          class={cls(
+                            'text-[10px] font-medium',
+                            colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                          )}
                           verticalAnchor="start"
                           x={4}
                           y={2}
                         />
                         <Text
                           value={format(node.value, 'integer')}
-                          class="text-[8px] font-extralight"
+                          class={cls(
+                            'text-[8px] font-extralight',
+                            colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                          )}
                           verticalAnchor="start"
                           x={4}
                           y={16}
