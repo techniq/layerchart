@@ -51,9 +51,9 @@
   )
     .flatMap(([file, source]) => {
       const url = file.replace('.', '').replace(/\/\+page.(md|svelte)/, '');
-      const [_, docs, group, name] = url.split('/');
+      const [_, docs, group, label] = url.split('/');
       return {
-        name,
+        label,
         value: url,
         group: group,
       };
