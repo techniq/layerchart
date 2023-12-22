@@ -1,0 +1,5 @@
+---
+'layerchart': minor
+---
+
+Theme support
