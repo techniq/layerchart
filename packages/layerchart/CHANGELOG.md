@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.28.0-next.0
+
+### Minor Changes
+
+- Theme support ([#78](https://github.com/techniq/layerchart/pull/78))
+
 ## 0.27.0
 
 ### Minor Changes
