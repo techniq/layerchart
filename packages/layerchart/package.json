@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-dsv": "^3.0.4",
-    "@sveltejs/adapter-cloudflare": "^2.3.4",
+    "@sveltejs/adapter-auto": "^2.1.1",
     "@sveltejs/kit": "^1.27.6",
     "@sveltejs/package": "^2.2.2",
     "@svitejs/changesets-changelog-github-compact": "^1.1.0",

@@ -1,4 +1,4 @@
-import cloudflareAdapter from '@sveltejs/adapter-cloudflare';
+import adapter from '@sveltejs/adapter-auto';
 import sveltePreprocess from 'svelte-preprocess';
 import { mdsvex } from 'mdsvex';
 import { codePreview } from 'svelte-ux/plugins/svelte.js';
@@ -11,7 +11,7 @@ const config = {
   preprocess: [mdsvex(mdsvexConfig), sveltePreprocess(), codePreview()],
 
   kit: {
-    adapter: cloudflareAdapter(),
+    adapter: adapter(),
   },
 };
 
