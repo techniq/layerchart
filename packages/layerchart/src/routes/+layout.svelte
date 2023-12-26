@@ -21,8 +21,6 @@
 
   import NavMenu from './_NavMenu.svelte';
 
-  // import 'daisyui/dist/themes.css';
-  import 'svelte-ux/styles/daisy.css';
   import { lightThemes, darkThemes } from 'svelte-ux/styles/daisy';
 
   settings({
