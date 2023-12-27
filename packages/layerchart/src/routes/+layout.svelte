@@ -66,6 +66,23 @@
   });
 </script>
 
+<svelte:head>
+  {#if $page.url.origin.includes('https')}
+    <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon={JSON.stringify({ token: 'aff39463882545fd8cca0adba6afa86e' })}
+    ></script>
+
+    <script
+      async
+      defer
+      src="https://us.umami.is/script.js"
+      data-website-id="98141640-7328-4228-ba7b-2287da133ee9"
+    ></script>
+  {/if}
+</svelte:head>
+
 <AppLayout>
   <nav slot="nav" class="nav h-full">
     <NavMenu />
