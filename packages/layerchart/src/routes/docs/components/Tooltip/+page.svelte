@@ -440,11 +440,7 @@
       r="key"
       rScale={scaleOrdinal()}
       rDomain={keys}
-      rRange={[
-        'oklch(var(--color-info))',
-        'oklch(var(--color-success))',
-        'oklch(var(--color-warning))',
-      ]}
+      rRange={['hsl(var(--color-info))', 'hsl(var(--color-success))', 'hsl(var(--color-warning))']}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{
         mode: charts.areaStack.mode,

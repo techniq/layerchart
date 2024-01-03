@@ -135,7 +135,7 @@
             geojson={country}
             class={cls(
               'fill-white cursor-pointer',
-              selectedFeature === country ? 'fill-error' : 'hover:fill-gray-200'
+              selectedFeature === country ? 'fill-danger' : 'hover:fill-gray-200'
             )}
             on:click={(e) => (selectedFeature = country)}
             {tooltip}

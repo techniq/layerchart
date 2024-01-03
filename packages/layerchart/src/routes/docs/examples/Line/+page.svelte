@@ -35,9 +35,9 @@
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 
   const fruitColors = {
-    apples: 'oklch(var(--color-info))',
-    bananas: 'oklch(var(--color-success))',
-    oranges: 'oklch(var(--color-warning))',
+    apples: 'hsl(var(--color-info))',
+    bananas: 'hsl(var(--color-success))',
+    oranges: 'hsl(var(--color-warning))',
   };
 
   const temperatureColor = scaleSequential(
@@ -263,7 +263,7 @@
           {@const color =
             tooltip.data == null || tooltip.data.fruit === fruit
               ? rScale(fruit)
-              : 'oklch(var(--color-surface-content) / 20%)'}
+              : 'hsl(var(--color-surface-content) / 20%)'}
           <Spline {data} class="stroke-2" stroke={color}>
             <svelte:fragment slot="end">
               <circle r={4} fill={color} />

@@ -144,11 +144,7 @@
     data={[{ name: 'One' }, { name: 'Two' }, { name: 'Three' }]}
     r="name"
     rScale={scaleOrdinal()}
-    rRange={[
-      'oklch(var(--color-success))',
-      'oklch(var(--color-warning))',
-      'oklch(var(--color-error))',
-    ]}
+    rRange={['hsl(var(--color-success))', 'hsl(var(--color-warning))', 'hsl(var(--color-danger))']}
   >
     <Legend title="I am Legend" />
   </Chart>
@@ -163,9 +159,9 @@
       r="name"
       rScale={scaleOrdinal()}
       rRange={[
-        'oklch(var(--color-success))',
-        'oklch(var(--color-warning))',
-        'oklch(var(--color-error))',
+        'hsl(var(--color-success))',
+        'hsl(var(--color-warning))',
+        'hsl(var(--color-danger))',
       ]}
     >
       <Legend title="top-left" placement="top-left" />

@@ -2,6 +2,7 @@ const colors = require('tailwindcss/colors');
 const plugin = require('tailwindcss/plugin');
 
 const { themes } = require('svelte-ux/styles/daisy');
+const svelteUx = require('svelte-ux/plugins/tailwind.cjs');
 
 module.exports = {
   content: ['./src/**/*.{html,svelte,md}', './node_modules/svelte-ux/**/*.{svelte,js,md}'],
@@ -22,5 +23,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require('@tailwindcss/typography'), require('svelte-ux/plugins/tailwind.cjs')],
+  plugins: [require('@tailwindcss/typography'), svelteUx],
 };

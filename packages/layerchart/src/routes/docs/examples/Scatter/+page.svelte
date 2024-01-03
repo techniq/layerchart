@@ -108,9 +108,9 @@
       rScale={scaleThreshold()}
       rDomain={[50, 90]}
       rRange={[
-        'oklch(var(--color-error))',
-        'oklch(var(--color-warning))',
-        'oklch(var(--color-success))',
+        'hsl(var(--color-danger))',
+        'hsl(var(--color-warning))',
+        'hsl(var(--color-success))',
       ]}
       padding={{ left: 16, bottom: 24 }}
     >

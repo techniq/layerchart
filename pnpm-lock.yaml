@@ -90,8 +90,8 @@ importers:
         specifier: ^0.6.6
         version: 0.6.6
       svelte-ux:
-        specifier: 0.58.0-next.5
-        version: 0.58.0-next.5(@fortawesome/free-regular-svg-icons@6.5.1)(@fortawesome/free-solid-svg-icons@6.5.1)(@mdi/js@7.3.67)(prism-svelte@0.5.0)(prism-themes@1.9.0)(prismjs@1.29.0)(sveld@0.18.1)(svelte@4.2.7)
+        specifier: 0.58.0-next.6
+        version: 0.58.0-next.6(@fortawesome/free-regular-svg-icons@6.5.1)(@fortawesome/free-solid-svg-icons@6.5.1)(@mdi/js@7.3.67)(prism-svelte@0.5.0)(prism-themes@1.9.0)(prismjs@1.29.0)(sveld@0.18.1)(svelte@4.2.7)
       topojson-client:
         specifier: ^3.1.0
         version: 3.1.0
@@ -3946,8 +3946,8 @@ packages:
       typescript: 5.2.2
     dev: true
 
-  /svelte-ux@0.58.0-next.5(@fortawesome/free-regular-svg-icons@6.5.1)(@fortawesome/free-solid-svg-icons@6.5.1)(@mdi/js@7.3.67)(prism-svelte@0.5.0)(prism-themes@1.9.0)(prismjs@1.29.0)(sveld@0.18.1)(svelte@4.2.7):
-    resolution: {integrity: sha512-WeouS3KijrdRZpeA9K+Wmu1Kiia2rAD2DtN8bUtTZcvNlONeiaEMIWgbUN3f5XHykjHh2al5zxLLR1ljkL2cBQ==}
+  /svelte-ux@0.58.0-next.6(@fortawesome/free-regular-svg-icons@6.5.1)(@fortawesome/free-solid-svg-icons@6.5.1)(@mdi/js@7.3.67)(prism-svelte@0.5.0)(prism-themes@1.9.0)(prismjs@1.29.0)(sveld@0.18.1)(svelte@4.2.7):
+    resolution: {integrity: sha512-+mn/+MAS+gv1wFH/L0bPIFfLF8L5cBwnRrAlIl15xzXICpdc7Ys9w3KXEyy2+GTX7Qs/5sZP0BcpFGBJs1PFRA==}
     peerDependencies:
       '@fortawesome/free-regular-svg-icons': ^6.2.1
       '@fortawesome/free-solid-svg-icons': ^6.2.1

@@ -36,11 +36,7 @@
       r="key"
       rScale={scaleOrdinal()}
       rDomain={keys}
-      rRange={[
-        'oklch(var(--color-error))',
-        'oklch(var(--color-success))',
-        'oklch(var(--color-info))',
-      ]}
+      rRange={['hsl(var(--color-danger))', 'hsl(var(--color-success))', 'hsl(var(--color-info))']}
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
@@ -66,11 +62,7 @@
       r="key"
       rScale={scaleOrdinal()}
       rDomain={keys}
-      rRange={[
-        'oklch(var(--color-error))',
-        'oklch(var(--color-success))',
-        'oklch(var(--color-info))',
-      ]}
+      rRange={['hsl(var(--color-danger))', 'hsl(var(--color-success))', 'hsl(var(--color-info))']}
       padding={{ left: 16, bottom: 24 }}
       tooltip
     >
