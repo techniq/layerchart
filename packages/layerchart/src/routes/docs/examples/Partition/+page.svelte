@@ -85,7 +85,7 @@
   function getNodeColor(node, colorBy) {
     switch (colorBy) {
       case 'children':
-        return node.children ? 'hsl(var(--color-primary))' : 'hsl(var(--color-primary) / 80%)';
+        return node.children ? 'hsl(var(--color-primary))' : 'hsl(var(--color-primary-600))';
       case 'depth':
         return sequentialColor(node.depth);
       case 'parent':

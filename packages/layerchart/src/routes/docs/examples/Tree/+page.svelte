@@ -3,7 +3,7 @@
   import { hierarchy } from 'd3-hierarchy';
   import { curveBumpX, curveBumpY, curveStep, curveStepBefore, curveStepAfter } from 'd3-shape';
 
-  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, ToggleGroup, ToggleOption, cls } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Group from '$lib/components/Group.svelte';
@@ -96,7 +96,7 @@
         <Zoom bind:this={zoom} tweened={{ duration: 800, easing: cubicOut }}>
           <Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : null}>
             {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
-              <Link data={link} {orientation} {curve} tweened class="stroke-surface-content/30" />
+              <Link data={link} {orientation} {curve} tweened class="stroke-surface-content/20" />
             {/each}
             {#each nodes as node (getNodeKey(node))}
               <Group
@@ -111,14 +111,14 @@
                   }
                   selected = node;
                 }}
-                class={node.data.children ? 'cursor-pointer' : ''}
+                class={cls(node.data.children && 'cursor-pointer')}
               >
                 <!-- Solid background to hide link -->
                 <!-- <Rect width={nodeWidth} height={nodeHeight} class="fill-surface-100" rx={10} /> -->
                 <Rect
                   width={nodeWidth}
                   height={nodeHeight}
-                  class="fill-primary/5 stroke-primary"
+                  class="fill-surface-100 stroke-primary"
                   stroke-width={node.data.children ? 2 : 1}
                   rx={10}
                 />

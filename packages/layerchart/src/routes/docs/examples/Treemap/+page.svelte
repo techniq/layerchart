@@ -102,9 +102,7 @@
   function getNodeColor(node, colorBy) {
     switch (colorBy) {
       case 'children':
-        return node.children
-          ? 'hsl(var(--color-primary) / 50%)'
-          : 'hsl(var(--color-surface-100) / 20%)';
+        return node.children ? 'hsl(var(--color-primary-500))' : 'hsl(var(--color-primary-400))';
       case 'depth':
         return sequentialColor(node.depth);
       case 'parent':
@@ -210,6 +208,7 @@
                         : hsl(nodeColor).darker(1)}
                       stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                       fill={nodeColor}
+                      fill-opacity={node.children ? 0.5 : 1}
                       rx={5}
                     />
                     <RectClipPath width={nodeWidth} height={nodeHeight}>
@@ -352,6 +351,7 @@
                       : hsl(nodeColor).darker(1)}
                     stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                     fill={nodeColor}
+                    fill-opacity={node.children ? 0.5 : 1}
                     rx={5}
                     tweened={{ delay: 600 }}
                   />
