@@ -85,7 +85,7 @@
   function getNodeColor(node, colorBy) {
     switch (colorBy) {
       case 'children':
-        return node.children ? 'oklch(var(--color-primary))' : 'oklch(var(--color-primary) / 80%)';
+        return node.children ? 'hsl(var(--color-primary))' : 'hsl(var(--color-primary) / 80%)';
       case 'depth':
         return sequentialColor(node.depth);
       case 'parent':
@@ -174,7 +174,7 @@
                         width={nodeWidth}
                         height={nodeHeight}
                         stroke={colorBy === 'children'
-                          ? 'oklch(var(--color-primary-content))'
+                          ? 'hsl(var(--color-primary-content))'
                           : hsl(nodeColor).darker(1)}
                         stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                         fill={nodeColor}
@@ -256,7 +256,7 @@
                         width={nodeWidth}
                         height={nodeHeight}
                         stroke={colorBy === 'children'
-                          ? 'oklch(var(--color-primary-content))'
+                          ? 'hsl(var(--color-primary-content))'
                           : hsl(nodeColor).darker(1)}
                         stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                         fill={nodeColor}
@@ -347,7 +347,7 @@
                       width={nodeWidth}
                       height={nodeHeight}
                       stroke={colorBy === 'children'
-                        ? 'oklch(var(--color-primary-content))'
+                        ? 'hsl(var(--color-primary-content))'
                         : hsl(nodeColor).darker(1)}
                       stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                       fill={nodeColor}

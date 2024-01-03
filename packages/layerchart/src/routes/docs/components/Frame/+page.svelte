@@ -22,7 +22,7 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Frame class="fill-error/5" />
+        <Frame class="fill-danger/5" />
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
       </Svg>
@@ -44,7 +44,7 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Frame class="fill-error/5" full />
+        <Frame class="fill-danger/5" full />
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
       </Svg>

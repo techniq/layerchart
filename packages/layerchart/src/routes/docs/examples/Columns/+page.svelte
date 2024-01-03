@@ -61,10 +61,10 @@
 
   const colorKeys = [...new Set(longData.map((x) => x.fruit))];
   const keyColors = [
-    'oklch(var(--color-info))',
-    'oklch(var(--color-success))',
-    'oklch(var(--color-warning))',
-    'oklch(var(--color-error))',
+    'hsl(var(--color-info))',
+    'hsl(var(--color-success))',
+    'hsl(var(--color-warning))',
+    'hsl(var(--color-danger))',
   ];
 
   let transitionChartMode = 'group';
