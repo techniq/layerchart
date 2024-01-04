@@ -24,7 +24,7 @@
   import { lightThemes, darkThemes } from 'svelte-ux/styles/daisy';
 
   settings({
-    theme: {
+    classes: {
       AppLayout: {
         aside: 'border-r',
         nav: 'bg-surface-300 py-2',

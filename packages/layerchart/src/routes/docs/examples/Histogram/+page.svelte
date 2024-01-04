@@ -11,7 +11,7 @@
   } from 'd3-random';
   import { subDays } from 'date-fns';
 
-  import { MenuField, RangeField, NumberStepper, dateDisplay } from 'svelte-ux';
+  import { MenuField, RangeField, NumberStepper, format, PeriodType } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
@@ -248,23 +248,24 @@
           placement="bottom"
           rule
           ticks={4}
-          format={(d) => dateDisplay(d, { format: 'M/d/yy' })}
+          format={(d) => format(d, PeriodType.Day)}
           labelProps={{ rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 }}
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Highlight area />
       </Svg>
       <Tooltip
-        header={(data) =>
-          dateDisplay(data.x0, { format: 'M/d/yy' }) +
-          ' - ' +
-          dateDisplay(data.x1, { format: 'M/d/yy' })}
+        header={(data) => format(data.x0, PeriodType.Day) + ' - ' + format(data.x1, PeriodType.Day)}
         let:data
       >
         <TooltipItem label="count" value={data.length} format="integer" />
         <TooltipSeparator />
         {#each data.slice(0, 5) as d}
-          <TooltipItem label="value" value={d} format={(value) => dateDisplay(value)} />
+          <TooltipItem
+            label="value"
+            value={d}
+            format={(value) => format(value, PeriodType.DayTime)}
+          />
         {/each}
         {#if data.length > 5}
           <span />

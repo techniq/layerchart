@@ -496,7 +496,7 @@
       <Svg>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
-        <Points class="fill-primary/10 stroke-primary" />
+        <Points class="fill-primary-100 stroke-primary" />
         <Highlight
           points={charts.dateTime.highlight.includes('points')}
           lines={charts.dateTime.highlight.includes('lines')}
@@ -542,7 +542,7 @@
       <Svg>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
-        <Points class="fill-primary/10 stroke-primary" links />
+        <Points class="fill-primary-100 stroke-primary" links />
         <Highlight
           points={charts.duration.highlight.includes('points')}
           lines={charts.duration.highlight.includes('lines')}
@@ -592,7 +592,7 @@
       <Svg>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
-        <Points class="fill-primary/10 stroke-primary" links />
+        <Points class="fill-primary-100 stroke-primary" links />
         <Highlight
           points={charts.multiDuration.highlight.includes('points')}
           lines={charts.multiDuration.highlight.includes('lines')}
