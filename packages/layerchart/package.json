@@ -42,6 +42,7 @@
     "@types/d3-time": "^3.0.2",
     "@types/lodash-es": "^4.17.11",
     "@types/marked": "^6.0.0",
+    "@types/prismjs": "^1.26.3",
     "@types/shapefile": "^0.6.4",
     "@types/topojson-client": "^3.1.4",
     "autoprefixer": "^10.4.16",
