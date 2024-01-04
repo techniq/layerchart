@@ -1,7 +1,7 @@
 <script lang="ts">
   import { scaleBand, scaleTime } from 'd3-scale';
-  import { addMinutes, format, startOfDay } from 'date-fns';
-  import { Duration, DurationUnits, dateDisplay } from 'svelte-ux';
+  import { addMinutes, startOfDay } from 'date-fns';
+  import { Duration, PeriodType, format } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
@@ -50,14 +50,23 @@
     >
       <Svg>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
-        <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
-        <Points class="fill-primary/10 stroke-primary" links={{ class: 'stroke-primary' }} />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.TimeOnly, { custom: 'h:mm aa' })}
+        />
+        <Points class="fill-primary-100 stroke-primary" links={{ class: 'stroke-primary' }} />
         <Highlight area />
         <Highlight points lines axis="x" />
       </Svg>
       <Tooltip header={(data) => data.name} let:data>
-        <TooltipItem label="start" value={dateDisplay(data.startDate, { format: 'h:mm:ss' })} />
-        <TooltipItem label="end" value={dateDisplay(data.endDate, { format: 'h:mm:ss' })} />
+        <TooltipItem
+          label="start"
+          value={format(data.startDate, PeriodType.TimeOnly, { variant: 'short' })}
+        />
+        <TooltipItem
+          label="end"
+          value={format(data.endDate, PeriodType.TimeOnly, { variant: 'short' })}
+        />
         <TooltipSeparator />
         <TooltipItem label="duration" valueAlign="right">
           <Duration start={data.startDate} end={data.endDate} totalUnits={2} />
