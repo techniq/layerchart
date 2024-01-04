@@ -45,6 +45,7 @@
     "@types/shapefile": "^0.6.4",
     "@types/topojson-client": "^3.1.4",
     "autoprefixer": "^10.4.16",
+    "d3-color": "^3.1.0",
     "daisyui": "^4.4.19",
     "execa": "^8.0.1",
     "marked": "^10.0.0",
