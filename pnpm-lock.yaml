@@ -159,6 +159,9 @@ importers:
       '@types/marked':
         specifier: ^6.0.0
         version: 6.0.0
+      '@types/prismjs':
+        specifier: ^1.26.3
+        version: 1.26.3
       '@types/shapefile':
         specifier: ^0.6.4
         version: 0.6.4
@@ -189,9 +192,15 @@ importers:
       prettier-plugin-svelte:
         specifier: ^3.1.0
         version: 3.1.0(prettier@3.1.0)(svelte@4.2.7)
+      prism-svelte:
+        specifier: ^0.5.0
+        version: 0.5.0
       prism-themes:
         specifier: ^1.9.0
         version: 1.9.0
+      prismjs:
+        specifier: ^1.29.0
+        version: 1.29.0
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
@@ -1282,6 +1291,10 @@ packages:
 
   /@types/normalize-package-data@2.4.4:
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
+
+  /@types/prismjs@1.26.3:
+    resolution: {integrity: sha512-A0D0aTXvjlqJ5ZILMz3rNfDBOx9hHxLZYv2by47Sm/pqW35zzjusrZTryatjN/Rf8Us2gZrJD+KeHbUSTux1Cw==}
+    dev: true
 
   /@types/pug@2.0.9:
     resolution: {integrity: sha512-Yg4LkgFYvn1faISbDNWmcAC1XoDT8IoMUFspp5mnagKk+UvD2N0IWt5A7GRdMubsNWqgCLmrkf8rXkzNqb4szA==}
@@ -3290,7 +3303,6 @@ packages:
 
   /prism-svelte@0.5.0:
     resolution: {integrity: sha512-db91Bf3pRGKDPz1lAqLFSJXeW13mulUJxhycysFpfXV5MIK7RgWWK2E5aPAa71s8TCzQUXxF5JOV42/iOs6QkA==}
-    dev: false
 
   /prism-themes@1.9.0:
     resolution: {integrity: sha512-tX2AYsehKDw1EORwBps+WhBFKc2kxfoFpQAjxBndbZKr4fRmMkv47XN0BghC/K1qwodB1otbe4oF23vUTFDokw==}
