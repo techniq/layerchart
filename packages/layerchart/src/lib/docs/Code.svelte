@@ -1,7 +1,7 @@
 <script lang="ts">
   import Prism from 'prismjs';
   import 'prism-svelte';
-  import { CopyButton, cls, getComponentTheme } from 'svelte-ux';
+  import { CopyButton, cls, getComponentClasses } from 'svelte-ux';
 
   export let source: string | null = null;
   export let language = 'svelte';
@@ -15,10 +15,10 @@
     code?: string;
   } = {};
 
-  const theme = getComponentTheme('Code');
+  const settingsClasses = getComponentClasses('Code');
 </script>
 
-<div class={cls('Code', 'rounded', theme.root, classes.root, $$props.class)}>
+<div class={cls('Code', 'rounded', settingsClasses.root, classes.root, $$props.class)}>
   {#if source}
     <div class="relative">
       <pre
