@@ -4,7 +4,7 @@
   import { schemeBlues } from 'd3-scale-chromatic';
   import { geoIdentity } from 'd3-geo';
   import { feature } from 'topojson-client';
-  import { format as d3format } from 'd3-format';
+  import { format } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
@@ -45,8 +45,6 @@
   $: colorScale = scaleQuantile()
     .domain(population.map((d) => d.population))
     .range(schemeBlues[9]);
-
-  const format = d3format('.2s');
 </script>
 
 <h1>Examples</h1>
@@ -82,7 +80,11 @@
         </g>
       </Svg>
 
-      <Legend scale={colorScale} title="Population" tickFormat={format} />
+      <Legend
+        scale={colorScale}
+        title="Population"
+        tickFormat={(d) => format(d, 'metric', { maximumSignificantDigits: 2 })}
+      />
 
       <Tooltip
         header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
