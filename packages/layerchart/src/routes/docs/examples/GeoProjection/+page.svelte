@@ -86,7 +86,8 @@
       let:tooltip
     >
       <Svg>
-        <GeoPath geojson={{ type: 'Sphere' }} class="stroke-black fill-blue-300" />
+        <GeoPath geojson={{ type: 'Sphere' }} class="stroke-black fill-blue-400/50" />
+        <Graticule class="stroke-black/20 pointer-events-none" />
         {#each features as feature}
           <GeoPath
             geojson={feature}
@@ -94,7 +95,6 @@
             class="stroke-black fill-white hover:fill-gray-300"
           />
         {/each}
-        <Graticule class="stroke-black/20 pointer-events-none" />
       </Svg>
       <Tooltip header={(data) => data.properties.name} let:data />
     </Chart>
@@ -121,10 +121,10 @@
         <GeoPath geojson={{ type: 'Sphere' }} fill="#93c5fd" />
       </Canvas>
       <Canvas>
-        <GeoPath {geojson} fill="white" />
+        <Graticule stroke="rgba(0,0,0,.20)" />
       </Canvas>
       <Canvas>
-        <Graticule stroke="rgba(0,0,0,.20)" />
+        <GeoPath {geojson} fill="white" />
       </Canvas>
     </Chart>
   </div>

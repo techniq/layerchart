@@ -105,7 +105,7 @@
         <div use:scrollIntoView={{ condition: isSelected }}>
           <Button
             variant={isSelected ? 'fill-light' : 'default'}
-            color={isSelected ? 'error' : 'default'}
+            color={isSelected ? 'primary' : 'default'}
             fullWidth
             on:click={() => (selectedFeature = country)}
           >
@@ -128,14 +128,14 @@
       let:tooltip
     >
       <Svg>
-        <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-300" />
+        <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
         <Graticule class="stroke-black/20" />
         {#each countries.features as country}
           <GeoPath
             geojson={country}
             class={cls(
               'fill-white cursor-pointer',
-              selectedFeature === country ? 'fill-danger' : 'hover:fill-gray-200'
+              selectedFeature === country ? 'fill-primary' : 'hover:fill-gray-200'
             )}
             on:click={(e) => (selectedFeature = country)}
             {tooltip}
@@ -172,7 +172,7 @@
         <div use:scrollIntoView={{ condition: isSelected }}>
           <Button
             variant={isSelected ? 'fill-light' : 'default'}
-            color={isSelected ? 'error' : 'default'}
+            color={isSelected ? 'primary' : 'default'}
             fullWidth
             on:click={() => (selectedFeature = country)}
           >
@@ -202,7 +202,7 @@
         <GeoPath geojson={countries} fill="white" />
       </Canvas>
       <Canvas>
-        <GeoPath geojson={selectedFeature} fill="#f87171" />
+        <GeoPath geojson={selectedFeature} fill="firebrick" />
       </Canvas>
     </Chart>
   </div>

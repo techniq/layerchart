@@ -85,7 +85,11 @@
             loftedProjection.rotate([yaw, pitch]);
           }}
         >
-          <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-300" on:click={() => (yaw += 1)} />
+          <GeoPath
+            geojson={{ type: 'Sphere' }}
+            class="fill-blue-400/50"
+            on:click={() => (yaw += 1)}
+          />
           <Graticule class="stroke-black/20 fill-none pointer-events-none" />
           {#each countries.features as country}
             <GeoPath geojson={country} class="fill-white pointer-events-none" />
@@ -104,7 +108,7 @@
                 y={(d) => d[1]}
                 defined={(d) => projection.invert(d)}
                 curve={curveNatural}
-                class="fill-none stroke-red-500 stroke-2"
+                class="fill-none stroke-danger stroke-2"
               />
               <GeoPath geojson={link.feature} class="stroke-gray-500/30 stroke-2" />
             </EdgeFade>
