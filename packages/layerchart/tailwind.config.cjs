@@ -1,13 +1,12 @@
 const colors = require('tailwindcss/colors');
 const plugin = require('tailwindcss/plugin');
 
-const { themes } = require('svelte-ux/styles/daisy');
 const svelteUx = require('svelte-ux/plugins/tailwind.cjs');
 
 module.exports = {
   content: ['./src/**/*.{html,svelte,md}', './node_modules/svelte-ux/**/*.{svelte,js,md}'],
   ux: {
-    themes,
+    themes: require('./themes.json'),
     // themes: {
     //   light: {
     //     primary: colors['blue']['500'],
