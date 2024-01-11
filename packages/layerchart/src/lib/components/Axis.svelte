@@ -25,7 +25,7 @@
   /** Length of the tick line */
   export let tickSize = 4;
   export let format: FormatType = undefined;
-  export let labelProps: ComponentProps<Text> | undefined = undefined;
+  export let labelProps: Partial<ComponentProps<Text>> | undefined = undefined;
 
   $: orientation = ['top', 'bottom'].includes(placement) ? 'horizontal' : 'vertical';
   $: scale = orientation === 'horizontal' ? $xScale : $yScale;
