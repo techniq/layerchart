@@ -78,9 +78,9 @@
    */
   $: yReverse = yScale ? !isScaleBand(yScale) : true;
 
-  export let tooltip: ComponentProps<TooltipContext> | boolean | undefined = undefined;
+  export let tooltip: Partial<ComponentProps<TooltipContext>> | boolean | undefined = undefined;
 
-  export let geo: ComponentProps<GeoContext> | undefined = undefined;
+  export let geo: Partial<ComponentProps<GeoContext>> | undefined = undefined;
 </script>
 
 <LayerCake

@@ -30,21 +30,21 @@
   export let axis: 'x' | 'y' | 'both' | 'none' | undefined = undefined;
 
   /** Show points and pass props to Circles */
-  export let points: boolean | ComponentProps<Circle> = false;
+  export let points: boolean | Partial<ComponentProps<Circle>> = false;
 
   /** Show lines and pass props to Lines */
-  export let lines: boolean | ComponentProps<Line> = false;
+  export let lines: boolean | Partial<ComponentProps<Line>> = false;
 
   /** Show area and pass props to Rect */
-  export let area: boolean | ComponentProps<Rect> = false;
+  export let area: boolean | Partial<ComponentProps<Rect>> = false;
 
   /** Show bar and pass props to Rect */
-  export let bar: boolean | ComponentProps<Rect> = false;
+  export let bar: boolean | Partial<ComponentProps<Rect>> = false;
 
   // TODO: Fix circle points being backwards for stack (see AreaStack)
 
-  let _points = [];
-  let _lines = [];
+  let _points: { x: number; y: number }[] = [];
+  let _lines: { x1: number; y1: number; x2: number; y2: number }[] = [];
   let _area = {
     x: 0,
     y: 0,

@@ -37,7 +37,7 @@
   export let defined: Parameters<Area<any>['defined']>[0] | undefined = undefined;
 
   /** Enable showing line */
-  export let line: boolean | ComponentProps<Spline> = false;
+  export let line: boolean | Partial<ComponentProps<Spline>> = false;
 
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });

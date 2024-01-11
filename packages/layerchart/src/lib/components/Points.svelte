@@ -17,7 +17,7 @@
   export let offsetY: Offset = undefined;
 
   /** Enable showing links between related points (array x/y accessors) */
-  export let links: boolean | ComponentProps<Link> = false;
+  export let links: boolean | Partial<ComponentProps<Link>> = false;
 
   function getOffset(value, offset: Offset, scale: any) {
     if (typeof offset === 'function') {
