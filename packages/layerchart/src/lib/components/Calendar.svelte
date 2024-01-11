@@ -18,7 +18,7 @@
   export let cellSize: number | [number, number] | undefined = undefined;
 
   /** Enable drawing path around each month.  If object, pass as props to underlying <path> */
-  export let monthPath: boolean | ComponentProps<MonthPath> = false;
+  export let monthPath: boolean | Partial<ComponentProps<MonthPath>> = false;
 
   /**
    * Tooltip context to setup mouse events to show tooltip for related data

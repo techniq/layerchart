@@ -5,8 +5,8 @@
   import GeoPath from './GeoPath.svelte';
 
   // TODO: Support full api (stepMinor/Major, extent[Minor/Major], etc
-  export let lines: Omit<ComponentProps<GeoPath>, 'geojson'> | boolean | undefined = undefined;
-  export let outline: Omit<ComponentProps<GeoPath>, 'geojson'> | boolean | undefined = undefined;
+  export let lines: Partial<ComponentProps<GeoPath>> | boolean | undefined = undefined;
+  export let outline: Partial<ComponentProps<GeoPath>> | boolean | undefined = undefined;
   export let step: [number, number] = [10, 10];
 
   $: graticule = geoGraticule();
@@ -22,11 +22,11 @@
 
   {#if lines}
     {#each graticule.lines() as line}
-      <GeoPath geojson={line} {...lines} />
+      <GeoPath geojson={line} {...typeof lines === 'object' ? lines : null} />
     {/each}
   {/if}
 
   {#if outline}
-    <GeoPath geojson={graticule.outline()} {...outline} />
+    <GeoPath geojson={graticule.outline()} {...typeof outline === 'object' ? outline : null} />
   {/if}
 </g>
