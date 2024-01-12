@@ -90,9 +90,12 @@
             class="fill-blue-400/50"
             on:click={() => (yaw += 1)}
           />
-          <Graticule class="stroke-black/20 fill-none pointer-events-none" />
+          <Graticule class="stroke-surface-content/20 fill-none pointer-events-none" />
           {#each countries.features as country}
-            <GeoPath geojson={country} class="fill-white pointer-events-none" />
+            <GeoPath
+              geojson={country}
+              class="stroke-surface-content/50 fill-white pointer-events-none"
+            />
           {/each}
           {#each links as link}
             {@const source = projection(link.source)}

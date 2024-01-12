@@ -55,7 +55,7 @@
           {#if show}
             <MotionPath duration="3s" repeatCount="indefinite" let:pathId let:objectId>
               <Spline id={pathId} {curve} />
-              <circle id={objectId} r={5} class="fill-white stroke-black" />
+              <circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
             </MotionPath>
           {/if}
         </Svg>
@@ -97,7 +97,7 @@
                 y={-10}
                 width={20}
                 height={20}
-                class="fill-white stroke-black"
+                class="fill-surface-100 stroke-surface-content"
               />
             </MotionPath>
           {/if}
@@ -128,7 +128,7 @@
           {#if show}
             <MotionPath duration="3s" let:pathId let:objectId>
               <Spline id={pathId} {curve} draw={{ duration: 3000, easing: linear }} />
-              <circle id={objectId} r={5} class="fill-white stroke-black" />
+              <circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
             </MotionPath>
           {/if}
         </Svg>

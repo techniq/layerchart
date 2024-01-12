@@ -86,13 +86,13 @@
       let:tooltip
     >
       <Svg>
-        <GeoPath geojson={{ type: 'Sphere' }} class="stroke-black fill-blue-400/50" />
-        <Graticule class="stroke-black/20 pointer-events-none" />
+        <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content fill-blue-400/50" />
+        <Graticule class="stroke-surface-content/20 pointer-events-none" />
         {#each features as feature}
           <GeoPath
             geojson={feature}
             {tooltip}
-            class="stroke-black fill-white hover:fill-gray-300"
+            class="stroke-surface-content/50 fill-white hover:fill-gray-300"
           />
         {/each}
       </Svg>
