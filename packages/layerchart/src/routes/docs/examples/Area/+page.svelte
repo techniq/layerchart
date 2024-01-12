@@ -60,7 +60,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
       </Svg>
     </Chart>
@@ -83,7 +87,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
         <Highlight points lines />
       </Svg>
@@ -109,7 +117,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
         <Labels format="integer" />
       </Svg>
@@ -132,7 +144,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
           <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
         </LinearGradient>
@@ -162,7 +178,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         {#each dataByFruit as [fruit, data]}
           {@const color = rScale(fruit)}
           <Area
@@ -216,7 +236,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         {#each dataByFruit as [fruit, data]}
           {@const color =
             tooltip.data == null || tooltip.data.fruit === fruit
@@ -272,7 +296,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         {#each dataByFruit as [fruit, data]}
           {@const color = rScale(fruit)}
           <Area
@@ -314,7 +342,11 @@
       >
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+          <Axis
+            placement="bottom"
+            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
           {#if show}
             <ChartClipPath
               initialWidth={0}
@@ -349,7 +381,11 @@
       >
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+          <Axis
+            placement="bottom"
+            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
           {#if show}
             <Spline draw={{ easing: cubicInOut, delay: 700 }} class="stroke-2 stroke-primary" />
             <ChartClipPath
@@ -385,7 +421,11 @@
       >
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+          <Axis
+            placement="bottom"
+            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
           {#if show}
             <Spline draw={{ easing: cubicInOut }} class="stroke-2 stroke-primary" />
             <ChartClipPath

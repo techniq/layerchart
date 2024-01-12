@@ -90,8 +90,8 @@ importers:
         specifier: ^0.6.6
         version: 0.6.6
       svelte-ux:
-        specifier: 0.58.0-next.9
-        version: 0.58.0-next.9(postcss@8.4.31)(svelte@4.2.7)
+        specifier: 0.58.0-next.11
+        version: 0.58.0-next.11(postcss@8.4.31)(svelte@4.2.7)
       topojson-client:
         specifier: ^3.1.0
         version: 3.1.0
@@ -3657,8 +3657,8 @@ packages:
       svelte: 4.2.7
       typescript: 5.2.2
 
-  /svelte-ux@0.58.0-next.9(postcss@8.4.31)(svelte@4.2.7):
-    resolution: {integrity: sha512-mfRNxKslN4P5ZrvZaN/9e1JJ6hJokzioLAiB+Z/sfVNTIlJdkh+jre710nRQmiktGj9imR+kcJjGDlR2w7s+aA==}
+  /svelte-ux@0.58.0-next.11(postcss@8.4.31)(svelte@4.2.7):
+    resolution: {integrity: sha512-hJBcelUG+L7aiSXGsC5pezy2FsTYiN27lGZCkEvEhuZVZMxFtdEZjXGqC72/QCDdhYSxgiJ301EY2PzYwDruAg==}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0
     dependencies:

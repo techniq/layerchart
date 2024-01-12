@@ -113,7 +113,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
       </Svg>
     </Chart>
@@ -136,7 +140,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Highlight area />
       </Svg>
@@ -163,7 +171,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Bars
           radius={4}
           strokeWidth={1}
@@ -194,7 +206,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Bars
           radius={4}
           strokeWidth={1}
@@ -230,7 +246,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Rule y={0} />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Labels format="integer" />
@@ -254,7 +274,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse" let:url>
           <Bars radius={4} strokeWidth={1} fill={url} class="stroke-blue-900" />
         </LinearGradient>
@@ -278,7 +302,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Rule
           y={median(data, (d) => d.value)}
@@ -305,7 +333,11 @@
       <Svg>
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Axis placement="left" grid={{ class: 'stroke-surface-100' }} rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
       </Svg>
     </Chart>
   </div>
@@ -327,7 +359,11 @@
       <Svg>
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Axis placement="left" grid={{ class: 'mix-blend-multiply' }} rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
       </Svg>
     </Chart>
   </div>
@@ -349,7 +385,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Bars y="baseline" radius={4} strokeWidth={1} class="fill-surface-content/20" />
         <Bars y="value" radius={4} strokeWidth={1} inset={8} class="fill-primary" />
         <Highlight area />
@@ -384,7 +424,11 @@
       >
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+          <Axis
+            placement="bottom"
+            format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
           {#if show}
             <Bars
               initialY={300 - 16 * 2 - 2 - 24}
