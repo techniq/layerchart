@@ -10,8 +10,8 @@ import {
 } from 'd3-time';
 import { format } from 'date-fns';
 
-import { formatDate, PeriodType } from 'svelte-ux/utils/date';
-import { getDuration, type Duration } from 'svelte-ux/utils/duration';
+import { formatDate, PeriodType, getDuration } from 'svelte-ux';
+import type { Duration } from 'svelte-ux/utils/duration';
 import { fail } from 'svelte-ux';
 
 // TODO: Use PeriodType along with Duration to format (and possibly select intervals)
@@ -25,22 +25,22 @@ const majorTicks = [
   {
     predicate: (duration: Duration | null) => duration!.years > 1,
     interval: timeYear.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.CalendarYear, 'short'),
+    format: (date: Date) => formatDate(date, PeriodType.CalendarYear, { variant: 'short' }),
   },
   {
     predicate: (duration: Duration | null) => duration!.years,
     interval: timeMonth.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.Month, 'short'),
+    format: (date: Date) => formatDate(date, PeriodType.Month, { variant: 'short' }),
   },
   {
     predicate: (duration: Duration | null) => duration!.days > 30,
     interval: timeMonth.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.Month, 'short'),
+    format: (date: Date) => formatDate(date, PeriodType.Month, { variant: 'short' }),
   },
   {
     predicate: (duration: Duration | null) => duration!.days,
     interval: timeDay.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.Day, 'short'),
+    format: (date: Date) => formatDate(date, PeriodType.Day, { variant: 'short' }),
   },
   {
     predicate: (duration: Duration | null) => duration!.hours,
@@ -83,22 +83,22 @@ const minorTicks = [
   {
     predicate: (duration: Duration | null) => duration!.years,
     interval: timeMonth.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.Month, 'short'),
+    format: (date: Date) => formatDate(date, PeriodType.Month, { variant: 'short' }),
   },
   {
     predicate: (duration: Duration | null) => duration!.days > 90,
     interval: timeMonth.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.Month, 'short'),
+    format: (date: Date) => formatDate(date, PeriodType.Month, { variant: 'short' }),
   },
   {
     predicate: (duration: Duration | null) => duration!.days > 30,
     interval: timeWeek.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.WeekSun, 'short'),
+    format: (date: Date) => formatDate(date, PeriodType.WeekSun, { variant: 'short' }),
   },
   {
     predicate: (duration: Duration | null) => duration!.days > 7,
     interval: timeDay.every(1),
-    format: (date: Date) => formatDate(date, PeriodType.Day, 'short'),
+    format: (date: Date) => formatDate(date, PeriodType.Day, { variant: 'short' }),
   },
   {
     predicate: (duration: Duration | null) => duration!.days > 3,

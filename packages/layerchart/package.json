@@ -95,7 +95,7 @@
     "lodash-es": "^4.17.21",
     "posthog-js": "^1.95.1",
     "shapefile": "^0.6.6",
-    "svelte-ux": "0.58.0-next.9",
+    "svelte-ux": "0.58.0-next.11",
     "topojson-client": "^3.1.0"
   },
   "peerDependencies": {

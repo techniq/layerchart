@@ -55,7 +55,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Threshold curve={selectedCurve}>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
             <Spline pathData={linePathData} stroke-width="1.5" />
@@ -87,7 +91,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Threshold curve={curveStepAfter}>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
             <Spline pathData={linePathData} color="black" width="1.5" />
@@ -127,7 +135,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Threshold>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
             <Spline pathData={linePathData} color="black" width="1.5" />

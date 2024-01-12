@@ -63,7 +63,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Spline class="stroke-2 stroke-primary" />
       </Svg>
     </Chart>
@@ -86,7 +90,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Spline class="stroke-2 stroke-primary" />
         <Highlight points lines />
       </Svg>
@@ -112,7 +120,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Spline class="stroke-2 stroke-primary" />
         <Labels format="integer" />
       </Svg>
@@ -134,7 +146,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <LinearGradient
           stops={ticks(1, 0, 10).map(temperatureColor.interpolator())}
           vertical
@@ -172,7 +188,11 @@
       {@const thresholdOffset = (yScale(50) / (height + padding.bottom)) * 100 + '%'}
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <LinearGradient
           stops={[
             [thresholdOffset, 'black'],
@@ -210,7 +230,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         {#each dataByFruit as [fruit, data]}
           {@const color = rScale(fruit)}
           <Spline {data} class="stroke-2" stroke={color}>
@@ -258,7 +282,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         {#each dataByFruit as [fruit, data]}
           {@const color =
             tooltip.data == null || tooltip.data.fruit === fruit
@@ -308,7 +336,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         {#each dataByFruit as [fruit, data]}
           {@const color = rScale(fruit)}
           <Spline {data} class="stroke-2" stroke={color} />

@@ -41,7 +41,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <AreaStack line={{ 'stroke-width': 2 }} />
       </Svg>
     </Chart>
@@ -68,7 +72,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <AreaStack line={{ 'stroke-width': 2 }} />
         <Highlight points lines />
       </Svg>
