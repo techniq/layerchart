@@ -133,7 +133,7 @@
           format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Points class="stroke-black/50" />
+        <Points class="stroke-surface-content/50" />
       </Svg>
     </Chart>
   </div>

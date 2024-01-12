@@ -129,12 +129,12 @@
     >
       <Svg>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
-        <Graticule class="stroke-black/20" />
+        <Graticule class="stroke-surface-content/20" />
         {#each countries.features as country}
           <GeoPath
             geojson={country}
             class={cls(
-              'fill-white cursor-pointer',
+              'stroke-surface-content/50 fill-white cursor-pointer',
               selectedFeature === country ? 'fill-primary' : 'hover:fill-gray-200'
             )}
             on:click={(e) => (selectedFeature = country)}
