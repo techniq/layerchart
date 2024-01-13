@@ -260,6 +260,37 @@
   </div>
 </Preview>
 
+<h2>Multiple series (using overrides)</h2>
+
+<Preview data={multiSeriesFlatData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={Array.from({ length: 90 }).map((_, i) => ({
+        x: i,
+        y: Math.floor(Math.random() * 90),
+        y1: Math.floor(Math.random() * 90),
+      }))}
+      x="x"
+      y="y"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24, right: 48 }}
+      tooltip={{ mode: 'voronoi' }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Spline y={(d) => d.y} class="stroke-2" stroke={fruitColors.bananas} />
+        <Spline y={(d) => d.y1} class="stroke-2" stroke={fruitColors.oranges} />
+        <Highlight points lines />
+      </Svg>
+      <Tooltip let:data>
+        <TooltipItem label="value" value={data.y} />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Multiple series (highlight on hover)</h2>
 
 <Preview data={multiSeriesFlatData}>

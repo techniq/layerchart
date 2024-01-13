@@ -14,7 +14,7 @@
   import { motionStore } from '$lib/stores/motionStore';
   import Group from './Group.svelte';
 
-  const { data: contextData, xGet, yGet } = getContext('LayerCake');
+  const { data: contextData, xGet, yGet, xScale, yScale } = getContext('LayerCake');
 
   /** Override data instead of using context */
   export let data: any = undefined;
@@ -40,8 +40,8 @@
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
   $: {
     const path = d3Line()
-      .x(x ?? $xGet)
-      .y(y ?? $yGet);
+      .x((d) => (x ? $xScale(x(d)) : $xGet(d)))
+      .y((d) => (y ? $yScale(y(d)) : $yGet(d)));
     if (curve) path.curve(curve);
     if (defined) path.defined(defined);
 

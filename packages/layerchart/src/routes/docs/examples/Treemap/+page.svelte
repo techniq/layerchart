@@ -191,7 +191,7 @@
               {#each nodes as node}
                 <Group
                   x={xScale(node.x0)}
-                  y={yScale(node.y0)}
+                  y={node.y0}
                   on:click={() => (node.children ? (selectedNested = node) : null)}
                   on:mousemove={(e) => tooltip.show(e, node)}
                   on:mouseleave={tooltip.hide}

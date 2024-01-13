@@ -12,7 +12,7 @@
 
   import Spline from './Spline.svelte';
 
-  const { data: contextData, xGet, yGet, yRange } = getContext('LayerCake');
+  const { data: contextData, xGet, yGet, yRange, xScale, yScale } = getContext('LayerCake');
 
   /** Override data instead of using context */
   export let data: any = undefined;
@@ -43,9 +43,10 @@
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
   $: {
     const path = d3Area()
-      .x(x ?? $xGet)
-      .y0(y0 ?? max($yRange))
-      .y1(y1 ?? $yGet);
+      .x((d) => (x ? $xScale(x(d)) : $xGet(d)))
+      .y0((d) => (y0 ? $yScale(y0(d)) : max($yRange)))
+      .y1((d) => (y1 ? $yScale(y1(d)) : $yGet(d)));
+
     if (curve) path.curve(curve);
     if (defined) path.defined(defined);
 
