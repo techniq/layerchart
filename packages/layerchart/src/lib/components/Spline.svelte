@@ -31,7 +31,12 @@
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
   /** Draw path over time.  Works best without `tweened` enabled */
   export let draw: boolean | Parameters<typeof _drawTransition>[1] = undefined;
-
+  /**
+   * Curve of spline drawn. Imported via d3-shape.
+   * @example
+   * import { curveNatural } from 'd3-shape';
+   * <Spline curve={curveNatrual} />
+   */
   export let curve: CurveFactory | CurveFactoryLineOnly | undefined = undefined;
   export let defined: Parameters<Line<any>['defined']>[0] | undefined = undefined;
 
