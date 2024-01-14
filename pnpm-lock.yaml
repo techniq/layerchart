@@ -20,15 +20,6 @@ importers:
 
   packages/layerchart:
     dependencies:
-      '@changesets/cli':
-        specifier: ^2.26.2
-        version: 2.26.2
-      '@mdi/js':
-        specifier: ^7.3.67
-        version: 7.3.67
-      '@types/d3-time':
-        specifier: ^3.0.2
-        version: 3.0.3
       d3-array:
         specifier: ^3.2.4
         version: 3.2.4
@@ -89,19 +80,16 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      posthog-js:
-        specifier: ^1.95.1
-        version: 1.95.1
-      shapefile:
-        specifier: ^0.6.6
-        version: 0.6.6
       svelte-ux:
         specifier: ^0.56.0
         version: 0.56.0(@fortawesome/free-regular-svg-icons@6.4.2)(@fortawesome/free-solid-svg-icons@6.4.2)(@mdi/js@7.3.67)(prism-svelte@0.5.0)(prism-themes@1.9.0)(prismjs@1.29.0)(sveld@0.18.1)(svelte@4.2.7)
-      topojson-client:
-        specifier: ^3.1.0
-        version: 3.1.0
     devDependencies:
+      '@changesets/cli':
+        specifier: ^2.26.2
+        version: 2.26.2
+      '@mdi/js':
+        specifier: ^7.3.67
+        version: 7.3.67
       '@rollup/plugin-dsv':
         specifier: ^3.0.4
         version: 3.0.4(rollup@2.79.1)
@@ -159,6 +147,9 @@ importers:
       '@types/d3-shape':
         specifier: ^3.1.5
         version: 3.1.5
+      '@types/d3-time':
+        specifier: ^3.0.2
+        version: 3.0.3
       '@types/lodash-es':
         specifier: ^4.17.11
         version: 4.17.11
@@ -183,18 +174,30 @@ importers:
       mdsvex:
         specifier: ^0.11.0
         version: 0.11.0(svelte@4.2.7)
+      posthog-js:
+        specifier: ^1.95.1
+        version: 1.95.1
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-svelte:
         specifier: ^3.1.0
         version: 3.1.0(prettier@3.1.0)(svelte@4.2.7)
+      prism-svelte:
+        specifier: ^0.5.0
+        version: 0.5.0
       prism-themes:
         specifier: ^1.9.0
         version: 1.9.0
+      prismjs:
+        specifier: ^1.29.0
+        version: 1.29.0
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
+      shapefile:
+        specifier: ^0.6.6
+        version: 0.6.6
       svelte:
         specifier: ^4.2.7
         version: 4.2.7
@@ -213,6 +216,9 @@ importers:
       tailwindcss:
         specifier: ^3.3.5
         version: 3.3.5
+      topojson-client:
+        specifier: ^3.1.0
+        version: 3.1.0
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
@@ -750,7 +756,6 @@ packages:
 
   /@mdi/js@7.3.67:
     resolution: {integrity: sha512-MnRjknFqpTC6FifhGHjZ0+QYq2bAkZFQqIj8JA2AdPZbBxUvr8QSgB2yPAJ8/ob/XkR41xlg5majDR3c1JP1hw==}
-    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1044,6 +1049,7 @@ packages:
 
   /@types/d3-time@3.0.3:
     resolution: {integrity: sha512-2p6olUZ4w3s+07q3Tm2dbiMZy5pCDfYwtLXXHUnVzXgQlZ/OyPtUz6OL382BkOuGlLXqfT+wqv8Fw2v8/0geBw==}
+    dev: true
 
   /@types/estree@0.0.39:
     resolution: {integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==}
@@ -1217,7 +1223,7 @@ packages:
 
   /array-source@0.0.4:
     resolution: {integrity: sha512-frNdc+zBn80vipY+GdcJkLEbMWj3xmzArYApmUGxoiV8uAu/ygcs9icPdsGdA26h0MkHUMW6EN2piIvVx+M5Mw==}
-    dev: false
+    dev: true
 
   /array-union@2.1.0:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
@@ -1449,6 +1455,7 @@ packages:
 
   /commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
+    dev: true
 
   /commander@4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
@@ -1965,13 +1972,13 @@ packages:
 
   /fflate@0.4.8:
     resolution: {integrity: sha512-FJqqoDBR00Mdj9ppamLa/Y7vxm+PRmNWA67N846RvsoYVMKB4q3y/de5PA7gUmRMYK/8CMz2GDZQmCRN1wBcWA==}
-    dev: false
+    dev: true
 
   /file-source@0.6.1:
     resolution: {integrity: sha512-1R1KneL7eTXmXfKxC10V/9NeGOdbsAXJ+lQ//fvvcHUgtaZcZDWNJNblxAoVOyV1cj45pOtUrR3vZTBwqcW8XA==}
     dependencies:
       stream-source: 0.3.5
-    dev: false
+    dev: true
 
   /fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
@@ -2915,7 +2922,7 @@ packages:
     dependencies:
       array-source: 0.0.4
       file-source: 0.6.1
-    dev: false
+    dev: true
 
   /path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
@@ -3036,7 +3043,7 @@ packages:
     resolution: {integrity: sha512-79HPLoBqENBEEGFhn+hueKliYH66Qbu4WcRTEd8WaqtvqHrK9qAQkcrShZNkg1V5vM4kHp0iMIkJYBXg1sq06Q==}
     dependencies:
       fflate: 0.4.8
-    dev: false
+    dev: true
 
   /preferred-pm@3.1.2:
     resolution: {integrity: sha512-nk7dKrcW8hfCZ4H6klWcdRknBOXWzNQByJ0oJyX97BOupsYD+FzLS4hflgEu/uPUEHZCuRfMxzCBsuWd7OzT8Q==}
@@ -3074,7 +3081,6 @@ packages:
 
   /prism-svelte@0.5.0:
     resolution: {integrity: sha512-db91Bf3pRGKDPz1lAqLFSJXeW13mulUJxhycysFpfXV5MIK7RgWWK2E5aPAa71s8TCzQUXxF5JOV42/iOs6QkA==}
-    dev: false
 
   /prism-themes@1.9.0:
     resolution: {integrity: sha512-tX2AYsehKDw1EORwBps+WhBFKc2kxfoFpQAjxBndbZKr4fRmMkv47XN0BghC/K1qwodB1otbe4oF23vUTFDokw==}
@@ -3338,7 +3344,7 @@ packages:
       slice-source: 0.4.1
       stream-source: 0.3.5
       text-encoding: 0.6.4
-    dev: false
+    dev: true
 
   /shebang-command@1.2.0:
     resolution: {integrity: sha512-EV3L1+UQWGor21OmnvojK36mhg+TyIKDh3iFBKBohr5xeXIhNBcx8oWdgkTEEQ+BEFFYdLRuqMfd5L84N1V5Vg==}
@@ -3392,7 +3398,7 @@ packages:
 
   /slice-source@0.4.1:
     resolution: {integrity: sha512-YiuPbxpCj4hD9Qs06hGAz/OZhQ0eDuALN0lRWJez0eD/RevzKqGdUx1IOMUnXgpr+sXZLq3g8ERwbAH0bCb8vg==}
-    dev: false
+    dev: true
 
   /smartwrap@2.0.2:
     resolution: {integrity: sha512-vCsKNQxb7PnCNd2wY1WClWifAc2lwqsG8OaswpJkVJsvMGcnEntdTCDajZCkk93Ay1U3t/9puJmb525Rg5MZBA==}
@@ -3464,7 +3470,7 @@ packages:
 
   /stream-source@0.3.5:
     resolution: {integrity: sha512-ZuEDP9sgjiAwUVoDModftG0JtYiLUV8K4ljYD1VyUMRWtbVf92474o4kuuul43iZ8t/hRuiDAx1dIJSvirrK/g==}
-    dev: false
+    dev: true
 
   /stream-transform@2.1.3:
     resolution: {integrity: sha512-9GHUiM5hMiCi6Y03jD2ARC1ettBXkQBoQAe7nJsPknnI0ow10aXjTnew8QtYQmLjzn974BnmWEAJgCY6ZP1DeQ==}
@@ -3854,7 +3860,7 @@ packages:
   /text-encoding@0.6.4:
     resolution: {integrity: sha512-hJnc6Qg3dWoOMkqP53F0dzRIgtmsAge09kxUIqGrEUS4qr5rWLckGYaQAVr+opBrIMRErGgy6f5aPnyPpyGRfg==}
     deprecated: no longer maintained
-    dev: false
+    dev: true
 
   /thenify-all@1.6.0:
     resolution: {integrity: sha512-RNxQH/qI8/t3thXJDwcstUO4zeqo64+Uy/+sNVRBx4Xn2OX+OZ9oP+iJnNFqplFra2ZUVeKCSa2oVWi3T4uVmA==}
@@ -3893,7 +3899,7 @@ packages:
     hasBin: true
     dependencies:
       commander: 2.20.3
-    dev: false
+    dev: true
 
   /tosource@2.0.0-alpha.3:
     resolution: {integrity: sha512-KAB2lrSS48y91MzFPFuDg4hLbvDiyTjOVgaK7Erw+5AmZXNq4sFRVn8r6yxSLuNs15PaokrDRpS61ERY9uZOug==}
