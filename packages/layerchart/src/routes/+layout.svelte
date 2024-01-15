@@ -200,7 +200,7 @@
     </div>
   </AppBar>
 
-  <main class="scroll-smooth" bind:this={mainEl}>
+  <main class="scroll-smooth isolate" bind:this={mainEl}>
     <slot />
   </main>
 </AppLayout>
