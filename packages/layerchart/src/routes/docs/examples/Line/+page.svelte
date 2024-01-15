@@ -195,8 +195,8 @@
         />
         <LinearGradient
           stops={[
-            [thresholdOffset, 'black'],
-            [thresholdOffset, 'red'],
+            [thresholdOffset, 'hsl(var(--color-info))'],
+            [thresholdOffset, 'hsl(var(--color-danger))'],
           ]}
           units="userSpaceOnUse"
           vertical

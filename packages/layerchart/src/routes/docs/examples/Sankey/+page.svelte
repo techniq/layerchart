@@ -5,7 +5,7 @@
   import { hierarchy } from 'd3-hierarchy';
   import { interpolateCool } from 'd3-scale-chromatic';
   import { extent } from 'd3-array';
-  import { Icon, sortFunc } from 'svelte-ux';
+  import { Icon, cls, sortFunc } from 'svelte-ux';
   import { mdiArrowRightBold } from '@mdi/js';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -75,7 +75,7 @@
       <Svg>
         <Sankey nodeId={(d) => d.id} let:links let:nodes>
           {#each links as link ([link.source.id, link.target.id].join('_'))}
-            <Link sankey data={link} stroke="#ddd" stroke-opacity={0.5} stroke-width={link.width} />
+            <Link sankey data={link} stroke-width={link.width} class="stroke-surface-content/10" />
           {/each}
           {#each nodes as node (node.id)}
             {@const nodeWidth = node.x1 - node.x0}
@@ -108,9 +108,8 @@
             <Link
               sankey
               data={link}
-              stroke="#ddd"
-              stroke-opacity={0.5}
               stroke-width={link.width}
+              class="stroke-surface-content/10"
               on:mousemove={(e) => tooltip.show(e, { link })}
               on:mouseleave={tooltip.hide}
             />
@@ -188,10 +187,9 @@
             <Link
               sankey
               data={link}
-              stroke="#ddd"
-              stroke-opacity={0.5}
               stroke-width={link.width}
               tweened
+              class="stroke-surface-content/10"
             />
           {/each}
 
@@ -253,14 +251,17 @@
               sankey
               data={link}
               stroke={linkColorBy === 'static'
-                ? 'black'
+                ? undefined
                 : colorScale(link[linkColorBy][nodeColorBy])}
               stroke-opacity={highlightLinkIndexes.length &&
               !highlightLinkIndexes.includes(link.index)
                 ? linkOpacity.inactive
                 : linkOpacity.default}
               stroke-width={link.width}
-              class="transition[stroke-opacity] duration-300"
+              class={cls(
+                'transition[stroke-opacity] duration-300',
+                linkColorBy === 'static' && 'stroke-surface-content'
+              )}
               on:mouseover={() => (highlightLinkIndexes = [link.index])}
               on:mousemove={(e) => tooltip.show(e, { link })}
               on:mouseout={() => {
@@ -369,14 +370,17 @@
               sankey
               data={link}
               stroke={linkColorBy === 'static'
-                ? 'black'
+                ? undefined
                 : colorScale(link[linkColorBy][nodeColorBy])}
               stroke-opacity={highlightLinkIndexes.length &&
               !highlightLinkIndexes.includes(link.index)
                 ? linkOpacity.inactive
                 : linkOpacity.default}
               stroke-width={link.width}
-              class="transition[stroke-opacity] duration-300"
+              class={cls(
+                'transition[stroke-opacity] duration-300',
+                linkColorBy === 'static' && 'stroke-surface-content'
+              )}
               on:mouseover={() => (highlightLinkIndexes = [link.index])}
               on:mouseout={() => (highlightLinkIndexes = [])}
               tweened
