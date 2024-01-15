@@ -212,10 +212,13 @@
 
   :global(body) {
     @apply bg-surface-200 accent-primary;
+    /* background-image:
+      radial-gradient(at 0% 0%, hsl(var(--color-secondary) / 0.33) 0px, transparent 50%),
+      radial-gradient(at 98% 1%, hsl(var(--color-primary) / 0.33) 0px, transparent 50%); */
   }
 
   :global(nav h1) {
-    @apply py-2 pl-4 mt-4 text-sm text-surface-content font-bold bg-surface-200 border-t border-b border-surface-100;
+    @apply py-2 pl-4 mt-4 text-sm text-surface-content font-bold bg-surface-200 border-t border-b;
   }
 
   :global(nav h2) {
@@ -223,7 +226,7 @@
   }
 
   :global(main h1:not(.prose *, .related *, .ApiDocs *)) {
-    @apply text-xl font-semibold mt-4 mb-2 border-b border-surface-content/20 pb-1;
+    @apply text-xl font-semibold mt-4 mb-2 border-b pb-1;
     scroll-margin-top: 128px; /* sticky header */
   }
 
