@@ -90,7 +90,7 @@
     </div>
 
     {#if description}
-      <div class="text-sm text-surface-content/60">
+      <div class="text-sm text-surface-content/60 xl:pr-[240px]">
         {description}
       </div>
     {/if}
