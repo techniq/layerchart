@@ -63,7 +63,7 @@
 </script>
 
 <div
-  class="[@media(min-height:900px)]:sticky top-0 z-20 bg-surface-200/90 backdrop-blur px-5 py-4 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)calc(100%-4px),rgba(0,0,0,0))]"
+  class="[@media(min-height:900px)]:sticky top-0 z-[60] bg-surface-200/90 backdrop-blur px-5 py-4 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)calc(100%-4px),rgba(0,0,0,0))]"
 >
   {#if title}
     <div>
@@ -224,7 +224,7 @@
 
     {#if showTableOfContents && $xlScreen}
       <div transition:slide={{ axis: 'x' }}>
-        <div class="w-[224px] sticky top-[16px] pr-2 max-h-[calc(100dvh-64px)] overflow-auto z-20">
+        <div class="w-[224px] sticky top-10 pr-2 max-h-[calc(100dvh-64px)] overflow-auto z-[60]">
           <div class="text-xs uppercase leading-8 tracking-widest text-surface-content/50">
             On this page
           </div>
