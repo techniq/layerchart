@@ -37,7 +37,7 @@
       y1={$yRange[0] || 0}
       y2={$yRange[1] || 0}
       {...$$restProps}
-      class={cls('stroke-gray-400', $$props.class)}
+      class={cls('stroke-surface-content/50', $$props.class)}
     />
   {/if}
 
@@ -48,7 +48,7 @@
       y1={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
       y2={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
       {...$$restProps}
-      class={cls('stroke-gray-400', $$props.class)}
+      class={cls('stroke-surface-content/50', $$props.class)}
     />
   {/if}
 </g>

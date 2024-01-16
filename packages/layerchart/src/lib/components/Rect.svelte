@@ -41,6 +41,7 @@
   y={$tweened_y}
   width={$tweened_width}
   height={$tweened_height}
+  class="fill-surface-content"
   {...$$restProps}
   on:click
   on:mouseover

@@ -43,6 +43,6 @@
 
 {#if showCenter}
   <div
-    class="absolute w-2 h-2 bg-red-500/80 rounded-full z-[1] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+    class="absolute w-2 h-2 bg-danger/80 rounded-full z-[1] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
   />
 {/if}

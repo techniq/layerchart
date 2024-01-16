@@ -31,6 +31,7 @@
   cx={$tweened_cx}
   cy={$tweened_cy}
   r={$tweened_r}
+  class="fill-surface-content"
   {...$$restProps}
   on:click
   on:mousemove

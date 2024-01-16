@@ -37,6 +37,7 @@
   y1={$tweened_y1}
   x2={$tweened_x2}
   y2={$tweened_y2}
+  class="stroke-surface-content"
   {...$$restProps}
   on:click
   on:mousemove

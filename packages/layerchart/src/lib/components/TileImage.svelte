@@ -70,13 +70,7 @@
 />
 <image xlink:href={href} x={(x + tx) * k} y={(y + ty) * k} width={k} height={k} />
 {#if debug}
-  <rect
-    x={(x + tx) * k}
-    y={(y + ty) * k}
-    width={k}
-    height={k}
-    class="stroke-red-500/50 fill-none"
-  />
+  <rect x={(x + tx) * k} y={(y + ty) * k} width={k} height={k} class="stroke-danger/50 fill-none" />
   <Text
     x={(x + tx) * k}
     y={(y + ty) * k}
