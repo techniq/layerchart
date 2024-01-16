@@ -42,7 +42,12 @@
       r={(d) => d.value}
       rScale={scaleThreshold().unknown('transparent')}
       rDomain={[25, 50, 75]}
-      rRange={schemeGreens[4]}
+      rRange={[
+        'hsl(var(--color-primary-100))',
+        'hsl(var(--color-primary-300))',
+        'hsl(var(--color-primary-500))',
+        'hsl(var(--color-primary-700))',
+      ]}
       tooltip={{ mode: 'manual' }}
       let:tooltip
     >
@@ -65,7 +70,12 @@
       r={(d) => d.value}
       rScale={scaleThreshold().unknown('transparent')}
       rDomain={[25, 50, 75]}
-      rRange={schemeGreens[4]}
+      rRange={[
+        'hsl(var(--color-primary-100))',
+        'hsl(var(--color-primary-300))',
+        'hsl(var(--color-primary-500))',
+        'hsl(var(--color-primary-700))',
+      ]}
       tooltip={{ mode: 'manual' }}
       let:tooltip
     >
@@ -88,7 +98,12 @@
       r={(d) => d.value}
       rScale={scaleThreshold().unknown('transparent')}
       rDomain={[25, 50, 75]}
-      rRange={schemeGreens[4]}
+      rRange={[
+        'hsl(var(--color-primary-100))',
+        'hsl(var(--color-primary-300))',
+        'hsl(var(--color-primary-500))',
+        'hsl(var(--color-primary-700))',
+      ]}
       padding={{ left: 20 }}
       tooltip={{ mode: 'manual' }}
       let:tooltip
