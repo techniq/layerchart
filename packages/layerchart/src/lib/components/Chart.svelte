@@ -137,6 +137,7 @@
         {width}
         {element}
         {projection}
+        {tooltip}
         {xScale}
         {yScale}
         {zScale}
@@ -144,7 +145,7 @@
         {padding}
         {data}
         {flatData}
-      />
+        />
     {/if}
   </GeoContext>
 </LayerCake>
