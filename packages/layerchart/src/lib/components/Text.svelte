@@ -158,7 +158,7 @@
       {transform}
       text-anchor={textAnchor}
       {...$$restProps}
-      class={cls('fill-surface-content', $$props.class)}
+      class={cls($$props.fill === undefined && 'fill-surface-content', $$props.class)}
     >
       {#each wordsByLines as line, index}
         <tspan {x} dy={index === 0 ? startDy : lineHeight}>

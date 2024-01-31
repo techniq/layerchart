@@ -1,5 +1,7 @@
 <script lang="ts">
   import { tick } from 'svelte';
+  import { cls } from 'svelte-ux';
+
   import {
     motionStore,
     resolveOptions,
@@ -41,7 +43,7 @@
   y={$tweened_y}
   width={$tweened_width}
   height={$tweened_height}
-  class="fill-surface-content"
+  class={cls($$props.fill === undefined && 'fill-surface-content')}
   {...$$restProps}
   on:click
   on:mouseover
