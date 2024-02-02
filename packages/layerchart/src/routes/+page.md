@@ -15,7 +15,7 @@ The goal is to provide a collection of useful but mostly unopinionated component
 The library accomplishes this through a large assortment of components:
 
 - Data-driven components (Area, Bars, Spline, ...)
-- Motion-enabled SVG primatives (Rect, Circle, Arc, Group, ...)
+- Motion-enabled SVG primitives (Rect, Circle, Arc, Group, ...)
 - SVG utilities (gradient/patterns, clipping, multi-line SVG text, motion path, ...)
 - Interaction (tooltip, pan/zoom)
 - Hierarchy layout and geo projections
