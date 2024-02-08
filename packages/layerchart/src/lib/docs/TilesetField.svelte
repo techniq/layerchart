@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Field, Switch } from 'svelte-ux';
+  import { SelectField, Switch } from 'svelte-ux';
 
   export let doubleScale = devicePixelRatio > 1;
 
@@ -39,7 +39,7 @@
     // https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer/tile/12/1572/1108.pbf
   };
 
-  $: serviceOptions = {
+  $: services = {
     'mapbox v1': {
       'streets-v11': mapboxv1('streets-v11'),
       'light-v10': mapboxv1('light-v10'),
@@ -81,30 +81,34 @@
     // }
   };
 
-  $: defaultServiceUrl = serviceOptions['mapbox v1']['streets-v11'];
+  $: serviceOptions = Object.entries(services).flatMap(([group, service]) => {
+    return Object.entries(service).map(([label, value]) => {
+      return { label, value: `${group}:${label}`, group, serviceUrl: value };
+    });
+  });
+
+  $: defaultServiceUrl = services['mapbox v1']['streets-v11'];
   export let serviceUrl = defaultServiceUrl;
 
   $: getServiceUrl = (option: string) => {
     const [selectedService, selectedTileset] = selected.split(':');
-    return serviceOptions[selectedService][selectedTileset];
+    return services[selectedService][selectedTileset];
   };
 
   let selected = 'mapbox v1:streets-v11';
   $: serviceUrl = getServiceUrl(selected);
 </script>
 
-<Field label="Tileset" let:id>
-  <select bind:value={selected} class="w-full outline-none appearance-none text-sm" {id}>
-    {#each Object.entries(serviceOptions) as [group, options]}
-      <optgroup label={group}>
-        {#each Object.keys(options) as option}
-          <option value="{group}:{option}">{option}</option>
-        {/each}
-      </optgroup>
-    {/each}
-  </select>
-  <div slot="append">
+<SelectField
+  label="Tileset"
+  options={serviceOptions}
+  bind:value={selected}
+  clearable={false}
+  toggleIcon={null}
+  stepper
+>
+  <div slot="append" on:click|stopPropagation>
     <div class="text-[10px] text-surface-content/50 text-center">2x</div>
     <Switch bind:checked={doubleScale} size="md" />
   </div>
-</Field>
+</SelectField>

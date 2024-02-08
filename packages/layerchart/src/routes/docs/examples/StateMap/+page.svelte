@@ -1,9 +1,8 @@
 <script lang="ts">
   import { geoAlbersUsa, geoAlbers, geoMercator } from 'd3-geo';
-  import { sort } from 'd3-array';
   import { feature } from 'topojson-client';
 
-  import { Field } from 'svelte-ux';
+  import { Field, SelectField, sort } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -19,7 +18,7 @@
   const stateOptions = sort(
     states.features
       .filter((x) => Number(x.id) < 60)
-      .map((x) => ({ name: x.properties.name, value: x.id })),
+      .map((x) => ({ label: x.properties.name, value: x.id })),
     (d) => d.value
   );
   let selectedStateId = '54'; // 'West Virginia';
@@ -30,27 +29,29 @@
 
   let projection = geoAlbersUsa;
   const projections = [
-    { name: 'Albers', value: geoAlbers },
-    { name: 'Albers USA', value: geoAlbersUsa },
-    { name: 'Mercator', value: geoMercator },
+    { label: 'Albers', value: geoAlbers },
+    { label: 'Albers USA', value: geoAlbersUsa },
+    { label: 'Mercator', value: geoMercator },
   ];
 </script>
 
 <div class="grid grid-cols-[1fr,1fr,1fr] gap-2 my-2">
-  <Field label="State" let:id>
-    <select bind:value={selectedStateId} class="w-full outline-none appearance-none text-sm" {id}>
-      {#each stateOptions as option}
-        <option value={option.value}>{option.name}</option>
-      {/each}
-    </select>
-  </Field>
-  <Field label="Projections" let:id>
-    <select bind:value={projection} class="w-full outline-none appearance-none text-sm" {id}>
-      {#each projections as option}
-        <option value={option.value}>{option.name}</option>
-      {/each}
-    </select>
-  </Field>
+  <SelectField
+    label="State"
+    options={stateOptions}
+    bind:value={selectedStateId}
+    clearable={false}
+    toggleIcon={null}
+    stepper
+  />
+  <SelectField
+    label="Projections"
+    options={projections}
+    bind:value={projection}
+    clearable={false}
+    toggleIcon={null}
+    stepper
+  />
 </div>
 
 <h1>Examples</h1>

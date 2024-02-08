@@ -10,7 +10,7 @@
   } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Field, RangeField, Switch } from 'svelte-ux';
+  import { Field, RangeField, SelectField, Switch } from 'svelte-ux';
 
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
@@ -23,13 +23,13 @@
 
   let projection = geoOrthographic;
   const projections = [
-    { name: 'Albers', value: geoAlbers },
-    { name: 'Albers USA', value: geoAlbersUsa },
-    { name: 'Equal Earth', value: geoEqualEarth },
-    { name: 'Equirectangular', value: geoEquirectangular },
-    { name: 'Mercator', value: geoMercator },
-    { name: 'Natural Earth', value: geoNaturalEarth1 },
-    { name: 'Orthographic', value: geoOrthographic },
+    { label: 'Albers', value: geoAlbers },
+    { label: 'Albers USA', value: geoAlbersUsa },
+    { label: 'Equal Earth', value: geoEqualEarth },
+    { label: 'Equirectangular', value: geoEquirectangular },
+    { label: 'Mercator', value: geoMercator },
+    { label: 'Natural Earth', value: geoNaturalEarth1 },
+    { label: 'Orthographic', value: geoOrthographic },
   ];
 
   let detailed = false;
@@ -48,13 +48,14 @@
 </script>
 
 <div class="grid grid-cols-[1fr,1fr,1fr,1fr,1fr,auto] gap-2 my-2">
-  <Field label="Projections" let:id>
-    <select bind:value={projection} class="w-full outline-none appearance-none text-sm" {id}>
-      {#each projections as option}
-        <option value={option.value}>{option.name}</option>
-      {/each}
-    </select>
-  </Field>
+  <SelectField
+    label="Projections"
+    options={projections}
+    bind:value={projection}
+    clearable={false}
+    toggleIcon={null}
+    stepper
+  />
   <RangeField label="Yaw" bind:value={yaw} min={-360} max={360} />
   <RangeField label="Pitch" bind:value={pitch} min={-90} max={90} />
   <RangeField label="Roll" bind:value={roll} min={-180} max={180} />
