@@ -21,7 +21,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import timezones from '../_data/geo/timezones.json';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
   export let data;
@@ -43,7 +42,7 @@
       ? geojson.features.filter((f) => f.properties.name === 'United States of America')
       : geojson.features;
 
-  $: timezoneGeojson = feature(timezones, timezones.objects.timezones);
+  $: timezoneGeojson = feature(data.timezones, data.timezones.objects.timezones);
 
   $: colorScale = scaleSequential(
     extent(timezoneGeojson.features, (d) => d.properties.zone),
