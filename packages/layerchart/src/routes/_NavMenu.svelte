@@ -35,6 +35,7 @@
       'SpikeMap',
       'ZoomableMap',
       'ZoomableTileMap',
+      'Timezones',
       'AnimatedGlobe',
       'LoftedArcsGlobe',
       'GeojsonPreview',
