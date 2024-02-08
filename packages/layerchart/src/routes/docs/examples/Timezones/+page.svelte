@@ -13,7 +13,7 @@
   import { interpolateRdBu } from 'd3-scale-chromatic';
   import { feature } from 'topojson-client';
 
-  import { Field } from 'svelte-ux';
+  import { SelectField } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
@@ -28,13 +28,13 @@
 
   let projection = geoNaturalEarth1;
   const projections = [
-    { name: 'Albers', value: geoAlbers },
-    { name: 'Albers USA', value: geoAlbersUsa },
-    { name: 'Equal Earth', value: geoEqualEarth },
-    { name: 'Equirectangular', value: geoEquirectangular },
-    { name: 'Mercator', value: geoMercator },
-    { name: 'Natural Earth', value: geoNaturalEarth1 },
-    { name: 'Orthographic', value: geoOrthographic },
+    { label: 'Albers', value: geoAlbers },
+    { label: 'Albers USA', value: geoAlbersUsa },
+    { label: 'Equal Earth', value: geoEqualEarth },
+    { label: 'Equirectangular', value: geoEquirectangular },
+    { label: 'Mercator', value: geoMercator },
+    { label: 'Natural Earth', value: geoNaturalEarth1 },
+    // { label: 'Orthographic', value: geoOrthographic },
   ];
 
   $: geojson = feature(data.geojson, data.geojson.objects.countries);
@@ -52,13 +52,14 @@
 </script>
 
 <div class="grid grid-cols-[1fr,2fr] gap-2 my-2">
-  <Field label="Projections" let:id>
-    <select bind:value={projection} class="w-full outline-none appearance-none text-sm" {id}>
-      {#each projections as option}
-        <option value={option.value}>{option.name}</option>
-      {/each}
-    </select>
-  </Field>
+  <SelectField
+    label="Projections"
+    options={projections}
+    bind:value={projection}
+    clearable={false}
+    toggleIcon={null}
+    stepper
+  />
 </div>
 
 <h1>Examples</h1>
@@ -77,21 +78,21 @@
       let:tooltip
     >
       <Svg>
-        <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content fill-blue-400/50" />
+        <!-- <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content fill-blue-400/50" /> -->
 
         {#each timezoneGeojson.features as feature}
           <GeoPath
             geojson={feature}
             {tooltip}
             fill={colorScale(feature.properties.zone)}
-            class="stroke-surface-content/50 hover:opacity-80"
+            class="stroke-gray-900/50 hover:brightness-110"
           />
         {/each}
 
         {#each features as feature}
           <GeoPath
             geojson={feature}
-            class="stroke-surface-content/50 fill-surface-content/20 pointer-events-none"
+            class="stroke-gray-900/10 fill-gray-900/20 pointer-events-none"
           />
         {/each}
       </Svg>
