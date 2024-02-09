@@ -6,6 +6,9 @@
 
   /** Use existing path or shape (by id) for clipPath */
   export let useId: string | undefined = undefined;
+
+  /** Disable clipping (show all) */
+  export let disabled: boolean = false;
 </script>
 
 <defs>
@@ -19,7 +22,11 @@
 </defs>
 
 {#if $$slots.default}
-  <g style:clip-path="url(#{id})" on:click on:mousemove on:mouseleave on:keydown>
-    <slot {id} url="url(#{id})" {useId} />
-  </g>
+  {#if disabled}
+    <slot />
+  {:else}
+    <g style:clip-path="url(#{id})" on:click on:mousemove on:mouseleave on:keydown>
+      <slot {id} url="url(#{id})" {useId} />
+    </g>
+  {/if}
 {/if}
