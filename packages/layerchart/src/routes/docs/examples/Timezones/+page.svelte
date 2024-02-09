@@ -13,7 +13,7 @@
   import { interpolateRdBu } from 'd3-scale-chromatic';
   import { feature } from 'topojson-client';
 
-  import { Field, SelectField, Switch } from 'svelte-ux';
+  import { Field, SelectField, Switch, timerStore } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
@@ -52,6 +52,8 @@
     extent(timezoneGeojson.features, (d) => d.properties.zone),
     interpolateRdBu
   );
+
+  const dateTimer = timerStore();
 </script>
 
 <div class="grid grid-cols-[1fr,auto,2fr] gap-2 my-2">
@@ -108,8 +110,18 @@
       </Svg>
 
       <Tooltip let:data>
-        <TooltipItem label="Name" value={data.properties.tz_name1st} />
-        <TooltipItem label="Timezone" value={data.properties.time_zone} />
+        {@const { tz_name1st, time_zone } = data.properties}
+        <TooltipItem label="Name" value={tz_name1st} />
+        <TooltipItem label="Timezone" value={time_zone} />
+        <TooltipItem label="Current time">
+          {tz_name1st
+            ? new Intl.DateTimeFormat(undefined, {
+                timeStyle: 'medium',
+                dateStyle: 'short',
+                timeZone: tz_name1st,
+              }).format($dateTimer)
+            : '-'}
+        </TooltipItem>
       </Tooltip>
     </Chart>
   </div>
