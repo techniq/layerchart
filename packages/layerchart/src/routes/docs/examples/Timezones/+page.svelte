@@ -54,6 +54,21 @@
   );
 
   const dateTimer = timerStore();
+
+  function formatDate(date: Date, timeZone: string | null) {
+    let result = '-';
+    if (timeZone) {
+      try {
+        result = new Intl.DateTimeFormat(undefined, {
+          timeStyle: 'medium',
+          dateStyle: 'short',
+          timeZone,
+        }).format(date);
+      } catch {}
+    }
+
+    return result;
+  }
 </script>
 
 <div class="grid grid-cols-[1fr,auto,2fr] gap-2 my-2">
@@ -113,15 +128,7 @@
         {@const { tz_name1st, time_zone } = data.properties}
         <TooltipItem label="Name" value={tz_name1st} />
         <TooltipItem label="Timezone" value={time_zone} />
-        <TooltipItem label="Current time">
-          {tz_name1st
-            ? new Intl.DateTimeFormat(undefined, {
-                timeStyle: 'medium',
-                dateStyle: 'short',
-                timeZone: tz_name1st,
-              }).format($dateTimer)
-            : '-'}
-        </TooltipItem>
+        <TooltipItem label="Current time" value={formatDate($dateTimer, tz_name1st)} />
       </Tooltip>
     </Chart>
   </div>
