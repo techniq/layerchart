@@ -128,7 +128,10 @@
         {@const { tz_name1st, time_zone } = data.properties}
         <TooltipItem label="Name" value={tz_name1st} />
         <TooltipItem label="Timezone" value={time_zone} />
-        <TooltipItem label="Current time" value={formatDate($dateTimer, tz_name1st)} />
+        <TooltipItem
+          label="Current time"
+          value={formatDate($dateTimer, time_zone.replace('UTC', ''))}
+        />
       </Tooltip>
     </Chart>
   </div>
