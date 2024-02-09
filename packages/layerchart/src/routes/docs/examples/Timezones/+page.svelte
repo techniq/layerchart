@@ -13,7 +13,7 @@
   import { interpolateRdBu } from 'd3-scale-chromatic';
   import { feature } from 'topojson-client';
 
-  import { SelectField } from 'svelte-ux';
+  import { Field, SelectField, Switch } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
@@ -22,8 +22,12 @@
   import Preview from '$lib/docs/Preview.svelte';
 
   import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import ClipPath from '$lib/components/ClipPath.svelte';
+  import Graticule from '$lib/components/Graticule.svelte';
 
   export let data;
+
+  let enableClip = false;
 
   let projection = geoNaturalEarth1;
   const projections = [
@@ -50,7 +54,7 @@
   );
 </script>
 
-<div class="grid grid-cols-[1fr,2fr] gap-2 my-2">
+<div class="grid grid-cols-[1fr,auto,2fr] gap-2 my-2">
   <SelectField
     label="Projections"
     options={projections}
@@ -59,6 +63,9 @@
     toggleIcon={null}
     stepper
   />
+  <Field label="Clip" let:id>
+    <Switch bind:checked={enableClip} {id} size="md" />
+  </Field>
 </div>
 
 <h1>Examples</h1>
@@ -77,16 +84,20 @@
       let:tooltip
     >
       <Svg>
-        <!-- <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content fill-blue-400/50" /> -->
+        <GeoPath geojson={{ type: 'Sphere' }} class="_fill-surface-200 stroke-surface-content/30" />
+        <Graticule class="stroke-surface-content/20" />
 
-        {#each timezoneGeojson.features as feature}
-          <GeoPath
-            geojson={feature}
-            {tooltip}
-            fill={colorScale(feature.properties.zone)}
-            class="stroke-gray-900/50 hover:brightness-110"
-          />
-        {/each}
+        <GeoPath {geojson} id="clip" />
+        <ClipPath useId="clip" disabled={!enableClip}>
+          {#each timezoneGeojson.features as feature}
+            <GeoPath
+              geojson={feature}
+              {tooltip}
+              fill={colorScale(feature.properties.zone)}
+              class="stroke-gray-900/50 hover:brightness-110"
+            />
+          {/each}
+        </ClipPath>
 
         {#each features as feature}
           <GeoPath
@@ -95,6 +106,7 @@
           />
         {/each}
       </Svg>
+
       <Tooltip let:data>
         <TooltipItem label="Name" value={data.properties.tz_name1st} />
         <TooltipItem label="Timezone" value={data.properties.time_zone} />
