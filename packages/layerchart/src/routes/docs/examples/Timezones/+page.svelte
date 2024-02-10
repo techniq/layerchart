@@ -130,7 +130,7 @@
         <TooltipItem label="Timezone" value={time_zone} />
         <TooltipItem
           label="Current time"
-          value={formatDate($dateTimer, time_zone.replace('UTC', ''))}
+          value={formatDate($dateTimer, time_zone.replace('UTC', '').replace('±', '+'))}
         />
       </Tooltip>
     </Chart>
