@@ -6,12 +6,12 @@
     geoEquirectangular,
     geoMercator,
     geoNaturalEarth1,
-    geoOrthographic,
   } from 'd3-geo';
   import { extent } from 'd3-array';
   import { scaleSequential } from 'd3-scale';
   import { interpolateRdBu } from 'd3-scale-chromatic';
   import { feature } from 'topojson-client';
+  import { century, equationOfTime, declination } from 'solar-calculator';
 
   import { Field, SelectField, Switch, timerStore } from 'svelte-ux';
 
@@ -24,10 +24,13 @@
   import TooltipItem from '$lib/components/TooltipItem.svelte';
   import ClipPath from '$lib/components/ClipPath.svelte';
   import Graticule from '$lib/components/Graticule.svelte';
+  import GeoCircle from '$lib/components/GeoCircle.svelte';
+  import { antipode } from '$lib/utils/geo.js';
 
   export let data;
 
   let enableClip = false;
+  let showDaylight = false;
 
   let projection = geoNaturalEarth1;
   const projections = [
@@ -69,9 +72,15 @@
 
     return result;
   }
+
+  const now = new Date();
+  const day = new Date(+now).setUTCHours(0, 0, 0, 0);
+  const t = century(now);
+  const longitude = ((day - now) / 864e5) * 360 - 180;
+  const sun = [longitude - equationOfTime(t) / 4, declination(t)];
 </script>
 
-<div class="grid grid-cols-[1fr,auto,2fr] gap-2 my-2">
+<div class="grid grid-cols-[1fr,auto,auto,2fr] gap-2 my-2">
   <SelectField
     label="Projections"
     options={projections}
@@ -80,8 +89,13 @@
     toggleIcon={null}
     stepper
   />
+
   <Field label="Clip" let:id>
     <Switch bind:checked={enableClip} {id} size="md" />
+  </Field>
+
+  <Field label="Daylight" let:id>
+    <Switch bind:checked={showDaylight} {id} size="md" />
   </Field>
 </div>
 
@@ -101,7 +115,7 @@
       let:tooltip
     >
       <Svg>
-        <GeoPath geojson={{ type: 'Sphere' }} class="_fill-surface-200 stroke-surface-content/30" />
+        <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" />
         <Graticule class="stroke-surface-content/20" />
 
         <GeoPath {geojson} id="clip" />
@@ -122,6 +136,10 @@
             class="stroke-gray-900/10 fill-gray-900/20 pointer-events-none"
           />
         {/each}
+
+        {#if showDaylight}
+          <GeoCircle center={antipode(sun)} class="stroke-none fill-black/50 pointer-events-none" />
+        {/if}
       </Svg>
 
       <Tooltip let:data>
