@@ -1,3 +1,4 @@
+export * from './geo';
 export * from './graph';
 export * from './hierarchy';
 export * from './math';
