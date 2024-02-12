@@ -27,17 +27,23 @@
   export let data;
 
   settings({
-    classes: {
+    components: {
       AppLayout: {
-        aside: 'border-r',
-        nav: 'bg-surface-300 py-2',
+        classes: {
+          aside: 'border-r',
+          nav: 'bg-surface-300 py-2',
+        },
       },
-      AppBar:
-        'bg-primary text-primary-content shadow-md [text-shadow:1px_1px_2px_theme(colors.primary-700)]',
+      AppBar: {
+        classes:
+          'bg-primary text-primary-content shadow-md [text-shadow:1px_1px_2px_theme(colors.primary-700)]',
+      },
       NavItem: {
-        root: 'text-sm text-surface-content/70 pl-6 py-2 hover:bg-surface-100/70 relative',
-        active:
-          'text-primary bg-surface-100 font-medium before:absolute before:bg-primary before:rounded-full before:w-1 before:h-2/3 before:left-[6px] shadow z-10',
+        classes: {
+          root: 'text-sm text-surface-content/70 pl-6 py-2 hover:bg-surface-100/70 relative',
+          active:
+            'text-primary bg-surface-100 font-medium before:absolute before:bg-primary before:rounded-full before:w-1 before:h-2/3 before:left-[6px] shadow z-10',
+        },
       },
     },
     themes: data.themes,
