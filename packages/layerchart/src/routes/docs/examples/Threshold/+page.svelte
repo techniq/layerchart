@@ -1,8 +1,8 @@
 <script lang="ts">
   import { scaleTime } from 'd3-scale';
-  import { curveLinear, curveStepAfter, curveBumpX, curveMonotoneX } from 'd3-shape';
+  import { curveLinear, curveStepAfter } from 'd3-shape';
   import { format } from 'date-fns';
-  import { Field, formatDate, PeriodType } from 'svelte-ux';
+  import { formatDate, PeriodType } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
@@ -17,6 +17,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData';
+  import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
   let selectedCurve = curveLinear;
 
@@ -29,14 +30,7 @@
   });
 </script>
 
-<Field label="Curve" let:id>
-  <select bind:value={selectedCurve} class="text-sm w-full outline-none cursor-pointer" {id}>
-    <option value={curveLinear}>curveLinear</option>
-    <option value={curveStepAfter}>curveStepAfter</option>
-    <option value={curveBumpX}>curveBumpX</option>
-    <option value={curveMonotoneX}>curveMonotoneX</option>
-  </select>
-</Field>
+<CurveMenuField bind:value={selectedCurve} />
 
 <h1>Examples</h1>
 
@@ -55,15 +49,19 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Threshold curve={selectedCurve}>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
             <Spline pathData={linePathData} stroke-width="1.5" />
-            <Area pathData={areaPathData} {clipPath} class="fill-green-500/30" />
+            <Area pathData={areaPathData} {clipPath} class="fill-success/30" />
           </g>
           <g slot="pathBelow" let:areaPathData let:clipPath let:linePathData>
             <Spline pathData={linePathData} stroke-dasharray="4" />
-            <Area pathData={areaPathData} {clipPath} class="fill-red-500/30" />
+            <Area pathData={areaPathData} {clipPath} class="fill-danger/30" />
           </g>
         </Threshold>
       </Svg>
@@ -87,15 +85,19 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Threshold curve={curveStepAfter}>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
             <Spline pathData={linePathData} color="black" width="1.5" />
-            <Area pathData={areaPathData} {clipPath} class="fill-green-500/30" />
+            <Area pathData={areaPathData} {clipPath} class="fill-success/30" />
           </g>
           <g slot="pathBelow" let:areaPathData let:clipPath let:linePathData>
             <Spline pathData={linePathData} color="black" width="1" stroke-dasharray="4" />
-            <Area pathData={areaPathData} {clipPath} class="fill-red-500/30" />
+            <Area pathData={areaPathData} {clipPath} class="fill-danger/30" />
           </g>
         </Threshold>
         <Highlight area />
@@ -127,15 +129,19 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Threshold>
           <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
             <Spline pathData={linePathData} color="black" width="1.5" />
-            <Area pathData={areaPathData} {clipPath} class="fill-green-500/30" />
+            <Area pathData={areaPathData} {clipPath} class="fill-success/30" />
           </g>
           <g slot="pathBelow" let:areaPathData let:clipPath let:linePathData>
             <Spline pathData={linePathData} color="black" width="1" stroke-dasharray="4" />
-            <Area pathData={areaPathData} {clipPath} class="fill-red-500/30" />
+            <Area pathData={areaPathData} {clipPath} class="fill-danger/30" />
           </g>
         </Threshold>
         <Labels format="integer" />

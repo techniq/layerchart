@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Field, Switch } from 'svelte-ux';
+  import { SelectField, Switch } from 'svelte-ux';
 
   export let doubleScale = devicePixelRatio > 1;
 
@@ -39,7 +39,7 @@
     // https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer/tile/12/1572/1108.pbf
   };
 
-  $: serviceOptions = {
+  $: services = {
     'mapbox v1': {
       'streets-v11': mapboxv1('streets-v11'),
       'light-v10': mapboxv1('light-v10'),
@@ -48,7 +48,7 @@
       'satelllite-v9': mapboxv1('satellite-v9'),
       'satelllite-streets-v12': mapboxv1('satellite-streets-v12'),
       'navigation-day-v1': mapboxv1('navigation-day-v1'),
-      'navigation-night-v1': mapboxv1('navigation-night-v1')
+      'navigation-night-v1': mapboxv1('navigation-night-v1'),
     },
     'mapbox v4': {
       'natural-earth-2': mapboxv4('mapbox.natural-earth-2'),
@@ -56,7 +56,7 @@
       streets: mapboxv4('mapbox.mapbox-streets-v8'),
       terrain: mapboxv4('mapbox.mapbox-terrain-v2'),
       'terrain-dem': mapboxv4('mapbox.mapbox-terrain-dem-v1'),
-      traffic: mapboxv4('mapbox.mapbox-traffic-v1')
+      traffic: mapboxv4('mapbox.mapbox-traffic-v1'),
       // 'transit (mapbox v4)': mapboxv4('mapbox.transit-v2'),
     },
     'National Map Services': {
@@ -64,7 +64,7 @@
       'USGS Imagery Topo Base Map': nationalmap('USGSImageryTopo'),
       'USGS Imagery Only Base Map': nationalmap('USGSImageryOnly'),
       'USGS Shaded Relief': nationalmap('USGSShadedReliefOnly'),
-      'USGS Topo Base Map': nationalmap('USGSTopo')
+      'USGS Topo Base Map': nationalmap('USGSTopo'),
     },
     ArcGIS: {
       'USA Topo Map': arcgis('USA_Topo_Maps'),
@@ -74,37 +74,41 @@
       'World Shaded Relief': arcgis('World_Shaded_Relief'),
       'World Street Map': arcgis('World_Street_Map'),
       'World Terrain Base': arcgis('World_Terrain_Base'),
-      'World Topo Map': arcgis('World_Topo_Map')
-    }
+      'World Topo Map': arcgis('World_Topo_Map'),
+    },
     // 'ArcGIS Vector': {
     // 	 'Community Map', url: arcgisVector('World_Basemap_v2'),
     // }
   };
 
-  $: defaultServiceUrl = serviceOptions['mapbox v1']['streets-v11'];
+  $: serviceOptions = Object.entries(services).flatMap(([group, service]) => {
+    return Object.entries(service).map(([label, value]) => {
+      return { label, value: `${group}:${label}`, group, serviceUrl: value };
+    });
+  });
+
+  $: defaultServiceUrl = services['mapbox v1']['streets-v11'];
   export let serviceUrl = defaultServiceUrl;
 
   $: getServiceUrl = (option: string) => {
     const [selectedService, selectedTileset] = selected.split(':');
-    return serviceOptions[selectedService][selectedTileset];
+    return services[selectedService][selectedTileset];
   };
 
   let selected = 'mapbox v1:streets-v11';
   $: serviceUrl = getServiceUrl(selected);
 </script>
 
-<Field label="Tileset" let:id>
-  <select bind:value={selected} class="w-full outline-none appearance-none text-sm" {id}>
-    {#each Object.entries(serviceOptions) as [group, options]}
-      <optgroup label={group}>
-        {#each Object.keys(options) as option}
-          <option value="{group}:{option}">{option}</option>
-        {/each}
-      </optgroup>
-    {/each}
-  </select>
-  <div slot="append">
-    <div class="text-[10px] text-black/50 text-center">2x</div>
+<SelectField
+  label="Tileset"
+  options={serviceOptions}
+  bind:value={selected}
+  clearable={false}
+  toggleIcon={null}
+  stepper
+>
+  <div slot="append" on:click|stopPropagation>
+    <div class="text-[10px] text-surface-content/50 text-center">2x</div>
     <Switch bind:checked={doubleScale} size="md" />
   </div>
-</Field>
+</SelectField>

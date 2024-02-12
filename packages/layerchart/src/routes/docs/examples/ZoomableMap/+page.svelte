@@ -4,7 +4,7 @@
   import { geoAlbersUsa, geoAlbers, geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, SelectField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import ZoomControls from '$lib/docs/ZoomControls.svelte';
@@ -18,9 +18,9 @@
 
   let projection = geoAlbersUsa;
   const projections = [
-    { name: 'Albers', value: geoAlbers },
-    { name: 'Albers USA', value: geoAlbersUsa },
-    { name: 'Mercator', value: geoMercator },
+    { label: 'Albers', value: geoAlbers },
+    { label: 'Albers USA', value: geoAlbersUsa },
+    { label: 'Mercator', value: geoMercator },
   ];
 
   const counties = feature(data.geojson, data.geojson.objects.counties);
@@ -40,13 +40,14 @@
 </script>
 
 <div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2 my-2">
-  <Field label="Projection" let:id>
-    <select bind:value={projection} class="w-full outline-none appearance-none text-sm" {id}>
-      {#each projections as option}
-        <option value={option.value}>{option.name}</option>
-      {/each}
-    </select>
-  </Field>
+  <SelectField
+    label="Projections"
+    options={projections}
+    bind:value={projection}
+    clearable={false}
+    toggleIcon={null}
+    stepper
+  />
   <Field label="Scroll mode" let:id>
     <ToggleGroup bind:value={scrollMode} variant="outline" size="sm" inset class="w-full">
       <ToggleOption value="none">None</ToggleOption>
@@ -83,7 +84,7 @@
           {#each filterNonStates(states.features) as feature}
             <GeoPath
               geojson={feature}
-              class="fill-white hover:fill-gray-200"
+              class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
               stroke-width={1 / scale}
               {tooltip}
               on:click={(e) => {
@@ -104,13 +105,14 @@
               }}
             />
           {/each}
+
           {#each selectedCountiesFeatures as feature (feature.id)}
             <g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}>
               <GeoPath
                 geojson={feature}
                 {tooltip}
                 stroke-width={1 / scale}
-                class="fill-white stroke-black/10 hover:fill-gray-200"
+                class="stroke-surface-content/10 hover:fill-surface-content/10"
                 on:click={() => {
                   selectedStateId = null;
                   resetZoom();

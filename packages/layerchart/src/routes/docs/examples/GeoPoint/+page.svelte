@@ -29,7 +29,10 @@
       <Svg>
         <g class="states">
           {#each states.features as feature}
-            <GeoPath geojson={feature} class="fill-gray-200 stroke-white hover:fill-gray-300" />
+            <GeoPath
+              geojson={feature}
+              class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
+            />
           {/each}
         </g>
         <g class="points pointer-events-none">
@@ -40,7 +43,7 @@
                 y="-6"
                 value={capital.description}
                 textAnchor="middle"
-                class="text-[8px] stroke-white [stroke-width:2px]"
+                class="text-[8px] stroke-surface-100 [stroke-width:2px]"
               />
             </GeoPoint>
           {/each}

@@ -21,10 +21,10 @@
 
   const colorKeys = [...new Set(data.map((d) => d.date))];
   const keyColors = [
-    'var(--color-blue-500)',
-    'var(--color-green-500)',
-    'var(--color-purple-500)',
-    'var(--color-orange-500)',
+    'hsl(var(--color-info))',
+    'hsl(var(--color-success))',
+    'hsl(var(--color-warning))',
+    'hsl(var(--color-danger))',
   ];
 </script>
 

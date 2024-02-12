@@ -34,8 +34,12 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Points class="fill-accent-400 stroke-accent-800" />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Points class="fill-primary/10 stroke-primary" />
       </Svg>
     </Chart>
   </div>
@@ -57,8 +61,12 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Points class="fill-accent-400 stroke-accent-800" />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Points class="fill-primary/10 stroke-primary" />
         <Highlight points lines />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
@@ -83,8 +91,12 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Points class="fill-accent-400 stroke-accent-800" />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Points class="fill-primary/10 stroke-primary" />
         <Labels format="integer" verticalAnchor="bottom" />
       </Svg>
     </Chart>
@@ -107,13 +119,21 @@
       r="value"
       rScale={scaleThreshold()}
       rDomain={[50, 90]}
-      rRange={['var(--color-red-500)', 'var(--color-yellow-500)', 'var(--color-green-500)']}
+      rRange={[
+        'hsl(var(--color-danger))',
+        'hsl(var(--color-warning))',
+        'hsl(var(--color-success))',
+      ]}
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Points class="stroke-black/50" />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Points class="stroke-surface-content/50" />
       </Svg>
     </Chart>
   </div>

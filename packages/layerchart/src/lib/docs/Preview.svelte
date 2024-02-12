@@ -5,8 +5,9 @@
   import 'prism-svelte';
   import { mdiCodeTags, mdiTable } from '@mdi/js';
 
-  import { Button, CopyButton, Dialog, Toggle, Tooltip } from 'svelte-ux';
+  import { Button, CopyButton, Dialog, Toggle, Tooltip, cls } from 'svelte-ux';
 
+  import Code from './Code.svelte';
   import Json from './Json.svelte';
 
   export let code: string | undefined = undefined;
@@ -24,36 +25,32 @@
   }
 </script>
 
-<div class="border border-black/20 rounded bg-white">
+<div class={cls('Preview border rounded bg-surface-100', $$props.class)}>
   <div class="p-4">
     <slot />
   </div>
 
   {#if code && showCode}
-    <div class="relative">
-      <pre
-        class="language-{language} rounded"
-        style="margin: 0; white-space: normal;"
-        transition:slide|local>
-          <code class="language-{language}">{@html highlightedCode}</code>
-      </pre>
-
-      <div class="absolute top-0 right-0 p-2">
-        <CopyButton value={code} class="text-white/70 hover:bg-white/20 py-1" size="sm" />
-      </div>
+    <div transition:slide class="bg-surface-200">
+      <Code source={code} highlightedSource={highlightedCode} classes={{ pre: 'rounded-t-none' }} />
     </div>
   {/if}
 </div>
 
 {#if code}
-  <Button icon={mdiCodeTags} class=" text-black/60 py-1" on:click={() => (showCode = !showCode)}>
-    {showCode ? 'Hide' : 'Show'} code
+  <Button
+    icon={mdiCodeTags}
+    class="text-surface-content/70 py-1"
+    on:click={() => (showCode = !showCode)}
+  >
+    {showCode ? 'Hide' : 'Show'} Code
   </Button>
 {/if}
 
 {#if data}
   <Toggle let:on={open} let:toggle>
-    <Button icon={mdiTable} class=" text-black/60 py-1" on:click={toggle}>View data</Button>
+    <Button icon={mdiTable} class="text-surface-content/70 py-1" on:click={toggle}>View data</Button
+    >
     <Dialog
       {open}
       on:close={toggle}
@@ -66,7 +63,7 @@
 
         {#if copyValue}
           <Tooltip title="Copy">
-            <CopyButton value={copyValue} variant="fill-light" color="accent" />
+            <CopyButton value={copyValue} variant="fill-light" color="primary" />
           </Tooltip>
         {/if}
       </div>
@@ -74,7 +71,7 @@
       <Json value={data} />
 
       <div slot="actions">
-        <Button variant="fill" color="accent">Close</Button>
+        <Button variant="fill" color="primary">Close</Button>
       </div>
     </Dialog>
   </Toggle>

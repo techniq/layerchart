@@ -1,6 +1,7 @@
 <script lang="ts">
   import { tick } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
+  import { cls } from 'svelte-ux';
 
   import { motionStore } from '$lib/stores/motionStore';
 
@@ -37,6 +38,7 @@
   y1={$tweened_y1}
   x2={$tweened_x2}
   y2={$tweened_y2}
+  class={cls($$props.stroke === undefined && 'stroke-surface-content')}
   {...$$restProps}
   on:click
   on:mousemove

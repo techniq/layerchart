@@ -163,7 +163,10 @@
             'bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white',
             '[&_.label]:text-white/75',
           ],
-          light: ['bg-white text-gray-800 border border-gray-500', '[&_.label]:text-black/50'],
+          light: [
+            'bg-white text-gray-800 border border-gray-500',
+            '[&_.label]:text-surface-content/50',
+          ],
           none: '',
         }[variant],
         classes.container,

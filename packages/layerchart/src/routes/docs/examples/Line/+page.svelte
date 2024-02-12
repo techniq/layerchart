@@ -35,9 +35,9 @@
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 
   const fruitColors = {
-    apples: 'var(--color-blue-500)',
-    bananas: 'var(--color-purple-500)',
-    oranges: 'var(--color-green-500)',
+    apples: 'hsl(var(--color-info))',
+    bananas: 'hsl(var(--color-success))',
+    oranges: 'hsl(var(--color-warning))',
   };
 
   const temperatureColor = scaleSequential(
@@ -63,8 +63,12 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Spline class="stroke-2 stroke-accent-500" />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Spline class="stroke-2 stroke-primary" />
       </Svg>
     </Chart>
   </div>
@@ -86,8 +90,12 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Spline class="stroke-2 stroke-accent-500" />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Spline class="stroke-2 stroke-primary" />
         <Highlight points lines />
       </Svg>
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
@@ -112,8 +120,12 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
-        <Spline class="stroke-2 stroke-accent-500" />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Spline class="stroke-2 stroke-primary" />
         <Labels format="integer" />
       </Svg>
     </Chart>
@@ -134,7 +146,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <LinearGradient
           stops={ticks(1, 0, 10).map(temperatureColor.interpolator())}
           vertical
@@ -172,11 +188,15 @@
       {@const thresholdOffset = (yScale(50) / (height + padding.bottom)) * 100 + '%'}
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <LinearGradient
           stops={[
-            [thresholdOffset, 'black'],
-            [thresholdOffset, 'red'],
+            [thresholdOffset, 'hsl(var(--color-info))'],
+            [thresholdOffset, 'hsl(var(--color-danger))'],
           ]}
           units="userSpaceOnUse"
           vertical
@@ -210,7 +230,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         {#each dataByFruit as [fruit, data]}
           {@const color = rScale(fruit)}
           <Spline {data} class="stroke-2" stroke={color}>
@@ -258,10 +282,16 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         {#each dataByFruit as [fruit, data]}
           {@const color =
-            tooltip.data == null || tooltip.data.fruit === fruit ? rScale(fruit) : '#ddd'}
+            tooltip.data == null || tooltip.data.fruit === fruit
+              ? rScale(fruit)
+              : 'hsl(var(--color-surface-content) / 20%)'}
           <Spline {data} class="stroke-2" stroke={color}>
             <svelte:fragment slot="end">
               <circle r={4} fill={color} />
@@ -306,7 +336,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         {#each dataByFruit as [fruit, data]}
           {@const color = rScale(fruit)}
           <Spline {data} class="stroke-2" stroke={color} />

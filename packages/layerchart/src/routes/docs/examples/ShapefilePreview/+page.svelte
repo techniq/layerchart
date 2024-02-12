@@ -19,9 +19,9 @@
     Button,
     ButtonGroup,
     EmptyMessage,
-    Field,
     Menu,
     MenuItem,
+    SelectField,
     TextField,
     Toggle,
   } from 'svelte-ux';
@@ -36,14 +36,14 @@
 
   let projection = geoIdentity;
   const projections = [
-    { name: 'Identity', value: geoIdentity },
-    { name: 'Albers', value: geoAlbers },
-    { name: 'Albers USA', value: geoAlbersUsa },
-    { name: 'Equal Earth', value: geoEqualEarth },
-    { name: 'Equirectangular', value: geoEquirectangular },
-    { name: 'Mercator', value: geoMercator },
-    { name: 'Natural Earth', value: geoNaturalEarth1 },
-    { name: 'Orthographic', value: geoOrthographic },
+    { label: 'Identity', value: geoIdentity },
+    { label: 'Albers', value: geoAlbers },
+    { label: 'Albers USA', value: geoAlbersUsa },
+    { label: 'Equal Earth', value: geoEqualEarth },
+    { label: 'Equirectangular', value: geoEquirectangular },
+    { label: 'Mercator', value: geoMercator },
+    { label: 'Natural Earth', value: geoNaturalEarth1 },
+    { label: 'Orthographic', value: geoOrthographic },
   ];
 
   function loadFile() {
@@ -54,7 +54,7 @@
 <div class="grid grid-cols-[1fr,auto] gap-2 items-center">
   <TextField label="File" bind:value={file} placeholder="Please specify a file or load an example">
     <div slot="append">
-      <ButtonGroup variant="fill-outline" color="accent">
+      <ButtonGroup variant="fill-outline" color="primary">
         <Button on:click={() => loadFile()}>Load file</Button>
         <Toggle let:on={open} let:toggle>
           <span>
@@ -84,13 +84,14 @@
     </div>
   </TextField>
 
-  <Field label="Projections" let:id>
-    <select bind:value={projection} class="w-full outline-none appearance-none text-sm" {id}>
-      {#each projections as option}
-        <option value={option.value}>{option.name}</option>
-      {/each}
-    </select>
-  </Field>
+  <SelectField
+    label="Projections"
+    options={projections}
+    bind:value={projection}
+    clearable={false}
+    toggleIcon={null}
+    stepper
+  />
 </div>
 
 <h1>Examples</h1>

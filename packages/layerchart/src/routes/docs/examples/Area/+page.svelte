@@ -37,9 +37,9 @@
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
   const fruitColors = {
-    apples: 'var(--color-blue-500)',
-    bananas: 'var(--color-purple-500)',
-    oranges: 'var(--color-green-500)',
+    apples: 'hsl(var(--color-info))',
+    bananas: 'hsl(var(--color-success))',
+    oranges: 'hsl(var(--color-warning))',
   };
 </script>
 
@@ -60,8 +60,12 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
-        <Area line={{ class: 'stroke-2 stroke-accent-500' }} class="fill-accent-500/30" />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
       </Svg>
     </Chart>
   </div>
@@ -83,8 +87,12 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
-        <Area line={{ class: 'stroke-2 stroke-accent-500' }} class="fill-accent-500/30" />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
         <Highlight points lines />
       </Svg>
       <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
@@ -109,8 +117,12 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
-        <Area line={{ class: 'stroke-2 stroke-accent-500' }} class="fill-accent-500/30" />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
         <Labels format="integer" />
       </Svg>
     </Chart>
@@ -132,9 +144,13 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
-        <LinearGradient class="from-accent-500/50 to-accent-500/0" vertical let:url>
-          <Area line={{ class: 'stroke-2 stroke-accent-500' }} fill={url} />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
+          <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
         </LinearGradient>
       </Svg>
     </Chart>
@@ -162,7 +178,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         {#each dataByFruit as [fruit, data]}
           {@const color = rScale(fruit)}
           <Area
@@ -216,10 +236,16 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         {#each dataByFruit as [fruit, data]}
           {@const color =
-            tooltip.data == null || tooltip.data.fruit === fruit ? rScale(fruit) : '#ddd'}
+            tooltip.data == null || tooltip.data.fruit === fruit
+              ? rScale(fruit)
+              : 'hsl(var(--color-surface-content) / 20%)'}
           <Area
             {data}
             fill={color}
@@ -270,7 +296,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         {#each dataByFruit as [fruit, data]}
           {@const color = rScale(fruit)}
           <Area
@@ -312,13 +342,17 @@
       >
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+          <Axis
+            placement="bottom"
+            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
           {#if show}
             <ChartClipPath
               initialWidth={0}
               tweened={{ width: { duration: 1000, easing: cubicInOut } }}
             >
-              <Area line={{ class: 'stroke-2 stroke-accent-500' }} class="fill-accent-500/30" />
+              <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
             </ChartClipPath>
           {/if}
         </Svg>
@@ -347,14 +381,18 @@
       >
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+          <Axis
+            placement="bottom"
+            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
           {#if show}
-            <Spline draw={{ easing: cubicInOut, delay: 700 }} class="stroke-2 stroke-accent-500" />
+            <Spline draw={{ easing: cubicInOut, delay: 700 }} class="stroke-2 stroke-primary" />
             <ChartClipPath
               initialWidth={0}
               tweened={{ width: { duration: 1000, easing: cubicInOut } }}
             >
-              <Area class="fill-accent-500/30" />
+              <Area class="fill-primary/30" />
             </ChartClipPath>
           {/if}
         </Svg>
@@ -383,9 +421,13 @@
       >
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, 'short')} rule />
+          <Axis
+            placement="bottom"
+            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
           {#if show}
-            <Spline draw={{ easing: cubicInOut }} class="stroke-2 stroke-accent-500" />
+            <Spline draw={{ easing: cubicInOut }} class="stroke-2 stroke-primary" />
             <ChartClipPath
               initialY={300}
               initialHeight={0}
@@ -394,7 +436,7 @@
                 height: { duration: 1000, easing: cubicInOut, delay: 500 },
               }}
             >
-              <Area class="fill-accent-500/30" />
+              <Area class="fill-primary/30" />
             </ChartClipPath>
           {/if}
         </Svg>
@@ -422,13 +464,13 @@
       let:tooltip
     >
       <Svg>
-        <LinearGradient class="from-accent-500/50 to-accent-500/0" vertical let:url>
-          <Area line={{ class: 'stroke-2 stroke-accent-500 opacity-20' }} fill={url} />
+        <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
+          <Area line={{ class: 'stroke-2 stroke-primary opacity-20' }} fill={url} />
           <RectClipPath x={0} y={0} width={tooltip.data ? tooltip.x : width} {height} spring>
-            <Area line={{ class: 'stroke-2 stroke-accent-500' }} fill={url} />
+            <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
           </RectClipPath>
         </LinearGradient>
-        <Highlight points lines={{ class: 'stroke-accent-500 [stroke-dasharray:unset]' }} />
+        <Highlight points lines={{ class: 'stroke-primary [stroke-dasharray:unset]' }} />
         <Axis placement="bottom" />
       </Svg>
 
@@ -436,7 +478,7 @@
         y={48}
         xOffset={4}
         variant="none"
-        class="text-sm font-semibold text-accent-700 leading-3"
+        class="text-sm font-semibold text-primary leading-3"
         let:data
       >
         {format(data.value, 'currency')}
@@ -451,7 +493,7 @@
         y={height + padding.top + 2}
         anchor="top"
         variant="none"
-        class="text-sm font-semibold bg-accent-500 text-white leading-3 px-2 py-1 rounded whitespace-nowrap"
+        class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded whitespace-nowrap"
         let:data
       >
         {format(data.date, PeriodType.Day)}

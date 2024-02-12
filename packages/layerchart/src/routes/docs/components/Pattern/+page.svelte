@@ -16,24 +16,24 @@
     <Chart>
       <Svg>
         <Pattern id="line-pattern-1" width={4} height={4}>
-          <line x2="100%" stroke="black" />
+          <line x2="100%" class="stroke-surface-content" />
         </Pattern>
         <Pattern id="line-pattern-2" width={4} height={4}>
-          <line y2="100%" stroke="black" />
+          <line y2="100%" class="stroke-surface-content" />
         </Pattern>
         <Pattern id="line-pattern-3" width={4} height={4}>
-          <line x2="100%" stroke="black" />
-          <line y2="100%" stroke="black" />
+          <line x2="100%" class="stroke-surface-content" />
+          <line y2="100%" class="stroke-surface-content" />
         </Pattern>
         <Pattern id="line-pattern-4" width={8} height={8}>
-          <line x1={8} y2={8} stroke="black" />
+          <line x1={8} y2={8} class="stroke-surface-content" />
         </Pattern>
         <Pattern id="line-pattern-5" width={8} height={8}>
-          <line x2={8} y2={8} stroke="black" />
+          <line x2={8} y2={8} class="stroke-surface-content" />
         </Pattern>
         <Pattern id="line-pattern-6" width={8} height={8}>
-          <line x1={8} y2={8} stroke="black" />
-          <line x2={8} y2={8} stroke="black" />
+          <line x1={8} y2={8} class="stroke-surface-content" />
+          <line x2={8} y2={8} class="stroke-surface-content" />
         </Pattern>
         {#each { length: 6 } as _, i}
           <rect
@@ -43,7 +43,7 @@
             height={300}
             rx={8}
             fill="url(#line-pattern-{i + 1})"
-            stroke="black"
+            class="stroke-surface-content"
           />
         {/each}
       </Svg>
@@ -58,30 +58,30 @@
     <Chart>
       <Svg>
         <Pattern id="circle-pattern-1" width={4} height={4}>
-          <circle cx={2} cy={2} r={1} />
+          <circle cx={2} cy={2} r={1} class="fill-surface-content" />
         </Pattern>
         <Pattern id="circle-pattern-2" width={8} height={8}>
-          <circle cx={4} cy={4} r={1} />
+          <circle cx={4} cy={4} r={1} class="fill-surface-content" />
         </Pattern>
         <Pattern id="circle-pattern-3" width={8} height={8}>
-          <circle cx={4} cy={4} r={2} />
+          <circle cx={4} cy={4} r={2} class="fill-surface-content" />
         </Pattern>
         <Pattern id="circle-pattern-4" width={8} height={8}>
-          <circle cx={4} cy={4} r={2} />
-          <circle cx={0} cy={0} r={2} />
-          <circle cx={0} cy={8} r={2} />
-          <circle cx={8} cy={0} r={2} />
-          <circle cx={8} cy={8} r={2} />
+          <circle cx={4} cy={4} r={2} class="fill-surface-content" />
+          <circle cx={0} cy={0} r={2} class="fill-surface-content" />
+          <circle cx={0} cy={8} r={2} class="fill-surface-content" />
+          <circle cx={8} cy={0} r={2} class="fill-surface-content" />
+          <circle cx={8} cy={8} r={2} class="fill-surface-content" />
         </Pattern>
         <Pattern id="circle-pattern-5" width={8} height={8}>
-          <circle cx={4} cy={4} r={1} />
-          <circle cx={0} cy={0} r={1} />
-          <circle cx={0} cy={8} r={1} />
-          <circle cx={8} cy={0} r={1} />
-          <circle cx={8} cy={8} r={1} />
+          <circle cx={4} cy={4} r={1} class="fill-surface-content" />
+          <circle cx={0} cy={0} r={1} class="fill-surface-content" />
+          <circle cx={0} cy={8} r={1} class="fill-surface-content" />
+          <circle cx={8} cy={0} r={1} class="fill-surface-content" />
+          <circle cx={8} cy={8} r={1} class="fill-surface-content" />
         </Pattern>
         <Pattern id="circle-pattern-6" width={8} height={8}>
-          <circle cx={4} cy={4} r={2} fill="#0003" />
+          <circle cx={4} cy={4} r={2} class="fill-surface-content/30" />
         </Pattern>
         {#each { length: 6 } as _, i}
           <rect
@@ -91,7 +91,7 @@
             height={300}
             rx={8}
             fill="url(#circle-pattern-{i + 1})"
-            stroke="black"
+            class="stroke-surface-content"
           />
         {/each}
       </Svg>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { cls } from 'svelte-ux';
   import { getStringWidth } from '$lib/utils/string';
 
   /*
@@ -151,7 +152,14 @@
 <!-- `paint-order: stroke` supports stroke outlining text  -->
 <svg x={dx} y={dy} class="overflow-visible [paint-order:stroke]">
   {#if isValidXOrY(x) && isValidXOrY(y)}
-    <text {x} {y} {transform} text-anchor={textAnchor} {...$$restProps}>
+    <text
+      {x}
+      {y}
+      {transform}
+      text-anchor={textAnchor}
+      {...$$restProps}
+      class={cls($$props.fill === undefined && 'fill-surface-content', $$props.class)}
+    >
       {#each wordsByLines as line, index}
         <tspan {x} dy={index === 0 ? startDy : lineHeight}>
           {line.words.join(' ')}

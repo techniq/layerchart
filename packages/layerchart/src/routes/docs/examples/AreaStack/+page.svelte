@@ -36,12 +36,16 @@
       r="key"
       rScale={scaleOrdinal()}
       rDomain={keys}
-      rRange={['var(--color-red-500)', 'var(--color-green-500)', 'var(--color-blue-500)']}
+      rRange={['hsl(var(--color-danger))', 'hsl(var(--color-success))', 'hsl(var(--color-info))']}
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <AreaStack line={{ 'stroke-width': 2 }} />
       </Svg>
     </Chart>
@@ -62,13 +66,17 @@
       r="key"
       rScale={scaleOrdinal()}
       rDomain={keys}
-      rRange={['var(--color-red-500)', 'var(--color-green-500)', 'var(--color-blue-500)']}
+      rRange={['hsl(var(--color-danger))', 'hsl(var(--color-success))', 'hsl(var(--color-info))']}
       padding={{ left: 16, bottom: 24 }}
       tooltip
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <AreaStack line={{ 'stroke-width': 2 }} />
         <Highlight points lines />
       </Svg>

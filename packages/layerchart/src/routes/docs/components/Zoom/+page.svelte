@@ -72,7 +72,7 @@
                   cx={point.x}
                   cy={point.y}
                   r={2}
-                  class={index % 2 ? 'fill-blue-500' : 'fill-green-500'}
+                  class={index % 2 ? 'fill-primary' : 'fill-secondary'}
                   {tweened}
                 />
               {/each}

@@ -28,12 +28,12 @@
   /**
    * Start angle in radians
    */
-  export let startAngle: number = undefined;
+  export let startAngle: number | undefined = undefined;
 
   /**
    * End angle in radians
    */
-  export let endAngle: number = undefined;
+  export let endAngle: number | undefined = undefined;
 
   /**
    * Define innerRadius.
@@ -42,12 +42,12 @@
    *   value <  0: offset of `outerRadius`
    *   default: yRange min
    */
-  export let innerRadius = undefined;
+  export let innerRadius: number | undefined = undefined;
 
   /**
    * Define outerRadius.  Defaults to yRange max/2 (ie. chart height / 2)
    */
-  export let outerRadius = undefined;
+  export let outerRadius: number | undefined = undefined;
 
   export let cornerRadius = 0;
   export let padAngle = 0;

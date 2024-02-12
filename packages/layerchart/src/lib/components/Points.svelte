@@ -17,7 +17,7 @@
   export let offsetY: Offset = undefined;
 
   /** Enable showing links between related points (array x/y accessors) */
-  export let links: boolean | ComponentProps<Link> = false;
+  export let links: boolean | Partial<ComponentProps<Link>> = false;
 
   function getOffset(value, offset: Offset, scale: any) {
     if (typeof offset === 'function') {
@@ -83,11 +83,11 @@
       const y = $yGet(d) + getOffset($yGet(d), offsetY, $yScale);
       return {
         source: {
-          x: xMin + getOffset(xMin, offsetX, $xScale),
+          x: xMin + getOffset(xMin, offsetX, $xScale) + r,
           y,
         },
         target: {
-          x: xMax + getOffset(xMax, offsetX, $xScale),
+          x: xMax + getOffset(xMax, offsetX, $xScale) - r,
           y: y,
         },
       };
@@ -116,7 +116,11 @@
   {#if links}
     <g class="link-group">
       {#each _links as link}
-        <Link data={link} stroke="black" {...typeof links === 'object' ? links : null} />
+        <Link
+          data={link}
+          class="stroke-surface-content/50"
+          {...typeof links === 'object' ? links : null}
+        />
       {/each}
     </g>
   {/if}

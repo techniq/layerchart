@@ -1,0 +1,12 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "layerchart": "0.27.0"
+  },
+  "changesets": [
+    "beige-rings-joke",
+    "neat-pens-train",
+    "olive-flies-poke"
+  ]
+}

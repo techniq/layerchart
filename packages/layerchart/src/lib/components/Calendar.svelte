@@ -18,7 +18,7 @@
   export let cellSize: number | [number, number] | undefined = undefined;
 
   /** Enable drawing path around each month.  If object, pass as props to underlying <path> */
-  export let monthPath: boolean | ComponentProps<MonthPath> = false;
+  export let monthPath: boolean | Partial<ComponentProps<MonthPath>> = false;
 
   /**
    * Tooltip context to setup mouse events to show tooltip for related data
@@ -38,8 +38,8 @@
   $: [cellWidth, cellHeight] = Array.isArray(cellSize)
     ? cellSize
     : typeof cellSize === 'number'
-    ? [cellSize, cellSize]
-    : [chartCellSize, chartCellSize];
+      ? [cellSize, cellSize]
+      : [chartCellSize, chartCellSize];
 
   $: dataByDate = data && $config.x ? index($data, (d) => $x(d)) : new Map();
 
@@ -64,7 +64,7 @@
       fill={cell.color}
       on:mousemove={(e) => tooltip?.show(e, cell.data)}
       on:mouseleave={(e) => tooltip?.hide()}
-      class="stroke-black/5"
+      class="stroke-surface-content/5"
       {...$$restProps}
     />
   {/each}

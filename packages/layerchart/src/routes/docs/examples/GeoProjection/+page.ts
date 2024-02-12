@@ -4,10 +4,13 @@ export async function load({ fetch }) {
   // TODO: Support different US (https://github.com/topojson/us-atlas) and World (https://github.com/topojson/world-atlas) files
   // TODO: Cache: https://github.com/sveltejs/kit/issues/3642
   return {
-    geojson: (await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')).json(),
-    geojsonDetail: (
-      await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json')
-    ).json(),
+    geojson: await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(
+      (r) => r.json()
+    ),
+    geojsonDetail: await fetch(
+      'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json'
+    ).then((r) => r.json()),
+
     meta: {
       pageSource,
     },

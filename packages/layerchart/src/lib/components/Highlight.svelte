@@ -30,21 +30,21 @@
   export let axis: 'x' | 'y' | 'both' | 'none' | undefined = undefined;
 
   /** Show points and pass props to Circles */
-  export let points: boolean | ComponentProps<Circle> = false;
+  export let points: boolean | Partial<ComponentProps<Circle>> = false;
 
   /** Show lines and pass props to Lines */
-  export let lines: boolean | ComponentProps<Line> = false;
+  export let lines: boolean | Partial<ComponentProps<Line>> = false;
 
   /** Show area and pass props to Rect */
-  export let area: boolean | ComponentProps<Rect> = false;
+  export let area: boolean | Partial<ComponentProps<Rect>> = false;
 
   /** Show bar and pass props to Rect */
-  export let bar: boolean | ComponentProps<Rect> = false;
+  export let bar: boolean | Partial<ComponentProps<Rect>> = false;
 
   // TODO: Fix circle points being backwards for stack (see AreaStack)
 
-  let _points = [];
-  let _lines = [];
+  let _points: { x: number; y: number }[] = [];
+  let _lines: { x1: number; y1: number; x2: number; y2: number }[] = [];
   let _area = {
     x: 0,
     y: 0,
@@ -196,7 +196,10 @@
         spring
         {..._area}
         {...typeof area === 'object' ? area : null}
-        class={cls(!area.fill && 'fill-black/5', typeof area === 'object' ? area.class : null)}
+        class={cls(
+          !area.fill && 'fill-surface-content/5',
+          typeof area === 'object' ? area.class : null
+        )}
         on:click
       />
     </slot>
@@ -213,7 +216,7 @@
         strokeWidth={typeof bar === 'object' ? bar.strokeWidth : null}
         radius={typeof bar === 'object' ? bar.radius : null}
         bar={$tooltip.data}
-        class={cls(!bar.fill && 'fill-accent-500', typeof bar === 'object' ? bar.class : null)}
+        class={cls(!bar.fill && 'fill-primary', typeof bar === 'object' ? bar.class : null)}
         on:click
       />
     </slot>
@@ -230,7 +233,7 @@
           y2={line.y2}
           {...typeof lines === 'object' ? lines : null}
           class={cls(
-            'stroke-black/20 stroke-2 [stroke-dasharray:2,2] pointer-events-none',
+            'stroke-surface-content/20 stroke-2 [stroke-dasharray:2,2] pointer-events-none',
             typeof lines === 'object' ? lines.class : null
           )}
         />
@@ -252,7 +255,7 @@
           {...typeof points === 'object' ? points : null}
           class={cls(
             'stroke-[6] stroke-white [paint-order:stroke] drop-shadow',
-            !fill && 'fill-accent-500',
+            !fill && 'fill-primary',
             typeof points === 'object' ? points.class : null
           )}
         />

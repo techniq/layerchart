@@ -30,7 +30,7 @@
   <div class="w-[125px] h-[18px]">
     <Chart {data} x="date" xScale={scaleBand()} y="value" yDomain={[0, null]}>
       <Svg>
-        <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
+        <Bars strokeWidth={1} class="fill-primary/20 stroke-primary" />
       </Svg>
     </Chart>
   </div>
@@ -45,7 +45,7 @@
       <span class="w-[125px] h-[18px] inline-block">
         <Chart {data} x="date" xScale={scaleBand()} y="value" yDomain={[0, null]}>
           <Svg>
-            <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
+            <Bars strokeWidth={1} class="fill-primary/20 stroke-primary" />
           </Svg>
         </Chart>
       </span> Sed ipsum justo, facilisis id tempor hendrerit, suscipit eu ipsum. Mauris ut sapien quis
@@ -60,7 +60,7 @@
   <div class="w-[125px] h-[18px]">
     <Chart data={negativeData} x="date" xScale={scaleBand()} y="value">
       <Svg>
-        <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
+        <Bars strokeWidth={1} class="fill-primary/20 stroke-primary" />
       </Svg>
     </Chart>
   </div>
@@ -72,7 +72,7 @@
   <div class="w-[125px] h-[18px]">
     <Chart {data} x="date" xScale={scaleBand()} y="value" yDomain={[0, null]} tooltip>
       <Svg>
-        <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
+        <Bars strokeWidth={1} class="fill-primary/20 stroke-primary" />
         <Highlight bar={{ strokeWidth: 1 }} />
       </Svg>
       <Tooltip
@@ -101,7 +101,7 @@
       let:containerWidth
     >
       <Svg>
-        <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
+        <Bars strokeWidth={1} class="fill-primary/20 stroke-primary" />
         <Highlight bar={{ strokeWidth: 1 }} />
       </Svg>
 
@@ -141,7 +141,7 @@
           let:containerHeight
         >
           <Svg>
-            <Bars strokeWidth={1} class="fill-gray-200 stroke-gray-400" />
+            <Bars strokeWidth={1} class="fill-primary/20 stroke-primary" />
             <Highlight bar={{ strokeWidth: 1 }} />
           </Svg>
           <Tooltip

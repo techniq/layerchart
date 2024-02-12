@@ -25,7 +25,7 @@
   /** Length of the tick line */
   export let tickSize = 4;
   export let format: FormatType = undefined;
-  export let labelProps: ComponentProps<Text> | undefined = undefined;
+  export let labelProps: Partial<ComponentProps<Text>> | undefined = undefined;
 
   $: orientation = ['top', 'bottom'].includes(placement) ? 'horizontal' : 'vertical';
   $: scale = orientation === 'horizontal' ? $xScale : $yScale;
@@ -36,8 +36,8 @@
   $: tickVals = Array.isArray(ticks)
     ? ticks
     : isScaleBand(scale)
-    ? scale.domain()
-    : scale.ticks(typeof ticks === 'function' ? ticks(scale) : ticks);
+      ? scale.domain()
+      : scale.ticks(typeof ticks === 'function' ? ticks(scale) : ticks);
 
   function getCoords(tick: any) {
     switch (placement) {
@@ -112,7 +112,7 @@
         y1={$yRange[0] || 0}
         y2={$yRange[1] || 0}
         {...lineProps}
-        class={cls('rule stroke-gray-400', lineProps?.class)}
+        class={cls('rule stroke-surface-content/50', lineProps?.class)}
       />
     {/if}
 
@@ -123,7 +123,7 @@
         y1={placement === 'top' ? yRangeMin : yRangeMax}
         y2={placement === 'top' ? yRangeMin : yRangeMax}
         {...lineProps}
-        class={cls('rule stroke-gray-400', lineProps?.class)}
+        class={cls('rule stroke-surface-content/50', lineProps?.class)}
       />
     {/if}
   {/if}
@@ -140,7 +140,7 @@
             x2={tickCoords.x}
             y2={yRangeMax}
             {...lineProps}
-            class={cls('grid stroke-gray-200', lineProps?.class)}
+            class={cls('grid stroke-surface-content/10', lineProps?.class)}
           />
         {:else if orientation === 'vertical'}
           <line
@@ -149,7 +149,7 @@
             x2={$width}
             y2={tickCoords.y}
             {...lineProps}
-            class={cls('grid stroke-gray-200', lineProps?.class)}
+            class={cls('grid stroke-surface-content/10', lineProps?.class)}
           />
         {/if}
       {/if}
@@ -161,7 +161,7 @@
           y1={tickCoords.y}
           x2={tickCoords.x}
           y2={tickCoords.y + (placement === 'top' ? -tickSize : tickSize)}
-          class="tick stroke-gray-400"
+          class="tick stroke-surface-content/50"
         />
       {:else if orientation === 'vertical'}
         <line
@@ -169,7 +169,7 @@
           y1={tickCoords.y}
           x2={tickCoords.x + (placement === 'left' ? -tickSize : tickSize)}
           y2={tickCoords.y}
-          class="tick stroke-gray-400"
+          class="tick stroke-surface-content/50"
         />
       {/if}
 
@@ -180,7 +180,7 @@
         {...getDefaultLabelProps()}
         {...labelProps}
         class={cls(
-          'label text-[10px] stroke-white [stroke-width:2px] font-light',
+          'label text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
           labelProps?.class
         )}
       />
