@@ -1,5 +1,23 @@
 # LayerChart
 
+## 0.30.0
+
+### Minor Changes
+
+- Theme support ([#78](https://github.com/techniq/layerchart/pull/78))
+
+### Patch Changes
+
+- Update sub-component props type that are spread (`ComponentProps<SomeComponent>`) to be more accurate (`Partial<...>`) ([#78](https://github.com/techniq/layerchart/pull/78))
+
+- [ClipPath] Add `disabled` prop to show all (ignore clipping) ([#78](https://github.com/techniq/layerchart/pull/78))
+
+- Update dependencies ([#78](https://github.com/techniq/layerchart/pull/78))
+
+- Add GeoCircle component ([#78](https://github.com/techniq/layerchart/pull/78))
+
+- Add antipode() geo util ([#78](https://github.com/techniq/layerchart/pull/78))
+
 ## 0.28.0-next.3
 
 ### Patch Changes
