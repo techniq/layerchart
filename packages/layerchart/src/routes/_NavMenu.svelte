@@ -59,7 +59,7 @@
       'Threshold',
     ],
     Interactions: ['Tooltip', 'TooltipContext', 'Highlight', 'Zoom'],
-    Geo: ['GeoContext', 'GeoPath', 'GeoPoint', 'GeoTile', 'Graticule', 'TileImage'],
+    Geo: ['GeoContext', 'GeoCircle', 'GeoPath', 'GeoPoint', 'GeoTile', 'Graticule', 'TileImage'],
     Hierarchy: ['Pack', 'Partition', 'Sankey'],
     Clipping: ['ClipPath', 'ChartClipPath', 'CircleClipPath', 'RectClipPath'],
     Other: ['Blur', 'Bounds', 'ColorRamp', 'LinearGradient', 'MotionPath', 'Pattern'],
