@@ -139,7 +139,7 @@
       />
 
       <div class="border-r border-primary-content/20 pr-2">
-        <ThemeSelect />
+        <ThemeSelect keyboardShortcuts />
       </div>
 
       {#if $lgScreen}
