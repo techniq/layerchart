@@ -12,7 +12,7 @@
   /** sets the circle precision to the specified angle in degrees */
   export let precision = 6;
 
-  $: geojson = geoCircle().radius(radius).center(center)();
+  $: geojson = geoCircle().radius(radius).center(center).precision(precision)();
 </script>
 
 <GeoPath {geojson} {...$$restProps} />
