@@ -18,6 +18,7 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
+  import Blur from '$lib/components/Blur.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -115,7 +116,7 @@
       let:tooltip
     >
       <Svg>
-        <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" />
+        <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" id="globe" />
         <Graticule class="stroke-surface-content/20" />
 
         <GeoPath {geojson} id="clip" />
@@ -138,7 +139,14 @@
         {/each}
 
         {#if showDaylight}
-          <GeoCircle center={antipode(sun)} class="stroke-none fill-black/50 pointer-events-none" />
+          <ClipPath useId="globe">
+            <Blur>
+              <GeoCircle
+                center={antipode(sun)}
+                class="stroke-none fill-black/50 pointer-events-none"
+              />
+            </Blur>
+          </ClipPath>
         {/if}
       </Svg>
 
