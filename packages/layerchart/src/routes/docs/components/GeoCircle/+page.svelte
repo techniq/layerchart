@@ -53,6 +53,13 @@
 </script>
 
 <div class="grid grid-cols-2 gap-2 my-2">
+  <Field label="Example">
+    <ToggleGroup bind:value={example} variant="outline" inset class="w-full" size="sm">
+      <ToggleOption value="single">Single</ToggleOption>
+      <ToggleOption value="multi">Multi</ToggleOption>
+    </ToggleGroup>
+  </Field>
+
   <SelectField
     label="Projections"
     options={projections}
@@ -61,12 +68,6 @@
     toggleIcon={null}
     stepper
   />
-  <Field label="Example">
-    <ToggleGroup bind:value={example} variant="outline" inset class="w-full">
-      <ToggleOption value="single">Single</ToggleOption>
-      <ToggleOption value="multi">Multi</ToggleOption>
-    </ToggleGroup>
-  </Field>
 
   <RangeField
     label="Latitude"

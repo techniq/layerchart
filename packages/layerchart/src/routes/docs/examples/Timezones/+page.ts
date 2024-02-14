@@ -11,6 +11,13 @@ export async function load({ fetch }) {
 
     meta: {
       pageSource,
+      related: [
+        'components/Blur',
+        'components/GeoCircle',
+        'components/GeoPath',
+        'components/ClipPath',
+        'components/Graticule',
+      ],
     },
   };
 }
