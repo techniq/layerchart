@@ -20,7 +20,28 @@ module.exports = {
     // },
   },
   theme: {
-    extend: {},
+    extend: {
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            // Reduce font size
+            h1: {
+              fontSize: theme('fontSize.2xl')[0],
+              fontWeight: theme('fontWeight.extrabold'),
+            },
+            h2: {
+              fontSize: theme('fontSize.xl')[0],
+              fontWeight: theme('fontWeight.bold'),
+              marginTop: theme('spacing.3'),
+            },
+            h3: {
+              fontSize: theme('fontSize.lg')[0],
+              fontWeight: theme('fontWeight.semibold'),
+            },
+          },
+        },
+      }),
+    },
   },
   plugins: [require('@tailwindcss/typography'), svelteUx],
 };
