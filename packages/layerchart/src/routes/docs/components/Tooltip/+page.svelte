@@ -178,7 +178,7 @@
   </div>
 </Preview>
 
-<h2>Light variant</h2>
+<h2>invert variant</h2>
 
 <Preview data={dateSeries}>
   <div class="h-[300px] p-4 border rounded">
@@ -202,7 +202,7 @@
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
       </Svg>
-      <Tooltip variant="light" let:data>
+      <Tooltip variant="invert" let:data>
         <div slot="header" class="font-semibold text-center" let:data>
           {format(data.date, 'eee, MMMM do')}
         </div>

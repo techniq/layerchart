@@ -32,7 +32,7 @@
 
   export let contained: 'container' | false = 'container'; // TODO: Support 'window' using getBoundingClientRect()
   export let animate = true;
-  export let variant: 'dark' | 'light' | 'none' = 'dark';
+  export let variant: 'default' | 'invert' | 'none' = 'default';
 
   export let header: ((data: any) => any) | undefined = undefined;
 
@@ -159,13 +159,13 @@
           ['[&_.value]:text-sm [&_.value]:tabular-nums'],
         ],
         {
-          dark: [
-            'bg-gray-900/90 backdrop-filter backdrop-blur-[2px] text-white',
-            '[&_.label]:text-white/75',
+          default: [
+            'bg-surface-100/90 backdrop-filter backdrop-blur-[2px] text-surface-content',
+            '[&_.label]:text-surface-content/75',
           ],
-          light: [
-            'bg-white text-gray-800 border border-gray-500',
-            '[&_.label]:text-surface-content/50',
+          invert: [
+            'bg-surface-content text-surface-100 border border-surface-content',
+            '[&_.label]:text-surface-100/50',
           ],
           none: '',
         }[variant],
