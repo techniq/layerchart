@@ -23,48 +23,40 @@
   <div class="grid gap-3">
     {#if selectedTab === 'svelte-ux'}
       <div>
-        Follow the <a href="https://svelte-ux.techniq.dev/">Svelte UX</a> instructions to create a new
-        project
+        <h2>Setup project</h2>
+        <p>
+          Follow the
+          <a href="https://svelte-ux.techniq.dev/">Svelte UX</a> instructions to create a new project
+        </p>
       </div>
-
-      <div>Install <code>layerchart</code> package</div>
-      <Code source={`npm install layerchart`} language="sh" />
-
-      <div>Update LayerChart components to <code>tailwind.config.cjs</code> content</div>
-      <Code
-        source={`module.exports = {
-  content: [
-    './src/**/*.{html,svelte}', 
-    './node_modules/svelte-ux/**/*.{svelte,js}',
-    './node_modules/layerchart/**/*.{svelte,js}' // <--- Add this
-  ],
-};`}
-        language="js"
-      />
     {:else if selectedTab === 'standalone'}
       <div>
-        Follow the Tailwind <a href="https://tailwindcss.com/docs/guides/sveltekit" target="_blank">
-          guide
-        </a> to setup a new SvelteKit project with Tailwind.
-      </div>
-
-      <div>OR</div>
-
-      <div>Start a new project SvelteKit project</div>
-      <Code source={`npm create svelte@latest`} language="sh" />
-
-      <div>Install <code>layerchart</code> package</div>
-      <Code source={`npm install layerchart`} language="sh" />
-
-      <div>
-        Add and setup Tailwind using <a
-          href="https://github.com/svelte-add/tailwindcss"
-          target="_blank"
+        <h2>Setup project</h2>
+        Use can use LayerChart with your existing project, such as
+        <a href="https://www.skeleton.dev/" target="_blank">Skeleton</a>,
+        <a href="https://www.shadcn-svelte.com/" target="_blank">shadcn-svelte</a>, or
+        <a href="https://daisyui.com/" target="_blank">Daisy UI</a>, although we are still
+        evaluating the best integration approach and would love your feedback (<a
+          href="https://discord.gg/697JhMPD3t"
+          target="_blank">Discord</a
         >
-          svelte-add
-        </a>
+        or <a href="https://github.com/techniq/layerchart/pulls" target="_blank">pull requests</a>).
+
+        <p>
+          You can also create a new Tailwind project following their
+          <a href="https://tailwindcss.com/docs/guides/sveltekit" target="_blank">guide</a>
+          or use
+          <a href="https://github.com/svelte-add/tailwindcss" target="_blank">svelte-add</a>.
+        </p>
+
+        <Blockquote>
+          <div>
+            Ongoing investigation to support non-Tailwind projects is being investigated, including
+            using <a href="https://unocss.dev/" target="_blank">UnoCSS</a> or vanilla CSS, but they are
+            undocumented and unsupported at this time.
+          </div>
+        </Blockquote>
       </div>
-      <Code source={`npx svelte-add@latest tailwindcss`} language="sh" />
     {:else if selectedTab === 'manual'}
       <div>
         Follow the Tailwind <a href="https://tailwindcss.com/docs/guides/sveltekit" target="_blank">
@@ -76,6 +68,33 @@
       <Code source={`npm install svelte-ux`} language="sh" />
     {/if}
   </div>
+
+  <h2>Install package</h2>
+
+  <div>Install <code>layerchart</code> package</div>
+  <Code source={`npm install layerchart`} language="sh" />
+
+  <Blockquote>
+    <div>
+      <div class="mb-1">
+        Depending on the example, you will typically need additional <code>d3</code> packages such
+        as <code>d3-scale</code> and <code>d3-array</code>
+      </div>
+      <Code source={`npm install d3-scale d3-array`} language="sh" />
+    </div>
+  </Blockquote>
+
+  <div>Update LayerChart components to <code>tailwind.config.cjs</code> content</div>
+  <Code
+    source={`module.exports = {
+  content: [
+    './src/**/*.{html,svelte}', 
+    './node_modules/svelte-ux/**/*.{svelte,js}',
+    './node_modules/layerchart/**/*.{svelte,js}' // <--- Add this
+  ],
+};`}
+    language="js"
+  />
 
   <h2>Usage</h2>
 
@@ -100,10 +119,10 @@
   </p>
 
   <p>
-    The examples do not currently show the importing of LayerChart components, utilties, external
+    The examples do not currently show the importing of LayerChart components, utilties, or external
     libraries (i.e.<code>{'<script>'}</code>
-    block). You can view the full page source by clicking on **Page source** at the top of each examples
-    page. This will show you all of the imports used for that page.
+    block). You can view the full page source by clicking on <strong>Page source</strong> at the top
+    of each examples page. This will show you all of the imports used for that page.
     <Blockquote>
       <div>
         <strong>Note:</strong> This site is built directly from LayerChart's codebase and does not
