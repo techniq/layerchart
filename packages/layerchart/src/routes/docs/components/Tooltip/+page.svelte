@@ -352,7 +352,7 @@
         {#each anchorOptions as option}
           <Button
             variant="outline"
-            color={option === anchor ? 'blue' : 'default'}
+            color={option === anchor ? 'primary' : 'default'}
             on:click={() => (anchor = option)}
           >
             {option}
