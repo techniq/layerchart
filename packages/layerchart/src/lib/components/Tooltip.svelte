@@ -160,11 +160,11 @@
         ],
         {
           default: [
-            'bg-surface-100/90 backdrop-filter backdrop-blur-[2px] text-surface-content',
+            'bg-surface-100/90 dark:bg-surface-300/90 backdrop-filter backdrop-blur-[2px] text-surface-content',
             '[&_.label]:text-surface-content/75',
           ],
           invert: [
-            'bg-surface-content text-surface-100 border border-surface-content',
+            'bg-surface-content/90 backdrop-filter backdrop-blur-[2px] text-surface-100 border border-surface-content',
             '[&_.label]:text-surface-100/50',
           ],
           none: '',
