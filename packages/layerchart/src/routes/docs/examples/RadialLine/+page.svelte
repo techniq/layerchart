@@ -1,6 +1,6 @@
 <script lang="ts">
   import { scaleLinear, scaleRadial, scaleUtc } from 'd3-scale';
-  import { flatGroup, range } from 'd3-array';
+  import { flatGroup } from 'd3-array';
   import { curveLinearClosed, curveCatmullRomClosed, curveCatmullRom } from 'd3-shape';
   import { PeriodType, cls } from 'svelte-ux';
 
@@ -70,7 +70,8 @@
   <div class="h-[500px] p-4 border rounded">
     <Chart
       data={data.dailyTemperatures}
-      x="dayOfYear"
+      x="date"
+      xScale={scaleUtc()}
       xRange={[0, 2 * Math.PI]}
       y="value"
       _yDomain={[50, 65]}
@@ -95,7 +96,7 @@
               opacity={[2023, 2024].includes(year) ? 1 : opacityScale(year)}
             />
           {/each}
-          <Axis placement="angle" grid ticks={range(12).map((x) => x * 30)} />
+          <Axis placement="angle" grid format={PeriodType.Month} />
           <Axis placement="radius" grid rule ticks={4} format={(v) => v + '° F'} />
         </Group>
       </Svg>

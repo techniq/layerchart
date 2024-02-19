@@ -10,7 +10,12 @@ export async function load() {
       return csvParse(await r.text(), autoType)
         .filter((d) => d.value !== 'NA')
         .map((d) => {
-          return { ...d, value: celsiusToFahrenheit(d.value) };
+          const origDate = new Date(d.year, 0, d.dayOfYear);
+          return {
+            ...d,
+            date: new Date(Date.UTC(2000, origDate.getUTCMonth(), origDate.getUTCDate())),
+            value: celsiusToFahrenheit(d.value),
+          };
         });
     }),
     sfoTemperatures: await fetch('/data/examples/sfoTemperatures.csv').then(async (r) => {
