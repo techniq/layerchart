@@ -14,9 +14,6 @@
 
   export let data;
 
-  $: opacityScale = scaleLinear().domain([1940, 2024]).range([0.1, 0.2]);
-  $: dataByYear = flatGroup(data.dailyTemperatures, (d) => d.year);
-
   /**
    * TODO:
    *  - [ ] Tooltip (manual with path, radial bisect?).  Work with Highlight
@@ -25,7 +22,7 @@
 
 <h1>Examples</h1>
 
-<h2>Line with Area</h2>
+<h2>Line with Areas</h2>
 
 <Preview data={data.sfoTemperatures}>
   <div class="h-[500px] p-4 border rounded">
@@ -64,7 +61,7 @@
   </div>
 </Preview>
 
-<h2>Multi line</h2>
+<h2>Multi-year Lines</h2>
 
 <Preview data={data.dailyTemperatures}>
   <div class="h-[500px] p-4 border rounded">
@@ -78,10 +75,13 @@
       _yRange={({ height }) => [0, height / 2]}
       yRange={({ height }) => [height / 5, height / 2]}
       yPadding={[0, 20]}
+      zDomain={[1940, 2024]}
+      zRange={[0.1, 0.2]}
+      let:zScale
     >
       <Svg>
         <Group center>
-          {#each dataByYear as [year, yearData]}
+          {#each flatGroup(data.dailyTemperatures, (d) => d.year) as [year, yearData]}
             <Spline
               data={yearData}
               radial
@@ -93,7 +93,7 @@
                     ? 'stroke-primary/50'
                     : 'stroke-surface-content'
               )}
-              opacity={[2023, 2024].includes(year) ? 1 : opacityScale(year)}
+              opacity={[2023, 2024].includes(year) ? 1 : zScale(year)}
             />
           {/each}
           <Axis placement="angle" grid format={PeriodType.Month} />
