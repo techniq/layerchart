@@ -1,5 +1,15 @@
 # LayerChart
 
+## 0.30.2
+
+### Patch Changes
+
+- Support radial / polar coordinate system (along with cartesian) for Axis, Spline, Area, and Point ([#107](https://github.com/techniq/layerchart/pull/107))
+
+- [Tooltip] Change variant `light`/`dark` (default: `dark`) to `default` / `invert` and base on theme colors ([#110](https://github.com/techniq/layerchart/pull/110))
+
+- [Axis] Fallback to tick value if no tick format defined (band scales) ([#107](https://github.com/techniq/layerchart/pull/107))
+
 ## 0.30.1
 
 ### Patch Changes
