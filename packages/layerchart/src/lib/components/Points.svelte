@@ -6,6 +6,7 @@
   import Circle from './Circle.svelte';
   import Link from './Link.svelte';
   import { isScaleBand } from '../utils/scales';
+  import { pointRadial } from 'd3-shape';
 
   const context = getContext('LayerCake') as any;
   const { data, xGet, y, yGet, xScale, yScale, rGet, config } = context;
@@ -16,6 +17,9 @@
   export let offsetX: Offset = undefined;
   export let offsetY: Offset = undefined;
 
+  /** Use radial instead of cartesian line generator, mapping `x` to `angle` and `y` to `radius`.  Radial points are positioned relative to the origin, use transform (ex. `<Group center>`) to change the origin */
+  export let radial = false;
+
   /** Enable showing links between related points (array x/y accessors) */
   export let links: boolean | Partial<ComponentProps<Link>> = false;
 
@@ -24,7 +28,7 @@
       return offset(value, context);
     } else if (offset != null) {
       return offset;
-    } else if (isScaleBand(scale)) {
+    } else if (isScaleBand(scale) && !radial) {
       return scale.bandwidth() / 2;
     } else {
       return 0;
@@ -127,9 +131,10 @@
 
   <g class="point-group">
     {#each points as point}
+      {@const radialPoint = pointRadial(point.x, point.y)}
       <Circle
-        cx={point.x}
-        cy={point.y}
+        cx={radial ? radialPoint[0] : point.x}
+        cy={radial ? radialPoint[1] : point.y}
         {r}
         fill={$config.r ? $rGet(point.data) : null}
         {...$$restProps}
