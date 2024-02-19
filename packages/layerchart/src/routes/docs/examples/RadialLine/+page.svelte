@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { scaleLinear, scaleRadial, scaleUtc } from 'd3-scale';
+  import { scaleBand, scaleUtc } from 'd3-scale';
   import { flatGroup } from 'd3-array';
   import { curveLinearClosed, curveCatmullRomClosed, curveCatmullRom } from 'd3-shape';
-  import { PeriodType, cls } from 'svelte-ux';
+  import { Field, PeriodType, ToggleGroup, ToggleOption, cls } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
@@ -11,16 +11,61 @@
   import Spline from '$lib/components/Spline.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import Points from '$lib/components/Points.svelte';
 
   export let data;
 
-  /**
-   * TODO:
-   *  - [ ] Tooltip (manual with path, radial bisect?).  Work with Highlight
-   */
+  const pitchData = [
+    { name: 'fastball', value: 10 },
+    { name: 'change', value: 0 },
+    { name: 'slider', value: 4 },
+    { name: 'cutter', value: 8 },
+    { name: 'curve', value: 5 },
+  ];
+  let curve = curveLinearClosed;
 </script>
 
 <h1>Examples</h1>
+
+<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+  <h2>Radar</h2>
+  <Field label="curve: " labelPlacement="left" class="mb-1" dense>
+    <ToggleGroup bind:value={curve} size="sm">
+      <ToggleOption value={curveLinearClosed}>Linear</ToggleOption>
+      <ToggleOption value={curveCatmullRomClosed}>CatmullRom</ToggleOption>
+    </ToggleGroup>
+  </Field>
+</div>
+
+<Preview data={pitchData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={pitchData}
+      x="name"
+      xScale={scaleBand()}
+      xDomain={pitchData.map((d) => d.name)}
+      xRange={[0, 2 * Math.PI]}
+      y="value"
+      yRange={({ height }) => [0, height / 2]}
+      yPadding={[0, 10]}
+      padding={{ top: 32, bottom: 8 }}
+    >
+      <Svg>
+        <Group center>
+          <Axis
+            placement="radius"
+            grid={{ class: 'stroke-surface-content/20 fill-surface-200/50' }}
+            ticks={[0, 5, 10]}
+            format={(d) => ''}
+          />
+          <Axis placement="angle" grid={{ class: 'stroke-surface-content/20' }} />
+          <Spline radial {curve} class="stroke-primary fill-primary/20" />
+          <Points radial class="fill-primary stroke-surface-200" />
+        </Group>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
 
 <h2>Line with Areas</h2>
 
@@ -32,7 +77,6 @@
       xScale={scaleUtc()}
       xRange={[0, 2 * Math.PI]}
       y={['minmin', 'maxmax']}
-      yScale={scaleRadial()}
       yRange={({ height }) => [height / 5, height / 2]}
       let:yScale
     >
