@@ -34,3 +34,13 @@ export function cartesianToPolar(x: number, y: number) {
     angle: Math.atan(y / x),
   };
 }
+
+/** Convert celsius temperature to fahrenheit */
+export function celsiusToFahrenheit(temperature: number) {
+  return temperature * (9 / 5) + 32;
+}
+
+/** Convert fahrenheit temperature to celsius */
+export function fahrenheitToCelsius(temperature: number) {
+  return (temperature - 32) * (5 / 9);
+}
