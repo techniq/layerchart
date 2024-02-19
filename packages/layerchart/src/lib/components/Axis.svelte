@@ -244,7 +244,7 @@
       <Text
         x={orientation === 'angle' ? radialTickCoords[0] : tickCoords.x}
         y={orientation === 'angle' ? radialTickCoords[1] : tickCoords.y}
-        value={formatValue(tick, format ?? scale.tickFormat?.())}
+        value={formatValue(tick, format ?? scale.tickFormat?.() ?? ((v) => v))}
         {...getDefaultLabelProps(tick)}
         {...labelProps}
         class={cls(
