@@ -2,7 +2,7 @@
   import { scaleLinear, scaleRadial, scaleUtc } from 'd3-scale';
   import { flatGroup, max, min, range } from 'd3-array';
   import { curveLinearClosed, curveCatmullRomClosed, curveCatmullRom } from 'd3-shape';
-  import { cls } from 'svelte-ux';
+  import { PeriodType, cls } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Area from '$lib/components/Area.svelte';
@@ -61,8 +61,8 @@
             curve={curveCatmullRomClosed}
             class="fill-primary/20"
           />
-          <Axis placement="angle" grid />
-          <Axis placement="radius" grid />
+          <Axis placement="angle" grid format={PeriodType.Month} />
+          <Axis placement="radius" rule grid format={(v) => v + '° F'} />
         </Group>
       </Svg>
     </Chart>
@@ -81,6 +81,7 @@
       _yDomain={[50, 65]}
       _yRange={({ height }) => [0, height / 2]}
       yRange={({ height }) => [height / 5, height / 2]}
+      yPadding={[0, 20]}
     >
       <Svg>
         <Group center>
@@ -100,7 +101,7 @@
             />
           {/each}
           <Axis placement="angle" grid ticks={range(12).map((x) => x * 30)} />
-          <Axis placement="radius" grid format={(d) => ''} />
+          <Axis placement="radius" grid rule ticks={4} format={(v) => v + '° F'} />
         </Group>
       </Svg>
     </Chart>
