@@ -87,8 +87,8 @@ importers:
         specifier: ^0.6.6
         version: 0.6.6
       svelte-ux:
-        specifier: 0.60.2
-        version: 0.60.2(postcss@8.4.35)(svelte@4.2.10)
+        specifier: 0.60.3
+        version: 0.60.3(postcss@8.4.35)(svelte@4.2.10)
       topojson-client:
         specifier: ^3.1.0
         version: 3.1.0
@@ -1170,8 +1170,8 @@ packages:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
     dev: true
 
-  /@types/node@20.11.17:
-    resolution: {integrity: sha512-QmgQZGWu1Yw9TDyAP9ZzpFJKynYNeOvwMJmaxABfieQoVoiVOS6MN1WSpqpRcbeA5+RW82kraAVxCCJg+780Qw==}
+  /@types/node@20.11.19:
+    resolution: {integrity: sha512-7xMnVEcZFu0DikYjWOlRq7NTPETrm7teqUT2WkQjrTIkEgUyyGdWsj/Zg8bEJt5TNklzbPD1X3fqfsHw3SpapQ==}
     dependencies:
       undici-types: 5.26.5
     dev: false
@@ -1196,7 +1196,7 @@ packages:
   /@types/resolve@1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
     dependencies:
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
     dev: false
 
   /@types/semver@7.5.6:
@@ -3957,8 +3957,8 @@ packages:
       svelte: 4.2.10
       typescript: 5.3.3
 
-  /svelte-ux@0.60.2(postcss@8.4.35)(svelte@4.2.10):
-    resolution: {integrity: sha512-ulwa7Wqr9Gesph3A0tq0y6WEzbTF5UtT4XzKo9NSjJqVxKPB8t9kyJH/2wXSN/5eue3Bb5lndTUcO5IZZR1iXA==}
+  /svelte-ux@0.60.3(postcss@8.4.35)(svelte@4.2.10):
+    resolution: {integrity: sha512-6bRSv916E55ZO/8PLDs+YTfX3DymvICmEIra/GYmx+DmoGVDoScAROIcTUUGKyvtWb19zJ160wukgaL7JmRL6A==}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0
     dependencies:
