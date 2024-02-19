@@ -13,7 +13,7 @@ export async function load() {
           return { ...d, value: celsiusToFahrenheit(d.value) };
         });
     }),
-    sfoTemperature: await fetch('/data/examples/sfo-temperature.csv').then(async (r) => {
+    sfoTemperatures: await fetch('/data/examples/sfoTemperatures.csv').then(async (r) => {
       return flatGroup(
         csvParse(await r.text(), autoType),
         (d) => new Date(Date.UTC(2000, d.date.getUTCMonth(), d.date.getUTCDate())) // group by day of year

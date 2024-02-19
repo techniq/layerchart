@@ -1,6 +1,6 @@
 <script lang="ts">
   import { scaleLinear, scaleRadial, scaleUtc } from 'd3-scale';
-  import { flatGroup, max, min, range } from 'd3-array';
+  import { flatGroup, range } from 'd3-array';
   import { curveLinearClosed, curveCatmullRomClosed, curveCatmullRom } from 'd3-shape';
   import { PeriodType, cls } from 'svelte-ux';
 
@@ -25,28 +25,23 @@
 
 <h1>Examples</h1>
 
-<h2>Complex</h2>
+<h2>Line with Area</h2>
 
-<Preview data={data.sfoTemperature}>
+<Preview data={data.sfoTemperatures}>
   <div class="h-[500px] p-4 border rounded">
     <Chart
-      data={data.sfoTemperature}
+      data={data.sfoTemperatures}
       x="date"
       xScale={scaleUtc()}
-      xDomain={[new Date('2000-01-01'), new Date('2001-01-01') - 1]}
       xRange={[0, 2 * Math.PI]}
-      y="avg"
+      y={['minmin', 'maxmax']}
       yScale={scaleRadial()}
-      yDomain={[
-        min(data.sfoTemperature, (d) => d.minmin),
-        max(data.sfoTemperature, (d) => d.maxmax),
-      ]}
       yRange={({ height }) => [height / 5, height / 2]}
       let:yScale
     >
       <Svg>
         <Group center>
-          <Spline radial curve={curveCatmullRom} class="stroke-primary" />
+          <Spline y={(d) => yScale(d.avg)} radial curve={curveCatmullRom} class="stroke-primary" />
           <Area
             radial
             y0={(d) => yScale(d.min)}
