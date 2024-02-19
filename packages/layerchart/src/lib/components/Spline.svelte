@@ -5,7 +5,7 @@
   import { draw as _drawTransition } from 'svelte/transition';
   import { cubicInOut } from 'svelte/easing';
 
-  import { line as d3Line } from 'd3-shape';
+  import { line as d3Line, lineRadial } from 'd3-shape';
   import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
   // import { interpolateString } from 'd3-interpolate';
   import { interpolatePath } from 'd3-interpolate-path';
@@ -22,9 +22,12 @@
   /** Pass `<path d={...} />` explicitly instead of calculating from data / context */
   export let pathData: string | undefined | null = undefined;
 
-  /** Override x accessor */
+  /** Use radial instead of cartesian line generator, mapping `x` to `angle` and `y` to `radius`.  Radial lines are positioned relative to the origin, use transform (ex. `<Group center>`) to change the origin */
+  export let radial = false;
+
+  /** Override `x` accessor from Chart context.  Applies to `angle` when `radial=true` */
   export let x: any = undefined; // TODO: Update Type
-  /** Override y accessor */
+  /** Override `y` accessor from Chart context.  Applies to `radius` when `radial=true` */
   export let y: any = undefined; // TODO: Update Type
 
   /** Interpolate path data using d3-interpolate-path.  Works best without `draw` enabled */
@@ -48,9 +51,13 @@
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
   $: {
-    const path = d3Line()
-      .x(x ?? $xGet)
-      .y(y ?? $yGet);
+    const path = radial
+      ? lineRadial()
+          .angle(x ?? $xGet)
+          .radius(y ?? $yGet)
+      : d3Line()
+          .x(x ?? $xGet)
+          .y(y ?? $yGet);
     if (curve) path.curve(curve);
     if (defined) path.defined(defined);
 

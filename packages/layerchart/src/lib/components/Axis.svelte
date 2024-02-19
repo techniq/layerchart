@@ -3,6 +3,7 @@
   import type { SVGAttributes } from 'svelte/elements';
   import { format as formatValue, type FormatType, cls } from 'svelte-ux';
   import { extent } from 'd3-array';
+  import { pointRadial } from 'd3-shape';
 
   import Text from './Text.svelte';
   import { isScaleBand } from '$lib/utils/scales';
@@ -10,7 +11,7 @@
   const { xScale, yScale, xRange, yRange, width } = getContext('LayerCake');
 
   /** Location of axis */
-  export let placement: 'top' | 'bottom' | 'left' | 'right';
+  export let placement: 'top' | 'bottom' | 'left' | 'right' | 'angle' | 'radius';
 
   /** Draw a rule line.  Use Rule component for greater rendering order control */
   export let rule: boolean | SVGAttributes<SVGLineElement> = false;
@@ -27,8 +28,15 @@
   export let format: FormatType = undefined;
   export let labelProps: Partial<ComponentProps<Text>> | undefined = undefined;
 
-  $: orientation = ['top', 'bottom'].includes(placement) ? 'horizontal' : 'vertical';
-  $: scale = orientation === 'horizontal' ? $xScale : $yScale;
+  $: orientation =
+    placement === 'angle'
+      ? 'angle'
+      : placement === 'radius'
+        ? 'radius'
+        : ['top', 'bottom'].includes(placement)
+          ? 'horizontal'
+          : 'vertical';
+  $: scale = ['horizontal', 'angle'].includes(orientation) ? $xScale : $yScale;
 
   $: [xRangeMin, xRangeMax] = extent($xRange);
   $: [yRangeMin, yRangeMax] = extent($yRange);
@@ -64,10 +72,22 @@
           x: xRangeMax,
           y: $yScale(tick) + (isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0),
         };
+
+      case 'angle':
+        return {
+          x: $xScale(tick),
+          y: yRangeMax,
+        };
+
+      case 'radius':
+        return {
+          x: xRangeMin,
+          y: $yScale(tick),
+        };
     }
   }
 
-  function getDefaultLabelProps(): ComponentProps<Text> {
+  function getDefaultLabelProps(tick: any): ComponentProps<Text> {
     switch (placement) {
       case 'top':
         return {
@@ -98,6 +118,24 @@
           dx: 4,
           dy: -2, // manually adjusted until Text supports custom styles
         };
+
+      case 'angle':
+        const xValue = $xScale(tick);
+        return {
+          textAnchor:
+            xValue === 0 || xValue === Math.PI ? 'middle' : xValue > Math.PI ? 'end' : 'start',
+          verticalAnchor: 'middle',
+          dx: 0,
+          dy: -2, // manually adjusted until Text supports custom styles
+        };
+
+      case 'radius':
+        return {
+          textAnchor: 'middle',
+          verticalAnchor: 'middle',
+          dx: 2,
+          dy: -2, // manually adjusted until Text supports custom styles
+        };
     }
   }
 </script>
@@ -126,10 +164,22 @@
         class={cls('rule stroke-surface-content/50', lineProps?.class)}
       />
     {/if}
+
+    <!-- TODO: angle rule? -->
+
+    {#if orientation === 'radius'}
+      <circle
+        r={$yRange[0] || 0}
+        {...lineProps}
+        class={cls('rule stroke-surface-content/20 fill-none', lineProps?.class)}
+      />
+    {/if}
   {/if}
 
   {#each tickVals as tick, i}
     {@const tickCoords = getCoords(tick)}
+    {@const radialTickCoords = pointRadial(tickCoords.x, tickCoords.y)}
+
     <g>
       {#if grid !== false}
         {@const lineProps = typeof grid === 'object' ? grid : null}
@@ -150,6 +200,24 @@
             y2={tickCoords.y}
             {...lineProps}
             class={cls('grid stroke-surface-content/10', lineProps?.class)}
+          />
+        {:else if orientation === 'angle'}
+          {@const [x1, y1] = pointRadial(tickCoords.x, yRangeMin)}
+          {@const [x2, y2] = pointRadial(tickCoords.x, yRangeMax)}
+
+          <line
+            {x1}
+            {y1}
+            {x2}
+            {y2}
+            {...lineProps}
+            class={cls('test grid stroke-surface-content/10', lineProps?.class)}
+          />
+        {:else if orientation === 'radius'}
+          <circle
+            r={tickCoords.y}
+            {...lineProps}
+            class={cls('grid stroke-surface-content/10 fill-none', lineProps?.class)}
           />
         {/if}
       {/if}
@@ -174,10 +242,10 @@
       {/if}
 
       <Text
-        x={tickCoords.x}
-        y={tickCoords.y}
-        value={formatValue(tick, format ?? scale.tickFormat?.())}
-        {...getDefaultLabelProps()}
+        x={orientation === 'angle' ? radialTickCoords[0] : tickCoords.x}
+        y={orientation === 'angle' ? radialTickCoords[1] : tickCoords.y}
+        value={formatValue(tick, format ?? scale.tickFormat?.() ?? ((v) => v))}
+        {...getDefaultLabelProps(tick)}
         {...labelProps}
         class={cls(
           'label text-[10px] stroke-surface-100 [stroke-width:2px] font-light',

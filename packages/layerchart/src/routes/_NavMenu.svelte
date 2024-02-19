@@ -17,6 +17,7 @@
       'Line',
       'Oscilloscope',
       'PunchCard',
+      'RadialLine',
       'Scatter',
       'Sparkbar',
       'Sparkline',

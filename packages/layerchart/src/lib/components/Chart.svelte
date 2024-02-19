@@ -99,9 +99,13 @@
   let:width
   let:element
   let:xScale
+  let:xGet
   let:yScale
+  let:yGet
   let:zScale
+  let:zGet
   let:rScale
+  let:rGet
   let:padding
   let:data
   let:flatData
@@ -120,9 +124,13 @@
           {projection}
           {tooltip}
           {xScale}
+          {xGet}
           {yScale}
+          {yGet}
           {zScale}
+          {zGet}
           {rScale}
+          {rGet}
           {padding}
           {data}
           {flatData}
@@ -138,9 +146,13 @@
         {element}
         {projection}
         {xScale}
+        {xGet}
         {yScale}
+        {yGet}
         {zScale}
+        {zGet}
         {rScale}
+        {rGet}
         {padding}
         {data}
         {flatData}

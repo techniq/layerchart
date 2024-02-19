@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext, type ComponentProps } from 'svelte';
   import type { tweened as tweenedStore } from 'svelte/motion';
-  import { type Area, area as d3Area } from 'd3-shape';
+  import { type Area, area as d3Area, areaRadial } from 'd3-shape';
   import type { CurveFactory } from 'd3-shape';
   import { max } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
@@ -19,6 +19,9 @@
 
   /** Pass `<path d={...} />` explicitly instead of calculating from data / context */
   export let pathData: string | undefined | null = undefined;
+
+  /** Use radial instead of cartesian area generator, mapping `x` to `angle` and `y0`/`y1 to `innerRadius`/`outerRadius.  Radial lines are positioned relative to the origin, use transform (ex. `<Group center>`) to change the origin */
+  export let radial = false;
 
   /** Override x accessor */
   export let x: any = undefined; // TODO: Update Type
@@ -42,10 +45,15 @@
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
   $: {
-    const path = d3Area()
-      .x(x ?? $xGet)
-      .y0(y0 ?? max($yRange))
-      .y1(y1 ?? $yGet);
+    const path = radial
+      ? areaRadial()
+          .angle(x ?? $xGet)
+          .innerRadius(y0 ?? max($yRange))
+          .outerRadius(y1 ?? $yGet)
+      : d3Area()
+          .x(x ?? $xGet)
+          .y0(y0 ?? max($yRange))
+          .y1(y1 ?? $yGet);
     if (curve) path.curve(curve);
     if (defined) path.defined(defined);
 
