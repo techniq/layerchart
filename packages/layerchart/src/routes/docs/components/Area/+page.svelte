@@ -60,10 +60,10 @@
           {curve}
           line={showLine && { class: 'stroke-primary stroke-2' }}
           {tweened}
-          class="fill-primary/30"
+          class="fill-primary/10"
         />
         {#if showPoints}
-          <Points {tweened} />
+          <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
         {/if}
       </Svg>
     </Chart>

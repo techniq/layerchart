@@ -71,7 +71,7 @@
         <Axis placement="bottom" rule />
         <Spline {curve} {tweened} {draw} class="stroke-primary stroke-2" />
         {#if showPoints}
-          <Points {tweened} />
+          <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
         {/if}
       </Svg>
     </Chart>
