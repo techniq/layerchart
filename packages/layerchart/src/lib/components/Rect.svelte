@@ -43,7 +43,7 @@
   y={$tweened_y}
   width={$tweened_width}
   height={$tweened_height}
-  class={cls($$props.fill === undefined && 'fill-surface-content')}
+  class={cls($$props.fill == null && 'fill-surface-content')}
   {...$$restProps}
   on:click
   on:mouseover

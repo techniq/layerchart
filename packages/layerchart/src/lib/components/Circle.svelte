@@ -32,7 +32,7 @@
   cx={$tweened_cx}
   cy={$tweened_cy}
   r={$tweened_r}
-  class={cls($$props.fill === undefined && 'fill-surface-content')}
+  class={cls($$props.fill == null && 'fill-surface-content')}
   {...$$restProps}
   on:click
   on:mousemove
