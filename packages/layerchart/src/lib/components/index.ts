@@ -47,4 +47,5 @@ export { default as TooltipItem } from './TooltipItem.svelte';
 export { default as TooltipSeparator } from './TooltipSeparator.svelte';
 export { default as Tree } from './Tree.svelte';
 export { default as Treemap } from './Treemap.svelte';
+export { default as Voronoi } from './Voronoi.svelte';
 export { default as Zoom } from './Zoom.svelte';

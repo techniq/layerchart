@@ -34,12 +34,12 @@
   import { raise } from 'layercake';
   import { writable } from 'svelte/store';
   import { bisector, max, min } from 'd3-array';
-  import { Delaunay } from 'd3-delaunay';
   import { quadtree as d3Quadtree } from 'd3-quadtree';
-  import { sortFunc } from 'svelte-ux';
+  import { cls, sortFunc } from 'svelte-ux';
 
-  import { Svg, Html } from '$lib/components/Chart.svelte';
-  import ChartClipPath from '$lib/components/ChartClipPath.svelte';
+  import { Svg, Html } from './Chart.svelte';
+  import ChartClipPath from './ChartClipPath.svelte';
+  import Voronoi from './Voronoi.svelte';
 
   import { localPoint } from '$lib/utils/event';
   import { isScaleBand, scaleInvert } from '$lib/utils/scales';
@@ -231,23 +231,6 @@
     });
   }
 
-  let points;
-  let voronoi;
-  $: if (mode === 'voronoi') {
-    points = $flatData.map((d) => {
-      const xValue = $xGet(d);
-      const yValue = $yGet(d);
-
-      const x = Array.isArray(xValue) ? min(xValue) : xValue;
-      const y = Array.isArray(yValue) ? min(yValue) : yValue;
-
-      const point = [x, y];
-      point.data = d;
-      return point;
-    });
-    voronoi = Delaunay.from(points).voronoi([0, 0, Math.max($width, 0), Math.max($height, 0)]); // width and/or height can sometimes be negative (when loading data remotely and updately)
-  }
-
   let quadtree;
   $: if (mode === 'quadtree') {
     quadtree = d3Quadtree()
@@ -354,21 +337,14 @@
   </Html>
 {:else if mode === 'voronoi'}
   <Svg>
-    {#each points as point, i}
-      <g class="tooltip-voronoi">
-        <path
-          d={voronoi.renderCell(i)}
-          style:fill={debug ? 'red' : 'transparent'}
-          style:fill-opacity={debug ? 0.1 : 0}
-          style:stroke={debug ? 'red' : 'transparent'}
-          on:mousemove={(e) => showTooltip(e, point.data)}
-          on:mouseleave={hideTooltip}
-          on:click={(e) => {
-            onClick({ data: point.data });
-          }}
-        />
-      </g>
-    {/each}
+    <Voronoi
+      on:mousemove={(e) => showTooltip(e.detail.event, e.detail.point.data)}
+      on:mouseleave={hideTooltip}
+      on:click={(e) => {
+        onClick({ data: e.detail.point.data });
+      }}
+      classes={{ path: cls(debug && 'fill-danger/10 stroke-danger') }}
+    />
   </Svg>
 {:else if mode === 'bounds' || mode === 'band'}
   <Svg>
