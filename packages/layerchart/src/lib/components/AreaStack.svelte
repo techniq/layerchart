@@ -37,17 +37,19 @@
   </g>
 {/if}
 
-<g class="area-group">
-  {#each $data as seriesData}
-    <Area
-      data={seriesData}
-      y0={(d) => d[0]}
-      y1={(d) => d[1]}
-      fill={$rGet(seriesData)}
-      {curve}
-      {defined}
-      {opacity}
-      {tweened}
-    />
-  {/each}
-</g>
+<slot data={$data}>
+  <g class="area-group">
+    {#each $data as seriesData}
+      <Area
+        data={seriesData}
+        y0={(d) => d[0]}
+        y1={(d) => d[1]}
+        fill={$rGet(seriesData)}
+        {curve}
+        {defined}
+        {opacity}
+        {tweened}
+      />
+    {/each}
+  </g>
+</slot>
