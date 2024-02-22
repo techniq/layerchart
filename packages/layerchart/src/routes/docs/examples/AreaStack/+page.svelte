@@ -112,28 +112,29 @@
           rule
         />
         <AreaStack let:data>
-          {#each data as seriesData, index}
-            {@const color1 =
-              index === 0
-                ? 'hsl(var(--color-danger-500))'
-                : index === 1
-                  ? 'hsl(var(--color-success-500))'
-                  : 'hsl(var(--color-info-500))'}
-            {@const color2 =
-              index === 0
-                ? 'hsl(var(--color-danger-500) / 10%)'
-                : index === 1
-                  ? 'hsl(var(--color-success-500) / 10%)'
-                  : 'hsl(var(--color-info-500) / 10%)'}
+          {@const primaryColorScale = scaleOrdinal([
+            'hsl(var(--color-danger-500))',
+            'hsl(var(--color-success-500))',
+            'hsl(var(--color-info-500))',
+          ])}
+          {@const secondaryColorScale = scaleOrdinal([
+            'hsl(var(--color-danger-500) / 10%)',
+            'hsl(var(--color-success-500) / 10%)',
+            'hsl(var(--color-info-500) / 10%)',
+          ])}
 
-            <LinearGradient stops={[color1, color2]} vertical let:url>
+          {#each data as seriesData, index}
+            {@const primaryColor = primaryColorScale(index)}
+            {@const secondaryColor = secondaryColorScale(index)}
+
+            <LinearGradient stops={[primaryColor, secondaryColor]} vertical let:url>
               <Area
                 data={seriesData}
                 y0={(d) => d[0]}
                 y1={(d) => d[1]}
                 fill={url}
                 fill-opacity={0.5}
-                line={{ stroke: color1 }}
+                line={{ stroke: primaryColor }}
               />
             </LinearGradient>
           {/each}
