@@ -14,15 +14,13 @@
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
-  import _population from '../_data/geo/us-county-population-2020.json';
-
   export let data;
   const states = feature(data.geojson, data.geojson.objects.states);
   const counties = feature(data.geojson, data.geojson.objects.counties);
 
   const statesById = index(states.features, (d) => d.id);
 
-  const population = _population.map((d) => {
+  const population = data.population.map((d) => {
     return {
       fips: d.state + d.county,
       state: statesById.get(d.state).properties.name,

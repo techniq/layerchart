@@ -8,6 +8,9 @@ export async function load({ fetch }) {
     geojson: await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/counties-albers-10m.json').then(
       (r) => r.json()
     ),
+    population: await fetch('/data/examples/geo/us-county-population-2020.json').then((r) =>
+      r.json()
+    ),
     meta: {
       pageSource,
     },
