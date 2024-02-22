@@ -63,7 +63,7 @@
 </script>
 
 {#if line}
-  <Spline {data} {curve} {defined} {tweened} {...typeof line === 'object' ? line : null} />
+  <Spline {data} y={y1} {curve} {defined} {tweened} {...typeof line === 'object' ? line : null} />
 {/if}
 
 <path

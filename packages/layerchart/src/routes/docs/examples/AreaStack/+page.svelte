@@ -5,9 +5,11 @@
   import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import Area from '$lib/components/Area.svelte';
   import AreaStack from '$lib/components/AreaStack.svelte';
   import Axis from '$lib/components/Axis.svelte';
   import Highlight from '$lib/components/Highlight.svelte';
+  import LinearGradient from '$lib/components/LinearGradient.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -85,6 +87,58 @@
           <TooltipItem label={key} value={data.data[key]} />
         {/each}
       </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Slot with gradient</h2>
+
+<Preview data={stackData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={stackData}
+      flatData={flatten(stackData)}
+      x={(d) => d.data.date}
+      xScale={scaleTime()}
+      y={[0, 1]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <AreaStack let:data>
+          {#each data as seriesData, index}
+            {@const color1 =
+              index === 0
+                ? 'hsl(var(--color-danger-500))'
+                : index === 1
+                  ? 'hsl(var(--color-success-500))'
+                  : 'hsl(var(--color-info-500))'}
+            {@const color2 =
+              index === 0
+                ? 'hsl(var(--color-danger-500) / 10%)'
+                : index === 1
+                  ? 'hsl(var(--color-success-500) / 10%)'
+                  : 'hsl(var(--color-info-500) / 10%)'}
+
+            <LinearGradient stops={[color1, color2]} vertical let:url>
+              <Area
+                data={seriesData}
+                y0={(d) => d[0]}
+                y1={(d) => d[1]}
+                fill={url}
+                fill-opacity={0.5}
+                line={{ stroke: color1 }}
+              />
+            </LinearGradient>
+          {/each}
+        </AreaStack>
+      </Svg>
     </Chart>
   </div>
 </Preview>
