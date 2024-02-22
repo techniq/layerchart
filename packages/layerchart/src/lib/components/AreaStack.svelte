@@ -6,7 +6,7 @@
   import Area from './Area.svelte';
   import Spline from './Spline.svelte';
 
-  const { data, yScale, rGet } = getContext('LayerCake');
+  const { data, rGet } = getContext('LayerCake');
 
   // TODO: Add as generic
   type Datum = any;
@@ -26,7 +26,7 @@
     {#each lineData as seriesData}
       <Spline
         data={seriesData}
-        y={(d) => $yScale(d[1])}
+        y={(d) => d[1]}
         stroke={$rGet(seriesData)}
         {curve}
         {defined}
@@ -41,8 +41,8 @@
   {#each $data as seriesData}
     <Area
       data={seriesData}
-      y0={(d) => $yScale(d[0])}
-      y1={(d) => $yScale(d[1])}
+      y0={(d) => d[0]}
+      y1={(d) => d[1]}
       fill={$rGet(seriesData)}
       {curve}
       {defined}
