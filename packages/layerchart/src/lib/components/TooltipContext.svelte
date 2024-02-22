@@ -322,10 +322,9 @@
 {#if ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode)}
   <Html>
     <div
-      class="tooltip-trigger absolute"
       style:width="{$width}px"
       style:height="{$height}px"
-      style:background={debug ? 'rgba(255 0 0 / .1)' : undefined}
+      class={cls('tooltip-trigger absolute', debug && 'bg-danger/10 outline outline-danger')}
       on:touchstart={showTooltip}
       on:touchmove={showTooltip}
       on:mousemove={showTooltip}
@@ -355,9 +354,7 @@
           y={rect.y}
           width={rect.width}
           height={rect.height}
-          style:fill={debug ? 'red' : 'transparent'}
-          style:fill-opacity={debug ? 0.1 : 0}
-          style:stroke={debug ? 'red' : 'transparent'}
+          class={cls(debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent')}
           on:mousemove={(e) => showTooltip(e, rect.data)}
           on:mouseleave={hideTooltip}
           on:click={(e) => {
@@ -379,9 +376,7 @@
             y={rect.y}
             width={rect.width}
             height={rect.height}
-            style:fill={debug ? 'red' : 'transparent'}
-            style:fill-opacity={debug ? 0.1 : 0}
-            stroke="red"
+            class={cls(debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent')}
           />
         {/each}
       </g>

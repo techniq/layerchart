@@ -78,22 +78,21 @@
       xRange={[0, 2 * Math.PI]}
       y={['minmin', 'maxmax']}
       yRange={({ height }) => [height / 5, height / 2]}
-      let:yScale
     >
       <Svg>
         <Group center>
-          <Spline y={(d) => yScale(d.avg)} radial curve={curveCatmullRom} class="stroke-primary" />
+          <Spline y={(d) => d.avg} radial curve={curveCatmullRom} class="stroke-primary" />
           <Area
             radial
-            y0={(d) => yScale(d.min)}
-            y1={(d) => yScale(d.max)}
+            y0={(d) => d.min}
+            y1={(d) => d.max}
             curve={curveCatmullRomClosed}
             class="fill-primary/20"
           />
           <Area
             radial
-            y0={(d) => yScale(d.minmin)}
-            y1={(d) => yScale(d.maxmax)}
+            y0={(d) => d.minmin}
+            y1={(d) => d.maxmax}
             curve={curveCatmullRomClosed}
             class="fill-primary/20"
           />

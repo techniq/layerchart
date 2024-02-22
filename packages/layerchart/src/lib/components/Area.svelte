@@ -12,7 +12,7 @@
 
   import Spline from './Spline.svelte';
 
-  const { data: contextData, xGet, yGet, yRange } = getContext('LayerCake');
+  const { data: contextData, xScale, yScale, xGet, yGet, yRange } = getContext('LayerCake');
 
   /** Override data instead of using context */
   export let data: any = undefined;
@@ -47,13 +47,13 @@
   $: {
     const path = radial
       ? areaRadial()
-          .angle(x ?? $xGet)
-          .innerRadius(y0 ?? max($yRange))
-          .outerRadius(y1 ?? $yGet)
+          .angle((d) => (x ? $xScale(x(d)) : $xGet(d)))
+          .innerRadius((d) => (y0 ? $yScale(y0(d)) : max($yRange)))
+          .outerRadius((d) => (y1 ? $yScale(y1(d)) : $yGet(d)))
       : d3Area()
-          .x(x ?? $xGet)
-          .y0(y0 ?? max($yRange))
-          .y1(y1 ?? $yGet);
+          .x((d) => (x ? $xScale(x(d)) : $xGet(d)))
+          .y0((d) => (y0 ? $yScale(y0(d)) : max($yRange)))
+          .y1((d) => (y1 ? $yScale(y1(d)) : $yGet(d)));
     if (curve) path.curve(curve);
     if (defined) path.defined(defined);
 
