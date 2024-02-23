@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.31.1
+
+### Patch Changes
+
+- Add pivotLonger() and pivotWider() to top-level exports. Add `layerchart/utils` export for additional utils ([`be4cfe219d61c5687e2a896ab43970f7ad6009d2`](https://github.com/techniq/layerchart/commit/be4cfe219d61c5687e2a896ab43970f7ad6009d2))
+
 ## 0.31.0
 
 ### Minor Changes
