@@ -106,6 +106,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "svelte": "./dist/index.js"
+    },
+    "./utils/*": {
+      "types": "./dist/utils/*.d.ts",
+      "svelte": "./dist/utils/*.js"
     }
   },
   "files": [
