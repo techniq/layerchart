@@ -1,5 +1,17 @@
 # LayerChart
 
+## 0.31.0
+
+### Minor Changes
+
+- [Area/AreaStack/Spline] Simplify overwriting x/y accessors by applying xScale/yScale within components ([#115](https://github.com/techniq/layerchart/pull/115))
+
+### Patch Changes
+
+- [AreaStack] Support passing slot for custom <Area> (enabling modifications in including <LinearGradient> fill) ([#116](https://github.com/techniq/layerchart/pull/116))
+
+- Add Voronoi as separate component ([`1aeaf0c20f80511209252de560ef0be867e129d7`](https://github.com/techniq/layerchart/commit/1aeaf0c20f80511209252de560ef0be867e129d7))
+
 ## 0.30.2
 
 ### Patch Changes
