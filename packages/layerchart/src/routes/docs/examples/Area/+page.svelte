@@ -214,6 +214,60 @@
   </div>
 </Preview>
 
+<h2>Multiple series (using overrides)</h2>
+
+<Preview data={multiSeriesFlatData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={multiSeriesData}
+      x="date"
+      y={['apples', 'bananas', 'oranges']}
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24, right: 48 }}
+      tooltip={{ mode: 'bisect-x' }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+
+        <Area
+          y1={(d) => d.apples}
+          class="stroke-2"
+          fill={fruitColors.apples}
+          fill-opacity={0.3}
+          line={{ stroke: fruitColors.apples, class: 'stroke-2' }}
+        />
+        <Area
+          y1={(d) => d.bananas}
+          class="stroke-2"
+          fill={fruitColors.bananas}
+          fill-opacity={0.3}
+          line={{ stroke: fruitColors.bananas, class: 'stroke-2' }}
+        />
+        <Area
+          y1={(d) => d.oranges}
+          class="stroke-2"
+          fill={fruitColors.oranges}
+          fill-opacity={0.3}
+          line={{ stroke: fruitColors.oranges, class: 'stroke-2' }}
+        />
+        <!-- TODO: Fix points with y array -->
+        <Highlight lines />
+      </Svg>
+      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
+        <TooltipItem label="apples" value={data.apples} />
+        <TooltipItem label="bananas" value={data.bananas} />
+        <TooltipItem label="oranges" value={data.oranges} />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Multiple series (highlight on hover)</h2>
 
 <Preview data={multiSeriesFlatData}>
