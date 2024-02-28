@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
+  import { getContext, type ComponentProps } from 'svelte';
 
   import { createDimensionGetter } from '$lib/utils/rect';
   import Rect from './Rect.svelte';
 
-  const { x: xContext, y: yContext, rGet, config } = getContext('LayerCake');
+  const { x: xContext, y: yContext } = getContext('LayerCake');
 
   export let bar: Object;
 
@@ -29,8 +28,8 @@
   export let groupPaddingInner = 0.2;
   export let groupPaddingOuter = 0;
 
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
+  export let spring: ComponentProps<Rect>['spring'] = undefined;
+  export let tweened: ComponentProps<Rect>['tweened'] = undefined;
 
   $: if (stroke === null || stroke === undefined) stroke = 'black';
 

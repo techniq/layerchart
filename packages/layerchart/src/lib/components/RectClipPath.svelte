@@ -1,6 +1,5 @@
 <script lang="ts">
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
-
+  import type { ComponentProps } from 'svelte';
   import { uniqueId } from 'svelte-ux';
 
   import ClipPath from './ClipPath.svelte';
@@ -13,8 +12,8 @@
   export let y: number = 0;
   export let width: number;
   export let height: number;
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
+  export let spring: ComponentProps<Rect>['spring'] = undefined;
+  export let tweened: ComponentProps<Rect>['tweened'] = undefined;
 </script>
 
 <ClipPath {id} let:url>

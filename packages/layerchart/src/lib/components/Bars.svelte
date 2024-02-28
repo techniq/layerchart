@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
+  import { getContext, type ComponentProps } from 'svelte';
 
   import Bar from './Bar.svelte';
+  import Rect from './Rect.svelte';
 
   const { data, rGet, config } = getContext('LayerCake');
 
@@ -23,8 +23,8 @@
   /** Inset the rect for amount of padding.  Useful with multiple bars (bullet, overlap, etc) */
   export let inset = 0;
 
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
+  export let spring: ComponentProps<Rect>['spring'] = undefined;
+  export let tweened: ComponentProps<Rect>['tweened'] = undefined;
 
   // See: https://svelte.dev/repl/7000c5ce05b84cd98ccbfb2768b4be3d?version=3.38.3
 
