@@ -329,8 +329,8 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Bars radius={4} strokeWidth={1} class="fill-surface-100" />
-        <Axis placement="bottom" grid={{ class: 'stroke-white' }} rule />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Axis placement="bottom" grid={{ class: 'stroke-surface-100' }} rule />
         <Axis
           placement="left"
           format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
