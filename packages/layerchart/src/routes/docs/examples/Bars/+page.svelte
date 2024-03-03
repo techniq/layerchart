@@ -230,7 +230,7 @@
   </div>
 </Preview>
 
-<h2>Labels and negative data</h2>
+<h2>Outside Labels (default)</h2>
 
 <Preview data={negativeData}>
   <div class="h-[300px] p-4 border rounded">
@@ -252,6 +252,33 @@
         <Rule x={0} />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Labels format="integer" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Inside Labels</h2>
+
+<Preview data={negativeData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={negativeData}
+      x="value"
+      xNice
+      y="date"
+      yScale={scaleBand().padding(0.4)}
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Axis placement="bottom" grid rule />
+        <Axis
+          placement="left"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Rule x={0} />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Labels placement="inside" format="integer" />
       </Svg>
     </Chart>
   </div>

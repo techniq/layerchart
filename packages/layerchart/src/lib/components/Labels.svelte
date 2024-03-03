@@ -14,7 +14,9 @@
 
   const { flatData, yScale, x, y, custom } = getContext('LayerCake');
 
-  // export let orientation: 'outside' | 'inside' | 'auto' = 'auto';
+  // TODO: Support 'auto' to switch `inside` to `outside` if not enough room
+  export let placement: 'inside' | 'outside' = 'outside';
+  export let offset = 4;
   export let significantDigits = 3;
   export let format: FormatType | undefined = undefined;
   // export let overlap = false;
@@ -65,18 +67,18 @@
       if (labelValue < 0) {
         // left
         return {
-          x: dimensions?.x - 4,
+          x: dimensions?.x + (placement === 'outside' ? -offset : offset),
           y: dimensions?.y + (dimensions?.height ?? 0) / 2,
-          textAnchor: 'end',
+          textAnchor: placement === 'outside' ? 'end' : 'start',
           verticalAnchor: 'middle',
           capHeight: '.6rem',
         };
       } else {
         // right
         return {
-          x: dimensions?.x + dimensions?.width + 4,
+          x: dimensions?.x + dimensions?.width + (placement === 'outside' ? offset : -offset),
           y: dimensions?.y + (dimensions?.height ?? 0) / 2,
-          textAnchor: 'start',
+          textAnchor: placement === 'outside' ? 'start' : 'end',
           verticalAnchor: 'middle',
           capHeight: '.6rem',
         };
@@ -87,19 +89,19 @@
         // bottom
         return {
           x: dimensions?.x + (dimensions?.width ?? 0) / 2,
-          y: dimensions?.y + dimensions?.height,
-          dy: '0.5em',
+          y: dimensions?.y + dimensions?.height + (placement === 'outside' ? offset : -offset),
+          capHeight: '.6rem',
           textAnchor: 'middle',
-          verticalAnchor: 'middle',
+          verticalAnchor: placement === 'outside' ? 'start' : 'end',
         };
       } else {
         // top
         return {
           x: dimensions?.x + (dimensions?.width ?? 0) / 2,
-          y: dimensions?.y,
-          dy: '-0.6em',
+          y: dimensions?.y + (placement === 'outside' ? -offset : offset),
+          capHeight: '.6rem',
           textAnchor: 'middle',
-          verticalAnchor: 'middle',
+          verticalAnchor: placement === 'outside' ? 'end' : 'start',
         };
       }
     }
