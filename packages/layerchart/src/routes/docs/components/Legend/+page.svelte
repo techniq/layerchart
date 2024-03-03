@@ -188,8 +188,8 @@
     classes={{
       root: 'ml-10',
       title: 'text-lg text-center',
-      label: 'fill-black/50',
-      tick: 'stroke-white',
+      label: 'fill-surface-content/50',
+      tick: 'stroke-surface-100',
     }}
   />
 </Preview>
