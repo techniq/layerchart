@@ -57,7 +57,7 @@
 
   const groups = ['examples', 'components', 'utils'];
   const quickSearchOptions = Object.entries(
-    import.meta.glob('./docs/**/+page.(md|svelte)', { as: 'raw', eager: true })
+    import.meta.glob('./docs/**/+page.(md|svelte)', { query: '?raw', eager: true })
   )
     .flatMap(([file, source]) => {
       const url = file.replace('.', '').replace(/\/\+page.(md|svelte)/, '');
