@@ -1,6 +1,10 @@
 <script lang="ts">
+  import { tick } from 'svelte';
+  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
+
   import { cls } from 'svelte-ux';
   import { getStringWidth } from '$lib/utils/string';
+  import { motionStore } from '$lib/stores/motionStore';
 
   /*
     TODO:
@@ -20,13 +24,15 @@
   export let value: string | number = 0;
 
   /** Maximum width to occupy (approximate as words are not split) */
-  export let width: number = undefined;
+  export let width: number | undefined = undefined;
 
   /** x position of the text */
   export let x: string | number = 0;
+  export let initialX = x;
 
   /** y position of the text */
   export let y: string | number = 0;
+  export let initialY = y;
 
   /** dx offset of the text */
   export let dx: string | number = 0;
@@ -50,7 +56,7 @@
   export let verticalAnchor: 'start' | 'middle' | 'end' | 'inherit' = 'end'; // default SVG behavior
 
   /** Rotational angle of the text */
-  export let rotate: number = undefined;
+  export let rotate: number | undefined = undefined;
 
   let wordsByLines: { words: string[]; width?: number }[] = [];
   let wordsWithWidth: { word: string; width: number }[] = [];
@@ -146,6 +152,17 @@
       typeof xOrY === 'string'
     );
   }
+
+  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
+  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
+
+  let tweened_x = motionStore(initialX, { spring, tweened });
+  let tweened_y = motionStore(initialY, { spring, tweened });
+
+  $: tick().then(() => {
+    tweened_x.set(x);
+    tweened_y.set(y);
+  });
 </script>
 
 <!-- `overflow: visible` allow contents to be shown outside element -->
@@ -153,15 +170,15 @@
 <svg x={dx} y={dy} class="overflow-visible [paint-order:stroke]">
   {#if isValidXOrY(x) && isValidXOrY(y)}
     <text
-      {x}
-      {y}
+      x={$tweened_x}
+      y={$tweened_y}
       {transform}
       text-anchor={textAnchor}
       {...$$restProps}
       class={cls($$props.fill === undefined && 'fill-surface-content', $$props.class)}
     >
       {#each wordsByLines as line, index}
-        <tspan {x} dy={index === 0 ? startDy : lineHeight}>
+        <tspan x={$tweened_x} dy={index === 0 ? startDy : lineHeight}>
           {line.words.join(' ')}
         </tspan>
       {/each}
