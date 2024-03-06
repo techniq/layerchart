@@ -108,7 +108,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice
+      yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
@@ -134,7 +134,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice
+      yNice={4}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
@@ -165,7 +165,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice
+      yNice={4}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
@@ -200,7 +200,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice
+      yNice={4}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
@@ -241,7 +241,8 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yBaseline={0}
-      yNice
+      yNice={4}
+      yPadding={[16, 16]}
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
@@ -269,7 +270,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yBaseline={0}
-      yNice
+      yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
@@ -297,7 +298,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice
+      yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
@@ -325,7 +326,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice
+      yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
@@ -355,7 +356,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice
+      yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
@@ -381,7 +382,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice
+      yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
@@ -407,7 +408,7 @@
       xScale={scaleBand().padding(0.4)}
       y={(d) => Math.max(d.value, d.baseline)}
       yDomain={[0, null]}
-      yNice
+      yNice={4}
       padding={{ left: 16, bottom: 24 }}
       tooltip
     >
@@ -447,7 +448,7 @@
         xScale={scaleBand().padding(0.4)}
         y="value"
         yDomain={[0, null]}
-        yNice
+        yNice={4}
         padding={{ left: 16, bottom: 24 }}
       >
         <Svg>
@@ -489,7 +490,7 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yNice
+      yNice={4}
       r={(d) => d}
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
@@ -517,7 +518,7 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yNice
+      yNice={4}
       r={(d) => d.keys[1]}
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
@@ -545,7 +546,7 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yNice
+      yNice={4}
       r={(d) => d.keys[1]}
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
@@ -573,7 +574,7 @@
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
 			y="values"
-			yNice
+      yNice={4}
 			r={(d) => d.keys[1]}
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
@@ -602,7 +603,7 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yNice
+      yNice={4}
       r={(d) => d}
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
@@ -641,7 +642,7 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yNice
+      yNice={4}
       r={(d) => {
         // Color by fruit (last key)
         return d.keys.at(-1);

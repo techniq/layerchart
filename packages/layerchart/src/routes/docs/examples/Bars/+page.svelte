@@ -238,6 +238,7 @@
       data={negativeData}
       x="value"
       xNice
+      xPadding={[20, 20]}
       y="date"
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 16, bottom: 24 }}
