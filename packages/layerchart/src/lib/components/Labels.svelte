@@ -5,7 +5,7 @@
    *   - [ ] Support multiple values (threshold, stacks, etc)
    */
   import { getContext, type ComponentProps } from 'svelte';
-  import { format as formatValue, type FormatType } from 'svelte-ux';
+  import { format as formatValue, type FormatType, cls } from 'svelte-ux';
   import { greatestAbs } from 'svelte-ux/utils/array';
 
   import Text from './Text.svelte';
@@ -113,7 +113,12 @@
     <!-- TODO: Add labels for each item when array/stack?  Use `getValue(item)` instead and iterate -->
     <Text
       value={getFormattedValue(item)}
-      class="text-xs stroke-surface-100 [stroke-width:2px]"
+      class={cls(
+        'text-xs',
+        placement === 'inside'
+          ? 'fill-surface-300 stroke-surface-content'
+          : 'fill-surface-content stroke-surface-100'
+      )}
       {...getTextProps(item)}
       {...$$restProps}
     />
