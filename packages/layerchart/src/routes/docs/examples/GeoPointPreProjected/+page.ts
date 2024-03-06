@@ -1,3 +1,4 @@
+import { autoType, csvParse } from 'd3-dsv';
 import pageSource from './+page.svelte?raw';
 
 export async function load({ fetch }) {
@@ -6,6 +7,9 @@ export async function load({ fetch }) {
   return {
     geojson: await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-albers-10m.json').then(
       (r) => r.json()
+    ),
+    stateCaptitals: await fetch('/data/examples/geo/us-state-capitals.csv').then(async (r) =>
+      csvParse(await r.text(), autoType)
     ),
     meta: {
       pageSource,

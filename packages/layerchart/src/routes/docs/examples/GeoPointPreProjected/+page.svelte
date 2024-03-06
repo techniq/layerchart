@@ -11,9 +11,8 @@
   import GeoPoint from '$lib/components/GeoPoint.svelte';
   import Text from '$lib/components/Text.svelte';
 
-  import capitals from '../_data/geo/us-state-capitals.csv';
-
   export let data;
+
   const states = feature(data.geojson, data.geojson.objects.states);
 </script>
 
@@ -60,7 +59,7 @@
           <text y={120}>{projection.translate()}</text>
         </GeoContext>
         <g class="points">
-          {#each capitals as capital}
+          {#each data.stateCaptitals as capital}
             <GeoPoint lat={capital.latitude} long={capital.longitude}>
               <circle r="2" fill="red" />
               <Text y="-6" value={capital.description} textAnchor="middle" class="text-[8px]" />
