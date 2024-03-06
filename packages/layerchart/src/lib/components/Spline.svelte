@@ -14,7 +14,7 @@
   import { motionStore } from '$lib/stores/motionStore';
   import Group from './Group.svelte';
 
-  const { data: contextData, xScale, yScale, xGet, yGet } = getContext('LayerCake');
+  const { data: contextData, xScale, yScale, x: contextX, y: contextY } = getContext('LayerCake');
 
   /** Override data instead of using context */
   export let data: any = undefined;
@@ -47,17 +47,31 @@
   export let curve: CurveFactory | CurveFactoryLineOnly | undefined = undefined;
   export let defined: Parameters<Line<any>['defined']>[0] | undefined = undefined;
 
+  function getScaleValue(
+    data: any,
+    scale: typeof $xScale | typeof $yScale,
+    accessor: typeof x | typeof y
+  ) {
+    if (scale.domain().length) {
+      // If scale is defined with domain, map value
+      return scale(accessor(data));
+    } else {
+      // Use raw value
+      return accessor(data);
+    }
+  }
+
   let d: string | null = '';
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
   $: {
     const path = radial
       ? lineRadial()
-          .angle((d) => (x ? $xScale(x(d)) : $xGet(d)))
-          .radius((d) => (y ? $yScale(y(d)) : $yGet(d)))
+          .angle((d) => getScaleValue(d, $xScale, x ?? $contextX))
+          .radius((d) => getScaleValue(d, $yScale, y ?? $contextY))
       : d3Line()
-          .x((d) => (x ? $xScale(x(d)) : $xGet(d)))
-          .y((d) => (y ? $yScale(y(d)) : $yGet(d)));
+          .x((d) => getScaleValue(d, $xScale, x ?? $contextX))
+          .y((d) => getScaleValue(d, $yScale, y ?? $contextY));
     if (curve) path.curve(curve);
     if (defined) path.defined(defined);
 
