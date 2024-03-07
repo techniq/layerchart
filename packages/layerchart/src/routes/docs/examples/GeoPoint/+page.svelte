@@ -1,17 +1,22 @@
 <script lang="ts">
   import { geoAlbersUsa, geoNaturalEarth1 } from 'd3-geo';
   import { feature } from 'topojson-client';
+  import { Field, Switch } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import GeoPoint from '$lib/components/GeoPoint.svelte';
   import Text from '$lib/components/Text.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
+  import TooltipItem from '$lib/components/TooltipItem.svelte';
 
   export let data;
 
   const states = feature(data.us.geojson, data.us.geojson.objects.states);
   const countries = feature(data.world.geojson, data.world.geojson.objects.countries);
+
+  let debugTooltip = false;
 </script>
 
 <h1>Examples</h1>
@@ -53,15 +58,30 @@
   </div>
 </Preview>
 
-<h2>World Airports</h2>
+<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+  <h2>World Airports</h2>
+  <div class="mb-2">
+    <Field dense let:id>
+      <label class="flex gap-2 items-center text-sm">
+        Show Voronoi
+        <Switch bind:checked={debugTooltip} {id} />
+      </label>
+    </Field>
+  </div>
+</div>
 
 <Preview data={states}>
   <div class="h-[600px]">
     <Chart
+      data={data.world.airports}
+      x="longitude"
+      y="latitude"
       geo={{
         projection: geoNaturalEarth1,
         fitGeojson: countries,
       }}
+      tooltip={{ mode: 'voronoi', debug: debugTooltip }}
+      let:tooltip
     >
       <Svg>
         <g class="states">
@@ -72,11 +92,16 @@
         <g class="points pointer-events-none">
           {#each data.world.airports as airport}
             <GeoPoint lat={airport.latitude} long={airport.longitude}>
-              <circle r="1" class="fill-primary" />
+              <circle r={tooltip.data?.name === airport.name ? 3 : 1} class="fill-primary" />
             </GeoPoint>
           {/each}
         </g>
       </Svg>
+
+      <Tooltip header={(d) => d.name} let:data>
+        <TooltipItem label="Latitude" value={data.latitude} format="decimal" />
+        <TooltipItem label="Longitude" value={data.longitude} format="decimal" />
+      </Tooltip>
     </Chart>
   </div>
 </Preview>

@@ -6,7 +6,7 @@
   const { width, height, padding } = getContext('LayerCake');
 
   export let mode: 'svg' | 'manual' = 'svg';
-  export let translateOnScale: false;
+  export let translateOnScale = false;
   export let spring: boolean | Parameters<typeof motionStore>[1]['spring'] = undefined;
   export let tweened: boolean | Parameters<typeof motionStore>[1]['tweened'] = undefined;
   export let disablePointer = false;
