@@ -11,64 +11,65 @@ import {
 import { format } from 'date-fns';
 
 import { formatDate, PeriodType, getDuration } from 'svelte-ux';
-import type { Duration } from 'svelte-ux/utils/duration';
 import { fail } from 'svelte-ux';
+
+type Duration = ReturnType<typeof getDuration>;
 
 // TODO: Use PeriodType along with Duration to format (and possibly select intervals)
 
 const majorTicks = [
   {
-    predicate: (duration: Duration | null) => duration == null, // Unknown
+    predicate: (duration: Duration) => duration == null, // Unknown
     interval: timeYear.every(1), // Better than rendering a lot of items
     format: (date: Date) => date.toString(),
   },
   {
-    predicate: (duration: Duration | null) => duration!.years > 1,
+    predicate: (duration: Duration) => duration!.years > 1,
     interval: timeYear.every(1),
     format: (date: Date) => formatDate(date, PeriodType.CalendarYear, { variant: 'short' }),
   },
   {
-    predicate: (duration: Duration | null) => duration!.years,
+    predicate: (duration: Duration) => duration!.years,
     interval: timeMonth.every(1),
     format: (date: Date) => formatDate(date, PeriodType.Month, { variant: 'short' }),
   },
   {
-    predicate: (duration: Duration | null) => duration!.days > 30,
+    predicate: (duration: Duration) => duration!.days > 30,
     interval: timeMonth.every(1),
     format: (date: Date) => formatDate(date, PeriodType.Month, { variant: 'short' }),
   },
   {
-    predicate: (duration: Duration | null) => duration!.days,
+    predicate: (duration: Duration) => duration!.days,
     interval: timeDay.every(1),
     format: (date: Date) => formatDate(date, PeriodType.Day, { variant: 'short' }),
   },
   {
-    predicate: (duration: Duration | null) => duration!.hours,
+    predicate: (duration: Duration) => duration!.hours,
     interval: timeHour.every(1),
     format: (date: Date) => format(date, 'h:mm a'),
   },
   {
-    predicate: (duration: Duration | null) => duration!.minutes > 10,
+    predicate: (duration: Duration) => duration!.minutes > 10,
     interval: timeMinute.every(10),
     format: (date: Date) => format(date, 'h:mm a'),
   },
   {
-    predicate: (duration: Duration | null) => duration!.minutes,
+    predicate: (duration: Duration) => duration!.minutes,
     interval: timeMinute.every(1),
     format: (date: Date) => format(date, 'h:mm a'),
   },
   {
-    predicate: (duration: Duration | null) => duration!.seconds > 10,
+    predicate: (duration: Duration) => duration!.seconds > 10,
     interval: timeSecond.every(10),
     format: (date: Date) => format(date, 'h:mm:ss'),
   },
   {
-    predicate: (duration: Duration | null) => duration!.seconds,
+    predicate: (duration: Duration) => duration!.seconds,
     interval: timeSecond.every(1),
     format: (date: Date) => format(date, 'h:mm:ss'),
   },
   {
-    predicate: (duration: Duration | null) => true, // 0 or more milliseconds
+    predicate: (duration: Duration) => true, // 0 or more milliseconds
     interval: timeMillisecond.every(100),
     format: (date: Date) => format(date, 'h:mm:ss.SSS'),
   },
@@ -76,67 +77,67 @@ const majorTicks = [
 
 const minorTicks = [
   {
-    predicate: (duration: Duration | null) => duration == null, // Unknown
+    predicate: (duration: Duration) => duration == null, // Unknown
     interval: timeYear.every(1), // Better than rendering a lot of items
     format: (date: Date) => date.toString(),
   },
   {
-    predicate: (duration: Duration | null) => duration!.years,
+    predicate: (duration: Duration) => duration!.years,
     interval: timeMonth.every(1),
     format: (date: Date) => formatDate(date, PeriodType.Month, { variant: 'short' }),
   },
   {
-    predicate: (duration: Duration | null) => duration!.days > 90,
+    predicate: (duration: Duration) => duration!.days > 90,
     interval: timeMonth.every(1),
     format: (date: Date) => formatDate(date, PeriodType.Month, { variant: 'short' }),
   },
   {
-    predicate: (duration: Duration | null) => duration!.days > 30,
+    predicate: (duration: Duration) => duration!.days > 30,
     interval: timeWeek.every(1),
     format: (date: Date) => formatDate(date, PeriodType.WeekSun, { variant: 'short' }),
   },
   {
-    predicate: (duration: Duration | null) => duration!.days > 7,
+    predicate: (duration: Duration) => duration!.days > 7,
     interval: timeDay.every(1),
     format: (date: Date) => formatDate(date, PeriodType.Day, { variant: 'short' }),
   },
   {
-    predicate: (duration: Duration | null) => duration!.days > 3,
+    predicate: (duration: Duration) => duration!.days > 3,
     interval: timeHour.every(8),
     format: (date: Date) => format(date, 'h:mm a'),
   },
   {
-    predicate: (duration: Duration | null) => duration!.days,
+    predicate: (duration: Duration) => duration!.days,
     interval: timeHour.every(1),
     format: (date: Date) => format(date, 'h:mm a'),
   },
   {
-    predicate: (duration: Duration | null) => duration!.hours,
+    predicate: (duration: Duration) => duration!.hours,
     interval: timeMinute.every(15),
     format: (date: Date) => format(date, 'h:mm a'),
   },
   {
-    predicate: (duration: Duration | null) => duration!.minutes > 10,
+    predicate: (duration: Duration) => duration!.minutes > 10,
     interval: timeMinute.every(10),
     format: (date: Date) => format(date, 'h:mm a'),
   },
   {
-    predicate: (duration: Duration | null) => duration!.minutes > 2,
+    predicate: (duration: Duration) => duration!.minutes > 2,
     interval: timeMinute.every(1),
     format: (date: Date) => format(date, 'h:mm a'),
   },
   {
-    predicate: (duration: Duration | null) => duration!.minutes,
+    predicate: (duration: Duration) => duration!.minutes,
     interval: timeSecond.every(10),
     format: (date: Date) => format(date, 'h:mm:ss'),
   },
   {
-    predicate: (duration: Duration | null) => duration!.seconds,
+    predicate: (duration: Duration) => duration!.seconds,
     interval: timeSecond.every(1),
     format: (date: Date) => format(date, 'h:mm:ss'),
   },
   {
-    predicate: (duration: Duration | null) => true, // 0 or more milliseconds
+    predicate: (duration: Duration) => true, // 0 or more milliseconds
     interval: timeMillisecond.every(10),
     format: (date: Date) => format(date, 'h:mm:ss.SSS'),
   },
