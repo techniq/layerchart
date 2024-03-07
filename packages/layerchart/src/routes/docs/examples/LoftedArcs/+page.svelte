@@ -66,8 +66,8 @@
         {#each singleLinks as link}
           <GeoSpline {link} class="stroke-gray-500/30 stroke-2" />
           <GeoSpline {link} class="stroke-danger stroke-2" loft={1.3} />
-          <GeoPoint lat={link.source[1]} long={link.source[0]} r={2} />
-          <GeoPoint lat={link.target[1]} long={link.target[0]} r={2} />
+          <GeoPoint lat={link.source[1]} long={link.source[0]} r={2} class="fill-black" />
+          <GeoPoint lat={link.target[1]} long={link.target[0]} r={2} class="fill-black" />
         {/each}
       </Svg>
     </Chart>
@@ -132,8 +132,8 @@
           {/each}
           {#each links as link}
             <GeoEdgeFade {link}>
-              <GeoPoint lat={link.source[1]} long={link.source[0]} r={2} />
-              <GeoPoint lat={link.target[1]} long={link.target[0]} r={2} />
+              <GeoPoint lat={link.source[1]} long={link.source[0]} r={2} class="fill-black" />
+              <GeoPoint lat={link.target[1]} long={link.target[0]} r={2} class="fill-black" />
               <GeoSpline {link} class="stroke-gray-500/30 stroke-2" />
               <GeoSpline {link} class="stroke-danger stroke-2" loft={1.3} />
             </GeoEdgeFade>
