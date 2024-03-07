@@ -9,8 +9,8 @@
   import { greatestAbs } from 'svelte-ux/utils/array';
 
   import Text from './Text.svelte';
-  import { isScaleBand } from '$lib/utils/scales';
-  import { createDimensionGetter } from '$lib/utils/rect';
+  import { isScaleBand } from '$lib/utils/scales.js';
+  import { createDimensionGetter } from '$lib/utils/rect.js';
 
   const { flatData, yScale, x, y, custom } = getContext('LayerCake');
 

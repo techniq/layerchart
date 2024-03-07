@@ -11,7 +11,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import { appleTicker } from '../_data/dateSeries';
+  import { appleTicker } from '../_data/dateSeries.js';
   import { PeriodType, formatDate } from 'svelte-ux';
 </script>
 

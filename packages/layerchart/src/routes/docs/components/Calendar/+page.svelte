@@ -14,7 +14,7 @@
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
-  import { createDateSeries } from '$lib/utils/genData';
+  import { createDateSeries } from '$lib/utils/genData.js';
 
   const now = new Date();
   const firstDayOfYear = startOfYear(now);

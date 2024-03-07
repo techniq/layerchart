@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext, type ComponentProps } from 'svelte';
 
-  import { createDimensionGetter } from '$lib/utils/rect';
+  import { createDimensionGetter } from '$lib/utils/rect.js';
   import Rect from './Rect.svelte';
 
   const { x: xContext, y: yContext } = getContext('LayerCake');

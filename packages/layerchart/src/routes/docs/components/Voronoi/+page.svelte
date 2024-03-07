@@ -6,7 +6,7 @@
   import Voronoi from '$lib/components/Voronoi.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { getSpiral } from '$lib/utils/genData';
+  import { getSpiral } from '$lib/utils/genData.js';
 
   const data = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
 

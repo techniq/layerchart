@@ -26,9 +26,9 @@
   import Pack from '$lib/components/Pack.svelte';
   import Zoom from '$lib/components/Zoom.svelte';
 
-  import { findAncestor } from '$lib/utils/hierarchy';
+  import { findAncestor } from '$lib/utils/hierarchy.js';
 
-  import { complexData } from '../_data/hierarchy';
+  import { complexData } from '../_data/hierarchy.js';
 
   const complexHierarchy = hierarchy(complexData)
     .sum((d) => d.value)

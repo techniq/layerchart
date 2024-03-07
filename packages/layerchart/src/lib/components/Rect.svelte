@@ -7,7 +7,7 @@
     resolveOptions,
     type SpringOptions,
     type TweenedOptions,
-  } from '$lib/stores/motionStore';
+  } from '$lib/stores/motionStore.js';
 
   export let x = 0;
   export let initialX = x;

@@ -12,7 +12,7 @@
   import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { getRandomInteger } from '$lib/utils/genData';
+  import { getRandomInteger } from '$lib/utils/genData.js';
 
   const count = 10;
   const now = startOfDay(new Date());

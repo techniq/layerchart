@@ -17,7 +17,7 @@
   import { link as d3Link, curveBumpX, curveBumpY } from 'd3-shape';
   import { interpolatePath } from 'd3-interpolate-path';
 
-  import { motionStore } from '$lib/stores/motionStore';
+  import { motionStore } from '$lib/stores/motionStore.js';
 
   // Override what is used from context
   export let data: any = undefined; // TODO: Update Type

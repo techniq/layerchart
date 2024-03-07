@@ -11,7 +11,7 @@
   import { interpolatePath } from 'd3-interpolate-path';
   import { cls } from 'svelte-ux';
 
-  import { motionStore } from '$lib/stores/motionStore';
+  import { motionStore } from '$lib/stores/motionStore.js';
   import Group from './Group.svelte';
 
   const { data: contextData, xScale, yScale, x: contextX, y: contextY } = getContext('LayerCake');

@@ -14,7 +14,7 @@
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { createDateSeries } from '$lib/utils/genData';
+  import { createDateSeries } from '$lib/utils/genData.js';
   import { flatten } from 'svelte-ux/utils/array';
 
   const keys = ['apples', 'bananas', 'oranges'];

@@ -3,7 +3,7 @@
   import { max, min } from 'd3-array';
   import { cls, notNull } from 'svelte-ux';
 
-  import { isScaleBand } from '$lib/utils/scales';
+  import { isScaleBand } from '$lib/utils/scales.js';
   import Circle from './Circle.svelte';
   import Line from './Line.svelte';
   import Bar from './Bar.svelte';

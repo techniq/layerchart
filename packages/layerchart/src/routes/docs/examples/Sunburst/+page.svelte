@@ -23,11 +23,11 @@
   import Partition from '$lib/components/Partition.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import { findAncestor } from '$lib/utils/hierarchy';
+  import { findAncestor } from '$lib/utils/hierarchy.js';
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import { complexData } from '../_data/hierarchy';
+  import { complexData } from '../_data/hierarchy.js';
 
   const complexHierarchy = hierarchy(complexData)
     .sum((d) => d.value)

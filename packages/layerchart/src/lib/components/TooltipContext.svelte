@@ -41,9 +41,9 @@
   import ChartClipPath from './ChartClipPath.svelte';
   import Voronoi from './Voronoi.svelte';
 
-  import { localPoint } from '$lib/utils/event';
-  import { isScaleBand, scaleInvert } from '$lib/utils/scales';
-  import { quadtreeRects } from '$lib/utils/quadtree';
+  import { localPoint } from '$lib/utils/event.js';
+  import { isScaleBand, scaleInvert } from '$lib/utils/scales.js';
+  import { quadtreeRects } from '$lib/utils/quadtree.js';
 
   const { flatData, x, xScale, xGet, xRange, y, yScale, yGet, yRange, width, height, padding } =
     getContext('LayerCake');

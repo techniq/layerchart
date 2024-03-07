@@ -19,9 +19,9 @@
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
-  import { simpleData, complexData, greenhouse } from '../_data/graph';
-  import { complexData as hierarchyComplexData } from '../_data/hierarchy';
-  import { graphFromHierarchy, graphFromNode } from '$lib/utils/graph';
+  import { simpleData, complexData, greenhouse } from '../_data/graph.js';
+  import { complexData as hierarchyComplexData } from '../_data/hierarchy.js';
+  import { graphFromHierarchy, graphFromNode } from '$lib/utils/graph.js';
   import SankeyControls from './SankeyControls.svelte';
   import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 

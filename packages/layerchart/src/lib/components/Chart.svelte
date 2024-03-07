@@ -22,7 +22,7 @@
   import type { ComponentProps } from 'svelte';
   import { max, min } from 'd3-array';
   import { get } from 'lodash-es';
-  import { isScaleBand } from '$lib/utils/scales';
+  import { isScaleBand } from '$lib/utils/scales.js';
   import TooltipContext from './TooltipContext.svelte';
   import GeoContext from './GeoContext.svelte';
 

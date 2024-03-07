@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext, createEventDispatcher } from 'svelte';
 
-  import { motionStore } from '$lib/stores/motionStore';
+  import { motionStore } from '$lib/stores/motionStore.js';
 
   const { width, height, padding } = getContext('LayerCake');
 
@@ -46,7 +46,7 @@
   export function translateCenter() {
     $translate = {
       x: 0,
-      y: 0
+      y: 0,
     };
   }
 
@@ -58,7 +58,7 @@
 
     $translate = {
       x: $width / 2 - center.x,
-      y: $height / 2 - center.y
+      y: $height / 2 - center.y,
     };
 
     if (rect) {
@@ -89,7 +89,7 @@
     translate.set(
       {
         x: startTranslate.x + deltaX / (mode === 'manual' ? 1 : $scale),
-        y: startTranslate.y + deltaY / (mode === 'manual' ? 1 : $scale)
+        y: startTranslate.y + deltaY / (mode === 'manual' ? 1 : $scale),
       },
       spring ? { hard: true } : tweened ? { duration: 0 } : undefined
     );
@@ -145,7 +145,7 @@
       translate.update(
         (startTranslate) => ({
           x: startTranslate.x + -e.deltaX / (mode === 'manual' ? 1 : $scale),
-          y: startTranslate.y + -e.deltaY / (mode === 'manual' ? 1 : $scale)
+          y: startTranslate.y + -e.deltaY / (mode === 'manual' ? 1 : $scale),
         }),
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
@@ -168,11 +168,11 @@
       // Translate towards point (ex. mouse cursor/center) while zooming in/out
       const invertTransformPoint = {
         x: (point.x - $translate.x) / currentScale,
-        y: (point.y - $translate.y) / currentScale
+        y: (point.y - $translate.y) / currentScale,
       };
       const newTranslate = {
         x: point.x - invertTransformPoint.x * newScale,
-        y: point.y - invertTransformPoint.y * newScale
+        y: point.y - invertTransformPoint.y * newScale,
       };
       translate.set(newTranslate, options);
     }
@@ -189,12 +189,12 @@
 
       return {
         x: point.x,
-        y: point.y
+        y: point.y,
       };
     } else {
       return {
         x: e.clientX,
-        y: e.clientY
+        y: e.clientY,
       };
     }
   }
@@ -203,14 +203,14 @@
 
   $: viewportCenter = {
     x: center.x - $translate.x,
-    y: center.y - $translate.y
+    y: center.y - $translate.y,
   };
 
   let transform = '';
   $: if (mode === 'svg') {
     const newTranslate = {
       x: $translate.x * $scale + center.x - center.x * $scale,
-      y: $translate.y * $scale + center.y - center.y * $scale
+      y: $translate.y * $scale + center.y - center.y * $scale,
     };
     transform = `translate(${newTranslate.x},${newTranslate.y}) scale(${$scale})`;
   }

@@ -6,8 +6,8 @@
 
   import Arc from './Arc.svelte';
   import Group from './Group.svelte';
-  import { degreesToRadians } from '$lib/utils/math';
-  import { motionStore } from '$lib/stores/motionStore';
+  import { degreesToRadians } from '$lib/utils/math.js';
+  import { motionStore } from '$lib/stores/motionStore.js';
   import type { TooltipContextValue } from './TooltipContext.svelte';
 
   /*

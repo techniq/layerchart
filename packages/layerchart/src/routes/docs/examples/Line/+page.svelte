@@ -17,9 +17,9 @@
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { createDateSeries } from '$lib/utils/genData';
-  import { pivotLonger } from '$lib/utils/pivot';
-  import { temperature as temperatureData } from '../_data/dateSeries';
+  import { createDateSeries } from '$lib/utils/genData.js';
+  import { pivotLonger } from '$lib/utils/pivot.js';
+  import { temperature as temperatureData } from '../_data/dateSeries.js';
 
   const data = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
 

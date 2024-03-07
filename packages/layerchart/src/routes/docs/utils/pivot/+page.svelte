@@ -1,7 +1,7 @@
 <script lang="ts">
   import Json from '$lib/docs/Json.svelte';
-  import { pivotLonger, pivotWider } from '$lib/utils/pivot';
-  import { wideData, longData } from '$lib/utils/genData';
+  import { pivotLonger, pivotWider } from '$lib/utils/pivot.js';
+  import { wideData, longData } from '$lib/utils/genData.js';
   import Code from '$lib/docs/Code.svelte';
 </script>
 

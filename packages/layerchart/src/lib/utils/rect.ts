@@ -1,7 +1,7 @@
 import { derived } from 'svelte/store';
 import { max, min } from 'd3-array';
 
-import { groupScaleBand, isScaleBand } from './scales';
+import { groupScaleBand, isScaleBand } from './scales.js';
 
 type DimensionGetterOptions = {
   /** Override `x` accessor from context */

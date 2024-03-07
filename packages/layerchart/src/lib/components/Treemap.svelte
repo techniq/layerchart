@@ -3,7 +3,7 @@
 
   import * as d3 from 'd3-hierarchy';
 
-  import { aspectTile } from '../utils/treemap';
+  import { aspectTile } from '../utils/treemap.js';
 
   const { data, width, height } = getContext('LayerCake');
 
@@ -29,20 +29,23 @@
     tile === 'squarify'
       ? d3.treemapSquarify
       : tile === 'resquarify'
-      ? d3.treemapResquarify
-      : tile === 'binary'
-      ? d3.treemapBinary
-      : tile === 'dice'
-      ? d3.treemapDice
-      : tile === 'slice'
-      ? d3.treemapSlice
-      : tile === 'sliceDice'
-      ? d3.treemapSliceDice
-      : tile;
+        ? d3.treemapResquarify
+        : tile === 'binary'
+          ? d3.treemapBinary
+          : tile === 'dice'
+            ? d3.treemapDice
+            : tile === 'slice'
+              ? d3.treemapSlice
+              : tile === 'sliceDice'
+                ? d3.treemapSliceDice
+                : tile;
 
   let treemap;
   $: {
-    treemap = d3.treemap().size([$width, $height]).tile(aspectTile(tileFunc, $width, $height));
+    treemap = d3
+      .treemap()
+      .size([$width, $height])
+      .tile(aspectTile(tileFunc, $width, $height));
 
     if (padding) {
       treemap.padding(padding);

@@ -28,7 +28,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import { createDateSeries, createTimeSeries, getSpiral } from '$lib/utils/genData';
+  import { createDateSeries, createTimeSeries, getSpiral } from '$lib/utils/genData.js';
   import TooltipControls from './TooltipControls.svelte';
   import type { ComponentProps } from 'svelte';
 

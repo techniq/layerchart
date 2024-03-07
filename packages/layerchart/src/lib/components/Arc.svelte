@@ -23,8 +23,8 @@
   import { arc as d3arc } from 'd3-shape';
   import { scaleLinear } from 'd3-scale';
   import { min, max } from 'd3-array';
-  import { motionStore } from '$lib/stores/motionStore';
-  import { degreesToRadians } from '$lib/utils/math';
+  import { motionStore } from '$lib/stores/motionStore.js';
+  import { degreesToRadians } from '$lib/utils/math.js';
 
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
