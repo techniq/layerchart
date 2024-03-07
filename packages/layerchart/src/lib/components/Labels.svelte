@@ -140,7 +140,8 @@
 
 <g class="Labels">
   <!-- TODO: Determine way to set lookup -->
-  {#each $flatData as d, i (getLabelText(d))}
+  <!-- {#each $flatData as d, i (getLabelText(d))} -->
+  {#each $flatData as d}
     {@const value = getValue(d)}
     {@const position = getPosition(d)}
     {@const textProps = getTextProps(d)}
