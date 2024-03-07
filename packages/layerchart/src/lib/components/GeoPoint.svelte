@@ -35,6 +35,8 @@
 
 {#if renderContext === 'svg'}
   <g transform="translate({x},{y})">
-    <slot />
+    <slot>
+      <circle {...$$restProps} />
+    </slot>
   </g>
 {/if}

@@ -91,9 +91,12 @@
         </g>
         <g class="points pointer-events-none">
           {#each data.world.airports as airport}
-            <GeoPoint lat={airport.latitude} long={airport.longitude}>
-              <circle r={tooltip.data?.name === airport.name ? 3 : 1} class="fill-primary" />
-            </GeoPoint>
+            <GeoPoint
+              lat={airport.latitude}
+              long={airport.longitude}
+              r={tooltip.data?.name === airport.name ? 3 : 1}
+              class="fill-primary"
+            />
           {/each}
         </g>
       </Svg>
