@@ -11,7 +11,7 @@
       'AreaStack',
       { label: 'Bar Chart (Vertical)', value: 'Columns' },
       { label: 'Bar Chart (Horizontal)', value: 'Bars' },
-      // { label: 'Bar Chart Race', value: 'BarChartRace' },
+      { label: 'Bar Chart Race', value: 'BarChartRace' },
       'Candlestick',
       'DotPlot',
       'Histogram',
