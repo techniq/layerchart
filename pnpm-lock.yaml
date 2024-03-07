@@ -87,8 +87,8 @@ importers:
         specifier: ^0.6.6
         version: 0.6.6
       svelte-ux:
-        specifier: '>=0.60.6'
-        version: 0.60.6(postcss@8.4.35)(svelte@4.2.12)
+        specifier: ^0.61.1
+        version: 0.61.1(postcss@8.4.35)(svelte@4.2.12)
       topojson-client:
         specifier: ^3.1.0
         version: 3.1.0
@@ -286,6 +286,14 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.1
+    dev: true
+
+  /@babel/runtime@7.24.0:
+    resolution: {integrity: sha512-Chk32uHMg6TnQdvw2e9IlqPpFX/6NLuK0Ys2PqLb7/gL5uFn9mXvK715FGLlOLQrcO4qIkNHkvPGktzzXexsFw==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.14.1
+    dev: false
 
   /@changesets/apply-release-plan@7.0.0:
     resolution: {integrity: sha512-vfi69JR416qC9hWmFGSxj7N6wA5J222XNBmezSVATPWDVPIF7gkd4d8CpbEbXmRWbVrkoli3oerGS6dcL/BGsQ==}
@@ -1191,8 +1199,8 @@ packages:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
     dev: true
 
-  /@types/node@20.11.20:
-    resolution: {integrity: sha512-7/rR21OS+fq8IyHTgtLkDK949uzsa6n8BkziAKtPVpugIkO6D+/ooXMvzXxDnZrmtXVfjb1bKQafYpb8s89LOg==}
+  /@types/node@20.11.25:
+    resolution: {integrity: sha512-TBHyJxk2b7HceLVGFcpAUjsa5zIdsPWlR6XHfyGzd0SFu+/NFgQgMAl96MSDZgQDvJAvV6BKsFOrt6zIL09JDw==}
     dependencies:
       undici-types: 5.26.5
     dev: false
@@ -1217,7 +1225,7 @@ packages:
   /@types/resolve@1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
     dependencies:
-      '@types/node': 20.11.20
+      '@types/node': 20.11.25
     dev: false
 
   /@types/semver@7.5.8:
@@ -3978,8 +3986,8 @@ packages:
       svelte: 4.2.12
       typescript: 5.3.3
 
-  /svelte-ux@0.60.6(postcss@8.4.35)(svelte@4.2.12):
-    resolution: {integrity: sha512-lkfGW1rGtXqHnHBDxBlHGOgLnKr5INzPCbdc6N4TDS5ZvAz8AAuvbUvDd+kPjwuCyuCNXapXLePiHgGPf2kk4A==}
+  /svelte-ux@0.61.1(postcss@8.4.35)(svelte@4.2.12):
+    resolution: {integrity: sha512-in1TmzkpwC76sG5bFQ5Aw1OsAjv21gPNxVsiDBVqLZa34nKVvAIG1rIj7PhkLo1Brd8P/e3qsZrHEYVD5QJgcw==}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0
     dependencies:
@@ -4046,7 +4054,7 @@ packages:
   /tailwind-merge@2.2.1:
     resolution: {integrity: sha512-o+2GTLkthfa5YUt4JxPfzMIpQzZ3adD1vLVkvKE1Twl9UAhGsEbIZhHHZVRttyW177S8PDJI3bTQNaebyofK3Q==}
     dependencies:
-      '@babel/runtime': 7.23.9
+      '@babel/runtime': 7.24.0
     dev: false
 
   /tailwindcss@3.4.1:

@@ -12,7 +12,7 @@
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { createDateSeries } from '$lib/utils/genData';
+  import { createDateSeries } from '$lib/utils/genData.js';
 
   const data = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
   const data2 = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });

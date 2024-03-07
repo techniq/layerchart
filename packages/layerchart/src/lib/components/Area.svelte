@@ -8,7 +8,7 @@
 
   import { cls } from 'svelte-ux';
 
-  import { motionStore } from '$lib/stores/motionStore';
+  import { motionStore } from '$lib/stores/motionStore.js';
 
   import Spline from './Spline.svelte';
 

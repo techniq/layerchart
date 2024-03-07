@@ -29,8 +29,8 @@
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { createStackData, stackOffsetSeparated } from '$lib/utils/stack';
-  import { createDateSeries, longData } from '$lib/utils/genData';
+  import { createStackData, stackOffsetSeparated } from '$lib/utils/stack.js';
+  import { createDateSeries, longData } from '$lib/utils/genData.js';
 
   const data = createDateSeries({
     count: 30,

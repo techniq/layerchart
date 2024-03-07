@@ -21,7 +21,7 @@
   import TooltipItem from '$lib/components/TooltipItem.svelte';
   import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
-  import { thresholdTime } from '$lib/utils/threshold';
+  import { thresholdTime } from '$lib/utils/threshold.js';
 
   import Preview from '$lib/docs/Preview.svelte';
 

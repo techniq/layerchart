@@ -2,7 +2,7 @@
   import { getContext } from 'svelte';
   import { scaleLinear } from 'd3-scale';
 
-  import { motionScale } from '$lib/utils/scales';
+  import { motionScale } from '$lib/utils/scales.js';
 
   const { width, height } = getContext('LayerCake');
 
@@ -20,7 +20,7 @@
 
     return [
       resolvedExtents?.[axis + '0'] ?? 0, // x0 or y0
-      resolvedExtents?.[axis + '1'] ?? fallback // x1 or y1, fallback as $width or $height
+      resolvedExtents?.[axis + '1'] ?? fallback, // x1 or y1, fallback as $width or $height
     ];
   }
 

@@ -6,7 +6,7 @@
   import Axis from '$lib/components/Axis.svelte';
   import Rule from '$lib/components/Rule.svelte';
 
-  import { createDateSeries } from '$lib/utils/genData';
+  import { createDateSeries } from '$lib/utils/genData.js';
   import Blockquote from '$lib/docs/Blockquote.svelte';
 
   const data = createDateSeries({ min: 50, max: 100, value: 'integer' });

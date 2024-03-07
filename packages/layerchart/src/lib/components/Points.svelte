@@ -5,7 +5,7 @@
 
   import Circle from './Circle.svelte';
   import Link from './Link.svelte';
-  import { isScaleBand } from '../utils/scales';
+  import { isScaleBand } from '../utils/scales.js';
   import { pointRadial } from 'd3-shape';
 
   const context = getContext('LayerCake') as any;

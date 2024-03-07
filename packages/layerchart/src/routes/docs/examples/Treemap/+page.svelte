@@ -32,10 +32,10 @@
   import TooltipItem from '$lib/components/TooltipItem.svelte';
   import Text from '$lib/components/Text.svelte';
   import Treemap from '$lib/components/Treemap.svelte';
-  import { findAncestor } from '$lib/utils/hierarchy';
-  import { isNodeVisible } from '$lib/utils/treemap';
+  import { findAncestor } from '$lib/utils/hierarchy.js';
+  import { isNodeVisible } from '$lib/utils/treemap.js';
 
-  import { complexData } from '../_data/hierarchy';
+  import { complexData } from '../_data/hierarchy.js';
   import flareCsv from '../_data/flare.csv';
   import carsCsv from '../_data/cars.csv';
 

@@ -16,7 +16,7 @@
   import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { createDateSeries } from '$lib/utils/genData';
+  import { createDateSeries } from '$lib/utils/genData.js';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
   let selectedCurve = curveLinear;

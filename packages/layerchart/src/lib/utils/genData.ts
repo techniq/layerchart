@@ -1,5 +1,5 @@
 import { addMinutes, startOfDay, startOfToday, subDays } from 'date-fns';
-import { degreesToRadians, radiansToDegrees } from './math';
+import { degreesToRadians, radiansToDegrees } from './math.js';
 
 /**
  * Get random number between min (inclusive) and max (exclusive)

@@ -3,7 +3,7 @@
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from 'svelte-ux';
 
-  import { motionStore } from '$lib/stores/motionStore';
+  import { motionStore } from '$lib/stores/motionStore.js';
 
   export let cx: number = 0;
   export let initialCx = cx;

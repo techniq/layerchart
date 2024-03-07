@@ -13,7 +13,7 @@
   import Circle from './Circle.svelte';
   import Line from './Line.svelte';
   import Text from './Text.svelte';
-  import { isScaleBand } from '$lib/utils/scales';
+  import { isScaleBand } from '$lib/utils/scales.js';
 
   const { xScale, yScale, xRange, yRange, width } = getContext('LayerCake');
 

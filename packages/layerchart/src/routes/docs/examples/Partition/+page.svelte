@@ -30,9 +30,9 @@
   import RectClipPath from '$lib/components/RectClipPath.svelte';
   import Text from '$lib/components/Text.svelte';
   import Partition from '$lib/components/Partition.svelte';
-  import { findAncestor } from '$lib/utils/hierarchy';
+  import { findAncestor } from '$lib/utils/hierarchy.js';
 
-  import { complexData } from '../_data/hierarchy';
+  import { complexData } from '../_data/hierarchy.js';
   import carsCsv from '../_data/cars.csv';
 
   const complexHierarchy = hierarchy(complexData)

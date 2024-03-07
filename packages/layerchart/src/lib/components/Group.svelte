@@ -2,7 +2,7 @@
   import { getContext, tick } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 
-  import { motionStore } from '$lib/stores/motionStore';
+  import { motionStore } from '$lib/stores/motionStore.js';
 
   const { width, height } = getContext('LayerCake');
 

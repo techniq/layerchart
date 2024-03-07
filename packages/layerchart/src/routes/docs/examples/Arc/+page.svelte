@@ -10,7 +10,7 @@
   import LinearGradient from '$lib/components/LinearGradient.svelte';
   import Text from '$lib/components/Text.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
-  import { radiansToDegrees } from '$lib/utils/math';
+  import { radiansToDegrees } from '$lib/utils/math.js';
 
   let value = 75;
   let segments = 60;

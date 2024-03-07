@@ -3,8 +3,8 @@
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 
   import { cls } from 'svelte-ux';
-  import { getStringWidth } from '$lib/utils/string';
-  import { motionStore } from '$lib/stores/motionStore';
+  import { getStringWidth } from '$lib/utils/string.js';
+  import { motionStore } from '$lib/stores/motionStore.js';
 
   /*
     TODO:

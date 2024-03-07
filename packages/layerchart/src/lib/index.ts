@@ -1,3 +1,3 @@
 export { Svg, Html } from 'layercake';
-export * from './components';
-export * from './utils';
+export * from './components/index.js';
+export * from './utils/index.js';

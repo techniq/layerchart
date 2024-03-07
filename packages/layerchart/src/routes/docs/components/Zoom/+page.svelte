@@ -13,7 +13,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import ZoomControls from '$lib/docs/ZoomControls.svelte';
 
-  import { getSpiral } from '$lib/utils/genData';
+  import { getSpiral } from '$lib/utils/genData.js';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
   let zoom;
