@@ -97,7 +97,7 @@
           rule
         />
         <Points class="fill-primary/10 stroke-primary" />
-        <Labels format="integer" verticalAnchor="bottom" />
+        <Labels format="integer" verticalAnchor="bottom" offset={10} />
       </Svg>
     </Chart>
   </div>
