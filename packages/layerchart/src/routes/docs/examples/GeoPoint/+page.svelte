@@ -91,13 +91,18 @@
         </g>
         <g class="points pointer-events-none">
           {#each data.world.airports as airport}
-            <GeoPoint
-              lat={airport.latitude}
-              long={airport.longitude}
-              r={tooltip.data?.name === airport.name ? 3 : 1}
-              class="fill-primary"
-            />
+            <GeoPoint lat={airport.latitude} long={airport.longitude} r={1} class="fill-primary" />
           {/each}
+
+          {#if tooltip.data}
+            <GeoPoint
+              lat={tooltip.data.latitude}
+              long={tooltip.data.longitude}
+              r={4}
+              class="stroke-primary/50 fill-none"
+              spring
+            />
+          {/if}
         </g>
       </Svg>
 

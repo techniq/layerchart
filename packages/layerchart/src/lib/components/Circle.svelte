@@ -11,7 +11,7 @@
   export let cy: number = 0;
   export let initialCy = cy;
 
-  export let r: number;
+  export let r: number = 1;
   export let initialR = r;
 
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;

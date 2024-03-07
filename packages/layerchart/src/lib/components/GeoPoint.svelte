@@ -3,6 +3,7 @@
   import { scaleCanvas } from 'layercake';
 
   import { geoContext } from './GeoContext.svelte';
+  import Circle from './Circle.svelte';
 
   /** Latitude */
   export let lat: number;
@@ -34,9 +35,11 @@
 </script>
 
 {#if renderContext === 'svg'}
-  <g transform="translate({x},{y})">
-    <slot>
-      <circle {...$$restProps} />
-    </slot>
-  </g>
+  {#if $$slots.default}
+    <g transform="translate({x},{y})">
+      <slot />
+    </g>
+  {:else}
+    <Circle cx={x} cy={y} {...$$restProps} />
+  {/if}
 {/if}
