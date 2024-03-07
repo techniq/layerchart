@@ -1,7 +1,7 @@
 <script lang="ts">
   import { cubicOut } from 'svelte/easing';
-  import { geoOrthographic, geoInterpolate } from 'd3-geo';
-  import { curveNatural } from 'd3-shape';
+  import { geoOrthographic, geoNaturalEarth1 } from 'd3-geo';
+  import { flatRollup } from 'd3-array';
   import { feature } from 'topojson-client';
 
   import { Field, Switch } from 'svelte-ux';
@@ -9,23 +9,21 @@
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import Preview from '$lib/docs/Preview.svelte';
 
-  import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
+  import Chart, { Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
+  import GeoEdgeFade from '$lib/components/GeoEdgeFade.svelte';
   import Graticule from '$lib/components/Graticule.svelte';
-  import Spline from '$lib/components/Spline.svelte';
   import Zoom from '$lib/components/Zoom.svelte';
 
-  import EdgeFade from './EdgeFade.svelte';
   import links from '../_data/geo/world-links.json';
+  import GeoSpline from '$lib/components/GeoSpline.svelte';
+  import GeoPoint from '$lib/components/GeoPoint.svelte';
 
   export let data;
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
   const translate = [480, 350];
-  const loftedProjection = geoOrthographic()
-    .translate(translate)
-    .scale(249.5 * 1.3);
 
   let scale = 0;
   let yaw = 0;
@@ -36,11 +34,47 @@
   let zoom;
   let scrollMode = 'scale';
   let debug = false;
+
+  // Use a single link per source
+  $: singleLinks = flatRollup(
+    links,
+    (values) => {
+      return values[1];
+    },
+    (d) => d.sourceId
+  ).map((d) => d[1]);
 </script>
 
 <h1>Examples</h1>
 
-<h2>SVG</h2>
+<h2>World map</h2>
+
+<Preview data={countries}>
+  <div class="h-[600px] overflow-hidden">
+    <Chart
+      geo={{
+        projection: geoNaturalEarth1,
+        fitGeojson: countries,
+      }}
+    >
+      <Svg>
+        <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
+        <Graticule class="stroke-surface-content/20" />
+        {#each countries.features as country}
+          <GeoPath geojson={country} class="stroke-surface-content/50 fill-white" />
+        {/each}
+        {#each singleLinks as link}
+          <GeoSpline {link} class="stroke-gray-500/30 stroke-2" />
+          <GeoSpline {link} class="stroke-danger stroke-2" loft={1.3} />
+          <GeoPoint lat={link.source[1]} long={link.source[0]} r={2} />
+          <GeoPoint lat={link.target[1]} long={link.target[0]} r={2} />
+        {/each}
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Draggable globe with EdgeFade</h2>
 
 <div class="grid grid-cols-[auto,1fr] gap-2 my-2">
   <Field label="Debug" let:id>
@@ -82,7 +116,6 @@
             const scale = 250;
             yaw = e.detail.translate.x * (sensitivity / scale);
             pitch = -e.detail.translate.y * (sensitivity / scale);
-            loftedProjection.rotate([yaw, pitch]);
           }}
         >
           <GeoPath
@@ -90,7 +123,7 @@
             class="fill-blue-400/50"
             on:click={() => (yaw += 1)}
           />
-          <Graticule class="stroke-surface-content/20 fill-none pointer-events-none" />
+          <Graticule class="stroke-surface-content/20 pointer-events-none" />
           {#each countries.features as country}
             <GeoPath
               geojson={country}
@@ -98,23 +131,12 @@
             />
           {/each}
           {#each links as link}
-            {@const source = projection(link.source)}
-            {@const target = projection(link.target)}
-            {@const middle = loftedProjection(geoInterpolate(link.source, link.target)(0.5))}
-            {@const pathData = [source, middle, target]}
-            <EdgeFade {link}>
-              <circle cx={source[0]} cy={source[1]} r={2} class="fill-black-500" />>
-              <circle cx={target[0]} cy={target[1]} r={2} class="fill-black-500" />>
-              <Spline
-                data={pathData}
-                x={(d) => d[0]}
-                y={(d) => d[1]}
-                defined={(d) => projection.invert(d)}
-                curve={curveNatural}
-                class="fill-none stroke-danger stroke-2"
-              />
-              <GeoPath geojson={link.feature} class="stroke-gray-500/30 stroke-2" />
-            </EdgeFade>
+            <GeoEdgeFade {link}>
+              <GeoPoint lat={link.source[1]} long={link.source[0]} r={2} />
+              <GeoPoint lat={link.target[1]} long={link.target[0]} r={2} />
+              <GeoSpline {link} class="stroke-gray-500/30 stroke-2" />
+              <GeoSpline {link} class="stroke-danger stroke-2" loft={1.3} />
+            </GeoEdgeFade>
           {/each}
         </Zoom>
       </Svg>

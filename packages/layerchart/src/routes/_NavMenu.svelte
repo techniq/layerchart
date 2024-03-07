@@ -38,7 +38,7 @@
       'ZoomableTileMap',
       'Timezones',
       'AnimatedGlobe',
-      'LoftedArcsGlobe',
+      'LoftedArcs',
       'GeojsonPreview',
       'ShapefilePreview',
     ],
