@@ -7,6 +7,9 @@ export async function load() {
       geojson: await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then((r) =>
         r.json()
       ),
+      airports: await fetch('/data/examples/geo/us-airports.csv').then(async (r) =>
+        csvParse(await r.text(), autoType)
+      ),
       stateCaptitals: await fetch('/data/examples/geo/us-state-capitals.csv').then(async (r) =>
         csvParse(await r.text(), autoType)
       ),
