@@ -58,9 +58,19 @@
   </div>
 </Preview>
 
-<h2>US Airports</h2>
+<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+  <h2>US Airports</h2>
+  <div class="mb-2">
+    <Field dense let:id>
+      <label class="flex gap-2 items-center text-sm">
+        Show Voronoi
+        <Switch bind:checked={debugTooltip} {id} />
+      </label>
+    </Field>
+  </div>
+</div>
 
-<Preview data={states}>
+<Preview data={states} class="overflow-hidden">
   <div class="h-[600px]">
     <Chart
       data={data.us.airports}
