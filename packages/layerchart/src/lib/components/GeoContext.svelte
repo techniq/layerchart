@@ -2,7 +2,6 @@
   import { getContext, setContext } from 'svelte';
   import { writable, type Writable } from 'svelte/store';
   import {
-    geoMercator,
     type GeoIdentityTransform,
     type GeoPermissibleObjects,
     type GeoProjection,
@@ -25,7 +24,7 @@
   const { width, height } = getContext('LayerCake');
 
   /** @type {Function} projection - A d3 projection function. Pass this in as an uncalled function, e.g. `projection={geoAlbersUsa}`. */
-  export let projection: () => GeoProjection | GeoIdentityTransform = geoMercator;
+  export let projection: (() => GeoProjection | GeoIdentityTransform) | undefined = undefined;
 
   export let fitGeojson: GeoPermissibleObjects;
 
@@ -48,15 +47,15 @@
   export let translate: [number, number] | undefined = undefined;
   export let center: [number, number] | undefined = undefined;
 
-  const geo = writable(projection());
+  const geo = writable(projection?.());
   setGeoContext(geo);
 
   $: fitSizeRange = (fixedAspectRatio ? [100, 100 / fixedAspectRatio] : [$width, $height]) as [
     number,
-    number
+    number,
   ];
 
-  $: {
+  $: if (projection) {
     const _projection = projection();
 
     if (fitGeojson && 'fitSize' in _projection) {

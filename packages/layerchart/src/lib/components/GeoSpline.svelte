@@ -1,8 +1,7 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
+  import { curveNatural, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoOrthographic, geoInterpolate } from 'd3-geo';
-  import { curveNatural } from 'd3-shape';
 
   import { geoContext } from './GeoContext.svelte';
   import Spline from './Spline.svelte';

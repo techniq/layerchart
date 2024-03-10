@@ -337,10 +337,10 @@
 {:else if mode === 'voronoi'}
   <Svg>
     <Voronoi
-      on:mousemove={(e) => showTooltip(e.detail.event, e.detail.point.data)}
+      on:mousemove={(e) => showTooltip(e.detail.event, e.detail.data)}
       on:mouseleave={hideTooltip}
       on:click={(e) => {
-        onClick({ data: e.detail.point.data });
+        onClick({ data: e.detail.data });
       }}
       classes={{ path: cls(debug && 'fill-danger/10 stroke-danger') }}
     />

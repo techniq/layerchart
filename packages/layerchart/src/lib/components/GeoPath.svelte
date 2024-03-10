@@ -1,15 +1,15 @@
 <script lang="ts">
   import { createEventDispatcher, getContext } from 'svelte';
   import { geoPath as d3geoPath, type GeoPath, type GeoPermissibleObjects } from 'd3-geo';
+  import { scaleCanvas } from 'layercake';
+  import { cls } from 'svelte-ux';
 
   import { geoContext } from './GeoContext.svelte';
   import type { TooltipContextValue } from './TooltipContext.svelte';
-  import { scaleCanvas } from 'layercake';
 
   export let geojson: GeoPermissibleObjects;
 
   export let fill: string | undefined = undefined;
-  export let fillScale: Object | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | string | undefined = undefined;
 
@@ -46,7 +46,7 @@
       geoPath.context($ctx);
       geoPath(geojson);
 
-      $ctx.fillStyle = fill || (fillScale && $rGet(fillScale)) || 'transparent';
+      $ctx.fillStyle = fill || 'transparent';
       $ctx.fill();
 
       $ctx.lineWidth = strokeWidth;
@@ -59,13 +59,17 @@
 {#if renderContext === 'svg'}
   <slot {geoPath}>
     <path
-      d={geoPath(geojson)}
-      fill={fill || (fillScale && $rGet(fillScale)) || 'transparent'}
-      stroke={stroke || 'black'}
-      on:mousemove={(e) => tooltip?.show(e, geojson)}
-      on:mouseleave={(e) => tooltip?.hide()}
-      on:click={(event) => dispatch('click', { geoPath, event })}
       {...$$restProps}
+      d={geoPath(geojson)}
+      {fill}
+      {stroke}
+      on:mousemove={(e) => tooltip?.show(e, geojson)}
+      on:mousemove
+      on:mouseleave={(e) => tooltip?.hide()}
+      on:mouseleave
+      on:click={(event) => dispatch('click', { geoPath, event })}
+      on:click
+      class={cls($$props.fill == null && 'fill-transparent', $$props.class)}
     />
   </slot>
 {/if}
