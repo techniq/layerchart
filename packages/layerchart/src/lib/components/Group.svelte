@@ -21,7 +21,7 @@
   /**
    * Center within chart
    */
-  export let center: boolean = false;
+  export let center: boolean | 'x' | 'y' = false;
 
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -30,16 +30,13 @@
   let tweened_y = motionStore(initialY, { spring, tweened });
 
   $: tick().then(() => {
-    tweened_x.set(x);
-    tweened_y.set(y);
+    tweened_x.set(x ?? (center === 'x' || center === true ? $width / 2 : 0));
+    tweened_y.set(y ?? (center === 'y' || center === true ? $height / 2 : 0));
   });
 
   let transform: string | undefined = undefined;
-  $: if (x != null || y != null) {
+  $: if (center || x != null || y != null) {
     transform = `translate(${$tweened_x ?? 0}, ${$tweened_y ?? 0})`;
-  }
-  $: if (center) {
-    transform = `translate(${$width / 2}, ${$height / 2})`;
   }
 </script>
 
