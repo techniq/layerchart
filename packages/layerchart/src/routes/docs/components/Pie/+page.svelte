@@ -277,3 +277,41 @@
     </Chart>
   </div>
 </Preview>
+
+<h2>Placement</h2>
+
+<h3>left</h3>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+      <Svg>
+        <Pie placement="left" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h3>center (default)</h3>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+      <Svg>
+        <Pie />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h3>right</h3>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+      <Svg>
+        <Pie placement="right" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>

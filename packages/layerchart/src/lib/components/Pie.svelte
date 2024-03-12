@@ -53,6 +53,8 @@
   export let padAngle = 0;
   // export let padRadius = 0;
 
+  export let placement: 'left' | 'center' | 'right' | 'none' = 'center';
+
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
@@ -66,7 +68,7 @@
    */
   export let tooltip: TooltipContextValue | undefined = undefined;
 
-  const { data: contextData, x, y, xRange, rGet, config } = getContext('LayerCake');
+  const { data: contextData, x, y, xRange, rGet, config, width, height } = getContext('LayerCake');
 
   $: resolved_endAngle = endAngle ?? degreesToRadians($config.xRange ? max($xRange) : max(range));
   let tweened_endAngle = motionStore(0, { spring, tweened });
@@ -80,9 +82,22 @@
 
   $: arcs = pie(data ?? $contextData);
   // $: console.log({ arcs, $yRange });
+
+  $: radius = Math.min($width / 2, $height / 2);
+  $: coords = {
+    x:
+      placement === 'left'
+        ? radius
+        : placement === 'center'
+          ? $width / 2
+          : placement === 'right'
+            ? $width - radius
+            : 0,
+    y: placement === 'none' ? 0 : $height / 2,
+  };
 </script>
 
-<Group center>
+<Group x={coords.x} y={coords.y}>
   <slot {arcs}>
     {#each arcs as arc, index}
       <Arc
