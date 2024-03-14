@@ -481,10 +481,8 @@
     <Chart
       data={groupedData}
       flatData={longData}
-      extents={{
-        x: extent(groupedData.flatMap((d) => d.values)),
-      }}
       x="values"
+      xDomain={extent(groupedData.flatMap((d) => d.values))}
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.3).paddingOuter(0.1)}
@@ -509,13 +507,11 @@
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={stackedData}
-      extents={{
-        x: extent(stackedData.flatMap((d) => d.values)),
-      }}
+      x="values"
+      xDomain={extent(stackedData.flatMap((d) => d.values))}
+      xNice
       y="year"
       yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-      x="values"
-      xNice
       r={(d) => d.keys[1]}
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
@@ -537,10 +533,8 @@
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={stackedPercentData}
-      extents={{
-        x: extent(stackedPercentData.flatMap((d) => d.values)),
-      }}
       x="values"
+      xDomain={extent(stackedPercentData.flatMap((d) => d.values))}
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
@@ -565,10 +559,8 @@
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			data={stackedSeperatedData}
-			extents={{
-				x: extent(stackedSeperatedData.flatMap((d) => d.values))
-			}}
 			x="values"
+      xDomain={extent(stackedSeperatedData.flatMap((d) => d.values))}
 			xNice
 			y="year"
 			yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
@@ -594,10 +586,8 @@
     <Chart
       data={groupedStackedData}
       flatData={longData}
-      extents={{
-        x: extent(groupedStackedData.flatMap((d) => d.values)),
-      }}
       x="values"
+      xDomain={extent(groupedStackedData.flatMap((d) => d.values))}
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
@@ -633,10 +623,9 @@
     <!-- Always use stackedData for extents for consistent scale -->
     <Chart
       data={transitionData}
-      extents={{
-        x: extent(stackedData.flatMap((d) => d.values)),
-      }}
       x="values"
+      xDomain={extent(stackedData.flatMap((d) => d.values))}
+      groupedStackedData
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}

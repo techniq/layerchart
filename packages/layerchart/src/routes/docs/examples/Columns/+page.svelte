@@ -484,12 +484,10 @@
     <Chart
       data={groupedData}
       flatData={longData}
-      extents={{
-        y: extent(groupedData.flatMap((d) => d.values)),
-      }}
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
+      yDomain={extent(groupedData.flatMap((d) => d.values))}
       yNice={4}
       r={(d) => d}
       rScale={scaleOrdinal()}
@@ -512,12 +510,10 @@
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={stackedData}
-      extents={{
-        y: extent(stackedData.flatMap((d) => d.values)),
-      }}
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
+      yDomain={extent(stackedData.flatMap((d) => d.values))}
       yNice={4}
       r={(d) => d.keys[1]}
       rScale={scaleOrdinal()}
@@ -540,12 +536,10 @@
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={stackedPercentData}
-      extents={{
-        y: extent(stackedPercentData.flatMap((d) => d.values)),
-      }}
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
+      yDomain={extent(stackedPercentData.flatMap((d) => d.values))}
       yNice={4}
       r={(d) => d.keys[1]}
       rScale={scaleOrdinal()}
@@ -568,12 +562,10 @@
 	<div class="h-[300px] p-4 border rounded">
 		<Chart
 			data={stackedSeperatedData}
-			extents={{
-				y: extent(stackedSeperatedData.flatMap((d) => d.values))
-			}}
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
 			y="values"
+      yDomain={extent(stackedSeperatedData.flatMap((d) => d.values))}
       yNice={4}
 			r={(d) => d.keys[1]}
 			rScale={scaleOrdinal()}
@@ -597,12 +589,10 @@
     <Chart
       data={groupedStackedData}
       flatData={longData}
-      extents={{
-        y: extent(groupedStackedData.flatMap((d) => d.values)),
-      }}
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
+      yDomain={extent(groupedStackedData.flatMap((d) => d.values))}
       yNice={4}
       r={(d) => d}
       rScale={scaleOrdinal()}
@@ -636,12 +626,10 @@
     <!-- Always use stackedData for extents for consistent scale -->
     <Chart
       data={transitionData}
-      extents={{
-        y: extent(stackedData.flatMap((d) => d.values)),
-      }}
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
+      yDomain={extent(stackedData.flatMap((d) => d.values))}
       yNice={4}
       r={(d) => {
         // Color by fruit (last key)
