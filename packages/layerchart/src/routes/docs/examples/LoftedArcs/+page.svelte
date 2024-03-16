@@ -23,16 +23,12 @@
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  const translate = [480, 350];
-
-  let scale = 0;
   let yaw = 0;
   let pitch = 0;
   let roll = 0;
   let sensitivity = 75;
 
   let zoom;
-  let scrollMode = 'scale';
   let debug = false;
 
   // Use a single link per source
@@ -56,6 +52,7 @@
         projection: geoNaturalEarth1,
         fitGeojson: countries,
       }}
+      padding={{ top: 16, bottom: 16, left: 16, right: 16 }}
     >
       <Svg>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
@@ -74,12 +71,17 @@
   </div>
 </Preview>
 
-<h2>Draggable globe with EdgeFade</h2>
+<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+  <h2>Draggable globe with EdgeFade</h2>
 
-<div class="grid grid-cols-[auto,1fr] gap-2 my-2">
-  <Field label="Debug" let:id>
-    <Switch bind:checked={debug} {id} />
-  </Field>
+  <div class="mb-2">
+    <Field dense let:id>
+      <label class="flex gap-2 items-center text-sm">
+        Debug
+        <Switch bind:checked={debug} {id} />
+      </label>
+    </Field>
+  </div>
 </div>
 
 <Preview data={countries}>
@@ -87,35 +89,28 @@
     <Chart
       geo={{
         projection: geoOrthographic,
-        _fitGeojson: countries,
+        fitGeojson: countries,
         rotate: {
           yaw,
           pitch,
           roll,
         },
-        _scale: scale,
-        translate: translate,
       }}
+      padding={{ top: 80, bottom: 80 }}
       let:projection
     >
       {#if debug}
-        <GeoDebug class="absolute top-0 left-0 z-10" />
+        <GeoDebug class="absolute top-0 right-0 z-10" />
       {/if}
       <Svg>
         <Zoom
           mode="manual"
-          _initialScale={projection.scale()}
-          _initialTranslate={{ x: projection.translate()[0], y: projection.translate()[1] }}
           bind:this={zoom}
           scroll="none"
           tweened={{ duration: 800, easing: cubicOut }}
-          let:zoomTo
-          let:reset={resetZoom}
           on:zoom={(e) => {
-            //scale = e.detail.scale;
-            const scale = 250;
-            yaw = e.detail.translate.x * (sensitivity / scale);
-            pitch = -e.detail.translate.y * (sensitivity / scale);
+            yaw = e.detail.translate.x * (sensitivity / projection.scale());
+            pitch = -e.detail.translate.y * (sensitivity / projection.scale());
           }}
         >
           <GeoPath
