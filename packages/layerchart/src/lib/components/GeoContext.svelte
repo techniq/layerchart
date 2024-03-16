@@ -26,7 +26,7 @@
   /** @type {Function} projection - A d3 projection function. Pass this in as an uncalled function, e.g. `projection={geoAlbersUsa}`. */
   export let projection: (() => GeoProjection | GeoIdentityTransform) | undefined = undefined;
 
-  export let fitGeojson: GeoPermissibleObjects;
+  export let fitGeojson: GeoPermissibleObjects | undefined = undefined;
 
   /** By default, the map fills to fit the $width and $height. If instead you want a fixed-aspect ratio, like for a server-side rendered map, set that here. */
   export let fixedAspectRatio: number | undefined = undefined;
@@ -46,6 +46,9 @@
   export let scale: number | undefined = undefined;
   export let translate: [number, number] | undefined = undefined;
   export let center: [number, number] | undefined = undefined;
+
+  export let reflectX: boolean | undefined = undefined;
+  export let reflectY: boolean | undefined = undefined;
 
   const geo = writable(projection?.());
   setGeoContext(geo);
@@ -76,6 +79,14 @@
 
     if (center && 'center' in _projection) {
       _projection.center(center);
+    }
+
+    if (reflectX) {
+      _projection.reflectX(reflectX);
+    }
+
+    if (reflectY) {
+      _projection.reflectY(reflectY);
     }
 
     if (clipAngle && 'clipAngle' in _projection) {
