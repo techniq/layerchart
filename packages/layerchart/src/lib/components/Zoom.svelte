@@ -69,18 +69,23 @@
   function onMouseDown(e: MouseEvent & { currentTarget: SVGElement }) {
     if (disablePointer) return;
 
+    e.preventDefault();
+
     dragging = true;
     moved = false;
     svgEl = e.currentTarget.ownerSVGElement; // capture for reference in mousemove event
     startPoint = localPoint(svgEl, e);
     startTranslate = $translate;
 
-    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mousemove', onMouseMove, { capture: true });
     window.addEventListener('mouseup', onMouseUp);
   }
 
   function onMouseMove(e: MouseEvent) {
     if (!dragging) return;
+
+    e.preventDefault(); // Stop text selection
+    e.stopPropagation(); // Stop tooltip from trigging (along with `capture: true`)
 
     const endPoint = localPoint(svgEl, e);
     const deltaX = endPoint.x - startPoint.x;
