@@ -11,10 +11,10 @@
   import Rect from '$lib/components/Rect.svelte';
   import Text from '$lib/components/Text.svelte';
   import Tree from '$lib/components/Tree.svelte';
-  import Zoom from '$lib/components/Zoom.svelte';
+  import Transform from '$lib/components/Transform.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import ZoomControls from '$lib/docs/ZoomControls.svelte';
+  import TransformControls from '$lib/docs/TransformControls.svelte';
 
   import { complexData } from '../_data/hierarchy.js';
 
@@ -30,11 +30,11 @@
   let curve = curveBumpX;
   let layout = 'chart';
   let selected;
-  let zoom;
+  let transform: Transform;
 
   /*
-	$: if (zoom && selected) {
-		zoom.zoomTo({
+	$: if (transform && selected) {
+		transform.zoomTo({
 			x: (orientation === 'horizontal' ? selected.y : selected.x),
 			y: (orientation === 'horizontal' ? selected.x : selected.y)
 		})
@@ -87,13 +87,13 @@
 
 <Preview data={complexDataHierarchy}>
   <div class="h-[800px] p-4 border rounded overflow-hidden relative">
-    <ZoomControls {zoom} orientation="horizontal" />
+    <TransformControls {transform} orientation="horizontal" />
     <Chart
       data={complexDataHierarchy}
       padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}
     >
       <Svg>
-        <Zoom bind:this={zoom} tweened={{ duration: 800, easing: cubicOut }}>
+        <Transform bind:this={transform} tweened={{ duration: 800, easing: cubicOut }}>
           <Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : null}>
             {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
               <Link data={link} {orientation} {curve} tweened class="stroke-surface-content/20" />
@@ -134,7 +134,7 @@
               </Group>
             {/each}
           </Tree>
-        </Zoom>
+        </Transform>
       </Svg>
     </Chart>
   </div>

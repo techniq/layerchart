@@ -7,7 +7,7 @@
     mdiMagnifyMinusOutline,
     mdiImageFilterCenterFocus,
   } from '@mdi/js';
-  import type Zoom from '$lib/components/Zoom.svelte';
+  import type Transform from '$lib/components/Transform.svelte';
 
   type Placement =
     | 'top-left'
@@ -20,7 +20,7 @@
     | 'bottom'
     | 'bottom-right';
 
-  export let zoom: Zoom;
+  export let transform: Transform;
   export let placement: Placement | undefined = 'top-right';
   export let orientation: 'horizontal' | 'vertical' = 'vertical';
 </script>
@@ -45,28 +45,28 @@
   <Tooltip title="Zoom in">
     <Button
       icon={mdiMagnifyPlusOutline}
-      on:click={() => zoom.increase()}
+      on:click={() => transform.zoomIn()}
       class="text-surface-content/50 p-2"
     />
   </Tooltip>
   <Tooltip title="Zoom out">
     <Button
       icon={mdiMagnifyMinusOutline}
-      on:click={() => zoom.decrease()}
+      on:click={() => transform.zoomOut()}
       class="text-surface-content/50 p-2"
     />
   </Tooltip>
   <Tooltip title="Center">
     <Button
       icon={mdiImageFilterCenterFocus}
-      on:click={() => zoom.translateCenter()}
+      on:click={() => transform.translateCenter()}
       class="text-surface-content/50 p-2"
     />
   </Tooltip>
   <Tooltip title="Reset">
     <Button
       icon={mdiArrowULeftTop}
-      on:click={() => zoom.reset()}
+      on:click={() => transform.reset()}
       class="text-surface-content/50 p-2"
     />
   </Tooltip>

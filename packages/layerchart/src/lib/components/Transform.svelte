@@ -14,7 +14,7 @@
   export let clickDistance = 10;
 
   const dispatch = createEventDispatcher<{
-    zoom: { scale: number; translate: { x: number; y: number } };
+    transform: { scale: number; translate: { x: number; y: number } };
   }>();
 
   let dragging = false;
@@ -35,11 +35,11 @@
     $scale = initialScale;
   }
 
-  export function increase() {
+  export function zoomIn() {
     scaleTo(1.25, { x: $width / 2, y: $height / 2 });
   }
 
-  export function decrease() {
+  export function zoomOut() {
     scaleTo(0.8, { x: $width / 2, y: $height / 2 });
   }
 
@@ -220,7 +220,7 @@
     transform = `translate(${newTranslate.x},${newTranslate.y}) scale(${$scale})`;
   }
 
-  $: dispatch('zoom', { scale: $scale, translate: $translate });
+  $: dispatch('transform', { scale: $scale, translate: $translate });
 </script>
 
 <g

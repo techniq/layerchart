@@ -8,14 +8,14 @@
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import Preview from '$lib/docs/Preview.svelte';
   import TilesetField from '$lib/docs/TilesetField.svelte';
-  import ZoomControls from '$lib/docs/ZoomControls.svelte';
+  import TransformControls from '$lib/docs/TransformControls.svelte';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import GeoTile from '$lib/components/GeoTile.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import Zoom from '$lib/components/Zoom.svelte';
+  import Transform from '$lib/components/Transform.svelte';
 
   export let data;
   const states = feature(data.geojson, data.geojson.objects.states);
@@ -32,7 +32,7 @@
   let selectedStateName = null;
   let serviceUrl;
   let zoomDelta = 0;
-  let zoom;
+  let transform: Transform;
   let scrollMode = 'scale';
   let debug = false;
 
@@ -61,7 +61,7 @@
 
 <Preview data={filteredStates}>
   <div class="h-[600px] relative overflow-hidden">
-    <ZoomControls {zoom} />
+    <TransformControls {transform} />
     <Chart
       geo={{
         projection: geoMercator,
@@ -77,7 +77,7 @@
         <GeoDebug class="absolute top-0 left-0 z-10" />
       {/if}
       <Svg>
-        <Zoom
+        <Transform
           mode="manual"
           translateOnScale
           initialScale={projection.scale()}
@@ -86,10 +86,10 @@
           tweened={{ duration: 800, easing: cubicOut }}
           let:zoomTo
           let:reset={resetZoom}
-          on:zoom={(e) => {
+          on:transform={(e) => {
             (scale = e.detail.scale), (translate = e.detail.translate);
           }}
-          bind:this={zoom}
+          bind:this={transform}
         >
           <GeoTile url={serviceUrl} {zoomDelta} {debug} />
           {#each filteredStates.features as feature}
@@ -125,7 +125,7 @@
               }}
             />
           {/each}
-        </Zoom>
+        </Transform>
       </Svg>
       <Tooltip header={(data) => data.properties.name} let:data>
         {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}

@@ -24,7 +24,7 @@
   import Group from '$lib/components/Group.svelte';
   import Circle from '$lib/components/Circle.svelte';
   import Pack from '$lib/components/Pack.svelte';
-  import Zoom from '$lib/components/Zoom.svelte';
+  import Transform from '$lib/components/Transform.svelte';
 
   import { findAncestor } from '$lib/utils/hierarchy.js';
 
@@ -37,12 +37,12 @@
   let colorBy = 'parent';
 
   let padding = 3;
-  let selected;
-  let zoom;
+  let selected: any;
+  let transform: Transform;
 
-  $: if (zoom && selected) {
+  $: if (transform && selected) {
     const diameter = selected.r * 2;
-    zoom.zoomTo({ x: selected.x, y: selected.y }, { width: diameter, height: diameter });
+    transform.zoomTo({ x: selected.x, y: selected.y }, { width: diameter, height: diameter });
   }
 
   const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
@@ -100,8 +100,8 @@
   <div class="h-[600px] p-4 border rounded overflow-hidden">
     <Chart data={complexHierarchy}>
       <Svg>
-        <Zoom
-          bind:this={zoom}
+        <Transform
+          bind:this={transform}
           let:scale
           tweened={{ duration: 800, easing: cubicOut }}
           disablePointer
@@ -145,7 +145,7 @@
               </g>
             {/each}
           </Pack>
-        </Zoom>
+        </Transform>
       </Svg>
     </Chart>
   </div>

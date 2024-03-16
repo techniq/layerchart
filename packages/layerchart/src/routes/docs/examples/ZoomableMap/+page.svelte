@@ -7,12 +7,12 @@
   import { Field, SelectField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import ZoomControls from '$lib/docs/ZoomControls.svelte';
+  import TransformControls from '$lib/docs/TransformControls.svelte';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
-  import Zoom from '$lib/components/Zoom.svelte';
+  import Transform from '$lib/components/Transform.svelte';
 
   export let data;
 
@@ -35,7 +35,7 @@
     ? counties.features.filter((f) => f.id.slice(0, 2) === selectedStateId)
     : [];
 
-  let zoom;
+  let transform: Transform;
   let scrollMode = 'scale';
 </script>
 
@@ -63,7 +63,7 @@
 
 <Preview data={states}>
   <div class="h-[600px] relative overflow-hidden">
-    <ZoomControls {zoom} />
+    <TransformControls {transform} />
     <Chart
       geo={{
         projection,
@@ -73,8 +73,8 @@
       let:tooltip
     >
       <Svg>
-        <Zoom
-          bind:this={zoom}
+        <Transform
+          bind:this={transform}
           scroll={scrollMode}
           tweened={{ duration: 800, easing: cubicOut }}
           let:zoomTo
@@ -120,7 +120,7 @@
               />
             </g>
           {/each}
-        </Zoom>
+        </Transform>
       </Svg>
       <Tooltip header={(data) => data.properties.name} />
     </Chart>

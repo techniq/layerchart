@@ -13,7 +13,7 @@
   import GeoPath from '$lib/components/GeoPath.svelte';
   import GeoEdgeFade from '$lib/components/GeoEdgeFade.svelte';
   import Graticule from '$lib/components/Graticule.svelte';
-  import Zoom from '$lib/components/Zoom.svelte';
+  import Transform from '$lib/components/Transform.svelte';
 
   import links from '../_data/geo/world-links.json';
   import GeoSpline from '$lib/components/GeoSpline.svelte';
@@ -28,7 +28,6 @@
   let roll = 0;
   let sensitivity = 75;
 
-  let zoom;
   let debug = false;
 
   // Use a single link per source
@@ -103,12 +102,11 @@
         <GeoDebug class="absolute top-0 right-0 z-10" />
       {/if}
       <Svg>
-        <Zoom
+        <Transform
           mode="manual"
-          bind:this={zoom}
           scroll="none"
           tweened={{ duration: 800, easing: cubicOut }}
-          on:zoom={(e) => {
+          on:transform={(e) => {
             yaw = e.detail.translate.x * (sensitivity / projection.scale());
             pitch = -e.detail.translate.y * (sensitivity / projection.scale());
           }}
@@ -133,7 +131,7 @@
               <GeoSpline {link} class="stroke-danger stroke-2" loft={1.3} />
             </GeoEdgeFade>
           {/each}
-        </Zoom>
+        </Transform>
       </Svg>
     </Chart>
   </div>

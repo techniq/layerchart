@@ -9,7 +9,7 @@
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Graticule from '$lib/components/Graticule.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
-  import Zoom from '$lib/components/Zoom.svelte';
+  import Transform from '$lib/components/Transform.svelte';
 
   export let data;
 
@@ -42,11 +42,11 @@
       let:projection
     >
       <Svg>
-        <Zoom
+        <Transform
           mode="manual"
           scroll="none"
           tweened={{ duration: 800, easing: cubicOut }}
-          on:zoom={(e) => {
+          on:transform={(e) => {
             yaw = e.detail.translate.x * (sensitivity / projection.scale());
             pitch = -e.detail.translate.y * (sensitivity / projection.scale());
           }}
@@ -79,7 +79,7 @@
               {tooltip}
             />
           {/each}
-        </Zoom>
+        </Transform>
       </Svg>
 
       <Tooltip>

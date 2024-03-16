@@ -1,5 +1,5 @@
-import api from '$lib/components/Zoom.svelte?raw&sveld';
-import source from '$lib/components/Zoom.svelte?raw';
+import api from '$lib/components/Transform.svelte?raw&sveld';
+import source from '$lib/components/Transform.svelte?raw';
 import pageSource from './+page.svelte?raw';
 
 export async function load() {
