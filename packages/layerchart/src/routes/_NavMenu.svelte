@@ -38,6 +38,7 @@
       'ZoomableTileMap',
       'Timezones',
       'AnimatedGlobe',
+      'TranslucentGlobe',
       'LoftedArcs',
       'GeojsonPreview',
       'ShapefilePreview',
