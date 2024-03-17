@@ -97,7 +97,7 @@
       xScale={scaleBand()}
       y="value"
       yDomain={[0, null]}
-      tooltip
+      tooltip={{ mode: 'bisect-x' }}
       let:containerWidth
     >
       <Svg>
@@ -137,7 +137,7 @@
           xScale={scaleBand()}
           y="value"
           yDomain={[0, null]}
-          tooltip
+          tooltip={{ mode: 'bisect-x' }}
           let:containerHeight
         >
           <Svg>

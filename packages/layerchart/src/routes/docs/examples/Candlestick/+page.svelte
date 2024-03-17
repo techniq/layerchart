@@ -33,7 +33,7 @@
       rDomain={['desc', 'asc']}
       rRange={['#e41a1c', '#4daf4a']}
       padding={{ left: 16, bottom: 24 }}
-      tooltip
+      tooltip={{ mode: 'bisect-x' }}
     >
       <Svg>
         <Axis placement="left" grid rule ticks={10} />

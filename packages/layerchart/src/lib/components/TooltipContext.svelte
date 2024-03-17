@@ -70,7 +70,7 @@
     | 'bounds'
     | 'voronoi'
     | 'quadtree'
-    | 'manual' = 'bisect-x';
+    | 'manual' = 'manual';
   /**
    * @type {'closest' | 'left' | 'right'}
    */

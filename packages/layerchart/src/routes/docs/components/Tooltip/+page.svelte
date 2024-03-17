@@ -159,7 +159,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip
+      tooltip={{ mode: 'bisect-x' }}
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -190,7 +190,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip
+      tooltip={{ mode: 'bisect-x' }}
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -225,7 +225,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip
+      tooltip={{ mode: 'bisect-x' }}
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -256,7 +256,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip
+      tooltip={{ mode: 'bisect-x' }}
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -287,7 +287,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip
+      tooltip={{ mode: 'bisect-x' }}
       let:height
       let:padding
     >
@@ -373,7 +373,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip
+      tooltip={{ mode: 'bisect-x' }}
     >
       <Svg>
         <Axis placement="left" grid rule />

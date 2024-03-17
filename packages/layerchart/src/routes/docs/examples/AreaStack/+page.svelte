@@ -70,7 +70,7 @@
       rDomain={keys}
       rRange={['hsl(var(--color-danger))', 'hsl(var(--color-success))', 'hsl(var(--color-info))']}
       padding={{ left: 16, bottom: 24 }}
-      tooltip
+      tooltip={{ mode: 'bisect-x' }}
     >
       <Svg>
         <Axis placement="left" grid rule />
