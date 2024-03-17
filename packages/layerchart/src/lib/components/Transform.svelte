@@ -14,6 +14,8 @@
   export let clickDistance = 10;
 
   const dispatch = createEventDispatcher<{
+    dragstart: null;
+    dragend: null;
     transform: { scale: number; translate: { x: number; y: number } };
   }>();
 
@@ -79,6 +81,8 @@
 
     window.addEventListener('mousemove', onMouseMove, { capture: true });
     window.addEventListener('mouseup', onMouseUp);
+
+    dispatch('dragstart');
   }
 
   function onMouseMove(e: MouseEvent) {
@@ -110,6 +114,7 @@
 
     window.removeEventListener('mousemove', onMouseMove);
     window.removeEventListener('mouseup', onMouseUp);
+    dispatch('dragend');
   }
 
   function onClick(e: MouseEvent) {
