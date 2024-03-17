@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { cubicOut } from 'svelte/easing';
   import { geoOrthographic } from 'd3-geo';
   import { feature } from 'topojson-client';
-  import { cubicOut } from 'svelte/easing';
+
+  import { Button, ButtonGroup, Field, RangeField, timerStore } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -19,11 +21,53 @@
   let pitch = 0;
   let roll = 0;
   let sensitivity = 75;
+
+  let velocity = 3;
+  let isSpinning = false;
+  const timer = timerStore({
+    delay: 1,
+    onTick() {
+      yaw += velocity * 0.1;
+    },
+    disabled: !isSpinning,
+  });
+  $: isSpinning ? timer.start() : timer.stop();
+  $timer;
 </script>
 
 <h1>Examples</h1>
 
-<h2>SVG</h2>
+<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+  <h2>SVG</h2>
+
+  <div class="mb-2 flex gap-6">
+    <Field label="Spin:" dense labelPlacement="left" let:id>
+      <ButtonGroup size="sm" variant="fill-light">
+        <Button
+          on:click={() => {
+            isSpinning = true;
+          }}
+          disabled={isSpinning}>Start</Button
+        >
+        <Button
+          on:click={() => {
+            isSpinning = false;
+          }}
+          disabled={!isSpinning}>Stop</Button
+        >
+      </ButtonGroup>
+    </Field>
+
+    <RangeField
+      label="Velocity:"
+      bind:value={velocity}
+      min={-10}
+      max={10}
+      disabled={!isSpinning}
+      labelPlacement="left"
+    />
+  </div>
+</div>
 
 <Preview data={countries}>
   <div class="h-[600px]">
@@ -46,6 +90,13 @@
           mode="manual"
           scroll="none"
           tweened={{ duration: 800, easing: cubicOut }}
+          on:dragstart={() => timer.stop()}
+          on:dragend={() => {
+            if (isSpinning) {
+              // Restart
+              timer.start();
+            }
+          }}
           on:transform={(e) => {
             yaw = e.detail.translate.x * (sensitivity / projection.scale());
             pitch = -e.detail.translate.y * (sensitivity / projection.scale());
