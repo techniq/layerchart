@@ -111,32 +111,8 @@
   let:flatData
 >
   <GeoContext {...geo} let:projection>
-    {#if tooltip}
-      {@const tooltipProps = typeof tooltip === 'object' ? tooltip : {}}
-      <TooltipContext {...tooltipProps} let:tooltip>
-        <slot
-          {aspectRatio}
-          {containerHeight}
-          {containerWidth}
-          {height}
-          {width}
-          {element}
-          {projection}
-          {tooltip}
-          {xScale}
-          {xGet}
-          {yScale}
-          {yGet}
-          {zScale}
-          {zGet}
-          {rScale}
-          {rGet}
-          {padding}
-          {data}
-          {flatData}
-        />
-      </TooltipContext>
-    {:else}
+    {@const tooltipProps = typeof tooltip === 'object' ? tooltip : {}}
+    <TooltipContext {...tooltipProps} let:tooltip>
       <slot
         {aspectRatio}
         {containerHeight}
@@ -145,6 +121,7 @@
         {width}
         {element}
         {projection}
+        {tooltip}
         {xScale}
         {xGet}
         {yScale}
@@ -157,6 +134,6 @@
         {data}
         {flatData}
       />
-    {/if}
+    </TooltipContext>
   </GeoContext>
 </LayerCake>
