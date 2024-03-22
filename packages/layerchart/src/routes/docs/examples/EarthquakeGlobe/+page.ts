@@ -12,7 +12,6 @@ export async function load({ fetch }) {
       .then((r) => r.json())
       .then((d) =>
         d.features.map((f) => {
-          console.log({ f });
           const c = geoCentroid(f);
           return {
             place: f.properties.place,
