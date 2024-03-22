@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.34.1
+
+### Patch Changes
+
+- [Axis] Add `label` slot for greater control (ex. support first/last labels with different alignment) ([`0106e549bbfc4498d737a877645612923ebcbb4b`](https://github.com/techniq/layerchart/commit/0106e549bbfc4498d737a877645612923ebcbb4b))
+
 ## 0.34.0
 
 ### Minor Changes
