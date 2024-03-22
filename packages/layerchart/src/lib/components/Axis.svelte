@@ -197,9 +197,22 @@
     {/if}
   {/if}
 
-  {#each tickVals as tick (tick)}
+  {#each tickVals as tick, index (tick)}
     {@const tickCoords = getCoords(tick)}
     {@const radialTickCoords = pointRadial(tickCoords.x, tickCoords.y)}
+    {@const textLabelProps = {
+      x: orientation === 'angle' ? radialTickCoords[0] : tickCoords.x,
+      y: orientation === 'angle' ? radialTickCoords[1] : tickCoords.y,
+      value: formatValue(tick, format ?? scale.tickFormat?.() ?? ((v) => v)),
+      ...getDefaultLabelProps(tick),
+      tweened,
+      spring,
+      ...labelProps,
+      class: cls(
+        'label text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
+        labelProps?.class
+      ),
+    }}
 
     <g in:transitionIn={transitionInParams}>
       {#if grid !== false}
@@ -272,19 +285,9 @@
         />
       {/if}
 
-      <Text
-        x={orientation === 'angle' ? radialTickCoords[0] : tickCoords.x}
-        y={orientation === 'angle' ? radialTickCoords[1] : tickCoords.y}
-        value={formatValue(tick, format ?? scale.tickFormat?.() ?? ((v) => v))}
-        {...getDefaultLabelProps(tick)}
-        {tweened}
-        {spring}
-        {...labelProps}
-        class={cls(
-          'label text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
-          labelProps?.class
-        )}
-      />
+      <slot name="label" labelProps={textLabelProps} {index}>
+        <Text {...textLabelProps} />
+      </slot>
     </g>
   {/each}
 </g>

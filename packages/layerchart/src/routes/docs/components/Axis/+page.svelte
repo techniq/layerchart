@@ -1,10 +1,12 @@
 <script lang="ts">
   import { scaleTime } from 'd3-scale';
+  import { PeriodType, format } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Preview from '$lib/docs/Preview.svelte';
   import Axis from '$lib/components/Axis.svelte';
   import Rule from '$lib/components/Rule.svelte';
+  import Text from '$lib/components/Text.svelte';
 
   import { createDateSeries } from '$lib/utils/genData.js';
   import Blockquote from '$lib/docs/Blockquote.svelte';
@@ -28,8 +30,8 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="bottom" />
-        <Axis placement="left" />
+        <Axis placement="bottom" rule />
+        <Axis placement="left" rule />
       </Svg>
     </Chart>
   </div>
@@ -49,8 +51,8 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="top" />
-        <Axis placement="right" />
+        <Axis placement="top" rule />
+        <Axis placement="right" rule />
       </Svg>
     </Chart>
   </div>
@@ -230,14 +232,14 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="bottom" tickLength={0} />
-        <Axis placement="left" tickLength={0} />
+        <Axis placement="bottom" rule tickLength={0} />
+        <Axis placement="left" rule tickLength={0} />
       </Svg>
     </Chart>
   </div>
 </Preview>
 
-<h2>only first/last ticks</h2>
+<h2>only first/last ticks with alignment</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
@@ -251,8 +253,17 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="bottom" ticks={(scale) => scale.domain()} />
-        <Axis placement="left" ticks={(scale) => scale.domain()} />
+        <Axis
+          placement="bottom"
+          rule
+          ticks={(scale) => scale.domain()}
+          format={(d) => format(d, PeriodType.Day, { variant: 'long' })}
+        >
+          <svelte:fragment slot="label" let:labelProps let:index>
+            <Text {...labelProps} textAnchor={index === 0 ? 'start' : 'end'} />
+          </svelte:fragment>
+        </Axis>
+        <Axis placement="left" rule ticks={(scale) => scale.domain()} />
       </Svg>
     </Chart>
   </div>
@@ -272,9 +283,10 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="bottom" />
+        <Axis placement="bottom" rule />
         <Axis
           placement="left"
+          rule
           ticks={(scale) => scale.ticks().filter(Number.isInteger)}
           format="integer"
         />
@@ -297,8 +309,8 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="bottom" />
-        <Axis placement="left" ticks={[0, 50, 100]} />
+        <Axis placement="bottom" rule />
+        <Axis placement="left" rule ticks={[0, 50, 100]} />
       </Svg>
     </Chart>
   </div>
@@ -318,8 +330,8 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="bottom" />
-        <Axis placement="left" ticks={20} />
+        <Axis placement="bottom" rule />
+        <Axis placement="left" rule ticks={20} />
       </Svg>
     </Chart>
   </div>
@@ -339,8 +351,35 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="bottom" />
-        <Axis placement="left" ticks={null} />
+        <Axis placement="bottom" rule />
+        <Axis placement="left" rule ticks={null} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>label next to hash</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis
+          placement="bottom"
+          rule={{ class: 'stroke-surface-content/10' }}
+          labelProps={{ textAnchor: 'start', dx: 8 }}
+          ticks={(scale) => scale.ticks().slice(0, -1)}
+          tickLength={22}
+        />
+        <Axis placement="left" rule />
       </Svg>
     </Chart>
   </div>
