@@ -93,7 +93,7 @@
           placement="bottom"
           format={(d) => ''}
           _format={(d) => frequency(d)?.toFixed(1)}
-          tickSize={0}
+          tickLength={0}
           rule
         />
         <LinearGradient

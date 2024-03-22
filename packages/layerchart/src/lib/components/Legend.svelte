@@ -31,7 +31,7 @@
   export let tickFormat: FormatType = undefined;
   export let tickValues: any[] | undefined = undefined;
   export let tickFontSize = 10;
-  export let tickSize = 4;
+  export let tickLength = 4;
   export let placement: Placement | undefined = undefined;
 
   export let classes: {
@@ -124,7 +124,7 @@
     tickValues = scale.domain();
     tickLabelOffset = xScale.bandwidth() / 2;
     tickLine = false;
-    tickSize = 0;
+    tickLength = 0;
   }
 </script>
 
@@ -154,8 +154,8 @@
   <slot values={tickValues} {scale}>
     <svg
       {width}
-      height={height + tickSize + tickFontSize}
-      viewBox="0 0 {width} {height + tickSize + tickFontSize}"
+      height={height + tickLength + tickFontSize}
+      viewBox="0 0 {width} {height + tickLength + tickFontSize}"
       class="overflow-visible"
     >
       <g>
@@ -173,7 +173,7 @@
           <text
             text-anchor="middle"
             x={xScale(tick) + tickLabelOffset}
-            y={height + tickSize + tickFontSize}
+            y={height + tickLength + tickFontSize}
             style:font-size={tickFontSize}
             class={cls('fill-surface-content', classes.label)}
           >
@@ -185,7 +185,7 @@
               x1={xScale(tick)}
               y1={0}
               x2={xScale(tick)}
-              y2={height + tickSize}
+              y2={height + tickLength}
               class={cls('stroke-surface-content', classes.tick)}
             />
           {/if}

@@ -31,7 +31,7 @@
     placement === 'left' || placement === 'right' ? 4 : undefined;
 
   /** Length of the tick line */
-  export let tickSize = 4;
+  export let tickLength = 4;
   export let format: FormatType = undefined;
   export let labelProps: Partial<ComponentProps<Text>> | undefined = undefined;
 
@@ -255,7 +255,7 @@
           x1={tickCoords.x}
           y1={tickCoords.y}
           x2={tickCoords.x}
-          y2={tickCoords.y + (placement === 'top' ? -tickSize : tickSize)}
+          y2={tickCoords.y + (placement === 'top' ? -tickLength : tickLength)}
           {tweened}
           {spring}
           class="tick stroke-surface-content/50"
@@ -264,7 +264,7 @@
         <Line
           x1={tickCoords.x}
           y1={tickCoords.y}
-          x2={tickCoords.x + (placement === 'left' ? -tickSize : tickSize)}
+          x2={tickCoords.x + (placement === 'left' ? -tickLength : tickLength)}
           y2={tickCoords.y}
           {tweened}
           {spring}

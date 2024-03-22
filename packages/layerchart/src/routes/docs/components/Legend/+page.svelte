@@ -120,7 +120,7 @@
   <Legend
     scale={scaleThreshold([2.5, 3.1, 3.5, 3.9, 6, 7, 8, 9.5], schemeRdBu[9])}
     title="Unemployment rate (%)"
-    tickSize={0}
+    tickLength={0}
   />
 </Preview>
 
@@ -133,7 +133,7 @@
       schemeSpectral[10]
     )}
     title="Age (years)"
-    tickSize={0}
+    tickLength={0}
   />
 </Preview>
 

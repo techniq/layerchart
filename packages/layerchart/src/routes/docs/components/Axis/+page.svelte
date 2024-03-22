@@ -216,7 +216,7 @@
   </div>
 </Preview>
 
-<h2>hidden ticks</h2>
+<h2>Remove ticks hashes</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
@@ -230,14 +230,14 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="bottom" tickSize={0} />
-        <Axis placement="left" tickSize={0} />
+        <Axis placement="bottom" tickLength={0} />
+        <Axis placement="left" tickLength={0} />
       </Svg>
     </Chart>
   </div>
 </Preview>
 
-<h2>Only first/last ticks</h2>
+<h2>only first/last ticks</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
@@ -258,7 +258,7 @@
   </div>
 </Preview>
 
-<h2>Integer only ticks</h2>
+<h2>integer-only ticks</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
@@ -283,7 +283,7 @@
   </div>
 </Preview>
 
-<h2>Explicit ticks</h2>
+<h2>explicit ticks</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
@@ -304,7 +304,7 @@
   </div>
 </Preview>
 
-<h2>Tick count</h2>
+<h2>tick count</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
@@ -325,7 +325,7 @@
   </div>
 </Preview>
 
-<h2>Remove default tick count</h2>
+<h2>remove default tick count</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
@@ -340,7 +340,7 @@
     >
       <Svg>
         <Axis placement="bottom" />
-        <Axis placement="left" ticks={undefined} />
+        <Axis placement="left" ticks={null} />
       </Svg>
     </Chart>
   </div>
