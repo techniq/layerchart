@@ -15,4 +15,4 @@
   $: geojson = geoCircle().radius(radius).center(center).precision(precision)();
 </script>
 
-<GeoPath {geojson} {...$$restProps} />
+<GeoPath {geojson} {...$$restProps} on:mousemove on:mouseleave on:click />
