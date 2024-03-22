@@ -56,9 +56,11 @@
 
   $: tickVals = Array.isArray(ticks)
     ? ticks
-    : isScaleBand(scale)
-      ? scale.domain()
-      : scale.ticks(typeof ticks === 'function' ? ticks(scale) : ticks);
+    : typeof ticks === 'function'
+      ? ticks(scale)
+      : isScaleBand(scale)
+        ? scale.domain()
+        : scale.ticks(ticks);
 
   function getCoords(tick: any) {
     switch (placement) {

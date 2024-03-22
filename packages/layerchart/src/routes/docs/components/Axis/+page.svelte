@@ -236,3 +236,112 @@
     </Chart>
   </div>
 </Preview>
+
+<h2>Only first/last ticks</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" ticks={(scale) => scale.domain()} />
+        <Axis placement="left" ticks={(scale) => scale.domain()} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Integer only ticks</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 2]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" />
+        <Axis
+          placement="left"
+          ticks={(scale) => scale.ticks().filter(Number.isInteger)}
+          format="integer"
+        />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Explicit ticks</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" />
+        <Axis placement="left" ticks={[0, 50, 100]} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Tick count</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" />
+        <Axis placement="left" ticks={20} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Remove default tick count</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" />
+        <Axis placement="left" ticks={undefined} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
