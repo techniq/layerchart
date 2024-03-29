@@ -1,16 +1,22 @@
 <script lang="ts">
   import { scaleBand, scaleOrdinal } from 'd3-scale';
-  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, ToggleGroup, ToggleOption, PeriodType } from 'svelte-ux';
 
-  import { forceX, forceManyBody, forceCollide, forceCenter } from 'd3-force';
+  import { forceX, forceY, forceManyBody, forceCollide, forceCenter } from 'd3-force';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import Axis from '$lib/components/Axis.svelte';
   import Circle from '$lib/components/Circle.svelte';
   import Force from '$lib/components/Force.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
+  import TooltipItem from '$lib/components/TooltipItem.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import data from './dots.json';
+  export let data;
+
+  // TODO: Move to load()
+  import dots from './dots.json';
 
   const categoryColor = scaleOrdinal([
     'hsl(var(--color-info))',
@@ -18,10 +24,9 @@
     'hsl(var(--color-danger))',
   ]);
 
+  const genderColor = scaleOrdinal(['hsl(var(--color-info))', 'hsl(var(--color-warning))']);
+
   let groupBy = true;
-  let manyBodyStrength = 3;
-  let xStrength = 0.1;
-  const nodeStrokeWidth = 1;
 </script>
 
 <h1>Examples</h1>
@@ -36,10 +41,10 @@
   </Field>
 </div>
 
-<Preview {data}>
+<Preview data={dots}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
-      {data}
+      data={dots}
       x="category"
       xScale={scaleBand()}
       r="value"
@@ -50,13 +55,14 @@
       let:width
       let:height
     >
+      {@const nodeStrokeWidth = 1}
       <Svg>
         <Force
           forces={{
             x: forceX()
               .x((d) => (groupBy ? xGet(d) + xScale.bandwidth() / 2 : width / 2))
-              .strength(xStrength),
-            charge: forceManyBody().strength(manyBodyStrength),
+              .strength(0.1),
+            charge: forceManyBody().strength(3),
             collision: forceCollide().radius(
               (d) => rGet(d) + nodeStrokeWidth / 2 // Divide this by two because an svg stroke is drawn halfway out
             ),
@@ -75,6 +81,56 @@
           {/each}
         </Force>
       </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Beeswarm</h2>
+
+<Preview data={data.usSenators}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={data.usSenators}
+      x={(d) => d.date_of_birth.getFullYear()}
+      let:xGet
+      let:height
+      let:tooltip
+    >
+      {@const r = 6}
+      <Svg>
+        <Axis placement="bottom" format="none" rule grid />
+        <Force
+          forces={{
+            x: forceX()
+              .x((d) => xGet(d))
+              .strength(0.95),
+            y: forceY()
+              .y(height / 2)
+              .strength(0.075),
+            collide: forceCollide(r),
+          }}
+          let:nodes
+        >
+          {#each nodes as node}
+            <Circle
+              cx={node.x}
+              cy={node.y}
+              {r}
+              fill={genderColor(node.gender)}
+              class="stroke-surface-100"
+              on:mousemove={(e) => tooltip.show(e, node)}
+              on:mouseleave={tooltip.hide}
+            />
+          {/each}
+        </Force>
+      </Svg>
+
+      <Tooltip header={(d) => d.name} let:data>
+        <TooltipItem label="Birth date" value={data.date_of_birth} format={PeriodType.Day} />
+        <TooltipItem label="State" value={data.state_name} />
+        <TooltipItem label="Party" value={data.party} />
+        <TooltipItem label="Gender" value={data.gender} />
+      </Tooltip>
     </Chart>
   </div>
 </Preview>

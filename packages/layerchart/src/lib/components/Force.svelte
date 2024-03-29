@@ -8,7 +8,8 @@
 
   export let alpha = 1;
 
-  const simulation = forceSimulation($data);
+  // Make copy of data since simulation mutates
+  const simulation = forceSimulation($data.map((d) => ({ ...d })));
 
   $: {
     // When variables change, set forces and restart the simulation
