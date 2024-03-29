@@ -92,6 +92,7 @@
     <Chart
       data={data.usSenators}
       x={(d) => d.date_of_birth.getFullYear()}
+      padding={{ bottom: 12 }}
       let:xGet
       let:height
       let:tooltip
@@ -109,6 +110,7 @@
               .strength(0.075),
             collide: forceCollide(r),
           }}
+          static
           let:nodes
         >
           {#each nodes as node}
