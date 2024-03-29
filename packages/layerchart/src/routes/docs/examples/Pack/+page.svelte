@@ -124,7 +124,6 @@
                   stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
                   stroke-width={1 / scale}
                   fill={nodeColor}
-                  rx={5}
                 />
               </Group>
             {/each}
