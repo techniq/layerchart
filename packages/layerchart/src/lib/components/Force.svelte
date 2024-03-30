@@ -8,6 +8,9 @@
 
   export let alpha = 1;
   export let alphaTarget = 0;
+  export let alphaDecay = 1 - Math.pow(0.001, 1 / 300);
+  export let alphaMin = 0.001;
+
   export let velocityDecay = 0.4;
 
   /** Clone data since simulation mutates original */
@@ -20,6 +23,14 @@
   let simulation = forceSimulation(cloneData ? structuredClone($data) : $data);
 
   $: {
+    simulation
+      .alpha(alpha)
+      .alphaTarget(alphaTarget)
+      .alphaMin(alphaMin)
+      .alphaDecay(alphaDecay)
+      .velocityDecay(velocityDecay)
+      .restart();
+
     if (_static) {
       // TODO: Not sure why it needs to be recreated when static
       simulation = forceSimulation(cloneData ? structuredClone($data) : $data);
@@ -44,8 +55,6 @@
       Object.entries(forces).forEach(([name, force]) => {
         simulation.force(name, force);
       });
-
-      simulation.alpha(alpha).alphaTarget(alphaTarget).velocityDecay(velocityDecay).restart();
     }
   }
 
