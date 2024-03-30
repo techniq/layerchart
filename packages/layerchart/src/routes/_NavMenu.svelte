@@ -74,7 +74,7 @@
       'Graticule',
       'TileImage',
     ],
-    Hierarchy: ['Pack', 'Partition', 'Sankey'],
+    Layout: ['ForceSimulation', 'Pack', 'Partition', 'Sankey', 'Treemap'],
     Clipping: ['ClipPath', 'ChartClipPath', 'CircleClipPath', 'RectClipPath'],
     Other: ['Blur', 'Bounds', 'ColorRamp', 'LinearGradient', 'MotionPath', 'Pattern'],
   };
