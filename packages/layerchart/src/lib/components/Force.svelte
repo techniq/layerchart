@@ -5,7 +5,11 @@
   const { data } = getContext('LayerCake');
 
   export let forces: Record<string, Force<any, any>>;
+
   export let alpha = 1;
+  export let alphaTarget = 0;
+  export let velocityDecay = 0.4;
+
   /** Clone data since simulation mutates original */
   export let cloneData = false;
 
@@ -41,7 +45,9 @@
         simulation.force(name, force);
       });
 
-      simulation.alpha(alpha).restart();
+      console.log('restart');
+
+      simulation.alpha(alpha).alphaTarget(alphaTarget).velocityDecay(velocityDecay).restart();
     }
   }
 

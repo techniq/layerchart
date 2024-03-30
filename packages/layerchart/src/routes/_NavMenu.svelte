@@ -13,7 +13,6 @@
       { label: 'Bar Chart (Horizontal)', value: 'Bars' },
       'Candlestick',
       'DotPlot',
-      'Force',
       'Histogram',
       'Line',
       'Oscilloscope',
@@ -25,6 +24,7 @@
       'Threshold',
     ],
     'Hierarchy & Graph': ['Pack', 'Partition', 'Sankey', 'Sunburst', 'Tree', 'Treemap'],
+    Force: ['Beeswarm', 'CollisionDetection', 'ForceGroup', 'ForceTree'],
     Geo: [
       'GeoPath',
       'GeoPoint',
