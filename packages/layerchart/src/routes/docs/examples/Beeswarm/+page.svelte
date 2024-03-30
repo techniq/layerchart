@@ -25,7 +25,8 @@
     <Chart
       data={data.usSenators}
       x={(d) => d.date_of_birth.getFullYear()}
-      padding={{ bottom: 12 }}
+      xNice
+      padding={{ bottom: 12, left: 8, right: 8 }}
       let:xGet
       let:height
       let:tooltip
