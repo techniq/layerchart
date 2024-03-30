@@ -4,7 +4,7 @@ import pageSource from './+page.svelte?raw';
 
 export async function load() {
   return {
-    usSenators: await fetch('/data/examples//us-senators.csv').then(async (r) =>
+    usSenators: await fetch('/data/examples/us-senators.csv').then(async (r) =>
       csvParse(await r.text(), autoType)
     ),
     meta: {

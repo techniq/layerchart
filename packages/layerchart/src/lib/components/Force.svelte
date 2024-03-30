@@ -5,20 +5,20 @@
   const { data } = getContext('LayerCake');
 
   export let forces: Record<string, Force<any, any>>;
-
   export let alpha = 1;
+  /** Clone data since simulation mutates original */
+  export let cloneData = false;
 
   let _static = false;
   /** If true, will only update nodes after simulation has completed */
   export { _static as static };
 
-  // Make copy of data since simulation mutates
-  let simulation = forceSimulation($data.map((d) => ({ ...d })));
+  let simulation = forceSimulation(cloneData ? structuredClone($data) : $data);
 
   $: {
     if (_static) {
       // TODO: Not sure why it needs to be recreated when static
-      simulation = forceSimulation($data.map((d) => ({ ...d })));
+      simulation = forceSimulation(cloneData ? structuredClone($data) : $data);
       simulation.stop();
 
       Object.entries(forces).forEach(([name, force]) => {
@@ -51,4 +51,4 @@
   });
 </script>
 
-<slot {nodes} />
+<slot {nodes} {simulation} />
