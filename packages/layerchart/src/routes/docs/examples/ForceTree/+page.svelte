@@ -17,8 +17,8 @@
   import { complexData } from '../_data/hierarchy.js';
 
   const root = hierarchy(complexData);
-  const links = root.links();
   const nodes = root.descendants();
+  const links = root.links();
 </script>
 
 <h1>Examples</h1>
