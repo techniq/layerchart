@@ -23,8 +23,6 @@
 
 <h1>Examples</h1>
 
-<!-- https://observablehq.com/@d3/force-directed-tree -->
-
 <Preview data={nodes}>
   <div class="h-[600px] p-4 border rounded">
     <Chart data={nodes} let:tooltip>

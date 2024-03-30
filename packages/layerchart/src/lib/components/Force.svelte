@@ -45,8 +45,6 @@
         simulation.force(name, force);
       });
 
-      console.log('restart');
-
       simulation.alpha(alpha).alphaTarget(alphaTarget).velocityDecay(velocityDecay).restart();
     }
   }

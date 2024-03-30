@@ -25,8 +25,6 @@
 
 <h1>Examples</h1>
 
-<!-- https://observablehq.com/@d3/collision-detection -->
-
 <Preview data={randomData}>
   <div class="h-[600px] p-4 border rounded overflow-hidden">
     <Chart data={randomData} let:width let:height>

@@ -1,16 +1,13 @@
 <script lang="ts">
-  import { scaleBand, scaleOrdinal } from 'd3-scale';
-  import { Field, ToggleGroup, ToggleOption, PeriodType, cls } from 'svelte-ux';
-  import { hierarchy } from 'd3-hierarchy';
-  import { randomUniform } from 'd3-random';
+  import { scaleOrdinal } from 'd3-scale';
+  import { PeriodType } from 'svelte-ux';
 
-  import { forceX, forceY, forceManyBody, forceCollide, forceCenter, forceLink } from 'd3-force';
+  import { forceX, forceY, forceCollide } from 'd3-force';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
   import Circle from '$lib/components/Circle.svelte';
   import Force from '$lib/components/Force.svelte';
-  import Group from '$lib/components/Group.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
