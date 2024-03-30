@@ -6,7 +6,7 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Circle from '$lib/components/Circle.svelte';
-  import Force from '$lib/components/Force.svelte';
+  import ForceSimulation from '$lib/components/ForceSimulation.svelte';
   import Group from '$lib/components/Group.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -29,7 +29,7 @@
   <div class="h-[600px] p-4 border rounded overflow-hidden">
     <Chart data={randomData} let:width let:height>
       <Svg>
-        <Force
+        <ForceSimulation
           forces={{
             x: forceX().strength(0.01),
             y: forceY().strength(0.01),
@@ -59,7 +59,7 @@
             }}
             class="fill-transparent"
           />
-        </Force>
+        </ForceSimulation>
       </Svg>
     </Chart>
   </div>

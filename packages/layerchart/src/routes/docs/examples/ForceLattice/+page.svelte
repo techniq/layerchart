@@ -3,7 +3,7 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Circle from '$lib/components/Circle.svelte';
-  import Force from '$lib/components/Force.svelte';
+  import ForceSimulation from '$lib/components/ForceSimulation.svelte';
   import Group from '$lib/components/Group.svelte';
   import Link from '$lib/components/Link.svelte';
 
@@ -28,7 +28,7 @@
   <div class="h-[800px] p-4 border rounded overflow-hidden">
     <Chart data={nodes}>
       <Svg>
-        <Force
+        <ForceSimulation
           forces={{
             charge: forceManyBody().strength(-20),
             link: forceLink(links).strength(1).distance(20).iterations(10),
@@ -46,7 +46,7 @@
               <Circle cx={node.x} cy={node.y} r={3} class="fill-surface-content" />
             {/each}
           </Group>
-        </Force>
+        </ForceSimulation>
       </Svg>
     </Chart>
   </div>

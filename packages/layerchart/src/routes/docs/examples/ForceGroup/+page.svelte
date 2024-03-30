@@ -6,7 +6,7 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Circle from '$lib/components/Circle.svelte';
-  import Force from '$lib/components/Force.svelte';
+  import ForceSimulation from '$lib/components/ForceSimulation.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -49,7 +49,7 @@
     >
       {@const nodeStrokeWidth = 1}
       <Svg>
-        <Force
+        <ForceSimulation
           forces={{
             x: forceX()
               .x((d) => (groupBy ? xGet(d) + xScale.bandwidth() / 2 : width / 2))
@@ -72,7 +72,7 @@
               class="stroke-surface-100"
             />
           {/each}
-        </Force>
+        </ForceSimulation>
       </Svg>
     </Chart>
   </div>

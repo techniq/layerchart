@@ -6,7 +6,7 @@
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Circle from '$lib/components/Circle.svelte';
-  import Force from '$lib/components/Force.svelte';
+  import ForceSimulation from '$lib/components/ForceSimulation.svelte';
   import Group from '$lib/components/Group.svelte';
   import Link from '$lib/components/Link.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
@@ -27,7 +27,7 @@
   <div class="h-[600px] p-4 border rounded">
     <Chart data={nodes} let:tooltip>
       <Svg>
-        <Force
+        <ForceSimulation
           forces={{
             link: forceLink(links)
               .id((d) => d.id)
@@ -59,7 +59,7 @@
               />
             {/each}
           </Group>
-        </Force>
+        </ForceSimulation>
       </Svg>
 
       <Tooltip header={(d) => d.data.name} let:data>

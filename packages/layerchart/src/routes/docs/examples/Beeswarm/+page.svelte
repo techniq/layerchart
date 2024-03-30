@@ -7,7 +7,7 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
   import Circle from '$lib/components/Circle.svelte';
-  import Force from '$lib/components/Force.svelte';
+  import ForceSimulation from '$lib/components/ForceSimulation.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -34,7 +34,7 @@
       {@const r = 6}
       <Svg>
         <Axis placement="bottom" format="none" rule grid />
-        <Force
+        <ForceSimulation
           forces={{
             x: forceX()
               .x((d) => xGet(d))
@@ -59,7 +59,7 @@
               on:mouseleave={tooltip.hide}
             />
           {/each}
-        </Force>
+        </ForceSimulation>
       </Svg>
 
       <Tooltip header={(d) => d.name} let:data>
