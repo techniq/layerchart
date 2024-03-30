@@ -25,12 +25,12 @@
 <h1>Examples</h1>
 
 <Preview data={nodes}>
-  <div class="h-[800px] p-4 border rounded">
+  <div class="h-[800px] p-4 border rounded overflow-hidden">
     <Chart data={nodes}>
       <Svg>
         <Force
           forces={{
-            charge: forceManyBody().strength(-10),
+            charge: forceManyBody().strength(-20),
             link: forceLink(links).strength(1).distance(20).iterations(10),
           }}
           let:nodes
