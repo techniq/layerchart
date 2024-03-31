@@ -27,9 +27,9 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import { complexData } from '../_data/hierarchy.js';
+  export let data;
 
-  const complexHierarchy = hierarchy(complexData)
+  const complexHierarchy = hierarchy(data.flare)
     .sum((d) => d.value)
     .sort(compoundSortFunc(sortFunc('height', 'desc'), sortFunc('value', 'desc')));
 

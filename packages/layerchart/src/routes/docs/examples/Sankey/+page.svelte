@@ -20,10 +20,11 @@
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
   import { simpleData, complexData, greenhouse } from '../_data/graph.js';
-  import { complexData as hierarchyComplexData } from '../_data/hierarchy.js';
   import { graphFromHierarchy, graphFromNode } from '$lib/utils/graph.js';
   import SankeyControls from './SankeyControls.svelte';
   import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
+
+  export let data;
 
   const colorScale = scaleSequential(interpolateCool);
 
@@ -47,7 +48,7 @@
           inactive: 0.01,
         };
 
-  const complexDataHierarchy = hierarchy(hierarchyComplexData)
+  const complexDataHierarchy = hierarchy(data.flare)
     .sum((d) => d.value)
     .sort(sortFunc('value', 'desc'));
 

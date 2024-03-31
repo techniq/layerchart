@@ -35,11 +35,12 @@
   import { findAncestor } from '$lib/utils/hierarchy.js';
   import { isNodeVisible } from '$lib/utils/treemap.js';
 
-  import { complexData } from '../_data/hierarchy.js';
   import flareCsv from '../_data/flare.csv';
   import carsCsv from '../_data/cars.csv';
 
-  const complexDataHierarchy = hierarchy(complexData)
+  export let data;
+
+  const complexDataHierarchy = hierarchy(data.flare)
     .sum((d) => d.value)
     .sort(sortFunc('value', 'desc'));
 

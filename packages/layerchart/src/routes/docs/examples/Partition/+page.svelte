@@ -32,10 +32,11 @@
   import Partition from '$lib/components/Partition.svelte';
   import { findAncestor } from '$lib/utils/hierarchy.js';
 
-  import { complexData } from '../_data/hierarchy.js';
   import carsCsv from '../_data/cars.csv';
 
-  const complexHierarchy = hierarchy(complexData)
+  export let data;
+
+  const complexHierarchy = hierarchy(data.flare)
     .sum((d) => d.value)
     .sort(sortFunc('value', 'desc'));
 

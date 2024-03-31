@@ -14,9 +14,9 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import { complexData } from '../_data/hierarchy.js';
+  export let data;
 
-  const root = hierarchy(complexData);
+  const root = hierarchy(data.flare);
   const nodes = root.descendants();
   const links = root.links();
 </script>
