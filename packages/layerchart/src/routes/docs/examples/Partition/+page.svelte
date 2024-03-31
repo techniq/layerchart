@@ -32,8 +32,6 @@
   import Partition from '$lib/components/Partition.svelte';
   import { findAncestor } from '$lib/utils/hierarchy.js';
 
-  import carsCsv from '../_data/cars.csv';
-
   export let data;
 
   const complexHierarchy = hierarchy(data.flare)
@@ -45,7 +43,7 @@
 
   let isFiltered = false;
   $: groupedCars = rollup(
-    carsCsv
+    data.cars
       // Limit dataset
       .filter((d) =>
         ['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.Make)

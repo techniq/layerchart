@@ -36,7 +36,6 @@
   import { isNodeVisible } from '$lib/utils/treemap.js';
 
   import flareCsv from '../_data/flare.csv';
-  import carsCsv from '../_data/cars.csv';
 
   export let data;
 
@@ -58,7 +57,7 @@
 
   let isFiltered = false;
   $: groupedCars = rollup(
-    carsCsv
+    data.cars
       // Limit dataset
       .filter((d) =>
         ['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.Make)
