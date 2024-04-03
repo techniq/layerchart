@@ -9,9 +9,12 @@
   import { pointRadial } from 'd3-shape';
 
   const context = getContext('LayerCake') as any;
-  const { data, xGet, y, yGet, xScale, yScale, rGet, config } = context;
+  const { data: contextData, xGet, y, yGet, xScale, yScale, rGet, config } = context;
 
   type Offset = number | ((value: number, context: any) => number) | undefined;
+
+  /** Override data instead of using context */
+  export let data: any = undefined;
 
   export let r = 5;
   export let offsetX: Offset = undefined;
@@ -35,7 +38,9 @@
     }
   }
 
-  $: points = $data.flatMap((d) => {
+  $: pointsData = data ?? $contextData;
+
+  $: points = pointsData.flatMap((d) => {
     if (Array.isArray($config.x)) {
       /*
 				x={["prop1" ,"prop2"]}
@@ -77,7 +82,7 @@
     }
   });
 
-  $: _links = $data.flatMap((d) => {
+  $: _links = pointsData.flatMap((d) => {
     if (Array.isArray($config.x)) {
       /*
 				x={["prop1" ,"prop2"]}
