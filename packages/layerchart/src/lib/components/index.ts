@@ -23,6 +23,7 @@ export { default as GeoTile } from './GeoTile.svelte';
 export { default as Graticule } from './Graticule.svelte';
 export { default as Group } from './Group.svelte';
 export { default as Highlight } from './Highlight.svelte';
+export { default as Hull } from './Hull.svelte';
 export { default as Labels } from './Labels.svelte';
 export { default as Legend } from './Legend.svelte';
 export { default as Line } from './Line.svelte';
