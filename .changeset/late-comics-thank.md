@@ -1,5 +1,5 @@
 ---
-"layerchart": patch
+'layerchart': minor
 ---
 
 Add Hull component
