@@ -2,11 +2,13 @@
   import { group } from 'd3-array';
   import { geoAlbersUsa } from 'd3-geo';
   import { scaleOrdinal } from 'd3-scale';
+  import { curveLinearClosed } from 'd3-shape';
   import { feature } from 'topojson-client';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Axis from '$lib/components/Axis.svelte';
   import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import GeoPoint from '$lib/components/GeoPoint.svelte';
   import Hull from '$lib/components/Hull.svelte';
@@ -14,6 +16,8 @@
   import Text from '$lib/components/Text.svelte';
 
   export let data;
+
+  export let curve = curveLinearClosed;
 
   const states = feature(data.us.geojson, data.us.geojson.objects.states);
 
@@ -25,6 +29,10 @@
 </script>
 
 <h1>Examples</h1>
+
+<div class="grid grid-cols-[1fr,1fr,1fr] gap-2">
+  <CurveMenuField bind:value={curve} showOpenClosed />
+</div>
 
 <h2>Scatter</h2>
 
@@ -48,6 +56,7 @@
           <Points r={3} {data} fill={groupColor(group)} />
           <Hull
             {data}
+            {curve}
             style="--group-color:{groupColor(group)}"
             classes={{
               path: 'pointer-events-none stroke-[--group-color] fill-[--group-color] [fill-opacity:0.1]',
@@ -85,6 +94,7 @@
             data={data.us.stateCaptitals.filter((d) => {
               return !['Alaska', 'Hawaii'].includes(d.name);
             })}
+            {curve}
             classes={{
               path: 'pointer-events-none stroke-danger fill-danger/10',
             }}

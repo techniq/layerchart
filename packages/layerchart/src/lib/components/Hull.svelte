@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { createEventDispatcher, getContext, type ComponentProps } from 'svelte';
   import { cls } from 'svelte-ux';
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
@@ -7,12 +7,16 @@
 
   import GeoPath from './GeoPath.svelte';
   import { geoContext } from './GeoContext.svelte';
+  import Spline from './Spline.svelte';
+  import { curveLinearClosed } from 'd3-shape';
 
-  const { flatData, xGet, yGet, x: xContext, y: yContext } = getContext('LayerCake');
+  const { flatData, x: xContext, y: yContext } = getContext('LayerCake');
   const geo = geoContext();
 
   /** Override data instead of using context */
   export let data: any = undefined;
+
+  export let curve: ComponentProps<Spline>['curve'] = curveLinearClosed;
 
   export let classes: {
     root?: string;
@@ -29,9 +33,8 @@
   }>();
 
   $: points = (data ?? $flatData).map((d) => {
-    // geo voronoi needs raw latitude/longtude, not mapped to range (chart dimensions)
-    const xValue = $geo ? $xContext(d) : $xGet(d);
-    const yValue = $geo ? $yContext(d) : $yGet(d);
+    const xValue = $xContext(d);
+    const yValue = $yContext(d);
 
     const x = Array.isArray(xValue) ? min(xValue) : xValue;
     const y = Array.isArray(yValue) ? min(yValue) : yValue;
@@ -47,6 +50,7 @@
     {@const polygon = geoVoronoi().hull(points)}
     <GeoPath
       geojson={polygon}
+      {curve}
       class={cls('fill-transparent', classes.path)}
       on:mousemove={(e) => dispatch('mousemove', { event: e, points, polygon })}
       on:mouseleave
@@ -55,8 +59,11 @@
   {:else}
     {@const delaunay = Delaunay.from(points)}
     {@const polygon = delaunay.hullPolygon()}
-    <path
-      d={delaunay.renderHull()}
+    <Spline
+      data={polygon}
+      x={(d) => d[0]}
+      y={(d) => d[1]}
+      {curve}
       class={cls('fill-transparent', classes.path)}
       on:mousemove={(e) => dispatch('mousemove', { event: e, points, polygon })}
       on:mouseleave
