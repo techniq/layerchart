@@ -180,6 +180,9 @@ importers:
       '@types/topojson-client':
         specifier: ^3.1.4
         version: 3.1.4
+      '@types/topojson-simplify':
+        specifier: ^3.0.3
+        version: 3.0.3
       autoprefixer:
         specifier: ^10.4.18
         version: 10.4.18(postcss@8.4.38)
@@ -231,6 +234,9 @@ importers:
       tailwindcss:
         specifier: ^3.4.1
         version: 3.4.1
+      topojson-simplify:
+        specifier: ^3.0.3
+        version: 3.0.3
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
@@ -1246,6 +1252,13 @@ packages:
 
   /@types/topojson-client@3.1.4:
     resolution: {integrity: sha512-Ntf3ZSetMYy7z3PrVCvcqmdRoVhgKA9UKN0ZuuZf8Ts2kcyL4qK34IXBs6qO5fem62EK4k03PtkJPVoroVu4/w==}
+    dependencies:
+      '@types/geojson': 7946.0.13
+      '@types/topojson-specification': 1.0.5
+    dev: true
+
+  /@types/topojson-simplify@3.0.3:
+    resolution: {integrity: sha512-sBO5UZ0O2dB0bNwo0vut2yLHhj3neUGi9uL7/ROdm8Gs6dtt4jcB9OGDKr+M2isZwQM2RuzVmifnMZpxj4IGNw==}
     dependencies:
       '@types/geojson': 7946.0.13
       '@types/topojson-specification': 1.0.5
@@ -4233,7 +4246,14 @@ packages:
     hasBin: true
     dependencies:
       commander: 2.20.3
-    dev: false
+
+  /topojson-simplify@3.0.3:
+    resolution: {integrity: sha512-V+pBjLVzSQ3+hSOxBiV01OVXgFiCmMO8ia3huxKEyIMTC1ApQHBcdXdOqcQ6U2JJJD31TZduwY6KyF15R8sUgg==}
+    hasBin: true
+    dependencies:
+      commander: 2.20.3
+      topojson-client: 3.1.0
+    dev: true
 
   /tosource@2.0.0-alpha.3:
     resolution: {integrity: sha512-KAB2lrSS48y91MzFPFuDg4hLbvDiyTjOVgaK7Erw+5AmZXNq4sFRVn8r6yxSLuNs15PaokrDRpS61ERY9uZOug==}

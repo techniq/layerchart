@@ -40,6 +40,7 @@
       'Timezones',
       'AnimatedGlobe',
       'TranslucentGlobe',
+      'SketchyGlobe',
       'EarthquakeGlobe',
       'LoftedArcs',
       'GeojsonPreview',
