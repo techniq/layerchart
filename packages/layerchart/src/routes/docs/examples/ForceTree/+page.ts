@@ -5,6 +5,7 @@ export async function load() {
     flare: await fetch('/data/examples/hierarchy/flare.json').then((r) => r.json()),
     meta: {
       pageSource,
+      related: ['https://observablehq.com/@d3/force-directed-tree'],
     },
   };
 }

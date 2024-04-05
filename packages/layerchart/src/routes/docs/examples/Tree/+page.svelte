@@ -16,11 +16,11 @@
   import Preview from '$lib/docs/Preview.svelte';
   import TransformControls from '$lib/docs/TransformControls.svelte';
 
-  import { complexData } from '../_data/hierarchy.js';
+  export let data;
 
   let expandedNodeNames = ['flare'];
 
-  $: complexDataHierarchy = hierarchy(complexData, (d) =>
+  $: complexDataHierarchy = hierarchy(data.flare, (d) =>
     expandedNodeNames.includes(d.name) ? d.children : null
   );
   // .sum((d) => d.value)

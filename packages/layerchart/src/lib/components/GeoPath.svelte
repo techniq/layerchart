@@ -1,11 +1,13 @@
 <script lang="ts">
   import { createEventDispatcher, getContext } from 'svelte';
-  import { geoPath as d3geoPath, type GeoPath, type GeoPermissibleObjects } from 'd3-geo';
+  import { type GeoPath, type GeoPermissibleObjects } from 'd3-geo';
   import { scaleCanvas } from 'layercake';
   import { cls } from 'svelte-ux';
 
   import { geoContext } from './GeoContext.svelte';
   import type { TooltipContextValue } from './TooltipContext.svelte';
+  import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
+  import { geoCurvePath } from '$lib/utils/geo.js';
 
   export let geojson: GeoPermissibleObjects;
 
@@ -22,13 +24,24 @@
    */
   export let tooltip: TooltipContextValue | undefined = undefined;
 
+  /**
+   * Curve of path drawn. Imported via d3-shape.
+   *
+   * @example
+   * import { curveCatmullRom } from 'd3-shape';
+   * <GeoPath curve={curveCatmullRom} />
+   *
+   * @type {CurveFactory | CurveFactoryLineOnly | undefined}
+   */
+  export let curve: CurveFactory | CurveFactoryLineOnly = curveLinearClosed;
+
   const dispatch = createEventDispatcher<{ click: { geoPath: GeoPath; event: MouseEvent } }>();
 
-  const { rGet, width, height } = getContext('LayerCake');
+  const { width, height } = getContext('LayerCake');
   const canvas = getContext('canvas');
   const geo = geoContext();
 
-  $: geoPath = d3geoPath($geo);
+  $: geoPath = geoCurvePath($geo, curve);
 
   $: renderContext = canvas ? 'canvas' : 'svg';
 
@@ -39,11 +52,12 @@
     $ctx.clearRect(0, 0, $width, $height);
 
     if (render) {
+      geoPath = geoCurvePath($geo, curve, $ctx);
       render($ctx, { geoPath });
     } else {
       $ctx.beginPath();
       // Set the context here since setting it in `$: geoPath` is a circular reference
-      geoPath.context($ctx);
+      geoPath = geoCurvePath($geo, curve, $ctx);
       geoPath(geojson);
 
       $ctx.fillStyle = fill || 'transparent';

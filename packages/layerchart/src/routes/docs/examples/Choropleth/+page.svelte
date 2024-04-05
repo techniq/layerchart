@@ -136,7 +136,6 @@
           render={(ctx, { geoPath }) => {
             for (var feature of enrichedCountiesFeatures) {
               ctx.beginPath();
-              geoPath.context(ctx);
               geoPath(feature);
               ctx.fillStyle = colorScale(feature.properties.data?.population);
               ctx.fill();

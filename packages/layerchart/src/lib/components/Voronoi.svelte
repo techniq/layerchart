@@ -1,6 +1,5 @@
 <script lang="ts">
   import { createEventDispatcher, getContext } from 'svelte';
-  import { draw as _drawTransition } from 'svelte/transition';
   import { cls } from 'svelte-ux';
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';

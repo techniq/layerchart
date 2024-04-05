@@ -24,6 +24,7 @@
       'Threshold',
     ],
     'Hierarchy & Graph': ['Pack', 'Partition', 'Sankey', 'Sunburst', 'Tree', 'Treemap'],
+    Force: ['Beeswarm', 'CollisionDetection', 'ForceGroup', 'ForceLattice', 'ForceTree'],
     Geo: [
       'GeoPath',
       'GeoPoint',
@@ -39,6 +40,7 @@
       'Timezones',
       'AnimatedGlobe',
       'TranslucentGlobe',
+      'SketchyGlobe',
       'EarthquakeGlobe',
       'LoftedArcs',
       'GeojsonPreview',
@@ -54,6 +56,7 @@
       'AreaStack',
       'Bars',
       'Calendar',
+      'Hull',
       'Labels',
       'Link',
       'Pie',
@@ -73,7 +76,7 @@
       'Graticule',
       'TileImage',
     ],
-    Hierarchy: ['Pack', 'Partition', 'Sankey'],
+    Layout: ['ForceSimulation', 'Pack', 'Partition', 'Sankey', 'Treemap'],
     Clipping: ['ClipPath', 'ChartClipPath', 'CircleClipPath', 'RectClipPath'],
     Other: ['Blur', 'Bounds', 'ColorRamp', 'LinearGradient', 'MotionPath', 'Pattern'],
   };

@@ -32,10 +32,9 @@
   import Partition from '$lib/components/Partition.svelte';
   import { findAncestor } from '$lib/utils/hierarchy.js';
 
-  import { complexData } from '../_data/hierarchy.js';
-  import carsCsv from '../_data/cars.csv';
+  export let data;
 
-  const complexHierarchy = hierarchy(complexData)
+  const complexHierarchy = hierarchy(data.flare)
     .sum((d) => d.value)
     .sort(sortFunc('value', 'desc'));
 
@@ -44,25 +43,25 @@
 
   let isFiltered = false;
   $: groupedCars = rollup(
-    carsCsv
+    data.cars
       // Limit dataset
       .filter((d) =>
-        ['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.Make)
+        ['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.make)
       )
       // Hide some models in each group to show transitions
-      .filter((d) => (isFiltered ? d.Year > 2010 : true))
-      // Apply `Make` selection
+      .filter((d) => (isFiltered ? d.year > 2010 : true))
+      // Apply `make` selection
       .filter((d) => {
         if (selectedCarNode?.depth === 1) {
-          return d.Make === selectedCarNode.data[0];
+          return d.make === selectedCarNode.data[0];
         } else {
           return true;
         }
       }),
     (items) => items[0], //.slice(0, 3),
-    (d) => d.Make,
-    (d) => d.Model
-    // d => d.Year,
+    (d) => d.make,
+    (d) => d.model
+    // d => d.year,
   );
   $: groupedHierarchy = hierarchy(groupedCars).count();
 

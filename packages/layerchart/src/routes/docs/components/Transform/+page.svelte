@@ -53,7 +53,7 @@
   <Field label="Show path" let:id>
     <Switch bind:checked={showPath} {id} size="md" />
   </Field>
-  <CurveMenuField bind:value={curve} />
+  <CurveMenuField bind:value={curve} showOpenClosed />
 </div>
 
 <Preview {data}>
