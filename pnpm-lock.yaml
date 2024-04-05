@@ -53,6 +53,9 @@ importers:
       d3-interpolate-path:
         specifier: ^2.3.0
         version: 2.3.0
+      d3-path:
+        specifier: ^3.1.0
+        version: 3.1.0
       d3-quadtree:
         specifier: ^3.0.1
         version: 3.0.1
