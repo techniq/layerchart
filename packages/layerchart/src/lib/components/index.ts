@@ -13,6 +13,7 @@ export { default as CircleClipPath } from './CircleClipPath.svelte';
 export { default as ClipPath } from './ClipPath.svelte';
 export { default as ColorRamp } from './ColorRamp.svelte';
 export { default as Frame } from './Frame.svelte';
+export { default as ForceSimulation } from './ForceSimulation.svelte';
 export { default as GeoCircle } from './GeoCircle.svelte';
 export { default as GeoContext, geoContext } from './GeoContext.svelte';
 export { default as GeoEdgeFade } from './GeoEdgeFade.svelte';
