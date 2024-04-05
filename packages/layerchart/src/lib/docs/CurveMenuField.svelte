@@ -1,25 +1,25 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import * as d3shapes from 'd3-shape';
 
-  import { MenuField } from 'svelte-ux';
+  import { MenuField, entries } from 'svelte-ux';
 
-  export let value: any | undefined = undefined;
+  export let value: any | undefined = d3shapes['curveLinear'];
+  export let showOpenClosed = false;
 
-  const options = Object.keys(d3shapes)
-    .filter((key) => key.startsWith('curve'))
-    .filter((key) => !key.endsWith('Open') && !key.endsWith('Closed'))
-    .filter((key) => !key.includes('Bundle')) // Not compatibile with area
-    .map((key) => {
+  const options = entries(d3shapes)
+    .filter(([key]) => {
+      return (
+        key.startsWith('curve') &&
+        (showOpenClosed ? true : !key.endsWith('Open') && !key.endsWith('Closed')) &&
+        !key.includes('Bundle') // Not compatibile with area
+      );
+    })
+    .map(([key, value]) => {
       return {
         label: key.replace('curve', ''),
-        value: d3shapes[key]
+        value: value,
       };
     });
-
-  onMount(() => {
-    value = d3shapes['curveLinear'];
-  });
 </script>
 
 <MenuField label="Curve" {options} bind:value stepper classes={{ menuIcon: 'hidden' }} />
