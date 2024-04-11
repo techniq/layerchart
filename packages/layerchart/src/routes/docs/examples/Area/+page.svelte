@@ -22,9 +22,10 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import { pivotLonger } from '$lib/utils/pivot.js';
-  import { appleStock } from '../_data/dateSeries.js';
 
-  const data = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
+  export let data;
+
+  const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
 
   const keys = ['apples', 'bananas', 'oranges'];
   const multiSeriesData = createDateSeries({
@@ -47,10 +48,10 @@
 
 <h2>Basic</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
-      {data}
+      data={dateSeriesData}
       x="date"
       xScale={scaleTime()}
       y="value"
@@ -73,10 +74,10 @@
 
 <h2>With Tooltip and Highlight</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
-      {data}
+      data={dateSeriesData}
       x="date"
       xScale={scaleTime()}
       y="value"
@@ -104,10 +105,10 @@
 
 <h2>With Labels</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
-      {data}
+      data={dateSeriesData}
       x="date"
       xScale={scaleTime()}
       y="value"
@@ -131,10 +132,10 @@
 
 <h2>Gradient</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
-      {data}
+      data={dateSeriesData}
       x="date"
       xScale={scaleTime()}
       y="value"
@@ -383,10 +384,10 @@
     </Field>
   </div>
 
-  <Preview {data}>
+  <Preview data={dateSeriesData}>
     <div class="h-[300px] p-4 border rounded">
       <Chart
-        {data}
+        data={dateSeriesData}
         x="date"
         xScale={scaleTime()}
         y="value"
@@ -422,10 +423,10 @@
     </Field>
   </div>
 
-  <Preview {data}>
+  <Preview data={dateSeriesData}>
     <div class="h-[300px] p-4 border rounded">
       <Chart
-        {data}
+        data={dateSeriesData}
         x="date"
         xScale={scaleTime()}
         y="value"
@@ -462,10 +463,10 @@
     </Field>
   </div>
 
-  <Preview {data}>
+  <Preview data={dateSeriesData}>
     <div class="h-[300px] p-4 border rounded">
       <Chart
-        {data}
+        data={dateSeriesData}
         x="date"
         xScale={scaleTime()}
         y="value"
@@ -501,10 +502,10 @@
 
 <h2>Clipped area on Tooltip</h2>
 
-<Preview data={appleStock}>
+<Preview data={data.appleStock}>
   <div class="h-[300px] border rounded">
     <Chart
-      data={appleStock}
+      data={data.appleStock}
       x="date"
       xScale={scaleTime()}
       y="value"

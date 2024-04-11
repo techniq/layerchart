@@ -11,8 +11,9 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import { appleTicker } from '../_data/dateSeries.js';
   import { PeriodType, formatDate } from 'svelte-ux';
+
+  export let data;
 </script>
 
 <h1>Examples</h1>
@@ -20,10 +21,10 @@
 <h2>Basic</h2>
 
 <!-- TODO: Should use xScale={scaleTime()} once `<Bar>` / createDimensionGetter() supports it -->
-<Preview data={appleTicker}>
+<Preview data={data.appleTicker}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
-      data={appleTicker}
+      data={data.appleTicker}
       x="date"
       xScale={scaleBand().paddingInner(0.4)}
       y={['high', 'low']}

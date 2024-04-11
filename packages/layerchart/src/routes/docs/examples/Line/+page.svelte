@@ -19,9 +19,12 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import { pivotLonger } from '$lib/utils/pivot.js';
-  import { temperature as temperatureData } from '../_data/dateSeries.js';
 
-  const data = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
+  export let data;
+
+  const temperatureData = data.dailyTemperature;
+
+  const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
 
   const keys = ['apples', 'bananas', 'oranges'];
   const multiSeriesData = createDateSeries({
@@ -50,10 +53,10 @@
 
 <h2>Basic</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
-      {data}
+      data={dateSeriesData}
       x="date"
       xScale={scaleTime()}
       y="value"
@@ -76,10 +79,10 @@
 
 <h2>With Tooltip and Highlight</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
-      {data}
+      data={dateSeriesData}
       x="date"
       xScale={scaleTime()}
       y="value"
@@ -107,10 +110,10 @@
 
 <h2>With Labels</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
-      {data}
+      data={dateSeriesData}
       x="date"
       xScale={scaleTime()}
       y="value"
