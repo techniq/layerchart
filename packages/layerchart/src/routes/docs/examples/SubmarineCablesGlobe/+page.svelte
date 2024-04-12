@@ -13,6 +13,10 @@
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
   import Transform from '$lib/components/Transform.svelte';
+  import GeoPoint from '$lib/components/GeoPoint.svelte';
+
+  import { isVisible } from '$lib/utils/geo.js';
+  import GeoVisible from '$lib/components/GeoVisible.svelte';
 
   export let data;
 
@@ -109,11 +113,8 @@
             geojson={{ type: 'Sphere' }}
             class="fill-surface-200 stroke-surface-content/20"
           />
-
           <Graticule class="stroke-surface-content/20" />
-          {#each countries.features as country}
-            <GeoPath geojson={country} class="stroke-surface-100/30 fill-surface-content" />
-          {/each}
+          <GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
 
           {#each data.cables.features as feature}
             {@const hasColor = tooltip.data == null || tooltip.data.id === feature.properties.id}
@@ -140,6 +141,20 @@
               on:mouseleave={(e) => tooltip?.hide()}
             />
           {/each} -->
+
+          {#each data.landingPoints.features as feature}
+            {@const [long, lat] = feature.geometry.coordinates}
+            <GeoVisible {lat} {long}>
+              <GeoPoint {lat} {long}>
+                <circle
+                  r={2}
+                  class="fill-surface-content stroke-surface-100 stroke"
+                  on:mousemove={(e) => tooltip?.show(e, feature.properties)}
+                  on:mouseleave={(e) => tooltip?.hide()}
+                />
+              </GeoPoint>
+            </GeoVisible>
+          {/each}
         </Transform>
       </Svg>
 

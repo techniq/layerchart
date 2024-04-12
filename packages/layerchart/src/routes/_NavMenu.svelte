@@ -74,6 +74,7 @@
       'GeoPoint',
       'GeoSpline',
       'GeoTile',
+      'GeoVisible',
       'Graticule',
       'TileImage',
     ],

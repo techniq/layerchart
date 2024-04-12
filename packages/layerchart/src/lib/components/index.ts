@@ -21,6 +21,7 @@ export { default as GeoPath } from './GeoPath.svelte';
 export { default as GeoPoint } from './GeoPoint.svelte';
 export { default as GeoSpline } from './GeoSpline.svelte';
 export { default as GeoTile } from './GeoTile.svelte';
+export { default as GeoVisible } from './GeoVisible.svelte';
 export { default as Graticule } from './Graticule.svelte';
 export { default as Group } from './Group.svelte';
 export { default as Highlight } from './Highlight.svelte';

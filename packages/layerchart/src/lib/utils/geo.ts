@@ -63,3 +63,17 @@ function curveContext(curve: ReturnType<CurveFactory | CurveFactoryLineOnly>): G
 export function antipode([longitude, latitude]: [number, number]): [number, number] {
   return [longitude + 180, -latitude];
 }
+
+/**
+ * Check if point ([x, y]) is visible on projection
+ * @see: https://observablehq.com/@d3/testing-projection-visibility
+ */
+export function isVisible(projection: GeoProjection | GeoStreamWrapper) {
+  let visible;
+  const stream = projection.stream({
+    point() {
+      visible = true;
+    },
+  });
+  return ([x, y]) => ((visible = false), stream.point(x, y), visible);
+}
