@@ -42,6 +42,7 @@
       'TranslucentGlobe',
       'SketchyGlobe',
       'EarthquakeGlobe',
+      'SubmarineCablesGlobe',
       'LoftedArcs',
       'GeojsonPreview',
       'ShapefilePreview',
