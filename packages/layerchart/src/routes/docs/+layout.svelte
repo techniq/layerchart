@@ -75,7 +75,12 @@
     </div>
 
     <div class="text-2xl font-bold">
-      {title}
+      {#if type === 'examples'}
+        {title.replace(/([a-z])([A-Z])/g, '$1 $2')}
+      {:else}
+        {title}
+      {/if}
+
       {#if status}
         <span
           class={cls(
