@@ -316,6 +316,41 @@
   </div>
 </Preview>
 
+<h2>Customize individual styles</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleBand().padding(0.4)}
+      y="value"
+      yDomain={[0, null]}
+      yNice={4}
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Bars>
+          {#each data as bar, i}
+            <Bar
+              {bar}
+              radius={4}
+              strokeWidth={1}
+              class={i === data.length - 1 ? 'fill-primary' : 'fill-surface-content'}
+            />
+          {/each}
+        </Bars>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Average annotation Rule</h2>
 
 <Preview {data}>
