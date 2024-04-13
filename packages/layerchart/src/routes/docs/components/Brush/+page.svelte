@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { PeriodType, format } from 'svelte-ux';
   import { scaleTime } from 'd3-scale';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
