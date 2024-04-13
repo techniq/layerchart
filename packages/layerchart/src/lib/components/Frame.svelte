@@ -18,6 +18,7 @@
   on:click
   on:mousedown
   on:touchstart
+  on:dblclick
   bind:this={rectEl}
   {...$$restProps}
 />
