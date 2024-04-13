@@ -5,15 +5,15 @@
 
   const { width, height, padding } = getContext('LayerCake');
 
-  /** Whether clipping should include chart padding (ex. axis) */
-  export let includePadding = false;
+  /** Include padding area (ex. axis) */
+  export let full = false;
 </script>
 
 <RectClipPath
-  x={includePadding ? -$padding.left : 0}
-  y={includePadding ? -$padding.top : 0}
-  width={$width + (includePadding ? $padding.left + $padding.right : 0)}
-  height={$height + (includePadding ? $padding.top + $padding.bottom : 0)}
+  x={full ? -$padding.left : 0}
+  y={full ? -$padding.top : 0}
+  width={$width + (full ? $padding.left + $padding.right : 0)}
+  height={$height + (full ? $padding.top + $padding.bottom : 0)}
   on:click
   {...$$restProps}
 >
