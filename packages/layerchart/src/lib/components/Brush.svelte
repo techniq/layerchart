@@ -109,6 +109,11 @@
     max = null;
   }
 
+  function selectAll() {
+    min = 0;
+    max = 1;
+  }
+
   // Map percentage back to domain
   $: domainScale = $xScale.copy().range([0, 1]);
 
@@ -131,30 +136,42 @@
     class={cls('frame', 'fill-transparent')}
     on:mousedown={reset}
     on:touchstart={reset}
+    on:dblclick={() => selectAll()}
     bind:rectEl={frameEl}
   />
 
-  <Group x={left} on:mousedown={adjustRange} on:touchstart={adjustRange}>
+  <Group
+    class="range"
+    x={left}
+    on:mousedown={adjustRange}
+    on:touchstart={adjustRange}
+    on:dblclick={() => clear()}
+  >
     <rect
       width={right - left}
       height={$height}
-      class={cls('range', 'fill-surface-content/10 cursor-move select-none')}
+      class={cls('fill-surface-content/10 cursor-move select-none')}
     />
   </Group>
 
-  <Group x={left} on:mousedown={adjustMin} on:touchstart={adjustMin}>
+  <Group class="handle min" x={left} on:mousedown={adjustMin} on:touchstart={adjustMin}>
     <rect
       width={handleWidth}
       height={$height}
-      class={cls('handle', 'fill-transparent cursor-ew-resize select-none')}
+      class={cls('fill-transparent cursor-ew-resize select-none')}
     />
   </Group>
 
-  <Group x={right - handleWidth + 1} on:mousedown={adjustMax} on:touchstart={adjustMax}>
+  <Group
+    class="handle max"
+    x={right - handleWidth + 1}
+    on:mousedown={adjustMax}
+    on:touchstart={adjustMax}
+  >
     <rect
       width={handleWidth}
       height={$height}
-      class={cls('handle', 'fill-transparent cursor-ew-resize select-none')}
+      class={cls('fill-transparent cursor-ew-resize select-none')}
     />
   </Group>
 </g>
