@@ -3,17 +3,21 @@
   import { createEventDispatcher, getContext } from 'svelte';
 
   import { clamp, cls } from 'svelte-ux';
+  import Frame from './Frame.svelte';
+  import Group from './Group.svelte';
 
   let min: number | null = null;
   let max: number | null = null;
 
-  let brushEl: HTMLDivElement;
+  export let handleWidth = 5;
+
+  let frameEl: SVGRectElement;
 
   const dispatch = createEventDispatcher<{
     change: { xDomain?: [any, any]; yDomain?: [any, any] };
   }>();
 
-  const { xScale, padding } = getContext('LayerCake');
+  const { xScale, width, height } = getContext('LayerCake');
 
   export let classes: {
     root?: string;
@@ -25,7 +29,7 @@
    * Convert pixel value `x` to percent of element's width
    */
   function pixelToPercent(x: number) {
-    const { left, right } = brushEl.getBoundingClientRect();
+    const { left, right } = frameEl.getBoundingClientRect();
     const scale = scaleLinear([left, right], [0, 1]).clamp(true);
     return scale(x);
   }
@@ -60,7 +64,7 @@
         if (e instanceof TouchEvent) {
           if (e.changedTouches.length !== 1) return;
           if (e.changedTouches[0].identifier !== startTouch?.identifier) return;
-        } else if (e.target === brushEl) {
+        } else if (e.target === frameEl) {
           clear();
         }
 
@@ -110,48 +114,47 @@
 
   // Track last min/max to fix infinite loop
   let lastExtents: [number | null, number | null] = [null, null];
-  $: console.log({ min, max, lastExtents });
   $: if (
     ((min == null && max == null) || min !== max) &&
     (lastExtents[0] !== min || lastExtents[1] !== max)
   ) {
     lastExtents = [min, max];
-    console.log('dispatching change');
     dispatch('change', { xDomain: [domainScale.invert(min ?? 0), domainScale.invert(max ?? 1)] });
   }
 
-  $: left = 100 * (min ?? 0);
-  $: right = 100 * (1 - (max ?? 1));
+  $: left = $width * (min ?? 0);
+  $: right = $width * (max ?? 0);
 </script>
 
-<div
-  bind:this={brushEl}
-  class={cls('Brush', 'relative h-full select-none', classes.root, $$props.class)}
-  style:margin-left="{$padding.left}px"
-  style:margin-right="{$padding.right}px"
-  on:mousedown|stopPropagation={reset}
-  on:touchstart|stopPropagation={reset}
->
-  {#if min != null}
-    <div
-      class={cls('range', 'absolute h-full bg-surface-content/10 cursor-move', classes.range)}
-      style:left="{left}%"
-      style:right="{right}%"
-      on:mousedown|stopPropagation={adjustRange}
-      on:touchstart|stopPropagation={adjustRange}
-    />
+<g class="Brush">
+  <Frame
+    class={cls('frame', 'fill-transparent')}
+    on:mousedown={reset}
+    on:touchstart={reset}
+    bind:rectEl={frameEl}
+  />
 
-    <div
-      class={cls('handle', 'absolute w-2 h-full cursor-ew-resize -translate-x-1/2', classes.handle)}
-      style:left="{left}%"
-      on:mousedown|stopPropagation={adjustMin}
-      on:touchstart|stopPropagation={adjustMin}
+  <Group x={left} on:mousedown={adjustRange} on:touchstart={adjustRange}>
+    <rect
+      width={right - left}
+      height={$height}
+      class={cls('range', 'fill-surface-content/10 cursor-move select-none')}
     />
-    <div
-      class={cls('handle', 'absolute w-2 h-full cursor-ew-resize translate-x-1/2', classes.handle)}
-      style:right="{right}%"
-      on:mousedown|stopPropagation={adjustMax}
-      on:touchstart|stopPropagation={adjustMax}
+  </Group>
+
+  <Group x={left} on:mousedown={adjustMin} on:touchstart={adjustMin}>
+    <rect
+      width={handleWidth}
+      height={$height}
+      class={cls('handle', 'fill-transparent cursor-ew-resize select-none')}
     />
-  {/if}
-</div>
+  </Group>
+
+  <Group x={right - handleWidth + 1} on:mousedown={adjustMax} on:touchstart={adjustMax}>
+    <rect
+      width={handleWidth}
+      height={$height}
+      class={cls('handle', 'fill-transparent cursor-ew-resize select-none')}
+    />
+  </Group>
+</g>

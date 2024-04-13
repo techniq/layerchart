@@ -24,7 +24,7 @@
 
 <h1>Examples</h1>
 
-<h2>Clip</h2>
+<h2>Clip data</h2>
 
 <Preview data={data.appleStock}>
   <div class="border rounded p-4 grid gap-1">
@@ -61,15 +61,14 @@
       >
         <Svg>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
+          <Brush
+            on:change={(e) => {
+              if (e.detail.xDomain) {
+                xDomain = e.detail.xDomain;
+              }
+            }}
+          />
         </Svg>
-
-        <Brush
-          on:change={(e) => {
-            if (e.detail.xDomain) {
-              xDomain = e.detail.xDomain;
-            }
-          }}
-        />
       </Chart>
     </div>
   </div>
@@ -113,15 +112,14 @@
       >
         <Svg>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
+          <Brush
+            on:change={(e) => {
+              if (e.detail.xDomain) {
+                xDomain = e.detail.xDomain;
+              }
+            }}
+          />
         </Svg>
-
-        <Brush
-          on:change={(e) => {
-            if (e.detail.xDomain) {
-              xDomain = e.detail.xDomain;
-            }
-          }}
-        />
       </Chart>
     </div>
   </div>
