@@ -1,23 +1,23 @@
 <script lang="ts">
-  import { scaleLinear } from 'd3-scale';
   import { createEventDispatcher, getContext } from 'svelte';
+  import { extent } from 'd3-array';
 
   import { clamp, cls } from 'svelte-ux';
   import Frame from './Frame.svelte';
   import Group from './Group.svelte';
+  import { localPoint } from '$lib/utils/event.js';
 
-  let min: number | null = null;
-  let max: number | null = null;
-
-  export let handleWidth = 5;
-
-  let frameEl: SVGRectElement;
+  const { xScale, xDomain, width, height, padding } = getContext('LayerCake');
 
   const dispatch = createEventDispatcher<{
     change: { xDomain?: [any, any]; yDomain?: [any, any] };
   }>();
 
-  const { xScale, width, height } = getContext('LayerCake');
+  // export let axis: 'x' | 'y' | 'both' = 'x';
+  export let handleWidth = 5;
+
+  export let min: number | null = null;
+  export let max: number | null = null;
 
   export let classes: {
     root?: string;
@@ -25,16 +25,11 @@
     handle?: string;
   } = {};
 
-  /**
-   * Convert pixel value `x` to percent of element's width
-   */
-  function pixelToPercent(x: number) {
-    const { left, right } = frameEl.getBoundingClientRect();
-    const scale = scaleLinear([left, right], [0, 1]).clamp(true);
-    return scale(x);
-  }
+  let frameEl: SVGRectElement;
 
-  function handler(fn: (start: { min: number; max: number; p: number }, p: number) => void) {
+  function handler(
+    fn: (start: { min: number; max: number; value: number }, value: number) => void
+  ) {
     return (e: MouseEvent | TouchEvent) => {
       let startTouch: Touch | null = null;
       let clientX: number;
@@ -47,16 +42,22 @@
         clientX = e.clientX;
       }
 
-      const start = { min: min ?? 0, max: max ?? 1, p: pixelToPercent(clientX) };
+      const [domainMin, domainMax] = extent($xDomain);
+
+      const start = {
+        min: min ?? domainMin,
+        max: max ?? domainMax,
+        value: $xScale.invert(localPoint(frameEl, e)?.x - $padding.left),
+      };
 
       const onMove = (e: MouseEvent | TouchEvent) => {
         if (e instanceof TouchEvent) {
           if (e instanceof TouchEvent && e.changedTouches.length !== 1) return;
           const touch = e.changedTouches[0];
           if (touch.identifier !== startTouch?.identifier) return;
-          fn(start, pixelToPercent(touch.clientX));
+          fn(start, $xScale.invert(localPoint(frameEl, touch)?.x - $padding.left));
         } else {
-          fn(start, pixelToPercent(e.clientX));
+          fn(start, $xScale.invert(localPoint(frameEl, e)?.x - $padding.left));
         }
       };
 
@@ -83,25 +84,29 @@
     };
   }
 
-  const reset = handler((start, p) => {
-    min = clamp(Math.min(start.p, p), 0, 1);
-    max = clamp(Math.max(start.p, p), 0, 1);
+  const reset = handler((start, value) => {
+    const [domainMin, domainMax] = extent($xDomain);
+    min = clamp(Math.min(start.value, value), domainMin, domainMax);
+    max = clamp(Math.max(start.value, value), domainMin, domainMax);
   });
 
-  const adjustRange = handler((start, p) => {
-    const d = clamp(p - start.p, -start.min, 1 - start.max);
+  const adjustRange = handler((start, value) => {
+    const [domainMin, domainMax] = extent($xDomain);
+    const d = clamp(value - start.value, domainMin - start.min, domainMax - start.max);
     min = start.min + d;
     max = start.max + d;
   });
 
-  const adjustMin = handler((start, p) => {
-    min = p > start.max ? start.max : p;
-    max = p > start.max ? p : start.max;
+  const adjustMin = handler((start, value) => {
+    const [domainMin, domainMax] = extent($xDomain);
+    min = clamp(value > start.max ? start.max : value, domainMin, domainMax);
+    max = clamp(value > start.max ? value : start.max, domainMin, domainMax);
   });
 
-  const adjustMax = handler((start, p) => {
-    min = p < start.min ? p : start.min;
-    max = p < start.min ? start.min : p;
+  const adjustMax = handler((start, value) => {
+    const [domainMin, domainMax] = extent($xDomain);
+    min = clamp(value < start.min ? value : start.min, domainMin, domainMax);
+    max = clamp(value < start.min ? start.min : value, domainMin, domainMax);
   });
 
   function clear() {
@@ -110,25 +115,21 @@
   }
 
   function selectAll() {
-    min = 0;
-    max = 1;
+    min = $xDomain[0];
+    max = $xDomain[1];
   }
 
-  // Map percentage back to domain
-  $: domainScale = $xScale.copy().range([0, 1]);
-
-  // Track last min/max to fix infinite loop
   let lastExtents: [number | null, number | null] = [null, null];
   $: if (
     ((min == null && max == null) || min !== max) &&
     (lastExtents[0] !== min || lastExtents[1] !== max)
   ) {
     lastExtents = [min, max];
-    dispatch('change', { xDomain: [domainScale.invert(min ?? 0), domainScale.invert(max ?? 1)] });
+    dispatch('change', { xDomain: [min, max] });
   }
 
-  $: left = $width * (min ?? 0);
-  $: right = $width * (max ?? 0);
+  $: left = $xScale(min);
+  $: right = $xScale(max);
 </script>
 
 <g class="Brush">
