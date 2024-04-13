@@ -1,5 +1,5 @@
 ---
-"layerchart": patch
+'layerchart': patch
 ---
 
-[Frame] Expose `rectEl` and forward `mousedown` and `touchstart` events
+[Frame] Expose `rectEl` and forward `mousedown`, `touchstart`, and `dblclick` events
