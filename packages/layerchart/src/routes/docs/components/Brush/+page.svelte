@@ -50,22 +50,12 @@
     </div>
 
     <div class="h-[40px]">
-      <Chart
-        data={data.appleStock}
-        x="date"
-        xScale={scaleTime()}
-        y="value"
-        _yDomain={[0, null]}
-        _yNice
-        padding={{ left: 16 }}
-      >
+      <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" padding={{ left: 16 }}>
         <Svg>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
           <Brush
             on:change={(e) => {
-              if (e.detail.xDomain) {
-                xDomain = e.detail.xDomain;
-              }
+              xDomain = e.detail.xDomain;
             }}
           />
         </Svg>
@@ -101,22 +91,12 @@
     </div>
 
     <div class="h-[40px]">
-      <Chart
-        data={data.appleStock}
-        x="date"
-        xScale={scaleTime()}
-        y="value"
-        _yDomain={[0, null]}
-        _yNice
-        padding={{ left: 16 }}
-      >
+      <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" padding={{ left: 16 }}>
         <Svg>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
           <Brush
             on:change={(e) => {
-              if (e.detail.xDomain) {
-                xDomain = e.detail.xDomain;
-              }
+              xDomain = e.detail.xDomain;
             }}
           />
         </Svg>
