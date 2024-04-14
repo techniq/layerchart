@@ -52,13 +52,7 @@
       <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" padding={{ left: 16 }}>
         <Svg>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
-          <Brush
-            min={xDomain2[0]}
-            max={xDomain2[1]}
-            on:change={(e) => {
-              xDomain2 = e.detail.xDomain;
-            }}
-          />
+          <Brush bind:xDomain={xDomain2} />
         </Svg>
       </Chart>
     </div>

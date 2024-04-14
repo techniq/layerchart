@@ -7,7 +7,7 @@
   import Group from './Group.svelte';
   import { localPoint } from '$lib/utils/event.js';
 
-  const { xScale, xDomain, width, height, padding } = getContext('LayerCake');
+  const { xScale, xDomain: xDomainContext, width, height, padding } = getContext('LayerCake');
 
   const dispatch = createEventDispatcher<{
     change: { xDomain?: [any, any]; yDomain?: [any, any] };
@@ -16,8 +16,7 @@
   // export let axis: 'x' | 'y' | 'both' = 'x';
   export let handleWidth = 5;
 
-  export let min: number | null = null;
-  export let max: number | null = null;
+  export let xDomain: [number | null, number | null] = [null, null];
 
   export let classes: {
     root?: string;
@@ -27,10 +26,10 @@
 
   let frameEl: SVGRectElement;
 
-  $: [xDomainMin, xDomainMax] = extent($xDomain);
+  $: [xDomainMin, xDomainMax] = extent($xDomainContext);
 
   function handler(
-    fn: (start: { min: number; max: number; value: number }, value: number) => void
+    fn: (start: { xDomain: [number, number]; value: number }, value: number) => void
   ) {
     return (e: MouseEvent | TouchEvent) => {
       let startTouch: Touch | null = null;
@@ -45,8 +44,7 @@
       }
 
       const start = {
-        min: min ?? xDomainMin,
-        max: max ?? xDomainMax,
+        xDomain: [xDomain[0] ?? xDomainMin, xDomain[1] ?? xDomainMax],
         value: $xScale.invert(localPoint(frameEl, e)?.x - $padding.left),
       };
 
@@ -85,47 +83,54 @@
   }
 
   const reset = handler((start, value) => {
-    min = clamp(Math.min(start.value, value), xDomainMin, xDomainMax);
-    max = clamp(Math.max(start.value, value), xDomainMin, xDomainMax);
+    xDomain = [
+      clamp(Math.min(start.value, value), xDomainMin, xDomainMax),
+      clamp(Math.max(start.value, value), xDomainMin, xDomainMax),
+    ];
   });
 
   const adjustRange = handler((start, value) => {
-    const d = clamp(value - start.value, xDomainMin - start.min, xDomainMax - start.max);
-    min = Number(start.min) + d;
-    max = Number(start.max) + d;
+    const d = clamp(
+      value - start.value,
+      xDomainMin - start.xDomain[0],
+      xDomainMax - start.xDomain[1]
+    );
+    xDomain = [Number(start.xDomain[0]) + d, Number(start.xDomain[1]) + d];
   });
 
   const adjustMin = handler((start, value) => {
-    min = clamp(value > start.max ? start.max : value, xDomainMin, xDomainMax);
-    max = clamp(value > start.max ? value : start.max, xDomainMin, xDomainMax);
+    xDomain = [
+      clamp(value > start.xDomain[1] ? start.xDomain[1] : value, xDomainMin, xDomainMax),
+      clamp(value > start.xDomain[1] ? value : start.xDomain[1], xDomainMin, xDomainMax),
+    ];
   });
 
   const adjustMax = handler((start, value) => {
-    min = clamp(value < start.min ? value : start.min, xDomainMin, xDomainMax);
-    max = clamp(value < start.min ? start.min : value, xDomainMin, xDomainMax);
+    xDomain = [
+      clamp(value < start.xDomain[0] ? value : start.xDomain[0], xDomainMin, xDomainMax),
+      clamp(value < start.xDomain[0] ? start.xDomain[0] : value, xDomainMin, xDomainMax),
+    ];
   });
 
   function clear() {
-    min = null;
-    max = null;
+    xDomain = [null, null];
   }
 
   function selectAll() {
-    min = xDomainMin;
-    max = xDomainMax;
+    xDomain = [xDomainMin, xDomainMax];
   }
 
-  let lastExtents: [number | null, number | null] = [null, null];
+  let lastDomain: typeof xDomain = [null, null];
   $: if (
-    ((min == null && max == null) || min !== max) &&
-    (lastExtents[0] !== min || lastExtents[1] !== max)
+    ((xDomain[0] == null && xDomain[1] == null) || xDomain[0] !== xDomain[1]) &&
+    (lastDomain[0] !== xDomain[0] || lastDomain[1] !== xDomain[1])
   ) {
-    lastExtents = [min, max];
-    dispatch('change', { xDomain: [min, max] });
+    lastDomain = xDomain;
+    dispatch('change', { xDomain });
   }
 
-  $: left = $xScale(min);
-  $: right = $xScale(max);
+  $: left = $xScale(xDomain[0]);
+  $: right = $xScale(xDomain[1]);
 </script>
 
 <g class="Brush">
@@ -156,7 +161,7 @@
       width={handleWidth}
       height={$height}
       class={cls('fill-transparent cursor-ew-resize select-none')}
-      on:dblclick={() => (min = xDomainMin)}
+      on:dblclick={() => (xDomain[0] = xDomainMin)}
     />
   </Group>
 
@@ -170,7 +175,7 @@
       width={handleWidth}
       height={$height}
       class={cls('fill-transparent cursor-ew-resize select-none')}
-      on:dblclick={() => (max = xDomainMax)}
+      on:dblclick={() => (xDomain[1] = xDomainMax)}
     />
   </Group>
 </g>
