@@ -1,6 +1,7 @@
 <script lang="ts">
   import { scaleTime } from 'd3-scale';
-  import { State } from 'svelte-ux';
+  import { PeriodType, State, format } from 'svelte-ux';
+  import { startOfDay, subDays } from 'date-fns';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Preview from '$lib/docs/Preview.svelte';
@@ -10,15 +11,21 @@
   import Brush from '$lib/components/Brush.svelte';
   import ChartClipPath from '$lib/components/ChartClipPath.svelte';
   import LinearGradient from '$lib/components/LinearGradient.svelte';
+  import Rule from '$lib/components/Rule.svelte';
+
+  import { randomWalk } from '$lib/utils/genData.js';
 
   export let data;
 
-  let xDomain = [new Date('2010-01-01'), new Date('2011-12-31')];
+  const now = new Date();
+  let xDomain = [subDays(now, 50), subDays(now, 10)];
 
-  $: filteredData =
-    xDomain[0] != null && xDomain[1] != null
-      ? data.appleStock.filter((d) => d.date >= xDomain[0] && d.date <= xDomain[1])
-      : data.appleStock;
+  const seriesData = [
+    randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
+    randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
+    randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
+    randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
+  ];
 
   /*
     TODO:
@@ -65,7 +72,7 @@
           padding={{ left: 16 }}
         >
           <Svg>
-            <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
+            <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
             <Brush
               on:change={(e) => {
                 set(e.detail.xDomain);
@@ -80,7 +87,7 @@
 
 <h2>Filter data</h2>
 
-<Preview {filteredData}>
+<Preview {data}>
   <div class="border rounded p-4 grid gap-1">
     <State initial={[null, null]} let:value={xDomain} let:set>
       <div class="h-[300px]">
@@ -120,7 +127,7 @@
           padding={{ left: 16 }}
         >
           <Svg>
-            <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
+            <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
             <Brush
               on:change={(e) => {
                 set(e.detail.xDomain);
@@ -132,41 +139,49 @@
     </State>
   </div>
 </Preview>
-
-<h2>bind to xDomain</h2>
+<h2>Sync brushes and bind to xDomain</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
-    <div class="h-[300px]">
-      <Chart
-        data={data.appleStock}
-        x="date"
-        xScale={scaleTime()}
-        {xDomain}
-        y="value"
-        yDomain={[0, null]}
-        yNice
-        padding={{ left: 16, bottom: 24 }}
-      >
-        <Svg>
-          <Axis placement="left" grid rule />
-          <Axis placement="bottom" rule />
-          <ChartClipPath>
-            <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
-              <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
-            </LinearGradient>
-          </ChartClipPath>
-        </Svg>
-      </Chart>
-    </div>
+  <div class="grid grid-cols-2 gap-4">
+    {#each seriesData as data}
+      <div class="border rounded p-4 grid gap-1">
+        <div class="h-[100px]">
+          <Chart
+            {data}
+            x="date"
+            xScale={scaleTime()}
+            {xDomain}
+            y="value"
+            _yDomain={[0, null]}
+            yBaseline={0}
+            yNice
+            padding={{ left: 16, bottom: 24 }}
+          >
+            <Svg>
+              <Axis placement="left" grid rule />
+              <Axis
+                placement="bottom"
+                format={(v) => format(v, PeriodType.Day, { variant: 'short' })}
+              />
+              <Rule y={0} />
+              <ChartClipPath>
+                <LinearGradient class="from-info/50 to-info/0" vertical let:url>
+                  <Area line={{ class: 'stroke-2 stroke-info' }} fill={url} />
+                </LinearGradient>
+              </ChartClipPath>
+            </Svg>
+          </Chart>
+        </div>
 
-    <div class="h-[40px]">
-      <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" padding={{ left: 16 }}>
-        <Svg>
-          <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
-          <Brush bind:xDomain />
-        </Svg>
-      </Chart>
-    </div>
+        <div class="h-[20px]">
+          <Chart {data} x="date" xScale={scaleTime()} y="value" padding={{ left: 16 }}>
+            <Svg>
+              <Area line={{ class: 'stroke-2 stroke-info' }} class="fill-info/20" />
+              <Brush bind:xDomain />
+            </Svg>
+          </Chart>
+        </div>
+      </div>
+    {/each}
   </div>
 </Preview>
