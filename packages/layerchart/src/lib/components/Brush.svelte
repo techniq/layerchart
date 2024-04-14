@@ -27,6 +27,8 @@
 
   let frameEl: SVGRectElement;
 
+  $: [domainMin, domainMax] = extent($xDomain);
+
   function handler(
     fn: (start: { min: number; max: number; value: number }, value: number) => void
   ) {
@@ -41,8 +43,6 @@
       } else {
         clientX = e.clientX;
       }
-
-      const [domainMin, domainMax] = extent($xDomain);
 
       const start = {
         min: min ?? domainMin,
@@ -85,26 +85,22 @@
   }
 
   const reset = handler((start, value) => {
-    const [domainMin, domainMax] = extent($xDomain);
     min = clamp(Math.min(start.value, value), domainMin, domainMax);
     max = clamp(Math.max(start.value, value), domainMin, domainMax);
   });
 
   const adjustRange = handler((start, value) => {
-    const [domainMin, domainMax] = extent($xDomain);
     const d = clamp(value - start.value, domainMin - start.min, domainMax - start.max);
     min = Number(start.min) + d;
     max = Number(start.max) + d;
   });
 
   const adjustMin = handler((start, value) => {
-    const [domainMin, domainMax] = extent($xDomain);
     min = clamp(value > start.max ? start.max : value, domainMin, domainMax);
     max = clamp(value > start.max ? value : start.max, domainMin, domainMax);
   });
 
   const adjustMax = handler((start, value) => {
-    const [domainMin, domainMax] = extent($xDomain);
     min = clamp(value < start.min ? value : start.min, domainMin, domainMax);
     max = clamp(value < start.min ? start.min : value, domainMin, domainMax);
   });
@@ -115,8 +111,8 @@
   }
 
   function selectAll() {
-    min = $xDomain[0];
-    max = $xDomain[1];
+    min = domainMin;
+    max = domainMax;
   }
 
   let lastExtents: [number | null, number | null] = [null, null];
