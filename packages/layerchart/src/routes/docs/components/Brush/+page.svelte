@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { scaleTime } from 'd3-scale';
-  import { PeriodType, State, format } from 'svelte-ux';
-  import { startOfDay, subDays } from 'date-fns';
+  import { scaleOrdinal, scaleTime } from 'd3-scale';
+  import { PeriodType, State, cls, format } from 'svelte-ux';
+  import { subDays } from 'date-fns';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Preview from '$lib/docs/Preview.svelte';
@@ -18,7 +18,7 @@
   export let data;
 
   const now = new Date();
-  let xDomain = [subDays(now, 50), subDays(now, 10)];
+  let xDomain = [subDays(now, 100), subDays(now, 80)];
 
   const seriesData = [
     randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
@@ -142,9 +142,15 @@
 <h2>Sync brushes and bind to xDomain</h2>
 
 <Preview data={data.appleStock}>
+  {@const colorScale = scaleOrdinal([
+    'var(--color-success-500)',
+    'var(--color-info-500)',
+    'var(--color-warning-500)',
+    'var(--color-danger-500)',
+  ])}
   <div class="grid grid-cols-2 gap-4">
-    {#each seriesData as data}
-      <div class="border rounded p-4 grid gap-1">
+    {#each seriesData as data, i}
+      <div class="border rounded p-4 grid gap-1" style:--chart-color={colorScale(i)}>
         <div class="h-[100px]">
           <Chart
             {data}
@@ -152,7 +158,6 @@
             xScale={scaleTime()}
             {xDomain}
             y="value"
-            _yDomain={[0, null]}
             yBaseline={0}
             yNice
             padding={{ left: 16, bottom: 24 }}
@@ -165,8 +170,12 @@
               />
               <Rule y={0} />
               <ChartClipPath>
-                <LinearGradient class="from-info/50 to-info/0" vertical let:url>
-                  <Area line={{ class: 'stroke-2 stroke-info' }} fill={url} />
+                <LinearGradient
+                  class="from-[hsl(var(--chart-color)/50%)] to-transparent"
+                  vertical
+                  let:url
+                >
+                  <Area line={{ class: 'stroke-2 stroke-[hsl(var(--chart-color))]' }} fill={url} />
                 </LinearGradient>
               </ChartClipPath>
             </Svg>
@@ -176,7 +185,10 @@
         <div class="h-[20px]">
           <Chart {data} x="date" xScale={scaleTime()} y="value" padding={{ left: 16 }}>
             <Svg>
-              <Area line={{ class: 'stroke-2 stroke-info' }} class="fill-info/20" />
+              <Area
+                line={{ class: 'stroke-2 stroke-[hsl(var(--chart-color))]' }}
+                class="fill-[hsl(var(--chart-color)/20%)]"
+              />
               <Brush bind:xDomain />
             </Svg>
           </Chart>
