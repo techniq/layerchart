@@ -27,7 +27,7 @@
 
   let frameEl: SVGRectElement;
 
-  $: [domainMin, domainMax] = extent($xDomain);
+  $: [xDomainMin, xDomainMax] = extent($xDomain);
 
   function handler(
     fn: (start: { min: number; max: number; value: number }, value: number) => void
@@ -45,8 +45,8 @@
       }
 
       const start = {
-        min: min ?? domainMin,
-        max: max ?? domainMax,
+        min: min ?? xDomainMin,
+        max: max ?? xDomainMax,
         value: $xScale.invert(localPoint(frameEl, e)?.x - $padding.left),
       };
 
@@ -85,24 +85,24 @@
   }
 
   const reset = handler((start, value) => {
-    min = clamp(Math.min(start.value, value), domainMin, domainMax);
-    max = clamp(Math.max(start.value, value), domainMin, domainMax);
+    min = clamp(Math.min(start.value, value), xDomainMin, xDomainMax);
+    max = clamp(Math.max(start.value, value), xDomainMin, xDomainMax);
   });
 
   const adjustRange = handler((start, value) => {
-    const d = clamp(value - start.value, domainMin - start.min, domainMax - start.max);
+    const d = clamp(value - start.value, xDomainMin - start.min, xDomainMax - start.max);
     min = Number(start.min) + d;
     max = Number(start.max) + d;
   });
 
   const adjustMin = handler((start, value) => {
-    min = clamp(value > start.max ? start.max : value, domainMin, domainMax);
-    max = clamp(value > start.max ? value : start.max, domainMin, domainMax);
+    min = clamp(value > start.max ? start.max : value, xDomainMin, xDomainMax);
+    max = clamp(value > start.max ? value : start.max, xDomainMin, xDomainMax);
   });
 
   const adjustMax = handler((start, value) => {
-    min = clamp(value < start.min ? value : start.min, domainMin, domainMax);
-    max = clamp(value < start.min ? start.min : value, domainMin, domainMax);
+    min = clamp(value < start.min ? value : start.min, xDomainMin, xDomainMax);
+    max = clamp(value < start.min ? start.min : value, xDomainMin, xDomainMax);
   });
 
   function clear() {
@@ -111,8 +111,8 @@
   }
 
   function selectAll() {
-    min = domainMin;
-    max = domainMax;
+    min = xDomainMin;
+    max = xDomainMax;
   }
 
   let lastExtents: [number | null, number | null] = [null, null];
@@ -156,6 +156,7 @@
       width={handleWidth}
       height={$height}
       class={cls('fill-transparent cursor-ew-resize select-none')}
+      on:dblclick={() => (min = xDomainMin)}
     />
   </Group>
 
@@ -169,6 +170,7 @@
       width={handleWidth}
       height={$height}
       class={cls('fill-transparent cursor-ew-resize select-none')}
+      on:dblclick={() => (max = xDomainMax)}
     />
   </Group>
 </g>
