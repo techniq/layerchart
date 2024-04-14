@@ -93,8 +93,8 @@
   const adjustRange = handler((start, value) => {
     const [domainMin, domainMax] = extent($xDomain);
     const d = clamp(value - start.value, domainMin - start.min, domainMax - start.max);
-    min = start.min + d;
-    max = start.max + d;
+    min = Number(start.min) + d;
+    max = Number(start.max) + d;
   });
 
   const adjustMin = handler((start, value) => {
