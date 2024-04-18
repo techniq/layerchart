@@ -6,6 +6,9 @@ export async function load({ fetch }) {
     geojson: await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(
       (r) => r.json()
     ),
+    tectonicPlates: await fetch(
+      'https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json'
+    ).then((r) => r.json()),
     earthquakes: await fetch(
       'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson'
     )

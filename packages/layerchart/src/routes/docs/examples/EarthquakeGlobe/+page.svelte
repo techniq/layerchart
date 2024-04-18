@@ -118,9 +118,9 @@
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
 
           <Graticule class="stroke-surface-content/20" />
-          {#each countries.features as country}
-            <GeoPath geojson={country} class="stroke-surface-100/30 fill-surface-content" />
-          {/each}
+
+          <GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
+          <GeoPath geojson={data.tectonicPlates} class="stroke-danger-100/30" />
 
           {#each data.earthquakes as eq}
             <GeoCircle
