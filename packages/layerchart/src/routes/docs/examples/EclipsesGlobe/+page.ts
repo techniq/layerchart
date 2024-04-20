@@ -11,7 +11,12 @@ export async function load({ fetch }) {
     ),
     meta: {
       pageSource,
-      related: ['https://www.visionscarto.net/empreintes-d-eclipses'],
+      related: [
+        'https://www.visionscarto.net/empreintes-d-eclipses',
+        'http://xjubier.free.fr/en/site_pages/Solar_Eclipses.html',
+        'https://stanke.co/creating-orthographic-maps-in-tableau/',
+        'https://www.washingtonpost.com/graphics/national/eclipse/',
+      ],
     },
   };
 }
