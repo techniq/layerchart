@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.36.0
+
+### Minor Changes
+
+- [GeoPath / GeoPoint] Support CSS styling (tailwind classes, etc) within <Canvas> context ([#141](https://github.com/techniq/layerchart/pull/141))
+
 ## 0.35.0
 
 ### Minor Changes
