@@ -1,9 +1,7 @@
 <script lang="ts">
   import { index, max, descending } from 'd3-array';
   import { geoIdentity } from 'd3-geo';
-  import { scaleLinear, scaleThreshold } from 'd3-scale';
-  import { interpolateViridis } from 'd3-scale-chromatic';
-  import { quantize } from 'd3-interpolate';
+  import { scaleLinear } from 'd3-scale';
   import { feature } from 'topojson-client';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -35,14 +33,6 @@
   $: heightScale = scaleLinear()
     .domain([0, max(population, (d) => d.population)])
     .range([0, maxHeight]);
-
-  $: colors = quantize(interpolateViridis, 5);
-  // $: colorScale = scaleQuantize()
-  // 	.domain([0, max(population, d => d.percentUnder18)])
-  // 	.range(colors)
-  $: colorScale = scaleThreshold()
-    .domain([16, 20, 24, 28, Math.ceil(max(population, (d) => d.percentUnder18))])
-    .range(colors);
 
   $: enrichedCountiesFeatures = counties.features
     .map((feature) => {
@@ -132,24 +122,28 @@
       }}
     >
       <Canvas>
-        <GeoPath geojson={states} fill="rgba(0,0,0,.1)" stroke="white" />
+        <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
       </Canvas>
       <Canvas>
         <GeoPath
           geojson={feature}
+          class="stroke-red-500 fill-red-500/25"
           render={(ctx, { geoPath }) => {
+            const computedStyle = window.getComputedStyle(ctx.canvas);
+
             for (var feature of enrichedCountiesFeatures) {
               const [x, y] = geoPath.centroid(feature);
               const d = feature.properties.data;
               const height = heightScale(d?.population);
-              const color = '#FF0000';
-              const radius = 5;
-              ctx.strokeStyle = color;
-              ctx.fillStyle = '#FF0000' + (256 * 0.25).toString(16);
-              ctx.beginPath();
+
+              ctx.strokeStyle = computedStyle.stroke;
+              ctx.fillStyle = computedStyle.fill;
+
               const startPoint = [x - width / 2, y];
               const midPoint = [x, y - height];
               const endPoint = [x + width / 2, y];
+
+              ctx.beginPath();
               ctx.moveTo(...startPoint);
               ctx.lineTo(...midPoint);
               ctx.lineTo(...endPoint);

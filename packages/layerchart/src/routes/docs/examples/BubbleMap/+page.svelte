@@ -137,7 +137,7 @@
       }}
     >
       <Canvas>
-        <GeoPath geojson={states} fill="rgba(0,0,0,.1)" stroke="white" />
+        <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
       </Canvas>
       <Canvas>
         <GeoPath

@@ -119,13 +119,13 @@
       }}
     >
       <Canvas>
-        <GeoPath geojson={{ type: 'Sphere' }} fill="#93c5fd" />
+        <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content fill-blue-400/50" />
       </Canvas>
       <Canvas>
-        <Graticule stroke="rgba(0,0,0,.20)" />
+        <Graticule class="stroke-surface-content/20" />
       </Canvas>
       <Canvas>
-        <GeoPath {geojson} fill="white" />
+        <GeoPath {geojson} class="stroke-surface-content/50 fill-white" />
       </Canvas>
     </Chart>
   </div>

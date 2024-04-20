@@ -126,7 +126,7 @@
         <GeoTile url={serviceUrl} {zoomDelta} />
       </Canvas>
       <Canvas>
-        <GeoPath geojson={filteredStates} stroke="rgba(0,0,0,.2)" />
+        <GeoPath geojson={filteredStates} class="stroke-black/20" />
       </Canvas>
     </Chart>
   </div>
