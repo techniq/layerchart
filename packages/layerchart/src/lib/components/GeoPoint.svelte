@@ -26,9 +26,13 @@
 
   $: ctx = canvas?.ctx;
   $: if (renderContext === 'canvas' && $ctx) {
-    // console.count('render');
     scaleCanvas($ctx, $width, $height);
     $ctx.clearRect(0, 0, $width, $height);
+
+    // Transfer classes defined on <GeoPoint> to <canvas> to enable window.getComputedStyle() retrieval (Tailwind classes, etc)
+    if ($$props.class) {
+      $ctx.canvas.classList.add(...$$props.class.split(' '));
+    }
 
     render($ctx, { x, y });
   }

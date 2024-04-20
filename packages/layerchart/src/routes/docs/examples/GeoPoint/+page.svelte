@@ -185,28 +185,43 @@
       }}
     >
       <Canvas>
-        <GeoPath geojson={states} fill="#e5e7eb" stroke="white" />
+        <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
       </Canvas>
+
       {#each data.us.stateCaptitals as capital}
         <Canvas>
+          <!-- Point -->
           <GeoPoint
             lat={capital.latitude}
             long={capital.longitude}
+            class="fill-white stroke-danger"
             render={(ctx, { x, y }) => {
-              // point
+              const computedStyle = window.getComputedStyle(ctx.canvas);
               const radius = 2;
-              ctx.strokeStyle = 'red';
-              ctx.fillStyle = 'white';
+              ctx.strokeStyle = computedStyle.stroke;
+              ctx.fillStyle = computedStyle.fill;
               ctx.beginPath();
               ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
               ctx.fill();
               ctx.stroke();
-              // label
+            }}
+          />
+        </Canvas>
+
+        <!-- Use separate canvas/points for separate stroke/fill classes -->
+        <Canvas>
+          <!-- Label -->
+          <GeoPoint
+            lat={capital.latitude}
+            long={capital.longitude}
+            class="fill-surface-content stroke-surface-100"
+            render={(ctx, { x, y }) => {
+              const computedStyle = window.getComputedStyle(ctx.canvas);
               ctx.font = '8px sans-serif';
               ctx.textAlign = 'center';
-              ctx.strokeStyle = 'white';
               ctx.lineWidth = 2;
-              ctx.fillStyle = 'black';
+              ctx.strokeStyle = computedStyle.stroke;
+              ctx.fillStyle = computedStyle.fill;
               ctx.strokeText(capital.description, x, y - 6);
               ctx.fillText(capital.description, x, y - 6);
             }}

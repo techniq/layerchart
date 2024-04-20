@@ -63,20 +63,24 @@
       }}
     >
       <Canvas>
-        <GeoPath geojson={states} fill="#e5e7eb" stroke="white" />
+        <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
       </Canvas>
       {#each states.features as feature}
         <Canvas>
           <GeoPath
             geojson={feature}
+            class="fill-surface-content stroke-surface-100"
             render={(ctx, { geoPath }) => {
               const [x, y] = geoPath.centroid(feature);
+              const computedStyle = window.getComputedStyle(ctx.canvas);
               ctx.font = '8px sans-serif';
               ctx.textAlign = 'center';
-              ctx.strokeStyle = 'white';
+
               ctx.lineWidth = 2;
-              ctx.fillStyle = 'black';
+              ctx.strokeStyle = computedStyle.stroke;
               ctx.strokeText(feature.properties.name, x, y);
+
+              ctx.fillStyle = computedStyle.fill;
               ctx.fillText(feature.properties.name, x, y);
             }}
           />

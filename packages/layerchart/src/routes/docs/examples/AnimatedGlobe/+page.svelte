@@ -193,16 +193,16 @@
       }}
     >
       <Canvas>
-        <GeoPath geojson={{ type: 'Sphere' }} fill="#93c5fd" />
+        <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
       </Canvas>
       <Canvas>
-        <Graticule stroke="rgba(0,0,0,.20)" />
+        <Graticule class="stroke-surface-content/20" />
       </Canvas>
       <Canvas>
-        <GeoPath geojson={countries} fill="white" />
+        <GeoPath geojson={countries} class="stroke-surface-content/50 fill-white" />
       </Canvas>
       <Canvas>
-        <GeoPath geojson={selectedFeature} fill="firebrick" />
+        <GeoPath geojson={selectedFeature} class="fill-primary" />
       </Canvas>
     </Chart>
   </div>

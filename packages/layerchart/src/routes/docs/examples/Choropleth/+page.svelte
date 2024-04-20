@@ -144,7 +144,7 @@
         />
       </Canvas>
       <Canvas>
-        <GeoPath geojson={states} stroke="#0000004C" />
+        <GeoPath geojson={states} class="stroke-black/30" />
       </Canvas>
     </Chart>
   </div>

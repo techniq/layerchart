@@ -70,10 +70,10 @@
       }}
     >
       <Canvas>
-        <GeoPath geojson={states} fill="white" />
+        <GeoPath geojson={states} class="stroke-surface-content" />
       </Canvas>
       <Canvas>
-        <GeoPath geojson={counties} stroke="rgba(0,0,0,.1)" />
+        <GeoPath geojson={counties} class="stroke-surface-content/20" />
       </Canvas>
     </Chart>
   </div>

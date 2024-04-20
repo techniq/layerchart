@@ -43,10 +43,20 @@
 
   $: geoPath = geoCurvePath($geo, curve);
 
+  const DEFAULT_FILL = 'rgb(0, 0, 0)';
+
   $: renderContext = canvas ? 'canvas' : 'svg';
 
   $: ctx = canvas?.ctx;
   $: if (renderContext === 'canvas' && $ctx) {
+    let computedStyles: Partial<CSSStyleDeclaration> = {};
+
+    // Transfer classes defined on <GeoPath> to <canvas> to enable window.getComputedStyle() retrieval (Tailwind classes, etc)
+    if ($$props.class) {
+      $ctx.canvas.classList.add(...$$props.class.split(' '));
+      computedStyles = window.getComputedStyle($ctx.canvas);
+    }
+
     // console.count('render');
     scaleCanvas($ctx, $width, $height);
     $ctx.clearRect(0, 0, $width, $height);
@@ -60,11 +70,14 @@
       geoPath = geoCurvePath($geo, curve, $ctx);
       geoPath(geojson);
 
-      $ctx.fillStyle = fill || 'transparent';
+      $ctx.fillStyle =
+        fill ??
+        (computedStyles.fill !== DEFAULT_FILL ? computedStyles.fill : undefined) ??
+        'transparent';
       $ctx.fill();
 
       $ctx.lineWidth = strokeWidth;
-      $ctx.strokeStyle = stroke;
+      $ctx.strokeStyle = stroke ?? computedStyles.stroke;
       $ctx.stroke();
     }
   }
