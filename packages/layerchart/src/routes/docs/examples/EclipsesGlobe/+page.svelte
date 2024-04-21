@@ -50,7 +50,7 @@
 
   $: dateExtents = extent(eclipses.features.map((f) => f.properties.Date));
   $: colorScale = scaleDiverging([dateExtents[0], new Date(), dateExtents[1]], (t) =>
-    t < 0.5 ? interpolatePurples(t + 0.5) : interpolateGreens(1 - t + 0.5)
+    t < 0.5 ? interpolatePurples(1 - t) : interpolateGreens(t)
   );
 </script>
 
