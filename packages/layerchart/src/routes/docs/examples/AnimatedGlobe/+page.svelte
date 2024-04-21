@@ -13,6 +13,7 @@
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Graticule from '$lib/components/Graticule.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
+  import Transform from '$lib/components/Transform.svelte';
   import { timings } from './timings.js';
 
   export let data;
@@ -23,6 +24,7 @@
   const yaw = spring(0, springOptions);
   const pitch = spring(0, springOptions);
   const roll = spring(0, springOptions);
+  const sensitivity = 75;
 
   let selectedFeature;
   $: if (selectedFeature) {
@@ -126,21 +128,33 @@
       }}
       tooltip={{ mode: 'manual' }}
       let:tooltip
+      let:projection
     >
       <Svg>
-        <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
-        <Graticule class="stroke-surface-content/20" />
-        {#each countries.features as country}
-          <GeoPath
-            geojson={country}
-            class={cls(
-              'stroke-surface-content/50 fill-white cursor-pointer',
-              selectedFeature === country ? 'fill-primary' : 'hover:fill-gray-200'
-            )}
-            on:click={(e) => (selectedFeature = country)}
-            {tooltip}
-          />
-        {/each}
+        <Transform
+          mode="manual"
+          scroll="none"
+          on:transform={(e) => {
+            $yaw = e.detail.translate.x * (sensitivity / projection.scale());
+            $pitch = -e.detail.translate.y * (sensitivity / projection.scale());
+          }}
+        >
+          <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
+          <Graticule class="stroke-surface-content/20" />
+          {#each countries.features as country}
+            <GeoPath
+              geojson={country}
+              class={cls(
+                'stroke-surface-content/50 fill-white cursor-pointer',
+                selectedFeature === country
+                  ? 'stroke-primary-900 fill-primary'
+                  : 'hover:fill-gray-200'
+              )}
+              on:click={(e) => (selectedFeature = country)}
+              {tooltip}
+            />
+          {/each}
+        </Transform>
       </Svg>
 
       <Tooltip>
@@ -202,7 +216,7 @@
         <GeoPath geojson={countries} class="stroke-surface-content/50 fill-white" />
       </Canvas>
       <Canvas>
-        <GeoPath geojson={selectedFeature} class="fill-primary" />
+        <GeoPath geojson={selectedFeature} class="stroke-primary-900 fill-primary" />
       </Canvas>
     </Chart>
   </div>
