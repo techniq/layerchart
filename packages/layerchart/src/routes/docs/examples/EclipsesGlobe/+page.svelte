@@ -3,7 +3,7 @@
   import { geoOrthographic } from 'd3-geo';
   import { extent } from 'd3-array';
   import { scaleDiverging } from 'd3-scale';
-  import { interpolateViridis } from 'd3-scale-chromatic';
+  import { interpolateGreens, interpolatePurples } from 'd3-scale-chromatic';
   import { feature } from 'topojson-client';
 
   import {
@@ -49,7 +49,9 @@
   $timer;
 
   $: dateExtents = extent(eclipses.features.map((f) => f.properties.Date));
-  $: colorScale = scaleDiverging([dateExtents[0], new Date(), dateExtents[1]], interpolateViridis);
+  $: colorScale = scaleDiverging([dateExtents[0], new Date(), dateExtents[1]], (t) =>
+    t < 0.5 ? interpolatePurples(t + 0.5) : interpolateGreens(1 - t + 0.5)
+  );
 </script>
 
 <h1>Examples</h1>
