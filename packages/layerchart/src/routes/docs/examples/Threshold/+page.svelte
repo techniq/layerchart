@@ -81,7 +81,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ findTooltipData: 'left' }}
+      tooltip={{ mode: 'bisect-x', findTooltipData: 'left' }}
     >
       <Svg>
         <Axis placement="left" grid rule />
