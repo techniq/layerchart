@@ -203,8 +203,8 @@
       tooltip={{ mode: 'band' }}
     >
       <Svg>
-        <Axis placement="left" grid rule format="metric" />
-        <Axis placement="bottom" rule ticks={4} />
+        <Axis placement="left" grid rule format="metric" tweened />
+        <Axis placement="bottom" rule ticks={4} tweened />
         <Bars radius={4} strokeWidth={1} tweened class="fill-primary" />
         <Highlight area />
       </Svg>
