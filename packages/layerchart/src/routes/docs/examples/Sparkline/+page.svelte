@@ -62,7 +62,7 @@
 <h2>With Tooltip and Highlight</h2>
 <Preview {data}>
   <div class="w-[125px] h-[25px]">
-    <Chart {data} x="date" xScale={scaleTime()} y="value" tooltip>
+    <Chart {data} x="date" xScale={scaleTime()} y="value" tooltip={{ mode: 'bisect-x' }}>
       <Svg>
         <Spline class="stroke-1 stroke-primary" />
         <Highlight points={{ r: 3, class: 'stroke-none' }} />
@@ -82,7 +82,14 @@
 <h2>With Tooltip and Highlight (fixed position)</h2>
 <Preview {data}>
   <div class="w-[125px] h-[25px]">
-    <Chart {data} x="date" xScale={scaleTime()} y="value" tooltip let:containerWidth>
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      tooltip={{ mode: 'bisect-x' }}
+      let:containerWidth
+    >
       <Svg>
         <Spline class="stroke-1 stroke-primary" />
         <Highlight points={{ r: 3, class: 'stroke-none' }} />
@@ -114,7 +121,14 @@
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pretium, ligula ac sollicitudin
       ullamcorper, leo justo pretium tellus, at gravida ex quam et orci.
       <span class="w-[125px] h-[18px] inline-block">
-        <Chart {data} x="date" xScale={scaleTime()} y="value" tooltip let:containerHeight>
+        <Chart
+          {data}
+          x="date"
+          xScale={scaleTime()}
+          y="value"
+          tooltip={{ mode: 'bisect-x' }}
+          let:containerHeight
+        >
           <Svg>
             <Spline class="stroke-1 stroke-primary" />
             <Highlight points lines />
