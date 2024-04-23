@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.36.1
+
+### Patch Changes
+
+- [Highlight] Support passing `data` prop to use (annotate) specific data point, else uses tooltip data as before. ([`83c98e66a4915ac6e35b23864ac0d54a4dcd28e0`](https://github.com/techniq/layerchart/commit/83c98e66a4915ac6e35b23864ac0d54a4dcd28e0))
+
 ## 0.36.0
 
 ### Minor Changes
