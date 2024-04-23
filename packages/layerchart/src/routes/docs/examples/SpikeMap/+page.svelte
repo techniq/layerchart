@@ -74,7 +74,7 @@
             <Group {x} {y}>
               <path
                 d="M{-width / 2},0 L0,{-height} L{width / 2},0"
-                class="stroke-red-500 fill-red-500/25"
+                class="stroke-danger fill-danger/25"
               />
             </Group>
           </GeoPath>
@@ -127,7 +127,7 @@
       <Canvas>
         <GeoPath
           geojson={feature}
-          class="stroke-red-500 fill-red-500/25"
+          class="stroke-danger fill-danger/25"
           render={(ctx, { geoPath }) => {
             const computedStyle = window.getComputedStyle(ctx.canvas);
 

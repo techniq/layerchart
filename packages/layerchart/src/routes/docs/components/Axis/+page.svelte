@@ -205,11 +205,11 @@
       <Svg>
         <Axis
           placement="bottom"
-          rule={{ class: 'stroke-red-500' }}
+          rule={{ class: 'stroke-danger' }}
           labelProps={{
             rotate: 315,
             textAnchor: 'end',
-            class: 'fill-red-500 font-semibold',
+            class: 'fill-danger font-semibold',
           }}
         />
         <Axis placement="left" />

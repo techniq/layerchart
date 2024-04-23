@@ -27,6 +27,9 @@
   } = getContext('LayerCake');
   const tooltip = tooltipContext();
 
+  /** Highlight specific data (annotate), espect uses tooltip data */
+  export let data: any = undefined;
+
   export let axis: 'x' | 'y' | 'both' | 'none' | undefined = undefined;
 
   /** Show points and pass props to Circles */
@@ -52,11 +55,13 @@
     height: 0,
   };
 
-  $: if ($tooltip.data) {
-    let xCoord = $xGet($tooltip.data);
+  $: highlightData = data ?? $tooltip.data;
+
+  $: if (highlightData) {
+    let xCoord = $xGet(highlightData);
     let xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
 
-    let yCoord = $yGet($tooltip.data);
+    let yCoord = $yGet(highlightData);
     let yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
 
     // Reset lines
@@ -100,7 +105,7 @@
         _area.width = $xScale.step();
       } else {
         // Find width to next data point
-        const index = $flatData.findIndex((d) => Number($x(d)) === Number($x($tooltip.data)));
+        const index = $flatData.findIndex((d) => Number($x(d)) === Number($x(highlightData)));
         const isLastPoint = index + 1 === $flatData.length;
         const nextDataPoint = isLastPoint ? max($xDomain) : $x($flatData[index + 1]);
         _area.width = ($xScale(nextDataPoint) ?? 0) - (xCoord ?? 0);
@@ -149,7 +154,7 @@
         _area.height = $yScale.step();
       } else {
         // Find width to next data point
-        const index = $flatData.findIndex((d) => Number($x(d)) === Number($x($tooltip.data)));
+        const index = $flatData.findIndex((d) => Number($x(d)) === Number($x(highlightData)));
         const isLastPoint = index + 1 === $flatData.length;
         const nextDataPoint = isLastPoint ? max($yDomain) : $x($flatData[index + 1]);
         _area.height = ($yScale(nextDataPoint) ?? 0) - (yCoord ?? 0);
@@ -170,11 +175,11 @@
       // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
       _points = xCoord.filter(notNull).map((xItem, i) => ({
         x: xItem + xOffset,
-        y: $yGet($tooltip.data) + yOffset,
+        y: $yGet(highlightData) + yOffset,
       }));
-    } else if (Array.isArray($tooltip.data)) {
+    } else if (Array.isArray(highlightData)) {
       // Stack series
-      _points = $tooltip.data.map((yValue, i) => ({
+      _points = highlightData.map((yValue, i) => ({
         x: xCoord + xOffset,
         y: $yScale(yValue) + yOffset,
       }));
@@ -182,14 +187,14 @@
       _points = [
         {
           x: xCoord + xOffset,
-          y: $yGet($tooltip.data) + yOffset,
+          y: $yGet(highlightData) + yOffset,
         },
       ];
     }
   }
 </script>
 
-{#if $tooltip.data}
+{#if highlightData}
   {#if area}
     <slot name="area" area={_area}>
       <Rect
@@ -215,7 +220,7 @@
         stroke={typeof bar === 'object' ? bar.stroke : null}
         strokeWidth={typeof bar === 'object' ? bar.strokeWidth : null}
         radius={typeof bar === 'object' ? bar.radius : null}
-        bar={$tooltip.data}
+        bar={highlightData}
         class={cls(!bar.fill && 'fill-primary', typeof bar === 'object' ? bar.class : null)}
         on:click
       />
@@ -245,7 +250,7 @@
     <slot name="points" points={_points}>
       {#each _points as point}
         <!-- TODO: Improve color with stacked data -->
-        {@const fill = $config.r ? $rGet($tooltip.data) : null}
+        {@const fill = $config.r ? $rGet(highlightData) : null}
         <Circle
           spring
           cx={point.x}

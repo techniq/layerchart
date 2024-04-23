@@ -348,6 +348,64 @@
   </div>
 </Preview>
 
+<h2>Highlight individual bar</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="value"
+      xDomain={[0, null]}
+      xNice
+      y="date"
+      yScale={scaleBand().padding(0.4)}
+      padding={{ left: 20, bottom: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" grid rule />
+        <Axis
+          placement="left"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Highlight data={data[3]} area />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Highlight individual bar (line)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="value"
+      xDomain={[0, null]}
+      xNice
+      y="date"
+      yScale={scaleBand().padding(0.4)}
+      padding={{ left: 20, bottom: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" grid rule />
+        <Axis
+          placement="left"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Highlight
+          data={data[3]}
+          lines={{ class: 'stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] ' }}
+          axis="x"
+        />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Average annotation Rule</h2>
 
 <Preview {data}>
@@ -371,7 +429,7 @@
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Rule
           x={median(data, (d) => d.value)}
-          class="stroke-2 stroke-red-400 [stroke-dasharray:4] [stroke-linecap:round] "
+          class="stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] "
         />
       </Svg>
     </Chart>
