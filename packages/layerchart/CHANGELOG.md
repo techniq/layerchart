@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.36.2
+
+### Patch Changes
+
+- [Legend/ColorRamp] Fix color ramp image size and legend text size on Firefox ([`3e16640d8e1d77d35f9da5e3874990ae8511b61c`](https://github.com/techniq/layerchart/commit/3e16640d8e1d77d35f9da5e3874990ae8511b61c))
+
 ## 0.36.1
 
 ### Patch Changes
