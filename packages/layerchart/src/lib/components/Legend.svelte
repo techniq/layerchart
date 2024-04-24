@@ -175,7 +175,7 @@
             x={xScale(tick) + tickLabelOffset}
             y={height + tickLength + tickFontSize}
             style:font-size={tickFontSize}
-            class={cls('fill-surface-content', classes.label)}
+            class={cls('fill-surface-content text-[10px]', classes.label)}
           >
             {tickFormat ? format(tick, tickFormat) : tick}
           </text>

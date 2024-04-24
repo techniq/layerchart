@@ -18,4 +18,4 @@
   }
 </script>
 
-<image {href} preserveAspectRatio="none" style:height style:width {...$$restProps} />
+<image {href} preserveAspectRatio="none" {height} {width} {...$$restProps} />
