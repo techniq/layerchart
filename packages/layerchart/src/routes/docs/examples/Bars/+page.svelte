@@ -2,7 +2,7 @@
   import { cubicInOut } from 'svelte/easing';
   import { scaleBand, scaleOrdinal } from 'd3-scale';
   import { format } from 'date-fns';
-  import { extent, median } from 'd3-array';
+  import { extent, mean } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
 
   import {
@@ -24,6 +24,7 @@
   import Labels from '$lib/components/Labels.svelte';
   import LinearGradient from '$lib/components/LinearGradient.svelte';
   import RectClipPath from '$lib/components/RectClipPath.svelte';
+  import Text from '$lib/components/Text.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -418,7 +419,9 @@
       y="date"
       yScale={scaleBand().padding(0.4)}
       padding={{ left: 20, bottom: 20 }}
+      let:xScale
     >
+      {@const avg = mean(data, (d) => d.value)}
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis
@@ -427,9 +430,15 @@
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
-        <Rule
-          x={median(data, (d) => d.value)}
-          class="stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] "
+        <Rule x={avg} class="stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] " />
+        <Text
+          x={xScale(avg)}
+          y={0}
+          dx={-4}
+          value="Avg"
+          textAnchor="end"
+          verticalAnchor="start"
+          class="text-sm fill-danger stroke-surface-100 stroke-2"
         />
       </Svg>
     </Chart>
