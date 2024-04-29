@@ -43,7 +43,7 @@ pnpm i
 ### Run dev server for `layerchart` package
 
 ```
-cd packages/svelte-ux
+cd packages/layerchart
 pnpm dev
 ```
 
