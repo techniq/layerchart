@@ -1,11 +1,7 @@
 <script lang="ts">
   import { Field, RangeField, Switch } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Arc from '$lib/components/Arc.svelte';
-  import Group from '$lib/components/Group.svelte';
-  import LinearGradient from '$lib/components/LinearGradient.svelte';
-  import Text from '$lib/components/Text.svelte';
+  import { Arc, Chart, Svg, Group, LinearGradient, Text } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
 
