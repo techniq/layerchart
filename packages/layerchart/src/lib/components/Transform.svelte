@@ -79,9 +79,6 @@
     startPoint = localPoint(svgEl, e);
     startTranslate = $translate;
 
-    window.addEventListener('pointermove', onPointerMove, { capture: true });
-    window.addEventListener('pointerup', onPointerUp);
-
     dispatch('dragstart');
   }
 
@@ -90,6 +87,7 @@
 
     e.preventDefault(); // Stop text selection
     e.stopPropagation(); // Stop tooltip from trigging (along with `capture: true`)
+    e.currentTarget.setPointerCapture(e.pointerId);
 
     const endPoint = localPoint(svgEl, e);
     const deltaX = endPoint.x - startPoint.x;
@@ -111,9 +109,6 @@
 
   function onPointerUp(e: PointerEvent) {
     dragging = false;
-
-    window.removeEventListener('pointermove', onPointerMove);
-    window.removeEventListener('pointerup', onPointerUp);
     dispatch('dragend');
   }
 
@@ -231,6 +226,8 @@
 <g
   on:mousewheel={onWheel}
   on:pointerdown={onPointerDown}
+  on:pointermove={onPointerMove}
+  on:pointerup={onPointerUp}
   on:dblclick={onDoubleClick}
   on:click|capture={onClick}
   on:click
