@@ -16,8 +16,7 @@
   width={$width + (full ? $padding.left + $padding.right : 0)}
   height={$height + (full ? $padding.top + $padding.bottom : 0)}
   on:click
-  on:mousedown
-  on:touchstart
+  on:pointerdown
   on:dblclick
   bind:this={rectEl}
   {...$$restProps}

@@ -31,54 +31,49 @@
   function handler(
     fn: (start: { xDomain: [number, number]; value: number }, value: number) => void
   ) {
-    return (e: MouseEvent | TouchEvent) => {
-      let startTouch: Touch | null = null;
+    return (e: PointerEvent) => {
+      // let startTouch: Touch | null = null;
       let clientX: number;
 
-      if (e instanceof TouchEvent) {
-        if (e.touches.length !== 1) return;
-        startTouch = e.touches[0];
-        clientX = startTouch.clientX;
-      } else {
-        clientX = e.clientX;
-      }
+      // if (e instanceof TouchEvent) {
+      //   if (e.touches.length !== 1) return;
+      //   startTouch = e.touches[0];
+      //   clientX = startTouch.clientX;
+      // } else {
+      clientX = e.clientX;
+      // }
 
       const start = {
         xDomain: [xDomain[0] ?? xDomainMin, xDomain[1] ?? xDomainMax],
         value: $xScale.invert(localPoint(frameEl, e)?.x - $padding.left),
       };
 
-      const onMove = (e: MouseEvent | TouchEvent) => {
-        if (e instanceof TouchEvent) {
-          if (e instanceof TouchEvent && e.changedTouches.length !== 1) return;
-          const touch = e.changedTouches[0];
-          if (touch.identifier !== startTouch?.identifier) return;
-          fn(start, $xScale.invert(localPoint(frameEl, touch)?.x - $padding.left));
-        } else {
-          fn(start, $xScale.invert(localPoint(frameEl, e)?.x - $padding.left));
-        }
+      const onMove = (e: PointerEvent) => {
+        // if (e instanceof TouchEvent) {
+        //   if (e instanceof TouchEvent && e.changedTouches.length !== 1) return;
+        //   const touch = e.changedTouches[0];
+        //   if (touch.identifier !== startTouch?.identifier) return;
+        //   fn(start, $xScale.invert(localPoint(frameEl, touch)?.x - $padding.left));
+        // } else {
+        fn(start, $xScale.invert(localPoint(frameEl, e)?.x - $padding.left));
+        // }
       };
 
-      const onEnd = (e: MouseEvent | TouchEvent) => {
-        if (e instanceof TouchEvent) {
-          if (e.changedTouches.length !== 1) return;
-          if (e.changedTouches[0].identifier !== startTouch?.identifier) return;
-        } else if (e.target === frameEl) {
+      const onEnd = (e: PointerEvent) => {
+        // if (e instanceof TouchEvent) {
+        //   if (e.changedTouches.length !== 1) return;
+        //   if (e.changedTouches[0].identifier !== startTouch?.identifier) return;
+        // } else if (e.target === frameEl) {
+        if (e.target === frameEl) {
           clear();
         }
 
-        window.removeEventListener('mousemove', onMove);
-        window.removeEventListener('mouseup', onEnd);
-
-        window.removeEventListener('touchmove', onMove);
-        window.removeEventListener('touchend', onEnd);
+        window.removeEventListener('pointermove', onMove);
+        window.removeEventListener('pointerup', onEnd);
       };
 
-      window.addEventListener('mousemove', onMove);
-      window.addEventListener('mouseup', onEnd);
-
-      window.addEventListener('touchmove', onMove);
-      window.addEventListener('touchend', onEnd);
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', onEnd);
     };
   }
 
@@ -136,19 +131,12 @@
 <g class="Brush">
   <Frame
     class={cls('frame', 'fill-transparent')}
-    on:mousedown={reset}
-    on:touchstart={reset}
+    on:pointerdown={reset}
     on:dblclick={() => selectAll()}
     bind:rectEl={frameEl}
   />
 
-  <Group
-    class="range"
-    x={left}
-    on:mousedown={adjustRange}
-    on:touchstart={adjustRange}
-    on:dblclick={() => clear()}
-  >
+  <Group class="range" x={left} on:pointerdown={adjustRange} on:dblclick={() => clear()}>
     <rect
       width={right - left}
       height={$height}
@@ -156,7 +144,7 @@
     />
   </Group>
 
-  <Group class="handle min" x={left} on:mousedown={adjustMin} on:touchstart={adjustMin}>
+  <Group class="handle min" x={left} on:pointerdown={adjustMin}>
     <rect
       width={handleWidth}
       height={$height}
@@ -165,12 +153,7 @@
     />
   </Group>
 
-  <Group
-    class="handle max"
-    x={right - handleWidth + 1}
-    on:mousedown={adjustMax}
-    on:touchstart={adjustMax}
-  >
+  <Group class="handle max" x={right - handleWidth + 1} on:pointerdown={adjustMax}>
     <rect
       width={handleWidth}
       height={$height}
