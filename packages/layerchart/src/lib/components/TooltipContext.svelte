@@ -323,7 +323,10 @@
     <div
       style:width="{$width}px"
       style:height="{$height}px"
-      class={cls('tooltip-trigger absolute', debug && 'bg-danger/10 outline outline-danger')}
+      class={cls(
+        'tooltip-trigger absolute touch-none',
+        debug && 'bg-danger/10 outline outline-danger'
+      )}
       on:pointermove={showTooltip}
       on:pointerleave={hideTooltip}
       on:click={(e) => {
