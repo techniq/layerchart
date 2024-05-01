@@ -3,7 +3,7 @@ import { isSVGElement, isSVGGraphicsElement, isSVGSVGElement, isTouchEvent } fro
 // See: https://github.com/airbnb/visx/blob/master/packages/visx-event/src/localPointGeneric.ts
 // TODO: Matches event.layerX/Y, but are deprecated (https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/layerX).
 //       Similar and could be replaced by event.offsetX/Y (but not identical)
-export function localPoint(node: Element, event: MouseEvent | TouchEvent) {
+export function localPoint(node: Element, event: MouseEvent | TouchEvent | PointerEvent) {
   if (!node || !event) return null;
 
   const coords = getPointFromEvent(event);
@@ -33,7 +33,7 @@ export function localPoint(node: Element, event: MouseEvent | TouchEvent) {
   };
 }
 
-function getPointFromEvent(event?: MouseEvent | TouchEvent) {
+function getPointFromEvent(event?: MouseEvent | TouchEvent | PointerEvent) {
   if (!event) return { x: 0, y: 0 };
 
   if (isTouchEvent(event)) {

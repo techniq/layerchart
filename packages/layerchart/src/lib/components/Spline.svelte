@@ -129,8 +129,8 @@
     class={cls('path-line fill-none', !$$props.stroke && 'stroke-surface-content', $$props.class)}
     in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
     on:click
-    on:mousemove
-    on:mouseleave
+    on:pointermove
+    on:pointerleave
     bind:this={pathEl}
   />
 

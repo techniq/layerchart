@@ -116,8 +116,8 @@
                   on:click={() => {
                     selected = node;
                   }}
-                  on:mousemove={(e) => tooltip.show(e, node)}
-                  on:mouseleave={tooltip.hide}
+                  on:pointermove={(e) => tooltip.show(e, node)}
+                  on:pointerleave={tooltip.hide}
                 >
                   <!-- <text x={centroid[0]} y={centroid[1]}>{node.data.name}</text> -->
                 </Arc>

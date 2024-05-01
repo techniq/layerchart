@@ -68,7 +68,7 @@
     }
   }
 
-  function onMouseDown(e: MouseEvent & { currentTarget: SVGElement }) {
+  function onPointerDown(e: PointerEvent & { currentTarget: SVGElement }) {
     if (disablePointer) return;
 
     e.preventDefault();
@@ -79,13 +79,13 @@
     startPoint = localPoint(svgEl, e);
     startTranslate = $translate;
 
-    window.addEventListener('mousemove', onMouseMove, { capture: true });
-    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('pointermove', onPointerMove, { capture: true });
+    window.addEventListener('pointerup', onPointerUp);
 
     dispatch('dragstart');
   }
 
-  function onMouseMove(e: MouseEvent) {
+  function onPointerMove(e: PointerEvent) {
     if (!dragging) return;
 
     e.preventDefault(); // Stop text selection
@@ -109,11 +109,11 @@
     }
   }
 
-  function onMouseUp(e: MouseEvent) {
+  function onPointerUp(e: PointerEvent) {
     dragging = false;
 
-    window.removeEventListener('mousemove', onMouseMove);
-    window.removeEventListener('mouseup', onMouseUp);
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
     dispatch('dragend');
   }
 
@@ -188,7 +188,7 @@
     }
   }
 
-  function localPoint(svgEl: SVGSVGElement | null, e: MouseEvent) {
+  function localPoint(svgEl: SVGSVGElement | null, e: PointerEvent) {
     if (svgEl) {
       const screenCTM = svgEl.getScreenCTM();
 
@@ -230,7 +230,7 @@
 
 <g
   on:mousewheel={onWheel}
-  on:mousedown={onMouseDown}
+  on:pointerdown={onPointerDown}
   on:dblclick={onDoubleClick}
   on:click|capture={onClick}
   on:click

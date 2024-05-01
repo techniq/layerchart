@@ -55,8 +55,8 @@
               {r}
               fill={genderColor(node.gender)}
               class="stroke-surface-100"
-              on:mousemove={(e) => tooltip.show(e, node)}
-              on:mouseleave={tooltip.hide}
+              on:pointermove={(e) => tooltip.show(e, node)}
+              on:pointerleave={tooltip.hide}
             />
           {/each}
         </ForceSimulation>

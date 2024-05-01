@@ -54,8 +54,8 @@
                 class={cls(
                   node.children ? 'fill-surface-100 stroke-surface-content' : 'fill-surface-content'
                 )}
-                on:mousemove={(e) => tooltip.show(e, node)}
-                on:mouseleave={tooltip.hide}
+                on:pointermove={(e) => tooltip.show(e, node)}
+                on:pointerleave={tooltip.hide}
               />
             {/each}
           </Group>

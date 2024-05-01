@@ -11,7 +11,7 @@
   const data = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
 
   let point = { x: 0, y: 0 };
-  function onMouseMove(e: MouseEvent) {
+  function onPointerMove(e: PointerEvent) {
     point = {
       x: e.offsetX,
       y: e.offsetY,
@@ -20,7 +20,7 @@
 </script>
 
 <Preview {data}>
-  <div class="h-[400px] p-4 border rounded relative" on:mousemove={onMouseMove}>
+  <div class="h-[400px] p-4 border rounded relative" on:pointermove={onPointerMove}>
     <Chart {data} x="x" y="y" let:xScale let:yScale>
       <Svg>
         <ChartClipPath>

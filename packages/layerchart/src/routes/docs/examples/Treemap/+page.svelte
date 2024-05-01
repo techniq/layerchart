@@ -193,8 +193,8 @@
                   x={xScale(node.x0)}
                   y={yScale(node.y0)}
                   on:click={() => (node.children ? (selectedNested = node) : null)}
-                  on:mousemove={(e) => tooltip.show(e, node)}
-                  on:mouseleave={tooltip.hide}
+                  on:pointermove={(e) => tooltip.show(e, node)}
+                  on:pointerleave={tooltip.hide}
                 >
                   {@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
                   {@const nodeHeight = yScale(node.y1) - yScale(node.y0)}

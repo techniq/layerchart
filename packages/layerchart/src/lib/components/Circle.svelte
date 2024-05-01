@@ -35,6 +35,6 @@
   class={cls($$props.fill == null && 'fill-surface-content')}
   {...$$restProps}
   on:click
-  on:mousemove
-  on:mouseleave
+  on:pointermove
+  on:pointerleave
 />

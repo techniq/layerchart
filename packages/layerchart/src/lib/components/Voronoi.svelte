@@ -23,7 +23,7 @@
   const dispatch = createEventDispatcher<{
     click: { data: any; point?: [number, number]; feature?: GeoPermissibleObjects };
     mousemove: {
-      event: MouseEvent;
+      event: PointerEvent;
       data: any;
       point?: [number, number];
       feature?: GeoPermissibleObjects;
@@ -55,9 +55,9 @@
       <GeoPath
         geojson={feature}
         class={cls('fill-transparent', classes.path)}
-        on:mousemove={(e) =>
+        on:pointermove={(e) =>
           dispatch('mousemove', { event: e, data: feature.properties.site.data, feature })}
-        on:mouseleave
+        on:pointerleave
         on:click={(e) => dispatch('click', { data: feature.properties.site.data, feature })}
       />
     {/each}
@@ -67,8 +67,8 @@
       <path
         d={voronoi.renderCell(i)}
         class={cls('fill-transparent', classes.path)}
-        on:mousemove={(e) => dispatch('mousemove', { event: e, data: point.data, point })}
-        on:mouseleave
+        on:pointermove={(e) => dispatch('mousemove', { event: e, data: point.data, point })}
+        on:pointerleave
         on:click={(e) => dispatch('click', { data: point.data, point })}
       />
     {/each}

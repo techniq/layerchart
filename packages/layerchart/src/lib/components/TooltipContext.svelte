@@ -8,8 +8,8 @@
     x: number;
     y: number;
     data: any;
-    show(event: MouseEvent | TouchEvent, tooltipData?: any): any;
-    hide(event?: MouseEvent | TouchEvent);
+    show(e: PointerEvent, tooltipData?: any): void;
+    hide(e?: PointerEvent): void;
   };
 
   export type TooltipContext = Readable<TooltipContextValue>;
@@ -76,7 +76,7 @@
    */
   export let findTooltipData: 'closest' | 'left' | 'right' = 'closest';
 
-  /** Similar to d3-selection's raise, re-insert the event.target as the last child of its parent, so to be the top-most element */
+  /** Similar to d3-selection's raise, re-insert the e.target as the last child of its parent, so to be the top-most element */
   export let raiseTarget = false;
 
   /** quadtree search radius
@@ -140,12 +140,12 @@
     }
   }
 
-  function showTooltip(event: MouseEvent | TouchEvent, tooltipData?: any) {
+  function showTooltip(e: PointerEvent, tooltipData?: any) {
     // Cancel hiding tooltip if from previous event loop
     clearTimeout(hideTimeoutId);
 
-    const referenceNode = (event.target as Element).closest('.layercake-container');
-    const point = localPoint(referenceNode, event);
+    const referenceNode = (e.target as Element).closest('.layercake-container');
+    const point = localPoint(referenceNode, e);
     const localX = point?.x ?? 0;
     const localY = point?.y ?? 0;
 
@@ -159,7 +159,7 @@
         }
 
         case 'bisect-band': {
-          // `x` and `y` values at mouse/touch coordinate
+          // `x` and `y` values at pointer coordinate
           const xValueAtPoint = scaleInvert($xScale, localX);
           const yValueAtPoint = scaleInvert($yScale, localY);
 
@@ -184,7 +184,7 @@
         }
 
         case 'bisect-x': {
-          // `x` value at mouse/touch coordinate
+          // `x` value at pointer coordinate
           const xValueAtPoint = scaleInvert($xScale, localX - $padding.left);
 
           const index = bisectX($flatData, xValueAtPoint, 1);
@@ -195,7 +195,7 @@
         }
 
         case 'bisect-y': {
-          // `y` value at mouse/touch coordinate
+          // `y` value at pointer coordinate
           const yValueAtPoint = scaleInvert($yScale, localY - $padding.top);
 
           const index = bisectY($flatData, yValueAtPoint, 1);
@@ -209,7 +209,7 @@
 
     if (tooltipData) {
       if (raiseTarget) {
-        raise(event.target);
+        raise(e.target);
       }
 
       $tooltip = {
@@ -313,7 +313,6 @@
         }
       })
       .sort(sortFunc('x'));
-    // console.log({ rects });
   }
 </script>
 
@@ -325,10 +324,8 @@
       style:width="{$width}px"
       style:height="{$height}px"
       class={cls('tooltip-trigger absolute', debug && 'bg-danger/10 outline outline-danger')}
-      on:touchstart={showTooltip}
-      on:touchmove={showTooltip}
-      on:mousemove={showTooltip}
-      on:mouseleave={hideTooltip}
+      on:pointermove={showTooltip}
+      on:pointerleave={hideTooltip}
       on:click={(e) => {
         onClick({ data: $tooltip?.data });
       }}
@@ -337,8 +334,8 @@
 {:else if mode === 'voronoi'}
   <Svg>
     <Voronoi
-      on:mousemove={(e) => showTooltip(e.detail.event, e.detail.data)}
-      on:mouseleave={hideTooltip}
+      on:pointermove={(e) => showTooltip(e.detail.event, e.detail.data)}
+      on:pointerleave={hideTooltip}
       on:click={(e) => {
         onClick({ data: e.detail.data });
       }}
@@ -355,8 +352,8 @@
           width={rect.width}
           height={rect.height}
           class={cls(debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent')}
-          on:mousemove={(e) => showTooltip(e, rect.data)}
-          on:mouseleave={hideTooltip}
+          on:pointermove={(e) => showTooltip(e, rect.data)}
+          on:pointerleave={hideTooltip}
           on:click={(e) => {
             onClick({ data: rect.data });
           }}

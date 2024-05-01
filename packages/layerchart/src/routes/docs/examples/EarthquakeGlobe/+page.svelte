@@ -127,8 +127,8 @@
               center={[eq.longitude, eq.latitude]}
               radius={rScale(Math.exp(eq.magnitude))}
               class="stroke-danger fill-danger/20"
-              on:mousemove={(e) => tooltip?.show(e, eq)}
-              on:mouseleave={(e) => tooltip?.hide()}
+              on:pointermove={(e) => tooltip?.show(e, eq)}
+              on:pointerleave={(e) => tooltip?.hide()}
             />
           {/each}
         </Transform>

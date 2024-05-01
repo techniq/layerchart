@@ -41,6 +41,6 @@
   class={cls($$props.stroke === undefined && 'stroke-surface-content')}
   {...$$restProps}
   on:click
-  on:mousemove
-  on:mouseleave
+  on:pointermove
+  on:pointerleave
 />
