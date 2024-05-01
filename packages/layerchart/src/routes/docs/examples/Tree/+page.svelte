@@ -45,7 +45,7 @@
     return node.data.name + node.depth;
   }
 
-  const nodeWidth = 100;
+  const nodeWidth = 120;
   const nodeHeight = 20;
   const nodeSiblingGap = 20;
   const nodeParentGap = 100;
@@ -95,9 +95,12 @@
       <Svg>
         <Transform bind:this={transform} tweened={{ duration: 800, easing: cubicOut }}>
           <Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : null}>
-            {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
-              <Link data={link} {orientation} {curve} tweened class="stroke-surface-content/20" />
-            {/each}
+            <g class="opacity-20">
+              {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
+                <Link data={link} {orientation} {curve} tweened class="stroke-surface-content" />
+              {/each}
+            </g>
+
             {#each nodes as node (getNodeKey(node))}
               <Group
                 x={(orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
@@ -113,13 +116,15 @@
                 }}
                 class={cls(node.data.children && 'cursor-pointer')}
               >
-                <!-- Solid background to hide link -->
-                <!-- <Rect width={nodeWidth} height={nodeHeight} class="fill-surface-100" rx={10} /> -->
                 <Rect
                   width={nodeWidth}
                   height={nodeHeight}
-                  class="fill-surface-100 stroke-primary"
-                  stroke-width={node.data.children ? 2 : 1}
+                  class={cls(
+                    'fill-surface-100',
+                    node.data.children
+                      ? 'stroke-primary hover:stroke-2'
+                      : 'stroke-secondary [stroke-dasharray:1]'
+                  )}
                   rx={10}
                 />
                 <Text
@@ -129,7 +134,10 @@
                   dy={-2}
                   textAnchor="middle"
                   verticalAnchor="middle"
-                  class="text-xs fill-primary"
+                  class={cls(
+                    'text-xs pointer-events-none',
+                    node.data.children ? 'fill-primary' : 'fill-secondary'
+                  )}
                 />
               </Group>
             {/each}
