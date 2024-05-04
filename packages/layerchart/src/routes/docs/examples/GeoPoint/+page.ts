@@ -10,7 +10,7 @@ export async function load() {
       airports: await fetch('/data/examples/geo/us-airports.csv').then(async (r) =>
         csvParse(await r.text(), autoType)
       ),
-      stateCaptitals: await fetch('/data/examples/geo/us-state-capitals.csv').then(async (r) =>
+      captitals: await fetch('/data/examples/geo/us-state-capitals.csv').then(async (r) =>
         csvParse(await r.text(), autoType)
       ),
     },
@@ -18,10 +18,10 @@ export async function load() {
       geojson: await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(
         (r) => r.json()
       ),
-
       airports: await fetch('/data/examples/geo/world-airports.csv').then(async (r) =>
         csvParse(await r.text(), autoType)
       ),
+      captitals: await fetch('/data/examples/geo/world-capitals.json').then(async (r) => r.json()),
     },
     meta: {
       pageSource,
