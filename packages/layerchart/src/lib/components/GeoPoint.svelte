@@ -4,6 +4,7 @@
 
   import { geoContext } from './GeoContext.svelte';
   import Circle from './Circle.svelte';
+  import Group from './Group.svelte';
 
   /** Latitude */
   export let lat: number;
@@ -40,9 +41,9 @@
 
 {#if renderContext === 'svg'}
   {#if $$slots.default}
-    <g transform="translate({x},{y})">
+    <Group {x} {y} {...$$restProps}>
       <slot />
-    </g>
+    </Group>
   {:else}
     <Circle cx={x} cy={y} {...$$restProps} />
   {/if}
