@@ -8,7 +8,7 @@
   import LinearGradient from '$lib/components/LinearGradient.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import Spline from '$lib/components/Spline.svelte';
   import { curveCardinal } from 'd3-shape';
@@ -18,6 +18,7 @@
   let timeData: { key: number; value: number }[] = [];
   let frequencyData: { key: number; value: number }[] = [];
 
+  let ctx: AudioContext;
   let analyser: AnalyserNode;
 
   $: frequency = scaleLinear()
@@ -28,9 +29,10 @@
     .domain([0, 255])
     .range([analyser?.minDecibels, analyser?.maxDecibels]);
 
+  let active = true;
   onMount(async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
     analyser = ctx
       .createMediaStreamSource(stream)
       .connect(new AnalyserNode(ctx, { fftSize: 2048 }));
@@ -51,9 +53,16 @@
       frequencyData = [...frequency].map((value, i) => ({ key: i, value }));
       timeData = [...time].map((value, i) => ({ key: i, value }));
 
-      requestAnimationFrame(step);
+      if(active) {
+        requestAnimationFrame(step);
+      }
     }
     requestAnimationFrame(step);
+  });
+
+  onDestroy(() => {
+    active = false;
+    ctx?.close();
   });
 
   const colorScale = scaleSequential([0, 256], interpolateTurbo);
