@@ -37,7 +37,9 @@
   $: if (topojsonStr) {
     try {
       topojson = JSON.parse(topojsonStr);
-      geojson = feature(topojson, topojson.objects.states);
+      // TODO: Add dropdown to select features instead of only using first
+      const features = Object.keys(topojson.objects);
+      geojson = feature(topojson, topojson.objects[features[0]]);
       error = '';
     } catch (e) {
       error = 'Invalid object';
