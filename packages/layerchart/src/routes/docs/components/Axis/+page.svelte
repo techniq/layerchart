@@ -239,7 +239,7 @@
   </div>
 </Preview>
 
-<h2>only first/last ticks with alignment</h2>
+<h2>show only first/last ticks with alignment</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">

@@ -142,7 +142,6 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      let:xScale
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -150,7 +149,7 @@
           placement="bottom"
           format={(d) => format(d, PeriodType.Day)}
           rule
-          ticks={xScale.domain()}
+          ticks={(scale) => scale.domain()}
         >
           <svelte:fragment slot="label" let:labelProps let:index>
             <Text {...labelProps} textAnchor={index ? 'end' : 'start'} />
