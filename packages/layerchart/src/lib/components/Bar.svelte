@@ -43,6 +43,7 @@
       outer: groupPaddingOuter,
     },
   });
+  $: dimensions = $getDimensions(bar);
 </script>
 
 <Rect
@@ -52,7 +53,7 @@
   {stroke}
   stroke-width={strokeWidth}
   rx={radius}
-  {...$getDimensions(bar)}
+  {...dimensions}
   {...$$restProps}
   on:click
 />

@@ -15,24 +15,18 @@ type DimensionGetterOptions = {
 
 // TOOD: Pass in overrides for `x` and `y` accessors
 export function createDimensionGetter(context, options?: DimensionGetterOptions) {
-  const {
-    flatData,
-    xGet,
-    yGet,
-    xRange,
-    yRange,
-    xScale,
-    yScale,
-    x: xAccessor,
-    y: yAccessor,
-  } = context;
+  const { flatData, xGet, yGet, xScale, yScale, x: xAccessor, y: yAccessor } = context;
 
   const groupBy = options?.groupBy;
   const inset = options?.inset ?? 0;
 
   return derived(
-    [flatData, xGet, yGet, xRange, yRange, xScale, yScale, xAccessor, yAccessor],
-    ([$flatData, $xGet, $yGet, $xRange, $yRange, $xScale, $yScale, $xAccessor, $yAccessor]) => {
+    [flatData, xGet, yGet, xScale, yScale, xAccessor, yAccessor],
+    ([$flatData, $xGet, $yGet, $xScale, $yScale, $xAccessor, $yAccessor]) => {
+      // Use `xscale.domain()` instead of `$xDomain` to include `nice()` being applied
+      const [minXDomain, maxXDomain] = $xScale.domain();
+      const [minYDomain, maxYDomain] = $yScale.domain();
+
       return function getter(item) {
         if (isScaleBand($yScale)) {
           // Horizontal band
@@ -64,12 +58,12 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
             right = 0;
           } else if (xValue > 0) {
             // Positive value
-            left = min($xRange); // or `0`?
+            left = max([0, minXDomain]);
             right = xValue;
           } else {
             // Negative value
             left = xValue;
-            right = min($xRange); // or `0`?
+            right = min([0, maxXDomain]);
           }
 
           return {
@@ -110,10 +104,10 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
           } else if (yValue > 0) {
             // Positive value
             top = yValue;
-            bottom = min($yRange); // or `0`?
+            bottom = max([0, minYDomain]);
           } else {
             // Negative value
-            top = min($yRange); // or `0`?
+            top = min([0, maxYDomain]);
             bottom = yValue;
           }
 

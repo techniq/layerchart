@@ -93,7 +93,6 @@
     groupBy: transitionChart.groupBy,
     stackBy: transitionChart.stackBy,
   });
-  // $: console.log({ transitionData })
 </script>
 
 <h1>Examples</h1>
@@ -227,6 +226,56 @@
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} />
       </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Calculated value domain (positive)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={createDateSeries({ count: 10, min: 50, max: 100 })}
+      x="value"
+      xNice
+      y="date"
+      yScale={scaleBand().padding(0.4)}
+      padding={{ left: 20, bottom: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" grid rule />
+        <Axis
+          placement="left"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Calculated value domain (negative)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={createDateSeries({ count: 10, min: -100, max: -50 })}
+      x="value"
+      xNice
+      y="date"
+      yScale={scaleBand().padding(0.4)}
+      padding={{ left: 20, bottom: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" grid rule />
+        <Axis
+          placement="left"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+      </Svg>
     </Chart>
   </div>
 </Preview>
