@@ -45,8 +45,6 @@
       'SubmarineCablesGlobe',
       'EclipsesGlobe',
       'LoftedArcs',
-      'GeojsonPreview',
-      'ShapefilePreview',
     ],
   };
 
@@ -85,6 +83,7 @@
   };
 
   const utils = ['pivot'];
+  const tools = ['GeojsonPreview', 'ShapefilePreview'];
 </script>
 
 <NavItem text="Home" icon={mdiHome} currentUrl={$page.url} path="/" />
@@ -143,4 +142,9 @@
 <h1>Utils</h1>
 {#each utils as item}
   <NavItem text={item} currentUrl={$page.url} path="/docs/utils/{item}" class="pl-6 py-2" />
+{/each}
+
+<h1>Tools</h1>
+{#each tools as item}
+  <NavItem text={item} currentUrl={$page.url} path="/docs/tools/{item}" class="pl-6 py-2" />
 {/each}
