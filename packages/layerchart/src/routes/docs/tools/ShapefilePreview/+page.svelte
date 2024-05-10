@@ -51,56 +51,56 @@
   }
 </script>
 
-<div class="grid grid-cols-[1fr,auto] gap-2 items-center">
-  <TextField label="File" bind:value={file} placeholder="Please specify a file or load an example">
-    <div slot="append">
-      <ButtonGroup variant="fill-outline" color="primary">
-        <Button on:click={() => loadFile()}>Load file</Button>
-        <Toggle let:on={open} let:toggle>
-          <span>
-            <Button icon={mdiChevronDown} on:click={toggle} rounded class="px-1" />
-            <Menu {open} on:close={toggle} placement="bottom-end">
-              <MenuItem
-                on:click={() => {
-                  file = 'https://cdn.rawgit.com/mbostock/shapefile/master/test/points.shp';
-                  loadFile();
-                }}
-              >
-                Load basic example
-              </MenuItem>
-              <MenuItem
-                on:click={() => {
-                  file =
-                    'https://cdn.rawgit.com/matplotlib/basemap/v1.1.0/lib/mpl_toolkits/basemap/data/UScounties.shp';
-                  loadFile();
-                }}
-              >
-                Load complex example
-              </MenuItem>
-            </Menu>
-          </span>
-        </Toggle>
-      </ButtonGroup>
-    </div>
-  </TextField>
+<div class="grid gap-2">
+  <div class="grid grid-cols-[1fr,auto] gap-2 items-center">
+    <TextField
+      label="File"
+      bind:value={file}
+      placeholder="Please specify a file or load an example"
+    >
+      <div slot="append">
+        <ButtonGroup variant="fill-outline" color="primary">
+          <Button on:click={() => loadFile()}>Load file</Button>
+          <Toggle let:on={open} let:toggle>
+            <span>
+              <Button icon={mdiChevronDown} on:click={toggle} rounded class="px-1" />
+              <Menu {open} on:close={toggle} placement="bottom-end">
+                <MenuItem
+                  on:click={() => {
+                    file = 'https://cdn.rawgit.com/mbostock/shapefile/master/test/points.shp';
+                    loadFile();
+                  }}
+                >
+                  Load basic example
+                </MenuItem>
+                <MenuItem
+                  on:click={() => {
+                    file =
+                      'https://cdn.rawgit.com/matplotlib/basemap/v1.1.0/lib/mpl_toolkits/basemap/data/UScounties.shp';
+                    loadFile();
+                  }}
+                >
+                  Load complex example
+                </MenuItem>
+              </Menu>
+            </span>
+          </Toggle>
+        </ButtonGroup>
+      </div>
+    </TextField>
 
-  <SelectField
-    label="Projections"
-    options={projections}
-    bind:value={projection}
-    clearable={false}
-    toggleIcon={null}
-    stepper
-  />
-</div>
+    <SelectField
+      label="Projections"
+      options={projections}
+      bind:value={projection}
+      clearable={false}
+      toggleIcon={null}
+      stepper
+    />
+  </div>
 
-<h1>Examples</h1>
-
-{#if geojson}
-  <h2>Canvas</h2>
-
-  <Preview data={geojson}>
-    <div class="h-[600px] mt-10">
+  <div class="h-[600px]">
+    {#if geojson}
       <Chart
         geo={{
           projection,
@@ -111,8 +111,8 @@
           <GeoPath {geojson} fill="white" />
         </Canvas>
       </Chart>
-    </div>
-  </Preview>
-{:else}
-  <EmptyMessage class="py-4 mx-1">Please specify a file</EmptyMessage>
-{/if}
+    {:else}
+      <EmptyMessage class="h-full">Please specify a file</EmptyMessage>
+    {/if}
+  </div>
+</div>

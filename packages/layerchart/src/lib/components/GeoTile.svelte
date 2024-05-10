@@ -19,14 +19,14 @@
   $: tile = d3Tile()
     .size([$width, $height])
     .scale($geo.scale() * 2 * Math.PI)
-    .translate($geo([0, 0]))
+    .translate($geo([0, 0]) ?? [0, 0]) // TODO: Only works with Mercator
     .tileSize(tileSize)
     .zoomDelta(zoomDelta);
 
   $: tiles = tile();
   $: ({
     translate: [tx, ty],
-    scale: k
+    scale: k,
   } = tiles);
 
   $: renderContext = canvas ? 'canvas' : 'svg';

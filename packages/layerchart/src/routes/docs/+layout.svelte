@@ -75,7 +75,7 @@
     </div>
 
     <div class="text-2xl font-bold">
-      {#if type === 'examples'}
+      {#if type === 'examples' || type === 'tools'}
         {title.replace(/([a-z])([A-Z])/g, '$1 $2')}
       {:else}
         {title}

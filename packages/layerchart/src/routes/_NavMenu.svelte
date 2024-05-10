@@ -83,7 +83,7 @@
   };
 
   const utils = ['pivot'];
-  const tools = ['GeojsonPreview', 'ShapefilePreview'];
+  const tools = ['GeojsonPreview', 'TopojsonPreview', 'ShapefilePreview'];
 </script>
 
 <NavItem text="Home" icon={mdiHome} currentUrl={$page.url} path="/" />
@@ -146,5 +146,10 @@
 
 <h1>Tools</h1>
 {#each tools as item}
-  <NavItem text={item} currentUrl={$page.url} path="/docs/tools/{item}" class="pl-6 py-2" />
+  <NavItem
+    text={item.replace(/([a-z])([A-Z])/g, '$1 $2')}
+    currentUrl={$page.url}
+    path="/docs/tools/{item}"
+    class="pl-6 py-2"
+  />
 {/each}

@@ -10,6 +10,7 @@
     geoIdentity,
     type GeoPermissibleObjects,
   } from 'd3-geo';
+  import { feature } from 'topojson-client';
 
   import {
     EmptyMessage,
@@ -26,15 +27,17 @@
   import TilesetField from '$lib/docs/TilesetField.svelte';
   import Json from '$lib/docs/Json.svelte';
 
-  let geojsonStr = '';
+  let topojsonStr = '';
+  let topojson: Parameters<typeof feature>[0];
   let geojson: GeoPermissibleObjects;
   let error = '';
 
-  let selectedTab: 'input' | 'geojson' = 'input';
+  let selectedTab: 'input' | 'topojson' | 'geojson' = 'input';
 
-  $: if (geojsonStr) {
+  $: if (topojsonStr) {
     try {
-      geojson = JSON.parse(geojsonStr);
+      topojson = JSON.parse(topojsonStr);
+      geojson = feature(topojson, topojson.objects.states);
       error = '';
     } catch (e) {
       error = 'Invalid object';
@@ -105,19 +108,22 @@
     classes={{ options: 'justify-start h-10' }}
   >
     <ToggleOption value="input">Input</ToggleOption>
-    <ToggleOption value="geojson">Parsed</ToggleOption>
+    <ToggleOption value="topojson">TopoJSON</ToggleOption>
+    <ToggleOption value="geojson">GeoJSON</ToggleOption>
   </ToggleGroup>
 
   {#if selectedTab === 'input'}
     <TextField
-      label="GeoJSON"
-      bind:value={geojsonStr}
-      placeholder={'{"type": "FeatureCollection", "features": [...] }'}
+      label="TopoJSON"
+      bind:value={topojsonStr}
+      placeholder={'{"type":"Topology","objects": { ... }, arcs: [...], bbox: [...]}'}
       multiline
       classes={{
         input: 'h-[400px]',
       }}
     />
+  {:else if selectedTab === 'topojson'}
+    <Json value={topojson} />
   {:else if selectedTab === 'geojson'}
     <Json value={geojson} />
   {/if}
