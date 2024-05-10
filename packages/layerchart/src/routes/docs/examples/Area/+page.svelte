@@ -130,6 +130,38 @@
   </div>
 </Preview>
 
+<h2>Explicit axis ticks (min/max)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      let:xScale
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day)}
+          rule
+          ticks={xScale.domain()}
+        >
+          <svelte:fragment slot="label" let:labelProps let:index>
+            <Text {...labelProps} textAnchor={index ? 'end' : 'start'} />
+          </svelte:fragment>
+        </Axis>
+        <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Gradient</h2>
 
 <Preview data={dateSeriesData}>
