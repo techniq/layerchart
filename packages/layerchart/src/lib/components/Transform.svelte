@@ -75,7 +75,7 @@
 
     dragging = true;
     moved = false;
-    svgEl = e.currentTarget.ownerSVGElement; // capture for reference in mousemove event
+    svgEl = e.currentTarget.ownerSVGElement; // capture for reference in pointermove event
     startPoint = localPoint(svgEl, e);
     startTranslate = $translate;
 

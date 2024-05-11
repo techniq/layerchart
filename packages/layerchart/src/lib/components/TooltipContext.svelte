@@ -327,6 +327,7 @@
         'tooltip-trigger absolute touch-none',
         debug && 'bg-danger/10 outline outline-danger'
       )}
+      on:pointerenter={showTooltip}
       on:pointermove={showTooltip}
       on:pointerleave={hideTooltip}
       on:click={(e) => {
@@ -337,6 +338,7 @@
 {:else if mode === 'voronoi'}
   <Svg>
     <Voronoi
+      on:pointerenter={(e) => showTooltip(e.detail.event, e.detail.data)}
       on:pointermove={(e) => showTooltip(e.detail.event, e.detail.data)}
       on:pointerleave={hideTooltip}
       on:click={(e) => {
@@ -355,6 +357,7 @@
           width={rect.width}
           height={rect.height}
           class={cls(debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent')}
+          on:pointerenter={(e) => showTooltip(e, rect.data)}
           on:pointermove={(e) => showTooltip(e, rect.data)}
           on:pointerleave={hideTooltip}
           on:click={(e) => {

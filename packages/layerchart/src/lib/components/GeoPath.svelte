@@ -90,6 +90,8 @@
       d={geoPath(geojson)}
       {fill}
       {stroke}
+      on:pointerenter={(e) => tooltip?.show(e, geojson)}
+      on:pointerenter
       on:pointermove={(e) => tooltip?.show(e, geojson)}
       on:pointermove
       on:pointerleave={(e) => tooltip?.hide()}
