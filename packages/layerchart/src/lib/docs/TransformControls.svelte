@@ -27,7 +27,7 @@
 
 <div
   class={cls(
-    'bg-surface-content/5 rounded-full m-1 backdrop-blur z-10 flex',
+    'bg-surface-300/50 rounded-full m-1 backdrop-blur z-10 flex',
     orientation === 'vertical' && 'flex-col',
     {
       'top-left': 'absolute top-0 left-0',
@@ -46,28 +46,28 @@
     <Button
       icon={mdiMagnifyPlusOutline}
       on:click={() => transform.zoomIn()}
-      class="text-surface-content/50 p-2"
+      class="text-surface-content p-2"
     />
   </Tooltip>
   <Tooltip title="Zoom out">
     <Button
       icon={mdiMagnifyMinusOutline}
       on:click={() => transform.zoomOut()}
-      class="text-surface-content/50 p-2"
+      class="text-surface-content p-2"
     />
   </Tooltip>
   <Tooltip title="Center">
     <Button
       icon={mdiImageFilterCenterFocus}
       on:click={() => transform.translateCenter()}
-      class="text-surface-content/50 p-2"
+      class="text-surface-content p-2"
     />
   </Tooltip>
   <Tooltip title="Reset">
     <Button
       icon={mdiArrowULeftTop}
       on:click={() => transform.reset()}
-      class="text-surface-content/50 p-2"
+      class="text-surface-content p-2"
     />
   </Tooltip>
 </div>
