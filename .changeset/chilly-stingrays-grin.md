@@ -1,0 +1,5 @@
+---
+"layerchart": patch
+---
+
+Update dependencies
