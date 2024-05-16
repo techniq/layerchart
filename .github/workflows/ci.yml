@@ -7,7 +7,6 @@ on:
   push:
     branches: ['main']
   pull_request:
-    branches: ['main']
 
 jobs:
   build:
@@ -19,13 +18,19 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.4
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4.0.0
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
+
       - run: pnpm install --frozen-lockfile
+
+      - run: pnpm lint
+
       - run: pnpm test:unit
         env:
           CI: true
+
+      - run: pnpm build
