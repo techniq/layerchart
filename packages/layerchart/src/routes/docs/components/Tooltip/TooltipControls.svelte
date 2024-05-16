@@ -62,10 +62,10 @@
     value={settings.snapToDataX && settings.snapToDataY
       ? 'both'
       : settings.snapToDataX
-      ? 'x-only'
-      : settings.snapToDataY
-      ? 'y-only'
-      : 'off'}
+        ? 'x-only'
+        : settings.snapToDataY
+          ? 'y-only'
+          : 'off'}
     on:change={(e) => {
       switch (e.detail.value) {
         case 'off':

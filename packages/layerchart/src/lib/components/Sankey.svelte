@@ -7,7 +7,7 @@
     sankeyCenter,
     sankeyRight,
     sankeyJustify,
-    type SankeyNode
+    type SankeyNode,
   } from 'd3-sankey';
 
   const dispatch = createEventDispatcher();
@@ -40,12 +40,12 @@
       nodeAlign === 'left'
         ? sankeyLeft
         : nodeAlign === 'center'
-        ? sankeyCenter
-        : nodeAlign === 'right'
-        ? sankeyRight
-        : nodeAlign === 'justify'
-        ? sankeyJustify
-        : nodeAlign
+          ? sankeyCenter
+          : nodeAlign === 'right'
+            ? sankeyRight
+            : nodeAlign === 'justify'
+              ? sankeyJustify
+              : nodeAlign
     )
     .nodeWidth(nodeWidth)
     .nodePadding(nodePadding)

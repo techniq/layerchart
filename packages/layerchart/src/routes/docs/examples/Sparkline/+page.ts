@@ -4,7 +4,12 @@ export async function load() {
   return {
     meta: {
       pageSource,
-      related: ['components/Spline', 'components/Tooltip', 'components/Highlight', 'examples/Sparkbar'],
+      related: [
+        'components/Spline',
+        'components/Tooltip',
+        'components/Highlight',
+        'examples/Sparkbar',
+      ],
     },
   };
 }

@@ -15,51 +15,51 @@
     {
       label: 'sin',
       group: 'math',
-      value: (x: number) => amplitude * Math.sin(x * frequency) + phase
+      value: (x: number) => amplitude * Math.sin(x * frequency) + phase,
     },
     {
       label: 'cos',
       group: 'math',
-      value: (x: number) => amplitude * Math.cos(x * frequency) + phase
+      value: (x: number) => amplitude * Math.cos(x * frequency) + phase,
     },
     {
       label: 'tan',
       group: 'math',
-      value: (x: number) => amplitude * Math.tan(x * frequency) + phase
+      value: (x: number) => amplitude * Math.tan(x * frequency) + phase,
     },
     {
       label: 'sqrt',
       group: 'math',
-      value: (x: number) => amplitude * Math.sqrt(x * frequency) + phase
+      value: (x: number) => amplitude * Math.sqrt(x * frequency) + phase,
     },
     {
       label: 'ceil',
       group: 'math',
-      value: (x: number) => amplitude * Math.ceil(x * frequency) + phase
+      value: (x: number) => amplitude * Math.ceil(x * frequency) + phase,
     },
     {
       label: 'floor',
       group: 'math',
-      value: (x: number) => amplitude * Math.floor(x * frequency) + phase
+      value: (x: number) => amplitude * Math.floor(x * frequency) + phase,
     },
     {
       label: 'round',
       group: 'math',
-      value: (x: number) => amplitude * Math.round(x * frequency) + phase
+      value: (x: number) => amplitude * Math.round(x * frequency) + phase,
     },
     { label: 'random', group: 'math', value: (x: number) => amplitude * Math.random() + phase },
     {
       label: 'pow',
       group: 'math',
-      value: (x: number) => amplitude * Math.pow(x, frequency) + phase
-    }
+      value: (x: number) => amplitude * Math.pow(x, frequency) + phase,
+    },
   ];
 
   const easingOptions = Object.entries(easings).map(([key, value]) => {
     return {
       label: key,
       value,
-      group: 'easing'
+      group: 'easing',
     };
   });
 

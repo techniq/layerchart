@@ -53,7 +53,7 @@
       frequencyData = [...frequency].map((value, i) => ({ key: i, value }));
       timeData = [...time].map((value, i) => ({ key: i, value }));
 
-      if(active) {
+      if (active) {
         requestAnimationFrame(step);
       }
     }

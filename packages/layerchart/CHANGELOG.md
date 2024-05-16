@@ -242,9 +242,7 @@
 
   ```svelte
   <Chart tooltip={{ snapToDataX: true, snapToDataY: true }}>
-    <Tooltip>
-      ...
-    </Tooltip>
+    <Tooltip>...</Tooltip>
   </Chart>
   ```
 
@@ -252,9 +250,7 @@
 
   ```svelte
   <Chart tooltip>
-    <Tooltip x="data" y="data">
-      ...
-    </Tooltip>
+    <Tooltip x="data" y="data">...</Tooltip>
   </Chart>
   ```
 
@@ -264,9 +260,7 @@
 
   ```svelte
   <Chart tooltip>
-    <Tooltip left={0} top={0}>
-      ...
-    </Tooltip>
+    <Tooltip left={0} top={0}>...</Tooltip>
   </Chart>
   ```
 
@@ -274,9 +268,7 @@
 
   ```svelte
   <Chart tooltip>
-    <Tooltip x={0} left={0}>
-      ...
-    </Tooltip>
+    <Tooltip x={0} left={0}>...</Tooltip>
   </Chart>
   ```
 
