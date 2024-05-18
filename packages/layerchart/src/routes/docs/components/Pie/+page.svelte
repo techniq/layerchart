@@ -2,10 +2,11 @@
   import { scaleOrdinal } from 'd3-scale';
   import { format } from 'date-fns';
   import { sum } from 'd3-array';
-  import { format as formatUtil } from 'svelte-ux';
+  import { cls, format as formatUtil } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Arc from '$lib/components/Arc.svelte';
+  import Group from '$lib/components/Group.svelte';
   import Pie from '$lib/components/Pie.svelte';
   import Text from '$lib/components/Text.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
@@ -25,6 +26,13 @@
     'hsl(var(--color-success))',
     'hsl(var(--color-warning))',
     'hsl(var(--color-danger))',
+  ];
+
+  const keyClasses = [
+    { shape: 'fill-info', content: 'fill-info-content' },
+    { shape: 'fill-success', content: 'fill-success-content' },
+    { shape: 'fill-warning', content: 'fill-warning-content' },
+    { shape: 'fill-danger', content: 'fill-danger-content' },
   ];
 </script>
 
@@ -211,34 +219,35 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" r="date">
       <Svg>
         <Pie let:arcs>
           {#each arcs as arc, index}
+            {@const colors = keyClasses[index]}
             <Arc
               startAngle={arc.startAngle}
               endAngle={arc.endAngle}
               padAngle={arc.padAngle}
-              fill={keyColors[index]}
+              class={colors.shape}
               let:centroid
             >
               <Text
-                value={formatUtil(data[index].value / dataSum, 'percent')}
+                value={formatUtil(arc.data.value / dataSum, 'percent')}
                 x={centroid[0]}
                 y={centroid[1]}
                 dy={-8}
                 textAnchor="middle"
                 verticalAnchor="middle"
-                class="text-lg"
+                class={cls('text-base', colors.content)}
               />
               <Text
-                value={data[index].value}
+                value={arc.data.value}
                 x={centroid[0]}
                 y={centroid[1]}
                 dy={8}
                 textAnchor="middle"
                 verticalAnchor="middle"
-                class="text-sm fill-black/50"
+                class={cls('text-sm opacity-50', colors.content)}
               />
             </Arc>
           {/each}
@@ -265,6 +274,62 @@
       <Svg>
         <Pie {tooltip} />
       </Svg>
+      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+        <TooltipItem label="value" value={data.value} format="integer" valueAlign="right" />
+        <TooltipItem
+          label="percent"
+          value={data.value / dataSum}
+          format="percent"
+          valueAlign="right"
+        />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Tooltip with Arcs (slot)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="value"
+      r="date"
+      rScale={scaleOrdinal()}
+      rDomain={colorKeys}
+      rRange={keyColors}
+      tooltip={{ mode: 'manual' }}
+      let:tooltip
+    >
+      <Svg>
+        <Pie let:arcs>
+          {#each arcs as arc, index}
+            {@const colors = keyClasses[index]}
+            <Group
+              on:mousemove={(e) => tooltip?.show(e, arc.data)}
+              on:mouseleave={(e) => tooltip?.hide()}
+            >
+              <Arc
+                startAngle={arc.startAngle}
+                endAngle={arc.endAngle}
+                padAngle={arc.padAngle}
+                class={colors.shape}
+                let:centroid
+              >
+                <Text
+                  value={formatUtil(arc.data.value / dataSum, 'percent')}
+                  x={centroid[0]}
+                  y={centroid[1]}
+                  textAnchor="middle"
+                  verticalAnchor="middle"
+                  class={cls('text-base', colors.content)}
+                />
+              </Arc>
+            </Group>
+          {/each}
+        </Pie>
+      </Svg>
+
       <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="value" value={data.value} format="integer" valueAlign="right" />
         <TooltipItem
