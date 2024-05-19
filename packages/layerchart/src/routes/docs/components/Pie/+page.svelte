@@ -305,15 +305,22 @@
         <Pie let:arcs>
           {#each arcs as arc, index}
             {@const colors = keyClasses[index]}
+            {@const isHighlighted = tooltip.data?.date === arc.data.date}
+            {@const isFaded = tooltip.data != null && tooltip.data.date !== arc.data.date}
             <Group
               on:mousemove={(e) => tooltip?.show(e, arc.data)}
               on:mouseleave={(e) => tooltip?.hide()}
+              class={cls(
+                // isHighlighted && 'stroke-surface-content stroke-2',
+                isFaded && 'opacity-50'
+              )}
             >
               <Arc
                 startAngle={arc.startAngle}
                 endAngle={arc.endAngle}
                 padAngle={arc.padAngle}
                 class={colors.shape}
+                _offset={isHighlighted ? 16 : 0}
                 let:centroid
               >
                 <Text
