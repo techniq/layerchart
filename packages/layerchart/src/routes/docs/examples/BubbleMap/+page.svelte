@@ -10,6 +10,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
+  import HitCanvas from '$lib/components/HitCanvas.svelte';
   import Legend from '$lib/components/Legend.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
@@ -69,7 +70,6 @@
         fitGeojson: states,
       }}
       padding={{ top: 60 }}
-      let:projection
       tooltip={{ mode: 'manual' }}
       let:tooltip
     >
@@ -97,7 +97,9 @@
           <GeoPath geojson={feature} {tooltip} class="stroke-none hover:fill-surface-content/10" />
         {/each}
       </Svg>
+
       <Legend scale={colorScale} title="Est. Percent under 18" placement="top-left" />
+
       <Tooltip
         header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
         let:data
@@ -135,13 +137,16 @@
         projection: geoIdentity,
         fitGeojson: states,
       }}
+      padding={{ top: 60 }}
+      tooltip={{ mode: 'manual' }}
+      let:tooltip
     >
       <Canvas>
         <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
       </Canvas>
+
       <Canvas>
         <GeoPath
-          geojson={feature}
           render={(ctx, { geoPath }) => {
             for (var feature of enrichedCountiesFeatures) {
               const [x, y] = geoPath.centroid(feature);
@@ -158,6 +163,61 @@
           }}
         />
       </Canvas>
+
+      {#if tooltip.data}
+        <Canvas>
+          <GeoPath geojson={tooltip.data} class="stroke-none fill-surface-content/10" />
+        </Canvas>
+      {/if}
+
+      <HitCanvas
+        let:nextColor
+        let:setColorData
+        on:mousemove={(e) => tooltip.show(e.detail.event, e.detail.data)}
+        on:mouseleave={tooltip.hide}
+      >
+        <GeoPath
+          render={(ctx, { geoPath }) => {
+            for (var feature of enrichedCountiesFeatures) {
+              const color = nextColor();
+
+              ctx.beginPath();
+              geoPath(feature);
+              ctx.fillStyle = color;
+              ctx.fill();
+
+              setColorData(color, feature);
+            }
+          }}
+        />
+      </HitCanvas>
+
+      <Legend scale={colorScale} title="Est. Percent under 18" placement="top-left" />
+
+      <Tooltip
+        header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
+        let:data
+      >
+        {@const d = data.properties.data}
+        <TooltipItem
+          label="Total Population"
+          value={d?.population}
+          format="integer"
+          valueAlign="right"
+        />
+        <TooltipItem
+          label="Est. Population under 18"
+          value={d?.populationUnder18}
+          format="integer"
+          valueAlign="right"
+        />
+        <TooltipItem
+          label="Est. Percent under 18"
+          value={d?.percentUnder18 / 100}
+          format="percentRound"
+          valueAlign="right"
+        />
+      </Tooltip>
     </Chart>
   </div>
 </Preview>

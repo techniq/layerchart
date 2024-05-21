@@ -64,7 +64,7 @@
   on:mousemove={(e) => {
     const { offsetX, offsetY } = e;
 
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = window.devicePixelRatio ?? 1;
     const imageData = context.getImageData(offsetX * dpr, offsetY * dpr, 1, 1);
     const [r, g, b, a] = imageData.data;
     const colorKey = `rgb(${r},${g},${b})`;
