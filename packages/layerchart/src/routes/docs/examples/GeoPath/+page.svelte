@@ -5,8 +5,8 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
   import HitCanvas from '$lib/components/HitCanvas.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
 
   export let data;
   const states = feature(data.geojson, data.geojson.objects.states);
