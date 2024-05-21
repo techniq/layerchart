@@ -8,6 +8,7 @@
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Group from '$lib/components/Group.svelte';
+  import HitCanvas from '$lib/components/HitCanvas.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
@@ -58,7 +59,6 @@
         projection: geoIdentity,
         fitGeojson: states,
       }}
-      let:projection
       tooltip={{ mode: 'manual' }}
       let:tooltip
     >
@@ -66,6 +66,7 @@
         {#each states.features as feature}
           <GeoPath geojson={feature} class="fill-surface-content/10 stroke-surface-100" />
         {/each}
+
         {#each enrichedCountiesFeatures as feature}
           <GeoPath geojson={feature} let:geoPath>
             {@const [x, y] = geoPath.centroid(feature)}
@@ -79,10 +80,12 @@
             </Group>
           </GeoPath>
         {/each}
+
         {#each enrichedCountiesFeatures as feature}
           <GeoPath geojson={feature} {tooltip} class="stroke-none hover:fill-surface-content/10" />
         {/each}
       </Svg>
+
       <Tooltip
         header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
         let:data
@@ -120,13 +123,15 @@
         projection: geoIdentity,
         fitGeojson: states,
       }}
+      tooltip={{ mode: 'manual' }}
+      let:tooltip
     >
       <Canvas>
         <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
       </Canvas>
+
       <Canvas>
         <GeoPath
-          geojson={feature}
           class="stroke-danger fill-danger/25"
           render={(ctx, { geoPath }) => {
             const computedStyle = window.getComputedStyle(ctx.canvas);
@@ -153,6 +158,59 @@
           }}
         />
       </Canvas>
+
+      {#if tooltip.data}
+        <Canvas>
+          <GeoPath geojson={tooltip.data} class="stroke-none fill-surface-content/10" />
+        </Canvas>
+      {/if}
+
+      <HitCanvas
+        let:nextColor
+        let:setColorData
+        on:mousemove={(e) => tooltip.show(e.detail.event, e.detail.data)}
+        on:mouseleave={tooltip.hide}
+      >
+        <GeoPath
+          render={(ctx, { geoPath }) => {
+            for (var feature of enrichedCountiesFeatures) {
+              const color = nextColor();
+
+              ctx.beginPath();
+              geoPath(feature);
+              ctx.fillStyle = color;
+              ctx.fill();
+
+              setColorData(color, feature);
+            }
+          }}
+        />
+      </HitCanvas>
+
+      <Tooltip
+        header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
+        let:data
+      >
+        {@const d = data.properties.data}
+        <TooltipItem
+          label="Total Population"
+          value={d?.population}
+          format="integer"
+          valueAlign="right"
+        />
+        <TooltipItem
+          label="Est. Population under 18"
+          value={d?.populationUnder18}
+          format="integer"
+          valueAlign="right"
+        />
+        <TooltipItem
+          label="Est. Percent under 18"
+          value={d?.percentUnder18 / 100}
+          format="percentRound"
+          valueAlign="right"
+        />
+      </Tooltip>
     </Chart>
   </div>
 </Preview>
