@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext, onMount, setContext } from 'svelte';
+  import { beforeUpdate, createEventDispatcher, getContext, onMount, setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import { scaleCanvas } from 'layercake';
   import { cls } from 'svelte-ux';
@@ -36,18 +36,23 @@
     let nextColor = 1;
 
     while (nextColor < 16777216) {
-      const rgb = [];
-
-      rgb.push(nextColor & 0xff); // R.
-      rgb.push((nextColor & 0xff00) >> 8); // G.
-      rgb.push((nextColor & 0xff0000) >> 16); // B.
+      const rgb = [
+        nextColor & 0xff, // red
+        (nextColor & 0xff00) >> 8, // green
+        (nextColor & 0xff0000) >> 16, // blue
+      ];
 
       nextColor += step;
       yield `rgb(${rgb.join(',')})`;
     }
   }
 
-  const colorGenerator = rgbColorGenerator();
+  $: colorGenerator = rgbColorGenerator();
+
+  // Reset color generator whenever updated (width/height) so always reusing same colors (and not exhausting)
+  beforeUpdate(() => {
+    colorGenerator = rgbColorGenerator();
+  });
 
   const dataByColor = new Map<string, any>();
   function setColorData(color: string, data: any) {
