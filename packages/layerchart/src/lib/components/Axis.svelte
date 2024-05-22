@@ -42,6 +42,7 @@
   /** Length of the tick line */
   export let tickLength = 4;
 
+  /** Format tick labels */
   export let format: FormatType | undefined = undefined;
 
   /** Props to apply to each tick label */
