@@ -32,8 +32,11 @@
 
   /** Length of the tick line */
   export let tickLength = 4;
-  export let format: FormatType = undefined;
-  export let labelProps: Partial<ComponentProps<Text>> | undefined = undefined;
+
+  export let format: FormatType | undefined = undefined;
+
+  /** Props to apply to each tick label */
+  export let tickLabelProps: Partial<ComponentProps<Text>> | undefined = undefined;
 
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -102,7 +105,7 @@
     }
   }
 
-  function getDefaultLabelProps(tick: any): ComponentProps<Text> {
+  function getDefaultTickLabelProps(tick: any): ComponentProps<Text> {
     switch (placement) {
       case 'top':
         return {
@@ -200,17 +203,17 @@
   {#each tickVals as tick, index (tick)}
     {@const tickCoords = getCoords(tick)}
     {@const radialTickCoords = pointRadial(tickCoords.x, tickCoords.y)}
-    {@const textLabelProps = {
+    {@const resolvedTickLabelProps = {
       x: orientation === 'angle' ? radialTickCoords[0] : tickCoords.x,
       y: orientation === 'angle' ? radialTickCoords[1] : tickCoords.y,
       value: formatValue(tick, format ?? scale.tickFormat?.() ?? ((v) => v)),
-      ...getDefaultLabelProps(tick),
+      ...getDefaultTickLabelProps(tick),
       tweened,
       spring,
-      ...labelProps,
+      ...tickLabelProps,
       class: cls(
         'label text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
-        labelProps?.class
+        tickLabelProps?.class
       ),
     }}
 
@@ -285,8 +288,8 @@
         />
       {/if}
 
-      <slot name="label" labelProps={textLabelProps} {index}>
-        <Text {...textLabelProps} />
+      <slot name="tickLabel" labelProps={resolvedTickLabelProps} {index}>
+        <Text {...resolvedTickLabelProps} />
       </slot>
     </g>
   {/each}

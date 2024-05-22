@@ -249,7 +249,7 @@
           rule
           ticks={4}
           format={(d) => format(d, PeriodType.Day)}
-          labelProps={{ rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 }}
+          tickLabelProps={{ rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 }}
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Highlight area />

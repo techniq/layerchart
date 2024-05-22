@@ -206,7 +206,7 @@
         <Axis
           placement="bottom"
           rule={{ class: 'stroke-danger' }}
-          labelProps={{
+          tickLabelProps={{
             rotate: 315,
             textAnchor: 'end',
             class: 'fill-danger font-semibold',
@@ -259,7 +259,7 @@
           ticks={(scale) => scale.domain()}
           format={(d) => format(d, PeriodType.Day, { variant: 'long' })}
         >
-          <svelte:fragment slot="label" let:labelProps let:index>
+          <svelte:fragment slot="tickLabel" let:labelProps let:index>
             <Text {...labelProps} textAnchor={index === 0 ? 'start' : 'end'} />
           </svelte:fragment>
         </Axis>
@@ -375,7 +375,7 @@
         <Axis
           placement="bottom"
           rule={{ class: 'stroke-surface-content/10' }}
-          labelProps={{ textAnchor: 'start', dx: 8 }}
+          tickLabelProps={{ textAnchor: 'start', dx: 8 }}
           ticks={(scale) => scale.ticks().slice(0, -1)}
           tickLength={22}
         />
