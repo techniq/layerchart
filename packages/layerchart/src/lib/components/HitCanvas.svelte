@@ -24,7 +24,8 @@
   };
 
   onMount(() => {
-    context = element.getContext('2d');
+    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext#willreadfrequently
+    context = element.getContext('2d', { willReadFrequently: true });
     scaleCanvas(context, $width, $height);
   });
 
