@@ -9,15 +9,15 @@
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoCurvePath } from '$lib/utils/geo.js';
 
-  export let geojson: GeoPermissibleObjects;
-
-  export let fill: string | undefined = undefined;
-  export let stroke: string | undefined = undefined;
-  export let strokeWidth: number | string | undefined = undefined;
+  export let geojson: GeoPermissibleObjects = undefined;
 
   /** Render to canvas */
   export let render: ((ctx: CanvasRenderingContext2D, { geoPath: GeoPath }) => any) | undefined =
     undefined;
+
+  export let fill: string | undefined = undefined;
+  export let stroke: string | undefined = undefined;
+  export let strokeWidth: number | string | undefined = undefined;
 
   /**
    * Tooltip context to setup mouse events to show tooltip for related data
@@ -77,7 +77,8 @@
       $ctx.fill();
 
       $ctx.lineWidth = strokeWidth;
-      $ctx.strokeStyle = stroke ?? computedStyles.stroke;
+      $ctx.strokeStyle =
+        stroke ?? computedStyles.stroke === 'none' ? 'transparent' : computedStyles.stroke;
       $ctx.stroke();
     }
   }
