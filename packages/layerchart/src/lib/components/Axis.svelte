@@ -15,10 +15,19 @@
   import Text from './Text.svelte';
   import { isScaleBand } from '$lib/utils/scales.js';
 
-  const { xScale, yScale, xRange, yRange, width } = getContext('LayerCake');
+  const { xScale, yScale, xRange, yRange, width, height, padding } = getContext('LayerCake');
 
   /** Location of axis */
   export let placement: 'top' | 'bottom' | 'left' | 'right' | 'angle' | 'radius';
+
+  /** Axis label */
+  export let label = '';
+
+  /** Location of axis label */
+  export let labelPlacement: 'start' | 'middle' | 'end' = 'middle';
+
+  /** Props applied label Text */
+  export let labelProps: Partial<ComponentProps<Text>> | undefined = undefined;
 
   /** Draw a rule line.  Use Rule component for greater rendering order control */
   export let rule: boolean | SVGAttributes<SVGLineElement> = false;
@@ -200,6 +209,47 @@
     {/if}
   {/if}
 
+  {#if label}
+    {@const resolvedLabelProps = {
+      value: label,
+      x:
+        placement === 'left' || (orientation === 'horizontal' && labelPlacement === 'start')
+          ? -$padding.left
+          : placement === 'right' || (orientation === 'horizontal' && labelPlacement === 'end')
+            ? $width + $padding.right
+            : $width / 2,
+      y:
+        placement === 'top' || (orientation === 'vertical' && labelPlacement === 'start')
+          ? -$padding.top
+          : orientation === 'vertical' && labelPlacement === 'middle'
+            ? $height / 2
+            : placement === 'bottom' || labelPlacement === 'end'
+              ? $height + $padding.bottom
+              : 0,
+      textAnchor:
+        labelPlacement === 'middle'
+          ? 'middle'
+          : placement === 'right' || (orientation === 'horizontal' && labelPlacement === 'end')
+            ? 'end'
+            : 'start',
+      verticalAnchor:
+        placement === 'top' ||
+        (orientation === 'vertical' && labelPlacement === 'start') ||
+        (placement === 'left' && labelPlacement === 'middle')
+          ? 'start'
+          : 'end',
+      rotate: orientation === 'vertical' && labelPlacement === 'middle' ? -90 : 0,
+      capHeight: '.5rem', // text-[10px]
+      ...labelProps,
+      class: cls(
+        'label text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
+        labelProps?.class
+      ),
+    }}
+
+    <Text value={label} {...resolvedLabelProps} />
+  {/if}
+
   {#each tickVals as tick, index (tick)}
     {@const tickCoords = getCoords(tick)}
     {@const radialTickCoords = pointRadial(tickCoords.x, tickCoords.y)}
@@ -212,7 +262,7 @@
       spring,
       ...tickLabelProps,
       class: cls(
-        'label text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
+        'tickLabel text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
         tickLabelProps?.class
       ),
     }}
