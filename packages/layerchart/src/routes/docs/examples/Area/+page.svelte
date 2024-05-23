@@ -151,7 +151,7 @@
           rule
           ticks={(scale) => scale.domain()}
         >
-          <svelte:fragment slot="label" let:labelProps let:index>
+          <svelte:fragment slot="tickLabel" let:labelProps let:index>
             <Text {...labelProps} textAnchor={index ? 'end' : 'start'} />
           </svelte:fragment>
         </Axis>

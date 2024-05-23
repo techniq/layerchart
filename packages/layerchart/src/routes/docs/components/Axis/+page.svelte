@@ -1,17 +1,20 @@
 <script lang="ts">
   import { scaleTime } from 'd3-scale';
-  import { PeriodType, format } from 'svelte-ux';
+  import { Field, PeriodType, Switch, format } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Preview from '$lib/docs/Preview.svelte';
   import Axis from '$lib/components/Axis.svelte';
   import Rule from '$lib/components/Rule.svelte';
   import Text from '$lib/components/Text.svelte';
+  import Frame from '$lib/components/Frame.svelte';
 
   import { createDateSeries } from '$lib/utils/genData.js';
   import Blockquote from '$lib/docs/Blockquote.svelte';
 
   const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
+
+  let debug = false;
 </script>
 
 <h1>Examples</h1>
@@ -206,7 +209,7 @@
         <Axis
           placement="bottom"
           rule={{ class: 'stroke-danger' }}
-          labelProps={{
+          tickLabelProps={{
             rotate: 315,
             textAnchor: 'end',
             class: 'fill-danger font-semibold',
@@ -259,7 +262,7 @@
           ticks={(scale) => scale.domain()}
           format={(d) => format(d, PeriodType.Day, { variant: 'long' })}
         >
-          <svelte:fragment slot="label" let:labelProps let:index>
+          <svelte:fragment slot="tickLabel" let:labelProps let:index>
             <Text {...labelProps} textAnchor={index === 0 ? 'start' : 'end'} />
           </svelte:fragment>
         </Axis>
@@ -375,11 +378,89 @@
         <Axis
           placement="bottom"
           rule={{ class: 'stroke-surface-content/10' }}
-          labelProps={{ textAnchor: 'start', dx: 8 }}
+          tickLabelProps={{ textAnchor: 'start', dx: 8 }}
           ticks={(scale) => scale.ticks().slice(0, -1)}
           tickLength={22}
         />
         <Axis placement="left" rule />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+  <h2>Axis label placements (top/bottom)</h2>
+
+  <div class="mb-2 flex gap-6">
+    <Field label="Debug:" dense labelPlacement="left" let:id>
+      <Switch {id} bind:checked={debug} />
+    </Field>
+  </div>
+</div>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 32, bottom: 32, left: 20, right: 20 }}
+    >
+      <Svg>
+        {#if debug}
+          <Frame class="fill-danger/5" />
+          <Frame class="fill-danger/5" full />
+        {/if}
+
+        <Axis label="top start" placement="top" labelPlacement="start" rule />
+        <Axis label="top middle" placement="top" labelPlacement="middle" rule />
+        <Axis label="top end" placement="top" labelPlacement="end" rule />
+
+        <Axis label="bottom start" placement="bottom" labelPlacement="start" rule />
+        <Axis label="bottom middle" placement="bottom" labelPlacement="middle" rule />
+        <Axis label="bottom end" placement="bottom" labelPlacement="end" rule />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+  <h2>Axis label placements (left/right)</h2>
+
+  <div class="mb-2 flex gap-6">
+    <Field label="Debug:" dense labelPlacement="left" let:id>
+      <Switch {id} bind:checked={debug} />
+    </Field>
+  </div>
+</div>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 32, right: 32 }}
+    >
+      <Svg>
+        {#if debug}
+          <Frame class="fill-danger/5" />
+          <Frame class="fill-danger/5" full />
+        {/if}
+
+        <Axis label="left start" placement="left" labelPlacement="start" rule />
+        <Axis label="left middle" placement="left" labelPlacement="middle" rule />
+        <Axis label="left end" placement="left" labelPlacement="end" rule />
+
+        <Axis label="right start" placement="right" labelPlacement="start" rule />
+        <Axis label="right middle" placement="right" labelPlacement="middle" rule />
+        <Axis label="right end" placement="right" labelPlacement="end" rule />
       </Svg>
     </Chart>
   </div>
