@@ -168,8 +168,8 @@
       <HitCanvas
         let:nextColor
         let:setColorData
-        on:mousemove={(e) => tooltip.show(e.detail.event, e.detail.data)}
-        on:mouseleave={tooltip.hide}
+        on:pointermove={(e) => tooltip.show(e.detail.event, e.detail.data)}
+        on:pointerleave={tooltip.hide}
       >
         <GeoPath
           render={(ctx, { geoPath }) => {

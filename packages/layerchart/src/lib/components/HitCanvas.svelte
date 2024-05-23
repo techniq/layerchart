@@ -13,7 +13,7 @@
   export let debug = false;
 
   const dispatch = createEventDispatcher<{
-    mousemove: {
+    pointermove: {
       event: MouseEvent;
       data: any;
     };
@@ -58,6 +58,25 @@
   function setColorData(color: string, data: any) {
     dataByColor.set(color, data);
   }
+
+  let activePointer = false;
+
+  function dispatchPointerMove(e: PointerEvent) {
+    const { offsetX, offsetY } = e;
+
+    const dpr = window.devicePixelRatio ?? 1;
+    const imageData = context.getImageData(offsetX * dpr, offsetY * dpr, 1, 1);
+    const [r, g, b, a] = imageData.data;
+    const colorKey = `rgb(${r},${g},${b})`;
+    const data = dataByColor.get(colorKey);
+
+    if (data) {
+      activePointer = true;
+    }
+
+    // Still dispatch with `undefined data` to hide tooltip, etc
+    dispatch('pointermove', { event: e, data });
+  }
 </script>
 
 <canvas
@@ -67,18 +86,16 @@
   style:left="{$padding.left}px"
   style:right="{$padding.right}px"
   class={cls('HitCanvas absolute w-full h-full border border-danger', !debug && 'opacity-0')}
-  on:mousemove={(e) => {
-    const { offsetX, offsetY } = e;
-
-    const dpr = window.devicePixelRatio ?? 1;
-    const imageData = context.getImageData(offsetX * dpr, offsetY * dpr, 1, 1);
-    const [r, g, b, a] = imageData.data;
-    const colorKey = `rgb(${r},${g},${b})`;
-    const data = dataByColor.get(colorKey);
-
-    dispatch('mousemove', { event: e, data });
+  on:pointerenter={dispatchPointerMove}
+  on:pointermove={dispatchPointerMove}
+  on:pointerleave={() => (activePointer = false)}
+  on:pointerleave
+  on:touchmove={(e) => {
+    // Prevent touch to not interfer with pointer if over data
+    if (activePointer) {
+      e.preventDefault();
+    }
   }}
-  on:mouseleave
 />
 
 <slot {element} {context} nextColor={() => colorGenerator.next().value} {setColorData}></slot>
