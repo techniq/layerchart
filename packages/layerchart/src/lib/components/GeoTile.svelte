@@ -1,6 +1,5 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import { scaleCanvas } from 'layercake';
   import { tile as d3Tile } from 'd3-tile';
 
   import { geoContext } from './GeoContext.svelte';
@@ -34,8 +33,7 @@
   $: ctx = canvas?.ctx;
   $: if (renderContext === 'canvas' && $ctx && url) {
     // console.count('render');
-    scaleCanvas($ctx, $width, $height);
-    $ctx.clearRect(0, 0, $width, $height);
+    // $ctx.clearRect(0, 0, $width, $height);
 
     tiles.forEach(([x, y, z]) => {
       const image = new Image();

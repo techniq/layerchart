@@ -1,7 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher, getContext } from 'svelte';
   import { type GeoPath, type GeoPermissibleObjects } from 'd3-geo';
-  import { scaleCanvas } from 'layercake';
   import { cls } from 'svelte-ux';
 
   import { geoContext } from './GeoContext.svelte';
@@ -58,7 +57,6 @@
     }
 
     // console.count('render');
-    scaleCanvas($ctx, $width, $height);
     $ctx.clearRect(0, 0, $width, $height);
 
     if (render) {

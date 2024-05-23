@@ -8,9 +8,10 @@
     LayerCake,
     Svg as _Svg,
     Html as _Html,
-    Canvas as _Canvas,
+    // Canvas as _Canvas,
     WebGL as _WebGL,
   } from 'layercake';
+  import _Canvas from './layout/Canvas.svelte';
 
   export const Svg = _Svg;
   export const Html = _Html;
