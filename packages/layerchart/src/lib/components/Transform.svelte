@@ -68,28 +68,26 @@
     }
   }
 
-  function onMouseDown(e: MouseEvent & { currentTarget: SVGElement }) {
+  function onPointerDown(e: PointerEvent & { currentTarget: SVGElement }) {
     if (disablePointer) return;
 
     e.preventDefault();
 
     dragging = true;
     moved = false;
-    svgEl = e.currentTarget.ownerSVGElement; // capture for reference in mousemove event
+    svgEl = e.currentTarget.ownerSVGElement; // capture for reference in pointermove event
     startPoint = localPoint(svgEl, e);
     startTranslate = $translate;
-
-    window.addEventListener('mousemove', onMouseMove, { capture: true });
-    window.addEventListener('mouseup', onMouseUp);
 
     dispatch('dragstart');
   }
 
-  function onMouseMove(e: MouseEvent) {
+  function onPointerMove(e: PointerEvent) {
     if (!dragging) return;
 
     e.preventDefault(); // Stop text selection
     e.stopPropagation(); // Stop tooltip from trigging (along with `capture: true`)
+    e.currentTarget.setPointerCapture(e.pointerId);
 
     const endPoint = localPoint(svgEl, e);
     const deltaX = endPoint.x - startPoint.x;
@@ -109,11 +107,8 @@
     }
   }
 
-  function onMouseUp(e: MouseEvent) {
+  function onPointerUp(e: PointerEvent) {
     dragging = false;
-
-    window.removeEventListener('mousemove', onMouseMove);
-    window.removeEventListener('mouseup', onMouseUp);
     dispatch('dragend');
   }
 
@@ -188,7 +183,7 @@
     }
   }
 
-  function localPoint(svgEl: SVGSVGElement | null, e: MouseEvent) {
+  function localPoint(svgEl: SVGSVGElement | null, e: PointerEvent) {
     if (svgEl) {
       const screenCTM = svgEl.getScreenCTM();
 
@@ -230,13 +225,22 @@
 
 <g
   on:mousewheel={onWheel}
-  on:mousedown={onMouseDown}
+  on:pointerdown={onPointerDown}
+  on:pointermove={onPointerMove}
+  on:touchmove={(e) => {
+    // Touch events cause pointer events to be interrupted.
+    // Typically `touch-action: none` works, but doesn't appear to with SVG, but `preventDefault()` works here
+    // https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#touch-action_css_property
+    e.preventDefault();
+  }}
+  on:pointerup={onPointerUp}
   on:dblclick={onDoubleClick}
   on:click|capture={onClick}
   on:click
   on:keydown
   on:keyup
   on:keypress
+  class="touch-none"
 >
   <rect
     x={-$padding.left}

@@ -111,8 +111,8 @@
               data={link}
               stroke-width={link.width}
               class="stroke-surface-content/10"
-              on:mousemove={(e) => tooltip.show(e, { link })}
-              on:mouseleave={tooltip.hide}
+              on:pointermove={(e) => tooltip.show(e, { link })}
+              on:pointerleave={tooltip.hide}
             />
           {/each}
 
@@ -124,8 +124,8 @@
                 width={nodeWidth}
                 height={nodeHeight}
                 class="fill-primary"
-                on:mousemove={(e) => tooltip.show(e, { node })}
-                on:mouseleave={tooltip.hide}
+                on:pointermove={(e) => tooltip.show(e, { node })}
+                on:pointerleave={tooltip.hide}
               />
               <Text
                 value={node.name}
@@ -263,9 +263,9 @@
                 'transition[stroke-opacity] duration-300',
                 linkColorBy === 'static' && 'stroke-surface-content'
               )}
-              on:mouseover={() => (highlightLinkIndexes = [link.index])}
-              on:mousemove={(e) => tooltip.show(e, { link })}
-              on:mouseout={() => {
+              on:pointerover={() => (highlightLinkIndexes = [link.index])}
+              on:pointermove={(e) => tooltip.show(e, { link })}
+              on:pointerout={() => {
                 highlightLinkIndexes = [];
                 tooltip.hide();
               }}
@@ -282,14 +282,14 @@
                 height={nodeHeight}
                 fill={colorScale(node[nodeColorBy])}
                 fill-opacity={0.5}
-                on:mouseover={() => {
+                on:pointerover={() => {
                   highlightLinkIndexes = [
                     ...node.sourceLinks.map((l) => l.index),
                     ...node.targetLinks.map((l) => l.index),
                   ];
                 }}
-                on:mousemove={(e) => tooltip.show(e, { node })}
-                on:mouseout={() => {
+                on:pointermove={(e) => tooltip.show(e, { node })}
+                on:pointerout={() => {
                   highlightLinkIndexes = [];
                   tooltip.hide();
                 }}
@@ -382,8 +382,8 @@
                 'transition[stroke-opacity] duration-300',
                 linkColorBy === 'static' && 'stroke-surface-content'
               )}
-              on:mouseover={() => (highlightLinkIndexes = [link.index])}
-              on:mouseout={() => (highlightLinkIndexes = [])}
+              on:pointerover={() => (highlightLinkIndexes = [link.index])}
+              on:pointerout={() => (highlightLinkIndexes = [])}
               tweened
             />
           {/each}
@@ -397,13 +397,13 @@
                 height={nodeHeight}
                 fill={colorScale(node[nodeColorBy])}
                 fill-opacity={0.5}
-                on:mouseover={() => {
+                on:pointerover={() => {
                   highlightLinkIndexes = [
                     ...node.sourceLinks.map((l) => l.index),
                     ...node.targetLinks.map((l) => l.index),
                   ];
                 }}
-                on:mouseout={() => (highlightLinkIndexes = [])}
+                on:pointerout={() => (highlightLinkIndexes = [])}
                 tweened
               />
               <Text

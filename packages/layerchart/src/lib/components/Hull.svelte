@@ -25,8 +25,8 @@
 
   const dispatch = createEventDispatcher<{
     click: { points: [number, number][]; polygon: Delaunay.Polygon };
-    mousemove: {
-      event: MouseEvent;
+    pointermove: {
+      event: PointerEvent;
       points: [number, number][];
       polygon: Delaunay.Polygon;
     };
@@ -52,8 +52,8 @@
       geojson={polygon}
       {curve}
       class={cls('fill-transparent', classes.path)}
-      on:mousemove={(e) => dispatch('mousemove', { event: e, points, polygon })}
-      on:mouseleave
+      on:pointermove={(e) => dispatch('pointermove', { event: e, points, polygon })}
+      on:pointerleave
       on:click={(e) => dispatch('click', { points, polygon })}
     />
   {:else}
@@ -65,8 +65,8 @@
       y={(d) => d[1]}
       {curve}
       class={cls('fill-transparent', classes.path)}
-      on:mousemove={(e) => dispatch('mousemove', { event: e, points, polygon })}
-      on:mouseleave
+      on:pointermove={(e) => dispatch('pointermove', { event: e, points, polygon })}
+      on:pointerleave
       on:click={(e) => dispatch('click', { points, polygon })}
     />
   {/if}

@@ -91,10 +91,12 @@
       d={geoPath(geojson)}
       {fill}
       {stroke}
-      on:mousemove={(e) => tooltip?.show(e, geojson)}
-      on:mousemove
-      on:mouseleave={(e) => tooltip?.hide()}
-      on:mouseleave
+      on:pointerenter={(e) => tooltip?.show(e, geojson)}
+      on:pointerenter
+      on:pointermove={(e) => tooltip?.show(e, geojson)}
+      on:pointermove
+      on:pointerleave={(e) => tooltip?.hide()}
+      on:pointerleave
       on:click={(event) => dispatch('click', { geoPath, event })}
       on:click
       class={cls($$props.fill == null && 'fill-transparent', $$props.class)}

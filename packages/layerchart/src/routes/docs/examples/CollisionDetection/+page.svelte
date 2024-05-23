@@ -53,7 +53,7 @@
           <rect
             {width}
             {height}
-            on:mousemove={(e) => {
+            on:pointermove={(e) => {
               nodes[0].fx = e.offsetX - width / 2;
               nodes[0].fy = e.offsetY - height / 2;
             }}

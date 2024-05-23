@@ -62,8 +62,8 @@
       width={cellWidth}
       height={cellHeight}
       fill={cell.color}
-      on:mousemove={(e) => tooltip?.show(e, cell.data)}
-      on:mouseleave={(e) => tooltip?.hide()}
+      on:pointermove={(e) => tooltip?.show(e, cell.data)}
+      on:pointerleave={(e) => tooltip?.hide()}
       class="stroke-surface-content/5"
       {...$$restProps}
     />

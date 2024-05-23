@@ -109,8 +109,8 @@
         {cornerRadius}
         {offset}
         fill={$config.r ? $rGet(arc.data) : null}
-        on:mousemove={(e) => tooltip?.show(e, arc.data)}
-        on:mouseleave={(e) => tooltip?.hide()}
+        on:pointermove={(e) => tooltip?.show(e, arc.data)}
+        on:pointerleave={(e) => tooltip?.hide()}
       />
     {/each}
   </slot>

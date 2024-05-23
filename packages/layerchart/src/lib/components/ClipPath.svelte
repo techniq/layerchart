@@ -25,7 +25,7 @@
   {#if disabled}
     <slot />
   {:else}
-    <g style:clip-path="url(#{id})" on:click on:mousemove on:mouseleave on:keydown>
+    <g style:clip-path="url(#{id})" on:click on:pointermove on:pointerleave on:keydown>
       <slot {id} url="url(#{id})" {useId} />
     </g>
   {/if}

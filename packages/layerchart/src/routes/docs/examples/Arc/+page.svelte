@@ -180,8 +180,8 @@
                 padAngle={0.02}
                 fill={color}
                 class="hover:scale-90 origin-center [transform-box:fill-box] transition-transform"
-                on:mousemove={(e) => tooltip?.show(e, color)}
-                on:mouseleave={(e) => tooltip?.hide()}
+                on:pointermove={(e) => tooltip?.show(e, color)}
+                on:pointerleave={(e) => tooltip?.hide()}
               />
             {/each}
           {/each}

@@ -72,6 +72,6 @@
   {...$$restProps}
   class={cls('path-area', $$props.class)}
   on:click
-  on:mousemove
-  on:mouseleave
+  on:pointermove
+  on:pointerleave
 />

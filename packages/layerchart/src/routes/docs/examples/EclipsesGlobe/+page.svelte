@@ -142,8 +142,8 @@
               geojson={feature}
               fill={hasColor ? colorScale(feature.properties.Date) : undefined}
               class={cls('transition-colors', !hasColor && 'fill-surface-content/10')}
-              on:mousemove={(e) => tooltip?.show(e, feature.properties)}
-              on:mouseleave={(e) => tooltip?.hide()}
+              on:pointermove={(e) => tooltip?.show(e, feature.properties)}
+              on:pointerleave={(e) => tooltip?.hide()}
             />
           {/each}
         </Transform>
