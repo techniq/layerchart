@@ -181,8 +181,10 @@
   transform="translate({xOffset}, {yOffset})"
   {...$$restProps}
   on:click
+  on:pointerenter
   on:pointermove
   on:pointerleave
+  on:touchmove
 />
 
 <slot value={$tweened_value} centroid={trackArcCentroid} {boundingBox} />

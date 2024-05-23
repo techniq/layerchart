@@ -308,8 +308,10 @@
             {@const isHighlighted = tooltip.data?.date === arc.data.date}
             {@const isFaded = tooltip.data != null && tooltip.data.date !== arc.data.date}
             <Group
-              on:mousemove={(e) => tooltip?.show(e, arc.data)}
-              on:mouseleave={(e) => tooltip?.hide()}
+              on:pointerenter={(e) => tooltip?.show(e, arc.data)}
+              on:pointermove={(e) => tooltip?.show(e, arc.data)}
+              on:pointerleave={(e) => tooltip?.hide()}
+              preventTouchMove
               class={cls(
                 // isHighlighted && 'stroke-surface-content stroke-2',
                 isFaded && 'opacity-50'
