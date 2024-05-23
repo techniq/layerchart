@@ -23,6 +23,11 @@
    */
   export let center: boolean | 'x' | 'y' = false;
 
+  /**
+   * Prevent `touchmove` default, which can interfer with `pointermove` when used with `Tooltip`, for example
+   */
+  export let preventTouchMove = false;
+
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
@@ -40,6 +45,19 @@
   }
 </script>
 
-<g {transform} {...$$restProps} on:click on:pointermove on:pointerleave>
+<g
+  {transform}
+  {...$$restProps}
+  on:click
+  on:pointerenter
+  on:pointermove
+  on:pointerleave
+  on:touchmove={(e) => {
+    if (preventTouchMove) {
+      // Prevent touch to not interfer with pointer
+      e.preventDefault();
+    }
+  }}
+>
   <slot />
 </g>
