@@ -67,6 +67,10 @@
               ctx.fillStyle = color;
               ctx.fill();
 
+              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
+              ctx.strokeStyle = color;
+              ctx.stroke();
+
               setColorData(color, feature);
             }
           }}

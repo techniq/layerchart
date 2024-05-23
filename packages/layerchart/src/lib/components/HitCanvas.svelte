@@ -85,7 +85,11 @@
   style:bottom="{$padding.bottom}px"
   style:left="{$padding.left}px"
   style:right="{$padding.right}px"
-  class={cls('HitCanvas absolute w-full h-full border border-danger', !debug && 'opacity-0')}
+  class={cls(
+    'HitCanvas absolute w-full h-full border border-danger',
+    // '[image-rendering:pixelated]', // https://developer.mozilla.org/en-US/docs/Web/CSS/image-rendering
+    !debug && 'opacity-0'
+  )}
   on:pointerenter={dispatchPointerMove}
   on:pointermove={dispatchPointerMove}
   on:pointerleave={() => (activePointer = false)}
