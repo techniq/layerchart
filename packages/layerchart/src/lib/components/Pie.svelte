@@ -109,8 +109,15 @@
         {cornerRadius}
         {offset}
         fill={$config.r ? $rGet(arc.data) : null}
+        on:pointerenter={(e) => tooltip?.show(e, arc.data)}
         on:pointermove={(e) => tooltip?.show(e, arc.data)}
         on:pointerleave={(e) => tooltip?.hide()}
+        on:touchmove={(e) => {
+          if (tooltip) {
+            // Prevent touch to not interfer with pointer when using tooltip
+            e.preventDefault();
+          }
+        }}
       />
     {/each}
   </slot>
