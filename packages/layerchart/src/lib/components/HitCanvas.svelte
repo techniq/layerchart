@@ -14,6 +14,10 @@
 
   const dispatch = createEventDispatcher<{
     pointermove: {
+      event: PointerEvent;
+      data: any;
+    };
+    click: {
       event: MouseEvent;
       data: any;
     };
@@ -61,7 +65,7 @@
 
   let activePointer = false;
 
-  function dispatchPointerMove(e: PointerEvent) {
+  function getPointerData(e: PointerEvent | MouseEvent) {
     const { offsetX, offsetY } = e;
 
     const dpr = window.devicePixelRatio ?? 1;
@@ -69,6 +73,12 @@
     const [r, g, b, a] = imageData.data;
     const colorKey = `rgb(${r},${g},${b})`;
     const data = dataByColor.get(colorKey);
+
+    return data;
+  }
+
+  function dispatchPointerMove(e: PointerEvent) {
+    const data = getPointerData(e);
 
     if (data) {
       activePointer = true;
@@ -98,6 +108,12 @@
     // Prevent touch to not interfer with pointer if over data
     if (activePointer) {
       e.preventDefault();
+    }
+  }}
+  on:click={(e) => {
+    const data = getPointerData(e);
+    if (data) {
+      dispatch('click', { event: e, data });
     }
   }}
 />
