@@ -15,7 +15,7 @@
   import GeoTile from '$lib/components/GeoTile.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import Transform from '$lib/components/Transform.svelte';
+  import TransformContext from '$lib/components/TransformContext.svelte';
   import { tweened } from 'svelte/motion';
 
   export let data;
