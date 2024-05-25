@@ -15,8 +15,6 @@
   import GeoTile from '$lib/components/GeoTile.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import TransformContext from '$lib/components/TransformContext.svelte';
-  import { tweened } from 'svelte/motion';
 
   export let data;
   const states = feature(data.geojson, data.geojson.objects.states);
@@ -37,9 +35,7 @@
   let scrollMode = 'scale';
   let debug = false;
 
-  let scale = 0;
-  let translate = { x: 480, y: 300 };
-
+  // Needed for initial transform context
   const initialScale = geoMercator().scale();
   const initialTranslate = geoMercator().translate();
 </script>
@@ -70,8 +66,6 @@
       geo={{
         projection: geoMercator,
         _fitGeojson: selectedFeature,
-        // scale,
-        // translate: [translate.x, translate.y],
         applyTransform: ['translate', 'scale'],
       }}
       transform={{
@@ -90,24 +84,6 @@
         <GeoDebug class="absolute top-0 left-0 z-10" />
       {/if}
       <Svg>
-        <!-- <Transform
-          mode="manual"
-          translateOnScale
-          initialScale={projection.scale()}
-          initialTranslate={{
-            x: projection.translate()[0],
-            y: projection.translate()[1],
-          }}
-          scroll={scrollMode}
-          tweened={{ duration: 800, easing: cubicOut }}
-          let:zoomTo
-          let:reset={resetZoom}
-          on:transform={(e) => {
-            scale = e.detail.scale;
-            translate = e.detail.translate;
-          }}
-          bind:this={transform}
-        > -->
         <GeoTile url={serviceUrl} {zoomDelta} {debug} />
         {#each filteredStates.features as feature}
           <GeoPath
@@ -142,7 +118,6 @@
             }}
           />
         {/each}
-        <!-- </Transform> -->
       </Svg>
       <Tooltip header={(data) => data.properties.name} let:data>
         {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
