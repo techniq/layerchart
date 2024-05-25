@@ -150,6 +150,7 @@
       </Canvas>
 
       <Canvas>
+        <!-- TODO: Fade in with delay like SVG -->
         <!-- <g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}> -->
         <GeoPath
           geojson={{ type: 'FeatureCollection', features: selectedCountiesFeatures }}
@@ -180,24 +181,24 @@
         on:pointermove={(e) => tooltip.show(e.detail.event, e.detail.data)}
         on:pointerleave={tooltip.hide}
         on:click={(e) => {
-          // console.log(e.detail.data);
           const feature = e.detail.data;
           const geoPath = d3geoPath(projection);
 
-          // const { geoPath, event } = e.detail;
-          let [[left, top], [right, bottom]] = geoPath.bounds(feature);
-          if (selectedStateId === feature.id) {
+          if (
+            selectedStateId === feature.id ||
+            !states.features.some((f) => f.id == feature.id) // County selected
+          ) {
             selectedStateId = null;
             transform.reset();
           } else {
             selectedStateId = feature.id;
+            let [[left, top], [right, bottom]] = geoPath.bounds(feature);
             let width = right - left;
             let height = bottom - top;
             let x = (left + right) / 2;
             let y = (top + bottom) / 2;
             const padding = 20;
 
-            // console.log({ x, y, width, height });
             transform.zoomTo({ x, y }, { width: width + padding, height: height + padding });
           }
         }}
@@ -205,6 +206,18 @@
         <GeoPath
           render={(ctx, { geoPath }) => {
             for (var feature of states.features) {
+              const color = nextColor();
+
+              ctx.beginPath();
+              geoPath(feature);
+              ctx.fillStyle = color;
+              ctx.fill();
+
+              setColorData(color, feature);
+            }
+
+            // Draw county features on top if state selected
+            for (var feature of selectedCountiesFeatures) {
               const color = nextColor();
 
               ctx.beginPath();
