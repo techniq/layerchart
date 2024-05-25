@@ -74,7 +74,6 @@
 
   let startPoint: { x: number; y: number } = { x: 0, y: 0 };
   let startTranslate: { x: number; y: number } = { x: 0, y: 0 };
-  let svgEl: SVGSVGElement | null = null;
 
   export function reset() {
     $translate = initialTranslate;
@@ -130,8 +129,7 @@
 
     dragging = true;
     moved = false;
-    svgEl = e.currentTarget.ownerSVGElement; // capture for reference in pointermove event
-    startPoint = localPoint(svgEl, e);
+    startPoint = localPoint(e);
     startTranslate = $translate;
 
     dispatch('dragstart');
@@ -144,7 +142,7 @@
     e.stopPropagation(); // Stop tooltip from trigging (along with `capture: true`)
     e.currentTarget.setPointerCapture(e.pointerId);
 
-    const endPoint = localPoint(svgEl, e);
+    const endPoint = localPoint(e);
     const deltaX = endPoint.x - startPoint.x;
     const deltaY = endPoint.y - startPoint.y;
 
@@ -176,7 +174,7 @@
 
   function onDoubleClick(e) {
     if (disablePointer) return;
-    const point = localPoint(svgEl, e);
+    const point = localPoint(e);
     scaleTo(e.shiftKey ? 0.5 : 2, point);
   }
 
@@ -185,8 +183,7 @@
 
     e.preventDefault();
 
-    svgEl = e.currentTarget.ownerSVGElement;
-    const point = (startPoint = localPoint(svgEl, e));
+    const point = (startPoint = localPoint(e));
 
     // Pinch to zoom is registered as a wheel event with control key
     const pinchToZoom = e.ctrlKey;
@@ -238,25 +235,11 @@
     }
   }
 
-  function localPoint(svgEl: SVGSVGElement | null, e: PointerEvent) {
-    if (svgEl) {
-      const screenCTM = svgEl.getScreenCTM();
-
-      let point = svgEl.createSVGPoint();
-      point.x = e.clientX;
-      point.y = e.clientY;
-      point = point.matrixTransform(screenCTM?.inverse());
-
-      return {
-        x: point.x,
-        y: point.y,
-      };
-    } else {
-      return {
-        x: e.clientX,
-        y: e.clientY,
-      };
-    }
+  function localPoint(e: PointerEvent | WheelEvent) {
+    return {
+      x: e.offsetX,
+      y: e.offsetY,
+    };
   }
 
   $: center = { x: $width / 2, y: $height / 2 };
