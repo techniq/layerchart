@@ -13,7 +13,7 @@
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Graticule from '$lib/components/Graticule.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
-  import Transform from '$lib/components/Transform.svelte';
+  import TransformContext from '$lib/components/TransformContext.svelte';
   import { timings } from './timings.js';
 
   export let data;
@@ -26,11 +26,23 @@
   const roll = spring(0, springOptions);
   const sensitivity = 75;
 
+  let transformContext: TransformContext;
+
   let selectedFeature;
   $: if (selectedFeature) {
     const centroid = geoCentroid(selectedFeature);
-    $yaw = -centroid[0];
-    $pitch = -centroid[1];
+
+    // $yaw = -centroid[0];
+    // $pitch = -centroid[1];
+
+    // transformContext.zoomTo({
+    //   x: -centroid[0],
+    //   y: -centroid[1],
+    // });
+    transformContext.translate.set({
+      x: -centroid[0],
+      y: -centroid[1],
+    });
   }
 
   // Animate to Yakko's song
@@ -116,45 +128,52 @@
         </div>
       {/each}
     </div>
+
     <Chart
       geo={{
         projection: geoOrthographic,
         fitGeojson: countries,
-        rotate: {
-          yaw: $yaw,
-          pitch: $pitch,
-          roll: $roll,
-        },
+        applyTransform: ['rotate'],
+        // rotate: {
+        //   yaw: $yaw,
+        //   pitch: $pitch,
+        //   roll: $roll,
+        // },
+      }}
+      transform={{ mode: 'manual', scroll: 'none', spring: { stiffness: 0.04 } }}
+      bind:transformContext
+      on:transform={(e) => {
+        // $yaw = e.detail.translate.x * (sensitivity / projection.scale());
+        // $pitch = -e.detail.translate.y * (sensitivity / projection.scale());
       }}
       tooltip={{ mode: 'manual' }}
       let:tooltip
-      let:projection
     >
       <Svg>
-        <Transform
+        <!-- <Transform
           mode="manual"
           scroll="none"
           on:transform={(e) => {
             $yaw = e.detail.translate.x * (sensitivity / projection.scale());
             $pitch = -e.detail.translate.y * (sensitivity / projection.scale());
           }}
-        >
-          <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
-          <Graticule class="stroke-surface-content/20" />
-          {#each countries.features as country}
-            <GeoPath
-              geojson={country}
-              class={cls(
-                'stroke-surface-content/50 fill-white cursor-pointer',
-                selectedFeature === country
-                  ? 'stroke-primary-900 fill-primary'
-                  : 'hover:fill-gray-200'
-              )}
-              on:click={(e) => (selectedFeature = country)}
-              {tooltip}
-            />
-          {/each}
-        </Transform>
+        > -->
+        <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
+        <Graticule class="stroke-surface-content/20" />
+        {#each countries.features as country}
+          <GeoPath
+            geojson={country}
+            class={cls(
+              'stroke-surface-content/50 fill-white cursor-pointer',
+              selectedFeature === country
+                ? 'stroke-primary-900 fill-primary'
+                : 'hover:fill-gray-200'
+            )}
+            on:click={(e) => (selectedFeature = country)}
+            {tooltip}
+          />
+        {/each}
+        <!-- </Transform> -->
       </Svg>
 
       <Tooltip>
@@ -199,12 +218,14 @@
       geo={{
         projection: geoOrthographic,
         fitGeojson: countries,
-        rotate: {
-          yaw: $yaw,
-          pitch: $pitch,
-          roll: $roll,
-        },
+        applyTransform: ['rotate'],
+        // rotate: {
+        //   yaw: $yaw,
+        //   pitch: $pitch,
+        //   roll: $roll,
+        // },
       }}
+      transform={{ mode: 'manual', scroll: 'none', spring: { stiffness: 0.04 } }}
     >
       <Canvas>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />

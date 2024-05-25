@@ -11,7 +11,6 @@
   import Rect from '$lib/components/Rect.svelte';
   import Text from '$lib/components/Text.svelte';
   import Tree from '$lib/components/Tree.svelte';
-  import Transform from '$lib/components/Transform.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
   import TransformControls from '$lib/docs/TransformControls.svelte';
@@ -30,16 +29,6 @@
   let curve = curveBumpX;
   let layout = 'chart';
   let selected;
-  let transform: Transform;
-
-  /*
-	$: if (transform && selected) {
-		transform.zoomTo({
-			x: (orientation === 'horizontal' ? selected.y : selected.x),
-			y: (orientation === 'horizontal' ? selected.x : selected.y)
-		})
-	}
-	*/
 
   function getNodeKey(node) {
     return node.data.name + node.depth;
@@ -87,62 +76,68 @@
 
 <Preview data={complexDataHierarchy}>
   <div class="h-[800px] p-4 border rounded overflow-hidden relative">
-    <TransformControls {transform} orientation="horizontal" />
     <Chart
       data={complexDataHierarchy}
       padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}
+      transform={{ mode: 'canvas', tweened: { duration: 800, easing: cubicOut } }}
+      let:transform
     >
-      <Svg>
-        <Transform bind:this={transform} tweened={{ duration: 800, easing: cubicOut }}>
-          <Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : null}>
-            <g class="opacity-20">
-              {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
-                <Link data={link} {orientation} {curve} tweened class="stroke-surface-content" />
-              {/each}
-            </g>
+      <TransformControls orientation="horizontal" class="-m-2" />
 
-            {#each nodes as node (getNodeKey(node))}
-              <Group
-                x={(orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
-                y={(orientation === 'horizontal' ? node.x : node.y) - nodeHeight / 2}
-                tweened
-                on:click={() => {
-                  if (expandedNodeNames.includes(node.data.name)) {
-                    expandedNodeNames = expandedNodeNames.filter((name) => name !== node.data.name);
-                  } else {
-                    expandedNodeNames = [...expandedNodeNames, node.data.name];
-                  }
-                  selected = node;
-                }}
-                class={cls(node.data.children && 'cursor-pointer')}
-              >
-                <Rect
-                  width={nodeWidth}
-                  height={nodeHeight}
-                  class={cls(
-                    'fill-surface-100',
-                    node.data.children
-                      ? 'stroke-primary hover:stroke-2'
-                      : 'stroke-secondary [stroke-dasharray:1]'
-                  )}
-                  rx={10}
-                />
-                <Text
-                  value={node.data.name}
-                  x={nodeWidth / 2}
-                  y={nodeHeight / 2}
-                  dy={-2}
-                  textAnchor="middle"
-                  verticalAnchor="middle"
-                  class={cls(
-                    'text-xs pointer-events-none',
-                    node.data.children ? 'fill-primary' : 'fill-secondary'
-                  )}
-                />
-              </Group>
+      <Svg>
+        <Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : null}>
+          <g class="opacity-20">
+            {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
+              <Link data={link} {orientation} {curve} tweened class="stroke-surface-content" />
             {/each}
-          </Tree>
-        </Transform>
+          </g>
+
+          {#each nodes as node (getNodeKey(node))}
+            <Group
+              x={(orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
+              y={(orientation === 'horizontal' ? node.x : node.y) - nodeHeight / 2}
+              tweened
+              on:click={() => {
+                if (expandedNodeNames.includes(node.data.name)) {
+                  expandedNodeNames = expandedNodeNames.filter((name) => name !== node.data.name);
+                } else {
+                  expandedNodeNames = [...expandedNodeNames, node.data.name];
+                }
+                selected = node;
+
+                // transform.zoomTo({
+                //   x: orientation === 'horizontal' ? selected.y : selected.x,
+                //   y: orientation === 'horizontal' ? selected.x : selected.y,
+                // });
+              }}
+              class={cls(node.data.children && 'cursor-pointer')}
+            >
+              <Rect
+                width={nodeWidth}
+                height={nodeHeight}
+                class={cls(
+                  'fill-surface-100',
+                  node.data.children
+                    ? 'stroke-primary hover:stroke-2'
+                    : 'stroke-secondary [stroke-dasharray:1]'
+                )}
+                rx={10}
+              />
+              <Text
+                value={node.data.name}
+                x={nodeWidth / 2}
+                y={nodeHeight / 2}
+                dy={-2}
+                textAnchor="middle"
+                verticalAnchor="middle"
+                class={cls(
+                  'text-xs pointer-events-none',
+                  node.data.children ? 'fill-primary' : 'fill-secondary'
+                )}
+              />
+            </Group>
+          {/each}
+        </Tree>
       </Svg>
     </Chart>
   </div>

@@ -16,6 +16,7 @@
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
   import Transform from '$lib/components/Transform.svelte';
+  import { tweened } from 'svelte/motion';
 
   export let data;
   const states = feature(data.geojson, data.geojson.objects.states);
@@ -38,6 +39,9 @@
 
   let scale = 0;
   let translate = { x: 480, y: 300 };
+
+  const initialScale = geoMercator().scale();
+  const initialTranslate = geoMercator().translate();
 </script>
 
 <div class="grid grid-cols-[1fr,1fr,1fr,auto] gap-2 my-2">
@@ -66,8 +70,17 @@
       geo={{
         projection: geoMercator,
         _fitGeojson: selectedFeature,
-        scale,
-        translate: [translate.x, translate.y],
+        // scale,
+        // translate: [translate.x, translate.y],
+        applyTransform: ['translate', 'scale'],
+      }}
+      transform={{
+        mode: 'manual',
+        initialScale,
+        initialTranslate: { x: initialTranslate[0], y: initialTranslate[1] },
+        translateOnScale: true,
+        scroll: scrollMode,
+        tweened: { duration: 800, easing: cubicOut },
       }}
       tooltip={{ mode: 'manual' }}
       let:tooltip
@@ -77,55 +90,59 @@
         <GeoDebug class="absolute top-0 left-0 z-10" />
       {/if}
       <Svg>
-        <Transform
+        <!-- <Transform
           mode="manual"
           translateOnScale
           initialScale={projection.scale()}
-          initialTranslate={{ x: projection.translate()[0], y: projection.translate()[1] }}
+          initialTranslate={{
+            x: projection.translate()[0],
+            y: projection.translate()[1],
+          }}
           scroll={scrollMode}
           tweened={{ duration: 800, easing: cubicOut }}
           let:zoomTo
           let:reset={resetZoom}
           on:transform={(e) => {
-            (scale = e.detail.scale), (translate = e.detail.translate);
+            scale = e.detail.scale;
+            translate = e.detail.translate;
           }}
           bind:this={transform}
-        >
-          <GeoTile url={serviceUrl} {zoomDelta} {debug} />
-          {#each filteredStates.features as feature}
-            <GeoPath
-              geojson={feature}
-              class="stroke-none"
-              {tooltip}
-              on:click={(e) => {
-                const { geoPath, event } = e.detail;
-                console.log({ selectedStateName, feature });
-                /*
+        > -->
+        <GeoTile url={serviceUrl} {zoomDelta} {debug} />
+        {#each filteredStates.features as feature}
+          <GeoPath
+            geojson={feature}
+            class="stroke-none"
+            {tooltip}
+            on:click={(e) => {
+              const { geoPath, event } = e.detail;
+              console.log({ selectedStateName, feature });
+              /*
 								if (selectedStateName === feature.properties.name) {
 									selectedStateName = null;
 									resetZoom();
 								} else {
 								*/
-                selectedStateName = feature.properties.name;
-                // let [[left, top], [right, bottom]] = geoPath.bounds(feature);
-                console.log(geoPath.bounds(feature));
-                let [minLongLat, maxLongLat] = geoBounds(feature);
-                // Convert lat/long to screen x/y
-                const [left, top] = projection(minLongLat);
-                const [right, bottom] = projection(maxLongLat);
-                let width = right - left;
-                let height = bottom - top;
-                //let x = (left + right) / 2;
-                //let y = (top + bottom) / 2;
-                let x = (left + right) / 2 + projection.translate()[0];
-                let y = (top + bottom) / 2 + projection.translate()[1];
-                const padding = 20;
-                //zoomTo({ x, y }, { width: width + padding, height: height + padding })
-                //}
-              }}
-            />
-          {/each}
-        </Transform>
+              selectedStateName = feature.properties.name;
+              // let [[left, top], [right, bottom]] = geoPath.bounds(feature);
+              console.log(geoPath.bounds(feature));
+              let [minLongLat, maxLongLat] = geoBounds(feature);
+              // Convert lat/long to screen x/y
+              const [left, top] = projection(minLongLat);
+              const [right, bottom] = projection(maxLongLat);
+              let width = right - left;
+              let height = bottom - top;
+              //let x = (left + right) / 2;
+              //let y = (top + bottom) / 2;
+              let x = (left + right) / 2 + projection.translate()[0];
+              let y = (top + bottom) / 2 + projection.translate()[1];
+              const padding = 20;
+              //zoomTo({ x, y }, { width: width + padding, height: height + padding })
+              //}
+            }}
+          />
+        {/each}
+        <!-- </Transform> -->
       </Svg>
       <Tooltip header={(data) => data.properties.name} let:data>
         {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}

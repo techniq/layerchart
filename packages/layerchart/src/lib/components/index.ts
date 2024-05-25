@@ -51,7 +51,7 @@ export { default as Tooltip } from './Tooltip.svelte';
 export { default as TooltipContext } from './TooltipContext.svelte';
 export { default as TooltipItem } from './TooltipItem.svelte';
 export { default as TooltipSeparator } from './TooltipSeparator.svelte';
+export { default as TransformContext, transformContext } from './TransformContext.svelte';
 export { default as Tree } from './Tree.svelte';
 export { default as Treemap } from './Treemap.svelte';
 export { default as Voronoi } from './Voronoi.svelte';
-export { default as Transform } from './Transform.svelte';

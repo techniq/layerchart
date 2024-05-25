@@ -3,10 +3,10 @@
   import { writable } from 'svelte/store';
   import { scaleCanvas } from 'layercake';
   import { cls } from 'svelte-ux';
+  import Canvas from './layout/Canvas.svelte';
 
-  const { width, height, padding } = getContext('LayerCake');
+  const { width, height } = getContext('LayerCake');
 
-  export let element: HTMLCanvasElement = undefined;
   export let context: CanvasRenderingContext2D = undefined;
 
   /** Show canvas for debugging */
@@ -29,7 +29,6 @@
 
   onMount(() => {
     // https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext#willreadfrequently
-    context = element.getContext('2d', { willReadFrequently: true });
     scaleCanvas(context, $width, $height);
   });
 
@@ -89,12 +88,9 @@
   }
 </script>
 
-<canvas
-  bind:this={element}
-  style:top="{$padding.top}px"
-  style:bottom="{$padding.bottom}px"
-  style:left="{$padding.left}px"
-  style:right="{$padding.right}px"
+<Canvas
+  bind:context
+  willReadFrequently
   class={cls(
     'HitCanvas absolute w-full h-full border border-danger',
     // '[image-rendering:pixelated]', // https://developer.mozilla.org/en-US/docs/Web/CSS/image-rendering
@@ -117,5 +113,4 @@
     }
   }}
 />
-
-<slot {element} {context} nextColor={() => colorGenerator.next().value} {setColorData}></slot>
+<slot nextColor={() => colorGenerator.next().value} {setColorData}></slot>

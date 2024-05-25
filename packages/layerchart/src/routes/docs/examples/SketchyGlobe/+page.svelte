@@ -11,7 +11,7 @@
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Graticule from '$lib/components/Graticule.svelte';
-  import Transform from '$lib/components/Transform.svelte';
+  import TransformContext from '$lib/components/TransformContext.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
   export let data;
@@ -22,17 +22,19 @@
   $: geojson = simplify(presimplify(data.geojson), Math.pow(10, 2 - minArea));
   $: land = feature(geojson, data.geojson.objects.land);
 
-  let yaw = 0;
-  let pitch = 0;
-  let roll = 0;
-  let sensitivity = 75;
+  let transformContext: TransformContext;
 
   let velocity = 3;
   let isSpinning = false;
   const timer = timerStore({
     delay: 1,
     onTick() {
-      yaw += velocity * 0.1;
+      transformContext.translate.update((value) => {
+        return {
+          x: (value.x += velocity),
+          y: value.y,
+        };
+      });
     },
     disabled: !isSpinning,
   });
@@ -85,36 +87,26 @@
       geo={{
         projection: geoOrthographic,
         fitGeojson: land,
-        rotate: {
-          yaw,
-          pitch,
-          roll,
-        },
+        applyTransform: ['rotate'],
       }}
-      let:projection
-      let:rScale
+      transform={{
+        mode: 'manual',
+        scroll: 'none',
+        tweened: { duration: 800, easing: cubicOut },
+      }}
+      on:dragstart={() => timer.stop()}
+      on:dragend={() => {
+        if (isSpinning) {
+          // Restart
+          timer.start();
+        }
+      }}
+      bind:transformContext
     >
       <Svg>
-        <Transform
-          mode="manual"
-          scroll="none"
-          tweened={{ duration: 800, easing: cubicOut }}
-          on:dragstart={() => timer.stop()}
-          on:dragend={() => {
-            if (isSpinning) {
-              // Restart
-              timer.start();
-            }
-          }}
-          on:transform={(e) => {
-            yaw = e.detail.translate.x * (sensitivity / projection.scale());
-            pitch = -e.detail.translate.y * (sensitivity / projection.scale());
-          }}
-        >
-          <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
-          <Graticule class="stroke-surface-content/20" />
-          <GeoPath geojson={land} {curve} class="stroke-surface-content/50 fill-white" />
-        </Transform>
+        <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
+        <Graticule class="stroke-surface-content/20" />
+        <GeoPath geojson={land} {curve} class="stroke-surface-content/50 fill-white" />
       </Svg>
     </Chart>
   </div>

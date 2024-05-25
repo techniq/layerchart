@@ -2,6 +2,8 @@
   import { getContext, onMount, setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import { scaleCanvas } from 'layercake';
+  import { cls } from 'svelte-ux';
+  import { transformContext } from '../TransformContext.svelte';
 
   const { width, height, padding } = getContext('LayerCake');
 
@@ -10,6 +12,10 @@
 
   /** The `<canvas>`'s 2d context. Useful for bindings. */
   export let context: CanvasRenderingContext2D = undefined;
+
+  /** Force the use of a software (instead of hardware accelerated) 2D canvas and can save memory when calling getImageData() frequently.
+   * see: https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext#willreadfrequently */
+  export let willReadFrequently = false;
 
   /** The layer's z-index. */
   export let zIndex = undefined;
@@ -29,50 +35,59 @@
   /** A string passed to `aria-describedby` property on the `<canvas>` tag. */
   export let describedBy: string | undefined = undefined;
 
-  /** Apply scale transform */
-  export let scale: number | undefined = undefined;
-
-  /** Apply scale transform */
-  export let translate = [0, 0];
-
-  const cntxt = {
-    ctx: writable({}),
-  };
+  const ctx = writable({});
 
   onMount(() => {
-    context = element?.getContext('2d') as CanvasRenderingContext2D;
+    context = element?.getContext('2d', { willReadFrequently }) as CanvasRenderingContext2D;
   });
+
+  const { mode, scale, translate } = transformContext();
 
   $: if (context) {
     scaleCanvas(context, $width, $height);
     context.clearRect(0, 0, $width, $height);
 
-    if (scale != null) {
-      context.scale(scale, scale);
+    if (mode === 'canvas') {
+      const center = { x: $width / 2, y: $height / 2 };
+      const newTranslate = {
+        x: $translate.x * $scale + center.x - center.x * $scale,
+        y: $translate.y * $scale + center.y - center.y * $scale,
+      };
+      context.translate(newTranslate.x, newTranslate.y);
+
+      context.scale($scale, $scale);
     }
 
-    if (translate.some((x) => x !== 0)) {
-      context.translate(translate[0], translate[1]);
-    }
+    // Force children to re-draw
+    $ctx = context;
   }
 
-  $: cntxt.ctx.set(context);
-  setContext('canvas', cntxt);
+  $: ctx.set(context);
+  setContext('canvas', { ctx });
 </script>
 
 <canvas
   bind:this={element}
-  class="layercake-layout-canvas"
-  style:z-index={zIndex}
-  style:pointer-events={pointerEvents === false ? 'none' : null}
   style:top="{$padding.top}px"
   style:right="{$padding.right}px"
   style:bottom="{$padding.bottom}px"
   style:left="{$padding.left}px"
-  style="width:100%;height:100%;position:absolute;"
+  style:z-index={zIndex}
+  class={cls(
+    'layercake-layout-canvas',
+    'absolute w-full h-full',
+    pointerEvents === false && 'pointer-events-none',
+    $$restProps.class
+  )}
   aria-label={label}
   aria-labelledby={labelledBy}
   aria-describedby={describedBy}
+  on:pointerenter
+  on:pointermove
+  on:pointerleave
+  on:pointerleave
+  on:touchmove
+  on:click
 >
   <slot name="fallback">
     {fallback || ''}

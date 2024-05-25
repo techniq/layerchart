@@ -1,16 +1,60 @@
+<script lang="ts" context="module">
+  import { getContext, setContext } from 'svelte';
+  import { writable, type Writable } from 'svelte/store';
+
+  export const transformContextKey = Symbol();
+
+  export type TransformContextValue = {
+    mode: 'canvas' | 'manual' | 'none';
+    scale: Writable<number>;
+    translate: Writable<{ x: number; y: number }>;
+    reset(): void;
+    zoomIn(): void;
+    zoomOut(): void;
+    translateCenter(): void;
+    zoomTo(center: { x: number; y: number }, rect?: { width: number; height: number }): void;
+  };
+
+  export type TransformContext = TransformContextValue;
+
+  const defaultContext: TransformContext = {
+    mode: 'none',
+    scale: writable(1),
+    translate: writable({ x: 0, y: 0 }),
+    reset: () => {},
+    zoomIn: () => {},
+    zoomOut: () => {},
+    translateCenter: () => {},
+    zoomTo: () => {},
+  };
+  export function transformContext() {
+    return getContext<TransformContext>(transformContextKey) ?? defaultContext;
+  }
+
+  function setTransformContext(transform: TransformContext) {
+    setContext(transformContextKey, transform);
+  }
+</script>
+
 <script lang="ts">
-  import { getContext, createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
 
   import { motionStore } from '$lib/stores/motionStore.js';
 
-  const { width, height, padding } = getContext('LayerCake');
+  const { width, height } = getContext('LayerCake');
 
-  export let mode: 'svg' | 'manual' = 'svg';
+  export let mode: 'canvas' | 'manual' | 'none' = 'none';
   export let translateOnScale = false;
   export let spring: boolean | Parameters<typeof motionStore>[1]['spring'] = undefined;
   export let tweened: boolean | Parameters<typeof motionStore>[1]['tweened'] = undefined;
+
+  /** Disable pointer events including move/dragging */
   export let disablePointer = false;
+
+  /** Action to take during wheel scroll */
   export let scroll: 'scale' | 'translate' | 'none' = 'none';
+
+  /** Distance/threshold to consider drag vs click (disable click propagation) */
   export let clickDistance = 10;
 
   const dispatch = createEventDispatcher<{
@@ -23,10 +67,10 @@
   let moved = false;
 
   export let initialTranslate = { x: 0, y: 0 };
-  const translate = motionStore(initialTranslate, { spring, tweened });
+  export const translate = motionStore(initialTranslate, { spring, tweened });
 
   export let initialScale = 1;
-  const scale = motionStore(initialScale, { spring, tweened });
+  export const scale = motionStore(initialScale, { spring, tweened });
 
   let startPoint: { x: number; y: number } = { x: 0, y: 0 };
   let startTranslate: { x: number; y: number } = { x: 0, y: 0 };
@@ -68,7 +112,18 @@
     }
   }
 
-  function onPointerDown(e: PointerEvent & { currentTarget: SVGElement }) {
+  setTransformContext({
+    mode,
+    scale,
+    translate,
+    reset,
+    zoomIn,
+    zoomOut,
+    translateCenter,
+    zoomTo,
+  });
+
+  function onPointerDown(e: PointerEvent & { currentTarget: HTMLDivElement }) {
     if (disablePointer) return;
 
     e.preventDefault();
@@ -211,19 +266,10 @@
     y: center.y - $translate.y,
   };
 
-  let transform = '';
-  $: if (mode === 'svg') {
-    const newTranslate = {
-      x: $translate.x * $scale + center.x - center.x * $scale,
-      y: $translate.y * $scale + center.y - center.y * $scale,
-    };
-    transform = `translate(${newTranslate.x},${newTranslate.y}) scale(${$scale})`;
-  }
-
   $: dispatch('transform', { scale: $scale, translate: $translate });
 </script>
 
-<g
+<div
   on:mousewheel={onWheel}
   on:pointerdown={onPointerDown}
   on:pointermove={onPointerMove}
@@ -240,16 +286,7 @@
   on:keydown
   on:keyup
   on:keypress
-  class="touch-none"
+  class="h-full"
 >
-  <rect
-    x={-$padding.left}
-    y={-$padding.top}
-    width={$width + $padding.left + $padding.right}
-    height={$height + $padding.top + $padding.bottom}
-    fill="transparent"
-  />
-  <g {transform}>
-    <slot scale={$scale} {zoomTo} {reset} />
-  </g>
-</g>
+  <slot transform={{ scale: $scale, translate: $translate, zoomTo, reset }} />
+</div>
