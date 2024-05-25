@@ -41,13 +41,13 @@
       ? geojson.features.filter((f) => f.properties.name === 'United States of America')
       : geojson.features;
 
+  let scale = 0;
   let yaw = 0;
   let pitch = 0;
   let roll = 0;
-  let scale = 0;
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,1fr,1fr,1fr,auto] gap-2 my-2">
+<div class="grid grid-cols-[1fr,1fr,auto] gap-2 my-2">
   <SelectField
     label="Projections"
     options={projections}
@@ -56,13 +56,15 @@
     toggleIcon={null}
     stepper
   />
-  <RangeField label="Yaw" bind:value={yaw} min={-360} max={360} />
-  <RangeField label="Pitch" bind:value={pitch} min={-90} max={90} />
-  <RangeField label="Roll" bind:value={roll} min={-180} max={180} />
   <RangeField label="Scale" bind:value={scale} min={-100} max={3000} />
   <Field label="Detail" let:id>
     <Switch bind:checked={detailed} {id} />
   </Field>
+</div>
+<div class="grid grid-cols-[1fr,1fr,1fr] gap-2 my-2">
+  <RangeField label="Yaw" bind:value={yaw} min={-360} max={360} />
+  <RangeField label="Pitch" bind:value={pitch} min={-90} max={90} />
+  <RangeField label="Roll" bind:value={roll} min={-180} max={180} />
 </div>
 
 <h1>Examples</h1>

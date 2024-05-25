@@ -49,6 +49,7 @@
   export let translate: [number, number] | undefined = undefined;
   export let center: [number, number] | undefined = undefined;
 
+  /** Apply TransformContext to the selected properties.  Typically `translate` or `rotate` are mutually selected  */
   export let applyTransform: ('scale' | 'translate' | 'rotate')[] = [];
 
   export let reflectX: boolean | undefined = undefined;
