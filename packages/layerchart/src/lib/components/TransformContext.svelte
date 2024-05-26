@@ -1,13 +1,14 @@
 <script lang="ts" context="module">
   import { getContext, setContext } from 'svelte';
-  import { writable, type Writable } from 'svelte/store';
+  import { writable, type Readable, type Writable } from 'svelte/store';
 
   export const transformContextKey = Symbol();
 
   export type TransformContextValue = {
     mode: 'canvas' | 'manual' | 'none';
     scale: Writable<number>;
-    translate: Writable<{ x: number; y: number }>;
+    translate: Writable<{ x: number; y: number; deltaX: number; deltaY: number }>;
+    dragging: Readable<boolean>;
     reset(): void;
     zoomIn(): void;
     zoomOut(): void;
@@ -20,7 +21,8 @@
   const defaultContext: TransformContext = {
     mode: 'none',
     scale: writable(1),
-    translate: writable({ x: 0, y: 0 }),
+    translate: writable({ x: 0, y: 0, deltaX: 0, deltaY: 0 }),
+    dragging: writable(false),
     reset: () => {},
     zoomIn: () => {},
     zoomOut: () => {},
@@ -63,8 +65,8 @@
     transform: { scale: number; translate: { x: number; y: number } };
   }>();
 
-  let dragging = false;
-  let moved = false;
+  let pointerDown = false;
+  const dragging = writable(false);
 
   export let initialTranslate = { x: 0, y: 0 };
   export const translate = motionStore(initialTranslate, { spring, tweened });
@@ -115,6 +117,7 @@
     mode,
     scale,
     translate,
+    dragging,
     reset,
     zoomIn,
     zoomOut,
@@ -127,8 +130,8 @@
 
     e.preventDefault();
 
-    dragging = true;
-    moved = false;
+    pointerDown = true;
+    $dragging = false;
     startPoint = localPoint(e);
     startTranslate = $translate;
 
@@ -136,37 +139,42 @@
   }
 
   function onPointerMove(e: PointerEvent) {
-    if (!dragging) return;
+    if (!pointerDown) return;
 
     e.preventDefault(); // Stop text selection
-    e.stopPropagation(); // Stop tooltip from trigging (along with `capture: true`)
-    e.currentTarget.setPointerCapture(e.pointerId);
 
     const endPoint = localPoint(e);
     const deltaX = endPoint.x - startPoint.x;
     const deltaY = endPoint.y - startPoint.y;
 
-    translate.set(
-      {
-        x: startTranslate.x + deltaX / (mode === 'manual' ? 1 : $scale),
-        y: startTranslate.y + deltaY / (mode === 'manual' ? 1 : $scale),
-      },
-      spring ? { hard: true } : tweened ? { duration: 0 } : undefined
-    );
-
-    if (!moved) {
+    if (!$dragging) {
       // If dragged beyond threshold, disable click propagation
-      moved = deltaX * deltaX + deltaY * deltaY > clickDistance;
+      $dragging = deltaX * deltaX + deltaY * deltaY > clickDistance;
+    }
+
+    if ($dragging) {
+      e.stopPropagation(); // Stop tooltip from trigging (along with `capture: true`)
+      e.currentTarget.setPointerCapture(e.pointerId);
+
+      translate.set(
+        {
+          x: startTranslate.x + deltaX / (mode === 'manual' ? 1 : $scale),
+          y: startTranslate.y + deltaY / (mode === 'manual' ? 1 : $scale),
+          deltaX: deltaX / (mode === 'manual' ? 1 : $scale),
+          deltaY: deltaY / (mode === 'manual' ? 1 : $scale),
+        },
+        spring ? { hard: true } : tweened ? { duration: 0 } : undefined
+      );
     }
   }
 
   function onPointerUp(e: PointerEvent) {
-    dragging = false;
+    pointerDown = false;
     dispatch('dragend');
   }
 
   function onClick(e: MouseEvent) {
-    if (moved) {
+    if ($dragging) {
       // Do not propagate click event to children if drag/moved.  Registered in capture phase (top-down)
       e.stopPropagation();
     }
@@ -203,6 +211,8 @@
         (startTranslate) => ({
           x: startTranslate.x + -e.deltaX / (mode === 'manual' ? 1 : $scale),
           y: startTranslate.y + -e.deltaY / (mode === 'manual' ? 1 : $scale),
+          deltaX: -e.deltaX / (mode === 'manual' ? 1 : $scale),
+          deltaY: -e.deltaY / (mode === 'manual' ? 1 : $scale),
         }),
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
