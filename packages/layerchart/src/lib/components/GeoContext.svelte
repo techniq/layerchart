@@ -55,7 +55,8 @@
   export let reflectX: boolean | undefined = undefined;
   export let reflectY: boolean | undefined = undefined;
 
-  const geo = writable(projection?.());
+  /** Exposed to allow binding in Chart */
+  export let geo = writable(projection?.());
   setGeoContext(geo);
 
   const { scale: transformScale, translate: transformTranslate } = transformContext();
@@ -88,20 +89,11 @@
       }
 
       if (applyTransform.includes('rotate')) {
-        // TODO: Works for dragging
-        const sensitivity = 75;
         _projection.rotate([
-          $transformTranslate.x * (sensitivity / _projection.scale()), // yaw
-          -$transformTranslate.y * (sensitivity / _projection.scale()), // pitch
+          $transformTranslate.x, // yaw
+          $transformTranslate.y, // pitch
           // TODO: `roll` from `transformContext`?
         ]);
-
-        // TODO: Works for geoCentroid() (AnimateGlobe clicking)
-        // _projection.rotate([
-        //   $transformTranslate.x, // yaw
-        //   $transformTranslate.y, // pitch
-        //   // rotate?.roll,
-        // ]);
       }
     }
 

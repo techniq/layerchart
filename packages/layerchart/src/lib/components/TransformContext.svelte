@@ -7,7 +7,7 @@
   export type TransformContextValue = {
     mode: 'canvas' | 'manual' | 'none';
     scale: Writable<number>;
-    translate: Writable<{ x: number; y: number; deltaX: number; deltaY: number }>;
+    translate: Writable<{ x: number; y: number }>;
     dragging: Readable<boolean>;
     reset(): void;
     zoomIn(): void;
@@ -21,7 +21,7 @@
   const defaultContext: TransformContext = {
     mode: 'none',
     scale: writable(1),
-    translate: writable({ x: 0, y: 0, deltaX: 0, deltaY: 0 }),
+    translate: writable({ x: 0, y: 0 }),
     dragging: writable(false),
     reset: () => {},
     zoomIn: () => {},
@@ -49,6 +49,13 @@
   export let translateOnScale = false;
   export let spring: boolean | Parameters<typeof motionStore>[1]['spring'] = undefined;
   export let tweened: boolean | Parameters<typeof motionStore>[1]['tweened'] = undefined;
+
+  export let processTranslate = (x: number, y: number, deltaX: number, deltaY: number) => {
+    return {
+      x: x + deltaX / (mode === 'manual' ? 1 : $scale),
+      y: y + deltaY / (mode === 'manual' ? 1 : $scale),
+    };
+  };
 
   /** Disable pointer events including move/dragging */
   export let disablePointer = false;
@@ -157,12 +164,7 @@
       e.currentTarget.setPointerCapture(e.pointerId);
 
       translate.set(
-        {
-          x: startTranslate.x + deltaX / (mode === 'manual' ? 1 : $scale),
-          y: startTranslate.y + deltaY / (mode === 'manual' ? 1 : $scale),
-          deltaX: deltaX / (mode === 'manual' ? 1 : $scale),
-          deltaY: deltaY / (mode === 'manual' ? 1 : $scale),
-        },
+        processTranslate(startTranslate.x, startTranslate.y, deltaX, deltaY),
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
     }
@@ -208,12 +210,8 @@
       );
     } else if (scroll === 'translate') {
       translate.update(
-        (startTranslate) => ({
-          x: startTranslate.x + -e.deltaX / (mode === 'manual' ? 1 : $scale),
-          y: startTranslate.y + -e.deltaY / (mode === 'manual' ? 1 : $scale),
-          deltaX: -e.deltaX / (mode === 'manual' ? 1 : $scale),
-          deltaY: -e.deltaY / (mode === 'manual' ? 1 : $scale),
-        }),
+        (startTranslate) =>
+          processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY),
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
     }
