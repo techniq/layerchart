@@ -6,15 +6,17 @@
   // See: https://github.com/carbon-design-system/sveld/issues/104
   import {
     LayerCake,
-    Svg as _Svg,
+    // Canvas as _Canvas,
     Html as _Html,
-    Canvas as _Canvas,
+    // Svg as _Svg,
     WebGL as _WebGL,
   } from 'layercake';
+  import _Canvas from './layout/Canvas.svelte';
+  import _Svg from './layout/Svg.svelte';
 
-  export const Svg = _Svg;
-  export const Html = _Html;
   export const Canvas = _Canvas;
+  export const Html = _Html;
+  export const Svg = _Svg;
   export const WebGL = _WebGL;
 </script>
 
@@ -23,8 +25,10 @@
   import { max, min } from 'd3-array';
   import { get } from 'lodash-es';
   import { isScaleBand } from '$lib/utils/scales.js';
-  import TooltipContext from './TooltipContext.svelte';
+
   import GeoContext from './GeoContext.svelte';
+  import TooltipContext from './TooltipContext.svelte';
+  import TransformContext from './TransformContext.svelte';
 
   type Accessor = string | ((d: any) => number);
 
@@ -78,9 +82,17 @@
    */
   $: yReverse = yScale ? !isScaleBand(yScale) : true;
 
+  /** Props passed to GeoContext */
+  export let geo: Partial<ComponentProps<GeoContext>> | undefined = undefined;
+
+  /** Props passed to TooltipContext */
   export let tooltip: Partial<ComponentProps<TooltipContext>> | boolean | undefined = undefined;
 
-  export let geo: Partial<ComponentProps<GeoContext>> | undefined = undefined;
+  /** Props passed to TransformContext */
+  export let transform: Partial<ComponentProps<TransformContext>> | undefined = undefined;
+  export let transformContext: TransformContext = undefined;
+
+  let geoProjection: ComponentProps<GeoContext>['geo'] = undefined;
 </script>
 
 <LayerCake
@@ -110,30 +122,60 @@
   let:data
   let:flatData
 >
-  <GeoContext {...geo} let:projection>
-    {@const tooltipProps = typeof tooltip === 'object' ? tooltip : {}}
-    <TooltipContext {...tooltipProps} let:tooltip>
-      <slot
-        {aspectRatio}
-        {containerHeight}
-        {containerWidth}
-        {height}
-        {width}
-        {element}
-        {projection}
-        {tooltip}
-        {xScale}
-        {xGet}
-        {yScale}
-        {yGet}
-        {zScale}
-        {zGet}
-        {rScale}
-        {rGet}
-        {padding}
-        {data}
-        {flatData}
-      />
-    </TooltipContext>
-  </GeoContext>
+  <TransformContext
+    bind:this={transformContext}
+    processTranslate={geo
+      ? (x, y, deltaX, deltaY, scale) => {
+          if (geo.applyTransform?.includes('rotate')) {
+            // When applying transform to rotate, invert `y` values and reduce sensitivity based on projection scale
+            // see: https://observablehq.com/@benoldenburg/simple-globe and https://observablehq.com/@michael-keith/draggable-globe-in-d3
+            const projectionScale = $geoProjection.scale();
+            const sensitivity = 75;
+            return {
+              x: x + deltaX * (sensitivity / projectionScale),
+              y: y + deltaY * (sensitivity / projectionScale) * -1,
+            };
+          } else if (geo.applyTransform?.includes('translate')) {
+            // When applying to `translate`, use pointer values as is (with no `scale` adjustment)
+            return { x: x + deltaX, y: y + deltaY };
+          } else {
+            // Apply default TransformContext.processTransform (passing `undefined` below appears to not work when checking for `geo?.applyTransform` exists)
+            return { x: x + deltaX / scale, y: y + deltaY / scale };
+          }
+        }
+      : undefined}
+    {...transform}
+    let:transform={_transform}
+    on:transform
+    on:dragstart
+    on:dragend
+  >
+    <GeoContext {...geo} bind:geo={geoProjection} let:projection>
+      {@const tooltipProps = typeof tooltip === 'object' ? tooltip : {}}
+      <TooltipContext {...tooltipProps} let:tooltip>
+        <slot
+          {aspectRatio}
+          {containerHeight}
+          {containerWidth}
+          {height}
+          {width}
+          {element}
+          {projection}
+          transform={_transform}
+          {tooltip}
+          {xScale}
+          {xGet}
+          {yScale}
+          {yGet}
+          {zScale}
+          {zGet}
+          {rScale}
+          {rGet}
+          {padding}
+          {data}
+          {flatData}
+        />
+      </TooltipContext>
+    </GeoContext>
+  </TransformContext>
 </LayerCake>

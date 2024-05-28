@@ -23,7 +23,7 @@
   import Graticule from '$lib/components/Graticule.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import Transform from '$lib/components/Transform.svelte';
+  import TransformContext from '$lib/components/TransformContext.svelte';
   import Legend from '$lib/components/Legend.svelte';
 
   export let data;
@@ -31,17 +31,19 @@
   const countries = feature(data.geojson, data.geojson.objects.countries);
   const eclipses = feature(data.eclipses, data.eclipses.objects.eclipses);
 
-  let yaw = 0;
-  let pitch = 0;
-  let roll = 0;
-  let sensitivity = 75;
+  let transformContext: TransformContext;
 
   let velocity = 3;
   let isSpinning = false;
   const timer = timerStore({
     delay: 1,
     onTick() {
-      yaw += velocity * 0.1;
+      transformContext.translate.update((value) => {
+        return {
+          x: (value.x += velocity),
+          y: value.y,
+        };
+      });
     },
     disabled: !isSpinning,
   });
@@ -94,16 +96,23 @@
       geo={{
         projection: geoOrthographic,
         fitGeojson: countries,
-        rotate: {
-          yaw,
-          pitch,
-          roll,
-        },
+        applyTransform: ['rotate'],
       }}
+      transform={{
+        scroll: 'none',
+        tweened: { duration: 800, easing: cubicOut },
+      }}
+      on:dragstart={() => timer.stop()}
+      on:dragend={() => {
+        if (isSpinning) {
+          // Restart
+          timer.start();
+        }
+      }}
+      bind:transformContext
       padding={{ top: 60 }}
       tooltip={{ mode: 'manual' }}
       let:tooltip
-      let:projection
     >
       <Legend
         scale={colorScale}
@@ -112,41 +121,21 @@
       />
 
       <Svg>
-        <Transform
-          mode="manual"
-          scroll="none"
-          tweened={{ duration: 800, easing: cubicOut }}
-          on:dragstart={() => timer.stop()}
-          on:dragend={() => {
-            if (isSpinning) {
-              // Restart
-              timer.start();
-            }
-          }}
-          on:transform={(e) => {
-            yaw = e.detail.translate.x * (sensitivity / projection.scale());
-            pitch = -e.detail.translate.y * (sensitivity / projection.scale());
-          }}
-        >
+        <GeoPath geojson={{ type: 'Sphere' }} class="fill-surface-200 stroke-surface-content/20" />
+        <Graticule class="stroke-surface-content/20" />
+        <GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
+
+        {#each eclipses.features as feature}
+          {@const hasColor = tooltip.data == null || tooltip.data.ID === feature.properties.ID}
+
           <GeoPath
-            geojson={{ type: 'Sphere' }}
-            class="fill-surface-200 stroke-surface-content/20"
+            geojson={feature}
+            fill={hasColor ? colorScale(feature.properties.Date) : undefined}
+            class={cls('transition-colors', !hasColor && 'fill-surface-content/10')}
+            on:pointermove={(e) => tooltip?.show(e, feature.properties)}
+            on:pointerleave={(e) => tooltip?.hide()}
           />
-          <Graticule class="stroke-surface-content/20" />
-          <GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
-
-          {#each eclipses.features as feature}
-            {@const hasColor = tooltip.data == null || tooltip.data.ID === feature.properties.ID}
-
-            <GeoPath
-              geojson={feature}
-              fill={hasColor ? colorScale(feature.properties.Date) : undefined}
-              class={cls('transition-colors', !hasColor && 'fill-surface-content/10')}
-              on:pointermove={(e) => tooltip?.show(e, feature.properties)}
-              on:pointerleave={(e) => tooltip?.hide()}
-            />
-          {/each}
-        </Transform>
+        {/each}
       </Svg>
 
       <Tooltip header={(d) => format(d.Date, PeriodType.Day, { variant: 'long' })} />

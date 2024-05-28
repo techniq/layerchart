@@ -11,23 +11,25 @@
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Graticule from '$lib/components/Graticule.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
-  import Transform from '$lib/components/Transform.svelte';
+  import TransformContext from '$lib/components/TransformContext.svelte';
 
   export let data;
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let yaw = 0;
-  let pitch = 0;
-  let roll = 0;
-  let sensitivity = 75;
+  let transformContext: TransformContext;
 
   let velocity = 3;
   let isSpinning = false;
   const timer = timerStore({
     delay: 1,
     onTick() {
-      yaw += velocity * 0.1;
+      transformContext.translate.update((value) => {
+        return {
+          x: (value.x += velocity),
+          y: value.y,
+        };
+      });
     },
     disabled: !isSpinning,
   });
@@ -75,62 +77,54 @@
       geo={{
         projection: geoOrthographic,
         fitGeojson: countries,
-        rotate: {
-          yaw,
-          pitch,
-          roll,
-        },
+        applyTransform: ['rotate'],
       }}
+      transform={{
+        scroll: 'none',
+        tweened: { duration: 800, easing: cubicOut },
+      }}
+      on:dragstart={() => timer.stop()}
+      on:dragend={() => {
+        if (isSpinning) {
+          // Restart
+          timer.start();
+        }
+      }}
+      bind:transformContext
       tooltip={{ mode: 'manual' }}
       let:tooltip
       let:projection
     >
+      {@const [yaw, pitch, roll] = projection.rotate()}
       <Svg>
-        <Transform
-          mode="manual"
-          scroll="none"
-          tweened={{ duration: 800, easing: cubicOut }}
-          on:dragstart={() => timer.stop()}
-          on:dragend={() => {
-            if (isSpinning) {
-              // Restart
-              timer.start();
-            }
-          }}
-          on:transform={(e) => {
-            yaw = e.detail.translate.x * (sensitivity / projection.scale());
-            pitch = -e.detail.translate.y * (sensitivity / projection.scale());
-          }}
+        <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/20" />
+
+        <!-- Back -->
+        <GeoContext
+          projection={geoOrthographic}
+          fitGeojson={countries}
+          rotate={{ yaw: yaw + 180, pitch: -pitch, roll: -roll }}
+          reflectX
         >
-          <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/20" />
-
-          <!-- Back -->
-          <GeoContext
-            projection={geoOrthographic}
-            fitGeojson={countries}
-            rotate={{ yaw: yaw + 180, pitch: -pitch, roll: -roll }}
-            reflectX
-          >
-            <Graticule class="stroke-surface-content/5" />
-            {#each countries.features as country}
-              <GeoPath
-                geojson={country}
-                class="stroke-surface-content/5 fill-surface-content/10"
-                reflectX
-              />
-            {/each}
-          </GeoContext>
-
-          <!-- Front -->
-          <Graticule class="stroke-surface-content/20" />
+          <Graticule class="stroke-surface-content/5" />
           {#each countries.features as country}
             <GeoPath
               geojson={country}
-              class="stroke-surface-100/30 fill-surface-content/70 cursor-pointer hover:fill-primary/70"
-              {tooltip}
+              class="stroke-surface-content/5 fill-surface-content/10"
+              reflectX
             />
           {/each}
-        </Transform>
+        </GeoContext>
+
+        <!-- Front -->
+        <Graticule class="stroke-surface-content/20" />
+        {#each countries.features as country}
+          <GeoPath
+            geojson={country}
+            class="stroke-surface-100/30 fill-surface-content/70 cursor-pointer hover:fill-primary/70"
+            {tooltip}
+          />
+        {/each}
       </Svg>
 
       <Tooltip>

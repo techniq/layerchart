@@ -12,7 +12,7 @@
   import Graticule from '$lib/components/Graticule.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import Transform from '$lib/components/Transform.svelte';
+  import TransformContext from '$lib/components/TransformContext.svelte';
   import { scaleSqrt } from 'd3-scale';
 
   export let data;
@@ -22,17 +22,19 @@
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let yaw = 0;
-  let pitch = 0;
-  let roll = 0;
-  let sensitivity = 75;
+  let transformContext: TransformContext;
 
   let velocity = 3;
   let isSpinning = false;
   const timer = timerStore({
     delay: 1,
     onTick() {
-      yaw += velocity * 0.1;
+      transformContext.translate.update((value) => {
+        return {
+          x: (value.x += velocity),
+          y: value.y,
+        };
+      });
     },
     disabled: !isSpinning,
   });
@@ -87,51 +89,41 @@
       geo={{
         projection: geoOrthographic,
         fitGeojson: countries,
-        rotate: {
-          yaw,
-          pitch,
-          roll,
-        },
+        applyTransform: ['rotate'],
       }}
+      transform={{
+        scroll: 'none',
+        tweened: { duration: 800, easing: cubicOut },
+      }}
+      on:dragstart={() => timer.stop()}
+      on:dragend={() => {
+        if (isSpinning) {
+          // Restart
+          timer.start();
+        }
+      }}
+      bind:transformContext
       tooltip={{ mode: 'manual' }}
       let:tooltip
-      let:projection
       let:rScale
     >
       <Svg>
-        <Transform
-          mode="manual"
-          scroll="none"
-          tweened={{ duration: 800, easing: cubicOut }}
-          on:dragstart={() => timer.stop()}
-          on:dragend={() => {
-            if (isSpinning) {
-              // Restart
-              timer.start();
-            }
-          }}
-          on:transform={(e) => {
-            yaw = e.detail.translate.x * (sensitivity / projection.scale());
-            pitch = -e.detail.translate.y * (sensitivity / projection.scale());
-          }}
-        >
-          <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
+        <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
 
-          <Graticule class="stroke-surface-content/20" />
+        <Graticule class="stroke-surface-content/20" />
 
-          <GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
-          <GeoPath geojson={data.tectonicPlates} class="stroke-danger-100/30" />
+        <GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
+        <GeoPath geojson={data.tectonicPlates} class="stroke-danger-100/30" />
 
-          {#each data.earthquakes as eq}
-            <GeoCircle
-              center={[eq.longitude, eq.latitude]}
-              radius={rScale(Math.exp(eq.magnitude))}
-              class="stroke-danger fill-danger/20"
-              on:pointermove={(e) => tooltip?.show(e, eq)}
-              on:pointerleave={(e) => tooltip?.hide()}
-            />
-          {/each}
-        </Transform>
+        {#each data.earthquakes as eq}
+          <GeoCircle
+            center={[eq.longitude, eq.latitude]}
+            radius={rScale(Math.exp(eq.magnitude))}
+            class="stroke-danger fill-danger/20"
+            on:pointermove={(e) => tooltip?.show(e, eq)}
+            on:pointerleave={(e) => tooltip?.hide()}
+          />
+        {/each}
       </Svg>
 
       <Tooltip header={(d) => d.place} let:data>

@@ -7,7 +7,7 @@
     mdiMagnifyMinusOutline,
     mdiImageFilterCenterFocus,
   } from '@mdi/js';
-  import type Transform from '$lib/components/Transform.svelte';
+  import { transformContext } from '$lib/components/TransformContext.svelte';
 
   type Placement =
     | 'top-left'
@@ -20,9 +20,10 @@
     | 'bottom'
     | 'bottom-right';
 
-  export let transform: Transform;
   export let placement: Placement | undefined = 'top-right';
   export let orientation: 'horizontal' | 'vertical' = 'vertical';
+
+  const transform = transformContext();
 </script>
 
 <div
@@ -39,7 +40,8 @@
       'bottom-left': 'absolute bottom-0 left-0',
       bottom: 'absolute bottom-0 left-1/2 -translate-x-1/2',
       'bottom-right': 'absolute bottom-0 right-0',
-    }[placement]
+    }[placement],
+    $$props.class
   )}
 >
   <Tooltip title="Zoom in">

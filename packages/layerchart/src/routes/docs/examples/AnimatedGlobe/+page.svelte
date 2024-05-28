@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { spring } from 'svelte/motion';
   import { geoOrthographic, geoCentroid } from 'd3-geo';
   import { feature } from 'topojson-client';
   import { index } from 'd3-array';
@@ -13,24 +12,33 @@
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Graticule from '$lib/components/Graticule.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
-  import Transform from '$lib/components/Transform.svelte';
+  import TransformContext from '$lib/components/TransformContext.svelte';
+
+  import GeoDebug from '$lib/docs/GeoDebug.svelte';
+  import TransformDebug from '$lib/docs/TransformDebug.svelte';
+
   import { timings } from './timings.js';
 
   export let data;
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  const springOptions = { stiffness: 0.04 };
-  const yaw = spring(0, springOptions);
-  const pitch = spring(0, springOptions);
-  const roll = spring(0, springOptions);
-  const sensitivity = 75;
+  let transformContext: TransformContext;
+  let transformContext2: TransformContext; // second instance for canvas example
 
   let selectedFeature;
   $: if (selectedFeature) {
     const centroid = geoCentroid(selectedFeature);
-    $yaw = -centroid[0];
-    $pitch = -centroid[1];
+
+    transformContext.translate.set({
+      x: -centroid[0],
+      y: -centroid[1],
+    });
+
+    transformContext2.translate.set({
+      x: -centroid[0],
+      y: -centroid[1],
+    });
   }
 
   // Animate to Yakko's song
@@ -81,6 +89,8 @@
     currentIndex = -1;
     selectedFeature = null;
   }
+
+  let debug = false;
 </script>
 
 <h1>Examples</h1>
@@ -116,45 +126,44 @@
         </div>
       {/each}
     </div>
+
     <Chart
       geo={{
         projection: geoOrthographic,
         fitGeojson: countries,
-        rotate: {
-          yaw: $yaw,
-          pitch: $pitch,
-          roll: $roll,
-        },
+        applyTransform: ['rotate'],
       }}
+      transform={{
+        scroll: 'none',
+        spring: { stiffness: 0.04 },
+      }}
+      bind:transformContext
       tooltip={{ mode: 'manual' }}
       let:tooltip
-      let:projection
     >
+      {#if debug}
+        <div class="absolute bottom-0 right-0 z-10 grid gap-1">
+          <GeoDebug />
+          <TransformDebug />
+        </div>
+      {/if}
+
       <Svg>
-        <Transform
-          mode="manual"
-          scroll="none"
-          on:transform={(e) => {
-            $yaw = e.detail.translate.x * (sensitivity / projection.scale());
-            $pitch = -e.detail.translate.y * (sensitivity / projection.scale());
-          }}
-        >
-          <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
-          <Graticule class="stroke-surface-content/20" />
-          {#each countries.features as country}
-            <GeoPath
-              geojson={country}
-              class={cls(
-                'stroke-surface-content/50 fill-white cursor-pointer',
-                selectedFeature === country
-                  ? 'stroke-primary-900 fill-primary'
-                  : 'hover:fill-gray-200'
-              )}
-              on:click={(e) => (selectedFeature = country)}
-              {tooltip}
-            />
-          {/each}
-        </Transform>
+        <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
+        <Graticule class="stroke-surface-content/20" />
+        {#each countries.features as country}
+          <GeoPath
+            geojson={country}
+            class={cls(
+              'stroke-surface-content/50 fill-white cursor-pointer',
+              selectedFeature === country
+                ? 'stroke-primary-900 fill-primary'
+                : 'hover:fill-gray-200'
+            )}
+            on:click={(e) => (selectedFeature = country)}
+            {tooltip}
+          />
+        {/each}
       </Svg>
 
       <Tooltip>
@@ -195,16 +204,15 @@
         </div>
       {/each}
     </div>
+
     <Chart
       geo={{
         projection: geoOrthographic,
         fitGeojson: countries,
-        rotate: {
-          yaw: $yaw,
-          pitch: $pitch,
-          roll: $roll,
-        },
+        applyTransform: ['rotate'],
       }}
+      transform={{ scroll: 'none', spring: { stiffness: 0.04 } }}
+      bind:transformContext={transformContext2}
     >
       <Canvas>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />

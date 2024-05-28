@@ -131,7 +131,7 @@
 <h2>Canvas</h2>
 
 <Preview data={states}>
-  <div class="h-[600px] mt-10">
+  <div class="h-[600px]">
     <Chart
       geo={{
         projection: geoIdentity,

@@ -24,7 +24,7 @@
   import Group from '$lib/components/Group.svelte';
   import Circle from '$lib/components/Circle.svelte';
   import Pack from '$lib/components/Pack.svelte';
-  import Transform from '$lib/components/Transform.svelte';
+  import type { TransformContext } from '$lib/components/TransformContext.svelte';
 
   import { findAncestor } from '$lib/utils/hierarchy.js';
 
@@ -38,11 +38,14 @@
 
   let padding = 3;
   let selected: any;
-  let transform: Transform;
+  let transformContext: TransformContext;
 
-  $: if (transform && selected) {
+  $: if (transformContext && selected) {
     const diameter = selected.r * 2;
-    transform.zoomTo({ x: selected.x, y: selected.y }, { width: diameter, height: diameter });
+    transformContext.zoomTo(
+      { x: selected.x, y: selected.y },
+      { width: diameter, height: diameter }
+    );
   }
 
   const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
@@ -98,53 +101,54 @@
     </Button>
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded overflow-hidden">
-    <Chart data={complexHierarchy}>
-      <Svg>
-        <Transform
-          bind:this={transform}
-          let:scale
-          tweened={{ duration: 800, easing: cubicOut }}
-          disablePointer
-          on:click={() => (selected = complexHierarchy)}
-        >
-          <Pack {padding} let:nodes>
-            {#each nodes as node}
-              <Group
+    <Chart
+      data={complexHierarchy}
+      transform={{
+        mode: 'canvas',
+        disablePointer: true,
+        tweened: { duration: 800, easing: cubicOut },
+      }}
+      bind:transformContext
+      let:transform
+    >
+      <Svg on:click={() => (selected = complexHierarchy)}>
+        <Pack {padding} let:nodes>
+          {#each nodes as node}
+            <Group
+              x={node.x}
+              y={node.y}
+              on:click={(e) => {
+                e.stopPropagation();
+                selected = node;
+              }}
+              class="cursor-pointer hover:contrast-[1.2]"
+            >
+              {@const nodeColor = getNodeColor(node, colorBy)}
+              <Circle
+                r={node.r}
+                stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+                stroke-width={1 / transform.scale}
+                fill={nodeColor}
+              />
+            </Group>
+          {/each}
+          <!-- Show text on top of all circles -->
+          {#each selected ? selected.children ?? [selected] : [] as node (node.data.name + node.depth)}
+            {@const fontSize = 1 / transform.scale}
+            <g in:fade|local>
+              <text
                 x={node.x}
                 y={node.y}
-                on:click={(e) => {
-                  e.stopPropagation();
-                  selected = node;
-                }}
-                class="cursor-pointer hover:contrast-[1.2]"
+                dy={fontSize * 8}
+                class="stroke-white/70 pointer-events-none [text-anchor:middle] [paint-order:stroke]"
+                style:font-size="{fontSize}rem"
+                style:stroke-width="{fontSize * 2}px"
               >
-                {@const nodeColor = getNodeColor(node, colorBy)}
-                <Circle
-                  r={node.r}
-                  stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
-                  stroke-width={1 / scale}
-                  fill={nodeColor}
-                />
-              </Group>
-            {/each}
-            <!-- Show text on top of all circles -->
-            {#each selected ? selected.children ?? [selected] : [] as node (node.data.name + node.depth)}
-              {@const fontSize = 1 / scale}
-              <g in:fade|local>
-                <text
-                  x={node.x}
-                  y={node.y}
-                  dy={fontSize * 8}
-                  class="stroke-white/70 pointer-events-none [text-anchor:middle] [paint-order:stroke]"
-                  style:font-size="{fontSize}rem"
-                  style:stroke-width="{fontSize * 2}px"
-                >
-                  {node.data.name}
-                </text>
-              </g>
-            {/each}
-          </Pack>
-        </Transform>
+                {node.data.name}
+              </text>
+            </g>
+          {/each}
+        </Pack>
       </Svg>
     </Chart>
   </div>

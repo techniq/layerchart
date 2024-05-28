@@ -8,7 +8,6 @@
   import Circle from '$lib/components/Circle.svelte';
   import Spline from '$lib/components/Spline.svelte';
   import Points from '$lib/components/Points.svelte';
-  import Transform from '$lib/components/Transform.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
   import TransformControls from '$lib/docs/TransformControls.svelte';
@@ -16,7 +15,6 @@
   import { getSpiral } from '$lib/utils/genData.js';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
-  let transform: Transform;
   let pointCount = 500;
   let angle = 137.5; //
   let showPoints = true;
@@ -58,31 +56,34 @@
 
 <Preview {data}>
   <div class="h-[500px] p-4 border rounded relative overflow-hidden">
-    <TransformControls {transform} />
-    <Chart {data} x="x" y="y">
+    <Chart
+      {data}
+      x="x"
+      y="y"
+      transform={{
+        mode: 'canvas',
+        scroll: scrollMode,
+        tweened: { duration: 800, easing: cubicOut },
+      }}
+    >
+      <TransformControls />
       <Svg>
-        <Transform
-          bind:this={transform}
-          scroll={scrollMode}
-          tweened={{ duration: 800, easing: cubicOut }}
-        >
-          {#if showPath}
-            <Spline {curve} {tweened} />
-          {/if}
-          {#if showPoints}
-            <Points let:points>
-              {#each points as point, index}
-                <Circle
-                  cx={point.x}
-                  cy={point.y}
-                  r={2}
-                  class={index % 2 ? 'fill-primary' : 'fill-secondary'}
-                  {tweened}
-                />
-              {/each}
-            </Points>
-          {/if}
-        </Transform>
+        {#if showPath}
+          <Spline {curve} {tweened} />
+        {/if}
+        {#if showPoints}
+          <Points let:points>
+            {#each points as point, index}
+              <Circle
+                cx={point.x}
+                cy={point.y}
+                r={2}
+                class={index % 2 ? 'fill-primary' : 'fill-secondary'}
+                {tweened}
+              />
+            {/each}
+          </Points>
+        {/if}
       </Svg>
     </Chart>
   </div>

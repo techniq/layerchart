@@ -7,6 +7,8 @@
     type GeoProjection,
   } from 'd3-geo';
 
+  import { transformContext } from './TransformContext.svelte';
+
   export const geoContextKey = Symbol();
 
   export type GeoContext = Writable<GeoProjection | GeoIdentityTransform>;
@@ -47,11 +49,17 @@
   export let translate: [number, number] | undefined = undefined;
   export let center: [number, number] | undefined = undefined;
 
+  /** Apply TransformContext to the selected properties.  Typically `translate` or `rotate` are mutually selected  */
+  export let applyTransform: ('scale' | 'translate' | 'rotate')[] = [];
+
   export let reflectX: boolean | undefined = undefined;
   export let reflectY: boolean | undefined = undefined;
 
-  const geo = writable(projection?.());
+  /** Exposed to allow binding in Chart */
+  export let geo = writable(projection?.());
   setGeoContext(geo);
+
+  const { scale: transformScale, translate: transformTranslate } = transformContext();
 
   $: fitSizeRange = (fixedAspectRatio ? [100, 100 / fixedAspectRatio] : [$width, $height]) as [
     number,
@@ -65,16 +73,38 @@
       _projection.fitSize(fitSizeRange, fitGeojson);
     }
 
-    if (scale && 'scale' in _projection) {
-      _projection.scale(scale);
+    if ('scale' in _projection) {
+      if (scale) {
+        _projection.scale(scale);
+      }
+
+      if (applyTransform.includes('scale')) {
+        _projection.scale($transformScale);
+      }
     }
 
-    if (rotate && 'rotate' in _projection) {
-      _projection.rotate([rotate.yaw, rotate.pitch, rotate.roll]);
+    if ('rotate' in _projection) {
+      if (rotate) {
+        _projection.rotate([rotate.yaw, rotate.pitch, rotate.roll]);
+      }
+
+      if (applyTransform.includes('rotate')) {
+        _projection.rotate([
+          $transformTranslate.x, // yaw
+          $transformTranslate.y, // pitch
+          // TODO: `roll` from `transformContext`?
+        ]);
+      }
     }
 
-    if (translate && 'translate' in _projection) {
-      _projection.translate(translate);
+    if ('translate' in _projection) {
+      if (translate) {
+        _projection.translate(translate);
+      }
+
+      if (applyTransform.includes('translate')) {
+        _projection.translate([$transformTranslate.x, $transformTranslate.y]);
+      }
     }
 
     if (center && 'center' in _projection) {
