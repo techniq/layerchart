@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.37.1
+
+### Patch Changes
+
+- Export LayerChart's Svg/Canvas impl. instead of LayerCake's (provides transformContext support). Export HitCanvas ([`e37579836098bdd3a983efee1dc7d0346ea29ba1`](https://github.com/techniq/layerchart/commit/e37579836098bdd3a983efee1dc7d0346ea29ba1))
+
 ## 0.37.0
 
 ### Minor Changes
