@@ -124,21 +124,26 @@
 >
   <TransformContext
     bind:this={transformContext}
-    processTranslate={(x, y, deltaX, deltaY) => {
-      if (geo?.applyTransform?.includes('rotate')) {
-        // When applying transform to rotate, it works best to invert `y` values and reduce sensitivity based on projection scale
-        // see: https://observablehq.com/@benoldenburg/simple-globe and https://observablehq.com/@michael-keith/draggable-globe-in-d3
-        const projectionScale = $geoProjection.scale();
-        const sensitivity = 75;
-        return {
-          x: x + deltaX * (sensitivity / projectionScale),
-          y: y + deltaY * (sensitivity / projectionScale) * -1,
-        };
-      } else {
-        // translate/etc should use pointer values as is
-        return { x: x + deltaX, y: y + deltaY };
-      }
-    }}
+    processTranslate={geo
+      ? (x, y, deltaX, deltaY, scale) => {
+          if (geo.applyTransform?.includes('rotate')) {
+            // When applying transform to rotate, invert `y` values and reduce sensitivity based on projection scale
+            // see: https://observablehq.com/@benoldenburg/simple-globe and https://observablehq.com/@michael-keith/draggable-globe-in-d3
+            const projectionScale = $geoProjection.scale();
+            const sensitivity = 75;
+            return {
+              x: x + deltaX * (sensitivity / projectionScale),
+              y: y + deltaY * (sensitivity / projectionScale) * -1,
+            };
+          } else if (geo.applyTransform?.includes('translate')) {
+            // When applying to `translate`, use pointer values as is (with no `scale` adjustment)
+            return { x: x + deltaX, y: y + deltaY };
+          } else {
+            // Apply default TransformContext.processTransform (passing `undefined` below appears to not work when checking for `geo?.applyTransform` exists)
+            return { x: x + deltaX / scale, y: y + deltaY / scale };
+          }
+        }
+      : undefined}
     {...transform}
     let:transform={_transform}
     on:transform

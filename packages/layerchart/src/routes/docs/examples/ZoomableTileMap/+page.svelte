@@ -69,7 +69,6 @@
         applyTransform: ['translate', 'scale'],
       }}
       transform={{
-        mode: 'manual',
         initialScale,
         initialTranslate: { x: initialTranslate[0], y: initialTranslate[1] },
         translateOnScale: true,

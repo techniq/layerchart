@@ -128,7 +128,6 @@
         applyTransform: ['rotate'],
       }}
       transform={{
-        mode: 'manual',
         scroll: 'none',
         spring: { stiffness: 0.04 },
       }}
@@ -199,13 +198,14 @@
         </div>
       {/each}
     </div>
+
     <Chart
       geo={{
         projection: geoOrthographic,
         fitGeojson: countries,
         applyTransform: ['rotate'],
       }}
-      transform={{ mode: 'manual', scroll: 'none', spring: { stiffness: 0.04 } }}
+      transform={{ scroll: 'none', spring: { stiffness: 0.04 } }}
     >
       <Canvas>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />

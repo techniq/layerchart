@@ -5,7 +5,7 @@
   export const transformContextKey = Symbol();
 
   export type TransformContextValue = {
-    mode: 'canvas' | 'manual' | 'none';
+    mode: 'canvas' | 'none';
     scale: Writable<number>;
     translate: Writable<{ x: number; y: number }>;
     dragging: Readable<boolean>;
@@ -45,15 +45,21 @@
 
   const { width, height } = getContext('LayerCake');
 
-  export let mode: 'canvas' | 'manual' | 'none' = 'none';
+  export let mode: 'canvas' | 'none' = 'none';
   export let translateOnScale = false;
   export let spring: boolean | Parameters<typeof motionStore>[1]['spring'] = undefined;
   export let tweened: boolean | Parameters<typeof motionStore>[1]['tweened'] = undefined;
 
-  export let processTranslate = (x: number, y: number, deltaX: number, deltaY: number) => {
+  export let processTranslate = (
+    x: number,
+    y: number,
+    deltaX: number,
+    deltaY: number,
+    scale: number
+  ) => {
     return {
-      x: x + deltaX / (mode === 'manual' ? 1 : $scale),
-      y: y + deltaY / (mode === 'manual' ? 1 : $scale),
+      x: x + deltaX / scale,
+      y: y + deltaY / scale,
     };
   };
 
@@ -164,7 +170,7 @@
       e.currentTarget.setPointerCapture(e.pointerId);
 
       translate.set(
-        processTranslate(startTranslate.x, startTranslate.y, deltaX, deltaY),
+        processTranslate(startTranslate.x, startTranslate.y, deltaX, deltaY, $scale),
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
     }
@@ -211,7 +217,7 @@
     } else if (scroll === 'translate') {
       translate.update(
         (startTranslate) =>
-          processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY),
+          processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY, $scale),
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
     }

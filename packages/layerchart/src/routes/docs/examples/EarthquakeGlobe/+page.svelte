@@ -92,7 +92,6 @@
         applyTransform: ['rotate'],
       }}
       transform={{
-        mode: 'manual',
         scroll: 'none',
         tweened: { duration: 800, easing: cubicOut },
       }}
