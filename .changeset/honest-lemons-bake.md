@@ -1,5 +1,5 @@
 ---
-"layerchart": minor
+'layerchart': minor
 ---
 
-Support tranform with Canvas layers (geo, etc)
+Support transform with Canvas layers (ex. geo, etc)
