@@ -83,6 +83,7 @@
           roll,
         },
         scale,
+        // applyTransform: ['rotate'],
       }}
       padding={{ left: 100, right: 100 }}
       tooltip={{ mode: 'manual' }}
@@ -118,6 +119,7 @@
           roll,
         },
         scale,
+        // applyTransform: ['rotate'],
       }}
     >
       <Canvas>

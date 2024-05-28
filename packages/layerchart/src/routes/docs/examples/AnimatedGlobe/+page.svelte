@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { spring } from 'svelte/motion';
   import { geoOrthographic, geoCentroid } from 'd3-geo';
   import { feature } from 'topojson-client';
   import { index } from 'd3-array';
@@ -14,17 +13,15 @@
   import Graticule from '$lib/components/Graticule.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TransformContext from '$lib/components/TransformContext.svelte';
+
+  import GeoDebug from '$lib/docs/GeoDebug.svelte';
+  import TransformDebug from '$lib/docs/TransformDebug.svelte';
+
   import { timings } from './timings.js';
 
   export let data;
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
-
-  const springOptions = { stiffness: 0.04 };
-  const yaw = spring(0, springOptions);
-  const pitch = spring(0, springOptions);
-  const roll = spring(0, springOptions);
-  const sensitivity = 75;
 
   let transformContext: TransformContext;
 
@@ -32,13 +29,6 @@
   $: if (selectedFeature) {
     const centroid = geoCentroid(selectedFeature);
 
-    // $yaw = -centroid[0];
-    // $pitch = -centroid[1];
-
-    // transformContext.zoomTo({
-    //   x: -centroid[0],
-    //   y: -centroid[1],
-    // });
     transformContext.translate.set({
       x: -centroid[0],
       y: -centroid[1],
@@ -93,6 +83,8 @@
     currentIndex = -1;
     selectedFeature = null;
   }
+
+  let debug = false;
 </script>
 
 <h1>Examples</h1>
@@ -134,30 +126,24 @@
         projection: geoOrthographic,
         fitGeojson: countries,
         applyTransform: ['rotate'],
-        // rotate: {
-        //   yaw: $yaw,
-        //   pitch: $pitch,
-        //   roll: $roll,
-        // },
       }}
-      transform={{ mode: 'manual', scroll: 'none', spring: { stiffness: 0.04 } }}
+      transform={{
+        mode: 'manual',
+        scroll: 'none',
+        spring: { stiffness: 0.04 },
+      }}
       bind:transformContext
-      on:transform={(e) => {
-        // $yaw = e.detail.translate.x * (sensitivity / projection.scale());
-        // $pitch = -e.detail.translate.y * (sensitivity / projection.scale());
-      }}
       tooltip={{ mode: 'manual' }}
       let:tooltip
     >
+      {#if debug}
+        <div class="absolute bottom-0 right-0 z-10 grid gap-1">
+          <GeoDebug />
+          <TransformDebug />
+        </div>
+      {/if}
+
       <Svg>
-        <!-- <Transform
-          mode="manual"
-          scroll="none"
-          on:transform={(e) => {
-            $yaw = e.detail.translate.x * (sensitivity / projection.scale());
-            $pitch = -e.detail.translate.y * (sensitivity / projection.scale());
-          }}
-        > -->
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
         <Graticule class="stroke-surface-content/20" />
         {#each countries.features as country}
@@ -173,7 +159,6 @@
             {tooltip}
           />
         {/each}
-        <!-- </Transform> -->
       </Svg>
 
       <Tooltip>
@@ -219,11 +204,6 @@
         projection: geoOrthographic,
         fitGeojson: countries,
         applyTransform: ['rotate'],
-        // rotate: {
-        //   yaw: $yaw,
-        //   pitch: $pitch,
-        //   roll: $roll,
-        // },
       }}
       transform={{ mode: 'manual', scroll: 'none', spring: { stiffness: 0.04 } }}
     >
