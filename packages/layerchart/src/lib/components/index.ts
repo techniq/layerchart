@@ -1,3 +1,6 @@
+// Re-export for easy access (Svg and Canvas are provided by LayerChart)
+export { Html, WebGL } from 'layercake';
+
 export { default as Arc } from './Arc.svelte';
 export { default as Area } from './Area.svelte';
 export { default as AreaStack } from './AreaStack.svelte';
@@ -7,6 +10,7 @@ export { default as Bars } from './Bars.svelte';
 export { default as Blur } from './Blur.svelte';
 export { default as Bounds } from './Bounds.svelte';
 export { default as Calendar } from './Calendar.svelte';
+export { default as Canvas } from './layout/Canvas.svelte';
 export { default as Chart } from './Chart.svelte';
 export { default as ChartClipPath } from './ChartClipPath.svelte';
 export { default as Circle } from './Circle.svelte';
@@ -26,6 +30,7 @@ export { default as GeoVisible } from './GeoVisible.svelte';
 export { default as Graticule } from './Graticule.svelte';
 export { default as Group } from './Group.svelte';
 export { default as Highlight } from './Highlight.svelte';
+export { default as HitCanvas } from './HitCanvas.svelte';
 export { default as Hull } from './Hull.svelte';
 export { default as Labels } from './Labels.svelte';
 export { default as Legend } from './Legend.svelte';
@@ -44,6 +49,7 @@ export { default as Rect } from './Rect.svelte';
 export { default as RectClipPath } from './RectClipPath.svelte';
 export { default as Rule } from './Rule.svelte';
 export { default as Sankey } from './Sankey.svelte';
+export { default as Svg } from './layout/Svg.svelte';
 export { default as Text } from './Text.svelte';
 export { default as Threshold } from './Threshold.svelte';
 export { default as TileImage } from './TileImage.svelte';
