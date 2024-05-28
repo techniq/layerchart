@@ -24,12 +24,18 @@
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
   let transformContext: TransformContext;
+  let transformContext2: TransformContext; // second instance for canvas example
 
   let selectedFeature;
   $: if (selectedFeature) {
     const centroid = geoCentroid(selectedFeature);
 
     transformContext.translate.set({
+      x: -centroid[0],
+      y: -centroid[1],
+    });
+
+    transformContext2.translate.set({
       x: -centroid[0],
       y: -centroid[1],
     });
@@ -206,6 +212,7 @@
         applyTransform: ['rotate'],
       }}
       transform={{ scroll: 'none', spring: { stiffness: 0.04 } }}
+      bind:transformContext={transformContext2}
     >
       <Canvas>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
