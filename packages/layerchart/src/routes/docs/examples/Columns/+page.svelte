@@ -125,6 +125,32 @@
   </div>
 </Preview>
 
+<h2>Rounded (top-only)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleBand().padding(0.4)}
+      y="value"
+      yDomain={[0, null]}
+      yNice={4}
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Bars radius={4} rounded="top" strokeWidth={1} class="fill-primary" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Tooltip and Highlight</h2>
 
 <Preview {data}>
