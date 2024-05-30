@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { geoMercator, geoBounds } from 'd3-geo';
+  import type { ComponentProps } from 'svelte';
+  import { geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
   import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
@@ -15,28 +16,23 @@
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
 
+  import { geoFitObjectTransform } from '$lib/utils/geo.js';
+
   export let data;
   const states = feature(data.geojson, data.geojson.objects.states);
 
   $: filteredStates = {
     ...states,
-    features: states.features.filter(
-      (d) => d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii'
-    ),
+    features: states.features.filter((d) => {
+      // Contiguous states
+      return Number(d.id) < 60 && d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii';
+    }),
   };
-  // $: filteredStates = { ...states, features: states.features.filter(d => d.properties.name === 'West Virginia')}
-  $: selectedFeature = filteredStates;
 
-  let selectedStateName = null;
-  let serviceUrl;
+  let serviceUrl: ComponentProps<TilesetField>['serviceUrl'];
   let zoomDelta = 0;
-  let transform: Transform;
   let scrollMode = 'scale';
   let debug = false;
-
-  // Needed for initial transform context
-  const initialScale = geoMercator().scale();
-  const initialTranslate = geoMercator().translate();
 </script>
 
 <div class="grid grid-cols-[1fr,1fr,1fr,auto] gap-2 my-2">
@@ -60,26 +56,31 @@
 
 <Preview data={filteredStates}>
   <div class="h-[600px] relative overflow-hidden">
-    <TransformControls {transform} />
     <Chart
       geo={{
         projection: geoMercator,
-        _fitGeojson: selectedFeature,
         applyTransform: ['translate', 'scale'],
       }}
       transform={{
-        initialScale,
-        initialTranslate: { x: initialTranslate[0], y: initialTranslate[1] },
         translateOnScale: true,
         scroll: scrollMode,
       }}
+      fitGeoObject={filteredStates}
       tooltip={{ mode: 'manual' }}
       let:tooltip
       let:projection
+      let:transform
+      let:width
+      let:height
     >
       {#if debug}
-        <GeoDebug class="absolute top-0 left-0 z-10" />
+        <div class="absolute top-0 left-0 z-10 grid gap-1">
+          <GeoDebug />
+        </div>
       {/if}
+
+      <TransformControls />
+
       <Svg>
         <GeoTile url={serviceUrl} {zoomDelta} {debug} />
         {#each filteredStates.features as feature}
@@ -89,29 +90,10 @@
             {tooltip}
             on:click={(e) => {
               const { geoPath, event } = e.detail;
-              console.log({ selectedStateName, feature });
-              /*
-								if (selectedStateName === feature.properties.name) {
-									selectedStateName = null;
-									resetZoom();
-								} else {
-								*/
-              selectedStateName = feature.properties.name;
-              // let [[left, top], [right, bottom]] = geoPath.bounds(feature);
-              console.log(geoPath.bounds(feature));
-              let [minLongLat, maxLongLat] = geoBounds(feature);
-              // Convert lat/long to screen x/y
-              const [left, top] = projection(minLongLat);
-              const [right, bottom] = projection(maxLongLat);
-              let width = right - left;
-              let height = bottom - top;
-              //let x = (left + right) / 2;
-              //let y = (top + bottom) / 2;
-              let x = (left + right) / 2 + projection.translate()[0];
-              let y = (top + bottom) / 2 + projection.translate()[1];
-              const padding = 20;
-              //zoomTo({ x, y }, { width: width + padding, height: height + padding })
-              //}
+
+              const featureTransform = geoFitObjectTransform(projection, [width, height], feature);
+              transform.setTranslate(featureTransform.translate);
+              transform.setScale(featureTransform.scale);
             }}
           />
         {/each}
