@@ -81,18 +81,20 @@
   let pointerDown = false;
   const dragging = writable(false);
 
-  export let initialTranslate = { x: 0, y: 0 };
-  export const translate = motionStore(initialTranslate, { spring, tweened });
+  const DEFAULT_TRANSLATE = { x: 0, y: 0 };
+  export let initialTranslate: { x: number; y: number } | undefined = undefined;
+  export const translate = motionStore(initialTranslate ?? DEFAULT_TRANSLATE, { spring, tweened });
 
-  export let initialScale = 1;
-  export const scale = motionStore(initialScale, { spring, tweened });
+  const DEFAULT_SCALE = 1;
+  export let initialScale: number | undefined = undefined;
+  export const scale = motionStore(initialScale ?? DEFAULT_SCALE, { spring, tweened });
 
   let startPoint: { x: number; y: number } = { x: 0, y: 0 };
   let startTranslate: { x: number; y: number } = { x: 0, y: 0 };
 
   export function reset() {
-    $translate = initialTranslate;
-    $scale = initialScale;
+    $translate = initialTranslate ?? DEFAULT_TRANSLATE;
+    $scale = initialScale ?? DEFAULT_SCALE;
   }
 
   export function zoomIn() {
