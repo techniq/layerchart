@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { cubicOut } from 'svelte/easing';
   import { geoOrthographic, geoNaturalEarth1 } from 'd3-geo';
   import { flatRollup } from 'd3-array';
   import { feature } from 'topojson-client';
@@ -84,10 +83,6 @@
         projection: geoOrthographic,
         fitGeojson: countries,
         applyTransform: ['rotate'],
-      }}
-      transform={{
-        scroll: 'none',
-        tweened: { duration: 800, easing: cubicOut },
       }}
       padding={{ top: 80, bottom: 80 }}
     >

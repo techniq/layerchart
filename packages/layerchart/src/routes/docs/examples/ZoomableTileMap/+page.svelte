@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { cubicOut } from 'svelte/easing';
   import { geoMercator, geoBounds } from 'd3-geo';
   import { feature } from 'topojson-client';
 
@@ -73,7 +72,6 @@
         initialTranslate: { x: initialTranslate[0], y: initialTranslate[1] },
         translateOnScale: true,
         scroll: scrollMode,
-        tweened: { duration: 800, easing: cubicOut },
       }}
       tooltip={{ mode: 'manual' }}
       let:tooltip

@@ -134,7 +134,6 @@
         applyTransform: ['rotate'],
       }}
       transform={{
-        scroll: 'none',
         spring: { stiffness: 0.04 },
       }}
       bind:transformContext

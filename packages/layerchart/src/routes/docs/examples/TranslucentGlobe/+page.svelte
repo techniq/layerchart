@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { cubicOut } from 'svelte/easing';
   import { geoOrthographic } from 'd3-geo';
   import { feature } from 'topojson-client';
 
@@ -78,10 +77,6 @@
         projection: geoOrthographic,
         fitGeojson: countries,
         applyTransform: ['rotate'],
-      }}
-      transform={{
-        scroll: 'none',
-        tweened: { duration: 800, easing: cubicOut },
       }}
       on:dragstart={() => timer.stop()}
       on:dragend={() => {
