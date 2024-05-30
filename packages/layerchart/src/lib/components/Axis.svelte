@@ -62,7 +62,9 @@
         : ['top', 'bottom'].includes(placement)
           ? 'horizontal'
           : 'vertical';
-  $: scale = ['horizontal', 'angle'].includes(orientation) ? $xScale : $yScale;
+
+  export let scale: any = undefined;
+  $: _scale = scale ?? (['horizontal', 'angle'].includes(orientation) ? $xScale : $yScale);
 
   $: [xRangeMin, xRangeMax] = extent($xRange);
   $: [yRangeMin, yRangeMax] = extent($yRange);
@@ -70,47 +72,47 @@
   $: tickVals = Array.isArray(ticks)
     ? ticks
     : typeof ticks === 'function'
-      ? ticks(scale)
-      : isScaleBand(scale)
-        ? scale.domain()
-        : scale.ticks(ticks);
+      ? ticks(_scale)
+      : isScaleBand(_scale)
+        ? _scale.domain()
+        : _scale.ticks(ticks);
 
   function getCoords(tick: any) {
     switch (placement) {
       case 'top':
         return {
-          x: $xScale(tick) + (isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0),
-          y: xRangeMin,
+          x: _scale(tick) + (isScaleBand(_scale) ? _scale.bandwidth() / 2 : 0),
+          y: yRangeMin,
         };
 
       case 'bottom':
         return {
-          x: $xScale(tick) + (isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0),
+          x: _scale(tick) + (isScaleBand(_scale) ? _scale.bandwidth() / 2 : 0),
           y: yRangeMax,
         };
 
       case 'left':
         return {
           x: xRangeMin,
-          y: $yScale(tick) + (isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0),
+          y: _scale(tick) + (isScaleBand(_scale) ? _scale.bandwidth() / 2 : 0),
         };
 
       case 'right':
         return {
           x: xRangeMax,
-          y: $yScale(tick) + (isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0),
+          y: _scale(tick) + (isScaleBand(_scale) ? _scale.bandwidth() / 2 : 0),
         };
 
       case 'angle':
         return {
-          x: $xScale(tick),
+          x: _scale(tick),
           y: yRangeMax,
         };
 
       case 'radius':
         return {
           x: xRangeMin,
-          y: $yScale(tick),
+          y: _scale(tick),
         };
     }
   }
@@ -148,7 +150,7 @@
         };
 
       case 'angle':
-        const xValue = $xScale(tick);
+        const xValue = _scale(tick);
         return {
           textAnchor:
             xValue === 0 || xValue === Math.PI ? 'middle' : xValue > Math.PI ? 'end' : 'start',
@@ -257,7 +259,7 @@
     {@const resolvedTickLabelProps = {
       x: orientation === 'angle' ? radialTickCoords[0] : tickCoords.x,
       y: orientation === 'angle' ? radialTickCoords[1] : tickCoords.y,
-      value: formatValue(tick, format ?? scale.tickFormat?.() ?? ((v) => v)),
+      value: formatValue(tick, format ?? _scale.tickFormat?.() ?? ((v) => v)),
       ...getDefaultTickLabelProps(tick),
       tweened,
       spring,
