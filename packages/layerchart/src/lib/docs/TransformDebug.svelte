@@ -15,10 +15,6 @@
       <span class="opacity-50">translate:</span>
       <div class="text-right">{format($translate.x, 'decimal')}</div>
       <div class="text-right">{format($translate.y, 'decimal')}</div>
-
-      <span class="opacity-50">delta:</span>
-      <div class="text-right">{format($translate.deltaX, 'decimal')}</div>
-      <div class="text-right">{format($translate.deltaY, 'decimal')}</div>
     </div>
   </div>
 </div>
