@@ -1,5 +1,13 @@
 # LayerChart
 
+## 0.37.2
+
+### Patch Changes
+
+- [Bar] Add `rounded` prop to round single side (or corner) using path ([#169](https://github.com/techniq/layerchart/pull/169))
+
+- [Axis] Support passing `scale` override (useful for dual axis) ([`a4f133f89dc85f8cba729c3ced172544086b44ed`](https://github.com/techniq/layerchart/commit/a4f133f89dc85f8cba729c3ced172544086b44ed))
+
 ## 0.37.1
 
 ### Patch Changes
