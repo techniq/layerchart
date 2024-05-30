@@ -77,3 +77,13 @@ export function isVisible(projection: GeoProjection | GeoStreamWrapper) {
   });
   return ([x, y]) => ((visible = false), stream.point(x, y), visible);
 }
+
+export function geoFitObjectTransform(
+  projection: GeoProjection,
+  size: [number, number],
+  object: Parameters<typeof projection.fitSize>[1]
+) {
+  const newProjection = projection.fitSize(size, object);
+  const translate = newProjection.translate();
+  return { translate: { x: translate[0], y: translate[1] }, scale: newProjection.scale() };
+}
