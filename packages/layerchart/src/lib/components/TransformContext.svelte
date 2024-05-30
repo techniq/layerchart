@@ -285,5 +285,14 @@
   on:keypress
   class="h-full"
 >
-  <slot transform={{ scale: $scale, translate: $translate, zoomTo, reset }} />
+  <slot
+    transform={{
+      scale: $scale,
+      setScale: scale.set,
+      translate: $translate,
+      setTranslate: translate.set,
+      zoomTo,
+      reset,
+    }}
+  />
 </div>
