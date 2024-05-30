@@ -13,6 +13,7 @@
       { label: 'Bar Chart (Horizontal)', value: 'Bars' },
       'Candlestick',
       'DotPlot',
+      'DualAxis',
       'Histogram',
       'Line',
       'Oscilloscope',
