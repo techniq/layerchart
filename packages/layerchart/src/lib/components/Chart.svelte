@@ -21,7 +21,7 @@
 </script>
 
 <script lang="ts">
-  import type { ComponentProps } from 'svelte';
+  import { onMount, type ComponentProps } from 'svelte';
   import { max, min } from 'd3-array';
   import { get } from 'lodash-es';
   import { isScaleBand } from '$lib/utils/scales.js';
@@ -29,6 +29,7 @@
   import GeoContext from './GeoContext.svelte';
   import TooltipContext from './TooltipContext.svelte';
   import TransformContext from './TransformContext.svelte';
+  import { geoFitObjectTransform } from '$lib/utils/geo.js';
 
   type Accessor = string | ((d: any) => number);
 
@@ -92,7 +93,18 @@
   export let transform: Partial<ComponentProps<TransformContext>> | undefined = undefined;
   export let transformContext: TransformContext = undefined;
 
+  /** Set transformContext's initial translate and scale based on geo object.  Requires `geo.projection` to also be set */
+  export let fitGeoObject: Parameters<typeof geoFitObjectTransform>[2] | undefined = undefined;
+
+  // Binded for access within TransformContext
   let geoProjection: ComponentProps<GeoContext>['geo'] = undefined;
+
+  // Track when mounted since LayerCake initializes width/height with `100` until binded `clientWidth`/`clientWidth` can run
+  // Useful to key/remount TransformContext with correct `initialTranslate` / `initialScale` values
+  let isMounted = false;
+  onMount(() => {
+    isMounted = true;
+  });
 </script>
 
 <LayerCake
@@ -122,60 +134,69 @@
   let:data
   let:flatData
 >
-  <TransformContext
-    bind:this={transformContext}
-    processTranslate={geo
-      ? (x, y, deltaX, deltaY, scale) => {
-          if (geo.applyTransform?.includes('rotate')) {
-            // When applying transform to rotate, invert `y` values and reduce sensitivity based on projection scale
-            // see: https://observablehq.com/@benoldenburg/simple-globe and https://observablehq.com/@michael-keith/draggable-globe-in-d3
-            const projectionScale = $geoProjection.scale();
-            const sensitivity = 75;
-            return {
-              x: x + deltaX * (sensitivity / projectionScale),
-              y: y + deltaY * (sensitivity / projectionScale) * -1,
-            };
-          } else if (geo.applyTransform?.includes('translate')) {
-            // When applying to `translate`, use pointer values as is (with no `scale` adjustment)
-            return { x: x + deltaX, y: y + deltaY };
-          } else {
-            // Apply default TransformContext.processTransform (passing `undefined` below appears to not work when checking for `geo?.applyTransform` exists)
-            return { x: x + deltaX / scale, y: y + deltaY / scale };
-          }
-        }
+  {@const initialTransform =
+    fitGeoObject && geo?.projection
+      ? geoFitObjectTransform(geo.projection(), [width, height], fitGeoObject)
       : undefined}
-    {...transform}
-    let:transform={_transform}
-    on:transform
-    on:dragstart
-    on:dragend
-  >
-    <GeoContext {...geo} bind:geo={geoProjection} let:projection>
-      {@const tooltipProps = typeof tooltip === 'object' ? tooltip : {}}
-      <TooltipContext {...tooltipProps} let:tooltip>
-        <slot
-          {aspectRatio}
-          {containerHeight}
-          {containerWidth}
-          {height}
-          {width}
-          {element}
-          {projection}
-          transform={_transform}
-          {tooltip}
-          {xScale}
-          {xGet}
-          {yScale}
-          {yGet}
-          {zScale}
-          {zGet}
-          {rScale}
-          {rGet}
-          {padding}
-          {data}
-          {flatData}
-        />
-      </TooltipContext>
-    </GeoContext>
-  </TransformContext>
+
+  {#key isMounted}
+    <TransformContext
+      bind:this={transformContext}
+      initialTranslate={initialTransform?.translate}
+      initialScale={initialTransform?.scale}
+      processTranslate={geo
+        ? (x, y, deltaX, deltaY, scale) => {
+            if (geo.applyTransform?.includes('rotate')) {
+              // When applying transform to rotate, invert `y` values and reduce sensitivity based on projection scale
+              // see: https://observablehq.com/@benoldenburg/simple-globe and https://observablehq.com/@michael-keith/draggable-globe-in-d3
+              const projectionScale = $geoProjection.scale();
+              const sensitivity = 75;
+              return {
+                x: x + deltaX * (sensitivity / projectionScale),
+                y: y + deltaY * (sensitivity / projectionScale) * -1,
+              };
+            } else if (geo.applyTransform?.includes('translate')) {
+              // When applying to `translate`, use pointer values as is (with no `scale` adjustment)
+              return { x: x + deltaX, y: y + deltaY };
+            } else {
+              // Apply default TransformContext.processTransform (passing `undefined` below appears to not work when checking for `geo?.applyTransform` exists)
+              return { x: x + deltaX / scale, y: y + deltaY / scale };
+            }
+          }
+        : undefined}
+      {...transform}
+      let:transform={_transform}
+      on:transform
+      on:dragstart
+      on:dragend
+    >
+      <GeoContext {...geo} bind:geo={geoProjection} let:projection>
+        {@const tooltipProps = typeof tooltip === 'object' ? tooltip : {}}
+        <TooltipContext {...tooltipProps} let:tooltip>
+          <slot
+            {aspectRatio}
+            {containerHeight}
+            {containerWidth}
+            {height}
+            {width}
+            {element}
+            {projection}
+            transform={_transform}
+            {tooltip}
+            {xScale}
+            {xGet}
+            {yScale}
+            {yGet}
+            {zScale}
+            {zGet}
+            {rScale}
+            {rGet}
+            {padding}
+            {data}
+            {flatData}
+          />
+        </TooltipContext>
+      </GeoContext>
+    </TransformContext>
+  {/key}
 </LayerCake>
