@@ -118,7 +118,7 @@
     example has a <strong>Show code</strong> link that displays the code for that visualization.
   </p>
 
-  <p>
+  <div>
     The examples do not currently show the importing of LayerChart components, utilties, or external
     libraries (i.e.<code>{'<script>'}</code>
     block). You can view the full page source by clicking on <strong>Page source</strong> at the top
@@ -130,7 +130,7 @@
         differently.
       </div>
     </Blockquote>
-  </p>
+  </div>
 
   <p>The page source will show:</p>
   <Code
