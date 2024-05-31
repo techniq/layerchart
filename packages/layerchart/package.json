@@ -40,7 +40,7 @@
     "@types/d3-scale": "^4.0.8",
     "@types/d3-scale-chromatic": "^3.0.3",
     "@types/d3-shape": "^3.1.6",
-    "@types/d3-time": "^3.0.2",
+    "@types/d3-time": "^3.0.3",
     "@types/lodash-es": "^4.17.12",
     "@types/prismjs": "^1.26.4",
     "@types/shapefile": "^0.6.4",
