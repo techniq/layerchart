@@ -86,7 +86,6 @@
         // applyTransform: ['rotate'],
       }}
       padding={{ left: 100, right: 100 }}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Svg>

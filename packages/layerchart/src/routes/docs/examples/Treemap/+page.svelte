@@ -168,7 +168,7 @@
     </Button>
   </Breadcrumb>
   <div class="h-[800px] p-4 border rounded">
-    <Chart data={complexDataHierarchy.copy()} tooltip={{ mode: 'manual' }} let:tooltip>
+    <Chart data={complexDataHierarchy.copy()} let:tooltip>
       <Svg>
         <Bounds
           domain={selectedNested}

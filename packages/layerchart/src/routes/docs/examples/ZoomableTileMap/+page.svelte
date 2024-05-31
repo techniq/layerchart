@@ -66,7 +66,6 @@
         scroll: scrollMode,
       }}
       fitGeoObject={filteredStates}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
       let:projection
       let:transform

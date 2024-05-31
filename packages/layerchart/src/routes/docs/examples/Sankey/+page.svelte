@@ -102,7 +102,7 @@
 
 <Preview data={structuredClone(greenhouse)}>
   <div class="h-[800px] p-4 border rounded">
-    <Chart data={structuredClone(greenhouse)} tooltip={{ mode: 'manual' }} let:tooltip>
+    <Chart data={structuredClone(greenhouse)} let:tooltip>
       <Svg>
         <Sankey nodeId={(d) => d.name} nodeWidth={8} let:links let:nodes>
           {#each links as link ([link.source.name, link.target.name].join('_'))}
@@ -232,7 +232,7 @@
 
 <Preview data={complexData}>
   <div class="h-[800px] p-4 border rounded">
-    <Chart data={complexData} padding={{ right: 164 }} tooltip={{ mode: 'manual' }} let:tooltip>
+    <Chart data={complexData} padding={{ right: 164 }} let:tooltip>
       <Svg>
         <Sankey
           {nodeAlign}

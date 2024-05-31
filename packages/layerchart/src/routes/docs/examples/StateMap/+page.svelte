@@ -82,7 +82,6 @@
         projection,
         fitGeojson: selectedStateFeature,
       }}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Svg>
@@ -112,7 +111,6 @@
         projection,
         fitGeojson: selectedStateFeature,
       }}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Svg>

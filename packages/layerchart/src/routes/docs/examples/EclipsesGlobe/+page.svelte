@@ -106,7 +106,6 @@
       }}
       bind:transformContext
       padding={{ top: 60 }}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Legend

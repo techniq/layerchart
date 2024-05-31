@@ -84,7 +84,7 @@
     </Button>
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded">
-    <Chart data={complexHierarchy} tooltip={{ mode: 'manual' }} let:tooltip>
+    <Chart data={complexHierarchy} let:tooltip>
       <Svg>
         <Bounds
           domain={{ x0: selected?.x0 ?? 0, x1: selected?.x1 ?? 1, y0: selected?.y0 ?? 0, y1: 1 }}

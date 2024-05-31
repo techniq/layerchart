@@ -25,7 +25,6 @@
         fitGeojson: states,
       }}
       let:projection
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Svg>
@@ -70,7 +69,6 @@
         fitGeojson: states,
       }}
       let:projection
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Canvas>

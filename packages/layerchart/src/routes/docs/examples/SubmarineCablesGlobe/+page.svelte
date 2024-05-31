@@ -92,7 +92,6 @@
         }
       }}
       bind:transformContext
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Svg>

@@ -268,7 +268,6 @@
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
       rRange={keyColors}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Svg>
@@ -298,7 +297,6 @@
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
       rRange={keyColors}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Svg>

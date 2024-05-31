@@ -137,7 +137,6 @@
         spring: { stiffness: 0.04 },
       }}
       bind:transformContext
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       {#if debug}

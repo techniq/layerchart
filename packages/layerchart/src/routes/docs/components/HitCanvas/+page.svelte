@@ -34,7 +34,6 @@
         projection: geoIdentity,
         fitGeojson: states,
       }}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Canvas>

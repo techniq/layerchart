@@ -48,7 +48,6 @@
         'hsl(var(--color-primary-500))',
         'hsl(var(--color-primary-700))',
       ]}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Svg>
@@ -76,7 +75,6 @@
         'hsl(var(--color-primary-500))',
         'hsl(var(--color-primary-700))',
       ]}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Svg>
@@ -105,7 +103,6 @@
         'hsl(var(--color-primary-700))',
       ]}
       padding={{ left: 20 }}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Svg>

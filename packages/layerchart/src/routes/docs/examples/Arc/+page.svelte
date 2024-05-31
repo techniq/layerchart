@@ -161,7 +161,7 @@
 
 <Preview>
   <div class="h-[300px] p-4 border rounded">
-    <Chart tooltip={{ mode: 'manual' }} let:tooltip>
+    <Chart let:tooltip>
       <Svg>
         <Group center>
           {#each { length: layerCount } as _, layerIndex}

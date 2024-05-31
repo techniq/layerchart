@@ -63,7 +63,6 @@
         projection,
         fitGeojson: states,
       }}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
       transform={{
         mode: 'canvas',
@@ -135,7 +134,6 @@
         tweened: { duration: 800, easing: cubicOut },
       }}
       let:projection
-      tooltip={{ mode: 'manual' }}
       let:tooltip
       let:transform
     >

@@ -29,7 +29,6 @@
         _translate: [487.5, 305],
         fitGeojson: states,
       }}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
       let:projection
     >

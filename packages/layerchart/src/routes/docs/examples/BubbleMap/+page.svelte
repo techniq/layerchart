@@ -70,7 +70,6 @@
         fitGeojson: states,
       }}
       padding={{ top: 60 }}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Svg>
@@ -138,7 +137,6 @@
         fitGeojson: states,
       }}
       padding={{ top: 60 }}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
     >
       <Canvas>

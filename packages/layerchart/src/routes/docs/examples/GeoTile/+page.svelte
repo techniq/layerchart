@@ -50,7 +50,6 @@
         projection: geoMercator,
         fitGeojson: selectedFeature,
       }}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
       let:projection
     >
@@ -84,7 +83,6 @@
         projection: geoMercator,
         fitGeojson: selectedFeature,
       }}
-      tooltip={{ mode: 'manual' }}
       let:tooltip
       let:projection
     >
