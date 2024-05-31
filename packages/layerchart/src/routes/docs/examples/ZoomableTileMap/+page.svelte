@@ -8,13 +8,13 @@
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import Preview from '$lib/docs/Preview.svelte';
   import TilesetField from '$lib/docs/TilesetField.svelte';
-  import TransformControls from '$lib/docs/TransformControls.svelte';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import GeoTile from '$lib/components/GeoTile.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import TransformControls from '$lib/components/TransformControls.svelte';
 
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
 

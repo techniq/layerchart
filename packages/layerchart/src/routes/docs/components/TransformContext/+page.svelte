@@ -8,9 +8,9 @@
   import Circle from '$lib/components/Circle.svelte';
   import Spline from '$lib/components/Spline.svelte';
   import Points from '$lib/components/Points.svelte';
+  import TransformControls from '$lib/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import TransformControls from '$lib/docs/TransformControls.svelte';
 
   import { getSpiral } from '$lib/utils/genData.js';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';

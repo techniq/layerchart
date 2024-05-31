@@ -7,12 +7,12 @@
   import { Field, SelectField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import TransformControls from '$lib/docs/TransformControls.svelte';
 
   import Chart, { Svg, Canvas } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import HitCanvas from '$lib/components/HitCanvas.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
+  import TransformControls from '$lib/components/TransformControls.svelte';
 
   export let data;
 

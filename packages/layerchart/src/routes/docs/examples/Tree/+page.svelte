@@ -10,10 +10,10 @@
   import Link from '$lib/components/Link.svelte';
   import Rect from '$lib/components/Rect.svelte';
   import Text from '$lib/components/Text.svelte';
+  import TransformControls from '$lib/components/TransformControls.svelte';
   import Tree from '$lib/components/Tree.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import TransformControls from '$lib/docs/TransformControls.svelte';
 
   export let data;
 
