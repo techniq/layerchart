@@ -51,16 +51,23 @@
 <h2>SVG</h2>
 
 <Preview data={states}>
-  <div class="h-[600px]">
+  <div class="h-[600px] overflow-hidden">
     <Chart
       geo={{
         projection: geoIdentity,
         fitGeojson: states,
       }}
+      transform={{
+        mode: 'canvas',
+        scroll: 'scale',
+      }}
       padding={{ top: 60 }}
       tooltip={{ raiseTarget: true }}
       let:tooltip
+      let:transform
     >
+      {@const strokeWidth = 1 / transform.scale}
+
       <Svg>
         <g>
           {#each enrichedCountiesFeatures as feature}
@@ -69,12 +76,17 @@
               {tooltip}
               fill={colorScale(feature.properties.data?.population)}
               class="stroke-none hover:stroke-white"
+              {strokeWidth}
             />
           {/each}
         </g>
         <g>
           {#each states.features as feature}
-            <GeoPath geojson={feature} class="fill-none stroke-black/30 pointer-events-none" />
+            <GeoPath
+              geojson={feature}
+              class="fill-none stroke-black/30 pointer-events-none"
+              {strokeWidth}
+            />
           {/each}
         </g>
       </Svg>
@@ -83,6 +95,7 @@
         scale={colorScale}
         title="Population"
         tickFormat={(d) => format(d, 'metric', { maximumSignificantDigits: 2 })}
+        class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-sm rounded m-1"
       />
 
       <Tooltip
@@ -122,10 +135,15 @@
         projection: geoIdentity,
         fitGeojson: states,
       }}
+      transform={{
+        mode: 'canvas',
+        scroll: 'scale',
+      }}
       padding={{ top: 60 }}
-      tooltip={{ raiseTarget: true }}
       let:tooltip
+      let:transform
     >
+      {@const strokeWidth = 1 / transform.scale}
       <Canvas>
         <GeoPath
           render={(ctx, { geoPath }) => {
@@ -139,12 +157,12 @@
         />
       </Canvas>
       <Canvas>
-        <GeoPath geojson={states} class="stroke-black/30" />
+        <GeoPath geojson={states} class="stroke-black/30" {strokeWidth} />
       </Canvas>
 
       {#if tooltip.data}
         <Canvas>
-          <GeoPath geojson={tooltip.data} class="stroke-white" />
+          <GeoPath geojson={tooltip.data} class="stroke-white" {strokeWidth} />
         </Canvas>
       {/if}
 
