@@ -5,7 +5,7 @@
   export const transformContextKey = Symbol();
 
   export type TransformContextValue = {
-    mode: 'canvas' | 'none';
+    mode: 'canvas' | 'manual' | 'none';
     scale: Writable<number>;
     translate: Writable<{ x: number; y: number }>;
     dragging: Readable<boolean>;
@@ -45,7 +45,7 @@
 
   const { width, height } = getContext('LayerCake');
 
-  export let mode: 'canvas' | 'none' = 'none';
+  export let mode: TransformContextValue['mode'] = 'none';
   export let translateOnScale = false;
   export let spring: boolean | Parameters<typeof motionStore>[1]['spring'] = undefined;
   export let tweened: boolean | Parameters<typeof motionStore>[1]['tweened'] = undefined;
@@ -63,7 +63,7 @@
     };
   };
 
-  /** Disable pointer events including move/dragging */
+  /** Disable pointer events including move/dragging.  Useful for `mode="canvas" but only want zoomTo() interactions */
   export let disablePointer = false;
 
   /** Action to take during wheel scroll */
@@ -141,7 +141,7 @@
   });
 
   function onPointerDown(e: PointerEvent & { currentTarget: HTMLDivElement }) {
-    if (disablePointer) return;
+    if (mode === 'none' || disablePointer) return;
 
     e.preventDefault();
 
@@ -191,13 +191,13 @@
   }
 
   function onDoubleClick(e) {
-    if (disablePointer) return;
+    if (mode === 'none' || disablePointer) return;
     const point = localPoint(e);
     scaleTo(e.shiftKey ? 0.5 : 2, point);
   }
 
   function onWheel(e: WheelEvent) {
-    if (scroll === 'none' || disablePointer) return;
+    if (mode === 'none' || disablePointer || scroll === 'none') return;
 
     e.preventDefault();
 
