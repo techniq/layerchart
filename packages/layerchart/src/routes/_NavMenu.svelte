@@ -87,7 +87,15 @@
     ],
     Layout: ['ForceSimulation', 'Pack', 'Partition', 'Sankey', 'Treemap'],
     Clipping: ['ClipPath', 'ChartClipPath', 'CircleClipPath', 'RectClipPath'],
-    Other: ['Blur', 'Bounds', 'ColorRamp', 'LinearGradient', 'MotionPath', 'Pattern'],
+    Other: [
+      'Blur',
+      'Bounds',
+      'ColorRamp',
+      'LinearGradient',
+      'RadialGradient',
+      'MotionPath',
+      'Pattern',
+    ],
   };
 
   const utils = ['pivot'];

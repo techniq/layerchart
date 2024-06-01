@@ -6,7 +6,7 @@
 
 <h1>Examples</h1>
 
-<h2>Direction and custom colors</h2>
+<h2>Direction with custom colors</h2>
 
 <Preview>
   <div class="h-[334px] p-4 border rounded">
