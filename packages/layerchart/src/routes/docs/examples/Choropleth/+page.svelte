@@ -13,6 +13,7 @@
   import Legend from '$lib/components/Legend.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import TransformControls from '$lib/components/TransformControls.svelte';
 
   export let data;
   const states = feature(data.geojson, data.geojson.objects.states);
@@ -67,6 +68,7 @@
       let:transform
     >
       {@const strokeWidth = 1 / transform.scale}
+      <TransformControls />
 
       <Svg>
         <g>
@@ -144,6 +146,8 @@
       let:transform
     >
       {@const strokeWidth = 1 / transform.scale}
+      <TransformControls />
+
       <Canvas>
         <GeoPath
           render={(ctx, { geoPath }) => {
