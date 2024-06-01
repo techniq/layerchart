@@ -53,21 +53,31 @@
 <h2>SVG</h2>
 
 <Preview data={states}>
-  <div class="h-[600px]">
+  <div class="h-[600px] overflow-hidden">
     <Chart
       geo={{
         projection: geoIdentity,
         fitGeojson: states,
       }}
+      transform={{
+        mode: 'canvas',
+        scroll: 'scale',
+      }}
       let:tooltip
+      let:transform
     >
+      {@const strokeWidth = 1 / transform.scale}
       <Svg>
         {#each states.features as feature}
-          <GeoPath geojson={feature} class="fill-surface-content/10 stroke-surface-100" />
+          <GeoPath
+            geojson={feature}
+            class="fill-surface-content/10 stroke-surface-100"
+            {strokeWidth}
+          />
         {/each}
 
         {#each enrichedCountiesFeatures as feature}
-          <GeoPath geojson={feature} let:geoPath>
+          <GeoPath geojson={feature} {strokeWidth} let:geoPath>
             {@const [x, y] = geoPath.centroid(feature)}
             {@const d = feature.properties.data}
             {@const height = heightScale(d?.population)}
@@ -75,13 +85,19 @@
               <path
                 d="M{-width / 2},0 L0,{-height} L{width / 2},0"
                 class="stroke-danger fill-danger/25"
+                stroke-width={strokeWidth}
               />
             </Group>
           </GeoPath>
         {/each}
 
         {#each enrichedCountiesFeatures as feature}
-          <GeoPath geojson={feature} {tooltip} class="stroke-none hover:fill-surface-content/10" />
+          <GeoPath
+            geojson={feature}
+            {tooltip}
+            class="stroke-none hover:fill-surface-content/10"
+            {strokeWidth}
+          />
         {/each}
       </Svg>
 
@@ -122,10 +138,20 @@
         projection: geoIdentity,
         fitGeojson: states,
       }}
+      transform={{
+        mode: 'canvas',
+        scroll: 'scale',
+      }}
       let:tooltip
+      let:transform
     >
+      {@const strokeWidth = 1 / transform.scale}
       <Canvas>
-        <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
+        <GeoPath
+          geojson={states}
+          class="fill-surface-content/10 stroke-surface-100"
+          {strokeWidth}
+        />
       </Canvas>
 
       <Canvas>
@@ -139,6 +165,7 @@
               const d = feature.properties.data;
               const height = heightScale(d?.population);
 
+              ctx.lineWidth = strokeWidth;
               ctx.strokeStyle = computedStyle.stroke;
               ctx.fillStyle = computedStyle.fill;
 
@@ -159,7 +186,11 @@
 
       {#if tooltip.data}
         <Canvas>
-          <GeoPath geojson={tooltip.data} class="stroke-none fill-surface-content/10" />
+          <GeoPath
+            geojson={tooltip.data}
+            class="stroke-none fill-surface-content/10"
+            {strokeWidth}
+          />
         </Canvas>
       {/if}
 
