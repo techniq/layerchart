@@ -11,10 +11,15 @@
 
   const dispatch = createEventDispatcher<{
     change: { xDomain?: [any, any]; yDomain?: [any, any] };
+    brushStart: { xDomain?: [any, any]; yDomain?: [any, any] };
+    brushEnd: { xDomain?: [any, any]; yDomain?: [any, any] };
   }>();
 
   // export let axis: 'x' | 'y' | 'both' = 'x';
   export let handleWidth = 5;
+
+  /** Only show range while actively brushing.  Useful with `brushEnd` event */
+  export let clearOnEnd = false;
 
   export let xDomain: [number | null, number | null] = [null, null];
 
@@ -37,21 +42,35 @@
         value: $xScale.invert(localPoint(frameEl, e)?.x - $padding.left),
       };
 
-      const onMove = (e: PointerEvent) => {
+      dispatch('brushStart', { xDomain });
+
+      const onPointerMove = (e: PointerEvent) => {
         fn(start, $xScale.invert(localPoint(frameEl, e)?.x - $padding.left));
+
+        if (xDomain[0] === xDomain[1]) {
+          // Ignore?
+        } else {
+          dispatch('change', { xDomain });
+        }
       };
 
-      const onEnd = (e: PointerEvent) => {
+      const onPointerUp = (e: PointerEvent) => {
         if (e.target === frameEl) {
           clear();
         }
 
-        window.removeEventListener('pointermove', onMove);
-        window.removeEventListener('pointerup', onEnd);
+        dispatch('brushEnd', { xDomain });
+
+        if (clearOnEnd) {
+          clear();
+        }
+
+        window.removeEventListener('pointermove', onPointerMove);
+        window.removeEventListener('pointerup', onPointerUp);
       };
 
-      window.addEventListener('pointermove', onMove);
-      window.addEventListener('pointerup', onEnd);
+      window.addEventListener('pointermove', onPointerMove);
+      window.addEventListener('pointerup', onPointerUp);
     };
   }
 
@@ -91,15 +110,6 @@
 
   function selectAll() {
     xDomain = [xDomainMin, xDomainMax];
-  }
-
-  let lastDomain: typeof xDomain = [null, null];
-  $: if (
-    ((xDomain[0] == null && xDomain[1] == null) || xDomain[0] !== xDomain[1]) &&
-    (lastDomain[0] !== xDomain[0] || lastDomain[1] !== xDomain[1])
-  ) {
-    lastDomain = xDomain;
-    dispatch('change', { xDomain });
   }
 
   $: left = $xScale(xDomain[0]);
