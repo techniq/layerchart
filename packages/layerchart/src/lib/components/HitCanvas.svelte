@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { beforeUpdate, createEventDispatcher, getContext, onMount, setContext } from 'svelte';
+  import { createEventDispatcher, getContext, onMount, setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import { scaleCanvas } from 'layercake';
   import { cls } from 'svelte-ux';
   import Canvas from './layout/Canvas.svelte';
+  import { transformContext } from './TransformContext.svelte';
 
   const { width, height } = getContext('LayerCake');
 
@@ -53,9 +54,15 @@
   $: colorGenerator = rgbColorGenerator();
 
   // Reset color generator whenever updated (width/height) so always reusing same colors (and not exhausting)
-  beforeUpdate(() => {
+  const { translate, scale } = transformContext();
+  $: {
+    $width;
+    $height;
+    $translate;
+    $scale;
+
     colorGenerator = rgbColorGenerator();
-  });
+  }
 
   const dataByColor = new Map<string, any>();
   function setColorData(color: string, data: any) {
