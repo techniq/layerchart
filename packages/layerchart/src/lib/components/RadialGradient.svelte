@@ -17,7 +17,10 @@
   export let r = '50%';
   export let fr = '0%';
 
-  export let rotate: number | undefined = undefined;
+  /** Indicates how the gradient behaves if it starts or ends inside the bounds of the shape containing the gradient */
+  export let spreadMethod: 'pad' | 'reflect' | 'repeat' = 'pad';
+
+  export let transform: string | null | undefined = undefined;
 
   /** Define the coordinate system for attributes (i.e. gradientUnits) */
   export let units: 'objectBoundingBox' | 'userSpaceOnUse' = 'objectBoundingBox';
@@ -32,7 +35,8 @@
     {fy}
     {r}
     {fr}
-    gradientTransform={rotate ? `rotate(${rotate})` : ''}
+    {spreadMethod}
+    gradientTransform={transform}
     gradientUnits={units}
     {...$$restProps}
   >
