@@ -32,38 +32,16 @@
     fn: (start: { xDomain: [number, number]; value: number }, value: number) => void
   ) {
     return (e: PointerEvent) => {
-      // let startTouch: Touch | null = null;
-      let clientX: number;
-
-      // if (e instanceof TouchEvent) {
-      //   if (e.touches.length !== 1) return;
-      //   startTouch = e.touches[0];
-      //   clientX = startTouch.clientX;
-      // } else {
-      clientX = e.clientX;
-      // }
-
       const start = {
         xDomain: [xDomain[0] ?? xDomainMin, xDomain[1] ?? xDomainMax],
         value: $xScale.invert(localPoint(frameEl, e)?.x - $padding.left),
       };
 
       const onMove = (e: PointerEvent) => {
-        // if (e instanceof TouchEvent) {
-        //   if (e instanceof TouchEvent && e.changedTouches.length !== 1) return;
-        //   const touch = e.changedTouches[0];
-        //   if (touch.identifier !== startTouch?.identifier) return;
-        //   fn(start, $xScale.invert(localPoint(frameEl, touch)?.x - $padding.left));
-        // } else {
         fn(start, $xScale.invert(localPoint(frameEl, e)?.x - $padding.left));
-        // }
       };
 
       const onEnd = (e: PointerEvent) => {
-        // if (e instanceof TouchEvent) {
-        //   if (e.changedTouches.length !== 1) return;
-        //   if (e.changedTouches[0].identifier !== startTouch?.identifier) return;
-        // } else if (e.target === frameEl) {
         if (e.target === frameEl) {
           clear();
         }
