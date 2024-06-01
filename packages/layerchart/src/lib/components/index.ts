@@ -45,6 +45,7 @@ export { default as Pattern } from './Pattern.svelte';
 export { default as Pie } from './Pie.svelte';
 export { default as Point } from './Point.svelte';
 export { default as Points } from './Points.svelte';
+export { default as RadialGradient } from './RadialGradient.svelte';
 export { default as Rect } from './Rect.svelte';
 export { default as RectClipPath } from './RectClipPath.svelte';
 export { default as Rule } from './Rule.svelte';
