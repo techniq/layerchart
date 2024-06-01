@@ -11,6 +11,7 @@
   import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Graticule from '$lib/components/Graticule.svelte';
+  import HitCanvas from '$lib/components/HitCanvas.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TransformContext from '$lib/components/TransformContext.svelte';
 
@@ -149,6 +150,7 @@
       <Svg>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
         <Graticule class="stroke-surface-content/20" />
+
         {#each countries.features as country}
           <GeoPath
             geojson={country}
@@ -211,19 +213,60 @@
       }}
       transform={{ scroll: 'none', spring: { stiffness: 0.04 } }}
       bind:transformContext={transformContext2}
+      let:tooltip
     >
       <Canvas>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
       </Canvas>
+
       <Canvas>
         <Graticule class="stroke-surface-content/20" />
       </Canvas>
+
       <Canvas>
         <GeoPath geojson={countries} class="stroke-surface-content/50 fill-white" />
       </Canvas>
+
       <Canvas>
         <GeoPath geojson={selectedFeature} class="stroke-primary-900 fill-primary" />
       </Canvas>
+
+      {#if tooltip.data}
+        <Canvas>
+          <GeoPath geojson={tooltip.data} class="fill-surface-content/20" />
+        </Canvas>
+      {/if}
+
+      <HitCanvas
+        let:nextColor
+        let:setColorData
+        on:pointermove={(e) => tooltip.show(e.detail.event, e.detail.data)}
+        on:pointerleave={tooltip.hide}
+        on:click={(e) => {
+          selectedFeature = e.detail.data;
+        }}
+      >
+        <GeoPath
+          render={(ctx, { geoPath }) => {
+            for (var feature of countries.features) {
+              const color = nextColor();
+
+              ctx.beginPath();
+              geoPath(feature);
+              ctx.fillStyle = color;
+              ctx.fill();
+
+              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
+              ctx.strokeStyle = color;
+              ctx.stroke();
+
+              setColorData(color, feature);
+            }
+          }}
+        />
+      </HitCanvas>
+
+      <Tooltip header={(data) => data.properties.name} />
     </Chart>
   </div>
 </Preview>
