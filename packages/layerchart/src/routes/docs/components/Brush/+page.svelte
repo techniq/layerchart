@@ -35,6 +35,128 @@
 
 <h1>Examples</h1>
 
+<h2>X-axis</h2>
+
+<Preview data={data.appleStock}>
+  <div class="border rounded p-4 grid gap-1">
+    <State initial={[null, null]} let:value={xDomain} let:set>
+      <div class="h-[300px]">
+        <Chart
+          data={data.appleStock}
+          x="date"
+          xScale={scaleTime()}
+          {xDomain}
+          y="value"
+          yDomain={[0, null]}
+          yNice
+          padding={{ left: 16, bottom: 24 }}
+        >
+          <Svg>
+            <Axis placement="left" grid rule />
+            <Axis placement="bottom" rule />
+            <ChartClipPath>
+              <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
+                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+              </LinearGradient>
+            </ChartClipPath>
+
+            <Brush
+              axis="x"
+              clearOnEnd
+              on:brushEnd={(e) => {
+                console.log(e.detail.xDomain);
+                set(e.detail.xDomain);
+              }}
+            />
+          </Svg>
+        </Chart>
+      </div>
+    </State>
+  </div>
+</Preview>
+
+<h2>Y-axis</h2>
+
+<Preview data={data.appleStock}>
+  <div class="border rounded p-4 grid gap-1">
+    <State initial={[0, null]} let:value={yDomain} let:set>
+      <div class="h-[300px]">
+        <Chart
+          data={data.appleStock}
+          x="date"
+          xScale={scaleTime()}
+          y="value"
+          {yDomain}
+          yNice
+          padding={{ left: 16, bottom: 24 }}
+        >
+          <Svg>
+            <Axis placement="left" grid rule />
+            <Axis placement="bottom" rule />
+            <ChartClipPath>
+              <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
+                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+              </LinearGradient>
+            </ChartClipPath>
+
+            <Brush
+              axis="y"
+              clearOnEnd
+              on:brushEnd={(e) => {
+                console.log(e.detail.yDomain);
+                set(e.detail.yDomain);
+              }}
+            />
+          </Svg>
+        </Chart>
+      </div>
+    </State>
+  </div>
+</Preview>
+
+<h2>Both (area)</h2>
+
+<Preview data={data.appleStock}>
+  <div class="border rounded p-4 grid gap-1">
+    <State initial={{ xDomain: [null, null], yDomain: [0, null] }} let:value let:set>
+      <div class="h-[300px]">
+        <Chart
+          data={data.appleStock}
+          x="date"
+          xScale={scaleTime()}
+          xDomain={value.xDomain}
+          y="value"
+          yDomain={value.yDomain}
+          yNice
+          padding={{ left: 16, bottom: 24 }}
+        >
+          <Svg>
+            <Axis placement="left" grid rule />
+            <Axis placement="bottom" rule />
+            <ChartClipPath>
+              <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
+                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+              </LinearGradient>
+            </ChartClipPath>
+
+            <Brush
+              axis="both"
+              clearOnEnd
+              on:brushEnd={(e) => {
+                console.log(e.detail.yDomain, e.detail.yDomain);
+                set({
+                  xDomain: e.detail.xDomain,
+                  yDomain: e.detail.yDomain,
+                });
+              }}
+            />
+          </Svg>
+        </Chart>
+      </div>
+    </State>
+  </div>
+</Preview>
+
 <h2>Integrated brush</h2>
 
 <Preview data={data.appleStock}>
