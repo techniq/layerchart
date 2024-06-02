@@ -80,13 +80,13 @@
 
       const onPointerUp = (e: PointerEvent) => {
         if (e.target === frameEl) {
-          clear();
+          reset();
         }
 
         dispatch('brushEnd', { xDomain, yDomain });
 
         if (clearOnEnd) {
-          clear();
+          reset();
         }
 
         window.removeEventListener('pointermove', onPointerMove);
@@ -98,7 +98,7 @@
     };
   }
 
-  const reset = handler((start, value) => {
+  const createRange = handler((start, value) => {
     xDomain = [
       clamp(Math.min(start.value.x, value.x), xDomainMin, xDomainMax),
       clamp(Math.max(start.value.x, value.x), xDomainMin, xDomainMax),
@@ -150,7 +150,7 @@
     ];
   });
 
-  function clear() {
+  function reset() {
     xDomain = [null, null];
     yDomain = [null, null];
   }
@@ -165,8 +165,6 @@
   $: left = $xScale(xDomain[0]);
   $: right = $xScale(xDomain[1]);
 
-  $: console.log({ top, bottom, left, right });
-
   $: rangeTop = axis === 'both' || axis === 'y' ? top : 0;
   $: rangeLeft = axis === 'both' || axis === 'x' ? left : 0;
   $: rangeWidth = axis === 'both' || axis === 'x' ? right - left : $width;
@@ -176,7 +174,7 @@
 <g class="Brush">
   <Frame
     class={cls('frame', 'fill-transparent')}
-    on:pointerdown={reset}
+    on:pointerdown={createRange}
     on:dblclick={() => selectAll()}
     bind:rectEl={frameEl}
   />
@@ -186,7 +184,7 @@
     x={rangeLeft}
     y={rangeTop}
     on:pointerdown={adjustRange}
-    on:dblclick={() => clear()}
+    on:dblclick={() => reset()}
   >
     <rect
       width={rangeWidth}
