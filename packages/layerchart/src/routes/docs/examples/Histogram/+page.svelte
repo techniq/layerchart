@@ -9,9 +9,10 @@
     randomNormal,
     randomUniform,
   } from 'd3-random';
+  import { timeDays, timeMonths, timeWeeks } from 'd3-time';
   import { subDays } from 'date-fns';
 
-  import { MenuField, RangeField, NumberStepper, format, PeriodType } from 'svelte-ux';
+  import { MenuField, RangeField, NumberStepper, format, PeriodType, State } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Axis from '$lib/components/Axis.svelte';
@@ -49,12 +50,9 @@
 
   const now = new Date();
   let dateRange = 10;
-  let dateThresholds = 10;
   $: randomDateData = Array.from({ length: randomCount }, () =>
     getRandomDate(subDays(now, dateRange), now)
   );
-  $: binByTime = d3bin().thresholds(thresholdTime(dateThresholds));
-  $: timeBins = binByTime(randomDateData);
 </script>
 
 <h1>Examples</h1>
@@ -223,55 +221,138 @@
   </div>
 </Preview>
 
-<h2>Date / time</h2>
+<State initial={{ thresholds: 10 }} let:value let:set>
+  {@const binByTime = d3bin().thresholds(thresholdTime(value.thresholds))}
+  {@const data = binByTime(randomDateData)}
 
-<div class="grid grid-cols-[148px,148px] gap-2 mb-2">
-  <NumberStepper label="Date range" bind:value={dateRange} class="w-full" />
-  <NumberStepper label="Thresholds" bind:value={dateThresholds} class="w-full" />
-</div>
+  <h2>Date / time (count)</h2>
 
-<Preview data={timeBins}>
-  <div class="h-[300px] p-4 border rounded">
-    <Chart
-      data={timeBins}
-      x={['x0', 'x1']}
-      xScale={scaleBand().padding(0.2)}
-      y="length"
-      yDomain={[0, null]}
-      yNice
-      padding={{ left: 16, bottom: 48 }}
-      tooltip={{ mode: 'band' }}
-    >
-      <Svg>
-        <Axis placement="left" grid rule format="metric" />
-        <Axis
-          placement="bottom"
-          rule
-          ticks={4}
-          format={(d) => format(d, PeriodType.Day)}
-          tickLabelProps={{ rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 }}
-        />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
-        <Highlight area />
-      </Svg>
-      <Tooltip
-        header={(data) => format(data.x0, PeriodType.Day) + ' - ' + format(data.x1, PeriodType.Day)}
-        let:data
-      >
-        <TooltipItem label="count" value={data.length} format="integer" />
-        <TooltipSeparator />
-        {#each data.slice(0, 5) as d}
-          <TooltipItem
-            label="value"
-            value={d}
-            format={(value) => format(value, PeriodType.DayTime)}
-          />
-        {/each}
-        {#if data.length > 5}
-          <span />
-          <span>...</span>
-        {/if}
-      </Tooltip>
-    </Chart>
+  <div class="grid grid-cols-[148px,148px] gap-2 mb-2">
+    <NumberStepper label="Date range" bind:value={dateRange} class="w-full" />
+    <NumberStepper
+      label="Thresholds"
+      value={value.thresholds}
+      on:change={(e) => set({ thresholds: e.detail.value })}
+      class="w-full"
+    />
   </div>
-</Preview>
+
+  <Preview {data}>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart
+        {data}
+        x={['x0', 'x1']}
+        xScale={scaleBand().padding(0.2)}
+        y="length"
+        yDomain={[0, null]}
+        yNice
+        padding={{ left: 16, bottom: 48 }}
+        tooltip={{ mode: 'band' }}
+      >
+        <Svg>
+          <Axis placement="left" grid rule format="metric" />
+          <Axis
+            placement="bottom"
+            rule
+            ticks={4}
+            format={(d) => format(d, PeriodType.Day)}
+            tickLabelProps={{ rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 }}
+          />
+          <Bars radius={4} strokeWidth={1} class="fill-primary" />
+          <Highlight area />
+        </Svg>
+        <Tooltip
+          header={(data) =>
+            format(data.x0, PeriodType.Day) + ' - ' + format(data.x1, PeriodType.Day)}
+          let:data
+        >
+          <TooltipItem label="count" value={data.length} format="integer" />
+          <TooltipSeparator />
+          {#each data.slice(0, 5) as d}
+            <TooltipItem
+              label="value"
+              value={d}
+              format={(value) => format(value, PeriodType.DayTime)}
+            />
+          {/each}
+          {#if data.length > 5}
+            <span />
+            <span>...</span>
+          {/if}
+        </Tooltip>
+      </Chart>
+    </div>
+  </Preview>
+</State>
+
+<State initial={{ intervalValue: 'weeks', intervalFunc: timeWeeks }} let:value let:set>
+  {@const binByTime = d3bin().thresholds((_data, min, max) => value.intervalFunc(min, max))}
+  {@const data = binByTime(randomDateData)}
+
+  <h2>Date / time (interval)</h2>
+
+  <div class="grid grid-cols-[148px,148px] gap-2 mb-2">
+    <NumberStepper label="Date range" bind:value={dateRange} class="w-full" />
+    <MenuField
+      label="Interval"
+      options={[
+        { label: 'Days', value: 'days', interval: timeDays },
+        { label: 'Weeks', value: 'weeks', interval: timeWeeks },
+        { label: 'Months', value: 'months', interval: timeMonths },
+      ]}
+      value={value?.intervalValue}
+      on:change={(e) => {
+        set({ intervalValue: e.detail.value, intervalFunc: e.detail.option.interval });
+      }}
+      stepper
+      classes={{ menuIcon: 'hidden' }}
+    />
+  </div>
+
+  <Preview {data}>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart
+        {data}
+        x={['x0', 'x1']}
+        xScale={scaleBand().padding(0.2)}
+        y="length"
+        yDomain={[0, null]}
+        yNice
+        padding={{ left: 16, bottom: 48 }}
+        tooltip={{ mode: 'band' }}
+      >
+        <Svg>
+          <Axis placement="left" grid rule format="metric" />
+          <Axis
+            placement="bottom"
+            rule
+            ticks={4}
+            format={(d) => format(d, PeriodType.Day)}
+            tickLabelProps={{ rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 }}
+          />
+          <Bars radius={4} strokeWidth={1} class="fill-primary" />
+          <Highlight area />
+        </Svg>
+        <Tooltip
+          header={(data) =>
+            format(data.x0, PeriodType.Day) + ' - ' + format(data.x1 - 1, PeriodType.Day)}
+          let:data
+        >
+          <TooltipItem label="count" value={data.length} format="integer" />
+          <TooltipSeparator />
+          {#each data.slice(0, 5) as d}
+            <TooltipItem
+              label="value"
+              value={d}
+              format={(value) => format(value, PeriodType.DayTime)}
+            />
+          {/each}
+          {#if data.length > 5}
+            <span />
+            <span>...</span>
+          {/if}
+        </Tooltip>
+      </Chart>
+    </div>
+  </Preview>
+</State>

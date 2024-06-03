@@ -6,7 +6,7 @@ import { scaleTime } from 'd3-scale';
  * https://observablehq.com/@d3/d3-bin-time-thresholds
  */
 export function thresholdTime(n: number): ThresholdNumberArrayGenerator<number> {
-  // TODO: Unable to satifiy `ThresholdNumberArrayGenerator<Value extends number>` with `Date`
+  // TODO: Unable to satisfy `ThresholdNumberArrayGenerator<Value extends number>` with `Date`
   return (data, min, max) => {
     return scaleTime().domain([min, max]).ticks(n);
   };
