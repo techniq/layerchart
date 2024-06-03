@@ -10,8 +10,10 @@
   import Axis from '$lib/components/Axis.svelte';
   import Brush from '$lib/components/Brush.svelte';
   import ChartClipPath from '$lib/components/ChartClipPath.svelte';
+  import Highlight from '$lib/components/Highlight.svelte';
   import LinearGradient from '$lib/components/LinearGradient.svelte';
   import Rule from '$lib/components/Rule.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
 
   import { randomWalk } from '$lib/utils/genData.js';
 
@@ -34,6 +36,49 @@
 </script>
 
 <h1>Examples</h1>
+
+<!-- TODO: Interop between -->
+<h2>Tooltip interop (WIP)</h2>
+
+<Preview data={data.appleStock}>
+  <div class="border rounded p-4 grid gap-1">
+    <State initial={[null, null]} let:value={xDomain} let:set>
+      <div class="h-[300px]">
+        <Chart
+          data={data.appleStock}
+          x="date"
+          xScale={scaleTime()}
+          {xDomain}
+          y="value"
+          yDomain={[0, null]}
+          padding={{ left: 16, bottom: 24 }}
+          tooltip={{ mode: 'bisect-x' }}
+        >
+          <Svg>
+            <Axis placement="left" grid rule />
+            <Axis placement="bottom" rule />
+            <ChartClipPath>
+              <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
+                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+              </LinearGradient>
+            </ChartClipPath>
+            <Highlight points lines />
+
+            <Brush
+              axis="x"
+              resetOnEnd
+              on:brushEnd={(e) => {
+                set(e.detail.xDomain);
+              }}
+            />
+          </Svg>
+
+          <Tooltip header={(data) => 'TODO'} />
+        </Chart>
+      </div>
+    </State>
+  </div>
+</Preview>
 
 <h2>Integrated brush (x-axis)</h2>
 
