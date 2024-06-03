@@ -258,5 +258,7 @@
         />
       </Group>
     {/if}
+
+    <!-- TODO: Add diagonal/corner handles -->
   {/if}
 </g>
