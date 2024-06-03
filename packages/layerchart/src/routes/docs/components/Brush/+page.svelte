@@ -48,7 +48,6 @@
           {xDomain}
           y="value"
           yDomain={[0, null]}
-          yNice
           padding={{ left: 16, bottom: 24 }}
         >
           <Svg>
@@ -64,7 +63,6 @@
               axis="x"
               resetOnEnd
               on:brushEnd={(e) => {
-                console.log(e.detail.xDomain);
                 set(e.detail.xDomain);
               }}
             />
@@ -87,7 +85,6 @@
           xScale={scaleTime()}
           y="value"
           {yDomain}
-          yNice
           padding={{ left: 16, bottom: 24 }}
         >
           <Svg>
@@ -103,7 +100,6 @@
               axis="y"
               resetOnEnd
               on:brushEnd={(e) => {
-                console.log(e.detail.yDomain);
                 set(e.detail.yDomain);
               }}
             />
@@ -127,7 +123,6 @@
           xDomain={value.xDomain}
           y="value"
           yDomain={value.yDomain}
-          yNice
           padding={{ left: 16, bottom: 24 }}
         >
           <Svg>
@@ -143,7 +138,6 @@
               axis="both"
               resetOnEnd
               on:brushEnd={(e) => {
-                console.log(e.detail.yDomain, e.detail.yDomain);
                 set({
                   xDomain: e.detail.xDomain,
                   yDomain: e.detail.yDomain,
@@ -170,7 +164,6 @@
           {xDomain}
           y="value"
           yDomain={[0, null]}
-          yNice
           padding={{ left: 16, bottom: 24 }}
         >
           <Svg>
@@ -197,7 +190,6 @@
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
             <Brush
               on:change={(e) => {
-                console.log('xDomain', e.detail.xDomain);
                 set(e.detail.xDomain);
               }}
             />
@@ -240,7 +232,6 @@
           xScale={scaleTime()}
           y="value"
           {yDomain}
-          yNice
           padding={{ left: 16, bottom: 24 }}
         >
           <Svg>
@@ -274,7 +265,6 @@
           xScale={scaleTime()}
           y="value"
           yDomain={[0, null]}
-          yNice
           padding={{ left: 16, bottom: 24 }}
         >
           <Svg>
@@ -313,7 +303,7 @@
   </div>
 </Preview>
 
-<h2>Sync brushes and bind to xDomain</h2>
+<h2>Sync brushes with `bind:xDomain`</h2>
 
 <Preview data={data.appleStock}>
   {@const colorScale = scaleOrdinal([
@@ -333,7 +323,6 @@
             {xDomain}
             y="value"
             yBaseline={0}
-            yNice
             padding={{ left: 16, bottom: 24 }}
           >
             <Svg>
