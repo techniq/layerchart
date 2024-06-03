@@ -77,7 +77,7 @@
     'layercake-layout-canvas',
     'absolute w-full h-full',
     pointerEvents === false && 'pointer-events-none',
-    $$restProps.class
+    $$props.class
   )}
   aria-label={label}
   aria-labelledby={labelledBy}

@@ -7,11 +7,12 @@
   import {
     LayerCake,
     // Canvas as _Canvas,
-    Html as _Html,
+    // Html as _Html,
     // Svg as _Svg,
     WebGL as _WebGL,
   } from 'layercake';
   import _Canvas from './layout/Canvas.svelte';
+  import _Html from './layout/Html.svelte';
   import _Svg from './layout/Svg.svelte';
 
   export const Canvas = _Canvas;

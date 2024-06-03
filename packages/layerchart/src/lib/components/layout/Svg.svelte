@@ -54,7 +54,8 @@
   class={cls(
     'layercake-layout-svg',
     'absolute top-0 left-0 overflow-visible',
-    pointerEvents === false && 'pointer-events-none'
+    pointerEvents === false && 'pointer-events-none',
+    $$props.class
   )}
   aria-label={label}
   aria-labelledby={labelledBy}
