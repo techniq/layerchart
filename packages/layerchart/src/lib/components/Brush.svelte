@@ -28,8 +28,15 @@
   /** Only show range while actively brushing.  Useful with `brushEnd` event */
   export let resetOnEnd = false;
 
-  export let xDomain: [number | null, number | null] = [null, null];
-  export let yDomain: [number | null, number | null] = [null, null];
+  export let xDomain: [number | null, number | null] = $xScale.domain();
+  export let yDomain: [number | null, number | null] = $yScale.domain();
+
+  // Capture original domains for reset()
+  const originalXDomain = $xScale.domain();
+  const originalYDomain = $yScale.domain();
+
+  $: [xDomainMin, xDomainMax] = extent($xScale.domain());
+  $: [yDomainMin, yDomainMax] = extent($yScale.domain());
 
   export let classes: {
     root?: string;
@@ -38,13 +45,6 @@
   } = {};
 
   let frameEl: SVGRectElement;
-
-  // Capture original domains for reset()
-  const originalXDomain = $xScale.domain();
-  const originalYDomain = $yScale.domain();
-
-  $: [xDomainMin, xDomainMax] = extent($xScale.domain());
-  $: [yDomainMin, yDomainMax] = extent($yScale.domain());
 
   function handler(
     fn: (
@@ -183,7 +183,12 @@
   $: rangeWidth = axis === 'both' || axis === 'x' ? right - left : $width;
   $: rangeHeight = axis === 'both' || axis === 'y' ? bottom - top : $height;
 
-  let isActive = false;
+  // Set reactively to handle cases where xDomain/yDomain are set externally (ex. `bind:xDomain`)
+  $: isActive =
+    xDomain[0]?.valueOf() !== originalXDomain[0]?.valueOf() ||
+    xDomain[1]?.valueOf() !== originalXDomain[1]?.valueOf() ||
+    yDomain[0]?.valueOf() !== originalYDomain[0]?.valueOf() ||
+    yDomain[1]?.valueOf() !== originalYDomain[1]?.valueOf();
 </script>
 
 <g class="Brush">
