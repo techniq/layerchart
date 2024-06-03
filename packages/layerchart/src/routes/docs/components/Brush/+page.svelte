@@ -18,7 +18,7 @@
   export let data;
 
   const now = new Date();
-  let xDomain = [subDays(now, 100), subDays(now, 80)];
+  let xDomain = [subDays(now, 60), subDays(now, 30)];
 
   const seriesData = [
     randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
@@ -312,6 +312,7 @@
     'var(--color-warning-500)',
     'var(--color-danger-500)',
   ])}
+
   <div class="grid grid-cols-2 gap-4">
     {#each seriesData as data, i}
       <div class="border rounded p-4 grid gap-1" style:--chart-color={colorScale(i)}>
