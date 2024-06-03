@@ -35,7 +35,7 @@
 
 <h1>Examples</h1>
 
-<h2>X-axis</h2>
+<h2>Integrated brush (x-axis)</h2>
 
 <Preview data={data.appleStock}>
   <div class="border rounded p-4 grid gap-1">
@@ -62,7 +62,7 @@
 
             <Brush
               axis="x"
-              clearOnEnd
+              resetOnEnd
               on:brushEnd={(e) => {
                 console.log(e.detail.xDomain);
                 set(e.detail.xDomain);
@@ -75,7 +75,7 @@
   </div>
 </Preview>
 
-<h2>Y-axis</h2>
+<h2>Integrated brush (y-axis)</h2>
 
 <Preview data={data.appleStock}>
   <div class="border rounded p-4 grid gap-1">
@@ -101,7 +101,7 @@
 
             <Brush
               axis="y"
-              clearOnEnd
+              resetOnEnd
               on:brushEnd={(e) => {
                 console.log(e.detail.yDomain);
                 set(e.detail.yDomain);
@@ -114,7 +114,7 @@
   </div>
 </Preview>
 
-<h2>Both (area)</h2>
+<h2>Integrated brush (both axis / area)</h2>
 
 <Preview data={data.appleStock}>
   <div class="border rounded p-4 grid gap-1">
@@ -141,51 +141,13 @@
 
             <Brush
               axis="both"
-              clearOnEnd
+              resetOnEnd
               on:brushEnd={(e) => {
                 console.log(e.detail.yDomain, e.detail.yDomain);
                 set({
                   xDomain: e.detail.xDomain,
                   yDomain: e.detail.yDomain,
                 });
-              }}
-            />
-          </Svg>
-        </Chart>
-      </div>
-    </State>
-  </div>
-</Preview>
-
-<h2>Integrated brush</h2>
-
-<Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
-    <State initial={[null, null]} let:value={xDomain} let:set>
-      <div class="h-[300px]">
-        <Chart
-          data={data.appleStock}
-          x="date"
-          xScale={scaleTime()}
-          {xDomain}
-          y="value"
-          yDomain={[0, null]}
-          yNice
-          padding={{ left: 16, bottom: 24 }}
-        >
-          <Svg>
-            <Axis placement="left" grid rule />
-            <Axis placement="bottom" rule />
-            <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
-                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
-              </LinearGradient>
-            </ChartClipPath>
-
-            <Brush
-              clearOnEnd
-              on:brushEnd={(e) => {
-                set(e.detail.xDomain);
               }}
             />
           </Svg>
@@ -235,9 +197,60 @@
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
             <Brush
               on:change={(e) => {
+                console.log('xDomain', e.detail.xDomain);
                 set(e.detail.xDomain);
               }}
             />
+          </Svg>
+        </Chart>
+      </div>
+    </State>
+  </div>
+</Preview>
+
+<h2>Clip data (y-axis)</h2>
+
+<Preview data={data.appleStock}>
+  <div class="border rounded p-4 grid grid-cols-[40px,1fr] gap-2">
+    <State initial={[0, null]} let:value={yDomain} let:set>
+      <div>
+        <Chart
+          data={data.appleStock}
+          x="date"
+          xScale={scaleTime()}
+          y="value"
+          padding={{ bottom: 24 }}
+        >
+          <Svg>
+            <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
+            <Brush
+              axis="y"
+              on:change={(e) => {
+                set(e.detail.yDomain);
+              }}
+            />
+          </Svg>
+        </Chart>
+      </div>
+
+      <div class="h-[300px]">
+        <Chart
+          data={data.appleStock}
+          x="date"
+          xScale={scaleTime()}
+          y="value"
+          {yDomain}
+          yNice
+          padding={{ left: 16, bottom: 24 }}
+        >
+          <Svg>
+            <Axis placement="left" grid rule />
+            <Axis placement="bottom" rule />
+            <ChartClipPath>
+              <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
+                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+              </LinearGradient>
+            </ChartClipPath>
           </Svg>
         </Chart>
       </div>

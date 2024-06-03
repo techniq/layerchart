@@ -26,7 +26,7 @@
   export let handleSize = 5;
 
   /** Only show range while actively brushing.  Useful with `brushEnd` event */
-  export let clearOnEnd = false;
+  export let resetOnEnd = false;
 
   export let xDomain: [number | null, number | null] = [null, null];
   export let yDomain: [number | null, number | null] = [null, null];
@@ -38,6 +38,10 @@
   } = {};
 
   let frameEl: SVGRectElement;
+
+  // Capture original domains for reset()
+  const originalXDomain = $xScale.domain();
+  const originalYDomain = $yScale.domain();
 
   $: [xDomainMin, xDomainMax] = extent($xScale.domain());
   $: [yDomainMin, yDomainMax] = extent($yScale.domain());
@@ -70,22 +74,23 @@
           y: $yScale.invert(localPoint(frameEl, e)?.y - $padding.top),
         });
 
-        if (xDomain[0] === xDomain[1] || yDomain[0] === yDomain[1]) {
-          // Ignore?
-          // TODO: What about when using `x` or `y` axis?
-        } else {
-          dispatch('change', { xDomain, yDomain });
-        }
+        // if (xDomain[0] === xDomain[1] || yDomain[0] === yDomain[1]) {
+        //   // Ignore?
+        //   // TODO: What about when using `x` or `y` axis?
+        // } else {
+        dispatch('change', { xDomain, yDomain });
+        // }
       };
 
       const onPointerUp = (e: PointerEvent) => {
         if (e.target === frameEl) {
           reset();
+          dispatch('change', { xDomain, yDomain });
         }
 
         dispatch('brushEnd', { xDomain, yDomain });
 
-        if (clearOnEnd) {
+        if (resetOnEnd) {
           reset();
         }
 
@@ -99,6 +104,8 @@
   }
 
   const createRange = handler((start, value) => {
+    isActive = true;
+
     xDomain = [
       clamp(Math.min(start.value.x, value.x), xDomainMin, xDomainMax),
       clamp(Math.max(start.value.x, value.x), xDomainMin, xDomainMax),
@@ -126,33 +133,39 @@
     yDomain = [Number(start.yDomain[0]) + dy, Number(start.yDomain[1]) + dy];
   });
 
-  const adjustMin = handler((start, value) => {
-    xDomain = [
-      clamp(value.x > start.xDomain[1] ? start.xDomain[1] : value.x, xDomainMin, xDomainMax),
-      clamp(value.x > start.xDomain[1] ? value.x : start.xDomain[1], xDomainMin, xDomainMax),
-    ];
-
+  const adjustBottom = handler((start, value) => {
     yDomain = [
       clamp(value.y > start.yDomain[1] ? start.yDomain[1] : value.y, yDomainMin, yDomainMax),
       clamp(value.y > start.yDomain[1] ? value.y : start.yDomain[1], yDomainMin, yDomainMax),
     ];
   });
 
-  const adjustMax = handler((start, value) => {
+  const adjustTop = handler((start, value) => {
+    yDomain = [
+      clamp(value.y < start.yDomain[1] ? value.y : start.yDomain[0], yDomainMin, yDomainMax),
+      clamp(value.y < start.yDomain[1] ? start.yDomain[0] : value.y, yDomainMin, yDomainMax),
+    ];
+  });
+
+  const adjustLeft = handler((start, value) => {
+    xDomain = [
+      clamp(value.x > start.xDomain[1] ? start.xDomain[1] : value.x, xDomainMin, xDomainMax),
+      clamp(value.x > start.xDomain[1] ? value.x : start.xDomain[1], xDomainMin, xDomainMax),
+    ];
+  });
+
+  const adjustRight = handler((start, value) => {
     xDomain = [
       clamp(value.x < start.xDomain[0] ? value.x : start.xDomain[0], xDomainMin, xDomainMax),
       clamp(value.x < start.xDomain[0] ? start.xDomain[0] : value.x, xDomainMin, xDomainMax),
     ];
-
-    yDomain = [
-      clamp(value.y < start.yDomain[0] ? value.y : start.yDomain[0], yDomainMin, yDomainMax),
-      clamp(value.y < start.yDomain[0] ? start.yDomain[0] : value.y, yDomainMin, yDomainMax),
-    ];
   });
 
   function reset() {
-    xDomain = [null, null];
-    yDomain = [null, null];
+    isActive = false;
+
+    xDomain = originalXDomain;
+    yDomain = originalYDomain;
   }
 
   function selectAll() {
@@ -169,6 +182,8 @@
   $: rangeLeft = axis === 'both' || axis === 'x' ? left : 0;
   $: rangeWidth = axis === 'both' || axis === 'x' ? right - left : $width;
   $: rangeHeight = axis === 'both' || axis === 'y' ? bottom - top : $height;
+
+  let isActive = false;
 </script>
 
 <g class="Brush">
@@ -179,36 +194,69 @@
     bind:rectEl={frameEl}
   />
 
-  <Group
-    class="range"
-    x={rangeLeft}
-    y={rangeTop}
-    on:pointerdown={adjustRange}
-    on:dblclick={() => reset()}
-  >
-    <rect
-      width={rangeWidth}
-      height={rangeHeight}
-      class={cls('fill-surface-content/10 cursor-move select-none')}
-    />
-  </Group>
+  {#if isActive}
+    <Group
+      class="range"
+      x={rangeLeft}
+      y={rangeTop}
+      on:pointerdown={adjustRange}
+      on:dblclick={() => reset()}
+    >
+      <rect
+        width={rangeWidth}
+        height={rangeHeight}
+        class={cls('fill-surface-content/10 cursor-move select-none')}
+      />
+    </Group>
 
-  <!-- TODO: Add top/bottom handles for `axis="y` | 'both'` -->
-  <Group class="handle min" x={rangeLeft} y={rangeTop} on:pointerdown={adjustMin}>
-    <rect
-      width={handleSize}
-      height={rangeHeight}
-      class={cls('fill-transparent cursor-ew-resize select-none')}
-      on:dblclick={() => (xDomain[0] = xDomainMin)}
-    />
-  </Group>
+    {#if axis === 'both' || axis === 'y'}
+      <Group class="handle top" x={rangeLeft} y={rangeTop} on:pointerdown={adjustTop}>
+        <rect
+          width={rangeWidth}
+          height={handleSize}
+          class={cls('fill-transparent cursor-ns-resize select-none')}
+          on:dblclick={() => (yDomain[0] = yDomainMin)}
+        />
+      </Group>
 
-  <Group class="handle max" x={right - handleSize + 1} y={0} on:pointerdown={adjustMax}>
-    <rect
-      width={handleSize}
-      height={rangeHeight}
-      class={cls('fill-transparent cursor-ew-resize select-none')}
-      on:dblclick={() => (xDomain[1] = xDomainMax)}
-    />
-  </Group>
+      <Group
+        class="handle bottom"
+        x={rangeLeft}
+        y={bottom - handleSize + 1}
+        on:pointerdown={adjustBottom}
+      >
+        <rect
+          width={rangeWidth}
+          height={handleSize}
+          class={cls('fill-transparent cursor-ns-resize select-none')}
+          on:dblclick={() => (yDomain[1] = yDomainMax)}
+        />
+      </Group>
+    {/if}
+
+    {#if axis === 'both' || axis === 'x'}
+      <Group class="handle left" x={rangeLeft} y={rangeTop} on:pointerdown={adjustLeft}>
+        <rect
+          width={handleSize}
+          height={rangeHeight}
+          class={cls('fill-transparent cursor-ew-resize select-none')}
+          on:dblclick={() => (xDomain[0] = xDomainMin)}
+        />
+      </Group>
+
+      <Group
+        class="handle right"
+        x={right - handleSize + 1}
+        y={rangeTop}
+        on:pointerdown={adjustRight}
+      >
+        <rect
+          width={handleSize}
+          height={rangeHeight}
+          class={cls('fill-transparent cursor-ew-resize select-none')}
+          on:dblclick={() => (xDomain[1] = xDomainMax)}
+        />
+      </Group>
+    {/if}
+  {/if}
 </g>
