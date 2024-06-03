@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { bin as d3bin } from 'd3-array';
+  import { bin } from 'd3-array';
   import { scaleBand } from 'd3-scale';
   import {
     randomBates,
@@ -30,7 +30,7 @@
 
   let thresholds = 10;
 
-  $: binByWeight = d3bin()
+  $: binByWeight = bin()
     .value((d) => d.weight)
     .thresholds(thresholds);
   $: olympiansBins = binByWeight(data.olympians);
@@ -39,7 +39,7 @@
   let randomCount = 1000;
   $: random = randomNormal();
   $: randomData = Array.from({ length: randomCount }, () => random());
-  $: binByValues = d3bin(); //.domain([0, 1]);
+  $: binByValues = bin(); //.domain([0, 1]);
   $: randomBins = binByValues(randomData);
 
   $: getRandomDate = (from: Date, to: Date) => {
@@ -222,7 +222,7 @@
 </Preview>
 
 <State initial={{ thresholds: 10 }} let:value let:set>
-  {@const binByTime = d3bin().thresholds(thresholdTime(value.thresholds))}
+  {@const binByTime = bin().thresholds(thresholdTime(value.thresholds))}
   {@const data = binByTime(randomDateData)}
 
   <h2>Date / time (count)</h2>
@@ -286,7 +286,7 @@
 </State>
 
 <State initial={{ intervalValue: 'weeks', intervalFunc: timeWeeks }} let:value let:set>
-  {@const binByTime = d3bin().thresholds((_data, min, max) => value.intervalFunc(min, max))}
+  {@const binByTime = bin().thresholds((_data, min, max) => value.intervalFunc(min, max))}
   {@const data = binByTime(randomDateData)}
 
   <h2>Date / time (interval)</h2>
