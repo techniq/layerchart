@@ -31,12 +31,12 @@
   $: if (selectedFeature) {
     const centroid = geoCentroid(selectedFeature);
 
-    transformContext.translate.set({
+    transformContext.setTranslate({
       x: -centroid[0],
       y: -centroid[1],
     });
 
-    transformContext2.translate.set({
+    transformContext2.setTranslate({
       x: -centroid[0],
       y: -centroid[1],
     });

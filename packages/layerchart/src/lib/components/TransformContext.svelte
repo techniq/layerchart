@@ -1,13 +1,16 @@
 <script lang="ts" context="module">
   import { getContext, setContext } from 'svelte';
-  import { writable, type Readable, type Writable } from 'svelte/store';
+  import { writable, type Readable, type Writable, derived } from 'svelte/store';
 
   export const transformContextKey = Symbol();
 
   export type TransformContextValue = {
     mode: 'canvas' | 'manual' | 'none';
     scale: Writable<number>;
+    setScale(value: number, options?: MotionOptions): void;
     translate: Writable<{ x: number; y: number }>;
+    setTranslate(point: { x: number; y: number }, options?: MotionOptions): void;
+    moving: Readable<boolean>;
     dragging: Readable<boolean>;
     reset(): void;
     zoomIn(): void;
@@ -18,10 +21,15 @@
 
   export type TransformContext = TransformContextValue;
 
+  const defaultTranslate = writable({ x: 0, y: 0 });
+  const defaultScale = writable(1);
   const defaultContext: TransformContext = {
     mode: 'none',
-    scale: writable(1),
-    translate: writable({ x: 0, y: 0 }),
+    scale: defaultScale,
+    setScale: defaultScale.set,
+    translate: defaultTranslate,
+    setTranslate: defaultTranslate.set,
+    moving: writable(false),
     dragging: writable(false),
     reset: () => {},
     zoomIn: () => {},
@@ -41,7 +49,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-  import { motionStore } from '$lib/stores/motionStore.js';
+  import { motionStore, type MotionOptions, motionFinishHandler } from '$lib/stores/motionStore.js';
 
   const { width, height } = getContext('LayerCake');
 
@@ -128,18 +136,6 @@
     }
   }
 
-  setTransformContext({
-    mode,
-    scale,
-    translate,
-    dragging,
-    reset,
-    zoomIn,
-    zoomOut,
-    translateCenter,
-    zoomTo,
-  });
-
   function onPointerDown(e: PointerEvent & { currentTarget: HTMLDivElement }) {
     if (mode === 'none' || disablePointer) return;
 
@@ -171,7 +167,7 @@
       e.stopPropagation(); // Stop tooltip from trigging (along with `capture: true`)
       e.currentTarget.setPointerCapture(e.pointerId);
 
-      translate.set(
+      setTranslate(
         processTranslate(startTranslate.x, startTranslate.y, deltaX, deltaY, $scale),
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
@@ -180,6 +176,7 @@
 
   function onPointerUp(e: PointerEvent) {
     pointerDown = false;
+    $dragging = false;
     dispatch('dragend');
   }
 
@@ -235,7 +232,7 @@
   ) {
     const currentScale = $scale;
     const newScale = $scale * value;
-    scale.set(newScale, options);
+    setScale(newScale, options);
 
     if (translateOnScale) {
       // Translate towards point (ex. mouse cursor/center) while zooming in/out
@@ -247,8 +244,22 @@
         x: point.x - invertTransformPoint.x * newScale,
         y: point.y - invertTransformPoint.y * newScale,
       };
-      translate.set(newTranslate, options);
+      setTranslate(newTranslate, options);
     }
+  }
+
+  const translating = motionFinishHandler();
+  const scaling = motionFinishHandler();
+  const moving = derived(
+    [translating, scaling],
+    ([translating, scaling]) => translating || scaling
+  );
+  export function setTranslate(point: { x: number; y: number }, options?: MotionOptions) {
+    translating.handle(translate.set(point, options));
+  }
+
+  export function setScale(value: number, options?: MotionOptions) {
+    scaling.handle(scale.set(value, options));
   }
 
   function localPoint(e: PointerEvent | WheelEvent) {
@@ -266,6 +277,21 @@
   };
 
   $: dispatch('transform', { scale: $scale, translate: $translate });
+
+  setTransformContext({
+    mode,
+    scale,
+    setScale,
+    translate,
+    setTranslate,
+    dragging,
+    moving,
+    reset,
+    zoomIn,
+    zoomOut,
+    translateCenter,
+    zoomTo,
+  });
 </script>
 
 <div
@@ -290,9 +316,9 @@
   <slot
     transform={{
       scale: $scale,
-      setScale: scale.set,
+      setScale,
       translate: $translate,
-      setTranslate: translate.set,
+      setTranslate,
       zoomTo,
       reset,
     }}
