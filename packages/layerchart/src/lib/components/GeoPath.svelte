@@ -34,6 +34,9 @@
    */
   export let curve: CurveFactory | CurveFactoryLineOnly = curveLinearClosed;
 
+  let className: string | undefined = undefined;
+  export { className as class };
+
   const dispatch = createEventDispatcher<{ click: { geoPath: GeoPath; event: MouseEvent } }>();
 
   const { width, height } = getContext('LayerCake');
@@ -51,8 +54,8 @@
     let computedStyles: Partial<CSSStyleDeclaration> = {};
 
     // Transfer classes defined on <GeoPath> to <canvas> to enable window.getComputedStyle() retrieval (Tailwind classes, etc)
-    if ($$props.class) {
-      $ctx.canvas.classList.add(...$$props.class.split(' '));
+    if (className) {
+      $ctx.canvas.classList.add(...className.split(' '));
       computedStyles = window.getComputedStyle($ctx.canvas);
     }
 
@@ -98,7 +101,7 @@
       on:pointerleave
       on:click={(event) => dispatch('click', { geoPath, event })}
       on:click
-      class={cls($$props.fill == null && 'fill-transparent', $$props.class)}
+      class={cls(fill == null && 'fill-transparent', className)}
     />
   </slot>
 {/if}
