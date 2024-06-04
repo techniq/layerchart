@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.38.4
+
+### Patch Changes
+
+- [GeoPath] Remove use of $props to fix dirty check in some reactive situations (particularly with HitCanvas) ([`fa6ba214110822e64c17f228705db967ae3f4a82`](https://github.com/techniq/layerchart/commit/fa6ba214110822e64c17f228705db967ae3f4a82))
+
 ## 0.38.3
 
 ### Patch Changes
