@@ -251,8 +251,8 @@
   const translating = motionFinishHandler();
   const scaling = motionFinishHandler();
   const moving = derived(
-    [translating, scaling],
-    ([translating, scaling]) => translating || scaling
+    [dragging, translating, scaling],
+    ([dragging, translating, scaling]) => dragging || translating || scaling
   );
   export function setTranslate(point: { x: number; y: number }, options?: MotionOptions) {
     translating.handle(translate.set(point, options));
