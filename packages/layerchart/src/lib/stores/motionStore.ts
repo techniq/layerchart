@@ -54,3 +54,29 @@ export function resolveOptions(prop: string, options: PropMotionOptions) {
             : false,
   };
 }
+
+export function motionFinishHandler() {
+  let latestIndex = 0;
+  const moving = writable(false);
+  const handle = function (promise: Promise<void> | void) {
+    latestIndex += 1;
+    if (!promise) {
+      // The store returned nothing, which means that the motion store is immediate.
+      moving.set(false);
+      return;
+    }
+
+    let thisIndex = latestIndex;
+    moving.set(true);
+    promise.then(() => {
+      if (thisIndex === latestIndex) {
+        moving.set(false);
+      }
+    });
+  };
+
+  return {
+    subscribe: moving.subscribe,
+    handle,
+  };
+}
