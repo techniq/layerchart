@@ -54,7 +54,7 @@
   $: colorGenerator = rgbColorGenerator();
 
   // Reset color generator whenever updated (width/height) so always reusing same colors (and not exhausting)
-  const { translate, scale } = transformContext();
+  const { translate, scale, dragging } = transformContext();
   $: {
     $width;
     $height;
@@ -120,4 +120,8 @@
     }
   }}
 />
-<slot nextColor={() => colorGenerator.next().value} {setColorData}></slot>
+
+<!-- Do not render while dragging to improve interaction performance -->
+{#if !$dragging}
+  <slot nextColor={() => colorGenerator.next().value} {setColorData}></slot>
+{/if}
