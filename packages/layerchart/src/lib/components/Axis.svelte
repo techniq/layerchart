@@ -36,8 +36,7 @@
   export let grid: boolean | SVGAttributes<SVGLineElement> = false;
 
   /** Control the number of ticks*/
-  export let ticks: number | any[] | Function | undefined =
-    placement === 'left' || placement === 'right' ? 4 : undefined;
+  export let ticks: number | any[] | Function | undefined = undefined;
 
   /** Length of the tick line */
   export let tickLength = 4;
@@ -74,8 +73,10 @@
     : typeof ticks === 'function'
       ? ticks(_scale)
       : isScaleBand(_scale)
-        ? _scale.domain()
-        : _scale.ticks(ticks);
+        ? ticks
+          ? _scale.domain().filter((v, i) => i % ticks === 0)
+          : _scale.domain()
+        : _scale.ticks(ticks ?? (placement === 'left' || placement === 'right' ? 4 : undefined));
 
   function getCoords(tick: any) {
     switch (placement) {
