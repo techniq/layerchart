@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cubicInOut } from 'svelte/easing';
-  import { scaleBand, scaleOrdinal } from 'd3-scale';
+  import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { format } from 'date-fns';
   import { extent, mean } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
@@ -356,6 +356,60 @@
         <Rule x={0} />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Labels placement="inside" format="integer" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Limit ticks (count)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="value"
+      xDomain={[0, null]}
+      xNice
+      y="date"
+      yScale={scaleBand().padding(0.4)}
+      padding={{ left: 20, bottom: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" grid rule />
+        <Axis
+          placement="left"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          ticks={4}
+          rule
+        />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Limit ticks (second scale)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="value"
+      xDomain={[0, null]}
+      xNice
+      y="date"
+      yScale={scaleBand().padding(0.4)}
+      padding={{ left: 20, bottom: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" grid rule />
+        <Axis
+          placement="left"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          ticks={(scale) => scaleTime(scale.domain(), scale.range()).ticks(4)}
+          rule
+        />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
       </Svg>
     </Chart>
   </div>
