@@ -5,7 +5,7 @@
   import { cls } from 'svelte-ux';
   import { transformContext } from '../TransformContext.svelte';
 
-  const { width, height, padding } = getContext('LayerCake');
+  const { width, height, containerWidth, containerHeight, padding } = getContext('LayerCake');
 
   /** The `<canvas>` tag. Useful for bindings. */
   export let element: HTMLCanvasElement | undefined = undefined;
@@ -44,8 +44,10 @@
   const { mode, scale, translate } = transformContext();
 
   $: if (context) {
-    scaleCanvas(context, $width, $height);
-    context.clearRect(0, 0, $width, $height);
+    scaleCanvas(context, $containerWidth, $containerHeight);
+    context.clearRect(0, 0, $containerWidth, $containerHeight);
+
+    context.translate($padding.left, $padding.top);
 
     if (mode === 'canvas') {
       const center = { x: $width / 2, y: $height / 2 };
@@ -54,7 +56,6 @@
         y: $translate.y * $scale + center.y - center.y * $scale,
       };
       context.translate(newTranslate.x, newTranslate.y);
-
       context.scale($scale, $scale);
     }
 
@@ -68,14 +69,10 @@
 
 <canvas
   bind:this={element}
-  style:top="{$padding.top}px"
-  style:right="{$padding.right}px"
-  style:bottom="{$padding.bottom}px"
-  style:left="{$padding.left}px"
   style:z-index={zIndex}
   class={cls(
     'layercake-layout-canvas',
-    'absolute w-full h-full',
+    'absolute top-0 left-0 w-full h-full',
     pointerEvents === false && 'pointer-events-none',
     $$props.class
   )}

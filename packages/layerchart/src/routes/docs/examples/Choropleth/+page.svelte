@@ -196,6 +196,7 @@
         scale={colorScale}
         title="Population"
         tickFormat={(d) => format(d, 'metric', { maximumSignificantDigits: 2 })}
+        class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-sm rounded m-1"
       />
 
       <Tooltip
