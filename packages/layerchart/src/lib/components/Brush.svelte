@@ -191,7 +191,7 @@
     yDomain[1]?.valueOf() !== originalYDomain[1]?.valueOf();
 </script>
 
-<g class="Brush">
+<g class="Brush select-none">
   <Frame
     class={cls('frame', 'fill-transparent')}
     on:pointerdown={createRange}
