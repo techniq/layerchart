@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.38.5
+
+### Patch Changes
+
+- [Axis] Support passing `ticks={number}` when using band scale (every nth domain value) ([`ca1a23e26d211b4f5adefdf8259a933a04662465`](https://github.com/techniq/layerchart/commit/ca1a23e26d211b4f5adefdf8259a933a04662465))
+
 ## 0.38.4
 
 ### Patch Changes
