@@ -27,6 +27,9 @@
   export let placement: Placement = 'top-right';
   export let orientation: 'horizontal' | 'vertical' = 'vertical';
 
+  type Actions = 'zoomIn' | 'zoomOut' | 'center' | 'reset' | 'scrollMode';
+  export let show: Actions[] = ['zoomIn', 'zoomOut', 'center', 'reset', 'scrollMode'];
+
   $: menuPlacementByOrientationAndPlacement = {
     horizontal: {
       'top-left': 'bottom-end',
@@ -78,55 +81,65 @@
     e.stopPropagation();
   }}
 >
-  <Tooltip title="Zoom in">
-    <Button
-      icon={mdiMagnifyPlusOutline}
-      on:click={() => transform.zoomIn()}
-      class="text-surface-content p-2"
-    />
-  </Tooltip>
+  {#if show.includes('zoomIn')}
+    <Tooltip title="Zoom in">
+      <Button
+        icon={mdiMagnifyPlusOutline}
+        on:click={() => transform.zoomIn()}
+        class="text-surface-content p-2"
+      />
+    </Tooltip>
+  {/if}
 
-  <Tooltip title="Zoom out">
-    <Button
-      icon={mdiMagnifyMinusOutline}
-      on:click={() => transform.zoomOut()}
-      class="text-surface-content p-2"
-    />
-  </Tooltip>
+  {#if show.includes('zoomOut')}
+    <Tooltip title="Zoom out">
+      <Button
+        icon={mdiMagnifyMinusOutline}
+        on:click={() => transform.zoomOut()}
+        class="text-surface-content p-2"
+      />
+    </Tooltip>
+  {/if}
 
-  <Tooltip title="Center">
-    <Button
-      icon={mdiImageFilterCenterFocus}
-      on:click={() => transform.translateCenter()}
-      class="text-surface-content p-2"
-    />
-  </Tooltip>
+  {#if show.includes('center')}
+    <Tooltip title="Center">
+      <Button
+        icon={mdiImageFilterCenterFocus}
+        on:click={() => transform.translateCenter()}
+        class="text-surface-content p-2"
+      />
+    </Tooltip>
+  {/if}
 
-  <Tooltip title="Reset">
-    <Button
-      icon={mdiArrowULeftTop}
-      on:click={() => transform.reset()}
-      class="text-surface-content p-2"
-    />
-  </Tooltip>
+  {#if show.includes('reset')}
+    <Tooltip title="Reset">
+      <Button
+        icon={mdiArrowULeftTop}
+        on:click={() => transform.reset()}
+        class="text-surface-content p-2"
+      />
+    </Tooltip>
+  {/if}
 
-  <Tooltip title="Scroll mode">
-    <MenuButton
-      iconOnly
-      options={[
-        { label: 'None', value: 'none', icon: mdiCancel },
-        { label: 'Zoom', value: 'scale', icon: mdiResize },
-        { label: 'Move', value: 'translate', icon: mdiArrowExpandAll },
-      ]}
-      menuProps={{ placement: menuPlacementByOrientationAndPlacement[orientation][placement] }}
-      menuIcon={null}
-      value={$scrollMode}
-      on:change={(e) => transform.setScrollMode(e.detail.value)}
-      class="text-surface-content"
-    >
-      <svelte:fragment slot="selection" let:value>
-        <Icon data={value?.icon ?? mdiChevronDown} />
-      </svelte:fragment>
-    </MenuButton>
-  </Tooltip>
+  {#if show.includes('scrollMode')}
+    <Tooltip title="Scroll mode">
+      <MenuButton
+        iconOnly
+        options={[
+          { label: 'None', value: 'none', icon: mdiCancel },
+          { label: 'Zoom', value: 'scale', icon: mdiResize },
+          { label: 'Move', value: 'translate', icon: mdiArrowExpandAll },
+        ]}
+        menuProps={{ placement: menuPlacementByOrientationAndPlacement[orientation][placement] }}
+        menuIcon={null}
+        value={$scrollMode}
+        on:change={(e) => transform.setScrollMode(e.detail.value)}
+        class="text-surface-content"
+      >
+        <svelte:fragment slot="selection" let:value>
+          <Icon data={value?.icon ?? mdiChevronDown} />
+        </svelte:fragment>
+      </MenuButton>
+    </Tooltip>
+  {/if}
 </div>
