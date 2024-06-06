@@ -211,7 +211,7 @@
         fitGeojson: countries,
         applyTransform: ['rotate'],
       }}
-      transform={{ scroll: 'none', spring: { stiffness: 0.04 } }}
+      transform={{ spring: { stiffness: 0.04 } }}
       bind:transformContext={transformContext2}
       let:tooltip
     >

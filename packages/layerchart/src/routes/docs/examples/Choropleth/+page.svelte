@@ -60,7 +60,7 @@
       }}
       transform={{
         mode: 'canvas',
-        scroll: 'scale',
+        initialScrollMode: 'scale',
       }}
       padding={{ top: 60 }}
       tooltip={{ raiseTarget: true }}
@@ -139,7 +139,7 @@
       }}
       transform={{
         mode: 'canvas',
-        scroll: 'scale',
+        initialScrollMode: 'scale',
       }}
       padding={{ top: 60 }}
       let:tooltip

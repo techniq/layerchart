@@ -3,7 +3,7 @@
   import { geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, RangeField, Switch } from 'svelte-ux';
 
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import Preview from '$lib/docs/Preview.svelte';
@@ -31,22 +31,14 @@
 
   let serviceUrl: ComponentProps<TilesetField>['serviceUrl'];
   let zoomDelta = 0;
-  let scrollMode = 'scale';
   let debug = false;
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,1fr,auto] gap-2 my-2">
+<div class="grid grid-cols-[1fr,1fr,auto] gap-2 my-2">
   <TilesetField bind:serviceUrl />
   <RangeField label="Zoom delta" bind:value={zoomDelta} min={-5} max={5} />
-  <Field label="Scroll mode" let:id>
-    <ToggleGroup bind:value={scrollMode} variant="outline" size="sm" inset class="w-full">
-      <ToggleOption value="none">None</ToggleOption>
-      <ToggleOption value="scale">Scale</ToggleOption>
-      <ToggleOption value="translate">Translate</ToggleOption>
-    </ToggleGroup>
-  </Field>
   <Field label="Debug" let:id>
-    <Switch bind:checked={debug} {id} />
+    <Switch bind:checked={debug} {id} size="sm" />
   </Field>
 </div>
 
@@ -63,7 +55,7 @@
       }}
       transform={{
         translateOnScale: true,
-        scroll: scrollMode,
+        initialScrollMode: 'scale',
       }}
       fitGeoObject={filteredStates}
       let:tooltip

@@ -62,7 +62,7 @@
       }}
       transform={{
         mode: 'canvas',
-        scroll: 'scale',
+        initialScrollMode: 'scale',
       }}
       let:tooltip
       let:transform
@@ -144,7 +144,7 @@
       }}
       transform={{
         mode: 'canvas',
-        scroll: 'scale',
+        initialScrollMode: 'scale',
       }}
       let:tooltip
       let:transform

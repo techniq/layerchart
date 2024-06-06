@@ -4,14 +4,19 @@
 
   export const transformContextKey = Symbol();
 
+  type TransformMode = 'canvas' | 'manual' | 'none';
+  type TransformScrollMode = 'scale' | 'translate' | 'none';
+
   export type TransformContextValue = {
-    mode: 'canvas' | 'manual' | 'none';
+    mode: TransformMode;
     scale: Writable<number>;
     setScale(value: number, options?: MotionOptions): void;
     translate: Writable<{ x: number; y: number }>;
     setTranslate(point: { x: number; y: number }, options?: MotionOptions): void;
     moving: Readable<boolean>;
     dragging: Readable<boolean>;
+    scrollMode: Readable<TransformScrollMode>;
+    setScrollMode(mode: TransformScrollMode): void;
     reset(): void;
     zoomIn(): void;
     zoomOut(): void;
@@ -31,6 +36,8 @@
     setTranslate: defaultTranslate.set,
     moving: writable(false),
     dragging: writable(false),
+    scrollMode: writable('none'),
+    setScrollMode: () => {},
     reset: () => {},
     zoomIn: () => {},
     zoomOut: () => {},
@@ -53,7 +60,7 @@
 
   const { width, height } = getContext('LayerCake');
 
-  export let mode: TransformContextValue['mode'] = 'none';
+  export let mode: TransformMode = 'none';
   export let translateOnScale = false;
   export let spring: boolean | Parameters<typeof motionStore>[1]['spring'] = undefined;
   export let tweened: boolean | Parameters<typeof motionStore>[1]['tweened'] = undefined;
@@ -75,7 +82,7 @@
   export let disablePointer = false;
 
   /** Action to take during wheel scroll */
-  export let scroll: 'scale' | 'translate' | 'none' = 'none';
+  export let initialScrollMode: TransformScrollMode = 'none';
 
   /** Distance/threshold to consider drag vs click (disable click propagation) */
   export let clickDistance = 10;
@@ -88,6 +95,7 @@
 
   let pointerDown = false;
   const dragging = writable(false);
+  const scrollMode = writable<TransformScrollMode>(initialScrollMode);
 
   const DEFAULT_TRANSLATE = { x: 0, y: 0 };
   export let initialTranslate: { x: number; y: number } | undefined = undefined;
@@ -99,6 +107,10 @@
 
   let startPoint: { x: number; y: number } = { x: 0, y: 0 };
   let startTranslate: { x: number; y: number } = { x: 0, y: 0 };
+
+  export function setScrollMode(mode: TransformScrollMode) {
+    $scrollMode = mode;
+  }
 
   export function reset() {
     $translate = initialTranslate ?? DEFAULT_TRANSLATE;
@@ -194,7 +206,7 @@
   }
 
   function onWheel(e: WheelEvent) {
-    if (mode === 'none' || disablePointer || scroll === 'none') return;
+    if (mode === 'none' || disablePointer || $scrollMode === 'none') return;
 
     e.preventDefault();
 
@@ -203,7 +215,7 @@
     // Pinch to zoom is registered as a wheel event with control key
     const pinchToZoom = e.ctrlKey;
 
-    if (scroll === 'scale' || pinchToZoom) {
+    if ($scrollMode === 'scale' || pinchToZoom) {
       // https://github.com/d3/d3-zoom#zoom_wheelDelta
       const scaleBy =
         -e.deltaY * (e.deltaMode === 1 ? 0.05 : e.deltaMode ? 1 : 0.002) * (e.ctrlKey ? 10 : 1);
@@ -213,7 +225,7 @@
         point,
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
-    } else if (scroll === 'translate') {
+    } else if ($scrollMode === 'translate') {
       translate.update(
         (startTranslate) =>
           processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY, $scale),
@@ -291,6 +303,8 @@
     zoomOut,
     translateCenter,
     zoomTo,
+    scrollMode,
+    setScrollMode,
   });
 </script>
 

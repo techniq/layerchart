@@ -4,7 +4,7 @@
   import { geoAlbersUsa, geoAlbers, geoMercator, geoPath as d3geoPath } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Field, SelectField, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { SelectField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -30,11 +30,9 @@
   $: selectedCountiesFeatures = selectedStateId
     ? counties.features.filter((f) => f.id.slice(0, 2) === selectedStateId)
     : [];
-
-  let scrollMode = 'none';
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2 my-2">
+<div class="grid grid-cols-[1fr,2fr] gap-2 my-2">
   <SelectField
     label="Projections"
     options={projections}
@@ -43,13 +41,6 @@
     toggleIcon={null}
     stepper
   />
-  <Field label="Scroll mode" let:id>
-    <ToggleGroup bind:value={scrollMode} variant="outline" size="sm" inset class="w-full">
-      <ToggleOption value="none">None</ToggleOption>
-      <ToggleOption value="scale">Scale</ToggleOption>
-      <ToggleOption value="translate">Translate</ToggleOption>
-    </ToggleGroup>
-  </Field>
 </div>
 
 <h1>Examples</h1>
@@ -66,7 +57,7 @@
       let:tooltip
       transform={{
         mode: 'canvas',
-        scroll: scrollMode,
+        initialScrollMode: 'none',
         tweened: { duration: 800, easing: cubicOut },
       }}
       let:transform
@@ -130,7 +121,7 @@
       }}
       transform={{
         mode: 'canvas',
-        scroll: scrollMode,
+        initialScrollMode: 'none',
         tweened: { duration: 800, easing: cubicOut },
       }}
       let:projection

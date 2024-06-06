@@ -2,7 +2,7 @@
   import type { ComponentProps } from 'svelte';
   import { cubicOut } from 'svelte/easing';
 
-  import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, RangeField, Switch } from 'svelte-ux';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Circle from '$lib/components/Circle.svelte';
@@ -20,7 +20,6 @@
   let showPoints = true;
   let showPath = false;
   let tweened = true;
-  let scrollMode = 'scale';
 
   $: data = getSpiral({ angle, radius: 10, count: pointCount, width: 500, height: 500 });
 
@@ -29,29 +28,22 @@
 
 <h1>Examples</h1>
 
-<div class="grid grid-cols-[1fr,auto,2fr] gap-2 mb-2">
-  <Field label="Scroll mode" let:id>
-    <ToggleGroup bind:value={scrollMode} variant="outline" size="sm" inset class="w-full">
-      <ToggleOption value="none">None</ToggleOption>
-      <ToggleOption value="scale">Scale</ToggleOption>
-      <ToggleOption value="translate">Translate</ToggleOption>
-    </ToggleGroup>
-  </Field>
+<div class="grid grid-cols-[1fr,auto] gap-2 mb-2">
+  <RangeField label="Angle" bind:value={angle} min={1} max={360} />
   <Field label="Tweened" let:id>
     <Switch bind:checked={tweened} {id} size="md" />
   </Field>
-  <RangeField label="Angle" bind:value={angle} min={1} max={360} />
 </div>
 
-<div class="grid grid-cols-[auto,1fr,auto,1fr] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,1fr,auto,auto] gap-2 mb-2">
+  <RangeField label="Points" bind:value={pointCount} min={1} max={2000} />
+  <CurveMenuField bind:value={curve} showOpenClosed />
   <Field label="Show points" let:id>
     <Switch bind:checked={showPoints} {id} size="md" />
   </Field>
-  <RangeField label="Points" bind:value={pointCount} min={1} max={2000} />
   <Field label="Show path" let:id>
     <Switch bind:checked={showPath} {id} size="md" />
   </Field>
-  <CurveMenuField bind:value={curve} showOpenClosed />
 </div>
 
 <Preview {data}>
@@ -62,8 +54,8 @@
       y="y"
       transform={{
         mode: 'canvas',
-        scroll: scrollMode,
         tweened: { duration: 800, easing: cubicOut },
+        initialScrollMode: 'scale',
       }}
     >
       <TransformControls />

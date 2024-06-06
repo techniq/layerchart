@@ -1,11 +1,15 @@
 <script lang="ts">
-  import { Button, Tooltip, cls } from 'svelte-ux';
+  import { Button, Icon, MenuButton, Tooltip, cls } from 'svelte-ux';
 
   import {
     mdiArrowULeftTop,
     mdiMagnifyPlusOutline,
     mdiMagnifyMinusOutline,
     mdiImageFilterCenterFocus,
+    mdiChevronDown,
+    mdiResize,
+    mdiArrowExpandAll,
+    mdiCancel,
   } from '@mdi/js';
   import { transformContext } from '$lib/components/TransformContext.svelte';
 
@@ -20,10 +24,36 @@
     | 'bottom'
     | 'bottom-right';
 
-  export let placement: Placement | undefined = 'top-right';
+  export let placement: Placement = 'top-right';
   export let orientation: 'horizontal' | 'vertical' = 'vertical';
 
+  $: menuPlacementByOrientationAndPlacement = {
+    horizontal: {
+      'top-left': 'bottom-end',
+      top: 'bottom-end',
+      'top-right': 'bottom-end',
+      left: 'bottom-end',
+      center: 'bottom-end',
+      right: 'bottom-end',
+      'bottom-left': 'top-end',
+      bottom: 'top-end',
+      'bottom-right': 'top-end',
+    },
+    vertical: {
+      'top-left': 'right-start',
+      top: 'right-start',
+      'top-right': 'left-start',
+      left: 'right-start',
+      center: 'right-start',
+      right: 'left-start',
+      'bottom-left': 'right-end',
+      bottom: 'right-end',
+      'bottom-right': 'left-end',
+    },
+  } as const;
+
   const transform = transformContext();
+  const scrollMode = transform.scrollMode;
 </script>
 
 <div
@@ -55,6 +85,7 @@
       class="text-surface-content p-2"
     />
   </Tooltip>
+
   <Tooltip title="Zoom out">
     <Button
       icon={mdiMagnifyMinusOutline}
@@ -62,6 +93,7 @@
       class="text-surface-content p-2"
     />
   </Tooltip>
+
   <Tooltip title="Center">
     <Button
       icon={mdiImageFilterCenterFocus}
@@ -69,11 +101,32 @@
       class="text-surface-content p-2"
     />
   </Tooltip>
+
   <Tooltip title="Reset">
     <Button
       icon={mdiArrowULeftTop}
       on:click={() => transform.reset()}
       class="text-surface-content p-2"
     />
+  </Tooltip>
+
+  <Tooltip title="Scroll mode">
+    <MenuButton
+      iconOnly
+      options={[
+        { label: 'None', value: 'none', icon: mdiCancel },
+        { label: 'Zoom', value: 'scale', icon: mdiResize },
+        { label: 'Move', value: 'translate', icon: mdiArrowExpandAll },
+      ]}
+      menuProps={{ placement: menuPlacementByOrientationAndPlacement[orientation][placement] }}
+      menuIcon={null}
+      value={$scrollMode}
+      on:change={(e) => transform.setScrollMode(e.detail.value)}
+      class="text-surface-content"
+    >
+      <svelte:fragment slot="selection" let:value>
+        <Icon data={value?.icon ?? mdiChevronDown} />
+      </svelte:fragment>
+    </MenuButton>
   </Tooltip>
 </div>
