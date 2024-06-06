@@ -43,6 +43,10 @@
     }[placement],
     $$props.class
   )}
+  on:dblclick={(e) => {
+    // Stop from propagating to TransformContext
+    e.stopPropagation();
+  }}
 >
   <Tooltip title="Zoom in">
     <Button
