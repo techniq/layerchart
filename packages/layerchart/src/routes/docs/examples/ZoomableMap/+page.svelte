@@ -13,6 +13,7 @@
   import HitCanvas from '$lib/components/HitCanvas.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import TransformControls from '$lib/components/TransformControls.svelte';
+  import TooltipItem from '$lib/components/TooltipItem.svelte';
 
   export let data;
 
@@ -61,6 +62,7 @@
         tweened: { duration: 800, easing: cubicOut },
       }}
       let:transform
+      let:projection
     >
       <TransformControls />
 
@@ -105,7 +107,12 @@
           </g>
         {/each}
       </Svg>
-      <Tooltip header={(data) => data.properties.name} />
+      <Tooltip header={(data) => data.properties.name}>
+        <!-- TODO: How to handle scale (not applied to projection) -->
+        <!-- {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
+        <TooltipItem label="longitude" value={longitude} format="decimal" />
+        <TooltipItem label="latitude" value={latitude} format="decimal" /> -->
+      </Tooltip>
     </Chart>
   </div>
 </Preview>
@@ -220,7 +227,12 @@
         />
       </HitCanvas>
 
-      <Tooltip header={(data) => data.properties.name} />
+      <Tooltip header={(data) => data.properties.name}>
+        <!-- TODO: How to handle scale (not applied to projection) -->
+        <!-- {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
+        <TooltipItem label="longitude" value={longitude} format="decimal" />
+        <TooltipItem label="latitude" value={latitude} format="decimal" /> -->
+      </Tooltip>
     </Chart>
   </div>
 </Preview>
