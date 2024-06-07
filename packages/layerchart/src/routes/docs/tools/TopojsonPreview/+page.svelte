@@ -13,6 +13,7 @@
   import { feature } from 'topojson-client';
 
   import {
+    CopyButton,
     EmptyMessage,
     RangeField,
     SelectField,
@@ -114,19 +115,22 @@
     <ToggleOption value="geojson">GeoJSON</ToggleOption>
   </ToggleGroup>
 
-  {#if selectedTab === 'input'}
-    <TextField
-      label="TopoJSON"
-      bind:value={topojsonStr}
-      placeholder={'{"type":"Topology","objects": { ... }, arcs: [...], bbox: [...]}'}
-      multiline
-      classes={{
-        input: 'h-[400px]',
-      }}
-    />
-  {:else if selectedTab === 'topojson'}
-    <Json value={topojson} />
-  {:else if selectedTab === 'geojson'}
-    <Json value={geojson} />
-  {/if}
+  <div class="relative">
+    {#if selectedTab === 'input'}
+      <TextField
+        label="TopoJSON"
+        bind:value={topojsonStr}
+        placeholder={'{"type":"Topology","objects": { ... }, arcs: [...], bbox: [...]}'}
+        multiline
+        classes={{
+          input: 'h-[400px]',
+        }}
+      />
+    {:else if selectedTab === 'topojson'}
+      <Json value={topojson} />
+    {:else if selectedTab === 'geojson'}
+      <CopyButton value={JSON.stringify(geojson)} class="absolute top-0 right-0" />
+      <Json value={geojson} />
+    {/if}
+  </div>
 </div>
