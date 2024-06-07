@@ -370,7 +370,7 @@
 {/if}
 
 {#if mode === 'quadtree' && debug}
-  <Svg>
+  <Svg pointerEvents={false}>
     <ChartClipPath>
       <g class="tooltip-quadtree">
         {#each quadtreeRects(quadtree, false) as rect}
