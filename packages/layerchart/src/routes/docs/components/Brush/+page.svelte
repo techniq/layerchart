@@ -1,6 +1,6 @@
 <script lang="ts">
   import { scaleOrdinal, scaleTime } from 'd3-scale';
-  import { PeriodType, State, cls, format } from 'svelte-ux';
+  import { PeriodType, State, format } from 'svelte-ux';
   import { subDays } from 'date-fns';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -28,17 +28,11 @@
     randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
     randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
   ];
-
-  /*
-    TODO:
-    - Brush with Tooltip
-  */
 </script>
 
 <h1>Examples</h1>
 
-<!-- TODO: Interop between -->
-<h2>Tooltip interop (WIP)</h2>
+<h2>Tooltip interop</h2>
 
 <Preview data={data.appleStock}>
   <div class="border rounded p-4 grid gap-1">
@@ -53,6 +47,8 @@
           yDomain={[0, null]}
           padding={{ left: 16, bottom: 24 }}
           tooltip={{ mode: 'bisect-x' }}
+          let:height
+          let:padding
         >
           <Svg>
             <Axis placement="left" grid rule />
@@ -73,7 +69,28 @@
             />
           </Svg>
 
-          <Tooltip header={(data) => 'TODO'} />
+          <Tooltip
+            y="data"
+            xOffset={4}
+            anchor="bottom"
+            variant="none"
+            class="text-sm font-semibold text-primary leading-3 bg-surface-100/80 backdrop-blur-sm px-2 py-1 rounded"
+            let:data
+          >
+            {format(data.value, 'currency')}
+          </Tooltip>
+
+          <Tooltip
+            x="data"
+            y={height + padding.top}
+            yOffset={2}
+            anchor="top"
+            variant="none"
+            class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded whitespace-nowrap"
+            let:data
+          >
+            {format(data.date, PeriodType.Day)}
+          </Tooltip>
         </Chart>
       </div>
     </State>
