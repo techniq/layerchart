@@ -32,71 +32,6 @@
 
 <h1>Examples</h1>
 
-<h2>Tooltip interop</h2>
-
-<Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
-    <State initial={[null, null]} let:value={xDomain} let:set>
-      <div class="h-[300px]">
-        <Chart
-          data={data.appleStock}
-          x="date"
-          xScale={scaleTime()}
-          {xDomain}
-          y="value"
-          yDomain={[0, null]}
-          padding={{ left: 16, bottom: 24 }}
-          tooltip={{ mode: 'bisect-x' }}
-          let:height
-          let:padding
-        >
-          <Svg>
-            <Axis placement="left" grid rule />
-            <Axis placement="bottom" rule />
-            <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
-                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
-              </LinearGradient>
-            </ChartClipPath>
-            <Highlight points lines />
-
-            <Brush
-              axis="x"
-              resetOnEnd
-              on:brushEnd={(e) => {
-                set(e.detail.xDomain);
-              }}
-            />
-          </Svg>
-
-          <Tooltip
-            y="data"
-            xOffset={4}
-            anchor="bottom"
-            variant="none"
-            class="text-sm font-semibold text-primary leading-3 bg-surface-100/80 backdrop-blur-sm px-2 py-1 rounded"
-            let:data
-          >
-            {format(data.value, 'currency')}
-          </Tooltip>
-
-          <Tooltip
-            x="data"
-            y={height + padding.top}
-            yOffset={2}
-            anchor="top"
-            variant="none"
-            class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded whitespace-nowrap"
-            let:data
-          >
-            {format(data.date, PeriodType.Day)}
-          </Tooltip>
-        </Chart>
-      </div>
-    </State>
-  </div>
-</Preview>
-
 <h2>Integrated brush (x-axis)</h2>
 
 <Preview data={data.appleStock}>
@@ -421,5 +356,70 @@
         </div>
       </div>
     {/each}
+  </div>
+</Preview>
+
+<h2>Tooltip interop</h2>
+
+<Preview data={data.appleStock}>
+  <div class="border rounded p-4 grid gap-1">
+    <State initial={[null, null]} let:value={xDomain} let:set>
+      <div class="h-[300px]">
+        <Chart
+          data={data.appleStock}
+          x="date"
+          xScale={scaleTime()}
+          {xDomain}
+          y="value"
+          yDomain={[0, null]}
+          padding={{ left: 16, bottom: 24 }}
+          tooltip={{ mode: 'bisect-x' }}
+          let:height
+          let:padding
+        >
+          <Svg>
+            <Axis placement="left" grid rule />
+            <Axis placement="bottom" rule />
+            <ChartClipPath>
+              <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
+                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+              </LinearGradient>
+            </ChartClipPath>
+            <Highlight points lines />
+
+            <Brush
+              axis="x"
+              resetOnEnd
+              on:brushEnd={(e) => {
+                set(e.detail.xDomain);
+              }}
+            />
+          </Svg>
+
+          <Tooltip
+            y="data"
+            xOffset={4}
+            anchor="bottom"
+            variant="none"
+            class="text-sm font-semibold text-primary leading-3 bg-surface-100/80 backdrop-blur-sm px-2 py-1 rounded"
+            let:data
+          >
+            {format(data.value, 'currency')}
+          </Tooltip>
+
+          <Tooltip
+            x="data"
+            y={height + padding.top}
+            yOffset={2}
+            anchor="top"
+            variant="none"
+            class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded whitespace-nowrap"
+            let:data
+          >
+            {format(data.date, PeriodType.Day)}
+          </Tooltip>
+        </Chart>
+      </div>
+    </State>
   </div>
 </Preview>
