@@ -226,7 +226,10 @@
         height={handleSize}
         class={cls('handle top', 'fill-transparent cursor-ns-resize select-none', classes.handle)}
         on:pointerdown={adjustTop}
-        on:dblclick={() => (yDomain[0] = yDomainMin)}
+        on:dblclick={() => {
+          yDomain[0] = yDomainMin;
+          dispatch('change', { xDomain, yDomain });
+        }}
         {...handle}
       />
 
@@ -241,7 +244,9 @@
           classes.handle
         )}
         on:pointerdown={adjustBottom}
-        on:dblclick={() => (yDomain[1] = yDomainMax)}
+        on:dblclick={() => {
+          yDomain[1] = yDomainMax;
+        }}
         {...handle}
       />
     {/if}
@@ -254,7 +259,10 @@
         height={rangeHeight}
         class={cls('handle left', 'fill-transparent cursor-ew-resize select-none', classes.handle)}
         on:pointerdown={adjustLeft}
-        on:dblclick={() => (xDomain[0] = xDomainMin)}
+        on:dblclick={() => {
+          xDomain[0] = xDomainMin;
+          dispatch('change', { xDomain, yDomain });
+        }}
         {...handle}
       />
 
@@ -265,7 +273,10 @@
         height={rangeHeight}
         class={cls('handle right', 'fill-transparent cursor-ew-resize select-none', classes.handle)}
         on:pointerdown={adjustRight}
-        on:dblclick={() => (xDomain[1] = xDomainMax)}
+        on:dblclick={() => {
+          xDomain[1] = xDomainMax;
+          dispatch('change', { xDomain, yDomain });
+        }}
         {...handle}
       />
     {/if}
