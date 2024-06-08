@@ -1,16 +1,11 @@
 <script lang="ts">
   import { createEventDispatcher, getContext } from 'svelte';
+  import type { SVGAttributes } from 'svelte/elements';
   import { extent } from 'd3-array';
 
   import { clamp, cls } from 'svelte-ux';
   import Frame from './Frame.svelte';
-  import Group from './Group.svelte';
   import { localPoint } from '$lib/utils/event.js';
-
-  /*
-    TODO:
-    - [ ] Handle resetting back to original domain (ex. yDomain={[0, null]})
-  */
 
   const { xScale, yScale, width, height, padding } = getContext('LayerCake');
 
@@ -38,8 +33,15 @@
   $: [xDomainMin, xDomainMax] = extent($xScale.domain());
   $: [yDomainMin, yDomainMax] = extent($yScale.domain());
 
+  /** Attributes passed to range <rect> element */
+  export let range: SVGAttributes<SVGRectElement> | undefined = undefined;
+
+  /** Attributes passed to handle <rect> elements */
+  export let handle: SVGAttributes<SVGRectElement> | undefined = undefined;
+
   export let classes: {
     root?: string;
+    frame?: string;
     range?: string;
     handle?: string;
   } = {};
@@ -191,9 +193,9 @@
     yDomain[1]?.valueOf() !== originalYDomain[1]?.valueOf();
 </script>
 
-<g class="Brush select-none">
+<g class={cls('Brush select-none', classes.root, $$props.class)}>
   <Frame
-    class={cls('frame', 'fill-transparent')}
+    class={cls('frame', 'fill-transparent', classes.frame)}
     on:pointerdown={createRange}
     on:dblclick={() => selectAll()}
     bind:rectEl={frameEl}
@@ -205,9 +207,15 @@
       y={rangeTop}
       width={rangeWidth}
       height={rangeHeight}
-      class={cls('range', 'fill-surface-content/10 cursor-move select-none')}
+      class={cls(
+        'range',
+        'cursor-move select-none',
+        range?.fill == null && 'fill-surface-content/10',
+        classes.range
+      )}
       on:pointerdown={adjustRange}
       on:dblclick={() => reset()}
+      {...range}
     />
 
     {#if axis === 'both' || axis === 'y'}
@@ -216,9 +224,10 @@
         y={rangeTop}
         width={rangeWidth}
         height={handleSize}
-        class={cls('handle top', 'fill-transparent cursor-ns-resize select-none')}
+        class={cls('handle top', 'fill-transparent cursor-ns-resize select-none', classes.handle)}
         on:pointerdown={adjustTop}
         on:dblclick={() => (yDomain[0] = yDomainMin)}
+        {...handle}
       />
 
       <rect
@@ -226,9 +235,14 @@
         y={bottom - handleSize + 1}
         width={rangeWidth}
         height={handleSize}
-        class={cls('handle bottom', 'fill-transparent cursor-ns-resize select-none')}
+        class={cls(
+          'handle bottom',
+          'fill-transparent cursor-ns-resize select-none',
+          classes.handle
+        )}
         on:pointerdown={adjustBottom}
         on:dblclick={() => (yDomain[1] = yDomainMax)}
+        {...handle}
       />
     {/if}
 
@@ -238,9 +252,10 @@
         y={rangeTop}
         width={handleSize}
         height={rangeHeight}
-        class={cls('handle left', 'fill-transparent cursor-ew-resize select-none')}
+        class={cls('handle left', 'fill-transparent cursor-ew-resize select-none', classes.handle)}
         on:pointerdown={adjustLeft}
         on:dblclick={() => (xDomain[0] = xDomainMin)}
+        {...handle}
       />
 
       <rect
@@ -248,9 +263,10 @@
         y={rangeTop}
         width={handleSize}
         height={rangeHeight}
-        class={cls('handle right', 'fill-transparent cursor-ew-resize select-none')}
+        class={cls('handle right', 'fill-transparent cursor-ew-resize select-none', classes.handle)}
         on:pointerdown={adjustRight}
         on:dblclick={() => (xDomain[1] = xDomainMax)}
+        {...handle}
       />
     {/if}
 

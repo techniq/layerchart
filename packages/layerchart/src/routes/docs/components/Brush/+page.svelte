@@ -12,10 +12,12 @@
   import ChartClipPath from '$lib/components/ChartClipPath.svelte';
   import Highlight from '$lib/components/Highlight.svelte';
   import LinearGradient from '$lib/components/LinearGradient.svelte';
+  import Pattern from '$lib/components/Pattern.svelte';
   import Rule from '$lib/components/Rule.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
 
   import { randomWalk } from '$lib/utils/genData.js';
+  import { url } from 'svelte-ux/utils/routing';
 
   export let data;
 
@@ -31,6 +33,36 @@
 </script>
 
 <h1>Examples</h1>
+
+<h2>Styling via classes</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[40px]">
+    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value">
+      <Svg>
+        <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
+        <Brush classes={{ range: 'fill-secondary/10', handle: 'fill-secondary/50' }} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Styling via props</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[40px]">
+    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value">
+      <Svg>
+        <Pattern id="range-pattern" width={8} height={8}>
+          <rect width={8} height={8} class="fill-secondary/5" />
+          <line x1={8} y2={8} class="stroke-secondary/20" />
+        </Pattern>
+        <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
+        <Brush range={{ fill: 'url(#range-pattern)' }} classes={{ range: 'stroke-secondary/50' }} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
 
 <h2>Integrated brush (x-axis)</h2>
 
