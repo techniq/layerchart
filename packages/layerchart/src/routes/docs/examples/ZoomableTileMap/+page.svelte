@@ -51,13 +51,13 @@
     <Chart
       geo={{
         projection: geoMercator,
+        fitGeojson: filteredStates,
         applyTransform: ['translate', 'scale'],
       }}
       transform={{
         translateOnScale: true,
         initialScrollMode: 'scale',
       }}
-      fitGeoObject={filteredStates}
       let:tooltip
       let:projection
       let:transform

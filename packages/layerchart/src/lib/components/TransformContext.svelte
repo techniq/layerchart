@@ -61,7 +61,9 @@
   const { width, height } = getContext('LayerCake');
 
   export let mode: TransformMode = 'none';
+  /** Translate towards point (ex. mouse cursor/center) while zooming in/out */
   export let translateOnScale = false;
+
   export let spring: boolean | Parameters<typeof motionStore>[1]['spring'] = undefined;
   export let tweened: boolean | Parameters<typeof motionStore>[1]['tweened'] = undefined;
 

@@ -94,9 +94,6 @@
   export let transform: Partial<ComponentProps<TransformContext>> | undefined = undefined;
   export let transformContext: TransformContext = undefined;
 
-  /** Set transformContext's initial translate and scale based on geo object.  Requires `geo.projection` to also be set */
-  export let fitGeoObject: Parameters<typeof geoFitObjectTransform>[2] | undefined = undefined;
-
   // Binded for access within TransformContext
   let geoProjection: ComponentProps<GeoContext>['geo'] = undefined;
 
@@ -135,9 +132,10 @@
   let:data
   let:flatData
 >
+  <!-- Apply fitGeojson using TransformContext instead of GeoContext if `applyTransform` is used -->
   {@const initialTransform =
-    fitGeoObject && geo?.projection
-      ? geoFitObjectTransform(geo.projection(), [width, height], fitGeoObject)
+    geo?.applyTransform && geo?.fitGeojson && geo?.projection
+      ? geoFitObjectTransform(geo.projection(), [width, height], geo.fitGeojson)
       : undefined}
 
   {#key isMounted}
