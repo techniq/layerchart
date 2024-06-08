@@ -200,68 +200,58 @@
   />
 
   {#if isActive}
-    <Group
-      class="range"
+    <rect
       x={rangeLeft}
       y={rangeTop}
+      width={rangeWidth}
+      height={rangeHeight}
+      class={cls('range', 'fill-surface-content/10 cursor-move select-none')}
       on:pointerdown={adjustRange}
       on:dblclick={() => reset()}
-    >
-      <rect
-        width={rangeWidth}
-        height={rangeHeight}
-        class={cls('fill-surface-content/10 cursor-move select-none')}
-      />
-    </Group>
+    />
 
     {#if axis === 'both' || axis === 'y'}
-      <Group class="handle top" x={rangeLeft} y={rangeTop} on:pointerdown={adjustTop}>
-        <rect
-          width={rangeWidth}
-          height={handleSize}
-          class={cls('fill-transparent cursor-ns-resize select-none')}
-          on:dblclick={() => (yDomain[0] = yDomainMin)}
-        />
-      </Group>
+      <rect
+        x={rangeLeft}
+        y={rangeTop}
+        width={rangeWidth}
+        height={handleSize}
+        class={cls('handle top', 'fill-transparent cursor-ns-resize select-none')}
+        on:pointerdown={adjustTop}
+        on:dblclick={() => (yDomain[0] = yDomainMin)}
+      />
 
-      <Group
-        class="handle bottom"
+      <rect
         x={rangeLeft}
         y={bottom - handleSize + 1}
+        width={rangeWidth}
+        height={handleSize}
+        class={cls('handle bottom', 'fill-transparent cursor-ns-resize select-none')}
         on:pointerdown={adjustBottom}
-      >
-        <rect
-          width={rangeWidth}
-          height={handleSize}
-          class={cls('fill-transparent cursor-ns-resize select-none')}
-          on:dblclick={() => (yDomain[1] = yDomainMax)}
-        />
-      </Group>
+        on:dblclick={() => (yDomain[1] = yDomainMax)}
+      />
     {/if}
 
     {#if axis === 'both' || axis === 'x'}
-      <Group class="handle left" x={rangeLeft} y={rangeTop} on:pointerdown={adjustLeft}>
-        <rect
-          width={handleSize}
-          height={rangeHeight}
-          class={cls('fill-transparent cursor-ew-resize select-none')}
-          on:dblclick={() => (xDomain[0] = xDomainMin)}
-        />
-      </Group>
+      <rect
+        x={rangeLeft}
+        y={rangeTop}
+        width={handleSize}
+        height={rangeHeight}
+        class={cls('handle left', 'fill-transparent cursor-ew-resize select-none')}
+        on:pointerdown={adjustLeft}
+        on:dblclick={() => (xDomain[0] = xDomainMin)}
+      />
 
-      <Group
-        class="handle right"
+      <rect
         x={right - handleSize + 1}
         y={rangeTop}
+        width={handleSize}
+        height={rangeHeight}
+        class={cls('handle right', 'fill-transparent cursor-ew-resize select-none')}
         on:pointerdown={adjustRight}
-      >
-        <rect
-          width={handleSize}
-          height={rangeHeight}
-          class={cls('fill-transparent cursor-ew-resize select-none')}
-          on:dblclick={() => (xDomain[1] = xDomainMax)}
-        />
-      </Group>
+        on:dblclick={() => (xDomain[1] = xDomainMax)}
+      />
     {/if}
 
     <!-- TODO: Add diagonal/corner handles -->
