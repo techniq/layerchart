@@ -1,6 +1,6 @@
 <script lang="ts">
   import { scaleOrdinal, scaleTime } from 'd3-scale';
-  import { PeriodType, State, format } from 'svelte-ux';
+  import { PeriodType, State, cls, format } from 'svelte-ux';
   import { subDays } from 'date-fns';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
@@ -18,6 +18,9 @@
 
   import { randomWalk } from '$lib/utils/genData.js';
   import { url } from 'svelte-ux/utils/routing';
+  import { range } from 'd3-array';
+  import Points from '$lib/components/Points.svelte';
+  import Circle from '$lib/components/Circle.svelte';
 
   export let data;
 
@@ -30,6 +33,10 @@
     randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
     randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
   ];
+
+  const randomData = range(200).map((d) => {
+    return { x: d, y: Math.random() };
+  });
 </script>
 
 <h1>Examples</h1>
@@ -180,7 +187,7 @@
   </div>
 </Preview>
 
-<h2>Clip data</h2>
+<h2>Separate chart (clip data)</h2>
 
 <Preview data={data.appleStock}>
   <div class="border rounded p-4 grid gap-1">
@@ -229,7 +236,7 @@
   </div>
 </Preview>
 
-<h2>Clip data (y-axis)</h2>
+<h2>Separate chart (clip data: y-axis)</h2>
 
 <Preview data={data.appleStock}>
   <div class="border rounded p-4 grid grid-cols-[40px,1fr] gap-2">
@@ -278,7 +285,7 @@
   </div>
 </Preview>
 
-<h2>Filter data</h2>
+<h2>Separate chart (filter data)</h2>
 
 <Preview {data}>
   <div class="border rounded p-4 grid gap-1">
@@ -454,4 +461,56 @@
       </div>
     </State>
   </div>
+</Preview>
+
+<h2>Selection</h2>
+
+<Preview data={randomData}>
+  <State initial={{ xDomain: [null, null], yDomain: [null, null] }} let:value let:set>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart
+        data={randomData}
+        x="x"
+        y="y"
+        yDomain={[0, null]}
+        yNice
+        padding={{ left: 16, bottom: 24 }}
+      >
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+
+          <Points let:points>
+            {#each points as point}
+              {@const isSelected =
+                (value.xDomain[0] == null || value.xDomain[0] <= point.data.x) &&
+                (value.xDomain[1] == null || point.data.x <= value.xDomain[1]) &&
+                (value.yDomain[0] == null || value.yDomain[0] <= point.data.y) &&
+                (value.yDomain[1] == null || point.data.y <= value.yDomain[1])}
+
+              <Circle
+                cx={point.x}
+                cy={point.y}
+                r={isSelected ? 4 : 2}
+                class={cls(
+                  isSelected ? 'fill-primary/30 stroke-primary' : 'fill-neutral/10 stroke-neutral'
+                )}
+                spring
+              />
+            {/each}
+          </Points>
+
+          <Brush
+            axis="both"
+            on:change={(e) => {
+              set({
+                xDomain: e.detail.xDomain,
+                yDomain: e.detail.yDomain,
+              });
+            }}
+          />
+        </Svg>
+      </Chart>
+    </div>
+  </State>
 </Preview>
