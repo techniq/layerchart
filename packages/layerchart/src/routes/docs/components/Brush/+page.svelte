@@ -61,8 +61,8 @@
     <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value">
       <Svg>
         <Pattern id="range-pattern" width={8} height={8}>
-          <rect width={8} height={8} class="fill-secondary/5" />
-          <line x1={8} y2={8} class="stroke-secondary/20" />
+          <rect width={8} height={8} class="fill-secondary/10" />
+          <line x1={8} y2={8} class="stroke-secondary/30" />
         </Pattern>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
         <Brush range={{ fill: 'url(#range-pattern)' }} classes={{ range: 'stroke-secondary/50' }} />
