@@ -1,5 +1,23 @@
 # LayerChart
 
+## 0.40.0
+
+### Minor Changes
+
+- Add Brush component ([#175](https://github.com/techniq/layerchart/pull/175))
+
+- [ChartClipPath] Remove padding by default (opt-in with `full`) ([#175](https://github.com/techniq/layerchart/pull/175))
+
+- [Chart] Remove `fitGeoObject` prop and use `fitGeojson` along with `applyTransform` on `<Chart geo={...}>` to apply to TransformContext ([`60d095dd1ac523b4aef3b10eaff9200a8d9103ce`](https://github.com/techniq/layerchart/commit/60d095dd1ac523b4aef3b10eaff9200a8d9103ce))
+
+### Patch Changes
+
+- [Frame] Expose `rectEl` and forward `mousedown`, `touchstart`, and `dblclick` events ([#175](https://github.com/techniq/layerchart/pull/175))
+
+- Update dependencies ([`552fb069940920d48ea0a27b8c196aa1d6309812`](https://github.com/techniq/layerchart/commit/552fb069940920d48ea0a27b8c196aa1d6309812))
+
+- [Group] Forward `dblclick` event ([#175](https://github.com/techniq/layerchart/pull/175))
+
 ## 0.39.0
 
 ### Minor Changes
