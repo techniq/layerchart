@@ -345,7 +345,11 @@
     }}
   >
     <!-- Rendering slot within tooltip-trigger allows pointer events to bubble up (ex. Brush) -->
-    <div class="absolute" style:top="-{$padding.top}px" style:left="-{$padding.left}px">
+    <div
+      class="absolute w-full h-full"
+      style:top="-{$padding.top}px"
+      style:left="-{$padding.left}px"
+    >
       <slot tooltip={$tooltip} />
     </div>
   </div>
