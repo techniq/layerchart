@@ -1,5 +1,5 @@
 ---
-'layerchart': patch
+'layerchart': minor
 ---
 
-[Brush] Forward `mousedown` and `touchstart` events
+Add Brush component
