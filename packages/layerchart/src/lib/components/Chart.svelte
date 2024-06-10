@@ -32,12 +32,12 @@
   import TransformContext from './TransformContext.svelte';
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
 
-  type Accessor = string | ((d: any) => number);
+  type Accessor = string | number | ((d: any) => number);
 
   /**
    *  Resolve a value from data based on the accessor type
    */
-  function getValue(accessor: Accessor | Accessor[], d) {
+  function getValue(accessor: Accessor | Accessor[], d: any) {
     if (Array.isArray(accessor)) {
       return accessor.map((a) => getValue(a, d));
     } else if (typeof accessor === 'function') {
