@@ -6,6 +6,7 @@
   import { clamp, cls } from 'svelte-ux';
   import Frame from './Frame.svelte';
   import { localPoint } from '$lib/utils/event.js';
+  import Group from './Group.svelte';
 
   const { xScale, yScale, width, height, padding } = getContext('LayerCake');
 
@@ -15,6 +16,7 @@
     brushEnd: { xDomain?: [any, any]; yDomain?: [any, any] };
   }>();
 
+  /** Axis to apply brushing */
   export let axis: 'x' | 'y' | 'both' = 'x';
 
   /** Size of draggable handles (width/height) */
@@ -202,83 +204,104 @@
   />
 
   {#if isActive}
-    <rect
-      x={rangeLeft}
-      y={rangeTop}
-      width={rangeWidth}
-      height={rangeHeight}
-      class={cls(
-        'range',
-        'cursor-move select-none',
-        range?.fill == null && 'fill-surface-content/10',
-        classes.range
-      )}
-      on:pointerdown={adjustRange}
-      on:dblclick={() => reset()}
-      {...range}
-    />
+    <Group x={rangeLeft} y={rangeTop} class="range">
+      <slot name="range" {rangeWidth} {rangeHeight}>
+        <rect
+          width={rangeWidth}
+          height={rangeHeight}
+          class={cls(
+            'cursor-move select-none',
+            range?.fill == null && 'fill-surface-content/10',
+            classes.range
+          )}
+          on:pointerdown={adjustRange}
+          on:dblclick={() => reset()}
+          {...range}
+        />
+      </slot>
+    </Group>
 
     {#if axis === 'both' || axis === 'y'}
-      <rect
+      <Group
         x={rangeLeft}
         y={rangeTop}
-        width={rangeWidth}
-        height={handleSize}
-        class={cls('handle top', 'fill-transparent cursor-ns-resize select-none', classes.handle)}
+        class="handle top"
         on:pointerdown={adjustTop}
         on:dblclick={() => {
           yDomain[0] = yDomainMin;
           dispatch('change', { xDomain, yDomain });
         }}
-        {...handle}
-      />
+      >
+        <slot name="handle" edge="top" {rangeWidth} {rangeHeight}>
+          <rect
+            width={rangeWidth}
+            height={handleSize}
+            class={cls('fill-transparent cursor-ns-resize select-none', classes.handle)}
+            {...handle}
+          />
+        </slot>
+      </Group>
 
-      <rect
+      <Group
         x={rangeLeft}
         y={bottom - handleSize + 1}
-        width={rangeWidth}
-        height={handleSize}
-        class={cls(
-          'handle bottom',
-          'fill-transparent cursor-ns-resize select-none',
-          classes.handle
-        )}
+        class="handle bottom"
         on:pointerdown={adjustBottom}
         on:dblclick={() => {
           yDomain[1] = yDomainMax;
         }}
-        {...handle}
-      />
+      >
+        <slot name="handle" edge="bottom" {rangeWidth} {rangeHeight}>
+          <rect
+            width={rangeWidth}
+            height={handleSize}
+            class={cls('fill-transparent cursor-ns-resize select-none', classes.handle)}
+            {...handle}
+          />
+        </slot>
+      </Group>
     {/if}
 
     {#if axis === 'both' || axis === 'x'}
-      <rect
+      <Group
         x={rangeLeft}
         y={rangeTop}
-        width={handleSize}
-        height={rangeHeight}
-        class={cls('handle left', 'fill-transparent cursor-ew-resize select-none', classes.handle)}
+        class="handle left"
         on:pointerdown={adjustLeft}
         on:dblclick={() => {
           xDomain[0] = xDomainMin;
           dispatch('change', { xDomain, yDomain });
         }}
-        {...handle}
-      />
+      >
+        <slot name="handle" edge="left" {rangeWidth} {rangeHeight}>
+          <rect
+            width={handleSize}
+            height={rangeHeight}
+            class={cls('fill-transparent cursor-ew-resize select-none', classes.handle)}
+            {...handle}
+          />
+        </slot>
+      </Group>
 
-      <rect
+      <Group
         x={right - handleSize + 1}
         y={rangeTop}
-        width={handleSize}
-        height={rangeHeight}
-        class={cls('handle right', 'fill-transparent cursor-ew-resize select-none', classes.handle)}
+        class="handle right"
         on:pointerdown={adjustRight}
         on:dblclick={() => {
           xDomain[1] = xDomainMax;
           dispatch('change', { xDomain, yDomain });
         }}
-        {...handle}
-      />
+      >
+        <slot name="handle" edge="right" {rangeWidth} {rangeHeight}>
+          <rect
+            width={handleSize}
+            height={rangeHeight}
+            class={cls('fill-transparent cursor-ew-resize select-none', classes.handle)}
+            {...handle}
+          />
+        </slot>
+      </Group>
     {/if}
 
     <!-- TODO: Add diagonal/corner handles -->

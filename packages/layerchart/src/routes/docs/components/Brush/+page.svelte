@@ -1,7 +1,9 @@
 <script lang="ts">
   import { scaleOrdinal, scaleTime } from 'd3-scale';
+  import { range } from 'd3-array';
   import { PeriodType, State, cls, format } from 'svelte-ux';
   import { subDays } from 'date-fns';
+  import { mdiChevronRight } from '@mdi/js';
 
   import Chart, { Svg } from '$lib/components/Chart.svelte';
   import Preview from '$lib/docs/Preview.svelte';
@@ -17,8 +19,6 @@
   import Tooltip from '$lib/components/Tooltip.svelte';
 
   import { randomWalk } from '$lib/utils/genData.js';
-  import { url } from 'svelte-ux/utils/routing';
-  import { range } from 'd3-array';
   import Points from '$lib/components/Points.svelte';
   import Circle from '$lib/components/Circle.svelte';
 
@@ -65,7 +65,35 @@
           <line x1={8} y2={8} class="stroke-secondary/30" />
         </Pattern>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-        <Brush range={{ fill: 'url(#range-pattern)' }} classes={{ range: 'stroke-secondary/50' }} />
+        <Brush range={{ fill: 'url(#range-pattern)', class: 'stroke-secondary/50' }} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Styling via slots</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[40px]">
+    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value">
+      <Svg>
+        <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
+        <Brush>
+          <svelte:fragment slot="handle" let:edge let:rangeHeight let:rangeWidth>
+            <rect
+              width={8}
+              height={rangeHeight}
+              class={cls('fill-secondary cursor-ew-resize select-none')}
+            />
+            <svg x="-6" y={rangeHeight / 2 - 10} width="20px" height="20px" viewBox="0 0 24 24">
+              <path
+                d={mdiChevronRight}
+                class={cls('fill-secondary-content origin-center', edge === 'left' && 'rotate-180')}
+              />
+            </svg>
+            <path />
+          </svelte:fragment>
+        </Brush>
       </Svg>
     </Chart>
   </div>
