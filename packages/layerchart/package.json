@@ -70,7 +70,7 @@
     "typescript": "^5.4.5",
     "unist-util-visit": "^5.0.0",
     "us-atlas": "^3.0.1",
-    "vite": "^5.2.12"
+    "vite": "^5.2.13"
   },
   "type": "module",
   "dependencies": {
@@ -97,9 +97,9 @@
     "date-fns": "^3.6.0",
     "layercake": "^8.3.0",
     "lodash-es": "^4.17.21",
-    "posthog-js": "^1.138.0",
+    "posthog-js": "^1.138.3",
     "shapefile": "^0.6.6",
-    "svelte-ux": "^0.66.5",
+    "svelte-ux": "^0.66.6",
     "topojson-client": "^3.1.0"
   },
   "peerDependencies": {
