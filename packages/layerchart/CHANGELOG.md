@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.40.1
+
+### Patch Changes
+
+- [Chart] Update Accessor type to support <Chart y={[0,1]} /> ([`c2671503c6677efbeef02f47956aa2b1cf7bfd7d`](https://github.com/techniq/layerchart/commit/c2671503c6677efbeef02f47956aa2b1cf7bfd7d))
+
 ## 0.40.0
 
 ### Minor Changes
