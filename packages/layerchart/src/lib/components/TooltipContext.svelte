@@ -149,6 +149,17 @@
     const localX = point?.x ?? 0;
     const localY = point?.y ?? 0;
 
+    if (
+      e.offsetX < e.currentTarget.offsetLeft ||
+      e.offsetX > e.currentTarget.offsetLeft + e.currentTarget.offsetWidth ||
+      e.offsetY < e.currentTarget.offsetTop ||
+      e.offsetY > e.currentTarget.offsetTop + e.currentTarget.offsetHeight
+    ) {
+      // Ignore if within padding of chart
+      hideTooltip();
+      return;
+    }
+
     // If tooltipData not provided already (voronoi, etc), attempt to find it
     // TODO: When using bisect-x/y/band, values should be sorted.  Tyipcally are for `x`, but not `y` (and band depends on if x or y scale)
     if (tooltipData == null) {
@@ -316,26 +327,30 @@
   }
 </script>
 
-<slot tooltip={$tooltip} />
-
 {#if ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode)}
-  <Html>
-    <div
-      style:width="{$width}px"
-      style:height="{$height}px"
-      class={cls(
-        'tooltip-trigger absolute touch-none',
-        debug && 'bg-danger/10 outline outline-danger'
-      )}
-      on:pointerenter={showTooltip}
-      on:pointermove={showTooltip}
-      on:pointerleave={hideTooltip}
-      on:click={(e) => {
-        onClick({ data: $tooltip?.data });
-      }}
-    />
-  </Html>
+  <div
+    style:width="{$width}px"
+    style:height="{$height}px"
+    style:top="{$padding.top}px"
+    style:left="{$padding.left}px"
+    class={cls(
+      'tooltip-trigger absolute touch-none',
+      debug && 'bg-danger/10 outline outline-danger'
+    )}
+    on:pointerenter={showTooltip}
+    on:pointermove={showTooltip}
+    on:pointerleave={hideTooltip}
+    on:click={(e) => {
+      onClick({ data: $tooltip?.data });
+    }}
+  >
+    <!-- Rendering slot within tooltip-trigger allows pointer events to bubble up (ex. Brush) -->
+    <div class="absolute" style:top="-{$padding.top}px" style:left="-{$padding.left}px">
+      <slot tooltip={$tooltip} />
+    </div>
+  </div>
 {:else if mode === 'voronoi'}
+  <slot tooltip={$tooltip} />
   <Svg>
     <Voronoi
       on:pointerenter={(e) => showTooltip(e.detail.event, e.detail.data)}
@@ -348,6 +363,7 @@
     />
   </Svg>
 {:else if mode === 'bounds' || mode === 'band'}
+  <slot tooltip={$tooltip} />
   <Svg>
     <g class="tooltip-rects">
       {#each rects as rect}
@@ -367,10 +383,12 @@
       {/each}
     </g>
   </Svg>
+{:else}
+  <slot tooltip={$tooltip} />
 {/if}
 
 {#if mode === 'quadtree' && debug}
-  <Svg>
+  <Svg pointerEvents={false}>
     <ChartClipPath>
       <g class="tooltip-quadtree">
         {#each quadtreeRects(quadtree, false) as rect}

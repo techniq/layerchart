@@ -50,4 +50,5 @@
   on:pointermove
   on:pointerout
   on:pointerleave
+  on:dblclick
 />

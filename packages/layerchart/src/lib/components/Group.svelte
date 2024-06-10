@@ -49,6 +49,7 @@
   {transform}
   {...$$restProps}
   on:click
+  on:pointerdown
   on:pointerenter
   on:pointermove
   on:pointerleave

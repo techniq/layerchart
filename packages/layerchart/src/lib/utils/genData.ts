@@ -1,4 +1,7 @@
 import { addMinutes, startOfDay, startOfToday, subDays } from 'date-fns';
+import { cumsum } from 'd3-array';
+import { randomNormal } from 'd3-random';
+
 import { degreesToRadians, radiansToDegrees } from './math.js';
 
 /**
@@ -17,6 +20,14 @@ export function getRandomInteger(min: number, max: number, includeMax = true) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + (includeMax ? 1 : 0)) + min);
+}
+
+/**
+ * @see: https://observablehq.com/@d3/d3-cumsum
+ */
+export function randomWalk(options?: { count?: number }) {
+  const random = randomNormal();
+  return Array.from(cumsum({ length: options?.count ?? 100 }, random));
 }
 
 export function createSeries(options: {
