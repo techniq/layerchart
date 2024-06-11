@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.40.3
+
+### Patch Changes
+
+- Fix Legend placement with Chart padding after recent TooltipContext layout changes ([`2633ea4b0f32803f80055c62538ae2b2213bb493`](https://github.com/techniq/layerchart/commit/2633ea4b0f32803f80055c62538ae2b2213bb493))
+
 ## 0.40.2
 
 ### Patch Changes
