@@ -10,6 +10,9 @@
     geoIdentity,
     type GeoPermissibleObjects,
   } from 'd3-geo';
+  import { scaleOrdinal } from 'd3-scale';
+  import { schemeCategory10 } from 'd3-scale-chromatic';
+  import { color } from 'd3-color';
   import { feature } from 'topojson-client';
 
   import {
@@ -25,6 +28,10 @@
   import Chart, { Canvas } from '$lib/components/Chart.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import GeoTile from '$lib/components/GeoTile.svelte';
+  import HitCanvas from '$lib/components/HitCanvas.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
+  import TooltipItem from '$lib/components/TooltipItem.svelte';
+
   import TilesetField from '$lib/docs/TilesetField.svelte';
   import Json from '$lib/docs/Json.svelte';
 
@@ -62,6 +69,14 @@
 
   let serviceUrl;
   let zoomDelta = 0;
+
+  const colorScale = scaleOrdinal().range(
+    schemeCategory10.map((hex) => {
+      let c = color(hex);
+      c.opacity = 0.5;
+      return c;
+    })
+  );
 </script>
 
 <div class="grid gap-2">
@@ -85,6 +100,7 @@
           fitGeojson: geojson,
         }}
         padding={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        let:tooltip
       >
         {#if projection === geoMercator}
           <Canvas>
@@ -94,11 +110,61 @@
 
         <Canvas>
           {#if projection === geoMercator}
-            <GeoPath {geojson} class="stroke-black fill-black/50" />
+            <!-- <GeoPath {geojson} class="stroke-black fill-black/50" /> -->
+            <GeoPath
+              render={(ctx, { geoPath }) => {
+                for (var feature of geojson.features) {
+                  ctx.beginPath();
+                  geoPath(feature);
+                  ctx.fillStyle = colorScale(feature.id);
+                  ctx.fill();
+                  ctx.stroke();
+                }
+              }}
+            />
           {:else}
-            <GeoPath {geojson} class="stroke-surface-content fill-surface-100" />
+            <!-- <GeoPath {geojson} class="stroke-surface-content fill-surface-100" /> -->
+            <GeoPath
+              render={(ctx, { geoPath }) => {
+                for (var feature of geojson.features) {
+                  ctx.beginPath();
+                  geoPath(feature);
+                  ctx.fillStyle = colorScale(feature.id);
+                  ctx.fill();
+                  ctx.stroke();
+                }
+              }}
+            />
           {/if}
         </Canvas>
+
+        <HitCanvas
+          let:nextColor
+          let:setColorData
+          on:pointermove={(e) => tooltip.show(e.detail.event, e.detail.data)}
+          on:pointerleave={tooltip.hide}
+        >
+          <GeoPath
+            render={(ctx, { geoPath }) => {
+              for (var feature of geojson.features) {
+                const color = nextColor();
+
+                ctx.beginPath();
+                geoPath(feature);
+                ctx.fillStyle = color;
+                ctx.fill();
+
+                setColorData(color, feature);
+              }
+            }}
+          />
+        </HitCanvas>
+
+        <Tooltip header={(data) => data.properties.id} let:data>
+          {#each Object.entries(data.properties) as [key, value]}
+            <TooltipItem label={key} {value} />
+          {/each}
+        </Tooltip>
       </Chart>
     {:else}
       <EmptyMessage class="h-full">Please enter input below</EmptyMessage>
