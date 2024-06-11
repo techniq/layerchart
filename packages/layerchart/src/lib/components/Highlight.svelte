@@ -44,6 +44,9 @@
   /** Show bar and pass props to Rect */
   export let bar: boolean | Partial<ComponentProps<Rect>> = false;
 
+  /** Set to false to disable spring transitions */
+  export let motion = true;
+
   // TODO: Fix circle points being backwards for stack (see AreaStack)
 
   let _points: { x: number; y: number }[] = [];
@@ -198,7 +201,7 @@
   {#if area}
     <slot name="area" area={_area}>
       <Rect
-        spring
+        spring={motion}
         {..._area}
         {...typeof area === 'object' ? area : null}
         class={cls(
@@ -213,7 +216,7 @@
   {#if bar}
     <slot name="bar" {bar}>
       <Bar
-        spring
+        spring={motion}
         x={typeof bar === 'object' ? bar.x : null}
         y={typeof bar === 'object' ? bar.y : null}
         inset={typeof bar === 'object' ? bar.inset : null}
@@ -231,7 +234,7 @@
     <slot name="lines" lines={_lines}>
       {#each _lines as line}
         <Line
-          spring
+          spring={motion}
           x1={line.x1}
           y1={line.y1}
           x2={line.x2}
@@ -252,7 +255,7 @@
         <!-- TODO: Improve color with stacked data -->
         {@const fill = $config.r ? $rGet(highlightData) : null}
         <Circle
-          spring
+          spring={motion}
           cx={point.x}
           cy={point.y}
           r={4}
