@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.40.2
+
+### Patch Changes
+
+- [TooltipContext] Fix Legend placement with bisect-x (etc) mode ([`eaf7d8ded501c39adfdb288f7c627ec1e9a0c62b`](https://github.com/techniq/layerchart/commit/eaf7d8ded501c39adfdb288f7c627ec1e9a0c62b))
+
 ## 0.40.1
 
 ### Patch Changes
