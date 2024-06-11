@@ -164,8 +164,25 @@
     // TODO: When using bisect-x/y/band, values should be sorted.  Tyipcally are for `x`, but not `y` (and band depends on if x or y scale)
     if (tooltipData == null) {
       switch (mode) {
-        case 'quadtree': {
-          tooltipData = quadtree.find(localX, localY, radius);
+        case 'bisect-x': {
+          // `x` value at pointer coordinate
+          const xValueAtPoint = scaleInvert($xScale, localX - $padding.left);
+
+          const index = bisectX($flatData, xValueAtPoint, 1);
+          const previousValue = $flatData[index - 1];
+          const currentValue = $flatData[index];
+          tooltipData = findData(previousValue, currentValue, xValueAtPoint, $x);
+          break;
+        }
+
+        case 'bisect-y': {
+          // `y` value at pointer coordinate
+          const yValueAtPoint = scaleInvert($yScale, localY - $padding.top);
+
+          const index = bisectY($flatData, yValueAtPoint, 1);
+          const previousValue = $flatData[index - 1];
+          const currentValue = $flatData[index];
+          tooltipData = findData(previousValue, currentValue, yValueAtPoint, $y);
           break;
         }
 
@@ -194,25 +211,8 @@
           break;
         }
 
-        case 'bisect-x': {
-          // `x` value at pointer coordinate
-          const xValueAtPoint = scaleInvert($xScale, localX - $padding.left);
-
-          const index = bisectX($flatData, xValueAtPoint, 1);
-          const previousValue = $flatData[index - 1];
-          const currentValue = $flatData[index];
-          tooltipData = findData(previousValue, currentValue, xValueAtPoint, $x);
-          break;
-        }
-
-        case 'bisect-y': {
-          // `y` value at pointer coordinate
-          const yValueAtPoint = scaleInvert($yScale, localY - $padding.top);
-
-          const index = bisectY($flatData, yValueAtPoint, 1);
-          const previousValue = $flatData[index - 1];
-          const currentValue = $flatData[index];
-          tooltipData = findData(previousValue, currentValue, yValueAtPoint, $y);
+        case 'quadtree': {
+          tooltipData = quadtree.find(localX, localY, radius);
           break;
         }
       }

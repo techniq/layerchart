@@ -132,7 +132,7 @@
   let:data
   let:flatData
 >
-  <!-- Apply fitGeojson using TransformContext instead of GeoContext if `applyTransform` is used -->
+  <!-- Apply `fitGeojson` using TransformContext instead of GeoContext if `applyTransform` is used -->
   {@const initialTransform =
     geo?.applyTransform && geo?.fitGeojson && geo?.projection
       ? geoFitObjectTransform(geo.projection(), [width, height], geo.fitGeojson)
