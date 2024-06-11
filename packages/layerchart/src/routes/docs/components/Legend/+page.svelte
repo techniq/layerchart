@@ -140,14 +140,20 @@
 <h2>Chart integration</h2>
 
 <Preview>
-  <Chart
-    data={[{ name: 'One' }, { name: 'Two' }, { name: 'Three' }]}
-    r="name"
-    rScale={scaleOrdinal()}
-    rRange={['hsl(var(--color-success))', 'hsl(var(--color-warning))', 'hsl(var(--color-danger))']}
-  >
-    <Legend title="I am Legend" />
-  </Chart>
+  <div class="h-[40px]">
+    <Chart
+      data={[{ name: 'One' }, { name: 'Two' }, { name: 'Three' }]}
+      r="name"
+      rScale={scaleOrdinal()}
+      rRange={[
+        'hsl(var(--color-success))',
+        'hsl(var(--color-warning))',
+        'hsl(var(--color-danger))',
+      ]}
+    >
+      <Legend title="I am Legend" />
+    </Chart>
+  </div>
 </Preview>
 
 <h2>Chart placement</h2>

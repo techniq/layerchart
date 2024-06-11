@@ -45,8 +45,22 @@
   import { isScaleBand, scaleInvert } from '$lib/utils/scales.js';
   import { quadtreeRects } from '$lib/utils/quadtree.js';
 
-  const { flatData, x, xScale, xGet, xRange, y, yScale, yGet, yRange, width, height, padding } =
-    getContext('LayerCake');
+  const {
+    flatData,
+    x,
+    xScale,
+    xGet,
+    xRange,
+    y,
+    yScale,
+    yGet,
+    yRange,
+    width,
+    height,
+    containerWidth,
+    containerHeight,
+    padding,
+  } = getContext('LayerCake');
 
   /*
 		TODO: Defaults to consider (if possible to detect scale type, which might not be possible)
@@ -325,86 +339,86 @@
       })
       .sort(sortFunc('x'));
   }
+
+  $: triggerPointEvents = ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode);
 </script>
 
-{#if ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode)}
-  <div
-    style:width="{$width}px"
-    style:height="{$height}px"
-    style:top="{$padding.top}px"
-    style:left="{$padding.left}px"
-    class={cls(
-      'tooltip-trigger absolute touch-none',
-      debug && 'bg-danger/10 outline outline-danger'
-    )}
-    on:pointerenter={showTooltip}
-    on:pointermove={showTooltip}
-    on:pointerleave={hideTooltip}
-    on:click={(e) => {
+<div
+  style:width="{$width}px"
+  style:height="{$height}px"
+  style:top="{$padding.top}px"
+  style:left="{$padding.left}px"
+  class={cls(
+    'tooltip-trigger absolute touch-none',
+    debug && triggerPointEvents && 'bg-danger/10 outline outline-danger'
+  )}
+  on:pointerenter={triggerPointEvents ? showTooltip : undefined}
+  on:pointermove={triggerPointEvents ? showTooltip : undefined}
+  on:pointerleave={triggerPointEvents ? hideTooltip : undefined}
+  on:click={(e) => {
+    if (triggerPointEvents) {
       onClick({ data: $tooltip?.data });
-    }}
+    }
+  }}
+>
+  <!-- Rendering slot within tooltip-trigger allows pointer events to bubble up (ex. Brush) -->
+  <div
+    class="absolute"
+    style:width="{$containerWidth}px"
+    style:height="{$containerHeight}px"
+    style:top="{-$padding.top}px"
+    style:left="{-$padding.left}px"
   >
-    <!-- Rendering slot within tooltip-trigger allows pointer events to bubble up (ex. Brush) -->
-    <div
-      class="absolute w-full h-full"
-      style:top="-{$padding.top}px"
-      style:left="-{$padding.left}px"
-    >
-      <slot tooltip={$tooltip} />
-    </div>
-  </div>
-{:else if mode === 'voronoi'}
-  <slot tooltip={$tooltip} />
-  <Svg>
-    <Voronoi
-      on:pointerenter={(e) => showTooltip(e.detail.event, e.detail.data)}
-      on:pointermove={(e) => showTooltip(e.detail.event, e.detail.data)}
-      on:pointerleave={hideTooltip}
-      on:click={(e) => {
-        onClick({ data: e.detail.data });
-      }}
-      classes={{ path: cls(debug && 'fill-danger/10 stroke-danger') }}
-    />
-  </Svg>
-{:else if mode === 'bounds' || mode === 'band'}
-  <slot tooltip={$tooltip} />
-  <Svg>
-    <g class="tooltip-rects">
-      {#each rects as rect}
-        <rect
-          x={rect.x}
-          y={rect.y}
-          width={rect.width}
-          height={rect.height}
-          class={cls(debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent')}
-          on:pointerenter={(e) => showTooltip(e, rect.data)}
-          on:pointermove={(e) => showTooltip(e, rect.data)}
+    <slot tooltip={$tooltip} />
+
+    {#if mode === 'voronoi'}
+      <Svg>
+        <Voronoi
+          on:pointerenter={(e) => showTooltip(e.detail.event, e.detail.data)}
+          on:pointermove={(e) => showTooltip(e.detail.event, e.detail.data)}
           on:pointerleave={hideTooltip}
           on:click={(e) => {
-            onClick({ data: rect.data });
+            onClick({ data: e.detail.data });
           }}
+          classes={{ path: cls(debug && 'fill-danger/10 stroke-danger') }}
         />
-      {/each}
-    </g>
-  </Svg>
-{:else}
-  <slot tooltip={$tooltip} />
-{/if}
-
-{#if mode === 'quadtree' && debug}
-  <Svg pointerEvents={false}>
-    <ChartClipPath>
-      <g class="tooltip-quadtree">
-        {#each quadtreeRects(quadtree, false) as rect}
-          <rect
-            x={rect.x}
-            y={rect.y}
-            width={rect.width}
-            height={rect.height}
-            class={cls(debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent')}
-          />
-        {/each}
-      </g>
-    </ChartClipPath>
-  </Svg>
-{/if}
+      </Svg>
+    {:else if mode === 'bounds' || mode === 'band'}
+      <Svg>
+        <g class="tooltip-rects">
+          {#each rects as rect}
+            <rect
+              x={rect.x}
+              y={rect.y}
+              width={rect.width}
+              height={rect.height}
+              class={cls(debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent')}
+              on:pointerenter={(e) => showTooltip(e, rect.data)}
+              on:pointermove={(e) => showTooltip(e, rect.data)}
+              on:pointerleave={hideTooltip}
+              on:click={(e) => {
+                onClick({ data: rect.data });
+              }}
+            />
+          {/each}
+        </g>
+      </Svg>
+    {:else if mode === 'quadtree' && debug}
+      <Svg pointerEvents={false}>
+        <ChartClipPath>
+          <g class="tooltip-quadtree">
+            {#each quadtreeRects(quadtree, false) as rect}
+              <rect
+                x={rect.x}
+                y={rect.y}
+                width={rect.width}
+                height={rect.height}
+                class={cls(debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent')}
+              />
+            {/each}
+          </g>
+        </ChartClipPath>
+      </Svg>
+    {/if}
+  </div>
+</div>
