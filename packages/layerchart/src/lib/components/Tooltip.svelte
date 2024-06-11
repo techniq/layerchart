@@ -1,11 +1,10 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import { spring } from 'svelte/motion';
   import { fade } from 'svelte/transition';
-  import { writable } from 'svelte/store';
   import { cls } from 'svelte-ux';
 
   import { tooltipContext } from './TooltipContext.svelte';
+  import { motionStore } from '../stores/motionStore.js';
 
   /** `x` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
   export let x: 'pointer' | 'data' | number | undefined = 'pointer';
@@ -31,8 +30,10 @@
   export let anchor: Placement = 'top-left';
 
   export let contained: 'container' | false = 'container'; // TODO: Support 'window' using getBoundingClientRect()
-  export let animate = true;
   export let variant: 'default' | 'invert' | 'none' = 'default';
+
+  /** Set to `false` to disable spring transitions */
+  export let motion = true;
 
   export let header: ((data: any) => any) | undefined = undefined;
 
@@ -49,8 +50,8 @@
   let tooltipWidth = 0;
   let tooltipHeight = 0;
 
-  const xPos = animate ? spring($tooltip.x) : writable($tooltip.x);
-  const yPos = animate ? spring($tooltip.y) : writable($tooltip.y);
+  const xPos = motionStore($tooltip.x, { spring: motion });
+  const yPos = motionStore($tooltip.y, { spring: motion });
 
   type Align = 'start' | 'center' | 'end';
 
