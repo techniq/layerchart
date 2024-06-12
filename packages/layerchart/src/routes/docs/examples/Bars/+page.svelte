@@ -15,21 +15,25 @@
     Switch,
   } from 'svelte-ux';
 
-  import { Chart, Svg } from 'layerchart';
-  import Axis from '$lib/components/Axis.svelte';
-  import Rule from '$lib/components/Rule.svelte';
-  import Bar from '$lib/components/Bar.svelte';
-  import Bars from '$lib/components/Bars.svelte';
-  import Highlight from '$lib/components/Highlight.svelte';
-  import Labels from '$lib/components/Labels.svelte';
-  import LinearGradient from '$lib/components/LinearGradient.svelte';
-  import RectClipPath from '$lib/components/RectClipPath.svelte';
-  import Text from '$lib/components/Text.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import {
+    Bar,
+    Bars,
+    Axis,
+    Chart,
+    Highlight,
+    Labels,
+    LinearGradient,
+    RectClipPath,
+    Rule,
+    Svg,
+    Text,
+    Tooltip,
+    TooltipItem,
+    createStackData,
+    stackOffsetSeparated,
+  } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { createStackData, stackOffsetSeparated } from '$lib/utils/stack.js';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
 
   const data = createDateSeries({

@@ -1,13 +1,8 @@
 <script lang="ts">
   import { scaleBand } from 'd3-scale';
   import { format } from 'date-fns';
-  import { cls } from 'svelte-ux';
 
-  import { Chart, Svg } from 'layerchart';
-  import Bars from '$lib/components/Bars.svelte';
-  import Highlight from '$lib/components/Highlight.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import { Bars, Chart, Highlight, Svg, Tooltip, TooltipItem } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';

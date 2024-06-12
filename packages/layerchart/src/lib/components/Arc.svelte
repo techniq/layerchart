@@ -23,6 +23,7 @@
   import { arc as d3arc } from 'd3-shape';
   import { scaleLinear } from 'd3-scale';
   import { min, max } from 'd3-array';
+
   import { motionStore } from '$lib/stores/motionStore.js';
   import { degreesToRadians } from '$lib/utils/math.js';
 

@@ -2,12 +2,7 @@
   import { scaleTime } from 'd3-scale';
   import { format } from 'date-fns';
 
-  import { Chart, Svg } from 'layerchart';
-  import Highlight from '$lib/components/Highlight.svelte';
-
-  import Spline from '$lib/components/Spline.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import { Chart, Highlight, Spline, Svg, Tooltip, TooltipItem } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';

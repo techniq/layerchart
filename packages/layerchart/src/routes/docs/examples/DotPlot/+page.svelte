@@ -3,13 +3,16 @@
   import { addMinutes, startOfDay } from 'date-fns';
   import { Duration, PeriodType, format } from 'svelte-ux';
 
-  import { Chart, Svg } from 'layerchart';
-  import Axis from '$lib/components/Axis.svelte';
-  import Highlight from '$lib/components/Highlight.svelte';
-  import Points from '$lib/components/Points.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
+  import {
+    Axis,
+    Chart,
+    Highlight,
+    Points,
+    Svg,
+    Tooltip,
+    TooltipItem,
+    TooltipSeparator,
+  } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { getRandomInteger } from '$lib/utils/genData.js';

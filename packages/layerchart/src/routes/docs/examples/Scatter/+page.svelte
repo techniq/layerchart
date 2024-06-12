@@ -3,13 +3,7 @@
   import { format } from 'date-fns';
   import { formatDate, PeriodType } from 'svelte-ux';
 
-  import { Chart, Svg } from 'layerchart';
-  import Axis from '$lib/components/Axis.svelte';
-  import Highlight from '$lib/components/Highlight.svelte';
-  import Labels from '$lib/components/Labels.svelte';
-  import Points from '$lib/components/Points.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import { Axis, Chart, Highlight, Labels, Points, Svg, Tooltip, TooltipItem } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';

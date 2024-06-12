@@ -3,20 +3,21 @@
   import { geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
+  import {
+    Chart,
+    GeoPath,
+    GeoTile,
+    Svg,
+    Tooltip,
+    TooltipItem,
+    TransformControls,
+    geoFitObjectTransform,
+  } from 'layerchart';
   import { Field, RangeField, Switch } from 'svelte-ux';
 
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import Preview from '$lib/docs/Preview.svelte';
   import TilesetField from '$lib/docs/TilesetField.svelte';
-
-  import { Chart, Svg } from 'layerchart';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import GeoTile from '$lib/components/GeoTile.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import TransformControls from '$lib/components/TransformControls.svelte';
-
-  import { geoFitObjectTransform } from '$lib/utils/geo.js';
 
   export let data;
   const states = feature(data.geojson, data.geojson.objects.states);

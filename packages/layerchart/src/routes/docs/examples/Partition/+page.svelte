@@ -8,6 +8,19 @@
   import { rollup } from 'd3-array';
 
   import {
+    Bounds,
+    Chart,
+    ChartClipPath,
+    Group,
+    Partition,
+    Rect,
+    RectClipPath,
+    Svg,
+    Text,
+    findAncestor,
+  } from 'layerchart';
+
+  import {
     Breadcrumb,
     Button,
     Field,
@@ -21,16 +34,6 @@
   } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-
-  import { Chart, Svg } from 'layerchart';
-  import Bounds from '$lib/components/Bounds.svelte';
-  import ChartClipPath from '$lib/components/ChartClipPath.svelte';
-  import Group from '$lib/components/Group.svelte';
-  import Rect from '$lib/components/Rect.svelte';
-  import RectClipPath from '$lib/components/RectClipPath.svelte';
-  import Text from '$lib/components/Text.svelte';
-  import Partition from '$lib/components/Partition.svelte';
-  import { findAncestor } from '$lib/utils/hierarchy.js';
 
   export let data;
 

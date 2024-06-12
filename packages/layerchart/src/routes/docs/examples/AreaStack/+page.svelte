@@ -4,14 +4,17 @@
   import { format } from 'date-fns';
   import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 
-  import { Chart, Svg } from 'layerchart';
-  import Area from '$lib/components/Area.svelte';
-  import AreaStack from '$lib/components/AreaStack.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Highlight from '$lib/components/Highlight.svelte';
-  import LinearGradient from '$lib/components/LinearGradient.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import {
+    Area,
+    AreaStack,
+    Axis,
+    Chart,
+    Highlight,
+    LinearGradient,
+    Svg,
+    Tooltip,
+    TooltipItem,
+  } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';

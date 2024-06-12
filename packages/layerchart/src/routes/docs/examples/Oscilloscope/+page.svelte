@@ -1,17 +1,13 @@
 <script lang="ts">
-  import { scaleBand, scaleLinear, scaleSequential } from 'd3-scale';
+  import { onDestroy, onMount } from 'svelte';
   import { range, ticks } from 'd3-array';
+  import { scaleBand, scaleLinear, scaleSequential } from 'd3-scale';
+  import { interpolateTurbo } from 'd3-scale-chromatic';
+  import { curveCardinal } from 'd3-shape';
 
-  import { Chart, Svg } from 'layerchart';
-  import Axis from '$lib/components/Axis.svelte';
-  import Bars from '$lib/components/Bars.svelte';
-  import LinearGradient from '$lib/components/LinearGradient.svelte';
+  import { Axis, Bars, Chart, LinearGradient, Spline, Svg } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { onDestroy, onMount } from 'svelte';
-  import { interpolateTurbo } from 'd3-scale-chromatic';
-  import Spline from '$lib/components/Spline.svelte';
-  import { curveCardinal } from 'd3-shape';
 
   // Inspired by: https://observablehq.com/@visnup/microphone-oscilloscope and https://codepen.io/agalliat/pen/PoZLBxP
 

@@ -10,11 +10,7 @@
     geoIdentity,
   } from 'd3-geo';
 
-  import { goto } from '$app/navigation';
-
-  import Preview from '$lib/docs/Preview.svelte';
-  import Chart, { Canvas } from '$lib/components/Chart.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
+  import { Canvas, Chart, GeoPath } from 'layerchart';
   import {
     Button,
     ButtonGroup,
@@ -25,7 +21,10 @@
     TextField,
     Toggle,
   } from 'svelte-ux';
+
   import { mdiChevronDown } from '@mdi/js';
+
+  import { goto } from '$app/navigation';
 
   export let data;
 

@@ -22,17 +22,20 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import { Chart, Svg } from 'layerchart';
-  import Bounds from '$lib/components/Bounds.svelte';
-  import ChartClipPath from '$lib/components/ChartClipPath.svelte';
-  import Group from '$lib/components/Group.svelte';
-  import Rect from '$lib/components/Rect.svelte';
-  import RectClipPath from '$lib/components/RectClipPath.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import Text from '$lib/components/Text.svelte';
-  import Treemap from '$lib/components/Treemap.svelte';
-  import { findAncestor } from '$lib/utils/hierarchy.js';
+  import {
+    Bounds,
+    Chart,
+    ChartClipPath,
+    Group,
+    Rect,
+    RectClipPath,
+    Svg,
+    Text,
+    Tooltip,
+    TooltipItem,
+    Treemap,
+    findAncestor,
+  } from 'layerchart';
   import { isNodeVisible } from '$lib/utils/treemap.js';
 
   import flareCsv from '../_data/flare.csv';

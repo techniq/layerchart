@@ -2,10 +2,8 @@
   import { geoAlbersUsa } from 'd3-geo';
   import { feature } from 'topojson-client';
 
+  import { Canvas, Chart, GeoPath, Svg, Text } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import Text from '$lib/components/Text.svelte';
 
   export let data;
   const states = feature(data.geojson, data.geojson.objects.states);

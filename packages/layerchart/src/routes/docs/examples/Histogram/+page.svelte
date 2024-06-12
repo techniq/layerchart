@@ -12,17 +12,18 @@
   import { timeDays, timeMonths, timeWeeks } from 'd3-time';
   import { subDays } from 'date-fns';
 
+  import {
+    Axis,
+    Bars,
+    Chart,
+    Highlight,
+    Svg,
+    Tooltip,
+    TooltipItem,
+    TooltipSeparator,
+    thresholdTime,
+  } from 'layerchart';
   import { MenuField, RangeField, NumberStepper, format, PeriodType, State } from 'svelte-ux';
-
-  import { Chart, Svg } from 'layerchart';
-  import Axis from '$lib/components/Axis.svelte';
-  import Bars from '$lib/components/Bars.svelte';
-  import Highlight from '$lib/components/Highlight.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
-
-  import { thresholdTime } from '$lib/utils/threshold.js';
 
   import Preview from '$lib/docs/Preview.svelte';
 

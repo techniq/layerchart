@@ -5,6 +5,8 @@
   import { interpolateGreens, interpolatePurples } from 'd3-scale-chromatic';
   import { feature } from 'topojson-client';
 
+  import { Chart, GeoPath, Graticule, Legend, Svg, Tooltip, TransformContext } from 'layerchart';
+
   import {
     Button,
     ButtonGroup,
@@ -17,13 +19,6 @@
   } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { Chart, Svg } from 'layerchart';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import Graticule from '$lib/components/Graticule.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import TransformContext from '$lib/components/TransformContext.svelte';
-  import Legend from '$lib/components/Legend.svelte';
 
   export let data;
 

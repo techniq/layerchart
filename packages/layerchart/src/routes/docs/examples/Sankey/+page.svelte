@@ -8,21 +8,25 @@
   import { Icon, cls, sortFunc } from 'svelte-ux';
   import { mdiArrowRightBold } from '@mdi/js';
 
-  import Preview from '$lib/docs/Preview.svelte';
+  import {
+    Chart,
+    Group,
+    Link,
+    Rect,
+    Sankey,
+    Svg,
+    Text,
+    Tooltip,
+    TooltipItem,
+    TooltipSeparator,
+    graphFromHierarchy,
+    graphFromNode,
+  } from 'layerchart';
 
-  import { Chart, Svg } from 'layerchart';
-  import Group from '$lib/components/Group.svelte';
-  import Link from '$lib/components/Link.svelte';
-  import Rect from '$lib/components/Rect.svelte';
-  import Sankey from '$lib/components/Sankey.svelte';
-  import Text from '$lib/components/Text.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import Preview from '$lib/docs/Preview.svelte';
+  import SankeyControls from './SankeyControls.svelte';
 
   import { simpleData, complexData, greenhouse } from '../_data/graph.js';
-  import { graphFromHierarchy, graphFromNode } from '$lib/utils/graph.js';
-  import SankeyControls from './SankeyControls.svelte';
-  import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
 
   export let data;
 

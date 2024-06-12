@@ -2,15 +2,18 @@
   import { geoOrthographic } from 'd3-geo';
   import { feature } from 'topojson-client';
 
+  import {
+    Chart,
+    GeoContext,
+    GeoPath,
+    Graticule,
+    Svg,
+    Tooltip,
+    TransformContext,
+  } from 'layerchart';
   import { Button, ButtonGroup, Field, RangeField, timerStore } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { Chart, Svg } from 'layerchart';
-  import GeoContext from '$lib/components/GeoContext.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import Graticule from '$lib/components/Graticule.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TransformContext from '$lib/components/TransformContext.svelte';
 
   export let data;
 

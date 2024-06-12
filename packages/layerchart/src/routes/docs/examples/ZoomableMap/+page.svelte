@@ -4,16 +4,10 @@
   import { geoAlbersUsa, geoAlbers, geoMercator, geoPath as d3geoPath } from 'd3-geo';
   import { feature } from 'topojson-client';
 
+  import { Canvas, Chart, GeoPath, HitCanvas, Svg, Tooltip, TransformControls } from 'layerchart';
   import { SelectField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-
-  import Chart, { Svg, Canvas } from '$lib/components/Chart.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import HitCanvas from '$lib/components/HitCanvas.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TransformControls from '$lib/components/TransformControls.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
 
   export let data;
 

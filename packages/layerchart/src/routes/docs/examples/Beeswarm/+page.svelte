@@ -1,15 +1,9 @@
 <script lang="ts">
   import { scaleOrdinal } from 'd3-scale';
+  import { forceX, forceY, forceCollide } from 'd3-force';
   import { PeriodType } from 'svelte-ux';
 
-  import { forceX, forceY, forceCollide } from 'd3-force';
-
-  import { Chart, Svg } from 'layerchart';
-  import Axis from '$lib/components/Axis.svelte';
-  import Circle from '$lib/components/Circle.svelte';
-  import ForceSimulation from '$lib/components/ForceSimulation.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import { Axis, Chart, Circle, ForceSimulation, Svg, Tooltip, TooltipItem } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
 

@@ -37,7 +37,7 @@
   import { quadtree as d3Quadtree } from 'd3-quadtree';
   import { cls, sortFunc } from 'svelte-ux';
 
-  import { Svg, Html } from './Chart.svelte';
+  import { Svg } from './Chart.svelte';
   import ChartClipPath from './ChartClipPath.svelte';
   import Voronoi from './Voronoi.svelte';
 

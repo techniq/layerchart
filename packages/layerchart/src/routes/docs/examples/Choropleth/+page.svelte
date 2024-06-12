@@ -6,14 +6,19 @@
   import { feature } from 'topojson-client';
   import { format } from 'svelte-ux';
 
+  import {
+    Canvas,
+    Chart,
+    GeoPath,
+    HitCanvas,
+    Legend,
+    Svg,
+    Tooltip,
+    TooltipItem,
+    TransformControls,
+  } from 'layerchart';
+
   import Preview from '$lib/docs/Preview.svelte';
-  import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import HitCanvas from '$lib/components/HitCanvas.svelte';
-  import Legend from '$lib/components/Legend.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import TransformControls from '$lib/components/TransformControls.svelte';
 
   export let data;
   const states = feature(data.geojson, data.geojson.objects.states);
