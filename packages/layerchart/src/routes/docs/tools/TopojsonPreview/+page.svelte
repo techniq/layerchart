@@ -77,6 +77,8 @@
       return c;
     })
   );
+
+  $: features = geojson.features;
 </script>
 
 <div class="grid gap-2">
@@ -113,7 +115,7 @@
             <!-- <GeoPath {geojson} class="stroke-black fill-black/50" /> -->
             <GeoPath
               render={(ctx, { geoPath }) => {
-                for (var feature of geojson.features) {
+                for (var feature of features) {
                   ctx.beginPath();
                   geoPath(feature);
                   ctx.fillStyle = colorScale(feature.id);
@@ -126,7 +128,7 @@
             <!-- <GeoPath {geojson} class="stroke-surface-content fill-surface-100" /> -->
             <GeoPath
               render={(ctx, { geoPath }) => {
-                for (var feature of geojson.features) {
+                for (var feature of features) {
                   ctx.beginPath();
                   geoPath(feature);
                   ctx.fillStyle = colorScale(feature.id);
@@ -146,7 +148,7 @@
         >
           <GeoPath
             render={(ctx, { geoPath }) => {
-              for (var feature of geojson.features) {
+              for (var feature of features) {
                 const color = nextColor();
 
                 ctx.beginPath();
