@@ -90,14 +90,14 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       posthog-js:
-        specifier: ^1.138.3
-        version: 1.138.3
+        specifier: ^1.139.1
+        version: 1.139.1
       shapefile:
         specifier: ^0.6.6
         version: 0.6.6
       svelte-ux:
-        specifier: ^0.66.6
-        version: 0.66.6(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)
+        specifier: ^0.66.7
+        version: 0.66.7(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)
       topojson-client:
         specifier: ^3.1.0
         version: 3.1.0
@@ -190,17 +190,17 @@ importers:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
       marked:
-        specifier: ^12.0.2
-        version: 12.0.2
+        specifier: ^13.0.0
+        version: 13.0.0
       mdsvex:
         specifier: ^0.11.2
         version: 0.11.2(svelte@4.2.18)
       prettier:
-        specifier: ^3.3.1
-        version: 3.3.1
+        specifier: ^3.3.2
+        version: 3.3.2
       prettier-plugin-svelte:
         specifier: ^3.2.4
-        version: 3.2.4(prettier@3.3.1)(svelte@4.2.18)
+        version: 3.2.4(prettier@3.3.2)(svelte@4.2.18)
       prism-svelte:
         specifier: ^0.5.0
         version: 0.5.0
@@ -226,8 +226,8 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0(svelte@4.2.18)
       svelte-preprocess:
-        specifier: ^5.1.4
-        version: 5.1.4(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)(typescript@5.4.5)
+        specifier: ^6.0.0
+        version: 6.0.0(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)(typescript@5.4.5)
       svelte2tsx:
         specifier: ^0.7.9
         version: 0.7.9(svelte@4.2.18)(typescript@5.4.5)
@@ -1782,8 +1782,8 @@ packages:
     resolution: {integrity: sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==}
     engines: {node: '>=8'}
 
-  marked@12.0.2:
-    resolution: {integrity: sha512-qXUm7e/YKFoqFPYPa3Ukg9xlI5cyAtGmyEIzMfW//m6kXwCy2Ps9DYf5ioijFKQ8qyuscrHoY04iJGctu2Kg0Q==}
+  marked@13.0.0:
+    resolution: {integrity: sha512-VTeDCd9txf4KLLljUZ0nljE/Incb9SrWuueE44QVuU0pkOdh4sfCeW1Z6lPcxyDRSVY6rm8db/0OPaN75RNUmw==}
     engines: {node: '>= 18'}
     hasBin: true
 
@@ -2077,8 +2077,8 @@ packages:
     resolution: {integrity: sha512-Wglpdk03BSfXkHoQa3b/oulrotAkwrlLDRSOb9D0bN86FdRyE9lppSp33aHNPgBa0JKCoB+drFLZkQoRRYae5A==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-js@1.138.3:
-    resolution: {integrity: sha512-egQFMHI7BqKMSaZ3NNaknNoNHfol2zUHPxQ0jnLsmS/mICCR03iOmX0CoW+5Enrw0fFXXKd0oACq5t1+9SmL2Q==}
+  posthog-js@1.139.1:
+    resolution: {integrity: sha512-+JDu2S7z6sh9Q5kj0oh/W8PZJMQ1gSigWi7gbY4NwwCq2M3t0wNFjxlfHbAo1GncRWDxen+IC+3J7oJ8TJGnkA==}
 
   preact@10.22.0:
     resolution: {integrity: sha512-RRurnSjJPj4rp5K6XoP45Ui33ncb7e4H7WiOHVpjbkvqvA3U+N8Z6Qbo0AE6leGYBV66n8EhEaFixvIu3SkxFw==}
@@ -2098,8 +2098,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.3.1:
-    resolution: {integrity: sha512-7CAwy5dRsxs8PHXT3twixW9/OEll8MLE0VRPCJyl7CkS6VHGPSlsVaWTiASPTyGyYRyApxlaWTzwUxVNrhcwDg==}
+  prettier@3.3.2:
+    resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -2455,8 +2455,45 @@ packages:
       typescript:
         optional: true
 
-  svelte-ux@0.66.6:
-    resolution: {integrity: sha512-/Stg33DPVLVVHHU1Rs/Fyg5Fq+7+NPK1zMMeyVAK/rmOCWqh+HR1lqy9yxt/otDAmYH73IqUpB6XSNbSVdjo1g==}
+  svelte-preprocess@6.0.0:
+    resolution: {integrity: sha512-sbyHnWBwIphuaJWC7hnJd6ZoW/VN0va3jVb/8dDfeT2+0hVmo1DCx+zBK0/JfUKQmzg/FOEtcsGKRnbt8pRRkw==}
+    engines: {node: '>= 18.0.0'}
+    peerDependencies:
+      '@babel/core': ^7.10.2
+      coffeescript: ^2.5.1
+      less: ^3.11.3 || ^4.0.0
+      postcss: ^7 || ^8
+      postcss-load-config: '>=3'
+      pug: ^3.0.0
+      sass: ^1.26.8
+      stylus: '>=0.55'
+      sugarss: ^2.0.0 || ^3.0.0 || ^4.0.0
+      svelte: ^4.0.0 || ^5.0.0-next.100 || ^5.0.0
+      typescript: ^5.0.0
+    peerDependenciesMeta:
+      '@babel/core':
+        optional: true
+      coffeescript:
+        optional: true
+      less:
+        optional: true
+      postcss:
+        optional: true
+      postcss-load-config:
+        optional: true
+      pug:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      typescript:
+        optional: true
+
+  svelte-ux@0.66.7:
+    resolution: {integrity: sha512-x4so3Aoj4wK7ZmhBYuq/Al2jq3dPWAvGvSSZy47Tux3YhF6vRB/aseDASqVKOl6gMSo9VuB79XzJOpFFl82O7w==}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0 || ^5.0.0-next.120
 
@@ -4347,7 +4384,7 @@ snapshots:
 
   map-obj@4.3.0: {}
 
-  marked@12.0.2: {}
+  marked@13.0.0: {}
 
   mdn-data@2.0.30: {}
 
@@ -4603,7 +4640,7 @@ snapshots:
       picocolors: 1.0.1
       source-map-js: 1.2.0
 
-  posthog-js@1.138.3:
+  posthog-js@1.139.1:
     dependencies:
       fflate: 0.4.8
       preact: 10.22.0
@@ -4617,14 +4654,14 @@ snapshots:
       path-exists: 4.0.0
       which-pm: 2.0.0
 
-  prettier-plugin-svelte@3.2.4(prettier@3.3.1)(svelte@4.2.18):
+  prettier-plugin-svelte@3.2.4(prettier@3.3.2)(svelte@4.2.18):
     dependencies:
-      prettier: 3.3.1
+      prettier: 3.3.2
       svelte: 4.2.18
 
   prettier@2.8.8: {}
 
-  prettier@3.3.1: {}
+  prettier@3.3.2: {}
 
   prism-svelte@0.4.7: {}
 
@@ -5027,7 +5064,17 @@ snapshots:
       postcss-load-config: 6.0.1(postcss@8.4.38)
       typescript: 5.4.5
 
-  svelte-ux@0.66.6(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18):
+  svelte-preprocess@6.0.0(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)(typescript@5.4.5):
+    dependencies:
+      detect-indent: 6.1.0
+      strip-indent: 3.0.0
+      svelte: 4.2.18
+    optionalDependencies:
+      postcss: 8.4.38
+      postcss-load-config: 6.0.1(postcss@8.4.38)
+      typescript: 5.4.5
+
+  svelte-ux@0.66.7(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18):
     dependencies:
       '@floating-ui/dom': 1.6.5
       '@fortawesome/fontawesome-common-types': 6.5.2
