@@ -11,7 +11,8 @@
     mdiArrowExpandAll,
     mdiCancel,
   } from '@mdi/js';
-  import { transformContext } from '$lib/components/TransformContext.svelte';
+
+  import { transformContext } from './TransformContext.svelte';
 
   type Placement =
     | 'top-left'

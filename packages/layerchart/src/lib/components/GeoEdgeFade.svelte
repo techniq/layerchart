@@ -3,7 +3,7 @@
   import { scaleLinear } from 'd3-scale';
   import { geoDistance } from 'd3-geo';
 
-  import { geoContext } from '$lib/components/GeoContext.svelte';
+  import { geoContext } from './GeoContext.svelte';
 
   export let link: { source: [number, number]; target: [number, number] };
 
