@@ -1,16 +1,18 @@
 <script lang="ts">
-  import { cls } from 'svelte-ux';
   import { hierarchy } from 'd3-hierarchy';
-
   import { forceX, forceY, forceManyBody, forceLink } from 'd3-force';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Circle from '$lib/components/Circle.svelte';
-  import ForceSimulation from '$lib/components/ForceSimulation.svelte';
-  import Group from '$lib/components/Group.svelte';
-  import Link from '$lib/components/Link.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import {
+    Chart,
+    Circle,
+    ForceSimulation,
+    Group,
+    Link,
+    Svg,
+    Tooltip,
+    TooltipItem,
+  } from 'layerchart';
+  import { cls } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
 

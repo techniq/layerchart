@@ -7,6 +7,7 @@
   import * as chromatic from 'd3-scale-chromatic';
   import { hsl } from 'd3-color';
 
+  import { Chart, Circle, Group, Pack, Svg, TransformContext, findAncestor } from 'layerchart';
   import {
     Breadcrumb,
     Button,
@@ -19,14 +20,6 @@
   } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Group from '$lib/components/Group.svelte';
-  import Circle from '$lib/components/Circle.svelte';
-  import Pack from '$lib/components/Pack.svelte';
-  import type { TransformContext } from '$lib/components/TransformContext.svelte';
-
-  import { findAncestor } from '$lib/utils/hierarchy.js';
 
   export let data;
 

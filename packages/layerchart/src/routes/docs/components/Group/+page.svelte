@@ -1,10 +1,6 @@
 <script lang="ts">
+  import { Axis, Chart, Group, Svg, Text } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Group from '$lib/components/Group.svelte';
-  import Text from '$lib/components/Text.svelte';
 </script>
 
 <h1>Examples</h1>

@@ -3,10 +3,7 @@
 
   import { Field, RangeField, Switch } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Area from '$lib/components/Area.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Points from '$lib/components/Points.svelte';
+  import { Area, Axis, Chart, Svg, Points } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';

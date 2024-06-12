@@ -5,15 +5,10 @@
   import { curveLinearClosed } from 'd3-shape';
   import { feature } from 'topojson-client';
 
+  import { Axis, Chart, GeoPath, GeoPoint, Hull, Points, Svg, Text } from 'layerchart';
+
   import Preview from '$lib/docs/Preview.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import GeoPoint from '$lib/components/GeoPoint.svelte';
-  import Hull from '$lib/components/Hull.svelte';
-  import Points from '$lib/components/Points.svelte';
-  import Text from '$lib/components/Text.svelte';
 
   export let data;
 

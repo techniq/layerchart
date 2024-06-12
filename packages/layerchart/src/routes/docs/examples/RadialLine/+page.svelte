@@ -4,14 +4,9 @@
   import { curveLinearClosed, curveCatmullRomClosed, curveCatmullRom } from 'd3-shape';
   import { Field, PeriodType, ToggleGroup, ToggleOption, cls } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Area from '$lib/components/Area.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Group from '$lib/components/Group.svelte';
-  import Spline from '$lib/components/Spline.svelte';
+  import { Area, Axis, Chart, Group, Points, Spline, Svg } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import Points from '$lib/components/Points.svelte';
 
   export let data;
 

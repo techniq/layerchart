@@ -6,6 +6,18 @@
   import { hsl } from 'd3-color';
 
   import {
+    Arc,
+    Bounds,
+    Chart,
+    Group,
+    Partition,
+    Svg,
+    Tooltip,
+    TooltipItem,
+    findAncestor,
+  } from 'layerchart';
+
+  import {
     Breadcrumb,
     Button,
     Field,
@@ -15,15 +27,6 @@
     format,
     sortFunc,
   } from 'svelte-ux';
-
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Arc from '$lib/components/Arc.svelte';
-  import Bounds from '$lib/components/Bounds.svelte';
-  import Group from '$lib/components/Group.svelte';
-  import Partition from '$lib/components/Partition.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import { findAncestor } from '$lib/utils/hierarchy.js';
 
   import Preview from '$lib/docs/Preview.svelte';
 

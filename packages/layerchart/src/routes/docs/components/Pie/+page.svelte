@@ -4,13 +4,7 @@
   import { sum } from 'd3-array';
   import { cls, format as formatUtil } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Arc from '$lib/components/Arc.svelte';
-  import Group from '$lib/components/Group.svelte';
-  import Pie from '$lib/components/Pie.svelte';
-  import Text from '$lib/components/Text.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import { Arc, Chart, Group, Pie, Svg, Text, Tooltip, TooltipItem } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';

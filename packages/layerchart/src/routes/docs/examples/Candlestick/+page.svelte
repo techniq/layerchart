@@ -1,17 +1,10 @@
 <script lang="ts">
   import { scaleBand, scaleOrdinal } from 'd3-scale';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Bars from '$lib/components/Bars.svelte';
-  import Highlight from '$lib/components/Highlight.svelte';
-  import Points from '$lib/components/Points.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import { Axis, Bars, Chart, Highlight, Points, Svg, Tooltip, TooltipItem } from 'layerchart';
+  import { PeriodType, formatDate } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-
-  import { PeriodType, formatDate } from 'svelte-ux';
 
   export let data;
 </script>

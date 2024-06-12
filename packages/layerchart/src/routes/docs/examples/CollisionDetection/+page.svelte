@@ -1,13 +1,9 @@
 <script lang="ts">
   import { scaleOrdinal } from 'd3-scale';
   import { randomUniform } from 'd3-random';
-
   import { forceX, forceY, forceManyBody, forceCollide } from 'd3-force';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Circle from '$lib/components/Circle.svelte';
-  import ForceSimulation from '$lib/components/ForceSimulation.svelte';
-  import Group from '$lib/components/Group.svelte';
+  import { Chart, Circle, Group, ForceSimulation, Svg } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
 

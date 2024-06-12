@@ -3,10 +3,8 @@
   import * as d3chromatic from 'd3-scale-chromatic';
   import { scaleQuantize } from 'd3-scale';
 
+  import { Chart, Svg, ColorRamp } from 'layerchart';
   import { NumberStepper } from 'svelte-ux';
-
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import ColorRamp from '$lib/components/ColorRamp.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
 

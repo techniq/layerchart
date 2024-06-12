@@ -2,18 +2,12 @@
   import { scaleBand, scaleLinear } from 'd3-scale';
   import { max, range } from 'd3-array';
   import { getDay, getWeek } from 'date-fns';
-  import { formatDate, PeriodType } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Highlight from '$lib/components/Highlight.svelte';
-  import Points from '$lib/components/Points.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import { Axis, Chart, Circle, Highlight, Points, Svg, Tooltip, TooltipItem } from 'layerchart';
+  import { formatDate, PeriodType } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
-  import Circle from '$lib/components/Circle.svelte';
 
   const data = createDateSeries({ count: 60, min: 10, max: 100, value: 'integer' });
 

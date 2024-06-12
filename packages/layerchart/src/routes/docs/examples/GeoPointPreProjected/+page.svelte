@@ -4,12 +4,8 @@
   import { geoIdentity, geoAlbersUsa } from 'd3-geo';
   import { feature } from 'topojson-client';
 
+  import { Chart, GeoPath, GeoContext, GeoPoint, Svg, Text } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
-  import GeoContext from '$lib/components/GeoContext.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import GeoPoint from '$lib/components/GeoPoint.svelte';
-  import Text from '$lib/components/Text.svelte';
 
   export let data;
 

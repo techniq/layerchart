@@ -15,6 +15,7 @@
   import { color } from 'd3-color';
   import { feature } from 'topojson-client';
 
+  import { Canvas, Chart, GeoPath, GeoTile, HitCanvas, Tooltip, TooltipItem } from 'layerchart';
   import {
     CopyButton,
     EmptyMessage,
@@ -24,13 +25,6 @@
     ToggleGroup,
     ToggleOption,
   } from 'svelte-ux';
-
-  import Chart, { Canvas } from '$lib/components/Chart.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import GeoTile from '$lib/components/GeoTile.svelte';
-  import HitCanvas from '$lib/components/HitCanvas.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
 
   import TilesetField from '$lib/docs/TilesetField.svelte';
   import Json from '$lib/docs/Json.svelte';

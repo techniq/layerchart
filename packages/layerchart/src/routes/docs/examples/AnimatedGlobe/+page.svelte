@@ -5,16 +5,19 @@
 
   import { mdiPlay, mdiStop } from '@mdi/js';
 
+  import {
+    Canvas,
+    Chart,
+    GeoPath,
+    Graticule,
+    HitCanvas,
+    Tooltip,
+    TransformContext,
+    Svg,
+  } from 'layerchart';
   import { Button, scrollIntoView, cls, sortFunc, ButtonGroup, timerStore } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import Graticule from '$lib/components/Graticule.svelte';
-  import HitCanvas from '$lib/components/HitCanvas.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TransformContext from '$lib/components/TransformContext.svelte';
-
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import TransformDebug from '$lib/docs/TransformDebug.svelte';
 

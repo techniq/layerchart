@@ -3,13 +3,8 @@
   import { feature } from 'topojson-client';
   import { Field, Switch } from 'svelte-ux';
 
+  import { Canvas, Chart, GeoPath, GeoPoint, Svg, Text, Tooltip, TooltipItem } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import GeoPoint from '$lib/components/GeoPoint.svelte';
-  import Text from '$lib/components/Text.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
 
   export let data;
 

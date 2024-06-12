@@ -2,12 +2,8 @@
   import { scaleTime } from 'd3-scale';
   import { Field, PeriodType, Switch, format } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Axis, Chart, Svg, Frame, Rule, Text } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Rule from '$lib/components/Rule.svelte';
-  import Text from '$lib/components/Text.svelte';
-  import Frame from '$lib/components/Frame.svelte';
 
   import { createDateSeries } from '$lib/utils/genData.js';
   import Blockquote from '$lib/docs/Blockquote.svelte';

@@ -3,15 +3,8 @@
   import { hierarchy } from 'd3-hierarchy';
   import { curveBumpX, curveBumpY, curveStep, curveStepBefore, curveStepAfter } from 'd3-shape';
 
+  import { Chart, Group, Link, Rect, Svg, Text, TransformControls, Tree } from 'layerchart';
   import { Field, ToggleGroup, ToggleOption, cls } from 'svelte-ux';
-
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Group from '$lib/components/Group.svelte';
-  import Link from '$lib/components/Link.svelte';
-  import Rect from '$lib/components/Rect.svelte';
-  import Text from '$lib/components/Text.svelte';
-  import TransformControls from '$lib/components/TransformControls.svelte';
-  import Tree from '$lib/components/Tree.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
 

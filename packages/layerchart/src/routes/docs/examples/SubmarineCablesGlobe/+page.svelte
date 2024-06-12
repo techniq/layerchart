@@ -4,17 +4,17 @@
 
   import { Button, ButtonGroup, Field, RangeField, cls, timerStore } from 'svelte-ux';
 
+  import {
+    Chart,
+    GeoPath,
+    GeoPoint,
+    GeoVisible,
+    Graticule,
+    Svg,
+    Tooltip,
+    TransformContext,
+  } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import GeoCircle from '$lib/components/GeoCircle.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import Graticule from '$lib/components/Graticule.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import TransformContext from '$lib/components/TransformContext.svelte';
-  import GeoPoint from '$lib/components/GeoPoint.svelte';
-
-  import GeoVisible from '$lib/components/GeoVisible.svelte';
 
   export let data;
 

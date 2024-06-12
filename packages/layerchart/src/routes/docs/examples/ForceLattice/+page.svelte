@@ -1,14 +1,10 @@
 <script lang="ts">
   import { forceManyBody, forceLink } from 'd3-force';
+  import { curveLinear } from 'd3-shape';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Circle from '$lib/components/Circle.svelte';
-  import ForceSimulation from '$lib/components/ForceSimulation.svelte';
-  import Group from '$lib/components/Group.svelte';
-  import Link from '$lib/components/Link.svelte';
+  import { Chart, Circle, ForceSimulation, Group, Link, Svg } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { curveLinear } from 'd3-shape';
 
   const n = 20;
   const nodes = Array.from({ length: n * n }, (_, i) => ({ index: i }));

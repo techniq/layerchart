@@ -2,13 +2,10 @@
   import { geoAlbersUsa, geoAlbers, geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Field, SelectField, sort } from 'svelte-ux';
+  import { Chart, ChartClipPath, GeoPath, Svg, Tooltip } from 'layerchart';
+  import { SelectField, sort } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import ChartClipPath from '$lib/components/ChartClipPath.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
 
   export let data;
 

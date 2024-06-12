@@ -4,20 +4,23 @@
   import { format } from 'date-fns';
   import { formatDate, PeriodType } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Area from '$lib/components/Area.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Highlight from '$lib/components/Highlight.svelte';
-  import Labels from '$lib/components/Labels.svelte';
-  import Spline from '$lib/components/Spline.svelte';
-  import Threshold from '$lib/components/Threshold.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
+  import {
+    Area,
+    Axis,
+    Chart,
+    Highlight,
+    Labels,
+    Spline,
+    Svg,
+    Threshold,
+    Tooltip,
+    TooltipItem,
+    TooltipSeparator,
+  } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { createDateSeries } from '$lib/utils/genData.js';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
+  import { createDateSeries } from '$lib/utils/genData.js';
 
   let selectedCurve = curveLinear;
 

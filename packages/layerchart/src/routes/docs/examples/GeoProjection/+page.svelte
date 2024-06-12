@@ -10,12 +10,8 @@
   } from 'd3-geo';
   import { feature } from 'topojson-client';
 
+  import { Canvas, Chart, GeoPath, Graticule, Svg, Tooltip } from 'layerchart';
   import { Field, RangeField, SelectField, Switch } from 'svelte-ux';
-
-  import Chart, { Canvas, Svg } from '$lib/components/Chart.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import Graticule from '$lib/components/Graticule.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
 

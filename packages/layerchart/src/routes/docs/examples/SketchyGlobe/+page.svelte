@@ -4,13 +4,10 @@
   import { feature } from 'topojson-client';
   import { presimplify, simplify } from 'topojson-simplify';
 
+  import { Chart, GeoPath, Graticule, Svg, TransformContext } from 'layerchart';
   import { Button, ButtonGroup, Field, RangeField, timerStore } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import Graticule from '$lib/components/Graticule.svelte';
-  import TransformContext from '$lib/components/TransformContext.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
   export let data;

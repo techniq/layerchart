@@ -123,25 +123,7 @@
     libraries (i.e.<code>{'<script>'}</code>
     block). You can view the full page source by clicking on <strong>Page source</strong> at the top
     of each examples page. This will show you all of the imports used for that page.
-    <Blockquote>
-      <div>
-        <strong>Note:</strong> This site is built directly from LayerChart's codebase and does not
-        <code>npm install layerchart</code>. Therefore it imports components from LayerChart
-        differently.
-      </div>
-    </Blockquote>
   </div>
-
-  <p>The page source will show:</p>
-  <Code
-    source={`import Chart, { Svg } from '$lib/components/Chart.svelte';
-import Axis from '$lib/components/Axis.svelte';
-import Bars from '$lib/components/Bars.svelte';`}
-    language="js"
-  />
-
-  <p>If you followed instructions to `npm install layerchart` your code should be:</p>
-  <Code source={`import { Chart, Svg, Axis, Bars } from 'layerchart';`} language="js" />
 
   <h2>Layer Cake</h2>
 

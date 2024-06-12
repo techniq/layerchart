@@ -3,19 +3,13 @@
   import { flatRollup } from 'd3-array';
   import { feature } from 'topojson-client';
 
+  import { Chart, GeoEdgeFade, GeoPath, GeoPoint, GeoSpline, Graticule, Svg } from 'layerchart';
   import { Field, Switch } from 'svelte-ux';
 
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import Preview from '$lib/docs/Preview.svelte';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import GeoEdgeFade from '$lib/components/GeoEdgeFade.svelte';
-  import Graticule from '$lib/components/Graticule.svelte';
-
   import links from '../_data/geo/world-links.json';
-  import GeoSpline from '$lib/components/GeoSpline.svelte';
-  import GeoPoint from '$lib/components/GeoPoint.svelte';
 
   export let data;
 

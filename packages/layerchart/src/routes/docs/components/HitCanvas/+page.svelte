@@ -2,12 +2,10 @@
   import { geoIdentity } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import Preview from '$lib/docs/Preview.svelte';
-  import Chart, { Canvas } from '$lib/components/Chart.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import HitCanvas from '$lib/components/HitCanvas.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
+  import { Chart, Canvas, GeoPath, HitCanvas, Tooltip } from 'layerchart';
   import { Field, Switch } from 'svelte-ux';
+
+  import Preview from '$lib/docs/Preview.svelte';
 
   export let data;
 

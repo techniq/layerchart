@@ -2,12 +2,7 @@
   import { scaleLinear } from 'd3-scale';
   import { extent, max } from 'd3-array';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Highlight from '$lib/components/Highlight.svelte';
-  import Spline from '$lib/components/Spline.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
+  import { Axis, Chart, Highlight, Spline, Svg, Tooltip, TooltipItem } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
 

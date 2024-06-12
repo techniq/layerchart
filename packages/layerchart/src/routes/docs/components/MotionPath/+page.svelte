@@ -2,15 +2,10 @@
   import type { ComponentProps } from 'svelte';
   import { linear } from 'svelte/easing';
 
+  import { Axis, Chart, MotionPath, Spline, Svg } from 'layerchart';
   import { Field, RangeField, Switch, Toggle } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import MotionPath from '$lib/components/MotionPath.svelte';
-  import Spline from '$lib/components/Spline.svelte';
-
   import Preview from '$lib/docs/Preview.svelte';
-
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';

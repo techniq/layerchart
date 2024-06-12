@@ -1,18 +1,21 @@
 <script lang="ts">
   import { geoOrthographic } from 'd3-geo';
+  import { scaleSqrt } from 'd3-scale';
   import { feature } from 'topojson-client';
 
   import { Button, ButtonGroup, Field, RangeField, timerStore } from 'svelte-ux';
 
+  import {
+    Chart,
+    GeoCircle,
+    GeoPath,
+    Graticule,
+    Svg,
+    Tooltip,
+    TooltipItem,
+    TransformContext,
+  } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import GeoCircle from '$lib/components/GeoCircle.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import Graticule from '$lib/components/Graticule.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import TransformContext from '$lib/components/TransformContext.svelte';
-  import { scaleSqrt } from 'd3-scale';
 
   export let data;
 

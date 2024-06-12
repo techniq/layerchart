@@ -13,20 +13,21 @@
   import { feature } from 'topojson-client';
   import { century, equationOfTime, declination } from 'solar-calculator';
 
+  import {
+    Blur,
+    Chart,
+    ClipPath,
+    GeoCircle,
+    GeoPath,
+    Graticule,
+    Svg,
+    Tooltip,
+    TooltipItem,
+    antipode,
+  } from 'layerchart';
   import { Field, SelectField, Switch, timerStore } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import Blur from '$lib/components/Blur.svelte';
-
   import Preview from '$lib/docs/Preview.svelte';
-
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import ClipPath from '$lib/components/ClipPath.svelte';
-  import Graticule from '$lib/components/Graticule.svelte';
-  import GeoCircle from '$lib/components/GeoCircle.svelte';
-  import { antipode } from '$lib/utils/geo.js';
 
   export let data;
 

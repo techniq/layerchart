@@ -1,8 +1,9 @@
 <script lang="ts">
-  import Json from '$lib/docs/Json.svelte';
-  import { pivotLonger, pivotWider } from '$lib/utils/pivot.js';
-  import { wideData, longData } from '$lib/utils/genData.js';
+  import { pivotLonger, pivotWider } from 'layerchart';
+
   import Code from '$lib/docs/Code.svelte';
+  import Json from '$lib/docs/Json.svelte';
+  import { wideData, longData } from '$lib/utils/genData.js';
 </script>
 
 <h1>pivotLonger</h1>
