@@ -1,6 +1,13 @@
 <script lang="ts">
   import { createEventDispatcher, getContext } from 'svelte';
-  import { type GeoPath, type GeoPermissibleObjects } from 'd3-geo';
+  import {
+    geoTransform as d3geoTransform,
+    type GeoIdentityTransform,
+    type GeoPath,
+    type GeoPermissibleObjects,
+    type GeoProjection,
+    type GeoTransformPrototype,
+  } from 'd3-geo';
   import { cls } from 'svelte-ux';
 
   import { geoContext } from './GeoContext.svelte';
@@ -43,7 +50,17 @@
   const canvas = getContext('canvas');
   const geo = geoContext();
 
-  $: geoPath = geoCurvePath($geo, curve);
+  /**
+   * Apply geo transform to projection.  Useful to draw straight lines with `geoMercator` projection.
+   * See: https://d3js.org/d3-geo/projection#geoTransform and https://stackoverflow.com/a/56409480/191902
+   **/
+  export let geoTransform:
+    | ((projection: GeoProjection | GeoIdentityTransform) => GeoTransformPrototype)
+    | undefined = undefined;
+
+  $: _projection = geoTransform ? d3geoTransform(geoTransform($geo)) : $geo;
+
+  $: geoPath = geoCurvePath(_projection, curve);
 
   const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
@@ -63,12 +80,12 @@
     $ctx.clearRect(0, 0, $width, $height);
 
     if (render) {
-      geoPath = geoCurvePath($geo, curve, $ctx);
+      geoPath = geoCurvePath(_projection, curve, $ctx);
       render($ctx, { geoPath });
     } else {
       $ctx.beginPath();
       // Set the context here since setting it in `$: geoPath` is a circular reference
-      geoPath = geoCurvePath($geo, curve, $ctx);
+      geoPath = geoCurvePath(_projection, curve, $ctx);
       geoPath(geojson);
 
       $ctx.fillStyle =
