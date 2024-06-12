@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { geoIdentity } from 'd3-geo';
+  import { geoAlbersUsa } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, HitCanvas, Svg, Tooltip } from 'layerchart';
+  import { Canvas, Chart, GeoPath, HitCanvas, Svg, Tooltip, TooltipItem } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   export let data;
@@ -18,7 +18,7 @@
   <div class="h-[600px]">
     <Chart
       geo={{
-        projection: geoIdentity,
+        projection: geoAlbersUsa,
         fitGeojson: states,
       }}
       let:projection
@@ -32,25 +32,16 @@
             class="stroke-surface-content fill-surface-100 hover:fill-surface-content/20"
           />
         {/each}
-        {#each counties.features as feature}
-          <GeoPath
-            geojson={feature}
-            class="fill-none stroke-surface-content/10 pointer-events-none"
-          />
-        {/each}
+
+        <GeoPath
+          geojson={counties}
+          class="fill-none stroke-surface-content/20 pointer-events-none"
+        />
       </Svg>
       <Tooltip header={(data) => data.properties.name} let:data>
         {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
-        <!-- <TooltipItem
-					label="longitude"
-					value={longitude}
-					format="decimal"
-				/>
-				<TooltipItem
-					label="latitude"
-					value={latitude}
-					format="decimal"
-				/> -->
+        <TooltipItem label="longitude" value={longitude} format="decimal" />
+        <TooltipItem label="latitude" value={latitude} format="decimal" />
       </Tooltip>
     </Chart>
   </div>
@@ -62,7 +53,7 @@
   <div class="h-[600px] mt-10">
     <Chart
       geo={{
-        projection: geoIdentity,
+        projection: geoAlbersUsa,
         fitGeojson: states,
       }}
       let:projection
@@ -105,16 +96,8 @@
 
       <Tooltip header={(data) => data.properties.name} let:data>
         {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
-        <!-- <TooltipItem
-					label="longitude"
-					value={longitude}
-					format="decimal"
-				/>
-				<TooltipItem
-					label="latitude"
-					value={latitude}
-					format="decimal"
-				/> -->
+        <TooltipItem label="longitude" value={longitude} format="decimal" />
+        <TooltipItem label="latitude" value={latitude} format="decimal" />
       </Tooltip>
     </Chart>
   </div>
