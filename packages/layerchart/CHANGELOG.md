@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.41.1
+
+### Patch Changes
+
+- [TooltipContext] Fix touch dragging to update tooltip highlighted when using `band` and `voronoi` modes (path based) ([`7093367c803ee25557e3522bb7b6a082be72b5cf`](https://github.com/techniq/layerchart/commit/7093367c803ee25557e3522bb7b6a082be72b5cf))
+
 ## 0.41.0
 
 ### Minor Changes
