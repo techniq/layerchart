@@ -4,7 +4,7 @@
   import { format } from 'date-fns';
   import { formatDate, PeriodType } from 'svelte-ux/utils/date';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import Area from '$lib/components/Area.svelte';
   import AreaStack from '$lib/components/AreaStack.svelte';
   import Axis from '$lib/components/Axis.svelte';

@@ -3,7 +3,7 @@
   import { addMinutes, startOfDay } from 'date-fns';
   import { Duration, PeriodType, format } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import Axis from '$lib/components/Axis.svelte';
   import Highlight from '$lib/components/Highlight.svelte';
   import Points from '$lib/components/Points.svelte';

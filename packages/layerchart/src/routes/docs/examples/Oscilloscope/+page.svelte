@@ -2,7 +2,7 @@
   import { scaleBand, scaleLinear, scaleSequential } from 'd3-scale';
   import { range, ticks } from 'd3-array';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import Axis from '$lib/components/Axis.svelte';
   import Bars from '$lib/components/Bars.svelte';
   import LinearGradient from '$lib/components/LinearGradient.svelte';

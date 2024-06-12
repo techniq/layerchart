@@ -3,7 +3,7 @@
   import { format } from 'date-fns';
   import { cls } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import Bars from '$lib/components/Bars.svelte';
   import Highlight from '$lib/components/Highlight.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';

@@ -5,7 +5,7 @@
   import { format as formatDate } from 'date-fns';
   import { format, Field, Switch, Toggle, PeriodType } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import Area from '$lib/components/Area.svelte';
   import Axis from '$lib/components/Axis.svelte';
   import ChartClipPath from '$lib/components/ChartClipPath.svelte';

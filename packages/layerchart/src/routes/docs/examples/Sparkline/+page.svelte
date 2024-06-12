@@ -2,7 +2,7 @@
   import { scaleTime } from 'd3-scale';
   import { format } from 'date-fns';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import Highlight from '$lib/components/Highlight.svelte';
 
   import Spline from '$lib/components/Spline.svelte';

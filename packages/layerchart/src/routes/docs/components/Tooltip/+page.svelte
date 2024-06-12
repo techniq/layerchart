@@ -1,7 +1,22 @@
 <script lang="ts">
+  import type { ComponentProps } from 'svelte';
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { stack } from 'd3-shape';
   import { format } from 'date-fns';
+
+  import {
+    Area,
+    AreaStack,
+    Axis,
+    Bars,
+    Chart,
+    Highlight,
+    Points,
+    Svg,
+    Tooltip,
+    TooltipItem,
+    TooltipSeparator,
+  } from 'layerchart';
 
   import {
     Button,
@@ -15,22 +30,9 @@
   } from 'svelte-ux';
   import { flatten } from 'svelte-ux/utils/array';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Area from '$lib/components/Area.svelte';
-  import AreaStack from '$lib/components/AreaStack.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Bars from '$lib/components/Bars.svelte';
-  import Highlight from '$lib/components/Highlight.svelte';
-  import Points from '$lib/components/Points.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
-  import TooltipSeparator from '$lib/components/TooltipSeparator.svelte';
-
   import Preview from '$lib/docs/Preview.svelte';
-
-  import { createDateSeries, createTimeSeries, getSpiral } from '$lib/utils/genData.js';
   import TooltipControls from './TooltipControls.svelte';
-  import type { ComponentProps } from 'svelte';
+  import { createDateSeries, createTimeSeries, getSpiral } from '$lib/utils/genData.js';
 
   const dateSeries = createDateSeries({
     count: 30,

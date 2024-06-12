@@ -5,7 +5,7 @@
   import { Button, ButtonGroup, Field, RangeField, timerStore } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import GeoCircle from '$lib/components/GeoCircle.svelte';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Graticule from '$lib/components/Graticule.svelte';

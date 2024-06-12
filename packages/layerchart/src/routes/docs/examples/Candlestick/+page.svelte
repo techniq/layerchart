@@ -1,7 +1,7 @@
 <script lang="ts">
   import { scaleBand, scaleOrdinal } from 'd3-scale';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import Axis from '$lib/components/Axis.svelte';
   import Bars from '$lib/components/Bars.svelte';
   import Highlight from '$lib/components/Highlight.svelte';

@@ -4,7 +4,7 @@
   import { curveLinearClosed, curveCatmullRomClosed, curveCatmullRom } from 'd3-shape';
   import { Field, PeriodType, ToggleGroup, ToggleOption, cls } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import Area from '$lib/components/Area.svelte';
   import Axis from '$lib/components/Axis.svelte';
   import Group from '$lib/components/Group.svelte';

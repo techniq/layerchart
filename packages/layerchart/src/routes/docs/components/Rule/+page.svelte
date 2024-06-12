@@ -1,10 +1,6 @@
 <script lang="ts">
-  import { scaleTime } from 'd3-scale';
-
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Axis, Chart, Rule, Svg } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Rule from '$lib/components/Rule.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
 
   const data = createDateSeries({ min: 50, max: 100, value: 'integer' });

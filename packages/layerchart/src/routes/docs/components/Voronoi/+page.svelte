@@ -1,9 +1,5 @@
 <script lang="ts">
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import ChartClipPath from '$lib/components/ChartClipPath.svelte';
-  import Circle from '$lib/components/Circle.svelte';
-  import Points from '$lib/components/Points.svelte';
-  import Voronoi from '$lib/components/Voronoi.svelte';
+  import { Chart, ChartClipPath, Circle, Points, Svg, Voronoi } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { getSpiral } from '$lib/utils/genData.js';

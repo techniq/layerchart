@@ -1,7 +1,7 @@
 <script lang="ts">
   import { forceManyBody, forceLink } from 'd3-force';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import Circle from '$lib/components/Circle.svelte';
   import ForceSimulation from '$lib/components/ForceSimulation.svelte';
   import Group from '$lib/components/Group.svelte';

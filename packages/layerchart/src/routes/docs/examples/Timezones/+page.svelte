@@ -15,7 +15,7 @@
 
   import { Field, SelectField, Switch, timerStore } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import Blur from '$lib/components/Blur.svelte';

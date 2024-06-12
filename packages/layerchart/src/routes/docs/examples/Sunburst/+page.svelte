@@ -16,7 +16,7 @@
     sortFunc,
   } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import Arc from '$lib/components/Arc.svelte';
   import Bounds from '$lib/components/Bounds.svelte';
   import Group from '$lib/components/Group.svelte';

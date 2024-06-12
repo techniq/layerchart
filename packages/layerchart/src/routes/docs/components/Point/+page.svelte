@@ -1,9 +1,6 @@
 <script lang="ts">
+  import { Axis, Chart, Point, Svg } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Point from '$lib/components/Point.svelte';
 </script>
 
 <h1>Examples</h1>

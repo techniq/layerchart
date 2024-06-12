@@ -1,9 +1,7 @@
 <script lang="ts">
   import Preview from '$lib/docs/Preview.svelte';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Line from '$lib/components/Line.svelte';
+  import { Axis, Chart, Line, Svg } from 'layerchart';
 </script>
 
 <h1>Examples</h1>

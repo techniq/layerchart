@@ -1,6 +1,5 @@
 <script lang="ts">
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import RadialGradient from '$lib/components/RadialGradient.svelte';
+  import { Chart, RadialGradient, Svg } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   const radius = 50;

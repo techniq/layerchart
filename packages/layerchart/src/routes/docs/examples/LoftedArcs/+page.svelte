@@ -8,7 +8,7 @@
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import Preview from '$lib/docs/Preview.svelte';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import GeoPath from '$lib/components/GeoPath.svelte';
   import GeoEdgeFade from '$lib/components/GeoEdgeFade.svelte';
   import Graticule from '$lib/components/Graticule.svelte';

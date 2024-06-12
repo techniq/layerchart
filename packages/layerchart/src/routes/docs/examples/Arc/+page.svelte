@@ -4,7 +4,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import Arc from '$lib/components/Arc.svelte';
   import Group from '$lib/components/Group.svelte';
   import LinearGradient from '$lib/components/LinearGradient.svelte';

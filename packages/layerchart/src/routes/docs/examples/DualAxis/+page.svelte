@@ -2,7 +2,7 @@
   import { scaleLinear } from 'd3-scale';
   import { extent, max } from 'd3-array';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import Axis from '$lib/components/Axis.svelte';
   import Highlight from '$lib/components/Highlight.svelte';
   import Spline from '$lib/components/Spline.svelte';

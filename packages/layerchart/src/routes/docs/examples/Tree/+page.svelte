@@ -5,7 +5,7 @@
 
   import { Field, ToggleGroup, ToggleOption, cls } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import Group from '$lib/components/Group.svelte';
   import Link from '$lib/components/Link.svelte';
   import Rect from '$lib/components/Rect.svelte';

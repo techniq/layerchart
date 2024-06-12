@@ -5,15 +5,9 @@
   import { range } from 'd3-array';
   import { schemeGreens } from 'd3-scale-chromatic';
 
+  import { Calendar, Chart, Group, Text, Tooltip, TooltipItem, Svg } from 'layerchart';
+
   import Preview from '$lib/docs/Preview.svelte';
-
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Calendar from '$lib/components/Calendar.svelte';
-  import Group from '$lib/components/Group.svelte';
-  import Text from '$lib/components/Text.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-  import TooltipItem from '$lib/components/TooltipItem.svelte';
-
   import { createDateSeries } from '$lib/utils/genData.js';
 
   const now = new Date();

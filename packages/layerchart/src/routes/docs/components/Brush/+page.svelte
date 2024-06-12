@@ -5,22 +5,24 @@
   import { subDays } from 'date-fns';
   import { mdiChevronRight } from '@mdi/js';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import {
+    Area,
+    Axis,
+    Brush,
+    Chart,
+    ChartClipPath,
+    Circle,
+    Highlight,
+    LinearGradient,
+    Pattern,
+    Points,
+    Rule,
+    Tooltip,
+    Svg,
+  } from 'layerchart';
+
   import Preview from '$lib/docs/Preview.svelte';
-
-  import Area from '$lib/components/Area.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Brush from '$lib/components/Brush.svelte';
-  import ChartClipPath from '$lib/components/ChartClipPath.svelte';
-  import Highlight from '$lib/components/Highlight.svelte';
-  import LinearGradient from '$lib/components/LinearGradient.svelte';
-  import Pattern from '$lib/components/Pattern.svelte';
-  import Rule from '$lib/components/Rule.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
-
   import { randomWalk } from '$lib/utils/genData.js';
-  import Points from '$lib/components/Points.svelte';
-  import Circle from '$lib/components/Circle.svelte';
 
   export let data;
 

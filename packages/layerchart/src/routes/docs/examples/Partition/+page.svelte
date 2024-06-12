@@ -22,7 +22,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Chart, Svg } from 'layerchart';
   import Bounds from '$lib/components/Bounds.svelte';
   import ChartClipPath from '$lib/components/ChartClipPath.svelte';
   import Group from '$lib/components/Group.svelte';

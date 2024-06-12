@@ -27,8 +27,7 @@
     schemeRdBu,
   } from 'd3-scale-chromatic';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import Legend from '$lib/components/Legend.svelte';
+  import { Chart, Legend } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
 

@@ -1,7 +1,6 @@
 <script lang="ts">
+  import { Text } from 'layerchart';
   import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
-
-  import Text from '$lib/components/Text.svelte';
 
   let value = 'This is really long text';
   let x = 0;

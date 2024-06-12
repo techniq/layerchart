@@ -11,12 +11,9 @@
   import { range } from 'd3-array';
   import { feature } from 'topojson-client';
 
+  import { Chart, GeoCircle, GeoPath, Graticule, Svg } from 'layerchart';
   import { Field, RangeField, SelectField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
-  import GeoCircle from '$lib/components/GeoCircle.svelte';
-  import GeoPath from '$lib/components/GeoPath.svelte';
-  import Graticule from '$lib/components/Graticule.svelte';
   import Preview from '$lib/docs/Preview.svelte';
 
   export let data;

@@ -1,9 +1,6 @@
 <script lang="ts">
-  import Chart, { Svg } from '$lib/components/Chart.svelte';
+  import { Axis, Chart, Frame, LinearGradient, Svg } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import Axis from '$lib/components/Axis.svelte';
-  import Frame from '$lib/components/Frame.svelte';
-  import LinearGradient from '$lib/components/LinearGradient.svelte';
 </script>
 
 <h1>Examples</h1>
