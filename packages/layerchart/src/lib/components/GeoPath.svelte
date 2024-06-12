@@ -99,6 +99,7 @@
       on:pointermove
       on:pointerleave={(e) => tooltip?.hide()}
       on:pointerleave
+      on:pointerdown
       on:click={(event) => dispatch('click', { geoPath, event })}
       on:click
       class={cls(fill == null && 'fill-transparent', className)}

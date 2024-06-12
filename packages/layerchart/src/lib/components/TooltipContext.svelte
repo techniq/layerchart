@@ -377,6 +377,11 @@
           on:pointerenter={(e) => showTooltip(e.detail.event, e.detail.data)}
           on:pointermove={(e) => showTooltip(e.detail.event, e.detail.data)}
           on:pointerleave={hideTooltip}
+          on:pointerdown={(e) => {
+            if (e.target.hasPointerCapture(e.pointerId)) {
+              e.target.releasePointerCapture(e.pointerId);
+            }
+          }}
           on:click={(e) => {
             onClick({ data: e.detail.data });
           }}
@@ -396,6 +401,11 @@
               on:pointerenter={(e) => showTooltip(e, rect.data)}
               on:pointermove={(e) => showTooltip(e, rect.data)}
               on:pointerleave={hideTooltip}
+              on:pointerdown={(e) => {
+                if (e.target.hasPointerCapture(e.pointerId)) {
+                  e.target.releasePointerCapture(e.pointerId);
+                }
+              }}
               on:click={(e) => {
                 onClick({ data: rect.data });
               }}
