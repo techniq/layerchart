@@ -13,9 +13,9 @@ const config = {
   kit: {
     adapter: adapter(),
     alias: {
-      'layerchart': 'src/lib/index.js',
-			'layerchart/*': 'src/lib/*'
-    }
+      layerchart: 'src/lib/index.js',
+      'layerchart/*': 'src/lib/*',
+    },
   },
 };
 
