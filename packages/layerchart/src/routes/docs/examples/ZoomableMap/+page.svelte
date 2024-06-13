@@ -4,7 +4,17 @@
   import { geoAlbersUsa, geoAlbers, geoMercator, geoPath as d3geoPath } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, HitCanvas, Svg, Tooltip, TransformControls } from 'layerchart';
+  import {
+    Canvas,
+    Chart,
+    GeoPath,
+    HitCanvas,
+    Svg,
+    Tooltip,
+    TooltipItem,
+    TransformControls,
+    geoFitObjectTransform,
+  } from 'layerchart';
   import { SelectField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -20,6 +30,14 @@
 
   const counties = feature(data.geojson, data.geojson.objects.counties);
   const states = feature(data.geojson, data.geojson.objects.states);
+
+  $: contiguousStates = {
+    ...states,
+    features: states.features.filter((d) => {
+      // Contiguous states
+      return Number(d.id) < 60 && d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii';
+    }),
+  };
 
   let selectedStateId = null;
   $: selectedCountiesFeatures = selectedStateId
@@ -40,23 +58,95 @@
 
 <h1>Examples</h1>
 
-<h2>SVG</h2>
+<h2>SVG (projection transform)</h2>
 
 <Preview data={states}>
   <div class="h-[600px] relative overflow-hidden">
     <Chart
       geo={{
         projection,
-        fitGeojson: states,
+        fitGeojson: projection === geoMercator ? contiguousStates : states,
+        applyTransform: ['translate', 'scale'],
       }}
+      transform={{
+        initialScrollMode: 'none',
+        translateOnScale: true,
+        tweened: { duration: 800, easing: cubicOut },
+      }}
+      let:projection
+      let:transform
       let:tooltip
+      let:width
+      let:height
+    >
+      <TransformControls />
+
+      <Svg>
+        {#each states.features as feature}
+          <GeoPath
+            geojson={feature}
+            class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
+            {tooltip}
+            on:click={(e) => {
+              const { geoPath, event } = e.detail;
+
+              if (selectedStateId === feature.id) {
+                selectedStateId = null;
+                transform.reset();
+              } else {
+                selectedStateId = feature.id;
+                const featureTransform = geoFitObjectTransform(
+                  projection,
+                  [width, height],
+                  feature
+                );
+                transform.setTranslate(featureTransform.translate);
+                transform.setScale(featureTransform.scale);
+              }
+            }}
+          />
+        {/each}
+
+        {#each selectedCountiesFeatures as feature (feature.id)}
+          <g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}>
+            <GeoPath
+              geojson={feature}
+              {tooltip}
+              class="stroke-surface-content/10 hover:fill-surface-content/10"
+              on:click={() => {
+                selectedStateId = null;
+                transform.reset();
+              }}
+            />
+          </g>
+        {/each}
+      </Svg>
+      <Tooltip header={(data) => data.properties.name}>
+        {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
+        <TooltipItem label="longitude" value={longitude} format="decimal" />
+        <TooltipItem label="latitude" value={latitude} format="decimal" />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>SVG (canvas transform)</h2>
+
+<Preview data={states}>
+  <div class="h-[600px] relative overflow-hidden">
+    <Chart
+      geo={{
+        projection,
+        fitGeojson: projection === geoMercator ? contiguousStates : states,
+      }}
       transform={{
         mode: 'canvas',
         initialScrollMode: 'none',
         tweened: { duration: 800, easing: cubicOut },
       }}
-      let:transform
       let:projection
+      let:transform
+      let:tooltip
     >
       <TransformControls />
 
@@ -69,16 +159,16 @@
             {tooltip}
             on:click={(e) => {
               const { geoPath, event } = e.detail;
-              let [[left, top], [right, bottom]] = geoPath.bounds(feature);
               if (selectedStateId === feature.id) {
                 selectedStateId = null;
                 transform.reset();
               } else {
                 selectedStateId = feature.id;
-                let width = right - left;
-                let height = bottom - top;
-                let x = (left + right) / 2;
-                let y = (top + bottom) / 2;
+                const [[left, top], [right, bottom]] = geoPath.bounds(feature);
+                const width = right - left;
+                const height = bottom - top;
+                const x = (left + right) / 2;
+                const y = (top + bottom) / 2;
                 const padding = 20;
                 transform.zoomTo({ x, y }, { width: width + padding, height: height + padding });
               }
@@ -102,7 +192,7 @@
         {/each}
       </Svg>
       <Tooltip header={(data) => data.properties.name}>
-        <!-- TODO: How to handle scale (not applied to projection) -->
+        <!-- TODO: How to handle scale (when using canvas and not projection transforms) -->
         <!-- {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
         <TooltipItem label="longitude" value={longitude} format="decimal" />
         <TooltipItem label="latitude" value={latitude} format="decimal" /> -->
@@ -111,14 +201,128 @@
   </div>
 </Preview>
 
-<h2>Canvas</h2>
+<h2>Canvas (projection transform)</h2>
 
 <Preview data={states}>
   <div class="h-[600px] relative overflow-hidden">
     <Chart
       geo={{
         projection,
-        fitGeojson: states,
+        fitGeojson: projection === geoMercator ? contiguousStates : states,
+        applyTransform: ['translate', 'scale'],
+      }}
+      transform={{
+        initialScrollMode: 'none',
+        translateOnScale: true,
+        tweened: { duration: 800, easing: cubicOut },
+      }}
+      let:projection
+      let:transform
+      let:tooltip
+      let:width
+      let:height
+    >
+      <TransformControls />
+
+      <Canvas>
+        <GeoPath
+          geojson={states}
+          class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
+        />
+      </Canvas>
+
+      <Canvas>
+        <!-- TODO: Fade in with delay like SVG -->
+        <!-- <g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}> -->
+        <GeoPath
+          geojson={{ type: 'FeatureCollection', features: selectedCountiesFeatures }}
+          {tooltip}
+          class="stroke-surface-content/10 hover:fill-surface-content/10"
+          on:click={() => {
+            selectedStateId = null;
+            transform.reset();
+          }}
+        />
+        <!-- </g> -->
+      </Canvas>
+
+      {#if tooltip.data}
+        <Canvas>
+          <GeoPath
+            geojson={tooltip.data}
+            strokeWidth={1 / transform.scale}
+            class="stroke-surface-content fill-surface-content/20"
+          />
+        </Canvas>
+      {/if}
+
+      <HitCanvas
+        let:nextColor
+        let:setColorData
+        on:pointermove={(e) => tooltip.show(e.detail.event, e.detail.data)}
+        on:pointerleave={tooltip.hide}
+        on:click={(e) => {
+          const feature = e.detail.data;
+
+          if (
+            selectedStateId === feature.id ||
+            !states.features.some((f) => f.id == feature.id) // County selected
+          ) {
+            selectedStateId = null;
+            transform.reset();
+          } else {
+            selectedStateId = feature.id;
+            const featureTransform = geoFitObjectTransform(projection, [width, height], feature);
+            transform.setTranslate(featureTransform.translate);
+            transform.setScale(featureTransform.scale);
+          }
+        }}
+      >
+        <GeoPath
+          render={(ctx, { geoPath }) => {
+            for (var feature of states.features) {
+              const color = nextColor();
+
+              ctx.beginPath();
+              geoPath(feature);
+              ctx.fillStyle = color;
+              ctx.fill();
+
+              setColorData(color, feature);
+            }
+
+            // Draw county features on top if state selected
+            for (var feature of selectedCountiesFeatures) {
+              const color = nextColor();
+
+              ctx.beginPath();
+              geoPath(feature);
+              ctx.fillStyle = color;
+              ctx.fill();
+
+              setColorData(color, feature);
+            }
+          }}
+        />
+      </HitCanvas>
+
+      <Tooltip header={(data) => data.properties.name}>
+        {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
+        <TooltipItem label="longitude" value={longitude} format="decimal" />
+        <TooltipItem label="latitude" value={latitude} format="decimal" />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Canvas (canvas transform)</h2>
+
+<Preview data={states}>
+  <div class="h-[600px] relative overflow-hidden">
+    <Chart
+      geo={{
+        projection,
+        fitGeojson: projection === geoMercator ? contiguousStates : states,
       }}
       transform={{
         mode: 'canvas',
@@ -126,8 +330,8 @@
         tweened: { duration: 800, easing: cubicOut },
       }}
       let:projection
-      let:tooltip
       let:transform
+      let:tooltip
     >
       <TransformControls />
 
@@ -222,7 +426,7 @@
       </HitCanvas>
 
       <Tooltip header={(data) => data.properties.name}>
-        <!-- TODO: How to handle scale (not applied to projection) -->
+        <!-- TODO: How to handle scale (when using canvas and not projection transforms) -->
         <!-- {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
         <TooltipItem label="longitude" value={longitude} format="decimal" />
         <TooltipItem label="latitude" value={latitude} format="decimal" /> -->
