@@ -46,7 +46,7 @@
 
   const dispatch = createEventDispatcher<{ click: { geoPath: GeoPath; event: MouseEvent } }>();
 
-  const { width, height } = getContext('LayerCake');
+  const { containerWidth, containerHeight, padding } = getContext('LayerCake');
   const canvas = getContext('canvas');
   const geo = geoContext();
 
@@ -77,7 +77,9 @@
     }
 
     // console.count('render');
-    $ctx.clearRect(0, 0, $width, $height);
+
+    // Clear with negative offset due to Canvas `context.translate(...)`
+    $ctx.clearRect(-$padding.left, -$padding.top, $containerWidth, $containerHeight);
 
     if (render) {
       geoPath = geoCurvePath(_projection, curve, $ctx);
