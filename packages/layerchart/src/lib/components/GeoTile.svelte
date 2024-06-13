@@ -3,6 +3,7 @@
   import { tile as d3Tile } from 'd3-tile';
 
   import { geoContext } from './GeoContext.svelte';
+  import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
 
   export let url: (x: number, y: number, z: number) => string;
@@ -11,14 +12,16 @@
   export let disableCache = false;
   export let debug = false;
 
-  const { width, height } = getContext('LayerCake');
+  const { containerWidth, containerHeight, padding } = getContext('LayerCake');
   const canvas = getContext('canvas');
   const geo = geoContext();
 
+  $: center = $geo([0, 0]) ?? [0, 0];
+
   $: tile = d3Tile()
-    .size([$width, $height])
+    .size([$containerWidth, $containerHeight])
+    .translate([center[0] + $padding.left, center[1] + $padding.top])
     .scale($geo.scale() * 2 * Math.PI)
-    .translate($geo([0, 0]) ?? [0, 0]) // TODO: Only works with Mercator
     .tileSize(tileSize)
     .zoomDelta(zoomDelta);
 
@@ -47,8 +50,10 @@
 
 {#if renderContext === 'svg' && url}
   <slot {tiles}>
-    {#each tiles as [x, y, z] (url(x, y, z))}
-      <TileImage {url} {x} {y} {z} {tx} {ty} {k} {disableCache} {debug} />
-    {/each}
+    <Group x={-$padding.left} y={-$padding.top}>
+      {#each tiles as [x, y, z] (url(x, y, z))}
+        <TileImage {url} {x} {y} {z} {tx} {ty} {k} {disableCache} {debug} />
+      {/each}
+    </Group>
   </slot>
 {/if}
