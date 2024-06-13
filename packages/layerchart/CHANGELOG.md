@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.41.3
+
+### Patch Changes
+
+- [GeoTile] Properly handle chart padding ([`4c7f3f5ea1322ec82fa75f09ef7416a0581f2715`](https://github.com/techniq/layerchart/commit/4c7f3f5ea1322ec82fa75f09ef7416a0581f2715))
+
 ## 0.41.2
 
 ### Patch Changes
