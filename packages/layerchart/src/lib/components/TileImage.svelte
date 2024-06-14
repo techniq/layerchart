@@ -10,9 +10,10 @@
   export let z: number;
   /** translate x */
   export let tx: number;
-  /** scale */
+  /** translate y */
   export let ty: number;
-  export let k: number;
+  export let scale: number;
+
   export let disableCache = false;
   export let debug = false;
 
@@ -63,17 +64,23 @@
 <!-- To avoid aliasing artifacts (thin white lines) between tiles, two layers of tiles are drawn, with the lower layer’s tiles enlarged by one pixel -->
 <image
   xlink:href={href}
-  x={(x + tx) * k - 0.5}
-  y={(y + ty) * k - 0.5}
-  width={k + 1}
-  height={k + 1}
+  x={(x + tx) * scale - 0.5}
+  y={(y + ty) * scale - 0.5}
+  width={scale + 1}
+  height={scale + 1}
 />
-<image xlink:href={href} x={(x + tx) * k} y={(y + ty) * k} width={k} height={k} />
+<image xlink:href={href} x={(x + tx) * scale} y={(y + ty) * scale} width={scale} height={scale} />
 {#if debug}
-  <rect x={(x + tx) * k} y={(y + ty) * k} width={k} height={k} class="stroke-danger/50 fill-none" />
+  <rect
+    x={(x + tx) * scale}
+    y={(y + ty) * scale}
+    width={scale}
+    height={scale}
+    class="stroke-danger/50 fill-none"
+  />
   <Text
-    x={(x + tx) * k}
-    y={(y + ty) * k}
+    x={(x + tx) * scale}
+    y={(y + ty) * scale}
     verticalAnchor="start"
     dx={2}
     dy={-2}

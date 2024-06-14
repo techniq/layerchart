@@ -28,20 +28,17 @@
   $: tiles = tile();
   $: ({
     translate: [tx, ty],
-    scale: k,
+    scale,
   } = tiles);
 
   $: renderContext = canvas ? 'canvas' : 'svg';
 
   $: ctx = canvas?.ctx;
   $: if (renderContext === 'canvas' && $ctx && url) {
-    // console.count('render');
-    // $ctx.clearRect(0, 0, $width, $height);
-
     tiles.forEach(([x, y, z]) => {
       const image = new Image();
       image.onload = () => {
-        $ctx.drawImage(image, (x + tx) * k, (y + ty) * k, k, k);
+        $ctx.drawImage(image, (x + tx) * scale, (y + ty) * scale, scale, scale);
       };
       image.src = url(x, y, z);
     });
@@ -52,7 +49,7 @@
   <slot {tiles}>
     <Group x={-$padding.left} y={-$padding.top}>
       {#each tiles as [x, y, z] (url(x, y, z))}
-        <TileImage {url} {x} {y} {z} {tx} {ty} {k} {disableCache} {debug} />
+        <TileImage {url} {x} {y} {z} {tx} {ty} {scale} {disableCache} {debug} />
       {/each}
     </Group>
   </slot>

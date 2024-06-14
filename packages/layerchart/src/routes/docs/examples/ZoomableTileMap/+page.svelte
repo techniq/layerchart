@@ -75,6 +75,7 @@
 
       <Svg>
         <GeoTile url={serviceUrl} {zoomDelta} {debug} />
+
         {#each filteredStates.features as feature}
           <GeoPath
             geojson={feature}
@@ -90,6 +91,7 @@
           />
         {/each}
       </Svg>
+
       <Tooltip header={(data) => data.properties.name} let:data>
         {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
         <TooltipItem label="longitude" value={longitude} format="decimal" />
@@ -135,6 +137,7 @@
 
       <Svg>
         <GeoTile url={serviceUrl} {zoomDelta} {debug} />
+
         {#each filteredStates.features as feature}
           <GeoPath
             geojson={feature}
@@ -150,6 +153,66 @@
           />
         {/each}
       </Svg>
+      <Tooltip header={(data) => data.properties.name} let:data>
+        {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
+        <TooltipItem label="longitude" value={longitude} format="decimal" />
+        <TooltipItem label="latitude" value={latitude} format="decimal" />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Seamless (multiple zoom layers)</h2>
+
+<Preview data={filteredStates}>
+  <div class="h-[600px] relative overflow-hidden">
+    <Chart
+      geo={{
+        projection: geoMercator,
+        fitGeojson: filteredStates,
+        applyTransform: ['translate', 'scale'],
+      }}
+      transform={{
+        translateOnScale: true,
+        initialScrollMode: 'scale',
+      }}
+      let:tooltip
+      let:projection
+      let:transform
+      let:width
+      let:height
+    >
+      {#if debug}
+        <div class="absolute top-0 left-0 z-10 grid gap-1">
+          <GeoDebug />
+        </div>
+      {/if}
+
+      <TransformControls />
+
+      <Svg>
+        <!-- technique: https://observablehq.com/@d3/seamless-zoomable-map-tiles -->
+        <GeoTile url={serviceUrl} zoomDelta={-100} />
+        <GeoTile url={serviceUrl} zoomDelta={-4} />
+        <GeoTile url={serviceUrl} zoomDelta={-1} />
+        <GeoTile url={serviceUrl} {zoomDelta} {debug} />
+
+        {#each filteredStates.features as feature}
+          <GeoPath
+            geojson={feature}
+            class="stroke-none"
+            {tooltip}
+            on:click={(e) => {
+              const { geoPath, event } = e.detail;
+
+              const featureTransform = geoFitObjectTransform(projection, [width, height], feature);
+              transform.setTranslate(featureTransform.translate);
+              transform.setScale(featureTransform.scale);
+            }}
+          />
+        {/each}
+      </Svg>
+
       <Tooltip header={(data) => data.properties.name} let:data>
         {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
         <TooltipItem label="longitude" value={longitude} format="decimal" />
