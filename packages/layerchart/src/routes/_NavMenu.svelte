@@ -25,7 +25,14 @@
       'Threshold',
     ],
     'Hierarchy & Graph': ['Pack', 'Partition', 'Sankey', 'Sunburst', 'Tree', 'Treemap'],
-    Force: ['Beeswarm', 'CollisionDetection', 'ForceGroup', 'ForceLattice', 'ForceTree'],
+    Force: [
+      'Beeswarm',
+      'CollisionDetection',
+      'ForceGraph',
+      'ForceGroup',
+      'ForceLattice',
+      'ForceTree',
+    ],
     Geo: [
       'GeoPath',
       'GeoPoint',
