@@ -36,7 +36,6 @@
           {/key}
 
           {#each nodes as node}
-            {console.log({ node })}
             <Circle
               cx={node.x}
               cy={node.y}
