@@ -31,10 +31,7 @@
       <Svg>
         <ForceSimulation
           forces={{
-            link: forceLink(links)
-              .id((d) => d.id)
-              .distance(0)
-              .strength(1),
+            link: forceLink(links).distance(0).strength(1),
             charge: forceManyBody().strength(-50),
             x: forceX(),
             y: forceY(),
