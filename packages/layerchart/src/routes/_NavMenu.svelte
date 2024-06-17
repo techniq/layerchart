@@ -28,8 +28,9 @@
     Force: [
       'Beeswarm',
       'CollisionDetection',
-      'ForceGraph',
       'ForceGroup',
+      'ForceGraph',
+      'ForceDisjointGraph',
       'ForceLattice',
       'ForceTree',
     ],
