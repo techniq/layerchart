@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.41.5
+
+### Patch Changes
+
+- Move vite-plugin-svelte to devDependencies ([`fc1a9a1ed0851800d347d99abb949c83a3f6599e`](https://github.com/techniq/layerchart/commit/fc1a9a1ed0851800d347d99abb949c83a3f6599e))
+
 ## 0.41.4
 
 ### Patch Changes
