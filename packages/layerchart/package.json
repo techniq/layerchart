@@ -24,6 +24,7 @@
     "@sveltejs/adapter-auto": "^3.2.1",
     "@sveltejs/kit": "^2.5.10",
     "@sveltejs/package": "^2.3.1",
+    "@sveltejs/vite-plugin-svelte": "^3.1.1",
     "@svitejs/changesets-changelog-github-compact": "^1.1.0",
     "@tailwindcss/typography": "^0.5.13",
     "@types/d3-array": "^3.2.1",
@@ -74,7 +75,6 @@
   },
   "type": "module",
   "dependencies": {
-    "@sveltejs/vite-plugin-svelte": "^3.1.1",
     "d3-array": "^3.2.4",
     "d3-color": "^3.1.0",
     "d3-delaunay": "^6.0.4",
