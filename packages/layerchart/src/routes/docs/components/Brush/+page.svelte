@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { scaleOrdinal, scaleTime } from 'd3-scale';
-  import { range } from 'd3-array';
-  import { PeriodType, State, cls, format } from 'svelte-ux';
+  import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
+  import { bin, range, sum } from 'd3-array';
+  import { timeMonths } from 'd3-time';
+  import { PeriodType, State, cls, format, formatDate } from 'svelte-ux';
   import { subDays } from 'date-fns';
   import { mdiChevronRight } from '@mdi/js';
 
@@ -19,6 +20,7 @@
     Rule,
     Tooltip,
     Svg,
+    Bars,
   } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -39,9 +41,68 @@
   const randomData = range(200).map((d) => {
     return { x: d, y: Math.random() };
   });
+
+  $: binByTime = bin()
+    .thresholds((_data, min, max) => timeMonths(min, max))
+    .value((d) => d.date);
+  $: appleStockBinByMonth = binByTime(data.appleStock);
+  // Simplify data for simplier brush example
+  $: appleStockByMonth = appleStockBinByMonth.map((monthBin) => {
+    return {
+      date: monthBin.x0,
+      value: sum(monthBin, (d) => d.value),
+    };
+  });
 </script>
 
 <h1>Examples</h1>
+
+<h2>Bar (scaleBand) support</h2>
+
+<Preview data={appleStockByMonth}>
+  <div class="border rounded p-4 grid gap-1">
+    <State initial={[null, null]} let:value={xDomain} let:set>
+      <div class="h-[300px]">
+        <Chart
+          _data={appleStockByMonth}
+          data={appleStockByMonth.filter(
+            (d) =>
+              (xDomain[0] == null || d.date >= xDomain[0]) &&
+              (xDomain[1] == null || d.date <= xDomain[1])
+          )}
+          x="date"
+          xScale={scaleBand().padding(0.2)}
+          y="value"
+          yDomain={[0, null]}
+          yNice
+          padding={{ left: 24, bottom: 24 }}
+        >
+          <Svg>
+            <Axis placement="left" grid rule />
+            <Axis
+              placement="bottom"
+              rule
+              ticks={(scale) => scaleTime(scale.domain(), scale.range()).ticks(4)}
+              format={(value) => formatDate(value, PeriodType.Custom, { custom: 'MMM yyyy' })}
+            />
+            <ChartClipPath>
+              <Bars radius={4} strokeWidth={1} class="fill-primary" />
+            </ChartClipPath>
+
+            <Brush
+              axis="x"
+              resetOnEnd
+              on:brushEnd={(e) => {
+                console.log(e.detail);
+                set(e.detail.xDomain);
+              }}
+            />
+          </Svg>
+        </Chart>
+      </div>
+    </State>
+  </div>
+</Preview>
 
 <h2>Styling via classes</h2>
 
