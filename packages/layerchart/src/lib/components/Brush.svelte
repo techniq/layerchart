@@ -6,6 +6,7 @@
   import { clamp, cls } from 'svelte-ux';
   import Frame from './Frame.svelte';
   import { localPoint } from '$lib/utils/event.js';
+  import { scaleInvert } from '$lib/utils/scales.js';
   import Group from './Group.svelte';
 
   const { xScale, yScale, width, height, padding } = getContext('LayerCake');
@@ -61,12 +62,13 @@
     ) => void
   ) {
     return (e: PointerEvent) => {
+      // TODO: Handle scaleBand domains
       const start = {
         xDomain: [xDomain[0] ?? xDomainMin, xDomain[1] ?? xDomainMax],
         yDomain: [yDomain[0] ?? yDomainMin, yDomain[1] ?? yDomainMax],
         value: {
-          x: $xScale.invert(localPoint(frameEl, e)?.x - $padding.left),
-          y: $yScale.invert(localPoint(frameEl, e)?.y - $padding.top),
+          x: scaleInvert($xScale, localPoint(frameEl, e)?.x - $padding.left),
+          y: scaleInvert($yScale, localPoint(frameEl, e)?.y - $padding.top),
         },
       };
 
@@ -74,8 +76,8 @@
 
       const onPointerMove = (e: PointerEvent) => {
         fn(start, {
-          x: $xScale.invert(localPoint(frameEl, e)?.x - $padding.left),
-          y: $yScale.invert(localPoint(frameEl, e)?.y - $padding.top),
+          x: scaleInvert($xScale, localPoint(frameEl, e)?.x - $padding.left),
+          y: scaleInvert($yScale, localPoint(frameEl, e)?.y - $padding.top),
         });
 
         // if (xDomain[0] === xDomain[1] || yDomain[0] === yDomain[1]) {
