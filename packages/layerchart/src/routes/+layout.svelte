@@ -231,7 +231,7 @@
   }
 
   :global(main :is(h1, h2, h3):not(.prose *, .related *, .ApiDocs *)) {
-    scroll-margin-top: calc(var(--headerHeight) + 128px); /* app header + docs header */
+    scroll-margin-top: calc(var(--headerHeight) + 148px); /* app header + docs header */
   }
 
   :global(main h1:not(.prose *, .related *, .ApiDocs *)) {
