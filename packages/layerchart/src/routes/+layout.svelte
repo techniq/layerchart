@@ -205,7 +205,7 @@
     </div>
   </AppBar>
 
-  <main class="scroll-smooth isolate" bind:this={mainEl}>
+  <main class="isolate" bind:this={mainEl}>
     <slot />
   </main>
 </AppLayout>
@@ -215,8 +215,8 @@
   @tailwind components;
   @tailwind utilities;
 
-  :global(body) {
-    @apply bg-surface-200 accent-primary;
+  :global(html) {
+    @apply bg-surface-200 accent-primary scroll-smooth;
     /* background-image:
       radial-gradient(at 0% 0%, hsl(var(--color-secondary) / 0.33) 0px, transparent 50%),
       radial-gradient(at 98% 1%, hsl(var(--color-primary) / 0.33) 0px, transparent 50%); */
@@ -230,19 +230,20 @@
     @apply pt-4 pb-2 pl-4 text-xs text-surface-content font-bold;
   }
 
+  :global(main :is(h1, h2, h3):not(.prose *, .related *, .ApiDocs *)) {
+    scroll-margin-top: calc(var(--headerHeight) + 128px); /* app header + docs header */
+  }
+
   :global(main h1:not(.prose *, .related *, .ApiDocs *)) {
     @apply text-xl font-semibold mt-4 mb-2 border-b pb-1;
-    scroll-margin-top: 128px; /* sticky header */
   }
 
   :global(main h2:not(.prose *, .related *, .ApiDocs *)) {
     @apply text-lg font-semibold mt-4 mb-1;
-    scroll-margin-top: 128px; /* sticky header */
   }
 
   :global(main h3:not(.prose *, .related *, .ApiDocs *)) {
     @apply text-xs text-surface-content/50 mb-1;
-    scroll-margin-top: 128px; /* sticky header */
   }
   :global(main :not(.prose) h2 + h3) {
     @apply -mt-1;
