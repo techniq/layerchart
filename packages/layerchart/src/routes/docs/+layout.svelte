@@ -7,6 +7,7 @@
     mdiCheck,
     mdiChevronDown,
     mdiChevronRight,
+    mdiClose,
     mdiCodeBraces,
     mdiCodeTags,
     mdiDatabaseOutline,
@@ -15,7 +16,16 @@
     mdiLink,
   } from '@mdi/js';
 
-  import { ApiDocs, Button, Icon, ListItem, TableOfContents, cls, xlScreen } from 'svelte-ux';
+  import {
+    ApiDocs,
+    Button,
+    Dialog,
+    Icon,
+    ListItem,
+    TableOfContents,
+    cls,
+    xlScreen,
+  } from 'svelte-ux';
 
   import Code from '$lib/docs/Code.svelte';
   import ViewSourceButton from '$lib/docs/ViewSourceButton.svelte';
@@ -40,7 +50,7 @@
     status,
   } = $page.data.meta ?? {});
 
-  $: showTableOfContents = false;
+  $: showTableOfContents = $xlScreen;
   onMount(() => {
     showTableOfContents = !hideTableOfContents && $xlScreen;
   });
@@ -137,12 +147,22 @@
 </div>
 
 <div class="px-4">
-  {#if showTableOfContents && !$xlScreen}
-    <div transition:fade class="mt-3">
-      {#key $page.route.id}
-        <TableOfContents class="text-surface-content" />
-      {/key}
-    </div>
+  {#if !$xlScreen}
+    {#key $page.route.id}
+      <Dialog
+        bind:open={showTableOfContents}
+        classes={{ dialog: 'w-[420px] max-w-[95vw] max-h-[95dvh]' }}
+      >
+        <div slot="title">On this page</div>
+        <Button
+          icon={mdiClose}
+          class="absolute top-1 right-1"
+          size="sm"
+          on:click={() => (showTableOfContents = false)}
+        />
+        <TableOfContents icon={mdiChevronRight} class="px-4 py-2" />
+      </Dialog>
+    {/key}
   {/if}
 
   <div class="grid xl:grid-cols-[1fr,auto] gap-6 pb-4">
@@ -228,18 +248,16 @@
     </div>
 
     {#if showTableOfContents && $xlScreen}
-      <div transition:slide={{ axis: 'x' }}>
-        <div
-          class="w-[224px] sticky top-[calc(var(--headerHeight)+10px)] pr-2 max-h-[calc(100dvh-64px)] overflow-auto z-[60]"
-        >
-          <div class="text-xs uppercase leading-8 tracking-widest text-surface-content/50">
-            On this page
-          </div>
-          <!-- Rebuild toc when page changes -->
-          {#key $page.route.id}
-            <TableOfContents class="text-surface-content" />
-          {/key}
+      <div
+        class="w-[224px] sticky top-[calc(var(--headerHeight)+10px)] pr-2 max-h-[calc(100dvh-64px)] overflow-auto z-[60]"
+      >
+        <div class="text-xs uppercase leading-8 tracking-widest text-surface-content/50">
+          On this page
         </div>
+        <!-- Rebuild toc when page changes -->
+        {#key $page.route.id}
+          <TableOfContents icon={mdiChevronRight} class="border-l pl-3" scrollOffset={184} />
+        {/key}
       </div>
     {/if}
   </div>

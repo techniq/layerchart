@@ -87,14 +87,14 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       posthog-js:
-        specifier: ^1.139.6
-        version: 1.139.6
+        specifier: ^1.140.1
+        version: 1.140.1
       shapefile:
         specifier: ^0.6.6
         version: 0.6.6
       svelte-ux:
-        specifier: ^0.69.1
-        version: 0.69.1(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)
+        specifier: ^0.70.1
+        version: 0.70.1(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)
       topojson-client:
         specifier: ^3.1.0
         version: 3.1.0
@@ -2083,8 +2083,8 @@ packages:
     resolution: {integrity: sha512-Wglpdk03BSfXkHoQa3b/oulrotAkwrlLDRSOb9D0bN86FdRyE9lppSp33aHNPgBa0JKCoB+drFLZkQoRRYae5A==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-js@1.139.6:
-    resolution: {integrity: sha512-JpJwufLW6RhJ7yup0qZ6Lx9Fl0GpwhKUO30wzINywksTgucOujqneepgaSjuCoYPb6Sb0ULImUebIYlotSAzBA==}
+  posthog-js@1.140.1:
+    resolution: {integrity: sha512-UeKuAtQSvbzmTCzNVaauku8F194EYwAP33WrRrWZlDlMNbMy7GKcZOgKbr7jZqnha7FlVlHrWk+Rpyr1zCFhPQ==}
 
   preact@10.22.0:
     resolution: {integrity: sha512-RRurnSjJPj4rp5K6XoP45Ui33ncb7e4H7WiOHVpjbkvqvA3U+N8Z6Qbo0AE6leGYBV66n8EhEaFixvIu3SkxFw==}
@@ -2498,8 +2498,8 @@ packages:
       typescript:
         optional: true
 
-  svelte-ux@0.69.1:
-    resolution: {integrity: sha512-MTHk+3Ii1ERHym1n5AxbIrzy209FzZ9piYEsSij/Zg4N2xhICokkQrkaWk1uR7Pf/+kbFVWFchgxZ1FC8A5z/g==}
+  svelte-ux@0.70.1:
+    resolution: {integrity: sha512-9JIJcc/9DBFaBJM1WGX/i2kWbaWsRABmHjpyiDEtWGJFcaNOpjAXun/5H4LcqCEqHJXRtUhLi0Ny2Xdz8NWgOA==}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0 || ^5.0.0-next.120
 
@@ -4648,7 +4648,7 @@ snapshots:
       picocolors: 1.0.1
       source-map-js: 1.2.0
 
-  posthog-js@1.139.6:
+  posthog-js@1.140.1:
     dependencies:
       fflate: 0.4.8
       preact: 10.22.0
@@ -5082,7 +5082,7 @@ snapshots:
       postcss-load-config: 6.0.1(postcss@8.4.38)
       typescript: 5.5.2
 
-  svelte-ux@0.69.1(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18):
+  svelte-ux@0.70.1(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18):
     dependencies:
       '@floating-ui/dom': 1.6.5
       '@fortawesome/fontawesome-common-types': 6.5.2
