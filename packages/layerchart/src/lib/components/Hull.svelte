@@ -1,16 +1,17 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext, type ComponentProps } from 'svelte';
+  import { createEventDispatcher, type ComponentProps } from 'svelte';
   import { cls } from 'svelte-ux';
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
   import { geoVoronoi } from 'd3-geo-voronoi';
+  import { curveLinearClosed } from 'd3-shape';
 
+  import { chartContext } from './ChartContext.svelte';
   import GeoPath from './GeoPath.svelte';
   import { geoContext } from './GeoContext.svelte';
   import Spline from './Spline.svelte';
-  import { curveLinearClosed } from 'd3-shape';
 
-  const { flatData, x: xContext, y: yContext } = getContext('LayerCake');
+  const { flatData, x: xContext, y: yContext } = chartContext();
   const geo = geoContext();
 
   /** Override data instead of using context */

@@ -1,15 +1,16 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext } from 'svelte';
-  import { cls } from 'svelte-ux';
+  import { createEventDispatcher } from 'svelte';
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
   import type { GeoPermissibleObjects } from 'd3-geo';
   import { geoVoronoi } from 'd3-geo-voronoi';
+  import { cls } from 'svelte-ux';
 
+  import { chartContext } from './ChartContext.svelte';
   import GeoPath from './GeoPath.svelte';
   import { geoContext } from './GeoContext.svelte';
 
-  const { flatData, xGet, yGet, x: xContext, y: yContext, width, height } = getContext('LayerCake');
+  const { flatData, xGet, yGet, x: xContext, y: yContext, width, height } = chartContext();
   const geo = geoContext();
 
   /** Override data instead of using context */
@@ -70,6 +71,8 @@
   {:else}
     {@const voronoi = Delaunay.from(points).voronoi([0, 0, boundWidth, boundHeight])}
     {#each points as point, i}
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <path
         d={voronoi.renderCell(i)}
         class={cls('fill-transparent', classes.path)}

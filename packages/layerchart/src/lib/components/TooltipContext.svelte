@@ -38,6 +38,7 @@
   import { cls, sortFunc } from 'svelte-ux';
 
   import { Svg } from './Chart.svelte';
+  import { chartContext } from './ChartContext.svelte';
   import ChartClipPath from './ChartClipPath.svelte';
   import Voronoi from './Voronoi.svelte';
 
@@ -60,7 +61,7 @@
     containerWidth,
     containerHeight,
     padding,
-  } = getContext('LayerCake');
+  } = chartContext();
 
   /*
 		TODO: Defaults to consider (if possible to detect scale type, which might not be possible)

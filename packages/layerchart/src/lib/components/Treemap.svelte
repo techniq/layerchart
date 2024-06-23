@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-
   import * as d3 from 'd3-hierarchy';
 
+  import { chartContext } from './ChartContext.svelte';
   import { aspectTile } from '../utils/treemap.js';
 
-  const { data, width, height } = getContext('LayerCake');
+  const { data, width, height } = chartContext();
 
   export let tile:
     | typeof d3.treemapSquarify

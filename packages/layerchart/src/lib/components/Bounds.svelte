@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import { scaleLinear } from 'd3-scale';
 
+  import { chartContext } from './ChartContext.svelte';
   import { motionScale } from '$lib/utils/scales.js';
 
-  const { width, height } = getContext('LayerCake');
+  const { width, height } = chartContext();
 
   type Extents = { x0: number; y0: number; x1: number; y1: number };
   type ExtentsAcccessor = (dimensions: { width: number; height: number }) => Extents;

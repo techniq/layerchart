@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { getContext, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
 
   import Bar from './Bar.svelte';
+  import { chartContext } from './ChartContext.svelte';
   import Rect from './Rect.svelte';
 
-  const { data, rGet, config } = getContext('LayerCake');
+  const { data, rGet, config } = chartContext();
 
   /**
    * Override `x` from context.  Useful for multiple Bar instances

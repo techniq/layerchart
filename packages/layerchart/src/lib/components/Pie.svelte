@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { pie as d3pie } from 'd3-shape';
   import { min, max } from 'd3-array';
 
   import Arc from './Arc.svelte';
+  import { chartContext } from './ChartContext.svelte';
   import Group from './Group.svelte';
   import { degreesToRadians } from '$lib/utils/math.js';
   import { motionStore } from '$lib/stores/motionStore.js';
@@ -68,7 +68,7 @@
    */
   export let tooltip: TooltipContextValue | undefined = undefined;
 
-  const { data: contextData, x, y, xRange, rGet, config, width, height } = getContext('LayerCake');
+  const { data: contextData, x, y, xRange, rGet, config, width, height } = chartContext();
 
   $: resolved_endAngle = endAngle ?? degreesToRadians($config.xRange ? max($xRange) : max(range));
   let tweened_endAngle = motionStore(0, { spring, tweened });

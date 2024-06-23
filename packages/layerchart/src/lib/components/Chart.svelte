@@ -27,6 +27,7 @@
   import { get } from 'lodash-es';
   import { isScaleBand } from '$lib/utils/scales.js';
 
+  import ChartContext from './ChartContext.svelte';
   import GeoContext from './GeoContext.svelte';
   import TooltipContext from './TooltipContext.svelte';
   import TransformContext from './TransformContext.svelte';
@@ -37,7 +38,7 @@
   /**
    *  Resolve a value from data based on the accessor type
    */
-  function getValue(accessor: Accessor | Accessor[], d: any) {
+  function getValue(accessor: Accessor | Accessor[] | undefined, d: any): any {
     if (Array.isArray(accessor)) {
       return accessor.map((a) => getValue(a, d));
     } else if (typeof accessor === 'function') {
@@ -92,6 +93,7 @@
 
   /** Props passed to TransformContext */
   export let transform: Partial<ComponentProps<TransformContext>> | undefined = undefined;
+  // @ts-ignore will only be undefined until bind:transformContext runs
   export let transformContext: TransformContext = undefined;
 
   // Binded for access within TransformContext
@@ -138,65 +140,67 @@
       ? geoFitObjectTransform(geo.projection(), [width, height], geo.fitGeojson)
       : undefined}
 
-  {#key isMounted}
-    <TransformContext
-      bind:this={transformContext}
-      mode={transform?.mode ?? geo?.applyTransform?.length ? 'manual' : 'none'}
-      initialTranslate={initialTransform?.translate}
-      initialScale={initialTransform?.scale}
-      processTranslate={geo
-        ? (x, y, deltaX, deltaY, scale) => {
-            if (geo.applyTransform?.includes('rotate')) {
-              // When applying transform to rotate, invert `y` values and reduce sensitivity based on projection scale
-              // see: https://observablehq.com/@benoldenburg/simple-globe and https://observablehq.com/@michael-keith/draggable-globe-in-d3
-              const projectionScale = $geoProjection.scale();
-              const sensitivity = 75;
-              return {
-                x: x + deltaX * (sensitivity / projectionScale),
-                y: y + deltaY * (sensitivity / projectionScale) * -1,
-              };
-            } else if (geo.applyTransform?.includes('translate')) {
-              // When applying to `translate`, use pointer values as is (with no `scale` adjustment)
-              return { x: x + deltaX, y: y + deltaY };
-            } else {
-              // Apply default TransformContext.processTransform (passing `undefined` below appears to not work when checking for `geo?.applyTransform` exists)
-              return { x: x + deltaX / scale, y: y + deltaY / scale };
+  <ChartContext>
+    {#key isMounted}
+      <TransformContext
+        bind:this={transformContext}
+        mode={transform?.mode ?? geo?.applyTransform?.length ? 'manual' : 'none'}
+        initialTranslate={initialTransform?.translate}
+        initialScale={initialTransform?.scale}
+        processTranslate={geo
+          ? (x, y, deltaX, deltaY, scale) => {
+              if (geo.applyTransform?.includes('rotate')) {
+                // When applying transform to rotate, invert `y` values and reduce sensitivity based on projection scale
+                // see: https://observablehq.com/@benoldenburg/simple-globe and https://observablehq.com/@michael-keith/draggable-globe-in-d3
+                const projectionScale = $geoProjection.scale();
+                const sensitivity = 75;
+                return {
+                  x: x + deltaX * (sensitivity / projectionScale),
+                  y: y + deltaY * (sensitivity / projectionScale) * -1,
+                };
+              } else if (geo.applyTransform?.includes('translate')) {
+                // When applying to `translate`, use pointer values as is (with no `scale` adjustment)
+                return { x: x + deltaX, y: y + deltaY };
+              } else {
+                // Apply default TransformContext.processTransform (passing `undefined` below appears to not work when checking for `geo?.applyTransform` exists)
+                return { x: x + deltaX / scale, y: y + deltaY / scale };
+              }
             }
-          }
-        : undefined}
-      {...transform}
-      let:transform={_transform}
-      on:transform
-      on:dragstart
-      on:dragend
-    >
-      <GeoContext {...geo} bind:geo={geoProjection} let:projection>
-        {@const tooltipProps = typeof tooltip === 'object' ? tooltip : {}}
-        <TooltipContext {...tooltipProps} let:tooltip>
-          <slot
-            {aspectRatio}
-            {containerHeight}
-            {containerWidth}
-            {height}
-            {width}
-            {element}
-            {projection}
-            transform={_transform}
-            {tooltip}
-            {xScale}
-            {xGet}
-            {yScale}
-            {yGet}
-            {zScale}
-            {zGet}
-            {rScale}
-            {rGet}
-            {padding}
-            {data}
-            {flatData}
-          />
-        </TooltipContext>
-      </GeoContext>
-    </TransformContext>
-  {/key}
+          : undefined}
+        {...transform}
+        let:transform={_transform}
+        on:transform
+        on:dragstart
+        on:dragend
+      >
+        <GeoContext {...geo} bind:geo={geoProjection} let:projection>
+          {@const tooltipProps = typeof tooltip === 'object' ? tooltip : {}}
+          <TooltipContext {...tooltipProps} let:tooltip>
+            <slot
+              {aspectRatio}
+              {containerHeight}
+              {containerWidth}
+              {height}
+              {width}
+              {element}
+              {projection}
+              transform={_transform}
+              {tooltip}
+              {xScale}
+              {xGet}
+              {yScale}
+              {yGet}
+              {zScale}
+              {zGet}
+              {rScale}
+              {rGet}
+              {padding}
+              {data}
+              {flatData}
+            />
+          </TooltipContext>
+        </GeoContext>
+      </TransformContext>
+    {/key}
+  </ChartContext>
 </LayerCake>

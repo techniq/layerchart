@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import { cls } from 'svelte-ux';
+  import { chartContext } from '../ChartContext.svelte';
 
   /** The layer's outermost `<div>` tag. Useful for bindings. */
   export let element: HTMLDivElement | undefined = undefined;
@@ -23,7 +23,7 @@
   /** A string passed to the `aria-describedby` property on the `<div>` tag. */
   export let describedBy: string | undefined = undefined;
 
-  const { padding } = getContext('LayerCake');
+  const { padding } = chartContext();
 
   $: roleVal = role || (label || labelledBy || describedBy ? 'figure' : undefined);
 </script>

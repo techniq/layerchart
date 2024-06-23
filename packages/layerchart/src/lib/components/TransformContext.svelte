@@ -56,9 +56,10 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
+  import { chartContext } from './ChartContext.svelte';
   import { motionStore, type MotionOptions, motionFinishHandler } from '$lib/stores/motionStore.js';
 
-  const { width, height } = getContext('LayerCake');
+  const { width, height } = chartContext();
 
   export let mode: TransformMode = 'none';
   /** Translate towards point (ex. mouse cursor/center) while zooming in/out */

@@ -4,15 +4,15 @@
    *   - [ ] Support step curves (center like scaleBand())
    *   - [ ] Support multiple values (threshold, stacks, etc)
    */
-  import { getContext, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
   import { format as formatValue, type FormatType, cls } from 'svelte-ux';
   import { greatestAbs } from 'svelte-ux/utils/array';
 
+  const { flatData, yScale, x, y, custom } = chartContext();
   import Text from './Text.svelte';
   import { isScaleBand } from '$lib/utils/scales.js';
   import { createDimensionGetter } from '$lib/utils/rect.js';
-
-  const { flatData, yScale, x, y, custom } = getContext('LayerCake');
+  import { chartContext } from './ChartContext.svelte';
 
   // TODO: Support 'auto' to switch `inside` to `outside` if not enough room
   export let placement: 'inside' | 'outside' = 'outside';
@@ -27,7 +27,7 @@
   export let groupPaddingInner = 0.2;
   export let groupPaddingOuter = 0;
 
-  $: getDimensions = createDimensionGetter(getContext('LayerCake'), {
+  $: getDimensions = createDimensionGetter(chartContext(), {
     // x,
     // y,
     groupBy,

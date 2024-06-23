@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import { partition as d3Partition } from 'd3-hierarchy';
+  import { chartContext } from './ChartContext.svelte';
 
-  const { data, width, height } = getContext('LayerCake');
+  const { data, width, height } = chartContext();
 
   export let orientation: 'vertical' | 'horizontal' = 'horizontal';
 

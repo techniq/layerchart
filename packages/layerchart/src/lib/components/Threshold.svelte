@@ -4,12 +4,12 @@
       - https://observablehq.com/@d3/difference-chart
       - https://github.com/airbnb/visx/issues/245
   */
-  import { getContext } from 'svelte';
   import { area as d3Area, line as d3Line } from 'd3-shape';
   import type { CurveFactory } from 'd3-shape';
   import { min, max } from 'd3-array';
+  import { chartContext } from './ChartContext.svelte';
 
-  const { data: contextData, xGet, yGet, yRange } = getContext('LayerCake');
+  const { data: contextData, xGet, yGet, yRange } = chartContext();
 
   // Properties to override what is used from context
   export let data: any = undefined; // TODO: Update Type

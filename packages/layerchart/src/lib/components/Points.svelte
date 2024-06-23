@@ -1,14 +1,15 @@
 <script lang="ts">
-  import { getContext, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
   import { extent } from 'd3-array';
+  import { pointRadial } from 'd3-shape';
   import { notNull } from 'svelte-ux';
 
+  import { chartContext } from './ChartContext.svelte';
   import Circle from './Circle.svelte';
   import Link from './Link.svelte';
   import { isScaleBand } from '../utils/scales.js';
-  import { pointRadial } from 'd3-shape';
 
-  const context = getContext('LayerCake') as any;
+  const context = chartContext() as any;
   const { data: contextData, xGet, y, yGet, xScale, yScale, rGet, config } = context;
 
   type Offset = number | ((value: number, context: any) => number) | undefined;

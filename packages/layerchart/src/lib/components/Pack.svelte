@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import { pack as d3Pack } from 'd3-hierarchy';
+  import { chartContext } from './ChartContext.svelte';
 
-  const { data, width, height } = getContext('LayerCake');
+  const { data, width, height } = chartContext();
 
   export let size: [number, number] | undefined = undefined;
 

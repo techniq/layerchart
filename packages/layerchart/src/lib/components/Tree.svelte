@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import { type HierarchyPointNode, tree as d3Tree } from 'd3-hierarchy';
+  import { chartContext } from './ChartContext.svelte';
 
-  const { data, width, height, padding } = getContext('LayerCake');
+  const { data, width, height, padding } = chartContext();
 
   /**
    * Sets this tree layout’s node size to the specified two-element array of numbers `[width, height]`.

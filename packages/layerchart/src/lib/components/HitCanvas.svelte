@@ -1,12 +1,14 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext, onMount, setContext } from 'svelte';
+  import { createEventDispatcher, onMount, setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import { scaleCanvas } from 'layercake';
   import { cls } from 'svelte-ux';
+
+  import { chartContext } from './ChartContext.svelte';
   import Canvas from './layout/Canvas.svelte';
   import { transformContext } from './TransformContext.svelte';
 
-  const { width, height } = getContext('LayerCake');
+  const { width, height } = chartContext();
 
   export let context: CanvasRenderingContext2D = undefined;
 

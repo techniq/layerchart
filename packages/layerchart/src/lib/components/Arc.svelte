@@ -17,13 +17,14 @@
   // https://svelte.dev/repl/09711e43a1264ba18945d7db7cab9335?version=3.38.2
   // https://codepen.io/simeydotme/pen/rrOEmO/
 
-  import { getContext, tick } from 'svelte';
+  import { tick } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { arc as d3arc } from 'd3-shape';
   import { scaleLinear } from 'd3-scale';
   import { min, max } from 'd3-array';
 
+  import { chartContext } from './ChartContext.svelte';
   import { motionStore } from '$lib/stores/motionStore.js';
   import { degreesToRadians } from '$lib/utils/math.js';
 
@@ -80,7 +81,7 @@
 
   export let track: boolean | SVGAttributes<SVGPathElement> = false;
 
-  const { yRange } = getContext('LayerCake');
+  const { yRange } = chartContext();
 
   $: scale = scaleLinear().domain(domain).range(range);
 

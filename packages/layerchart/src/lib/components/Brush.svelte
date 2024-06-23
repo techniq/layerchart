@@ -1,14 +1,15 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import { extent } from 'd3-array';
-
   import { clamp, cls } from 'svelte-ux';
+
+  import { chartContext } from './ChartContext.svelte';
   import Frame from './Frame.svelte';
   import { localPoint } from '$lib/utils/event.js';
   import Group from './Group.svelte';
 
-  const { xScale, yScale, width, height, padding } = getContext('LayerCake');
+  const { xScale, yScale, width, height, padding } = chartContext();
 
   const dispatch = createEventDispatcher<{
     change: { xDomain?: [any, any]; yDomain?: [any, any] };

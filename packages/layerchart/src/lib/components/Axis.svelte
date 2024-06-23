@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
   import { fade } from 'svelte/transition';
   import { cubicIn } from 'svelte/easing';
   import type { SVGAttributes } from 'svelte/elements';
@@ -10,12 +10,13 @@
 
   import { format as formatValue, type FormatType, cls, type TransitionParams } from 'svelte-ux';
 
+  import { chartContext } from './ChartContext.svelte';
   import Circle from './Circle.svelte';
   import Line from './Line.svelte';
   import Text from './Text.svelte';
   import { isScaleBand } from '$lib/utils/scales.js';
 
-  const { xScale, yScale, xRange, yRange, width, height, padding } = getContext('LayerCake');
+  const { xScale, yScale, xRange, yRange, width, height, padding } = chartContext();
 
   /** Location of axis */
   export let placement: 'top' | 'bottom' | 'left' | 'right' | 'angle' | 'radius';

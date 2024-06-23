@@ -1,6 +1,6 @@
 <script lang="ts">
   // https://github.com/d3/d3-sankey
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import {
     sankey as d3Sankey,
     sankeyLeft,
@@ -10,9 +10,11 @@
     type SankeyNode,
   } from 'd3-sankey';
 
+  import { chartContext } from './ChartContext.svelte';
+
   const dispatch = createEventDispatcher();
 
-  const { data, width, height, padding } = getContext('LayerCake');
+  const { data, width, height, padding } = chartContext();
 
   export let nodes = (d) => d.nodes;
   export let nodeId = (d) => d.index;

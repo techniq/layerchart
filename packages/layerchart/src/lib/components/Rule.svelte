@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import { cls } from 'svelte-ux';
   import { extent } from 'd3-array';
+  import { cls } from 'svelte-ux';
 
+  import { chartContext } from './ChartContext.svelte';
   import Line from './Line.svelte';
 
-  const { xScale, yScale, xRange, yRange } = getContext('LayerCake');
+  const { xScale, yScale, xRange, yRange } = chartContext();
 
   $: [xRangeMin, xRangeMax] = extent($xRange);
   $: [yRangeMin, yRangeMax] = extent($yRange);

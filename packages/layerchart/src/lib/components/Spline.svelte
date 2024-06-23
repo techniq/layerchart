@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext, tick } from 'svelte';
+  import { tick } from 'svelte';
   import { writable } from 'svelte/store';
   import { tweened as tweenedStore } from 'svelte/motion';
   import { draw as _drawTransition } from 'svelte/transition';
@@ -11,10 +11,11 @@
   import { interpolatePath } from 'd3-interpolate-path';
   import { cls } from 'svelte-ux';
 
-  import { motionStore } from '$lib/stores/motionStore.js';
+  import { chartContext } from './ChartContext.svelte';
   import Group from './Group.svelte';
+  import { motionStore } from '$lib/stores/motionStore.js';
 
-  const { data: contextData, xScale, yScale, x: contextX, y: contextY } = getContext('LayerCake');
+  const { data: contextData, xScale, yScale, x: contextX, y: contextY } = chartContext();
 
   /** Override data instead of using context */
   export let data: any = undefined;

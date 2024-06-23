@@ -2,6 +2,7 @@
   import { getContext } from 'svelte';
   import { tile as d3Tile } from 'd3-tile';
 
+  import { chartContext } from './ChartContext.svelte';
   import { geoContext } from './GeoContext.svelte';
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
@@ -12,7 +13,7 @@
   export let disableCache = false;
   export let debug = false;
 
-  const { containerWidth, containerHeight, padding } = getContext('LayerCake');
+  const { containerWidth, containerHeight, padding } = chartContext();
   const canvas = getContext('canvas');
   const geo = geoContext();
 

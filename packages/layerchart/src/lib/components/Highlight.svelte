@@ -1,14 +1,16 @@
 <script lang="ts">
-  import { getContext, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
   import { max, min } from 'd3-array';
   import { cls, notNull } from 'svelte-ux';
 
-  import { isScaleBand } from '$lib/utils/scales.js';
+  import { chartContext } from './ChartContext.svelte';
   import Circle from './Circle.svelte';
   import Line from './Line.svelte';
   import Bar from './Bar.svelte';
   import Rect from './Rect.svelte';
   import { tooltipContext } from './TooltipContext.svelte';
+
+  import { isScaleBand } from '$lib/utils/scales.js';
 
   const {
     flatData,
@@ -24,7 +26,7 @@
     yGet,
     rGet,
     config,
-  } = getContext('LayerCake');
+  } = chartContext();
   const tooltip = tooltipContext();
 
   /** Highlight specific data (annotate), espect uses tooltip data */

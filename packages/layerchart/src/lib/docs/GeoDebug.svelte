@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import { format, Checkbox, cls } from 'svelte-ux';
 
+  import { chartContext } from '$lib/components/ChartContext.svelte';
   import { geoContext } from '$lib/components/GeoContext.svelte';
 
-  const { width, height } = getContext('LayerCake');
+  const { width, height } = chartContext();
   const geo = geoContext();
 
   let showCenter = false;

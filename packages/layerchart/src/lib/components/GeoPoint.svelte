@@ -1,6 +1,7 @@
 <script lang="ts">
   import { getContext } from 'svelte';
 
+  import { chartContext } from './ChartContext.svelte';
   import { geoContext } from './GeoContext.svelte';
   import Circle from './Circle.svelte';
   import Group from './Group.svelte';
@@ -16,7 +17,7 @@
     coords: { x: number; y: number }
   ) => any = () => {};
 
-  const { width, height } = getContext('LayerCake');
+  const { width, height } = chartContext();
   const canvas = getContext('canvas');
   const geo = geoContext();
 

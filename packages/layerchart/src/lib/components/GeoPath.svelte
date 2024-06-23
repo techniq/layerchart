@@ -10,6 +10,7 @@
   } from 'd3-geo';
   import { cls } from 'svelte-ux';
 
+  import { chartContext } from './ChartContext.svelte';
   import { geoContext } from './GeoContext.svelte';
   import type { TooltipContextValue } from './TooltipContext.svelte';
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
@@ -46,7 +47,7 @@
 
   const dispatch = createEventDispatcher<{ click: { geoPath: GeoPath; event: MouseEvent } }>();
 
-  const { containerWidth, containerHeight, padding } = getContext('LayerCake');
+  const { containerWidth, containerHeight, padding } = chartContext();
   const canvas = getContext('canvas');
   const geo = geoContext();
 

@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { getContext, onMount, setContext } from 'svelte';
+  import { onMount, setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import { scaleCanvas } from 'layercake';
   import { cls } from 'svelte-ux';
+
+  import { chartContext } from '../ChartContext.svelte';
   import { transformContext } from '../TransformContext.svelte';
 
-  const { width, height, containerWidth, containerHeight, padding } = getContext('LayerCake');
+  const { width, height, containerWidth, containerHeight, padding } = chartContext();
 
   /** The `<canvas>` tag. Useful for bindings. */
   export let element: HTMLCanvasElement | undefined = undefined;

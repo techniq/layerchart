@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import { curveNatural, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoOrthographic, geoInterpolate } from 'd3-geo';
 
+  import { chartContext } from './ChartContext.svelte';
   import { geoContext } from './GeoContext.svelte';
   import Spline from './Spline.svelte';
 
@@ -22,7 +22,7 @@
    */
   export let curve: CurveFactory | CurveFactoryLineOnly | undefined = curveNatural;
 
-  const { width, height } = getContext('LayerCake');
+  const { width, height } = chartContext();
   const geo = geoContext();
 
   $: loftedProjection = geoOrthographic()

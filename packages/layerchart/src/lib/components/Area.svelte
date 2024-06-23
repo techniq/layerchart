@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
   import type { tweened as tweenedStore } from 'svelte/motion';
   import { type Area, area as d3Area, areaRadial } from 'd3-shape';
   import type { CurveFactory } from 'd3-shape';
@@ -10,9 +10,10 @@
 
   import { motionStore } from '$lib/stores/motionStore.js';
 
+  import { chartContext } from './ChartContext.svelte';
   import Spline from './Spline.svelte';
 
-  const { data: contextData, xScale, yScale, xGet, yGet, yRange } = getContext('LayerCake');
+  const { data: contextData, xScale, yScale, xGet, yGet, yRange } = chartContext();
 
   /** Override data instead of using context */
   export let data: any = undefined;

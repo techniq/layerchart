@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { getContext, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
 
-  import { createDimensionGetter } from '$lib/utils/rect.js';
+  import { chartContext } from './ChartContext.svelte';
   import Rect from './Rect.svelte';
   import Spline from './Spline.svelte';
 
-  const { x: xContext, y: yContext } = getContext('LayerCake');
+  import { createDimensionGetter } from '$lib/utils/rect.js';
+
+  const { x: xContext, y: yContext } = chartContext();
 
   export let bar: Object;
 
@@ -46,7 +48,7 @@
 
   $: if (stroke === null || stroke === undefined) stroke = 'black';
 
-  $: getDimensions = createDimensionGetter(getContext('LayerCake'), {
+  $: getDimensions = createDimensionGetter(chartContext(), {
     x,
     y,
     groupBy,
