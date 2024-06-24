@@ -16,6 +16,19 @@
   ]);
 
   let groupBy = true;
+  $: reheatSimulation({ groupBy });
+
+  let alpha = 1;
+
+  const xForce = forceX().strength(0.1);
+  const chargeForce = forceManyBody().strength(3);
+  const collideForce = forceCollide();
+  const centerForce = forceCenter();
+
+  function reheatSimulation(args: Record<string, any> = {}) {
+    const _ = args;
+    alpha = 1.0;
+  }
 </script>
 
 <h1>Examples</h1>
@@ -48,16 +61,15 @@
       <Svg>
         <ForceSimulation
           forces={{
-            x: forceX()
-              .x((d) => (groupBy ? xGet(d) + xScale.bandwidth() / 2 : width / 2))
-              .strength(0.1),
-            charge: forceManyBody().strength(3),
-            collision: forceCollide().radius(
+            x: xForce.x((d) => (groupBy ? xGet(d) + xScale.bandwidth() / 2 : width / 2)),
+            charge: chargeForce,
+            collide: collideForce.radius(
               (d) => rGet(d) + nodeStrokeWidth / 2 // Divide this by two because an svg stroke is drawn halfway out
             ),
-            center: forceCenter(width / 2, height / 2),
+            center: centerForce.x(width / 2).y(height / 2),
           }}
           cloneData
+          bind:alpha
           let:nodes
         >
           {#each nodes as node}

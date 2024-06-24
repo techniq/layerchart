@@ -16,6 +16,9 @@
     }
   }
   const data = { nodes: nodes, links: links };
+
+  const chargeForce = forceManyBody().strength(-20);
+  const linkForce = forceLink(links).strength(1).distance(20).iterations(10);
 </script>
 
 <h1>Examples</h1>
@@ -26,8 +29,8 @@
       <Svg>
         <ForceSimulation
           forces={{
-            charge: forceManyBody().strength(-20),
-            link: forceLink(links).strength(1).distance(20).iterations(10),
+            charge: chargeForce,
+            link: linkForce,
           }}
           let:nodes
         >
