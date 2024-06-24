@@ -62,7 +62,7 @@
   let wordsWithWidth: { word: string; width: number }[] = [];
   let spaceWidth: number = 0;
 
-  let style: CSSStyleDeclaration = undefined; // TODO: read from DOM?
+  let style: CSSStyleDeclaration | undefined = undefined; // TODO: read from DOM?
 
   $: words = value != null ? value.toString().split(/(?:(?!\u00A0+)\s+)/) : [];
 
@@ -100,6 +100,7 @@
   function getPixelValue(cssValue: string) {
     // TODO: Properly measure pixel values using DOM (handle inherited font size, zoom, etc)
     // console.log(cssValue);
+    // @ts-ignore
     const [match, value, units] = cssValue.match(/([\d.]+)(\D+)/);
     // console.log({ value, units });
     const number = Number(value);

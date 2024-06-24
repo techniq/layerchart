@@ -101,7 +101,8 @@
   <p>LayerChart components can be easily imported into your project.</p>
 
   <Code
-    source={`<script>
+    source={'<' +
+      `script>
   import { Chart, Svg, Axis, Bars } from 'layerchart';
 </script>`}
     language="svelte"

@@ -87,7 +87,7 @@
             x1: xItem + xOffset,
             y1: 0,
             x2: xItem + xOffset,
-            y2: max($yRange),
+            y2: max($yRange) as unknown as number,
           })),
         ];
       } else {
@@ -97,7 +97,7 @@
             x1: xCoord + xOffset,
             y1: 0,
             x2: xCoord + xOffset,
-            y2: max($yRange),
+            y2: max($yRange) as unknown as number,
           },
         ];
       }
@@ -122,7 +122,7 @@
         (isScaleBand($xScale) ? ($xScale.padding() * $xScale.step()) / 2 : 0);
 
       if (axis === 'x') {
-        _area.height = max($yRange);
+        _area.height = max($yRange) as unknown as number;
       }
     }
 
@@ -135,7 +135,7 @@
           ...yCoord.filter(notNull).map((yItem, i) => ({
             x1: 0,
             y1: yItem + yOffset,
-            x2: max($xRange),
+            x2: max($xRange) as unknown as number,
             y2: yItem + yOffset,
           })),
         ];
@@ -145,7 +145,7 @@
           {
             x1: 0,
             y1: yCoord + yOffset,
-            x2: max($xRange),
+            x2: max($xRange) as unknown as number,
             y2: yCoord + yOffset,
           },
         ];
@@ -171,7 +171,7 @@
         (isScaleBand($yScale) ? ($yScale.padding() * $yScale.step()) / 2 : 0);
 
       if (axis === 'y') {
-        _area.width = max($xRange);
+        _area.width = max($xRange) as unknown as number;
       }
     }
 
@@ -207,6 +207,7 @@
         {..._area}
         {...typeof area === 'object' ? area : null}
         class={cls(
+          // @ts-ignore
           !area.fill && 'fill-surface-content/5',
           typeof area === 'object' ? area.class : null
         )}
@@ -226,7 +227,11 @@
         strokeWidth={typeof bar === 'object' ? bar.strokeWidth : null}
         radius={typeof bar === 'object' ? bar.radius : null}
         bar={highlightData}
-        class={cls(!bar.fill && 'fill-primary', typeof bar === 'object' ? bar.class : null)}
+        class={cls(
+          // @ts-ignore
+          !bar.fill && 'fill-primary',
+          typeof bar === 'object' ? bar.class : null
+        )}
         on:click
       />
     </slot>

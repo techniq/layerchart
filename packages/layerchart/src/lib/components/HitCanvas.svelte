@@ -10,6 +10,7 @@
 
   const { width, height } = chartContext();
 
+  // @ts-ignore: this will immediately be defined on mount via `bind:context`
   export let context: CanvasRenderingContext2D = undefined;
 
   /** Show canvas for debugging */

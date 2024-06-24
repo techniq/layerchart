@@ -41,10 +41,10 @@
     zPadding: Readable<[number, number]>;
     rPadding: Readable<[number, number]>;
     padding: Readable<{
-      top?: number | undefined;
-      bottom?: number | undefined;
-      left?: number | undefined;
-      right?: number | undefined;
+      top: number;
+      bottom: number;
+      left: number;
+      right: number;
     }>;
     flatData: Readable<any[]>;
     extents: Readable<{}>;
@@ -56,7 +56,7 @@
     yRange: Readable<any>;
     zRange: Readable<any>;
     rRange: Readable<any>;
-    config: Readable<{}>;
+    config: Readable<any>;
     xScale: Readable<any>;
     xGet: Readable<any>;
     yScale: Readable<any>;

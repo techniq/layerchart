@@ -39,7 +39,7 @@
                 ? d3.treemapSliceDice
                 : tile;
 
-  let treemap;
+  let treemap: d3.TreemapLayout<any>;
   $: {
     treemap = d3
       .treemap()
@@ -69,6 +69,7 @@
     }
   }
 
+  // @ts-ignore
   $: treemapData = treemap($data);
   // TODO: Remove selected
   $: selected = treemapData; // set initial selection

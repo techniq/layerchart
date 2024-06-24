@@ -37,7 +37,7 @@
 
     <div>
       <span class="opacity-50">long/lat: <Checkbox bind:checked={showCenter} size="xs" /></span>
-      {#each $geo.invert?.([$width / 2, $height / 2]) as coord}
+      {#each $geo.invert?.([$width / 2, $height / 2]) ?? [] as coord}
         <div class="text-right">{format(coord, 'decimal')}</div>
       {/each}
     </div>

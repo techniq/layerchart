@@ -28,7 +28,7 @@
   export let width = 320;
   export let height = 10;
   export let ticks = width / 64;
-  export let tickFormat: FormatType = undefined;
+  export let tickFormat: FormatType | undefined = undefined;
   export let tickValues: any[] | undefined = undefined;
   export let tickFontSize = 10;
   export let tickLength = 4;
@@ -92,7 +92,7 @@
       .domain([-1, scale.range().length - 1])
       .rangeRound([0, width]);
 
-    swatches = scale.range().map((d, i) => {
+    swatches = scale.range().map((d: any, i: number) => {
       return {
         x: xScale(i - 1),
         y: 0,

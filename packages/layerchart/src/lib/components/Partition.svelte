@@ -32,6 +32,7 @@
     }
   }
 
+  // @ts-ignore
   $: partitionData = partition($data);
 </script>
 

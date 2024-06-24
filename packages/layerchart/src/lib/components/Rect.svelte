@@ -38,6 +38,7 @@
 </script>
 
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <rect
   x={$tweened_x}
   y={$tweened_y}

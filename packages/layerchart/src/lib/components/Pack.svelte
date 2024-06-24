@@ -20,6 +20,7 @@
     }
   }
 
+  // @ts-ignore
   $: packData = pack($data);
 </script>
 

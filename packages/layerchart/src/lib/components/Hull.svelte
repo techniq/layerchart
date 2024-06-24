@@ -3,16 +3,17 @@
   import { cls } from 'svelte-ux';
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
+  // @ts-ignore
   import { geoVoronoi } from 'd3-geo-voronoi';
   import { curveLinearClosed } from 'd3-shape';
 
   import { chartContext } from './ChartContext.svelte';
   import GeoPath from './GeoPath.svelte';
-  import { geoContext } from './GeoContext.svelte';
+  import { geoContext, type GeoContext } from './GeoContext.svelte';
   import Spline from './Spline.svelte';
 
   const { flatData, x: xContext, y: yContext } = chartContext();
-  const geo = geoContext();
+  const geo = geoContext() as GeoContext | undefined;
 
   /** Override data instead of using context */
   export let data: any = undefined;
@@ -33,7 +34,7 @@
     };
   }>();
 
-  $: points = (data ?? $flatData).map((d) => {
+  $: points = (data ?? $flatData).map((d: any) => {
     const xValue = $xContext(d);
     const yValue = $yContext(d);
 
@@ -41,6 +42,7 @@
     const y = Array.isArray(yValue) ? min(yValue) : yValue;
 
     const point = [x, y];
+    // @ts-ignore
     point.data = d;
     return point;
   });

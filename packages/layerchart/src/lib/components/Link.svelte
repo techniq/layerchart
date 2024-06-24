@@ -26,28 +26,30 @@
    * Update source and target accessors to be compatible with d3-sankey.  see: https://github.com/d3/d3-sankey#sankeyLinkHorizontal
    */
   export let sankey = false;
-  export let source = sankey ? (d) => [d.source.x1, d.y0] : (d) => d.source;
-  export let target = sankey ? (d) => [d.target.x0, d.y1] : (d) => d.target;
+  export let source = sankey ? (d: any) => [d.source.x1, d.y0] : (d: any) => d.source;
+  export let target = sankey ? (d: any) => [d.target.x0, d.y1] : (d: any) => d.target;
 
   /** Convenient property to swap x/y accessor logic */
   export let orientation: 'vertical' | 'horizontal' = sankey ? 'horizontal' : 'vertical';
-  export let x = (d) => (sankey ? d[0] : orientation === 'horizontal' ? d.y : d.x);
-  export let y = (d) => (sankey ? d[1] : orientation === 'horizontal' ? d.x : d.y);
+  export let x = (d: any) => (sankey ? d[0] : orientation === 'horizontal' ? d.y : d.x);
+  export let y = (d: any) => (sankey ? d[1] : orientation === 'horizontal' ? d.x : d.y);
   export let curve = orientation === 'horizontal' ? curveBumpX : curveBumpY;
 
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
+  // @ts-ignore
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
 
   $: {
     orientation; // subscribe to orientation changes to update link
     const link = d3Link(curve).source(source).target(target).x(x).y(y);
-    const d = link(data);
+    const d = link(data) ?? '';
     tweened_d.set(d);
   }
 </script>
 
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <path
   class="path-link"
   d={$tweened_d}

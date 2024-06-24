@@ -27,7 +27,7 @@
   /** Enable showing links between related points (array x/y accessors) */
   export let links: boolean | Partial<ComponentProps<Link>> = false;
 
-  function getOffset(value, offset: Offset, scale: any) {
+  function getOffset(value: any, offset: Offset, scale: any) {
     if (typeof offset === 'function') {
       return offset(value, context);
     } else if (offset != null) {
@@ -41,7 +41,7 @@
 
   $: pointsData = data ?? $contextData;
 
-  $: points = pointsData.flatMap((d) => {
+  $: points = pointsData.flatMap((d: any) => {
     if (Array.isArray($config.x)) {
       /*
 				x={["prop1" ,"prop2"]}
@@ -49,7 +49,7 @@
 			*/
       return $xGet(d)
         .filter(notNull)
-        .map((x) => {
+        .map((x: number) => {
           return {
             x: x + getOffset(x, offsetX, $xScale),
             y: $yGet(d) + getOffset($yGet(d), offsetY, $yScale),
@@ -63,7 +63,7 @@
 			*/
       return $yGet(d)
         .filter(notNull)
-        .map((y) => {
+        .map((y: number) => {
           return {
             x: $xGet(d) + getOffset($xGet(d), offsetX, $xScale),
             y: y + getOffset(y, offsetY, $yScale),
@@ -83,13 +83,13 @@
     }
   });
 
-  $: _links = pointsData.flatMap((d) => {
+  $: _links = pointsData.flatMap((d: any) => {
     if (Array.isArray($config.x)) {
       /*
 				x={["prop1" ,"prop2"]}
 				y="prop3"
 			*/
-      const [xMin, xMax] = extent($xGet(d));
+      const [xMin, xMax] = extent($xGet(d)) as unknown as [number, number];
       const y = $yGet(d) + getOffset($yGet(d), offsetY, $yScale);
       return {
         source: {
@@ -107,7 +107,7 @@
 				y={["prop2" ,"prop3"]}
 			*/
       const x = $xGet(d) + getOffset($xGet(d), offsetX, $xScale);
-      const [yMin, yMax] = extent($yGet(d));
+      const [yMin, yMax] = extent($yGet(d)) as unknown as [number, number];
       return {
         source: {
           x: x,

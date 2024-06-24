@@ -17,10 +17,10 @@
   // TODO: Support 'auto' to switch `inside` to `outside` if not enough room
   export let placement: 'inside' | 'outside' = 'outside';
   export let offset = 4;
-  export let significantDigits = 3;
   export let format: FormatType | undefined = undefined;
   // export let overlap = false;
 
+  // @ts-ignore
   $: yBaseline = $custom?.yBaseline ?? 0;
 
   export let groupBy: string | undefined = undefined;
@@ -38,14 +38,14 @@
     },
   });
 
-  $: getValue = (item) => (isScaleBand($yScale) ? $x(item) : $y(item));
+  $: getValue = (item: any) => (isScaleBand($yScale) ? $x(item) : $y(item));
 
-  $: getLabelValue = (item) => {
+  $: getLabelValue = (item: any) => {
     const value = getValue(item);
     return (Array.isArray(value) ? greatestAbs(value) : value) + yBaseline;
   };
 
-  $: getFormattedValue = (item) => {
+  $: getFormattedValue = (item: any) => {
     const labelValue = getLabelValue(item);
     let formattedValue = labelValue;
     if (labelValue != null) {

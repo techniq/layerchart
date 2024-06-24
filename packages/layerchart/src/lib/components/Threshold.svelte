@@ -17,40 +17,40 @@
   export let y0: any = undefined; // TODO: Update Type
   export let y1: any = undefined; // TODO: Update Type
 
-  export let curve: CurveFactory = undefined;
-  export let defined: Parameters<typeof areaPath.defined>[0] = undefined;
+  export let curve: CurveFactory | undefined = undefined;
+  export let defined: Parameters<typeof areaPath.defined>[0] | undefined = undefined;
   export let id = Math.random().toString(16).slice(-4);
 
   $: areaPath = d3Area()
     .x(x ?? $xGet)
-    .y0(y0 ?? ((d) => $yGet(d)[0]))
-    .y1(y1 ?? ((d) => $yGet(d)[1]));
+    .y0(y0 ?? ((d: any) => $yGet(d)[0]))
+    .y1(y1 ?? ((d: any) => $yGet(d)[1]));
   $: if (curve) areaPath.curve(curve);
   $: if (defined) areaPath.defined(defined);
 
   $: clipPathBelow = d3Area()
     .x(x ?? $xGet)
-    .y0(y0 ?? ((d) => $yGet(d)[0]))
-    .y1(y1 ?? ((d) => max($yRange)));
+    .y0(y0 ?? ((d: any) => $yGet(d)[0]))
+    .y1(y1 ?? ((d: any) => max($yRange)));
   $: if (curve) clipPathBelow.curve(curve);
   $: if (defined) clipPathBelow.defined(defined);
 
   $: clipPathAbove = d3Area()
     .x(x ?? $xGet)
-    .y0(y0 ?? ((d) => max($yRange)))
-    .y1(y1 ?? ((d) => $yGet(d)[1]));
+    .y0(y0 ?? ((d: any) => max($yRange)))
+    .y1(y1 ?? ((d: any) => $yGet(d)[1]));
   $: if (curve) clipPathAbove.curve(curve);
   $: if (defined) clipPathAbove.defined(defined);
 
   $: linePathAbove = d3Line()
     .x(x ?? $xGet)
-    .y(y0 ?? ((d) => $yGet(d)[0]));
+    .y(y0 ?? ((d: any) => $yGet(d)[0]));
   $: if (curve) linePathAbove.curve(curve);
   $: if (defined) linePathAbove.defined(defined);
 
   $: linePathBelow = d3Line()
     .x(x ?? $xGet)
-    .y(y1 ?? ((d) => $yGet(d)[1]));
+    .y(y1 ?? ((d: any) => $yGet(d)[1]));
   $: if (curve) linePathBelow.curve(curve);
   $: if (defined) linePathBelow.defined(defined);
 </script>

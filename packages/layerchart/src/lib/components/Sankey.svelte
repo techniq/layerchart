@@ -16,8 +16,8 @@
 
   const { data, width, height, padding } = chartContext();
 
-  export let nodes = (d) => d.nodes;
-  export let nodeId = (d) => d.index;
+  export let nodes = (d: any) => d.nodes;
+  export let nodeId = (d: any) => d.index;
   /**
    * see: https://github.com/d3/d3-sankey#alignments
    */
@@ -31,7 +31,7 @@
   export let nodePadding = 10;
   export let nodeSort = undefined;
 
-  export let links = (d) => d.links;
+  export let links = (d: any) => d.links;
   export let linkSort = undefined;
 
   $: sankey = d3Sankey()
@@ -51,10 +51,13 @@
     )
     .nodeWidth(nodeWidth)
     .nodePadding(nodePadding)
+    // @ts-ignore
     .nodeSort(nodeSort)
     .links(links)
+    // @ts-ignore
     .linkSort(linkSort);
 
+  // @ts-ignore
   $: sankeyData = sankey($data);
 
   $: dispatch('update', sankeyData);

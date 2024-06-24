@@ -4,7 +4,7 @@
   export let label: any;
   /** Value to be formatted and displayed.  Can also be passed as default slot */
   export let value: any = undefined;
-  export let format: FormatType = undefined;
+  export let format: FormatType | undefined = undefined;
   export let valueAlign: 'left' | 'right' | 'center' = 'left';
 
   export let classes: {

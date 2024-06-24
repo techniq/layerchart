@@ -180,10 +180,12 @@
 
     if ($dragging) {
       e.stopPropagation(); // Stop tooltip from trigging (along with `capture: true`)
-      e.currentTarget.setPointerCapture(e.pointerId);
+      // @ts-ignore
+      e.currentTarget?.setPointerCapture(e.pointerId);
 
       setTranslate(
         processTranslate(startTranslate.x, startTranslate.y, deltaX, deltaY, $scale),
+        // @ts-ignore
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
     }
@@ -202,7 +204,7 @@
     }
   }
 
-  function onDoubleClick(e) {
+  function onDoubleClick(e: MouseEvent) {
     if (mode === 'none' || disablePointer) return;
     const point = localPoint(e);
     scaleTo(e.shiftKey ? 0.5 : 2, point);
@@ -226,12 +228,14 @@
       scaleTo(
         Math.pow(2, scaleBy),
         point,
+        // @ts-ignore
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
     } else if ($scrollMode === 'translate') {
       translate.update(
         (startTranslate) =>
           processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY, $scale),
+        // @ts-ignore
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
     }
@@ -270,14 +274,16 @@
     ([dragging, translating, scaling]) => dragging || translating || scaling
   );
   export function setTranslate(point: { x: number; y: number }, options?: MotionOptions) {
+    // @ts-ignore
     translating.handle(translate.set(point, options));
   }
 
   export function setScale(value: number, options?: MotionOptions) {
+    // @ts-ignore
     scaling.handle(scale.set(value, options));
   }
 
-  function localPoint(e: PointerEvent | WheelEvent) {
+  function localPoint(e: PointerEvent | MouseEvent | WheelEvent) {
     return {
       x: e.offsetX,
       y: e.offsetY,
@@ -311,8 +317,9 @@
   });
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-  on:mousewheel={onWheel}
+  on:wheel={onWheel}
   on:pointerdown={onPointerDown}
   on:pointermove={onPointerMove}
   on:touchmove={(e) => {

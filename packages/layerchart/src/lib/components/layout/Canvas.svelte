@@ -13,6 +13,7 @@
   export let element: HTMLCanvasElement | undefined = undefined;
 
   /** The `<canvas>`'s 2d context. Useful for bindings. */
+  // @ts-ignore: set during onMount()
   export let context: CanvasRenderingContext2D = undefined;
 
   /** Force the use of a software (instead of hardware accelerated) 2D canvas and can save memory when calling getImageData() frequently.
@@ -49,7 +50,7 @@
     scaleCanvas(context, $containerWidth, $containerHeight);
     context.clearRect(0, 0, $containerWidth, $containerHeight);
 
-    context.translate($padding.left, $padding.top);
+    context.translate($padding.left ?? 0, $padding.top ?? 0);
 
     if (mode === 'canvas') {
       const center = { x: $width / 2, y: $height / 2 };
