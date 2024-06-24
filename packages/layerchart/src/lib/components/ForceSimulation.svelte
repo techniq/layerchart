@@ -46,8 +46,6 @@
   // keep track of previous forces ourselves, for diffing against `forces`.
   let previousForces: Forces = {};
 
-  // Only dynamic simulations distinguish between paused and running state.
-  // Invariant: Static simulations always keep `paused = true`.
   let paused: boolean = true;
 
   // MARK: Reactivity Effects
@@ -57,18 +55,9 @@
     // update the running state of the simulation:
 
     if (stopped) {
-      if (!isStatic()) {
-        pauseDynamicSimulation();
-      }
+      pauseDynamicSimulation();
     } else {
-      if (isStatic()) {
-        if (!isPaused()) {
-          pauseDynamicSimulation();
-        }
-        runStaticSimulation();
-      } else {
-        resumeDynamicSimulation();
-      }
+      runOrResumeSimulation();
     }
   }
 
@@ -81,19 +70,17 @@
     } else {
       simulation.on('tick', onTick).on('end', onEnd);
     }
+
+    runOrResumeSimulation();
   }
 
   $: {
     // Any time the `$data` store gets changed we
     // pass them to the internal d3 simulation object:
 
-    pushNodesToSimulation(nodes);
+    pushNodesToSimulation($data);
 
-    if (isStatic()) {
-      runStaticSimulation();
-    } else {
-      resumeDynamicSimulation();
-    }
+    runOrResumeSimulation();
   }
 
   $: {
@@ -102,11 +89,7 @@
 
     pushForcesToSimulation(forces);
 
-    if (isStatic()) {
-      runStaticSimulation();
-    } else {
-      resumeDynamicSimulation();
-    }
+    runOrResumeSimulation();
   }
 
   $: {
@@ -115,10 +98,11 @@
 
     pushAlphaToSimulation(alpha);
 
-    if (isStatic()) {
-      runStaticSimulation();
-    } else {
-      resumeDynamicSimulation(alpha);
+    // Only resume the simulation as long as `alpha`
+    // is above the cut-off threshold of `alphaMin`,
+    // otherwise our simulation will never terminate:
+    if (simulation.alpha() >= simulation.alphaMin()) {
+      runOrResumeSimulation();
     }
   }
 
@@ -127,6 +111,8 @@
     // pass them all to the internal d3 simulation object
     // (they are cheap, so passing them as a batch is fine!):
 
+    // We read `simulation.alpha()` instead of `alpha` here, so
+    // Svelte does not trigger this block on any change to `alpha`:
     let alphaValue = simulation.alpha();
     if (alphaTarget > alphaValue && alphaValue < alphaMin) {
       // Lift `alpha` from below `alphaMin` in order to give the simulation
@@ -141,11 +127,7 @@
       .alphaDecay(alphaDecay)
       .velocityDecay(velocityDecay);
 
-    if (isStatic()) {
-      runStaticSimulation();
-    } else {
-      resumeDynamicSimulation();
-    }
+    runOrResumeSimulation();
   }
 
   // MARK: Push State
@@ -168,7 +150,7 @@
 
     // Add new or overwrite existing forces:
     Object.entries(forces).forEach(([name, force]) => {
-      if (!(name in previousForces) || forces[name] !== previousForces[name]) {
+      if (!(name in previousForces) || force !== previousForces[name]) {
         simulation.force(name, force);
       }
     });
@@ -178,9 +160,8 @@
 
   // MARK: Pull State
 
-  function pullNodesAndAlphaFromSimulation() {
+  function pullNodesFromSimulation() {
     nodes = simulation.nodes();
-    alpha = simulation.alpha();
   }
 
   function pullAlphaFromSimulation() {
@@ -189,12 +170,22 @@
 
   // MARK: Resume / Pause
 
-  function runStaticSimulation() {
+  function runOrResumeSimulation() {
+    if (_static) {
+      runStaticSimulationToCompletion();
+    } else {
+      resumeDynamicSimulation();
+    }
+  }
+
+  function runStaticSimulationToCompletion() {
     if (stopped) {
+      // If a simulation is marked as stopped, then it should not get started.
       return;
     }
 
     if (!_static) {
+      // Only static simulations are run to completion.
       return;
     }
 
@@ -213,77 +204,78 @@
 
     for (let i = 0; i < ticks; ++i) {
       simulation.tick();
-      pullAlphaFromSimulation();
     }
+
+    pullNodesFromSimulation();
+    pullAlphaFromSimulation();
 
     onEnd();
   }
 
-  function resumeDynamicSimulation(alpha: number | undefined = undefined) {
+  function resumeDynamicSimulation() {
+    if (!paused) {
+      // No need to restart an already running simulation.
+      return;
+    }
+
     if (stopped) {
+      // If a simulation is marked as stopped, then it should not get resumed.
       return;
     }
 
     if (_static) {
+      // Only dynamic simulations can be resumed.
       return;
     }
 
-    if (alpha) {
-      pushAlphaToSimulation(alpha);
-    }
+    onStart();
+    simulation.restart();
 
-    if (paused) {
-      onStart();
-      simulation.restart();
-      paused = false;
-
-      // No need to call `onEnd();` for dynamic simulations
-      // as the simulation itself takes care of firing `on:end`,
-      // which then gets calls `onEnd();` for us.
-    }
+    // No need to call `onEnd();` for dynamic simulations
+    // as the simulation itself takes care of firing `on:end`,
+    // which then gets calls `onEnd();` for us.
   }
 
   function pauseDynamicSimulation() {
-    if (!paused) {
-      paused = true;
-      simulation.stop();
-      onEnd();
+    if (paused) {
+      // No need to pause an already paused simulation.
+      return;
     }
+
+    simulation.stop();
+    onEnd();
   }
 
   // MARK: Event Listeners
 
   function onStart() {
+    if (!paused) {
+      // Avoid double-emissions of `start` event due to race conditions.
+      return;
+    }
+
+    paused = false;
     dispatch('start');
   }
 
   function onTick() {
-    pullNodesAndAlphaFromSimulation();
+    pullNodesFromSimulation();
+    pullAlphaFromSimulation();
 
     dispatch('tick', {
       alpha,
       alphaTarget,
     });
-
-    if (simulation.alpha() < simulation.alphaMin()) {
-      pauseDynamicSimulation();
-    }
   }
 
   function onEnd() {
-    pullNodesAndAlphaFromSimulation();
+    if (paused) {
+      // Avoid double-emissions of `end` event due to race conditions.
+      return;
+    }
 
+    paused = true;
     dispatch('end');
-  }
-
-  // MARK: Utilities
-
-  function isStatic(): boolean {
-    return _static;
-  }
-
-  function isPaused(): boolean {
-    return paused;
   }
 </script>
 
