@@ -42,6 +42,10 @@
 
   const simulation = forceSimulation().stop();
 
+  // d3.Simulation does not provide a `.forces()` getter, so we need to
+  // keep track of previous forces ourselves, for diffing against `forces`.
+  let previousForces: Forces = {};
+
   // Only dynamic simulations distinguish between paused and running state.
   // Invariant: Static simulations always keep `paused = true`.
   let paused: boolean = true;
@@ -155,10 +159,21 @@
   }
 
   function pushForcesToSimulation(forces: Forces) {
-
-    Object.entries(forces).forEach(([name, force]) => {
-      simulation.force(name, force);
+    // Evict obsolete forces:
+    Object.keys(previousForces).forEach((name) => {
+      if (!(name in forces)) {
+        simulation.force(name, null);
+      }
     });
+
+    // Add new or overwrite existing forces:
+    Object.entries(forces).forEach(([name, force]) => {
+      if (!(name in previousForces) || forces[name] !== previousForces[name]) {
+        simulation.force(name, force);
+      }
+    });
+
+    previousForces = forces;
   }
 
   // MARK: Pull State

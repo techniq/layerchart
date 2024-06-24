@@ -46,7 +46,6 @@
     alpha = 1;
 
     // Change the link force without re-initializing any forces:
-    const linkForce = forces.link as ForceLink<any, any>;
     linkForce.distance(linkDistance);
   }
 
@@ -56,7 +55,6 @@
     alpha = 1;
 
     // Change the center force without re-initializing any forces:
-    const centerForce = forces.center as ForceCenter<any>;
     centerForce.strength(centerStrength);
   }
 
@@ -69,7 +67,6 @@
     alpha = 1;
 
     // Change the charge force without re-initializing any forces:
-    const chargeForce = forces.charge as ForceManyBody<any>;
     chargeForce
       .distanceMin(chargeDistanceMin)
       .distanceMax(chargeDistanceMaxInfinity ? Infinity : chargeDistanceMax)
@@ -83,21 +80,18 @@
     alpha = 1;
 
     // Change the collide force without re-initializing any forces:
-    const collideForce = forces.collide as ForceCollide<any>;
     collideForce.radius(collideRadius).strength(collideStrength(collideStrengthTarget));
   }
 
-  let forces: Record<string, Force<any, any>> = {
-    link: forceLink(links)
-      .id((d) => d.id)
-      .distance(linkDistance),
-    charge: forceManyBody()
-      .distanceMin(chargeDistanceMin)
-      .distanceMax(chargeDistanceMaxInfinity ? Infinity : chargeDistanceMax)
-      .strength(chargeStrength),
-    collide: forceCollide(collideRadius).strength(collideStrength(collideStrengthTarget)),
-    center: forceCenter(0, 0).strength(centerStrength),
-  };
+  const linkForce = forceLink(links)
+    .id((d) => d.id)
+    .distance(linkDistance);
+  const chargeForce = forceManyBody()
+    .distanceMin(chargeDistanceMin)
+    .distanceMax(chargeDistanceMaxInfinity ? Infinity : chargeDistanceMax)
+    .strength(chargeStrength);
+  const collideForce = forceCollide(collideRadius).strength(collideStrength(collideStrengthTarget));
+  const centerForce = forceCenter(0, 0).strength(centerStrength);
 
   function handleStart(event: CustomEvent<null>) {
     running = true;
@@ -111,16 +105,6 @@
 
   function handleEnd(event: CustomEvent<null>) {
     running = false;
-  }
-
-  // This function caches its forces object,
-  // (mutating the center force if necessary)
-  // and always returns the same object, thus avoiding needless
-  // force re-initializations by d3-force:
-  function forcesFor(size: { width: number; height: number }): Record<string, Force<any, any>> {
-    const centerForce = forces.center as ForceCenter<any>;
-    centerForce.x(size.width / 2).y(size.height / 2);
-    return forces;
   }
 
   function collideStrength(collideStrengthTarget: number): number {
@@ -246,7 +230,12 @@
     <Chart data={nodes} let:width let:height let:tooltip>
       <Svg>
         <ForceSimulation
-          forces={forcesFor({ width, height })}
+          forces={{
+            link: linkForce,
+            charge: chargeForce,
+            collide: collideForce,
+            center: centerForce.x(width / 2).y(height / 2),
+          }}
           bind:alpha
           bind:alphaTarget
           bind:stopped={isStopped}
