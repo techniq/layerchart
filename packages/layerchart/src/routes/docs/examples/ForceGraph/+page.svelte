@@ -1,18 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
-  import {
-    forceCollide,
-    forceManyBody,
-    forceLink,
-    forceCenter,
-    type Force,
-    forceSimulation,
-    type ForceCenter,
-    type ForceCollide,
-    type ForceLink,
-    type ForceManyBody,
-  } from 'd3-force';
+  import { forceCollide, forceManyBody, forceLink, forceCenter } from 'd3-force';
   import { curveLinear } from 'd3-shape';
   import { scaleOrdinal } from 'd3-scale';
   import { schemeCategory10 } from 'd3-scale-chromatic';
@@ -28,7 +15,7 @@
 
   const colorScale = scaleOrdinal(schemeCategory10);
 
-  let isStopped: boolean = true;
+  let isStopped: boolean = false;
   let isStatic: boolean = false;
 
   let alpha = 1;
@@ -38,77 +25,75 @@
   let running = false;
 
   let nodeRadius = 3;
+  let nodeStrokeWidth = 0;
   let linkWidth = 1;
+  let linkOpacity = 0.5;
+
+  let hasLinkForce = true;
+  let hasChargeForce = true;
+  let hasCollideForce = true;
+  let hasCenterForce = true;
+  $: {
+    reheatSimulation({
+      hasLinkForce,
+      hasChargeForce,
+      hasCollideForce,
+      hasCenterForce,
+    });
+  }
+
+  const linkForce = forceLink(links).id((d) => d.id);
+  const chargeForce = forceManyBody();
+  const collideForce = forceCollide();
+  const centerForce = forceCenter(0, 0);
 
   let linkDistance = 30;
   $: {
-    // Reheat the simulation:
-    alpha = 1;
-
-    // Change the link force without re-initializing any forces:
+    reheatSimulation();
     linkForce.distance(linkDistance);
   }
 
-  let centerStrength = 1;
-  $: {
-    // Reheat the simulation:
-    alpha = 1;
-
-    // Change the center force without re-initializing any forces:
-    centerForce.strength(centerStrength);
-  }
-
-  let chargeStrength = -30;
   let chargeDistanceMin = 1;
-  let chargeDistanceMax = 100;
-  let chargeDistanceMaxInfinity = true;
+  let chargeDistanceMax = 1000;
+  let chargeStrength = -30;
   $: {
-    // Reheat the simulation:
-    alpha = 1;
-
-    // Change the charge force without re-initializing any forces:
+    reheatSimulation();
     chargeForce
       .distanceMin(chargeDistanceMin)
-      .distanceMax(chargeDistanceMaxInfinity ? Infinity : chargeDistanceMax)
+      .distanceMax(chargeDistanceMax)
       .strength(chargeStrength);
   }
 
   let collideRadius = 3;
-  let collideStrengthTarget = 1;
+  let collideStrength = 1;
   $: {
-    // Reheat the simulation:
-    alpha = 1;
-
-    // Change the collide force without re-initializing any forces:
-    collideForce.radius(collideRadius).strength(collideStrength(collideStrengthTarget));
+    reheatSimulation();
+    collideForce.radius(collideRadius).strength(collideStrength);
   }
 
-  const linkForce = forceLink(links)
-    .id((d) => d.id)
-    .distance(linkDistance);
-  const chargeForce = forceManyBody()
-    .distanceMin(chargeDistanceMin)
-    .distanceMax(chargeDistanceMaxInfinity ? Infinity : chargeDistanceMax)
-    .strength(chargeStrength);
-  const collideForce = forceCollide(collideRadius).strength(collideStrength(collideStrengthTarget));
-  const centerForce = forceCenter(0, 0).strength(centerStrength);
+  let centerStrength = 1.0;
+  $: {
+    reheatSimulation();
+    centerForce.strength(centerStrength);
+  }
 
   function handleStart(event: CustomEvent<null>) {
     running = true;
   }
 
   function handleTick(event: CustomEvent<{ alpha: number; alphaTarget: number }>) {
-    // If we didn't already use `bind:alpha` then this is where we would get access to
-    // the current values of `alpha` and `alphaTarget`, which then would allow us
-    // to dynamically adjust e.g. the forces of our simulation.
+    // If we weren't already using `bind:alpha`, then this is
+    // where we would get access to the current values of
+    // `alpha` and `alphaTarget` and could make adjustments accordingly.
   }
 
   function handleEnd(event: CustomEvent<null>) {
     running = false;
   }
 
-  function collideStrength(collideStrengthTarget: number): number {
-    return (1.0 - alpha) * collideStrengthTarget;
+  function reheatSimulation(args: Record<string, any> = {}) {
+    const _ = args;
+    alpha = 1.0;
   }
 </script>
 
@@ -116,16 +101,11 @@
 
 <div class="grid gap-1 mb-4">
   <div class="grid grid-cols-7 gap-2">
-    <Field label="State" class="col-span-1">
-      <Checkbox size="xs" bind:checked={isStopped}>Stopped</Checkbox>
-    </Field>
-    <Field label="Status" class="col-span-1">
-      {#if running}
-        <ProgressCircle size={15} />
-      {/if}
-    </Field>
     <Field label="Type" class="col-span-1">
       <Checkbox size="xs" bind:checked={isStatic}>Static</Checkbox>
+    </Field>
+    <Field label="State" class="col-span-1">
+      <Checkbox size="xs" bind:checked={isStopped}>Stopped</Checkbox>
     </Field>
     <RangeField
       label="Alpha Target"
@@ -135,8 +115,19 @@
       max={1}
       step={0.1}
     />
-    <Field label="Alpha" class="col-span-2">
-      <Progress value={alpha} />
+    <RangeField
+      label="Alpha"
+      class="col-span-2"
+      bind:value={alpha}
+      min={0}
+      max={1}
+      step={0.001}
+      format="decimal"
+    />
+    <Field label="Running" class="col-span-1">
+      {#if running}
+        <ProgressCircle size={15} />
+      {/if}
     </Field>
   </div>
   <div class="grid grid-cols-4 gap-2">
@@ -149,6 +140,14 @@
       step={1}
     />
     <RangeField
+      label="Node Stroke Width"
+      class="col-span-1"
+      bind:value={nodeStrokeWidth}
+      min={0}
+      max={10}
+      step={0.5}
+    />
+    <RangeField
       label="Link Width"
       class="col-span-1"
       bind:value={linkWidth}
@@ -157,31 +156,43 @@
       step={0.5}
     />
     <RangeField
-      label="Link Distance"
+      label="Link Opacity"
       class="col-span-1"
+      bind:value={linkOpacity}
+      min={0.1}
+      max={1}
+      step={0.1}
+    />
+  </div>
+  <div class="grid grid-cols-7 gap-2">
+    <Field label="Link Force" class="col-span-1">
+      <Checkbox size="xs" bind:checked={hasLinkForce} />
+    </Field>
+    <RangeField
+      label="Link Distance"
+      class="col-span-3"
       bind:value={linkDistance}
       min={0}
       max={100}
       step={1}
+      disabled={!hasCenterForce}
     />
+    <Field label="Center Force" class="col-span-1">
+      <Checkbox size="xs" bind:checked={hasCenterForce} />
+    </Field>
     <RangeField
       label="Center Strength"
-      class="col-span-1"
+      class="col-span-2"
       bind:value={centerStrength}
       min={0}
       max={1}
-      step={0.01}
+      step={0.1}
     />
   </div>
   <div class="grid grid-cols-7 gap-2">
-    <RangeField
-      label="Charge Strength"
-      class="col-span-2"
-      bind:value={chargeStrength}
-      min={-100}
-      max={10}
-      step={1}
-    />
+    <Field label="Charge Force" class="col-span-1">
+      <Checkbox size="xs" bind:checked={hasChargeForce} />
+    </Field>
     <RangeField
       label="Charge Distance Min"
       class="col-span-2"
@@ -189,40 +200,47 @@
       min={1}
       max={10}
       step={1}
+      disabled={!hasChargeForce}
     />
     <RangeField
       label="Charge Distance Max"
       class="col-span-2"
       bind:value={chargeDistanceMax}
       min={1}
-      max={200}
-      step={1}
-      disabled={chargeDistanceMaxInfinity}
+      max={1000}
+      step={10}
+      disabled={!hasChargeForce}
     />
-    <Field label="Charge Distance" class="col-span-1">
-      <Checkbox size="xs" bind:checked={chargeDistanceMaxInfinity}>Infinity</Checkbox>
-    </Field>
+    <RangeField
+      label="Charge Strength"
+      class="col-span-2"
+      bind:value={chargeStrength}
+      min={-100}
+      max={10}
+      step={1}
+      disabled={!hasChargeForce}
+    />
   </div>
-  <div class="grid grid-cols-3 gap-2">
+  <div class="grid grid-cols-7 gap-2">
+    <Field label="Collide Force" class="col-span-1">
+      <Checkbox size="xs" bind:checked={hasCollideForce} />
+    </Field>
     <RangeField
       label="Collide Radius"
-      class="col-span-1"
+      class="col-span-3"
       bind:value={collideRadius}
       min={0}
       max={30}
       step={1}
     />
     <RangeField
-      label="Collide Strength Target"
-      class="col-span-1"
-      bind:value={collideStrengthTarget}
+      label="Collide Strength"
+      class="col-span-3"
+      bind:value={collideStrength}
       min={0}
       max={1}
       step={0.1}
     />
-    <Field label="Collide Strength" class="col-span-1">
-      <Progress value={collideStrength(collideStrengthTarget)} />
-    </Field>
   </div>
 </div>
 <Preview data={data.miserables}>
@@ -231,10 +249,10 @@
       <Svg>
         <ForceSimulation
           forces={{
-            link: linkForce,
-            charge: chargeForce,
-            collide: collideForce,
-            center: centerForce.x(width / 2).y(height / 2),
+            ...(hasLinkForce && { link: linkForce }),
+            ...(hasChargeForce && { charge: chargeForce }),
+            ...(hasCollideForce && { collide: collideForce }),
+            ...(hasCenterForce && { center: centerForce.x(width / 2).y(height / 2) }),
           }}
           bind:alpha
           bind:alphaTarget
@@ -249,9 +267,10 @@
             {#each links as link}
               <Link
                 data={link}
-                class="stroke-surface-content/50"
+                class="stroke-surface-content"
                 curve={curveLinear}
                 stroke-width={linkWidth}
+                opacity={linkOpacity}
               />
             {/each}
           {/key}
@@ -262,6 +281,8 @@
               cy={node.y}
               r={nodeRadius}
               fill={colorScale(node.group)}
+              stroke-width={nodeStrokeWidth}
+              class="stroke-surface-content"
               on:pointermove={(e) => tooltip.show(e, node)}
               on:pointerleave={tooltip.hide}
             />
