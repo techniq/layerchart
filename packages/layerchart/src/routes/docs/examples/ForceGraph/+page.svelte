@@ -19,7 +19,6 @@
   let isStatic: boolean = false;
 
   let alpha = 1;
-  $: console.log('alpha', alpha);
 
   let alphaTarget = 0;
   let running = false;
