@@ -10,6 +10,10 @@
   export let data;
 
   const genderColor = scaleOrdinal(['hsl(var(--color-info))', 'hsl(var(--color-warning))']);
+
+  const xForce = forceX().strength(0.95);
+  const yForce = forceY().strength(0.075);
+  const collideForce = forceCollide();
 </script>
 
 <h1>Examples</h1>
@@ -30,13 +34,9 @@
         <Axis placement="bottom" format="none" rule grid />
         <ForceSimulation
           forces={{
-            x: forceX()
-              .x((d) => xGet(d))
-              .strength(0.95),
-            y: forceY()
-              .y(height / 2)
-              .strength(0.075),
-            collide: forceCollide(r),
+            x: xForce.x((d) => xGet(d)),
+            y: yForce.y(height / 2),
+            collide: collideForce.radius(r),
           }}
           static
           cloneData

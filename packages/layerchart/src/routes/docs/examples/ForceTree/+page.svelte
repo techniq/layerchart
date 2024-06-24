@@ -21,6 +21,11 @@
   const root = hierarchy(data.flare);
   const nodes = root.descendants();
   const links = root.links();
+
+  const linkForce = forceLink(links).distance(0).strength(1);
+  const chargeForce = forceManyBody().strength(-50);
+  const xForce = forceX();
+  const yForce = forceY();
 </script>
 
 <h1>Examples</h1>
@@ -31,10 +36,10 @@
       <Svg>
         <ForceSimulation
           forces={{
-            link: forceLink(links).distance(0).strength(1),
-            charge: forceManyBody().strength(-50),
-            x: forceX(),
-            y: forceY(),
+            link: linkForce,
+            charge: chargeForce,
+            x: xForce,
+            y: yForce,
           }}
           let:nodes
         >

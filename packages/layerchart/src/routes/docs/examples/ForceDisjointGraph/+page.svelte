@@ -13,6 +13,11 @@
   const { nodes, links } = data.miserables;
 
   const colorScale = scaleOrdinal(schemeCategory10);
+
+  const linkForce = forceLink(links).id((d) => d.id);
+  const chargeForce = forceManyBody();
+  const xForce = forceX();
+  const yForce = forceY();
 </script>
 
 <h1>Examples</h1>
@@ -23,10 +28,10 @@
       <Svg>
         <ForceSimulation
           forces={{
-            link: forceLink(links).id((d) => d.id),
-            charge: forceManyBody(),
-            x: forceX(),
-            y: forceY(),
+            link: linkForce,
+            charge: chargeForce,
+            x: xForce,
+            y: yForce,
           }}
           let:nodes
         >
