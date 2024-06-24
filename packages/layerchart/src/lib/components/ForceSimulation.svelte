@@ -40,78 +40,25 @@
 
   let nodes: any[] = [];
 
-  const simulation = forceSimulation().stop(); //.nodes(nodesFromData());
+  const simulation = forceSimulation().stop();
 
   // Only dynamic simulations distinguish between paused and running state.
   // Invariant: Static simulations always keep `paused = true`.
   let paused: boolean = true;
 
-  // MARK: Reactivity Triggers
+  // MARK: Reactivity Effects
 
   $: {
     // Any time the `stopped` prop gets toggled we
     // update the running state of the simulation:
-    updateStateOnChangeOf({
-      stopped,
-      _static,
-    });
-  }
-
-  $: {
-    // Any time the `static` prop gets toggled we
-    // either attach or detach our internal event listeners:
-    updateEventListenersOnChangeOf({ _static });
-  }
-
-  $: {
-    // Any time the `$data` store gets changed we
-    // pass them to the internal d3 simulation object:
-    updateNodesOnChangeOf({ data: $data });
-  }
-
-  $: {
-    // Any time the `forces` prop gets changed we
-    // pass them to the internal d3 simulation object:
-    updateForcesOnChangeOf({ forces });
-  }
-
-  $: {
-    // Any time the `alpha` prop gets changed we
-    // pass it to the internal d3 simulation object:
-    updateAlphaOnChangeOf({ alpha });
-  }
-
-  $: {
-    // Any time any of the the alpha props get changed we
-    // pass them all to the internal d3 simulation object
-    // (they are cheap, so passing them as a batch is fine!):
-    updateSettingsOnChangeOf({
-      alphaTarget,
-      alphaMin,
-      alphaDecay,
-      velocityDecay,
-      _static,
-    });
-  }
-
-  // MARK: Reactivity Behaviors
-
-  function updateEventListenersOnChangeOf(args: { _static: boolean }) {
-    const { _static } = args;
-
-    pushEventListenersToSimulation({ _static });
-  }
-
-  function updateStateOnChangeOf(args: { stopped: boolean; _static: boolean }) {
-    const { stopped } = args;
 
     if (stopped) {
-      if (!_static) {
+      if (!isStatic()) {
         pauseDynamicSimulation();
       }
     } else {
-      if (_static) {
-        if (!paused) {
+      if (isStatic()) {
+        if (!isPaused()) {
           pauseDynamicSimulation();
         }
         runStaticSimulation();
@@ -121,64 +68,9 @@
     }
   }
 
-  function updateAlphaOnChangeOf(args: { alpha: number }) {
-    const { alpha } = args;
-
-    pushAlphaToSimulation({ alpha });
-
-    if (_static) {
-      runStaticSimulation();
-    } else {
-      resumeDynamicSimulation(alpha);
-    }
-  }
-
-  function updateSettingsOnChangeOf(args: {
-    alphaTarget: number;
-    alphaMin: number;
-    alphaDecay: number;
-    velocityDecay: number;
-    _static: boolean;
-  }) {
-    const { alphaTarget, alphaMin, alphaDecay, velocityDecay, _static } = args;
-
-    pushSettingsToSimulation({ alphaTarget, alphaMin, alphaDecay, velocityDecay, _static });
-
-    if (_static) {
-      runStaticSimulation();
-    } else {
-      resumeDynamicSimulation();
-    }
-  }
-
-  function updateNodesOnChangeOf(args: { data: any[] }) {
-    const { data } = args;
-
-    pushNodesToSimulation({ nodes: data });
-
-    if (_static) {
-      runStaticSimulation();
-    } else {
-      resumeDynamicSimulation();
-    }
-  }
-
-  function updateForcesOnChangeOf(args: { forces: Forces }) {
-    const { forces } = args;
-
-    pushForcesToSimulation({ forces });
-
-    if (_static) {
-      runStaticSimulation();
-    } else {
-      resumeDynamicSimulation();
-    }
-  }
-
-  // MARK: Push State
-
-  function pushEventListenersToSimulation(args: { _static: boolean }) {
-    const { _static } = args;
+  $: {
+    // Any time the `static` prop gets toggled we
+    // either attach or detach our internal event listeners:
 
     if (_static) {
       simulation.on('tick', null).on('end', null);
@@ -187,44 +79,82 @@
     }
   }
 
-  function pushSettingsToSimulation(args: {
-    alphaTarget: number;
-    alphaMin: number;
-    alphaDecay: number;
-    velocityDecay: number;
-    _static: boolean;
-  }) {
-    const { alphaTarget, alphaMin, alphaDecay, velocityDecay, _static } = args;
+  $: {
+    // Any time the `$data` store gets changed we
+    // pass them to the internal d3 simulation object:
 
-    let alpha = simulation.alpha();
-    if (alphaTarget > alpha && alpha < alphaMin) {
+    pushNodesToSimulation(nodes);
+
+    if (isStatic()) {
+      runStaticSimulation();
+    } else {
+      resumeDynamicSimulation();
+    }
+  }
+
+  $: {
+    // Any time the `forces` prop gets changed we
+    // pass them to the internal d3 simulation object:
+
+    pushForcesToSimulation(forces);
+
+    if (isStatic()) {
+      runStaticSimulation();
+    } else {
+      resumeDynamicSimulation();
+    }
+  }
+
+  $: {
+    // Any time the `alpha` prop gets changed we
+    // pass it to the internal d3 simulation object:
+
+    pushAlphaToSimulation(alpha);
+
+    if (isStatic()) {
+      runStaticSimulation();
+    } else {
+      resumeDynamicSimulation(alpha);
+    }
+  }
+
+  $: {
+    // Any time any of the the alpha props get changed we
+    // pass them all to the internal d3 simulation object
+    // (they are cheap, so passing them as a batch is fine!):
+
+    let alphaValue = simulation.alpha();
+    if (alphaTarget > alphaValue && alphaValue < alphaMin) {
       // Lift `alpha` from below `alphaMin` in order to give the simulation
       // a chance to get revived if an `alphaTarget > alpha` is provided:
-      alpha = alphaMin;
+      alphaValue = alphaMin;
     }
 
     simulation
-      .alpha(alpha)
+      .alpha(alphaValue)
       .alphaTarget(alphaTarget)
       .alphaMin(alphaMin)
       .alphaDecay(alphaDecay)
       .velocityDecay(velocityDecay);
+
+    if (isStatic()) {
+      runStaticSimulation();
+    } else {
+      resumeDynamicSimulation();
+    }
   }
 
-  function pushAlphaToSimulation(args: { alpha: number }) {
-    const { alpha } = args;
+  // MARK: Push State
 
+  function pushAlphaToSimulation(alpha: number) {
     simulation.alpha(alpha);
   }
 
-  function pushNodesToSimulation(args: { nodes: any[] }) {
-    const { nodes } = args;
-
+  function pushNodesToSimulation(nodes: any[]) {
     simulation.nodes(cloneData ? structuredClone(nodes) : nodes);
   }
 
-  function pushForcesToSimulation(args: { forces: Forces }) {
-    const { forces } = args;
+  function pushForcesToSimulation(forces: Forces) {
 
     Object.entries(forces).forEach(([name, force]) => {
       simulation.force(name, force);
@@ -262,7 +192,7 @@
       Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())
     );
 
-    pushAlphaToSimulation({ alpha: 1 });
+    pushAlphaToSimulation(1.0);
 
     onStart();
 
@@ -284,7 +214,7 @@
     }
 
     if (alpha) {
-      pushAlphaToSimulation({ alpha });
+      pushAlphaToSimulation(alpha);
     }
 
     if (paused) {
@@ -329,6 +259,16 @@
     pullNodesAndAlphaFromSimulation();
 
     dispatch('end');
+  }
+
+  // MARK: Utilities
+
+  function isStatic(): boolean {
+    return _static;
+  }
+
+  function isPaused(): boolean {
+    return paused;
   }
 </script>
 
