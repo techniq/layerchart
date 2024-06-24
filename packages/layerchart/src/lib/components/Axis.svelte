@@ -75,7 +75,7 @@
       ? ticks(_scale)
       : isScaleBand(_scale)
         ? ticks
-          ? _scale.domain().filter((v, i) => i % ticks === 0)
+          ? _scale.domain().filter((v: any, i: number) => i % ticks === 0)
           : _scale.domain()
         : _scale.ticks(ticks ?? (placement === 'left' || placement === 'right' ? 4 : undefined));
 
@@ -252,7 +252,7 @@
       ),
     }}
 
-    <Text value={label} {...resolvedLabelProps} />
+    <Text {...resolvedLabelProps} />
   {/if}
 
   {#each tickVals as tick, index (tick)}

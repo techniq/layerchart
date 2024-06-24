@@ -33,8 +33,8 @@
   const originalXDomain = $xScale.domain();
   const originalYDomain = $yScale.domain();
 
-  $: [xDomainMin, xDomainMax] = extent($xScale.domain());
-  $: [yDomainMin, yDomainMax] = extent($yScale.domain());
+  $: [xDomainMin, xDomainMax] = extent<number>($xScale.domain()) as [number, number];
+  $: [yDomainMin, yDomainMax] = extent<number>($yScale.domain()) as [number, number];
 
   /** Attributes passed to range <rect> element */
   export let range: SVGAttributes<SVGRectElement> | undefined = undefined;
@@ -63,11 +63,11 @@
   ) {
     return (e: PointerEvent) => {
       const start = {
-        xDomain: [xDomain[0] ?? xDomainMin, xDomain[1] ?? xDomainMax],
-        yDomain: [yDomain[0] ?? yDomainMin, yDomain[1] ?? yDomainMax],
+        xDomain: [xDomain[0] ?? xDomainMin, xDomain[1] ?? xDomainMax] as [number, number],
+        yDomain: [yDomain[0] ?? yDomainMin, yDomain[1] ?? yDomainMax] as [number, number],
         value: {
-          x: $xScale.invert(localPoint(frameEl, e)?.x - $padding.left),
-          y: $yScale.invert(localPoint(frameEl, e)?.y - $padding.top),
+          x: $xScale.invert(localPoint(frameEl, e)?.x ?? 0 - $padding.left),
+          y: $yScale.invert(localPoint(frameEl, e)?.y ?? 0 - $padding.top),
         },
       };
 
@@ -75,8 +75,8 @@
 
       const onPointerMove = (e: PointerEvent) => {
         fn(start, {
-          x: $xScale.invert(localPoint(frameEl, e)?.x - $padding.left),
-          y: $yScale.invert(localPoint(frameEl, e)?.y - $padding.top),
+          x: $xScale.invert(localPoint(frameEl, e)?.x ?? 0 - $padding.left),
+          y: $yScale.invert(localPoint(frameEl, e)?.y ?? 0 - $padding.top),
         });
 
         // if (xDomain[0] === xDomain[1] || yDomain[0] === yDomain[1]) {
@@ -205,6 +205,7 @@
   />
 
   {#if isActive}
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <Group x={rangeLeft} y={rangeTop} class="range">
       <slot name="range" {rangeWidth} {rangeHeight}>
         <rect

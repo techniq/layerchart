@@ -28,6 +28,7 @@
   });
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <circle
   cx={$tweened_cx}
   cy={$tweened_cy}

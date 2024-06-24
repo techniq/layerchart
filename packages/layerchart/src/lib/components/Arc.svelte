@@ -103,7 +103,7 @@
     }
   }
 
-  $: _outerRadius = getOuterRadius(outerRadius, max($yRange) / 2);
+  $: _outerRadius = getOuterRadius(outerRadius, (max<number>($yRange) ?? 0) / 2);
 
   function getInnerRadius(innerRadius: number | undefined, outerRadius: number) {
     if (innerRadius == null) {
@@ -130,7 +130,7 @@
     .startAngle(startAngle ?? degreesToRadians(range[0]))
     .endAngle(endAngle ?? degreesToRadians(scale($tweened_value)))
     .cornerRadius(cornerRadius)
-    .padAngle(padAngle);
+    .padAngle(padAngle) as Function;
   // .padRadius(padRadius);
 
   $: trackArc = d3arc()
@@ -139,30 +139,30 @@
     .startAngle(startAngle ?? degreesToRadians(range[0]))
     .endAngle(endAngle ?? degreesToRadians(range[1]))
     .cornerRadius(cornerRadius)
-    .padAngle(padAngle);
+    .padAngle(padAngle) as Function;
   // .padRadius(padRadius);
 
   $: trackArcCentroid = trackArc.centroid();
   // $: console.log(trackArcCentroid)
 
-  let trackArcEl;
-  $: boundingBox = trackArc && trackArcEl ? trackArcEl.getBBox() : {};
+  let trackArcEl: SVGPathElement | undefined = undefined;
+  $: boundingBox = trackArcEl ? trackArcEl.getBBox() : {};
   // $: console.log(boundingBox)
 
-  $: labelArcCenterOffset = {
-    x: outerRadius - boundingBox.width / 2,
-    // x: 0,
-    y: (outerRadius - boundingBox.height / 2) * -1,
-  };
+  // $: labelArcCenterOffset = {
+  //   x: outerRadius - boundingBox.width / 2,
+  //   // x: 0,
+  //   y: (outerRadius - boundingBox.height / 2) * -1,
+  // };
   // $: console.log(labelArcCenterOffset)
 
-  $: labelArcBottomOffset = {
-    // x: outerRadius - boundingBox.width / 2,
-    x: outerRadius - boundingBox.width / 2,
-    // x: 0,
-    // y: (outerRadius - boundingBox.height) * -1
-    y: (outerRadius - boundingBox.height) * -1,
-  };
+  // $: labelArcBottomOffset = {
+  //   // x: outerRadius - boundingBox.width / 2,
+  //   x: outerRadius - boundingBox.width / 2,
+  //   // x: 0,
+  //   // y: (outerRadius - boundingBox.height) * -1
+  //   y: (outerRadius - boundingBox.height) * -1,
+  // };
   // $: console.log(labelArcBottomOffset)
 
   /**
@@ -178,6 +178,7 @@
   <path d={trackArc()} class="track" bind:this={trackArcEl} {...track} />
 {/if}
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <path
   d={arc()}
   transform="translate({xOffset}, {yOffset})"

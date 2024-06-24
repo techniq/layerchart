@@ -25,9 +25,7 @@
 
   export let velocityDecay = 0.4;
 
-  type AlphaResponse = (alpha: number, alphaTarget: number) => number;
-  export let alphaResponse: AlphaResponse | undefined = undefined;
-
+  /** Stop simulation */
   export let stopped = false;
 
   let _static = false;

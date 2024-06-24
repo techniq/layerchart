@@ -2,7 +2,6 @@
   import { curveNatural, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoOrthographic, geoInterpolate } from 'd3-geo';
 
-  import { chartContext } from './ChartContext.svelte';
   import { geoContext } from './GeoContext.svelte';
   import Spline from './Spline.svelte';
 
@@ -22,7 +21,6 @@
    */
   export let curve: CurveFactory | CurveFactoryLineOnly | undefined = curveNatural;
 
-  const { width, height } = chartContext();
   const geo = geoContext();
 
   $: loftedProjection = geoOrthographic()
@@ -35,11 +33,4 @@
   $: middle = loftedProjection(geoInterpolate(link.source, link.target)(0.5));
 </script>
 
-<Spline
-  data={[source, middle, target]}
-  x={(d) => d[0]}
-  y={(d) => d[1]}
-  defined={(d) => $geo.invert(d)}
-  {curve}
-  {...$$restProps}
-/>
+<Spline data={[source, middle, target]} x={(d) => d[0]} y={(d) => d[1]} {curve} {...$$restProps} />

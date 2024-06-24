@@ -25,12 +25,12 @@
   export let radial = false;
 
   /** Override x accessor */
-  export let x: any = undefined; // TODO: Update Type
+  export let x: ((d: any) => any) | undefined = undefined;
 
   /** Override y0 accessor.  Defaults to max($yRange) */
-  export let y0: any = undefined; // TODO: Update Type
+  export let y0: ((d: any) => any) | undefined = undefined;
   /** Override y1 accessor.  Defaults to y accessor */
-  export let y1: any = undefined; // TODO: Update Type
+  export let y1: ((d: any) => any) | undefined = undefined;
 
   /** Interpolate path data using d3-interpolate-path */
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -59,7 +59,7 @@
     if (defined) path.defined(defined);
 
     const d = pathData ?? path(data ?? $contextData);
-    tweened_d.set(d);
+    tweened_d.set(d ?? '');
   }
 </script>
 
@@ -67,6 +67,7 @@
   <Spline {data} y={y1} {curve} {defined} {tweened} {...typeof line === 'object' ? line : null} />
 {/if}
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <path
   d={$tweened_d}
   clip-path={clipPath}
