@@ -6,6 +6,7 @@ import type { NewPassengerCars } from '$static/data/examples/new-passenger-cars.
 export async function load() {
   return {
     newPassengerCars: await fetch('/data/examples/new-passenger-cars.csv').then(async (r) =>
+      // @ts-ignore
       csvParse<NewPassengerCars>(await r.text(), autoType)
     ),
     meta: {
