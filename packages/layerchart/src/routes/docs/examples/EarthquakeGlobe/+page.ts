@@ -16,7 +16,7 @@ export async function load({ fetch }) {
       'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson'
     )
       .then((r) => r.json())
-      .then((d) =>
+      .then((d: GeoJSON.FeatureCollection<null, { place: string; mag: number }>) =>
         d.features.map((f) => {
           const c = geoCentroid(f);
           return {

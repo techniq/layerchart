@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cubicOut } from 'svelte/easing';
-  import { hierarchy } from 'd3-hierarchy';
+  import { hierarchy, type HierarchyNode, type HierarchyRectangularNode } from 'd3-hierarchy';
   import { scaleSequential, scaleOrdinal } from 'd3-scale';
   import * as chromatic from 'd3-scale-chromatic';
   import { hsl } from 'd3-color';
@@ -38,7 +38,7 @@
 
   let colorBy = 'parent';
 
-  let selected = complexHierarchy; // select root initially
+  let selected: HierarchyRectangularNode<any> = complexHierarchy as HierarchyRectangularNode<any>; // select root initially
 
   const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
   // filter out hard to see yellow and green
@@ -47,18 +47,21 @@
   );
   // const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
 
-  function getNodeColor(node, colorBy) {
+  function getNodeColor(node: HierarchyNode<any>, colorBy: string) {
     switch (colorBy) {
       case 'children':
         return node.children ? '#ccc' : '#ddd';
       case 'depth':
-        return sequentialColor(node.depth);
+        return sequentialColor(node.depth).toString();
       case 'parent':
         const colorParent = findAncestor(node, (n) => n.depth === 1);
         return colorParent
-          ? hsl(ordinalColor(colorParent.data.name)).brighter(node.depth * 0.3)
+          ? hsl(ordinalColor(colorParent.data.name))
+              .brighter(node.depth * 0.3)
+              .toString()
           : '#ddd';
     }
+    return '';
   }
 </script>
 
@@ -82,7 +85,7 @@
     <Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded">
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
-        <div class="text-xs text-surface-content/50">{format(item.value, 'integer')}</div>
+        <div class="text-xs text-surface-content/50">{format(item.value ?? 0, 'integer')}</div>
       </div>
     </Button>
   </Breadcrumb>

@@ -37,7 +37,7 @@
   export let grid: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'> = false;
 
   /** Control the number of ticks*/
-  export let ticks: number | any[] | Function | undefined = undefined;
+  export let ticks: number | any[] | Function | null | undefined = undefined;
 
   /** Length of the tick line */
   export let tickLength = 4;

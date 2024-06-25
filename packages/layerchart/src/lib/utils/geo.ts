@@ -70,12 +70,13 @@ export function antipode([longitude, latitude]: [number, number]): [number, numb
  */
 export function isVisible(projection: GeoProjection | GeoStreamWrapper) {
   let visible;
+  // @ts-ignore
   const stream = projection.stream({
     point() {
       visible = true;
     },
   });
-  return ([x, y]) => ((visible = false), stream.point(x, y), visible);
+  return ([x, y]: [number, number]) => ((visible = false), stream.point(x, y), visible);
 }
 
 export function geoFitObjectTransform(

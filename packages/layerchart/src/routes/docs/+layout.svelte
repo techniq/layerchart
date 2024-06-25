@@ -24,6 +24,7 @@
     ListItem,
     TableOfContents,
     cls,
+    toTitleCase,
     xlScreen,
   } from 'svelte-ux';
 
@@ -183,7 +184,7 @@
                 title={feature.description}
                 icon={mdiCheck}
                 avatar={{ size: 'sm', class: 'text-xs text-white bg-success' }}
-                classes={{ root: feature.depth && 'pl-12', title: 'text-sm' }}
+                classes={{ root: feature.depth ? 'pl-12' : '', title: 'text-sm' }}
               />
             {/each}
           </ul>
@@ -216,7 +217,7 @@
                             ? mdiGithub
                             : mdiLink}
                   <ListItem
-                    title={item.name}
+                    title={item.name.toString()}
                     {icon}
                     avatar={{ size: 'sm', class: 'text-xs text-white bg-primary' }}
                     on:click={() => {

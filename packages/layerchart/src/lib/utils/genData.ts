@@ -27,6 +27,7 @@ export function getRandomInteger(min: number, max: number, includeMax = true) {
  */
 export function randomWalk(options?: { count?: number }) {
   const random = randomNormal();
+  // @ts-ignore
   return Array.from(cumsum({ length: options?.count ?? 100 }, random));
 }
 
@@ -151,13 +152,35 @@ export const longData = [
   { year: '2016', basket: 2, fruit: 'dates', value: 400 },
 ];
 
-export function getPhyllotaxis({ radius, count, width, height }) {
+export function getPhyllotaxis({
+  radius,
+  count,
+  width,
+  height,
+}: {
+  radius: number;
+  count: number;
+  width: number;
+  height: number;
+}) {
   // Phyllotaxis: https://www.youtube.com/watch?v=KWoJgHFYWxY
   const rads = Math.PI * (3 - Math.sqrt(5)); // ~2.4 rads or ~137.5 degrees
   return getSpiral({ angle: radiansToDegrees(rads), radius, count, width, height });
 }
 
-export function getSpiral({ angle, radius, count, width, height }) {
+export function getSpiral({
+  angle,
+  radius,
+  count,
+  width,
+  height,
+}: {
+  angle: number;
+  radius: number;
+  count: number;
+  width: number;
+  height: number;
+}) {
   return Array.from({ length: count }, (_, i) => {
     const r = radius * Math.sqrt(i);
     const a = degreesToRadians(angle * i);

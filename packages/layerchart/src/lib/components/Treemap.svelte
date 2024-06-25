@@ -19,8 +19,8 @@
   export let paddingOuter = 0;
   export let paddingTop = 0;
   export let paddingBottom = 0;
-  export let paddingLeft = undefined;
-  export let paddingRight = undefined;
+  export let paddingLeft: number | undefined = undefined;
+  export let paddingRight: number | undefined = undefined;
 
   export let selected = null;
 

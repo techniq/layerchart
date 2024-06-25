@@ -1,7 +1,7 @@
 <script lang="ts">
   import { cubicOut } from 'svelte/easing';
   import { fade } from 'svelte/transition';
-  import { hierarchy } from 'd3-hierarchy';
+  import { hierarchy, type HierarchyNode } from 'd3-hierarchy';
   import { scaleSequential, scaleOrdinal } from 'd3-scale';
   import * as chromatic from 'd3-scale-chromatic';
   import { hsl } from 'd3-color';
@@ -84,18 +84,21 @@
   );
   // const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
 
-  function getNodeColor(node, colorBy) {
+  function getNodeColor(node: HierarchyNode<any>, colorBy: string) {
     switch (colorBy) {
       case 'children':
         return node.children ? 'hsl(var(--color-primary))' : 'hsl(var(--color-primary-600))';
       case 'depth':
-        return sequentialColor(node.depth);
+        return sequentialColor(node.depth).toString();
       case 'parent':
         const colorParent = findAncestor(node, (n) => n.depth === 1);
         return colorParent
-          ? hsl(ordinalColor(colorParent.data.name)).brighter(node.depth * 0.3)
+          ? hsl(ordinalColor(colorParent.data.name))
+              .brighter(node.depth * 0.3)
+              .toString()
           : '#ddd';
     }
+    return '';
   }
 </script>
 
@@ -139,7 +142,7 @@
     >
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
-        <div class="text-xs text-surface-content/50">{format(item.value, 'integer')}</div>
+        <div class="text-xs text-surface-content/50">{format(item.value ?? 0, 'integer')}</div>
       </div>
     </Button>
   </Breadcrumb>
@@ -197,7 +200,7 @@
                             colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
                           )}
                         >
-                          {format(node.value, 'integer')}
+                          {format(node.value ?? 0, 'integer')}
                         </tspan>
                       </text>
                     </g>
@@ -225,7 +228,7 @@
     >
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
-        <div class="text-xs text-surface-content/50">{format(item.value, 'integer')}</div>
+        <div class="text-xs text-surface-content/50">{format(item.value ?? 0, 'integer')}</div>
       </div>
     </Button>
   </Breadcrumb>
@@ -275,7 +278,7 @@
                         y={2}
                       />
                       <Text
-                        value={format(node.value, 'integer')}
+                        value={format(node.value ?? 0, 'integer')}
                         class={cls(
                           'text-[8px] font-extralight',
                           colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
@@ -317,7 +320,7 @@
     >
       <div class="text-left">
         <div class="text-sm">{item.data[0] ?? 'Overall'}</div>
-        <div class="text-xs text-surface-content/50">{format(item.value, 'integer')}</div>
+        <div class="text-xs text-surface-content/50">{format(item.value ?? 0, 'integer')}</div>
       </div>
     </Button>
   </Breadcrumb>
@@ -373,7 +376,7 @@
                               colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
                             )}
                           >
-                            {format(node.value, 'integer')}
+                            {format(node.value ?? 0, 'integer')}
                           </tspan>
                         {/if}
                       </text>

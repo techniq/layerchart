@@ -2,6 +2,7 @@ import { derived } from 'svelte/store';
 import { max, min } from 'd3-array';
 
 import { groupScaleBand, isScaleBand } from './scales.js';
+import type { ChartContext } from '../components/ChartContext.svelte';
 
 type DimensionGetterOptions = {
   /** Override `x` accessor from context */
@@ -14,7 +15,7 @@ type DimensionGetterOptions = {
 };
 
 // TOOD: Pass in overrides for `x` and `y` accessors
-export function createDimensionGetter(context, options?: DimensionGetterOptions) {
+export function createDimensionGetter(context: ChartContext, options?: DimensionGetterOptions) {
   const { flatData, xGet, yGet, xScale, yScale, x: xAccessor, y: yAccessor } = context;
 
   const groupBy = options?.groupBy;
@@ -27,12 +28,14 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
       const [minXDomain, maxXDomain] = $xScale.domain();
       const [minYDomain, maxYDomain] = $yScale.domain();
 
+      // @ts-ignore
       return function getter(item) {
         if (isScaleBand($yScale)) {
           // Horizontal band
           const y1Scale = groupBy
             ? groupScaleBand($yScale, $flatData, groupBy, options?.groupPadding)
             : null;
+          // @ts-ignore
           const y = firstValue($yGet(item)) + (y1Scale ? y1Scale(item[groupBy]) : 0) + inset / 2;
           const height = Math.max(
             0,
@@ -41,7 +44,8 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
 
           const _x = options?.x
             ? typeof options.x === 'string'
-              ? (d) => d[options.x]
+              ? // @ts-ignore
+                (d: any) => d[options.x]
               : options?.x
             : $xAccessor;
           const xValue = _x(item);
@@ -78,6 +82,7 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
             ? groupScaleBand($xScale, $flatData, groupBy, options?.groupPadding)
             : null;
 
+          // @ts-ignore
           const x = firstValue($xGet(item)) + (x1Scale ? x1Scale(item[groupBy]) : 0) + inset / 2;
           const width = Math.max(
             0,
@@ -86,7 +91,8 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
 
           const _y = options?.y
             ? typeof options.y === 'string'
-              ? (d) => d[options.y]
+              ? // @ts-ignore
+                (d: any) => d[options.y]
               : options?.y
             : $yAccessor;
           const yValue = _y(item);

@@ -1,6 +1,12 @@
 import { csvParseRows } from 'd3-dsv';
-import type { SankeyExtraProperties, SankeyGraph, SankeyLink, SankeyNodeMinimal } from 'd3-sankey';
-import type { hierarchy as d3Hierarchy } from 'd3-hierarchy';
+import type {
+  SankeyExtraProperties,
+  SankeyGraph,
+  SankeyLink,
+  SankeyNode,
+  SankeyNodeMinimal,
+} from 'd3-sankey';
+import type { HierarchyLink, hierarchy as d3Hierarchy } from 'd3-hierarchy';
 
 /**
  * Convert CSV rows in format: 'source,target,value' to SankeyGraph
@@ -12,7 +18,7 @@ export function graphFromCsv(csv: string): SankeyGraph<any, any> {
           source,
           target,
           // @ts-ignore
-          value: !value || isNaN((value = +value)) ? 1 : value,
+          value: !value || isNaN((value = +value)) ? 1 : +value,
           // color: linkColor,
         }
       : null
@@ -35,10 +41,10 @@ export function graphFromHierarchy(hierarchy: ReturnType<typeof d3Hierarchy>) {
  * Create graph from node (and target node/links downward)
  */
 export function graphFromNode(node: SankeyNodeMinimal<any, any>) {
-  const nodes = [node];
-  const links = [];
+  const nodes: SankeyNode<any, any>[] = [node];
+  const links: SankeyLink<any, any>[] = [];
 
-  node.sourceLinks.forEach((link) => {
+  node.sourceLinks?.forEach((link) => {
     nodes.push(link.target);
     links.push(link);
 

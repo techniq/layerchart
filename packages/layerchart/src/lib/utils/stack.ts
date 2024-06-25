@@ -20,16 +20,16 @@ export function createStackData(
     const groupedData = flatGroup(
       data,
       (d) => d[options.xKey],
-      (d) => d[options.groupBy]
+      (d) => d[options.groupBy ?? '']
     );
 
     const result = groupedData.flatMap((d, i) => {
       const groupKeys = d.slice(0, -1); // all but last item
       const itemData = d.slice(-1)[0]; // last item
 
-      const pivotData = pivotWider(itemData, options.xKey, options.stackBy, 'value');
+      const pivotData = pivotWider(itemData, options.xKey, options.stackBy ?? '', 'value');
 
-      const stackKeys: Array<any> = [...new Set(itemData.map((d) => d[options.stackBy]))];
+      const stackKeys: Array<any> = [...new Set(itemData.map((d) => d[options.stackBy ?? '']))];
       const stackData = stack().keys(stackKeys).order(options.order).offset(options.offset)(
         pivotData
       );
@@ -53,7 +53,7 @@ export function createStackData(
     // Stack only
     const pivotData = pivotWider(data, options.xKey, options.stackBy, 'value');
 
-    const stackKeys: Array<any> = [...new Set(data.map((d) => d[options.stackBy]))];
+    const stackKeys: Array<any> = [...new Set(data.map((d) => d[options.stackBy ?? '']))];
     const stackData = stack().keys(stackKeys).order(options.order).offset(options.offset)(
       pivotData
     );
