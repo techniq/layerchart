@@ -142,6 +142,7 @@
     .padAngle(padAngle) as Function;
   // .padRadius(padRadius);
 
+  // @ts-ignore
   $: trackArcCentroid = trackArc.centroid();
   // $: console.log(trackArcCentroid)
 
@@ -169,13 +170,18 @@
    * Offset arc from center
    */
   export let offset = 0;
-  $: angle = (startAngle + endAngle) / 2;
+  $: angle = ((startAngle ?? 0) + (endAngle ?? 0)) / 2;
   $: xOffset = Math.sin(angle) * offset;
   $: yOffset = -Math.cos(angle) * offset;
 </script>
 
 {#if track}
-  <path d={trackArc()} class="track" bind:this={trackArcEl} {...track} />
+  <path
+    d={trackArc()}
+    class="track"
+    bind:this={trackArcEl}
+    {...typeof track === 'object' ? track : null}
+  />
 {/if}
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->

@@ -44,7 +44,7 @@
   export let area: boolean | Partial<ComponentProps<Rect>> = false;
 
   /** Show bar and pass props to Rect */
-  export let bar: boolean | Partial<ComponentProps<Rect>> = false;
+  export let bar: boolean | Partial<ComponentProps<Bar>> = false;
 
   /** Set to false to disable spring transitions */
   export let motion = true;
@@ -220,12 +220,12 @@
     <slot name="bar" {bar}>
       <Bar
         spring={motion}
-        x={typeof bar === 'object' ? bar.x : null}
-        y={typeof bar === 'object' ? bar.y : null}
-        inset={typeof bar === 'object' ? bar.inset : null}
-        stroke={typeof bar === 'object' ? bar.stroke : null}
-        strokeWidth={typeof bar === 'object' ? bar.strokeWidth : null}
-        radius={typeof bar === 'object' ? bar.radius : null}
+        x={typeof bar === 'object' ? bar.x : undefined}
+        y={typeof bar === 'object' ? bar.y : undefined}
+        inset={typeof bar === 'object' ? bar.inset : undefined}
+        stroke={typeof bar === 'object' ? bar.stroke : undefined}
+        strokeWidth={typeof bar === 'object' ? bar.strokeWidth : undefined}
+        radius={typeof bar === 'object' ? bar.radius : undefined}
         bar={highlightData}
         class={cls(
           // @ts-ignore

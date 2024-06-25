@@ -9,9 +9,6 @@
 
   const { data, rGet } = chartContext();
 
-  // TODO: Add as generic
-  type Datum = any;
-
   export let curve: CurveFactory | undefined = undefined;
   export let defined: ComponentProps<Spline>['defined'] | undefined = undefined;
   export let opacity = 0.3;

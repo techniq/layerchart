@@ -108,7 +108,7 @@
 
   let hideTimeoutId: NodeJS.Timeout;
 
-  $: bisectX = bisector((d) => {
+  $: bisectX = bisector((d: any) => {
     const value = $x(d);
     if (Array.isArray(value)) {
       // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
@@ -121,7 +121,7 @@
     }
   }).left;
 
-  $: bisectY = bisector((d) => {
+  $: bisectY = bisector((d: any) => {
     const value = $y(d);
     if (Array.isArray(value)) {
       // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)

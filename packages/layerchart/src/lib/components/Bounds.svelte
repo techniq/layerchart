@@ -19,7 +19,9 @@
       typeof extents === 'function' ? extents({ width: $width, height: $height }) : extents;
 
     return [
+      // @ts-ignore
       resolvedExtents?.[axis + '0'] ?? 0, // x0 or y0
+      // @ts-ignore
       resolvedExtents?.[axis + '1'] ?? fallback, // x1 or y1, fallback as $width or $height
     ];
   }

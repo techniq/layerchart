@@ -7,10 +7,10 @@
 
   type LayerCakeContext<TData = any[]> = {
     activeGetters: Readable<{
-      x: Function;
-      y: Function;
-      z: Function;
-      r: Function;
+      x: (d: TData) => any;
+      y: (d: TData) => any;
+      z: (d: TData) => any;
+      r: (d: TData) => any;
     }>;
     width: Readable<number>;
     height: Readable<number>;
@@ -18,10 +18,10 @@
     aspectRatio: Readable<number>;
     containerWidth: Readable<number>;
     containerHeight: Readable<number>;
-    x: Readable<Function>;
-    y: Readable<Function>;
-    z: Readable<Function>;
-    r: Readable<Function>;
+    x: Readable<(d: TData) => any>;
+    y: Readable<(d: TData) => any>;
+    z: Readable<(d: TData) => any>;
+    r: Readable<(d: TData) => any>;
     custom: Readable<Object>;
     data: Readable<TData>;
     xNice: Readable<number | boolean>;

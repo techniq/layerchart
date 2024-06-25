@@ -43,7 +43,9 @@
   /** Enable showing line */
   export let line: boolean | Partial<ComponentProps<Spline>> = false;
 
-  $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
+  $: tweenedOptions = tweened
+    ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
+    : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
   $: {
     const path = radial
