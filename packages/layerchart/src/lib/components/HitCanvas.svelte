@@ -52,6 +52,8 @@
       nextColor += step;
       yield `rgb(${rgb.join(',')})`;
     }
+
+    return 'rgb(0,0,0)';
   }
 
   $: colorGenerator = rgbColorGenerator();

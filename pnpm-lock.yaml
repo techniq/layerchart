@@ -94,7 +94,7 @@ importers:
         version: 0.6.6
       svelte-ux:
         specifier: ^0.71.0
-        version: 0.71.0(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)
+        version: 0.71.0(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)
       topojson-client:
         specifier: ^3.1.0
         version: 3.1.0
@@ -186,6 +186,9 @@ importers:
       '@types/topojson-simplify':
         specifier: ^3.0.3
         version: 3.0.3
+      '@types/topojson-specification':
+        specifier: ^1.0.5
+        version: 1.0.5
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
@@ -221,13 +224,13 @@ importers:
         version: 4.2.18
       svelte-check:
         specifier: ^3.8.1
-        version: 3.8.1(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)
+        version: 3.8.1(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)
       svelte-json-tree:
         specifier: ^2.2.0
         version: 2.2.0(svelte@4.2.18)
       svelte-preprocess:
         specifier: ^6.0.1
-        version: 6.0.1(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)(typescript@5.5.2)
+        version: 6.0.1(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)(typescript@5.5.2)
       svelte2tsx:
         specifier: ^0.7.10
         version: 0.7.10(svelte@4.2.18)(typescript@5.5.2)
@@ -1730,10 +1733,6 @@ packages:
     resolution: {integrity: sha512-O18pf7nyvHTckunPWCV1XUNXU1piu01y2b7ATJ0ppkUkk8ocqVWBrYjJBCwHDjD/ZWcfyrA0P4gKhzWGi5EINQ==}
     engines: {node: '>=14'}
 
-  lilconfig@3.1.2:
-    resolution: {integrity: sha512-eop+wDAvpItUys0FWkHIKeC9ybYrTGbU41U5K7+bttZZeohvnY7M9dZ5kB21GNWiFT2q1OoPTvncPCgSOVO5ow==}
-    engines: {node: '>=14'}
-
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
 
@@ -2042,24 +2041,6 @@ packages:
       postcss:
         optional: true
       ts-node:
-        optional: true
-
-  postcss-load-config@6.0.1:
-    resolution: {integrity: sha512-oPtTM4oerL+UXmx+93ytZVN82RrlY/wPUV8IeDxFrzIjXOLF1pN+EmKPLbubvKHT2HC20xXsCAH2Z+CKV6Oz/g==}
-    engines: {node: '>= 18'}
-    peerDependencies:
-      jiti: '>=1.21.0'
-      postcss: '>=8.0.9'
-      tsx: ^4.8.1
-      yaml: ^2.4.2
-    peerDependenciesMeta:
-      jiti:
-        optional: true
-      postcss:
-        optional: true
-      tsx:
-        optional: true
-      yaml:
         optional: true
 
   postcss-nested@6.0.1:
@@ -4341,9 +4322,6 @@ snapshots:
 
   lilconfig@3.1.1: {}
 
-  lilconfig@3.1.2:
-    optional: true
-
   lines-and-columns@1.2.4: {}
 
   load-yaml-file@0.2.0:
@@ -4617,13 +4595,6 @@ snapshots:
       yaml: 2.4.3
     optionalDependencies:
       postcss: 8.4.38
-
-  postcss-load-config@6.0.1(postcss@8.4.38):
-    dependencies:
-      lilconfig: 3.1.2
-    optionalDependencies:
-      postcss: 8.4.38
-    optional: true
 
   postcss-nested@6.0.1(postcss@8.4.38):
     dependencies:
@@ -5006,7 +4977,7 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  sveld@0.20.0(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38):
+  sveld@0.20.0(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38):
     dependencies:
       '@rollup/plugin-node-resolve': 13.3.0(rollup@2.79.1)
       acorn: 8.12.0
@@ -5016,7 +4987,7 @@ snapshots:
       rollup: 2.79.1
       rollup-plugin-svelte: 7.2.2(rollup@2.79.1)(svelte@4.2.18)
       svelte: 4.2.18
-      svelte-preprocess: 5.1.4(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)(typescript@5.5.2)
+      svelte-preprocess: 5.1.4(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)(typescript@5.5.2)
       typescript: 5.5.2
     transitivePeerDependencies:
       - '@babel/core'
@@ -5029,7 +5000,7 @@ snapshots:
       - stylus
       - sugarss
 
-  svelte-check@3.8.1(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18):
+  svelte-check@3.8.1(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       chokidar: 3.6.0
@@ -5038,7 +5009,7 @@ snapshots:
       picocolors: 1.0.1
       sade: 1.8.1
       svelte: 4.2.18
-      svelte-preprocess: 5.1.4(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)(typescript@5.5.2)
+      svelte-preprocess: 5.1.4(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)(typescript@5.5.2)
       typescript: 5.5.2
     transitivePeerDependencies:
       - '@babel/core'
@@ -5059,7 +5030,7 @@ snapshots:
     dependencies:
       svelte: 4.2.18
 
-  svelte-preprocess@5.1.4(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)(typescript@5.5.2):
+  svelte-preprocess@5.1.4(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)(typescript@5.5.2):
     dependencies:
       '@types/pug': 2.0.10
       detect-indent: 6.1.0
@@ -5069,20 +5040,20 @@ snapshots:
       svelte: 4.2.18
     optionalDependencies:
       postcss: 8.4.38
-      postcss-load-config: 6.0.1(postcss@8.4.38)
+      postcss-load-config: 4.0.2(postcss@8.4.38)
       typescript: 5.5.2
 
-  svelte-preprocess@6.0.1(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)(typescript@5.5.2):
+  svelte-preprocess@6.0.1(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)(typescript@5.5.2):
     dependencies:
       detect-indent: 6.1.0
       strip-indent: 3.0.0
       svelte: 4.2.18
     optionalDependencies:
       postcss: 8.4.38
-      postcss-load-config: 6.0.1(postcss@8.4.38)
+      postcss-load-config: 4.0.2(postcss@8.4.38)
       typescript: 5.5.2
 
-  svelte-ux@0.71.0(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18):
+  svelte-ux@0.71.0(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18):
     dependencies:
       '@floating-ui/dom': 1.6.5
       '@fortawesome/fontawesome-common-types': 6.5.2
@@ -5097,7 +5068,7 @@ snapshots:
       prism-svelte: 0.5.0
       prism-themes: 1.9.0
       prismjs: 1.29.0
-      sveld: 0.20.0(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)
+      sveld: 0.20.0(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)
       svelte: 4.2.18
       tailwind-merge: 2.3.0
       zod: 3.23.8

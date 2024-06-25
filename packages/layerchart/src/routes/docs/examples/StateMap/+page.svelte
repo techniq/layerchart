@@ -21,7 +21,7 @@
   let selectedStateId = '54'; // 'West Virginia';
   $: selectedStateFeature = states.features.find((f) => f.id === selectedStateId);
   $: selectedCountiesFeatures = counties.features.filter(
-    (f) => f.id.slice(0, 2) === selectedStateId
+    (f) => String(f.id).slice(0, 2) === selectedStateId
   );
 
   let projection = geoAlbersUsa;

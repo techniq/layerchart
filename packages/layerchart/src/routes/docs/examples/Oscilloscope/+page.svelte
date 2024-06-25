@@ -28,7 +28,9 @@
   let active = true;
   onMount(async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    // @ts-ignore
     ctx = new (window.AudioContext || window.webkitAudioContext)();
+    // @ts-ignore
     analyser = ctx
       .createMediaStreamSource(stream)
       .connect(new AnalyserNode(ctx, { fftSize: 2048 }));
@@ -96,8 +98,8 @@
         <Axis placement="left" format={(d) => decibels(d)?.toFixed(1)} grid rule />
         <Axis
           placement="bottom"
-          format={(d) => ''}
-          _format={(d) => frequency(d)?.toFixed(1)}
+          format={(d) => /*frequency(d)?.toFixed(1)*/ ''}
+          ticks={10}
           tickLength={0}
           rule
         />

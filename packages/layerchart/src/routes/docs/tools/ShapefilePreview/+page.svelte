@@ -8,6 +8,7 @@
     geoNaturalEarth1,
     geoOrthographic,
     geoIdentity,
+    type GeoProjection,
   } from 'd3-geo';
 
   import { Canvas, Chart, GeoPath } from 'layerchart';
@@ -33,7 +34,7 @@
 
   let file = data.file;
 
-  let projection = geoIdentity;
+  let projection = geoIdentity as unknown as () => GeoProjection;
   const projections = [
     { label: 'Identity', value: geoIdentity },
     { label: 'Albers', value: geoAlbers },

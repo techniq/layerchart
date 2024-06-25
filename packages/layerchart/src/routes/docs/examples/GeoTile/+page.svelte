@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { ComponentProps } from 'svelte';
   import { geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
@@ -20,7 +21,7 @@
   // $: filteredStates = { ...states, features: states.features.filter(d => d.properties.name === 'West Virginia')}
   $: selectedFeature = filteredStates;
 
-  let serviceUrl;
+  let serviceUrl: ComponentProps<GeoTile>['url'];
   let zoomDelta = 0;
   let debug = false;
 </script>
@@ -60,7 +61,7 @@
         {/each}
       </Svg>
       <Tooltip header={(data) => data.properties.name} let:data>
-        {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
+        {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
         <TooltipItem label="longitude" value={longitude} format="decimal" />
         <TooltipItem label="latitude" value={latitude} format="decimal" />
       </Tooltip>
@@ -96,7 +97,7 @@
         {/each}
       </Svg>
       <Tooltip header={(data) => data.properties.name} let:data>
-        {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
+        {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
         <TooltipItem label="longitude" value={longitude} format="decimal" />
         <TooltipItem label="latitude" value={latitude} format="decimal" />
       </Tooltip>

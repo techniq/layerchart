@@ -47,6 +47,7 @@
     "@types/shapefile": "^0.6.4",
     "@types/topojson-client": "^3.1.4",
     "@types/topojson-simplify": "^3.0.3",
+    "@types/topojson-specification": "^1.0.5",
     "autoprefixer": "^10.4.19",
     "marked": "^13.0.0",
     "mdsvex": "^0.11.2",

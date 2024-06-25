@@ -41,6 +41,7 @@
     });
   }
 
+  // @ts-ignore
   const linkForce = forceLink(links).id((d) => d.id);
   const chargeForce = forceManyBody();
   const collideForce = forceCollide();

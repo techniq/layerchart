@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { ComponentProps } from 'svelte';
   import {
     geoAlbersUsa,
     geoAlbers,
@@ -55,14 +56,14 @@
     { label: 'Orthographic', value: geoOrthographic },
   ];
 
-  let serviceUrl;
+  let serviceUrl: ComponentProps<GeoTile>['url'];
   let zoomDelta = 0;
 
-  const colorScale = scaleOrdinal().range(
+  const colorScale = scaleOrdinal<string>().range(
     schemeCategory10.map((hex) => {
-      let c = color(hex);
+      let c = color(hex)!;
       c.opacity = 0.5;
-      return c;
+      return c.toString() ?? '';
     })
   );
 

@@ -1,12 +1,15 @@
 import { autoType, csvParse } from 'd3-dsv';
 import pageSource from './+page.svelte?raw';
+import type { GeometryCollection, Topology } from 'topojson-specification';
 
 export async function load() {
   return {
     us: {
-      geojson: await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then((r) =>
+      geojson: (await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then((r) =>
         r.json()
-      ),
+      )) as Topology<{
+        states: GeometryCollection<{ name: string }>;
+      }>,
       airports: await fetch('/data/examples/geo/us-airports.csv').then(async (r) =>
         csvParse(await r.text(), autoType)
       ),
@@ -15,9 +18,11 @@ export async function load() {
       ),
     },
     world: {
-      geojson: await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(
+      geojson: (await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(
         (r) => r.json()
-      ),
+      )) as Topology<{
+        countries: GeometryCollection<{ name: string }>;
+      }>,
       airports: await fetch('/data/examples/geo/world-airports.csv').then(async (r) =>
         csvParse(await r.text(), autoType)
       ),
