@@ -57,7 +57,7 @@
   <h2>World Capitals</h2>
   <div class="mb-2">
     <Field dense let:id>
-      <label class="flex gap-2 items-center text-sm">
+      <label class="flex gap-2 items-center text-sm" for={id}>
         Show Voronoi
         <Switch bind:checked={debugTooltip} {id} />
       </label>
@@ -125,7 +125,7 @@
   <h2>US Airports</h2>
   <div class="mb-2">
     <Field dense let:id>
-      <label class="flex gap-2 items-center text-sm">
+      <label class="flex gap-2 items-center text-sm" for={id}>
         Show Voronoi
         <Switch bind:checked={debugTooltip} {id} />
       </label>
@@ -185,7 +185,7 @@
   <h2>World Airports</h2>
   <div class="mb-2">
     <Field dense let:id>
-      <label class="flex gap-2 items-center text-sm">
+      <label class="flex gap-2 items-center text-sm" for={id}>
         Show Voronoi
         <Switch bind:checked={debugTooltip} {id} />
       </label>

@@ -62,7 +62,7 @@
 
   <div class="mb-2">
     <Field dense let:id>
-      <label class="flex gap-2 items-center text-sm">
+      <label class="flex gap-2 items-center text-sm" for={id}>
         Debug
         <Switch bind:checked={debug} {id} />
       </label>
