@@ -61,7 +61,7 @@
     value: 'integer',
     keys,
   });
-  const stackData = stack().keys(keys)(stackDateSeries);
+  const stackData = stack().keys(keys)(stackDateSeries as any);
 
   const spiralData = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
 
@@ -130,7 +130,7 @@
       snapToDataY: true,
       debug: false,
     },
-  } satisfies Record<string, ComponentProps<TooltipControls>['settings']>;
+  } as Record<string, ComponentProps<TooltipControls>['settings']>;
 
   const anchorOptions = [
     'top-left',
@@ -390,9 +390,9 @@
       <Tooltip
         {anchor}
         x={snap}
-        xOffset={['top', 'center', 'bottom'].includes(anchor) ? 0 : 10}
+        xOffset={['top', 'center', 'bottom'].includes(anchor ?? '') ? 0 : 10}
         y={snap}
-        yOffset={['left', 'center', 'right'].includes(anchor) ? 0 : 10}
+        yOffset={['left', 'center', 'right'].includes(anchor ?? '') ? 0 : 10}
         header={(data) => format(data.date, 'eee, MMMM do')}
         let:data
       >

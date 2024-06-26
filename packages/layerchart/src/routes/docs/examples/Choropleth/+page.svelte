@@ -24,6 +24,8 @@
   const states = feature(data.geojson, data.geojson.objects.states);
   const counties = feature(data.geojson, data.geojson.objects.counties);
 
+  $: console.log({ data });
+
   const projection = geoIdentity as unknown as () => GeoProjection;
 
   const statesById = index(states.features, (d) => d.id);
@@ -31,7 +33,7 @@
   const population = data.population.map((d) => {
     return {
       id: d.state + d.county,
-      state: statesById.get(d.state).properties.name,
+      state: statesById.get(d.state)?.properties.name,
       population: +d.DP05_0001E,
       populationUnder18: +d.DP05_0019E,
       percentUnder18: +d.DP05_0019PE,
@@ -44,12 +46,12 @@
       ...feature,
       properties: {
         ...feature.properties,
-        data: populationByFips.get(feature.id),
+        data: populationByFips.get(String(feature.id)),
       },
     };
   });
 
-  $: colorScale = scaleQuantile()
+  $: colorScale = scaleQuantile<string, string>()
     .domain(population.map((d) => d.population))
     .range(schemeBlues[9]);
 </script>
@@ -83,7 +85,7 @@
             <GeoPath
               geojson={feature}
               {tooltip}
-              fill={colorScale(feature.properties.data?.population)}
+              fill={colorScale(feature.properties.data?.population ?? 0)}
               class="stroke-none hover:stroke-white"
               {strokeWidth}
             />
@@ -126,7 +128,7 @@
         />
         <TooltipItem
           label="Est. Percent under 18"
-          value={d?.percentUnder18 / 100}
+          value={d?.percentUnder18 ?? 0 / 100}
           format="percentRound"
           valueAlign="right"
         />
@@ -161,7 +163,7 @@
             for (var feature of enrichedCountiesFeatures) {
               ctx.beginPath();
               geoPath(feature);
-              ctx.fillStyle = colorScale(feature.properties.data?.population);
+              ctx.fillStyle = colorScale(feature.properties.data?.population ?? 0);
               ctx.fill();
             }
           }}
@@ -225,7 +227,7 @@
         />
         <TooltipItem
           label="Est. Percent under 18"
-          value={d?.percentUnder18 / 100}
+          value={d?.percentUnder18 ?? 0 / 100}
           format="percentRound"
           valueAlign="right"
         />

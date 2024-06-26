@@ -17,7 +17,7 @@
   const defaultContext: TooltipContext = writable({
     x: 0,
     y: 0,
-    data: null,
+    data: null as any,
     show: () => {},
     hide: () => {},
   });
@@ -106,7 +106,7 @@
   const tooltip = writable({
     y: 0,
     x: 0,
-    data: null,
+    data: null as any,
     show: showTooltip,
     hide: hideTooltip,
   });

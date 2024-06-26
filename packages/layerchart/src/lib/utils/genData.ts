@@ -83,7 +83,7 @@ export function createDateSeries(options: {
           ];
         })
       ),
-    };
+    } as { date: Date; value: number };
   });
 }
 

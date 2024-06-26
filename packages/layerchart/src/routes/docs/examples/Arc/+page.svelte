@@ -141,11 +141,13 @@
                 cornerRadius={4}
                 padAngle={0.02}
                 class={cls(
-                  (segmentIndex / segments) * 100 < value ? 'fill-emerald-300' : 'fill-gray-700'
+                  (segmentIndex / segments) * 100 < (value ?? 0)
+                    ? 'fill-emerald-300'
+                    : 'fill-gray-700'
                 )}
               >
                 <Text
-                  value={Math.round(value)}
+                  value={Math.round(value ?? 0)}
                   textAnchor="middle"
                   verticalAnchor="middle"
                   dy={16}

@@ -1,5 +1,6 @@
 import type { GeometryCollection, Topology } from 'topojson-specification';
 import pageSource from './+page.svelte?raw';
+import type { USCountyPopulationData } from '$static/data/examples/geo/us-county-population-2020.js';
 
 export async function load({ fetch }) {
   // TODO: Support different US (https://github.com/topojson/us-atlas) and World (https://github.com/topojson/world-atlas) files
@@ -11,9 +12,9 @@ export async function load({ fetch }) {
       states: GeometryCollection<{ name: string }>;
       counties: GeometryCollection<{ name: string }>;
     }>,
-    population: await fetch('/data/examples/geo/us-county-population-2020.json').then((r) =>
+    population: (await fetch('/data/examples/geo/us-county-population-2020.json').then((r) =>
       r.json()
-    ),
+    )) as USCountyPopulationData,
     meta: {
       pageSource,
     },

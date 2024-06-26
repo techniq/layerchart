@@ -151,7 +151,7 @@
   )}
 >
   <div class={cls('text-[10px] font-semibold', classes.title)}>{title}</div>
-  <slot values={tickValues} {scale}>
+  <slot values={tickValues ?? []} {scale}>
     <svg
       {width}
       height={height + tickLength + tickFontSize}
