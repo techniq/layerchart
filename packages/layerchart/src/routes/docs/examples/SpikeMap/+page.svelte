@@ -1,6 +1,6 @@
 <script lang="ts">
   import { index, max, descending } from 'd3-array';
-  import { geoIdentity } from 'd3-geo';
+  import { geoIdentity, type GeoProjection } from 'd3-geo';
   import { scaleLinear } from 'd3-scale';
   import { feature } from 'topojson-client';
 
@@ -19,6 +19,9 @@
   import Preview from '$lib/docs/Preview.svelte';
 
   export let data;
+
+  const projection = geoIdentity as unknown as () => GeoProjection;
+
   const states = feature(data.geojson, data.geojson.objects.states);
   const counties = feature(data.geojson, data.geojson.objects.counties);
 
@@ -62,7 +65,7 @@
   <div class="h-[600px] overflow-hidden">
     <Chart
       geo={{
-        projection: geoIdentity,
+        projection,
         fitGeojson: states,
       }}
       transform={{
@@ -144,7 +147,7 @@
   <div class="h-[600px] mt-10">
     <Chart
       geo={{
-        projection: geoIdentity,
+        projection,
         fitGeojson: states,
       }}
       transform={{
@@ -185,9 +188,9 @@
               const endPoint = [x + width / 2, y];
 
               ctx.beginPath();
-              ctx.moveTo(...startPoint);
-              ctx.lineTo(...midPoint);
-              ctx.lineTo(...endPoint);
+              ctx.moveTo(x - width / 2, y); // startPoint
+              ctx.lineTo(x, y - height); // midPoint
+              ctx.lineTo(x + width / 2, y); // endPoint
               ctx.fill();
               ctx.stroke();
             }

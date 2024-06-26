@@ -4,7 +4,6 @@
   import {
     geoTransform as d3geoTransform,
     type GeoIdentityTransform,
-    type GeoPath,
     type GeoPermissibleObjects,
     type GeoProjection,
     type GeoTransformPrototype,

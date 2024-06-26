@@ -21,11 +21,13 @@
   export const WebGL = _WebGL;
 </script>
 
-<script lang="ts">
+<script lang="ts" generics="TData">
+  import type { HierarchyNode } from 'd3-hierarchy';
+
   import { onMount, type ComponentProps } from 'svelte';
   import { max, min } from 'd3-array';
   import { get } from 'lodash-es';
-  import { isScaleBand } from '$lib/utils/scales.js';
+  import { isScaleBand, type AnyScale } from '$lib/utils/scales.js';
 
   import ChartContext from './ChartContext.svelte';
   import GeoContext from './GeoContext.svelte';
@@ -33,12 +35,12 @@
   import TransformContext from './TransformContext.svelte';
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
 
-  type Accessor = string | number | ((d: any) => number);
+  type Accessor = string | number | ((d: TData) => number);
 
   /**
    *  Resolve a value from data based on the accessor type
    */
-  function getValue(accessor: Accessor | Accessor[] | undefined, d: any): any {
+  function getValue(accessor: Accessor | Accessor[] | undefined, d: TData): any {
     if (Array.isArray(accessor)) {
       return accessor.map((a) => getValue(a, d));
     } else if (typeof accessor === 'function') {
@@ -50,11 +52,11 @@
     }
   }
 
-  export let data: any[] = [];
+  export let data: TData[] | HierarchyNode<TData> = [];
 
   export let x: Accessor | Accessor[] | undefined = undefined;
   export let y: Accessor | Accessor[] | undefined = undefined;
-  export let yScale: Function | undefined = undefined;
+  export let yScale: AnyScale | undefined = undefined;
 
   /**
    * x value guaranteed to be visible in xDomain.  Useful with optional negative values since `xDomain={[0, null]}` would ignore negative values
@@ -62,7 +64,7 @@
   export let xBaseline: number | null = null;
 
   let xDomain: [number, number] | undefined = undefined;
-  $: if (xBaseline != null) {
+  $: if (xBaseline != null && Array.isArray(data)) {
     const xValues = data.flatMap((d) => getValue(x, d));
     xDomain = [min([xBaseline, ...xValues]), max([xBaseline, ...xValues])];
   }
@@ -73,7 +75,7 @@
   export let yBaseline: number | null = null;
 
   let yDomain: [number, number] | undefined = undefined;
-  $: if (yBaseline != null) {
+  $: if (yBaseline != null && Array.isArray(data)) {
     const yValues = data.flatMap((d) => getValue(y, d));
     yDomain = [min([yBaseline, ...yValues]), max([yBaseline, ...yValues])];
   }
@@ -131,8 +133,6 @@
   let:rScale
   let:rGet
   let:padding
-  let:data
-  let:flatData
 >
   <!-- Apply `fitGeojson` using TransformContext instead of GeoContext if `applyTransform` is used -->
   {@const initialTransform =
@@ -140,7 +140,7 @@
       ? geoFitObjectTransform(geo.projection(), [width, height], geo.fitGeojson)
       : undefined}
 
-  <ChartContext>
+  <ChartContext {data} let:data let:flatData>
     {#key isMounted}
       <TransformContext
         bind:this={transformContext}

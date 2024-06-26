@@ -9,7 +9,7 @@ export async function load() {
       (r) => r.json()
     )) as Topology<{
       states: GeometryCollection<{ name: string }>;
-      countries: GeometryCollection<{ name: string }>;
+      counties: GeometryCollection<{ name: string }>;
     }>,
     meta: {
       api,

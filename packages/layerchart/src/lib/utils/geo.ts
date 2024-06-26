@@ -17,7 +17,7 @@ export function geoCurvePath(
   projection: GeoProjection | GeoStreamWrapper | null,
   curve: CurveFactory | CurveFactoryLineOnly,
   context?: CanvasRenderingContext2D | Path
-) {
+): ReturnType<typeof d3geoPath> {
   const pathContext = context === undefined ? path() : context;
   const geoPath = d3geoPath(projection, curveContext(curve(pathContext)));
 
@@ -29,6 +29,7 @@ export function geoCurvePath(
   // Expose geoPath properties such as `.centroid()`
   Object.setPrototypeOf(fn, geoPath);
 
+  // @ts-ignore
   return fn;
 }
 

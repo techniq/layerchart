@@ -75,7 +75,7 @@
   $: {
     // Any time the `$data` store gets changed we
     // pass them to the internal d3 simulation object:
-    pushNodesToSimulation($data);
+    pushNodesToSimulation($data as any[]);
     runOrResumeSimulation();
   }
 

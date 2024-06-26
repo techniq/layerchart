@@ -26,12 +26,12 @@
   /** Only show range while actively brushing.  Useful with `brushEnd` event */
   export let resetOnEnd = false;
 
-  export let xDomain: [number | null, number | null] = $xScale.domain();
-  export let yDomain: [number | null, number | null] = $yScale.domain();
+  export let xDomain: [number | null, number | null] = $xScale.domain() as [number, number];
+  export let yDomain: [number | null, number | null] = $yScale.domain() as [number, number];
 
   // Capture original domains for reset()
-  const originalXDomain = $xScale.domain();
-  const originalYDomain = $yScale.domain();
+  const originalXDomain = $xScale.domain() as [number, number];
+  const originalYDomain = $yScale.domain() as [number, number];
 
   $: [xDomainMin, xDomainMax] = extent<number>($xScale.domain()) as [number, number];
   $: [yDomainMin, yDomainMax] = extent<number>($yScale.domain()) as [number, number];
@@ -66,8 +66,8 @@
         xDomain: [xDomain[0] ?? xDomainMin, xDomain[1] ?? xDomainMax] as [number, number],
         yDomain: [yDomain[0] ?? yDomainMin, yDomain[1] ?? yDomainMax] as [number, number],
         value: {
-          x: $xScale.invert(localPoint(frameEl, e)?.x ?? 0 - $padding.left),
-          y: $yScale.invert(localPoint(frameEl, e)?.y ?? 0 - $padding.top),
+          x: $xScale.invert?.(localPoint(frameEl, e)?.x ?? 0 - $padding.left),
+          y: $yScale.invert?.(localPoint(frameEl, e)?.y ?? 0 - $padding.top),
         },
       };
 
@@ -75,8 +75,8 @@
 
       const onPointerMove = (e: PointerEvent) => {
         fn(start, {
-          x: $xScale.invert(localPoint(frameEl, e)?.x ?? 0 - $padding.left),
-          y: $yScale.invert(localPoint(frameEl, e)?.y ?? 0 - $padding.top),
+          x: $xScale.invert?.(localPoint(frameEl, e)?.x ?? 0 - $padding.left),
+          y: $yScale.invert?.(localPoint(frameEl, e)?.y ?? 0 - $padding.top),
         });
 
         // if (xDomain[0] === xDomain[1] || yDomain[0] === yDomain[1]) {

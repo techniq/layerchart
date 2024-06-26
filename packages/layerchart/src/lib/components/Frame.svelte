@@ -7,7 +7,7 @@
   export let full = false;
 
   /** Access underlying `<rect>` element */
-  export let rectEl: SVGRectElement;
+  export let rectEl: SVGRectElement | undefined = undefined;
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->

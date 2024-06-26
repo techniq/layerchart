@@ -15,7 +15,10 @@ type DimensionGetterOptions = {
 };
 
 // TOOD: Pass in overrides for `x` and `y` accessors
-export function createDimensionGetter(context: ChartContext, options?: DimensionGetterOptions) {
+export function createDimensionGetter<TData>(
+  context: ChartContext<TData>,
+  options?: DimensionGetterOptions
+) {
   const { flatData, xGet, yGet, xScale, yScale, x: xAccessor, y: yAccessor } = context;
 
   const groupBy = options?.groupBy;
@@ -76,7 +79,7 @@ export function createDimensionGetter(context: ChartContext, options?: Dimension
             width: $xScale(right) - $xScale(left),
             height,
           };
-        } else {
+        } else if (isScaleBand($xScale)) {
           // Vertical band or linear
           const x1Scale = groupBy
             ? groupScaleBand($xScale, $flatData, groupBy, options?.groupPadding)

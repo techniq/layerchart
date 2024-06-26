@@ -5,8 +5,8 @@ import { pivotWider } from './pivot.js';
 type OrderType = typeof stackOrderNone; // all orders share the same API
 type OffsetType = typeof stackOffsetNone; // all offsets share the same API
 
-export function createStackData(
-  data: any[],
+export function createStackData<TData>(
+  data: TData[],
   options: {
     xKey: string;
     groupBy?: string;
@@ -19,7 +19,9 @@ export function createStackData(
     // Group then Stack (if needed)
     const groupedData = flatGroup(
       data,
+      // @ts-ignore
       (d) => d[options.xKey],
+      // @ts-ignore
       (d) => d[options.groupBy ?? '']
     );
 
@@ -29,7 +31,10 @@ export function createStackData(
 
       const pivotData = pivotWider(itemData, options.xKey, options.stackBy ?? '', 'value');
 
-      const stackKeys: Array<any> = [...new Set(itemData.map((d) => d[options.stackBy ?? '']))];
+      const stackKeys: Array<any> = [
+        ...new Set(itemData.map((d: any) => d[options.stackBy ?? ''])),
+      ];
+      // @ts-ignore
       const stackData = stack().keys(stackKeys).order(options.order).offset(options.offset)(
         pivotData
       );
@@ -42,7 +47,7 @@ export function createStackData(
           return {
             ...itemData[0], // TODO: More than one should use stacks or aggregate values?
             keys: options.stackBy ? [...groupKeys, series.key] : groupKeys,
-            values: options.stackBy ? [s[0], s[1]] : [0, sum(itemData, (d) => d.value)],
+            values: options.stackBy ? [s[0], s[1]] : [0, sum(itemData, (d: any) => d.value)],
           };
         });
       });
@@ -53,7 +58,9 @@ export function createStackData(
     // Stack only
     const pivotData = pivotWider(data, options.xKey, options.stackBy, 'value');
 
+    // @ts-ignore
     const stackKeys: Array<any> = [...new Set(data.map((d) => d[options.stackBy ?? '']))];
+    // @ts-ignore
     const stackData = stack().keys(stackKeys).order(options.order).offset(options.offset)(
       pivotData
     );
@@ -76,10 +83,13 @@ export function createStackData(
         data,
         (items) => {
           return {
+            // @ts-ignore
             keys: [items[0][options.xKey]],
+            // @ts-ignore
             values: [0, sum(items, (d) => d.value)],
           };
         },
+        // @ts-ignore
         (d) => d[options.xKey]
       ).values()
     );
@@ -91,6 +101,7 @@ export function createStackData(
  *   - see: https://observablehq.com/@mkfreeman/separated-bar-chart
  */
 // TODO: Try to find way to support separated with createStackData() (which has isolated stacked per group)
+// @ts-ignore
 export function stackOffsetSeparated(series, order) {
   const gap = 200; // TODO: Determine way to pass in as option (curry?)
 
@@ -99,6 +110,7 @@ export function stackOffsetSeparated(series, order) {
   // Standard series
   for (var i = 1, s0, s1 = series[order[0]], n, m = s1.length; i < n; ++i) {
     (s0 = s1), (s1 = series[order[i]]);
+    // @ts-ignore
     let base = max(s0, (d) => d[1]) + gap; // here is where you calculate the maximum of the previous layer
     for (var j = 0; j < m; ++j) {
       // Set the height based on the data values, shifted up by the previous layer

@@ -14,7 +14,7 @@
   import Circle from './Circle.svelte';
   import Line from './Line.svelte';
   import Text from './Text.svelte';
-  import { isScaleBand } from '$lib/utils/scales.js';
+  import { isScaleBand, type AnyScale } from '$lib/utils/scales.js';
 
   const { xScale, yScale, xRange, yRange, width, height, padding } = chartContext();
 
@@ -37,7 +37,7 @@
   export let grid: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'> = false;
 
   /** Control the number of ticks*/
-  export let ticks: number | any[] | Function | null | undefined = undefined;
+  export let ticks: number | any[] | ((scale: AnyScale) => any) | null | undefined = undefined;
 
   /** Length of the tick line */
   export let tickLength = 4;

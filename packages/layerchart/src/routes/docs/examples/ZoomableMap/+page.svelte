@@ -207,6 +207,7 @@
 <Preview data={states}>
   <div class="h-[600px] relative overflow-hidden">
     <Chart
+      data={[{ hello: 1 }]}
       geo={{
         projection,
         fitGeojson: projection === geoMercator ? contiguousStates : states,

@@ -10,7 +10,7 @@ export async function load({ fetch }) {
       (r) => r.json()
     )) as Topology<{
       states: GeometryCollection<{ name: string }>;
-      countries: GeometryCollection<{ name: string }>;
+      counties: GeometryCollection<{ name: string }>;
     }>,
     population: await fetch('/data/examples/geo/us-county-population-2020.json').then((r) =>
       r.json()

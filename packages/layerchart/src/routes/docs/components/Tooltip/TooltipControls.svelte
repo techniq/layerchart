@@ -1,19 +1,19 @@
-<script lang="ts">
+<script lang="ts" generics="TData">
   import type { ComponentProps } from 'svelte';
   import { Field, MenuField, MultiSelectField, Switch } from 'svelte-ux';
 
   import type TooltipContext from '$lib/components/TooltipContext.svelte';
   import type Highlight from '$lib/components/Highlight.svelte';
 
-  type TooltipContextProps = ComponentProps<TooltipContext>;
+  type TooltipContextProps = ComponentProps<TooltipContext<TData>>;
   type HighlightProps = ComponentProps<Highlight>;
 
   export let settings: {
     mode: TooltipContextProps['mode'];
     highlight: Array<'none' | 'points' | 'lines' | 'area'>;
     axis: HighlightProps['axis'];
-    snapToDataX: TooltipContextProps['snapToDataX'];
-    snapToDataY: TooltipContextProps['snapToDataX'];
+    snapToDataX: boolean;
+    snapToDataY: boolean;
     debug: TooltipContextProps['debug'];
   };
 </script>

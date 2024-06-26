@@ -61,7 +61,7 @@
     containerWidth,
     containerHeight,
     padding,
-  } = chartContext();
+  } = chartContext<any>();
 
   /*
 		TODO: Defaults to consider (if possible to detect scale type, which might not be possible)
@@ -103,7 +103,13 @@
 
   export let onClick: ({ data }: { data: any }) => any = () => {};
 
-  const tooltip = writable({ y: 0, x: 0, data: null, show: showTooltip, hide: hideTooltip });
+  const tooltip = writable({
+    y: 0,
+    x: 0,
+    data: null,
+    show: showTooltip,
+    hide: hideTooltip,
+  });
   setTooltipContext(tooltip);
 
   let hideTimeoutId: NodeJS.Timeout;
@@ -298,7 +304,7 @@
           return value;
         }
       })
-      .addAll($flatData);
+      .addAll($flatData as [number, number][]);
   }
 
   let rects: Array<{ x: number; y: number; width: number; height: number; data: any }> = [];

@@ -4,7 +4,9 @@
 
   import { page } from '$app/stores';
 
-  const examples = {
+  type LinkCollection = Record<string, Array<string | { label: string; value: string }>>;
+
+  const examples: LinkCollection = {
     'Cartesian & Polar': [
       'Arc',
       'Area',
@@ -57,7 +59,7 @@
     ],
   };
 
-  const components = {
+  const components: LinkCollection = {
     Common: ['Chart', 'Axis', 'Frame', 'Legend', 'Rule'],
     Primitives: ['Arc', 'Circle', 'Group', 'Line', 'Point', 'Rect', 'Text'],
     'Data-driven': [

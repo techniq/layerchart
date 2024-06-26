@@ -9,7 +9,6 @@
     geoNaturalEarth1,
     geoOrthographic,
     geoIdentity,
-    type GeoPermissibleObjects,
   } from 'd3-geo';
   import { scaleOrdinal } from 'd3-scale';
   import { schemeCategory10 } from 'd3-scale-chromatic';
@@ -29,7 +28,7 @@
   import Json from '$lib/docs/Json.svelte';
 
   let geojsonStr = '';
-  let geojson: GeoPermissibleObjects;
+  let geojson: GeoJSON.FeatureCollection;
   let error = '';
 
   let selectedTab: 'input' | 'geojson' = 'input';
@@ -107,7 +106,7 @@
                 for (var feature of features) {
                   ctx.beginPath();
                   geoPath(feature);
-                  ctx.fillStyle = colorScale(feature.id);
+                  ctx.fillStyle = colorScale(String(feature.id));
                   ctx.fill();
                   ctx.stroke();
                 }
@@ -120,7 +119,7 @@
                 for (var feature of features) {
                   ctx.beginPath();
                   geoPath(feature);
-                  ctx.fillStyle = colorScale(feature.id);
+                  ctx.fillStyle = colorScale(String(feature.id));
                   ctx.fill();
                   ctx.stroke();
                 }

@@ -147,8 +147,7 @@
   // $: console.log(trackArcCentroid)
 
   let trackArcEl: SVGPathElement | undefined = undefined;
-  $: boundingBox = trackArcEl ? trackArcEl.getBBox() : {};
-  // $: console.log(boundingBox)
+  $: boundingBox = trackArcEl ? trackArcEl.getBBox() : ({} as DOMRect);
 
   // $: labelArcCenterOffset = {
   //   x: outerRadius - boundingBox.width / 2,

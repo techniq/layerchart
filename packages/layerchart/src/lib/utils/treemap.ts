@@ -28,7 +28,7 @@ export function aspectTile(tile: TileFunc, width: number, height: number): TileF
 /**
  * Show if the node (a) is a child of the selected (b), or any parent above selected
  */
-export function isNodeVisible(a: HierarchyNode<any>, b: HierarchyNode<any>) {
+export function isNodeVisible(a: HierarchyNode<any>, b: HierarchyNode<any> | null) {
   while (b) {
     if (a.parent === b) return true;
     b = b.parent;

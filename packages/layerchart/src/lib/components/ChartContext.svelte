@@ -1,11 +1,14 @@
 <!-- Wrapper to allow getting LayerCake context from <Chart> and exposing with a strongly type context getter -->
 <script lang="ts" context="module">
+  import type { AnyScale } from 'layerchart/utils/scales.js';
+
+  import type { HierarchyNode } from 'd3-hierarchy';
   import { getContext, setContext } from 'svelte';
   import { type Readable } from 'svelte/store';
 
   export const chartContextKey = Symbol();
 
-  type LayerCakeContext<TData = any[]> = {
+  type LayerCakeContext<TData> = {
     activeGetters: Readable<{
       x: (d: TData) => any;
       y: (d: TData) => any;
@@ -23,7 +26,7 @@
     z: Readable<(d: TData) => any>;
     r: Readable<(d: TData) => any>;
     custom: Readable<Object>;
-    data: Readable<TData>;
+    data: Readable<TData[] | HierarchyNode<TData>>;
     xNice: Readable<number | boolean>;
     yNice: Readable<number | boolean>;
     zNice: Readable<number | boolean>;
@@ -46,7 +49,7 @@
       left: number;
       right: number;
     }>;
-    flatData: Readable<any[]>;
+    flatData: Readable<TData[]>;
     extents: Readable<{}>;
     xDomain: Readable<any>;
     yDomain: Readable<any>;
@@ -57,32 +60,35 @@
     zRange: Readable<any>;
     rRange: Readable<any>;
     config: Readable<any>;
-    xScale: Readable<any>;
+    xScale: Readable<AnyScale>;
     xGet: Readable<any>;
-    yScale: Readable<any>;
+    yScale: Readable<AnyScale>;
     yGet: Readable<any>;
-    zScale: Readable<any>;
+    zScale: Readable<AnyScale>;
     zGet: Readable<any>;
-    rScale: Readable<any>;
+    rScale: Readable<AnyScale>;
     rGet: Readable<any>;
   };
 
-  export type ChartContext = LayerCakeContext & {
+  export type ChartContext<TData> = LayerCakeContext<TData> & {
     // TODO: consider extending with additional values
   };
 
-  export function chartContext() {
-    return getContext<ChartContext>(chartContextKey);
+  export function chartContext<TData = any>() {
+    return getContext<ChartContext<TData>>(chartContextKey);
   }
 
-  function setChartContext(context: ChartContext) {
+  function setChartContext<TData = any>(context: ChartContext<TData>) {
     setContext(chartContextKey, context);
   }
 </script>
 
-<script lang="ts">
-  const layerCakeContext = getContext<LayerCakeContext>('LayerCake');
+<script lang="ts" generics="TData">
+  const layerCakeContext = getContext<LayerCakeContext<TData>>('LayerCake');
   setChartContext(layerCakeContext);
+
+  // Added to try to pass TData downward
+  export let data: TData[] | HierarchyNode<TData> = []; // Same as `ComponentProps<Chart<TData>>` but causes circular reference
 </script>
 
-<slot />
+<slot {data} flatData={layerCakeContext.data} />
