@@ -26,11 +26,11 @@
     ];
   }
 
-  const xScale = motionScale(scaleLinear, { spring, tweened });
+  const xScale = motionScale(scaleLinear as any, { spring, tweened });
   $: xScale.domain(getExtents(domain, 'x', $width));
   $: xScale.range(getExtents(range, 'x', $width));
 
-  const yScale = motionScale(scaleLinear, { spring, tweened });
+  const yScale = motionScale(scaleLinear as any, { spring, tweened });
   $: yScale.domain(getExtents(domain, 'y', $height));
   $: yScale.range(getExtents(range, 'y', $height));
 </script>

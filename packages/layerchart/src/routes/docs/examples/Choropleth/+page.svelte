@@ -2,7 +2,7 @@
   import { index } from 'd3-array';
   import { scaleQuantile } from 'd3-scale';
   import { schemeBlues } from 'd3-scale-chromatic';
-  import { geoIdentity } from 'd3-geo';
+  import { geoIdentity, type GeoProjection } from 'd3-geo';
   import { feature } from 'topojson-client';
   import { format } from 'svelte-ux';
 
@@ -23,6 +23,8 @@
   export let data;
   const states = feature(data.geojson, data.geojson.objects.states);
   const counties = feature(data.geojson, data.geojson.objects.counties);
+
+  const projection = geoIdentity as unknown as () => GeoProjection;
 
   const statesById = index(states.features, (d) => d.id);
 
@@ -60,7 +62,7 @@
   <div class="h-[600px] overflow-hidden">
     <Chart
       geo={{
-        projection: geoIdentity,
+        projection,
         fitGeojson: states,
       }}
       transform={{
@@ -139,7 +141,7 @@
   <div class="h-[600px]">
     <Chart
       geo={{
-        projection: geoIdentity,
+        projection,
         fitGeojson: states,
       }}
       transform={{

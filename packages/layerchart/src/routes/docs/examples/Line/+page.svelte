@@ -285,7 +285,11 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={(d) => formatDate(d, PeriodType.Day, 'short')} rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
         <Spline y={(d) => d.y} class="stroke-2" stroke={fruitColors.bananas} />
         <Spline y={(d) => d.y1} class="stroke-2" stroke={fruitColors.oranges} />
         <Highlight points lines />

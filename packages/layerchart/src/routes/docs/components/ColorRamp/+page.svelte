@@ -3,8 +3,8 @@
   import * as d3chromatic from 'd3-scale-chromatic';
   import { scaleQuantize } from 'd3-scale';
 
-  import { Chart, Svg, ColorRamp } from 'layerchart';
-  import { NumberStepper } from 'svelte-ux';
+  import { ColorRamp } from 'layerchart';
+  import { NumberStepper, entries } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -12,14 +12,16 @@
   let height = 20;
   let steps = 5;
 
-  const interpolators = Object.entries(d3chromatic).filter(([key, value]) =>
-    key.startsWith('interpolate')
-  );
+  const interpolators: [string, (value: number) => string][] = entries<any, any>(
+    d3chromatic
+  ).filter(([key, value]) => key.startsWith('interpolate'));
   interpolators.push([`interpolateRgb('red', 'blue')`, interpolateRgb('red', 'blue')]);
   interpolators.push([`interpolateLab('red', 'blue')`, interpolateLab('red', 'blue')]);
   interpolators.push([`interpolateHclLong('red', 'blue')`, interpolateHclLong('red', 'blue')]);
 
-  const schemes = Object.entries(d3chromatic).filter(([key, value]) => key.startsWith('scheme'));
+  const schemes: any[] = Object.entries(d3chromatic).filter(([key, value]) =>
+    key.startsWith('scheme')
+  ) as any;
 </script>
 
 <h1>Examples</h1>

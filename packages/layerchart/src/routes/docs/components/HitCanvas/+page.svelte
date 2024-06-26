@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { geoIdentity } from 'd3-geo';
+  import { geoIdentity, type GeoProjection } from 'd3-geo';
   import { feature } from 'topojson-client';
 
   import { Chart, Canvas, GeoPath, HitCanvas, Tooltip } from 'layerchart';
@@ -8,6 +8,8 @@
   import Preview from '$lib/docs/Preview.svelte';
 
   export let data;
+
+  const projection = geoIdentity as unknown as () => GeoProjection;
 
   const states = feature(data.geojson, data.geojson.objects.states);
   const counties = feature(data.geojson, data.geojson.objects.counties);
@@ -29,7 +31,7 @@
   <div class="h-[600px] mt-10">
     <Chart
       geo={{
-        projection: geoIdentity,
+        projection,
         fitGeojson: states,
       }}
       let:tooltip

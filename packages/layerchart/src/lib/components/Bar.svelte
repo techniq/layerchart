@@ -58,7 +58,7 @@
       outer: groupPaddingOuter,
     },
   });
-  $: dimensions = $getDimensions(bar);
+  $: dimensions = $getDimensions(bar) ?? { x: 0, y: 0, width: 0, height: 0 };
 
   $: topLeft = ['all', 'top', 'left', 'top-left'].includes(rounded);
   $: topRight = ['all', 'top', 'right', 'top-right'].includes(rounded);

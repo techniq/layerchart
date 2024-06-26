@@ -12,6 +12,7 @@ export type AnyScale<Domain = any, Range = any, Input = Domain, Output = any> = 
   range(): Range[];
   bandwidth?: Function;
   ticks?: Function;
+  tickFormat?: Function;
 };
 
 /**
