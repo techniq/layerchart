@@ -287,7 +287,12 @@
 </State>
 
 <State initial={{ intervalValue: 'weeks', intervalFunc: timeWeeks }} let:value let:set>
-  {@const binByTime = bin().thresholds((_data, min, max) => value.intervalFunc(min, max))}
+  <!-- TODO: Remove all the workarounds to make typescript happy -->
+  <!-- {@const binByTime = bin().thresholds((_data, min, max) => value?.intervalFunc(min, max))} -->
+  {@const binByTime = bin().thresholds(
+    (_data, min, max) =>
+      value?.intervalFunc(new Date(min), new Date(max)).map((d) => d.valueOf()) ?? []
+  )}
   {@const data = binByTime(randomDateData)}
 
   <h2>Date / time (interval)</h2>
