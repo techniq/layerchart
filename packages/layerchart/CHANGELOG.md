@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.43.1
+
+### Patch Changes
+
+- Fix aliased import for utils/common.js ([`526f06edd5003f900456a545f47c97775bead6f5`](https://github.com/techniq/layerchart/commit/526f06edd5003f900456a545f47c97775bead6f5))
+
 ## 0.43.0
 
 ### Minor Changes
