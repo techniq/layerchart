@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
-  import { stack } from 'd3-shape';
+  import { stack, type Series, type Stack } from 'd3-shape';
   import { format } from 'date-fns';
 
   import {
@@ -61,7 +61,8 @@
     value: 'integer',
     keys,
   });
-  const stackData = stack().keys(keys)(stackDateSeries);
+  // TODO: Fix type
+  const stackData = stack().keys(keys)(stackDateSeries) as any[];
 
   const spiralData = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
 

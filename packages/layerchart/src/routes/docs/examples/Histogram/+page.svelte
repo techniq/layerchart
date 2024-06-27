@@ -53,7 +53,7 @@
   let dateRange = 10;
   $: randomDateData = Array.from({ length: randomCount }, () =>
     getRandomDate(subDays(now, dateRange), now)
-  );
+  ) as any[]; // TODO: Make typescript happy
 </script>
 
 <h1>Examples</h1>
@@ -336,7 +336,7 @@
         </Svg>
         <Tooltip
           header={(data) =>
-            format(data.x0, PeriodType.Day) + ' - ' + format(data.x1 - 1, PeriodType.Day)}
+            format(data.x0, PeriodType.Day) + ' - ' + format(new Date(data.x1 - 1), PeriodType.Day)}
           let:data
         >
           <TooltipItem label="count" value={data.length} format="integer" />

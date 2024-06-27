@@ -19,9 +19,9 @@
   interpolators.push([`interpolateLab('red', 'blue')`, interpolateLab('red', 'blue')]);
   interpolators.push([`interpolateHclLong('red', 'blue')`, interpolateHclLong('red', 'blue')]);
 
-  const schemes: any[] = Object.entries(d3chromatic).filter(([key, value]) =>
+  const schemes = Object.entries(d3chromatic).filter(([key, value]) =>
     key.startsWith('scheme')
-  ) as any;
+  ) as unknown as Array<[name: string, scheme: string[]]>;
 </script>
 
 <h1>Examples</h1>
@@ -66,7 +66,7 @@
 <Preview>
   <div class="grid gap-4">
     {#each schemes as [name, scheme]}
-      {#if typeof scheme[[0]] === 'string'}
+      {#if typeof scheme[0] === 'string'}
         <div>
           <div class="text-sm">{name}</div>
           <svg {width} {height}>

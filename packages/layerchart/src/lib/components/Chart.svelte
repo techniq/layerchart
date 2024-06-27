@@ -37,6 +37,13 @@
   import TransformContext from './TransformContext.svelte';
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
 
+  type DomainType =
+    | [number | Date | null, number | Date | null]
+    | string[]
+    | number[]
+    | Date[]
+    | Function;
+
   interface $$Props {
     /** Whether this chart should be rendered server side. (default: false) */
     ssr?: boolean;
@@ -79,13 +86,13 @@
     r?: Accessor<TData>;
 
     /** Set a min or max. For linear scales, if you want to inherit the value from the data's extent, set that value to `null`. This value can also be an array because sometimes your scales are [piecewise](https://github.com/d3/d3-scale#continuous_domain) or are a list of discrete values such as in [ordinal scales](https://github.com/d3/d3-scale#ordinal-scales), useful for color series. Set it to a function that receives the computed domain and lets you return a modified domain, useful for sorting values. */
-    xDomain?: [number | null, number | null] | string[] | number[] | Function;
+    xDomain?: DomainType;
     /** Set a min or max. For linear scales, if you want to inherit the value from the data's extent, set that value to `null`.  Set it to a function that receives the computed domain and lets you return a modified domain, useful for sorting values. */
-    yDomain?: [number | null, number | null] | string[] | number[] | Function;
+    yDomain?: DomainType;
     /** Set a min or max. For linear scales, if you want to inherit the value from the data's extent, set that value to `null`. This value can also be an array because sometimes your scales are [piecewise](https://github.com/d3/d3-scale#continuous_domain) or are a list of discrete values such as in [ordinal scales](https://github.com/d3/d3-scale#ordinal-scales), useful for color series. Set it to a function that receives the computed domain and lets you return a modified domain, useful for sorting values. */
-    zDomain?: [number | null, number | null] | string[] | number[] | Function;
+    zDomain?: DomainType;
     /** Set a min or max. For linear scales, if you want to inherit the value from the data's extent, set that value to `null`. This value can also be an array because sometimes your scales are [piecewise](https://github.com/d3/d3-scale#continuous_domain) or are a list of discrete values such as in [ordinal scales](https://github.com/d3/d3-scale#ordinal-scales), useful for color series. Set it to a function that receives the computed domain and lets you return a modified domain, useful for sorting values. */
-    rDomain?: [number | null, number | null] | string[] | number[] | Function;
+    rDomain?: DomainType;
 
     /** Applies D3's [scale.nice()](https://github.com/d3/d3-scale#continuous_nice) to the x domain. (default: false) */
     xNice?: boolean | number;
