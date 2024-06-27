@@ -1,5 +1,17 @@
 # LayerChart
 
+## 0.43.0
+
+### Minor Changes
+
+- Cleanup a11y and TS warnings/errors ([#207](https://github.com/techniq/layerchart/pull/207))
+
+- Improve types across project ([#207](https://github.com/techniq/layerchart/pull/207))
+
+### Patch Changes
+
+- Add type-safe `chartContext()` instead of using `getContext('LayerCake')` ([#207](https://github.com/techniq/layerchart/pull/207))
+
 ## 0.42.0
 
 ### Minor Changes
