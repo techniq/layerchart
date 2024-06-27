@@ -27,7 +27,7 @@
   export let data;
 
   const now = new Date();
-  let xDomain = [subDays(now, 60), subDays(now, 30)];
+  let xDomain = [subDays(now, 60), subDays(now, 30)] as [Date, Date];
 
   const seriesData = [
     randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),

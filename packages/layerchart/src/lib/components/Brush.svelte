@@ -26,8 +26,14 @@
   /** Only show range while actively brushing.  Useful with `brushEnd` event */
   export let resetOnEnd = false;
 
-  export let xDomain: [number | null, number | null] = $xScale.domain() as [number, number];
-  export let yDomain: [number | null, number | null] = $yScale.domain() as [number, number];
+  export let xDomain: [number | Date | null, number | Date | null] = $xScale.domain() as [
+    number,
+    number,
+  ];
+  export let yDomain: [number | Date | null, number | Date | null] = $yScale.domain() as [
+    number,
+    number,
+  ];
 
   // Capture original domains for reset()
   const originalXDomain = $xScale.domain() as [number, number];
