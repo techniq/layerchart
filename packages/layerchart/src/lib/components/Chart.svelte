@@ -22,7 +22,7 @@
 </script>
 
 <script lang="ts" generics="TData">
-  import { accessor, type Accessor } from 'layerchart/utils/common.js';
+  import { accessor, type Accessor } from '../utils/common.js';
 
   import type { HierarchyNode } from 'd3-hierarchy';
   import type { SankeyGraph } from 'd3-sankey';

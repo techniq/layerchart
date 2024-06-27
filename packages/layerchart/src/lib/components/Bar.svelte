@@ -6,7 +6,7 @@
   import Spline from './Spline.svelte';
 
   import { createDimensionGetter } from '$lib/utils/rect.js';
-  import type { Accessor } from 'layerchart/utils/common.js';
+  import type { Accessor } from '../utils/common.js';
 
   const { x: xContext, y: yContext } = chartContext();
 
