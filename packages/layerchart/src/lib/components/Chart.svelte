@@ -40,7 +40,7 @@
   type DomainType =
     | [number | Date | null, number | Date | null]
     | string[]
-    | number[]
+    | (number | null)[]
     | Date[]
     | Function
     // 'null' useful for Brush component
