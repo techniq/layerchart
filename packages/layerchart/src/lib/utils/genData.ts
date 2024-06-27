@@ -31,11 +31,11 @@ export function randomWalk(options?: { count?: number }) {
   return Array.from(cumsum({ length: options?.count ?? 100 }, random));
 }
 
-export function createSeries(options: {
+export function createSeries<TKey extends string>(options: {
   count?: number;
   min: number;
   max: number;
-  keys?: Array<string>;
+  keys?: TKey[];
   value?: 'number' | 'integer';
 }) {
   const count = options.count ?? 10;
@@ -54,15 +54,15 @@ export function createSeries(options: {
           ];
         })
       ),
-    };
+    } as { x: number } & { [K in TKey]: number };
   });
 }
 
-export function createDateSeries<T extends string>(options: {
+export function createDateSeries<TKey extends string>(options: {
   count?: number;
   min: number;
   max: number;
-  keys?: T[];
+  keys?: TKey[];
   value?: 'number' | 'integer';
 }) {
   const now = startOfToday();
@@ -83,15 +83,15 @@ export function createDateSeries<T extends string>(options: {
           ];
         })
       ),
-    } as { date: Date } & { [K in T]: number };
+    } as { date: Date } & { [K in TKey]: number };
   });
 }
 
-export function createTimeSeries(options: {
+export function createTimeSeries<TKey extends string>(options: {
   count?: number;
   min: number;
   max: number;
-  keys: Array<string>;
+  keys: TKey[];
   value: 'number' | 'integer';
 }) {
   const count = options.count ?? 10;
@@ -117,7 +117,7 @@ export function createTimeSeries(options: {
           ];
         })
       ),
-    };
+    } as { name: string; startDate: Date; endDate: Date } & { [K in TKey]: number };
   });
 
   return timeSeries;
