@@ -31,7 +31,7 @@
 
   let thresholds = 10;
 
-  $: binByWeight = bin()
+  $: binByWeight = bin<(typeof data.olympians)[0], number>()
     .value((d) => d.weight)
     .thresholds(thresholds);
   $: olympiansBins = binByWeight(data.olympians);
@@ -223,7 +223,7 @@
 </Preview>
 
 <State initial={{ thresholds: 10 }} let:value let:set>
-  {@const binByTime = bin().thresholds(thresholdTime(value.thresholds))}
+  {@const binByTime = bin().thresholds(thresholdTime(value?.thresholds ?? 0))}
   {@const data = binByTime(randomDateData)}
 
   <h2>Date / time (count)</h2>
@@ -232,7 +232,7 @@
     <NumberStepper label="Date range" bind:value={dateRange} class="w-full" />
     <NumberStepper
       label="Thresholds"
-      value={value.thresholds}
+      value={value?.thresholds}
       on:change={(e) => set({ thresholds: e.detail.value })}
       class="w-full"
     />

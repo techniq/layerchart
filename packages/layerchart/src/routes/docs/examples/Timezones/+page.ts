@@ -9,6 +9,7 @@ export async function load({ fetch }) {
       (r) => r.json()
     )) as Topology<{
       countries: GeometryCollection<{ name: string }>;
+      land: GeometryCollection;
     }>,
     timezones: (await fetch('/data/examples/geo/timezones.json').then((r) =>
       r.json()

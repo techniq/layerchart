@@ -46,7 +46,7 @@
       ...feature,
       properties: {
         ...feature.properties,
-        data: populationByFips.get(String(feature.id)),
+        data: populationByFips.get(feature.id as string),
       },
     };
   });

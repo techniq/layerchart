@@ -30,7 +30,7 @@
   let transformContext: TransformContext;
   let transformContext2: TransformContext; // second instance for canvas example
 
-  let selectedFeature;
+  let selectedFeature: (typeof countries.features)[0] | null;
   $: if (selectedFeature) {
     const centroid = geoCentroid(selectedFeature);
 
@@ -65,9 +65,9 @@
   let currentIndex = -1;
   let isPlaying = false;
 
-  $: if (isPlaying && $audioCurrentTime >= countryTimings[currentIndex + 1]?.audioTime) {
+  $: if (isPlaying && ($audioCurrentTime ?? 0) >= countryTimings[currentIndex + 1]?.audioTime) {
     const countryName = countryTimings[currentIndex + 1].country;
-    selectedFeature = countryFeaturesByName.get(countryName);
+    selectedFeature = countryFeaturesByName.get(countryName) ?? null;
     currentIndex += 1;
   }
 

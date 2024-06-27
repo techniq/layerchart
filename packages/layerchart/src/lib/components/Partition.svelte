@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { partition as d3Partition } from 'd3-hierarchy';
+  import {
+    partition as d3Partition,
+    type HierarchyNode,
+    type HierarchyRectangularNode,
+  } from 'd3-hierarchy';
   import { chartContext } from './ChartContext.svelte';
 
   const { data, width, height } = chartContext();
@@ -32,8 +36,7 @@
     }
   }
 
-  // @ts-ignore
-  $: partitionData = partition($data);
+  $: partitionData = partition($data as HierarchyNode<any>) as HierarchyRectangularNode<any>;
 </script>
 
 <slot nodes={partitionData.descendants()} />

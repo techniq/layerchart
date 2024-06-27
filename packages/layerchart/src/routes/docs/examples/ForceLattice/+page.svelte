@@ -8,14 +8,13 @@
 
   const n = 20;
   const nodes = Array.from({ length: n * n }, (_, i) => ({ index: i }));
-  const links = [];
+  const links: { source: number; target: number }[] = [];
   for (let y = 0; y < n; ++y) {
     for (let x = 0; x < n; ++x) {
       if (y > 0) links.push({ source: (y - 1) * n + x, target: y * n + x });
       if (x > 0) links.push({ source: y * n + (x - 1), target: y * n + x });
     }
   }
-  const data = { nodes: nodes, links: links };
 
   const chargeForce = forceManyBody().strength(-20);
   const linkForce = forceLink(links).strength(1).distance(20).iterations(10);

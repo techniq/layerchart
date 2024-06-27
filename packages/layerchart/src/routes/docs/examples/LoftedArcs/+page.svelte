@@ -9,8 +9,6 @@
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import Preview from '$lib/docs/Preview.svelte';
 
-  import links from '../_data/geo/world-links.json';
-
   export let data;
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
@@ -19,7 +17,7 @@
 
   // Use a single link per source
   $: singleLinks = flatRollup(
-    links,
+    data.worldLinks,
     (values) => {
       return values[1];
     },
@@ -92,7 +90,7 @@
             class="stroke-surface-content/50 fill-white pointer-events-none"
           />
         {/each}
-        {#each links as link}
+        {#each data.worldLinks as link}
           <GeoEdgeFade {link}>
             <GeoPoint lat={link.source[1]} long={link.source[0]} r={2} class="fill-black" />
             <GeoPoint lat={link.target[1]} long={link.target[0]} r={2} class="fill-black" />

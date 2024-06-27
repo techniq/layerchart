@@ -34,7 +34,7 @@
       let:yScale
     >
       {@const minBandwidth = Math.min(xScale.bandwidth(), yScale.bandwidth())}
-      {@const maxValue = max(data, (d) => d.value)}
+      {@const maxValue = max(data, (d) => d.value) ?? 0}
       {@const rScale = scaleLinear()
         .domain([0, maxValue])
         .range([0, minBandwidth / 2 - 5])}

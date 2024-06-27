@@ -25,7 +25,7 @@
 
   const complexHierarchy = hierarchy(data.flare)
     .sum((d) => d.value)
-    .sort(sortFunc('value', 'desc'));
+    .sort(sortFunc('value', 'desc')) as HierarchyCircularNode<any>;
 
   let colorBy = 'parent';
 

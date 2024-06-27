@@ -6,15 +6,19 @@
 
   const { width, height } = chartContext();
 
-  type Extents = { x0: number; y0: number; x1: number; y1: number };
+  type Extents = Partial<{ x0: number; y0: number; x1: number; y1: number }>;
   type ExtentsAcccessor = (dimensions: { width: number; height: number }) => Extents;
 
-  export let domain: Extents | ExtentsAcccessor;
-  export let range: Extents | ExtentsAcccessor;
+  export let domain: Extents | ExtentsAcccessor | null | undefined = undefined;
+  export let range: Extents | ExtentsAcccessor | null | undefined = undefined;
   export let spring: boolean | Parameters<typeof motionScale>[1]['spring'] = undefined;
   export let tweened: boolean | Parameters<typeof motionScale>[1]['tweened'] = undefined;
 
-  function getExtents(extents: Extents | ExtentsAcccessor, axis: 'x' | 'y', fallback: number) {
+  function getExtents(
+    extents: Extents | ExtentsAcccessor | null | undefined,
+    axis: 'x' | 'y',
+    fallback: number
+  ) {
     const resolvedExtents =
       typeof extents === 'function' ? extents({ width: $width, height: $height }) : extents;
 

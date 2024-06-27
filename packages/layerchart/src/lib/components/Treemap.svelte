@@ -1,5 +1,16 @@
 <script lang="ts">
-  import * as d3 from 'd3-hierarchy';
+  import {
+    treemap as d3treemap,
+    treemapBinary,
+    treemapDice,
+    treemapResquarify,
+    treemapSlice,
+    treemapSliceDice,
+    treemapSquarify,
+    type HierarchyNode,
+    type HierarchyRectangularNode,
+    type TreemapLayout,
+  } from 'd3-hierarchy';
 
   import { chartContext } from './ChartContext.svelte';
   import { aspectTile } from '../utils/treemap.js';
@@ -7,13 +18,13 @@
   const { data, width, height } = chartContext();
 
   export let tile:
-    | typeof d3.treemapSquarify
+    | typeof treemapSquarify
     | 'binary'
     | 'squarify'
     | 'resquarify'
     | 'dice'
     | 'slice'
-    | 'sliceDice' = d3.treemapSquarify;
+    | 'sliceDice' = treemapSquarify;
   export let padding = 0;
   export let paddingInner = 0;
   export let paddingOuter = 0;
@@ -22,27 +33,26 @@
   export let paddingLeft: number | undefined = undefined;
   export let paddingRight: number | undefined = undefined;
 
-  export let selected = null;
+  export let selected: HierarchyRectangularNode<any> | null | undefined = null;
 
   $: tileFunc =
     tile === 'squarify'
-      ? d3.treemapSquarify
+      ? treemapSquarify
       : tile === 'resquarify'
-        ? d3.treemapResquarify
+        ? treemapResquarify
         : tile === 'binary'
-          ? d3.treemapBinary
+          ? treemapBinary
           : tile === 'dice'
-            ? d3.treemapDice
+            ? treemapDice
             : tile === 'slice'
-              ? d3.treemapSlice
+              ? treemapSlice
               : tile === 'sliceDice'
-                ? d3.treemapSliceDice
+                ? treemapSliceDice
                 : tile;
 
-  let treemap: d3.TreemapLayout<any>;
+  let treemap: TreemapLayout<any>;
   $: {
-    treemap = d3
-      .treemap()
+    treemap = d3treemap()
       .size([$width, $height])
       .tile(aspectTile(tileFunc, $width, $height));
 
@@ -69,8 +79,8 @@
     }
   }
 
-  // @ts-ignore
-  $: treemapData = treemap($data);
+  $: treemapData = treemap($data as HierarchyNode<any>);
+
   // TODO: Remove selected
   $: selected = treemapData; // set initial selection
 </script>

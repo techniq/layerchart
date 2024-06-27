@@ -26,6 +26,7 @@ export async function load() {
         (r) => r.json()
       )) as Topology<{
         countries: GeometryCollection<{ name: string }>;
+        land: GeometryCollection;
       }>,
       airports: (await fetch('/data/examples/geo/world-airports.csv').then(async (r) =>
         csvParse(await r.text(), autoType)

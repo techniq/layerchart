@@ -30,7 +30,7 @@
   const population = data.population.map((d) => {
     return {
       fips: d.state + d.county,
-      state: statesById.get(d.state).properties.name,
+      state: statesById.get(d.state)?.properties.name,
       population: +d.DP05_0001E,
       populationUnder18: +d.DP05_0019E,
       percentUnder18: +d.DP05_0019PE,
@@ -41,7 +41,7 @@
   const width = 7;
   const maxHeight = 200;
   $: heightScale = scaleLinear()
-    .domain([0, max(population, (d) => d.population)])
+    .domain([0, max(population, (d) => d.population) ?? 0])
     .range([0, maxHeight]);
 
   $: enrichedCountiesFeatures = counties.features
@@ -50,7 +50,7 @@
         ...feature,
         properties: {
           ...feature.properties,
-          data: populationByFips.get(feature.id),
+          data: populationByFips.get(feature.id as string),
         },
       };
     })
@@ -92,7 +92,7 @@
           <GeoPath geojson={feature} {strokeWidth} let:geoPath>
             {@const [x, y] = geoPath.centroid(feature)}
             {@const d = feature.properties.data}
-            {@const height = heightScale(d?.population)}
+            {@const height = heightScale(d?.population ?? 0)}
             <Group {x} {y}>
               <path
                 d="M{-width / 2},0 L0,{-height} L{width / 2},0"
@@ -177,7 +177,7 @@
             for (var feature of enrichedCountiesFeatures) {
               const [x, y] = geoPath.centroid(feature);
               const d = feature.properties.data;
-              const height = heightScale(d?.population);
+              const height = heightScale(d?.population ?? 0);
 
               ctx.lineWidth = strokeWidth;
               ctx.strokeStyle = computedStyle.stroke;

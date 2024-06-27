@@ -64,7 +64,9 @@
     data: { name: string };
     parent?: HierarchySankeyNodeProperties;
   };
-  type HierarchySankeyNode = SankeyNode<HierarchySankeyNodeProperties, {}>;
+  // TODO: Fix type
+  type HierarchySankeyNode = SankeyNode<HierarchySankeyNodeProperties & any, {}>;
+
   function getHierarchyNodeKey(node: HierarchySankeyNode) {
     return [node.data.name, node.parent?.data.name].join('_');
   }
@@ -83,8 +85,8 @@
             <Link sankey data={link} stroke-width={link.width} class="stroke-surface-content/10" />
           {/each}
           {#each nodes as node (node.id)}
-            {@const nodeWidth = node.x1 - node.x0}
-            {@const nodeHeight = node.y1 - node.y0}
+            {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
+            {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
             <Group x={node.x0} y={node.y0}>
               <Rect width={nodeWidth} height={nodeHeight} class="fill-primary" />
               <Text
@@ -121,8 +123,8 @@
           {/each}
 
           {#each nodes as node (node.name)}
-            {@const nodeWidth = node.x1 - node.x0}
-            {@const nodeHeight = node.y1 - node.y0}
+            {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
+            {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
             <Group x={node.x0} y={node.y0}>
               <Rect
                 width={nodeWidth}
@@ -199,14 +201,15 @@
           {/each}
 
           {#each nodes as node (node.name)}
-            {@const nodeWidth = node.x1 - node.x0}
-            {@const nodeHeight = node.y1 - node.y0}
+            {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
+            {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
             <Group
               x={node.x0}
               y={node.y0}
               tweened
               on:click={() => {
-                selectedNode = node === selectedNode || node.sourceLinks.length === 0 ? null : node;
+                selectedNode =
+                  node === selectedNode || node.sourceLinks?.length === 0 ? null : node;
               }}
             >
               <Rect
@@ -247,7 +250,9 @@
           on:update={(e) => {
             // Calculate domain extents from Sankey data
             // TODO: Update as 'nodeColorBy' changes
+            // @ts-ignore
             const extents = extent(e.detail.nodes, (d) => d[nodeColorBy]);
+            // @ts-ignore
             colorScale.domain(extents);
           }}
         >
@@ -278,8 +283,8 @@
           {/each}
 
           {#each nodes as node (node.name)}
-            {@const nodeWidth = node.x1 - node.x0}
-            {@const nodeHeight = node.y1 - node.y0}
+            {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
+            {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
             <Group x={node.x0} y={node.y0} tweened>
               <Rect
                 width={nodeWidth}
@@ -288,8 +293,8 @@
                 fill-opacity={0.5}
                 on:pointerover={() => {
                   highlightLinkIndexes = [
-                    ...node.sourceLinks.map((l) => l.index),
-                    ...node.targetLinks.map((l) => l.index),
+                    ...(node.sourceLinks?.map((l) => l.index) ?? []),
+                    ...(node.targetLinks?.map((l) => l.index) ?? []),
                   ];
                 }}
                 on:pointermove={(e) => tooltip.show(e, { node })}
@@ -366,7 +371,9 @@
           on:update={(e) => {
             // Calculate domain extents from Sankey data
             // TODO: Update as 'nodeColorBy' changes
+            // @ts-ignore
             const extents = extent(e.detail.nodes, (d) => d[nodeColorBy]);
+            // @ts-ignore
             colorScale.domain(extents);
           }}
         >
@@ -393,8 +400,8 @@
           {/each}
 
           {#each nodes as node (getHierarchyNodeKey(node))}
-            {@const nodeWidth = node.x1 - node.x0}
-            {@const nodeHeight = node.y1 - node.y0}
+            {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
+            {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
             <Group x={node.x0} y={node.y0} tweened>
               <Rect
                 width={nodeWidth}
@@ -403,8 +410,8 @@
                 fill-opacity={0.5}
                 on:pointerover={() => {
                   highlightLinkIndexes = [
-                    ...node.sourceLinks.map((l) => l.index),
-                    ...node.targetLinks.map((l) => l.index),
+                    ...(node.sourceLinks?.map((l) => l.index) ?? []),
+                    ...(node.targetLinks?.map((l) => l.index) ?? []),
                   ];
                 }}
                 on:pointerout={() => (highlightLinkIndexes = [])}

@@ -16,7 +16,7 @@
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoCurvePath } from '$lib/utils/geo.js';
 
-  export let geojson: GeoPermissibleObjects | undefined = undefined;
+  export let geojson: GeoPermissibleObjects | null | undefined = undefined;
 
   /** Render to canvas */
   export let render:

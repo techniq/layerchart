@@ -9,10 +9,14 @@ export async function load({ fetch }) {
       (r) => r.json()
     )) as Topology<{
       countries: GeometryCollection<{ name: string }>;
+      land: GeometryCollection;
     }>,
-    geojsonDetail: await fetch(
+    geojsonDetail: (await fetch(
       'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json'
-    ).then((r) => r.json()),
+    ).then((r) => r.json())) as Topology<{
+      countries: GeometryCollection<{ name: string }>;
+      land: GeometryCollection;
+    }>,
 
     meta: {
       pageSource,

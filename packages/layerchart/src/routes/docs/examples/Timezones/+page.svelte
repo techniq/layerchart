@@ -55,6 +55,7 @@
   $: timezoneGeojson = feature(data.timezones, data.timezones.objects.timezones);
 
   $: colorScale = scaleSequential(
+    // @ts-ignore
     extent(timezoneGeojson.features, (d) => d.properties.zone),
     interpolateRdBu
   );

@@ -8,6 +8,7 @@ export async function load({ fetch }) {
       (r) => r.json()
     )) as Topology<{
       countries: GeometryCollection<{ name: string }>;
+      land: GeometryCollection;
     }>,
     tectonicPlates: await fetch(
       'https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json'

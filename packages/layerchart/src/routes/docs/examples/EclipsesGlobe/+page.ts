@@ -8,6 +8,7 @@ export async function load({ fetch }) {
       (r) => r.json()
     )) as Topology<{
       countries: GeometryCollection<{ name: string }>;
+      land: GeometryCollection;
     }>,
     eclipses: await fetch('/data/examples/geo/eclipses.json').then(async (r) =>
       parse(await r.text())

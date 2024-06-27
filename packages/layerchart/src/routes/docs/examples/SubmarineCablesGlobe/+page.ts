@@ -8,6 +8,7 @@ export async function load({ fetch }) {
       (r) => r.json()
     )) as Topology<{
       countries: GeometryCollection<{ name: string }>;
+      land: GeometryCollection;
     }>,
     cables: await fetch('/data/examples/geo/submarine-cables.json').then((r) => r.json()),
     landingPoints: await fetch('/data/examples/geo/submarine-cables-landing-points.json').then(

@@ -42,7 +42,7 @@
 
   let selectedStateId: GeometryObjectA['id'] | null = null;
   $: selectedCountiesFeatures = selectedStateId
-    ? counties.features.filter((f) => String(f.id).slice(0, 2) === selectedStateId)
+    ? counties.features.filter((f) => (f.id as string).slice(0, 2) === selectedStateId)
     : [];
 </script>
 

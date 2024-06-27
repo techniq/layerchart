@@ -8,13 +8,14 @@
     sankeyRight,
     sankeyJustify,
     type SankeyNode,
+    type SankeyLink,
   } from 'd3-sankey';
 
   import { chartContext } from './ChartContext.svelte';
 
   const dispatch = createEventDispatcher();
 
-  const { data, width, height, padding } = chartContext();
+  const { data, width, height } = chartContext();
 
   export let nodes = (d: any) => d.nodes;
   export let nodeId = (d: any) => d.index;
@@ -59,8 +60,11 @@
 
   // @ts-ignore
   $: sankeyData = sankey($data);
+  type NodeExtraProperties = Record<string, any>;
+  $: _nodes = sankeyData.nodes as SankeyNode<NodeExtraProperties, any>[];
+  $: _links = sankeyData.links as SankeyLink<NodeExtraProperties, any>[];
 
   $: dispatch('update', sankeyData);
 </script>
 
-<slot nodes={sankeyData.nodes} links={sankeyData.links} />
+<slot nodes={_nodes} links={_links} />

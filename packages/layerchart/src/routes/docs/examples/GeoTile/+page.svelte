@@ -15,10 +15,11 @@
   $: filteredStates = {
     ...states,
     features: states.features.filter(
-      (d) => d.id < 60 && d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii'
+      (d) => Number(d.id) < 60 && d.properties.name !== 'Alaska' && d.properties.name !== 'Hawaii'
     ),
   };
   // $: filteredStates = { ...states, features: states.features.filter(d => d.properties.name === 'West Virginia')}
+  let selectedFeature: typeof filteredStates | (typeof filteredStates.features)[0];
   $: selectedFeature = filteredStates;
 
   let serviceUrl: ComponentProps<GeoTile>['url'];
