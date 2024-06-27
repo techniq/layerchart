@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  // @ts-ignore
+  // @ts-expect-error
   import { tile as d3Tile } from 'd3-tile';
 
   import { chartContext } from './ChartContext.svelte';

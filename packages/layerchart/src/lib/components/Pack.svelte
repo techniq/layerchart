@@ -20,7 +20,7 @@
     }
   }
 
-  // @ts-ignore
+  // @ts-expect-error
   $: packData = pack($data);
 </script>
 

@@ -32,14 +32,14 @@ export function createDimensionGetter<TData>(
       const [minXDomain, maxXDomain] = $xScale.domain();
       const [minYDomain, maxYDomain] = $yScale.domain();
 
-      // @ts-ignore
+      // @ts-expect-error
       return function getter(item) {
         if (isScaleBand($yScale)) {
           // Horizontal band
           const y1Scale = groupBy
             ? groupScaleBand($yScale, $flatData, groupBy, options?.groupPadding)
             : null;
-          // @ts-ignore
+          // @ts-expect-error
           const y = firstValue($yGet(item)) + (y1Scale ? y1Scale(item[groupBy]) : 0) + inset / 2;
           const height = Math.max(
             0,
@@ -81,7 +81,7 @@ export function createDimensionGetter<TData>(
             ? groupScaleBand($xScale, $flatData, groupBy, options?.groupPadding)
             : null;
 
-          // @ts-ignore
+          // @ts-expect-error
           const x = firstValue($xGet(item)) + (x1Scale ? x1Scale(item[groupBy]) : 0) + inset / 2;
           const width = Math.max(
             0,

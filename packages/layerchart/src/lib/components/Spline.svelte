@@ -59,7 +59,7 @@
   }
 
   let d: string | null = '';
-  // @ts-ignore
+  // @ts-expect-error
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
   $: {

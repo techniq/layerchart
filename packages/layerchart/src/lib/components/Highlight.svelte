@@ -207,7 +207,7 @@
         {..._area}
         {...typeof area === 'object' ? area : null}
         class={cls(
-          // @ts-ignore
+          // @ts-expect-error
           !area.fill && 'fill-surface-content/5',
           typeof area === 'object' ? area.class : null
         )}
@@ -228,7 +228,7 @@
         radius={typeof bar === 'object' ? bar.radius : undefined}
         bar={highlightData}
         class={cls(
-          // @ts-ignore
+          // @ts-expect-error
           !bar.fill && 'fill-primary',
           typeof bar === 'object' ? bar.class : null
         )}

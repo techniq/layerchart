@@ -118,7 +118,7 @@ export function springScale<Domain, Range>(
   const rangeStore = spring<Range>(undefined, springOptions);
 
   const tweenedScale = derived([domainStore, rangeStore], ([domain, range]) => {
-    // @ts-ignore
+    // @ts-expect-error
     const scaleInstance = scale.domain ? scale : scale(); // support `scaleLinear` or `scaleLinear()` (which could have `.interpolate()` and others set)
 
     if (domain) {
@@ -146,7 +146,7 @@ export function motionScale<Domain, Range>(scale: AnyScale, options: MotionOptio
   const rangeStore = motionStore<Range>(undefined as Range, options);
 
   const tweenedScale = derived([domainStore, rangeStore], ([domain, range]) => {
-    // @ts-ignore
+    // @ts-expect-error
     const scaleInstance = scale.domain ? scale : scale(); // support `scaleLinear` or `scaleLinear()` (which could have `.interpolate()` and others set)
 
     if (domain) {

@@ -17,7 +17,7 @@ export function graphFromCsv(csv: string): SankeyGraph<any, any> {
       ? {
           source,
           target,
-          // @ts-ignore
+          // @ts-expect-error
           value: !value || isNaN((value = +value)) ? 1 : +value,
           // color: linkColor,
         }

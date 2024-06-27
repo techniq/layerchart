@@ -61,7 +61,7 @@
     value: 'integer',
     keys,
   });
-  const stackData = stack().keys(keys)(stackDateSeries as any);
+  const stackData = stack().keys(keys)(stackDateSeries);
 
   const spiralData = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
 
@@ -458,7 +458,7 @@
 </small>
 
 <TooltipControls bind:settings={charts.areaStack} />
-<Preview data={dateSeries}>
+<Preview data={stackData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={stackData}

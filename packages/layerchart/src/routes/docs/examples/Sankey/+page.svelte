@@ -250,9 +250,9 @@
           on:update={(e) => {
             // Calculate domain extents from Sankey data
             // TODO: Update as 'nodeColorBy' changes
-            // @ts-ignore
+            // @ts-expect-error
             const extents = extent(e.detail.nodes, (d) => d[nodeColorBy]);
-            // @ts-ignore
+            // @ts-expect-error
             colorScale.domain(extents);
           }}
         >
@@ -371,9 +371,9 @@
           on:update={(e) => {
             // Calculate domain extents from Sankey data
             // TODO: Update as 'nodeColorBy' changes
-            // @ts-ignore
+            // @ts-expect-error
             const extents = extent(e.detail.nodes, (d) => d[nodeColorBy]);
-            // @ts-ignore
+            // @ts-expect-error
             colorScale.domain(extents);
           }}
         >

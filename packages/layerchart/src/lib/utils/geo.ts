@@ -29,7 +29,7 @@ export function geoCurvePath(
   // Expose geoPath properties such as `.centroid()`
   Object.setPrototypeOf(fn, geoPath);
 
-  // @ts-ignore
+  // @ts-expect-error
   return fn;
 }
 
@@ -71,7 +71,7 @@ export function antipode([longitude, latitude]: [number, number]): [number, numb
  */
 export function isVisible(projection: GeoProjection | GeoStreamWrapper) {
   let visible;
-  // @ts-ignore
+  // @ts-expect-error
   const stream = projection.stream({
     point() {
       visible = true;

@@ -70,17 +70,16 @@
 
   const { data: contextData, x, y, xRange, rGet, config, width, height } = chartContext();
 
-  // @ts-ignore
+  // @ts-expect-error
   $: resolved_endAngle = endAngle ?? degreesToRadians($config.xRange ? max($xRange) : max(range));
   let tweened_endAngle = motionStore(0, { spring, tweened });
   $: tweened_endAngle.set(resolved_endAngle);
 
   $: pie = d3pie()
-    // @ts-ignore
+    // @ts-expect-error
     .startAngle(startAngle ?? degreesToRadians($config.xRange ? min($xRange) : min(range)))
     .endAngle($tweened_endAngle)
     .padAngle(padAngle)
-    // @ts-ignore
     .value($x);
 
   $: arcs = pie(data ?? $contextData);

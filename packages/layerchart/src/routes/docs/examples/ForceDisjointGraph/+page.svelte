@@ -14,7 +14,7 @@
 
   const colorScale = scaleOrdinal(schemeCategory10);
 
-  // @ts-ignore
+  // @ts-expect-error
   const linkForce = forceLink(links).id((d) => d.id);
   const chargeForce = forceManyBody();
   const xForce = forceX();

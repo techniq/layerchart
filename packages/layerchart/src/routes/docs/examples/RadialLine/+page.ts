@@ -9,7 +9,7 @@ export async function load() {
     dailyTemperatures: await fetch('/data/examples/dailyTemperatures.csv').then(async (r) => {
       return csvParse<{ dayOfYear: number; year: number; value: number | 'NA' }>(
         await r.text(),
-        // @ts-ignore
+        // @ts-expect-error
         autoType
       )
         .filter((d) => d.value !== 'NA')
@@ -26,7 +26,7 @@ export async function load() {
       return flatGroup(
         csvParse<{ date: Date; tavg: number; tmax: number; tmin: number }>(
           await r.text(),
-          // @ts-ignore
+          // @ts-expect-error
           autoType
         ),
         (d) => new Date(Date.UTC(2000, d.date.getUTCMonth(), d.date.getUTCDate())) // group by day of year

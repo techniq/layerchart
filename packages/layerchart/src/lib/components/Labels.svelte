@@ -20,7 +20,7 @@
   export let format: FormatType | undefined = undefined;
   // export let overlap = false;
 
-  // @ts-ignore
+  // @ts-expect-error
   $: yBaseline = $custom?.yBaseline ?? 0;
 
   export let groupBy: string | undefined = undefined;

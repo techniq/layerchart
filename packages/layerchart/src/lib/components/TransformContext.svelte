@@ -180,12 +180,12 @@
 
     if ($dragging) {
       e.stopPropagation(); // Stop tooltip from trigging (along with `capture: true`)
-      // @ts-ignore
+      // @ts-expect-error
       e.currentTarget?.setPointerCapture(e.pointerId);
 
       setTranslate(
         processTranslate(startTranslate.x, startTranslate.y, deltaX, deltaY, $scale),
-        // @ts-ignore
+        // @ts-expect-error
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
     }
@@ -228,14 +228,14 @@
       scaleTo(
         Math.pow(2, scaleBy),
         point,
-        // @ts-ignore
+        // @ts-expect-error
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
     } else if ($scrollMode === 'translate') {
       translate.update(
         (startTranslate) =>
           processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY, $scale),
-        // @ts-ignore
+        // @ts-expect-error
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
     }
@@ -274,12 +274,12 @@
     ([dragging, translating, scaling]) => dragging || translating || scaling
   );
   export function setTranslate(point: { x: number; y: number }, options?: MotionOptions) {
-    // @ts-ignore
+    // @ts-expect-error
     translating.handle(translate.set(point, options));
   }
 
   export function setScale(value: number, options?: MotionOptions) {
-    // @ts-ignore
+    // @ts-expect-error
     scaling.handle(scale.set(value, options));
   }
 

@@ -5,7 +5,7 @@ import { autoType } from 'd3-dsv';
 
 /** @type {import('vite').UserConfig} */
 const config = {
-  // @ts-ignore
+  // @ts-expect-error
   plugins: [sveltekit(), sveld(), dsv({ processRow: autoType })],
   // optimizeDeps: {
   //   include: ['svelte-ux'],

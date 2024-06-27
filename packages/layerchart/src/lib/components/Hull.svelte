@@ -3,7 +3,7 @@
   import { cls } from 'svelte-ux';
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
-  // @ts-ignore
+  // @ts-expect-error
   import { geoVoronoi } from 'd3-geo-voronoi';
   import { curveLinearClosed } from 'd3-shape';
 
@@ -42,7 +42,7 @@
     const y = Array.isArray(yValue) ? min(yValue) : yValue;
 
     const point = [x, y];
-    // @ts-ignore
+    // @ts-expect-error
     point.data = d;
     return point;
   });

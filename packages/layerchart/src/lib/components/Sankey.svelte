@@ -52,13 +52,13 @@
     )
     .nodeWidth(nodeWidth)
     .nodePadding(nodePadding)
-    // @ts-ignore
+    // @ts-expect-error
     .nodeSort(nodeSort)
     .links(links)
-    // @ts-ignore
+    // @ts-expect-error
     .linkSort(linkSort);
 
-  // @ts-ignore
+  // @ts-expect-error
   $: sankeyData = sankey($data);
   type NodeExtraProperties = Record<string, any>;
   $: _nodes = sankeyData.nodes as SankeyNode<NodeExtraProperties, any>[];

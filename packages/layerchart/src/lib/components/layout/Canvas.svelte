@@ -13,7 +13,7 @@
   export let element: HTMLCanvasElement | undefined = undefined;
 
   /** The `<canvas>`'s 2d context. Useful for bindings. */
-  // @ts-ignore: set during onMount()
+  // @ts-expect-error: set during onMount()
   export let context: CanvasRenderingContext2D = undefined;
 
   /** Force the use of a software (instead of hardware accelerated) 2D canvas and can save memory when calling getImageData() frequently.

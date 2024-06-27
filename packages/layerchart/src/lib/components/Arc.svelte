@@ -142,7 +142,7 @@
     .padAngle(padAngle) as Function;
   // .padRadius(padRadius);
 
-  // @ts-ignore
+  // @ts-expect-error
   $: trackArcCentroid = trackArc.centroid();
   // $: console.log(trackArcCentroid)
 

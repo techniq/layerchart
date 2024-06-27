@@ -171,13 +171,13 @@
     const localY = point?.y ?? 0;
 
     if (
-      // @ts-ignore
+      // @ts-expect-error
       e.offsetX < e.currentTarget?.offsetLeft ||
-      // @ts-ignore
+      // @ts-expect-error
       e.offsetX > e.currentTarget?.offsetLeft + e.currentTarget?.offsetWidth ||
-      // @ts-ignore
+      // @ts-expect-error
       e.offsetY < e.currentTarget?.offsetTop ||
-      // @ts-ignore
+      // @ts-expect-error
       e.offsetY > e.currentTarget?.offsetTop + e.currentTarget?.offsetHeight
     ) {
       // Ignore if within padding of chart
@@ -309,7 +309,7 @@
 
   let rects: Array<{ x: number; y: number; width: number; height: number; data: any }> = [];
   $: if (mode === 'bounds' || mode === 'band') {
-    // @ts-ignore
+    // @ts-expect-error
     rects = $flatData
       .map((d) => {
         const xValue = $xGet(d);
@@ -321,9 +321,9 @@
         const xOffset = isScaleBand($xScale) ? ($xScale.padding() * $xScale.step()) / 2 : 0;
         const yOffset = isScaleBand($yScale) ? ($yScale.padding() * $yScale.step()) / 2 : 0;
 
-        // @ts-ignore
+        // @ts-expect-error
         const fullWidth = max($xRange) - min($xRange);
-        // @ts-ignore
+        // @ts-expect-error
         const fullHeight = max($yRange) - min($yRange);
 
         if (mode === 'band') {
@@ -350,7 +350,7 @@
               ? yValue[1] - yValue[0]
               : isScaleBand($yScale)
                 ? $yScale.step()
-                : // @ts-ignore
+                : // @ts-expect-error
                   max($yRange) - y,
             data: d,
           };
@@ -396,18 +396,17 @@
       <Svg>
         <Voronoi
           on:pointerenter={(e) => {
-            // @ts-ignore
+            // @ts-expect-error
             showTooltip(e.detail.event, e.detail.data);
           }}
           on:pointermove={(e) => {
-            // @ts-ignore
             showTooltip(e.detail.event, e.detail.data);
           }}
           on:pointerleave={hideTooltip}
           on:pointerdown={(e) => {
-            // @ts-ignore
+            // @ts-expect-error
             if (e.target?.hasPointerCapture(e.pointerId)) {
-              // @ts-ignore
+              // @ts-expect-error
               e.target.releasePointerCapture(e.pointerId);
             }
           }}
@@ -431,9 +430,9 @@
               on:pointermove={(e) => showTooltip(e, rect.data)}
               on:pointerleave={hideTooltip}
               on:pointerdown={(e) => {
-                // @ts-ignore
+                // @ts-expect-error
                 if (e.target?.hasPointerCapture(e.pointerId)) {
-                  // @ts-ignore
+                  // @ts-expect-error
                   e.target.releasePointerCapture(e.pointerId);
                 }
               }}

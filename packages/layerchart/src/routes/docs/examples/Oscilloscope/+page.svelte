@@ -28,9 +28,9 @@
   let active = true;
   onMount(async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    // @ts-ignore
+    // @ts-expect-error
     ctx = new (window.AudioContext || window.webkitAudioContext)();
-    // @ts-ignore
+    // @ts-expect-error
     analyser = ctx
       .createMediaStreamSource(stream)
       .connect(new AnalyserNode(ctx, { fftSize: 2048 }));

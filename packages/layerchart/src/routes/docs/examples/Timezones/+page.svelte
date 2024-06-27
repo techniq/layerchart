@@ -11,7 +11,7 @@
   import { scaleSequential } from 'd3-scale';
   import { interpolateRdBu } from 'd3-scale-chromatic';
   import { feature } from 'topojson-client';
-  // @ts-ignore
+  // @ts-expect-error
   import { century, equationOfTime, declination } from 'solar-calculator';
 
   import {
@@ -55,7 +55,7 @@
   $: timezoneGeojson = feature(data.timezones, data.timezones.objects.timezones);
 
   $: colorScale = scaleSequential(
-    // @ts-ignore
+    // @ts-expect-error
     extent(timezoneGeojson.features, (d) => d.properties.zone),
     interpolateRdBu
   );

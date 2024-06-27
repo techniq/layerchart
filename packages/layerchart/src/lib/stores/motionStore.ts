@@ -36,7 +36,7 @@ export function resolveOptions(prop: string, options: PropMotionOptions) {
       typeof options.spring === 'boolean' || options.spring == null
         ? options.spring
         : prop in options.spring
-          ? //@ts-ignore
+          ? //@ts-expect-error
             options.spring[prop]
           : Object.keys(options.spring).some((key) =>
                 ['precision', 'damping', 'stiffness'].includes(key)
@@ -47,7 +47,7 @@ export function resolveOptions(prop: string, options: PropMotionOptions) {
       typeof options.tweened === 'boolean' || options.tweened == null
         ? options.tweened
         : prop in options.tweened
-          ? //@ts-ignore
+          ? //@ts-expect-error
             options.tweened[prop]
           : Object.keys(options.tweened).some((key) =>
                 ['delay', 'duration', 'easing'].includes(key)

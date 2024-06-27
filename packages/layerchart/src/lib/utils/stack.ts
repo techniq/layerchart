@@ -22,9 +22,9 @@ export function createStackData<TData>(
     // Group then Stack (if needed)
     const groupedData = flatGroup(
       data,
-      // @ts-ignore
+      // @ts-expect-error
       (d) => d[options.xKey],
-      // @ts-ignore
+      // @ts-expect-error
       (d) => d[options.groupBy ?? '']
     );
 
@@ -37,7 +37,7 @@ export function createStackData<TData>(
       const stackKeys: Array<any> = [
         ...new Set(itemData.map((d: any) => d[options.stackBy ?? ''])),
       ];
-      // @ts-ignore
+      // @ts-expect-error
       const stackData = stack().keys(stackKeys).order(options.order).offset(options.offset)(
         pivotData
       );
@@ -61,9 +61,9 @@ export function createStackData<TData>(
     // Stack only
     const pivotData = pivotWider(data, options.xKey, options.stackBy, 'value');
 
-    // @ts-ignore
+    // @ts-expect-error
     const stackKeys: Array<any> = [...new Set(data.map((d) => d[options.stackBy ?? '']))];
-    // @ts-ignore
+    // @ts-expect-error
     const stackData = stack().keys(stackKeys).order(options.order).offset(options.offset)(
       pivotData
     );
@@ -86,13 +86,13 @@ export function createStackData<TData>(
         data,
         (items) => {
           return {
-            // @ts-ignore
+            // @ts-expect-error
             keys: [items[0][options.xKey]],
-            // @ts-ignore
+            // @ts-expect-error
             values: [0, sum(items, (d) => d.value)],
           };
         },
-        // @ts-ignore
+        // @ts-expect-error
         (d) => d[options.xKey]
       ).values()
     );
@@ -104,7 +104,7 @@ export function createStackData<TData>(
  *   - see: https://observablehq.com/@mkfreeman/separated-bar-chart
  */
 // TODO: Try to find way to support separated with createStackData() (which has isolated stacked per group)
-// @ts-ignore
+// @ts-expect-error
 export function stackOffsetSeparated(series, order) {
   const gap = 200; // TODO: Determine way to pass in as option (curry?)
 
@@ -113,7 +113,7 @@ export function stackOffsetSeparated(series, order) {
   // Standard series
   for (var i = 1, s0, s1 = series[order[0]], n, m = s1.length; i < n; ++i) {
     (s0 = s1), (s1 = series[order[i]]);
-    // @ts-ignore
+    // @ts-expect-error
     let base = max(s0, (d) => d[1]) + gap; // here is where you calculate the maximum of the previous layer
     for (var j = 0; j < m; ++j) {
       // Set the height based on the data values, shifted up by the previous layer

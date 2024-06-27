@@ -37,11 +37,11 @@
         img.onload = function () {
           var canvas = document.createElement('canvas');
           var context = canvas.getContext('2d')!;
-          // @ts-ignore
+          // @ts-expect-error
           canvas.height = this.naturalHeight;
-          // @ts-ignore
+          // @ts-expect-error
           canvas.width = this.naturalWidth;
-          // @ts-ignore
+          // @ts-expect-error
           context.drawImage(this, 0, 0);
           var dataUri = canvas.toDataURL('image/jpeg');
           // console.log('from load', { x, y, z });

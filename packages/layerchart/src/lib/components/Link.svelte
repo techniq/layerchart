@@ -36,7 +36,7 @@
   export let curve = orientation === 'horizontal' ? curveBumpX : curveBumpY;
 
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
-  // @ts-ignore
+  // @ts-expect-error
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
 

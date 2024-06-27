@@ -129,7 +129,7 @@
               axis="x"
               resetOnEnd
               on:brushEnd={(e) => {
-                // @ts-ignore
+                // @ts-expect-error
                 set(e.detail.xDomain);
               }}
             />
@@ -167,7 +167,7 @@
               axis="y"
               resetOnEnd
               on:brushEnd={(e) => {
-                // @ts-ignore
+                // @ts-expect-error
                 set(e.detail.yDomain);
               }}
             />
@@ -207,9 +207,9 @@
               resetOnEnd
               on:brushEnd={(e) => {
                 set({
-                  // @ts-ignore
+                  // @ts-expect-error
                   xDomain: e.detail.xDomain,
-                  // @ts-ignore
+                  // @ts-expect-error
                   yDomain: e.detail.yDomain,
                 });
               }}
@@ -260,7 +260,7 @@
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
             <Brush
               on:change={(e) => {
-                // @ts-ignore
+                // @ts-expect-error
                 set(e.detail.xDomain);
               }}
             />
@@ -289,7 +289,7 @@
             <Brush
               axis="y"
               on:change={(e) => {
-                // @ts-ignore
+                // @ts-expect-error
                 set(e.detail.yDomain);
               }}
             />
@@ -330,9 +330,9 @@
         <Chart
           data={data.appleStock.filter(
             (d) =>
-              // @ts-ignore
+              // @ts-expect-error
               (xDomain[0] == null || d.date >= xDomain[0]) &&
-              // @ts-ignore
+              // @ts-expect-error
               (xDomain[1] == null || d.date <= xDomain[1])
           )}
           x="date"
@@ -367,7 +367,7 @@
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
             <Brush
               on:change={(e) => {
-                // @ts-ignore
+                // @ts-expect-error
                 set(e.detail.xDomain);
               }}
             />
@@ -469,7 +469,7 @@
               axis="x"
               resetOnEnd
               on:brushEnd={(e) => {
-                // @ts-ignore
+                // @ts-expect-error
                 set(e.detail.xDomain);
               }}
             />
@@ -523,13 +523,13 @@
           <Points let:points>
             {#each points as point}
               {@const isSelected =
-                // @ts-ignore
+                // @ts-expect-error
                 (value.xDomain[0] == null || value.xDomain[0] <= point.data.x) &&
-                // @ts-ignore
+                // @ts-expect-error
                 (value.xDomain[1] == null || point.data.x <= value.xDomain[1]) &&
-                // @ts-ignore
+                // @ts-expect-error
                 (value.yDomain[0] == null || value.yDomain[0] <= point.data.y) &&
-                // @ts-ignore
+                // @ts-expect-error
                 (value.yDomain[1] == null || point.data.y <= value.yDomain[1])}
 
               <Circle
@@ -548,9 +548,9 @@
             axis="both"
             on:change={(e) => {
               set({
-                // @ts-ignore
+                // @ts-expect-error
                 xDomain: e.detail.xDomain,
-                // @ts-ignore
+                // @ts-expect-error
                 yDomain: e.detail.yDomain,
               });
             }}

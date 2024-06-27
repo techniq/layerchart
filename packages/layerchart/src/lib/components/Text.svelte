@@ -100,7 +100,7 @@
   function getPixelValue(cssValue: string) {
     // TODO: Properly measure pixel values using DOM (handle inherited font size, zoom, etc)
     // console.log(cssValue);
-    // @ts-ignore
+    // @ts-expect-error
     const [match, value, units] = cssValue.match(/([\d.]+)(\D+)/);
     // console.log({ value, units });
     const number = Number(value);

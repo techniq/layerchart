@@ -12,7 +12,7 @@ export function findAncestor<T = any>(
     if (filter(node)) {
       return node;
     }
-    // @ts-ignore
+    // @ts-expect-error
     node = node.parent;
   }
 

@@ -3,7 +3,7 @@
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
   import type { GeoPermissibleObjects } from 'd3-geo';
-  // @ts-ignore
+  // @ts-expect-error
   import { geoVoronoi } from 'd3-geo-voronoi';
   import { cls } from 'svelte-ux';
 
@@ -41,7 +41,7 @@
     const y = Array.isArray(yValue) ? min(yValue) : yValue;
 
     const point = [x, y];
-    // @ts-ignore
+    // @ts-expect-error
     point.data = d;
     return point;
   });

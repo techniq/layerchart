@@ -34,7 +34,7 @@
     }
   }
 
-  // @ts-ignore
+  // @ts-expect-error
   $: treeData = tree($data);
 </script>
 

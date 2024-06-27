@@ -235,7 +235,7 @@
 
   /** Props passed to TransformContext */
   export let transform: Partial<ComponentProps<TransformContext>> | undefined = undefined;
-  // @ts-ignore will only be undefined until bind:transformContext runs
+  // @ts-expect-error will only be undefined until bind:transformContext runs
   export let transformContext: TransformContext = undefined;
 
   // Binded for access within TransformContext
@@ -292,7 +292,7 @@
               if (geo.applyTransform?.includes('rotate')) {
                 // When applying transform to rotate, invert `y` values and reduce sensitivity based on projection scale
                 // see: https://observablehq.com/@benoldenburg/simple-globe and https://observablehq.com/@michael-keith/draggable-globe-in-d3
-                // @ts-ignore
+                // @ts-expect-error
                 const projectionScale = $geoProjection.scale();
                 const sensitivity = 75;
                 return {
