@@ -2,7 +2,7 @@
   import { cubicInOut } from 'svelte/easing';
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { format } from 'date-fns';
-  import { extent, mean } from 'd3-array';
+  import { mean } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
 
   import {
@@ -35,6 +35,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
+  import { extent } from '$lib/utils/array.js';
 
   const data = createDateSeries({
     count: 10,
@@ -860,7 +861,6 @@
       data={transitionData}
       x="values"
       xDomain={extent(stackedData.flatMap((d) => d.values))}
-      groupedStackedData
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
@@ -879,7 +879,10 @@
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <g>
-          {#each data as bar (bar.keys.filter((key) => typeof key !== 'number').join('-'))}
+          <!-- TODO: 'data' can be used once type issue is resolved -->
+          {#each transitionData as bar (bar.keys
+            .filter((key) => typeof key !== 'number')
+            .join('-'))}
             <Bar
               {bar}
               groupBy={transitionChart.groupBy}

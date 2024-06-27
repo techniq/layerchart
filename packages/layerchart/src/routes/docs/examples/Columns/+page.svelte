@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { cls } from 'svelte-ux';
   import { cubicInOut } from 'svelte/easing';
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
-  import { format } from 'date-fns';
-  import { extent, mean } from 'd3-array';
+  import { mean } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
+  import { format } from 'date-fns';
 
   import {
     Axis,
@@ -36,6 +35,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
+  import { extent } from '$lib/utils/array.js';
 
   const data = createDateSeries({
     count: 30,
@@ -97,8 +97,14 @@
     xKey: 'year',
     groupBy: transitionChart.groupBy,
     stackBy: transitionChart.stackBy,
-  });
-  // $: console.log({ transitionData })
+  }) as {
+    basket: number;
+    fruit: string;
+    keys: string[];
+    value: number;
+    values: number[];
+    year: string;
+  }[];
 </script>
 
 <h1>Examples</h1>
@@ -883,7 +889,10 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <g>
-          {#each data as bar (bar.keys.filter((key) => typeof key !== 'number').join('-'))}
+          <!-- TODO: 'data' can be used once type issue is resolved -->
+          {#each transitionData as bar (bar.keys
+            .filter((key) => typeof key !== 'number')
+            .join('-'))}
             <Bar
               {bar}
               groupBy={transitionChart.groupBy}

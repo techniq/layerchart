@@ -14,7 +14,10 @@ export function createStackData<TData>(
     order?: OrderType;
     offset?: OffsetType;
   }
-) {
+): {
+  keys: (string | number)[];
+  values: number[];
+}[] {
   if (options.groupBy) {
     // Group then Stack (if needed)
     const groupedData = flatGroup(
