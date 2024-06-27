@@ -31,6 +31,7 @@
     TooltipItem,
     createStackData,
     stackOffsetSeparated,
+    Pattern,
   } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -504,7 +505,14 @@
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
-        <Highlight data={data[3]} area />
+        <Pattern id="highlight-pattern" width={8} height={8}>
+          <rect width={8} height={8} class="fill-secondary/10" />
+          <line x1={8} y2={8} class="stroke-secondary/30" />
+        </Pattern>
+        <Highlight
+          data={data[3]}
+          area={{ fill: 'url(#highlight-pattern)', class: 'stroke-secondary/50' }}
+        />
       </Svg>
     </Chart>
   </div>
