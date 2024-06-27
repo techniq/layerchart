@@ -1,13 +1,14 @@
 <script lang="ts">
   import { Text } from 'layerchart';
+  import type { ComponentProps } from 'svelte';
   import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   let value = 'This is really long text';
   let x = 0;
   let y = 0;
   let width = 300;
-  let textAnchor = 'start';
-  let verticalAnchor = 'start';
+  let textAnchor: ComponentProps<Text>['textAnchor'] = 'start';
+  let verticalAnchor: ComponentProps<Text>['verticalAnchor'] = 'start';
   let lineHeight = '1em';
   let rotate = 0;
   let scaleToFit = false;

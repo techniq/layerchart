@@ -1,23 +1,26 @@
 <script lang="ts">
-  import { getContext, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
 
-  import { createDimensionGetter } from '$lib/utils/rect.js';
+  import { chartContext } from './ChartContext.svelte';
   import Rect from './Rect.svelte';
   import Spline from './Spline.svelte';
 
-  const { x: xContext, y: yContext } = getContext('LayerCake');
+  import { createDimensionGetter } from '$lib/utils/rect.js';
+  import type { Accessor } from 'layerchart/utils/common.js';
+
+  const { x: xContext, y: yContext } = chartContext();
 
   export let bar: Object;
 
   /**
    * Override `x` from context.  Useful for multiple Bar instances
    */
-  export let x = $xContext;
+  export let x: Accessor = $xContext;
 
   /**
    * Override `y` from context.  Useful for multiple Bar instances
    */
-  export let y = $yContext;
+  export let y: Accessor = $yContext;
 
   export let fill: string | undefined = undefined;
   export let stroke = 'black';
@@ -46,7 +49,7 @@
 
   $: if (stroke === null || stroke === undefined) stroke = 'black';
 
-  $: getDimensions = createDimensionGetter(getContext('LayerCake'), {
+  $: getDimensions = createDimensionGetter(chartContext(), {
     x,
     y,
     groupBy,
@@ -56,7 +59,7 @@
       outer: groupPaddingOuter,
     },
   });
-  $: dimensions = $getDimensions(bar);
+  $: dimensions = $getDimensions(bar) ?? { x: 0, y: 0, width: 0, height: 0 };
 
   $: topLeft = ['all', 'top', 'left', 'top-left'].includes(rounded);
   $: topRight = ['all', 'top', 'right', 'top-right'].includes(rounded);

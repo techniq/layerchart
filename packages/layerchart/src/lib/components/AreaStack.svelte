@@ -1,15 +1,13 @@
 <script lang="ts">
-  import { getContext, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
   import type { tweened as tweenedStore } from 'svelte/motion';
   import type { CurveFactory } from 'd3-shape';
 
+  import { chartContext } from './ChartContext.svelte';
   import Area from './Area.svelte';
   import Spline from './Spline.svelte';
 
-  const { data, rGet } = getContext('LayerCake');
-
-  // TODO: Add as generic
-  type Datum = any;
+  const { data, rGet } = chartContext();
 
   export let curve: CurveFactory | undefined = undefined;
   export let defined: ComponentProps<Spline>['defined'] | undefined = undefined;

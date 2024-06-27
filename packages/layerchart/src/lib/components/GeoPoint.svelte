@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
   import { geoContext } from './GeoContext.svelte';
   import Circle from './Circle.svelte';
@@ -16,8 +17,7 @@
     coords: { x: number; y: number }
   ) => any = () => {};
 
-  const { width, height } = getContext('LayerCake');
-  const canvas = getContext('canvas');
+  const canvas = getContext<{ ctx: Readable<CanvasRenderingContext2D> }>('canvas');
   const geo = geoContext();
 
   $: [x, y] = $geo([long, lat]) ?? [0, 0];

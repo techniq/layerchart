@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { pie as d3pie } from 'd3-shape';
   import { min, max } from 'd3-array';
 
   import Arc from './Arc.svelte';
+  import { chartContext } from './ChartContext.svelte';
   import Group from './Group.svelte';
   import { degreesToRadians } from '$lib/utils/math.js';
   import { motionStore } from '$lib/stores/motionStore.js';
@@ -18,7 +18,7 @@
     - [ ] Hover events / change innerRadius / outerRadius, etc
   */
 
-  export let data: any = undefined; // TODO: Update Type
+  export let data: any[] | undefined = undefined; // TODO: Update Type
 
   /**
    * Range [min,max] in degrees.  See also startAngle/endAngle
@@ -68,20 +68,21 @@
    */
   export let tooltip: TooltipContextValue | undefined = undefined;
 
-  const { data: contextData, x, y, xRange, rGet, config, width, height } = getContext('LayerCake');
+  const { data: contextData, x, y, xRange, rGet, config, width, height } = chartContext();
 
+  // @ts-expect-error
   $: resolved_endAngle = endAngle ?? degreesToRadians($config.xRange ? max($xRange) : max(range));
   let tweened_endAngle = motionStore(0, { spring, tweened });
   $: tweened_endAngle.set(resolved_endAngle);
 
-  $: pie = d3pie()
+  $: pie = d3pie<any>()
+    // @ts-expect-error
     .startAngle(startAngle ?? degreesToRadians($config.xRange ? min($xRange) : min(range)))
     .endAngle($tweened_endAngle)
     .padAngle(padAngle)
     .value($x);
 
-  $: arcs = pie(data ?? $contextData);
-  // $: console.log({ arcs, $yRange });
+  $: arcs = pie(data ?? (Array.isArray($contextData) ? $contextData : []));
 
   $: radius = Math.min($width / 2, $height / 2);
   $: coords = {
@@ -99,7 +100,7 @@
 
 <Group x={coords.x} y={coords.y}>
   <slot {arcs}>
-    {#each arcs as arc, index}
+    {#each arcs as arc}
       <Arc
         startAngle={arc.startAngle}
         endAngle={arc.endAngle}

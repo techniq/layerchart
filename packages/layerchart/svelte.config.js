@@ -15,6 +15,7 @@ const config = {
     alias: {
       layerchart: 'src/lib/index.js',
       'layerchart/*': 'src/lib/*',
+      '$static/*': 'static/*',
     },
   },
 };

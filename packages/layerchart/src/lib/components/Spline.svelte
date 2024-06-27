@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext, tick } from 'svelte';
+  import { tick } from 'svelte';
   import { writable } from 'svelte/store';
   import { tweened as tweenedStore } from 'svelte/motion';
   import { draw as _drawTransition } from 'svelte/transition';
@@ -11,10 +11,11 @@
   import { interpolatePath } from 'd3-interpolate-path';
   import { cls } from 'svelte-ux';
 
-  import { motionStore } from '$lib/stores/motionStore.js';
+  import { chartContext } from './ChartContext.svelte';
   import Group from './Group.svelte';
+  import { motionStore } from '$lib/stores/motionStore.js';
 
-  const { data: contextData, xScale, yScale, x: contextX, y: contextY } = getContext('LayerCake');
+  const { data: contextData, xScale, yScale, x: contextX, y: contextY } = chartContext();
 
   /** Override data instead of using context */
   export let data: any = undefined;
@@ -26,9 +27,9 @@
   export let radial = false;
 
   /** Override `x` accessor from Chart context.  Applies to `angle` when `radial=true` */
-  export let x: any = undefined; // TODO: Update Type
+  export let x: ((d: any) => any) | undefined = undefined; // TODO: Update Type
   /** Override `y` accessor from Chart context.  Applies to `radius` when `radial=true` */
-  export let y: any = undefined; // TODO: Update Type
+  export let y: ((d: any) => any) | undefined = undefined; // TODO: Update Type
 
   /** Interpolate path data using d3-interpolate-path.  Works best without `draw` enabled */
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -47,11 +48,7 @@
   export let curve: CurveFactory | CurveFactoryLineOnly | undefined = undefined;
   export let defined: Parameters<Line<any>['defined']>[0] | undefined = undefined;
 
-  function getScaleValue(
-    data: any,
-    scale: typeof $xScale | typeof $yScale,
-    accessor: typeof x | typeof y
-  ) {
+  function getScaleValue(data: any, scale: typeof $xScale | typeof $yScale, accessor: Function) {
     if (scale.domain().length) {
       // If scale is defined with domain, map value
       return scale(accessor(data));
@@ -62,6 +59,7 @@
   }
 
   let d: string | null = '';
+  // @ts-expect-error
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
   $: {
@@ -75,7 +73,7 @@
     if (curve) path.curve(curve);
     if (defined) path.defined(defined);
 
-    d = pathData ?? path(data ?? $contextData);
+    d = pathData ?? path(data ?? $contextData) ?? '';
     tweened_d.set(d);
   }
 
@@ -97,8 +95,8 @@
           easing: (typeof draw === 'object' && draw.easing) || cubicInOut,
           interpolate(a, b) {
             return (t: number) => {
-              const totalLength = pathEl.getTotalLength();
-              const point = pathEl.getPointAtLength(totalLength * t);
+              const totalLength = pathEl?.getTotalLength() ?? 0;
+              const point = pathEl?.getPointAtLength(totalLength * t);
               return point;
             };
           },
@@ -123,6 +121,7 @@
 </script>
 
 {#key key}
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <path
     d={$tweened_d}
     {...$$restProps}

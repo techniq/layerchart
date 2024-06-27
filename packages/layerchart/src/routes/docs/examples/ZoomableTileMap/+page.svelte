@@ -30,7 +30,7 @@
     }),
   };
 
-  let serviceUrl: ComponentProps<TilesetField>['serviceUrl'];
+  let serviceUrl: ComponentProps<GeoTile>['url'];
   let zoomDelta = 0;
   let debug = false;
 </script>
@@ -93,7 +93,7 @@
       </Svg>
 
       <Tooltip header={(data) => data.properties.name} let:data>
-        {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
+        {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
         <TooltipItem label="longitude" value={longitude} format="decimal" />
         <TooltipItem label="latitude" value={latitude} format="decimal" />
       </Tooltip>
@@ -154,7 +154,7 @@
         {/each}
       </Svg>
       <Tooltip header={(data) => data.properties.name} let:data>
-        {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
+        {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
         <TooltipItem label="longitude" value={longitude} format="decimal" />
         <TooltipItem label="latitude" value={latitude} format="decimal" />
       </Tooltip>
@@ -214,7 +214,7 @@
       </Svg>
 
       <Tooltip header={(data) => data.properties.name} let:data>
-        {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
+        {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
         <TooltipItem label="longitude" value={longitude} format="decimal" />
         <TooltipItem label="latitude" value={latitude} format="decimal" />
       </Tooltip>

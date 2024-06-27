@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { ComponentProps } from 'svelte';
   import {
     geoAlbersUsa,
     geoAlbers,
@@ -8,7 +9,6 @@
     geoNaturalEarth1,
     geoOrthographic,
     geoIdentity,
-    type GeoPermissibleObjects,
   } from 'd3-geo';
   import { scaleOrdinal } from 'd3-scale';
   import { schemeCategory10 } from 'd3-scale-chromatic';
@@ -28,7 +28,7 @@
   import Json from '$lib/docs/Json.svelte';
 
   let geojsonStr = '';
-  let geojson: GeoPermissibleObjects;
+  let geojson: GeoJSON.FeatureCollection;
   let error = '';
 
   let selectedTab: 'input' | 'geojson' = 'input';
@@ -55,14 +55,14 @@
     { label: 'Orthographic', value: geoOrthographic },
   ];
 
-  let serviceUrl;
+  let serviceUrl: ComponentProps<GeoTile>['url'];
   let zoomDelta = 0;
 
-  const colorScale = scaleOrdinal().range(
+  const colorScale = scaleOrdinal<string>().range(
     schemeCategory10.map((hex) => {
-      let c = color(hex);
+      let c = color(hex)!;
       c.opacity = 0.5;
-      return c;
+      return c.toString() ?? '';
     })
   );
 
@@ -106,7 +106,7 @@
                 for (var feature of features) {
                   ctx.beginPath();
                   geoPath(feature);
-                  ctx.fillStyle = colorScale(feature.id);
+                  ctx.fillStyle = colorScale(String(feature.id));
                   ctx.fill();
                   ctx.stroke();
                 }
@@ -119,7 +119,7 @@
                 for (var feature of features) {
                   ctx.beginPath();
                   geoPath(feature);
-                  ctx.fillStyle = colorScale(feature.id);
+                  ctx.fillStyle = colorScale(String(feature.id));
                   ctx.fill();
                   ctx.stroke();
                 }

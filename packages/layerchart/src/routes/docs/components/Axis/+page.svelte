@@ -286,7 +286,7 @@
         <Axis
           placement="left"
           rule
-          ticks={(scale) => scale.ticks().filter(Number.isInteger)}
+          ticks={(scale) => scale.ticks?.().filter(Number.isInteger)}
           format="integer"
         />
       </Svg>
@@ -375,7 +375,7 @@
           placement="bottom"
           rule={{ class: 'stroke-surface-content/10' }}
           tickLabelProps={{ textAnchor: 'start', dx: 8 }}
-          ticks={(scale) => scale.ticks().slice(0, -1)}
+          ticks={(scale) => scale.ticks?.().slice(0, -1)}
           tickLength={22}
         />
         <Axis placement="left" rule />

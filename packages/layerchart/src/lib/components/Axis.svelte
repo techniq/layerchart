@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
   import { fade } from 'svelte/transition';
   import { cubicIn } from 'svelte/easing';
   import type { SVGAttributes } from 'svelte/elements';
@@ -10,12 +10,13 @@
 
   import { format as formatValue, type FormatType, cls, type TransitionParams } from 'svelte-ux';
 
+  import { chartContext } from './ChartContext.svelte';
   import Circle from './Circle.svelte';
   import Line from './Line.svelte';
   import Text from './Text.svelte';
-  import { isScaleBand } from '$lib/utils/scales.js';
+  import { isScaleBand, type AnyScale } from '$lib/utils/scales.js';
 
-  const { xScale, yScale, xRange, yRange, width, height, padding } = getContext('LayerCake');
+  const { xScale, yScale, xRange, yRange, width, height, padding } = chartContext();
 
   /** Location of axis */
   export let placement: 'top' | 'bottom' | 'left' | 'right' | 'angle' | 'radius';
@@ -30,13 +31,13 @@
   export let labelProps: Partial<ComponentProps<Text>> | undefined = undefined;
 
   /** Draw a rule line.  Use Rule component for greater rendering order control */
-  export let rule: boolean | SVGAttributes<SVGLineElement> = false;
+  export let rule: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'> = false;
 
   /** Draw a grid lines */
-  export let grid: boolean | SVGAttributes<SVGLineElement> = false;
+  export let grid: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'> = false;
 
   /** Control the number of ticks*/
-  export let ticks: number | any[] | Function | undefined = undefined;
+  export let ticks: number | any[] | ((scale: AnyScale) => any) | null | undefined = undefined;
 
   /** Length of the tick line */
   export let tickLength = 4;
@@ -50,7 +51,11 @@
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
-  export let transitionIn = tweened ? fade : () => {};
+  export let transitionIn = tweened
+    ? fade
+    : () => {
+        return {};
+      };
   export let transitionInParams: TransitionParams = { easing: cubicIn };
 
   $: orientation =
@@ -65,8 +70,8 @@
   export let scale: any = undefined;
   $: _scale = scale ?? (['horizontal', 'angle'].includes(orientation) ? $xScale : $yScale);
 
-  $: [xRangeMin, xRangeMax] = extent($xRange);
-  $: [yRangeMin, yRangeMax] = extent($yRange);
+  $: [xRangeMin, xRangeMax] = extent<number>($xRange) as [number, number];
+  $: [yRangeMin, yRangeMax] = extent<number>($yRange) as [number, number];
 
   $: tickVals = Array.isArray(ticks)
     ? ticks
@@ -74,7 +79,7 @@
       ? ticks(_scale)
       : isScaleBand(_scale)
         ? ticks
-          ? _scale.domain().filter((v, i) => i % ticks === 0)
+          ? _scale.domain().filter((v: any, i: number) => i % ticks === 0)
           : _scale.domain()
         : _scale.ticks(ticks ?? (placement === 'left' || placement === 'right' ? 4 : undefined));
 
@@ -169,6 +174,43 @@
         };
     }
   }
+
+  $: resolvedLabelProps = {
+    value: label,
+    x:
+      placement === 'left' || (orientation === 'horizontal' && labelPlacement === 'start')
+        ? -$padding.left
+        : placement === 'right' || (orientation === 'horizontal' && labelPlacement === 'end')
+          ? $width + $padding.right
+          : $width / 2,
+    y:
+      placement === 'top' || (orientation === 'vertical' && labelPlacement === 'start')
+        ? -$padding.top
+        : orientation === 'vertical' && labelPlacement === 'middle'
+          ? $height / 2
+          : placement === 'bottom' || labelPlacement === 'end'
+            ? $height + $padding.bottom
+            : 0,
+    textAnchor:
+      labelPlacement === 'middle'
+        ? 'middle'
+        : placement === 'right' || (orientation === 'horizontal' && labelPlacement === 'end')
+          ? 'end'
+          : 'start',
+    verticalAnchor:
+      placement === 'top' ||
+      (orientation === 'vertical' && labelPlacement === 'start') ||
+      (placement === 'left' && labelPlacement === 'middle')
+        ? 'start'
+        : 'end',
+    rotate: orientation === 'vertical' && labelPlacement === 'middle' ? -90 : 0,
+    capHeight: '.5rem', // text-[10px]
+    ...labelProps,
+    class: cls(
+      'label text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
+      labelProps?.class
+    ),
+  } satisfies ComponentProps<Text>;
 </script>
 
 <g class="Axis placement-{placement}">
@@ -214,44 +256,7 @@
   {/if}
 
   {#if label}
-    {@const resolvedLabelProps = {
-      value: label,
-      x:
-        placement === 'left' || (orientation === 'horizontal' && labelPlacement === 'start')
-          ? -$padding.left
-          : placement === 'right' || (orientation === 'horizontal' && labelPlacement === 'end')
-            ? $width + $padding.right
-            : $width / 2,
-      y:
-        placement === 'top' || (orientation === 'vertical' && labelPlacement === 'start')
-          ? -$padding.top
-          : orientation === 'vertical' && labelPlacement === 'middle'
-            ? $height / 2
-            : placement === 'bottom' || labelPlacement === 'end'
-              ? $height + $padding.bottom
-              : 0,
-      textAnchor:
-        labelPlacement === 'middle'
-          ? 'middle'
-          : placement === 'right' || (orientation === 'horizontal' && labelPlacement === 'end')
-            ? 'end'
-            : 'start',
-      verticalAnchor:
-        placement === 'top' ||
-        (orientation === 'vertical' && labelPlacement === 'start') ||
-        (placement === 'left' && labelPlacement === 'middle')
-          ? 'start'
-          : 'end',
-      rotate: orientation === 'vertical' && labelPlacement === 'middle' ? -90 : 0,
-      capHeight: '.5rem', // text-[10px]
-      ...labelProps,
-      class: cls(
-        'label text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
-        labelProps?.class
-      ),
-    }}
-
-    <Text value={label} {...resolvedLabelProps} />
+    <Text {...resolvedLabelProps} />
   {/if}
 
   {#each tickVals as tick, index (tick)}

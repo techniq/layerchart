@@ -1,8 +1,8 @@
 import { writable } from 'svelte/store';
 import { spring, tweened } from 'svelte/motion';
 
-export type SpringOptions = Parameters<typeof spring>[1];
-export type TweenedOptions = Parameters<typeof tweened>[1];
+export type SpringOptions = Parameters<typeof spring<any>>[1];
+export type TweenedOptions = Parameters<typeof tweened<any>>[1];
 
 export type MotionOptions = {
   spring?: boolean | SpringOptions;
@@ -36,7 +36,8 @@ export function resolveOptions(prop: string, options: PropMotionOptions) {
       typeof options.spring === 'boolean' || options.spring == null
         ? options.spring
         : prop in options.spring
-          ? options.spring[prop]
+          ? //@ts-expect-error
+            options.spring[prop]
           : Object.keys(options.spring).some((key) =>
                 ['precision', 'damping', 'stiffness'].includes(key)
               )
@@ -46,7 +47,8 @@ export function resolveOptions(prop: string, options: PropMotionOptions) {
       typeof options.tweened === 'boolean' || options.tweened == null
         ? options.tweened
         : prop in options.tweened
-          ? options.tweened[prop]
+          ? //@ts-expect-error
+            options.tweened[prop]
           : Object.keys(options.tweened).some((key) =>
                 ['delay', 'duration', 'easing'].includes(key)
               )

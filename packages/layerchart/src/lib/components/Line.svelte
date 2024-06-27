@@ -33,6 +33,7 @@
   });
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <line
   x1={$tweened_x1}
   y1={$tweened_y1}

@@ -27,14 +27,15 @@ export function getRandomInteger(min: number, max: number, includeMax = true) {
  */
 export function randomWalk(options?: { count?: number }) {
   const random = randomNormal();
+  // @ts-expect-error
   return Array.from(cumsum({ length: options?.count ?? 100 }, random));
 }
 
-export function createSeries(options: {
+export function createSeries<TKey extends string>(options: {
   count?: number;
   min: number;
   max: number;
-  keys?: Array<string>;
+  keys?: TKey[];
   value?: 'number' | 'integer';
 }) {
   const count = options.count ?? 10;
@@ -53,15 +54,15 @@ export function createSeries(options: {
           ];
         })
       ),
-    };
+    } as { x: number } & { [K in TKey]: number };
   });
 }
 
-export function createDateSeries(options: {
+export function createDateSeries<TKey extends string>(options: {
   count?: number;
   min: number;
   max: number;
-  keys?: Array<string>;
+  keys?: TKey[];
   value?: 'number' | 'integer';
 }) {
   const now = startOfToday();
@@ -82,15 +83,15 @@ export function createDateSeries(options: {
           ];
         })
       ),
-    };
+    } as { date: Date } & { [K in TKey]: number };
   });
 }
 
-export function createTimeSeries(options: {
+export function createTimeSeries<TKey extends string>(options: {
   count?: number;
   min: number;
   max: number;
-  keys: Array<string>;
+  keys: TKey[];
   value: 'number' | 'integer';
 }) {
   const count = options.count ?? 10;
@@ -116,7 +117,7 @@ export function createTimeSeries(options: {
           ];
         })
       ),
-    };
+    } as { name: string; startDate: Date; endDate: Date } & { [K in TKey]: number };
   });
 
   return timeSeries;
@@ -151,13 +152,35 @@ export const longData = [
   { year: '2016', basket: 2, fruit: 'dates', value: 400 },
 ];
 
-export function getPhyllotaxis({ radius, count, width, height }) {
+export function getPhyllotaxis({
+  radius,
+  count,
+  width,
+  height,
+}: {
+  radius: number;
+  count: number;
+  width: number;
+  height: number;
+}) {
   // Phyllotaxis: https://www.youtube.com/watch?v=KWoJgHFYWxY
   const rads = Math.PI * (3 - Math.sqrt(5)); // ~2.4 rads or ~137.5 degrees
   return getSpiral({ angle: radiansToDegrees(rads), radius, count, width, height });
 }
 
-export function getSpiral({ angle, radius, count, width, height }) {
+export function getSpiral({
+  angle,
+  radius,
+  count,
+  width,
+  height,
+}: {
+  angle: number;
+  radius: number;
+  count: number;
+  width: number;
+  height: number;
+}) {
   return Array.from({ length: count }, (_, i) => {
     const r = radius * Math.sqrt(i);
     const a = degreesToRadians(angle * i);

@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import { cls } from 'svelte-ux';
+
+  import { chartContext } from '../ChartContext.svelte';
   import { transformContext } from '../TransformContext.svelte';
 
   /** The layer's `<svg>` tag. Useful for bindings. */
@@ -30,7 +31,7 @@
   /** Shorthand to set the contents of `<title></title>` for accessibility. You can also set arbitrary HTML via the "title" slot but this is a convenient shorthand. If you use the "title" slot, this prop is ignored. */
   export let title: string | undefined = undefined;
 
-  const { containerWidth, containerHeight, width, height, padding } = getContext('LayerCake');
+  const { containerWidth, containerHeight, width, height, padding } = chartContext();
 
   const { mode, scale, translate } = transformContext();
 
@@ -45,6 +46,8 @@
   }
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <svg
   bind:this={element}
   {viewBox}
@@ -61,6 +64,7 @@
   aria-labelledby={labelledBy}
   aria-describedby={describedBy}
   on:click
+  role="figure"
 >
   <slot name="title">
     {#if title}<title>{title}</title>{/if}

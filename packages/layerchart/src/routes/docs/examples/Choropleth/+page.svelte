@@ -2,7 +2,7 @@
   import { index } from 'd3-array';
   import { scaleQuantile } from 'd3-scale';
   import { schemeBlues } from 'd3-scale-chromatic';
-  import { geoIdentity } from 'd3-geo';
+  import { geoIdentity, type GeoProjection } from 'd3-geo';
   import { feature } from 'topojson-client';
   import { format } from 'svelte-ux';
 
@@ -24,12 +24,14 @@
   const states = feature(data.geojson, data.geojson.objects.states);
   const counties = feature(data.geojson, data.geojson.objects.counties);
 
+  const projection = geoIdentity as unknown as () => GeoProjection;
+
   const statesById = index(states.features, (d) => d.id);
 
   const population = data.population.map((d) => {
     return {
       id: d.state + d.county,
-      state: statesById.get(d.state).properties.name,
+      state: statesById.get(d.state)?.properties.name,
       population: +d.DP05_0001E,
       populationUnder18: +d.DP05_0019E,
       percentUnder18: +d.DP05_0019PE,
@@ -42,12 +44,12 @@
       ...feature,
       properties: {
         ...feature.properties,
-        data: populationByFips.get(feature.id),
+        data: populationByFips.get(feature.id as string),
       },
     };
   });
 
-  $: colorScale = scaleQuantile()
+  $: colorScale = scaleQuantile<string, string>()
     .domain(population.map((d) => d.population))
     .range(schemeBlues[9]);
 </script>
@@ -60,7 +62,7 @@
   <div class="h-[600px] overflow-hidden">
     <Chart
       geo={{
-        projection: geoIdentity,
+        projection,
         fitGeojson: states,
       }}
       transform={{
@@ -81,7 +83,7 @@
             <GeoPath
               geojson={feature}
               {tooltip}
-              fill={colorScale(feature.properties.data?.population)}
+              fill={colorScale(feature.properties.data?.population ?? 0)}
               class="stroke-none hover:stroke-white"
               {strokeWidth}
             />
@@ -124,7 +126,7 @@
         />
         <TooltipItem
           label="Est. Percent under 18"
-          value={d?.percentUnder18 / 100}
+          value={d?.percentUnder18 ?? 0 / 100}
           format="percentRound"
           valueAlign="right"
         />
@@ -139,7 +141,7 @@
   <div class="h-[600px]">
     <Chart
       geo={{
-        projection: geoIdentity,
+        projection,
         fitGeojson: states,
       }}
       transform={{
@@ -159,7 +161,7 @@
             for (var feature of enrichedCountiesFeatures) {
               ctx.beginPath();
               geoPath(feature);
-              ctx.fillStyle = colorScale(feature.properties.data?.population);
+              ctx.fillStyle = colorScale(feature.properties.data?.population ?? 0);
               ctx.fill();
             }
           }}
@@ -223,7 +225,7 @@
         />
         <TooltipItem
           label="Est. Percent under 18"
-          value={d?.percentUnder18 / 100}
+          value={d?.percentUnder18 ?? 0 / 100}
           format="percentRound"
           valueAlign="right"
         />

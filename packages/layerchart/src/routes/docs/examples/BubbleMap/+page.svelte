@@ -1,6 +1,6 @@
 <script lang="ts">
   import { index, max } from 'd3-array';
-  import { geoIdentity } from 'd3-geo';
+  import { geoIdentity, type GeoProjection } from 'd3-geo';
   import { scaleSqrt, scaleThreshold } from 'd3-scale';
   import { interpolateViridis } from 'd3-scale-chromatic';
   import { quantize } from 'd3-interpolate';
@@ -25,12 +25,14 @@
   const states = feature(data.geojson, data.geojson.objects.states);
   const counties = feature(data.geojson, data.geojson.objects.counties);
 
+  const projection = geoIdentity as unknown as () => GeoProjection;
+
   const statesById = index(states.features, (d) => d.id);
 
   const population = data.population.map((d) => {
     return {
       fips: d.state + d.county,
-      state: statesById.get(d.state).properties.name,
+      state: statesById.get(d.state)?.properties.name,
       population: +d.DP05_0001E,
       populationUnder18: +d.DP05_0019E,
       percentUnder18: +d.DP05_0019PE,
@@ -40,15 +42,15 @@
 
   const maxRadius = 40;
   $: rScale = scaleSqrt()
-    .domain([0, max(population, (d) => d.population)])
+    .domain([0, max(population, (d) => d.population) ?? 0])
     .range([0, maxRadius]);
 
   $: colors = quantize(interpolateViridis, 5);
   // $: colorScale = scaleQuantize()
   // 	.domain([0, max(population, d => d.percentUnder18)])
   // 	.range(colors)
-  $: colorScale = scaleThreshold()
-    .domain([16, 20, 24, 28, Math.ceil(max(population, (d) => d.percentUnder18))])
+  $: colorScale = scaleThreshold<number, string>()
+    .domain([16, 20, 24, 28, Math.ceil(max(population, (d) => d.percentUnder18) ?? 0)])
     .range(colors);
 
   $: enrichedCountiesFeatures = counties.features
@@ -57,7 +59,7 @@
         ...feature,
         properties: {
           ...feature.properties,
-          data: populationByFips.get(feature.id),
+          data: populationByFips.get(String(feature.id)),
         },
       };
     })
@@ -72,7 +74,7 @@
   <div class="h-[600px] overflow-hidden">
     <Chart
       geo={{
-        projection: geoIdentity,
+        projection,
         fitGeojson: states,
       }}
       transform={{
@@ -101,10 +103,10 @@
             <circle
               {cx}
               {cy}
-              r={rScale(d?.population)}
-              fill={colorScale(d?.percentUnder18)}
+              r={rScale(d?.population ?? 0)}
+              fill={colorScale(d?.percentUnder18 ?? 0)}
               fill-opacity={0.5}
-              stroke={colorScale(d?.percentUnder18)}
+              stroke={colorScale(d?.percentUnder18 ?? 0)}
               stroke-width={strokeWidth / 2}
               class="pointer-events-none"
             />
@@ -161,7 +163,7 @@
   <div class="h-[600px]">
     <Chart
       geo={{
-        projection: geoIdentity,
+        projection,
         fitGeojson: states,
       }}
       transform={{
@@ -189,8 +191,8 @@
             for (var feature of enrichedCountiesFeatures) {
               const [x, y] = geoPath.centroid(feature);
               const d = feature.properties.data;
-              const radius = rScale(d?.population);
-              const color = colorScale(d?.percentUnder18);
+              const radius = rScale(d?.population ?? 0);
+              const color = colorScale(d?.percentUnder18 ?? 0);
               ctx.strokeStyle = color;
               ctx.lineWidth = strokeWidth;
               ctx.fillStyle = color + (256 * 0.5).toString(16);

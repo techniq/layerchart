@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import { type HierarchyPointNode, tree as d3Tree } from 'd3-hierarchy';
+  import { type HierarchyPointNode, tree as d3Tree, type TreeLayout } from 'd3-hierarchy';
+  import { chartContext } from './ChartContext.svelte';
 
-  const { data, width, height, padding } = getContext('LayerCake');
+  const { data, width, height } = chartContext();
 
   /**
    * Sets this tree layout’s node size to the specified two-element array of numbers `[width, height]`.
@@ -16,12 +16,13 @@
   /**
    * see: https://github.com/d3/d3-hierarchy#tree_separation
    */
-  export let separation: (a: HierarchyPointNode<any>, b: HierarchyPointNode<any>) => number =
-    undefined;
+  export let separation:
+    | ((a: HierarchyPointNode<any>, b: HierarchyPointNode<any>) => number)
+    | undefined = undefined;
 
   export let orientation: 'vertical' | 'horizontal' = 'horizontal';
 
-  let tree;
+  let tree: TreeLayout<any>;
   $: {
     tree = d3Tree().size(orientation === 'horizontal' ? [$height, $width] : [$width, $height]);
 
@@ -33,6 +34,7 @@
     }
   }
 
+  // @ts-expect-error
   $: treeData = tree($data);
 </script>
 

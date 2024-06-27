@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
+  import { chartContext } from './ChartContext.svelte';
 
-  const context = getContext('LayerCake') as any;
+  const context = chartContext() as any;
   const { xGet, yGet } = context;
 
   /** Single data point to translate to x/y */

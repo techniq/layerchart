@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import { scaleLinear } from 'd3-scale';
   import { geoDistance } from 'd3-geo';
 
@@ -7,14 +6,12 @@
 
   export let link: { source: [number, number]; target: [number, number] };
 
-  const { width, height } = getContext('LayerCake');
   const geo = geoContext();
 
   const fade = scaleLinear().domain([-0.1, 0]).range([0, 0.1]);
   const clamper = scaleLinear().domain([0, 1]).range([0, 1]).clamp(true);
 
-  // $: center = $geo.invert([$width / 2, $height / 2]);
-  $: center = $geo.invert($geo.translate());
+  $: center = $geo.invert?.($geo.translate()) ?? ([0, 0] as [number, number]);
   $: source = link.source;
   $: target = link.target;
   $: startDistance = 1.57 - geoDistance(source, center);

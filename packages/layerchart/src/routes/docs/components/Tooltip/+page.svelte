@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
-  import { stack } from 'd3-shape';
+  import { stack, type Series, type Stack } from 'd3-shape';
   import { format } from 'date-fns';
 
   import {
@@ -61,7 +61,8 @@
     value: 'integer',
     keys,
   });
-  const stackData = stack().keys(keys)(stackDateSeries);
+  // TODO: Fix type
+  const stackData = stack().keys(keys)(stackDateSeries) as any[];
 
   const spiralData = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
 
@@ -130,7 +131,7 @@
       snapToDataY: true,
       debug: false,
     },
-  } satisfies Record<string, ComponentProps<TooltipControls>['settings']>;
+  } as Record<string, ComponentProps<TooltipControls>['settings']>;
 
   const anchorOptions = [
     'top-left',
@@ -390,9 +391,9 @@
       <Tooltip
         {anchor}
         x={snap}
-        xOffset={['top', 'center', 'bottom'].includes(anchor) ? 0 : 10}
+        xOffset={['top', 'center', 'bottom'].includes(anchor ?? '') ? 0 : 10}
         y={snap}
-        yOffset={['left', 'center', 'right'].includes(anchor) ? 0 : 10}
+        yOffset={['left', 'center', 'right'].includes(anchor ?? '') ? 0 : 10}
         header={(data) => format(data.date, 'eee, MMMM do')}
         let:data
       >
@@ -458,7 +459,7 @@
 </small>
 
 <TooltipControls bind:settings={charts.areaStack} />
-<Preview data={dateSeries}>
+<Preview data={stackData}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={stackData}

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import { format, Checkbox, cls } from 'svelte-ux';
 
+  import { chartContext } from '$lib/components/ChartContext.svelte';
   import { geoContext } from '$lib/components/GeoContext.svelte';
 
-  const { width, height } = getContext('LayerCake');
+  const { width, height } = chartContext();
   const geo = geoContext();
 
   let showCenter = false;
@@ -37,7 +37,7 @@
 
     <div>
       <span class="opacity-50">long/lat: <Checkbox bind:checked={showCenter} size="xs" /></span>
-      {#each $geo.invert?.([$width / 2, $height / 2]) as coord}
+      {#each $geo.invert?.([$width / 2, $height / 2]) ?? [] as coord}
         <div class="text-right">{format(coord, 'decimal')}</div>
       {/each}
     </div>

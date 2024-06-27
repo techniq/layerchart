@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import { curveNatural, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoOrthographic, geoInterpolate } from 'd3-geo';
 
@@ -22,7 +21,6 @@
    */
   export let curve: CurveFactory | CurveFactoryLineOnly | undefined = curveNatural;
 
-  const { width, height } = getContext('LayerCake');
   const geo = geoContext();
 
   $: loftedProjection = geoOrthographic()
@@ -35,11 +33,4 @@
   $: middle = loftedProjection(geoInterpolate(link.source, link.target)(0.5));
 </script>
 
-<Spline
-  data={[source, middle, target]}
-  x={(d) => d[0]}
-  y={(d) => d[1]}
-  defined={(d) => $geo.invert(d)}
-  {curve}
-  {...$$restProps}
-/>
+<Spline data={[source, middle, target]} x={(d) => d[0]} y={(d) => d[1]} {curve} {...$$restProps} />

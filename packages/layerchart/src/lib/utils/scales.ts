@@ -5,6 +5,16 @@ import { type MotionOptions, motionStore } from '$lib/stores/motionStore.js';
 import { scaleBand, type ScaleBand } from 'd3-scale';
 import { unique } from 'svelte-ux/utils/array';
 
+export type AnyScale<Domain = any, Range = any, Input = Domain, Output = any> = {
+  (value: Input): Output;
+  invert?: (value: Output) => Input;
+  domain(): Domain[];
+  range(): Range[];
+  bandwidth?: Function;
+  ticks?: Function;
+  tickFormat?: Function;
+};
+
 /**
  * Implemenation for missing `scaleBand().invert()`
  *
@@ -15,19 +25,19 @@ import { unique } from 'svelte-ux/utils/array';
  * 			https://github.com/d3/d3-scale/blob/11777dac7d4b0b3e229d658aee3257ea67bd5ffa/src/band.js#L32
  * 			https://gist.github.com/LuisSevillano/d53a1dc529eef518780c6df99613e2fd
  */
-export function scaleBandInvert(scale) {
+export function scaleBandInvert(scale: ScaleBand<any>) {
   const domain = scale.domain();
   const eachBand = scale.step();
   const paddingOuter = eachBand * (scale.paddingOuter?.() ?? scale.padding()); // `scaleBand` uses paddingOuter(), while `scalePoint` uses padding() for outer paddding - https://github.com/d3/d3-scale#point_padding
 
-  return function (value) {
+  return function (value: number) {
     // TODO: Should this use Math.round to better select? https://stackoverflow.com/questions/38633082/d3-getting-invert-value-of-band-scales/50846323#comment104743795_50846323
     const index = Math.floor((value - paddingOuter) / eachBand);
     return domain[Math.max(0, Math.min(index, domain.length - 1))];
   };
 }
 
-export function isScaleBand(scale) {
+export function isScaleBand(scale: AnyScale<any, any>): scale is ScaleBand<any> {
   return typeof scale.bandwidth === 'function';
 }
 
@@ -35,11 +45,11 @@ export function isScaleBand(scale) {
  *  Generic way to invert a scale value, handling scaleBand and continuous scales (linear, time, etc).
  *  Useful to map mouse event location (x,y) to domain value
  */
-export function scaleInvert(scale, value: number) {
+export function scaleInvert(scale: AnyScale<any, any>, value: number) {
   if (isScaleBand(scale)) {
     return scaleBandInvert(scale)(value);
   } else {
-    return scale.invert(value);
+    return scale.invert?.(value);
   }
 }
 
@@ -70,9 +80,12 @@ export function groupScaleBand<Domain extends { toString(): string }>(
 /**
  * Animate d3-scale as domain and/or range are updated using tweened store
  */
-export function tweenedScale(scale, tweenedOptions: Parameters<typeof tweened>[1] = {}) {
-  const tweenedDomain = tweened(undefined, tweenedOptions);
-  const tweenedRange = tweened(undefined, tweenedOptions);
+export function tweenedScale<Domain, Range>(
+  scale: any,
+  tweenedOptions: Parameters<typeof tweened<any>>[1] = {}
+) {
+  const tweenedDomain = tweened<Domain>(undefined as Domain, tweenedOptions);
+  const tweenedRange = tweened<Range>(undefined as Range, tweenedOptions);
 
   const tweenedScale = derived([tweenedDomain, tweenedRange], ([domain, range]) => {
     const scaleInstance = scale.domain ? scale : scale(); // support `scaleLinear` or `scaleLinear()` (which could have `.interpolate()` and others set)
@@ -89,19 +102,23 @@ export function tweenedScale(scale, tweenedOptions: Parameters<typeof tweened>[1
 
   return {
     subscribe: tweenedScale.subscribe,
-    domain: (values) => tweenedDomain.set(values),
-    range: (values) => tweenedRange.set(values),
+    domain: (values: Domain) => tweenedDomain.set(values),
+    range: (values: Range) => tweenedRange.set(values),
   };
 }
 
 /**
  * Animate d3-scale as domain and/or range are updated using spring store
  */
-export function springScale(scale, springOptions: Parameters<typeof spring>[1] = {}) {
-  const domainStore = spring(undefined, springOptions);
-  const rangeStore = spring(undefined, springOptions);
+export function springScale<Domain, Range>(
+  scale: AnyScale,
+  springOptions: Parameters<typeof spring>[1] = {}
+) {
+  const domainStore = spring<Domain>(undefined, springOptions);
+  const rangeStore = spring<Range>(undefined, springOptions);
 
   const tweenedScale = derived([domainStore, rangeStore], ([domain, range]) => {
+    // @ts-expect-error
     const scaleInstance = scale.domain ? scale : scale(); // support `scaleLinear` or `scaleLinear()` (which could have `.interpolate()` and others set)
 
     if (domain) {
@@ -116,19 +133,20 @@ export function springScale(scale, springOptions: Parameters<typeof spring>[1] =
 
   return {
     subscribe: tweenedScale.subscribe,
-    domain: (values) => domainStore.set(values),
-    range: (values) => rangeStore.set(values),
+    domain: (values: Domain) => domainStore.set(values),
+    range: (values: Range) => rangeStore.set(values),
   };
 }
 
 /**
  * Create a store wrapper around a d3-scale which interpolates the domain and/or range using `tweened()` or `spring()` stores.  Fallbacks to `writable()` store if not interpolating
  */
-export function motionScale(scale, options: MotionOptions) {
-  const domainStore = motionStore(undefined, options);
-  const rangeStore = motionStore(undefined, options);
+export function motionScale<Domain, Range>(scale: AnyScale, options: MotionOptions) {
+  const domainStore = motionStore<Domain>(undefined as Domain, options);
+  const rangeStore = motionStore<Range>(undefined as Range, options);
 
   const tweenedScale = derived([domainStore, rangeStore], ([domain, range]) => {
+    // @ts-expect-error
     const scaleInstance = scale.domain ? scale : scale(); // support `scaleLinear` or `scaleLinear()` (which could have `.interpolate()` and others set)
 
     if (domain) {
@@ -143,7 +161,7 @@ export function motionScale(scale, options: MotionOptions) {
 
   return {
     subscribe: tweenedScale.subscribe,
-    domain: (values) => domainStore.set(values),
-    range: (values) => rangeStore.set(values),
+    domain: (values: Domain) => domainStore.set(values),
+    range: (values: Range) => rangeStore.set(values),
   };
 }

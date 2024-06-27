@@ -17,7 +17,7 @@ export function geoCurvePath(
   projection: GeoProjection | GeoStreamWrapper | null,
   curve: CurveFactory | CurveFactoryLineOnly,
   context?: CanvasRenderingContext2D | Path
-) {
+): ReturnType<typeof d3geoPath> {
   const pathContext = context === undefined ? path() : context;
   const geoPath = d3geoPath(projection, curveContext(curve(pathContext)));
 
@@ -29,6 +29,7 @@ export function geoCurvePath(
   // Expose geoPath properties such as `.centroid()`
   Object.setPrototypeOf(fn, geoPath);
 
+  // @ts-expect-error
   return fn;
 }
 
@@ -70,12 +71,13 @@ export function antipode([longitude, latitude]: [number, number]): [number, numb
  */
 export function isVisible(projection: GeoProjection | GeoStreamWrapper) {
   let visible;
+  // @ts-expect-error
   const stream = projection.stream({
     point() {
       visible = true;
     },
   });
-  return ([x, y]) => ((visible = false), stream.point(x, y), visible);
+  return ([x, y]: [number, number]) => ((visible = false), stream.point(x, y), visible);
 }
 
 export function geoFitObjectTransform(

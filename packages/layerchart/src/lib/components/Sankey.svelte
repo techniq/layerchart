@@ -1,6 +1,6 @@
 <script lang="ts">
   // https://github.com/d3/d3-sankey
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import {
     sankey as d3Sankey,
     sankeyLeft,
@@ -8,14 +8,17 @@
     sankeyRight,
     sankeyJustify,
     type SankeyNode,
+    type SankeyLink,
   } from 'd3-sankey';
+
+  import { chartContext } from './ChartContext.svelte';
 
   const dispatch = createEventDispatcher();
 
-  const { data, width, height, padding } = getContext('LayerCake');
+  const { data, width, height } = chartContext();
 
-  export let nodes = (d) => d.nodes;
-  export let nodeId = (d) => d.index;
+  export let nodes = (d: any) => d.nodes;
+  export let nodeId = (d: any) => d.index;
   /**
    * see: https://github.com/d3/d3-sankey#alignments
    */
@@ -29,7 +32,7 @@
   export let nodePadding = 10;
   export let nodeSort = undefined;
 
-  export let links = (d) => d.links;
+  export let links = (d: any) => d.links;
   export let linkSort = undefined;
 
   $: sankey = d3Sankey()
@@ -49,13 +52,19 @@
     )
     .nodeWidth(nodeWidth)
     .nodePadding(nodePadding)
+    // @ts-expect-error
     .nodeSort(nodeSort)
     .links(links)
+    // @ts-expect-error
     .linkSort(linkSort);
 
+  // @ts-expect-error
   $: sankeyData = sankey($data);
+  type NodeExtraProperties = Record<string, any>;
+  $: _nodes = sankeyData.nodes as SankeyNode<NodeExtraProperties, any>[];
+  $: _links = sankeyData.links as SankeyLink<NodeExtraProperties, any>[];
 
   $: dispatch('update', sankeyData);
 </script>
 
-<slot nodes={sankeyData.nodes} links={sankeyData.links} />
+<slot nodes={_nodes} links={_links} />

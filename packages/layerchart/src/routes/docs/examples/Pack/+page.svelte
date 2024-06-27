@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { cubicOut } from 'svelte/easing';
   import { fade } from 'svelte/transition';
-  import { hierarchy } from 'd3-hierarchy';
+  import { hierarchy, type HierarchyCircularNode, type HierarchyNode } from 'd3-hierarchy';
   import { scaleSequential, scaleOrdinal } from 'd3-scale';
   import * as chromatic from 'd3-scale-chromatic';
   import { hsl } from 'd3-color';
@@ -25,12 +25,12 @@
 
   const complexHierarchy = hierarchy(data.flare)
     .sum((d) => d.value)
-    .sort(sortFunc('value', 'desc'));
+    .sort(sortFunc('value', 'desc')) as HierarchyCircularNode<any>;
 
   let colorBy = 'parent';
 
   let padding = 3;
-  let selected: any;
+  let selected: HierarchyCircularNode<any>;
   let transformContext: TransformContext;
 
   $: if (transformContext && selected) {
@@ -48,23 +48,26 @@
   );
   // const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
 
-  function getNodeColor(node, colorBy) {
+  function getNodeColor(node: HierarchyNode<any>, colorBy: string) {
     switch (colorBy) {
       case 'children':
         return node.children ? '#ccc' : '#ddd';
       case 'depth':
-        return sequentialColor(node.depth);
+        return sequentialColor(node.depth).toString();
       case 'parent':
         const colorParent = findAncestor(node, (n) => n.depth === 1);
         return colorParent
-          ? hsl(ordinalColor(colorParent.data.name)).brighter(node.depth * 0.3)
+          ? hsl(ordinalColor(colorParent.data.name))
+              .brighter(node.depth * 0.3)
+              .toString()
           : '#ddd';
     }
+    return '';
   }
 
   onMount(() => {
     // Set root initially.  Wait for Tree to mount so layout is set
-    selected = complexHierarchy; // select root initially
+    selected = complexHierarchy as HierarchyCircularNode<any>; // select root initially
   });
 </script>
 
@@ -89,7 +92,7 @@
     <Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded">
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
-        <div class="text-xs text-surface-content/50">{format(item.value, 'integer')}</div>
+        <div class="text-xs text-surface-content/50">{format(item.value ?? 0, 'integer')}</div>
       </div>
     </Button>
   </Breadcrumb>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { index, max, descending } from 'd3-array';
-  import { geoIdentity } from 'd3-geo';
+  import { geoIdentity, type GeoProjection } from 'd3-geo';
   import { scaleLinear } from 'd3-scale';
   import { feature } from 'topojson-client';
 
@@ -19,6 +19,9 @@
   import Preview from '$lib/docs/Preview.svelte';
 
   export let data;
+
+  const projection = geoIdentity as unknown as () => GeoProjection;
+
   const states = feature(data.geojson, data.geojson.objects.states);
   const counties = feature(data.geojson, data.geojson.objects.counties);
 
@@ -27,7 +30,7 @@
   const population = data.population.map((d) => {
     return {
       fips: d.state + d.county,
-      state: statesById.get(d.state).properties.name,
+      state: statesById.get(d.state)?.properties.name,
       population: +d.DP05_0001E,
       populationUnder18: +d.DP05_0019E,
       percentUnder18: +d.DP05_0019PE,
@@ -38,7 +41,7 @@
   const width = 7;
   const maxHeight = 200;
   $: heightScale = scaleLinear()
-    .domain([0, max(population, (d) => d.population)])
+    .domain([0, max(population, (d) => d.population) ?? 0])
     .range([0, maxHeight]);
 
   $: enrichedCountiesFeatures = counties.features
@@ -47,7 +50,7 @@
         ...feature,
         properties: {
           ...feature.properties,
-          data: populationByFips.get(feature.id),
+          data: populationByFips.get(feature.id as string),
         },
       };
     })
@@ -62,7 +65,7 @@
   <div class="h-[600px] overflow-hidden">
     <Chart
       geo={{
-        projection: geoIdentity,
+        projection,
         fitGeojson: states,
       }}
       transform={{
@@ -89,7 +92,7 @@
           <GeoPath geojson={feature} {strokeWidth} let:geoPath>
             {@const [x, y] = geoPath.centroid(feature)}
             {@const d = feature.properties.data}
-            {@const height = heightScale(d?.population)}
+            {@const height = heightScale(d?.population ?? 0)}
             <Group {x} {y}>
               <path
                 d="M{-width / 2},0 L0,{-height} L{width / 2},0"
@@ -144,7 +147,7 @@
   <div class="h-[600px] mt-10">
     <Chart
       geo={{
-        projection: geoIdentity,
+        projection,
         fitGeojson: states,
       }}
       transform={{
@@ -174,7 +177,7 @@
             for (var feature of enrichedCountiesFeatures) {
               const [x, y] = geoPath.centroid(feature);
               const d = feature.properties.data;
-              const height = heightScale(d?.population);
+              const height = heightScale(d?.population ?? 0);
 
               ctx.lineWidth = strokeWidth;
               ctx.strokeStyle = computedStyle.stroke;
@@ -185,9 +188,9 @@
               const endPoint = [x + width / 2, y];
 
               ctx.beginPath();
-              ctx.moveTo(...startPoint);
-              ctx.lineTo(...midPoint);
-              ctx.lineTo(...endPoint);
+              ctx.moveTo(x - width / 2, y); // startPoint
+              ctx.lineTo(x, y - height); // midPoint
+              ctx.lineTo(x + width / 2, y); // endPoint
               ctx.fill();
               ctx.stroke();
             }

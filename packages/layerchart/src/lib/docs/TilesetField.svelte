@@ -79,7 +79,7 @@
     // 'ArcGIS Vector': {
     // 	 'Community Map', url: arcgisVector('World_Basemap_v2'),
     // }
-  };
+  } as Record<string, Record<string, Function>>;
 
   $: serviceOptions = Object.entries(services).flatMap(([group, service]) => {
     return Object.entries(service).map(([label, value]) => {
@@ -107,7 +107,7 @@
   toggleIcon={null}
   stepper
 >
-  <div slot="append" on:click|stopPropagation>
+  <div slot="append" on:click|stopPropagation role="none">
     <div class="text-[10px] text-surface-content/50 text-center">2x</div>
     <Switch bind:checked={doubleScale} size="md" />
   </div>

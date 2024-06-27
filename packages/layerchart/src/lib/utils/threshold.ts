@@ -7,6 +7,7 @@ import { scaleTime } from 'd3-scale';
  */
 export function thresholdTime(n: number): ThresholdNumberArrayGenerator<number> {
   // TODO: Unable to satisfy `ThresholdNumberArrayGenerator<Value extends number>` with `Date`
+  // @ts-expect-error
   return (data, min, max) => {
     return scaleTime().domain([min, max]).ticks(n);
   };

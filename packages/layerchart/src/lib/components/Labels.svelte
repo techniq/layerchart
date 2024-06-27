@@ -4,30 +4,30 @@
    *   - [ ] Support step curves (center like scaleBand())
    *   - [ ] Support multiple values (threshold, stacks, etc)
    */
-  import { getContext, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
   import { format as formatValue, type FormatType, cls } from 'svelte-ux';
   import { greatestAbs } from 'svelte-ux/utils/array';
 
+  const { flatData, yScale, x, y, custom } = chartContext();
   import Text from './Text.svelte';
   import { isScaleBand } from '$lib/utils/scales.js';
   import { createDimensionGetter } from '$lib/utils/rect.js';
-
-  const { flatData, yScale, x, y, custom } = getContext('LayerCake');
+  import { chartContext } from './ChartContext.svelte';
 
   // TODO: Support 'auto' to switch `inside` to `outside` if not enough room
   export let placement: 'inside' | 'outside' = 'outside';
   export let offset = 4;
-  export let significantDigits = 3;
   export let format: FormatType | undefined = undefined;
   // export let overlap = false;
 
+  // @ts-expect-error
   $: yBaseline = $custom?.yBaseline ?? 0;
 
   export let groupBy: string | undefined = undefined;
   export let groupPaddingInner = 0.2;
   export let groupPaddingOuter = 0;
 
-  $: getDimensions = createDimensionGetter(getContext('LayerCake'), {
+  $: getDimensions = createDimensionGetter(chartContext(), {
     // x,
     // y,
     groupBy,
@@ -38,14 +38,14 @@
     },
   });
 
-  $: getValue = (item) => (isScaleBand($yScale) ? $x(item) : $y(item));
+  $: getValue = (item: any) => (isScaleBand($yScale) ? $x(item) : $y(item));
 
-  $: getLabelValue = (item) => {
+  $: getLabelValue = (item: any) => {
     const value = getValue(item);
     return (Array.isArray(value) ? greatestAbs(value) : value) + yBaseline;
   };
 
-  $: getFormattedValue = (item) => {
+  $: getFormattedValue = (item: any) => {
     const labelValue = getLabelValue(item);
     let formattedValue = labelValue;
     if (labelValue != null) {

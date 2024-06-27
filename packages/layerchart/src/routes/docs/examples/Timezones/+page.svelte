@@ -11,6 +11,7 @@
   import { scaleSequential } from 'd3-scale';
   import { interpolateRdBu } from 'd3-scale-chromatic';
   import { feature } from 'topojson-client';
+  // @ts-expect-error
   import { century, equationOfTime, declination } from 'solar-calculator';
 
   import {
@@ -54,6 +55,7 @@
   $: timezoneGeojson = feature(data.timezones, data.timezones.objects.timezones);
 
   $: colorScale = scaleSequential(
+    // @ts-expect-error
     extent(timezoneGeojson.features, (d) => d.properties.zone),
     interpolateRdBu
   );
@@ -78,8 +80,8 @@
   const now = new Date();
   const day = new Date(+now).setUTCHours(0, 0, 0, 0);
   const t = century(now);
-  const longitude = ((day - now) / 864e5) * 360 - 180;
-  const sun = [longitude - equationOfTime(t) / 4, declination(t)];
+  const longitude = ((day - now.valueOf()) / 864e5) * 360 - 180;
+  const sun = [longitude - equationOfTime(t) / 4, declination(t)] as [number, number];
 </script>
 
 <div class="grid grid-cols-[1fr,auto,auto,2fr] gap-2 my-2">

@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { getContext, tick } from 'svelte';
+  import { tick } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 
+  import { chartContext } from './ChartContext.svelte';
   import { motionStore } from '$lib/stores/motionStore.js';
 
-  const { width, height } = getContext('LayerCake');
+  const { width, height } = chartContext();
 
   /**
    * Translate x
@@ -45,6 +46,7 @@
   }
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <g
   {transform}
   {...$$restProps}

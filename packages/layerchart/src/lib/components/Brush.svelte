@@ -1,14 +1,15 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import { extent } from 'd3-array';
-
   import { clamp, cls } from 'svelte-ux';
+
+  import { chartContext } from './ChartContext.svelte';
   import Frame from './Frame.svelte';
   import { localPoint } from '$lib/utils/event.js';
   import Group from './Group.svelte';
 
-  const { xScale, yScale, width, height, padding } = getContext('LayerCake');
+  const { xScale, yScale, width, height, padding } = chartContext();
 
   const dispatch = createEventDispatcher<{
     change: { xDomain?: [any, any]; yDomain?: [any, any] };
@@ -25,15 +26,21 @@
   /** Only show range while actively brushing.  Useful with `brushEnd` event */
   export let resetOnEnd = false;
 
-  export let xDomain: [number | null, number | null] = $xScale.domain();
-  export let yDomain: [number | null, number | null] = $yScale.domain();
+  export let xDomain: [number | Date | null, number | Date | null] = $xScale.domain() as [
+    number,
+    number,
+  ];
+  export let yDomain: [number | Date | null, number | Date | null] = $yScale.domain() as [
+    number,
+    number,
+  ];
 
   // Capture original domains for reset()
-  const originalXDomain = $xScale.domain();
-  const originalYDomain = $yScale.domain();
+  const originalXDomain = $xScale.domain() as [number, number];
+  const originalYDomain = $yScale.domain() as [number, number];
 
-  $: [xDomainMin, xDomainMax] = extent($xScale.domain());
-  $: [yDomainMin, yDomainMax] = extent($yScale.domain());
+  $: [xDomainMin, xDomainMax] = extent<number>($xScale.domain()) as [number, number];
+  $: [yDomainMin, yDomainMax] = extent<number>($yScale.domain()) as [number, number];
 
   /** Attributes passed to range <rect> element */
   export let range: SVGAttributes<SVGRectElement> | undefined = undefined;
@@ -62,11 +69,11 @@
   ) {
     return (e: PointerEvent) => {
       const start = {
-        xDomain: [xDomain[0] ?? xDomainMin, xDomain[1] ?? xDomainMax],
-        yDomain: [yDomain[0] ?? yDomainMin, yDomain[1] ?? yDomainMax],
+        xDomain: [xDomain[0] ?? xDomainMin, xDomain[1] ?? xDomainMax] as [number, number],
+        yDomain: [yDomain[0] ?? yDomainMin, yDomain[1] ?? yDomainMax] as [number, number],
         value: {
-          x: $xScale.invert(localPoint(frameEl, e)?.x - $padding.left),
-          y: $yScale.invert(localPoint(frameEl, e)?.y - $padding.top),
+          x: $xScale.invert?.(localPoint(frameEl, e)?.x ?? 0 - $padding.left),
+          y: $yScale.invert?.(localPoint(frameEl, e)?.y ?? 0 - $padding.top),
         },
       };
 
@@ -74,8 +81,8 @@
 
       const onPointerMove = (e: PointerEvent) => {
         fn(start, {
-          x: $xScale.invert(localPoint(frameEl, e)?.x - $padding.left),
-          y: $yScale.invert(localPoint(frameEl, e)?.y - $padding.top),
+          x: $xScale.invert?.(localPoint(frameEl, e)?.x ?? 0 - $padding.left),
+          y: $yScale.invert?.(localPoint(frameEl, e)?.y ?? 0 - $padding.top),
         });
 
         // if (xDomain[0] === xDomain[1] || yDomain[0] === yDomain[1]) {
@@ -204,6 +211,7 @@
   />
 
   {#if isActive}
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <Group x={rangeLeft} y={rangeTop} class="range">
       <slot name="range" {rangeWidth} {rangeHeight}>
         <rect

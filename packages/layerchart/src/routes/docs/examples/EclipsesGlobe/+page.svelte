@@ -45,8 +45,9 @@
   $timer;
 
   $: dateExtents = extent(eclipses.features.map((f) => f.properties.Date));
-  $: colorScale = scaleDiverging([dateExtents[0], new Date(), dateExtents[1]], (t) =>
-    t < 0.5 ? interpolatePurples(1 - t) : interpolateGreens(t)
+  $: colorScale = scaleDiverging<string>(
+    [dateExtents[0] ?? 0, new Date(), dateExtents[1] ?? 0],
+    (t) => (t < 0.5 ? interpolatePurples(1 - t) : interpolateGreens(t))
   );
 </script>
 
@@ -106,7 +107,7 @@
       <Legend
         scale={colorScale}
         title="Eclipse date"
-        tickFormat={(d) => new Date(d).getFullYear()}
+        tickFormat={(d) => new Date(d).getFullYear().toString()}
       />
 
       <Svg>

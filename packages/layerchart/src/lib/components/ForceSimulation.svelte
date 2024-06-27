@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
 
   import { forceSimulation, type Force } from 'd3-force';
+  import { chartContext } from './ChartContext.svelte';
 
-  const { data } = getContext('LayerCake');
+  const { data } = chartContext();
 
   const dispatch = createEventDispatcher<{
     start: null;
@@ -24,9 +25,7 @@
 
   export let velocityDecay = 0.4;
 
-  type AlphaResponse = (alpha: number, alphaTarget: number) => number;
-  export let alphaResponse: AlphaResponse | undefined = undefined;
-
+  /** Stop simulation */
   export let stopped = false;
 
   let _static = false;
@@ -64,7 +63,6 @@
   $: {
     // Any time the `static` prop gets toggled we
     // either attach or detach our internal event listeners:
-
     if (_static) {
       simulation.on('tick', null).on('end', null);
     } else {
@@ -77,25 +75,20 @@
   $: {
     // Any time the `$data` store gets changed we
     // pass them to the internal d3 simulation object:
-
-    pushNodesToSimulation($data);
-
+    pushNodesToSimulation($data as any[]);
     runOrResumeSimulation();
   }
 
   $: {
     // Any time the `forces` prop gets changed we
     // pass them to the internal d3 simulation object:
-
     pushForcesToSimulation(forces);
-
     runOrResumeSimulation();
   }
 
   $: {
     // Any time the `alpha` prop gets changed we
     // pass it to the internal d3 simulation object:
-
     pushAlphaToSimulation(alpha);
 
     // Only resume the simulation as long as `alpha`

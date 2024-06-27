@@ -15,7 +15,8 @@
   export let fx = cx;
   export let fy = cy;
   export let r = '50%';
-  export let fr = '0%';
+  // TODO: Svelte / Typescript does not know `<radialRadiant fr="...">`
+  // export let fr = '0%';
 
   /** Indicates how the gradient behaves if it starts or ends inside the bounds of the shape containing the gradient */
   export let spreadMethod: 'pad' | 'reflect' | 'repeat' = 'pad';
@@ -34,7 +35,6 @@
     {fx}
     {fy}
     {r}
-    {fr}
     {spreadMethod}
     gradientTransform={transform}
     gradientUnits={units}

@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { cls } from 'svelte-ux';
   import { cubicInOut } from 'svelte/easing';
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
-  import { format } from 'date-fns';
-  import { extent, mean } from 'd3-array';
+  import { mean } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
+  import { format } from 'date-fns';
 
   import {
     Axis,
@@ -14,6 +13,7 @@
     Highlight,
     Labels,
     LinearGradient,
+    Pattern,
     RectClipPath,
     Rule,
     Svg,
@@ -36,6 +36,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
+  import { extent } from '$lib/utils/array.js';
 
   const data = createDateSeries({
     count: 30,
@@ -97,8 +98,14 @@
     xKey: 'year',
     groupBy: transitionChart.groupBy,
     stackBy: transitionChart.stackBy,
-  });
-  // $: console.log({ transitionData })
+  }) as {
+    basket: number;
+    fruit: string;
+    keys: string[];
+    value: number;
+    values: number[];
+    year: string;
+  }[];
 </script>
 
 <h1>Examples</h1>
@@ -477,7 +484,7 @@
               {bar}
               radius={4}
               strokeWidth={1}
-              class={i === data.length - 1 ? 'fill-primary' : 'fill-surface-content'}
+              class={i === data.length - 4 ? 'fill-primary' : 'fill-surface-content'}
             />
           {/each}
         </Bars>
@@ -507,7 +514,14 @@
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
-        <Highlight data={data[3]} area />
+        <Pattern id="highlight-pattern" width={8} height={8}>
+          <rect width={8} height={8} class="fill-secondary/10" />
+          <line x1={8} y2={8} class="stroke-secondary/30" />
+        </Pattern>
+        <Highlight
+          data={data[3]}
+          area={{ fill: 'url(#highlight-pattern)', class: 'stroke-secondary/50' }}
+        />
       </Svg>
     </Chart>
   </div>
@@ -883,7 +897,10 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <g>
-          {#each data as bar (bar.keys.filter((key) => typeof key !== 'number').join('-'))}
+          <!-- TODO: 'data' can be used once type issue is resolved -->
+          {#each transitionData as bar (bar.keys
+            .filter((key) => typeof key !== 'number')
+            .join('-'))}
             <Bar
               {bar}
               groupBy={transitionChart.groupBy}

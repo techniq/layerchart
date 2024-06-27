@@ -17,13 +17,14 @@
   // https://svelte.dev/repl/09711e43a1264ba18945d7db7cab9335?version=3.38.2
   // https://codepen.io/simeydotme/pen/rrOEmO/
 
-  import { getContext, tick } from 'svelte';
+  import { tick } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { arc as d3arc } from 'd3-shape';
   import { scaleLinear } from 'd3-scale';
   import { min, max } from 'd3-array';
 
+  import { chartContext } from './ChartContext.svelte';
   import { motionStore } from '$lib/stores/motionStore.js';
   import { degreesToRadians } from '$lib/utils/math.js';
 
@@ -80,7 +81,7 @@
 
   export let track: boolean | SVGAttributes<SVGPathElement> = false;
 
-  const { yRange } = getContext('LayerCake');
+  const { yRange } = chartContext();
 
   $: scale = scaleLinear().domain(domain).range(range);
 
@@ -102,7 +103,7 @@
     }
   }
 
-  $: _outerRadius = getOuterRadius(outerRadius, max($yRange) / 2);
+  $: _outerRadius = getOuterRadius(outerRadius, (max<number>($yRange) ?? 0) / 2);
 
   function getInnerRadius(innerRadius: number | undefined, outerRadius: number) {
     if (innerRadius == null) {
@@ -129,7 +130,7 @@
     .startAngle(startAngle ?? degreesToRadians(range[0]))
     .endAngle(endAngle ?? degreesToRadians(scale($tweened_value)))
     .cornerRadius(cornerRadius)
-    .padAngle(padAngle);
+    .padAngle(padAngle) as Function;
   // .padRadius(padRadius);
 
   $: trackArc = d3arc()
@@ -138,45 +139,51 @@
     .startAngle(startAngle ?? degreesToRadians(range[0]))
     .endAngle(endAngle ?? degreesToRadians(range[1]))
     .cornerRadius(cornerRadius)
-    .padAngle(padAngle);
+    .padAngle(padAngle) as Function;
   // .padRadius(padRadius);
 
+  // @ts-expect-error
   $: trackArcCentroid = trackArc.centroid();
   // $: console.log(trackArcCentroid)
 
-  let trackArcEl;
-  $: boundingBox = trackArc && trackArcEl ? trackArcEl.getBBox() : {};
-  // $: console.log(boundingBox)
+  let trackArcEl: SVGPathElement | undefined = undefined;
+  $: boundingBox = trackArcEl ? trackArcEl.getBBox() : ({} as DOMRect);
 
-  $: labelArcCenterOffset = {
-    x: outerRadius - boundingBox.width / 2,
-    // x: 0,
-    y: (outerRadius - boundingBox.height / 2) * -1,
-  };
+  // $: labelArcCenterOffset = {
+  //   x: outerRadius - boundingBox.width / 2,
+  //   // x: 0,
+  //   y: (outerRadius - boundingBox.height / 2) * -1,
+  // };
   // $: console.log(labelArcCenterOffset)
 
-  $: labelArcBottomOffset = {
-    // x: outerRadius - boundingBox.width / 2,
-    x: outerRadius - boundingBox.width / 2,
-    // x: 0,
-    // y: (outerRadius - boundingBox.height) * -1
-    y: (outerRadius - boundingBox.height) * -1,
-  };
+  // $: labelArcBottomOffset = {
+  //   // x: outerRadius - boundingBox.width / 2,
+  //   x: outerRadius - boundingBox.width / 2,
+  //   // x: 0,
+  //   // y: (outerRadius - boundingBox.height) * -1
+  //   y: (outerRadius - boundingBox.height) * -1,
+  // };
   // $: console.log(labelArcBottomOffset)
 
   /**
    * Offset arc from center
    */
   export let offset = 0;
-  $: angle = (startAngle + endAngle) / 2;
+  $: angle = ((startAngle ?? 0) + (endAngle ?? 0)) / 2;
   $: xOffset = Math.sin(angle) * offset;
   $: yOffset = -Math.cos(angle) * offset;
 </script>
 
 {#if track}
-  <path d={trackArc()} class="track" bind:this={trackArcEl} {...track} />
+  <path
+    d={trackArc()}
+    class="track"
+    bind:this={trackArcEl}
+    {...typeof track === 'object' ? track : null}
+  />
 {/if}
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <path
   d={arc()}
   transform="translate({xOffset}, {yOffset})"

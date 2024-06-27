@@ -3,7 +3,6 @@
   import { startOfYear, endOfYear } from 'date-fns';
   import { scaleThreshold } from 'd3-scale';
   import { range } from 'd3-array';
-  import { schemeGreens } from 'd3-scale-chromatic';
 
   import { Calendar, Chart, Group, Text, Tooltip, TooltipItem, Svg } from 'layerchart';
 

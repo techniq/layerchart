@@ -1,17 +1,19 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext, type ComponentProps } from 'svelte';
+  import { createEventDispatcher, type ComponentProps } from 'svelte';
   import { cls } from 'svelte-ux';
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
+  // @ts-expect-error
   import { geoVoronoi } from 'd3-geo-voronoi';
-
-  import GeoPath from './GeoPath.svelte';
-  import { geoContext } from './GeoContext.svelte';
-  import Spline from './Spline.svelte';
   import { curveLinearClosed } from 'd3-shape';
 
-  const { flatData, x: xContext, y: yContext } = getContext('LayerCake');
-  const geo = geoContext();
+  import { chartContext } from './ChartContext.svelte';
+  import GeoPath from './GeoPath.svelte';
+  import { geoContext, type GeoContext } from './GeoContext.svelte';
+  import Spline from './Spline.svelte';
+
+  const { flatData, x: xContext, y: yContext } = chartContext();
+  const geo = geoContext() as GeoContext | undefined;
 
   /** Override data instead of using context */
   export let data: any = undefined;
@@ -32,7 +34,7 @@
     };
   }>();
 
-  $: points = (data ?? $flatData).map((d) => {
+  $: points = (data ?? $flatData).map((d: any) => {
     const xValue = $xContext(d);
     const yValue = $yContext(d);
 
@@ -40,6 +42,7 @@
     const y = Array.isArray(yValue) ? min(yValue) : yValue;
 
     const point = [x, y];
+    // @ts-expect-error
     point.data = d;
     return point;
   });

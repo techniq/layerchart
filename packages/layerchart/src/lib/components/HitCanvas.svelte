@@ -1,13 +1,16 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext, onMount, setContext } from 'svelte';
+  import { createEventDispatcher, onMount, setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import { scaleCanvas } from 'layercake';
   import { cls } from 'svelte-ux';
+
+  import { chartContext } from './ChartContext.svelte';
   import Canvas from './layout/Canvas.svelte';
   import { transformContext } from './TransformContext.svelte';
 
-  const { width, height } = getContext('LayerCake');
+  const { width, height } = chartContext();
 
+  // @ts-expect-error: this will immediately be defined on mount via `bind:context`
   export let context: CanvasRenderingContext2D = undefined;
 
   /** Show canvas for debugging */
@@ -49,6 +52,8 @@
       nextColor += step;
       yield `rgb(${rgb.join(',')})`;
     }
+
+    return 'rgb(0,0,0)';
   }
 
   $: colorGenerator = rgbColorGenerator();

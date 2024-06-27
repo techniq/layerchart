@@ -7,11 +7,12 @@
     type GeoProjection,
   } from 'd3-geo';
 
+  import { chartContext } from './ChartContext.svelte';
   import { transformContext } from './TransformContext.svelte';
 
   export const geoContextKey = Symbol();
 
-  export type GeoContext = Writable<GeoProjection | GeoIdentityTransform>;
+  export type GeoContext = Writable<GeoProjection /* | GeoIdentityTransform*/>;
 
   export function geoContext() {
     return getContext<GeoContext>(geoContextKey);
@@ -23,10 +24,10 @@
 </script>
 
 <script lang="ts">
-  const { width, height } = getContext('LayerCake');
+  const { width, height } = chartContext();
 
   /** @type {Function} projection - A d3 projection function. Pass this in as an uncalled function, e.g. `projection={geoAlbersUsa}`. */
-  export let projection: (() => GeoProjection | GeoIdentityTransform) | undefined = undefined;
+  export let projection: (() => GeoProjection) /* | GeoIdentityTransform*/ | undefined = undefined;
 
   export let fitGeojson: GeoPermissibleObjects | undefined = undefined;
 

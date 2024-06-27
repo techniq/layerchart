@@ -18,6 +18,7 @@
   import { SelectField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import type { GeometryObjectA } from 'topojson-specification';
 
   export let data;
 
@@ -39,9 +40,9 @@
     }),
   };
 
-  let selectedStateId = null;
+  let selectedStateId: GeometryObjectA['id'] | null = null;
   $: selectedCountiesFeatures = selectedStateId
-    ? counties.features.filter((f) => f.id.slice(0, 2) === selectedStateId)
+    ? counties.features.filter((f) => (f.id as string).slice(0, 2) === selectedStateId)
     : [];
 </script>
 
@@ -122,7 +123,7 @@
         {/each}
       </Svg>
       <Tooltip header={(data) => data.properties.name}>
-        {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
+        {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
         <TooltipItem label="longitude" value={longitude} format="decimal" />
         <TooltipItem label="latitude" value={latitude} format="decimal" />
       </Tooltip>
@@ -193,7 +194,7 @@
       </Svg>
       <Tooltip header={(data) => data.properties.name}>
         <!-- TODO: How to handle scale (when using canvas and not projection transforms) -->
-        <!-- {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
+        <!-- {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
         <TooltipItem label="longitude" value={longitude} format="decimal" />
         <TooltipItem label="latitude" value={latitude} format="decimal" /> -->
       </Tooltip>
@@ -206,6 +207,7 @@
 <Preview data={states}>
   <div class="h-[600px] relative overflow-hidden">
     <Chart
+      data={[{ hello: 1 }]}
       geo={{
         projection,
         fitGeojson: projection === geoMercator ? contiguousStates : states,
@@ -307,7 +309,7 @@
       </HitCanvas>
 
       <Tooltip header={(data) => data.properties.name}>
-        {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
+        {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
         <TooltipItem label="longitude" value={longitude} format="decimal" />
         <TooltipItem label="latitude" value={latitude} format="decimal" />
       </Tooltip>
@@ -427,7 +429,7 @@
 
       <Tooltip header={(data) => data.properties.name}>
         <!-- TODO: How to handle scale (when using canvas and not projection transforms) -->
-        <!-- {@const [longitude, latitude] = projection.invert([tooltip.x, tooltip.y])}
+        <!-- {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
         <TooltipItem label="longitude" value={longitude} format="decimal" />
         <TooltipItem label="latitude" value={latitude} format="decimal" /> -->
       </Tooltip>

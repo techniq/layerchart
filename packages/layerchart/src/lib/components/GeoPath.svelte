@@ -1,25 +1,30 @@
 <script lang="ts">
   import { createEventDispatcher, getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
   import {
     geoTransform as d3geoTransform,
     type GeoIdentityTransform,
-    type GeoPath,
     type GeoPermissibleObjects,
     type GeoProjection,
     type GeoTransformPrototype,
   } from 'd3-geo';
   import { cls } from 'svelte-ux';
 
+  import { chartContext } from './ChartContext.svelte';
   import { geoContext } from './GeoContext.svelte';
   import type { TooltipContextValue } from './TooltipContext.svelte';
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoCurvePath } from '$lib/utils/geo.js';
 
-  export let geojson: GeoPermissibleObjects = undefined;
+  export let geojson: GeoPermissibleObjects | null | undefined = undefined;
 
   /** Render to canvas */
-  export let render: ((ctx: CanvasRenderingContext2D, { geoPath: GeoPath }) => any) | undefined =
-    undefined;
+  export let render:
+    | ((
+        ctx: CanvasRenderingContext2D,
+        options: { geoPath: ReturnType<typeof geoCurvePath> }
+      ) => any)
+    | undefined = undefined;
 
   export let fill: string | undefined = undefined;
   export let stroke: string | undefined = undefined;
@@ -44,10 +49,12 @@
   let className: string | undefined = undefined;
   export { className as class };
 
-  const dispatch = createEventDispatcher<{ click: { geoPath: GeoPath; event: MouseEvent } }>();
+  const dispatch = createEventDispatcher<{
+    click: { geoPath: ReturnType<typeof geoCurvePath>; event: MouseEvent };
+  }>();
 
-  const { containerWidth, containerHeight, padding } = getContext('LayerCake');
-  const canvas = getContext('canvas');
+  const { containerWidth, containerHeight, padding } = chartContext();
+  const canvas = getContext<{ ctx: Readable<CanvasRenderingContext2D> }>('canvas');
   const geo = geoContext();
 
   /**
@@ -88,7 +95,9 @@
       $ctx.beginPath();
       // Set the context here since setting it in `$: geoPath` is a circular reference
       geoPath = geoCurvePath(_projection, curve, $ctx);
-      geoPath(geojson);
+      if (geojson) {
+        geoPath(geojson);
+      }
 
       $ctx.fillStyle =
         fill ??
@@ -96,19 +105,20 @@
         'transparent';
       $ctx.fill();
 
-      $ctx.lineWidth = strokeWidth;
+      $ctx.lineWidth = Number(strokeWidth ?? 0);
       $ctx.strokeStyle =
-        stroke ?? computedStyles.stroke === 'none' ? 'transparent' : computedStyles.stroke;
+        stroke ?? computedStyles.stroke === 'none' ? 'transparent' : computedStyles.stroke ?? '';
       $ctx.stroke();
     }
   }
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 {#if renderContext === 'svg'}
   <slot {geoPath}>
     <path
       {...$$restProps}
-      d={geoPath(geojson)}
+      d={geojson ? geoPath(geojson) : ''}
       {fill}
       {stroke}
       stroke-width={strokeWidth}

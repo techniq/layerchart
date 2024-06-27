@@ -117,7 +117,12 @@
           />
         {:else if example === 'multi'}
           {#each coordinates as coords}
-            <GeoCircle center={coords} radius={step / 4} {precision} class="stroke-danger" />
+            <GeoCircle
+              center={[coords[0], coords[1]]}
+              radius={step / 4}
+              {precision}
+              class="stroke-danger"
+            />
           {/each}
         {/if}
       </Svg>

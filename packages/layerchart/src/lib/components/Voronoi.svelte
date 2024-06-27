@@ -1,16 +1,18 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext } from 'svelte';
-  import { cls } from 'svelte-ux';
+  import { createEventDispatcher } from 'svelte';
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
   import type { GeoPermissibleObjects } from 'd3-geo';
+  // @ts-expect-error
   import { geoVoronoi } from 'd3-geo-voronoi';
+  import { cls } from 'svelte-ux';
 
+  import { chartContext } from './ChartContext.svelte';
   import GeoPath from './GeoPath.svelte';
-  import { geoContext } from './GeoContext.svelte';
+  import { geoContext, type GeoContext } from './GeoContext.svelte';
 
-  const { flatData, xGet, yGet, x: xContext, y: yContext, width, height } = getContext('LayerCake');
-  const geo = geoContext();
+  const { flatData, xGet, yGet, x: xContext, y: yContext, width, height } = chartContext();
+  const geo = geoContext() as GeoContext | undefined;
 
   /** Override data instead of using context */
   export let data: any = undefined;
@@ -30,7 +32,7 @@
     };
   }>();
 
-  $: points = (data ?? $flatData).map((d) => {
+  $: points = (data ?? $flatData).map((d: any) => {
     // geo voronoi needs raw latitude/longtude, not mapped to range (chart dimensions)
     const xValue = $geo ? $xContext(d) : $xGet(d);
     const yValue = $geo ? $yContext(d) : $yGet(d);
@@ -39,6 +41,7 @@
     const y = Array.isArray(yValue) ? min(yValue) : yValue;
 
     const point = [x, y];
+    // @ts-expect-error
     point.data = d;
     return point;
   });
@@ -70,6 +73,8 @@
   {:else}
     {@const voronoi = Delaunay.from(points).voronoi([0, 0, boundWidth, boundHeight])}
     {#each points as point, i}
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <path
         d={voronoi.renderCell(i)}
         class={cls('fill-transparent', classes.path)}

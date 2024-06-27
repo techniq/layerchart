@@ -17,7 +17,7 @@
   const defaultContext: TooltipContext = writable({
     x: 0,
     y: 0,
-    data: null,
+    data: null as any,
     show: () => {},
     hide: () => {},
   });
@@ -34,10 +34,11 @@
   import { raise } from 'layercake';
   import { writable } from 'svelte/store';
   import { bisector, max, min } from 'd3-array';
-  import { quadtree as d3Quadtree } from 'd3-quadtree';
+  import { quadtree as d3Quadtree, type Quadtree } from 'd3-quadtree';
   import { cls, sortFunc } from 'svelte-ux';
 
   import { Svg } from './Chart.svelte';
+  import { chartContext } from './ChartContext.svelte';
   import ChartClipPath from './ChartClipPath.svelte';
   import Voronoi from './Voronoi.svelte';
 
@@ -60,7 +61,7 @@
     containerWidth,
     containerHeight,
     padding,
-  } = getContext('LayerCake');
+  } = chartContext<any>();
 
   /*
 		TODO: Defaults to consider (if possible to detect scale type, which might not be possible)
@@ -102,12 +103,18 @@
 
   export let onClick: ({ data }: { data: any }) => any = () => {};
 
-  const tooltip = writable({ y: 0, x: 0, data: null, show: showTooltip, hide: hideTooltip });
+  const tooltip = writable({
+    y: 0,
+    x: 0,
+    data: null as any,
+    show: showTooltip,
+    hide: hideTooltip,
+  });
   setTooltipContext(tooltip);
 
   let hideTimeoutId: NodeJS.Timeout;
 
-  $: bisectX = bisector((d) => {
+  $: bisectX = bisector((d: any) => {
     const value = $x(d);
     if (Array.isArray(value)) {
       // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
@@ -120,7 +127,7 @@
     }
   }).left;
 
-  $: bisectY = bisector((d) => {
+  $: bisectY = bisector((d: any) => {
     const value = $y(d);
     if (Array.isArray(value)) {
       // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
@@ -133,7 +140,7 @@
     }
   }).left;
 
-  function findData(previousValue, currentValue, valueAtPoint, accessor) {
+  function findData(previousValue: any, currentValue: any, valueAtPoint: any, accessor: Function) {
     switch (findTooltipData) {
       case 'closest':
         if (currentValue === undefined) {
@@ -158,16 +165,20 @@
     // Cancel hiding tooltip if from previous event loop
     clearTimeout(hideTimeoutId);
 
-    const referenceNode = (e.target as Element).closest('.layercake-container');
+    const referenceNode = (e.target as Element).closest('.layercake-container')!;
     const point = localPoint(referenceNode, e);
     const localX = point?.x ?? 0;
     const localY = point?.y ?? 0;
 
     if (
-      e.offsetX < e.currentTarget.offsetLeft ||
-      e.offsetX > e.currentTarget.offsetLeft + e.currentTarget.offsetWidth ||
-      e.offsetY < e.currentTarget.offsetTop ||
-      e.offsetY > e.currentTarget.offsetTop + e.currentTarget.offsetHeight
+      // @ts-expect-error
+      e.offsetX < e.currentTarget?.offsetLeft ||
+      // @ts-expect-error
+      e.offsetX > e.currentTarget?.offsetLeft + e.currentTarget?.offsetWidth ||
+      // @ts-expect-error
+      e.offsetY < e.currentTarget?.offsetTop ||
+      // @ts-expect-error
+      e.offsetY > e.currentTarget?.offsetTop + e.currentTarget?.offsetHeight
     ) {
       // Ignore if within padding of chart
       hideTooltip();
@@ -207,14 +218,18 @@
 
           if (isScaleBand($xScale)) {
             // Find point closest to pointer within the x band
-            const bandData = $flatData.filter((d) => $x(d) === xValueAtPoint).sort(sortFunc($y)); // sort for bisect
+            const bandData = $flatData
+              .filter((d) => $x(d) === xValueAtPoint)
+              .sort(sortFunc($y as () => any)); // sort for bisect
             const index = bisectY(bandData, yValueAtPoint, 1);
             const previousValue = bandData[index - 1];
             const currentValue = bandData[index];
             tooltipData = findData(previousValue, currentValue, yValueAtPoint, $y);
           } else if (isScaleBand($yScale)) {
             // Find point closest to pointer within the y band
-            const bandData = $flatData.filter((d) => $y(d) === yValueAtPoint).sort(sortFunc($x)); // sort for bisect
+            const bandData = $flatData
+              .filter((d) => $y(d) === yValueAtPoint)
+              .sort(sortFunc($x as () => any)); // sort for bisect
             const index = bisectX(bandData, xValueAtPoint, 1);
             const previousValue = bandData[index - 1];
             const currentValue = bandData[index];
@@ -234,7 +249,7 @@
 
     if (tooltipData) {
       if (raiseTarget) {
-        raise(e.target);
+        raise(e.target as Element);
       }
 
       $tooltip = {
@@ -256,7 +271,7 @@
     });
   }
 
-  let quadtree;
+  let quadtree: Quadtree<[number, number]>;
   $: if (mode === 'quadtree') {
     quadtree = d3Quadtree()
       .extent([
@@ -289,11 +304,12 @@
           return value;
         }
       })
-      .addAll($flatData);
+      .addAll($flatData as [number, number][]);
   }
 
-  let rects = [];
+  let rects: Array<{ x: number; y: number; width: number; height: number; data: any }> = [];
   $: if (mode === 'bounds' || mode === 'band') {
+    // @ts-expect-error
     rects = $flatData
       .map((d) => {
         const xValue = $xGet(d);
@@ -305,7 +321,9 @@
         const xOffset = isScaleBand($xScale) ? ($xScale.padding() * $xScale.step()) / 2 : 0;
         const yOffset = isScaleBand($yScale) ? ($yScale.padding() * $yScale.step()) / 2 : 0;
 
+        // @ts-expect-error
         const fullWidth = max($xRange) - min($xRange);
+        // @ts-expect-error
         const fullHeight = max($yRange) - min($yRange);
 
         if (mode === 'band') {
@@ -332,7 +350,8 @@
               ? yValue[1] - yValue[0]
               : isScaleBand($yScale)
                 ? $yScale.step()
-                : max($yRange) - y,
+                : // @ts-expect-error
+                  max($yRange) - y,
             data: d,
           };
         }
@@ -343,6 +362,8 @@
   $: triggerPointEvents = ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode);
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   style:width="{$width}px"
   style:height="{$height}px"
@@ -366,19 +387,26 @@
     class="absolute"
     style:width="{$containerWidth}px"
     style:height="{$containerHeight}px"
-    style:top="{-$padding.top}px"
-    style:left="{-$padding.left}px"
+    style:top="-{$padding.top ?? 0}px"
+    style:left="-{$padding.left ?? 0}px"
   >
     <slot tooltip={$tooltip} />
 
     {#if mode === 'voronoi'}
       <Svg>
         <Voronoi
-          on:pointerenter={(e) => showTooltip(e.detail.event, e.detail.data)}
-          on:pointermove={(e) => showTooltip(e.detail.event, e.detail.data)}
+          on:pointerenter={(e) => {
+            // @ts-expect-error
+            showTooltip(e.detail.event, e.detail.data);
+          }}
+          on:pointermove={(e) => {
+            showTooltip(e.detail.event, e.detail.data);
+          }}
           on:pointerleave={hideTooltip}
           on:pointerdown={(e) => {
-            if (e.target.hasPointerCapture(e.pointerId)) {
+            // @ts-expect-error
+            if (e.target?.hasPointerCapture(e.pointerId)) {
+              // @ts-expect-error
               e.target.releasePointerCapture(e.pointerId);
             }
           }}
@@ -402,7 +430,9 @@
               on:pointermove={(e) => showTooltip(e, rect.data)}
               on:pointerleave={hideTooltip}
               on:pointerdown={(e) => {
-                if (e.target.hasPointerCapture(e.pointerId)) {
+                // @ts-expect-error
+                if (e.target?.hasPointerCapture(e.pointerId)) {
+                  // @ts-expect-error
                   e.target.releasePointerCapture(e.pointerId);
                 }
               }}

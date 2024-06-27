@@ -7,6 +7,7 @@
   "scripts": {
     "test:unit": "pnpm -r test:unit",
     "build": "rimraf packages/*/dist && pnpm -r build",
+    "check": "pnpm -r check",
     "lint": "pnpm -r lint",
     "format": "pnpm -r format",
     "changeset": "changeset",

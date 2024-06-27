@@ -27,7 +27,7 @@
   export let data;
 
   const now = new Date();
-  let xDomain = [subDays(now, 60), subDays(now, 30)];
+  let xDomain = [subDays(now, 60), subDays(now, 30)] as [Date, Date];
 
   const seriesData = [
     randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
@@ -129,6 +129,7 @@
               axis="x"
               resetOnEnd
               on:brushEnd={(e) => {
+                // @ts-expect-error
                 set(e.detail.xDomain);
               }}
             />
@@ -166,6 +167,7 @@
               axis="y"
               resetOnEnd
               on:brushEnd={(e) => {
+                // @ts-expect-error
                 set(e.detail.yDomain);
               }}
             />
@@ -186,9 +188,9 @@
           data={data.appleStock}
           x="date"
           xScale={scaleTime()}
-          xDomain={value.xDomain}
+          xDomain={value?.xDomain}
           y="value"
-          yDomain={value.yDomain}
+          yDomain={value?.yDomain}
           padding={{ left: 16, bottom: 24 }}
         >
           <Svg>
@@ -205,7 +207,9 @@
               resetOnEnd
               on:brushEnd={(e) => {
                 set({
+                  // @ts-expect-error
                   xDomain: e.detail.xDomain,
+                  // @ts-expect-error
                   yDomain: e.detail.yDomain,
                 });
               }}
@@ -256,6 +260,7 @@
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
             <Brush
               on:change={(e) => {
+                // @ts-expect-error
                 set(e.detail.xDomain);
               }}
             />
@@ -284,6 +289,7 @@
             <Brush
               axis="y"
               on:change={(e) => {
+                // @ts-expect-error
                 set(e.detail.yDomain);
               }}
             />
@@ -324,7 +330,9 @@
         <Chart
           data={data.appleStock.filter(
             (d) =>
+              // @ts-expect-error
               (xDomain[0] == null || d.date >= xDomain[0]) &&
+              // @ts-expect-error
               (xDomain[1] == null || d.date <= xDomain[1])
           )}
           x="date"
@@ -359,6 +367,7 @@
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
             <Brush
               on:change={(e) => {
+                // @ts-expect-error
                 set(e.detail.xDomain);
               }}
             />
@@ -381,7 +390,7 @@
 
   <div class="grid grid-cols-2 gap-4">
     {#each seriesData as data, i}
-      <div class="border rounded p-4 grid gap-1" style:--chart-color={colorScale(i)}>
+      <div class="border rounded p-4 grid gap-1" style:--chart-color={colorScale(String(i))}>
         <div class="h-[100px]">
           <Chart
             {data}
@@ -460,6 +469,7 @@
               axis="x"
               resetOnEnd
               on:brushEnd={(e) => {
+                // @ts-expect-error
                 set(e.detail.xDomain);
               }}
             />
@@ -513,9 +523,13 @@
           <Points let:points>
             {#each points as point}
               {@const isSelected =
+                // @ts-expect-error
                 (value.xDomain[0] == null || value.xDomain[0] <= point.data.x) &&
+                // @ts-expect-error
                 (value.xDomain[1] == null || point.data.x <= value.xDomain[1]) &&
+                // @ts-expect-error
                 (value.yDomain[0] == null || value.yDomain[0] <= point.data.y) &&
+                // @ts-expect-error
                 (value.yDomain[1] == null || point.data.y <= value.yDomain[1])}
 
               <Circle
@@ -534,7 +548,9 @@
             axis="both"
             on:change={(e) => {
               set({
+                // @ts-expect-error
                 xDomain: e.detail.xDomain,
+                // @ts-expect-error
                 yDomain: e.detail.yDomain,
               });
             }}

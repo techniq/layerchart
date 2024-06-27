@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { getContext, type ComponentProps } from 'svelte';
-  import { timeDays, timeMonths, timeWeek, timeYear, utcYear } from 'd3-time';
+  import { type ComponentProps } from 'svelte';
+  import { timeDays, timeMonths, timeWeek, timeYear } from 'd3-time';
   import { index } from 'd3-array';
   import { format } from 'date-fns';
 
+  import { chartContext } from './ChartContext.svelte';
   import Rect from './Rect.svelte';
   import type { TooltipContextValue } from './TooltipContext.svelte';
   import MonthPath from './MonthPath.svelte';
@@ -25,7 +26,7 @@
    */
   export let tooltip: TooltipContextValue | undefined = undefined;
 
-  const { width, height, x, rGet, data, config } = getContext('LayerCake');
+  const { width, height, x, rGet, data, config } = chartContext();
 
   $: yearDays = timeDays(start, end);
   $: yearMonths = timeMonths(start, end);

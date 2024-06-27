@@ -2,7 +2,7 @@
   import { cubicInOut } from 'svelte/easing';
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { format } from 'date-fns';
-  import { extent, mean } from 'd3-array';
+  import { mean } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
 
   import {
@@ -31,10 +31,12 @@
     TooltipItem,
     createStackData,
     stackOffsetSeparated,
+    Pattern,
   } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
+  import { extent } from '$lib/utils/array.js';
 
   const data = createDateSeries({
     count: 10,
@@ -503,7 +505,14 @@
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
-        <Highlight data={data[3]} area />
+        <Pattern id="highlight-pattern" width={8} height={8}>
+          <rect width={8} height={8} class="fill-secondary/10" />
+          <line x1={8} y2={8} class="stroke-secondary/30" />
+        </Pattern>
+        <Highlight
+          data={data[3]}
+          area={{ fill: 'url(#highlight-pattern)', class: 'stroke-secondary/50' }}
+        />
       </Svg>
     </Chart>
   </div>
@@ -860,7 +869,6 @@
       data={transitionData}
       x="values"
       xDomain={extent(stackedData.flatMap((d) => d.values))}
-      groupedStackedData
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
@@ -879,7 +887,10 @@
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <g>
-          {#each data as bar (bar.keys.filter((key) => typeof key !== 'number').join('-'))}
+          <!-- TODO: 'data' can be used once type issue is resolved -->
+          {#each transitionData as bar (bar.keys
+            .filter((key) => typeof key !== 'number')
+            .join('-'))}
             <Bar
               {bar}
               groupBy={transitionChart.groupBy}

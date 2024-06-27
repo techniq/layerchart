@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import { scaleBand, scaleLinear } from 'd3-scale';
   import { quantize, interpolate, interpolateRound } from 'd3-interpolate';
   import { quantile, range } from 'd3-array';
   import { format, type FormatType } from 'svelte-ux';
   import type { SVGAttributes } from 'svelte/elements';
 
+  import { chartContext } from './ChartContext.svelte';
   import ColorRamp from './ColorRamp.svelte';
   import { cls } from 'svelte-ux';
 
-  const { rScale } = getContext('LayerCake') ?? {};
+  const { rScale } = chartContext() ?? {};
 
   type AnyScale = any;
   type Placement =
@@ -28,7 +28,7 @@
   export let width = 320;
   export let height = 10;
   export let ticks = width / 64;
-  export let tickFormat: FormatType = undefined;
+  export let tickFormat: FormatType | undefined = undefined;
   export let tickValues: any[] | undefined = undefined;
   export let tickFontSize = 10;
   export let tickLength = 4;
@@ -92,7 +92,7 @@
       .domain([-1, scale.range().length - 1])
       .rangeRound([0, width]);
 
-    swatches = scale.range().map((d, i) => {
+    swatches = scale.range().map((d: any, i: number) => {
       return {
         x: xScale(i - 1),
         y: 0,
@@ -151,7 +151,7 @@
   )}
 >
   <div class={cls('text-[10px] font-semibold', classes.title)}>{title}</div>
-  <slot values={tickValues} {scale}>
+  <slot values={tickValues ?? []} {scale}>
     <svg
       {width}
       height={height + tickLength + tickFontSize}

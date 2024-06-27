@@ -1,14 +1,16 @@
 <script lang="ts">
-  import { getContext, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
   import { max, min } from 'd3-array';
   import { cls, notNull } from 'svelte-ux';
 
-  import { isScaleBand } from '$lib/utils/scales.js';
+  import { chartContext } from './ChartContext.svelte';
   import Circle from './Circle.svelte';
   import Line from './Line.svelte';
   import Bar from './Bar.svelte';
   import Rect from './Rect.svelte';
   import { tooltipContext } from './TooltipContext.svelte';
+
+  import { isScaleBand } from '$lib/utils/scales.js';
 
   const {
     flatData,
@@ -24,7 +26,7 @@
     yGet,
     rGet,
     config,
-  } = getContext('LayerCake');
+  } = chartContext();
   const tooltip = tooltipContext();
 
   /** Highlight specific data (annotate), espect uses tooltip data */
@@ -42,7 +44,7 @@
   export let area: boolean | Partial<ComponentProps<Rect>> = false;
 
   /** Show bar and pass props to Rect */
-  export let bar: boolean | Partial<ComponentProps<Rect>> = false;
+  export let bar: boolean | Partial<ComponentProps<Bar>> = false;
 
   /** Set to false to disable spring transitions */
   export let motion = true;
@@ -85,7 +87,7 @@
             x1: xItem + xOffset,
             y1: 0,
             x2: xItem + xOffset,
-            y2: max($yRange),
+            y2: max($yRange) as unknown as number,
           })),
         ];
       } else {
@@ -95,7 +97,7 @@
             x1: xCoord + xOffset,
             y1: 0,
             x2: xCoord + xOffset,
-            y2: max($yRange),
+            y2: max($yRange) as unknown as number,
           },
         ];
       }
@@ -120,7 +122,7 @@
         (isScaleBand($xScale) ? ($xScale.padding() * $xScale.step()) / 2 : 0);
 
       if (axis === 'x') {
-        _area.height = max($yRange);
+        _area.height = max($yRange) as unknown as number;
       }
     }
 
@@ -133,7 +135,7 @@
           ...yCoord.filter(notNull).map((yItem, i) => ({
             x1: 0,
             y1: yItem + yOffset,
-            x2: max($xRange),
+            x2: max($xRange) as unknown as number,
             y2: yItem + yOffset,
           })),
         ];
@@ -143,7 +145,7 @@
           {
             x1: 0,
             y1: yCoord + yOffset,
-            x2: max($xRange),
+            x2: max($xRange) as unknown as number,
             y2: yCoord + yOffset,
           },
         ];
@@ -169,7 +171,7 @@
         (isScaleBand($yScale) ? ($yScale.padding() * $yScale.step()) / 2 : 0);
 
       if (axis === 'y') {
-        _area.width = max($xRange);
+        _area.width = max($xRange) as unknown as number;
       }
     }
 
@@ -205,6 +207,7 @@
         {..._area}
         {...typeof area === 'object' ? area : null}
         class={cls(
+          // @ts-expect-error
           !area.fill && 'fill-surface-content/5',
           typeof area === 'object' ? area.class : null
         )}
@@ -217,14 +220,18 @@
     <slot name="bar" {bar}>
       <Bar
         spring={motion}
-        x={typeof bar === 'object' ? bar.x : null}
-        y={typeof bar === 'object' ? bar.y : null}
-        inset={typeof bar === 'object' ? bar.inset : null}
-        stroke={typeof bar === 'object' ? bar.stroke : null}
-        strokeWidth={typeof bar === 'object' ? bar.strokeWidth : null}
-        radius={typeof bar === 'object' ? bar.radius : null}
+        x={typeof bar === 'object' ? bar.x : undefined}
+        y={typeof bar === 'object' ? bar.y : undefined}
+        inset={typeof bar === 'object' ? bar.inset : undefined}
+        stroke={typeof bar === 'object' ? bar.stroke : undefined}
+        strokeWidth={typeof bar === 'object' ? bar.strokeWidth : undefined}
+        radius={typeof bar === 'object' ? bar.radius : undefined}
         bar={highlightData}
-        class={cls(!bar.fill && 'fill-primary', typeof bar === 'object' ? bar.class : null)}
+        class={cls(
+          // @ts-expect-error
+          !bar.fill && 'fill-primary',
+          typeof bar === 'object' ? bar.class : null
+        )}
         on:click
       />
     </slot>

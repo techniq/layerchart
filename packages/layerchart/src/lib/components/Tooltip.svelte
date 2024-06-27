@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
   import { fade } from 'svelte/transition';
   import { cls } from 'svelte-ux';
 
+  import { chartContext } from './ChartContext.svelte';
   import { tooltipContext } from './TooltipContext.svelte';
   import { motionStore } from '../stores/motionStore.js';
 
@@ -44,7 +44,7 @@
     content?: string;
   } = {};
 
-  const { padding, xGet, yGet, containerWidth, containerHeight } = getContext('LayerCake');
+  const { padding, xGet, yGet, containerWidth, containerHeight } = chartContext();
   const tooltip = tooltipContext();
 
   let tooltipWidth = 0;

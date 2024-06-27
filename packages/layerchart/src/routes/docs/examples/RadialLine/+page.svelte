@@ -109,8 +109,6 @@
       xScale={scaleUtc()}
       xRange={[0, 2 * Math.PI]}
       y="value"
-      _yDomain={[50, 65]}
-      _yRange={({ height }) => [0, height / 2]}
       yRange={({ height }) => [height / 5, height / 2]}
       yPadding={[0, 20]}
       zDomain={[1940, 2024]}

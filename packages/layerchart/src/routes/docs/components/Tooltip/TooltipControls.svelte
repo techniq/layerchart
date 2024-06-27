@@ -10,10 +10,10 @@
 
   export let settings: {
     mode: TooltipContextProps['mode'];
-    highlight: Array<'none' | 'points' | 'lines' | 'area'>;
+    highlight: Array<'none' | 'points' | 'lines' | 'area' | 'bar'>;
     axis: HighlightProps['axis'];
-    snapToDataX: TooltipContextProps['snapToDataX'];
-    snapToDataY: TooltipContextProps['snapToDataX'];
+    snapToDataX: boolean;
+    snapToDataY: boolean;
     debug: TooltipContextProps['debug'];
   };
 </script>

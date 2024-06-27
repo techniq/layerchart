@@ -60,6 +60,7 @@
   const scrollMode = transform.scrollMode;
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class={cls(
     'bg-surface-300/50 rounded-full m-1 backdrop-blur z-10 flex',

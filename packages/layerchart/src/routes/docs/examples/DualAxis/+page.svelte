@@ -11,10 +11,10 @@
   const chartData = data.newPassengerCars;
 
   // Remap efficiency to its equivalent value in sales - https://observablehq.com/@observablehq/plot-dual-axis
-  const efficiencyScale = scaleLinear(
-    extent(chartData, (d) => d.efficiency),
-    [0, max(chartData, (d) => d.sales)]
-  );
+  const efficiencyScale = scaleLinear(extent(chartData, (d) => d.efficiency) as [number, number], [
+    0,
+    max(chartData, (d) => d.sales),
+  ]);
 </script>
 
 <h1>Examples</h1>

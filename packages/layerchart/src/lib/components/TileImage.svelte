@@ -21,7 +21,7 @@
 
   // if disable cache, set href immediately, otherwise set from cache / dataUri
   let href = disableCache ? url(x, y, z) : '';
-  function loadImage(url) {
+  function loadImage(url: string) {
     // const key = [x, y, z].join('-');
     const key = url;
 
@@ -31,14 +31,17 @@
         href = dataUri;
       });
     } else {
-      const promise = new Promise((resolve, reject) => {
+      const promise = new Promise<string>((resolve, reject) => {
         const img = new Image();
         img.crossOrigin = 'anonymous';
         img.onload = function () {
           var canvas = document.createElement('canvas');
-          var context = canvas.getContext('2d');
+          var context = canvas.getContext('2d')!;
+          // @ts-expect-error
           canvas.height = this.naturalHeight;
+          // @ts-expect-error
           canvas.width = this.naturalWidth;
+          // @ts-expect-error
           context.drawImage(this, 0, 0);
           var dataUri = canvas.toDataURL('image/jpeg');
           // console.log('from load', { x, y, z });
@@ -46,7 +49,7 @@
           resolve(dataUri);
         };
         img.onerror = (err) => {
-          cache.delete(key);
+          tileCache.delete(key);
           reject(err);
         };
         img.src = url;

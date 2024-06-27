@@ -22,7 +22,7 @@
 
   const keys = ['apples', 'bananas', 'oranges'];
   const data = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer', keys });
-  const stackData = stack().keys(keys)(data);
+  const stackData = stack().keys(keys)(data) as any[];
 </script>
 
 <h1>Examples</h1>
@@ -127,8 +127,8 @@
           ])}
 
           {#each data as seriesData, index}
-            {@const primaryColor = primaryColorScale(index)}
-            {@const secondaryColor = secondaryColorScale(index)}
+            {@const primaryColor = primaryColorScale(String(index))}
+            {@const secondaryColor = secondaryColorScale(String(index))}
 
             <LinearGradient stops={[primaryColor, secondaryColor]} vertical let:url>
               <Area

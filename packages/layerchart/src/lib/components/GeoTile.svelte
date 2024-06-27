@@ -1,7 +1,10 @@
 <script lang="ts">
   import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  // @ts-expect-error
   import { tile as d3Tile } from 'd3-tile';
 
+  import { chartContext } from './ChartContext.svelte';
   import { geoContext } from './GeoContext.svelte';
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
@@ -12,8 +15,8 @@
   export let disableCache = false;
   export let debug = false;
 
-  const { containerWidth, containerHeight, padding } = getContext('LayerCake');
-  const canvas = getContext('canvas');
+  const { containerWidth, containerHeight, padding } = chartContext();
+  const canvas = getContext<{ ctx: Readable<CanvasRenderingContext2D> }>('canvas');
   const geo = geoContext();
 
   $: center = $geo([0, 0]) ?? [0, 0];
@@ -35,7 +38,7 @@
 
   $: ctx = canvas?.ctx;
   $: if (renderContext === 'canvas' && $ctx && url) {
-    tiles.forEach(([x, y, z]) => {
+    tiles.forEach(([x, y, z]: number[]) => {
       const image = new Image();
       image.onload = () => {
         $ctx.drawImage(image, (x + tx) * scale, (y + ty) * scale, scale, scale);

@@ -2,19 +2,24 @@ import { derived } from 'svelte/store';
 import { max, min } from 'd3-array';
 
 import { groupScaleBand, isScaleBand } from './scales.js';
+import type { ChartContext } from '../components/ChartContext.svelte';
+import { accessor, type Accessor } from './common.js';
 
 type DimensionGetterOptions = {
   /** Override `x` accessor from context */
-  x?: (item: any) => any;
+  x?: Accessor;
   /** Override `y` accessor from context */
-  y?: (item: any) => any;
+  y?: Accessor;
   groupBy?: string;
   inset?: number;
   groupPadding?: { inner?: number; outer?: number };
 };
 
 // TOOD: Pass in overrides for `x` and `y` accessors
-export function createDimensionGetter(context, options?: DimensionGetterOptions) {
+export function createDimensionGetter<TData>(
+  context: ChartContext<TData>,
+  options?: DimensionGetterOptions
+) {
   const { flatData, xGet, yGet, xScale, yScale, x: xAccessor, y: yAccessor } = context;
 
   const groupBy = options?.groupBy;
@@ -27,23 +32,21 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
       const [minXDomain, maxXDomain] = $xScale.domain();
       const [minYDomain, maxYDomain] = $yScale.domain();
 
+      // @ts-expect-error
       return function getter(item) {
         if (isScaleBand($yScale)) {
           // Horizontal band
           const y1Scale = groupBy
             ? groupScaleBand($yScale, $flatData, groupBy, options?.groupPadding)
             : null;
+          // @ts-expect-error
           const y = firstValue($yGet(item)) + (y1Scale ? y1Scale(item[groupBy]) : 0) + inset / 2;
           const height = Math.max(
             0,
             $yScale.bandwidth ? (y1Scale ? y1Scale.bandwidth() : $yScale.bandwidth()) - inset : 0
           );
 
-          const _x = options?.x
-            ? typeof options.x === 'string'
-              ? (d) => d[options.x]
-              : options?.x
-            : $xAccessor;
+          const _x = accessor(options?.x ?? $xAccessor);
           const xValue = _x(item);
 
           let left = 0;
@@ -74,21 +77,19 @@ export function createDimensionGetter(context, options?: DimensionGetterOptions)
           };
         } else {
           // Vertical band or linear
-          const x1Scale = groupBy
-            ? groupScaleBand($xScale, $flatData, groupBy, options?.groupPadding)
-            : null;
+          const x1Scale =
+            groupBy && isScaleBand($xScale)
+              ? groupScaleBand($xScale, $flatData, groupBy, options?.groupPadding)
+              : null;
 
+          // @ts-expect-error
           const x = firstValue($xGet(item)) + (x1Scale ? x1Scale(item[groupBy]) : 0) + inset / 2;
           const width = Math.max(
             0,
             $xScale.bandwidth ? (x1Scale ? x1Scale.bandwidth() : $xScale.bandwidth()) - inset : 0
           );
 
-          const _y = options?.y
-            ? typeof options.y === 'string'
-              ? (d) => d[options.y]
-              : options?.y
-            : $yAccessor;
+          const _y = accessor(options?.y ?? $yAccessor);
           const yValue = _y(item);
 
           let top = 0;

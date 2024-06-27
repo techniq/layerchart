@@ -1,12 +1,13 @@
 <script lang="ts">
   import { cubicOut } from 'svelte/easing';
-  import { hierarchy } from 'd3-hierarchy';
+  import { hierarchy, type HierarchyNode } from 'd3-hierarchy';
   import { curveBumpX, curveBumpY, curveStep, curveStepBefore, curveStepAfter } from 'd3-shape';
 
   import { Chart, Group, Link, Rect, Svg, Text, TransformControls, Tree } from 'layerchart';
   import { Field, ToggleGroup, ToggleOption, cls } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import type { ComponentProps } from 'svelte';
 
   export let data;
 
@@ -18,12 +19,12 @@
   // .sum((d) => d.value)
   // .sort(sortFunc('value', 'desc'));
 
-  let orientation = 'horizontal';
+  let orientation: ComponentProps<Tree>['orientation'] = 'horizontal';
   let curve = curveBumpX;
   let layout = 'chart';
   let selected;
 
-  function getNodeKey(node) {
+  function getNodeKey(node: HierarchyNode<{ name: string }>) {
     return node.data.name + node.depth;
   }
 
@@ -33,8 +34,8 @@
   const nodeParentGap = 100;
   $: nodeSize =
     orientation === 'horizontal'
-      ? [nodeHeight + nodeSiblingGap, nodeWidth + nodeParentGap]
-      : [nodeWidth + nodeSiblingGap, nodeHeight + nodeParentGap];
+      ? ([nodeHeight + nodeSiblingGap, nodeWidth + nodeParentGap] as [number, number])
+      : ([nodeWidth + nodeSiblingGap, nodeHeight + nodeParentGap] as [number, number]);
 </script>
 
 <h1>Examples</h1>
@@ -78,7 +79,7 @@
       <TransformControls orientation="horizontal" class="-m-2" />
 
       <Svg>
-        <Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : null}>
+        <Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : undefined}>
           <g class="opacity-20">
             {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
               <Link data={link} {orientation} {curve} tweened class="stroke-surface-content" />

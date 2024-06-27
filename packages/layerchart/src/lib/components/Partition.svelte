@@ -1,8 +1,12 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import { partition as d3Partition } from 'd3-hierarchy';
+  import {
+    partition as d3Partition,
+    type HierarchyNode,
+    type HierarchyRectangularNode,
+  } from 'd3-hierarchy';
+  import { chartContext } from './ChartContext.svelte';
 
-  const { data, width, height } = getContext('LayerCake');
+  const { data, width, height } = chartContext();
 
   export let orientation: 'vertical' | 'horizontal' = 'horizontal';
 
@@ -32,7 +36,7 @@
     }
   }
 
-  $: partitionData = partition($data);
+  $: partitionData = partition($data as HierarchyNode<any>) as HierarchyRectangularNode<any>;
 </script>
 
 <slot nodes={partitionData.descendants()} />

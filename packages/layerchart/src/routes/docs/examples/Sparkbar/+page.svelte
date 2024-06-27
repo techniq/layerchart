@@ -65,7 +65,14 @@
 
 <Preview {data}>
   <div class="w-[125px] h-[18px]">
-    <Chart {data} x="date" xScale={scaleBand()} y="value" yDomain={[0, null]} tooltip>
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleBand()}
+      y="value"
+      yDomain={[0, null]}
+      tooltip={{ mode: 'bisect-x' }}
+    >
       <Svg>
         <Bars strokeWidth={1} class="fill-primary/20 stroke-primary" />
         <Highlight bar={{ strokeWidth: 1 }} />
