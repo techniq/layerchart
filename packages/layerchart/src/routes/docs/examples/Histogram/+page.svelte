@@ -75,9 +75,9 @@
       tooltip={{ mode: 'band' }}
     >
       <Svg>
-        <Axis placement="left" grid rule format="metric" />
-        <Axis placement="bottom" rule ticks={4} />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Axis placement="left" grid rule format="metric" tweened />
+        <Axis placement="bottom" rule ticks={4} tweened />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" tweened />
         <Highlight area />
       </Svg>
       <Tooltip header={(data) => data.x0 + ' - ' + (data.x1 - 1)} let:data>
@@ -110,9 +110,9 @@
       tooltip={{ mode: 'band' }}
     >
       <Svg>
-        <Axis placement="left" rule />
-        <Axis placement="bottom" grid rule />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Axis placement="left" rule tweened />
+        <Axis placement="bottom" grid rule tweened />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" tweened />
         <Highlight area />
       </Svg>
       <Tooltip header={(data) => data.x0 + ' - ' + (data.x1 - 1)} let:data>
@@ -251,7 +251,7 @@
         tooltip={{ mode: 'band' }}
       >
         <Svg>
-          <Axis placement="left" grid rule format="metric" />
+          <Axis placement="left" grid rule format="metric" tweened />
           <Axis
             placement="bottom"
             rule
@@ -259,7 +259,7 @@
             format={(d) => format(d, PeriodType.Day)}
             tickLabelProps={{ rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 }}
           />
-          <Bars radius={4} strokeWidth={1} class="fill-primary" />
+          <Bars radius={4} strokeWidth={1} class="fill-primary" tweened />
           <Highlight area />
         </Svg>
         <Tooltip
@@ -328,7 +328,7 @@
         tooltip={{ mode: 'band' }}
       >
         <Svg>
-          <Axis placement="left" grid rule format="metric" />
+          <Axis placement="left" grid rule format="metric" tweened />
           <Axis
             placement="bottom"
             rule
@@ -336,7 +336,7 @@
             format={(d) => format(d, PeriodType.Day)}
             tickLabelProps={{ rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 }}
           />
-          <Bars radius={4} strokeWidth={1} class="fill-primary" />
+          <Bars radius={4} strokeWidth={1} class="fill-primary" tweened />
           <Highlight area />
         </Svg>
         <Tooltip
