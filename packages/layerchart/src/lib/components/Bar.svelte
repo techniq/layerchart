@@ -6,6 +6,7 @@
   import Spline from './Spline.svelte';
 
   import { createDimensionGetter } from '$lib/utils/rect.js';
+  import type { Accessor } from 'layerchart/utils/common.js';
 
   const { x: xContext, y: yContext } = chartContext();
 
@@ -14,12 +15,12 @@
   /**
    * Override `x` from context.  Useful for multiple Bar instances
    */
-  export let x = $xContext;
+  export let x: Accessor = $xContext;
 
   /**
    * Override `y` from context.  Useful for multiple Bar instances
    */
-  export let y = $yContext;
+  export let y: Accessor = $yContext;
 
   export let fill: string | undefined = undefined;
   export let stroke = 'black';

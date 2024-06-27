@@ -1,21 +1,22 @@
 <script lang="ts">
   import { type ComponentProps } from 'svelte';
 
-  import Bar from './Bar.svelte';
   import { chartContext } from './ChartContext.svelte';
+  import Bar from './Bar.svelte';
   import Rect from './Rect.svelte';
+  import type { Accessor } from '../utils/common.js';
 
   const { data, rGet, config } = chartContext();
 
   /**
    * Override `x` from context.  Useful for multiple Bar instances
    */
-  export let x: any = undefined; // TODO: Update Type
+  export let x: Accessor = undefined;
 
   /**
    * Override `y` from context.  Useful for multiple Bar instances
    */
-  export let y: any = undefined; // TODO: Update Type
+  export let y: Accessor = undefined;
 
   export let stroke = 'black';
   export let strokeWidth = 0;

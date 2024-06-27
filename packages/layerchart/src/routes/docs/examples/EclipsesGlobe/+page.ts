@@ -10,9 +10,11 @@ export async function load({ fetch }) {
       countries: GeometryCollection<{ name: string }>;
       land: GeometryCollection;
     }>,
-    eclipses: await fetch('/data/examples/geo/eclipses.json').then(async (r) =>
+    eclipses: (await fetch('/data/examples/geo/eclipses.json').then(async (r) =>
       parse(await r.text())
-    ),
+    )) as Topology<{
+      eclipses: GeometryCollection<{ ID: string; Date: Date }>;
+    }>,
     meta: {
       pageSource,
       related: [

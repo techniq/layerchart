@@ -84,11 +84,13 @@
 </script>
 
 <script lang="ts" generics="TData">
+  import type { SankeyGraph } from 'd3-sankey';
+
   const layerCakeContext = getContext<LayerCakeContext<TData>>('LayerCake');
   setChartContext(layerCakeContext);
 
   // Added to try to pass TData downward
-  export let data: TData[] | HierarchyNode<TData> = []; // Same as `ComponentProps<Chart<TData>>` but causes circular reference
+  export let data: TData[] | HierarchyNode<TData> | SankeyGraph<any, any> = []; // Same as `ComponentProps<Chart<TData>>` but causes circular reference
 </script>
 
 <slot {data} flatData={layerCakeContext.data} />

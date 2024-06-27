@@ -58,11 +58,11 @@ export function createSeries(options: {
   });
 }
 
-export function createDateSeries(options: {
+export function createDateSeries<T extends string>(options: {
   count?: number;
   min: number;
   max: number;
-  keys?: Array<string>;
+  keys?: T[];
   value?: 'number' | 'integer';
 }) {
   const now = startOfToday();
@@ -83,7 +83,7 @@ export function createDateSeries(options: {
           ];
         })
       ),
-    } as { date: Date; value: number };
+    } as { date: Date } & { [K in T]: number };
   });
 }
 

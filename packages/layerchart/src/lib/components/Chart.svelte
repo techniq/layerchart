@@ -22,12 +22,13 @@
 </script>
 
 <script lang="ts" generics="TData">
+  import { accessor, type Accessor } from 'layerchart/utils/common.js';
+
   import type { HierarchyNode } from 'd3-hierarchy';
   import type { SankeyGraph } from 'd3-sankey';
 
   import { onMount, type ComponentProps } from 'svelte';
   import { max, min } from 'd3-array';
-  import { get } from 'lodash-es';
   import { isScaleBand, type AnyScale } from '$lib/utils/scales.js';
 
   import ChartContext from './ChartContext.svelte';
@@ -35,8 +36,6 @@
   import TooltipContext from './TooltipContext.svelte';
   import TransformContext from './TransformContext.svelte';
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
-
-  type Accessor = string | number | ((d: TData) => number);
 
   interface $$Props {
     /** Whether this chart should be rendered server side. (default: false) */
@@ -71,13 +70,13 @@
     flatData?: any[];
 
     /** The x accessor. The key in each row of data that corresponds to the x-field. This can be a string, an accessor function, a number or an array of any combination of those types. This property gets converted to a function when you access it through the context. */
-    x?: Accessor | Accessor[];
+    x?: Accessor<TData>;
     /** The y accessor. The key in each row of data that corresponds to the y-field. This can be a string, an accessor function, a number or an array of any combination of those types. This property gets converted to a function when you access it through the context. */
-    y?: Accessor | Accessor[];
+    y?: Accessor<TData>;
     /** The z accessor. The key in each row of data that corresponds to the z-field. This can be a string, an accessor function, a number or an array of any combination of those types. This property gets converted to a function when you access it through the context. */
-    z?: Accessor | Accessor[];
+    z?: Accessor<TData>;
     /** The r accessor. The key in each row of data that corresponds to the r-field. This can be a string, an accessor function, a number or an array of any combination of those types. This property gets converted to a function when you access it through the context. */
-    r?: Accessor | Accessor[];
+    r?: Accessor<TData>;
 
     /** Set a min or max. For linear scales, if you want to inherit the value from the data's extent, set that value to `null`. This value can also be an array because sometimes your scales are [piecewise](https://github.com/d3/d3-scale#continuous_domain) or are a list of discrete values such as in [ordinal scales](https://github.com/d3/d3-scale#ordinal-scales), useful for color series. Set it to a function that receives the computed domain and lets you return a modified domain, useful for sorting values. */
     xDomain?: [number | null, number | null] | string[] | number[] | Function;
@@ -193,25 +192,10 @@
     transformContext?: typeof transformContext;
   }
 
-  /**
-   *  Resolve a value from data based on the accessor type
-   */
-  function getValue(accessor: Accessor | Accessor[] | undefined, d: TData): any {
-    if (Array.isArray(accessor)) {
-      return accessor.map((a) => getValue(a, d));
-    } else if (typeof accessor === 'function') {
-      return accessor(d) || 0;
-    } else if (typeof accessor === 'string') {
-      return get(d, accessor);
-    } else {
-      throw new Error('Unexpected accessor: ' + accessor);
-    }
-  }
-
   export let data: TData[] | HierarchyNode<TData> | SankeyGraph<any, any> = [];
 
-  export let x: Accessor | Accessor[] | undefined = undefined;
-  export let y: Accessor | Accessor[] | undefined = undefined;
+  export let x: Accessor<TData> = undefined;
+  export let y: Accessor<TData> = undefined;
   export let yScale: AnyScale | undefined = undefined;
 
   /**
@@ -221,7 +205,7 @@
 
   let xDomain: [number, number] | undefined = undefined;
   $: if (xBaseline != null && Array.isArray(data)) {
-    const xValues = data.flatMap((d) => getValue(x, d));
+    const xValues = data.flatMap(accessor(x));
     xDomain = [min([xBaseline, ...xValues]), max([xBaseline, ...xValues])];
   }
 
@@ -232,7 +216,7 @@
 
   let yDomain: [number, number] | undefined = undefined;
   $: if (yBaseline != null && Array.isArray(data)) {
-    const yValues = data.flatMap((d) => getValue(y, d));
+    const yValues = data.flatMap(accessor(y));
     yDomain = [min([yBaseline, ...yValues]), max([yBaseline, ...yValues])];
   }
 

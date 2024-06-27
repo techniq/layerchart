@@ -1,7 +1,7 @@
 <script lang="ts">
   import { scaleOrdinal } from 'd3-scale';
   import { randomUniform } from 'd3-random';
-  import { forceX, forceY, forceManyBody, forceCollide } from 'd3-force';
+  import { forceX, forceY, forceManyBody, forceCollide, type SimulationNodeDatum } from 'd3-force';
 
   import { Chart, Circle, Group, ForceSimulation, Svg } from 'layerchart';
 
@@ -17,6 +17,12 @@
     'hsl(var(--color-warning))',
     'hsl(var(--color-danger))',
   ]);
+
+  const xForce = forceX().strength(0.01);
+  const yForce = forceY().strength(0.01);
+  const collideForce = forceCollide<SimulationNodeDatum & { r: number }>()
+    .radius((d) => d.r + 1)
+    .iterations(3);
 </script>
 
 <h1>Examples</h1>
@@ -27,11 +33,9 @@
       <Svg>
         <ForceSimulation
           forces={{
-            x: forceX().strength(0.01),
-            y: forceY().strength(0.01),
-            collide: forceCollide()
-              .radius((d) => d.r + 1)
-              .iterations(3),
+            x: xForce,
+            y: yForce,
+            collide: collideForce,
             charge: forceManyBody().strength((d, i) => (i ? 0 : (-width * 2) / 3)),
           }}
           alphaTarget={0.3}

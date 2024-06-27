@@ -3,12 +3,13 @@ import { max, min } from 'd3-array';
 
 import { groupScaleBand, isScaleBand } from './scales.js';
 import type { ChartContext } from '../components/ChartContext.svelte';
+import { accessor, type Accessor } from './common.js';
 
 type DimensionGetterOptions = {
   /** Override `x` accessor from context */
-  x?: (item: any) => any;
+  x?: Accessor;
   /** Override `y` accessor from context */
-  y?: (item: any) => any;
+  y?: Accessor;
   groupBy?: string;
   inset?: number;
   groupPadding?: { inner?: number; outer?: number };
@@ -45,12 +46,7 @@ export function createDimensionGetter<TData>(
             $yScale.bandwidth ? (y1Scale ? y1Scale.bandwidth() : $yScale.bandwidth()) - inset : 0
           );
 
-          const _x = options?.x
-            ? typeof options.x === 'string'
-              ? // @ts-ignore
-                (d: any) => d[options.x]
-              : options?.x
-            : $xAccessor;
+          const _x = accessor(options?.x ?? $xAccessor);
           const xValue = _x(item);
 
           let left = 0;
@@ -92,12 +88,7 @@ export function createDimensionGetter<TData>(
             $xScale.bandwidth ? (x1Scale ? x1Scale.bandwidth() : $xScale.bandwidth()) - inset : 0
           );
 
-          const _y = options?.y
-            ? typeof options.y === 'string'
-              ? // @ts-ignore
-                (d: any) => d[options.y]
-              : options?.y
-            : $yAccessor;
+          const _y = accessor(options?.y ?? $yAccessor);
           const yValue = _y(item);
 
           let top = 0;
