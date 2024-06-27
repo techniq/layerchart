@@ -75,11 +75,12 @@ export function createDimensionGetter<TData>(
             width: $xScale(right) - $xScale(left),
             height,
           };
-        } else if (isScaleBand($xScale)) {
+        } else {
           // Vertical band or linear
-          const x1Scale = groupBy
-            ? groupScaleBand($xScale, $flatData, groupBy, options?.groupPadding)
-            : null;
+          const x1Scale =
+            groupBy && isScaleBand($xScale)
+              ? groupScaleBand($xScale, $flatData, groupBy, options?.groupPadding)
+              : null;
 
           // @ts-expect-error
           const x = firstValue($xGet(item)) + (x1Scale ? x1Scale(item[groupBy]) : 0) + inset / 2;
