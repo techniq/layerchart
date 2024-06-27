@@ -42,7 +42,10 @@
     | string[]
     | number[]
     | Date[]
-    | Function;
+    | Function
+    // 'null' useful for Brush component
+    | null[]
+    | null;
 
   interface $$Props {
     /** Whether this chart should be rendered server side. (default: false) */
