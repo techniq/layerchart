@@ -48,16 +48,16 @@
     | null;
 
   interface $$Props {
-    /** Whether this chart should be rendered server side. (default: false) */
+    /** Whether this chart should be rendered server side. @default false */
     ssr?: boolean;
 
-    /** Whether to allow pointer events via CSS. Set this to `false` to set `pointer-events: none;` on all components, disabling all mouse interaction. (default: true) */
+    /** Whether to allow pointer events via CSS. Set this to `false` to set `pointer-events: none;` on all components, disabling all mouse interaction. @default true */
     pointerEvents?: boolean;
 
-    /** Determine the positioning of the wrapper div. Set this to `'absolute'` when you want to stack cakes. (default: 'relative') */
+    /** Determine the positioning of the wrapper div. Set this to `'absolute'` when you want to stack cakes. @default 'relative' */
     position?: string;
 
-    /** If `true`, set all scale ranges to `[0, 100]`. Ranges reversed via `xReverse`, `yReverse`, `zReverse` or `rReverse` props will continue to be reversed as usual. (default: false) */
+    /** If `true`, set all scale ranges to `[0, 100]`. Ranges reversed via `xReverse`, `yReverse`, `zReverse` or `rReverse` props will continue to be reversed as usual. @default false */
     percentRange?: boolean;
 
     /** Override the automated width.  */
@@ -97,13 +97,13 @@
     /** Set a min or max. For linear scales, if you want to inherit the value from the data's extent, set that value to `null`. This value can also be an array because sometimes your scales are [piecewise](https://github.com/d3/d3-scale#continuous_domain) or are a list of discrete values such as in [ordinal scales](https://github.com/d3/d3-scale#ordinal-scales), useful for color series. Set it to a function that receives the computed domain and lets you return a modified domain, useful for sorting values. */
     rDomain?: DomainType;
 
-    /** Applies D3's [scale.nice()](https://github.com/d3/d3-scale#continuous_nice) to the x domain. (default: false) */
+    /** Applies D3's [scale.nice()](https://github.com/d3/d3-scale#continuous_nice) to the x domain. @default false */
     xNice?: boolean | number;
-    /** Applies D3's [scale.nice()](https://github.com/d3/d3-scale#continuous_nice) to the y domain. (default: false) */
+    /** Applies D3's [scale.nice()](https://github.com/d3/d3-scale#continuous_nice) to the y domain. @default false */
     yNice?: boolean | number;
-    /**  Applies D3's [scale.nice()](https://github.com/d3/d3-scale#continuous_nice) to the z domain. (default: false) */
+    /**  Applies D3's [scale.nice()](https://github.com/d3/d3-scale#continuous_nice) to the z domain. @default false */
     zNice?: boolean | number;
-    /**  Applies D3's [scale.nice()](https://github.com/d3/d3-scale#continuous_nice) to the r domain. (default: false) */
+    /**  Applies D3's [scale.nice()](https://github.com/d3/d3-scale#continuous_nice) to the r domain. @default false */
     rNice?: boolean | number;
 
     /** @type Assign a pixel value to add to the min or max of the scale. This will increase the scales domain by the scale unit equivalent of the provided pixels. */
@@ -145,13 +145,13 @@
       | string[]
       | ((args: { width: number; height: number }) => number[] | string[]);
 
-    /** Reverse the default x range. By default this is `false` and the range is `[0, width]`. Ignored if you set the xRange prop. (default: false) */
+    /** Reverse the default x range. By default this is `false` and the range is `[0, width]`. Ignored if you set the xRange prop. @default false */
     xReverse?: boolean;
-    /** Reverse the default y range. By default this is `true` and the range is `[height, 0]` unless using an ordinal scale with a `.bandwidth` method for `yScale`. Ignored if you set the `yRange` prop. (default: true) */
+    /** Reverse the default y range. By default this is `true` and the range is `[height, 0]` unless using an ordinal scale with a `.bandwidth` method for `yScale`. Ignored if you set the `yRange` prop. @default true */
     yReverse?: boolean;
-    /** @type {Boolean} [zReverse=false] Reverse the default z range. By default this is `false` and the range is `[0, width]`. Ignored if you set the zRange prop. */
+    /** @type {Boolean} [zReverse=false] Reverse the default z range. By default this is `false` and the range is `[0, width]`. Ignored if you set the zRange prop. @default false */
     zReverse?: boolean;
-    /** @type {Boolean} [rReverse=false] Reverse the default r range. By default this is `false` and the range is `[1, 25]`. Ignored if you set the rRange prop. */
+    /** @type {Boolean} [rReverse=false] Reverse the default r range. By default this is `false` and the range is `[1, 25]`. Ignored if you set the rRange prop. @default false */
     rReverse?: boolean;
 
     /** @type {Boolean} [xDomainSort=true] Only used when scale is ordinal. Set whether the calculated unique items come back sorted. */
