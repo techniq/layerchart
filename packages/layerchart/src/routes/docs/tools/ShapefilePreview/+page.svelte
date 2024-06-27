@@ -30,7 +30,6 @@
   export let data;
 
   $: geojson = data.geojson;
-  $: console.log({ geojson });
 
   let file = data.file;
 

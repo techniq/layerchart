@@ -24,8 +24,6 @@
   const states = feature(data.geojson, data.geojson.objects.states);
   const counties = feature(data.geojson, data.geojson.objects.counties);
 
-  $: console.log({ data });
-
   const projection = geoIdentity as unknown as () => GeoProjection;
 
   const statesById = index(states.features, (d) => d.id);

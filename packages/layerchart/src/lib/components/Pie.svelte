@@ -83,7 +83,6 @@
     .value($x);
 
   $: arcs = pie(data ?? (Array.isArray($contextData) ? $contextData : []));
-  // $: console.log({ arcs, $yRange });
 
   $: radius = Math.min($width / 2, $height / 2);
   $: coords = {
@@ -101,7 +100,7 @@
 
 <Group x={coords.x} y={coords.y}>
   <slot {arcs}>
-    {#each arcs as arc, index}
+    {#each arcs as arc}
       <Arc
         startAngle={arc.startAngle}
         endAngle={arc.endAngle}

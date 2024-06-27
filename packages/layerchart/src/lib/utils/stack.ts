@@ -42,10 +42,7 @@ export function createStackData<TData>(
         pivotData
       );
 
-      //console.log({ pivotData, stackData })
-
       return stackData.flatMap((series) => {
-        //console.log({ series })
         return series.flatMap((s) => {
           return {
             ...itemData[0], // TODO: More than one should use stacks or aggregate values?
