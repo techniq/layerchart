@@ -4,8 +4,8 @@
   import { scaleOrdinal } from 'd3-scale';
   import { schemeCategory10 } from 'd3-scale-chromatic';
 
-  import { Chart, Circle, ForceSimulation, Link, Svg, Tooltip, TooltipItem } from 'layerchart';
-  import { Checkbox, Field, Progress, ProgressCircle, RangeField } from 'svelte-ux';
+  import { Chart, Circle, ForceSimulation, Link, Svg, Tooltip } from 'layerchart';
+  import { Checkbox, Field, ProgressCircle, RangeField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -244,7 +244,7 @@
   </div>
 </div>
 <Preview data={data.miserables}>
-  <div class="h-[600px] p-4 border rounded">
+  <div class="h-[600px] p-4 border rounded overflow-hidden">
     <Chart data={nodes} let:width let:height let:tooltip>
       <Svg>
         <ForceSimulation
