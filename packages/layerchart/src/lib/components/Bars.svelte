@@ -4,7 +4,7 @@
   import { chartContext } from './ChartContext.svelte';
   import Bar from './Bar.svelte';
   import Rect from './Rect.svelte';
-  import type { Accessor } from '../utils/common.js';
+  import { chartDataArray, type Accessor } from '../utils/common.js';
 
   const { data, rGet, config } = chartContext();
 
@@ -37,7 +37,7 @@
 
 <g class="Bars">
   <slot>
-    {#each $data as item}
+    {#each chartDataArray($data) as item}
       <Bar
         bar={item}
         {x}

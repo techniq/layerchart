@@ -3,6 +3,7 @@
   import { stack } from 'd3-shape';
   import { format } from 'date-fns';
   import { formatDate, PeriodType } from 'svelte-ux/utils/date';
+  import { flatten } from 'svelte-ux/utils/array';
 
   import {
     Area,
@@ -14,11 +15,11 @@
     Svg,
     Tooltip,
     TooltipItem,
+    chartDataArray,
   } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
-  import { flatten } from 'svelte-ux/utils/array';
 
   const keys = ['apples', 'bananas', 'oranges'];
   const data = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer', keys });
@@ -126,7 +127,7 @@
             'hsl(var(--color-info-500) / 10%)',
           ])}
 
-          {#each data as seriesData, index}
+          {#each chartDataArray(data) as seriesData, index}
             {@const primaryColor = primaryColorScale(String(index))}
             {@const secondaryColor = secondaryColorScale(String(index))}
 

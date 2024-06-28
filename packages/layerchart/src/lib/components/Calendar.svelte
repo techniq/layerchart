@@ -9,6 +9,7 @@
   import type { TooltipContextValue } from './TooltipContext.svelte';
   import MonthPath from './MonthPath.svelte';
   import Text from './Text.svelte';
+  import { chartDataArray } from '../utils/common.js';
 
   export let start: Date;
   export let end: Date;
@@ -42,7 +43,7 @@
       ? [cellSize, cellSize]
       : [chartCellSize, chartCellSize];
 
-  $: dataByDate = data && $config.x ? index($data, (d) => $x(d)) : new Map();
+  $: dataByDate = data && $config.x ? index(chartDataArray($data), (d) => $x(d)) : new Map();
 
   $: cells = yearDays.map((date) => {
     const cellData = dataByDate.get(date) ?? { date };

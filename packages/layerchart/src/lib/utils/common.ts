@@ -1,4 +1,6 @@
+import type Chart from '../components/Chart.svelte';
 import { get } from 'lodash-es';
+import type { ComponentProps } from 'svelte';
 
 export type Accessor<TData = any> =
   | number
@@ -14,10 +16,23 @@ export function accessor<TData = any>(prop: Accessor<TData>): (d: TData) => any 
     // function
     return prop;
   } else if (typeof prop === 'string') {
-    // path
+    // path string
     return (d: TData) => get(d, prop);
   } else {
     // return full object
     return (d: TData) => d;
+  }
+}
+
+/** Guarantee chart data is an array */
+export function chartDataArray<TData = any>(data: ComponentProps<Chart<TData>>['data']) {
+  if (data == null) {
+    return [];
+  } else if (Array.isArray(data)) {
+    return data;
+  } else if ('nodes' in data) {
+    return data.nodes;
+  } else {
+    return data.descendants();
   }
 }

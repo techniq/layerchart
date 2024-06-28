@@ -6,6 +6,7 @@
   import { chartContext } from './ChartContext.svelte';
   import Area from './Area.svelte';
   import Spline from './Spline.svelte';
+  import { chartDataArray } from '../utils/common.js';
 
   const { data, rGet } = chartContext();
 
@@ -16,7 +17,7 @@
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
   // Render in reverse order so bottom stacks are rendered last (and stack above the upper stacks).  Fixes when upper stack has 0 value
-  $: lineData = [...$data].reverse();
+  $: lineData = [...chartDataArray($data)].reverse();
 </script>
 
 {#if line}
@@ -37,7 +38,7 @@
 
 <slot data={$data}>
   <g class="area-group">
-    {#each $data as seriesData}
+    {#each chartDataArray($data) as seriesData}
       <Area
         data={seriesData}
         y0={(d) => d[0]}
