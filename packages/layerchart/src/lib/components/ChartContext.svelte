@@ -26,7 +26,7 @@
     z: Readable<(d: TData) => any>;
     r: Readable<(d: TData) => any>;
     custom: Readable<Object>;
-    data: Readable<TData[] | HierarchyNode<TData>>;
+    data: Readable<TData[] | HierarchyNode<TData> | SankeyGraph<any, any>>;
     xNice: Readable<number | boolean>;
     yNice: Readable<number | boolean>;
     zNice: Readable<number | boolean>;
