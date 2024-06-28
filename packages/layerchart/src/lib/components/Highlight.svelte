@@ -1,6 +1,7 @@
 <script lang="ts">
   import { type ComponentProps } from 'svelte';
   import { max, min } from 'd3-array';
+  import type { Series, SeriesPoint } from 'd3-shape';
   import { cls, notNull } from 'svelte-ux';
 
   import { chartContext } from './ChartContext.svelte';
@@ -13,6 +14,7 @@
   import { isScaleBand } from '$lib/utils/scales.js';
 
   const {
+    data: contextData,
     flatData,
     x,
     xDomain,
@@ -51,7 +53,7 @@
 
   // TODO: Fix circle points being backwards for stack (see AreaStack)
 
-  let _points: { x: number; y: number }[] = [];
+  let _points: { x: number; y: number; fill: string }[] = [];
   let _lines: { x1: number; y1: number; x2: number; y2: number }[] = [];
   let _area = {
     x: 0,
@@ -181,18 +183,35 @@
       _points = xCoord.filter(notNull).map((xItem, i) => ({
         x: xItem + xOffset,
         y: $yGet(highlightData) + yOffset,
+        fill: $config.r ? $rGet(highlightData) : null,
       }));
     } else if (Array.isArray(highlightData)) {
       // Stack series
-      _points = highlightData.map((yValue, i) => ({
-        x: xCoord + xOffset,
-        y: $yScale(yValue) + yOffset,
-      }));
+      // `highlightData` is a single stack layer/point, which is an 2 element array with an extra `data` property `[number, number, data: any]`.
+      const highlightSeriesPoint = highlightData as SeriesPoint<any>;
+
+      // Ignore non-array data such as hierarchy and graph (make Typescript happy)
+      if (Array.isArray($contextData)) {
+        // For each series, find the related data point
+        const seriesPointsData = $contextData.map((series: Series<any, any>) => {
+          return {
+            series,
+            point: series.find((d) => $x(d) === $x(highlightSeriesPoint))!,
+          };
+        });
+
+        _points = seriesPointsData.map((seriesPoint, i) => ({
+          x: xCoord + xOffset,
+          y: $yScale(seriesPoint.point[1]) + yOffset,
+          fill: $config.r ? $rGet(seriesPoint.series) : null,
+        }));
+      }
     } else {
       _points = [
         {
           x: xCoord + xOffset,
           y: $yGet(highlightData) + yOffset,
+          fill: $config.r ? $rGet(highlightData) : null,
         },
       ];
     }
@@ -259,18 +278,16 @@
   {#if points}
     <slot name="points" points={_points}>
       {#each _points as point}
-        <!-- TODO: Improve color with stacked data -->
-        {@const fill = $config.r ? $rGet(highlightData) : null}
         <Circle
           spring={motion}
           cx={point.x}
           cy={point.y}
+          fill={point.fill}
           r={4}
-          {fill}
           {...typeof points === 'object' ? points : null}
           class={cls(
             'stroke-[6] stroke-white [paint-order:stroke] drop-shadow',
-            !fill && 'fill-primary',
+            !point.fill && 'fill-primary',
             typeof points === 'object' ? points.class : null
           )}
         />

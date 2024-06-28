@@ -11,6 +11,7 @@
     Axis,
     Chart,
     Highlight,
+    Labels,
     LinearGradient,
     Svg,
     Tooltip,
@@ -94,6 +95,38 @@
     </Chart>
   </div>
 </Preview>
+
+<!-- TODO: Current shows the stacked value, but should it show the individual series value instead? -->
+<!-- <h2>With Labels</h2>
+
+<Preview data={stackData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={stackData}
+      flatData={flatten(stackData)}
+      x={(d) => d.data.date}
+      xScale={scaleTime()}
+      y={[0, 1]}
+      yNice
+      r="key"
+      rScale={scaleOrdinal()}
+      rDomain={keys}
+      rRange={['hsl(var(--color-danger))', 'hsl(var(--color-success))', 'hsl(var(--color-info))']}
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <AreaStack line={{ 'stroke-width': 2 }} />
+        <Labels />
+      </Svg>
+    </Chart>
+  </div>
+</Preview> -->
 
 <h2>Slot with gradient</h2>
 
