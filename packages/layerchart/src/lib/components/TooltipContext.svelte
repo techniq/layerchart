@@ -186,7 +186,7 @@
     }
 
     // If tooltipData not provided already (voronoi, etc), attempt to find it
-    // TODO: When using bisect-x/y/band, values should be sorted.  Tyipcally are for `x`, but not `y` (and band depends on if x or y scale)
+    // TODO: When using bisect-x/y/band, values should be sorted.  Typically they are for `x`, but not `y` (and band depends on if x or y scale)
     if (tooltipData == null) {
       switch (mode) {
         case 'bisect-x': {
