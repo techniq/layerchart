@@ -259,6 +259,10 @@
       y={['apples', 'bananas', 'oranges']}
       yDomain={[0, null]}
       yNice
+      r={(d) => d.$key}
+      rScale={scaleOrdinal()}
+      rDomain={Object.keys(fruitColors)}
+      rRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
       tooltip={{ mode: 'bisect-x' }}
     >
@@ -291,8 +295,7 @@
           fill-opacity={0.3}
           line={{ stroke: fruitColors.oranges, class: 'stroke-2' }}
         />
-        <!-- TODO: Fix points with y array -->
-        <Highlight lines />
+        <Highlight lines points />
       </Svg>
       <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
         <TooltipItem label="apples" value={data.apples} />

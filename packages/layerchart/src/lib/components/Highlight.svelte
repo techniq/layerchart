@@ -179,32 +179,76 @@
 
     // points
     if (Array.isArray(xCoord)) {
-      // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
-      _points = xCoord.filter(notNull).map((xItem, i) => ({
-        x: xItem + xOffset,
-        y: $yGet(highlightData) + yOffset,
-        fill: $config.r ? $rGet(highlightData) : null,
-      }));
-    } else if (Array.isArray(highlightData)) {
-      // Stack series
-      // `highlightData` is a single stack layer/point, which is an 2 element array with an extra `data` property `[number, number, data: any]`.
-      const highlightSeriesPoint = highlightData as SeriesPoint<any>;
+      // `x` accessor with multiple properties (ex. `x={['start', 'end']}` or `x={[0, 1]}`)
 
-      // Ignore non-array data such as hierarchy and graph (make Typescript happy)
-      if (Array.isArray($contextData)) {
-        // For each series, find the related data point
-        const seriesPointsData = $contextData.map((series: Series<any, any>) => {
+      if (Array.isArray(highlightData)) {
+        // Stack series  (ex. `y={[['apples', 'bananas', 'oranges']]})`)
+        // `highlightData` is a single stack layer/point, which is an 2 element array with an extra `data` property `[number, number, data: any]`.
+        const highlightSeriesPoint = highlightData as SeriesPoint<any>;
+
+        // Ignore non-array data such as hierarchy and graph (make Typescript happy)
+        if (Array.isArray($contextData)) {
+          // For each series, find the related data point
+          const seriesPointsData = $contextData.map((series: Series<any, any>) => {
+            return {
+              series,
+              point: series.find((d) => $y(d) === $y(highlightSeriesPoint))!,
+            };
+          });
+
+          _points = seriesPointsData.map((seriesPoint, i) => ({
+            x: $xScale(seriesPoint.point[1]) + xOffset,
+            y: yCoord + yOffset,
+            fill: $config.r ? $rGet(seriesPoint.series) : null,
+          }));
+        }
+      } else {
+        // Multi series / etc  (ex. `y={['apples', 'bananas', 'oranges']}`)
+        _points = xCoord.filter(notNull).map((xItem, i) => {
+          const $key = $config.x[i];
           return {
-            series,
-            point: series.find((d) => $x(d) === $x(highlightSeriesPoint))!,
+            x: xItem + xOffset,
+            y: $xGet(highlightData) + yOffset,
+            // TODO: is there a better way to expose the series key/value?
+            fill: $config.r ? $rGet({ ...highlightData, $key }) : null,
           };
         });
+      }
+    } else if (Array.isArray(yCoord)) {
+      // `y` accessor with multiple properties (ex. `y={['apples', 'bananas', 'oranges']}` or `y={[0, 1]})
 
-        _points = seriesPointsData.map((seriesPoint, i) => ({
-          x: xCoord + xOffset,
-          y: $yScale(seriesPoint.point[1]) + yOffset,
-          fill: $config.r ? $rGet(seriesPoint.series) : null,
-        }));
+      if (Array.isArray(highlightData)) {
+        // Stack series  (ex. `y={[['apples', 'bananas', 'oranges']]})`)
+        // `highlightData` is a single stack layer/point, which is an 2 element array with an extra `data` property `[number, number, data: any]`.
+        const highlightSeriesPoint = highlightData as SeriesPoint<any>;
+
+        // Ignore non-array data such as hierarchy and graph (make Typescript happy)
+        if (Array.isArray($contextData)) {
+          // For each series, find the related data point
+          const seriesPointsData = $contextData.map((series: Series<any, any>) => {
+            return {
+              series,
+              point: series.find((d) => $x(d) === $x(highlightSeriesPoint))!,
+            };
+          });
+
+          _points = seriesPointsData.map((seriesPoint, i) => ({
+            x: xCoord + xOffset,
+            y: $yScale(seriesPoint.point[1]) + yOffset,
+            fill: $config.r ? $rGet(seriesPoint.series) : null,
+          }));
+        }
+      } else {
+        // Multi series / etc  (ex. `y={['apples', 'bananas', 'oranges']}`)
+        _points = yCoord.filter(notNull).map((yItem, i) => {
+          const $key = $config.y[i];
+          return {
+            x: $xGet(highlightData) + xOffset,
+            y: yItem + yOffset,
+            // TODO: is there a better way to expose the series key/value?
+            fill: $config.r ? $rGet({ ...highlightData, $key }) : null,
+          };
+        });
       }
     } else {
       _points = [
