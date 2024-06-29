@@ -12,20 +12,19 @@
   import { tooltipContext } from './TooltipContext.svelte';
 
   import { isScaleBand } from '$lib/utils/scales.js';
+  import { accessor, type Accessor } from '$lib/utils/common.js';
 
   const {
     data: contextData,
     flatData,
-    x,
+    x: xContext,
     xDomain,
     xScale,
     xRange,
-    xGet,
-    y,
+    y: yContext,
     yDomain,
     yScale,
     yRange,
-    yGet,
     rGet,
     config,
   } = chartContext();
@@ -33,6 +32,16 @@
 
   /** Highlight specific data (annotate), espect uses tooltip data */
   export let data: any = undefined;
+
+  /**
+   * Override `x` from context
+   */
+  export let x: Accessor = $xContext;
+
+  /**
+   * Override `y` from context
+   */
+  export let y: Accessor = $yContext;
 
   export let axis: 'x' | 'y' | 'both' | 'none' | undefined = undefined;
 
@@ -53,6 +62,9 @@
 
   // TODO: Fix circle points being backwards for stack (see AreaStack)
 
+  const _x = accessor(x);
+  const _y = accessor(y);
+
   let _points: { x: number; y: number; fill: string }[] = [];
   let _lines: { x1: number; y1: number; x2: number; y2: number }[] = [];
   let _area = {
@@ -65,11 +77,13 @@
   $: highlightData = data ?? $tooltip.data;
 
   $: if (highlightData) {
-    let xCoord = $xGet(highlightData);
-    let xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
+    const xValue = _x(highlightData);
+    const xCoord = Array.isArray(xValue) ? xValue.map((v) => $xScale(v)) : $xScale(xValue);
+    const xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
 
-    let yCoord = $yGet(highlightData);
-    let yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
+    const yValue = _y(highlightData);
+    const yCoord = Array.isArray(yValue) ? yValue.map((v) => $yScale(v)) : $yScale(yValue);
+    const yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
 
     // Reset lines
     _lines = [];
@@ -112,9 +126,9 @@
         _area.width = $xScale.step();
       } else {
         // Find width to next data point
-        const index = $flatData.findIndex((d) => Number($x(d)) === Number($x(highlightData)));
+        const index = $flatData.findIndex((d) => Number(_x(d)) === Number(_x(highlightData)));
         const isLastPoint = index + 1 === $flatData.length;
-        const nextDataPoint = isLastPoint ? max($xDomain) : $x($flatData[index + 1]);
+        const nextDataPoint = isLastPoint ? max($xDomain) : _x($flatData[index + 1]);
         _area.width = ($xScale(nextDataPoint) ?? 0) - (xCoord ?? 0);
       }
 
@@ -161,9 +175,9 @@
         _area.height = $yScale.step();
       } else {
         // Find width to next data point
-        const index = $flatData.findIndex((d) => Number($x(d)) === Number($x(highlightData)));
+        const index = $flatData.findIndex((d) => Number(_x(d)) === Number(_x(highlightData)));
         const isLastPoint = index + 1 === $flatData.length;
-        const nextDataPoint = isLastPoint ? max($yDomain) : $x($flatData[index + 1]);
+        const nextDataPoint = isLastPoint ? max($yDomain) : _x($flatData[index + 1]);
         _area.height = ($yScale(nextDataPoint) ?? 0) - (yCoord ?? 0);
       }
 
@@ -192,7 +206,7 @@
           const seriesPointsData = $contextData.map((series: Series<any, any>) => {
             return {
               series,
-              point: series.find((d) => $y(d) === $y(highlightSeriesPoint))!,
+              point: series.find((d) => _y(d) === _y(highlightSeriesPoint))!,
             };
           });
 
@@ -228,7 +242,7 @@
           const seriesPointsData = $contextData.map((series: Series<any, any>) => {
             return {
               series,
-              point: series.find((d) => $x(d) === $x(highlightSeriesPoint))!,
+              point: series.find((d) => _x(d) === _x(highlightSeriesPoint))!,
             };
           });
 
@@ -331,7 +345,7 @@
           {...typeof points === 'object' ? points : null}
           class={cls(
             'stroke-[6] stroke-white [paint-order:stroke] drop-shadow',
-            !point.fill && 'fill-primary',
+            !point.fill && typeof points === 'object' && !points.fill && 'fill-primary',
             typeof points === 'object' ? points.class : null
           )}
         />
