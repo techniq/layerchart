@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.43.3
+
+### Patch Changes
+
+- [Highlight] Support non-stack array accessor when displaying points ([#215](https://github.com/techniq/layerchart/pull/215))
+
 ## 0.43.2
 
 ### Patch Changes
