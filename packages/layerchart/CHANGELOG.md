@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.43.4
+
+### Patch Changes
+
+- [Highlight] Support passing `x` and `y` accessor overrides (useful with area series via overrides). ([`377c544bed4372aff1f99e49c4aae42ca2e7e0ba`](https://github.com/techniq/layerchart/commit/377c544bed4372aff1f99e49c4aae42ca2e7e0ba))
+
 ## 0.43.3
 
 ### Patch Changes
