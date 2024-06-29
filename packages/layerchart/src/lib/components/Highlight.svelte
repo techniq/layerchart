@@ -208,7 +208,7 @@
           const $key = $config.x[i];
           return {
             x: xItem + xOffset,
-            y: $xGet(highlightData) + yOffset,
+            y: yCoord + yOffset,
             // TODO: is there a better way to expose the series key/value?
             fill: $config.r ? $rGet({ ...highlightData, $key }) : null,
           };
@@ -243,7 +243,7 @@
         _points = yCoord.filter(notNull).map((yItem, i) => {
           const $key = $config.y[i];
           return {
-            x: $xGet(highlightData) + xOffset,
+            x: xCoord + xOffset,
             y: yItem + yOffset,
             // TODO: is there a better way to expose the series key/value?
             fill: $config.r ? $rGet({ ...highlightData, $key }) : null,
@@ -254,7 +254,7 @@
       _points = [
         {
           x: xCoord + xOffset,
-          y: $yGet(highlightData) + yOffset,
+          y: yCoord + yOffset,
           fill: $config.r ? $rGet(highlightData) : null,
         },
       ];
