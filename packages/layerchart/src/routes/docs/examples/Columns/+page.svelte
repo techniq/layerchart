@@ -1,7 +1,7 @@
 <script lang="ts">
   import { cubicInOut } from 'svelte/easing';
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
-  import { mean } from 'd3-array';
+  import { extent, mean } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
   import { format } from 'date-fns';
 
@@ -36,7 +36,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
-  import { extent } from '$lib/utils/array.js';
 
   const data = createDateSeries({
     count: 30,

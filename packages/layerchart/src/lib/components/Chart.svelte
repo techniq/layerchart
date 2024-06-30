@@ -38,13 +38,9 @@
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
 
   type DomainType =
-    | [number | Date | null, number | Date | null]
-    | string[]
-    | (number | null)[]
-    | Date[]
+    | (number | string | Date | null | undefined)[]
     | Function
     // 'null' useful for Brush component
-    | null[]
     | null;
 
   interface $$Props {
