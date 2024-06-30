@@ -1,5 +1,13 @@
 # LayerChart
 
+## 0.43.5
+
+### Patch Changes
+
+- [Highlight] Fix coloring points with primary color by default ([`cad5382e69e8ecb782f2935c2babcac70387be05`](https://github.com/techniq/layerchart/commit/cad5382e69e8ecb782f2935c2babcac70387be05))
+
+- [Chart] Relax DomainType typing to be more forgiving ([`1ab9d85f61053e714e734ea1df6bf98333255acd`](https://github.com/techniq/layerchart/commit/1ab9d85f61053e714e734ea1df6bf98333255acd))
+
 ## 0.43.4
 
 ### Patch Changes
