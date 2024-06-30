@@ -345,7 +345,7 @@
           {...typeof points === 'object' ? points : null}
           class={cls(
             'stroke-[6] stroke-white [paint-order:stroke] drop-shadow',
-            !point.fill && typeof points !== 'object' && !points.fill && 'fill-primary',
+            !point.fill && (typeof points === 'boolean' || !points.fill) && 'fill-primary',
             typeof points === 'object' ? points.class : null
           )}
         />
