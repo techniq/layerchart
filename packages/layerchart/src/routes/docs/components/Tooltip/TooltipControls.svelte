@@ -37,10 +37,10 @@
     label="Highlight"
     bind:value={settings.highlight}
     options={[
-      { name: 'points', value: 'points' },
-      { name: 'lines', value: 'lines' },
-      { name: 'area', value: 'area' },
-      { name: 'bar', value: 'bar' },
+      { label: 'points', value: 'points' },
+      { label: 'lines', value: 'lines' },
+      { label: 'area', value: 'area' },
+      { label: 'bar', value: 'bar' },
     ]}
     formatSelected={({ options }) => options.map((x) => x.name).join(', ')}
   />

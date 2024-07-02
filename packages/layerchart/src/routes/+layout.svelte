@@ -142,7 +142,7 @@
 
       <QuickSearch
         options={quickSearchOptions}
-        on:change={(e) => goto(e.detail.value)}
+        on:change={(e) => goto(String(e.detail.value))}
         classes={{ button: 'max-sm:-mr-3' }}
       />
 

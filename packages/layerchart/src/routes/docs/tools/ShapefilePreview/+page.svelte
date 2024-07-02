@@ -35,7 +35,7 @@
 
   let projection = geoIdentity as unknown as () => GeoProjection;
   const projections = [
-    { label: 'Identity', value: geoIdentity },
+    { label: 'Identity', value: geoIdentity as () => GeoProjection },
     { label: 'Albers', value: geoAlbers },
     { label: 'Albers USA', value: geoAlbersUsa },
     { label: 'Equal Earth', value: geoEqualEarth },

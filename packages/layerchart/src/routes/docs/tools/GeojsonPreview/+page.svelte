@@ -9,6 +9,7 @@
     geoNaturalEarth1,
     geoOrthographic,
     geoIdentity,
+    type GeoProjection,
   } from 'd3-geo';
   import { scaleOrdinal } from 'd3-scale';
   import { schemeCategory10 } from 'd3-scale-chromatic';
@@ -45,7 +46,7 @@
 
   let projection = geoMercator;
   const projections = [
-    { label: 'Identity', value: geoIdentity },
+    { label: 'Identity', value: geoIdentity as () => GeoProjection },
     { label: 'Albers', value: geoAlbers },
     { label: 'Albers USA', value: geoAlbersUsa },
     { label: 'Equal Earth', value: geoEqualEarth },
