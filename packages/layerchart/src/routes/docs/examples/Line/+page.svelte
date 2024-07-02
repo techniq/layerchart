@@ -281,7 +281,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24, right: 48 }}
-      tooltip={{ mode: 'voronoi' }}
+      tooltip={{ mode: 'bisect-x' }}
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -292,10 +292,13 @@
         />
         <Spline y={(d) => d.y} class="stroke-2" stroke={fruitColors.bananas} />
         <Spline y={(d) => d.y1} class="stroke-2" stroke={fruitColors.oranges} />
-        <Highlight points lines />
+        <Highlight y={(d) => d.y} points={{ fill: fruitColors.bananas }} />
+        <Highlight y={(d) => d.y1} points={{ fill: fruitColors.oranges }} />
+        <Highlight lines />
       </Svg>
       <Tooltip let:data>
-        <TooltipItem label="value" value={data.y} />
+        <TooltipItem label="bananas" value={data.y} />
+        <TooltipItem label="oranges" value={data.y1} />
       </Tooltip>
     </Chart>
   </div>
