@@ -161,7 +161,13 @@
           size="sm"
           on:click={() => (showTableOfContents = false)}
         />
-        <TableOfContents icon={mdiChevronRight} class="px-4 py-2" />
+        <TableOfContents
+          icon={mdiChevronRight}
+          class="px-4 py-2"
+          on:nodeClick={(e) => {
+            showTableOfContents = false;
+          }}
+        />
       </Dialog>
     {/key}
   {/if}
