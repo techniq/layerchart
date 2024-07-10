@@ -16,7 +16,7 @@
     "up-deps": "pnpm update -r -i --latest"
   },
   "devDependencies": {
-    "@changesets/cli": "2.27.5",
+    "@changesets/cli": "2.27.7",
     "@svitejs/changesets-changelog-github-compact": "^1.1.0",
     "rimraf": "5.0.7"
   },
