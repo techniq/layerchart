@@ -1,6 +1,8 @@
 // Re-export for easy access (Svg and Canvas are provided by LayerChart)
 export { Html, WebGL } from 'layercake';
 
+export * from './charts/index.js';
+
 export { default as Arc } from './Arc.svelte';
 export { default as Area } from './Area.svelte';
 export { default as AreaStack } from './AreaStack.svelte';
