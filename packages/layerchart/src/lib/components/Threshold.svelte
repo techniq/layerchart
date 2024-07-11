@@ -8,49 +8,54 @@
   import type { CurveFactory } from 'd3-shape';
   import { min, max } from 'd3-array';
   import { chartContext } from './ChartContext.svelte';
+  import { accessor, type Accessor } from '../utils/common.js';
 
   const { data: contextData, xGet, yGet, yRange } = chartContext();
 
   // Properties to override what is used from context
   export let data: any = undefined; // TODO: Update Type
-  export let x: any = undefined; // TODO: Update Type
-  export let y0: any = undefined; // TODO: Update Type
-  export let y1: any = undefined; // TODO: Update Type
+  export let x: Accessor = undefined;
+  export let y0: Accessor = undefined;
+  export let y1: Accessor = undefined;
 
   export let curve: CurveFactory | undefined = undefined;
   export let defined: Parameters<typeof areaPath.defined>[0] | undefined = undefined;
   export let id = Math.random().toString(16).slice(-4);
 
+  const _x = accessor(x);
+  const _y0 = accessor(y0);
+  const _y1 = accessor(y1);
+
   $: areaPath = d3Area()
-    .x(x ?? $xGet)
-    .y0(y0 ?? ((d: any) => $yGet(d)[0]))
-    .y1(y1 ?? ((d: any) => $yGet(d)[1]));
+    .x(x ? _x : $xGet)
+    .y0(y0 ? _y0 : (d: any) => $yGet(d)[0])
+    .y1(y1 ? _y1 : (d: any) => $yGet(d)[1]);
   $: if (curve) areaPath.curve(curve);
   $: if (defined) areaPath.defined(defined);
 
   $: clipPathBelow = d3Area()
-    .x(x ?? $xGet)
-    .y0(y0 ?? ((d: any) => $yGet(d)[0]))
-    .y1(y1 ?? ((d: any) => max($yRange)));
+    .x(x ? _x : $xGet)
+    .y0(y0 ? _y0 : (d: any) => $yGet(d)[0])
+    .y1(y1 ? _y1 : (d: any) => max($yRange));
   $: if (curve) clipPathBelow.curve(curve);
   $: if (defined) clipPathBelow.defined(defined);
 
   $: clipPathAbove = d3Area()
-    .x(x ?? $xGet)
-    .y0(y0 ?? ((d: any) => max($yRange)))
-    .y1(y1 ?? ((d: any) => $yGet(d)[1]));
+    .x(x ? _x : $xGet)
+    .y0(y0 ? _y0 : (d: any) => max($yRange))
+    .y1(y1 ? _y1 : (d: any) => $yGet(d)[1]);
   $: if (curve) clipPathAbove.curve(curve);
   $: if (defined) clipPathAbove.defined(defined);
 
   $: linePathAbove = d3Line()
-    .x(x ?? $xGet)
-    .y(y0 ?? ((d: any) => $yGet(d)[0]));
+    .x(x ? _x : $xGet)
+    .y(y0 ? _y0 : (d: any) => $yGet(d)[0]);
   $: if (curve) linePathAbove.curve(curve);
   $: if (defined) linePathAbove.defined(defined);
 
   $: linePathBelow = d3Line()
-    .x(x ?? $xGet)
-    .y(y1 ?? ((d: any) => $yGet(d)[1]));
+    .x(x ? _x : $xGet)
+    .y(y1 ? _y1 : (d: any) => $yGet(d)[1]);
   $: if (curve) linePathBelow.curve(curve);
   $: if (defined) linePathBelow.defined(defined);
 </script>

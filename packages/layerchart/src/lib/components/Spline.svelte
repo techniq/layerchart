@@ -14,6 +14,7 @@
   import { chartContext } from './ChartContext.svelte';
   import Group from './Group.svelte';
   import { motionStore } from '$lib/stores/motionStore.js';
+  import { accessor, type Accessor } from '../utils/common.js';
 
   const { data: contextData, xScale, yScale, x: contextX, y: contextY } = chartContext();
 
@@ -27,9 +28,9 @@
   export let radial = false;
 
   /** Override `x` accessor from Chart context.  Applies to `angle` when `radial=true` */
-  export let x: ((d: any) => any) | undefined = undefined; // TODO: Update Type
+  export let x: Accessor = undefined;
   /** Override `y` accessor from Chart context.  Applies to `radius` when `radial=true` */
-  export let y: ((d: any) => any) | undefined = undefined; // TODO: Update Type
+  export let y: Accessor = undefined;
 
   /** Interpolate path data using d3-interpolate-path.  Works best without `draw` enabled */
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -58,6 +59,9 @@
     }
   }
 
+  const _x = accessor(x);
+  const _y = accessor(y);
+
   let d: string | null = '';
   // @ts-expect-error
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
@@ -65,11 +69,11 @@
   $: {
     const path = radial
       ? lineRadial()
-          .angle((d) => getScaleValue(d, $xScale, x ?? $contextX))
-          .radius((d) => getScaleValue(d, $yScale, y ?? $contextY))
+          .angle((d) => getScaleValue(d, $xScale, x ? _x : $contextX))
+          .radius((d) => getScaleValue(d, $yScale, y ? _y : $contextY))
       : d3Line()
-          .x((d) => getScaleValue(d, $xScale, x ?? $contextX))
-          .y((d) => getScaleValue(d, $yScale, y ?? $contextY));
+          .x((d) => getScaleValue(d, $xScale, x ? _x : $contextX))
+          .y((d) => getScaleValue(d, $yScale, y ? _y : $contextY));
     if (curve) path.curve(curve);
     if (defined) path.defined(defined);
 

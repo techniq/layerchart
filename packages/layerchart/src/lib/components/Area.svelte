@@ -12,6 +12,7 @@
 
   import { chartContext } from './ChartContext.svelte';
   import Spline from './Spline.svelte';
+  import { accessor, type Accessor } from '../utils/common.js';
 
   const { data: contextData, xScale, yScale, xGet, yGet, yRange } = chartContext();
 
@@ -25,12 +26,12 @@
   export let radial = false;
 
   /** Override x accessor */
-  export let x: ((d: any) => any) | undefined = undefined;
+  export let x: Accessor = undefined;
 
   /** Override y0 accessor.  Defaults to max($yRange) */
-  export let y0: ((d: any) => any) | undefined = undefined;
+  export let y0: Accessor = undefined;
   /** Override y1 accessor.  Defaults to y accessor */
-  export let y1: ((d: any) => any) | undefined = undefined;
+  export let y1: Accessor = undefined;
 
   /** Interpolate path data using d3-interpolate-path */
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -43,6 +44,10 @@
   /** Enable showing line */
   export let line: boolean | Partial<ComponentProps<Spline>> = false;
 
+  const _x = accessor(x);
+  const _y0 = accessor(y0);
+  const _y1 = accessor(y1);
+
   $: tweenedOptions = tweened
     ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
     : false;
@@ -50,13 +55,13 @@
   $: {
     const path = radial
       ? areaRadial()
-          .angle((d) => (x ? $xScale(x(d)) : $xGet(d)))
-          .innerRadius((d) => (y0 ? $yScale(y0(d)) : max($yRange)))
-          .outerRadius((d) => (y1 ? $yScale(y1(d)) : $yGet(d)))
+          .angle((d) => (x ? $xScale(_x(d)) : $xGet(d)))
+          .innerRadius((d) => (y0 ? $yScale(_y0(d)) : max($yRange)))
+          .outerRadius((d) => (y1 ? $yScale(_y1(d)) : $yGet(d)))
       : d3Area()
-          .x((d) => (x ? $xScale(x(d)) : $xGet(d)))
-          .y0((d) => (y0 ? $yScale(y0(d)) : max($yRange)))
-          .y1((d) => (y1 ? $yScale(y1(d)) : $yGet(d)));
+          .x((d) => (x ? $xScale(_x(d)) : $xGet(d)))
+          .y0((d) => (y0 ? $yScale(_y0(d)) : max($yRange)))
+          .y1((d) => (y1 ? $yScale(_y1(d)) : $yGet(d)));
     if (curve) path.curve(curve);
     if (defined) path.defined(defined);
 
