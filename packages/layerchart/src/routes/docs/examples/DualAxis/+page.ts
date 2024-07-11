@@ -11,6 +11,7 @@ export async function load() {
     ),
     meta: {
       pageSource,
+      related: ['examples/Compound'],
     },
   };
 }

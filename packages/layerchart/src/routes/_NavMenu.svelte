@@ -14,6 +14,7 @@
       { label: 'Bar Chart (Vertical)', value: 'Columns' },
       { label: 'Bar Chart (Horizontal)', value: 'Bars' },
       'Candlestick',
+      'Compound',
       'DotPlot',
       'DualAxis',
       'Histogram',
