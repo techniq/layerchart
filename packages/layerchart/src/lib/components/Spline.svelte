@@ -15,6 +15,7 @@
   import Group from './Group.svelte';
   import { motionStore } from '$lib/stores/motionStore.js';
   import { accessor, type Accessor } from '../utils/common.js';
+  import { isScaleBand } from '../utils/scales.js';
 
   const { data: contextData, xScale, yScale, x: contextX, y: contextY } = chartContext();
 
@@ -62,6 +63,9 @@
   const _x = accessor(x);
   const _y = accessor(y);
 
+  $: xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
+  $: yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
+
   let d: string | null = '';
   // @ts-expect-error
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
@@ -72,8 +76,8 @@
           .angle((d) => getScaleValue(d, $xScale, x ? _x : $contextX))
           .radius((d) => getScaleValue(d, $yScale, y ? _y : $contextY))
       : d3Line()
-          .x((d) => getScaleValue(d, $xScale, x ? _x : $contextX))
-          .y((d) => getScaleValue(d, $yScale, y ? _y : $contextY));
+          .x((d) => getScaleValue(d, $xScale, x ? _x : $contextX) + xOffset)
+          .y((d) => getScaleValue(d, $yScale, y ? _y : $contextY) + yOffset);
     if (curve) path.curve(curve);
     if (defined) path.defined(defined);
 

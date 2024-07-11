@@ -7,7 +7,7 @@
   import { chartContext } from './ChartContext.svelte';
   import Circle from './Circle.svelte';
   import Link from './Link.svelte';
-  import { isScaleBand } from '../utils/scales.js';
+  import { isScaleBand, type AnyScale } from '../utils/scales.js';
 
   const context = chartContext() as any;
   const { data: contextData, xGet, y, yGet, xScale, yScale, rGet, config } = context;
@@ -27,7 +27,7 @@
   /** Enable showing links between related points (array x/y accessors) */
   export let links: boolean | Partial<ComponentProps<Link>> = false;
 
-  function getOffset(value: any, offset: Offset, scale: any) {
+  function getOffset(value: any, offset: Offset, scale: AnyScale) {
     if (typeof offset === 'function') {
       return offset(value, context);
     } else if (offset != null) {

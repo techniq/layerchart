@@ -13,6 +13,7 @@
   import { chartContext } from './ChartContext.svelte';
   import Spline from './Spline.svelte';
   import { accessor, type Accessor } from '../utils/common.js';
+  import { isScaleBand } from '../utils/scales.js';
 
   const { data: contextData, xScale, yScale, xGet, yGet, yRange } = chartContext();
 
@@ -48,6 +49,9 @@
   const _y0 = accessor(y0);
   const _y1 = accessor(y1);
 
+  $: xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
+  $: yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
+
   $: tweenedOptions = tweened
     ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
     : false;
@@ -59,9 +63,9 @@
           .innerRadius((d) => (y0 ? $yScale(_y0(d)) : max($yRange)))
           .outerRadius((d) => (y1 ? $yScale(_y1(d)) : $yGet(d)))
       : d3Area()
-          .x((d) => (x ? $xScale(_x(d)) : $xGet(d)))
-          .y0((d) => (y0 ? $yScale(_y0(d)) : max($yRange)))
-          .y1((d) => (y1 ? $yScale(_y1(d)) : $yGet(d)));
+          .x((d) => (x ? $xScale(_x(d)) : $xGet(d)) + xOffset)
+          .y0((d) => (y0 ? $yScale(_y0(d)) : max($yRange)) + yOffset)
+          .y1((d) => (y1 ? $yScale(_y1(d)) : $yGet(d)) + yOffset);
     if (curve) path.curve(curve);
     if (defined) path.defined(defined);
 
