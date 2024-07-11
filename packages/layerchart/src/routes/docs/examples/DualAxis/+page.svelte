@@ -93,7 +93,8 @@
         <Axis placement="bottom" format="none" rule />
         <Spline class="stroke-2 stroke-primary" />
         <Spline y={(d) => efficiencyScale(d.efficiency)} class="stroke-2 stroke-secondary" />
-        <Highlight lines />
+        <Highlight lines points />
+        <Highlight points={{ class: 'fill-secondary' }} y={(d) => efficiencyScale(d.efficiency)} />
       </Svg>
 
       <Tooltip header={(data) => data.year} let:data>
