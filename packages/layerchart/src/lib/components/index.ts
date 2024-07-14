@@ -59,6 +59,7 @@ export { default as Threshold } from './Threshold.svelte';
 export { default as TileImage } from './TileImage.svelte';
 export { default as Tooltip } from './Tooltip.svelte';
 export { default as TooltipContext } from './TooltipContext.svelte';
+export { default as TooltipHeader } from './TooltipHeader.svelte';
 export { default as TooltipItem } from './TooltipItem.svelte';
 export { default as TooltipSeparator } from './TooltipSeparator.svelte';
 export { default as TransformContext, transformContext } from './TransformContext.svelte';
