@@ -155,9 +155,10 @@
     <div
       class={cls(
         variant !== 'none' && [
-          'px-2 py-1 h-full rounded elevation-1',
-          '[&_.label]:text-xs [&_.label]:text-right [&_.label]:whitespace-nowrap',
-          ['[&_.value]:text-sm [&_.value]:tabular-nums'],
+          'text-sm py-1 px-2 h-full rounded elevation-1',
+          '[&_.header]:font-medium',
+          '[&_.label]:whitespace-nowrap',
+          '[&_.value]:tabular-nums',
         ],
         {
           default: [
@@ -177,7 +178,7 @@
       {#if header || $$slots.header}
         <div
           class={cls(
-            variant !== 'none' && 'text-center font-semibold whitespace-nowrap',
+            variant !== 'none' && 'text-center font-medium whitespace-nowrap px-2',
             classes.header
           )}
         >
@@ -190,7 +191,7 @@
       {#if $$slots.default}
         <div
           class={cls(
-            variant !== 'none' && 'grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center pt-1',
+            variant !== 'none' && 'grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center',
             classes.content
           )}
         >

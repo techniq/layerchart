@@ -14,6 +14,7 @@
     Points,
     Svg,
     Tooltip,
+    TooltipHeader,
     TooltipItem,
     TooltipSeparator,
   } from 'layerchart';
@@ -174,8 +175,102 @@
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
+      <Tooltip let:data>
+        <TooltipHeader>{format(data.date, 'eee, MMMM do')}</TooltipHeader>
         <TooltipItem label="value" value={data.value} />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Custom content</h2>
+
+<Preview data={dateSeries}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeries}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
+        <Highlight points lines />
+      </Svg>
+      <Tooltip let:data>Anything can go here test</Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>theme color swatch</h2>
+
+<Preview data={dateSeries}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeries}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
+        <Highlight points lines />
+      </Svg>
+      <Tooltip let:data>
+        <TooltipHeader>{format(data.date, 'eee, MMMM do')}</TooltipHeader>
+        <TooltipItem label="value" value={data.value} color="primary" />
+      </Tooltip>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>custom color swatch</h2>
+
+<Preview data={dateSeries}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeries}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
+        <Highlight points lines />
+      </Svg>
+      <Tooltip let:data>
+        <TooltipHeader>{format(data.date, 'eee, MMMM do')}</TooltipHeader>
+        <TooltipItem label="value" value={data.value} color="variable" style="--color:red" />
       </Tooltip>
     </Chart>
   </div>
