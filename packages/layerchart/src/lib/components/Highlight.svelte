@@ -203,18 +203,23 @@
         // Ignore non-array data such as hierarchy and graph (make Typescript happy)
         if (Array.isArray($contextData)) {
           // For each series, find the related data point
-          const seriesPointsData = $contextData.map((series: Series<any, any>) => {
+          const seriesPointsData = $contextData
+            .map((series: Series<any, any>) => {
+              return {
+                series,
+                point: series.find((d) => _y(d) === _y(highlightSeriesPoint))!,
+              };
+            })
+            .filter((d) => d.point); // remove if no point found (ex. Histogram);
+
+          _points = seriesPointsData.map((seriesPoint, i) => {
+            console.log({ seriesPoint });
             return {
-              series,
-              point: series.find((d) => _y(d) === _y(highlightSeriesPoint))!,
+              x: $xScale(seriesPoint.point[1]) + xOffset,
+              y: yCoord + yOffset,
+              fill: $config.r ? $rGet(seriesPoint.series) : null,
             };
           });
-
-          _points = seriesPointsData.map((seriesPoint, i) => ({
-            x: $xScale(seriesPoint.point[1]) + xOffset,
-            y: yCoord + yOffset,
-            fill: $config.r ? $rGet(seriesPoint.series) : null,
-          }));
         }
       } else {
         // Multi series / etc  (ex. `y={['apples', 'bananas', 'oranges']}`)
@@ -239,12 +244,14 @@
         // Ignore non-array data such as hierarchy and graph (make Typescript happy)
         if (Array.isArray($contextData)) {
           // For each series, find the related data point
-          const seriesPointsData = $contextData.map((series: Series<any, any>) => {
-            return {
-              series,
-              point: series.find((d) => _x(d) === _x(highlightSeriesPoint))!,
-            };
-          });
+          const seriesPointsData = $contextData
+            .map((series: Series<any, any>) => {
+              return {
+                series,
+                point: series.find((d) => _x(d) === _x(highlightSeriesPoint))!,
+              };
+            })
+            .filter((d) => d.point); // remove if no point found (ex. Histogram)
 
           _points = seriesPointsData.map((seriesPoint, i) => ({
             x: xCoord + xOffset,
