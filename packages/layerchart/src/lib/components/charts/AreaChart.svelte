@@ -11,6 +11,7 @@
   import Svg from '../layout/Svg.svelte';
   import TooltipItem from '../TooltipItem.svelte';
   import Tooltip from '../Tooltip.svelte';
+  import TooltipHeader from '../TooltipHeader.svelte';
 
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
 
@@ -46,7 +47,8 @@
     </Svg>
 
     <slot name="tooltip" {x} {y}>
-      <Tooltip header={(data) => format(x(data))} let:data>
+      <Tooltip let:data>
+        <TooltipHeader>{format(x(data))}</TooltipHeader>
         <TooltipItem label="value" value={y(data)} />
       </Tooltip>
     </slot>
