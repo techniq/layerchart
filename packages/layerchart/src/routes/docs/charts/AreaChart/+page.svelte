@@ -20,6 +20,7 @@
     Tooltip,
     TooltipItem,
     pivotLonger,
+    TooltipHeader,
   } from 'layerchart';
   import { format, Field, Switch, Toggle, PeriodType } from 'svelte-ux';
 
@@ -65,7 +66,8 @@
   <div class="h-[300px] p-4 border rounded">
     <AreaChart data={dateSeriesData} x="date" y="value">
       <svelte:fragment slot="tooltip" let:x let:y>
-        <Tooltip header={(data) => format(x(data), PeriodType.DayTime)} let:data>
+        <Tooltip let:data>
+          <TooltipHeader>{format(x(data), PeriodType.DayTime)}</TooltipHeader>
           <TooltipItem label="value" value={y(data)} />
         </Tooltip>
       </svelte:fragment>
@@ -89,7 +91,8 @@
         <Highlight points lines />
       </Svg>
 
-      <Tooltip header={(data) => format(x(data), PeriodType.DayTime)} let:data>
+      <Tooltip let:data>
+        <TooltipHeader>{format(x(data), PeriodType.DayTime)}</TooltipHeader>
         <TooltipItem label="value" value={y(data)} />
       </Tooltip>
     </AreaChart>

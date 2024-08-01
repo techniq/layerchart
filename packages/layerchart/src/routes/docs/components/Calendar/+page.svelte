@@ -4,7 +4,16 @@
   import { scaleThreshold } from 'd3-scale';
   import { range } from 'd3-array';
 
-  import { Calendar, Chart, Group, Text, Tooltip, TooltipItem, Svg } from 'layerchart';
+  import {
+    Calendar,
+    Chart,
+    Group,
+    Text,
+    Tooltip,
+    TooltipItem,
+    Svg,
+    TooltipHeader,
+  } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -47,7 +56,13 @@
         <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltip} monthPath />
       </Svg>
 
-      <Tooltip header={(d) => format(d.date, PeriodType.Day)} />
+      <Tooltip let:data>
+        <TooltipHeader>{format(data.date, PeriodType.Day)}</TooltipHeader>
+
+        {#if data.value != null}
+          <TooltipItem label="value" value={data.value} format="integer" valueAlign="right" />
+        {/if}
+      </Tooltip>
     </Chart>
   </div>
 </Preview>
@@ -74,7 +89,13 @@
         <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltip} cellSize={16} monthPath />
       </Svg>
 
-      <Tooltip header={(d) => format(d.date, PeriodType.Day)} />
+      <Tooltip let:data>
+        <TooltipHeader>{format(data.date, PeriodType.Day)}</TooltipHeader>
+
+        {#if data.value != null}
+          <TooltipItem label="value" value={data.value} format="integer" valueAlign="right" />
+        {/if}
+      </Tooltip>
     </Chart>
   </div>
 </Preview>
@@ -117,7 +138,9 @@
         {/each}
       </Svg>
 
-      <Tooltip header={(d) => format(d.date, PeriodType.Day)} let:data>
+      <Tooltip let:data>
+        <TooltipHeader>{format(data.date, PeriodType.Day)}</TooltipHeader>
+
         {#if data.value != null}
           <TooltipItem label="value" value={data.value} format="integer" valueAlign="right" />
         {/if}
