@@ -1,8 +1,8 @@
 <script lang="ts" generics="TData">
-  import { format, PeriodType } from 'svelte-ux';
+  import { format } from 'svelte-ux';
 
   import { type ComponentProps } from 'svelte';
-  import { scaleTime } from 'd3-scale';
+  import { scaleLinear, scaleTime } from 'd3-scale';
 
   import Area from '../Area.svelte';
   import Axis from '../Axis.svelte';
@@ -12,19 +12,26 @@
   import TooltipItem from '../TooltipItem.svelte';
   import Tooltip from '../Tooltip.svelte';
 
+  import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
+
   interface $$Props extends ComponentProps<Chart<TData>> {}
 
   export let data: $$Props['data'] = [];
+  export let x: Accessor<TData> = undefined;
+  export let y: Accessor<TData> = undefined;
+
+  // Default xScale based on first data's `x` value
+  $: xScale = accessor(x)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear();
 </script>
 
 <Chart
   {data}
-  x="date"
-  xScale={scaleTime()}
-  y="value"
+  {x}
+  {xScale}
+  {y}
   yDomain={[0, null]}
   yNice
-  padding={{ left: 16, bottom: 24 }}
+  padding={{ left: 16, bottom: 16 }}
   tooltip={{ mode: 'bisect-x' }}
   {...$$restProps}
   let:x

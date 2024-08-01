@@ -8,7 +8,6 @@
     AreaChart,
     Area,
     Axis,
-    Chart,
     ChartClipPath,
     Highlight,
     Labels,
@@ -56,15 +55,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={chartData} />
-  </div>
-</Preview>
-
-<h2>Accessor override</h2>
-
-<Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={dateSeriesData} x="date" />
+    <AreaChart data={chartData} x="date" y="value" />
   </div>
 </Preview>
 
@@ -72,7 +63,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={dateSeriesData} x="date">
+    <AreaChart data={dateSeriesData} x="date" y="value">
       <svelte:fragment slot="tooltip" let:x let:y>
         <Tooltip header={(data) => format(x(data), PeriodType.DayTime)} let:data>
           <TooltipItem label="value" value={y(data)} />
