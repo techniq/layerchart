@@ -1,0 +1,39 @@
+name: Production Deployment
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - packages/layerchart/**
+
+jobs:
+    deploy-production:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            deployments: write
+        name: Deploy Production Site to Cloudflare Pages
+        steps:
+            - uses: actions/checkout@v4
+            - uses: pnpm/action-setup@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 18.x
+                  cache: pnpm
+
+            - name: Install dependencies
+              run: pnpm install
+
+            - name: Build site
+              run: pnpm build
+
+            - name: Deploy to Cloudflare Pages
+              uses: AdrianGonz97/refined-cf-pages-action@v1
+              with:
+                  apiToken: ${{ secrets.CF_API_TOKEN }}
+                  accountId: ${{ secrets.CF_ACCOUNT_ID }}
+                  githubToken: ${{ secrets.GITHUB_TOKEN }}
+                  projectName: layerchart
+                  directory: ./.svelte-kit/cloudflare
+                  workingDirectory: packages/layerchart
+                  deploymentName: Production
