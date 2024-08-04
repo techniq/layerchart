@@ -2,16 +2,7 @@
   import { hierarchy } from 'd3-hierarchy';
   import { forceX, forceY, forceManyBody, forceLink } from 'd3-force';
 
-  import {
-    Chart,
-    Circle,
-    ForceSimulation,
-    Group,
-    Link,
-    Svg,
-    Tooltip,
-    TooltipItem,
-  } from 'layerchart';
+  import { Chart, Circle, ForceSimulation, Group, Link, Svg, Tooltip } from 'layerchart';
   import { cls } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -66,14 +57,17 @@
         </ForceSimulation>
       </Svg>
 
-      <Tooltip header={(d) => d.data.name} let:data>
-        {#if data.data.children}
-          <TooltipItem label="children" value={data.data.children.length} />
-        {/if}
-        {#if data.data.value}
-          <TooltipItem label="value" value={data.data.value} format="integer" />
-        {/if}
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.data.name}</Tooltip.Header>
+        <Tooltip.List>
+          {#if data.data.children}
+            <Tooltip.Item label="children" value={data.data.children.length} />
+          {/if}
+          {#if data.data.value}
+            <Tooltip.Item label="value" value={data.data.value} format="integer" />
+          {/if}
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

@@ -3,7 +3,7 @@
   import { feature } from 'topojson-client';
   import { Field, Switch } from 'svelte-ux';
 
-  import { Canvas, Chart, GeoPath, GeoPoint, Svg, Text, Tooltip, TooltipItem } from 'layerchart';
+  import { Canvas, Chart, GeoPath, GeoPoint, Svg, Text, Tooltip } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   export let data;
@@ -112,11 +112,13 @@
         </g>
       </Svg>
 
-      <!-- <Tooltip header={(d) => d.label} let:data>
-        {console.log({ data })}
-        <TooltipItem label="Latitude" value={data.latitude} format="decimal" />
-        <TooltipItem label="Longitude" value={data.longitude} format="decimal" />
-      </Tooltip> -->
+      <!-- <Tooltip.Root let:data>
+        <Tooltip.Header>{data.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
+          <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
+        </Tooltip.List>
+      </Tooltip.Root> -->
     </Chart>
   </div>
 </Preview>
@@ -173,10 +175,13 @@
         </g>
       </Svg>
 
-      <Tooltip header={(d) => d.name} let:data>
-        <TooltipItem label="Latitude" value={data.latitude} format="decimal" />
-        <TooltipItem label="Longitude" value={data.longitude} format="decimal" />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
+          <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -229,10 +234,13 @@
         </g>
       </Svg>
 
-      <Tooltip header={(d) => d.name} let:data>
-        <TooltipItem label="Latitude" value={data.latitude} format="decimal" />
-        <TooltipItem label="Longitude" value={data.longitude} format="decimal" />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
+          <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
