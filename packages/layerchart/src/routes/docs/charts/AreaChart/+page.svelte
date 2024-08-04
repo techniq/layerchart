@@ -25,7 +25,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
 
-  export let data;
+  // export let data;
 
   const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
   // Align with AreaChart defaults (label/value)
@@ -101,36 +101,7 @@
   </div>
 </Preview>
 
-<!-- <h2>With Tooltip and Highlight</h2>
-
-<Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
-    <Chart
-      data={dateSeriesData}
-      x="date"
-      xScale={scaleTime()}
-      y="value"
-      yDomain={[0, null]}
-      yNice
-      padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
-    >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
-        <Highlight points lines />
-      </Svg>
-      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="value" value={data.value} />
-      </Tooltip>
-    </Chart>
-  </div>
-</Preview>
+<!-- 
 
 <h2>With Labels</h2>
 
