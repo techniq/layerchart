@@ -17,7 +17,7 @@
   import { feature } from 'topojson-client';
   import type { GeometryCollection, Topology } from 'topojson-specification';
 
-  import { Canvas, Chart, GeoPath, GeoTile, HitCanvas, Tooltip, TooltipItem } from 'layerchart';
+  import { Canvas, Chart, GeoPath, GeoTile, HitCanvas, Tooltip } from 'layerchart';
   import {
     CopyButton,
     EmptyMessage,
@@ -158,11 +158,14 @@
           />
         </HitCanvas>
 
-        <Tooltip header={(data) => data.properties.id} let:data>
-          {#each Object.entries(data.properties) as [key, value]}
-            <TooltipItem label={key} {value} />
-          {/each}
-        </Tooltip>
+        <Tooltip.Root let:data>
+          <Tooltip.Header>{data.properties.id}</Tooltip.Header>
+          <Tooltip.List>
+            {#each Object.entries(data.properties) as [key, value]}
+              <Tooltip.Item label={key} {value} />
+            {/each}
+          </Tooltip.List>
+        </Tooltip.Root>
       </Chart>
     {:else}
       <EmptyMessage class="h-full">Please enter input below</EmptyMessage>

@@ -1,17 +1,7 @@
 <script lang="ts">
   import { scaleBand } from 'd3-scale';
 
-  import {
-    Area,
-    Axis,
-    Bars,
-    Chart,
-    Highlight,
-    Spline,
-    Svg,
-    Tooltip,
-    TooltipItem,
-  } from 'layerchart';
+  import { Area, Axis, Bars, Chart, Highlight, Spline, Svg, Tooltip } from 'layerchart';
 
   import { formatDate, PeriodType } from 'svelte-ux';
 

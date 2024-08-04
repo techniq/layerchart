@@ -4,16 +4,7 @@
   import { scaleThreshold } from 'd3-scale';
   import { range } from 'd3-array';
 
-  import {
-    Calendar,
-    Chart,
-    Group,
-    Text,
-    Tooltip,
-    TooltipItem,
-    Svg,
-    TooltipHeader,
-  } from 'layerchart';
+  import { Calendar, Chart, Group, Text, Tooltip, Svg } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';

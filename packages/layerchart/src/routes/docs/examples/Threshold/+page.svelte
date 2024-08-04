@@ -14,8 +14,6 @@
     Svg,
     Threshold,
     Tooltip,
-    TooltipItem,
-    TooltipSeparator,
   } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -105,12 +103,16 @@
         </Threshold>
         <Highlight area />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="value" value={data.value} />
-        <TooltipItem label="baseline" value={data.baseline} />
-        <TooltipSeparator />
-        <TooltipItem label="variance" value={data.value - data.baseline} />
-      </Tooltip>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+          <Tooltip.Item label="baseline" value={data.baseline} />
+          <Tooltip.Separator />
+          <Tooltip.Item label="variance" value={data.value - data.baseline} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
