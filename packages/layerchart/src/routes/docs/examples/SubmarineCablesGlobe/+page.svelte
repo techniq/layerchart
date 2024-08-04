@@ -140,10 +140,13 @@
         {/each}
       </Svg>
 
-      <Tooltip header={(d) => d.name} let:data>
-        <!-- <TooltipItem label="Latitude" value={data.latitude} format="decimal" />
-        <TooltipItem label="Longitude" value={data.longitude} format="decimal" /> -->
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.name}</Tooltip.Header>
+        <!-- <Tooltip.List>
+          <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
+          <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
+        </Tooltip.List> -->
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

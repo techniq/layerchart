@@ -9,7 +9,6 @@
     GeoTile,
     Svg,
     Tooltip,
-    TooltipItem,
     TransformControls,
     geoFitObjectTransform,
   } from 'layerchart';
@@ -92,11 +91,14 @@
         {/each}
       </Svg>
 
-      <Tooltip header={(data) => data.properties.name} let:data>
+      <Tooltip.Root let:data>
         {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
-        <TooltipItem label="longitude" value={longitude} format="decimal" />
-        <TooltipItem label="latitude" value={latitude} format="decimal" />
-      </Tooltip>
+        <Tooltip.Header>{data.properties.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="longitude" value={longitude} format="decimal" />
+          <Tooltip.Item label="latitude" value={latitude} format="decimal" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -153,11 +155,15 @@
           />
         {/each}
       </Svg>
-      <Tooltip header={(data) => data.properties.name} let:data>
+
+      <Tooltip.Root let:data>
         {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
-        <TooltipItem label="longitude" value={longitude} format="decimal" />
-        <TooltipItem label="latitude" value={latitude} format="decimal" />
-      </Tooltip>
+        <Tooltip.Header>{data.properties.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="longitude" value={longitude} format="decimal" />
+          <Tooltip.Item label="latitude" value={latitude} format="decimal" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -213,11 +219,14 @@
         {/each}
       </Svg>
 
-      <Tooltip header={(data) => data.properties.name} let:data>
+      <Tooltip.Root let:data>
         {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
-        <TooltipItem label="longitude" value={longitude} format="decimal" />
-        <TooltipItem label="latitude" value={latitude} format="decimal" />
-      </Tooltip>
+        <Tooltip.Header>{data.properties.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="longitude" value={longitude} format="decimal" />
+          <Tooltip.Item label="latitude" value={latitude} format="decimal" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
