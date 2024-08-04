@@ -18,7 +18,6 @@
     Svg,
     Text,
     Tooltip,
-    TooltipItem,
     pivotLonger,
   } from 'layerchart';
   import { format, Field, Switch, Toggle, PeriodType } from 'svelte-ux';
@@ -99,9 +98,12 @@
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="value" value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -242,9 +244,12 @@
         {/each}
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label={data.fruit} value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label={data.fruit} value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -299,11 +304,14 @@
         <Highlight y={(d) => d.oranges} points={{ fill: fruitColors.oranges }} />
         <Highlight lines />
       </Svg>
-      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="apples" value={data.apples} />
-        <TooltipItem label="bananas" value={data.bananas} />
-        <TooltipItem label="oranges" value={data.oranges} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="apples" value={data.apples} />
+          <Tooltip.Item label="bananas" value={data.bananas} />
+          <Tooltip.Item label="oranges" value={data.oranges} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -362,9 +370,12 @@
         {/each}
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label={data.fruit} value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label={data.fruit} value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -407,9 +418,12 @@
         <Labels format="integer" />
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label={data.fruit} value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label={data.fruit} value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -568,30 +582,28 @@
         <Axis placement="bottom" />
       </Svg>
 
-      <Tooltip
+      <Tooltip.Root
         y={48}
         xOffset={4}
-        variant="none"
         class="text-sm font-semibold text-primary leading-3"
         let:data
       >
         {format(data.value, 'currency')}
-      </Tooltip>
+      </Tooltip.Root>
 
-      <Tooltip x={4} y={4} variant="none" class="text-sm font-semibold leading-3" let:data>
+      <Tooltip.Root x={4} y={4} variant="none" class="text-sm font-semibold leading-3" let:data>
         {format(data.date, PeriodType.Day)}
-      </Tooltip>
+      </Tooltip.Root>
 
-      <Tooltip
+      <Tooltip.Root
         x="data"
         y={height + padding.top + 2}
         anchor="top"
-        variant="none"
         class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded whitespace-nowrap"
         let:data
       >
         {format(data.date, PeriodType.Day)}
-      </Tooltip>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

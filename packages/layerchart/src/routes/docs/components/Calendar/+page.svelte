@@ -96,7 +96,7 @@
 
         {#if data.value != null}
           <Tooltip.List>
-            <TooltipItem label="value" value={data.value} format="integer" valueAlign="right" />
+            <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
           </Tooltip.List>
         {/if}
       </Tooltip.Root>
