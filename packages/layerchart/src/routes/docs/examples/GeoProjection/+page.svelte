@@ -95,7 +95,10 @@
           />
         {/each}
       </Svg>
-      <Tooltip header={(data) => data.properties.name} let:data />
+
+      <Tooltip.Root let:data>
+        {data.properties.name}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

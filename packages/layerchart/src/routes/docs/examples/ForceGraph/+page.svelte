@@ -290,7 +290,9 @@
         </ForceSimulation>
       </Svg>
 
-      <Tooltip header={(d) => d.id} />
+      <Tooltip.Root let:data>
+        {data.id}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

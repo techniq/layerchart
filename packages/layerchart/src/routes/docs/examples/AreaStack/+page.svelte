@@ -86,7 +86,8 @@
         <AreaStack line={{ 'stroke-width': 2 }} />
         <Highlight points lines />
       </Svg>
-      <Tooltip.Root header={(data) => format(data.data.date, 'eee, MMMM do')} let:data>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.data.date, 'eee, MMMM do')}</Tooltip.Header>
         <Tooltip.List>
           {#each keys as key}
             <Tooltip.Item label={key} value={data.data[key]} />

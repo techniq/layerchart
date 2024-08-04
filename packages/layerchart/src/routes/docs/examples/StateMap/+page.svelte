@@ -94,7 +94,10 @@
           class="fill-none stroke-surface-content pointer-events-none"
         />
       </Svg>
-      <Tooltip header={(data) => data.properties.name} />
+
+      <Tooltip.Root let:data>
+        {data.properites.name}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -131,7 +134,10 @@
           />
         </ChartClipPath>
       </Svg>
-      <Tooltip header={(data) => data.properties.name} />
+
+      <Tooltip.Root let:data>
+        {data.properites.name}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
