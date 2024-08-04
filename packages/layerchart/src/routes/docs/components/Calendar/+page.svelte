@@ -56,13 +56,15 @@
         <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltip} monthPath />
       </Svg>
 
-      <Tooltip let:data>
-        <TooltipHeader>{format(data.date, PeriodType.Day)}</TooltipHeader>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, PeriodType.Day)}</Tooltip.Header>
 
         {#if data.value != null}
-          <TooltipItem label="value" value={data.value} format="integer" valueAlign="right" />
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+          </Tooltip.List>
         {/if}
-      </Tooltip>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -89,13 +91,15 @@
         <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltip} cellSize={16} monthPath />
       </Svg>
 
-      <Tooltip let:data>
-        <TooltipHeader>{format(data.date, PeriodType.Day)}</TooltipHeader>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, PeriodType.Day)}</Tooltip.Header>
 
         {#if data.value != null}
-          <TooltipItem label="value" value={data.value} format="integer" valueAlign="right" />
+          <Tooltip.List>
+            <TooltipItem label="value" value={data.value} format="integer" valueAlign="right" />
+          </Tooltip.List>
         {/if}
-      </Tooltip>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -138,13 +142,15 @@
         {/each}
       </Svg>
 
-      <Tooltip let:data>
-        <TooltipHeader>{format(data.date, PeriodType.Day)}</TooltipHeader>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, PeriodType.Day)}</Tooltip.Header>
 
         {#if data.value != null}
-          <TooltipItem label="value" value={data.value} format="integer" valueAlign="right" />
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+          </Tooltip.List>
         {/if}
-      </Tooltip>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

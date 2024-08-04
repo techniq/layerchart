@@ -475,7 +475,7 @@
             />
           </Svg>
 
-          <Tooltip
+          <Tooltip.Root
             y="data"
             xOffset={4}
             anchor="bottom"
@@ -484,9 +484,9 @@
             let:data
           >
             {format(data.value, 'currency')}
-          </Tooltip>
+          </Tooltip.Root>
 
-          <Tooltip
+          <Tooltip.Root
             x="data"
             y={height + padding.top}
             yOffset={2}
@@ -496,7 +496,7 @@
             let:data
           >
             {format(data.date, PeriodType.Day)}
-          </Tooltip>
+          </Tooltip.Root>
         </Chart>
       </div>
     </State>

@@ -17,7 +17,7 @@
 </script>
 
 <div class={cls('contents', classes.root, $$props.class)} {...$$restProps}>
-  <div class={cls('label', 'flex items-center gap-2', classes.label)}>
+  <div class={cls('label', 'flex items-center gap-2 whitespace-nowrap', classes.label)}>
     {#if color}
       <div
         class={cls(
@@ -44,6 +44,7 @@
   <div
     class={cls(
       'value',
+      'tabular-nums',
       {
         'text-right': valueAlign === 'right',
         'text-center': valueAlign === 'center',
