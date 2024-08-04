@@ -128,7 +128,9 @@
         {/each}
       </Svg>
 
-      <Tooltip header={(d) => format(d.Date, PeriodType.Day, { variant: 'long' })} />
+      <Tooltip.Root let:data>
+        {format(data.Date, PeriodType.Day, { variant: 'long' })}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
