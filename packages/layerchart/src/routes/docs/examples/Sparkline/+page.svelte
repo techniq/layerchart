@@ -2,7 +2,7 @@
   import { scaleTime } from 'd3-scale';
   import { format } from 'date-fns';
 
-  import { Chart, Highlight, Spline, Svg, Tooltip, TooltipItem } from 'layerchart';
+  import { Chart, Highlight, Spline, Svg, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -62,14 +62,13 @@
         <Spline class="stroke-1 stroke-primary" />
         <Highlight points={{ r: 3, class: 'stroke-none' }} />
       </Svg>
-      <Tooltip
-        class="text-xs"
-        contained={false}
-        header={(data) => format(data.date, 'eee, MMM do')}
-        let:data
-      >
-        <TooltipItem label="value" value={data.value} />
-      </Tooltip>
+
+      <Tooltip.Root class="text-xs" contained={false} let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -90,7 +89,7 @@
         <Highlight points={{ r: 3, class: 'stroke-none' }} />
       </Svg>
 
-      <Tooltip
+      <Tooltip.Root
         class="text-xs"
         contained={false}
         y={-3}
@@ -104,7 +103,7 @@
         <div class="font-semibold">
           {data.value}
         </div>
-      </Tooltip>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -128,16 +127,19 @@
             <Spline class="stroke-1 stroke-primary" />
             <Highlight points lines />
           </Svg>
-          <Tooltip
+
+          <Tooltip.Root
             class="text-xs"
             contained={false}
-            header={(data) => format(data.date, 'eee, MMM do')}
             y={containerHeight + 4}
             xOffset={0}
             let:data
           >
-            <TooltipItem label="value" value={data.value} />
-          </Tooltip>
+            <Tooltip.Header>{format(data.date, 'eee, MMM do')}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} />
+            </Tooltip.List>
+          </Tooltip.Root>
         </Chart>
       </span> Sed ipsum justo, facilisis id tempor hendrerit, suscipit eu ipsum. Mauris ut sapien quis
       nibh volutpat venenatis. Ut viverra justo varius sapien convallis venenatis vel faucibus urna.

@@ -2,7 +2,7 @@
   import { scaleBand } from 'd3-scale';
   import { format } from 'date-fns';
 
-  import { Bars, Chart, Highlight, Svg, Tooltip, TooltipItem } from 'layerchart';
+  import { Bars, Chart, Highlight, Svg, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -77,14 +77,13 @@
         <Bars strokeWidth={1} class="fill-primary/20 stroke-primary" />
         <Highlight bar={{ strokeWidth: 1 }} />
       </Svg>
-      <Tooltip
-        class="text-xs"
-        contained={false}
-        header={(data) => format(data.date, 'eee, MMM do')}
-        let:data
-      >
-        <TooltipItem label="value" value={data.value} />
-      </Tooltip>
+
+      <Tooltip.Root contained={false} class="text-xs" let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -107,12 +106,12 @@
         <Highlight bar={{ strokeWidth: 1 }} />
       </Svg>
 
-      <Tooltip
+      <Tooltip.Root
         class="text-xs"
         contained={false}
+        variant="none"
         y={-10}
         x={containerWidth + 8}
-        variant="none"
         let:data
       >
         <div class="whitespace-nowrap">
@@ -121,7 +120,7 @@
         <div class="font-semibold">
           {data.value}
         </div>
-      </Tooltip>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -146,16 +145,19 @@
             <Bars strokeWidth={1} class="fill-primary/20 stroke-primary" />
             <Highlight bar={{ strokeWidth: 1 }} />
           </Svg>
-          <Tooltip
+
+          <Tooltip.Root
             class="text-xs"
             contained={false}
-            header={(data) => format(data.date, 'eee, MMM do')}
             y={containerHeight + 4}
             xOffset={0}
             let:data
           >
-            <TooltipItem label="value" value={data.value} />
-          </Tooltip>
+            <Tooltip.Header>{format(data.date, 'eee, MMM do')}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} />
+            </Tooltip.List>
+          </Tooltip.Root>
         </Chart>
       </span> Sed ipsum justo, facilisis id tempor hendrerit, suscipit eu ipsum. Mauris ut sapien quis
       nibh volutpat venenatis. Ut viverra justo varius sapien convallis venenatis vel faucibus urna.

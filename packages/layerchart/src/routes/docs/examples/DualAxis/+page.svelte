@@ -2,7 +2,7 @@
   import { scaleLinear } from 'd3-scale';
   import { extent, max } from 'd3-array';
 
-  import { Axis, Chart, Highlight, Spline, Svg, Tooltip, TooltipItem } from 'layerchart';
+  import { Axis, Chart, Highlight, Spline, Svg, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -58,10 +58,13 @@
         <Highlight points={{ class: 'fill-secondary' }} y={(d) => efficiencyScale(d.efficiency)} />
       </Svg>
 
-      <Tooltip header={(data) => data.year} let:data>
-        <TooltipItem label="sales" value={data.sales} format="currencyRound" />
-        <TooltipItem label="efficiency" value={data.efficiency} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="sales" value={data.sales} format="currencyRound" />
+          <Tooltip.Item label="efficiency" value={data.efficiency} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -115,10 +118,13 @@
         <Highlight lines />
       </Svg>
 
-      <Tooltip header={(data) => data.year} let:data>
-        <TooltipItem label="sales" value={data.sales} format="currencyRound" />
-        <TooltipItem label="efficiency" value={data.efficiency} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="sales" value={data.sales} format="currencyRound" />
+          <Tooltip.Item label="efficiency" value={data.efficiency} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

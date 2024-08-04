@@ -3,7 +3,7 @@
   import { format } from 'date-fns';
   import { formatDate, PeriodType } from 'svelte-ux';
 
-  import { Axis, Chart, Highlight, Labels, Points, Svg, Tooltip, TooltipItem } from 'layerchart';
+  import { Axis, Chart, Highlight, Labels, Points, Svg, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -63,9 +63,13 @@
         <Points class="fill-primary/10 stroke-primary" />
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="value" value={data.value} />
-      </Tooltip>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
