@@ -9,9 +9,7 @@
   import Chart from '../Chart.svelte';
   import Highlight from '../Highlight.svelte';
   import Svg from '../layout/Svg.svelte';
-  import TooltipItem from '../TooltipItem.svelte';
-  import Tooltip from '../Tooltip.svelte';
-  import TooltipHeader from '../TooltipHeader.svelte';
+  import * as Tooltip from '../tooltip/index.js';
 
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
 
@@ -47,10 +45,12 @@
     </Svg>
 
     <slot name="tooltip" {x} {y}>
-      <Tooltip let:data>
-        <TooltipHeader>{format(x(data))}</TooltipHeader>
-        <TooltipItem label="value" value={y(data)} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(x(data))}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={y(data)} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </slot>
   </slot>
 </Chart>

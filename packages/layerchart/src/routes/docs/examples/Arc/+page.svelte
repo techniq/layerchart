@@ -192,7 +192,9 @@
           {/each}
         </Group>
       </Svg>
-      <Tooltip header={(data) => data} />
+      <Tooltip.Root let:data>
+        {data}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

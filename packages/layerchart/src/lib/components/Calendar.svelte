@@ -6,7 +6,7 @@
 
   import { chartContext } from './ChartContext.svelte';
   import Rect from './Rect.svelte';
-  import type { TooltipContextValue } from './TooltipContext.svelte';
+  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import MonthPath from './MonthPath.svelte';
   import Text from './Text.svelte';
   import { chartDataArray } from '../utils/common.js';

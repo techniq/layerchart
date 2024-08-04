@@ -33,7 +33,7 @@
 
   import ChartContext from './ChartContext.svelte';
   import GeoContext from './GeoContext.svelte';
-  import TooltipContext from './TooltipContext.svelte';
+  import TooltipContext from './tooltip/TooltipContext.svelte';
   import TransformContext from './TransformContext.svelte';
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
 
