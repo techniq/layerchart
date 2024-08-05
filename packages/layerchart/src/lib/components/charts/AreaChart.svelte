@@ -38,8 +38,17 @@
 >
   <slot {x} {y}>
     <Svg>
-      <Axis placement="left" grid rule />
-      <Axis placement="bottom" rule />
+      <Axis
+        placement="left"
+        grid
+        rule
+        format={(value) => format(value, undefined, { variant: 'short' })}
+      />
+      <Axis
+        placement="bottom"
+        rule
+        format={(value) => format(value, undefined, { variant: 'short' })}
+      />
       <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
       <Highlight points lines />
     </Svg>
