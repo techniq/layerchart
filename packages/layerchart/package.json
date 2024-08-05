@@ -21,7 +21,7 @@
     "@changesets/cli": "^2.27.7",
     "@mdi/js": "^7.4.47",
     "@rollup/plugin-dsv": "^3.0.4",
-    "@sveltejs/adapter-auto": "^3.2.2",
+    "@sveltejs/adapter-cloudflare": "^4.7.0",
     "@sveltejs/kit": "^2.5.18",
     "@sveltejs/package": "^2.3.2",
     "@sveltejs/vite-plugin-svelte": "^3.1.1",
