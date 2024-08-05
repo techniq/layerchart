@@ -7,7 +7,7 @@
   type LinkCollection = Record<string, Array<string | { label: string; value: string }>>;
 
   const charts: LinkCollection = {
-    'Cartesian & Polar': ['AreaChart'],
+    'Cartesian & Polar': ['AreaChart', 'BarChart'],
   };
 
   const examples: LinkCollection = {

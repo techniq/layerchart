@@ -75,7 +75,7 @@
   </div>
 </Preview>
 
-<h2>Full chart override</h2>
+<h2>Custom chart</h2>
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
