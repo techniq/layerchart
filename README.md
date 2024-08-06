@@ -52,3 +52,14 @@ pnpm dev
 ```
 pnpm changeset
 ```
+
+## Community
+
+Join the Discord server to ask questions, find collaborators, or just say hi!
+
+<a href="https://discord.gg/697JhMPD3t" alt="LayerStack Discord community">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://invidget.switchblade.xyz/697JhMPD3t">
+  <img alt="LayerStack Discord community" src="https://invidget.switchblade.xyz/697JhMPD3t?theme=light">
+</picture>
+</a>
