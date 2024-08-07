@@ -622,6 +622,49 @@
   </div>
 </Preview>
 
+<h2>Highlight color based on value</h2>
+
+<Preview data={negativeDateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={negativeDateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+      r={(d) => (d.value < 0 ? 'under' : 'over')}
+      rScale={scaleOrdinal()}
+      rDomain={['over', 'under']}
+      rRange={['hsl(var(--color-success))', 'hsl(var(--color-danger))']}
+      let:width
+      let:height
+      let:yScale
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
+        <Rule y={0} />
+        <RectClipPath x={0} y={0} {width} height={yScale(0)}>
+          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
+        </RectClipPath>
+        <RectClipPath x={0} y={yScale(0)} {width} height={height - yScale(0)}>
+          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
+        </RectClipPath>
+        <Highlight lines points />
+      </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Threshold with LinearGradient</h2>
 
 <Preview data={negativeDateSeriesData}>
