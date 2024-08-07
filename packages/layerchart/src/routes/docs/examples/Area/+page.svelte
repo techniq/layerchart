@@ -14,6 +14,7 @@
     LinearGradient,
     Point,
     RectClipPath,
+    Rule,
     Spline,
     Svg,
     Text,
@@ -28,6 +29,12 @@
   export let data;
 
   const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
+  const negativeDateSeriesData = createDateSeries({
+    count: 30,
+    min: -20,
+    max: 50,
+    value: 'integer',
+  });
 
   const keys = ['apples', 'bananas', 'oranges'];
   const multiSeriesData = createDateSeries({
@@ -553,6 +560,74 @@
   </Preview>
 </Toggle>
 
+<h2>Threshold with RectClipPath</h2>
+
+<Preview data={negativeDateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={negativeDateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+      let:width
+      let:height
+      let:yScale
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
+        <Rule y={0} />
+        <RectClipPath x={0} y={0} {width} height={yScale(0)}>
+          <Area line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
+        </RectClipPath>
+        <RectClipPath x={0} y={yScale(0)} {width} height={height - yScale(0)}>
+          <Area line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
+        </RectClipPath>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Threshold with LinearGradient</h2>
+
+<Preview data={negativeDateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={negativeDateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+      let:yScale
+      let:height
+      let:padding
+    >
+      {@const thresholdOffset = (yScale(0) / (height + padding.bottom)) * 100 + '%'}
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
+        <Rule y={0} />
+        <LinearGradient
+          stops={[
+            [thresholdOffset, 'hsl(var(--color-success))'],
+            [thresholdOffset, 'hsl(var(--color-danger))'],
+          ]}
+          units="userSpaceOnUse"
+          vertical
+          let:url
+        >
+          <Area line={{ stroke: url, class: 'stroke-2' }} fill={url} fill-opacity={0.2} />
+        </LinearGradient>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Clipped area on Tooltip</h2>
 
 <Preview data={data.appleStock}>
@@ -585,6 +660,7 @@
       <Tooltip.Root
         y={48}
         xOffset={4}
+        variant="none"
         class="text-sm font-semibold text-primary leading-3"
         let:data
       >
@@ -599,6 +675,7 @@
         x="data"
         y={height + padding.top + 2}
         anchor="top"
+        variant="none"
         class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded whitespace-nowrap"
         let:data
       >
