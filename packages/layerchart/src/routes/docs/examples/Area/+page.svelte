@@ -622,7 +622,7 @@
   </div>
 </Preview>
 
-<h2>Highlight color based on value</h2>
+<h2>Highlight color based on value using color scale</h2>
 
 <Preview data={negativeDateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
@@ -653,6 +653,53 @@
           <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
         </RectClipPath>
         <Highlight lines points />
+      </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Highlight color based on value using tooltip slot prop</h2>
+
+<Preview data={negativeDateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={negativeDateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+      let:width
+      let:height
+      let:yScale
+      let:tooltip
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
+        <Rule y={0} />
+        <RectClipPath x={0} y={0} {width} height={yScale(0)}>
+          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
+        </RectClipPath>
+        <RectClipPath x={0} y={yScale(0)} {width} height={height - yScale(0)}>
+          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
+        </RectClipPath>
+        <Highlight
+          lines={{
+            class: tooltip.data?.value < 0 ? 'stroke-danger' : 'stroke-success',
+          }}
+          points={{
+            class: tooltip.data?.value < 0 ? 'fill-danger' : 'fill-success',
+          }}
+        />
       </Svg>
 
       <Tooltip.Root let:data>
