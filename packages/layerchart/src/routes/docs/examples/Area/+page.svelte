@@ -591,6 +591,37 @@
   </div>
 </Preview>
 
+<h2>Threshold with RectClipPath (over/under)</h2>
+
+<Preview data={negativeDateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={negativeDateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+      let:width
+      let:height
+      let:yScale
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
+        <Rule y={0} />
+        <RectClipPath x={0} y={0} {width} height={yScale(0)}>
+          <Area line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
+        </RectClipPath>
+        <RectClipPath x={0} y={yScale(0)} {width} height={height - yScale(0)}>
+          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
+        </RectClipPath>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Threshold with LinearGradient</h2>
 
 <Preview data={negativeDateSeriesData}>
@@ -622,6 +653,48 @@
           let:url
         >
           <Area line={{ stroke: url, class: 'stroke-2' }} fill={url} fill-opacity={0.2} />
+        </LinearGradient>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Threshold with LinearGradient (over/under)</h2>
+
+<Preview data={negativeDateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={negativeDateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+      let:yScale
+      let:height
+      let:padding
+    >
+      {@const thresholdOffset = (yScale(0) / (height + padding.bottom)) * 100 + '%'}
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
+        <Rule y={0} />
+        <LinearGradient
+          stops={[
+            [thresholdOffset, 'hsl(var(--color-success))'],
+            [thresholdOffset, 'hsl(var(--color-danger))'],
+          ]}
+          units="userSpaceOnUse"
+          vertical
+          let:url
+        >
+          <Area
+            y0={(d) => 0}
+            line={{ stroke: url, class: 'stroke-2' }}
+            fill={url}
+            fill-opacity={0.2}
+          />
         </LinearGradient>
       </Svg>
     </Chart>
