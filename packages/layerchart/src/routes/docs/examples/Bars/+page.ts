@@ -5,7 +5,7 @@ export async function load() {
     meta: {
       title: 'Bar Chart (Horizontal)',
       pageSource,
-      related: ['components/Bars', 'examples/Columns', 'examples/Histogram'],
+      related: ['components/Bars', 'examples/Columns', 'examples/Histogram', 'charts/BarChart'],
     },
   };
 }

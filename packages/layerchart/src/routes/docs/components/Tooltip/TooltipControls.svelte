@@ -2,7 +2,7 @@
   import type { ComponentProps } from 'svelte';
   import { Field, MenuField, MultiSelectField, Switch } from 'svelte-ux';
 
-  import type TooltipContext from '$lib/components/TooltipContext.svelte';
+  import type TooltipContext from '$lib/components/tooltip/TooltipContext.svelte';
   import type Highlight from '$lib/components/Highlight.svelte';
 
   type TooltipContextProps = ComponentProps<TooltipContext>;

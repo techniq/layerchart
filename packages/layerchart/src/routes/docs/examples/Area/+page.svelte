@@ -14,11 +14,11 @@
     LinearGradient,
     Point,
     RectClipPath,
+    Rule,
     Spline,
     Svg,
     Text,
     Tooltip,
-    TooltipItem,
     pivotLonger,
   } from 'layerchart';
   import { format, Field, Switch, Toggle, PeriodType } from 'svelte-ux';
@@ -29,6 +29,12 @@
   export let data;
 
   const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
+  const negativeDateSeriesData = createDateSeries({
+    count: 30,
+    min: -20,
+    max: 50,
+    value: 'integer',
+  });
 
   const keys = ['apples', 'bananas', 'oranges'];
   const multiSeriesData = createDateSeries({
@@ -99,9 +105,12 @@
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="value" value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -242,9 +251,12 @@
         {/each}
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label={data.fruit} value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label={data.fruit} value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -299,11 +311,14 @@
         <Highlight y={(d) => d.oranges} points={{ fill: fruitColors.oranges }} />
         <Highlight lines />
       </Svg>
-      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="apples" value={data.apples} />
-        <TooltipItem label="bananas" value={data.bananas} />
-        <TooltipItem label="oranges" value={data.oranges} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="apples" value={data.apples} />
+          <Tooltip.Item label="bananas" value={data.bananas} />
+          <Tooltip.Item label="oranges" value={data.oranges} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -362,9 +377,12 @@
         {/each}
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label={data.fruit} value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label={data.fruit} value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -407,9 +425,12 @@
         <Labels format="integer" />
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => formatDate(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label={data.fruit} value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label={data.fruit} value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -539,6 +560,237 @@
   </Preview>
 </Toggle>
 
+<h2>Threshold with RectClipPath</h2>
+
+<Preview data={negativeDateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={negativeDateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+      let:width
+      let:height
+      let:yScale
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
+        <Rule y={0} />
+        <RectClipPath x={0} y={0} {width} height={yScale(0)}>
+          <Area line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
+        </RectClipPath>
+        <RectClipPath x={0} y={yScale(0)} {width} height={height - yScale(0)}>
+          <Area line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
+        </RectClipPath>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Threshold with RectClipPath (over/under)</h2>
+
+<Preview data={negativeDateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={negativeDateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+      let:width
+      let:height
+      let:yScale
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
+        <Rule y={0} />
+        <RectClipPath x={0} y={0} {width} height={yScale(0)}>
+          <Area line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
+        </RectClipPath>
+        <RectClipPath x={0} y={yScale(0)} {width} height={height - yScale(0)}>
+          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
+        </RectClipPath>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Highlight color based on value using color scale</h2>
+
+<Preview data={negativeDateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={negativeDateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+      r={(d) => (d.value < 0 ? 'under' : 'over')}
+      rScale={scaleOrdinal()}
+      rDomain={['over', 'under']}
+      rRange={['hsl(var(--color-success))', 'hsl(var(--color-danger))']}
+      let:width
+      let:height
+      let:yScale
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
+        <Rule y={0} />
+        <RectClipPath x={0} y={0} {width} height={yScale(0)}>
+          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
+        </RectClipPath>
+        <RectClipPath x={0} y={yScale(0)} {width} height={height - yScale(0)}>
+          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
+        </RectClipPath>
+        <Highlight lines points />
+      </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Highlight color based on value using tooltip slot prop</h2>
+
+<Preview data={negativeDateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={negativeDateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+      let:width
+      let:height
+      let:yScale
+      let:tooltip
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
+        <Rule y={0} />
+        <RectClipPath x={0} y={0} {width} height={yScale(0)}>
+          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
+        </RectClipPath>
+        <RectClipPath x={0} y={yScale(0)} {width} height={height - yScale(0)}>
+          <Area y0={(d) => 0} line={{ class: 'stroke-2 stroke-danger' }} class="fill-danger/20" />
+        </RectClipPath>
+        <Highlight
+          lines={{
+            class: tooltip.data?.value < 0 ? 'stroke-danger' : 'stroke-success',
+          }}
+          points={{
+            class: tooltip.data?.value < 0 ? 'fill-danger' : 'fill-success',
+          }}
+        />
+      </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Threshold with LinearGradient</h2>
+
+<Preview data={negativeDateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={negativeDateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+      let:yScale
+      let:height
+      let:padding
+    >
+      {@const thresholdOffset = (yScale(0) / (height + padding.bottom)) * 100 + '%'}
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
+        <Rule y={0} />
+        <LinearGradient
+          stops={[
+            [thresholdOffset, 'hsl(var(--color-success))'],
+            [thresholdOffset, 'hsl(var(--color-danger))'],
+          ]}
+          units="userSpaceOnUse"
+          vertical
+          let:url
+        >
+          <Area line={{ stroke: url, class: 'stroke-2' }} fill={url} fill-opacity={0.2} />
+        </LinearGradient>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Threshold with LinearGradient (over/under)</h2>
+
+<Preview data={negativeDateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={negativeDateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+      let:yScale
+      let:height
+      let:padding
+    >
+      {@const thresholdOffset = (yScale(0) / (height + padding.bottom)) * 100 + '%'}
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
+        <Rule y={0} />
+        <LinearGradient
+          stops={[
+            [thresholdOffset, 'hsl(var(--color-success))'],
+            [thresholdOffset, 'hsl(var(--color-danger))'],
+          ]}
+          units="userSpaceOnUse"
+          vertical
+          let:url
+        >
+          <Area
+            y0={(d) => 0}
+            line={{ stroke: url, class: 'stroke-2' }}
+            fill={url}
+            fill-opacity={0.2}
+          />
+        </LinearGradient>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Clipped area on Tooltip</h2>
 
 <Preview data={data.appleStock}>
@@ -568,7 +820,7 @@
         <Axis placement="bottom" />
       </Svg>
 
-      <Tooltip
+      <Tooltip.Root
         y={48}
         xOffset={4}
         variant="none"
@@ -576,13 +828,13 @@
         let:data
       >
         {format(data.value, 'currency')}
-      </Tooltip>
+      </Tooltip.Root>
 
-      <Tooltip x={4} y={4} variant="none" class="text-sm font-semibold leading-3" let:data>
+      <Tooltip.Root x={4} y={4} variant="none" class="text-sm font-semibold leading-3" let:data>
         {format(data.date, PeriodType.Day)}
-      </Tooltip>
+      </Tooltip.Root>
 
-      <Tooltip
+      <Tooltip.Root
         x="data"
         y={height + padding.top + 2}
         anchor="top"
@@ -591,7 +843,7 @@
         let:data
       >
         {format(data.date, PeriodType.Day)}
-      </Tooltip>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

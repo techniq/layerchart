@@ -16,7 +16,6 @@
     Svg,
     Text,
     Tooltip,
-    TooltipItem,
     pivotLonger,
   } from 'layerchart';
 
@@ -104,9 +103,13 @@
         <Spline class="stroke-2 stroke-primary" />
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="value" value={data.value} />
-      </Tooltip>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -259,9 +262,13 @@
         {/each}
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label={data.fruit} value={data.value} />
-      </Tooltip>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label={data.fruit} value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -296,10 +303,13 @@
         <Highlight y={(d) => d.y1} points={{ fill: fruitColors.oranges }} />
         <Highlight lines />
       </Svg>
-      <Tooltip let:data>
-        <TooltipItem label="bananas" value={data.y} />
-        <TooltipItem label="oranges" value={data.y1} />
-      </Tooltip>
+
+      <Tooltip.Root let:data>
+        <Tooltip.List>
+          <Tooltip.Item label="bananas" value={data.y} />
+          <Tooltip.Item label="oranges" value={data.y1} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -352,9 +362,12 @@
         {/each}
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label={data.fruit} value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label={data.fruit} value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -392,9 +405,12 @@
         <Labels format="integer" />
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label={data.fruit} value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label={data.fruit} value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

@@ -12,7 +12,7 @@
 
   import { chartContext } from './ChartContext.svelte';
   import { geoContext } from './GeoContext.svelte';
-  import type { TooltipContextValue } from './TooltipContext.svelte';
+  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoCurvePath } from '$lib/utils/geo.js';
 

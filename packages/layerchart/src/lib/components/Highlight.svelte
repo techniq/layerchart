@@ -9,7 +9,7 @@
   import Line from './Line.svelte';
   import Bar from './Bar.svelte';
   import Rect from './Rect.svelte';
-  import { tooltipContext } from './TooltipContext.svelte';
+  import { tooltipContext } from './tooltip/TooltipContext.svelte';
 
   import { isScaleBand } from '$lib/utils/scales.js';
   import { accessor, type Accessor } from '$lib/utils/common.js';

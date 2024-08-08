@@ -4,7 +4,7 @@
   import { sum } from 'd3-array';
   import { cls, format as formatUtil } from 'svelte-ux';
 
-  import { Arc, Chart, Group, Pie, Svg, Text, Tooltip, TooltipItem } from 'layerchart';
+  import { Arc, Chart, Group, Pie, Svg, Text, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -267,15 +267,18 @@
       <Svg>
         <Pie {tooltip} />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="value" value={data.value} format="integer" valueAlign="right" />
-        <TooltipItem
-          label="percent"
-          value={data.value / dataSum}
-          format="percent"
-          valueAlign="right"
-        />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+          <Tooltip.Item
+            label="percent"
+            value={data.value / dataSum}
+            format="percent"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -331,15 +334,18 @@
         </Pie>
       </Svg>
 
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="value" value={data.value} format="integer" valueAlign="right" />
-        <TooltipItem
-          label="percent"
-          value={data.value / dataSum}
-          format="percent"
-          valueAlign="right"
-        />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+          <Tooltip.Item
+            label="percent"
+            value={data.value / dataSum}
+            format="percent"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

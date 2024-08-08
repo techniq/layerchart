@@ -11,7 +11,6 @@
     HitCanvas,
     Svg,
     Tooltip,
-    TooltipItem,
     TransformControls,
     geoFitObjectTransform,
   } from 'layerchart';
@@ -122,11 +121,15 @@
           </g>
         {/each}
       </Svg>
-      <Tooltip header={(data) => data.properties.name}>
+
+      <Tooltip.Root let:data>
         {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
-        <TooltipItem label="longitude" value={longitude} format="decimal" />
-        <TooltipItem label="latitude" value={latitude} format="decimal" />
-      </Tooltip>
+        <Tooltip.Header>{data.properties.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="longitude" value={longitude} format="decimal" />
+          <Tooltip.Item label="latitude" value={latitude} format="decimal" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -192,12 +195,17 @@
           </g>
         {/each}
       </Svg>
-      <Tooltip header={(data) => data.properties.name}>
+
+      <Tooltip.Root let:data>
+        {data.properties.name}
         <!-- TODO: How to handle scale (when using canvas and not projection transforms) -->
         <!-- {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
-        <TooltipItem label="longitude" value={longitude} format="decimal" />
-        <TooltipItem label="latitude" value={latitude} format="decimal" /> -->
-      </Tooltip>
+        <Tooltip.Header>{data.properties.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="longitude" value={longitude} format="decimal" />
+          <Tooltip.Item label="latitude" value={latitude} format="decimal" />
+        </Tooltip.List> -->
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -308,11 +316,14 @@
         />
       </HitCanvas>
 
-      <Tooltip header={(data) => data.properties.name}>
+      <Tooltip.Root let:data>
         {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
-        <TooltipItem label="longitude" value={longitude} format="decimal" />
-        <TooltipItem label="latitude" value={latitude} format="decimal" />
-      </Tooltip>
+        <Tooltip.Header>{data.properties.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="longitude" value={longitude} format="decimal" />
+          <Tooltip.Item label="latitude" value={latitude} format="decimal" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -427,12 +438,16 @@
         />
       </HitCanvas>
 
-      <Tooltip header={(data) => data.properties.name}>
+      <Tooltip.Root let:data>
+        {data.properties.name}
         <!-- TODO: How to handle scale (when using canvas and not projection transforms) -->
         <!-- {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
-        <TooltipItem label="longitude" value={longitude} format="decimal" />
-        <TooltipItem label="latitude" value={latitude} format="decimal" /> -->
-      </Tooltip>
+        <Tooltip.Header>{data.properties.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="longitude" value={longitude} format="decimal" />
+          <Tooltip.Item label="latitude" value={latitude} format="decimal" />
+        </Tooltip.List> -->
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

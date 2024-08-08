@@ -15,7 +15,6 @@
     LinearGradient,
     Svg,
     Tooltip,
-    TooltipItem,
     chartDataArray,
   } from 'layerchart';
 
@@ -87,11 +86,14 @@
         <AreaStack line={{ 'stroke-width': 2 }} />
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.data.date, 'eee, MMMM do')} let:data>
-        {#each keys as key}
-          <TooltipItem label={key} value={data.data[key]} />
-        {/each}
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          {#each keys as key}
+            <Tooltip.Item label={key} value={data.data[key]} />
+          {/each}
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

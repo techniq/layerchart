@@ -3,7 +3,7 @@
   import { forceX, forceY, forceCollide } from 'd3-force';
   import { PeriodType } from 'svelte-ux';
 
-  import { Axis, Chart, Circle, ForceSimulation, Svg, Tooltip, TooltipItem } from 'layerchart';
+  import { Axis, Chart, Circle, ForceSimulation, Svg, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -56,12 +56,15 @@
         </ForceSimulation>
       </Svg>
 
-      <Tooltip header={(d) => d.name} let:data>
-        <TooltipItem label="Birth date" value={data.date_of_birth} format={PeriodType.Day} />
-        <TooltipItem label="State" value={data.state_name} />
-        <TooltipItem label="Party" value={data.party} />
-        <TooltipItem label="Gender" value={data.gender} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="Birth date" value={data.date_of_birth} format={PeriodType.Day} />
+          <Tooltip.Item label="State" value={data.state_name} />
+          <Tooltip.Item label="Party" value={data.party} />
+          <Tooltip.Item label="Gender" value={data.gender} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

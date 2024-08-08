@@ -12,17 +12,7 @@
   import { timeDays, timeMonths, timeWeeks } from 'd3-time';
   import { subDays } from 'date-fns';
 
-  import {
-    Axis,
-    Bars,
-    Chart,
-    Highlight,
-    Svg,
-    Tooltip,
-    TooltipItem,
-    TooltipSeparator,
-    thresholdTime,
-  } from 'layerchart';
+  import { Axis, Bars, Chart, Highlight, Svg, Tooltip, thresholdTime } from 'layerchart';
   import { MenuField, RangeField, NumberStepper, format, PeriodType, State } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -80,17 +70,20 @@
         <Bars radius={4} strokeWidth={1} class="fill-primary" tweened />
         <Highlight area />
       </Svg>
-      <Tooltip header={(data) => data.x0 + ' - ' + (data.x1 - 1)} let:data>
-        <TooltipItem label="count" value={data.length} format="integer" />
-        <TooltipSeparator />
-        {#each data.slice(0, 5) as d}
-          <TooltipItem label={d.name} value={d.weight} />
-        {/each}
-        {#if data.length > 5}
-          <span />
-          <span>...</span>
-        {/if}
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="count" value={data.length} format="integer" />
+          <Tooltip.Separator />
+          {#each data.slice(0, 5) as d}
+            <Tooltip.Item label={d.name} value={d.weight} />
+          {/each}
+          {#if data.length > 5}
+            <span />
+            <span>...</span>
+          {/if}
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -115,17 +108,20 @@
         <Bars radius={4} strokeWidth={1} class="fill-primary" tweened />
         <Highlight area />
       </Svg>
-      <Tooltip header={(data) => data.x0 + ' - ' + (data.x1 - 1)} let:data>
-        <TooltipItem label="count" value={data.length} format="integer" />
-        <TooltipSeparator />
-        {#each data.slice(0, 5) as d}
-          <TooltipItem label={d.name} value={d.weight} />
-        {/each}
-        {#if data.length > 5}
-          <span />
-          <span>...</span>
-        {/if}
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="count" value={data.length} format="integer" />
+          <Tooltip.Separator />
+          {#each data.slice(0, 5) as d}
+            <Tooltip.Item label={d.name} value={d.weight} />
+          {/each}
+          {#if data.length > 5}
+            <span />
+            <span>...</span>
+          {/if}
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -207,17 +203,20 @@
         <Bars radius={4} strokeWidth={1} tweened class="fill-primary" />
         <Highlight area />
       </Svg>
-      <Tooltip header={(data) => data.x0 + ' - ' + (data.x1 - 0.01)} let:data>
-        <TooltipItem label="count" value={data.length} format="integer" />
-        <TooltipSeparator />
-        {#each data.slice(0, 5) as d}
-          <TooltipItem label="value" value={d} />
-        {/each}
-        {#if data.length > 5}
-          <span />
-          <span>...</span>
-        {/if}
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 0.01)}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="count" value={data.length} format="integer" />
+          <Tooltip.Separator />
+          {#each data.slice(0, 5) as d}
+            <Tooltip.Item label="value" value={d} />
+          {/each}
+          {#if data.length > 5}
+            <span />
+            <span>...</span>
+          {/if}
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -262,25 +261,28 @@
           <Bars radius={4} strokeWidth={1} class="fill-primary" tweened />
           <Highlight area />
         </Svg>
-        <Tooltip
-          header={(data) =>
-            format(data.x0, PeriodType.Day) + ' - ' + format(data.x1, PeriodType.Day)}
-          let:data
-        >
-          <TooltipItem label="count" value={data.length} format="integer" />
-          <TooltipSeparator />
-          {#each data.slice(0, 5) as d}
-            <TooltipItem
-              label="value"
-              value={d}
-              format={(value) => format(value, PeriodType.DayTime)}
-            />
-          {/each}
-          {#if data.length > 5}
-            <span />
-            <span>...</span>
-          {/if}
-        </Tooltip>
+        <Tooltip.Root let:data>
+          <Tooltip.Header class="text-center">
+            {format(data.x0, PeriodType.Day) +
+              ' - ' +
+              format(data.x1, PeriodType.Day)}</Tooltip.Header
+          >
+          <Tooltip.List>
+            <Tooltip.Item label="count" value={data.length} format="integer" />
+            <Tooltip.Separator />
+            {#each data.slice(0, 5) as d}
+              <Tooltip.Item
+                label="value"
+                value={d}
+                format={(value) => format(value, PeriodType.DayTime)}
+              />
+            {/each}
+            {#if data.length > 5}
+              <span />
+              <span>...</span>
+            {/if}
+          </Tooltip.List>
+        </Tooltip.Root>
       </Chart>
     </div>
   </Preview>
@@ -339,25 +341,28 @@
           <Bars radius={4} strokeWidth={1} class="fill-primary" tweened />
           <Highlight area />
         </Svg>
-        <Tooltip
-          header={(data) =>
-            format(data.x0, PeriodType.Day) + ' - ' + format(new Date(data.x1 - 1), PeriodType.Day)}
-          let:data
-        >
-          <TooltipItem label="count" value={data.length} format="integer" />
-          <TooltipSeparator />
-          {#each data.slice(0, 5) as d}
-            <TooltipItem
-              label="value"
-              value={d}
-              format={(value) => format(value, PeriodType.DayTime)}
-            />
-          {/each}
-          {#if data.length > 5}
-            <span />
-            <span>...</span>
-          {/if}
-        </Tooltip>
+        <Tooltip.Root let:data>
+          <Tooltip.Header class="text-center"
+            >{format(data.x0, PeriodType.Day) +
+              ' - ' +
+              format(new Date(data.x1 - 1), PeriodType.Day)}</Tooltip.Header
+          >
+          <Tooltip.Item label="count" value={data.length} format="integer" />
+          <Tooltip.List>
+            <Tooltip.Separator />
+            {#each data.slice(0, 5) as d}
+              <Tooltip.Item
+                label="value"
+                value={d}
+                format={(value) => format(value, PeriodType.DayTime)}
+              />
+            {/each}
+            {#if data.length > 5}
+              <span />
+              <span>...</span>
+            {/if}
+          </Tooltip.List>
+        </Tooltip.Root>
       </Chart>
     </div>
   </Preview>

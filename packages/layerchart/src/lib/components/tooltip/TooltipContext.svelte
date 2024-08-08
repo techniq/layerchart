@@ -37,10 +37,10 @@
   import { quadtree as d3Quadtree, type Quadtree } from 'd3-quadtree';
   import { cls, sortFunc } from 'svelte-ux';
 
-  import { Svg } from './Chart.svelte';
-  import { chartContext } from './ChartContext.svelte';
-  import ChartClipPath from './ChartClipPath.svelte';
-  import Voronoi from './Voronoi.svelte';
+  import { Svg } from './../Chart.svelte';
+  import { chartContext } from './../ChartContext.svelte';
+  import ChartClipPath from './../ChartClipPath.svelte';
+  import Voronoi from './../Voronoi.svelte';
 
   import { localPoint } from '$lib/utils/event.js';
   import { isScaleBand, scaleInvert } from '$lib/utils/scales.js';

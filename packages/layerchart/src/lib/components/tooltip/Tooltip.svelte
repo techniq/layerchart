@@ -2,9 +2,9 @@
   import { fade } from 'svelte/transition';
   import { cls } from 'svelte-ux';
 
-  import { chartContext } from './ChartContext.svelte';
+  import { chartContext } from './../ChartContext.svelte';
   import { tooltipContext } from './TooltipContext.svelte';
-  import { motionStore } from '../stores/motionStore.js';
+  import { motionStore } from '../../stores/motionStore.js';
 
   /** `x` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
   export let x: 'pointer' | 'data' | number | undefined = 'pointer';
@@ -34,8 +34,6 @@
 
   /** Set to `false` to disable spring transitions */
   export let motion = true;
-
-  export let header: ((data: any) => any) | undefined = undefined;
 
   export let classes: {
     root?: string;
@@ -154,11 +152,7 @@
   >
     <div
       class={cls(
-        variant !== 'none' && [
-          'px-2 py-1 h-full rounded elevation-1',
-          '[&_.label]:text-xs [&_.label]:text-right [&_.label]:whitespace-nowrap',
-          ['[&_.value]:text-sm [&_.value]:tabular-nums'],
-        ],
+        variant !== 'none' && ['text-sm py-1 px-2 h-full rounded elevation-1'],
         {
           default: [
             'bg-surface-100/90 dark:bg-surface-300/90 backdrop-filter backdrop-blur-[2px] text-surface-content',
@@ -174,26 +168,8 @@
         $$props.class
       )}
     >
-      {#if header || $$slots.header}
-        <div
-          class={cls(
-            variant !== 'none' && 'text-center font-semibold whitespace-nowrap',
-            classes.header
-          )}
-        >
-          <slot name="header" data={$tooltip.data}>
-            {header?.($tooltip.data)}
-          </slot>
-        </div>
-      {/if}
-
       {#if $$slots.default}
-        <div
-          class={cls(
-            variant !== 'none' && 'grid grid-cols-[1fr,auto] gap-x-2 gap-y-1 items-center pt-1',
-            classes.content
-          )}
-        >
+        <div class={cls(classes.content)}>
           <slot data={$tooltip.data} />
         </div>
       {/if}

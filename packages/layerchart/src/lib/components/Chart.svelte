@@ -33,7 +33,7 @@
 
   import ChartContext from './ChartContext.svelte';
   import GeoContext from './GeoContext.svelte';
-  import TooltipContext from './TooltipContext.svelte';
+  import TooltipContext from './tooltip/TooltipContext.svelte';
   import TransformContext from './TransformContext.svelte';
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
 
@@ -270,12 +270,16 @@
   let:height
   let:width
   let:element
+  let:x
   let:xScale
   let:xGet
+  let:y
   let:yScale
   let:yGet
+  let:z
   let:zScale
   let:zGet
+  let:r
   let:rScale
   let:rGet
   let:padding
@@ -333,12 +337,16 @@
               {projection}
               transform={_transform}
               {tooltip}
+              {x}
               {xScale}
               {xGet}
+              {y}
               {yScale}
               {yGet}
+              {z}
               {zScale}
               {zGet}
+              {r}
               {rScale}
               {rGet}
               {padding}

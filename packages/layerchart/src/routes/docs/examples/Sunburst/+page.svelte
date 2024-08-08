@@ -5,17 +5,7 @@
   import * as chromatic from 'd3-scale-chromatic';
   import { hsl } from 'd3-color';
 
-  import {
-    Arc,
-    Bounds,
-    Chart,
-    Group,
-    Partition,
-    Svg,
-    Tooltip,
-    TooltipItem,
-    findAncestor,
-  } from 'layerchart';
+  import { Arc, Bounds, Chart, Group, Partition, Svg, Tooltip, findAncestor } from 'layerchart';
 
   import {
     Breadcrumb,
@@ -132,9 +122,13 @@
           </Partition>
         </Bounds>
       </Svg>
-      <Tooltip header={(data) => data.data.name} let:data>
-        <TooltipItem label="value" value={data.value} format="integer" />
-      </Tooltip>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.data.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} format="integer" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

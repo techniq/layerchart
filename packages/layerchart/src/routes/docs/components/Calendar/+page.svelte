@@ -4,7 +4,7 @@
   import { scaleThreshold } from 'd3-scale';
   import { range } from 'd3-array';
 
-  import { Calendar, Chart, Group, Text, Tooltip, TooltipItem, Svg } from 'layerchart';
+  import { Calendar, Chart, Group, Text, Tooltip, Svg } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -47,7 +47,15 @@
         <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltip} monthPath />
       </Svg>
 
-      <Tooltip header={(d) => format(d.date, PeriodType.Day)} />
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, PeriodType.Day)}</Tooltip.Header>
+
+        {#if data.value != null}
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+          </Tooltip.List>
+        {/if}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -74,7 +82,15 @@
         <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltip} cellSize={16} monthPath />
       </Svg>
 
-      <Tooltip header={(d) => format(d.date, PeriodType.Day)} />
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, PeriodType.Day)}</Tooltip.Header>
+
+        {#if data.value != null}
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+          </Tooltip.List>
+        {/if}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -117,11 +133,15 @@
         {/each}
       </Svg>
 
-      <Tooltip header={(d) => format(d.date, PeriodType.Day)} let:data>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, PeriodType.Day)}</Tooltip.Header>
+
         {#if data.value != null}
-          <TooltipItem label="value" value={data.value} format="integer" valueAlign="right" />
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+          </Tooltip.List>
         {/if}
-      </Tooltip>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

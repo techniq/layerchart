@@ -1,5 +1,5 @@
-import api from '$lib/components/Tooltip.svelte?raw&sveld';
-import source from '$lib/components/Tooltip.svelte?raw';
+import api from '$lib/components/tooltip/Tooltip.svelte?raw&sveld';
+import source from '$lib/components/tooltip/Tooltip.svelte?raw';
 import pageSource from './+page.svelte?raw';
 
 export async function load() {

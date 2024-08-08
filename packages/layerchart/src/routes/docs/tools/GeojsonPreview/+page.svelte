@@ -15,7 +15,7 @@
   import { schemeCategory10 } from 'd3-scale-chromatic';
   import { color } from 'd3-color';
 
-  import { Canvas, Chart, GeoPath, GeoTile, HitCanvas, Tooltip, TooltipItem } from 'layerchart';
+  import { Canvas, Chart, GeoPath, GeoTile, HitCanvas, Tooltip } from 'layerchart';
   import {
     EmptyMessage,
     RangeField,
@@ -151,11 +151,14 @@
           />
         </HitCanvas>
 
-        <Tooltip header={(data) => data.properties.id} let:data>
-          {#each Object.entries(data.properties) as [key, value]}
-            <TooltipItem label={key} {value} />
-          {/each}
-        </Tooltip>
+        <Tooltip.Root let:data>
+          <Tooltip.Header>{data.properties.id}</Tooltip.Header>
+          <Tooltip.List>
+            {#each Object.entries(data.properties) as [key, value]}
+              <Tooltip.Item label={key} {value} />
+            {/each}
+          </Tooltip.List>
+        </Tooltip.Root>
       </Chart>
     {:else}
       <EmptyMessage class="h-full">Please enter input below</EmptyMessage>
