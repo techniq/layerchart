@@ -129,7 +129,7 @@
             </Group>
           {/each}
           <!-- Show text on top of all circles -->
-          {#each selected ? selected.children ?? [selected] : [] as node (node.data.name + node.depth)}
+          {#each selected ? (selected.children ?? [selected]) : [] as node (node.data.name + node.depth)}
             {@const fontSize = 1 / transform.scale}
             <g in:fade|local>
               <text

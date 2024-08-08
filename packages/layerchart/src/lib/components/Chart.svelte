@@ -290,7 +290,7 @@
     {#key isMounted}
       <TransformContext
         bind:this={transformContext}
-        mode={transform?.mode ?? geo?.applyTransform?.length ? 'manual' : 'none'}
+        mode={(transform?.mode ?? geo?.applyTransform?.length) ? 'manual' : 'none'}
         initialTranslate={initialTransform?.translate}
         initialScale={initialTransform?.scale}
         processTranslate={geo
