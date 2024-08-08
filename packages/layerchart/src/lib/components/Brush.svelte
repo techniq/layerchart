@@ -7,6 +7,7 @@
   import { chartContext } from './ChartContext.svelte';
   import Frame from './Frame.svelte';
   import { localPoint } from '$lib/utils/event.js';
+  import { scaleInvert } from '$lib/utils/scales.js';
   import Group from './Group.svelte';
 
   const { xScale, yScale, width, height, padding } = chartContext();
@@ -68,12 +69,13 @@
     ) => void
   ) {
     return (e: PointerEvent) => {
+      // TODO: Handle scaleBand domains
       const start = {
         xDomain: [xDomain[0] ?? xDomainMin, xDomain[1] ?? xDomainMax] as [number, number],
         yDomain: [yDomain[0] ?? yDomainMin, yDomain[1] ?? yDomainMax] as [number, number],
         value: {
-          x: $xScale.invert?.(localPoint(frameEl, e)?.x ?? 0 - $padding.left),
-          y: $yScale.invert?.(localPoint(frameEl, e)?.y ?? 0 - $padding.top),
+          x: scaleInvert($xScale, localPoint(frameEl, e)?.x ?? 0 - $padding.left),
+          y: scaleInvert($yScale, localPoint(frameEl, e)?.y ?? 0 - $padding.top),
         },
       };
 
@@ -81,8 +83,8 @@
 
       const onPointerMove = (e: PointerEvent) => {
         fn(start, {
-          x: $xScale.invert?.(localPoint(frameEl, e)?.x ?? 0 - $padding.left),
-          y: $yScale.invert?.(localPoint(frameEl, e)?.y ?? 0 - $padding.top),
+          x: scaleInvert($xScale, localPoint(frameEl, e)?.x ?? 0 - $padding.left),
+          y: scaleInvert($yScale, localPoint(frameEl, e)?.y ?? 0 - $padding.top),
         });
 
         // if (xDomain[0] === xDomain[1] || yDomain[0] === yDomain[1]) {
