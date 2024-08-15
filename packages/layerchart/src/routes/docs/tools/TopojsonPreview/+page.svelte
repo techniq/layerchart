@@ -17,7 +17,7 @@
   import { feature } from 'topojson-client';
   import type { GeometryCollection, Topology } from 'topojson-specification';
 
-  import { Canvas, Chart, GeoPath, GeoTile, HitCanvas, Tooltip } from 'layerchart';
+  import { Canvas, Chart, GeoPath, GeoTile, HitCanvas, Svg, Tooltip } from 'layerchart';
   import {
     CopyButton,
     EmptyMessage,
@@ -74,7 +74,7 @@
     })
   );
 
-  $: features = geojson.features;
+  $: features = geojson?.features;
 </script>
 
 <div class="grid gap-2">
@@ -101,9 +101,9 @@
         let:tooltip
       >
         {#if projection === geoMercator}
-          <Canvas>
+          <Svg>
             <GeoTile url={serviceUrl} {zoomDelta} />
-          </Canvas>
+          </Svg>
         {/if}
 
         <Canvas>
