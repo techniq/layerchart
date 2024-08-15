@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-Add @layerstack svelte-stores, tailwind, and utils packages and move `svelte-ux` package to devDependancies (components for docs only)
+Add `@layerstack/svelte-actions`, `@layerstack/svelte-stores`, `@layerstack/tailwind`, and `@layerstack/utils` packages and move `svelte-ux` package to `devDependancies` (components only for docs)

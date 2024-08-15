@@ -16,7 +16,8 @@
     Svg,
   } from 'layerchart';
   import { Button, ButtonGroup } from 'svelte-ux';
-  import { sortFunc, scrollIntoView } from '@layerstack/utils';
+  import { sortFunc } from '@layerstack/utils';
+  import { scrollIntoView } from '@layerstack/svelte-actions';
   import { cls } from '@layerstack/tailwind';
   import { timerStore } from '@layerstack/svelte-stores';
 

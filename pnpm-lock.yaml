@@ -23,6 +23,9 @@ importers:
 
   packages/layerchart:
     dependencies:
+      '@layerstack/svelte-actions':
+        specifier: ^0.0.3
+        version: 0.0.3
       '@layerstack/svelte-stores':
         specifier: ^0.0.3
         version: 0.0.3
@@ -714,6 +717,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
+
+  '@layerstack/svelte-actions@0.0.3':
+    resolution: {integrity: sha512-StExYf7MRSecjUrYIAIzgkw5NzvSNJJYiK+/daVAjCEyX/JS6zW541MkoFM+XfafA57jZ0Ryz70rG5wNKJJj4Q==}
 
   '@layerstack/svelte-stores@0.0.3':
     resolution: {integrity: sha512-tkSzYhoecDvhbev6VbCJk8vPCRSnFB44IDa3gNZ2esU0k6Fxgz1vcboGDUvGJtZ+Q8IcJV05MeGA89ViW6nBQA==}
@@ -3052,6 +3058,15 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@layerstack/svelte-actions@0.0.3':
+    dependencies:
+      '@floating-ui/dom': 1.6.10
+      '@layerstack/utils': 0.0.3
+      d3-array: 3.2.4
+      d3-scale: 4.0.2
+      date-fns: 3.6.0
+      lodash-es: 4.17.21
 
   '@layerstack/svelte-stores@0.0.3':
     dependencies:

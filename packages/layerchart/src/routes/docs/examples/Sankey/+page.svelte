@@ -6,7 +6,8 @@
   import { interpolateCool } from 'd3-scale-chromatic';
   import { extent } from 'd3-array';
   import { Icon } from 'svelte-ux';
-  import { cls, sortFunc } from '@layerstack/utils';
+  import { sortFunc } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
   import { mdiArrowRightBold } from '@mdi/js';
 
   import {
