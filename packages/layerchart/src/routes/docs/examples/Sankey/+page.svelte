@@ -26,8 +26,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import SankeyControls from './SankeyControls.svelte';
 
-  import { simpleData, complexData, greenhouse } from '../_data/graph.js';
-
   export let data;
 
   const colorScale = scaleSequential(interpolateCool);
@@ -76,9 +74,9 @@
 
 <h2>Simple</h2>
 
-<Preview data={simpleData}>
+<Preview data={data.simple}>
   <div class="h-[400px] p-4 border rounded">
-    <Chart data={simpleData}>
+    <Chart data={data.simple}>
       <Svg>
         <Sankey nodeId={(d) => d.id} let:links let:nodes>
           {#each links as link ([link.source.id, link.target.id].join('_'))}
@@ -106,9 +104,9 @@
 
 <h2>Tooltip</h2>
 
-<Preview data={structuredClone(greenhouse)}>
+<Preview data={structuredClone(data.greenhouse)}>
   <div class="h-[800px] p-4 border rounded">
-    <Chart data={structuredClone(greenhouse)} let:tooltip>
+    <Chart data={structuredClone(data.greenhouse)} let:tooltip>
       <Svg>
         <Sankey nodeId={(d) => d.name} nodeWidth={8} let:links let:nodes>
           {#each links as link ([link.source.name, link.target.name].join('_'))}
@@ -187,9 +185,9 @@
 
 <h2>Node select</h2>
 
-<Preview data={selectedNode ? graphFromNode(selectedNode) : greenhouse}>
+<Preview data={selectedNode ? graphFromNode(selectedNode) : data.greenhouse}>
   <div class="h-[600px] p-4 border rounded">
-    <Chart data={selectedNode ? graphFromNode(selectedNode) : greenhouse}>
+    <Chart data={selectedNode ? graphFromNode(selectedNode) : data.greenhouse}>
       <Svg>
         <Sankey nodeId={(d) => d.name} nodeWidth={8} let:links let:nodes>
           {#each links as link ([link.source.name, link.target.name].join('_'))}
@@ -239,9 +237,9 @@
 
 <SankeyControls bind:nodeAlign bind:nodeColorBy bind:linkColorBy bind:nodePadding bind:nodeWidth />
 
-<Preview data={complexData}>
+<Preview data={data.complex}>
   <div class="h-[800px] p-4 border rounded">
-    <Chart data={complexData} padding={{ right: 164 }} let:tooltip>
+    <Chart data={data.complex} padding={{ right: 164 }} let:tooltip>
       <Svg>
         <Sankey
           {nodeAlign}
