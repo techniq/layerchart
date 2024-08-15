@@ -107,7 +107,9 @@
 
       $ctx.lineWidth = Number(strokeWidth ?? 0);
       $ctx.strokeStyle =
-        stroke ?? computedStyles.stroke === 'none' ? 'transparent' : computedStyles.stroke ?? '';
+        (stroke ?? computedStyles.stroke === 'none')
+          ? 'transparent'
+          : (computedStyles.stroke ?? '');
       $ctx.stroke();
     }
   }
