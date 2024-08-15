@@ -11,7 +11,9 @@
     Tooltip,
     radiansToDegrees,
   } from 'layerchart';
-  import { Field, RangeField, SpringValue, Switch, Toggle, cls, round } from 'svelte-ux';
+  import { Field, RangeField, SpringValue, Switch, Toggle } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
+  import { round } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 

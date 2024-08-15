@@ -4,7 +4,8 @@
   import { scaleQuantize } from 'd3-scale';
 
   import { ColorRamp } from 'layerchart';
-  import { NumberStepper, entries } from 'svelte-ux';
+  import { NumberStepper } from 'svelte-ux';
+  import { entries } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 

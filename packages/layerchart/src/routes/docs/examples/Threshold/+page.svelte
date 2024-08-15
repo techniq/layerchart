@@ -2,7 +2,7 @@
   import { scaleTime } from 'd3-scale';
   import { curveLinear, curveStepAfter } from 'd3-shape';
   import { format } from 'date-fns';
-  import { formatDate, PeriodType } from 'svelte-ux';
+  import { formatDate, PeriodType } from '@layerstack/utils';
 
   import {
     Area,

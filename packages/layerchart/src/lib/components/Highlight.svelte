@@ -2,7 +2,8 @@
   import { type ComponentProps } from 'svelte';
   import { max, min } from 'd3-array';
   import type { Series, SeriesPoint } from 'd3-shape';
-  import { cls, notNull } from 'svelte-ux';
+  import { notNull } from '@layerstack/utils/typeGuards';
+  import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
   import Circle from './Circle.svelte';

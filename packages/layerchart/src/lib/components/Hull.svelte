@@ -1,11 +1,11 @@
 <script lang="ts">
   import { createEventDispatcher, type ComponentProps } from 'svelte';
-  import { cls } from 'svelte-ux';
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
   // @ts-expect-error
   import { geoVoronoi } from 'd3-geo-voronoi';
   import { curveLinearClosed } from 'd3-shape';
+  import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
   import GeoPath from './GeoPath.svelte';

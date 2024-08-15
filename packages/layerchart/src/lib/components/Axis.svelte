@@ -8,7 +8,9 @@
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
 
-  import { format as formatValue, type FormatType, cls, type TransitionParams } from 'svelte-ux';
+  import { format as formatValue, type FormatType } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
+  import type { TransitionParams } from 'svelte-ux'; // TODO: Replace with `@layerstack/svelte-types` or similar
 
   import { chartContext } from './ChartContext.svelte';
   import Circle from './Circle.svelte';

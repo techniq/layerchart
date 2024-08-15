@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
-  import { uniqueId } from 'svelte-ux';
+  import { uniqueId } from '@layerstack/utils';
 
   import ClipPath from './ClipPath.svelte';
   import Rect from './Rect.svelte';

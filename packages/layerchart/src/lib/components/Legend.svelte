@@ -1,13 +1,13 @@
 <script lang="ts">
+  import type { SVGAttributes } from 'svelte/elements';
   import { scaleBand, scaleLinear } from 'd3-scale';
   import { quantize, interpolate, interpolateRound } from 'd3-interpolate';
   import { quantile, range } from 'd3-array';
-  import { format, type FormatType } from 'svelte-ux';
-  import type { SVGAttributes } from 'svelte/elements';
+  import { format, type FormatType } from '@layerstack/utils';
 
   import { chartContext } from './ChartContext.svelte';
   import ColorRamp from './ColorRamp.svelte';
-  import { cls } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   const { rScale } = chartContext() ?? {};
 

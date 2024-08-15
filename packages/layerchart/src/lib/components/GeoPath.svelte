@@ -8,7 +8,7 @@
     type GeoProjection,
     type GeoTransformPrototype,
   } from 'd3-geo';
-  import { cls } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
   import { geoContext } from './GeoContext.svelte';
@@ -107,9 +107,7 @@
 
       $ctx.lineWidth = Number(strokeWidth ?? 0);
       $ctx.strokeStyle =
-        (stroke ?? computedStyles.stroke === 'none')
-          ? 'transparent'
-          : (computedStyles.stroke ?? '');
+        stroke ?? computedStyles.stroke === 'none' ? 'transparent' : computedStyles.stroke ?? '';
       $ctx.stroke();
     }
   }

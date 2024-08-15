@@ -8,16 +8,8 @@
   import { hsl } from 'd3-color';
 
   import { Chart, Circle, Group, Pack, Svg, TransformContext, findAncestor } from 'layerchart';
-  import {
-    Breadcrumb,
-    Button,
-    Field,
-    RangeField,
-    ToggleGroup,
-    ToggleOption,
-    format,
-    sortFunc,
-  } from 'svelte-ux';
+  import { Breadcrumb, Button, Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 

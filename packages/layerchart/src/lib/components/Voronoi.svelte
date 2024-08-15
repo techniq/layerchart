@@ -5,7 +5,7 @@
   import type { GeoPermissibleObjects } from 'd3-geo';
   // @ts-expect-error
   import { geoVoronoi } from 'd3-geo-voronoi';
-  import { cls } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
   import GeoPath from './GeoPath.svelte';

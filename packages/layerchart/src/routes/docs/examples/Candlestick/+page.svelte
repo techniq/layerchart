@@ -2,7 +2,7 @@
   import { scaleBand, scaleOrdinal } from 'd3-scale';
 
   import { Axis, Bars, Chart, Highlight, Points, Svg, Tooltip } from 'layerchart';
-  import { PeriodType, formatDate } from 'svelte-ux';
+  import { PeriodType, formatDate } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 

@@ -9,7 +9,7 @@
   import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
   // import { interpolateString } from 'd3-interpolate';
   import { interpolatePath } from 'd3-interpolate-path';
-  import { cls } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
   import Group from './Group.svelte';

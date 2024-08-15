@@ -4,7 +4,7 @@
   import { schemeBlues } from 'd3-scale-chromatic';
   import { geoIdentity, type GeoProjection } from 'd3-geo';
   import { feature } from 'topojson-client';
-  import { format } from 'svelte-ux';
+  import { format } from '@layerstack/utils';
 
   import {
     Canvas,

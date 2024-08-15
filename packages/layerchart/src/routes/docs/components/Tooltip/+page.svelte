@@ -5,18 +5,9 @@
   import { format } from 'date-fns';
 
   import { Area, AreaStack, Axis, Bars, Chart, Highlight, Points, Svg, Tooltip } from 'layerchart';
-
-  import {
-    Button,
-    Duration,
-    Field,
-    formatDate,
-    Menu,
-    MenuField,
-    PeriodType,
-    Toggle,
-  } from 'svelte-ux';
-  import { flatten } from 'svelte-ux/utils/array';
+  import { Button, Duration, Field, Menu, MenuField, PeriodType, Toggle } from 'svelte-ux';
+  import { formatDate } from '@layerstack/utils';
+  import { flatten } from '@layerstack/utils/array';
 
   import Preview from '$lib/docs/Preview.svelte';
   import TooltipControls from './TooltipControls.svelte';

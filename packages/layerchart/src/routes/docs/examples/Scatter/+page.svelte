@@ -1,7 +1,7 @@
 <script lang="ts">
   import { scaleTime, scaleThreshold } from 'd3-scale';
   import { format } from 'date-fns';
-  import { formatDate, PeriodType } from 'svelte-ux';
+  import { formatDate, PeriodType } from '@layerstack/utils';
 
   import { Axis, Chart, Highlight, Labels, Points, Svg, Tooltip } from 'layerchart';
 

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { Field, RangeField, Switch } from 'svelte-ux';
-
   import { Arc, Chart, Svg, Group, LinearGradient, Text } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';

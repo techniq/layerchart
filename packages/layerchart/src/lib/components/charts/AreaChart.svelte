@@ -1,5 +1,5 @@
 <script lang="ts" generics="TData">
-  import { format } from 'svelte-ux';
+  import { format } from '@layerstack/utils';
 
   import { type ComponentProps } from 'svelte';
   import { scaleLinear, scaleTime } from 'd3-scale';

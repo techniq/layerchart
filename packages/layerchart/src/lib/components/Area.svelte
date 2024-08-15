@@ -6,7 +6,7 @@
   import { max } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
 
-  import { cls } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   import { motionStore } from '$lib/stores/motionStore.js';
 

@@ -11,7 +11,8 @@
     Tooltip,
     TransformContext,
   } from 'layerchart';
-  import { Button, ButtonGroup, Field, RangeField, timerStore } from 'svelte-ux';
+  import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
+  import { timerStore } from '@layerstack/svelte-stores';
 
   import Preview from '$lib/docs/Preview.svelte';
 

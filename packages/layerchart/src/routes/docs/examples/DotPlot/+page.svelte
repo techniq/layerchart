@@ -1,7 +1,8 @@
 <script lang="ts">
   import { scaleBand, scaleTime } from 'd3-scale';
   import { addMinutes, startOfDay } from 'date-fns';
-  import { Duration, PeriodType, format } from 'svelte-ux';
+  import { Duration } from 'svelte-ux';
+  import { PeriodType, format } from '@layerstack/utils';
 
   import { Axis, Chart, Highlight, Points, Svg, Tooltip } from 'layerchart';
 

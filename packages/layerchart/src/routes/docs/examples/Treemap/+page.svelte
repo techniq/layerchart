@@ -15,10 +15,9 @@
     Switch,
     ToggleGroup,
     ToggleOption,
-    format,
-    sortFunc,
-    cls,
   } from 'svelte-ux';
+  import { format, sortFunc } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
 

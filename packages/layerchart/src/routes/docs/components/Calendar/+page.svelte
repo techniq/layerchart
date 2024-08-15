@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { PeriodType, format } from 'svelte-ux';
+  import { format, PeriodType } from '@layerstack/utils';
   import { startOfYear, endOfYear } from 'date-fns';
   import { scaleThreshold } from 'd3-scale';
   import { range } from 'd3-array';

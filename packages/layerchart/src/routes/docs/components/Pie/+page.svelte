@@ -2,7 +2,8 @@
   import { scaleOrdinal } from 'd3-scale';
   import { format } from 'date-fns';
   import { sum } from 'd3-array';
-  import { cls, format as formatUtil } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
+  import { format as formatUtil } from '@layerstack/utils';
 
   import { Arc, Chart, Group, Pie, Svg, Text, Tooltip } from 'layerchart';
 

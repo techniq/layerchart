@@ -4,7 +4,7 @@
   import { getDay, getWeek } from 'date-fns';
 
   import { Axis, Chart, Circle, Highlight, Points, Svg, Tooltip } from 'layerchart';
-  import { formatDate, PeriodType } from 'svelte-ux';
+  import { formatDate, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';

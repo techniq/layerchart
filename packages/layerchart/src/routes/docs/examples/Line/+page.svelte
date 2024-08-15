@@ -3,7 +3,7 @@
   import { extent, flatGroup, ticks } from 'd3-array';
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { format } from 'date-fns';
-  import { formatDate, PeriodType } from 'svelte-ux/utils/date';
+  import { formatDate, PeriodType } from '@layerstack/utils';
 
   import {
     Axis,

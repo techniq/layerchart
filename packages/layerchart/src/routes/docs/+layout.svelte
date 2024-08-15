@@ -15,17 +15,11 @@
     mdiLink,
   } from '@mdi/js';
 
-  import {
-    ApiDocs,
-    Button,
-    Dialog,
-    Icon,
-    ListItem,
-    TableOfContents,
-    cls,
-    toTitleCase,
-    xlScreen,
-  } from 'svelte-ux';
+  import { ApiDocs, Button, Dialog, Icon, ListItem, TableOfContents } from 'svelte-ux';
+
+  import { xlScreen } from '@layerstack/svelte-stores';
+  import { cls } from '@layerstack/tailwind';
+  import { toTitleCase } from '@layerstack/utils';
 
   import Code from '$lib/docs/Code.svelte';
   import ViewSourceButton from '$lib/docs/ViewSourceButton.svelte';

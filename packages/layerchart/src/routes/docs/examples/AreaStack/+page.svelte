@@ -2,8 +2,8 @@
   import { scaleOrdinal, scaleTime } from 'd3-scale';
   import { stack } from 'd3-shape';
   import { format } from 'date-fns';
-  import { formatDate, PeriodType } from 'svelte-ux/utils/date';
-  import { flatten } from 'svelte-ux/utils/array';
+  import { formatDate, PeriodType } from '@layerstack/utils';
+  import { flatten } from '@layerstack/utils/array';
 
   import {
     Area,

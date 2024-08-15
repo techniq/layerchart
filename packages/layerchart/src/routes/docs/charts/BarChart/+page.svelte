@@ -23,7 +23,8 @@
     stackOffsetSeparated,
   } from 'layerchart';
 
-  import { Field, ToggleGroup, ToggleOption, format, PeriodType, Toggle, Switch } from 'svelte-ux';
+  import { Field, ToggleGroup, ToggleOption, Toggle, Switch } from 'svelte-ux';
+  import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';

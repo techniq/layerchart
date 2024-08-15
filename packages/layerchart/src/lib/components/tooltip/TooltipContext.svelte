@@ -35,7 +35,8 @@
   import { writable } from 'svelte/store';
   import { bisector, max, min } from 'd3-array';
   import { quadtree as d3Quadtree, type Quadtree } from 'd3-quadtree';
-  import { cls, sortFunc } from 'svelte-ux';
+  import { sortFunc } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
 
   import { Svg } from './../Chart.svelte';
   import { chartContext } from './../ChartContext.svelte';

@@ -1,4 +1,4 @@
-import { parse } from 'svelte-ux';
+import { parse } from '@layerstack/utils';
 import type { AppleTickerData } from '$static/data/examples/date/apple-ticker.js';
 
 import pageSource from './+page.svelte?raw';

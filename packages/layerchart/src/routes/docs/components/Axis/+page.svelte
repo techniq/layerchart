@@ -1,6 +1,7 @@
 <script lang="ts">
   import { scaleTime } from 'd3-scale';
-  import { Field, PeriodType, Switch, format } from 'svelte-ux';
+  import { Field, PeriodType, Switch } from 'svelte-ux';
+  import { format } from '@layerstack/utils';
 
   import { Axis, Chart, Svg, Frame, Rule, Text } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';

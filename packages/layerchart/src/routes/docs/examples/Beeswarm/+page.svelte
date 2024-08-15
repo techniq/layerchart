@@ -1,7 +1,7 @@
 <script lang="ts">
   import { scaleOrdinal } from 'd3-scale';
   import { forceX, forceY, forceCollide } from 'd3-force';
-  import { PeriodType } from 'svelte-ux';
+  import { PeriodType } from '@layerstack/utils';
 
   import { Axis, Chart, Circle, ForceSimulation, Svg, Tooltip } from 'layerchart';
 

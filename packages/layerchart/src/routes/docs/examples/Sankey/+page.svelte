@@ -5,7 +5,8 @@
   import { hierarchy } from 'd3-hierarchy';
   import { interpolateCool } from 'd3-scale-chromatic';
   import { extent } from 'd3-array';
-  import { Icon, cls, sortFunc } from 'svelte-ux';
+  import { Icon } from 'svelte-ux';
+  import { cls, sortFunc } from '@layerstack/utils';
   import { mdiArrowRightBold } from '@mdi/js';
 
   import {

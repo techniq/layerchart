@@ -2,7 +2,7 @@
   import { createEventDispatcher, onMount, setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import { scaleCanvas } from 'layercake';
-  import { cls } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
   import Canvas from './layout/Canvas.svelte';

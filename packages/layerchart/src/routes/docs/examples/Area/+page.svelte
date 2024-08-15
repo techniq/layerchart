@@ -21,7 +21,8 @@
     Tooltip,
     pivotLonger,
   } from 'layerchart';
-  import { format, Field, Switch, Toggle, PeriodType } from 'svelte-ux';
+  import { Field, Switch, Toggle, PeriodType } from 'svelte-ux';
+  import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';

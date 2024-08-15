@@ -3,7 +3,7 @@
   import { forceX, forceY, forceManyBody, forceLink } from 'd3-force';
 
   import { Chart, Circle, ForceSimulation, Group, Link, Svg, Tooltip } from 'layerchart';
-  import { cls } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
 

@@ -10,8 +10,7 @@ import {
 } from 'd3-time';
 import { format } from 'date-fns';
 
-import { formatDate, PeriodType, getDuration } from 'svelte-ux';
-import { fail } from 'svelte-ux';
+import { formatDate, PeriodType, getDuration, fail } from '@layerstack/utils';
 
 type Duration = ReturnType<typeof getDuration>;
 

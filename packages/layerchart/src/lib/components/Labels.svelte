@@ -5,8 +5,9 @@
    *   - [ ] Support multiple values (threshold, stacks, etc)
    */
   import { type ComponentProps } from 'svelte';
-  import { format as formatValue, type FormatType, cls } from 'svelte-ux';
-  import { greatestAbs } from 'svelte-ux/utils/array';
+  import { format as formatValue, type FormatType } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
+  import { greatestAbs } from '@layerstack/utils/array';
 
   const { flatData, yScale, x, y, custom } = chartContext();
   import Text from './Text.svelte';

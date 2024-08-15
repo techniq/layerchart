@@ -5,15 +5,8 @@
   import { extent, mean } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
 
-  import {
-    Field,
-    ToggleGroup,
-    ToggleOption,
-    formatDate,
-    PeriodType,
-    Toggle,
-    Switch,
-  } from 'svelte-ux';
+  import { Field, ToggleGroup, ToggleOption, Toggle, Switch } from 'svelte-ux';
+  import { formatDate, PeriodType } from '@layerstack/utils';
 
   import {
     Bar,

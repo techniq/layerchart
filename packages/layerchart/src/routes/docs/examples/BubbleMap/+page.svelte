@@ -5,7 +5,7 @@
   import { interpolateViridis } from 'd3-scale-chromatic';
   import { quantize } from 'd3-interpolate';
   import { feature } from 'topojson-client';
-  import { sortFunc } from 'svelte-ux';
+  import { sortFunc } from '@layerstack/utils';
 
   import {
     Chart,

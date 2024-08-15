@@ -2,7 +2,8 @@
   import { createEventDispatcher } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import { extent } from 'd3-array';
-  import { clamp, cls } from 'svelte-ux';
+  import { clamp } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
   import Frame from './Frame.svelte';

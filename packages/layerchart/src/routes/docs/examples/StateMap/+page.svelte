@@ -3,7 +3,8 @@
   import { feature } from 'topojson-client';
 
   import { Chart, ChartClipPath, GeoPath, Svg, Tooltip } from 'layerchart';
-  import { SelectField, sort } from 'svelte-ux';
+  import { SelectField } from 'svelte-ux';
+  import { sort } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 

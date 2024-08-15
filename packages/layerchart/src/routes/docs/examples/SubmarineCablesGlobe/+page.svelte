@@ -2,7 +2,9 @@
   import { geoOrthographic } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Button, ButtonGroup, Field, RangeField, cls, timerStore } from 'svelte-ux';
+  import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
+  import { timerStore } from '@layerstack/svelte-stores';
 
   import {
     Chart,

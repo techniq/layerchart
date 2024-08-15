@@ -5,7 +5,8 @@
   import 'prism-svelte';
   import { mdiCodeTags, mdiTable } from '@mdi/js';
 
-  import { Button, CopyButton, Dialog, Toggle, Tooltip, cls } from 'svelte-ux';
+  import { Button, CopyButton, Dialog, Toggle, Tooltip } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   import Code from './Code.svelte';
   import Json from './Json.svelte';

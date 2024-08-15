@@ -2,7 +2,6 @@
   import type { ComponentProps } from 'svelte';
 
   import { Field, RangeField, Switch } from 'svelte-ux';
-
   import { Area, Axis, Chart, Svg, Points } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';

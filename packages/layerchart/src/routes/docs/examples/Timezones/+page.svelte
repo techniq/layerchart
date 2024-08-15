@@ -25,7 +25,8 @@
     Tooltip,
     antipode,
   } from 'layerchart';
-  import { Field, SelectField, Switch, timerStore } from 'svelte-ux';
+  import { Field, SelectField, Switch } from 'svelte-ux';
+  import { timerStore } from '@layerstack/svelte-stores';
 
   import Preview from '$lib/docs/Preview.svelte';
 

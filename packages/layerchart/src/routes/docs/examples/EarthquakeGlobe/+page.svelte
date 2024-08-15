@@ -3,7 +3,8 @@
   import { scaleSqrt } from 'd3-scale';
   import { feature } from 'topojson-client';
 
-  import { Button, ButtonGroup, Field, RangeField, timerStore } from 'svelte-ux';
+  import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
+  import { timerStore } from '@layerstack/svelte-stores';
 
   import { Chart, GeoCircle, GeoPath, Graticule, Svg, Tooltip, TransformContext } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';

@@ -15,7 +15,10 @@
     TransformContext,
     Svg,
   } from 'layerchart';
-  import { Button, scrollIntoView, cls, sortFunc, ButtonGroup, timerStore } from 'svelte-ux';
+  import { Button, ButtonGroup } from 'svelte-ux';
+  import { sortFunc, scrollIntoView } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
+  import { timerStore } from '@layerstack/svelte-stores';
 
   import Preview from '$lib/docs/Preview.svelte';
   import GeoDebug from '$lib/docs/GeoDebug.svelte';

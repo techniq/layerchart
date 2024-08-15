@@ -1,7 +1,7 @@
 <script lang="ts" generics="TData">
   import { type ComponentProps } from 'svelte';
   import { scaleBand, scaleLinear } from 'd3-scale';
-  import { format } from 'svelte-ux';
+  import { format } from '@layerstack/utils';
 
   import Axis from '../Axis.svelte';
   import Bars from '../Bars.svelte';

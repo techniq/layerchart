@@ -7,16 +7,8 @@
 
   import { Arc, Bounds, Chart, Group, Partition, Svg, Tooltip, findAncestor } from 'layerchart';
 
-  import {
-    Breadcrumb,
-    Button,
-    Field,
-    ToggleGroup,
-    ToggleOption,
-    compoundSortFunc,
-    format,
-    sortFunc,
-  } from 'svelte-ux';
+  import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { format, sortFunc, compoundSortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 

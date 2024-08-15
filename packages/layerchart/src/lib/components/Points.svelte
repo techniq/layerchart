@@ -2,7 +2,7 @@
   import { type ComponentProps } from 'svelte';
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
-  import { notNull } from 'svelte-ux';
+  import { notNull } from '@layerstack/utils/typeGuards';
 
   import { chartContext } from './ChartContext.svelte';
   import Circle from './Circle.svelte';

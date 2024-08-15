@@ -13,7 +13,8 @@
   import { subDays } from 'date-fns';
 
   import { Axis, Bars, Chart, Highlight, Svg, Tooltip, thresholdTime } from 'layerchart';
-  import { MenuField, RangeField, NumberStepper, format, PeriodType, State } from 'svelte-ux';
+  import { MenuField, RangeField, NumberStepper, State } from 'svelte-ux';
+  import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 

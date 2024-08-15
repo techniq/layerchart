@@ -1,4 +1,4 @@
-import { parse } from 'svelte-ux';
+import { parse } from '@layerstack/utils';
 
 import api from '$lib/components/Brush.svelte?raw&sveld';
 import source from '$lib/components/Brush.svelte?raw';
