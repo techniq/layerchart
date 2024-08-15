@@ -15,7 +15,16 @@
   import { schemeCategory10 } from 'd3-scale-chromatic';
   import { color } from 'd3-color';
 
-  import { Canvas, Chart, GeoPath, GeoTile, HitCanvas, Tooltip } from 'layerchart';
+  import {
+    Canvas,
+    Chart,
+    GeoPath,
+    GeoTile,
+    HitCanvas,
+    Svg,
+    Tooltip,
+    TransformControls,
+  } from 'layerchart';
   import {
     EmptyMessage,
     RangeField,
@@ -89,15 +98,26 @@
         geo={{
           projection,
           fitGeojson: geojson,
+          applyTransform: ['translate', 'scale'],
+        }}
+        transform={{
+          translateOnScale: true,
+          initialScrollMode: 'scale',
         }}
         padding={{ top: 8, bottom: 8, left: 8, right: 8 }}
         let:tooltip
       >
         {#if projection === geoMercator}
-          <Canvas>
+          <Svg>
+            <!-- technique: https://observablehq.com/@d3/seamless-zoomable-map-tiles -->
+            <GeoTile url={serviceUrl} zoomDelta={-100} />
+            <GeoTile url={serviceUrl} zoomDelta={-4} />
+            <GeoTile url={serviceUrl} zoomDelta={-1} />
             <GeoTile url={serviceUrl} {zoomDelta} />
-          </Canvas>
+          </Svg>
         {/if}
+
+        <TransformControls />
 
         <Canvas>
           {#if projection === geoMercator}
