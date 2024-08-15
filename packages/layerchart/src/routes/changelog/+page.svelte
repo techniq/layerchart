@@ -2,7 +2,7 @@
   import { marked } from 'marked';
   import { TableOfContents } from 'svelte-ux';
 
-  import changelog from '../../../CHANGELOG.md?raw';
+  export let data;
 
   function sanitize(str: string) {
     return str.replace(/</g, '\\<').replace(/>/g, '\\>');
@@ -11,7 +11,7 @@
 
 <div class="grid grid-cols-[1fr,auto] gap-6 pt-2 pb-4">
   <div class="prose max-w-none px-4 bg-surface-100 p-2 m-2 rounded shadow-lg border overflow-auto">
-    {@html marked.parse(sanitize(changelog))}
+    {@html marked.parse(sanitize(data.changelog))}
   </div>
 
   <div class="hidden lg:block w-[224px]">
