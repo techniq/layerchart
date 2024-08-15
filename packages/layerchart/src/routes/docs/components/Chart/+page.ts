@@ -8,9 +8,15 @@ export async function load() {
       api,
       source,
       pageSource,
-      description: 'Setup LakerCake chart context, along with tooltip and geo contexts',
+      description:
+        'Sets up chart context, including tooltip and geo contexts.  See also simplified charts such as AreaChart and BarChart for streamline configuration',
       features: ['Adds support for x and y baselines (always show 0, etc)'],
-      related: ['components/TooltipContext', 'components/GeoContext'],
+      related: [
+        'components/AreaChart',
+        'components/BarChart',
+        'components/TooltipContext',
+        'components/GeoContext',
+      ],
     },
   };
 }

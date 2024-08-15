@@ -15,7 +15,8 @@ export async function load() {
       api,
       source,
       pageSource,
-      related: ['components/Area', 'examples/Area'],
+      description: 'Streamlined Chart configuration for Area charts',
+      related: ['components/Chart', 'components/Area', 'examples/Area'],
     },
   };
 }

@@ -8,7 +8,14 @@ export async function load() {
       api,
       source,
       pageSource,
-      related: ['components/Bars', 'examples/Bars', 'examples/Histogram', 'examples/Sparkbar'],
+      description: 'Streamlined Chart configuration for Bar charts',
+      related: [
+        'components/Chart',
+        'components/Bars',
+        'examples/Bars',
+        'examples/Histogram',
+        'examples/Sparkbar',
+      ],
     },
   };
 }

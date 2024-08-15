@@ -65,7 +65,8 @@
   };
 
   const components: LinkCollection = {
-    Common: ['Chart', 'Axis', 'Frame', 'Legend', 'Rule'],
+    Charts: ['Chart', 'AreaChart', 'BarChart'],
+    Common: ['Axis', 'Frame', 'Legend', 'Rule'],
     Primitives: ['Arc', 'Circle', 'Group', 'Line', 'Point', 'Rect', 'Text'],
     'Data-driven': [
       'Area',
@@ -127,7 +128,7 @@
 />
 <NavItem text="Changelog" icon={mdiFormatListBulleted} currentUrl={$page.url} path="/changelog" />
 
-<h1>Charts</h1>
+<!-- <h1>Charts</h1>
 {#each Object.entries(charts) as [header, items]}
   <h2>{header}</h2>
   {#each items as item}
@@ -140,7 +141,7 @@
       class="pl-6 py-2"
     />
   {/each}
-{/each}
+{/each} -->
 
 <h1>Examples</h1>
 {#each Object.entries(examples) as [header, items]}
