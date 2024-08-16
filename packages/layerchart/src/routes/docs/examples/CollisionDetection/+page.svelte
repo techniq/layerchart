@@ -23,6 +23,7 @@
   const collideForce = forceCollide<SimulationNodeDatum & { r: number }>()
     .radius((d) => d.r + 1)
     .iterations(3);
+  const manyBodyForce = forceManyBody();
 </script>
 
 <h1>Examples</h1>
@@ -36,7 +37,7 @@
             x: xForce,
             y: yForce,
             collide: collideForce,
-            charge: forceManyBody().strength((d, i) => (i ? 0 : (-width * 2) / 3)),
+            charge: manyBodyForce.strength((d, i) => (i ? 0 : (-width * 2) / 3)),
           }}
           alphaTarget={0.3}
           velocityDecay={0.1}
