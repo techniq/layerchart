@@ -287,7 +287,7 @@
       y="y"
       yDomain={[0, null]}
       yNice
-      padding={{ left: 16, bottom: 24, right: 48 }}
+      padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
       <Svg>
