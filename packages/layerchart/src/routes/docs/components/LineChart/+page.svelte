@@ -101,7 +101,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <LineChart data={dateSeriesData} x="date" y="value" labels={{offset: 10}} />
+    <LineChart data={dateSeriesData} x="date" y="value" labels={{ offset: 10 }} />
   </div>
 </Preview>
 
