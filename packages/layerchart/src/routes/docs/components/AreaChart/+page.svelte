@@ -26,11 +26,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
 
-  // export let data;
-
   const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
-  // Align with AreaChart defaults (label/value)
-  const chartData = dateSeriesData.map((d) => ({ ...d, label: d.date }));
 
   const keys = ['apples', 'bananas', 'oranges'];
   const multiSeriesData = createDateSeries({
@@ -55,7 +51,15 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={chartData} x="date" y="value" />
+    <AreaChart data={dateSeriesData} x="date" y="value" />
+  </div>
+</Preview>
+
+<h2>Labels</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart data={dateSeriesData} x="date" y="value" labels />
   </div>
 </Preview>
 
