@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.44.0
+
+### Minor Changes
+
+- Add 'on:resize' (`{ width: number, height: number}`) event to `Chart` and `ChartContext` ([#231](https://github.com/techniq/layerchart/pull/231))
+
 ## 0.43.8
 
 ### Patch Changes
