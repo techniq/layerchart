@@ -4,7 +4,7 @@
 
   import type { HierarchyNode } from 'd3-hierarchy';
   import { createEventDispatcher, getContext, onMount, setContext } from 'svelte';
-  import { derived, type Readable } from 'svelte/store';
+  import { type Readable } from 'svelte/store';
 
   export const chartContextKey = Symbol();
 
@@ -75,8 +75,10 @@
   };
 
   export type ChartResizeDetail = {
-    chart: { width: number; height: number };
-    container: { width: number; height: number };
+    width: number;
+    height: number;
+    containerWidth: number;
+    containerHeight: number;
   };
 
   export type ChartResizeEvent = CustomEvent<ChartResizeDetail>;
@@ -106,8 +108,10 @@
 
   $: if (isMounted) {
     dispatch('resize', {
-      chart: { width: $width, height: $height },
-      container: { width: $containerWidth, height: $containerHeight },
+      width: $width,
+      height: $height,
+      containerWidth: $containerWidth,
+      containerHeight: $containerHeight,
     });
   }
 
