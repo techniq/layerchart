@@ -70,6 +70,17 @@
     rGet: Readable<any>;
   };
 
+  export type ChartEvents = {
+    resize: ChartResizeDetail;
+  };
+
+  export type ChartResizeDetail = {
+    chart: { width: number; height: number };
+    container: { width: number; height: number };
+  };
+
+  export type ChartResizeEvent = CustomEvent<ChartResizeDetail>;
+
   export type ChartContext<TData> = LayerCakeContext<TData> & {
     // TODO: consider extending with additional values
   };
@@ -86,23 +97,18 @@
 <script lang="ts" generics="TData">
   import type { SankeyGraph } from 'd3-sankey';
 
-  const dispatch = createEventDispatcher<{
-    resize: { width: number; height: number };
-  }>();
+  const dispatch = createEventDispatcher<ChartEvents>();
 
   const layerCakeContext = getContext<LayerCakeContext<TData>>('LayerCake');
   setChartContext(layerCakeContext);
 
-  const size = derived([layerCakeContext.width, layerCakeContext.height], ([$width, $height]) => ({
-    width: $width,
-    height: $height,
-  }));
+  const { width, height, containerWidth, containerHeight } = layerCakeContext;
 
-  $: {
-    let { width, height } = $size;
-    if (isMounted) {
-      dispatch('resize', { width, height });
-    }
+  $: if (isMounted) {
+    dispatch('resize', {
+      chart: { width: $width, height: $height },
+      container: { width: $containerWidth, height: $containerHeight },
+    });
   }
 
   // Track when mounted since LayerCake initializes width/height with `100` until binded `clientWidth`/`clientWidth` can run
