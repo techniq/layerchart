@@ -192,7 +192,7 @@
   </div>
 </Preview>
 
-<h2>theme color swatch</h2>
+<h2>color swatch</h2>
 
 <Preview data={dateSeries}>
   <div class="h-[300px] p-4 border rounded">
@@ -219,14 +219,14 @@
       <Tooltip.Root let:data>
         <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
         <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} color="primary" />
+          <Tooltip.Item label="value" value={data.value} color="#f00" />
         </Tooltip.List>
       </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
 
-<h2>custom color swatch</h2>
+<h2>color swatch using theme</h2>
 
 <Preview data={dateSeries}>
   <div class="h-[300px] p-4 border rounded">
@@ -253,7 +253,7 @@
       <Tooltip.Root let:data>
         <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
         <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} color="variable" style="--color:red" />
+          <Tooltip.Item label="value" value={data.value} color="hsl(var(--color-primary))" />
         </Tooltip.List>
       </Tooltip.Root>
     </Chart>

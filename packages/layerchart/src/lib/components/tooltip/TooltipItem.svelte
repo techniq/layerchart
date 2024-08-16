@@ -7,7 +7,7 @@
   export let value: any = undefined;
   export let format: FormatType | undefined = undefined;
   export let valueAlign: 'left' | 'right' | 'center' = 'left';
-  export let color: ThemeColors | 'variable' | undefined = undefined;
+  export let color: string | undefined = undefined;
 
   export let classes: {
     root?: string;
@@ -21,22 +21,8 @@
   <div class={cls('label', 'flex items-center gap-2 whitespace-nowrap', classes.label)}>
     {#if color}
       <div
-        class={cls(
-          'color',
-          'inline-block size-2 rounded-full',
-          {
-            primary: 'bg-primary',
-            secondary: 'bg-secondary',
-            accent: 'bg-accent',
-            neutral: 'bg-neutral',
-            info: 'bg-info',
-            success: 'bg-success',
-            warning: 'bg-warning',
-            danger: 'bg-danger',
-            variable: 'bg-[--color]',
-          }[color.toString()],
-          classes.color
-        )}
+        class={cls('color', 'inline-block size-2 rounded-full bg-[--color]', classes.color)}
+        style:--color={color}
       ></div>
     {/if}
     <slot name="label">{label}</slot>
