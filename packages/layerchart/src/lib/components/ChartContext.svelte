@@ -3,7 +3,7 @@
   import type { AnyScale } from 'layerchart/utils/scales.js';
 
   import type { HierarchyNode } from 'd3-hierarchy';
-  import { getContext, setContext } from 'svelte';
+  import { createEventDispatcher, getContext, onMount, setContext } from 'svelte';
   import { type Readable } from 'svelte/store';
 
   export const chartContextKey = Symbol();
@@ -70,6 +70,19 @@
     rGet: Readable<any>;
   };
 
+  export type ChartEvents = {
+    resize: ChartResizeDetail;
+  };
+
+  export type ChartResizeDetail = {
+    width: number;
+    height: number;
+    containerWidth: number;
+    containerHeight: number;
+  };
+
+  export type ChartResizeEvent = CustomEvent<ChartResizeDetail>;
+
   export type ChartContext<TData> = LayerCakeContext<TData> & {
     // TODO: consider extending with additional values
   };
@@ -86,8 +99,27 @@
 <script lang="ts" generics="TData">
   import type { SankeyGraph } from 'd3-sankey';
 
+  const dispatch = createEventDispatcher<ChartEvents>();
+
   const layerCakeContext = getContext<LayerCakeContext<TData>>('LayerCake');
   setChartContext(layerCakeContext);
+
+  const { width, height, containerWidth, containerHeight } = layerCakeContext;
+
+  $: if (isMounted) {
+    dispatch('resize', {
+      width: $width,
+      height: $height,
+      containerWidth: $containerWidth,
+      containerHeight: $containerHeight,
+    });
+  }
+
+  // Track when mounted since LayerCake initializes width/height with `100` until binded `clientWidth`/`clientWidth` can run
+  let isMounted = false;
+  onMount(() => {
+    isMounted = true;
+  });
 
   // Added to try to pass TData downward
   export let data: TData[] | HierarchyNode<TData> | SankeyGraph<any, any> = []; // Same as `ComponentProps<Chart<TData>>` but causes circular reference

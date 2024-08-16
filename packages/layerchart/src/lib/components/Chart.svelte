@@ -286,7 +286,7 @@
       ? geoFitObjectTransform(geo.projection(), [width, height], geo.fitGeojson)
       : undefined}
 
-  <ChartContext {data} let:data let:flatData>
+  <ChartContext {data} let:data let:flatData on:resize>
     {#key isMounted}
       <TransformContext
         bind:this={transformContext}
