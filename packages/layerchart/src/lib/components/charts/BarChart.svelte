@@ -51,8 +51,9 @@
   {...$$restProps}
   let:x
   let:y
+  let:tooltip
 >
-  <slot {x} {y}>
+  <slot {x} {y} {tooltip}>
     <Svg>
       <Axis
         placement="left"
