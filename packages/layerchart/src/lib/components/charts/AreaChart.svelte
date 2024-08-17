@@ -14,12 +14,17 @@
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
 
   interface $$Props extends ComponentProps<Chart<TData>> {
+    series?: typeof series;
     labels?: typeof labels;
   }
 
   export let data: $$Props['data'] = [];
   export let x: Accessor<TData> = undefined;
   export let y: Accessor<TData> = undefined;
+
+  export let series: { label?: string; value: Accessor<TData>; color?: string }[] = [
+    { value: y, color: 'hsl(var(--color-primary))' },
+  ];
 
   export let labels: ComponentProps<Labels> | boolean = false;
 
@@ -31,7 +36,7 @@
   {data}
   {x}
   {xScale}
-  {y}
+  y={y ?? series.map((d) => d.value)}
   yDomain={[0, null]}
   yNice
   padding={{ left: 16, bottom: 16 }}
@@ -54,8 +59,19 @@
         rule
         format={(value) => format(value, undefined, { variant: 'short' })}
       />
-      <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
-      <Highlight points lines />
+
+      {#each series as s}
+        {@const valueAccessor = accessor(s.value)}
+        <Area
+          y1={valueAccessor}
+          line={{ class: 'stroke-2', stroke: s.color }}
+          fill={s.color}
+          fill-opacity={0.3}
+        />
+        <Highlight y={valueAccessor} points={{ fill: s.color }} />
+      {/each}
+      <Highlight lines />
+
       {#if labels}
         <Labels {...typeof labels === 'object' ? labels : null} />
       {/if}
@@ -65,7 +81,10 @@
       <Tooltip.Root let:data>
         <Tooltip.Header>{format(x(data))}</Tooltip.Header>
         <Tooltip.List>
-          <Tooltip.Item label="value" value={y(data)} />
+          {#each series as s}
+            {@const valueAccessor = accessor(s.value)}
+            <Tooltip.Item label={s.label ?? 'value'} value={valueAccessor(data)} color={s.color} />
+          {/each}
         </Tooltip.List>
       </Tooltip.Root>
     </slot>
