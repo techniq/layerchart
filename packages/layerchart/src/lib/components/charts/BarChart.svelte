@@ -69,6 +69,7 @@
       />
       <Bars radius={4} strokeWidth={1} class="fill-primary" />
       <Highlight area />
+
       {#if labels}
         <Labels {...typeof labels === 'object' ? labels : null} />
       {/if}

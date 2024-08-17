@@ -60,12 +60,10 @@
         format={(value) => format(value, undefined, { variant: 'short' })}
       />
 
-      {#each series as s}
-        {@const valueAccessor = accessor(s.value)}
-        <Spline y={valueAccessor} class="stroke-2" stroke={s.color} />
-        <Highlight y={valueAccessor} points={{ fill: s.color }} />
+      {#each series as s, i}
+        <Spline y={s.value} class="stroke-2" stroke={s.color} />
+        <Highlight y={s.value} points={{ fill: s.color }} lines={i === 0} />
       {/each}
-      <Highlight lines />
 
       {#if labels}
         <Labels {...typeof labels === 'object' ? labels : null} />

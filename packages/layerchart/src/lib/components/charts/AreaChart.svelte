@@ -61,16 +61,17 @@
       />
 
       {#each series as s}
-        {@const valueAccessor = accessor(s.value)}
         <Area
-          y1={valueAccessor}
+          y1={s.value}
           line={{ class: 'stroke-2', stroke: s.color }}
           fill={s.color}
           fill-opacity={0.3}
         />
-        <Highlight y={valueAccessor} points={{ fill: s.color }} />
       {/each}
-      <Highlight lines />
+
+      {#each series as s, i}
+        <Highlight y={s.value} points={{ fill: s.color }} lines={i == 0} />
+      {/each}
 
       {#if labels}
         <Labels {...typeof labels === 'object' ? labels : null} />
