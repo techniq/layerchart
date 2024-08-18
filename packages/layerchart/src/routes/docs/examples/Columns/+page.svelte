@@ -3,7 +3,6 @@
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { extent, mean } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
-  import { format } from 'date-fns';
 
   import {
     Axis,
@@ -24,7 +23,7 @@
   } from 'layerchart';
 
   import { Field, ToggleGroup, ToggleOption, Toggle, Switch } from 'svelte-ux';
-  import { formatDate, PeriodType } from '@layerstack/utils';
+  import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
@@ -118,7 +117,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -144,7 +143,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} rounded="top" strokeWidth={1} class="fill-primary" />
@@ -171,14 +170,16 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Highlight area />
       </Svg>
       <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.Header
+          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+        >
         <Tooltip.List>
           <Tooltip.Item label="value" value={data.value} />
         </Tooltip.List>
@@ -205,7 +206,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars
@@ -216,7 +217,9 @@
         <Highlight area bar={{ class: 'fill-primary', strokeWidth: 1, radius: 4 }} />
       </Svg>
       <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.Header
+          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+        >
         <Tooltip.List>
           <Tooltip.Item label="value" value={data.value} />
         </Tooltip.List>
@@ -243,7 +246,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars
@@ -260,7 +263,9 @@
         </Highlight>
       </Svg>
       <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.Header
+          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+        >
         <Tooltip.List>
           <Tooltip.Item label="value" value={data.value} />
         </Tooltip.List>
@@ -285,7 +290,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -310,7 +315,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -337,7 +342,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Rule y={0} />
@@ -365,7 +370,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Rule y={0} />
@@ -393,7 +398,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           ticks={4}
           rule
         />
@@ -420,7 +425,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           ticks={(scale) => scaleTime(scale.domain(), scale.range()).ticks(4)}
           rule
         />
@@ -447,7 +452,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse" let:url>
@@ -475,7 +480,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars>
@@ -510,7 +515,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -544,7 +549,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -578,7 +583,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -615,7 +620,7 @@
         <Axis placement="left" grid={{ class: 'stroke-surface-100' }} rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
       </Svg>
@@ -641,7 +646,7 @@
         <Axis placement="left" grid={{ class: 'mix-blend-multiply' }} rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
       </Svg>
@@ -657,7 +662,7 @@
       {data}
       x="date"
       xScale={scaleBand().padding(0.4)}
-      y={(d) => Math.max(d.value, d.baseline)}
+      y={['value', 'baseline']}
       yDomain={[0, null]}
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
@@ -667,7 +672,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars y="baseline" radius={4} strokeWidth={1} class="fill-surface-content/20" />
@@ -675,7 +680,49 @@
         <Highlight area />
       </Svg>
       <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.Header
+          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+        >
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+          <Tooltip.Item label="baseline" value={data.baseline} />
+        </Tooltip.List>
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Multiple (diverging)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleBand().padding(0.4)}
+      y={['value', (d) => -d.baseline]}
+      yNice={4}
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule format={(d) => format(Math.abs(d), 'integer')} />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
+        <Bars y="value" radius={4} rounded="top" strokeWidth={1} class="fill-primary" />
+        <Bars
+          y={(d) => -d.baseline}
+          radius={4}
+          rounded="bottom"
+          strokeWidth={1}
+          class="fill-secondary"
+        />
+        <Rule y={0} />
+        <Highlight area />
+      </Svg>
+      <Tooltip.Root let:data>
+        <Tooltip.Header
+          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+        >
         <Tooltip.List>
           <Tooltip.Item label="value" value={data.value} />
           <Tooltip.Item label="baseline" value={data.baseline} />
@@ -709,7 +756,7 @@
           <Axis placement="left" grid rule />
           <Axis
             placement="bottom"
-            format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
             rule
           />
           {#if show}
@@ -949,7 +996,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
