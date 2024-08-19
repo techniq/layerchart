@@ -91,7 +91,7 @@ export function rasterizeText(text: string, options: RasterizeTextOptions = {}) 
 }
 
 function getPixel(imageData: ImageData, x: number, y: number) {
-  var i = 4 * (parseInt(x) + parseInt(y) * imageData.width);
+  var i = 4 * (Math.floor(x) + Math.floor(y) * imageData.width);
   var d = imageData.data;
   return [d[i], d[i + 1], d[i + 2], d[i + 3]];
 }
