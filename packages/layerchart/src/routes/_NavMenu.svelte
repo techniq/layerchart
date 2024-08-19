@@ -40,6 +40,7 @@
       'ForceDisjointGraph',
       'ForceLattice',
       'ForceTree',
+      'ForceText',
     ],
     Geo: [
       'GeoPath',
