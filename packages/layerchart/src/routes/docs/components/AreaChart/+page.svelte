@@ -1,5 +1,15 @@
 <script lang="ts">
-  import { AreaChart, Area, Axis, Highlight, Svg, Tooltip, pivotLonger } from 'layerchart';
+  import {
+    AreaChart,
+    Area,
+    Axis,
+    Highlight,
+    Svg,
+    Tooltip,
+    pivotLonger,
+    LinearGradient,
+    Rule,
+  } from 'layerchart';
   import { PeriodType } from 'svelte-ux';
   import { format } from '@layerstack/utils';
 
@@ -7,6 +17,12 @@
   import { createDateSeries } from '$lib/utils/genData.js';
 
   const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
+  const negativeDateSeriesData = createDateSeries({
+    count: 30,
+    min: -20,
+    max: 50,
+    value: 'integer',
+  });
 
   const keys = ['apples', 'bananas', 'oranges'];
   const multiSeriesData = createDateSeries({
@@ -26,6 +42,71 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <AreaChart data={dateSeriesData} x="date" y="value" />
+  </div>
+</Preview>
+
+<h2>Gradient</h2>
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart data={dateSeriesData} x="date" y="value">
+      <svelte:fragment slot="marks">
+        <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
+          <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+        </LinearGradient>
+      </svelte:fragment>
+    </AreaChart>
+  </div>
+</Preview>
+
+<h2>Threshold Gradient</h2>
+<Preview data={dateSeriesData}>
+  {@const colors = {
+    positive: 'hsl(var(--color-success))',
+    negative: 'hsl(var(--color-danger))',
+  }}
+
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart data={negativeDateSeriesData} x="date" y="value" yDomain={null}>
+      <svelte:fragment slot="marks" let:yScale let:height let:padding>
+        {@const thresholdOffset = (yScale(0) / (height + padding.bottom)) * 100 + '%'}
+        <Rule y={0} />
+        <LinearGradient
+          stops={[
+            [thresholdOffset, colors.positive],
+            [thresholdOffset, colors.negative],
+          ]}
+          units="userSpaceOnUse"
+          vertical
+          let:url
+        >
+          <Area
+            y0={(d) => 0}
+            line={{ stroke: url, class: 'stroke-2' }}
+            fill={url}
+            fill-opacity={0.2}
+          />
+        </LinearGradient>
+      </svelte:fragment>
+
+      <svelte:fragment slot="highlight" let:tooltip let:y>
+        {@const value = tooltip.data && y(tooltip.data)}
+        <Highlight lines points={{ fill: value < 0 ? colors.negative : colors.positive }} />
+      </svelte:fragment>
+
+      <svelte:fragment slot="tooltip" let:x let:y>
+        <Tooltip.Root let:data>
+          {@const value = y(data)}
+          <Tooltip.Header>{format(x(data), PeriodType.DayTime)}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item
+              label="value"
+              value={y(data)}
+              color={value < 0 ? colors.negative : colors.positive}
+            />
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
+    </AreaChart>
   </div>
 </Preview>
 
