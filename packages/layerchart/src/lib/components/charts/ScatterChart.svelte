@@ -43,30 +43,38 @@
   let:padding
   let:tooltip
 >
-  <slot {x} {y} {width} {height} {padding} {tooltip}>
+  {@const slotProps = { x, y, width, height, padding, tooltip }}
+  <slot {...slotProps}>
     <Svg>
-      <Axis
-        placement="left"
-        grid
-        rule
-        format={(value) => format(value, undefined, { variant: 'short' })}
-      />
-      <Axis
-        placement="bottom"
-        grid
-        rule
-        format={(value) => format(value, undefined, { variant: 'short' })}
-      />
+      <slot name="axis" {...slotProps}>
+        <Axis
+          placement="left"
+          grid
+          rule
+          format={(value) => format(value, undefined, { variant: 'short' })}
+        />
+        <Axis
+          placement="bottom"
+          grid
+          rule
+          format={(value) => format(value, undefined, { variant: 'short' })}
+        />
+      </slot>
 
-      <Points class="fill-primary/10 stroke-primary" />
-      <Highlight points lines axis="both" />
+      <slot name="marks" {...slotProps}>
+        <Points class="fill-primary/10 stroke-primary" />
+      </slot>
+
+      <slot name="highlight" {...slotProps}>
+        <Highlight points lines axis="both" />
+      </slot>
 
       {#if labels}
         <Labels {...typeof labels === 'object' ? labels : null} format={(value) => format(value)} />
       {/if}
     </Svg>
 
-    <slot name="tooltip" {x} {y} {width} {height} {padding}>
+    <slot name="tooltip" {...slotProps}>
       <Tooltip.Root let:data>
         <Tooltip.Header>{format(x(data))}</Tooltip.Header>
         <Tooltip.List>

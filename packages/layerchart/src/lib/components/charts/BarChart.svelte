@@ -56,29 +56,38 @@
   let:padding
   let:tooltip
 >
-  <slot {x} {y} {width} {height} {padding} {tooltip}>
+  {@const slotProps = { x, y, width, height, padding, tooltip }}
+  <slot {...slotProps}>
     <Svg>
-      <Axis
-        placement="left"
-        grid={isVertical}
-        rule
-        format={(value) => format(value, undefined, { variant: 'short' })}
-      />
-      <Axis
-        placement="bottom"
-        grid={!isVertical}
-        rule
-        format={(value) => format(value, undefined, { variant: 'short' })}
-      />
-      <Bars radius={4} strokeWidth={1} class="fill-primary" />
-      <Highlight area />
+      <slot name="axis" {...slotProps}>
+        <Axis
+          placement="left"
+          grid={isVertical}
+          rule
+          format={(value) => format(value, undefined, { variant: 'short' })}
+        />
+        <Axis
+          placement="bottom"
+          grid={!isVertical}
+          rule
+          format={(value) => format(value, undefined, { variant: 'short' })}
+        />
+      </slot>
+
+      <slot name="marks" {...slotProps}>
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+      </slot>
+
+      <slot name="highlight" {...slotProps}>
+        <Highlight area />
+      </slot>
 
       {#if labels}
         <Labels {...typeof labels === 'object' ? labels : null} />
       {/if}
     </Svg>
 
-    <slot name="tooltip" {x} {y} {width} {height} {padding}>
+    <slot name="tooltip" {...slotProps}>
       <Tooltip.Root let:data>
         <Tooltip.Header>{format(isVertical ? x(data) : y(data))}</Tooltip.Header>
         <Tooltip.List>

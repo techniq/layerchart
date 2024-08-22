@@ -49,39 +49,46 @@
   let:padding
   let:tooltip
 >
-  <slot {x} {y} {width} {height} {padding} {tooltip}>
+  {@const slotProps = { x, y, width, height, padding, tooltip, series }}
+  <slot {...slotProps}>
     <Svg>
-      <Axis
-        placement="left"
-        grid
-        rule
-        format={(value) => format(value, undefined, { variant: 'short' })}
-      />
-      <Axis
-        placement="bottom"
-        rule
-        format={(value) => format(value, undefined, { variant: 'short' })}
-      />
-
-      {#each series as s}
-        <Area
-          y1={s.value}
-          line={{ class: 'stroke-2', stroke: s.color }}
-          fill={s.color}
-          fill-opacity={0.3}
+      <slot name="axis" {...slotProps}>
+        <Axis
+          placement="left"
+          grid
+          rule
+          format={(value) => format(value, undefined, { variant: 'short' })}
         />
-      {/each}
+        <Axis
+          placement="bottom"
+          rule
+          format={(value) => format(value, undefined, { variant: 'short' })}
+        />
+      </slot>
 
-      {#each series as s, i}
-        <Highlight y={s.value} points={{ fill: s.color }} lines={i == 0} />
-      {/each}
+      <slot name="marks" {...slotProps}>
+        {#each series as s}
+          <Area
+            y1={s.value}
+            line={{ class: 'stroke-2', stroke: s.color }}
+            fill={s.color}
+            fill-opacity={0.3}
+          />
+        {/each}
+      </slot>
+
+      <slot name="highlight" {...slotProps}>
+        {#each series as s, i}
+          <Highlight y={s.value} points={{ fill: s.color }} lines={i == 0} />
+        {/each}
+      </slot>
 
       {#if labels}
         <Labels {...typeof labels === 'object' ? labels : null} />
       {/if}
     </Svg>
 
-    <slot name="tooltip" {x} {y} {width} {height} {padding}>
+    <slot name="tooltip" {...slotProps}>
       <Tooltip.Root let:data>
         <Tooltip.Header>{format(x(data))}</Tooltip.Header>
         <Tooltip.List>
