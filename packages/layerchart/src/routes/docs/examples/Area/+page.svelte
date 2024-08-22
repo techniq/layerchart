@@ -729,7 +729,8 @@
       let:height
       let:padding
     >
-      {@const thresholdOffset = (yScale(0) / (height + padding.bottom)) * 100 + '%'}
+      {@const thresholdValue = 0}
+      {@const thresholdOffset = yScale(thresholdValue) / (height + padding.bottom)}
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
@@ -766,7 +767,8 @@
       let:height
       let:padding
     >
-      {@const thresholdOffset = (yScale(0) / (height + padding.bottom)) * 100 + '%'}
+      {@const thresholdValue = 0}
+      {@const thresholdOffset = yScale(thresholdValue) / (height + padding.bottom)}
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />

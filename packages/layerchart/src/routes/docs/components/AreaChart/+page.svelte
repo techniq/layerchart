@@ -68,7 +68,8 @@
   <div class="h-[300px] p-4 border rounded">
     <AreaChart data={negativeDateSeriesData} x="date" y="value" yDomain={null}>
       <svelte:fragment slot="marks" let:yScale let:height let:padding>
-        {@const thresholdOffset = (yScale(0) / (height + padding.bottom)) * 100 + '%'}
+        {@const thresholdValue = 0}
+        {@const thresholdOffset = yScale(thresholdValue) / (height + padding.bottom)}
         <Rule y={0} />
         <LinearGradient
           stops={[
