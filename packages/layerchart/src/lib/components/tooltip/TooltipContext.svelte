@@ -397,7 +397,6 @@
       <Svg>
         <Voronoi
           on:pointerenter={(e) => {
-            // @ts-expect-error
             showTooltip(e.detail.event, e.detail.data);
           }}
           on:pointermove={(e) => {

@@ -24,6 +24,12 @@
 
   const dispatch = createEventDispatcher<{
     click: { data: any; point?: [number, number]; feature?: GeoPermissibleObjects };
+    pointerenter: {
+      event: PointerEvent;
+      data: any;
+      point?: [number, number];
+      feature?: GeoPermissibleObjects;
+    };
     pointermove: {
       event: PointerEvent;
       data: any;
@@ -58,7 +64,8 @@
       <GeoPath
         geojson={feature}
         class={cls('fill-transparent', classes.path)}
-        on:pointerenter
+        on:pointerenter={(e) =>
+          dispatch('pointerenter', { event: e, data: feature.properties.site.data, feature })}
         on:pointermove={(e) =>
           dispatch('pointermove', { event: e, data: feature.properties.site.data, feature })}
         on:pointerleave
@@ -78,7 +85,7 @@
       <path
         d={voronoi.renderCell(i)}
         class={cls('fill-transparent', classes.path)}
-        on:pointerenter
+        on:pointerenter={(e) => dispatch('pointerenter', { event: e, data: point.data, point })}
         on:pointermove={(e) => dispatch('pointermove', { event: e, data: point.data, point })}
         on:pointerleave
         on:touchmove={(e) => {
