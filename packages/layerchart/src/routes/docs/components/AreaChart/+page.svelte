@@ -61,11 +61,7 @@
       data={multiSeriesFlatData}
       x="date"
       y="value"
-      tooltip={{ mode: 'voronoi' }}
-      let:x
-      let:tooltip
-    >
-      {@const series = [
+      series={[
         { label: 'apples', value: 'apples', color: 'hsl(var(--color-danger))' },
         {
           label: 'bananas',
@@ -78,26 +74,14 @@
           color: 'hsl(var(--color-warning))',
         },
       ]}
-      {@const activeSeriesColor = series.find((s) => s.value === tooltip.data?.fruit)?.color}
-      <Svg>
-        <Axis
-          placement="left"
-          grid
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-        />
-        <Axis
-          placement="bottom"
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-        />
-
+      tooltip={{ mode: 'voronoi' }}
+    >
+      <svelte:fragment slot="marks" let:series let:tooltip>
         {#each series as s}
           {@const color =
             tooltip.data == null || tooltip.data.fruit === s.value
               ? s.color
               : 'hsl(var(--color-surface-content) / 20%)'}
-          <!-- <Area data={multiSeriesData} y1={s.value} class="stroke-2" stroke={color} /> -->
 
           <Area
             data={multiSeriesData}
@@ -107,16 +91,22 @@
             fill-opacity={0.3}
           />
         {/each}
+      </svelte:fragment>
 
-        <Highlight lines points={{ fill: activeSeriesColor }} />
-      </Svg>
+      <svelte:fragment slot="highlight" let:series let:tooltip>
+        {@const activeSeries = series.find((s) => s.value === tooltip.data?.fruit)}
+        <Highlight lines points={{ fill: activeSeries?.color }} />
+      </svelte:fragment>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(x(data))}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label={data.fruit} value={data.value} color={activeSeriesColor} />
-        </Tooltip.List>
-      </Tooltip.Root>
+      <svelte:fragment slot="tooltip" let:x let:series let:tooltip>
+        {@const activeSeries = series.find((s) => s.value === tooltip.data?.fruit)}
+        <Tooltip.Root slot="tooltip" let:data>
+          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label={data.fruit} value={data.value} color={activeSeries?.color} />
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
     </AreaChart>
   </div>
 </Preview>
