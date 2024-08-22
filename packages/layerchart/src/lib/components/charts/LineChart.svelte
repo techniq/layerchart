@@ -43,13 +43,15 @@
   tooltip={{ mode: 'bisect-x' }}
   {...$$restProps}
   let:x
+  let:xScale
   let:y
+  let:yScale
   let:width
   let:height
   let:padding
   let:tooltip
 >
-  {@const slotProps = { x, y, width, height, padding, tooltip, series }}
+  {@const slotProps = { x, xScale, y, yScale, width, height, padding, tooltip, series }}
   <slot {...slotProps}>
     <Svg>
       <slot name="axis" {...slotProps}>
