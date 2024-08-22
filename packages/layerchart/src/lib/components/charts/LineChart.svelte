@@ -44,9 +44,12 @@
   {...$$restProps}
   let:x
   let:y
+  let:width
+  let:height
+  let:padding
   let:tooltip
 >
-  <slot {x} {y} {tooltip}>
+  <slot {x} {y} {width} {height} {padding} {tooltip}>
     <Svg>
       <Axis
         placement="left"
@@ -70,7 +73,7 @@
       {/if}
     </Svg>
 
-    <slot name="tooltip" {x} {y}>
+    <slot name="tooltip" {x} {y} {width} {height} {padding}>
       <Tooltip.Root let:data>
         <Tooltip.Header>{format(x(data))}</Tooltip.Header>
         <Tooltip.List>

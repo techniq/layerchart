@@ -29,14 +29,29 @@
 <h2>Custom tooltip</h2>
 
 <Preview {data}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded">
     <ScatterChart {data} x="x" y="y">
-      <svelte:fragment slot="tooltip" let:x let:y>
-        <Tooltip.Root let:data>
-          <Tooltip.Header>{format(x(data), 'integer')}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="value" value={format(y(data), 'integer')} />
-          </Tooltip.List>
+      <svelte:fragment slot="tooltip" let:x let:y let:padding let:height>
+        <Tooltip.Root
+          x={padding.left}
+          y="data"
+          anchor="right"
+          contained={false}
+          class="text-[10px] font-semibold text-primary bg-surface-100 mr-[2px] px-1 py-[2px] border border-primary rounded whitespace-nowrap"
+          let:data
+        >
+          {format(y(data), 'integer')}
+        </Tooltip.Root>
+
+        <Tooltip.Root
+          x="data"
+          y={height}
+          anchor="top"
+          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[1px] px-2 py-[1px] border border-primary rounded whitespace-nowrap"
+          contained={false}
+          let:data
+        >
+          {format(x(data), 'integer')}
         </Tooltip.Root>
       </svelte:fragment>
     </ScatterChart>
@@ -52,7 +67,7 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" grid rule />
         <Points class="fill-primary/10 stroke-primary" />
-        <Highlight points lines />
+        <Highlight points lines axis="both" />
       </Svg>
 
       <Tooltip.Root let:data>
