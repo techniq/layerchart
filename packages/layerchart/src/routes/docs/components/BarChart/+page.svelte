@@ -1,33 +1,10 @@
 <script lang="ts">
-  import { cubicInOut } from 'svelte/easing';
-  import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
-  import { extent, mean } from 'd3-array';
-  import { stackOffsetExpand } from 'd3-shape';
+  import { Axis, BarChart, Bars, Highlight, Rule, Svg, Tooltip } from 'layerchart';
 
-  import {
-    Axis,
-    BarChart,
-    Bar,
-    Bars,
-    Chart,
-    Highlight,
-    Labels,
-    LinearGradient,
-    Pattern,
-    RectClipPath,
-    Rule,
-    Svg,
-    Text,
-    Tooltip,
-    createStackData,
-    stackOffsetSeparated,
-  } from 'layerchart';
-
-  import { Field, ToggleGroup, ToggleOption, Toggle, Switch } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { createDateSeries, longData } from '$lib/utils/genData.js';
+  import { createDateSeries } from '$lib/utils/genData.js';
 
   const data = createDateSeries({
     count: 10,
@@ -38,66 +15,6 @@
   });
   const horizontalData = data.slice(0, 10);
   const negativeData = createDateSeries({ count: 30, min: -20, max: 50, value: 'integer' });
-
-  const groupedData = createStackData(longData, { xKey: 'year', groupBy: 'fruit' });
-  const stackedData = createStackData(longData, { xKey: 'year', stackBy: 'fruit' });
-  const groupedStackedData = createStackData(longData, {
-    xKey: 'year',
-    groupBy: 'basket',
-    stackBy: 'fruit',
-  });
-  const stackedPercentData = createStackData(longData, {
-    xKey: 'year',
-    stackBy: 'fruit',
-    offset: stackOffsetExpand,
-  });
-  const stackedSeperatedData = createStackData(longData, {
-    xKey: 'year',
-    stackBy: 'fruit',
-    offset: stackOffsetSeparated,
-  });
-
-  const colorKeys = [...new Set(longData.map((x) => x.fruit))];
-  const keyColors = [
-    'hsl(var(--color-info))',
-    'hsl(var(--color-success))',
-    'hsl(var(--color-warning))',
-    'hsl(var(--color-danger))',
-  ];
-
-  let transitionChartMode = 'group';
-  $: transitionChart =
-    transitionChartMode === 'group'
-      ? {
-          groupBy: 'fruit',
-          stackBy: undefined,
-        }
-      : transitionChartMode === 'stack'
-        ? {
-            groupBy: undefined,
-            stackBy: 'fruit',
-          }
-        : transitionChartMode === 'groupStack'
-          ? {
-              groupBy: 'basket',
-              stackBy: 'fruit',
-            }
-          : {
-              groupBy: undefined,
-              stackBy: undefined,
-            };
-  $: transitionData = createStackData(longData, {
-    xKey: 'year',
-    groupBy: transitionChart.groupBy,
-    stackBy: transitionChart.stackBy,
-  }) as {
-    basket: number;
-    fruit: string;
-    keys: string[];
-    value: number;
-    values: number[];
-    year: string;
-  }[];
 </script>
 
 <h1>Examples</h1>
@@ -115,6 +32,72 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart data={horizontalData} x="value" y="date" layout="horizontal" />
+  </div>
+</Preview>
+
+<h2>Series</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      {data}
+      x="date"
+      series={[
+        { label: 'baseline', value: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
+        {
+          label: 'value',
+          value: 'value',
+          color: 'hsl(var(--color-primary))',
+          props: { inset: 16 },
+        },
+      ]}
+    />
+  </div>
+</Preview>
+
+<h2>Series (horizontal)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      {data}
+      y="date"
+      layout="horizontal"
+      series={[
+        { label: 'baseline', value: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
+        { label: 'value', value: 'value', color: 'hsl(var(--color-primary))', props: { inset: 8 } },
+      ]}
+    />
+  </div>
+</Preview>
+
+<h2>Series (diverging)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      {data}
+      x="date"
+      yDomain={null}
+      series={[
+        {
+          label: 'value',
+          value: 'value',
+          color: 'hsl(var(--color-primary))',
+          props: { rounded: 'top' },
+        },
+        {
+          label: 'baseline',
+          value: (d) => -d.baseline,
+          color: 'hsl(var(--color-secondary))',
+          props: { rounded: 'bottom' },
+        },
+      ]}
+    >
+      <svelte:fragment slot="after-marks">
+        <Rule y={0} />
+      </svelte:fragment>
+    </BarChart>
   </div>
 </Preview>
 

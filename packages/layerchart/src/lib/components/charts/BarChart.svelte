@@ -11,12 +11,13 @@
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
-  import { type Accessor } from '../../utils/common.js';
+  import { accessor, type Accessor } from '../../utils/common.js';
 
   interface $$Props extends ComponentProps<Chart<TData>> {
+    series?: typeof series;
+    labels?: typeof labels;
     layout?: typeof layout;
     bandPadding?: typeof bandPadding;
-    labels?: typeof labels;
   }
 
   export let data: $$Props['data'] = [];
@@ -24,10 +25,17 @@
   export let y: Accessor<TData> = undefined;
 
   export let layout: 'vertical' | 'horizontal' = 'vertical';
-  export let bandPadding = 0.4;
-  export let labels: ComponentProps<Labels> | boolean = false;
-
   $: isVertical = layout === 'vertical';
+
+  export let series: {
+    label?: string;
+    value: Accessor<TData>;
+    color?: string;
+    props?: ComponentProps<Bars>;
+  }[] = [{ value: layout === 'vertical' ? y : x, color: 'hsl(var(--color-primary))' }];
+
+  export let labels: ComponentProps<Labels> | boolean = false;
+  export let bandPadding = 0.4;
 
   $: xScale = isVertical ? scaleBand().padding(bandPadding) : scaleLinear();
   $: xDomain = isVertical ? undefined : [0, null];
@@ -38,11 +46,11 @@
 
 <Chart
   {data}
-  {x}
+  x={x ?? series.map((s) => s.value)}
   {xScale}
   {xDomain}
   xNice={layout === 'horizontal'}
-  {y}
+  y={y ?? series.map((d) => d.value)}
   {yScale}
   {yDomain}
   yNice={layout === 'vertical'}
@@ -76,9 +84,22 @@
         />
       </slot>
 
+      <slot name="before-marks" {...slotProps} />
+
       <slot name="marks" {...slotProps}>
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        {#each series as s}
+          <Bars
+            x={isVertical ? undefined : s.value}
+            y={isVertical ? s.value : undefined}
+            radius={4}
+            strokeWidth={1}
+            fill={s.color}
+            {...s.props}
+          />
+        {/each}
       </slot>
+
+      <slot name="after-marks" {...slotProps} />
 
       <slot name="highlight" {...slotProps}>
         <Highlight area />
@@ -93,7 +114,10 @@
       <Tooltip.Root let:data>
         <Tooltip.Header>{format(isVertical ? x(data) : y(data))}</Tooltip.Header>
         <Tooltip.List>
-          <Tooltip.Item label="value" value={isVertical ? y(data) : x(data)} />
+          {#each series as s}
+            {@const valueAccessor = accessor(s.value)}
+            <Tooltip.Item label={s.label ?? 'value'} value={valueAccessor(data)} color={s.color} />
+          {/each}
         </Tooltip.List>
       </Tooltip.Root>
     </slot>
