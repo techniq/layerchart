@@ -22,9 +22,12 @@
   export let x: Accessor<TData> = undefined;
   export let y: Accessor<TData> = undefined;
 
-  export let series: { label?: string; value: Accessor<TData>; color?: string }[] = [
-    { value: y, color: 'hsl(var(--color-primary))' },
-  ];
+  export let series: {
+    label?: string;
+    value: Accessor<TData>;
+    color?: string;
+    props?: ComponentProps<Spline>;
+  }[] = [{ value: y, color: 'hsl(var(--color-primary))' }];
 
   export let labels: ComponentProps<Labels> | boolean = false;
 
@@ -68,11 +71,15 @@
         />
       </slot>
 
+      <slot name="before-marks" {...slotProps} />
+
       <slot name="marks" {...slotProps}>
-        {#each series as s, i}
-          <Spline y={s.value} class="stroke-2" stroke={s.color} />
+        {#each series as s}
+          <Spline y={s.value} class="stroke-2" stroke={s.color} {...s.props} />
         {/each}
       </slot>
+
+      <slot name="after-marks" {...slotProps} />
 
       <slot name="highlight" {...slotProps}>
         {#each series as s, i}
