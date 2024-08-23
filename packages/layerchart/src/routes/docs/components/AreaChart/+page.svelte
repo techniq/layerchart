@@ -176,12 +176,14 @@
       </svelte:fragment>
 
       <svelte:fragment slot="highlight" let:series let:tooltip>
-        {@const activeSeries = series.find((s) => s.value === tooltip.data?.fruit)}
+        <!-- TODO: Remove hack to make typescript happy -->
+        {@const activeSeries = [...series].find((s) => s.value === tooltip.data?.fruit)}
         <Highlight lines points={{ fill: activeSeries?.color }} />
       </svelte:fragment>
 
       <svelte:fragment slot="tooltip" let:x let:series let:tooltip>
-        {@const activeSeries = series.find((s) => s.value === tooltip.data?.fruit)}
+        <!-- TODO: Remove hack to make typescript happy -->
+        {@const activeSeries = [...series].find((s) => s.value === tooltip.data?.fruit)}
         <Tooltip.Root slot="tooltip" let:data>
           <Tooltip.Header>{format(x(data))}</Tooltip.Header>
           <Tooltip.List>
