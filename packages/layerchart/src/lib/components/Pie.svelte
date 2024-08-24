@@ -51,7 +51,6 @@
 
   export let cornerRadius = 0;
   export let padAngle = 0;
-  // export let padRadius = 0;
 
   export let placement: 'left' | 'center' | 'right' | 'none' = 'center';
 

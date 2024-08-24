@@ -86,7 +86,7 @@
   $: scale = scaleLinear().domain(domain).range(range);
 
   function getOuterRadius(outerRadius: number | undefined, chartRadius: number) {
-    if (outerRadius == null) {
+    if (!outerRadius) {
       return chartRadius;
     } else if (outerRadius > 1) {
       // discrete value
