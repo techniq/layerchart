@@ -4,7 +4,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
 
-  const data = longData.filter((d) => d.year === '2019');
+  const data = longData.filter((d) => d.year === 2019);
 
   // const data = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
   const data2 = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
