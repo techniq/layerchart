@@ -15,7 +15,8 @@
     TODO:
     - [ ] Centroid labels
     - [ ] Outside/offset labels
-    - [ ] Multiple charts (data prop)
+    - [ ] Multiple/concentric charts (data prop, with different domains) - http://localhost:3002/docs/examples/Arc#concentric
+    - [ ] Segmented arcs - http://localhost:3002/docs/examples/Arc#segmented_arc
   */
 
   interface $$Props extends ComponentProps<Chart<TData>> {
@@ -114,17 +115,17 @@
       <slot name="before-marks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#if separateTracks}
-          <Pie
-            {range}
-            {innerRadius}
-            {outerRadius}
-            {cornerRadius}
-            {padAngle}
-            {placement}
-            {tooltip}
-            {...props.pie}
-          >
+        <Pie
+          {range}
+          {innerRadius}
+          {outerRadius}
+          {cornerRadius}
+          {padAngle}
+          {placement}
+          {...props.pie}
+          let:arcs
+        >
+          {#if separateTracks}
             {@const sumValue = Number(sum(chartData, valueAccessor))}
             {#each chartData as d, i}
               <Arc
@@ -141,18 +142,7 @@
                 {...props.arc}
               />
             {/each}
-          </Pie>
-        {:else}
-          <Pie
-            {range}
-            {innerRadius}
-            {outerRadius}
-            {padAngle}
-            {cornerRadius}
-            {placement}
-            {...props.pie}
-            let:arcs
-          >
+          {:else}
             {#each arcs as arc}
               <Arc
                 startAngle={arc.startAngle}
@@ -160,15 +150,15 @@
                 {outerRadius}
                 {innerRadius}
                 {cornerRadius}
-                padAngle={arc.padAngle}
+                {padAngle}
                 fill={rScale(r(arc.data))}
                 data={arc.data}
                 {tooltip}
                 {...props.arc}
               />
             {/each}
-          </Pie>
-        {/if}
+          {/if}
+        </Pie>
       </slot>
 
       <slot name="after-marks" {...slotProps} />
