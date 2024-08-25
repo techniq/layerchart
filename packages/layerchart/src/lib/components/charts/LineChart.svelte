@@ -16,6 +16,7 @@
   interface $$Props extends ComponentProps<Chart<TData>> {
     series?: typeof series;
     labels?: typeof labels;
+    props?: typeof props;
   }
 
   export let data: $$Props['data'] = [];
@@ -26,13 +27,21 @@
     label?: string;
     value: Accessor<TData>;
     color?: string;
-    props?: ComponentProps<Spline>;
+    props?: Partial<ComponentProps<Spline>>;
   }[] = [{ value: y, color: 'hsl(var(--color-primary))' }];
 
   export let labels: ComponentProps<Labels> | boolean = false;
 
   // Default xScale based on first data's `x` value
   $: xScale = accessor(x)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear();
+
+  export let props: {
+    axisLeft?: Partial<ComponentProps<Axis>>;
+    axisBottom?: Partial<ComponentProps<Axis>>;
+    spline?: Partial<ComponentProps<Spline>>;
+    highlight?: Partial<ComponentProps<Highlight>>;
+    labels?: Partial<ComponentProps<Labels>>;
+  } = {};
 </script>
 
 <Chart
@@ -63,11 +72,13 @@
           grid
           rule
           format={(value) => format(value, undefined, { variant: 'short' })}
+          {...props.axisLeft}
         />
         <Axis
           placement="bottom"
           rule
           format={(value) => format(value, undefined, { variant: 'short' })}
+          {...props.axisBottom}
         />
       </slot>
 
@@ -75,7 +86,7 @@
 
       <slot name="marks" {...slotProps}>
         {#each series as s}
-          <Spline y={s.value} class="stroke-2" stroke={s.color} {...s.props} />
+          <Spline y={s.value} class="stroke-2" stroke={s.color} {...props.spline} {...s.props} />
         {/each}
       </slot>
 
@@ -83,12 +94,12 @@
 
       <slot name="highlight" {...slotProps}>
         {#each series as s, i}
-          <Highlight y={s.value} points={{ fill: s.color }} lines={i === 0} />
+          <Highlight y={s.value} points={{ fill: s.color }} lines={i === 0} {...props.highlight} />
         {/each}
       </slot>
 
       {#if labels}
-        <Labels {...typeof labels === 'object' ? labels : null} />
+        <Labels {...props.labels} {...typeof labels === 'object' ? labels : null} />
       {/if}
     </Svg>
 

@@ -21,6 +21,7 @@
     padAngle?: typeof padAngle;
     placement?: typeof placement;
     separateTracks?: typeof separateTracks;
+    props?: typeof props;
     // series?: typeof series;
     // labels?: typeof labels;
   }
@@ -56,30 +57,28 @@
   export let outerRadius: number | undefined = undefined;
 
   export let cornerRadius = 0;
-
   export let padAngle = 0;
 
   export let placement: 'left' | 'center' | 'right' | 'none' = 'center';
 
+  /**
+   * Show values as individual, concentric arcs
+   */
   export let separateTracks = false;
 
-  // export let series: {
-  //   label?: string;
-  //   value: Accessor<TData>;
-  //   color?: string;
-  //   props?: ComponentProps<Area>;
-  // }[] = [{ value: y, color: 'hsl(var(--color-primary))' }];
-
-  // export let labels: ComponentProps<Labels> | boolean = false;
-
   export let colorScale = scaleOrdinal();
+  export let colorKeys = [...new Set(chartDataArray(data).map((d) => accessor(label)(d)))];
   export let colors = [
     'hsl(var(--color-info))',
     'hsl(var(--color-success))',
     'hsl(var(--color-warning))',
     'hsl(var(--color-danger))',
   ];
-  export let colorKeys = [...new Set(chartDataArray(data).map((d) => accessor(label)(d)))];
+
+  export let props: {
+    pie?: Partial<ComponentProps<Pie>>;
+    arc?: Partial<ComponentProps<Arc>>;
+  } = {};
 </script>
 
 <Chart
@@ -109,7 +108,16 @@
 
       <slot name="marks" {...slotProps}>
         {#if separateTracks}
-          <Pie {range} {innerRadius} {outerRadius} {padAngle} {cornerRadius} {placement} {tooltip}>
+          <Pie
+            {range}
+            {innerRadius}
+            {outerRadius}
+            {cornerRadius}
+            {padAngle}
+            {placement}
+            {tooltip}
+            {...props.pie}
+          >
             {@const sumValue = Number(sum(chartData, valueAccessor))}
             {#each chartData as d, i}
               <Arc
@@ -118,10 +126,12 @@
                 outerRadius={i * (outerRadius ?? 0)}
                 {innerRadius}
                 {cornerRadius}
+                {padAngle}
                 fill={rScale(r(d))}
                 track={{ fill: rScale(r(d)), 'fill-opacity': 0.1 }}
                 {tooltip}
                 data={d}
+                {...props.arc}
               />
             {/each}
           </Pie>
@@ -133,8 +143,24 @@
             {padAngle}
             {cornerRadius}
             {placement}
-            {tooltip}
-          />
+            {...props.pie}
+            let:arcs
+          >
+            {#each arcs as arc}
+              <Arc
+                startAngle={arc.startAngle}
+                endAngle={arc.endAngle}
+                {outerRadius}
+                {innerRadius}
+                {cornerRadius}
+                padAngle={arc.padAngle}
+                fill={rScale(r(arc.data))}
+                data={arc.data}
+                {tooltip}
+                {...props.arc}
+              />
+            {/each}
+          </Pie>
         {/if}
       </slot>
 

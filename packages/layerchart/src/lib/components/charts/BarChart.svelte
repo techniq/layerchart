@@ -18,6 +18,7 @@
     labels?: typeof labels;
     layout?: typeof layout;
     bandPadding?: typeof bandPadding;
+    props?: typeof props;
   }
 
   export let data: $$Props['data'] = [];
@@ -31,7 +32,7 @@
     label?: string;
     value: Accessor<TData>;
     color?: string;
-    props?: ComponentProps<Bars>;
+    props?: Partial<ComponentProps<Bars>>;
   }[] = [{ value: layout === 'vertical' ? y : x, color: 'hsl(var(--color-primary))' }];
 
   export let labels: ComponentProps<Labels> | boolean = false;
@@ -42,6 +43,14 @@
 
   $: yScale = isVertical ? scaleLinear() : scaleBand().padding(bandPadding);
   $: yDomain = isVertical ? [0, null] : undefined;
+
+  export let props: {
+    axisLeft?: Partial<ComponentProps<Axis>>;
+    axisBottom?: Partial<ComponentProps<Axis>>;
+    bars?: Partial<ComponentProps<Bars>>;
+    highlight?: Partial<ComponentProps<Highlight>>;
+    labels?: Partial<ComponentProps<Labels>>;
+  } = {};
 </script>
 
 <Chart
@@ -75,12 +84,14 @@
           grid={isVertical}
           rule
           format={(value) => format(value, undefined, { variant: 'short' })}
+          {...props.axisLeft}
         />
         <Axis
           placement="bottom"
           grid={!isVertical}
           rule
           format={(value) => format(value, undefined, { variant: 'short' })}
+          {...props.axisBottom}
         />
       </slot>
 
@@ -94,6 +105,7 @@
             radius={4}
             strokeWidth={1}
             fill={s.color}
+            {...props.bars}
             {...s.props}
           />
         {/each}
@@ -102,11 +114,11 @@
       <slot name="after-marks" {...slotProps} />
 
       <slot name="highlight" {...slotProps}>
-        <Highlight area />
+        <Highlight area {...props.highlight} />
       </slot>
 
       {#if labels}
-        <Labels {...typeof labels === 'object' ? labels : null} />
+        <Labels {...props.labels} {...typeof labels === 'object' ? labels : null} />
       {/if}
     </Svg>
 

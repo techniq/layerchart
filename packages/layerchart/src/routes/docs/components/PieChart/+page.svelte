@@ -54,8 +54,16 @@
       separateTracks
       outerRadius={-25}
       innerRadius={-20}
-      cornerRadius={5}
+      cornerRadius={10}
     />
+  </div>
+</Preview>
+
+<h2>Inner component props (Arc class)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart {data} label="fruit" value="value" props={{ arc: { class: 'stroke-surface-100' } }} />
   </div>
 </Preview>
 

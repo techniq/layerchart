@@ -25,6 +25,14 @@
 
   // Default xScale based on first data's `x` value
   $: xScale = accessor(x)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear();
+
+  export let props: {
+    axisLeft?: Partial<ComponentProps<Axis>>;
+    axisBottom?: Partial<ComponentProps<Axis>>;
+    points?: Partial<ComponentProps<Points>>;
+    highlight?: Partial<ComponentProps<Highlight>>;
+    labels?: Partial<ComponentProps<Labels>>;
+  } = {};
 </script>
 
 <Chart
@@ -54,29 +62,35 @@
           grid
           rule
           format={(value) => format(value, undefined, { variant: 'short' })}
+          {...props.axisLeft}
         />
         <Axis
           placement="bottom"
           grid
           rule
           format={(value) => format(value, undefined, { variant: 'short' })}
+          {...props.axisBottom}
         />
       </slot>
 
       <slot name="before-marks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        <Points class="fill-primary/10 stroke-primary" />
+        <Points class="fill-primary/10 stroke-primary" {...props.points} />
       </slot>
 
       <slot name="after-marks" {...slotProps} />
 
       <slot name="highlight" {...slotProps}>
-        <Highlight points lines axis="both" />
+        <Highlight points lines axis="both" {...props.highlight} />
       </slot>
 
       {#if labels}
-        <Labels {...typeof labels === 'object' ? labels : null} format={(value) => format(value)} />
+        <Labels
+          format={(value) => format(value)}
+          {...props.highlight}
+          {...typeof labels === 'object' ? labels : null}
+        />
       {/if}
     </Svg>
 
