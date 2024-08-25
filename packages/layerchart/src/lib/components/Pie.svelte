@@ -63,7 +63,7 @@
   export let offset = 0;
 
   /**
-   * Tooltip context to setup mouse events to show tooltip for related data
+   * Tooltip context to setup pointer events to show tooltip for related data
    */
   export let tooltip: TooltipContextValue | undefined = undefined;
 
@@ -109,15 +109,8 @@
         {cornerRadius}
         {offset}
         fill={$config.r ? $rGet(arc.data) : null}
-        on:pointerenter={(e) => tooltip?.show(e, arc.data)}
-        on:pointermove={(e) => tooltip?.show(e, arc.data)}
-        on:pointerleave={(e) => tooltip?.hide()}
-        on:touchmove={(e) => {
-          if (tooltip) {
-            // Prevent touch to not interfer with pointer when using tooltip
-            e.preventDefault();
-          }
-        }}
+        data={arc.data}
+        {tooltip}
       />
     {/each}
   </slot>

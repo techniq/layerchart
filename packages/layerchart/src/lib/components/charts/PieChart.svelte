@@ -112,7 +112,6 @@
           <Pie {range} {innerRadius} {outerRadius} {padAngle} {cornerRadius} {placement} {tooltip}>
             {@const sumValue = Number(sum(chartData, valueAccessor))}
             {#each chartData as d, i}
-              {console.log(chartData, i)}
               <Arc
                 value={valueAccessor(d)}
                 domain={[0, sumValue]}
@@ -121,13 +120,8 @@
                 {cornerRadius}
                 fill={rScale(r(d))}
                 track={{ fill: rScale(r(d)), 'fill-opacity': 0.1 }}
-                on:pointerenter={(e) => tooltip?.show(e, d)}
-                on:pointermove={(e) => tooltip?.show(e, d)}
-                on:pointerleave={(e) => tooltip?.hide()}
-                on:touchmove={(e) => {
-                  // Prevent touch to not interfer with pointer when using tooltip
-                  e.preventDefault();
-                }}
+                {tooltip}
+                data={d}
               />
             {/each}
           </Pie>

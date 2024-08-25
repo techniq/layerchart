@@ -27,6 +27,7 @@
   import { chartContext } from './ChartContext.svelte';
   import { motionStore } from '$lib/stores/motionStore.js';
   import { degreesToRadians } from '$lib/utils/math.js';
+  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
 
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -172,6 +173,16 @@
   $: angle = ((startAngle ?? 0) + (endAngle ?? 0)) / 2;
   $: xOffset = Math.sin(angle) * offset;
   $: yOffset = -Math.cos(angle) * offset;
+
+  /**
+   * Tooltip context to setup pointer events to show tooltip for related data.  Must set `data` prop as well
+   */
+  export let tooltip: TooltipContextValue | undefined = undefined;
+
+  /**
+   * Data to set when showing tooltip
+   */
+  export let data: any = undefined;
 </script>
 
 {#if track}
@@ -188,6 +199,15 @@
   d={arc()}
   transform="translate({xOffset}, {yOffset})"
   {...$$restProps}
+  on:pointerenter={(e) => tooltip?.show(e, data)}
+  on:pointermove={(e) => tooltip?.show(e, data)}
+  on:pointerleave={(e) => tooltip?.hide()}
+  on:touchmove={(e) => {
+    if (tooltip) {
+      // Prevent touch to not interfer with pointer when using tooltip
+      e.preventDefault();
+    }
+  }}
   on:click
   on:pointerenter
   on:pointermove
