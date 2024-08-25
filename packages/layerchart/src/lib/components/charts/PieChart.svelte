@@ -11,6 +11,13 @@
 
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
 
+  /*
+    TODO:
+    - [ ] Centroid labels
+    - [ ] Outside/offset labels
+    - [ ] Multiple charts (data prop)
+  */
+
   interface $$Props extends ComponentProps<Chart<TData>> {
     label?: typeof label;
     value?: typeof label;
