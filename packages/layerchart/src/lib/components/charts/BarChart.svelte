@@ -75,7 +75,7 @@
   let:padding
   let:tooltip
 >
-  {@const slotProps = { x, xScale, y, yScale, width, height, padding, tooltip }}
+  {@const slotProps = { x, xScale, y, yScale, width, height, padding, tooltip, series }}
   <slot {...slotProps}>
     <Svg>
       <slot name="axis" {...slotProps}>

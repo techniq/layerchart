@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Axis, BarChart, Bars, Highlight, Labels, Rule, Svg, Tooltip } from 'layerchart';
-
+  import { accessor, Axis, BarChart, Bars, Highlight, Rule, Svg, Tooltip } from 'layerchart';
+  import { sum } from 'd3-array';
   import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -105,19 +105,19 @@
 <h2>Series (horizontal / diverging)</h2>
 
 <Preview data={data.worldPopulationDemographics}>
+  {@const totalPopulation = sum(data.worldPopulationDemographics, (d) => d.male + d.female)}
   <div class="h-[600px] p-4 border rounded">
     <BarChart
       data={data.worldPopulationDemographics}
       xDomain={null}
       y="age"
-      yDomain={data.worldPopulationDemographics.map((d) => d.age).reverse()}
+      yDomain={data.worldPopulationDemographics.map((d) => d.age)}
       orientation="horizontal"
       padding={{ left: 32, bottom: 16 }}
       labels={{ format: (value) => format(Math.abs(value), 'metric') }}
       props={{
-        axisBottom: {
-          format: 'metric',
-        },
+        axisLeft: { rule: false },
+        axisBottom: { format: (value) => format(Math.abs(value), 'metric') },
       }}
       series={[
         {
@@ -136,6 +136,79 @@
     >
       <svelte:fragment slot="after-marks">
         <Rule x={0} />
+      </svelte:fragment>
+
+      <svelte:fragment slot="tooltip" let:y let:series>
+        <Tooltip.Root let:data>
+          <Tooltip.Header>Age: {format(y(data))}</Tooltip.Header>
+          <Tooltip.List>
+            {#each series as s}
+              {@const valueAccessor = accessor(s.value)}
+              {@const value = Math.abs(valueAccessor(data))}
+              <Tooltip.Item label={s.label ?? 'value'} color={s.color}>
+                {format(value)}
+                <span class="text-xs text-surface-content/50"
+                  >({format(value / totalPopulation, 'percent')})</span
+                >
+              </Tooltip.Item>
+            {/each}
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
+    </BarChart>
+  </div>
+</Preview>
+
+<h2>Series (horizontal / diverging) as percent</h2>
+
+<Preview data={data.worldPopulationDemographics}>
+  {@const totalPopulation = sum(data.worldPopulationDemographics, (d) => d.male + d.female)}
+  <div class="h-[600px] p-4 border rounded">
+    <BarChart
+      data={data.worldPopulationDemographics}
+      xDomain={null}
+      y="age"
+      yDomain={data.worldPopulationDemographics.map((d) => d.age)}
+      orientation="horizontal"
+      padding={{ left: 32, bottom: 16 }}
+      labels={{ format: 'percent' }}
+      props={{
+        axisLeft: { rule: false },
+        axisBottom: { format: 'percentRound' },
+      }}
+      series={[
+        {
+          label: 'male',
+          value: (d) => -d.male / totalPopulation,
+          color: 'hsl(var(--color-primary))',
+          props: { rounded: 'left' },
+        },
+        {
+          label: 'female',
+          value: (d) => d.female / totalPopulation,
+          color: 'hsl(var(--color-secondary))',
+          props: { rounded: 'right' },
+        },
+      ]}
+    >
+      <svelte:fragment slot="after-marks">
+        <Rule x={0} />
+      </svelte:fragment>
+
+      <svelte:fragment slot="tooltip" let:y let:series>
+        <Tooltip.Root let:data>
+          <Tooltip.Header>Age: {format(y(data))}</Tooltip.Header>
+          <Tooltip.List>
+            {#each series as s}
+              {@const valueAccessor = accessor(s.value)}
+              {@const value = Math.abs(valueAccessor(data))}
+              <Tooltip.Item label={s.label ?? 'value'} color={s.color}>
+                {format(value * totalPopulation)}
+                <span class="text-xs text-surface-content/50">({format(value, 'percent')})</span>
+              </Tooltip.Item>
+            {/each}
+          </Tooltip.List>
+        </Tooltip.Root>
       </svelte:fragment>
     </BarChart>
   </div>
