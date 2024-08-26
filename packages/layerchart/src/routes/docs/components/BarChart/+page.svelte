@@ -1,46 +1,47 @@
 <script lang="ts">
-  import { Axis, BarChart, Bars, Highlight, Rule, Svg, Tooltip } from 'layerchart';
+  import { Axis, BarChart, Bars, Highlight, Labels, Rule, Svg, Tooltip } from 'layerchart';
 
   import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
 
-  const data = createDateSeries({
+  export let data;
+
+  const dateSeriesData = createDateSeries({
     count: 10,
     min: 20,
     max: 100,
     value: 'integer',
     keys: ['value', 'baseline'],
   });
-  const horizontalData = data.slice(0, 10);
-  const negativeData = createDateSeries({ count: 30, min: -20, max: 50, value: 'integer' });
+  const horizontalDateSeriesData = dateSeriesData.slice(0, 10);
 </script>
 
 <h1>Examples</h1>
 
 <h2>Vertical (default)</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart {data} x="date" y="value" />
+    <BarChart data={dateSeriesData} x="date" y="value" />
   </div>
 </Preview>
 
 <h2>Horizontal</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={horizontalData} x="value" y="date" layout="horizontal" />
+    <BarChart data={horizontalDateSeriesData} x="value" y="date" layout="horizontal" />
   </div>
 </Preview>
 
 <h2>Series</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart
-      {data}
+      data={dateSeriesData}
       x="date"
       series={[
         { label: 'baseline', value: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
@@ -57,10 +58,10 @@
 
 <h2>Series (horizontal)</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart
-      {data}
+      data={dateSeriesData}
       y="date"
       layout="horizontal"
       series={[
@@ -73,10 +74,10 @@
 
 <h2>Series (diverging)</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart
-      {data}
+      data={dateSeriesData}
       x="date"
       yDomain={null}
       series={[
@@ -101,27 +102,71 @@
   </div>
 </Preview>
 
+<h2>Series (horizontal / diverging)</h2>
+
+<Preview data={data.worldPopulationDemographics}>
+  <div class="h-[600px] p-4 border rounded">
+    <BarChart
+      data={data.worldPopulationDemographics}
+      xDomain={null}
+      y="age"
+      yDomain={data.worldPopulationDemographics.map((d) => d.age).reverse()}
+      layout="horizontal"
+      padding={{ left: 32, bottom: 16 }}
+      series={[
+        {
+          label: 'male',
+          value: (d) => -d.male,
+          color: 'hsl(var(--color-primary))',
+          props: { rounded: 'left' },
+        },
+        {
+          label: 'female',
+          value: 'female',
+          color: 'hsl(var(--color-secondary))',
+          props: { rounded: 'right' },
+        },
+      ]}
+    >
+      <svelte:fragment slot="after-marks">
+        <Rule x={0} />
+        <!-- <Labels /> -->
+      </svelte:fragment>
+
+      <svelte:fragment slot="axis">
+        <Axis
+          placement="left"
+          grid
+          rule
+          format={(value) => format(value, undefined, { variant: 'short' })}
+        />
+        <Axis placement="bottom" rule format={(value) => format(value, 'metric')} />
+      </svelte:fragment>
+    </BarChart>
+  </div>
+</Preview>
+
 <h2>Labels</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart {data} x="date" y="value" labels />
+    <BarChart data={dateSeriesData} x="date" y="value" labels />
   </div>
 </Preview>
 
 <h2>Labels (inside placement)</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart {data} x="date" y="value" labels={{ placement: 'inside' }} />
+    <BarChart data={dateSeriesData} x="date" y="value" labels={{ placement: 'inside' }} />
   </div>
 </Preview>
 
 <h2>Custom tooltip</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart {data} x="date" y="value">
+    <BarChart data={dateSeriesData} x="date" y="value">
       <svelte:fragment slot="tooltip" let:x let:y>
         <Tooltip.Root let:data>
           <Tooltip.Header>{format(x(data), PeriodType.DayTime)}</Tooltip.Header>
@@ -136,9 +181,9 @@
 
 <h2>Custom chart</h2>
 
-<Preview {data}>
+<Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart {data} x="date" y="value" let:x let:y>
+    <BarChart data={dateSeriesData} x="date" y="value" let:x let:y>
       <Svg>
         <Axis
           placement="left"
