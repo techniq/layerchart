@@ -4,6 +4,7 @@
   import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
 
   export let data;
@@ -159,6 +160,12 @@
   </div>
 </Preview>
 
+<Blockquote>
+  Data source: <a href="https://www.populationpyramid.net/ " target="_blank">
+    Population pyramid
+  </a>
+</Blockquote>
+
 <h2>Series (horizontal / diverging) as percent</h2>
 
 <Preview data={data.worldPopulationDemographics}>
@@ -213,6 +220,12 @@
     </BarChart>
   </div>
 </Preview>
+
+<Blockquote>
+  Data source: <a href="https://www.populationpyramid.net/ " target="_blank">
+    Population pyramid
+  </a>
+</Blockquote>
 
 <h2>Labels</h2>
 
