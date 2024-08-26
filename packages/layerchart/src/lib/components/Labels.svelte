@@ -83,6 +83,7 @@
             : 'fill-surface-content stroke-surface-100'
         )}
         {...getTextProps(point)}
+        {...$$restProps}
       />
     {/each}
   </Points>
