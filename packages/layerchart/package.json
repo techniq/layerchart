@@ -13,6 +13,7 @@
     "prepublishOnly": "svelte-package",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+    "test:unit": "TZ=UTC+4 vitest",
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "prepare": "svelte-kit sync"
@@ -75,7 +76,8 @@
     "typescript": "^5.5.4",
     "unist-util-visit": "^5.0.0",
     "us-atlas": "^3.0.1",
-    "vite": "^5.4.0"
+    "vite": "^5.4.0",
+    "vitest": "^2.0.5"
   },
   "type": "module",
   "dependencies": {
