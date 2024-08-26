@@ -10,7 +10,7 @@
   import { isScaleBand, type AnyScale } from '../utils/scales.js';
 
   const context = chartContext() as any;
-  const { data: contextData, xGet, y, yGet, xScale, yScale, rGet, config } = context;
+  const { data: contextData, x, xScale, xGet, y, yScale, yGet, rGet, config } = context;
 
   type Offset = number | ((value: number, context: any) => number) | undefined;
 
@@ -47,12 +47,15 @@
 				x={["prop1" ,"prop2"]}
 				y="prop3"
 			*/
-      return $xGet(d)
+      return $x(d)
         .filter(notNull)
-        .map((x: number) => {
+        .map((xValue: number) => {
+          const yValue = $y(d);
           return {
-            x: x + getOffset(x, offsetX, $xScale),
-            y: $yGet(d) + getOffset($yGet(d), offsetY, $yScale),
+            x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
+            y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
+            xValue,
+            yValue: $y(d),
             data: d,
           };
         });
@@ -61,12 +64,15 @@
 				x="prop1"
 				y={["prop2" ,"prop3"]}
 			*/
-      return $yGet(d)
+      return $y(d)
         .filter(notNull)
-        .map((y: number) => {
+        .map((yValue: number) => {
+          const xValue = $x(d);
           return {
-            x: $xGet(d) + getOffset($xGet(d), offsetX, $xScale),
-            y: y + getOffset(y, offsetY, $yScale),
+            x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
+            y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
+            xValue,
+            yValue: $y(d),
             data: d,
           };
         });
@@ -75,13 +81,17 @@
 				x="prop1"
 				y="prop2"
 			*/
+      const xValue = $x(d);
+      const yValue = $y(d);
       return {
-        x: $xGet(d) + getOffset($xGet(d), offsetX, $xScale),
-        y: $yGet(d) + getOffset($yGet(d), offsetY, $yScale),
+        x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
+        y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
+        xValue,
+        yValue,
         data: d,
       };
     }
-  });
+  }) as { x: number; y: number; xValue: any; yValue: any; data: any }[];
 
   $: _links = pointsData.flatMap((d: any) => {
     if (Array.isArray($config.x)) {
