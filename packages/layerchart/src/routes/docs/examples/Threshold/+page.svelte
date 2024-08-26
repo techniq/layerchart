@@ -119,8 +119,6 @@
 
 <h2>With Labels</h2>
 
-<!-- TODO: Show label for both value and baseline (above and below) -->
-
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart

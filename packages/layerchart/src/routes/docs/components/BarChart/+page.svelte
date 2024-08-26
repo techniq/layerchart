@@ -113,6 +113,12 @@
       yDomain={data.worldPopulationDemographics.map((d) => d.age).reverse()}
       orientation="horizontal"
       padding={{ left: 32, bottom: 16 }}
+      labels={{ format: (value) => format(Math.abs(value), 'metric') }}
+      props={{
+        axisBottom: {
+          format: 'metric',
+        },
+      }}
       series={[
         {
           label: 'male',
@@ -130,17 +136,6 @@
     >
       <svelte:fragment slot="after-marks">
         <Rule x={0} />
-        <!-- <Labels /> -->
-      </svelte:fragment>
-
-      <svelte:fragment slot="axis">
-        <Axis
-          placement="left"
-          grid
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-        />
-        <Axis placement="bottom" rule format={(value) => format(value, 'metric')} />
       </svelte:fragment>
     </BarChart>
   </div>
