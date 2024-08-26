@@ -171,10 +171,10 @@
       yDomain={data.worldPopulationDemographics.map((d) => d.age)}
       orientation="horizontal"
       padding={{ left: 32, bottom: 16 }}
-      labels={{ format: 'percent' }}
+      labels={{ format: (value) => format(Math.abs(value), 'percent') }}
       props={{
         axisLeft: { rule: false },
-        axisBottom: { format: 'percentRound' },
+        axisBottom: { format: (value) => format(Math.abs(value), 'percentRound') },
       }}
       series={[
         {
