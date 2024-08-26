@@ -16,7 +16,7 @@
   interface $$Props extends ComponentProps<Chart<TData>> {
     series?: typeof series;
     labels?: typeof labels;
-    layout?: typeof layout;
+    orientation?: typeof orientation;
     bandPadding?: typeof bandPadding;
     props?: typeof props;
   }
@@ -25,15 +25,15 @@
   export let x: Accessor<TData> = undefined;
   export let y: Accessor<TData> = undefined;
 
-  export let layout: 'vertical' | 'horizontal' = 'vertical';
-  $: isVertical = layout === 'vertical';
+  export let orientation: 'vertical' | 'horizontal' = 'vertical';
+  $: isVertical = orientation === 'vertical';
 
   export let series: {
     label?: string;
     value: Accessor<TData>;
     color?: string;
     props?: Partial<ComponentProps<Bars>>;
-  }[] = [{ value: layout === 'vertical' ? y : x, color: 'hsl(var(--color-primary))' }];
+  }[] = [{ value: orientation === 'vertical' ? y : x, color: 'hsl(var(--color-primary))' }];
 
   export let labels: ComponentProps<Labels> | boolean = false;
   export let bandPadding = 0.4;
@@ -58,11 +58,11 @@
   x={x ?? series.map((s) => s.value)}
   {xScale}
   {xDomain}
-  xNice={layout === 'horizontal'}
+  xNice={orientation === 'horizontal'}
   y={y ?? series.map((d) => d.value)}
   {yScale}
   {yDomain}
-  yNice={layout === 'vertical'}
+  yNice={orientation === 'vertical'}
   padding={{ left: 16, bottom: 16 }}
   tooltip={{ mode: 'band' }}
   {...$$restProps}

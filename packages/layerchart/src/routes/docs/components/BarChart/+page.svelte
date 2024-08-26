@@ -32,7 +32,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={horizontalDateSeriesData} x="value" y="date" layout="horizontal" />
+    <BarChart data={horizontalDateSeriesData} x="value" y="date" orientation="horizontal" />
   </div>
 </Preview>
 
@@ -63,7 +63,7 @@
     <BarChart
       data={dateSeriesData}
       y="date"
-      layout="horizontal"
+      orientation="horizontal"
       series={[
         { label: 'baseline', value: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
         { label: 'value', value: 'value', color: 'hsl(var(--color-primary))', props: { inset: 8 } },
@@ -111,7 +111,7 @@
       xDomain={null}
       y="age"
       yDomain={data.worldPopulationDemographics.map((d) => d.age).reverse()}
-      layout="horizontal"
+      orientation="horizontal"
       padding={{ left: 32, bottom: 16 }}
       series={[
         {
