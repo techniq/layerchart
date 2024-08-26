@@ -2,6 +2,7 @@
   import { type ComponentProps } from 'svelte';
   import { scaleOrdinal } from 'd3-scale';
   import { sum } from 'd3-array';
+  import { format } from '@layerstack/utils';
 
   import Arc from '../Arc.svelte';
   import Chart from '../Chart.svelte';
@@ -171,7 +172,7 @@
             label={labelAccessor(data)}
             value={valueAccessor(data)}
             color={rScale(r(data))}
-            format="integer"
+            {format}
           />
         </Tooltip.List>
       </Tooltip.Root>

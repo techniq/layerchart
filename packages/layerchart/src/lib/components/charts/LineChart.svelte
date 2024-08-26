@@ -109,7 +109,12 @@
         <Tooltip.List>
           {#each series as s}
             {@const valueAccessor = accessor(s.value)}
-            <Tooltip.Item label={s.label ?? 'value'} value={valueAccessor(data)} color={s.color} />
+            <Tooltip.Item
+              label={s.label ?? 'value'}
+              value={valueAccessor(data)}
+              color={s.color}
+              {format}
+            />
           {/each}
         </Tooltip.List>
       </Tooltip.Root>

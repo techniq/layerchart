@@ -98,7 +98,7 @@
       <Tooltip.Root let:data>
         <Tooltip.Header>{format(x(data))}</Tooltip.Header>
         <Tooltip.List>
-          <Tooltip.Item label="value" value={format(y(data))} />
+          <Tooltip.Item label="value" value={y(data)} {format} />
         </Tooltip.List>
       </Tooltip.Root>
     </slot>
