@@ -127,15 +127,15 @@
   <RangeField label="Segments" bind:value={segments} min={2} />
 </div>
 <Preview>
-  <div class="h-[240px] p-4 border rounded bg-neutral-900">
+  <div class="h-[240px] p-4 border rounded">
     <Chart>
       <Svg>
         <Group center>
-          {#each { length: segments } as _, segmentIndex}
-            {@const segmentAngle = (2 * Math.PI) / segments}
-            {@const startAngle = segmentIndex * segmentAngle}
-            {@const endAngle = (segmentIndex + 1) * segmentAngle}
-            <SpringValue {value} let:value>
+          <SpringValue {value} let:value>
+            {#each { length: segments } as _, segmentIndex}
+              {@const segmentAngle = (2 * Math.PI) / segments}
+              {@const startAngle = segmentIndex * segmentAngle}
+              {@const endAngle = (segmentIndex + 1) * segmentAngle}
               <Arc
                 {startAngle}
                 {endAngle}
@@ -144,20 +144,20 @@
                 padAngle={0.02}
                 class={cls(
                   (segmentIndex / segments) * 100 < (value ?? 0)
-                    ? 'fill-emerald-300'
-                    : 'fill-gray-700'
+                    ? 'fill-success-300'
+                    : 'fill-surface-content/10'
                 )}
-              >
-                <Text
-                  value={Math.round(value ?? 0)}
-                  textAnchor="middle"
-                  verticalAnchor="middle"
-                  dy={16}
-                  class="text-6xl tabular-nums fill-white"
-                />
-              </Arc>
-            </SpringValue>
-          {/each}
+              ></Arc>
+            {/each}
+
+            <Text
+              value={Math.round(value ?? 0)}
+              textAnchor="middle"
+              verticalAnchor="middle"
+              dy={16}
+              class="text-6xl tabular-nums"
+            />
+          </SpringValue>
         </Group>
       </Svg>
     </Chart>
