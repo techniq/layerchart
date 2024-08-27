@@ -2,7 +2,7 @@
   import { forceX, forceY, forceManyBody, forceCollide } from 'd3-force';
 
   import { Chart, Circle, ForceSimulation, Svg } from 'layerchart';
-  import { RangeField, TextField } from 'svelte-ux';
+  import { Field, RangeField, Switch, TextField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -13,6 +13,10 @@
   let height = 500;
   let radius = 2;
   const collisionStrength = 0.01;
+
+  let hasCollideForce = false; // TODO: Determine why unable to remove if enabled true by default
+  let hasChargeForce = false;
+  let transition = false;
 
   function onResize(e: ChartResizeEvent) {
     width = e.detail.width;
@@ -39,10 +43,8 @@
 
   $: pixels = rasterizeText(text, textOptions).map(function (d) {
     return {
-      x: Math.random() * width,
-      y: Math.random() * height,
-      // x: d[0],
-      // y: d[1],
+      x: transition ? d[0] : Math.random() * width,
+      y: transition ? d[1] : Math.random() * height,
       xTarget: d[0],
       yTarget: d[1],
       rTarget: radius,
@@ -60,11 +62,22 @@
 
 <h1>Examples</h1>
 
-<div class="grid grid-flow-col gap-2 mb-2">
+<div class="grid grid-flow-col gap-2 mb-1">
   <TextField label="Text" bind:value={text} />
   <RangeField label="Font size (px)" bind:value={fontSize} max={600} />
   <RangeField label="Spacing" bind:value={spacing} />
   <RangeField label="Radius" bind:value={radius} min={1} max={spacing * 2} />
+</div>
+<div class="flex gap-2 mb-2">
+  <Field label="Collide Force" let:id>
+    <Switch bind:checked={hasCollideForce} {id} size="md" />
+  </Field>
+  <Field label="Charge Force" let:id>
+    <Switch bind:checked={hasChargeForce} {id} size="md" />
+  </Field>
+  <Field label="Transition" let:id>
+    <Switch bind:checked={transition} {id} size="md" />
+  </Field>
 </div>
 
 <Preview {data}>
@@ -75,16 +88,26 @@
           forces={{
             x: xForce,
             y: yForce,
-            collide: collideForce,
-            // charge: manyBodyForce.strength((d, i) => (i ? 0 : (-width * 2) / 10)),
+            ...(hasCollideForce && {
+              collide: collideForce,
+            }),
+            ...(hasChargeForce && {
+              charge: manyBodyForce.strength((d, i) => (i ? 0 : (-width * 2) / 10)),
+            }),
           }}
           alphaTarget={1}
           velocityDecay={0.2}
           let:nodes
         >
-          {#each nodes as node, i}
+          {#each nodes as node, i (i)}
             {#if i > 0}
-              <Circle cx={node.x} cy={node.y} r={node.rTarget} fill="hsl(var(--color-primary))" />
+              <Circle
+                cx={node.x}
+                cy={node.y}
+                r={node.rTarget}
+                fill="hsl(var(--color-primary))"
+                spring={transition}
+              />
             {/if}
           {/each}
 
