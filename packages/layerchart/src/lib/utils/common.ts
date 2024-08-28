@@ -16,8 +16,8 @@ export function accessor<TData = any>(prop: Accessor<TData>): (d: TData) => any 
   } else if (typeof prop === 'function') {
     // function
     return prop;
-  } else if (typeof prop === 'string') {
-    // path string
+  } else if (typeof prop === 'string' || typeof prop === 'number') {
+    // path string or number (array index)
     return (d: TData) => get(d, prop);
   } else {
     // return full object

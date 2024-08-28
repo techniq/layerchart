@@ -10,12 +10,12 @@ export const testData = {
 };
 
 describe('accessor', () => {
-  it('string', () => {
+  it('string path', () => {
     const actual = accessor('one')(testData);
     expect(actual).toEqual(testData.one);
   });
 
-  it('nested string', () => {
+  it('nested path', () => {
     const actual = accessor('obj.value')(testData);
     expect(actual).toEqual(testData.obj.value);
   });
@@ -25,12 +25,17 @@ describe('accessor', () => {
     expect(actual).toEqual([testData.one, testData.two, testData.obj.value, testData.arr[0]]);
   });
 
+  it('multiple properties as numbers (index)', () => {
+    const actual = accessor([0, 1])(testData.arr);
+    expect(actual).toEqual([testData.arr[0], testData.arr[1]]);
+  });
+
   it('function', () => {
     const actual = accessor((d) => d.obj.value)(testData);
     expect(actual).toEqual(testData.obj.value);
   });
 
-  it('string array', () => {
+  it('string path with array value', () => {
     const actual = accessor('arr[0]')(testData);
     expect(actual).toEqual(testData.arr[0]);
   });
