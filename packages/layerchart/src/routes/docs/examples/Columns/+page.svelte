@@ -818,10 +818,10 @@
 
           <Tooltip.Separator />
 
-          <!-- TODO: Remove Array() hack to make svelte-check happy -->
+          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
           <Tooltip.Item
             label="total"
-            value={sum(Array(data.data), (d) => d.value)}
+            value={sum([...data.data], (d) => d.value)}
             format="integer"
             valueAlign="right"
           />
@@ -872,10 +872,10 @@
 
           <Tooltip.Separator />
 
-          <!-- TODO: Remove Array() hack to make svelte-check happy -->
+          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
           <Tooltip.Item
             label="total"
-            value={sum(Array(data.data), (d) => d.value)}
+            value={sum([...data.data], (d) => d.value)}
             format="integer"
             valueAlign="right"
           />
@@ -926,10 +926,10 @@
 
           <Tooltip.Separator />
 
-          <!-- TODO: Remove Array() hack to make svelte-check happy -->
+          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
           <Tooltip.Item
             label="total"
-            value={sum(Array(data.data), (d) => d.value)}
+            value={sum([...data.data], (d) => d.value)}
             format="integer"
             valueAlign="right"
           />
@@ -1006,10 +1006,10 @@
 
           <Tooltip.Separator />
 
-          <!-- TODO: Remove Array() hack to make svelte-check happy -->
+          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
           <Tooltip.Item
             label="total"
-            value={sum(Array(data.data), (d) => d.value)}
+            value={sum([...data.data], (d) => d.value)}
             format="integer"
             valueAlign="right"
           />
@@ -1091,10 +1091,10 @@
 
           <Tooltip.Separator />
 
-          <!-- TODO: Remove Array() hack to make svelte-check happy -->
+          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
           <Tooltip.Item
             label="total"
-            value={sum(Array(data.data), (d) => d.value)}
+            value={sum([...data.data], (d) => d.value)}
             format="integer"
             valueAlign="right"
           />
