@@ -840,7 +840,6 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yDomain={extent(stackedData.flatMap((d) => d.values))}
       yNice={4}
       r="fruit"
       rScale={scaleOrdinal()}
@@ -894,7 +893,6 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yDomain={extent(stackedPercentData.flatMap((d) => d.values))}
       yNice={4}
       r="fruit"
       rScale={scaleOrdinal()}
@@ -948,7 +946,6 @@
 			x="year"
 			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
 			y="values"
-      yDomain={extent(stackedSeperatedData.flatMap((d) => d.values))}
       yNice={4}
 			r="fruit"
 			rScale={scaleOrdinal()}
@@ -974,7 +971,6 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yDomain={extent(groupedStackedData.flatMap((d) => d.values))}
       yNice={4}
       r="fruit"
       rScale={scaleOrdinal()}
@@ -1039,7 +1035,6 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yDomain={extent(stackedData.flatMap((d) => d.values))}
       yNice={4}
       r="fruit"
       rScale={scaleOrdinal()}
@@ -1124,7 +1119,6 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yDomain={extent(stackedData.flatMap((d) => d.values))}
       yNice={4}
       r="fruit"
       rScale={scaleOrdinal()}

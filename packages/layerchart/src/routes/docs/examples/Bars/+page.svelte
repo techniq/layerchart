@@ -836,7 +836,6 @@
     <Chart
       data={stackedData}
       x="values"
-      xDomain={extent(stackedData.flatMap((d) => d.values))}
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
@@ -890,7 +889,6 @@
     <Chart
       data={stackedPercentData}
       x="values"
-      xDomain={extent(stackedPercentData.flatMap((d) => d.values))}
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
@@ -944,7 +942,6 @@
 		<Chart
 			data={stackedSeperatedData}
 			x="values"
-      xDomain={extent(stackedSeperatedData.flatMap((d) => d.values))}
 			xNice
 			y="year"
 			yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
@@ -970,7 +967,6 @@
     <Chart
       data={groupedStackedData}
       x="values"
-      xDomain={extent(groupedStackedData.flatMap((d) => d.values))}
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
@@ -1035,7 +1031,6 @@
     <Chart
       data={transitionData}
       x="values"
-      xDomain={extent(stackedData.flatMap((d) => d.values))}
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
@@ -1120,7 +1115,6 @@
     <Chart
       data={transitionData}
       x="values"
-      xDomain={extent(stackedData.flatMap((d) => d.values))}
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
