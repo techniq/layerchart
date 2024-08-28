@@ -257,9 +257,9 @@
 
 <LayerCake
   {data}
-  {x}
+  x={accessor(x)}
   {xDomain}
-  {y}
+  y={accessor(y)}
   {yScale}
   {yDomain}
   {yReverse}
