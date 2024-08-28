@@ -94,6 +94,10 @@
     {...dimensions}
     {...$$restProps}
     on:click
+    on:pointerenter
+    on:pointermove
+    on:pointerleave
+    on:touchmove
   />
 {:else}
   <Spline
@@ -105,5 +109,9 @@
     stroke-width={strokeWidth}
     {...$$restProps}
     on:click
+    on:pointerenter
+    on:pointermove
+    on:pointerleave
+    on:touchmove
   />
 {/if}
