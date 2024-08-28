@@ -13,7 +13,7 @@
     "prepublishOnly": "svelte-package",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-    "test:unit": "TZ=UTC+4 vitest",
+    "test:unit": "TZ=UTC-5 vitest",
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "prepare": "svelte-kit sync"
