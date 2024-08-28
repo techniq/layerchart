@@ -1102,6 +1102,85 @@
   </div>
 </Preview>
 
+<h2>Tooltip and click handlers for individual stack/grouped bar</h2>
+
+<div class="grid grid-cols-[1fr,1fr] gap-2 mb-2">
+  <Field label="Mode">
+    <ToggleGroup bind:value={transitionChartMode} variant="outline" size="sm" inset class="w-full">
+      <ToggleOption value="group">Grouped</ToggleOption>
+      <ToggleOption value="stack">Stacked</ToggleOption>
+      <ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
+    </ToggleGroup>
+  </Field>
+</div>
+
+<Preview data={transitionData}>
+  <div class="h-[400px] p-4 border rounded">
+    <!-- Always use stackedData for extents for consistent scale -->
+    <Chart
+      data={transitionData}
+      x="values"
+      xDomain={extent(stackedData.flatMap((d) => d.values))}
+      xNice
+      y="year"
+      yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
+      r="fruit"
+      rScale={scaleOrdinal()}
+      rDomain={colorKeys}
+      rRange={keyColors}
+      padding={{ left: 16, bottom: 24 }}
+      let:tooltip
+      let:data
+      let:rScale
+    >
+      <Svg>
+        <Axis placement="bottom" grid rule />
+        <Axis placement="left" rule />
+        <g>
+          <!-- TODO: 'data' can be used once type issue is resolved -->
+          {#each transitionData as bar (bar.year + '-' + bar.fruit)}
+            <Bar
+              {bar}
+              groupBy={transitionChart.groupBy}
+              groupPaddingInner={0.2}
+              groupPaddingOuter={0}
+              fill={rScale(bar.fruit)}
+              radius={4}
+              strokeWidth={1}
+              tweened={{
+                x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
+                y: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
+                width: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
+                height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
+              }}
+              class="cursor-pointer"
+              on:click={(e) => {
+                alert('You clicked on:\n' + JSON.stringify(bar, null, 2));
+              }}
+              on:pointerenter={(e) => tooltip?.show(e, bar)}
+              on:pointermove={(e) => tooltip?.show(e, bar)}
+              on:pointerleave={(e) => tooltip?.hide()}
+            />
+          {/each}
+        </g>
+      </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item
+            label={data.fruit}
+            value={data.value}
+            color={rScale(data.fruit)}
+            format="integer"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Click handler</h2>
 
 <Preview {data}>
@@ -1130,68 +1209,6 @@
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Highlight area />
-      </Svg>
-    </Chart>
-  </div>
-</Preview>
-
-<h2>Click handlers for stack/grouped bars</h2>
-
-<div class="grid grid-cols-[1fr,1fr] gap-2 mb-2">
-  <Field label="Mode">
-    <ToggleGroup bind:value={transitionChartMode} variant="outline" size="sm" inset class="w-full">
-      <ToggleOption value="group">Grouped</ToggleOption>
-      <ToggleOption value="stack">Stacked</ToggleOption>
-      <ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
-    </ToggleGroup>
-  </Field>
-</div>
-
-<Preview data={transitionData}>
-  <div class="h-[400px] p-4 border rounded">
-    <!-- Always use stackedData for extents for consistent scale -->
-    <Chart
-      data={transitionData}
-      x="values"
-      xDomain={extent(stackedData.flatMap((d) => d.values))}
-      xNice
-      y="year"
-      yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
-      r="fruit"
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
-      padding={{ left: 16, bottom: 24 }}
-      let:data
-      let:rScale
-    >
-      <Svg>
-        <Axis placement="bottom" grid rule />
-        <Axis placement="left" rule />
-        <g>
-          <!-- TODO: 'data' can be used once type issue is resolved -->
-          {#each transitionData as bar (bar.year + '-' + bar.fruit)}
-            <Bar
-              {bar}
-              groupBy={transitionChart.groupBy}
-              groupPaddingInner={0.2}
-              groupPaddingOuter={0}
-              fill={rScale(bar.fruit)}
-              radius={4}
-              strokeWidth={1}
-              tweened={{
-                x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-                y: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
-                width: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-                height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
-              }}
-              class="cursor-pointer"
-              on:click={(e) => {
-                alert('You clicked on:\n' + JSON.stringify(bar, null, 2));
-              }}
-            />
-          {/each}
-        </g>
       </Svg>
     </Chart>
   </div>

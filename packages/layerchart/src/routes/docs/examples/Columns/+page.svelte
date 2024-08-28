@@ -1104,40 +1104,7 @@
   </div>
 </Preview>
 
-<h2>Click handler</h2>
-
-<Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
-    <Chart
-      {data}
-      x="date"
-      xScale={scaleBand().padding(0.4)}
-      y="value"
-      yDomain={[0, null]}
-      yNice={4}
-      padding={{ left: 16, bottom: 24 }}
-      tooltip={{
-        mode: 'band',
-        onClick({ data }) {
-          alert('You clicked on:\n' + JSON.stringify(data, null, 2));
-        },
-      }}
-    >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
-        <Highlight area />
-      </Svg>
-    </Chart>
-  </div>
-</Preview>
-
-<h2>Click handlers for stack/grouped bars</h2>
+<h2>Tooltip and click handlers for individual stack/grouped bar</h2>
 
 <div class="grid grid-cols-[1fr,1fr] gap-2 mb-2">
   <Field label="Mode">
@@ -1166,6 +1133,7 @@
       padding={{ left: 16, bottom: 24 }}
       let:data
       let:rScale
+      let:tooltip
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -1191,9 +1159,58 @@
               on:click={(e) => {
                 alert('You clicked on:\n' + JSON.stringify(bar, null, 2));
               }}
+              on:pointerenter={(e) => tooltip?.show(e, bar)}
+              on:pointermove={(e) => tooltip?.show(e, bar)}
+              on:pointerleave={(e) => tooltip?.hide()}
             />
           {/each}
         </g>
+      </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item
+            label={data.fruit}
+            value={data.value}
+            color={rScale(data.fruit)}
+            format="integer"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Click handler</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleBand().padding(0.4)}
+      y="value"
+      yDomain={[0, null]}
+      yNice={4}
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{
+        mode: 'band',
+        onClick({ data }) {
+          alert('You clicked on:\n' + JSON.stringify(data, null, 2));
+        },
+      }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Highlight area />
       </Svg>
     </Chart>
   </div>
