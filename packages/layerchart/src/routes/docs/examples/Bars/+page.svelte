@@ -1,7 +1,7 @@
 <script lang="ts">
   import { cubicInOut } from 'svelte/easing';
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
-  import { extent, mean } from 'd3-array';
+  import { extent, mean, sum } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
 
   import { Field, ToggleGroup, ToggleOption, Toggle, Switch } from 'svelte-ux';
@@ -20,7 +20,7 @@
     Svg,
     Text,
     Tooltip,
-    createStackData,
+    groupStackData,
     stackOffsetSeparated,
     Pattern,
   } from 'layerchart';
@@ -37,19 +37,19 @@
   });
   const negativeData = createDateSeries({ min: -20, max: 50, value: 'integer' });
 
-  const groupedData = createStackData(longData, { xKey: 'year', groupBy: 'fruit' });
-  const stackedData = createStackData(longData, { xKey: 'year', stackBy: 'fruit' });
-  const groupedStackedData = createStackData(longData, {
+  const groupedData = groupStackData(longData, { xKey: 'year', groupBy: 'fruit' });
+  const stackedData = groupStackData(longData, { xKey: 'year', stackBy: 'fruit' });
+  const groupedStackedData = groupStackData(longData, {
     xKey: 'year',
     groupBy: 'basket',
     stackBy: 'fruit',
   });
-  const stackedPercentData = createStackData(longData, {
+  const stackedPercentData = groupStackData(longData, {
     xKey: 'year',
     stackBy: 'fruit',
     offset: stackOffsetExpand,
   });
-  const stackedSeperatedData = createStackData(longData, {
+  const stackedSeperatedData = groupStackData(longData, {
     xKey: 'year',
     stackBy: 'fruit',
     offset: stackOffsetSeparated,
@@ -84,11 +84,18 @@
               groupBy: undefined,
               stackBy: undefined,
             };
-  $: transitionData = createStackData(longData, {
+  $: transitionData = groupStackData(longData, {
     xKey: 'year',
     groupBy: transitionChart.groupBy,
     stackBy: transitionChart.stackBy,
-  });
+  }) as {
+    year: string;
+    fruit: string;
+    basket: number;
+    keys: string[];
+    value: number;
+    values: number[];
+  }[];
 </script>
 
 <h1>Examples</h1>
@@ -775,23 +782,49 @@
   <div class="h-[400px] p-4 border rounded">
     <Chart
       data={groupedData}
-      flatData={longData}
-      x="values"
-      xDomain={extent(groupedData.flatMap((d) => d.values))}
+      x="value"
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.3).paddingOuter(0.1)}
-      r={(d) => d}
+      r="fruit"
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
       rRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'band' }}
+      let:rScale
     >
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars groupBy="fruit" radius={4} strokeWidth={1} />
+        <Highlight area />
       </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          {#each data.data as d}
+            <Tooltip.Item
+              label={d.fruit}
+              value={d.value}
+              color={rScale(d.fruit)}
+              format="integer"
+              valueAlign="right"
+            />
+          {/each}
+
+          <Tooltip.Separator />
+
+          <!-- TODO: Remove Array() hack to make svelte-check happy -->
+          <Tooltip.Item
+            label="total"
+            value={sum(Array(data.data), (d) => d.value)}
+            format="integer"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -807,17 +840,45 @@
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-      r={(d) => d.keys[1]}
+      r="fruit"
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
       rRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'band' }}
+      let:rScale
     >
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars radius={4} strokeWidth={1} />
+        <Highlight area />
       </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          {#each data.data as d}
+            <Tooltip.Item
+              label={d.fruit}
+              value={d.value}
+              color={rScale(d.fruit)}
+              format="integer"
+              valueAlign="right"
+            />
+          {/each}
+
+          <Tooltip.Separator />
+
+          <!-- TODO: Remove Array() hack to make svelte-check happy -->
+          <Tooltip.Item
+            label="total"
+            value={sum(Array(data.data), (d) => d.value)}
+            format="integer"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -833,17 +894,45 @@
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-      r={(d) => d.keys[1]}
+      r="fruit"
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
       rRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'band' }}
+      let:rScale
     >
       <Svg>
         <Axis placement="bottom" grid rule format="percentRound" />
         <Axis placement="left" rule />
         <Bars radius={4} strokeWidth={1} />
+        <Highlight area />
       </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          {#each data.data as d}
+            <Tooltip.Item
+              label={d.fruit}
+              value={d.value}
+              color={rScale(d.fruit)}
+              format="integer"
+              valueAlign="right"
+            />
+          {/each}
+
+          <Tooltip.Separator />
+
+          <!-- TODO: Remove Array() hack to make svelte-check happy -->
+          <Tooltip.Item
+            label="total"
+            value={sum(Array(data.data), (d) => d.value)}
+            format="integer"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -859,7 +948,7 @@
 			xNice
 			y="year"
 			yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-			r={(d) => d.keys[1]}
+			r="fruit"
 			rScale={scaleOrdinal()}
 			rDomain={colorKeys}
 			rRange={keyColors}
@@ -880,23 +969,50 @@
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={groupedStackedData}
-      flatData={longData}
       x="values"
       xDomain={extent(groupedStackedData.flatMap((d) => d.values))}
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-      r={(d) => d}
+      r="fruit"
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
       rRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'band' }}
+      let:rScale
     >
       <Svg>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
         <Bars groupBy="basket" radius={4} strokeWidth={1} />
+        <Highlight area />
       </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          {#each data.data as d}
+            <Tooltip.Item
+              label={d.fruit}
+              value={d.value}
+              color={rScale(d.fruit)}
+              format="integer"
+              valueAlign="right"
+            />
+          {/each}
+
+          <Tooltip.Separator />
+
+          <!-- TODO: Remove Array() hack to make svelte-check happy -->
+          <Tooltip.Item
+            label="total"
+            value={sum(Array(data.data), (d) => d.value)}
+            format="integer"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -923,14 +1039,12 @@
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
-      r={(d) => {
-        // Color by fruit (last key)
-        return d.keys.at(-1);
-      }}
+      r="fruit"
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
       rRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'band' }}
       let:data
       let:rScale
     >
@@ -939,15 +1053,13 @@
         <Axis placement="left" rule />
         <g>
           <!-- TODO: 'data' can be used once type issue is resolved -->
-          {#each transitionData as bar (bar.keys
-            .filter((key) => typeof key !== 'number')
-            .join('-'))}
+          {#each transitionData as bar (bar.year + '-' + bar.fruit)}
             <Bar
               {bar}
               groupBy={transitionChart.groupBy}
               groupPaddingInner={0.2}
               groupPaddingOuter={0}
-              fill={rScale(bar.keys.at(-1))}
+              fill={rScale(bar.fruit)}
               radius={4}
               strokeWidth={1}
               tweened={{
@@ -959,7 +1071,33 @@
             />
           {/each}
         </g>
+        <Highlight area />
       </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          {#each data.data as d}
+            <Tooltip.Item
+              label={d.fruit}
+              value={d.value}
+              color={rScale(d.fruit)}
+              format="integer"
+              valueAlign="right"
+            />
+          {/each}
+
+          <Tooltip.Separator />
+
+          <!-- TODO: Remove Array() hack to make svelte-check happy -->
+          <Tooltip.Item
+            label="total"
+            value={sum(Array(data.data), (d) => d.value)}
+            format="integer"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -1019,10 +1157,7 @@
       xNice
       y="year"
       yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
-      r={(d) => {
-        // Color by fruit (last key)
-        return d.keys.at(-1);
-      }}
+      r="fruit"
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
       rRange={keyColors}
@@ -1035,15 +1170,13 @@
         <Axis placement="left" rule />
         <g>
           <!-- TODO: 'data' can be used once type issue is resolved -->
-          {#each transitionData as bar (bar.keys
-            .filter((key) => typeof key !== 'number')
-            .join('-'))}
+          {#each transitionData as bar (bar.year + '-' + bar.fruit)}
             <Bar
               {bar}
               groupBy={transitionChart.groupBy}
               groupPaddingInner={0.2}
               groupPaddingOuter={0}
-              fill={rScale(bar.keys.at(-1))}
+              fill={rScale(bar.fruit)}
               radius={4}
               strokeWidth={1}
               tweened={{

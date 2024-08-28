@@ -46,10 +46,10 @@
         {stroke}
         {strokeWidth}
         {radius}
+        {inset}
         {spring}
         {tweened}
         {groupBy}
-        {inset}
         {groupPaddingInner}
         {groupPaddingOuter}
         {...$$restProps}
