@@ -55,7 +55,7 @@ export function groupStackData<TData>(
           return {
             ...keys,
             keys,
-            value: groupData[0].value,
+            value: s[1] - s[0],
             values: options.stackBy ? [s[0], s[1]] : [0, sum(groupData, (d: any) => d.value)],
             data: dataByKey.get(keys[options.xKey]),
           };
