@@ -52,11 +52,13 @@ export function groupStackData<TData>(
             keys[options.stackBy] = series.key;
           }
 
+          const value = sum(groupData, (d: any) => d.value);
+
           return {
             ...keys,
             keys,
-            value: s[1] - s[0],
-            values: options.stackBy ? [s[0], s[1]] : [0, sum(groupData, (d: any) => d.value)],
+            value,
+            values: options.stackBy ? [s[0], s[1]] : [0, value],
             data: dataByKey.get(keys[options.xKey]),
           };
         });

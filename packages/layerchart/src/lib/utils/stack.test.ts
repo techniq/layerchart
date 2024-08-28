@@ -27,7 +27,7 @@ export const testData = [
 
 const testDataByYear = group(testData, (d) => d.year);
 
-describe('createStackData', () => {
+describe('groupStackData', () => {
   it('xKey only', () => {
     const actual = groupStackData(testData, { xKey: 'year' });
 
@@ -79,7 +79,7 @@ describe('createStackData', () => {
     expect(actual[0]).toEqual({
       year: 2019,
       basket: 1,
-      value: 3840,
+      value: 5760,
       keys: { year: 2019, basket: 1 },
       values: [0, 5760],
       data: testDataByYear.get(2019),
@@ -88,7 +88,7 @@ describe('createStackData', () => {
     expect(actual[1]).toEqual({
       year: 2019,
       basket: 2,
-      value: 960,
+      value: 1360,
       keys: { year: 2019, basket: 2 },
       values: [0, 1360],
       data: testDataByYear.get(2019),
@@ -97,7 +97,7 @@ describe('createStackData', () => {
     expect(actual[2]).toEqual({
       year: 2018,
       basket: 1,
-      value: 1600,
+      value: 3040,
       keys: { year: 2018, basket: 1 },
       values: [0, 3040],
       data: testDataByYear.get(2018),
