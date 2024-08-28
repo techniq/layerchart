@@ -7,6 +7,7 @@ export type Accessor<TData = any> =
   | string
   | ((d: TData) => any)
   | undefined
+  | null
   | Accessor<TData>[];
 
 export function accessor<TData = any>(prop: Accessor<TData>): (d: TData) => any {
