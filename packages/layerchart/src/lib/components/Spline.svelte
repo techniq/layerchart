@@ -141,6 +141,7 @@
     )}
     in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
     on:click
+    on:pointerenter
     on:pointermove
     on:pointerleave
     bind:this={pathEl}

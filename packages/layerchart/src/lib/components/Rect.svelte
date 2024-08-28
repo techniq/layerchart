@@ -47,6 +47,7 @@
   class={cls($$props.fill == null && 'fill-surface-content')}
   {...$$restProps}
   on:click
+  on:pointerenter
   on:pointerover
   on:pointermove
   on:pointerout
