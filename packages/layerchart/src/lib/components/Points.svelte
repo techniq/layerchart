@@ -42,47 +42,42 @@
   $: pointsData = data ?? $contextData;
 
   $: points = pointsData.flatMap((d: any) => {
-    if (Array.isArray($config.x)) {
+    const xValue = $x(d);
+    const yValue = $y(d);
+
+    if (Array.isArray(xValue)) {
       /*
 				x={["prop1" ,"prop2"]}
 				y="prop3"
 			*/
-      return $x(d)
-        .filter(notNull)
-        .map((xValue: number) => {
-          const yValue = $y(d);
-          return {
-            x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
-            y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
-            xValue,
-            yValue: $y(d),
-            data: d,
-          };
-        });
-    } else if (Array.isArray($config.y)) {
+      return xValue.filter(notNull).map((xValue: number) => {
+        return {
+          x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
+          y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
+          xValue,
+          yValue: $y(d),
+          data: d,
+        };
+      });
+    } else if (Array.isArray(yValue)) {
       /*
 				x="prop1"
 				y={["prop2" ,"prop3"]}
 			*/
-      return $y(d)
-        .filter(notNull)
-        .map((yValue: number) => {
-          const xValue = $x(d);
-          return {
-            x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
-            y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
-            xValue,
-            yValue: $y(d),
-            data: d,
-          };
-        });
+      return yValue.filter(notNull).map((yValue: number) => {
+        return {
+          x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
+          y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
+          xValue,
+          yValue: $y(d),
+          data: d,
+        };
+      });
     } else {
       /*
 				x="prop1"
 				y="prop2"
 			*/
-      const xValue = $x(d);
-      const yValue = $y(d);
       return {
         x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
         y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
@@ -94,7 +89,10 @@
   }) as { x: number; y: number; xValue: any; yValue: any; data: any }[];
 
   $: _links = pointsData.flatMap((d: any) => {
-    if (Array.isArray($config.x)) {
+    const xValue = $x(d);
+    const yValue = $y(d);
+
+    if (Array.isArray(xValue)) {
       /*
 				x={["prop1" ,"prop2"]}
 				y="prop3"
@@ -111,7 +109,7 @@
           y: y,
         },
       };
-    } else if (Array.isArray($config.y)) {
+    } else if (Array.isArray(yValue)) {
       /*
 				x="prop1"
 				y={["prop2" ,"prop3"]}
