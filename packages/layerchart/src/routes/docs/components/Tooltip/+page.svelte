@@ -587,7 +587,7 @@
         y={charts.areaStack.snapToDataY ? 'data' : 'pointer'}
         let:data
       >
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.Header>{format(data.data.date, 'eee, MMMM do')}</Tooltip.Header>
         <Tooltip.List>
           {#each keys as key}
             <Tooltip.Item label={key} value={data.data[key]} />
