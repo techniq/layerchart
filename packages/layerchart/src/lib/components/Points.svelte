@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { type ComponentProps } from 'svelte';
+  import { getContext, type ComponentProps } from 'svelte';
+  import type { Readable } from 'svelte/store';
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
   import { notNull } from '@layerstack/utils/typeGuards';
@@ -10,7 +11,20 @@
   import { isScaleBand, type AnyScale } from '../utils/scales.js';
 
   const context = chartContext() as any;
-  const { data: contextData, x, xScale, xGet, y, yScale, yGet, rGet, config } = context;
+  const {
+    data: contextData,
+    x,
+    xScale,
+    xGet,
+    y,
+    yScale,
+    yGet,
+    rGet,
+    padding,
+    containerWidth,
+    containerHeight,
+    config,
+  } = context;
 
   type Offset = number | ((value: number, context: any) => number) | undefined;
 
@@ -26,6 +40,22 @@
 
   /** Enable showing links between related points (array x/y accessors) */
   export let links: boolean | Partial<ComponentProps<Link>> = false;
+
+  export let fill: string | undefined = undefined;
+  export let stroke: string | undefined = undefined;
+  export let strokeWidth: number | string | undefined = undefined;
+
+  type Point = { x: number; y: number; xValue: any; yValue: any; data: any };
+
+  /** Render to canvas */
+  export let render: ((ctx: CanvasRenderingContext2D, points: Point[]) => any) | undefined =
+    undefined;
+
+  let className: string | undefined = undefined;
+  export { className as class };
+
+  const canvas = getContext<{ ctx: Readable<CanvasRenderingContext2D> }>('canvas');
+  const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
   function getOffset(value: any, offset: Offset, scale: AnyScale) {
     if (typeof offset === 'function') {
@@ -86,7 +116,7 @@
         data: d,
       };
     }
-  }) as { x: number; y: number; xValue: any; yValue: any; data: any }[];
+  }) as Point[];
 
   $: _links = pointsData.flatMap((d: any) => {
     const xValue = $x(d);
@@ -128,31 +158,72 @@
       };
     }
   });
+
+  $: renderContext = canvas ? 'canvas' : 'svg';
+  $: ctx = canvas?.ctx;
+  $: console.log({ renderContext });
+  $: if (renderContext === 'canvas' && $ctx) {
+    let computedStyles: Partial<CSSStyleDeclaration> = {};
+
+    // Transfer classes defined on <GeoPath> to <canvas> to enable window.getComputedStyle() retrieval (Tailwind classes, etc)
+    if (className) {
+      $ctx.canvas.classList.add(...className.split(' '));
+      computedStyles = window.getComputedStyle($ctx.canvas);
+    }
+
+    // Clear with negative offset due to Canvas `context.translate(...)`
+    $ctx.clearRect(-$padding.left, -$padding.top, $containerWidth, $containerHeight);
+
+    if (render) {
+      console.log({ render });
+      render($ctx, points);
+    } else {
+      points.forEach((point) => {
+        $ctx.beginPath();
+        $ctx.arc(point.x, point.y, r, 0, 2 * Math.PI, false);
+
+        $ctx.lineWidth = Number(strokeWidth ?? 0);
+        $ctx.strokeStyle =
+          (stroke ?? computedStyles.stroke === 'none')
+            ? 'transparent'
+            : (computedStyles.stroke ?? '');
+        $ctx.stroke();
+
+        $ctx.fillStyle =
+          fill ??
+          (computedStyles.fill !== DEFAULT_FILL ? computedStyles.fill : undefined) ??
+          'transparent';
+        $ctx.fill();
+      });
+    }
+  }
 </script>
 
 <slot {points}>
-  {#if links}
-    <g class="link-group">
-      {#each _links as link}
-        <Link
-          data={link}
-          class="stroke-surface-content/50"
-          {...typeof links === 'object' ? links : null}
+  {#if renderContext === 'svg'}
+    {#if links}
+      <g class="link-group">
+        {#each _links as link}
+          <Link
+            data={link}
+            class="stroke-surface-content/50"
+            {...typeof links === 'object' ? links : null}
+          />
+        {/each}
+      </g>
+    {/if}
+
+    <g class="point-group">
+      {#each points as point}
+        {@const radialPoint = pointRadial(point.x, point.y)}
+        <Circle
+          cx={radial ? radialPoint[0] : point.x}
+          cy={radial ? radialPoint[1] : point.y}
+          {r}
+          fill={$config.r ? $rGet(point.data) : null}
+          {...$$restProps}
         />
       {/each}
     </g>
   {/if}
-
-  <g class="point-group">
-    {#each points as point}
-      {@const radialPoint = pointRadial(point.x, point.y)}
-      <Circle
-        cx={radial ? radialPoint[0] : point.x}
-        cy={radial ? radialPoint[1] : point.y}
-        {r}
-        fill={$config.r ? $rGet(point.data) : null}
-        {...$$restProps}
-      />
-    {/each}
-  </g>
 </slot>
