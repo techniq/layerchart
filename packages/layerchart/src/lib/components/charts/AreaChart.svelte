@@ -48,20 +48,28 @@
     labels?: Partial<ComponentProps<Labels>>;
   } = {};
 
-  // TODO: Detect if value is specified as non-string an throw error (or add `key` property series?)
-  $: seriesKeys = series.map((s) => s.value);
-  $: stackData = stack().keys(seriesKeys)(chartDataArray(data)) as any[];
+  let chartData = chartDataArray(data) as Array<TData & { stackData?: any }>;
 
-  $: chartData = chartDataArray(data).map((d, i) => {
-    if (stackSeries) {
+  $: if (stackSeries) {
+    const seriesKeys = series.map((s) => {
+      if (typeof s.value === 'string') {
+        return s.value;
+      } else {
+        throw new Error(
+          `Unsupported series type: ${s.value}.  'stackSeries' currently requires string values`
+        );
+      }
+    });
+
+    const stackData = stack().keys(seriesKeys)(chartDataArray(data)) as any[];
+
+    chartData = chartData.map((d, i) => {
       return {
         ...d,
         stackData: stackData.map((sd) => sd[i]),
       };
-    } else {
-      return d;
-    }
-  });
+    });
+  }
 </script>
 
 <Chart
