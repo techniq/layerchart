@@ -11,7 +11,7 @@
     Rule,
   } from 'layerchart';
   import { PeriodType } from 'svelte-ux';
-  import { format } from '@layerstack/utils';
+  import { format, formatDate } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -214,12 +214,27 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <AreaChart data={dateSeriesData} x="date" y="value">
-      <svelte:fragment slot="tooltip" let:x let:y>
-        <Tooltip.Root let:data>
-          <Tooltip.Header>{format(x(data), PeriodType.DayTime)}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="value" value={y(data)} />
-          </Tooltip.List>
+      <svelte:fragment slot="tooltip" let:x let:y let:height let:padding>
+        <Tooltip.Root
+          x={padding.left}
+          y="data"
+          anchor="right"
+          contained={false}
+          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-1 py-[2px] border border-primary rounded whitespace-nowrap"
+          let:data
+        >
+          {y(data)}
+        </Tooltip.Root>
+
+        <Tooltip.Root
+          x="data"
+          y={height}
+          anchor="top"
+          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-2 py-[2px] border border-primary rounded whitespace-nowrap"
+          contained={false}
+          let:data
+        >
+          {formatDate(x(data), PeriodType.Day)}
         </Tooltip.Root>
       </svelte:fragment>
     </AreaChart>
