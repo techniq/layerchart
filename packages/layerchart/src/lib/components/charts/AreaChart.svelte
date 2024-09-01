@@ -1,6 +1,7 @@
 <script lang="ts" generics="TData">
   import { type ComponentProps } from 'svelte';
   import { scaleLinear, scaleTime } from 'd3-scale';
+  import { stack } from 'd3-shape';
   import { format } from '@layerstack/utils';
 
   import Area from '../Area.svelte';
@@ -17,11 +18,15 @@
     series?: typeof series;
     labels?: typeof labels;
     props?: typeof props;
+    stackSeries?: typeof stackSeries;
   }
 
   export let data: $$Props['data'] = [];
   export let x: Accessor<TData> = undefined;
   export let y: Accessor<TData> = undefined;
+
+  /** Stack instead of overlap series */
+  export let stackSeries = false;
 
   export let series: {
     label?: string;
@@ -42,13 +47,29 @@
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
   } = {};
+
+  // TODO: Detect if value is specified as non-string an throw error (or add `key` property series?)
+  $: seriesKeys = series.map((s) => s.value);
+  $: stackData = stack().keys(seriesKeys)(chartDataArray(data)) as any[];
+
+  $: chartData = chartDataArray(data).map((d, i) => {
+    if (stackSeries) {
+      return {
+        ...d,
+        stackData: stackData.map((sd) => sd[i]),
+      };
+    } else {
+      return d;
+    }
+  });
 </script>
 
 <Chart
-  {data}
+  data={chartData}
   {x}
   {xScale}
-  y={y ?? series.map((d) => d.value)}
+  y={y ??
+    (stackSeries ? (d) => series.map((s, i) => d.stackData[i][1]) : series.map((s) => s.value))}
   yDomain={[0, null]}
   yNice
   padding={{ left: 16, bottom: 16 }}
@@ -85,9 +106,10 @@
       <slot name="before-marks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#each series as s}
+        {#each series as s, i}
           <Area
-            y1={s.value}
+            y0={stackSeries ? (d) => d.stackData[i][0] : undefined}
+            y1={stackSeries ? (d) => d.stackData[i][1] : s.value}
             line={{ class: 'stroke-2', stroke: s.color }}
             fill={s.color}
             fill-opacity={0.3}
@@ -101,7 +123,12 @@
 
       <slot name="highlight" {...slotProps}>
         {#each series as s, i}
-          <Highlight y={s.value} points={{ fill: s.color }} lines={i == 0} {...props.highlight} />
+          <Highlight
+            y={stackSeries ? (d) => d.stackData[i][1] : s.value}
+            points={{ fill: s.color }}
+            lines={i == 0}
+            {...props.highlight}
+          />
         {/each}
       </slot>
 

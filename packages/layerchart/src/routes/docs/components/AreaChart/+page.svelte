@@ -201,6 +201,31 @@
   </div>
 </Preview>
 
+<h2>Stack series</h2>
+
+<Preview data={multiSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { label: 'apples', value: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          label: 'bananas',
+          value: 'bananas',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          label: 'oranges',
+          value: 'oranges',
+          color: 'hsl(var(--color-warning))',
+        },
+      ]}
+      stackSeries
+    />
+  </div>
+</Preview>
+
 <h2>Labels</h2>
 
 <Preview data={dateSeriesData}>
