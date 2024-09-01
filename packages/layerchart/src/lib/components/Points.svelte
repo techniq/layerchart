@@ -161,7 +161,6 @@
 
   $: renderContext = canvas ? 'canvas' : 'svg';
   $: ctx = canvas?.ctx;
-  $: console.log({ renderContext });
   $: if (renderContext === 'canvas' && $ctx) {
     let computedStyles: Partial<CSSStyleDeclaration> = {};
 
@@ -175,7 +174,6 @@
     $ctx.clearRect(-$padding.left, -$padding.top, $containerWidth, $containerHeight);
 
     if (render) {
-      console.log({ render });
       render($ctx, points);
     } else {
       points.forEach((point) => {
