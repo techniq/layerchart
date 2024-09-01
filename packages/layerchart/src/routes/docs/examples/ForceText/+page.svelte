@@ -1,7 +1,7 @@
 <script lang="ts">
   import { forceX, forceY, forceManyBody, forceCollide } from 'd3-force';
 
-  import { Chart, Circle, ForceSimulation, Svg } from 'layerchart';
+  import { Canvas, Chart, Circle, ForceSimulation, Points, Svg } from 'layerchart';
   import { Field, RangeField, Switch, TextField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -75,41 +75,54 @@
   <Field label="Charge Force" let:id>
     <Switch bind:checked={hasChargeForce} {id} size="md" />
   </Field>
-  <Field label="Transition" let:id>
+  <!-- <Field label="Transition" let:id>
     <Switch bind:checked={transition} {id} size="md" />
-  </Field>
+  </Field> -->
 </div>
 
 <Preview {data}>
   <div class="h-[500px] p-4 border rounded overflow-hidden">
-    <Chart {data} let:width let:height on:resize={onResize}>
-      <Svg>
-        <ForceSimulation
-          forces={{
-            x: xForce,
-            y: yForce,
-            ...(hasCollideForce && {
-              collide: collideForce,
-            }),
-            ...(hasChargeForce && {
-              charge: manyBodyForce.strength((d, i) => (i ? 0 : (-width * 2) / 10)),
-            }),
-          }}
-          alphaTarget={1}
-          velocityDecay={0.2}
-          let:nodes
-        >
-          {#each nodes as node, i (i)}
-            {#if i > 0}
-              <Circle
-                cx={node.x}
-                cy={node.y}
-                r={node.rTarget}
-                fill="hsl(var(--color-primary))"
-                spring={transition}
-              />
-            {/if}
-          {/each}
+    <Chart
+      x="x"
+      xDomain={[0, 1]}
+      xRange={[0, 1]}
+      y="y"
+      yDomain={[0, 1]}
+      yRange={[0, 1]}
+      {data}
+      let:width
+      let:height
+      on:resize={onResize}
+    >
+      <ForceSimulation
+        forces={{
+          x: xForce,
+          y: yForce,
+          ...(hasCollideForce && {
+            collide: collideForce,
+          }),
+          ...(hasChargeForce && {
+            charge: manyBodyForce.strength((d, i) => (i ? 0 : (-width * 2) / 10)),
+          }),
+        }}
+        alphaTarget={1}
+        velocityDecay={0.2}
+        let:nodes
+      >
+        <Canvas>
+          <Points data={nodes.slice(1)} r={radius} class="fill-primary" />
+        </Canvas>
+
+        <Svg>
+          <!-- {#each nodes.slice(1) as node, i (i)}
+            <Circle
+              cx={node.x}
+              cy={node.y}
+              r={node.rTarget}
+              class="fill-primary"
+              spring={transition}
+            />
+          {/each} -->
 
           <rect
             {width}
@@ -120,8 +133,8 @@
             }}
             class="fill-transparent"
           />
-        </ForceSimulation>
-      </Svg>
+        </Svg>
+      </ForceSimulation>
     </Chart>
   </div>
 </Preview>
