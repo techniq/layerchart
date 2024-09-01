@@ -75,7 +75,15 @@
 </script>
 
 {#if line}
-  <Spline {data} y={y1} {curve} {defined} {tweened} {...typeof line === 'object' ? line : null} />
+  <Spline
+    {data}
+    {x}
+    y={y1}
+    {curve}
+    {defined}
+    {tweened}
+    {...typeof line === 'object' ? line : null}
+  />
 {/if}
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
