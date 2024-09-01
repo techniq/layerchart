@@ -8,7 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
-      related: ['examples/Bars', 'examples/Columns', 'examples/Histogram'],
+      related: ['components/Bar', 'examples/Bars', 'examples/Columns', 'examples/Histogram'],
     },
   };
 }
