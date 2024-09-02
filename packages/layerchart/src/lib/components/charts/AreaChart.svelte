@@ -26,15 +26,15 @@
   export let x: Accessor<TData> = undefined;
   export let y: Accessor<TData> = undefined;
 
-  /** Stack instead of overlap series */
-  export let stackSeries = false;
-
   export let series: {
     label?: string;
     value: Accessor<TData>;
     color?: string;
     props?: Partial<ComponentProps<Area>>;
   }[] = [{ value: y, color: 'hsl(var(--color-primary))' }];
+
+  /** Stack instead of overlap series */
+  export let stackSeries = false;
 
   export let labels: ComponentProps<Labels> | boolean = false;
 
@@ -50,7 +50,6 @@
   } = {};
 
   let chartData = chartDataArray(data) as Array<TData & { stackData?: any }>;
-
   $: if (stackSeries) {
     const seriesKeys = series.map((s) => {
       if (typeof s.value === 'string') {

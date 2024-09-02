@@ -5,7 +5,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
-  import { createDateSeries } from '$lib/utils/genData.js';
+  import { createDateSeries, wideData } from '$lib/utils/genData.js';
 
   export let data;
 
@@ -226,6 +226,75 @@
     Population pyramid
   </a>
 </Blockquote>
+
+<h2>Stack series</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={wideData}
+      x="year"
+      series={[
+        { label: 'apples', value: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          label: 'bananas',
+          value: 'bananas',
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          label: 'cherries',
+          value: 'cherries',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          label: 'dates',
+          value: 'dates',
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      stackSeries
+      props={{
+        axisBottom: { format: 'none' },
+        axisLeft: { format: 'metric' },
+      }}
+    />
+  </div>
+</Preview>
+
+<h2>Stack series (horizontal)</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={wideData}
+      orientation="horizontal"
+      y="year"
+      series={[
+        { label: 'apples', value: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          label: 'bananas',
+          value: 'bananas',
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          label: 'cherries',
+          value: 'cherries',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          label: 'dates',
+          value: 'dates',
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      stackSeries
+      props={{
+        axisBottom: { format: 'metric' },
+        axisLeft: { format: 'none' },
+      }}
+    />
+  </div>
+</Preview>
 
 <h2>Labels</h2>
 
