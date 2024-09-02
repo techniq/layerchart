@@ -2,7 +2,9 @@
   import { cubicInOut } from 'svelte/easing';
   import { scaleOrdinal, scaleTime } from 'd3-scale';
   import { flatGroup } from 'd3-array';
+  import { stack } from 'd3-shape';
   import { format as formatDate } from 'date-fns';
+  import { flatten } from 'layercake';
 
   import {
     Area,
@@ -19,6 +21,7 @@
     Svg,
     Text,
     Tooltip,
+    chartDataArray,
     pivotLonger,
   } from 'layerchart';
   import { Field, Switch, Toggle, PeriodType } from 'svelte-ux';
@@ -45,12 +48,14 @@
     value: 'integer',
     keys,
   });
+  const stackData = stack().keys(keys)(multiSeriesData) as any[];
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
+
   const fruitColors = {
-    apples: 'hsl(var(--color-info))',
+    apples: 'hsl(var(--color-danger))',
     bananas: 'hsl(var(--color-success))',
-    oranges: 'hsl(var(--color-warning))',
+    oranges: 'hsl(var(--color-info))',
   };
 </script>
 
@@ -432,6 +437,113 @@
           <Tooltip.Item label={data.fruit} value={data.value} />
         </Tooltip.List>
       </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Stack</h2>
+
+<Preview data={stackData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={stackData}
+      flatData={flatten(stackData)}
+      x={(d) => d.data.date}
+      xScale={scaleTime()}
+      y={[0, 1]}
+      yNice
+      r="key"
+      rScale={scaleOrdinal()}
+      rDomain={Object.keys(fruitColors)}
+      rRange={Object.values(fruitColors)}
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+      let:data
+      let:rGet
+      let:rScale
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+
+        {#each stackData as seriesData}
+          {@const color = rGet(seriesData)}
+          <Area
+            data={seriesData}
+            y0={(d) => d[0]}
+            y1={(d) => d[1]}
+            line={{ stroke: color, 'stroke-width': 2 }}
+            fill={color}
+            fill-opacity={0.2}
+          />
+        {/each}
+
+        <Highlight points lines />
+      </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          {#each keys as key}
+            <Tooltip.Item label={key} value={data.data[key]} color={rScale(key)} />
+          {/each}
+        </Tooltip.List>
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Stack with gradient</h2>
+
+<Preview data={stackData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={stackData}
+      flatData={flatten(stackData)}
+      x={(d) => d.data.date}
+      xScale={scaleTime()}
+      y={[0, 1]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        {@const primaryColors = [
+          'hsl(var(--color-danger-500))',
+          'hsl(var(--color-success-500))',
+          'hsl(var(--color-info-500))',
+        ]}
+        {@const secondaryColors = [
+          'hsl(var(--color-danger-500) / 10%)',
+          'hsl(var(--color-success-500) / 10%)',
+          'hsl(var(--color-info-500) / 10%)',
+        ]}
+
+        {#each chartDataArray(stackData) as seriesData, index}
+          {@const primaryColor = primaryColors[index]}
+          {@const secondaryColor = secondaryColors[index]}
+
+          <LinearGradient stops={[primaryColor, secondaryColor]} vertical let:url>
+            <Area
+              data={seriesData}
+              y0={(d) => d[0]}
+              y1={(d) => d[1]}
+              fill={url}
+              fill-opacity={0.5}
+              line={{ stroke: primaryColor }}
+            />
+          </LinearGradient>
+        {/each}
+      </Svg>
     </Chart>
   </div>
 </Preview>

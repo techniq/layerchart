@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
-  import { stack, type Series, type Stack } from 'd3-shape';
+  import { stack } from 'd3-shape';
   import { format } from 'date-fns';
 
-  import { Area, AreaStack, Axis, Bars, Chart, Highlight, Points, Svg, Tooltip } from 'layerchart';
+  import { Area, Axis, Bars, Chart, Highlight, Points, Svg, Tooltip } from 'layerchart';
   import { Button, Duration, Field, Menu, MenuField, PeriodType, Toggle } from 'svelte-ux';
   import { formatDate } from '@layerstack/utils';
   import { flatten } from '@layerstack/utils/array';
@@ -566,6 +566,7 @@
         mode: charts.areaStack.mode,
         debug: charts.areaStack.debug,
       }}
+      let:rGet
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -574,7 +575,19 @@
           format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <AreaStack line={{ class: 'stroke-2' }} />
+
+        {#each stackData as seriesData}
+          {@const color = rGet(seriesData)}
+          <Area
+            data={seriesData}
+            y0={(d) => d[0]}
+            y1={(d) => d[1]}
+            line={{ stroke: color, 'stroke-width': 2 }}
+            fill={color}
+            fill-opacity={0.2}
+          />
+        {/each}
+
         <Highlight
           points={charts.areaStack.highlight.includes('points')}
           lines={charts.areaStack.highlight.includes('lines')}

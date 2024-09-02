@@ -14,7 +14,6 @@
     'Cartesian & Polar': [
       'Arc',
       'Area',
-      'AreaStack',
       { label: 'Bar Chart (Vertical)', value: 'Columns' },
       { label: 'Bar Chart (Horizontal)', value: 'Bars' },
       'Candlestick',
@@ -71,7 +70,6 @@
     Primitives: ['Arc', 'Bar', 'Circle', 'Group', 'Line', 'Point', 'Rect', 'Text'],
     Marks: [
       'Area',
-      'AreaStack',
       'Bars',
       'Calendar',
       'Hull',

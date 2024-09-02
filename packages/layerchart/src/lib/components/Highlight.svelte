@@ -61,8 +61,6 @@
   /** Set to false to disable spring transitions */
   export let motion = true;
 
-  // TODO: Fix circle points being backwards for stack (see AreaStack)
-
   const _x = accessor(x);
   const _y = accessor(y);
 
