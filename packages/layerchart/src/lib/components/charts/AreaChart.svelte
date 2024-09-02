@@ -71,8 +71,6 @@
       };
     });
   }
-
-  // TODO: Should we stack the series the same as how they are defined (so the first is on top), or update the Tooltip to make the stack
 </script>
 
 <Chart
@@ -152,7 +150,9 @@
       <Tooltip.Root let:data>
         <Tooltip.Header>{format(x(data))}</Tooltip.Header>
         <Tooltip.List>
-          {#each series as s}
+          <!-- Reverse series order so tooltip items match stacks -->
+          {@const seriesItems = stackSeries ? [...series].reverse() : series}
+          {#each seriesItems as s}
             {@const valueAccessor = accessor(s.value)}
             <Tooltip.Item
               label={s.label ?? 'value'}
