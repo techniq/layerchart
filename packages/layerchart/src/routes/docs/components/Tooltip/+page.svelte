@@ -580,8 +580,6 @@
           {@const color = rGet(seriesData)}
           <Area
             data={seriesData}
-            y0={(d) => d[0]}
-            y1={(d) => d[1]}
             line={{ stroke: color, 'stroke-width': 2 }}
             fill={color}
             fill-opacity={0.2}

@@ -9,6 +9,7 @@
   import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
   // import { interpolateString } from 'd3-interpolate';
   import { interpolatePath } from 'd3-interpolate-path';
+  import { max } from 'd3-array';
   import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
@@ -51,12 +52,18 @@
   export let defined: Parameters<Line<any>['defined']>[0] | undefined = undefined;
 
   function getScaleValue(data: any, scale: typeof $xScale | typeof $yScale, accessor: Function) {
+    let value = accessor(data);
+
+    if (Array.isArray(value)) {
+      value = max(value);
+    }
+
     if (scale.domain().length) {
       // If scale is defined with domain, map value
-      return scale(accessor(data));
+      return scale(value);
     } else {
       // Use raw value
-      return accessor(data);
+      return value;
     }
   }
 

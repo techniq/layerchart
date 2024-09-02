@@ -15,7 +15,7 @@
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
 
-  const { data: contextData, xScale, yScale, xGet, yGet, yRange } = chartContext();
+  const { data: contextData, xScale, yScale, x: contextX, y, yRange, config } = chartContext();
 
   /** Override data instead of using context */
   export let data: any = undefined;
@@ -59,13 +59,37 @@
   $: {
     const path = radial
       ? areaRadial()
-          .angle((d) => (x ? $xScale(_x(d)) : $xGet(d)))
+          .angle((d) => $xScale(x ? _x(d) : $contextX(d)))
           .innerRadius((d) => (y0 ? $yScale(_y0(d)) : max($yRange)))
-          .outerRadius((d) => (y1 ? $yScale(_y1(d)) : $yGet(d)))
+          .outerRadius((d) => $yScale(y1 ? _y1(d) : $y(d)))
       : d3Area()
-          .x((d) => (x ? $xScale(_x(d)) : $xGet(d)) + xOffset)
-          .y0((d) => (y0 ? $yScale(_y0(d)) : max($yRange)) + yOffset)
-          .y1((d) => (y1 ? $yScale(_y1(d)) : $yGet(d)) + yOffset);
+          .x((d) => $xScale(x ? _x(d) : $contextX(d)) + xOffset)
+          .y0((d) => {
+            let value = max<number>($yRange)!;
+            if (y0) {
+              value = $yScale(_y0(d));
+            } else if (Array.isArray($config.y) && $config.y[0] === 0) {
+              // Use first value if `y` defined as an array (ex. `<Chart y={[0,1]}>`)
+              value = $yScale($y(d)[0]);
+            }
+
+            return value + yOffset;
+          })
+
+          .y1((d) => {
+            let value = max<number>($yRange)!;
+            if (y1) {
+              value = $yScale(_y1(d));
+            } else if (Array.isArray($config.y) && $config.y[1] === 1) {
+              // Use second value if `y` defined as an array (ex. `<Chart y={[0,1]}>`)
+              value = $yScale($y(d)[1]);
+            } else {
+              // Expect single value defined for `y` (ex. `<Chart y="value">`)
+              value = $yScale($y(d));
+            }
+
+            return value + yOffset;
+          });
     if (curve) path.curve(curve);
     if (defined) path.defined(defined);
 

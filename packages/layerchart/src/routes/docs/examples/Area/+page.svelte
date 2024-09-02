@@ -474,8 +474,6 @@
           {@const color = rGet(seriesData)}
           <Area
             data={seriesData}
-            y0={(d) => d[0]}
-            y1={(d) => d[1]}
             line={{ stroke: color, 'stroke-width': 2 }}
             fill={color}
             fill-opacity={0.2}
@@ -533,14 +531,7 @@
           {@const secondaryColor = secondaryColors[index]}
 
           <LinearGradient stops={[primaryColor, secondaryColor]} vertical let:url>
-            <Area
-              data={seriesData}
-              y0={(d) => d[0]}
-              y1={(d) => d[1]}
-              fill={url}
-              fill-opacity={0.5}
-              line={{ stroke: primaryColor }}
-            />
+            <Area data={seriesData} fill={url} fill-opacity={0.5} line={{ stroke: primaryColor }} />
           </LinearGradient>
         {/each}
       </Svg>
