@@ -37,6 +37,8 @@
   import TransformContext from './TransformContext.svelte';
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
 
+  type LayerCakeProps = ComponentProps<LayerCake>;
+
   type DomainType =
     | (number | string | Date | null | undefined)[]
     | Function
@@ -253,13 +255,17 @@
   onMount(() => {
     isMounted = true;
   });
+
+  // TODO: Hack until LayerCake has better typings (`Accessor<TData>`)
+  $: _x = x as LayerCakeProps['x'];
+  $: _y = y as LayerCakeProps['y'];
 </script>
 
 <LayerCake
   {data}
-  {x}
+  x={_x}
   {xDomain}
-  {y}
+  y={_y}
   {yScale}
   {yDomain}
   {yReverse}
