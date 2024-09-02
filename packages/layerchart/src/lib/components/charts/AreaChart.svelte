@@ -2,6 +2,7 @@
   import { type ComponentProps } from 'svelte';
   import { scaleLinear, scaleTime } from 'd3-scale';
   import { stack } from 'd3-shape';
+  import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
 
   import Area from '../Area.svelte';
@@ -70,6 +71,8 @@
       };
     });
   }
+
+  // TODO: Should we stack the series the same as how they are defined (so the first is on top), or update the Tooltip to make the stack
 </script>
 
 <Chart
@@ -156,8 +159,23 @@
               value={valueAccessor(data)}
               color={s.color}
               {format}
+              valueAlign="right"
             />
           {/each}
+
+          {#if stackSeries}
+            <Tooltip.Separator />
+
+            <Tooltip.Item
+              label="total"
+              value={sum(series, (s) => {
+                const valueAccessor = accessor(s.value);
+                return valueAccessor(data);
+              })}
+              format="integer"
+              valueAlign="right"
+            />
+          {/if}
         </Tooltip.List>
       </Tooltip.Root>
     </slot>
