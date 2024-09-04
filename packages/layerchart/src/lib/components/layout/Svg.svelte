@@ -31,11 +31,18 @@
   /** Shorthand to set the contents of `<title></title>` for accessibility. You can also set arbitrary HTML via the "title" slot but this is a convenient shorthand. If you use the "title" slot, this prop is ignored. */
   export let title: string | undefined = undefined;
 
+  /**
+   * Translate children to center, useful for radial layouts
+   */
+  export let center: boolean | 'x' | 'y' = false;
+
   const { containerWidth, containerHeight, width, height, padding } = chartContext();
 
   const { mode, scale, translate } = transformContext();
 
-  let transform = '';
+  let transform = center
+    ? `translate(${center === 'x' || center === true ? $width / 2 : 0}, ${center === 'y' || center === true ? $height / 2 : 0})`
+    : '';
   $: if (mode === 'canvas') {
     const center = { x: $width / 2, y: $height / 2 };
     const newTranslate = {
@@ -79,8 +86,12 @@
     class="layercake-layout-svg_g"
     transform="translate({$padding.left}, {$padding.top})"
   >
-    <g {transform}>
+    {#if transform}
+      <g {transform}>
+        <slot {element}></slot>
+      </g>
+    {:else}
       <slot {element}></slot>
-    </g>
+    {/if}
   </g>
 </svg>

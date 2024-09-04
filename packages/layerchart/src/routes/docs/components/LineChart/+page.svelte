@@ -1,5 +1,15 @@
 <script lang="ts">
-  import { Axis, Highlight, LineChart, pivotLonger, Spline, Svg, Tooltip } from 'layerchart';
+  import {
+    Axis,
+    Highlight,
+    LineChart,
+    pivotLonger,
+    Points,
+    Spline,
+    Svg,
+    Tooltip,
+  } from 'layerchart';
+  import { scaleBand } from 'd3-scale';
   import { PeriodType } from 'svelte-ux';
   import { format } from '@layerstack/utils';
 
@@ -17,9 +27,47 @@
     keys,
   });
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
+
+  const pitchData = [
+    { name: 'fastball', value: 10 },
+    { name: 'change', value: 0 },
+    { name: 'slider', value: 4 },
+    { name: 'cutter', value: 8 },
+    { name: 'curve', value: 5 },
+  ];
 </script>
 
 <h1>Examples</h1>
+
+<h2>Radar</h2>
+
+<Preview data={pitchData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart
+      data={pitchData}
+      x="name"
+      xScale={scaleBand()}
+      xDomain={pitchData.map((d) => d.name)}
+      y="value"
+      yPadding={[0, 10]}
+      padding={{ top: 32, bottom: 8 }}
+      radial
+      props={{
+        spline: {
+          class: 'stroke-primary fill-primary/20',
+        },
+        axisLeft: {
+          ticks: [0, 5, 10],
+          format: (d) => '',
+        },
+      }}
+    >
+      <svelte:fragment slot="after-marks">
+        <Points class="fill-primary stroke-surface-200" />
+      </svelte:fragment>
+    </LineChart>
+  </div>
+</Preview>
 
 <h2>Basic</h2>
 

@@ -51,30 +51,28 @@
 <Preview>
   <div class="h-[120px] p-4 border rounded">
     <Chart>
-      <Svg>
-        <Group center>
-          <Group y={16}>
-            <LinearGradient class="from-secondary to-primary" let:url>
-              <Arc
-                {value}
-                range={[-120, 120]}
-                outerRadius={60}
-                innerRadius={50}
-                cornerRadius={5}
-                spring
-                let:value
-                fill={url}
-                track={{ class: 'fill-none stroke-surface-content/10' }}
-              >
-                <Text
-                  value={Math.round(value) + '%'}
-                  textAnchor="middle"
-                  verticalAnchor="middle"
-                  class="text-3xl tabular-nums"
-                />
-              </Arc>
-            </LinearGradient>
-          </Group>
+      <Svg center>
+        <Group y={16}>
+          <LinearGradient class="from-secondary to-primary" let:url>
+            <Arc
+              {value}
+              range={[-120, 120]}
+              outerRadius={60}
+              innerRadius={50}
+              cornerRadius={5}
+              spring
+              let:value
+              fill={url}
+              track={{ class: 'fill-none stroke-surface-content/10' }}
+            >
+              <Text
+                value={Math.round(value) + '%'}
+                textAnchor="middle"
+                verticalAnchor="middle"
+                class="text-3xl tabular-nums"
+              />
+            </Arc>
+          </LinearGradient>
         </Group>
       </Svg>
     </Chart>
@@ -86,35 +84,33 @@
 <Preview>
   <div class="h-[200px] p-4 border rounded">
     <Chart>
-      <Svg>
-        <Group center>
-          <Arc
-            value={400}
-            domain={[0, 1000]}
-            innerRadius={-20}
-            cornerRadius={10}
-            class="fill-red-500"
-            track={{ class: 'fill-red-500/10' }}
-          />
-          <Arc
-            value={20}
-            domain={[0, 30]}
-            outerRadius={-25}
-            innerRadius={-20}
-            cornerRadius={10}
-            class="fill-lime-400"
-            track={{ class: 'fill-lime-400/10' }}
-          />
-          <Arc
-            value={10}
-            domain={[0, 12]}
-            outerRadius={-50}
-            innerRadius={-20}
-            cornerRadius={10}
-            class="fill-cyan-400"
-            track={{ class: 'fill-cyan-500/10' }}
-          />
-        </Group>
+      <Svg center>
+        <Arc
+          value={400}
+          domain={[0, 1000]}
+          innerRadius={-20}
+          cornerRadius={10}
+          class="fill-red-500"
+          track={{ class: 'fill-red-500/10' }}
+        />
+        <Arc
+          value={20}
+          domain={[0, 30]}
+          outerRadius={-25}
+          innerRadius={-20}
+          cornerRadius={10}
+          class="fill-lime-400"
+          track={{ class: 'fill-lime-400/10' }}
+        />
+        <Arc
+          value={10}
+          domain={[0, 12]}
+          outerRadius={-50}
+          innerRadius={-20}
+          cornerRadius={10}
+          class="fill-cyan-400"
+          track={{ class: 'fill-cyan-500/10' }}
+        />
       </Svg>
     </Chart>
   </div>
@@ -129,36 +125,34 @@
 <Preview>
   <div class="h-[240px] p-4 border rounded">
     <Chart>
-      <Svg>
-        <Group center>
-          <SpringValue {value} let:value>
-            {#each { length: segments } as _, segmentIndex}
-              {@const segmentAngle = (2 * Math.PI) / segments}
-              {@const startAngle = segmentIndex * segmentAngle}
-              {@const endAngle = (segmentIndex + 1) * segmentAngle}
-              <Arc
-                {startAngle}
-                {endAngle}
-                innerRadius={-20}
-                cornerRadius={4}
-                padAngle={0.02}
-                class={cls(
-                  (segmentIndex / segments) * 100 < (value ?? 0)
-                    ? 'fill-success-300'
-                    : 'fill-surface-content/10'
-                )}
-              ></Arc>
-            {/each}
+      <Svg center>
+        <SpringValue {value} let:value>
+          {#each { length: segments } as _, segmentIndex}
+            {@const segmentAngle = (2 * Math.PI) / segments}
+            {@const startAngle = segmentIndex * segmentAngle}
+            {@const endAngle = (segmentIndex + 1) * segmentAngle}
+            <Arc
+              {startAngle}
+              {endAngle}
+              innerRadius={-20}
+              cornerRadius={4}
+              padAngle={0.02}
+              class={cls(
+                (segmentIndex / segments) * 100 < (value ?? 0)
+                  ? 'fill-success-300'
+                  : 'fill-surface-content/10'
+              )}
+            ></Arc>
+          {/each}
 
-            <Text
-              value={Math.round(value ?? 0)}
-              textAnchor="middle"
-              verticalAnchor="middle"
-              dy={16}
-              class="text-6xl tabular-nums"
-            />
-          </SpringValue>
-        </Group>
+          <Text
+            value={Math.round(value ?? 0)}
+            textAnchor="middle"
+            verticalAnchor="middle"
+            dy={16}
+            class="text-6xl tabular-nums"
+          />
+        </SpringValue>
       </Svg>
     </Chart>
   </div>
@@ -169,30 +163,28 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded">
     <Chart let:tooltip>
-      <Svg>
-        <Group center>
-          {#each { length: layerCount } as _, layerIndex}
-            {@const layer = layerIndex + 1}
-            {#each { length: divisions } as _, segmentIndex}
-              {@const segmentAngle = (2 * Math.PI) / divisions}
-              {@const startAngle = segmentIndex * segmentAngle}
-              {@const endAngle = (segmentIndex + 1) * segmentAngle}
-              {@const color = wheelSegmentColor(startAngle, layer)}
-              <Arc
-                {startAngle}
-                {endAngle}
-                outerRadius={layer / layerCount}
-                innerRadius={-20}
-                cornerRadius={4}
-                padAngle={0.02}
-                fill={color}
-                class="hover:scale-90 origin-center [transform-box:fill-box] transition-transform"
-                on:pointermove={(e) => tooltip?.show(e, color)}
-                on:pointerleave={(e) => tooltip?.hide()}
-              />
-            {/each}
+      <Svg center>
+        {#each { length: layerCount } as _, layerIndex}
+          {@const layer = layerIndex + 1}
+          {#each { length: divisions } as _, segmentIndex}
+            {@const segmentAngle = (2 * Math.PI) / divisions}
+            {@const startAngle = segmentIndex * segmentAngle}
+            {@const endAngle = (segmentIndex + 1) * segmentAngle}
+            {@const color = wheelSegmentColor(startAngle, layer)}
+            <Arc
+              {startAngle}
+              {endAngle}
+              outerRadius={layer / layerCount}
+              innerRadius={-20}
+              cornerRadius={4}
+              padAngle={0.02}
+              fill={color}
+              class="hover:scale-90 origin-center [transform-box:fill-box] transition-transform"
+              on:pointermove={(e) => tooltip?.show(e, color)}
+              on:pointerleave={(e) => tooltip?.hide()}
+            />
           {/each}
-        </Group>
+        {/each}
       </Svg>
       <Tooltip.Root let:data>
         {data}
@@ -213,40 +205,38 @@
   <Preview>
     <div class="h-[200px] p-4 border rounded">
       <Chart>
-        <Svg>
-          <Group center>
-            {#if show}
-              <Arc
-                initialValue={0}
-                value={40}
-                innerRadius={-20}
-                cornerRadius={10}
-                class="fill-red-500"
-                track={{ class: 'fill-red-500/10' }}
-                tweened={{ duration: 1000, easing: cubicInOut }}
-              />
-              <Arc
-                initialValue={0}
-                value={60}
-                outerRadius={-25}
-                innerRadius={-20}
-                cornerRadius={10}
-                class="fill-lime-400"
-                track={{ class: 'fill-lime-400/10' }}
-                tweened={{ duration: 1000, easing: cubicInOut }}
-              />
-              <Arc
-                initialValue={0}
-                value={80}
-                outerRadius={-50}
-                innerRadius={-20}
-                cornerRadius={10}
-                class="fill-cyan-400"
-                track={{ class: 'fill-cyan-500/10' }}
-                tweened={{ duration: 1000, easing: cubicInOut }}
-              />
-            {/if}
-          </Group>
+        <Svg center>
+          {#if show}
+            <Arc
+              initialValue={0}
+              value={40}
+              innerRadius={-20}
+              cornerRadius={10}
+              class="fill-red-500"
+              track={{ class: 'fill-red-500/10' }}
+              tweened={{ duration: 1000, easing: cubicInOut }}
+            />
+            <Arc
+              initialValue={0}
+              value={60}
+              outerRadius={-25}
+              innerRadius={-20}
+              cornerRadius={10}
+              class="fill-lime-400"
+              track={{ class: 'fill-lime-400/10' }}
+              tweened={{ duration: 1000, easing: cubicInOut }}
+            />
+            <Arc
+              initialValue={0}
+              value={80}
+              outerRadius={-50}
+              innerRadius={-20}
+              cornerRadius={10}
+              class="fill-cyan-400"
+              track={{ class: 'fill-cyan-500/10' }}
+              tweened={{ duration: 1000, easing: cubicInOut }}
+            />
+          {/if}
         </Svg>
       </Chart>
     </div>

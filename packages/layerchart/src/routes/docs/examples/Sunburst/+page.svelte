@@ -5,7 +5,7 @@
   import * as chromatic from 'd3-scale-chromatic';
   import { hsl } from 'd3-color';
 
-  import { Arc, Bounds, Chart, Group, Partition, Svg, Tooltip, findAncestor } from 'layerchart';
+  import { Arc, Bounds, Chart, Partition, Svg, Tooltip, findAncestor } from 'layerchart';
 
   import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format, sortFunc, compoundSortFunc } from '@layerstack/utils';
@@ -73,7 +73,7 @@
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded">
     <Chart data={complexHierarchy} let:tooltip>
-      <Svg>
+      <Svg center>
         <Bounds
           domain={{ x0: selected?.x0 ?? 0, x1: selected?.x1 ?? 1, y0: selected?.y0 ?? 0, y1: 1 }}
           range={({ height }) => ({
@@ -87,30 +87,28 @@
           let:yScale
         >
           <Partition size={[1, 1]} let:nodes>
-            <Group center>
-              {#each nodes as node}
-                {@const nodeColor = getNodeColor(node, colorBy)}
-                <Arc
-                  value={node.value}
-                  startAngle={Math.max(0, Math.min(2 * Math.PI, xScale(node.x0)))}
-                  endAngle={Math.max(0, Math.min(2 * Math.PI, xScale(node.x1)))}
-                  innerRadius={Math.max(0, yScale(node.y0))}
-                  outerRadius={Math.max(0, yScale(node.y1))}
-                  fill={nodeColor}
-                  _stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 2)}
-                  stroke="hsl(0 0% 20%)"
-                  class="cursor-pointer"
-                  let:centroid
-                  on:click={() => {
-                    selected = node;
-                  }}
-                  on:pointermove={(e) => tooltip.show(e, node)}
-                  on:pointerleave={tooltip.hide}
-                >
-                  <!-- <text x={centroid[0]} y={centroid[1]}>{node.data.name}</text> -->
-                </Arc>
-              {/each}
-            </Group>
+            {#each nodes as node}
+              {@const nodeColor = getNodeColor(node, colorBy)}
+              <Arc
+                value={node.value}
+                startAngle={Math.max(0, Math.min(2 * Math.PI, xScale(node.x0)))}
+                endAngle={Math.max(0, Math.min(2 * Math.PI, xScale(node.x1)))}
+                innerRadius={Math.max(0, yScale(node.y0))}
+                outerRadius={Math.max(0, yScale(node.y1))}
+                fill={nodeColor}
+                _stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 2)}
+                stroke="hsl(0 0% 20%)"
+                class="cursor-pointer"
+                let:centroid
+                on:click={() => {
+                  selected = node;
+                }}
+                on:pointermove={(e) => tooltip.show(e, node)}
+                on:pointerleave={tooltip.hide}
+              >
+                <!-- <text x={centroid[0]} y={centroid[1]}>{node.data.name}</text> -->
+              </Arc>
+            {/each}
           </Partition>
         </Bounds>
       </Svg>

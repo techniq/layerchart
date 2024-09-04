@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Field, RangeField, Switch } from 'svelte-ux';
-  import { Arc, Chart, Svg, Group, LinearGradient, Text } from 'layerchart';
+  import { Arc, Chart, Svg, LinearGradient, Text } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -52,36 +52,34 @@
 <Preview>
   <div class="h-[200px] p-4 border rounded">
     <Chart>
-      <Svg>
-        <Group center>
-          {#key spring}
-            <LinearGradient class="from-secondary to-primary" vertical let:url>
-              <Arc
-                {value}
-                {domain}
-                {range}
-                {innerRadius}
-                {outerRadius}
-                {cornerRadius}
-                {padAngle}
-                {label}
-                {spring}
-                let:value
-                let:boundingBox
-                fill={url}
-                track={{ class: 'fill-surface-content/5' }}
-              >
-                <Text
-                  value={Math.round(value)}
-                  textAnchor="middle"
-                  verticalAnchor="middle"
-                  class="text-4xl"
-                  dy={8}
-                />
-              </Arc>
-            </LinearGradient>
-          {/key}
-        </Group>
+      <Svg center>
+        {#key spring}
+          <LinearGradient class="from-secondary to-primary" vertical let:url>
+            <Arc
+              {value}
+              {domain}
+              {range}
+              {innerRadius}
+              {outerRadius}
+              {cornerRadius}
+              {padAngle}
+              {label}
+              {spring}
+              let:value
+              let:boundingBox
+              fill={url}
+              track={{ class: 'fill-surface-content/5' }}
+            >
+              <Text
+                value={Math.round(value)}
+                textAnchor="middle"
+                verticalAnchor="middle"
+                class="text-4xl"
+                dy={8}
+              />
+            </Arc>
+          </LinearGradient>
+        {/key}
       </Svg>
     </Chart>
   </div>
@@ -117,44 +115,42 @@
   <Preview>
     <div class="h-[200px] p-4 border rounded">
       <Chart>
-        <Svg>
-          <Group center>
-            <LinearGradient stops={['hsl(80, 100%, 50%)', 'hsl(200, 100%, 50%)']} vertical let:url>
-              <Arc
-                {value}
-                {domain}
-                {range}
-                {innerRadius}
-                {outerRadius}
-                {cornerRadius}
-                {padAngle}
-                {label}
-                let:boundingBox
-                fill={url}
-              >
-                <!-- svg center -->
-                <!-- <Text
+        <Svg center>
+          <LinearGradient stops={['hsl(80, 100%, 50%)', 'hsl(200, 100%, 50%)']} vertical let:url>
+            <Arc
+              {value}
+              {domain}
+              {range}
+              {innerRadius}
+              {outerRadius}
+              {cornerRadius}
+              {padAngle}
+              {label}
+              let:boundingBox
+              fill={url}
+            >
+              <!-- svg center -->
+              <!-- <Text
 							value={Math.round(value)}
 							textAnchor="middle"
 							verticalAnchor="middle"
               class="text-4xl"
 							dy={8}
 						/> -->
-                <!-- arc center -->
-                <Text
-                  value={Math.round(value)}
-                  textAnchor="middle"
-                  verticalAnchor="middle"
-                  class="text-4xl"
-                  x={outerRadius - boundingBox.width / 2}
-                  y={(outerRadius - boundingBox.height / 2) * -1}
-                  dy={8}
-                />
-                <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-4xl" capHeight="1.5rem" /> -->
-                <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-7xl" capHeight="3.1em" /> -->
-              </Arc>
-            </LinearGradient>
-          </Group>
+              <!-- arc center -->
+              <Text
+                value={Math.round(value)}
+                textAnchor="middle"
+                verticalAnchor="middle"
+                class="text-4xl"
+                x={outerRadius - boundingBox.width / 2}
+                y={(outerRadius - boundingBox.height / 2) * -1}
+                dy={8}
+              />
+              <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-4xl" capHeight="1.5rem" /> -->
+              <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-7xl" capHeight="3.1em" /> -->
+            </Arc>
+          </LinearGradient>
         </Svg>
       </Chart>
     </div>

@@ -2,7 +2,7 @@
   import { forceManyBody, forceLink } from 'd3-force';
   import { curveLinear } from 'd3-shape';
 
-  import { Chart, Circle, ForceSimulation, Group, Link, Svg } from 'layerchart';
+  import { Chart, Circle, ForceSimulation, Link, Svg } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -25,7 +25,7 @@
 <Preview data={nodes}>
   <div class="h-[800px] p-4 border rounded overflow-hidden">
     <Chart data={nodes}>
-      <Svg>
+      <Svg center>
         <ForceSimulation
           forces={{
             charge: chargeForce,
@@ -33,17 +33,15 @@
           }}
           let:nodes
         >
-          <Group center>
-            {#key nodes}
-              {#each links as link}
-                <Link data={link} class="stroke-surface-content/20" curve={curveLinear} />
-              {/each}
-            {/key}
-
-            {#each nodes as node}
-              <Circle cx={node.x} cy={node.y} r={3} class="fill-surface-content" />
+          {#key nodes}
+            {#each links as link}
+              <Link data={link} class="stroke-surface-content/20" curve={curveLinear} />
             {/each}
-          </Group>
+          {/key}
+
+          {#each nodes as node}
+            <Circle cx={node.x} cy={node.y} r={3} class="fill-surface-content" />
+          {/each}
         </ForceSimulation>
       </Svg>
     </Chart>
