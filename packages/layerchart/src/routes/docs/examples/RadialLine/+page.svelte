@@ -45,6 +45,7 @@
       yRange={({ height }) => [0, height / 2]}
       yPadding={[0, 10]}
       padding={{ top: 32, bottom: 8 }}
+      radial
     >
       <Svg>
         <Group center>
@@ -55,8 +56,8 @@
             format={(d) => ''}
           />
           <Axis placement="angle" grid={{ class: 'stroke-surface-content/20' }} />
-          <Spline radial {curve} class="stroke-primary fill-primary/20" />
-          <Points radial class="fill-primary stroke-surface-200" />
+          <Spline {curve} class="stroke-primary fill-primary/20" />
+          <Points class="fill-primary stroke-surface-200" />
         </Group>
       </Svg>
     </Chart>
@@ -74,19 +75,18 @@
       xRange={[0, 2 * Math.PI]}
       y={['minmin', 'maxmax']}
       yRange={({ height }) => [height / 5, height / 2]}
+      radial
     >
       <Svg>
         <Group center>
-          <Spline y={(d) => d.avg} radial curve={curveCatmullRom} class="stroke-primary" />
+          <Spline y={(d) => d.avg} curve={curveCatmullRom} class="stroke-primary" />
           <Area
-            radial
             y0={(d) => d.min}
             y1={(d) => d.max}
             curve={curveCatmullRomClosed}
             class="fill-primary/20"
           />
           <Area
-            radial
             y0={(d) => d.minmin}
             y1={(d) => d.maxmax}
             curve={curveCatmullRomClosed}
@@ -114,6 +114,7 @@
       yPadding={[0, 20]}
       zDomain={[1940, 2024]}
       zRange={[0.1, 0.2]}
+      radial
       let:zScale
     >
       <Svg>
@@ -121,7 +122,6 @@
           {#each flatGroup(data.dailyTemperatures, (d) => d.year) as [year, yearData]}
             <Spline
               data={yearData}
-              radial
               curve={curveCatmullRom}
               class={cls(
                 year === 2024

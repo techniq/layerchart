@@ -187,6 +187,10 @@
     /** y value guaranteed to be visible in yDomain.  Useful with optional negative values since `yDomain={[0, null]}` would ignore negative values */
     yBaseline?: typeof xBaseline;
 
+    /* Props passed to ChartContext */
+    /** Use radial instead of cartesian coordinates, mapping `x` to `angle` and `y`` to radial.  Radial lines are positioned relative to the origin, use transform (ex. `<Group center>`) to change the origin */
+    radial?: typeof radial;
+
     /** Props passed to GeoContext */
     geo?: typeof geo;
 
@@ -234,6 +238,9 @@
    * see: https://github.com/mhkeller/layercake/issues/83
    */
   $: yReverse = yScale ? !isScaleBand(yScale) : true;
+
+  /** Use radial instead of cartesian coordinates, mapping `x` to `angle` and `y`` to radial.  Radial lines are positioned relative to the origin, use transform (ex. `<Group center>`) to change the origin */
+  export let radial = false;
 
   /** Props passed to GeoContext */
   export let geo: Partial<ComponentProps<GeoContext>> | undefined = undefined;
@@ -296,7 +303,7 @@
       ? geoFitObjectTransform(geo.projection(), [width, height], geo.fitGeojson)
       : undefined}
 
-  <ChartContext {data} let:data let:flatData on:resize>
+  <ChartContext {data} {radial} let:data let:flatData on:resize>
     {#key isMounted}
       <TransformContext
         bind:this={transformContext}

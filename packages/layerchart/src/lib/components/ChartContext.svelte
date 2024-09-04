@@ -4,7 +4,7 @@
 
   import type { HierarchyNode } from 'd3-hierarchy';
   import { createEventDispatcher, getContext, onMount, setContext } from 'svelte';
-  import { type Readable } from 'svelte/store';
+  import { writable, type Readable } from 'svelte/store';
 
   export const chartContextKey = Symbol();
 
@@ -84,7 +84,8 @@
   export type ChartResizeEvent = CustomEvent<ChartResizeDetail>;
 
   export type ChartContext<TData> = LayerCakeContext<TData> & {
-    // TODO: consider extending with additional values
+    // Additional context values
+    radial: Readable<boolean>;
   };
 
   export function chartContext<TData = any>() {
@@ -99,13 +100,22 @@
 <script lang="ts" generics="TData">
   import type { SankeyGraph } from 'd3-sankey';
 
+  /** Use radial instead of cartesian coordinates, mapping `x` to `angle` and `y`` to radial.  Radial lines are positioned relative to the origin, use transform (ex. `<Group center>`) to change the origin */
+  export let radial = false;
+
+  const _radial = writable(radial);
+
+  $: $_radial = radial;
+
+  const chartContext = {
+    ...getContext<LayerCakeContext<TData>>('LayerCake'),
+    radial: _radial,
+  };
+  setChartContext(chartContext);
+
+  const { width, height, containerWidth, containerHeight } = chartContext;
+
   const dispatch = createEventDispatcher<ChartEvents>();
-
-  const layerCakeContext = getContext<LayerCakeContext<TData>>('LayerCake');
-  setChartContext(layerCakeContext);
-
-  const { width, height, containerWidth, containerHeight } = layerCakeContext;
-
   $: if (isMounted) {
     dispatch('resize', {
       width: $width,
@@ -125,4 +135,4 @@
   export let data: TData[] | HierarchyNode<TData> | SankeyGraph<any, any> = []; // Same as `ComponentProps<Chart<TData>>` but causes circular reference
 </script>
 
-<slot {data} flatData={layerCakeContext.data} />
+<slot {data} flatData={chartContext.data} />

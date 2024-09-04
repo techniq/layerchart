@@ -15,16 +15,22 @@
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
 
-  const { data: contextData, xScale, yScale, x: contextX, y, yRange, config } = chartContext();
+  const {
+    data: contextData,
+    xScale,
+    yScale,
+    x: contextX,
+    y,
+    yRange,
+    config,
+    radial,
+  } = chartContext();
 
   /** Override data instead of using context */
   export let data: any = undefined;
 
   /** Pass `<path d={...} />` explicitly instead of calculating from data / context */
   export let pathData: string | undefined | null = undefined;
-
-  /** Use radial instead of cartesian area generator, mapping `x` to `angle` and `y0`/`y1 to `innerRadius`/`outerRadius.  Radial lines are positioned relative to the origin, use transform (ex. `<Group center>`) to change the origin */
-  export let radial = false;
 
   /** Override x accessor */
   export let x: Accessor = undefined;
@@ -57,7 +63,7 @@
     : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
   $: {
-    const path = radial
+    const path = $radial
       ? areaRadial()
           .angle((d) => $xScale(x ? _x(d) : $contextX(d)))
           .innerRadius((d) => (y0 ? $yScale(_y0(d)) : max($yRange)))
