@@ -27,8 +27,8 @@
   $: xScale = accessor(x)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear();
 
   export let props: {
-    axisLeft?: Partial<ComponentProps<Axis>>;
-    axisBottom?: Partial<ComponentProps<Axis>>;
+    xAxis?: Partial<ComponentProps<Axis>>;
+    yAxis?: Partial<ComponentProps<Axis>>;
     points?: Partial<ComponentProps<Points>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
@@ -62,14 +62,14 @@
           grid
           rule
           format={(value) => format(value, undefined, { variant: 'short' })}
-          {...props.axisLeft}
+          {...props.yAxis}
         />
         <Axis
           placement="bottom"
           grid
           rule
           format={(value) => format(value, undefined, { variant: 'short' })}
-          {...props.axisBottom}
+          {...props.xAxis}
         />
       </slot>
 

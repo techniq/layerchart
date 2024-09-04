@@ -56,7 +56,7 @@
         spline: {
           class: 'stroke-primary fill-primary/20',
         },
-        axisLeft: {
+        yAxis: {
           ticks: [0, 5, 10],
           format: (d) => '',
         },

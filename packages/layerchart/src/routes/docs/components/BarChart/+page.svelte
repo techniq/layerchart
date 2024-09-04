@@ -117,8 +117,8 @@
       padding={{ left: 32, bottom: 16 }}
       labels={{ format: (value) => format(Math.abs(value), 'metric') }}
       props={{
-        axisLeft: { rule: false },
-        axisBottom: { format: (value) => format(Math.abs(value), 'metric') },
+        xAxis: { format: (value) => format(Math.abs(value), 'metric') },
+        yAxis: { rule: false },
       }}
       series={[
         {
@@ -180,8 +180,8 @@
       padding={{ left: 32, bottom: 16 }}
       labels={{ format: (value) => format(Math.abs(value), 'percent') }}
       props={{
-        axisLeft: { rule: false },
-        axisBottom: { format: (value) => format(Math.abs(value), 'percentRound') },
+        xAxis: { format: (value) => format(Math.abs(value), 'percentRound') },
+        yAxis: { rule: false },
       }}
       series={[
         {
@@ -254,8 +254,8 @@
       ]}
       stackSeries
       props={{
-        axisBottom: { format: 'none' },
-        axisLeft: { format: 'metric' },
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
       }}
     />
   </div>
@@ -289,8 +289,8 @@
       ]}
       stackSeries
       props={{
-        axisBottom: { format: 'metric' },
-        axisLeft: { format: 'none' },
+        xAxis: { format: 'metric' },
+        yAxis: { format: 'none' },
       }}
     />
   </div>

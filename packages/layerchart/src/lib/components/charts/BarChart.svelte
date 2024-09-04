@@ -51,8 +51,8 @@
   $: yDomain = isVertical ? [0, null] : undefined;
 
   export let props: {
-    axisLeft?: Partial<ComponentProps<Axis>>;
-    axisBottom?: Partial<ComponentProps<Axis>>;
+    xAxis?: Partial<ComponentProps<Axis>>;
+    yAxis?: Partial<ComponentProps<Axis>>;
     bars?: Partial<ComponentProps<Bars>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
@@ -114,14 +114,14 @@
           grid={isVertical}
           rule
           format={(value) => format(value, undefined, { variant: 'short' })}
-          {...props.axisLeft}
+          {...props.yAxis}
         />
         <Axis
           placement="bottom"
           grid={!isVertical}
           rule
           format={(value) => format(value, undefined, { variant: 'short' })}
-          {...props.axisBottom}
+          {...props.xAxis}
         />
       </slot>
 
