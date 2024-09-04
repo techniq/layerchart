@@ -219,6 +219,7 @@
           cy={radial ? radialPoint[1] : point.y}
           {r}
           fill={$config.r ? $rGet(point.data) : null}
+          class={className}
           {...$$restProps}
         />
       {/each}
