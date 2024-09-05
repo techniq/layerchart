@@ -1,4 +1,6 @@
 <script lang="ts" generics="TData">
+  import Points from '../Points.svelte';
+
   import { type ComponentProps } from 'svelte';
   import { scaleLinear, scaleTime } from 'd3-scale';
   import { curveLinearClosed } from 'd3-shape';
@@ -17,6 +19,7 @@
   interface $$Props extends ComponentProps<Chart<TData>> {
     series?: typeof series;
     labels?: typeof labels;
+    points?: typeof points;
     props?: typeof props;
   }
 
@@ -35,6 +38,7 @@
   }[] = [{ value: y, color: 'hsl(var(--color-primary))' }];
 
   export let labels: ComponentProps<Labels> | boolean = false;
+  export let points: ComponentProps<Points> | boolean = false;
 
   // Default xScale based on first data's `x` value
   $: xScale = accessor(x)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear();
@@ -45,6 +49,7 @@
     spline?: Partial<ComponentProps<Spline>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
+    points?: Partial<ComponentProps<Points>>;
   } = {};
 </script>
 
@@ -107,15 +112,27 @@
 
       <slot name="after-marks" {...slotProps} />
 
+      {#if points}
+        {#each series as s, i}
+          {console.log({ s })}
+          <Points
+            fill={s.color}
+            class="stroke-surface-200"
+            {...props.points}
+            {...typeof points === 'object' ? points : null}
+          />
+        {/each}
+      {/if}
+
+      {#if labels}
+        <Labels {...props.labels} {...typeof labels === 'object' ? labels : null} />
+      {/if}
+
       <slot name="highlight" {...slotProps}>
         {#each series as s, i}
           <Highlight y={s.value} points={{ fill: s.color }} lines={i === 0} {...props.highlight} />
         {/each}
       </slot>
-
-      {#if labels}
-        <Labels {...props.labels} {...typeof labels === 'object' ? labels : null} />
-      {/if}
     </Svg>
 
     <slot name="tooltip" {...slotProps}>
