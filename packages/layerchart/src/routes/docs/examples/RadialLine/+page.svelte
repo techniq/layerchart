@@ -39,7 +39,6 @@
       data={pitchData}
       x="name"
       xScale={scaleBand()}
-      xDomain={pitchData.map((d) => d.name)}
       xRange={[0, 2 * Math.PI]}
       y="value"
       yRange={({ height }) => [0, height / 2]}

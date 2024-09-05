@@ -623,7 +623,6 @@
       xScale={scaleTime()}
       y="name"
       yScale={scaleBand()}
-      yDomain={[...new Set(timeSeries.map((d) => d.name))]}
       padding={{ left: 36, bottom: 36 }}
       tooltip={{
         mode: charts.dateTime.mode,
@@ -671,7 +670,6 @@
       xScale={scaleTime()}
       y="name"
       yScale={scaleBand()}
-      yDomain={[...new Set(timeSeries.map((d) => d.name))]}
       padding={{ left: 36, bottom: 36 }}
       tooltip={{
         mode: charts.duration.mode,
@@ -723,7 +721,6 @@
       xScale={scaleTime()}
       y="name"
       yScale={scaleBand()}
-      yDomain={[...new Set(overlapTimeSeries.map((d) => d.name))]}
       padding={{ left: 36, bottom: 36 }}
       tooltip={{
         mode: charts.multiDuration.mode,

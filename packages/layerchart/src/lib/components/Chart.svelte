@@ -268,6 +268,7 @@
   $: _y = y as LayerCakeProps['y'];
 </script>
 
+<!-- Remove domain sorting by default: https://github.com/mhkeller/layercake/issues/147  -->
 <LayerCake
   {data}
   x={_x}
@@ -276,6 +277,10 @@
   {yScale}
   {yDomain}
   {yReverse}
+  xDomainSort={false}
+  yDomainSort={false}
+  zDomainSort={false}
+  rDomainSort={false}
   {...$$restProps}
   let:aspectRatio
   let:containerHeight
