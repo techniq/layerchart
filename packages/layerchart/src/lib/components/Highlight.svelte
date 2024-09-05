@@ -1,7 +1,7 @@
 <script lang="ts">
   import { type ComponentProps } from 'svelte';
   import { max, min } from 'd3-array';
-  import type { Series, SeriesPoint } from 'd3-shape';
+  import { pointRadial, type Series, type SeriesPoint } from 'd3-shape';
   import { notNull } from '@layerstack/utils/typeGuards';
   import { cls } from '@layerstack/tailwind';
 
@@ -28,6 +28,7 @@
     yRange,
     rGet,
     config,
+    radial,
   } = chartContext();
   const tooltip = tooltipContext();
 
@@ -78,11 +79,11 @@
   $: if (highlightData) {
     const xValue = _x(highlightData);
     const xCoord = Array.isArray(xValue) ? xValue.map((v) => $xScale(v)) : $xScale(xValue);
-    const xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
+    const xOffset = isScaleBand($xScale) && !$radial ? $xScale.bandwidth() / 2 : 0;
 
     const yValue = _y(highlightData);
     const yCoord = Array.isArray(yValue) ? yValue.map((v) => $yScale(v)) : $yScale(yValue);
-    const yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
+    const yOffset = isScaleBand($yScale) && !$radial ? $yScale.bandwidth() / 2 : 0;
 
     // Reset lines
     _lines = [];
@@ -278,6 +279,32 @@
           fill: $config.r ? $rGet(highlightData) : null,
         },
       ];
+    }
+
+    if ($radial) {
+      // Translate x/y to angle/radius
+      _points = _points.map((p) => {
+        const [x, y] = pointRadial(p.x, p.y);
+        return {
+          ...p,
+          x,
+          y,
+        };
+      });
+
+      _lines = _lines.map((l) => {
+        const [x1, y1] = pointRadial(l.x1, l.y1);
+        const [x2, y2] = pointRadial(l.x2, l.y2);
+        return {
+          ...l,
+          x1,
+          y1,
+          x2,
+          y2,
+        };
+      });
+
+      // TODO: How to handle _areas
     }
   }
 </script>
