@@ -167,7 +167,7 @@
       x="name"
       xScale={scaleBand()}
       y="value"
-      padding={{ top: 32, bottom: 8 }}
+      padding={{ top: 8 }}
       yPadding={[0, 10]}
       radial
       points

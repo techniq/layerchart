@@ -9,12 +9,17 @@
     pivotLonger,
     LinearGradient,
     Rule,
+    Spline,
   } from 'layerchart';
   import { PeriodType } from 'svelte-ux';
   import { format, formatDate } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import { scaleUtc } from 'd3-scale';
+  import { curveCatmullRom } from 'd3-shape';
+
+  export let data;
 
   const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
   const negativeDateSeriesData = createDateSeries({
@@ -231,6 +236,39 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <AreaChart data={dateSeriesData} x="date" y="value" labels />
+  </div>
+</Preview>
+
+<h2>Radial</h2>
+
+<Preview data={data.sfoTemperatures}>
+  <div class="h-[500px] p-4 border rounded">
+    <AreaChart
+      data={data.sfoTemperatures}
+      x="date"
+      xScale={scaleUtc()}
+      y={['minmin', 'maxmax']}
+      yRange={({ height }) => [height / 5, height / 2]}
+      radial
+      props={{
+        area: { line: false, 'fill-opacity': 1 },
+        xAxis: { format: PeriodType.Month },
+        yAxis: { ticks: 4, format: (v) => v + '° F' },
+        highlight: { points: false },
+      }}
+      series={[
+        { label: 'min/max', value: ['min', 'max'], color: 'hsl(var(--color-primary) / 20%)' },
+        {
+          label: 'minmin/maxmax',
+          value: ['minmin', 'maxmax'],
+          color: 'hsl(var(--color-primary) / 20%)',
+        },
+      ]}
+    >
+      <svelte:fragment slot="before-marks">
+        <Spline y="avg" curve={curveCatmullRom} class="stroke-primary" />
+      </svelte:fragment>
+    </AreaChart>
   </div>
 </Preview>
 

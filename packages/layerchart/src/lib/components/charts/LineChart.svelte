@@ -62,9 +62,9 @@
   yDomain={[0, null]}
   yRange={$$props.yRange ?? (radial ? ({ height }) => [0, height / 2] : undefined)}
   yNice
-  padding={{ left: 16, bottom: 16 }}
-  tooltip={{ mode: radial ? 'voronoi' : 'bisect-x' }}
   {radial}
+  padding={radial ? undefined : { left: 16, bottom: 16 }}
+  tooltip={{ mode: radial ? 'voronoi' : 'bisect-x' }}
   {...$$restProps}
   let:x
   let:xScale
@@ -114,7 +114,6 @@
 
       {#if points}
         {#each series as s, i}
-          {console.log({ s })}
           <Points
             fill={s.color}
             class="stroke-surface-200"

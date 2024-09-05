@@ -26,6 +26,9 @@
   export let x: Accessor<TData> = undefined;
   export let y: Accessor<TData> = undefined;
 
+  /** Use radial instead of cartesian coordinates, mapping `x` to `angle` and `y`` to radial.  Radial lines are positioned relative to the origin, use transform (ex. `<Group center>`) to change the origin */
+  export let radial = false;
+
   export let series: {
     label?: string;
     value: Accessor<TData>;
@@ -76,12 +79,15 @@
   data={chartData}
   {x}
   {xScale}
+  xRange={$$props.xRange ?? (radial ? [0, 2 * Math.PI] : undefined)}
   y={y ??
     (stackSeries ? (d) => series.map((s, i) => d.stackData[i][1]) : series.map((s) => s.value))}
   yDomain={[0, null]}
+  yRange={$$props.yRange ?? (radial ? ({ height }) => [0, height / 2] : undefined)}
   yNice
-  padding={{ left: 16, bottom: 16 }}
-  tooltip={{ mode: 'bisect-x' }}
+  {radial}
+  padding={radial ? undefined : { left: 16, bottom: 16 }}
+  tooltip={{ mode: radial ? 'voronoi' : 'bisect-x' }}
   {...$$restProps}
   let:x
   let:xScale
@@ -94,17 +100,18 @@
 >
   {@const slotProps = { x, xScale, y, yScale, width, height, padding, tooltip, series }}
   <slot {...slotProps}>
-    <Svg>
+    <Svg center={radial}>
       <slot name="axis" {...slotProps}>
         <Axis
-          placement="left"
+          placement={radial ? 'radius' : 'left'}
           grid
           rule
           format={(value) => format(value, undefined, { variant: 'short' })}
           {...props.yAxis}
         />
         <Axis
-          placement="bottom"
+          placement={radial ? 'angle' : 'bottom'}
+          grid={radial}
           rule
           format={(value) => format(value, undefined, { variant: 'short' })}
           {...props.xAxis}
@@ -116,8 +123,16 @@
       <slot name="marks" {...slotProps}>
         {#each series as s, i}
           <Area
-            y0={stackSeries ? (d) => d.stackData[i][0] : undefined}
-            y1={stackSeries ? (d) => d.stackData[i][1] : s.value}
+            y0={stackSeries
+              ? (d) => d.stackData[i][0]
+              : Array.isArray(s.value)
+                ? s.value[0]
+                : undefined}
+            y1={stackSeries
+              ? (d) => d.stackData[i][1]
+              : Array.isArray(s.value)
+                ? s.value[1]
+                : s.value}
             line={{ class: 'stroke-2', stroke: s.color }}
             fill={s.color}
             fill-opacity={0.3}
