@@ -216,7 +216,8 @@
           cx={$radial ? radialPoint[0] : point.x}
           cy={$radial ? radialPoint[1] : point.y}
           {r}
-          fill={$config.r ? $rGet(point.data) : null}
+          fill={fill ?? ($config.r ? $rGet(point.data) : null)}
+          {stroke}
           class={className}
           {...$$restProps}
         />
