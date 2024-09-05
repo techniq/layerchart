@@ -8,8 +8,8 @@
   import { chartContext } from './ChartContext.svelte';
   import Points from './Points.svelte';
 
-  export let placement: 'inside' | 'outside' = 'outside';
-  export let offset = 4;
+  export let placement: 'inside' | 'outside' | 'center' = 'outside';
+  export let offset = placement === 'center' ? 0 : 4;
   export let format: FormatType | undefined = undefined;
 
   const { yScale } = chartContext();
@@ -55,7 +55,8 @@
           y: point.y + (placement === 'outside' ? offset : -offset),
           capHeight: '.6rem',
           textAnchor: 'middle',
-          verticalAnchor: placement === 'outside' ? 'start' : 'end',
+          verticalAnchor:
+            placement === 'center' ? 'middle' : placement === 'outside' ? 'start' : 'end',
         };
       } else {
         // top
@@ -65,7 +66,8 @@
           y: point.y + (placement === 'outside' ? -offset : offset),
           capHeight: '.6rem',
           textAnchor: 'middle',
-          verticalAnchor: placement === 'outside' ? 'end' : 'start',
+          verticalAnchor:
+            placement === 'center' ? 'middle' : placement === 'outside' ? 'end' : 'start',
         };
       }
     }
