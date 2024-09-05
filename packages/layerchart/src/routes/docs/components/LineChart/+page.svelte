@@ -39,36 +39,6 @@
 
 <h1>Examples</h1>
 
-<h2>Radar</h2>
-
-<Preview data={pitchData}>
-  <div class="h-[300px] p-4 border rounded">
-    <LineChart
-      data={pitchData}
-      x="name"
-      xScale={scaleBand()}
-      xDomain={pitchData.map((d) => d.name)}
-      y="value"
-      yPadding={[0, 10]}
-      padding={{ top: 32, bottom: 8 }}
-      radial
-      props={{
-        spline: {
-          class: 'stroke-primary fill-primary/20',
-        },
-        yAxis: {
-          ticks: [0, 5, 10],
-          format: (d) => '',
-        },
-      }}
-    >
-      <svelte:fragment slot="after-marks">
-        <Points class="fill-primary stroke-surface-200" />
-      </svelte:fragment>
-    </LineChart>
-  </div>
-</Preview>
-
 <h2>Basic</h2>
 
 <Preview data={dateSeriesData}>
@@ -150,6 +120,73 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <LineChart data={dateSeriesData} x="date" y="value" labels={{ offset: 10 }} />
+  </div>
+</Preview>
+
+<h2>Points</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart data={dateSeriesData} x="date" y="value" points />
+  </div>
+</Preview>
+
+<h2>Labels with Points</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart data={dateSeriesData} x="date" y="value" points labels={{ offset: 10 }} />
+  </div>
+</Preview>
+
+<h2>Labels within points</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      points={{ r: 12 }}
+      labels={{ placement: 'center', class: 'text-xs fill-surface-300' }}
+      props={{
+        highlight: {
+          points: false,
+        },
+      }}
+    />
+  </div>
+</Preview>
+
+<h2>Radar</h2>
+
+<Preview data={pitchData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart
+      data={pitchData}
+      x="name"
+      xScale={scaleBand()}
+      y="value"
+      padding={{ top: 32, bottom: 8 }}
+      yPadding={[0, 10]}
+      radial
+      points
+      props={{
+        spline: {
+          class: 'stroke-primary fill-primary/20',
+        },
+        yAxis: {
+          ticks: [0, 5, 10],
+          format: (d) => '',
+          grid: {
+            class: 'stroke-surface-content/20 fill-surface-200/50',
+          },
+        },
+        highlight: {
+          lines: false,
+        },
+      }}
+    />
   </div>
 </Preview>
 

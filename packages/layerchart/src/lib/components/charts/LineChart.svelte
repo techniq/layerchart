@@ -63,7 +63,7 @@
   yRange={$$props.yRange ?? (radial ? ({ height }) => [0, height / 2] : undefined)}
   yNice
   padding={{ left: 16, bottom: 16 }}
-  tooltip={{ mode: 'bisect-x' }}
+  tooltip={{ mode: radial ? 'voronoi' : 'bisect-x' }}
   {radial}
   {...$$restProps}
   let:x
