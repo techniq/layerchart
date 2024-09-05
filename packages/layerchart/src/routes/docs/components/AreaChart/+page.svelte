@@ -76,7 +76,7 @@
       x="date"
       y="value"
       yDomain={null}
-      props={{ axisBottom: { rule: false } }}
+      props={{ xAxis: { rule: false } }}
     >
       <svelte:fragment slot="marks" let:yScale let:height let:padding>
         {@const thresholdValue = 0}
