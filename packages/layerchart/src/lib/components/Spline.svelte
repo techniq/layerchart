@@ -64,8 +64,8 @@
     }
   }
 
-  const _x = accessor(x);
-  const _y = accessor(y);
+  const xAccessor = x ? accessor(x) : $contextX;
+  const yAccessor = y ? accessor(y) : $contextY;
 
   $: xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
   $: yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
@@ -77,13 +77,15 @@
   $: {
     const path = $radial
       ? lineRadial()
-          .angle((d) => getScaleValue(d, $xScale, x ? _x : $contextX))
-          .radius((d) => getScaleValue(d, $yScale, y ? _y : $contextY))
+          .angle((d) => getScaleValue(d, $xScale, xAccessor))
+          .radius((d) => getScaleValue(d, $yScale, yAccessor))
       : d3Line()
-          .x((d) => getScaleValue(d, $xScale, x ? _x : $contextX) + xOffset)
-          .y((d) => getScaleValue(d, $yScale, y ? _y : $contextY) + yOffset);
+          .x((d) => getScaleValue(d, $xScale, xAccessor) + xOffset)
+          .y((d) => getScaleValue(d, $yScale, yAccessor) + yOffset);
+
+    path.defined(defined ?? ((d) => xAccessor(d) != null && yAccessor(d) != null));
+
     if (curve) path.curve(curve);
-    if (defined) path.defined(defined);
 
     d = pathData ?? path(data ?? $contextData) ?? '';
     tweened_d.set(d);

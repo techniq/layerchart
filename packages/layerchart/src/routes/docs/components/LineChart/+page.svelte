@@ -17,6 +17,12 @@
   import { createDateSeries } from '$lib/utils/genData.js';
 
   const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
+  $: dateSeriesDataWithNulls = dateSeriesData.map((d) => {
+    return {
+      ...d,
+      value: Math.random() < 0.2 ? null : d.value,
+    };
+  });
 
   const keys = ['apples', 'bananas', 'oranges'];
   const multiSeriesData = createDateSeries({
@@ -187,6 +193,33 @@
         },
       }}
     />
+  </div>
+</Preview>
+
+<h2>Null gaps</h2>
+
+<Preview data={dateSeriesDataWithNulls}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart data={dateSeriesDataWithNulls} x="date" y="value" />
+  </div>
+</Preview>
+
+<h2>Null with dashed lines</h2>
+
+<Preview data={dateSeriesDataWithNulls}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart data={dateSeriesDataWithNulls} x="date" y="value">
+      <svelte:fragment slot="before-marks" let:series>
+        {#each series as s}
+          <Spline
+            data={dateSeriesDataWithNulls.filter((d) => d.value !== null)}
+            y={s.value}
+            class="stroke-2 [stroke-dasharray:3,3]"
+            stroke={s.color}
+          />
+        {/each}
+      </svelte:fragment>
+    </LineChart>
   </div>
 </Preview>
 
