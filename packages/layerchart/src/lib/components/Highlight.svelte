@@ -213,7 +213,6 @@
             .filter((d) => d.point); // remove if no point found (ex. Histogram);
 
           _points = seriesPointsData.map((seriesPoint, i) => {
-            console.log({ seriesPoint });
             return {
               x: $xScale(seriesPoint.point[1]) + xOffset,
               y: yCoord + yOffset,
@@ -271,7 +270,7 @@
           };
         });
       }
-    } else {
+    } else if (xCoord != null && yCoord != null) {
       _points = [
         {
           x: xCoord + xOffset,
@@ -279,6 +278,8 @@
           fill: $config.r ? $rGet(highlightData) : null,
         },
       ];
+    } else {
+      _points = [];
     }
 
     if ($radial) {
