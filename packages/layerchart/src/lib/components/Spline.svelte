@@ -133,7 +133,7 @@
   <path
     d={$tweened_d}
     {...$$restProps}
-    class={cls('path-line fill-none', !$$props.stroke && 'stroke-surface-content', $$props.class)}
+    class={cls('path-line', !$$props.fill && 'fill-none', !$$props.stroke && 'stroke-surface-content', $$props.class)}
     in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
     on:click
     on:pointermove
