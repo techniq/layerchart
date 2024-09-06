@@ -22,6 +22,13 @@
   export let data;
 
   const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
+  $: dateSeriesDataWithNulls = dateSeriesData.map((d) => {
+    return {
+      ...d,
+      value: Math.random() < 0.2 ? null : d.value,
+    };
+  });
+
   const negativeDateSeriesData = createDateSeries({
     count: 30,
     min: -20,
@@ -271,6 +278,16 @@
     </AreaChart>
   </div>
 </Preview>
+
+<h2>Null gaps</h2>
+
+<Preview data={dateSeriesDataWithNulls}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart data={dateSeriesDataWithNulls} x="date" y="value" />
+  </div>
+</Preview>
+
+<!-- TODO: Add "Null with filled gaps" using clipped paths -->
 
 <h2>Custom tooltip</h2>
 
