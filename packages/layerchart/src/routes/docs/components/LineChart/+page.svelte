@@ -209,7 +209,7 @@
 <Preview data={dateSeriesDataWithNulls}>
   <div class="h-[300px] p-4 border rounded">
     <LineChart data={dateSeriesDataWithNulls} x="date" y="value">
-      <svelte:fragment slot="before-marks" let:series>
+      <svelte:fragment slot="below-marks" let:series>
         {#each series as s}
           <Spline
             data={dateSeriesDataWithNulls.filter((d) => d.value !== null)}

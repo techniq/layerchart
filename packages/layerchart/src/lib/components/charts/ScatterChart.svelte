@@ -73,13 +73,13 @@
         />
       </slot>
 
-      <slot name="before-marks" {...slotProps} />
+      <slot name="below-marks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
         <Points class="fill-primary/10 stroke-primary" {...props.points} />
       </slot>
 
-      <slot name="after-marks" {...slotProps} />
+      <slot name="above-marks" {...slotProps} />
 
       <slot name="highlight" {...slotProps}>
         <Highlight points lines axis="both" {...props.highlight} />

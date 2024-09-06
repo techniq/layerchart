@@ -113,7 +113,7 @@
   {@const slotProps = { label, value, x, xScale, y, yScale, width, height, padding, tooltip }}
   <slot {...slotProps}>
     <Svg>
-      <slot name="before-marks" {...slotProps} />
+      <slot name="below-marks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
         <Pie
@@ -162,7 +162,7 @@
         </Pie>
       </slot>
 
-      <slot name="after-marks" {...slotProps} />
+      <slot name="above-marks" {...slotProps} />
     </Svg>
 
     <slot name="tooltip" {...slotProps}>

@@ -95,7 +95,7 @@
         />
       </slot>
 
-      <slot name="before-marks" {...slotProps} />
+      <slot name="below-marks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
         {#each series as s}
@@ -110,7 +110,7 @@
         {/each}
       </slot>
 
-      <slot name="after-marks" {...slotProps} />
+      <slot name="above-marks" {...slotProps} />
 
       {#if points}
         {#each series as s, i}

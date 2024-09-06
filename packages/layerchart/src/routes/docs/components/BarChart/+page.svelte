@@ -96,7 +96,7 @@
         },
       ]}
     >
-      <svelte:fragment slot="after-marks">
+      <svelte:fragment slot="above-marks">
         <Rule y={0} />
       </svelte:fragment>
     </BarChart>
@@ -135,7 +135,7 @@
         },
       ]}
     >
-      <svelte:fragment slot="after-marks">
+      <svelte:fragment slot="above-marks">
         <Rule x={0} />
       </svelte:fragment>
 
@@ -198,7 +198,7 @@
         },
       ]}
     >
-      <svelte:fragment slot="after-marks">
+      <svelte:fragment slot="above-marks">
         <Rule x={0} />
       </svelte:fragment>
 
