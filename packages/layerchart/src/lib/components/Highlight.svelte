@@ -101,7 +101,7 @@
           ..._lines,
           ...xCoord.filter(notNull).map((xItem, i) => ({
             x1: xItem + xOffset,
-            y1: 0,
+            y1: min($yRange) as unknown as number,
             x2: xItem + xOffset,
             y2: max($yRange) as unknown as number,
           })),
@@ -111,7 +111,7 @@
           ..._lines,
           {
             x1: xCoord + xOffset,
-            y1: 0,
+            y1: min($yRange) as unknown as number,
             x2: xCoord + xOffset,
             y2: max($yRange) as unknown as number,
           },
@@ -149,7 +149,7 @@
         _lines = [
           ..._lines,
           ...yCoord.filter(notNull).map((yItem, i) => ({
-            x1: 0,
+            x1: min($xRange) as unknown as number,
             y1: yItem + yOffset,
             x2: max($xRange) as unknown as number,
             y2: yItem + yOffset,
@@ -159,7 +159,7 @@
         _lines = [
           ..._lines,
           {
-            x1: 0,
+            x1: min($xRange) as unknown as number,
             y1: yCoord + yOffset,
             x2: max($xRange) as unknown as number,
             y2: yCoord + yOffset,
