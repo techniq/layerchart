@@ -59,7 +59,7 @@
 <h2>Custom tooltip</h2>
 
 <Preview data={spiralData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded">
     <ScatterChart data={spiralData} x="x" y="y">
       <svelte:fragment slot="tooltip" let:x let:y let:padding let:height>
         <Tooltip.Root
