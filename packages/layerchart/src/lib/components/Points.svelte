@@ -69,52 +69,54 @@
 
   $: pointsData = data ?? $contextData;
 
-  $: points = pointsData.flatMap((d: any) => {
-    const xValue = $x(d);
-    const yValue = $y(d);
+  $: points = pointsData
+    .flatMap((d: any) => {
+      const xValue = $x(d);
+      const yValue = $y(d);
 
-    if (Array.isArray(xValue)) {
-      /*
+      if (Array.isArray(xValue)) {
+        /*
 				x={["prop1" ,"prop2"]}
 				y="prop3"
 			*/
-      return xValue.filter(notNull).map((xValue: number) => {
-        return {
-          x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
-          y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
-          xValue,
-          yValue: $y(d),
-          data: d,
-        };
-      });
-    } else if (Array.isArray(yValue)) {
-      /*
+        return xValue.filter(notNull).map((xValue: number) => {
+          return {
+            x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
+            y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
+            xValue,
+            yValue: $y(d),
+            data: d,
+          };
+        });
+      } else if (Array.isArray(yValue)) {
+        /*
 				x="prop1"
 				y={["prop2" ,"prop3"]}
 			*/
-      return yValue.filter(notNull).map((yValue: number) => {
+        return yValue.filter(notNull).map((yValue: number) => {
+          return {
+            x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
+            y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
+            xValue,
+            yValue: $y(d),
+            data: d,
+          };
+        });
+      } else if (xValue != null && yValue != null) {
+        /*
+				x="prop1"
+				y="prop2"
+			*/
         return {
           x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
           y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
           xValue,
-          yValue: $y(d),
+          yValue,
           data: d,
         };
-      });
-    } else {
-      /*
-				x="prop1"
-				y="prop2"
-			*/
-      return {
-        x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
-        y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
-        xValue,
-        yValue,
-        data: d,
-      };
-    }
-  }) as Point[];
+      }
+    })
+    .filter((p: Point) => p) as Point[];
 
   $: _links = pointsData.flatMap((d: any) => {
     const xValue = $x(d);
