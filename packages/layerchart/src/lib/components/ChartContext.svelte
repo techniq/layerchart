@@ -133,6 +133,8 @@
 
   // Added to try to pass TData downward
   export let data: TData[] | HierarchyNode<TData> | SankeyGraph<any, any> = []; // Same as `ComponentProps<Chart<TData>>` but causes circular reference
+
+  $: config = chartContext.config;
 </script>
 
-<slot {data} flatData={chartContext.data} config={chartContext.config} />
+<slot {data} flatData={chartContext.data} config={$config} />
