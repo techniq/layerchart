@@ -14,12 +14,21 @@
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
 
   interface $$Props extends ComponentProps<Chart<TData>> {
+    series?: typeof series;
     labels?: typeof labels;
   }
 
   export let data: $$Props['data'] = [];
   export let x: Accessor<TData> = undefined;
   export let y: Accessor<TData> = undefined;
+
+  export let series: {
+    key: string;
+    label?: string;
+    data: TData[];
+    color?: string;
+    props?: Partial<ComponentProps<Points>>;
+  }[] = [{ key: 'default', data: chartDataArray(data), color: 'hsl(var(--color-primary))' }];
 
   export let labels: ComponentProps<Labels> | boolean = false;
 
@@ -33,10 +42,14 @@
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
   } = {};
+
+  let chartData = series
+    .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
+    .filter((d) => d) as Array<TData>;
 </script>
 
 <Chart
-  {data}
+  data={chartData}
   {x}
   {xScale}
   {y}
@@ -52,8 +65,13 @@
   let:height
   let:padding
   let:tooltip
+  let:config
 >
-  {@const slotProps = { x, xScale, y, yScale, width, height, padding, tooltip }}
+  {@const slotProps = { x, xScale, y, yScale, width, height, padding, tooltip, series }}
+  {@const activeSeries = tooltip.data
+    ? (series.find((s) => s.key === tooltip.data.seriesKey) ?? series[0])
+    : null}
+
   <slot {...slotProps}>
     <Svg>
       <slot name="axis" {...slotProps}>
@@ -76,13 +94,22 @@
       <slot name="below-marks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        <Points class="fill-primary/10 stroke-primary" {...props.points} />
+        {#each series as s}
+          <Points
+            data={s.data}
+            stroke={s.color}
+            fill={s.color}
+            fill-opacity={0.3}
+            {...props.points}
+            {...s.props}
+          />
+        {/each}
       </slot>
 
       <slot name="above-marks" {...slotProps} />
 
       <slot name="highlight" {...slotProps}>
-        <Highlight points lines axis="both" {...props.highlight} />
+        <Highlight points={{ fill: activeSeries?.color }} lines axis="both" {...props.highlight} />
       </slot>
 
       {#if labels}
@@ -96,9 +123,14 @@
 
     <slot name="tooltip" {...slotProps}>
       <Tooltip.Root let:data>
-        <Tooltip.Header>{format(x(data))}</Tooltip.Header>
+        {#if activeSeries?.key !== 'default'}
+          <Tooltip.Header color={activeSeries?.color}>
+            {activeSeries?.label ?? activeSeries?.key}
+          </Tooltip.Header>
+        {/if}
         <Tooltip.List>
-          <Tooltip.Item label="value" value={y(data)} {format} />
+          <Tooltip.Item label={typeof config.x ? config.x : 'x'} value={x(data)} {format} />
+          <Tooltip.Item label={typeof config.y ? config.y : 'y'} value={y(data)} {format} />
         </Tooltip.List>
       </Tooltip.Root>
     </slot>

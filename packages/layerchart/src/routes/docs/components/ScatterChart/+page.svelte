@@ -1,36 +1,66 @@
 <script lang="ts">
   import { Axis, Highlight, Points, ScatterChart, Svg, Tooltip } from 'layerchart';
   import { format } from '@layerstack/utils';
+  import { flatGroup } from 'd3-array';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { getSpiral } from '$lib/utils/genData.js';
 
-  const data = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
+  export let data;
+
+  const spiralData = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
+
+  const penguinDataBySpecies = flatGroup(
+    data.penguins.filter((d) => d.flipper_length_mm !== 'NA' && d.bill_length_mm !== 'NA'),
+    (d) => d.species
+  );
 </script>
 
 <h1>Examples</h1>
 
 <h2>Basic</h2>
 
-<Preview {data}>
+<Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded">
-    <ScatterChart {data} x="x" y="y" />
+    <ScatterChart data={spiralData} x="x" y="y" />
+  </div>
+</Preview>
+
+<h2>Series</h2>
+
+<Preview data={penguinDataBySpecies}>
+  <div class="h-[400px] p-4 border rounded">
+    <ScatterChart
+      x="flipper_length_mm"
+      y="bill_length_mm"
+      series={penguinDataBySpecies.map(([species, data], i) => {
+        return {
+          key: species,
+          data,
+          color: [
+            'hsl(var(--color-primary))',
+            'hsl(var(--color-secondary))',
+            'hsl(var(--color-success))',
+          ][i],
+        };
+      })}
+    />
   </div>
 </Preview>
 
 <h2>Labels</h2>
 
-<Preview {data}>
+<Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded">
-    <ScatterChart {data} x="x" y="y" labels={{ offset: 10 }} />
+    <ScatterChart data={spiralData} x="x" y="y" labels={{ offset: 10 }} />
   </div>
 </Preview>
 
 <h2>Custom tooltip</h2>
 
-<Preview {data}>
+<Preview data={spiralData}>
   <div class="h-[300px] p-4 border rounded">
-    <ScatterChart {data} x="x" y="y">
+    <ScatterChart data={spiralData} x="x" y="y">
       <svelte:fragment slot="tooltip" let:x let:y let:padding let:height>
         <Tooltip.Root
           x={padding.left}
@@ -60,9 +90,9 @@
 
 <h2>Custom chart</h2>
 
-<Preview {data}>
+<Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded">
-    <ScatterChart {data} x="x" y="y" let:x let:y>
+    <ScatterChart data={spiralData} x="x" y="y" let:x let:y>
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" grid rule />
