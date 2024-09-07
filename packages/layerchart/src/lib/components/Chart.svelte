@@ -308,7 +308,7 @@
       ? geoFitObjectTransform(geo.projection(), [width, height], geo.fitGeojson)
       : undefined}
 
-  <ChartContext {data} {radial} let:data let:flatData on:resize>
+  <ChartContext {data} {radial} let:data let:flatData let:config on:resize>
     {#key isMounted}
       <TransformContext
         bind:this={transformContext}
@@ -370,6 +370,7 @@
               {padding}
               {data}
               {flatData}
+              {config}
             />
           </TooltipContext>
         </GeoContext>
