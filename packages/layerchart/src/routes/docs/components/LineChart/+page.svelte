@@ -36,6 +36,15 @@
     { name: 'cutter', value: 8 },
     { name: 'curve', value: 5 },
   ];
+
+  const budgetData = [
+    { name: 'Sales', budget: 22000, actual: 40000 },
+    { name: 'Administration', budget: 3000, actual: 14000 },
+    { name: 'Information Technology', budget: 20000, actual: 28000 },
+    { name: 'Customer Support', budget: 35000, actual: 26000 },
+    { name: 'Development', budget: 50000, actual: 42000 },
+    { name: 'Marketing', budget: 18000, actual: 21000 },
+  ];
 </script>
 
 <h1>Examples</h1>
@@ -183,6 +192,41 @@
           grid: {
             class: 'stroke-surface-content/20 fill-surface-200/50',
           },
+        },
+        highlight: {
+          lines: false,
+        },
+      }}
+      tooltip={{ mode: 'voronoi' }}
+    />
+  </div>
+</Preview>
+
+<h2>Radar with series data</h2>
+
+<Preview data={budgetData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart
+      data={budgetData}
+      x="name"
+      xScale={scaleBand()}
+      yPadding={[0, 10]}
+      radial
+      series={[
+        {
+          key: 'budget',
+          color: 'hsl(var(--color-secondary))',
+          props: { class: 'fill-secondary/50' },
+        },
+        { key: 'actual', color: 'hsl(var(--color-primary))', props: { class: 'fill-primary/50' } },
+      ]}
+      props={{
+        spline: {
+          curve: curveLinearClosed,
+        },
+        yAxis: {
+          ticks: 4,
+          format: 'metric',
         },
         highlight: {
           lines: false,
