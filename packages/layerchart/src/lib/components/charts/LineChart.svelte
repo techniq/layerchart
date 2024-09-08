@@ -31,17 +31,17 @@
   export let radial = false;
 
   export let series: {
+    key: string | number;
     label?: string;
-    value: Accessor<TData>;
+    value?: Accessor<TData>;
+    /** Provider series data, else uses chart data (with value/key accessor) */
+    data?: TData[];
     color?: string;
     props?: Partial<ComponentProps<Spline>>;
-  }[] = [{ value: y, color: 'hsl(var(--color-primary))' }];
+  }[] = [{ key: 'default', value: y, color: 'hsl(var(--color-primary))' }];
 
   export let labels: ComponentProps<Labels> | boolean = false;
   export let points: ComponentProps<Points> | boolean = false;
-
-  // Default xScale based on first data's `x` value
-  $: xScale = accessor(x)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear();
 
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
@@ -51,20 +51,31 @@
     labels?: Partial<ComponentProps<Labels>>;
     points?: Partial<ComponentProps<Points>>;
   } = {};
+
+  $: allSeriesData = series
+    .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
+    .filter((d) => d) as Array<TData & { stackData?: any }>;
+
+  $: chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<
+    TData & { stackData?: any }
+  >;
+
+  // Default xScale based on first data's `x` value
+  $: xScale = accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear();
 </script>
 
 <Chart
-  {data}
+  data={chartData}
   {x}
   {xScale}
   xRange={$$props.xRange ?? (radial ? [0, 2 * Math.PI] : undefined)}
-  y={y ?? series.map((d) => d.value)}
+  y={y ?? series.map((s) => s.value ?? s.key)}
   yDomain={[0, null]}
   yRange={$$props.yRange ?? (radial ? ({ height }) => [0, height / 2] : undefined)}
   yNice
   {radial}
   padding={radial ? undefined : { left: 16, bottom: 16 }}
-  tooltip={{ mode: radial ? 'voronoi' : 'bisect-x' }}
+  tooltip={{ mode: 'bisect-x' }}
   {...$$restProps}
   let:x
   let:xScale
@@ -100,8 +111,8 @@
       <slot name="marks" {...slotProps}>
         {#each series as s}
           <Spline
-            y={s.value}
-            curve={radial ? curveLinearClosed : undefined}
+            data={s.data}
+            y={s.value ?? (s.data ? undefined : s.key)}
             class="stroke-2"
             stroke={s.color}
             {...props.spline}
@@ -113,8 +124,9 @@
       <slot name="above-marks" {...slotProps} />
 
       {#if points}
-        {#each series as s, i}
+        {#each series as s}
           <Points
+            data={s.data}
             fill={s.color}
             class="stroke-surface-200"
             {...props.points}
@@ -129,7 +141,13 @@
 
       <slot name="highlight" {...slotProps}>
         {#each series as s, i}
-          <Highlight y={s.value} points={{ fill: s.color }} lines={i === 0} {...props.highlight} />
+          <Highlight
+            data={s.data}
+            y={s.value ?? s.key}
+            points={{ fill: s.color }}
+            lines={i === 0}
+            {...props.highlight}
+          />
         {/each}
       </slot>
     </Svg>
@@ -139,9 +157,9 @@
         <Tooltip.Header>{format(x(data))}</Tooltip.Header>
         <Tooltip.List>
           {#each series as s}
-            {@const valueAccessor = accessor(s.value)}
+            {@const valueAccessor = accessor(s.value ?? s.key)}
             <Tooltip.Item
-              label={s.label ?? 'value'}
+              label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
               value={valueAccessor(data)}
               color={s.color}
               {format}

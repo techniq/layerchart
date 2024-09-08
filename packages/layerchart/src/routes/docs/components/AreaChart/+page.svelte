@@ -12,7 +12,7 @@
     Spline,
   } from 'layerchart';
   import { PeriodType } from 'svelte-ux';
-  import { format, formatDate } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -117,7 +117,7 @@
       <svelte:fragment slot="tooltip" let:x let:y>
         <Tooltip.Root let:data>
           {@const value = y(data)}
-          <Tooltip.Header>{format(x(data), PeriodType.DayTime)}</Tooltip.Header>
+          <Tooltip.Header>{format(x(data), PeriodType.Day)}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item
               label="value"
@@ -328,7 +328,7 @@
           contained={false}
           let:data
         >
-          {formatDate(x(data), PeriodType.Day)}
+          {format(x(data), PeriodType.Day)}
         </Tooltip.Root>
       </svelte:fragment>
     </AreaChart>

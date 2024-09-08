@@ -35,6 +35,7 @@
     key: string;
     label?: string;
     value?: Accessor<TData>;
+    /** Provider series data, else uses chart data (with value/key accessor) */
     data?: TData[];
     color?: string;
     props?: Partial<ComponentProps<Area>>;
@@ -153,7 +154,7 @@
       <slot name="above-marks" {...slotProps} />
 
       {#if points}
-        {#each series as s, i}
+        {#each series as s}
           <Points
             data={s.data}
             fill={s.color}
