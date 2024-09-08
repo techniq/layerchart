@@ -45,6 +45,7 @@
 
   import { localPoint } from '$lib/utils/event.js';
   import { isScaleBand, scaleInvert } from '$lib/utils/scales.js';
+  import { cartesianToPolar } from '$lib/utils/math.js';
   import { quadtreeRects } from '$lib/utils/quadtree.js';
 
   const {
@@ -62,6 +63,7 @@
     containerWidth,
     containerHeight,
     padding,
+    radial,
   } = chartContext<any>();
 
   /*
@@ -191,8 +193,14 @@
     if (tooltipData == null) {
       switch (mode) {
         case 'bisect-x': {
-          // `x` value at pointer coordinate
-          const xValueAtPoint = scaleInvert($xScale, localX - $padding.left);
+          let xValueAtPoint: any;
+          if ($radial) {
+            // Assume radial is always centered
+            const { radians } = cartesianToPolar(localX - $width / 2, localY - $height / 2);
+            xValueAtPoint = scaleInvert($xScale, radians);
+          } else {
+            xValueAtPoint = scaleInvert($xScale, localX - $padding.left);
+          }
 
           const index = bisectX($flatData, xValueAtPoint, 1);
           const previousValue = $flatData[index - 1];
