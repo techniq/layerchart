@@ -34,7 +34,7 @@
   export let series: {
     key: string;
     label?: string;
-    value: Accessor<TData>;
+    value?: Accessor<TData>;
     data?: TData[];
     color?: string;
     props?: Partial<ComponentProps<Area>>;
@@ -64,15 +64,7 @@
   >;
 
   $: if (stackSeries) {
-    const seriesKeys = series.map((s) => {
-      if (typeof s.value === 'string') {
-        return s.value;
-      } else {
-        throw new Error(
-          `Unsupported series type: ${s.value}.  'stackSeries' currently requires string values`
-        );
-      }
-    });
+    const seriesKeys = series.map((s) => s.key);
 
     const stackData = stack().keys(seriesKeys)(chartDataArray(data)) as any[];
 
@@ -94,7 +86,9 @@
   {xScale}
   xRange={$$props.xRange ?? (radial ? [0, 2 * Math.PI] : undefined)}
   y={y ??
-    (stackSeries ? (d) => series.map((s, i) => d.stackData[i][1]) : series.map((s) => s.value))}
+    (stackSeries
+      ? (d) => series.map((s, i) => d.stackData[i][1])
+      : series.map((s) => s.value ?? s.key))}
   yDomain={[0, null]}
   yRange={$$props.yRange ?? (radial ? ({ height }) => [0, height / 2] : undefined)}
   yNice
@@ -146,7 +140,7 @@
               ? (d) => d.stackData[i][1]
               : Array.isArray(s.value)
                 ? s.value[1]
-                : s.value}
+                : (s.value ?? s.key)}
             line={{ class: 'stroke-2', stroke: s.color }}
             fill={s.color}
             fill-opacity={0.3}
@@ -173,7 +167,7 @@
       <slot name="highlight" {...slotProps}>
         {#each series as s, i}
           <Highlight
-            y={stackSeries ? (d) => d.stackData[i][1] : s.value}
+            y={stackSeries ? (d) => d.stackData[i][1] : (s.value ?? s.key)}
             points={{ fill: s.color }}
             lines={i == 0}
             {...props.highlight}
@@ -193,9 +187,9 @@
           <!-- Reverse series order so tooltip items match stacks -->
           {@const seriesItems = stackSeries ? [...series].reverse() : series}
           {#each seriesItems as s}
-            {@const valueAccessor = accessor(s.value)}
+            {@const valueAccessor = accessor(s.value ?? s.key)}
             <Tooltip.Item
-              label={s.label ?? 'value'}
+              label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
               value={valueAccessor(data)}
               color={s.color}
               {format}
@@ -209,7 +203,7 @@
             <Tooltip.Item
               label="total"
               value={sum(series, (s) => {
-                const valueAccessor = accessor(s.value);
+                const valueAccessor = accessor(s.value ?? s.key);
                 return valueAccessor(data);
               })}
               format="integer"

@@ -18,6 +18,7 @@
   import { createDateSeries } from '$lib/utils/genData.js';
   import { scaleUtc } from 'd3-scale';
   import { curveCatmullRom } from 'd3-shape';
+  import { group } from 'd3-array';
 
   export let data;
 
@@ -45,6 +46,7 @@
     keys,
   });
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
+  const multiSeriesDataByFruit = group(multiSeriesFlatData, (d) => d.fruit);
 </script>
 
 <h1>Examples</h1>
@@ -137,15 +139,13 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { label: 'apples', value: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
         {
-          label: 'bananas',
-          value: 'bananas',
+          key: 'bananas',
           color: 'hsl(var(--color-success))',
         },
         {
-          label: 'oranges',
-          value: 'oranges',
+          key: 'oranges',
           color: 'hsl(var(--color-warning))',
         },
       ]}
@@ -155,22 +155,25 @@
 
 <h2>Series (highlight on hover)</h2>
 
-<Preview data={multiSeriesFlatData}>
+<Preview data={multiSeriesDataByFruit}>
   <div class="h-[300px] p-4 border rounded">
     <AreaChart
-      data={multiSeriesFlatData}
       x="date"
       y="value"
       series={[
-        { label: 'apples', value: 'apples', color: 'hsl(var(--color-danger))' },
         {
-          label: 'bananas',
-          value: 'bananas',
+          key: 'apples',
+          data: multiSeriesDataByFruit.get('apples'),
+          color: 'hsl(var(--color-danger))',
+        },
+        {
+          key: 'bananas',
+          data: multiSeriesDataByFruit.get('bananas'),
           color: 'hsl(var(--color-success))',
         },
         {
-          label: 'oranges',
-          value: 'oranges',
+          key: 'oranges',
+          data: multiSeriesDataByFruit.get('oranges'),
           color: 'hsl(var(--color-warning))',
         },
       ]}
@@ -179,13 +182,12 @@
       <svelte:fragment slot="marks" let:series let:tooltip>
         {#each series as s}
           {@const color =
-            tooltip.data == null || tooltip.data.fruit === s.value
+            tooltip.data == null || tooltip.data.fruit === s.key
               ? s.color
               : 'hsl(var(--color-surface-content) / 20%)'}
 
           <Area
-            data={multiSeriesData}
-            y1={s.value}
+            data={s.data}
             line={{ class: 'stroke-2', stroke: color }}
             fill={color}
             fill-opacity={0.3}
@@ -195,13 +197,13 @@
 
       <svelte:fragment slot="highlight" let:series let:tooltip>
         <!-- TODO: Remove hack to make typescript happy -->
-        {@const activeSeries = [...series].find((s) => s.value === tooltip.data?.fruit)}
+        {@const activeSeries = [...series].find((s) => s.key === tooltip.data?.fruit)}
         <Highlight lines points={{ fill: activeSeries?.color }} />
       </svelte:fragment>
 
       <svelte:fragment slot="tooltip" let:x let:series let:tooltip>
         <!-- TODO: Remove hack to make typescript happy -->
-        {@const activeSeries = [...series].find((s) => s.value === tooltip.data?.fruit)}
+        {@const activeSeries = [...series].find((s) => s.key === tooltip.data?.fruit)}
         <Tooltip.Root slot="tooltip" let:data>
           <Tooltip.Header>{format(x(data))}</Tooltip.Header>
           <Tooltip.List>
@@ -221,15 +223,13 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { label: 'apples', value: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
         {
-          label: 'bananas',
-          value: 'bananas',
+          key: 'bananas',
           color: 'hsl(var(--color-success))',
         },
         {
-          label: 'oranges',
-          value: 'oranges',
+          key: 'oranges',
           color: 'hsl(var(--color-warning))',
         },
       ]}
@@ -243,6 +243,14 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <AreaChart data={dateSeriesData} x="date" y="value" labels />
+  </div>
+</Preview>
+
+<h2>Points</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart data={dateSeriesData} x="date" y="value" points />
   </div>
 </Preview>
 
@@ -264,8 +272,14 @@
         highlight: { points: false },
       }}
       series={[
-        { label: 'min/max', value: ['min', 'max'], color: 'hsl(var(--color-primary) / 20%)' },
         {
+          key: 'min_max',
+          label: 'min/max',
+          value: ['min', 'max'],
+          color: 'hsl(var(--color-primary) / 20%)',
+        },
+        {
+          key: 'minmin_maxmax',
           label: 'minmin/maxmax',
           value: ['minmin', 'maxmax'],
           color: 'hsl(var(--color-primary) / 20%)',
@@ -283,7 +297,7 @@
 
 <Preview data={dateSeriesDataWithNulls}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={dateSeriesDataWithNulls} x="date" y="value" />
+    <AreaChart data={dateSeriesDataWithNulls} x="date" y="value" points />
   </div>
 </Preview>
 
