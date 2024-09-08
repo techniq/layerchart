@@ -26,12 +26,21 @@ export function polarToCartesian(angle: number, radius: number) {
 }
 
 /**
- * Convert cartesian to polar coordinate system.  Angle in radians
+ * Convert cartesian to polar coordinate system.  Angle in radians with 0 at the 12 o'clock position
  */
 export function cartesianToPolar(x: number, y: number) {
+  let radians = Math.atan2(y, x);
+
+  radians += Math.PI / 2;
+
+  // Ensure the result is between 0 and 2π
+  if (radians < 0) {
+    radians += 2 * Math.PI;
+  }
+
   return {
     radius: Math.sqrt(x ** 2 + y ** 2),
-    angle: Math.atan(y / x),
+    radians,
   };
 }
 
