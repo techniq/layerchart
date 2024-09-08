@@ -10,6 +10,7 @@
   import Chart from '../Chart.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
+  import Points from '../Points.svelte';
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
@@ -18,6 +19,7 @@
   interface $$Props extends ComponentProps<Chart<TData>> {
     series?: typeof series;
     labels?: typeof labels;
+    points?: typeof points;
     props?: typeof props;
     stackSeries?: typeof stackSeries;
   }
@@ -30,29 +32,37 @@
   export let radial = false;
 
   export let series: {
+    key: string;
     label?: string;
     value: Accessor<TData>;
+    data?: TData[];
     color?: string;
     props?: Partial<ComponentProps<Area>>;
-  }[] = [{ value: y, color: 'hsl(var(--color-primary))' }];
+  }[] = [{ key: 'default', value: y, color: 'hsl(var(--color-primary))' }];
 
   /** Stack instead of overlap series */
   export let stackSeries = false;
 
   export let labels: ComponentProps<Labels> | boolean = false;
-
-  // Default xScale based on first data's `x` value
-  $: xScale = accessor(x)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear();
+  export let points: ComponentProps<Points> | boolean = false;
 
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
     yAxis?: Partial<ComponentProps<Axis>>;
     area?: Partial<ComponentProps<Area>>;
+    points?: Partial<ComponentProps<Points>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
   } = {};
 
-  let chartData = chartDataArray(data) as Array<TData & { stackData?: any }>;
+  $: allSeriesData = series
+    .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
+    .filter((d) => d) as Array<TData & { stackData?: any }>;
+
+  $: chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<
+    TData & { stackData?: any }
+  >;
+
   $: if (stackSeries) {
     const seriesKeys = series.map((s) => {
       if (typeof s.value === 'string') {
@@ -73,6 +83,9 @@
       };
     });
   }
+
+  // Default xScale based on first data's `x` value
+  $: xScale = accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear();
 </script>
 
 <Chart
@@ -87,7 +100,7 @@
   yNice
   {radial}
   padding={radial ? undefined : { left: 16, bottom: 16 }}
-  tooltip={{ mode: radial ? 'voronoi' : 'bisect-x' }}
+  tooltip={{ mode: 'bisect-x' }}
   {...$$restProps}
   let:x
   let:xScale
@@ -123,6 +136,7 @@
       <slot name="marks" {...slotProps}>
         {#each series as s, i}
           <Area
+            data={s.data}
             y0={stackSeries
               ? (d) => d.stackData[i][0]
               : Array.isArray(s.value)
@@ -143,6 +157,18 @@
       </slot>
 
       <slot name="above-marks" {...slotProps} />
+
+      {#if points}
+        {#each series as s, i}
+          <Points
+            data={s.data}
+            fill={s.color}
+            class="stroke-surface-200"
+            {...props.points}
+            {...typeof points === 'object' ? points : null}
+          />
+        {/each}
+      {/if}
 
       <slot name="highlight" {...slotProps}>
         {#each series as s, i}
