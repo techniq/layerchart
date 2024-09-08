@@ -16,7 +16,6 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
-  import { scaleUtc } from 'd3-scale';
   import { curveCatmullRom } from 'd3-shape';
   import { group } from 'd3-array';
 
@@ -261,7 +260,6 @@
     <AreaChart
       data={data.sfoTemperatures}
       x="date"
-      xScale={scaleUtc()}
       y={['minmin', 'maxmax']}
       yRange={({ height }) => [height / 5, height / 2]}
       radial

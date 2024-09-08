@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Axis, Highlight, LineChart, pivotLonger, Spline, Svg, Tooltip } from 'layerchart';
-  import { scaleBand, scaleUtc } from 'd3-scale';
+  import { scaleBand } from 'd3-scale';
   import { curveLinearClosed } from 'd3-shape';
   import { flatGroup } from 'd3-array';
   import { PeriodType } from 'svelte-ux';
@@ -243,7 +243,6 @@
   <div class="h-[500px] p-4 border rounded">
     <LineChart
       x="date"
-      xScale={scaleUtc()}
       y="value"
       yDomain={null}
       yRange={({ height }) => [height / 5, height / 2]}
