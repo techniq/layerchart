@@ -32,11 +32,20 @@
   $: isVertical = orientation === 'vertical';
 
   export let series: {
+    key: string;
     label?: string;
-    value: Accessor<TData>;
+    value?: Accessor<TData>;
+    /** Provider series data, else uses chart data (with value/key accessor) */
+    data?: TData[];
     color?: string;
     props?: Partial<ComponentProps<Bars>>;
-  }[] = [{ value: orientation === 'vertical' ? y : x, color: 'hsl(var(--color-primary))' }];
+  }[] = [
+    {
+      key: 'default',
+      value: orientation === 'vertical' ? y : x,
+      color: 'hsl(var(--color-primary))',
+    },
+  ];
 
   /** Stack instead of overlap series */
   export let stackSeries = false;
@@ -58,18 +67,16 @@
     labels?: Partial<ComponentProps<Labels>>;
   } = {};
 
-  let chartData = chartDataArray(data) as Array<TData & { stackData?: any }>;
-  $: if (stackSeries) {
-    const seriesKeys = series.map((s) => {
-      if (typeof s.value === 'string') {
-        return s.value;
-      } else {
-        throw new Error(
-          `Unsupported series type: ${s.value}.  'stackSeries' currently requires string values`
-        );
-      }
-    });
+  $: allSeriesData = series
+    .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
+    .filter((d) => d) as Array<TData & { stackData?: any }>;
 
+  $: chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<
+    TData & { stackData?: any }
+  >;
+
+  $: if (stackSeries) {
+    const seriesKeys = series.map((s) => s.key);
     const stackData = stack().keys(seriesKeys)(chartDataArray(data)) as any[];
 
     chartData = chartData.map((d, i) => {
@@ -84,12 +91,16 @@
 <Chart
   data={chartData}
   x={x ??
-    (stackSeries ? (d) => series.map((s, i) => d.stackData[i][1]) : series.map((s) => s.value))}
+    (stackSeries
+      ? (d) => series.map((s, i) => d.stackData[i][1])
+      : series.map((s) => s.value ?? s.key))}
   {xScale}
   {xDomain}
   xNice={orientation === 'horizontal'}
   y={y ??
-    (stackSeries ? (d) => series.map((s, i) => d.stackData[i][1]) : series.map((s) => s.value))}
+    (stackSeries
+      ? (d) => series.map((s, i) => d.stackData[i][1])
+      : series.map((s) => s.value ?? s.key))}
   {yScale}
   {yDomain}
   yNice={orientation === 'vertical'}
@@ -130,8 +141,8 @@
       <slot name="marks" {...slotProps}>
         {#each series as s, i}
           <Bars
-            x={isVertical ? undefined : stackSeries ? (d) => d.stackData[i] : s.value}
-            y={isVertical ? (stackSeries ? (d) => d.stackData[i] : s.value) : undefined}
+            x={isVertical ? undefined : stackSeries ? (d) => d.stackData[i] : (s.value ?? s.key)}
+            y={isVertical ? (stackSeries ? (d) => d.stackData[i] : (s.value ?? s.key)) : undefined}
             radius={4}
             strokeWidth={1}
             fill={s.color}
@@ -159,9 +170,9 @@
           <!-- Reverse series order so tooltip items match stacks -->
           {@const seriesItems = stackSeries ? [...series].reverse() : series}
           {#each seriesItems as s}
-            {@const valueAccessor = accessor(s.value)}
+            {@const valueAccessor = accessor(s.value ?? s.key)}
             <Tooltip.Item
-              label={s.label ?? 'value'}
+              label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
               value={valueAccessor(data)}
               color={s.color}
               {format}
@@ -175,7 +186,7 @@
             <Tooltip.Item
               label="total"
               value={sum(series, (s) => {
-                const valueAccessor = accessor(s.value);
+                const valueAccessor = accessor(s.value ?? s.key);
                 return valueAccessor(data);
               })}
               format="integer"

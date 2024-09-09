@@ -45,10 +45,9 @@
       data={dateSeriesData}
       x="date"
       series={[
-        { label: 'baseline', value: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
+        { key: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
         {
-          label: 'value',
-          value: 'value',
+          key: 'value',
           color: 'hsl(var(--color-primary))',
           props: { inset: 16 },
         },
@@ -66,8 +65,8 @@
       y="date"
       orientation="horizontal"
       series={[
-        { label: 'baseline', value: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
-        { label: 'value', value: 'value', color: 'hsl(var(--color-primary))', props: { inset: 8 } },
+        { key: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
+        { key: 'value', color: 'hsl(var(--color-primary))', props: { inset: 8 } },
       ]}
     />
   </div>
@@ -83,13 +82,12 @@
       yDomain={null}
       series={[
         {
-          label: 'value',
-          value: 'value',
+          key: 'value',
           color: 'hsl(var(--color-primary))',
           props: { rounded: 'top' },
         },
         {
-          label: 'baseline',
+          key: 'baseline',
           value: (d) => -d.baseline,
           color: 'hsl(var(--color-secondary))',
           props: { rounded: 'bottom' },
@@ -112,7 +110,6 @@
       data={data.worldPopulationDemographics}
       xDomain={null}
       y="age"
-      yDomain={data.worldPopulationDemographics.map((d) => d.age)}
       orientation="horizontal"
       padding={{ left: 32, bottom: 16 }}
       labels={{ format: (value) => format(Math.abs(value), 'metric') }}
@@ -122,14 +119,13 @@
       }}
       series={[
         {
-          label: 'male',
+          key: 'male',
           value: (d) => -d.male,
           color: 'hsl(var(--color-primary))',
           props: { rounded: 'left' },
         },
         {
-          label: 'female',
-          value: 'female',
+          key: 'female',
           color: 'hsl(var(--color-secondary))',
           props: { rounded: 'right' },
         },
@@ -144,9 +140,9 @@
           <Tooltip.Header>Age: {format(y(data))}</Tooltip.Header>
           <Tooltip.List>
             {#each series as s}
-              {@const valueAccessor = accessor(s.value)}
+              {@const valueAccessor = accessor(s.value ?? s.key)}
               {@const value = Math.abs(valueAccessor(data))}
-              <Tooltip.Item label={s.label ?? 'value'} color={s.color}>
+              <Tooltip.Item label={s.key} color={s.color}>
                 {format(value)}
                 <span class="text-xs text-surface-content/50"
                   >({format(value / totalPopulation, 'percent')})</span
@@ -175,7 +171,6 @@
       data={data.worldPopulationDemographics}
       xDomain={null}
       y="age"
-      yDomain={data.worldPopulationDemographics.map((d) => d.age)}
       orientation="horizontal"
       padding={{ left: 32, bottom: 16 }}
       labels={{ format: (value) => format(Math.abs(value), 'percent') }}
@@ -185,13 +180,13 @@
       }}
       series={[
         {
-          label: 'male',
+          key: 'male',
           value: (d) => -d.male / totalPopulation,
           color: 'hsl(var(--color-primary))',
           props: { rounded: 'left' },
         },
         {
-          label: 'female',
+          key: 'female',
           value: (d) => d.female / totalPopulation,
           color: 'hsl(var(--color-secondary))',
           props: { rounded: 'right' },
@@ -207,9 +202,9 @@
           <Tooltip.Header>Age: {format(y(data))}</Tooltip.Header>
           <Tooltip.List>
             {#each series as s}
-              {@const valueAccessor = accessor(s.value)}
+              {@const valueAccessor = accessor(s.value ?? s.key)}
               {@const value = Math.abs(valueAccessor(data))}
-              <Tooltip.Item label={s.label ?? 'value'} color={s.color}>
+              <Tooltip.Item label={s.key} color={s.color}>
                 {format(value * totalPopulation)}
                 <span class="text-xs text-surface-content/50">({format(value, 'percent')})</span>
               </Tooltip.Item>
@@ -235,20 +230,17 @@
       data={wideData}
       x="year"
       series={[
-        { label: 'apples', value: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
         {
-          label: 'bananas',
-          value: 'bananas',
+          key: 'bananas',
           color: 'hsl(var(--color-warning))',
         },
         {
-          label: 'cherries',
-          value: 'cherries',
+          key: 'cherries',
           color: 'hsl(var(--color-success))',
         },
         {
-          label: 'dates',
-          value: 'dates',
+          key: 'dates',
           color: 'hsl(var(--color-info))',
         },
       ]}
@@ -270,20 +262,17 @@
       orientation="horizontal"
       y="year"
       series={[
-        { label: 'apples', value: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
         {
-          label: 'bananas',
-          value: 'bananas',
+          key: 'bananas',
           color: 'hsl(var(--color-warning))',
         },
         {
-          label: 'cherries',
-          value: 'cherries',
+          key: 'cherries',
           color: 'hsl(var(--color-success))',
         },
         {
-          label: 'dates',
-          value: 'dates',
+          key: 'dates',
           color: 'hsl(var(--color-info))',
         },
       ]}

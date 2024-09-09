@@ -66,7 +66,6 @@
 
   $: if (stackSeries) {
     const seriesKeys = series.map((s) => s.key);
-
     const stackData = stack().keys(seriesKeys)(chartDataArray(data)) as any[];
 
     chartData = chartData.map((d, i) => {
