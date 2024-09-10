@@ -266,6 +266,22 @@
           <Spline class="stroke-2" stroke={url} />
         </LinearGradient>
       </svelte:fragment>
+
+      <svelte:fragment slot="highlight" let:tooltip let:y>
+        {#if tooltip.data}
+          <Highlight lines points={{ fill: temperatureColor(y(tooltip.data)) }} />
+        {/if}
+      </svelte:fragment>
+
+      <svelte:fragment slot="tooltip" let:x let:y>
+        <Tooltip.Root let:data>
+          {@const value = y(data)}
+          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="value" {value} color={temperatureColor(value)} />
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
     </LineChart>
   </div>
 </Preview>
@@ -279,8 +295,8 @@
         {@const thresholdOffset = (yScale(50) / (height + padding.bottom)) * 100 + '%'}
         <LinearGradient
           stops={[
-            [thresholdOffset, 'hsl(var(--color-success))'],
             [thresholdOffset, 'hsl(var(--color-danger))'],
+            [thresholdOffset, 'hsl(var(--color-info))'],
           ]}
           units="userSpaceOnUse"
           vertical
