@@ -19,7 +19,7 @@ export async function load() {
         // @ts-expect-error
         autoType
       )
-        .filter((d) => d.value !== 'NA')
+        .filter((d) => d.value !== 'NA' && d.dayOfYear <= 365 /* Ignore 366th day */)
         .map((d) => {
           const origDate = new Date(d.year, 0, d.dayOfYear);
           return {
@@ -29,6 +29,9 @@ export async function load() {
           };
         });
     }),
+    dailyTemperature: await fetch('/data/examples/date/daily-temperature.json').then(async (r) =>
+      parse<{ date: Date; value: number }[]>(await r.text())
+    ),
     meta: {
       api,
       source,

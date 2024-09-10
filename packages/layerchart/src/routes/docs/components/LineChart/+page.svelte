@@ -1,13 +1,23 @@
 <script lang="ts">
-  import { Axis, Highlight, LineChart, pivotLonger, Spline, Svg, Tooltip } from 'layerchart';
-  import { scaleBand } from 'd3-scale';
+  import {
+    Axis,
+    Highlight,
+    LinearGradient,
+    LineChart,
+    pivotLonger,
+    Spline,
+    Svg,
+    Tooltip,
+  } from 'layerchart';
+  import { scaleBand, scaleSequential } from 'd3-scale';
   import { curveLinearClosed } from 'd3-shape';
-  import { flatGroup } from 'd3-array';
+  import { extent, flatGroup, ticks } from 'd3-array';
   import { PeriodType } from 'svelte-ux';
   import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import { interpolateTurbo } from 'd3-scale-chromatic';
 
   export let data;
 
@@ -45,6 +55,11 @@
     { name: 'Development', budget: 50000, actual: 42000 },
     { name: 'Marketing', budget: 18000, actual: 21000 },
   ];
+
+  const temperatureColor = scaleSequential(
+    extent(data.dailyTemperature, (d) => d.value) as [number, number],
+    interpolateTurbo
+  );
 </script>
 
 <h1>Examples</h1>
@@ -237,7 +252,80 @@
   </div>
 </Preview>
 
-<h2>Radial with series data</h2>
+<h2>Gradient encoding</h2>
+
+<Preview data={data.dailyTemperature}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart data={data.dailyTemperature} x="date" y="value" yDomain={null}>
+      <svelte:fragment slot="marks">
+        <LinearGradient
+          stops={ticks(1, 0, 10).map(temperatureColor.interpolator())}
+          vertical
+          let:url
+        >
+          <Spline class="stroke-2" stroke={url} />
+        </LinearGradient>
+      </svelte:fragment>
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Gradient threshold</h2>
+
+<Preview data={data.dailyTemperature}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart data={data.dailyTemperature} x="date" y="value" yDomain={null}>
+      <svelte:fragment slot="marks" let:yScale let:height let:padding>
+        {@const thresholdOffset = (yScale(50) / (height + padding.bottom)) * 100 + '%'}
+        <LinearGradient
+          stops={[
+            [thresholdOffset, 'hsl(var(--color-success))'],
+            [thresholdOffset, 'hsl(var(--color-danger))'],
+          ]}
+          units="userSpaceOnUse"
+          vertical
+          let:url
+        >
+          <Spline class="stroke-2" stroke={url} />
+        </LinearGradient>
+      </svelte:fragment>
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Large series</h2>
+
+<Preview data={data.dailyTemperatures}>
+  <div class="h-[500px] p-4 border rounded">
+    <LineChart
+      x="date"
+      y="value"
+      yDomain={null}
+      props={{
+        spline: { class: 'stroke' },
+        xAxis: { format: PeriodType.Month },
+        yAxis: { ticks: 4, format: (v) => v + '° F' },
+        highlight: { points: false },
+      }}
+      series={flatGroup(data.dailyTemperatures, (d) => d.year).map(([year, data]) => {
+        return {
+          key: year,
+          data,
+          color:
+            year === 2024
+              ? 'hsl(var(--color-primary))'
+              : year === 2023
+                ? 'hsl(var(--color-primary) / 50%)'
+                : 'hsl(var(--color-surface-content))',
+          props: { opacity: [2023, 2024].includes(year) ? 1 : 0.1 },
+        };
+      })}
+      tooltip={{ mode: 'manual' }}
+    />
+  </div>
+</Preview>
+
+<h2>Radial large series</h2>
 
 <Preview data={data.dailyTemperatures}>
   <div class="h-[500px] p-4 border rounded">
