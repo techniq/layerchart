@@ -38,7 +38,7 @@
   import { sortFunc } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
-  import { Svg } from './../Chart.svelte';
+  import Svg from './../layout/Svg.svelte';
   import { chartContext } from './../ChartContext.svelte';
   import ChartClipPath from './../ChartClipPath.svelte';
   import Voronoi from './../Voronoi.svelte';

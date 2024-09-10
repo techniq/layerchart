@@ -1,40 +1,17 @@
-<script context="module" lang="ts">
-  // import { LayerCake, Svg, Html } from 'layercake';
-  // export { Svg, Html };
-
-  // TODO: Workaround for sveld error: `Cannot read properties of null (reading 'type')` in `ComponentParser`
-  // See: https://github.com/carbon-design-system/sveld/issues/104
-  import {
-    LayerCake,
-    // Canvas as _Canvas,
-    // Html as _Html,
-    // Svg as _Svg,
-    WebGL as _WebGL,
-  } from 'layercake';
-  import _Canvas from './layout/Canvas.svelte';
-  import _Html from './layout/Html.svelte';
-  import _Svg from './layout/Svg.svelte';
-
-  export const Canvas = _Canvas;
-  export const Html = _Html;
-  export const Svg = _Svg;
-  export const WebGL = _WebGL;
-</script>
-
 <script lang="ts" generics="TData">
-  import { accessor, type Accessor } from '../utils/common.js';
-
+  import { onMount, type ComponentProps } from 'svelte';
+  import { LayerCake } from 'layercake';
   import type { HierarchyNode } from 'd3-hierarchy';
   import type { SankeyGraph } from 'd3-sankey';
-
-  import { onMount, type ComponentProps } from 'svelte';
   import { max, min } from 'd3-array';
-  import { isScaleBand, type AnyScale } from '$lib/utils/scales.js';
 
   import ChartContext from './ChartContext.svelte';
   import GeoContext from './GeoContext.svelte';
   import TooltipContext from './tooltip/TooltipContext.svelte';
   import TransformContext from './TransformContext.svelte';
+
+  import { accessor, type Accessor } from '$lib/utils/common.js';
+  import { isScaleBand, type AnyScale } from '$lib/utils/scales.js';
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
 
   type LayerCakeProps = ComponentProps<LayerCake>;
@@ -104,25 +81,25 @@
     /**  Applies D3's [scale.nice()](https://github.com/d3/d3-scale#continuous_nice) to the r domain. @default false */
     rNice?: boolean | number;
 
-    /** @type Assign a pixel value to add to the min or max of the scale. This will increase the scales domain by the scale unit equivalent of the provided pixels. */
+    /** Assign a pixel value to add to the min or max of the scale. This will increase the scales domain by the scale unit equivalent of the provided pixels. */
     xPadding?: [number, number];
-    /** @type Assign a pixel value to add to the min or max of the scale. This will increase the scales domain by the scale unit equivalent of the provided pixels. */
+    /** Assign a pixel value to add to the min or max of the scale. This will increase the scales domain by the scale unit equivalent of the provided pixels. */
     yPadding?: [number, number];
-    /** @type Assign a pixel value to add to the min or max of the scale. This will increase the scales domain by the scale unit equivalent of the provided pixels. */
+    /** Assign a pixel value to add to the min or max of the scale. This will increase the scales domain by the scale unit equivalent of the provided pixels. */
     zPadding?: [number, number];
-    /** @type Assign a pixel value to add to the min or max of the scale. This will increase the scales domain by the scale unit equivalent of the provided pixels. */
+    /** Assign a pixel value to add to the min or max of the scale. This will increase the scales domain by the scale unit equivalent of the provided pixels. */
     rPadding?: [number, number];
 
-    /** @type {Function} [xScale=d3.scaleLinear] The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if you want to override the default or you want to extra options. */
+    /** The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if you want to override the default or you want to extra options. @default scaleLinear */
     xScale?: AnyScale;
-    /** @type {Function} [yScale=d3.scaleLinear] The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if you want to override the default or you want to extra options. */
+    /** The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if you want to override the default or you want to extra options. @default scaleLinear */
     yScale?: AnyScale;
-    /** @type {Function} [zScale=d3.scaleLinear] The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if you want to override the default or you want to extra options. */
+    /** The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if you want to override the default or you want to extra options. @default scaleLinear */
     zScale?: AnyScale;
-    /** @type {Function} [rScale=d3.scaleSqrt] The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if you want to override the default or you want to extra options. */
+    /** The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if you want to override the default or you want to extra options. @default scaleSqrt */
     rScale?: AnyScale;
 
-    /** @type Override the default x range of `[0, width]` by setting an array or function with argument `({ width, height})` that returns an array. Setting this prop overrides `xReverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
+    /** Override the default x range of `[0, width]` by setting an array or function with argument `({ width, height})` that returns an array. Setting this prop overrides `xReverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
     xRange?:
       | number[]
       | string[]
@@ -147,18 +124,18 @@
     xReverse?: boolean;
     /** Reverse the default y range. By default this is `true` and the range is `[height, 0]` unless using an ordinal scale with a `.bandwidth` method for `yScale`. Ignored if you set the `yRange` prop. @default true */
     yReverse?: boolean;
-    /** @type {Boolean} [zReverse=false] Reverse the default z range. By default this is `false` and the range is `[0, width]`. Ignored if you set the zRange prop. @default false */
+    /** Reverse the default z range. By default this is `false` and the range is `[0, width]`. Ignored if you set the zRange prop. @default false */
     zReverse?: boolean;
-    /** @type {Boolean} [rReverse=false] Reverse the default r range. By default this is `false` and the range is `[1, 25]`. Ignored if you set the rRange prop. @default false */
+    /** Reverse the default r range. By default this is `false` and the range is `[1, 25]`. Ignored if you set the rRange prop. @default false */
     rReverse?: boolean;
 
-    /** @type {Boolean} [xDomainSort=true] Only used when scale is ordinal. Set whether the calculated unique items come back sorted. */
+    /** Only used when scale is ordinal. Set whether the calculated unique items come back sorted. */
     xDomainSort?: boolean;
-    /** @type {Boolean} [yDomainSort=true] Only used when scale is ordinal. Set whether the calculated unique items come back sorted. */
+    /** Only used when scale is ordinal. Set whether the calculated unique items come back sorted. */
     yDomainSort?: boolean;
-    /** @type {Boolean} [zDomainSort=true] Only used when scale is ordinal. Set whether the calculated unique items come back sorted. */
+    /** Only used when scale is ordinal. Set whether the calculated unique items come back sorted. */
     zDomainSort?: boolean;
-    /** @type {Boolean} [rDomainSort=true] Only used when scale is ordinal. Set whether the calculated unique items come back sorted. */
+    /** Only used when scale is ordinal. Set whether the calculated unique items come back sorted. */
     rDomainSort?: boolean;
 
     /** The amount of padding to put around your chart. It operates like CSS box-sizing: border-box; where values are subtracted from the parent container's width and height, the same as a [D3 margin convention](https://bl.ocks.org/mbostock/3019563). */
@@ -175,10 +152,10 @@
     /** Any extra configuration values you want available on the LayerCake context. This could be useful for color lookups or additional constants. */
     custom?: Record<string, any>;
 
-    /** @type {Boolean} debug Enable debug printing to the console. Useful to inspect your scales and dimensions. */
+    /** Enable debug printing to the console. Useful to inspect your scales and dimensions. */
     debug?: boolean;
 
-    /** @type {Boolean} [verbose=true] Show warnings in the console. */
+    /** Show warnings in the console. */
     verbose?: boolean;
 
     /** x value guaranteed to be visible in xDomain.  Useful with optional negative values since `xDomain={[0, null]}` would ignore negative values */
