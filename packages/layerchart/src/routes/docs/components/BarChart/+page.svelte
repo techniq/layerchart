@@ -59,7 +59,7 @@
 <h2>Series (horizontal)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded">
     <BarChart
       data={dateSeriesData}
       y="date"
