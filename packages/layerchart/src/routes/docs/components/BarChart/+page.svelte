@@ -79,7 +79,6 @@
     <BarChart
       data={dateSeriesData}
       x="date"
-      yDomain={null}
       series={[
         {
           key: 'value',
@@ -108,7 +107,6 @@
   <div class="h-[600px] p-4 border rounded">
     <BarChart
       data={data.worldPopulationDemographics}
-      xDomain={null}
       y="age"
       orientation="horizontal"
       padding={{ left: 32, bottom: 16 }}
@@ -169,7 +167,6 @@
   <div class="h-[600px] p-4 border rounded">
     <BarChart
       data={data.worldPopulationDemographics}
-      xDomain={null}
       y="age"
       orientation="horizontal"
       padding={{ left: 32, bottom: 16 }}

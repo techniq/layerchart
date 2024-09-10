@@ -79,13 +79,7 @@
   }}
 
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart
-      data={negativeDateSeriesData}
-      x="date"
-      y="value"
-      yDomain={null}
-      props={{ xAxis: { rule: false } }}
-    >
+    <AreaChart data={negativeDateSeriesData} x="date" y="value" props={{ xAxis: { rule: false } }}>
       <svelte:fragment slot="marks" let:yScale let:height let:padding>
         {@const thresholdValue = 0}
         {@const thresholdOffset = yScale(thresholdValue) / (height + padding.bottom)}

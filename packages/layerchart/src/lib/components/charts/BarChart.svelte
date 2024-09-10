@@ -54,10 +54,10 @@
   export let bandPadding = 0.4;
 
   $: xScale = isVertical ? scaleBand().padding(bandPadding) : scaleLinear();
-  $: xDomain = isVertical ? undefined : [0, null];
+  $: xBaseline = isVertical ? undefined : 0;
 
   $: yScale = isVertical ? scaleLinear() : scaleBand().padding(bandPadding);
-  $: yDomain = isVertical ? [0, null] : undefined;
+  $: yBaseline = isVertical ? 0 : undefined;
 
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
@@ -95,14 +95,14 @@
       ? (d) => series.map((s, i) => d.stackData[i][1])
       : series.map((s) => s.value ?? s.key))}
   {xScale}
-  {xDomain}
+  {xBaseline}
   xNice={orientation === 'horizontal'}
   y={y ??
     (stackSeries
       ? (d) => series.map((s, i) => d.stackData[i][1])
       : series.map((s) => s.value ?? s.key))}
   {yScale}
-  {yDomain}
+  {yBaseline}
   yNice={orientation === 'vertical'}
   padding={{ left: 16, bottom: 16 }}
   tooltip={{ mode: 'band' }}
