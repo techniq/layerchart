@@ -84,7 +84,7 @@
             x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
             y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
             xValue,
-            yValue: $y(d),
+            yValue,
             data: d,
           };
         });
@@ -98,7 +98,7 @@
             x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
             y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
             xValue,
-            yValue: $y(d),
+            yValue,
             data: d,
           };
         });
