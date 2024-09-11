@@ -350,6 +350,8 @@
       y="value"
       yDomain={null}
       yRange={({ height }) => [height / 5, height / 2]}
+      yNice={false}
+      yPadding={[0, 20]}
       radial
       props={{
         spline: { class: 'stroke' },
