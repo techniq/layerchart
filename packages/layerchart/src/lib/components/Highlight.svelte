@@ -106,7 +106,7 @@
             y2: max($yRange) as unknown as number,
           })),
         ];
-      } else {
+      } else if (xCoord) {
         _lines = [
           ..._lines,
           {
@@ -155,7 +155,7 @@
             y2: yItem + yOffset,
           })),
         ];
-      } else {
+      } else if (yCoord) {
         _lines = [
           ..._lines,
           {
