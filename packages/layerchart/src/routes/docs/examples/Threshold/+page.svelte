@@ -55,15 +55,15 @@
           format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Threshold curve={selectedCurve}>
-          <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
-            <Spline pathData={linePathData} stroke-width="1.5" />
-            <Area pathData={areaPathData} {clipPath} class="fill-success/30" />
+        <Threshold curve={selectedCurve} let:curve>
+          <g slot="above" let:curve>
+            <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
           </g>
-          <g slot="pathBelow" let:areaPathData let:clipPath let:linePathData>
-            <Spline pathData={linePathData} stroke-dasharray="4" />
-            <Area pathData={areaPathData} {clipPath} class="fill-danger/30" />
+          <g slot="below" let:curve>
+            <Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
           </g>
+          <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
+          <Spline y="value" {curve} class="stroke-[1.5]" />
         </Threshold>
       </Svg>
     </Chart>
@@ -91,15 +91,15 @@
           format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Threshold curve={curveStepAfter}>
-          <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
-            <Spline pathData={linePathData} color="black" width="1.5" />
-            <Area pathData={areaPathData} {clipPath} class="fill-success/30" />
+        <Threshold curve={curveStepAfter} let:curve>
+          <g slot="above" let:curve>
+            <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
           </g>
-          <g slot="pathBelow" let:areaPathData let:clipPath let:linePathData>
-            <Spline pathData={linePathData} color="black" width="1" stroke-dasharray="4" />
-            <Area pathData={areaPathData} {clipPath} class="fill-danger/30" />
+          <g slot="below" let:curve>
+            <Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
           </g>
+          <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
+          <Spline y="value" {curve} class="stroke-[1.5]" />
         </Threshold>
         <Highlight area />
       </Svg>
@@ -138,14 +138,14 @@
           rule
         />
         <Threshold>
-          <g slot="pathAbove" let:areaPathData let:clipPath let:linePathData>
-            <Spline pathData={linePathData} color="black" width="1.5" />
-            <Area pathData={areaPathData} {clipPath} class="fill-success/30" />
+          <g slot="above">
+            <Area y0="value" y1="baseline" class="fill-success/30" />
           </g>
-          <g slot="pathBelow" let:areaPathData let:clipPath let:linePathData>
-            <Spline pathData={linePathData} color="black" width="1" stroke-dasharray="4" />
-            <Area pathData={areaPathData} {clipPath} class="fill-danger/30" />
+          <g slot="below">
+            <Area y0="value" y1="baseline" class="fill-danger/30" />
           </g>
+          <Spline y="baseline" class="[stroke-dasharray:4]" />
+          <Spline y="value" class="stroke-[1.5]" />
         </Threshold>
         <Labels format="integer" />
       </Svg>

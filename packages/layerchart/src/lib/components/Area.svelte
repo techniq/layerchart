@@ -77,18 +77,19 @@
               value = $yScale(y0Accessor(d));
             } else if (Array.isArray($config.y) && $config.y[0] === 0) {
               // Use first value if `y` defined as an array (ex. `<Chart y={[0,1]}>`)
+              // TODO: Would be nice if this also handled multi-series (<Chart y={['apples', 'bananas', 'oranges']}>) as well as delta values (<Chart y={['baseline', 'value']}>)
               value = $yScale($y(d)[0]);
             }
 
             return value + yOffset;
           })
-
           .y1((d) => {
             let value = max<number>($yRange)!;
             if (y1) {
               value = $yScale(y1Accessor(d));
             } else if (Array.isArray($config.y) && $config.y[1] === 1) {
               // Use second value if `y` defined as an array (ex. `<Chart y={[0,1]}>`)
+              // TODO: Would be nice if this also handled multi-series (<Chart y={['apples', 'bananas', 'oranges']}>) as well as delta values (<Chart y={['baseline', 'value']}>)
               value = $yScale($y(d)[1]);
             } else {
               // Expect single value defined for `y` (ex. `<Chart y="value">`)
