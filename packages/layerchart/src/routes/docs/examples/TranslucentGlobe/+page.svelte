@@ -125,9 +125,9 @@
         {/each}
       </Svg>
 
-      <Tooltip>
-        <div slot="header" let:data>{data.properties.name}</div>
-      </Tooltip>
+      <Tooltip.Root let:data>
+        {data.properties.name}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
