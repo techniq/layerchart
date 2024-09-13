@@ -6,6 +6,7 @@
 
   import Arc from '../Arc.svelte';
   import Chart from '../Chart.svelte';
+  import Group from '../Group.svelte';
   import Pie from '../Pie.svelte';
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
@@ -86,6 +87,7 @@
 
   export let props: {
     pie?: Partial<ComponentProps<Pie>>;
+    group?: Partial<ComponentProps<Group>>;
     arc?: Partial<ComponentProps<Arc>>;
   } = {};
 </script>
@@ -126,39 +128,41 @@
           {...props.pie}
           let:arcs
         >
-          {#if separateTracks}
-            {@const sumValue = Number(sum(chartData, valueAccessor))}
-            {#each chartData as d, i}
-              <Arc
-                value={valueAccessor(d)}
-                domain={[0, sumValue]}
-                outerRadius={i * (outerRadius ?? 0)}
-                {innerRadius}
-                {cornerRadius}
-                {padAngle}
-                fill={rScale(r(d))}
-                track={{ fill: rScale(r(d)), 'fill-opacity': 0.1 }}
-                {tooltip}
-                data={d}
-                {...props.arc}
-              />
-            {/each}
-          {:else}
-            {#each arcs as arc}
-              <Arc
-                startAngle={arc.startAngle}
-                endAngle={arc.endAngle}
-                {outerRadius}
-                {innerRadius}
-                {cornerRadius}
-                {padAngle}
-                fill={rScale(r(arc.data))}
-                data={arc.data}
-                {tooltip}
-                {...props.arc}
-              />
-            {/each}
-          {/if}
+          <Group {...props.group}>
+            {#if separateTracks}
+              {@const sumValue = Number(sum(chartData, valueAccessor))}
+              {#each chartData as d, i}
+                <Arc
+                  value={valueAccessor(d)}
+                  domain={[0, sumValue]}
+                  outerRadius={i * (outerRadius ?? 0)}
+                  {innerRadius}
+                  {cornerRadius}
+                  {padAngle}
+                  fill={rScale(r(d))}
+                  track={{ fill: rScale(r(d)), 'fill-opacity': 0.1 }}
+                  {tooltip}
+                  data={d}
+                  {...props.arc}
+                />
+              {/each}
+            {:else}
+              {#each arcs as arc}
+                <Arc
+                  startAngle={arc.startAngle}
+                  endAngle={arc.endAngle}
+                  {outerRadius}
+                  {innerRadius}
+                  {cornerRadius}
+                  {padAngle}
+                  fill={rScale(r(arc.data))}
+                  data={arc.data}
+                  {tooltip}
+                  {...props.arc}
+                />
+              {/each}
+            {/if}
+          </Group>
         </Pie>
       </slot>
 

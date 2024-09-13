@@ -38,15 +38,17 @@
 <h2>Arc (range)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[180px] border rounded">
     <PieChart
       {data}
       label="fruit"
       value="value"
       range={[-90, 90]}
+      outerRadius={256 / 2}
       innerRadius={-20}
       cornerRadius={10}
       padAngle={0.02}
+      props={{ group: { y: 60 } }}
     />
   </div>
 </Preview>
