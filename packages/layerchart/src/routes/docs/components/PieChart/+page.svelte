@@ -20,14 +20,6 @@
   </div>
 </Preview>
 
-<h2>Arc (range)</h2>
-
-<Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} label="fruit" value="value" range={[-90, 90]} innerRadius={-20} />
-  </div>
-</Preview>
-
 <h2>Donut (innerRadius)</h2>
 
 <Preview {data}>
@@ -38,6 +30,22 @@
       value="value"
       innerRadius={-20}
       cornerRadius={5}
+      padAngle={0.02}
+    />
+  </div>
+</Preview>
+
+<h2>Arc (range)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      {data}
+      label="fruit"
+      value="value"
+      range={[-90, 90]}
+      innerRadius={-20}
+      cornerRadius={10}
       padAngle={0.02}
     />
   </div>
