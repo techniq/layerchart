@@ -15,9 +15,11 @@
 
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
 
-  interface $$Props extends ComponentProps<Chart<TData>> {
+  type ChartProps = ComponentProps<Chart<TData>>;
+
+  interface $$Props extends ChartProps {
     series?: typeof series;
-    stackSeries?: typeof stackSeries;
+    seriesLayout?: typeof seriesLayout;
     labels?: typeof labels;
     orientation?: typeof orientation;
     bandPadding?: typeof bandPadding;
@@ -47,17 +49,43 @@
     },
   ];
 
-  /** Stack instead of overlap series */
-  export let stackSeries = false;
+  /** Determine how to layout series.  Overlap (default), stack, or group side by side */
+  export let seriesLayout: 'overlap' | 'stack' | 'group' = 'overlap';
+  $: stackSeries = seriesLayout === 'stack';
+  $: groupSeries = seriesLayout === 'group';
 
   export let labels: ComponentProps<Labels> | boolean = false;
+
+  /** Padding between primary x or y bands/bars, applied to scaleBand().padding() */
   export let bandPadding = 0.4;
+  /** Padding between group/series items when using 'seriesLayout="group"', applied to scaleBand().padding() */
+  export let groupPadding = 0;
 
   $: xScale = isVertical ? scaleBand().padding(bandPadding) : scaleLinear();
   $: xBaseline = isVertical ? undefined : 0;
 
   $: yScale = isVertical ? scaleLinear() : scaleBand().padding(bandPadding);
   $: yBaseline = isVertical ? 0 : undefined;
+
+  let x1Scale: ChartProps['x1Scale'];
+  let x1Domain: ChartProps['x1Domain'];
+  let x1Range: ChartProps['x1Range'];
+
+  let y1Scale: ChartProps['y1Scale'];
+  let y1Domain: ChartProps['y1Domain'];
+  let y1Range: ChartProps['y1Range'];
+
+  $: if (seriesLayout === 'group') {
+    if (isVertical) {
+      x1Scale = scaleBand().padding(groupPadding);
+      x1Domain = series.map((s) => s.key);
+      x1Range = ({ xScale }) => [0, xScale.bandwidth?.()];
+    } else {
+      y1Scale = scaleBand().padding(groupPadding);
+      y1Domain = series.map((s) => s.key);
+      y1Range = ({ yScale }) => [0, yScale.bandwidth?.()];
+    }
+  }
 
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
@@ -97,6 +125,9 @@
   {xScale}
   {xBaseline}
   xNice={orientation === 'horizontal'}
+  {x1Scale}
+  {x1Domain}
+  {x1Range}
   y={y ??
     (stackSeries
       ? (d) => series.map((s, i) => d.stackData[i][1])
@@ -104,6 +135,9 @@
   {yScale}
   {yBaseline}
   yNice={orientation === 'vertical'}
+  {y1Scale}
+  {y1Domain}
+  {y1Range}
   padding={{ left: 16, bottom: 16 }}
   tooltip={{ mode: 'band' }}
   {...$$restProps}
@@ -141,8 +175,10 @@
       <slot name="marks" {...slotProps}>
         {#each series as s, i}
           <Bars
-            x={isVertical ? undefined : stackSeries ? (d) => d.stackData[i] : (s.value ?? s.key)}
+            x={!isVertical ? (stackSeries ? (d) => d.stackData[i] : (s.value ?? s.key)) : undefined}
             y={isVertical ? (stackSeries ? (d) => d.stackData[i] : (s.value ?? s.key)) : undefined}
+            x1={isVertical && groupSeries ? (d) => s.value ?? s.key : undefined}
+            y1={!isVertical && groupSeries ? (d) => s.value ?? s.key : undefined}
             radius={4}
             strokeWidth={1}
             fill={s.color}
@@ -180,7 +216,7 @@
             />
           {/each}
 
-          {#if stackSeries}
+          {#if stackSeries || groupSeries}
             <Tooltip.Separator />
 
             <Tooltip.Item

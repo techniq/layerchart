@@ -21,7 +21,7 @@
     labels?: typeof labels;
     points?: typeof points;
     props?: typeof props;
-    stackSeries?: typeof stackSeries;
+    seriesLayout?: typeof seriesLayout;
   }
 
   export let data: $$Props['data'] = [];
@@ -41,8 +41,9 @@
     props?: Partial<ComponentProps<Area>>;
   }[] = [{ key: 'default', value: y, color: 'hsl(var(--color-primary))' }];
 
-  /** Stack instead of overlap series */
-  export let stackSeries = false;
+  /** Determine how to layout series.  Overlap (default) or stack */
+  export let seriesLayout: 'overlap' | 'stack' = 'overlap';
+  $: stackSeries = seriesLayout === 'stack';
 
   export let labels: ComponentProps<Labels> | boolean = false;
   export let points: ComponentProps<Points> | boolean = false;

@@ -226,7 +226,7 @@
           color: 'hsl(var(--color-warning))',
         },
       ]}
-      stackSeries
+      seriesLayout="stack"
     />
   </div>
 </Preview>
