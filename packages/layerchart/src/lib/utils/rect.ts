@@ -1,7 +1,7 @@
 import { derived } from 'svelte/store';
 import { max, min } from 'd3-array';
 
-import { groupScaleBand, isScaleBand } from './scales.js';
+import { isScaleBand } from './scales.js';
 import type { ChartContext } from '../components/ChartContext.svelte';
 import { accessor, type Accessor } from './common.js';
 
@@ -10,43 +10,55 @@ type DimensionGetterOptions = {
   x?: Accessor;
   /** Override `y` accessor from context */
   y?: Accessor;
-  groupBy?: string;
+  /** Override `x1` accessor from context */
+  x1?: Accessor;
+  /** Override `y1` accessor from context */
+  y1?: Accessor;
   inset?: number;
-  groupPadding?: { inner?: number; outer?: number };
 };
 
-// TOOD: Pass in overrides for `x` and `y` accessors
 export function createDimensionGetter<TData>(
   context: ChartContext<TData>,
   options?: DimensionGetterOptions
 ) {
-  const { flatData, xGet, yGet, xScale, yScale, x: xAccessor, y: yAccessor } = context;
+  const {
+    xScale,
+    yScale,
+    x: xAccessor,
+    y: yAccessor,
+    x1: x1Accessor,
+    y1: y1Accessor,
+    x1Scale,
+    y1Scale,
+  } = context;
 
-  const groupBy = options?.groupBy;
   const inset = options?.inset ?? 0;
 
   return derived(
-    [flatData, xGet, yGet, xScale, yScale, xAccessor, yAccessor],
-    ([$flatData, $xGet, $yGet, $xScale, $yScale, $xAccessor, $yAccessor]) => {
+    [xScale, x1Scale, yScale, y1Scale, xAccessor, yAccessor, x1Accessor, y1Accessor],
+    ([$xScale, $x1Scale, $yScale, $y1Scale, $xAccessor, $yAccessor, $x1Accessor, $y1Accessor]) => {
       // Use `xscale.domain()` instead of `$xDomain` to include `nice()` being applied
       const [minXDomain, maxXDomain] = $xScale.domain();
       const [minYDomain, maxYDomain] = $yScale.domain();
+
+      const _x = accessor(options?.x ?? $xAccessor);
+      const _y = accessor(options?.y ?? $yAccessor);
+      const _x1 = accessor(options?.x1 ?? $x1Accessor);
+      const _y1 = accessor(options?.y1 ?? $y1Accessor);
 
       // @ts-expect-error
       return function getter(item) {
         if (isScaleBand($yScale)) {
           // Horizontal band
-          const y1Scale = groupBy
-            ? groupScaleBand($yScale, $flatData, groupBy, options?.groupPadding)
-            : null;
-          // @ts-expect-error
-          const y = firstValue($yGet(item)) + (y1Scale ? y1Scale(item[groupBy]) : 0) + inset / 2;
+          const y =
+            firstValue($yScale(_y(item)) ?? 0) + ($y1Scale ? $y1Scale(_y1(item)) : 0) + inset / 2;
           const height = Math.max(
             0,
-            $yScale.bandwidth ? (y1Scale ? y1Scale.bandwidth() : $yScale.bandwidth()) - inset : 0
+            $yScale.bandwidth
+              ? ($y1Scale ? ($y1Scale.bandwidth?.() ?? 0) : $yScale.bandwidth()) - inset
+              : 0
           );
 
-          const _x = accessor(options?.x ?? $xAccessor);
           const xValue = _x(item);
 
           let left = 0;
@@ -77,19 +89,15 @@ export function createDimensionGetter<TData>(
           };
         } else {
           // Vertical band or linear
-          const x1Scale =
-            groupBy && isScaleBand($xScale)
-              ? groupScaleBand($xScale, $flatData, groupBy, options?.groupPadding)
-              : null;
-
-          // @ts-expect-error
-          const x = firstValue($xGet(item)) + (x1Scale ? x1Scale(item[groupBy]) : 0) + inset / 2;
+          const x =
+            firstValue($xScale(_x(item))) + ($x1Scale ? $x1Scale(_x1(item)) : 0) + inset / 2;
           const width = Math.max(
             0,
-            $xScale.bandwidth ? (x1Scale ? x1Scale.bandwidth() : $xScale.bandwidth()) - inset : 0
+            $xScale.bandwidth
+              ? ($x1Scale ? ($x1Scale.bandwidth?.() ?? 0) : $xScale.bandwidth()) - inset
+              : 0
           );
 
-          const _y = accessor(options?.y ?? $yAccessor);
           const yValue = _y(item);
 
           let top = 0;

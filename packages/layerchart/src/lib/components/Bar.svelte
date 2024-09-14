@@ -22,6 +22,16 @@
    */
   export let y: Accessor = $yContext;
 
+  /**
+   * Override `x1` from context.  Useful for multiple Bar instances
+   */
+  export let x1: Accessor = undefined;
+
+  /**
+   * Override `y1` from context.  Useful for multiple Bar instances
+   */
+  export let y1: Accessor = undefined;
+
   export let fill: string | undefined = undefined;
   export let stroke = 'black';
   export let strokeWidth = 0;
@@ -40,9 +50,6 @@
     | 'bottom-right' = 'all';
 
   export let inset = 0;
-  export let groupBy: string | undefined = undefined;
-  export let groupPaddingInner = 0.2;
-  export let groupPaddingOuter = 0;
 
   export let spring: ComponentProps<Rect>['spring'] = undefined;
   export let tweened: ComponentProps<Rect>['tweened'] = undefined;
@@ -52,12 +59,9 @@
   $: getDimensions = createDimensionGetter(chartContext(), {
     x,
     y,
-    groupBy,
+    x1,
+    y1,
     inset,
-    groupPadding: {
-      inner: groupPaddingInner,
-      outer: groupPaddingOuter,
-    },
   });
   $: dimensions = $getDimensions(bar) ?? { x: 0, y: 0, width: 0, height: 0 };
 

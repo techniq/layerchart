@@ -1,7 +1,7 @@
 <script lang="ts">
   import { cubicInOut } from 'svelte/easing';
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
-  import { extent, mean, sum } from 'd3-array';
+  import { mean, sum } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
 
   import {
@@ -27,6 +27,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
+  import { unique } from '@layerstack/utils/array';
 
   const data = createDateSeries({
     count: 30,
@@ -66,24 +67,24 @@
   let transitionChartMode = 'group';
   $: transitionChart =
     transitionChartMode === 'group'
-      ? {
+      ? ({
           groupBy: 'fruit',
           stackBy: undefined,
-        }
+        } as const)
       : transitionChartMode === 'stack'
-        ? {
+        ? ({
             groupBy: undefined,
             stackBy: 'fruit',
-          }
+          } as const)
         : transitionChartMode === 'groupStack'
-          ? {
+          ? ({
               groupBy: 'basket',
               stackBy: 'fruit',
-            }
-          : {
+            } as const)
+          : ({
               groupBy: undefined,
               stackBy: undefined,
-            };
+            } as const);
   $: transitionData = groupStackData(longData, {
     xKey: 'year',
     groupBy: transitionChart.groupBy,
@@ -792,6 +793,10 @@
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
       rRange={keyColors}
+      x1="fruit"
+      x1Scale={scaleBand()}
+      x1Domain={colorKeys}
+      x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
       let:rScale
@@ -799,7 +804,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-        <Bars groupBy="fruit" radius={4} strokeWidth={1} />
+        <Bars radius={4} strokeWidth={1} />
         <Highlight area />
       </Svg>
 
@@ -937,31 +942,6 @@
   </div>
 </Preview>
 
-<!-- <h2>Stack (Separated)</h2>
-
-<Preview data={stackedSeperatedData}>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			data={stackedSeperatedData}
-			x="year"
-			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-			y="values"
-      yNice={4}
-			r="fruit"
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-			padding={{ left: 16, bottom: 24 }}
-		>
-			<Svg>
-				<Axis placement="left" grid rule />
-				<Axis placement="bottom" rule />
-				<Bars radius={4} strokeWidth={1} />
-			</Svg>
-		</Chart>
-	</div>
-</Preview> -->
-
 <h2>Grouped and Stacked</h2>
 
 <Preview data={groupedStackedData}>
@@ -976,6 +956,10 @@
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
       rRange={keyColors}
+      x1="basket"
+      x1Scale={scaleBand().padding(0.1)}
+      x1Domain={[1, 2]}
+      x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
       let:rScale
@@ -983,7 +967,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-        <Bars groupBy="basket" radius={4} strokeWidth={1} />
+        <Bars radius={4} strokeWidth={1} />
         <Highlight area />
       </Svg>
 
@@ -1029,7 +1013,6 @@
 
 <Preview data={transitionData}>
   <div class="h-[300px] p-4 border rounded">
-    <!-- Always use stackedData for extents for consistent scale -->
     <Chart
       data={transitionData}
       x="year"
@@ -1040,6 +1023,12 @@
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
       rRange={keyColors}
+      x1={transitionChart.groupBy}
+      x1Scale={scaleBand().padding(0.1)}
+      x1Domain={transitionChart.groupBy
+        ? unique(transitionData.map((d) => d[transitionChart.groupBy]))
+        : undefined}
+      x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
       let:data
@@ -1053,9 +1042,6 @@
           {#each transitionData as bar (bar.year + '-' + bar.fruit)}
             <Bar
               {bar}
-              groupBy={transitionChart.groupBy}
-              groupPaddingInner={0.2}
-              groupPaddingOuter={0}
               fill={rScale(bar.fruit)}
               radius={4}
               strokeWidth={1}
@@ -1113,7 +1099,6 @@
 
 <Preview data={transitionData}>
   <div class="h-[300px] p-4 border rounded">
-    <!-- Always use stackedData for extents for consistent scale -->
     <Chart
       data={transitionData}
       x="year"
@@ -1124,6 +1109,12 @@
       rScale={scaleOrdinal()}
       rDomain={colorKeys}
       rRange={keyColors}
+      x1={transitionChart.groupBy}
+      x1Scale={scaleBand().padding(0.1)}
+      x1Domain={transitionChart.groupBy
+        ? unique(transitionData.map((d) => d[transitionChart.groupBy]))
+        : undefined}
+      x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
       padding={{ left: 16, bottom: 24 }}
       let:data
       let:rScale
@@ -1137,9 +1128,6 @@
           {#each transitionData as bar (bar.year + '-' + bar.fruit)}
             <Bar
               {bar}
-              groupBy={transitionChart.groupBy}
-              groupPaddingInner={0.2}
-              groupPaddingOuter={0}
               fill={rScale(bar.fruit)}
               radius={4}
               strokeWidth={1}

@@ -11,16 +11,10 @@
   import TransformContext from './TransformContext.svelte';
 
   import { accessor, type Accessor } from '$lib/utils/common.js';
-  import { isScaleBand, type AnyScale } from '$lib/utils/scales.js';
+  import { isScaleBand, type AnyScale, type DomainType } from '$lib/utils/scales.js';
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
 
   type LayerCakeProps = ComponentProps<LayerCake>;
-
-  type DomainType =
-    | (number | string | Date | null | undefined)[]
-    | Function
-    // 'null' useful for Brush component
-    | null;
 
   interface $$Props {
     /** Whether this chart should be rendered server side. @default false */
@@ -62,6 +56,10 @@
     z?: Accessor<TData>;
     /** The r accessor. The key in each row of data that corresponds to the r-field. This can be a string, an accessor function, a number or an array of any combination of those types. This property gets converted to a function when you access it through the context. */
     r?: Accessor<TData>;
+    /** The x1 accessor. The key in each row of data that corresponds to the x1-field. This can be a string, an accessor function, a number or an array of any combination of those types. This property gets converted to a function when you access it through the context. */
+    x1?: Accessor<TData>;
+    /** The y1 accessor. The key in each row of data that corresponds to the y1-field. This can be a string, an accessor function, a number or an array of any combination of those types. This property gets converted to a function when you access it through the context. */
+    y1?: Accessor<TData>;
 
     /** Set a min or max. For linear scales, if you want to inherit the value from the data's extent, set that value to `null`. This value can also be an array because sometimes your scales are [piecewise](https://github.com/d3/d3-scale#continuous_domain) or are a list of discrete values such as in [ordinal scales](https://github.com/d3/d3-scale#ordinal-scales), useful for color series. Set it to a function that receives the computed domain and lets you return a modified domain, useful for sorting values. */
     xDomain?: DomainType;
@@ -71,6 +69,10 @@
     zDomain?: DomainType;
     /** Set a min or max. For linear scales, if you want to inherit the value from the data's extent, set that value to `null`. This value can also be an array because sometimes your scales are [piecewise](https://github.com/d3/d3-scale#continuous_domain) or are a list of discrete values such as in [ordinal scales](https://github.com/d3/d3-scale#ordinal-scales), useful for color series. Set it to a function that receives the computed domain and lets you return a modified domain, useful for sorting values. */
     rDomain?: DomainType;
+    /** Set a min or max. For linear scales, if you want to inherit the value from the data's extent, set that value to `null`. This value can also be an array because sometimes your scales are [piecewise](https://github.com/d3/d3-scale#continuous_domain) or are a list of discrete values such as in [ordinal scales](https://github.com/d3/d3-scale#ordinal-scales), useful for color series. Set it to a function that receives the computed domain and lets you return a modified domain, useful for sorting values. */
+    x1Domain?: DomainType;
+    /** Set a min or max. For linear scales, if you want to inherit the value from the data's extent, set that value to `null`. This value can also be an array because sometimes your scales are [piecewise](https://github.com/d3/d3-scale#continuous_domain) or are a list of discrete values such as in [ordinal scales](https://github.com/d3/d3-scale#ordinal-scales), useful for color series. Set it to a function that receives the computed domain and lets you return a modified domain, useful for sorting values. */
+    y1Domain?: DomainType;
 
     /** Applies D3's [scale.nice()](https://github.com/d3/d3-scale#continuous_nice) to the x domain. @default false */
     xNice?: boolean | number;
@@ -98,6 +100,10 @@
     zScale?: AnyScale;
     /** The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if you want to override the default or you want to extra options. @default scaleSqrt */
     rScale?: AnyScale;
+    /** The D3 scale that should be used for the x1-dimension. Pass in an instantiated D3 scale if you want to override the default or you want to extra options. @default scaleLinear */
+    x1Scale?: AnyScale;
+    /** The D3 scale that should be used for the y1-dimension. Pass in an instantiated D3 scale if you want to override the default or you want to extra options. @default scaleLinear */
+    y1Scale?: AnyScale;
 
     /** Override the default x range of `[0, width]` by setting an array or function with argument `({ width, height})` that returns an array. Setting this prop overrides `xReverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
     xRange?:
@@ -119,6 +125,16 @@
       | number[]
       | string[]
       | ((args: { width: number; height: number }) => number[] | string[]);
+    /** Override the default x1 range of `[0, width]` by setting an array or function with argument `({ xScale, width, height})` that returns an array. Setting this prop overrides `x1Reverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
+    x1Range?:
+      | number[]
+      | string[]
+      | ((args: { xScale: AnyScale; width: number; height: number }) => number[] | string[]);
+    /** Override the default y1 range of `[0, width]` by setting an array or function with argument `({ yScale, width, height})` that returns an array. Setting this prop overrides `x1Reverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
+    y1Range?:
+      | number[]
+      | string[]
+      | ((args: { yScale: AnyScale; width: number; height: number }) => number[] | string[]);
 
     /** Reverse the default x range. By default this is `false` and the range is `[0, width]`. Ignored if you set the xRange prop. @default false */
     xReverse?: boolean;
@@ -186,6 +202,16 @@
   export let x: Accessor<TData> = undefined;
   export let y: Accessor<TData> = undefined;
   export let yScale: AnyScale | undefined = undefined;
+
+  export let x1: $$Props['x1'] = undefined;
+  export let x1Scale: $$Props['x1Scale'] = undefined;
+  export let x1Domain: $$Props['x1Domain'] = undefined;
+  export let x1Range: $$Props['x1Range'] = undefined;
+
+  export let y1: $$Props['y1'] = undefined;
+  export let y1Scale: $$Props['y1Scale'] = undefined;
+  export let y1Domain: $$Props['y1Domain'] = undefined;
+  export let y1Range: $$Props['y1Range'] = undefined;
 
   /**
    * x value guaranteed to be visible in xDomain.  Useful with optional negative values since `xDomain={[0, null]}` would ignore negative values
@@ -285,7 +311,22 @@
       ? geoFitObjectTransform(geo.projection(), [width, height], geo.fitGeojson)
       : undefined}
 
-  <ChartContext {data} {radial} let:data let:flatData let:config on:resize>
+  <ChartContext
+    {data}
+    {radial}
+    {x1}
+    {x1Scale}
+    {x1Domain}
+    {x1Range}
+    {y1}
+    {y1Scale}
+    {y1Domain}
+    {y1Range}
+    let:data
+    let:flatData
+    let:config
+    on:resize
+  >
     {#key isMounted}
       <TransformContext
         bind:this={transformContext}
