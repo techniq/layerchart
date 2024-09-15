@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-Consolidate Tooltip components (TooltipItem, TooltipSeparator, etc) to Tooltip.Item, Tooltip.Separtor, etc
+breaking(Tooltip): Consolidate Tooltip components (TooltipItem, TooltipSeparator, etc) to Tooltip.Item, Tooltip.Separtor, etc

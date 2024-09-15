@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-Rename Tooltip to Tooltip.Root
+breaking(Tooltip): Rename Tooltip to Tooltip.Root

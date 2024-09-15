@@ -2,4 +2,4 @@
 'layerchart': patch
 ---
 
-[TooltipSeparator] Use theme color
+fix(TooltipSeparator): Use theme color
