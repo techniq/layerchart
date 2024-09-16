@@ -112,10 +112,12 @@
 </script>
 
 <script lang="ts" generics="TData">
+  import { extent } from 'd3-array';
+
   import type { SankeyGraph } from 'd3-sankey';
 
   import type Chart from './Chart.svelte';
-  import { accessor } from '../utils/common.js';
+  import { accessor, chartDataArray } from '../utils/common.js';
 
   type ChartProps = ComponentProps<Chart<TData>>;
 
@@ -130,8 +132,16 @@
   export let y1Range: ChartProps['y1Range'] = undefined;
 
   const layerCakeContext = getContext<LayerCakeContext<TData>>('LayerCake');
-  const { width, height, containerWidth, containerHeight, xScale, yScale, config } =
-    layerCakeContext;
+  const {
+    data: contextData,
+    width,
+    height,
+    containerWidth,
+    containerHeight,
+    xScale,
+    yScale,
+    config,
+  } = layerCakeContext;
 
   /* --------------------------------------------
    * Make store versions of each parameter
@@ -143,11 +153,11 @@
   const _x1Range = writable<ChartProps['x1Range']>(x1Range);
 
   $: $_x1 = accessor(x1);
+  $: $_x1Domain = x1Domain ?? extent(chartDataArray($contextData), $_x1);
   $: $_x1Scale =
-    x1Scale && x1Domain && x1Range
-      ? createScale(x1Scale, x1Domain, x1Range, { xScale: $xScale, $width, $height })
+    x1Scale && x1Range
+      ? createScale(x1Scale, $_x1Domain, x1Range, { xScale: $xScale, $width, $height })
       : null;
-  $: $_x1Domain = x1Domain;
   $: $_x1Range = x1Range;
 
   const _y1 = writable(accessor(y1));
@@ -156,12 +166,12 @@
   const _y1Range = writable<ChartProps['y1Range']>(y1Range);
 
   $: $_y1 = accessor(y1);
-  $: $_y1Scale =
-    y1Scale && y1Domain && y1Range
-      ? createScale(y1Scale, y1Domain, y1Range, { yScale: $yScale, $width, $height })
-      : null;
-  $: $_y1Domain = y1Domain;
+  $: $_y1Domain = y1Domain ?? extent(chartDataArray($contextData), $_y1);
   $: $_y1Range = y1Range;
+  $: $_y1Scale =
+    y1Scale && y1Range
+      ? createScale(y1Scale, $_y1Domain, y1Range, { yScale: $yScale, $width, $height })
+      : null;
 
   /** Use radial instead of cartesian coordinates, mapping `x` to `angle` and `y`` to radial.  Radial lines are positioned relative to the origin, use transform (ex. `<Group center>`) to change the origin */
   export let radial = false;
