@@ -325,6 +325,8 @@
     let:data
     let:flatData
     let:config
+    let:x1Scale
+    let:y1Scale
     on:resize
   >
     {#key isMounted}
@@ -385,6 +387,8 @@
               {r}
               {rScale}
               {rGet}
+              {x1Scale}
+              {y1Scale}
               {padding}
               {data}
               {flatData}
