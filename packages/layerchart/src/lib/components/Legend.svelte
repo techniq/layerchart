@@ -9,7 +9,7 @@
   import ColorRamp from './ColorRamp.svelte';
   import { cls } from '@layerstack/tailwind';
 
-  const { rScale } = chartContext() ?? {};
+  const { cScale } = chartContext() ?? {};
 
   type AnyScale = any;
   type Placement =
@@ -41,9 +41,9 @@
     tick?: string;
   } = {};
 
-  $: if (scale == null && rScale) {
+  $: if (scale == null && cScale) {
     // Read scale from chart context
-    scale = $rScale;
+    scale = $cScale;
   }
 
   let xScale: AnyScale;

@@ -6,7 +6,7 @@
   import Rect from './Rect.svelte';
   import { chartDataArray, type Accessor } from '../utils/common.js';
 
-  const { data, rGet, config } = chartContext();
+  const { data, cGet, config } = chartContext();
 
   /**
    * Override `x` from context.  Useful for multiple Bar instances
@@ -48,7 +48,7 @@
         {y}
         {x1}
         {y1}
-        fill={$config.r ? $rGet(item) : null}
+        fill={$config.c ? $cGet(item) : null}
         {stroke}
         {strokeWidth}
         {radius}

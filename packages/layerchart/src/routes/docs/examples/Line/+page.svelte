@@ -229,13 +229,13 @@
       y="value"
       yDomain={[0, null]}
       yNice
-      r="fruit"
-      rScale={scaleOrdinal()}
-      rDomain={Object.keys(fruitColors)}
-      rRange={Object.values(fruitColors)}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={Object.keys(fruitColors)}
+      cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
       tooltip={{ mode: 'voronoi' }}
-      let:rScale
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -245,7 +245,7 @@
           rule
         />
         {#each dataByFruit as [fruit, data]}
-          {@const color = rScale(fruit)}
+          {@const color = cScale(fruit)}
           <Spline {data} class="stroke-2" stroke={color}>
             <svelte:fragment slot="end">
               <circle r={4} fill={color} />
@@ -325,14 +325,14 @@
       y="value"
       yDomain={[0, null]}
       yNice
-      r="fruit"
-      rScale={scaleOrdinal()}
-      rDomain={Object.keys(fruitColors)}
-      rRange={Object.values(fruitColors)}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={Object.keys(fruitColors)}
+      cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
       tooltip={{ mode: 'voronoi' }}
       let:tooltip
-      let:rScale
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -344,7 +344,7 @@
         {#each dataByFruit as [fruit, data]}
           {@const color =
             tooltip.data == null || tooltip.data.fruit === fruit
-              ? rScale(fruit)
+              ? cScale(fruit)
               : 'hsl(var(--color-surface-content) / 20%)'}
           <Spline {data} class="stroke-2" stroke={color}>
             <svelte:fragment slot="end">
@@ -383,13 +383,13 @@
       y="value"
       yDomain={[0, null]}
       yNice
-      r="fruit"
-      rScale={scaleOrdinal()}
-      rDomain={Object.keys(fruitColors)}
-      rRange={Object.values(fruitColors)}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={Object.keys(fruitColors)}
+      cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'voronoi' }}
-      let:rScale
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -399,7 +399,7 @@
           rule
         />
         {#each dataByFruit as [fruit, data]}
-          {@const color = rScale(fruit)}
+          {@const color = cScale(fruit)}
           <Spline {data} class="stroke-2" stroke={color} />
         {/each}
         <Labels format="integer" />

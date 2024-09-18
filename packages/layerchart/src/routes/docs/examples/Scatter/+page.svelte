@@ -114,10 +114,10 @@
       y="value"
       yDomain={[0, null]}
       yNice
-      r="value"
-      rScale={scaleThreshold()}
-      rDomain={[50, 90]}
-      rRange={[
+      c="value"
+      cScale={scaleThreshold()}
+      cDomain={[50, 90]}
+      cRange={[
         'hsl(var(--color-danger))',
         'hsl(var(--color-warning))',
         'hsl(var(--color-success))',

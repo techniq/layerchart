@@ -26,7 +26,7 @@
     yDomain,
     yScale,
     yRange,
-    rGet,
+    cGet,
     config,
     radial,
   } = chartContext();
@@ -216,7 +216,7 @@
             return {
               x: $xScale(seriesPoint.point[1]) + xOffset,
               y: yCoord + yOffset,
-              fill: $config.r ? $rGet(seriesPoint.series) : null,
+              fill: $config.c ? $cGet(seriesPoint.series) : null,
             };
           });
         }
@@ -228,7 +228,7 @@
             x: xItem + xOffset,
             y: yCoord + yOffset,
             // TODO: is there a better way to expose the series key/value?
-            fill: $config.r ? $rGet({ ...highlightData, $key }) : null,
+            fill: $config.c ? $cGet({ ...highlightData, $key }) : null,
           };
         });
       }
@@ -255,7 +255,7 @@
           _points = seriesPointsData.map((seriesPoint, i) => ({
             x: xCoord + xOffset,
             y: $yScale(seriesPoint.point[1]) + yOffset,
-            fill: $config.r ? $rGet(seriesPoint.series) : null,
+            fill: $config.c ? $cGet(seriesPoint.series) : null,
           }));
         }
       } else {
@@ -266,7 +266,7 @@
             x: xCoord + xOffset,
             y: yItem + yOffset,
             // TODO: is there a better way to expose the series key/value?
-            fill: $config.r ? $rGet({ ...highlightData, $key }) : null,
+            fill: $config.c ? $cGet({ ...highlightData, $key }) : null,
           };
         });
       }
@@ -275,7 +275,7 @@
         {
           x: xCoord + xOffset,
           y: yCoord + yOffset,
-          fill: $config.r ? $rGet(highlightData) : null,
+          fill: $config.c ? $cGet(highlightData) : null,
         },
       ];
     } else {
@@ -308,6 +308,8 @@
       // TODO: How to handle _areas
     }
   }
+
+  $: console.log({ _points });
 </script>
 
 {#if highlightData}

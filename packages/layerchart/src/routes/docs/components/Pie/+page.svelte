@@ -37,7 +37,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie />
       </Svg>
@@ -49,15 +49,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart
-      {data}
-      x="value"
-      xRange={[-90, 90]}
-      r="date"
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
-    >
+    <Chart {data} x="value" xRange={[-90, 90]} c="date" cRange={keyColors}>
       <Svg>
         <Pie />
       </Svg>
@@ -69,7 +61,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie range={[-90, 90]} />
       </Svg>
@@ -81,7 +73,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie padAngle={0.05} />
       </Svg>
@@ -93,7 +85,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie innerRadius={100} padAngle={0.03} />
       </Svg>
@@ -107,7 +99,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie innerRadius={100} />
       </Svg>
@@ -119,7 +111,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie innerRadius={0.9} />
       </Svg>
@@ -131,7 +123,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie innerRadius={-30} />
       </Svg>
@@ -143,7 +135,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie outerRadius={100} />
       </Svg>
@@ -155,7 +147,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie innerRadius={100} {data} />
         <Pie outerRadius={90} data={data2} />
@@ -168,7 +160,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie tweened />
       </Svg>
@@ -180,7 +172,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie offset={4} />
       </Svg>
@@ -192,7 +184,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie let:arcs>
           {#each arcs as arc, index}
@@ -214,7 +206,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date">
+    <Chart {data} x="value" c="date">
       <Svg>
         <Pie let:arcs>
           {#each arcs as arc, index}
@@ -231,8 +223,8 @@
                 x={centroid[0]}
                 y={centroid[1]}
                 dy={-8}
-                textAnchor="middle"
-                verticalAnchor="middle"
+                textAnchoc="middle"
+                verticalAnchoc="middle"
                 class={cls('text-base', colors.content)}
               />
               <Text
@@ -240,8 +232,8 @@
                 x={centroid[0]}
                 y={centroid[1]}
                 dy={8}
-                textAnchor="middle"
-                verticalAnchor="middle"
+                textAnchoc="middle"
+                verticalAnchoc="middle"
                 class={cls('text-sm opacity-50', colors.content)}
               />
             </Arc>
@@ -256,15 +248,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart
-      {data}
-      x="value"
-      r="date"
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
-      let:tooltip
-    >
+    <Chart {data} x="value" c="date" cRange={keyColors} let:tooltip>
       <Svg>
         <Pie {tooltip} />
       </Svg>
@@ -288,15 +272,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart
-      {data}
-      x="value"
-      r="date"
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
-      let:tooltip
-    >
+    <Chart {data} x="value" c="date" cRange={keyColors} let:tooltip>
       <Svg>
         <Pie let:arcs>
           {#each arcs as arc, index}
@@ -325,8 +301,8 @@
                   value={formatUtil(arc.data.value / dataSum, 'percent')}
                   x={centroid[0]}
                   y={centroid[1]}
-                  textAnchor="middle"
-                  verticalAnchor="middle"
+                  textAnchoc="middle"
+                  verticalAnchoc="middle"
                   class={cls('text-base', colors.content)}
                 />
               </Arc>
@@ -357,7 +333,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie placement="left" />
       </Svg>
@@ -369,7 +345,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie />
       </Svg>
@@ -381,7 +357,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" r="date" rScale={scaleOrdinal()} rDomain={colorKeys} rRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg>
         <Pie placement="right" />
       </Svg>

@@ -97,15 +97,15 @@
   x={value}
   y={label}
   r={label}
-  rScale={colorScale}
-  rDomain={colorKeys}
-  rRange={colors}
+  cScale={colorScale}
+  cDomain={colorKeys}
+  cRange={colors}
   {...$$restProps}
   let:x
   let:xScale
   let:y
-  let:r
-  let:rScale
+  let:c
+  let:cScale
   let:yScale
   let:width
   let:height
@@ -139,8 +139,8 @@
                   {innerRadius}
                   {cornerRadius}
                   {padAngle}
-                  fill={rScale(r(d))}
-                  track={{ fill: rScale(r(d)), 'fill-opacity': 0.1 }}
+                  fill={cScale(c(d))}
+                  track={{ fill: cScale(c(d)), 'fill-opacity': 0.1 }}
                   {tooltip}
                   data={d}
                   {...props.arc}
@@ -155,7 +155,7 @@
                   {innerRadius}
                   {cornerRadius}
                   {padAngle}
-                  fill={rScale(r(arc.data))}
+                  fill={cScale(c(arc.data))}
                   data={arc.data}
                   {tooltip}
                   {...props.arc}
@@ -175,7 +175,7 @@
           <Tooltip.Item
             label={labelAccessor(data)}
             value={valueAccessor(data)}
-            color={rScale(r(data))}
+            color={cScale(c(data))}
             {format}
           />
         </Tooltip.List>

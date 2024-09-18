@@ -27,7 +27,7 @@
    */
   export let tooltip: TooltipContextValue | undefined = undefined;
 
-  const { width, height, x, rGet, data, config } = chartContext();
+  const { width, height, x, cGet, data, config } = chartContext();
 
   $: yearDays = timeDays(start, end);
   $: yearMonths = timeMonths(start, end);
@@ -50,7 +50,7 @@
     return {
       x: timeWeek.count(timeYear(date), date) * cellWidth,
       y: date.getDay() * cellHeight,
-      color: $config.r ? $rGet(cellData) : 'transparent',
+      color: $config.c ? $cGet(cellData) : 'transparent',
       data: cellData,
     };
   });

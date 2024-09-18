@@ -557,16 +557,16 @@
       xScale={scaleTime()}
       y={[0, 1]}
       yNice
-      r="key"
-      rScale={scaleOrdinal()}
-      rDomain={keys}
-      rRange={['hsl(var(--color-info))', 'hsl(var(--color-success))', 'hsl(var(--color-warning))']}
+      c="key"
+      cScale={scaleOrdinal()}
+      cDomain={keys}
+      cRange={['hsl(var(--color-info))', 'hsl(var(--color-success))', 'hsl(var(--color-warning))']}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{
         mode: charts.areaStack.mode,
         debug: charts.areaStack.debug,
       }}
-      let:rGet
+      let:cGet
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -577,7 +577,7 @@
         />
 
         {#each stackData as seriesData}
-          {@const color = rGet(seriesData)}
+          {@const color = cGet(seriesData)}
           <Area
             data={seriesData}
             line={{ stroke: color, 'stroke-width': 2 }}

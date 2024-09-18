@@ -789,17 +789,17 @@
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="value"
       yNice={4}
-      r="fruit"
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={colorKeys}
+      cRange={keyColors}
       x1="fruit"
       x1Scale={scaleBand()}
       x1Domain={colorKeys}
       x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
-      let:rScale
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -815,7 +815,7 @@
             <Tooltip.Item
               label={d.fruit}
               value={d.value}
-              color={rScale(d.fruit)}
+              color={cScale(d.fruit)}
               format="integer"
               valueAlign="right"
             />
@@ -846,13 +846,13 @@
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
       yNice={4}
-      r="fruit"
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={colorKeys}
+      cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
-      let:rScale
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -868,7 +868,7 @@
             <Tooltip.Item
               label={d.fruit}
               value={d.value}
-              color={rScale(d.fruit)}
+              color={cScale(d.fruit)}
               format="integer"
               valueAlign="right"
             />
@@ -899,13 +899,13 @@
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
       yNice={4}
-      r="fruit"
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={colorKeys}
+      cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
-      let:rScale
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule format="percentRound" />
@@ -921,7 +921,7 @@
             <Tooltip.Item
               label={d.fruit}
               value={d.value}
-              color={rScale(d.fruit)}
+              color={cScale(d.fruit)}
               format="integer"
               valueAlign="right"
             />
@@ -952,17 +952,17 @@
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
       yNice={4}
-      r="fruit"
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={colorKeys}
+      cRange={keyColors}
       x1="basket"
       x1Scale={scaleBand().padding(0.1)}
       x1Domain={[1, 2]}
       x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
-      let:rScale
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -978,7 +978,7 @@
             <Tooltip.Item
               label={d.fruit}
               value={d.value}
-              color={rScale(d.fruit)}
+              color={cScale(d.fruit)}
               format="integer"
               valueAlign="right"
             />
@@ -1019,10 +1019,10 @@
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
       yNice={4}
-      r="fruit"
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={colorKeys}
+      cRange={keyColors}
       x1={transitionChart.groupBy}
       x1Scale={scaleBand().padding(0.1)}
       x1Domain={transitionChart.groupBy
@@ -1032,7 +1032,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
       let:data
-      let:rScale
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -1042,7 +1042,7 @@
           {#each transitionData as bar (bar.year + '-' + bar.fruit)}
             <Bar
               {bar}
-              fill={rScale(bar.fruit)}
+              fill={cScale(bar.fruit)}
               radius={4}
               strokeWidth={1}
               tweened={{
@@ -1064,7 +1064,7 @@
             <Tooltip.Item
               label={d.fruit}
               value={d.value}
-              color={rScale(d.fruit)}
+              color={cScale(d.fruit)}
               format="integer"
               valueAlign="right"
             />
@@ -1105,10 +1105,10 @@
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
       yNice={4}
-      r="fruit"
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={colorKeys}
+      cRange={keyColors}
       x1={transitionChart.groupBy}
       x1Scale={scaleBand().padding(0.1)}
       x1Domain={transitionChart.groupBy
@@ -1117,7 +1117,7 @@
       x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
       padding={{ left: 16, bottom: 24 }}
       let:data
-      let:rScale
+      let:cScale
       let:tooltip
     >
       <Svg>
@@ -1128,7 +1128,7 @@
           {#each transitionData as bar (bar.year + '-' + bar.fruit)}
             <Bar
               {bar}
-              fill={rScale(bar.fruit)}
+              fill={cScale(bar.fruit)}
               radius={4}
               strokeWidth={1}
               tweened={{
@@ -1155,7 +1155,7 @@
           <Tooltip.Item
             label={data.fruit}
             value={data.value}
-            color={rScale(data.fruit)}
+            color={cScale(data.fruit)}
             format="integer"
             valueAlign="right"
           />

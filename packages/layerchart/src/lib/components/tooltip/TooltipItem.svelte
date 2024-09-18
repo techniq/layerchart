@@ -1,6 +1,6 @@
 <script lang="ts">
   import { format as formatUtil, type FormatType } from '@layerstack/utils';
-  import { cls, type ThemeColors } from '@layerstack/tailwind';
+  import { cls } from '@layerstack/tailwind';
 
   export let label: any;
   /** Value to be formatted and displayed.  Can also be passed as default slot */

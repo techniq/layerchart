@@ -22,10 +22,10 @@
       xScale={scaleBand().paddingInner(0.4)}
       y={['high', 'low']}
       yNice
-      r={(d) => (d.close < d.open ? 'desc' : 'asc')}
-      rScale={scaleOrdinal()}
-      rDomain={['desc', 'asc']}
-      rRange={['#e41a1c', '#4daf4a']}
+      c={(d) => (d.close < d.open ? 'desc' : 'asc')}
+      cScale={scaleOrdinal()}
+      cDomain={['desc', 'asc']}
+      cRange={['#e41a1c', '#4daf4a']}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >

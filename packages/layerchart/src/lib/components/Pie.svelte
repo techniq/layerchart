@@ -67,7 +67,7 @@
    */
   export let tooltip: TooltipContextValue | undefined = undefined;
 
-  const { data: contextData, x, y, xRange, rGet, config, width, height } = chartContext();
+  const { data: contextData, x, y, xRange, c, cScale, config, width, height } = chartContext();
 
   // @ts-expect-error
   $: resolved_endAngle = endAngle ?? degreesToRadians($config.xRange ? max($xRange) : max(range));
@@ -108,7 +108,7 @@
         {outerRadius}
         {cornerRadius}
         {offset}
-        fill={$config.r ? $rGet(arc.data) : null}
+        fill={$config.c ? $cScale?.($c(arc.data)) : null}
         data={arc.data}
         {tooltip}
       />

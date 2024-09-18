@@ -60,6 +60,8 @@
     x1?: Accessor<TData>;
     /** The y1 accessor. The key in each row of data that corresponds to the y1-field. This can be a string, an accessor function, a number or an array of any combination of those types. This property gets converted to a function when you access it through the context. */
     y1?: Accessor<TData>;
+    /** The c (color) accessor. The key in each row of data that corresponds to the color. This can be a string or an accessor function. This property gets converted to a function when you access it through the context. */
+    c?: Accessor<TData>;
 
     /** Set a min or max. For linear scales, if you want to inherit the value from the data's extent, set that value to `null`. This value can also be an array because sometimes your scales are [piecewise](https://github.com/d3/d3-scale#continuous_domain) or are a list of discrete values such as in [ordinal scales](https://github.com/d3/d3-scale#ordinal-scales), useful for color series. Set it to a function that receives the computed domain and lets you return a modified domain, useful for sorting values. */
     xDomain?: DomainType;
@@ -73,6 +75,8 @@
     x1Domain?: DomainType;
     /** Set a min or max. For linear scales, if you want to inherit the value from the data's extent, set that value to `null`. This value can also be an array because sometimes your scales are [piecewise](https://github.com/d3/d3-scale#continuous_domain) or are a list of discrete values such as in [ordinal scales](https://github.com/d3/d3-scale#ordinal-scales), useful for color series. Set it to a function that receives the computed domain and lets you return a modified domain, useful for sorting values. */
     y1Domain?: DomainType;
+    /** Set the list of color values. */
+    cDomain?: DomainType;
 
     /** Applies D3's [scale.nice()](https://github.com/d3/d3-scale#continuous_nice) to the x domain. @default false */
     xNice?: boolean | number;
@@ -104,6 +108,8 @@
     x1Scale?: AnyScale;
     /** The D3 scale that should be used for the y1-dimension. Pass in an instantiated D3 scale if you want to override the default or you want to extra options. @default scaleLinear */
     y1Scale?: AnyScale;
+    /** The D3 scale that should be used for the  color dimension. Pass in an instantiated D3 scale if you want to override the default or you want to extra options. @default scaleOrdinal */
+    cScale?: AnyScale;
 
     /** Override the default x range of `[0, width]` by setting an array or function with argument `({ width, height})` that returns an array. Setting this prop overrides `xReverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
     xRange?:
@@ -125,16 +131,18 @@
       | number[]
       | string[]
       | ((args: { width: number; height: number }) => number[] | string[]);
-    /** Override the default x1 range of `[0, width]` by setting an array or function with argument `({ xScale, width, height})` that returns an array. Setting this prop overrides `x1Reverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
+    /** Set the x1 range by setting an array or function with argument `({ xScale, width, height})` that returns an array. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
     x1Range?:
       | number[]
       | string[]
       | ((args: { xScale: AnyScale; width: number; height: number }) => number[] | string[]);
-    /** Override the default y1 range of `[0, width]` by setting an array or function with argument `({ yScale, width, height})` that returns an array. Setting this prop overrides `x1Reverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
+    /** Set the y1 range by setting an array or function with argument `({ yScale, width, height})` that returns an array. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
     y1Range?:
       | number[]
       | string[]
       | ((args: { yScale: AnyScale; width: number; height: number }) => number[] | string[]);
+    /** Override the default y1 range of `[0, width]` by setting an array or function with argument `({ yScale, width, height})` that returns an array. Setting this prop overrides `x1Reverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
+    cRange?: string[];
 
     /** Reverse the default x range. By default this is `false` and the range is `[0, width]`. Ignored if you set the xRange prop. @default false */
     xReverse?: boolean;
@@ -212,6 +220,11 @@
   export let y1Scale: $$Props['y1Scale'] = undefined;
   export let y1Domain: $$Props['y1Domain'] = undefined;
   export let y1Range: $$Props['y1Range'] = undefined;
+
+  export let c: $$Props['c'] = undefined;
+  export let cScale: $$Props['cScale'] = undefined;
+  export let cDomain: $$Props['cDomain'] = undefined;
+  export let cRange: $$Props['cRange'] = undefined;
 
   /**
    * x value guaranteed to be visible in xDomain.  Useful with optional negative values since `xDomain={[0, null]}` would ignore negative values
@@ -322,11 +335,22 @@
     {y1Scale}
     {y1Domain}
     {y1Range}
+    {c}
+    {cScale}
+    {cDomain}
+    {cRange}
     let:data
     let:flatData
     let:config
+    let:x1
     let:x1Scale
+    let:x1Get
+    let:y1
     let:y1Scale
+    let:y1Get
+    let:c
+    let:cScale
+    let:cGet
     on:resize
   >
     {#key isMounted}
@@ -387,8 +411,15 @@
               {r}
               {rScale}
               {rGet}
+              {x1}
               {x1Scale}
+              {x1Get}
+              {y1}
               {y1Scale}
+              {y1Get}
+              {c}
+              {cScale}
+              {cGet}
               {padding}
               {data}
               {flatData}

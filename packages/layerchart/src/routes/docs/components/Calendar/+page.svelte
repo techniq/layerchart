@@ -31,11 +31,11 @@
   <div class="h-[200px] p-4 border rounded">
     <Chart
       {data}
-      x={(d) => d.date}
-      r={(d) => d.value}
-      rScale={scaleThreshold().unknown('transparent')}
-      rDomain={[25, 50, 75]}
-      rRange={[
+      x="date"
+      c="value"
+      cScale={scaleThreshold().unknown('transparent')}
+      cDomain={[25, 50, 75]}
+      cRange={[
         'hsl(var(--color-primary-100))',
         'hsl(var(--color-primary-300))',
         'hsl(var(--color-primary-500))',
@@ -66,11 +66,11 @@
   <div class="h-[200px] p-4 border rounded overflow-hidden">
     <Chart
       {data}
-      x={(d) => d.date}
-      r={(d) => d.value}
-      rScale={scaleThreshold().unknown('transparent')}
-      rDomain={[25, 50, 75]}
-      rRange={[
+      x="date"
+      c="value"
+      cScale={scaleThreshold().unknown('transparent')}
+      cDomain={[25, 50, 75]}
+      cRange={[
         'hsl(var(--color-primary-100))',
         'hsl(var(--color-primary-300))',
         'hsl(var(--color-primary-500))',
@@ -101,11 +101,11 @@
   <div class="h-[716px] p-4 border rounded overflow-hidden">
     <Chart
       {data}
-      x={(d) => d.date}
-      r={(d) => d.value}
-      rScale={scaleThreshold().unknown('transparent')}
-      rDomain={[25, 50, 75]}
-      rRange={[
+      x="date"
+      c="value"
+      cScale={scaleThreshold().unknown('transparent')}
+      cDomain={[25, 50, 75]}
+      cRange={[
         'hsl(var(--color-primary-100))',
         'hsl(var(--color-primary-300))',
         'hsl(var(--color-primary-500))',
