@@ -3,7 +3,6 @@
 
   import { type ComponentProps } from 'svelte';
   import { scaleLinear, scaleTime } from 'd3-scale';
-  import { curveLinearClosed } from 'd3-shape';
   import { format } from '@layerstack/utils';
 
   import Axis from '../Axis.svelte';
