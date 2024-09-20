@@ -9,9 +9,9 @@
   const data = dataByYear.get(2019);
 
   const exerciseData = [
-    { label: 'move', value: 400, total: 1000, color: '#ef4444' },
-    { label: 'exercise', value: 20, total: 30, color: '#a3e635' },
-    { label: 'stand', value: 10, total: 12, color: '#22d3ee' },
+    { label: 'move', value: 400, maxValue: 1000, color: '#ef4444' },
+    { label: 'exercise', value: 20, maxValue: 30, color: '#a3e635' },
+    { label: 'stand', value: 10, maxValue: 12, color: '#22d3ee' },
   ];
 </script>
 
@@ -58,6 +58,39 @@
   </div>
 </Preview>
 
+<h2>Single value</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      data={[{ label: 'Example', value: 70 }]}
+      label="label"
+      value="value"
+      maxValue={100}
+      outerRadius={-25}
+      innerRadius={-20}
+      cornerRadius={10}
+    />
+  </div>
+</Preview>
+
+<h2>Single value (arc)</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      data={[{ label: 'Example', value: 70 }]}
+      label="label"
+      value="value"
+      maxValue={100}
+      range={[-90, 90]}
+      outerRadius={-25}
+      innerRadius={-20}
+      cornerRadius={10}
+    />
+  </div>
+</Preview>
+
 <h2>Series data</h2>
 
 <Preview data={dataByYear}>
@@ -65,9 +98,7 @@
     <PieChart
       label="fruit"
       value="value"
-      series={Array.from(dataByYear).map(([key, data]) => {
-        return { key, data };
-      })}
+      series={Array.from(dataByYear, ([key, data]) => ({ key, data }))}
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={5}
@@ -83,12 +114,7 @@
     <PieChart
       label="fruit"
       value="value"
-      series={data?.map((d) => {
-        return {
-          key: d.fruit,
-          data: d,
-        };
-      })}
+      series={data?.map((d) => ({ key: d.fruit, data: [d] }))}
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
@@ -103,12 +129,7 @@
     <PieChart
       label="fruit"
       value="value"
-      series={data?.map((d) => {
-        return {
-          key: d.fruit,
-          data: d,
-        };
-      })}
+      series={data?.map((d) => ({ key: d.fruit, data: [d] }))}
       range={[-90, 90]}
       outerRadius={-25}
       innerRadius={-20}
@@ -125,12 +146,7 @@
     <PieChart
       label="fruit"
       value="value"
-      series={data?.map((d) => {
-        return {
-          key: d.fruit,
-          data: d,
-        };
-      })}
+      series={data?.map((d) => ({ key: d.fruit, data: [d] }))}
       props={{
         arc: {
           track: { fill: 'hsl(var(--color-surface-content) / 10%)' },
@@ -143,7 +159,7 @@
   </div>
 </Preview>
 
-<h2>Series data (individual tracks and total)</h2>
+<h2>Series data (individual tracks, max value, and color)</h2>
 
 <Preview data={exerciseData}>
   <div class="h-[200px] p-4 border rounded">
@@ -153,26 +169,11 @@
       series={exerciseData.map((d) => {
         return {
           key: d.label,
-          data: d,
-          total: d.total,
+          data: [d],
+          maxValue: d.maxValue,
           color: d.color,
         };
       })}
-      outerRadius={-25}
-      innerRadius={-20}
-      cornerRadius={10}
-    />
-  </div>
-</Preview>
-
-<h2>Series data (single value)</h2>
-
-<Preview>
-  <div class="h-[300px] p-4 border rounded">
-    <PieChart
-      label="label"
-      value="value"
-      series={[{ key: 'test', data: { label: 'Test', value: 70 }, total: 100 }]}
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}

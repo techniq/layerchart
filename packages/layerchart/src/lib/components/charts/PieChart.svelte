@@ -20,9 +20,12 @@
     - [ ] Segmented arcs - http://localhost:3002/docs/examples/Arc#segmented_arc
   */
 
-  interface $$Props extends ComponentProps<Chart<TData>> {
+  type ChartProps = ComponentProps<Chart<TData>>;
+
+  interface $$Props extends ChartProps {
     label?: typeof label;
     value?: typeof label;
+    maxValue?: typeof maxValue;
     range?: typeof range;
     innerRadius?: typeof innerRadius;
     outerRadius?: typeof outerRadius;
@@ -34,7 +37,7 @@
     // labels?: typeof labels;
   }
 
-  export let data: $$Props['data'] = [];
+  export let data: ChartProps['data'] = [];
 
   /** Label accessor */
   export let label: Accessor<TData> = 'label';
@@ -44,14 +47,17 @@
   export let value: Accessor<TData> = 'value';
   $: valueAccessor = accessor(value);
 
+  /** Maximum possible value, useful when `data` is single item */
+  export let maxValue: number | undefined = undefined;
+
   export let series: {
     key: string | number;
     label?: string;
     value?: Accessor<TData>;
     /** Provider series data, else uses chart data (with value/key accessor) */
-    data?: TData | TData[];
-    /** Maximum possible value, required when `data` is single item */
-    total?: number;
+    data?: TData[];
+    /** Maximum possible value, useful when `data` is single item */
+    maxValue?: number;
     color?: string;
     props?: Partial<ComponentProps<Arc>>;
   }[] = [{ key: 'default', value: value /*, color: 'hsl(var(--color-primary))'*/ }];
@@ -87,14 +93,8 @@
   } = {};
 
   $: allSeriesData = series
-    .flatMap((s) =>
-      Array.isArray(s.data)
-        ? s.data.map((d) => ({ seriesKey: s.key, ...d }))
-        : s.data
-          ? [s.data]
-          : null
-    )
-    .filter((d) => d) as Array<TData & { stackData?: any }>;
+    .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
+    .filter((d) => d) as Array<TData>;
 
   $: chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<TData>;
 
@@ -136,20 +136,22 @@
       <slot name="marks" {...slotProps}>
         {#each series as s, i}
           <!-- Redundant logic to make Typescript happy -->
-          <Group center={s.data && !Array.isArray(s.data)} {...props.group}>
-            {#if s.data && !Array.isArray(s.data)}
+          {@const singleArc = s.data?.length === 1 || chartData.length === 1}
+          <Group center={singleArc} {...props.group}>
+            {#if singleArc}
+              {@const d = s.data?.[0] || chartData[0]}
               <Arc
-                value={valueAccessor(s.data)}
-                domain={[0, s.total ?? sum(chartData, valueAccessor)]}
+                value={valueAccessor(d)}
+                domain={[0, s.maxValue ?? maxValue ?? sum(chartData, valueAccessor)]}
                 {range}
                 {innerRadius}
                 outerRadius={i * (outerRadius ?? 0)}
                 {cornerRadius}
                 {padAngle}
-                fill={s.color ?? cScale(c(s.data))}
-                track={{ fill: s.color ?? cScale(c(s.data)), 'fill-opacity': 0.1 }}
+                fill={s.color ?? cScale(c(d))}
+                track={{ fill: s.color ?? cScale(c(d)), 'fill-opacity': 0.1 }}
                 {tooltip}
-                data={s.data}
+                data={d}
                 {...props.arc}
               />
             {:else}
