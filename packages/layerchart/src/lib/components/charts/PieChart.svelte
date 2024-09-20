@@ -1,6 +1,5 @@
 <script lang="ts" generics="TData">
   import { type ComponentProps } from 'svelte';
-  import { scaleOrdinal } from 'd3-scale';
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
 
@@ -17,7 +16,7 @@
     TODO:
     - [ ] Centroid labels
     - [ ] Outside/offset labels
-    - [ ] Multiple/concentric charts (data prop, with different domains) - http://localhost:3002/docs/examples/Arc#concentric
+    - [x] Multiple/concentric charts (data prop, with different domains) - http://localhost:3002/docs/examples/Arc#concentric
     - [ ] Segmented arcs - http://localhost:3002/docs/examples/Arc#segmented_arc
   */
 
@@ -30,14 +29,12 @@
     cornerRadius?: typeof cornerRadius;
     padAngle?: typeof padAngle;
     placement?: typeof placement;
-    separateTracks?: typeof separateTracks;
     props?: typeof props;
-    // series?: typeof series;
+    series?: typeof series;
     // labels?: typeof labels;
   }
 
   export let data: $$Props['data'] = [];
-  $: chartData = chartDataArray(data);
 
   /** Label accessor */
   export let label: Accessor<TData> = 'label';
@@ -46,6 +43,18 @@
   /** Value accessor */
   export let value: Accessor<TData> = 'value';
   $: valueAccessor = accessor(value);
+
+  export let series: {
+    key: string | number;
+    label?: string;
+    value?: Accessor<TData>;
+    /** Provider series data, else uses chart data (with value/key accessor) */
+    data?: TData | TData[];
+    /** Maximum possible value, required when `data` is single item */
+    total?: number;
+    color?: string;
+    props?: Partial<ComponentProps<Arc>>;
+  }[] = [{ key: 'default', value: value /*, color: 'hsl(var(--color-primary))'*/ }];
 
   /**
    * Range [min,max] in degrees.  See also startAngle/endAngle
@@ -71,35 +80,42 @@
 
   export let placement: 'left' | 'center' | 'right' | 'none' = 'center';
 
-  /**
-   * Show values as individual, concentric arcs
-   */
-  export let separateTracks = false;
-
-  export let colorScale = scaleOrdinal();
-  export let colorKeys = [...new Set(chartDataArray(data).map((d) => accessor(label)(d)))];
-  export let colors = [
-    'hsl(var(--color-info))',
-    'hsl(var(--color-success))',
-    'hsl(var(--color-warning))',
-    'hsl(var(--color-danger))',
-  ];
-
   export let props: {
     pie?: Partial<ComponentProps<Pie>>;
     group?: Partial<ComponentProps<Group>>;
     arc?: Partial<ComponentProps<Arc>>;
   } = {};
+
+  $: allSeriesData = series
+    .flatMap((s) =>
+      Array.isArray(s.data)
+        ? s.data.map((d) => ({ seriesKey: s.key, ...d }))
+        : s.data
+          ? [s.data]
+          : null
+    )
+    .filter((d) => d) as Array<TData & { stackData?: any }>;
+
+  $: chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<TData>;
+
+  $: seriesColors = series.map((s) => s.color).filter((d) => d != null);
 </script>
 
 <Chart
-  {data}
+  data={chartData}
   x={value}
   y={label}
-  r={label}
-  cScale={colorScale}
-  cDomain={colorKeys}
-  cRange={colors}
+  c={label}
+  cRange={seriesColors.length
+    ? seriesColors
+    : [
+        'hsl(var(--color-primary))',
+        'hsl(var(--color-secondary))',
+        'hsl(var(--color-info))',
+        'hsl(var(--color-success))',
+        'hsl(var(--color-warning))',
+        'hsl(var(--color-danger))',
+      ]}
   {...$$restProps}
   let:x
   let:xScale
@@ -118,52 +134,54 @@
       <slot name="below-marks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        <Pie
-          {range}
-          {innerRadius}
-          {outerRadius}
-          {cornerRadius}
-          {padAngle}
-          {placement}
-          {...props.pie}
-          let:arcs
-        >
-          <Group {...props.group}>
-            {#if separateTracks}
-              {@const sumValue = Number(sum(chartData, valueAccessor))}
-              {#each chartData as d, i}
-                <Arc
-                  value={valueAccessor(d)}
-                  domain={[0, sumValue]}
-                  outerRadius={i * (outerRadius ?? 0)}
-                  {innerRadius}
-                  {cornerRadius}
-                  {padAngle}
-                  fill={cScale(c(d))}
-                  track={{ fill: cScale(c(d)), 'fill-opacity': 0.1 }}
-                  {tooltip}
-                  data={d}
-                  {...props.arc}
-                />
-              {/each}
+        {#each series as s, i}
+          <!-- Redundant logic to make Typescript happy -->
+          <Group center={s.data && !Array.isArray(s.data)} {...props.group}>
+            {#if s.data && !Array.isArray(s.data)}
+              <Arc
+                value={valueAccessor(s.data)}
+                domain={[0, s.total ?? sum(chartData, valueAccessor)]}
+                {range}
+                {innerRadius}
+                outerRadius={i * (outerRadius ?? 0)}
+                {cornerRadius}
+                {padAngle}
+                fill={s.color ?? cScale(c(s.data))}
+                track={{ fill: s.color ?? cScale(c(s.data)), 'fill-opacity': 0.1 }}
+                {tooltip}
+                data={s.data}
+                {...props.arc}
+              />
             {:else}
-              {#each arcs as arc}
-                <Arc
-                  startAngle={arc.startAngle}
-                  endAngle={arc.endAngle}
-                  {outerRadius}
-                  {innerRadius}
-                  {cornerRadius}
-                  {padAngle}
-                  fill={cScale(c(arc.data))}
-                  data={arc.data}
-                  {tooltip}
-                  {...props.arc}
-                />
-              {/each}
+              <Pie
+                data={s.data}
+                {range}
+                {innerRadius}
+                {outerRadius}
+                {cornerRadius}
+                {padAngle}
+                {placement}
+                {...props.pie}
+                let:arcs
+              >
+                {#each arcs as arc}
+                  <Arc
+                    startAngle={arc.startAngle}
+                    endAngle={arc.endAngle}
+                    outerRadius={i * (outerRadius ?? 0)}
+                    {innerRadius}
+                    {cornerRadius}
+                    {padAngle}
+                    fill={cScale(c(arc.data))}
+                    data={arc.data}
+                    {tooltip}
+                    {...props.arc}
+                  />
+                {/each}
+              </Pie>
             {/if}
           </Group>
-        </Pie>
+        {/each}
       </slot>
 
       <slot name="above-marks" {...slotProps} />
