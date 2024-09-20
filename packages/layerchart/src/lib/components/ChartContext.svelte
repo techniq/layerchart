@@ -119,6 +119,8 @@
 </script>
 
 <script lang="ts" generics="TData">
+  import { unique } from '@layerstack/utils/array';
+
   import { scaleOrdinal } from 'd3-scale';
 
   import { extent } from 'd3-array';
@@ -197,7 +199,7 @@
   const _cGet = writable<Function>();
 
   $: $_c = accessor(c);
-  $: $_cDomain = cDomain ?? chartDataArray($contextData).map($_c);
+  $: $_cDomain = cDomain ?? unique(chartDataArray($contextData).map($_c));
   $: $_cRange = cRange;
   $: $_cScale = cRange
     ? createScale(cScale ?? scaleOrdinal(), $_cDomain, cRange, { $width, $height })
