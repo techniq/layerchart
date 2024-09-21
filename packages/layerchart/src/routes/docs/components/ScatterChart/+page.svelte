@@ -26,6 +26,14 @@
   </div>
 </Preview>
 
+<h2>Radius via rScale</h2>
+
+<Preview data={spiralData}>
+  <div class="h-[400px] p-4 border rounded">
+    <ScatterChart data={spiralData} x="x" y="y" r="y" rRange={[2, 30]} xNice yNice />
+  </div>
+</Preview>
+
 <h2>Series</h2>
 
 <Preview data={penguinDataBySpecies}>
@@ -33,6 +41,30 @@
     <ScatterChart
       x="flipper_length_mm"
       y="bill_length_mm"
+      series={penguinDataBySpecies.map(([species, data], i) => {
+        return {
+          key: species,
+          data,
+          color: [
+            'hsl(var(--color-primary))',
+            'hsl(var(--color-secondary))',
+            'hsl(var(--color-success))',
+          ][i],
+        };
+      })}
+    />
+  </div>
+</Preview>
+
+<h2>Series with radius</h2>
+
+<Preview data={penguinDataBySpecies}>
+  <div class="h-[400px] p-4 border rounded">
+    <ScatterChart
+      x="flipper_length_mm"
+      y="bill_length_mm"
+      r="body_mass_g"
+      rRange={[2, 20]}
       series={penguinDataBySpecies.map(([species, data], i) => {
         return {
           key: species,

@@ -20,6 +20,7 @@
     yScale,
     yGet,
     cGet,
+    rGet,
     padding,
     containerWidth,
     containerHeight,
@@ -43,7 +44,7 @@
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | string | undefined = undefined;
 
-  type Point = { x: number; y: number; xValue: any; yValue: any; data: any };
+  type Point = { x: number; y: number; r: number; xValue: any; yValue: any; data: any };
 
   /** Render to canvas */
   export let render: ((ctx: CanvasRenderingContext2D, points: Point[]) => any) | undefined =
@@ -83,6 +84,7 @@
           return {
             x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
             y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
+            r: $config.r ? $rGet(d) : r,
             xValue,
             yValue,
             data: d,
@@ -97,6 +99,7 @@
           return {
             x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
             y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
+            r: $config.r ? $rGet(d) : r,
             xValue,
             yValue,
             data: d,
@@ -110,6 +113,7 @@
         return {
           x: $xScale(xValue) + getOffset($xScale(xValue), offsetX, $xScale),
           y: $yScale(yValue) + getOffset($yScale(yValue), offsetY, $yScale),
+          r: $config.r ? $rGet(d) : r,
           xValue,
           yValue,
           data: d,
@@ -131,11 +135,11 @@
       const y = $yGet(d) + getOffset($yGet(d), offsetY, $yScale);
       return {
         source: {
-          x: xMin + getOffset(xMin, offsetX, $xScale) + r,
+          x: xMin + getOffset(xMin, offsetX, $xScale) + ($config.r ? $rGet(d) : r),
           y,
         },
         target: {
-          x: xMax + getOffset(xMax, offsetX, $xScale) - r,
+          x: xMax + getOffset(xMax, offsetX, $xScale) - ($config.r ? $rGet(d) : r),
           y: y,
         },
       };
@@ -178,7 +182,7 @@
     } else {
       points.forEach((point) => {
         $ctx.beginPath();
-        $ctx.arc(point.x, point.y, r, 0, 2 * Math.PI, false);
+        $ctx.arc(point.x, point.y, point.r, 0, 2 * Math.PI, false);
 
         $ctx.lineWidth = Number(strokeWidth ?? 0);
         $ctx.strokeStyle =
@@ -217,7 +221,7 @@
         <Circle
           cx={$radial ? radialPoint[0] : point.x}
           cy={$radial ? radialPoint[1] : point.y}
-          {r}
+          r={point.r}
           fill={fill ?? ($config.c ? $cGet(point.data) : null)}
           {stroke}
           class={className}

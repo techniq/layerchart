@@ -61,6 +61,7 @@
   let:xScale
   let:y
   let:yScale
+  let:r
   let:width
   let:height
   let:padding
@@ -129,8 +130,23 @@
           </Tooltip.Header>
         {/if}
         <Tooltip.List>
-          <Tooltip.Item label={typeof config.x ? config.x : 'x'} value={x(data)} {format} />
-          <Tooltip.Item label={typeof config.y ? config.y : 'y'} value={y(data)} {format} />
+          <Tooltip.Item
+            label={typeof config.x === 'string' ? config.x : 'x'}
+            value={x(data)}
+            {format}
+          />
+          <Tooltip.Item
+            label={typeof config.y === 'string' ? config.y : 'y'}
+            value={y(data)}
+            {format}
+          />
+          {#if config.r}
+            <Tooltip.Item
+              label={typeof config.r === 'string' ? config.r : 'r'}
+              value={r(data)}
+              {format}
+            />
+          {/if}
         </Tooltip.List>
       </Tooltip.Root>
     </slot>
