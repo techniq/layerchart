@@ -141,7 +141,7 @@
                 domain={[0, s.maxValue ?? maxValue ?? sum(chartData, valueAccessor)]}
                 {range}
                 {innerRadius}
-                outerRadius={i * (outerRadius ?? 0)}
+                outerRadius={(outerRadius ?? 0) < 0 ? i * (outerRadius ?? 0) : outerRadius}
                 {cornerRadius}
                 {padAngle}
                 fill={s.color ?? cScale(c(d))}

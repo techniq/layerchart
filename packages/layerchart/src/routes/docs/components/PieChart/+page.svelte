@@ -77,18 +77,18 @@
 <h2>Single value (arc)</h2>
 
 <Preview>
-  <div class="h-[200px] p-4 border rounded">
+  <div class="h-[120px] p-4 border rounded">
     <PieChart
       data={[{ label: 'Example', value: 70 }]}
       label="label"
       value="value"
       maxValue={100}
       range={[-90, 90]}
-      outerRadius={-25}
+      outerRadius={90}
       innerRadius={-20}
       cornerRadius={10}
       props={{
-        group: { y: 40 },
+        group: { y: 45 },
       }}
     />
   </div>
