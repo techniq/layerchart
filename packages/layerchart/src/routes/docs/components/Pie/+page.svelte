@@ -223,7 +223,7 @@
                 x={centroid[0]}
                 y={centroid[1]}
                 dy={-8}
-                textAnchoc="middle"
+                textAnchor="middle"
                 verticalAnchoc="middle"
                 class={cls('text-base', colors.content)}
               />
@@ -232,7 +232,7 @@
                 x={centroid[0]}
                 y={centroid[1]}
                 dy={8}
-                textAnchoc="middle"
+                textAnchor="middle"
                 verticalAnchoc="middle"
                 class={cls('text-sm opacity-50', colors.content)}
               />
@@ -301,7 +301,7 @@
                   value={formatUtil(arc.data.value / dataSum, 'percent')}
                   x={centroid[0]}
                   y={centroid[1]}
-                  textAnchoc="middle"
+                  textAnchor="middle"
                   verticalAnchoc="middle"
                   class={cls('text-base', colors.content)}
                 />
