@@ -208,8 +208,11 @@
   export let data: TData[] | HierarchyNode<TData> | SankeyGraph<any, any> = [];
 
   export let x: Accessor<TData> = undefined;
+  export let xRange: $$Props['xRange'] = undefined;
+
   export let y: Accessor<TData> = undefined;
   export let yScale: AnyScale | undefined = undefined;
+  export let yRange: $$Props['yRange'] = undefined;
 
   export let x1: $$Props['x1'] = undefined;
   export let x1Scale: $$Props['x1Scale'] = undefined;
@@ -289,9 +292,11 @@
   {data}
   x={_x}
   {xDomain}
+  xRange={xRange ?? (radial ? [0, 2 * Math.PI] : undefined)}
   y={_y}
   {yScale}
   {yDomain}
+  yRange={yRange ?? (radial ? ({ height }) => [0, height / 2] : undefined)}
   {yReverse}
   xDomainSort={false}
   yDomainSort={false}

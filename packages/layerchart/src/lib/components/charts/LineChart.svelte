@@ -67,10 +67,8 @@
   data={chartData}
   {x}
   {xScale}
-  xRange={$$props.xRange ?? (radial ? [0, 2 * Math.PI] : undefined)}
   y={y ?? series.map((s) => s.value ?? s.key)}
   yBaseline={0}
-  yRange={$$props.yRange ?? (radial ? ({ height }) => [0, height / 2] : undefined)}
   yNice
   {radial}
   padding={radial ? undefined : { left: 16, bottom: 16 }}

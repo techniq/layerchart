@@ -308,8 +308,6 @@
       // TODO: How to handle _areas
     }
   }
-
-  $: console.log({ _points });
 </script>
 
 {#if highlightData}
