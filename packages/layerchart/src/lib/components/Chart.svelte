@@ -282,9 +282,14 @@
     isMounted = true;
   });
 
-  // TODO: Hack until LayerCake has better typings (`Accessor<TData>`)
+  // TODO: Hacks until LayerCake has better typings (`Accessor<TData>`)
   $: _x = x as LayerCakeProps['x'];
   $: _y = y as LayerCakeProps['y'];
+  $: _yRange =
+    yRange ??
+    ((radial
+      ? ({ height }: { height: number }) => [0, height / 2]
+      : undefined) as LayerCakeProps['yRange']);
 </script>
 
 <!-- Remove domain sorting by default: https://github.com/mhkeller/layercake/issues/147  -->
@@ -296,7 +301,7 @@
   y={_y}
   {yScale}
   {yDomain}
-  yRange={yRange ?? (radial ? ({ height }) => [0, height / 2] : undefined)}
+  yRange={_yRange}
   {yReverse}
   xDomainSort={false}
   yDomainSort={false}
