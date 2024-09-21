@@ -94,7 +94,7 @@
           let:url
         >
           <Area
-            y0={(d) => 0}
+            y0={(d) => thresholdValue}
             line={{ stroke: url, class: 'stroke-2' }}
             fill={url}
             fill-opacity={0.2}
