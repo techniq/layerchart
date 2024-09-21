@@ -31,7 +31,6 @@
     outerRadius?: typeof outerRadius;
     cornerRadius?: typeof cornerRadius;
     padAngle?: typeof padAngle;
-    placement?: typeof placement;
     props?: typeof props;
     series?: typeof series;
     // labels?: typeof labels;
@@ -84,8 +83,6 @@
   export let cornerRadius = 0;
   export let padAngle = 0;
 
-  export let placement: 'left' | 'center' | 'right' | 'none' = 'center';
-
   export let props: {
     pie?: Partial<ComponentProps<Pie>>;
     group?: Partial<ComponentProps<Group>>;
@@ -130,14 +127,13 @@
 >
   {@const slotProps = { label, value, x, xScale, y, yScale, width, height, padding, tooltip }}
   <slot {...slotProps}>
-    <Svg>
+    <Svg center>
       <slot name="below-marks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#each series as s, i}
-          <!-- Redundant logic to make Typescript happy -->
-          {@const singleArc = s.data?.length === 1 || chartData.length === 1}
-          <Group center={singleArc} {...props.group}>
+        <Group {...props.group}>
+          {#each series as s, i}
+            {@const singleArc = s.data?.length === 1 || chartData.length === 1}
             {#if singleArc}
               {@const d = s.data?.[0] || chartData[0]}
               <Arc
@@ -162,7 +158,6 @@
                 {outerRadius}
                 {cornerRadius}
                 {padAngle}
-                {placement}
                 {...props.pie}
                 let:arcs
               >
@@ -182,8 +177,8 @@
                 {/each}
               </Pie>
             {/if}
-          </Group>
-        {/each}
+          {/each}
+        </Group>
       </slot>
 
       <slot name="above-marks" {...slotProps} />

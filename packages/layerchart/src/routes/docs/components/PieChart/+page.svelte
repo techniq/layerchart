@@ -61,7 +61,7 @@
 <h2>Single value</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[200px] p-4 border rounded">
     <PieChart
       data={[{ label: 'Example', value: 70 }]}
       label="label"
@@ -77,7 +77,7 @@
 <h2>Single value (arc)</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[200px] p-4 border rounded">
     <PieChart
       data={[{ label: 'Example', value: 70 }]}
       label="label"
@@ -87,6 +87,9 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
+      props={{
+        group: { y: 40 },
+      }}
     />
   </div>
 </Preview>
@@ -134,7 +137,7 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
-      props={{ group: { y: 190 } }}
+      props={{ group: { y: 70 } }}
     />
   </div>
 </Preview>

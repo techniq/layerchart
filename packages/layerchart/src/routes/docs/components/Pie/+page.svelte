@@ -38,7 +38,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg>
+      <Svg center>
         <Pie />
       </Svg>
     </Chart>
@@ -50,7 +50,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" xRange={[-90, 90]} c="date" cRange={keyColors}>
-      <Svg>
+      <Svg center>
         <Pie />
       </Svg>
     </Chart>
@@ -62,7 +62,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg>
+      <Svg center>
         <Pie range={[-90, 90]} />
       </Svg>
     </Chart>
@@ -74,7 +74,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg>
+      <Svg center>
         <Pie padAngle={0.05} />
       </Svg>
     </Chart>
@@ -86,7 +86,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg>
+      <Svg center>
         <Pie innerRadius={100} padAngle={0.03} />
       </Svg>
     </Chart>
@@ -100,7 +100,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg>
+      <Svg center>
         <Pie innerRadius={100} />
       </Svg>
     </Chart>
@@ -112,7 +112,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg>
+      <Svg center>
         <Pie innerRadius={0.9} />
       </Svg>
     </Chart>
@@ -124,7 +124,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg>
+      <Svg center>
         <Pie innerRadius={-30} />
       </Svg>
     </Chart>
@@ -136,7 +136,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg>
+      <Svg center>
         <Pie outerRadius={100} />
       </Svg>
     </Chart>
@@ -148,7 +148,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg>
+      <Svg center>
         <Pie innerRadius={100} {data} />
         <Pie outerRadius={90} data={data2} />
       </Svg>
@@ -161,7 +161,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg>
+      <Svg center>
         <Pie tweened />
       </Svg>
     </Chart>
@@ -173,7 +173,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg>
+      <Svg center>
         <Pie offset={4} />
       </Svg>
     </Chart>
@@ -185,7 +185,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg>
+      <Svg center>
         <Pie let:arcs>
           {#each arcs as arc, index}
             <Arc
@@ -207,7 +207,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date">
-      <Svg>
+      <Svg center>
         <Pie let:arcs>
           {#each arcs as arc, index}
             {@const colors = keyClasses[index]}
@@ -249,7 +249,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors} let:tooltip>
-      <Svg>
+      <Svg center>
         <Pie {tooltip} />
       </Svg>
       <Tooltip.Root let:data>
@@ -273,7 +273,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors} let:tooltip>
-      <Svg>
+      <Svg center>
         <Pie let:arcs>
           {#each arcs as arc, index}
             {@const colors = keyClasses[index]}
@@ -333,20 +333,22 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" c="date" cRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors} let:height>
       <Svg>
-        <Pie placement="left" />
+        <Group x={height / 2} center="y">
+          <Pie />
+        </Group>
       </Svg>
     </Chart>
   </div>
 </Preview>
 
-<h3>center (default)</h3>
+<h3>center</h3>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg>
+      <Svg center>
         <Pie />
       </Svg>
     </Chart>
@@ -357,9 +359,11 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" c="date" cRange={keyColors}>
+    <Chart {data} x="value" c="date" cRange={keyColors} let:width let:height>
       <Svg>
-        <Pie placement="right" />
+        <Group x={width - height / 2} center="y">
+          <Pie />
+        </Group>
       </Svg>
     </Chart>
   </div>

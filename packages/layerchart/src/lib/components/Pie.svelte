@@ -5,7 +5,6 @@
 
   import Arc from './Arc.svelte';
   import { chartContext } from './ChartContext.svelte';
-  import Group from './Group.svelte';
   import { degreesToRadians } from '$lib/utils/math.js';
   import { motionStore } from '$lib/stores/motionStore.js';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
@@ -52,8 +51,6 @@
   export let cornerRadius = 0;
   export let padAngle = 0;
 
-  export let placement: 'left' | 'center' | 'right' | 'none' = 'center';
-
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
@@ -82,36 +79,21 @@
     .value($x);
 
   $: arcs = pie(data ?? (Array.isArray($contextData) ? $contextData : []));
-
-  $: radius = Math.min($width / 2, $height / 2);
-  $: coords = {
-    x:
-      placement === 'left'
-        ? radius
-        : placement === 'center'
-          ? $width / 2
-          : placement === 'right'
-            ? $width - radius
-            : 0,
-    y: placement === 'none' ? 0 : $height / 2,
-  };
 </script>
 
-<Group x={coords.x} y={coords.y}>
-  <slot {arcs}>
-    {#each arcs as arc}
-      <Arc
-        startAngle={arc.startAngle}
-        endAngle={arc.endAngle}
-        padAngle={arc.padAngle}
-        {innerRadius}
-        {outerRadius}
-        {cornerRadius}
-        {offset}
-        fill={$config.c ? $cScale?.($c(arc.data)) : null}
-        data={arc.data}
-        {tooltip}
-      />
-    {/each}
-  </slot>
-</Group>
+<slot {arcs}>
+  {#each arcs as arc}
+    <Arc
+      startAngle={arc.startAngle}
+      endAngle={arc.endAngle}
+      padAngle={arc.padAngle}
+      {innerRadius}
+      {outerRadius}
+      {cornerRadius}
+      {offset}
+      fill={$config.c ? $cScale?.($c(arc.data)) : null}
+      data={arc.data}
+      {tooltip}
+    />
+  {/each}
+</slot>
