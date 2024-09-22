@@ -404,6 +404,14 @@
   </div>
 </Preview>
 
+<h2>Sparkline</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="w-[124px] h-[24px]">
+    <LineChart data={dateSeriesData} x="date" y="value" axis={false} />
+  </div>
+</Preview>
+
 <h2>Custom tooltip</h2>
 
 <Preview data={dateSeriesData}>

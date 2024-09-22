@@ -19,6 +19,7 @@
   interface $$Props extends ComponentProps<Chart<TData>> {
     series?: typeof series;
     labels?: typeof labels;
+    axis?: typeof axis;
     points?: typeof points;
     props?: typeof props;
     seriesLayout?: typeof seriesLayout;
@@ -45,6 +46,7 @@
   export let seriesLayout: 'overlap' | 'stack' = 'overlap';
   $: stackSeries = seriesLayout === 'stack';
 
+  export let axis: ComponentProps<Axis> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let points: ComponentProps<Points> | boolean = false;
 
@@ -92,7 +94,7 @@
   yBaseline={0}
   yNice
   {radial}
-  padding={radial ? undefined : { left: 16, bottom: 16 }}
+  padding={radial || axis === false ? undefined : { left: 16, bottom: 16 }}
   tooltip={{ mode: 'bisect-x' }}
   {...$$restProps}
   let:x
@@ -108,20 +110,24 @@
   <slot {...slotProps}>
     <Svg center={radial}>
       <slot name="axis" {...slotProps}>
-        <Axis
-          placement={radial ? 'radius' : 'left'}
-          grid
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-          {...props.yAxis}
-        />
-        <Axis
-          placement={radial ? 'angle' : 'bottom'}
-          grid={radial}
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-          {...props.xAxis}
-        />
+        {#if axis}
+          <Axis
+            placement={radial ? 'radius' : 'left'}
+            grid
+            rule
+            format={(value) => format(value, undefined, { variant: 'short' })}
+            {...typeof axis === 'object' ? axis : null}
+            {...props.yAxis}
+          />
+          <Axis
+            placement={radial ? 'angle' : 'bottom'}
+            grid={radial}
+            rule
+            format={(value) => format(value, undefined, { variant: 'short' })}
+            {...typeof axis === 'object' ? axis : null}
+            {...props.xAxis}
+          />
+        {/if}
       </slot>
 
       <slot name="below-marks" {...slotProps} />

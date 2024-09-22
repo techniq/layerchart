@@ -22,7 +22,7 @@
 <h2>Basic</h2>
 
 <Preview {data}>
-  <div class="w-[125px] h-[18px]">
+  <div class="w-[124px] h-[18px]">
     <Chart {data} x="date" xScale={scaleBand()} y="value" yDomain={[0, null]}>
       <Svg>
         <Bars strokeWidth={1} class="fill-primary/20 stroke-primary" />
@@ -37,7 +37,7 @@
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pretium, ligula ac sollicitudin
       ullamcorper, leo justo pretium tellus, at gravida ex quam et orci.
-      <span class="w-[125px] h-[18px] inline-block">
+      <span class="w-[124px] h-[18px] inline-block">
         <Chart {data} x="date" xScale={scaleBand()} y="value" yDomain={[0, null]}>
           <Svg>
             <Bars strokeWidth={1} class="fill-primary/20 stroke-primary" />
@@ -52,7 +52,7 @@
 <h2>Basic negative data</h2>
 
 <Preview data={negativeData}>
-  <div class="w-[125px] h-[18px]">
+  <div class="w-[124px] h-[18px]">
     <Chart data={negativeData} x="date" xScale={scaleBand()} y="value">
       <Svg>
         <Bars strokeWidth={1} class="fill-primary/20 stroke-primary" />
@@ -64,7 +64,7 @@
 <h2>With Tooltip and Highlight</h2>
 
 <Preview {data}>
-  <div class="w-[125px] h-[18px]">
+  <div class="w-[124px] h-[18px]">
     <Chart
       {data}
       x="date"
@@ -91,7 +91,7 @@
 <h2>With Tooltip and Highlight (fixed position)</h2>
 
 <Preview {data}>
-  <div class="w-[125px] h-[18px]">
+  <div class="w-[124px] h-[18px]">
     <Chart
       {data}
       x="date"
@@ -131,7 +131,7 @@
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pretium, ligula ac sollicitudin
       ullamcorper, leo justo pretium tellus, at gravida ex quam et orci.
-      <span class="w-[125px] h-[18px] inline-block">
+      <span class="w-[124px] h-[18px] inline-block">
         <Chart
           {data}
           x="date"

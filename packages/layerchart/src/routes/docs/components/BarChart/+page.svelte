@@ -361,6 +361,21 @@
   </div>
 </Preview>
 
+<h2>Sparkline</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="w-[124px] h-[24px]">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      axis={false}
+      bandPadding={0.1}
+      props={{ bars: { radius: 1 } }}
+    />
+  </div>
+</Preview>
+
 <h2>Custom tooltip</h2>
 
 <Preview data={dateSeriesData}>

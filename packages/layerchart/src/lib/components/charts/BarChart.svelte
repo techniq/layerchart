@@ -21,6 +21,7 @@
     series?: typeof series;
     seriesLayout?: typeof seriesLayout;
     labels?: typeof labels;
+    axis?: typeof axis;
     orientation?: typeof orientation;
     bandPadding?: typeof bandPadding;
     props?: typeof props;
@@ -54,6 +55,7 @@
   $: stackSeries = seriesLayout === 'stack';
   $: groupSeries = seriesLayout === 'group';
 
+  export let axis: ComponentProps<Axis> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
 
   /** Padding between primary x or y bands/bars, applied to scaleBand().padding() */
@@ -138,7 +140,7 @@
   {y1Scale}
   {y1Domain}
   {y1Range}
-  padding={{ left: 16, bottom: 16 }}
+  padding={axis === false ? undefined : { left: 16, bottom: 16 }}
   tooltip={{ mode: 'band' }}
   {...$$restProps}
   let:x
@@ -154,20 +156,24 @@
   <slot {...slotProps}>
     <Svg>
       <slot name="axis" {...slotProps}>
-        <Axis
-          placement="left"
-          grid={isVertical}
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-          {...props.yAxis}
-        />
-        <Axis
-          placement="bottom"
-          grid={!isVertical}
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-          {...props.xAxis}
-        />
+        {#if axis}
+          <Axis
+            placement="left"
+            grid={isVertical}
+            rule
+            format={(value) => format(value, undefined, { variant: 'short' })}
+            {...typeof axis === 'object' ? axis : null}
+            {...props.yAxis}
+          />
+          <Axis
+            placement="bottom"
+            grid={!isVertical}
+            rule
+            format={(value) => format(value, undefined, { variant: 'short' })}
+            {...typeof axis === 'object' ? axis : null}
+            {...props.xAxis}
+          />
+        {/if}
       </slot>
 
       <slot name="below-marks" {...slotProps} />

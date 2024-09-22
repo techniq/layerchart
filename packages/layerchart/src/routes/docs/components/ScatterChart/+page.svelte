@@ -2,6 +2,7 @@
   import { Axis, Highlight, Points, ScatterChart, Svg, Tooltip } from 'layerchart';
   import { format } from '@layerstack/utils';
   import { flatGroup } from 'd3-array';
+  import { randomNormal } from 'd3-random';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { getSpiral } from '$lib/utils/genData.js';
@@ -14,6 +15,9 @@
     data.penguins.filter((d) => d.flipper_length_mm !== 'NA' && d.bill_length_mm !== 'NA'),
     (d) => d.species
   );
+
+  const random = randomNormal();
+  const randomNormalData = Array.from({ length: 100 }, () => ({ value: random() }));
 </script>
 
 <h1>Examples</h1>
@@ -23,6 +27,20 @@
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded">
     <ScatterChart data={spiralData} x="x" y="y" />
+  </div>
+</Preview>
+
+<h2>Single dimension</h2>
+
+<Preview data={randomNormalData}>
+  <div class="h-[24px]">
+    <ScatterChart
+      data={randomNormalData}
+      x="value"
+      y={(d) => 0}
+      axis={false}
+      props={{ highlight: { lines: false } }}
+    />
   </div>
 </Preview>
 

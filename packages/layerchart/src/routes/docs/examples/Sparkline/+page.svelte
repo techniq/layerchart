@@ -15,7 +15,7 @@
 <h2>Basic</h2>
 <Preview {data}>
   <div>
-    <div class="w-[125px] h-[18px]">
+    <div class="w-[124px] h-[18px]">
       <Chart {data} x="date" xScale={scaleTime()} y="value">
         <Svg>
           <Spline class="stroke-1 stroke-primary" />
@@ -31,7 +31,7 @@
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pretium, ligula ac sollicitudin
       ullamcorper, leo justo pretium tellus, at gravida ex quam et orci.
-      <span class="w-[125px] h-[18px] inline-block">
+      <span class="w-[124px] h-[18px] inline-block">
         <Chart {data} x="date" xScale={scaleTime()} y="value">
           <Svg>
             <Spline class="stroke-1 stroke-primary" />
@@ -45,7 +45,7 @@
 
 <h2>Basic zero axis</h2>
 <Preview {data}>
-  <div class="w-[125px] h-[20px] inline-block">
+  <div class="w-[124px] h-[20px] inline-block">
     <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, null]}>
       <Svg>
         <Spline class="stroke-1 stroke-primary" />
@@ -56,7 +56,7 @@
 
 <h2>With Tooltip and Highlight</h2>
 <Preview {data}>
-  <div class="w-[125px] h-[25px]">
+  <div class="w-[124px] h-[24px]">
     <Chart {data} x="date" xScale={scaleTime()} y="value" tooltip={{ mode: 'bisect-x' }}>
       <Svg>
         <Spline class="stroke-1 stroke-primary" />
@@ -75,7 +75,7 @@
 
 <h2>With Tooltip and Highlight (fixed position)</h2>
 <Preview {data}>
-  <div class="w-[125px] h-[25px]">
+  <div class="w-[124px] h-[24px]">
     <Chart
       {data}
       x="date"
@@ -114,7 +114,7 @@
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pretium, ligula ac sollicitudin
       ullamcorper, leo justo pretium tellus, at gravida ex quam et orci.
-      <span class="w-[125px] h-[18px] inline-block">
+      <span class="w-[124px] h-[18px] inline-block">
         <Chart
           {data}
           x="date"

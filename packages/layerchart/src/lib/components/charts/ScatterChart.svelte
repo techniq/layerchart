@@ -16,6 +16,8 @@
   interface $$Props extends ComponentProps<Chart<TData>> {
     series?: typeof series;
     labels?: typeof labels;
+    axis?: typeof axis;
+    props?: typeof props;
   }
 
   export let data: $$Props['data'] = [];
@@ -30,6 +32,7 @@
     props?: Partial<ComponentProps<Points>>;
   }[] = [{ key: 'default', data: chartDataArray(data), color: 'hsl(var(--color-primary))' }];
 
+  export let axis: ComponentProps<Axis> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
 
   // Default xScale based on first data's `x` value
@@ -54,7 +57,7 @@
   {xScale}
   {y}
   yNice
-  padding={{ left: 16, bottom: 16 }}
+  padding={axis === false ? undefined : { left: 16, bottom: 16 }}
   tooltip={{ mode: 'voronoi' }}
   {...$$restProps}
   let:x
@@ -76,20 +79,24 @@
   <slot {...slotProps}>
     <Svg>
       <slot name="axis" {...slotProps}>
-        <Axis
-          placement="left"
-          grid
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-          {...props.yAxis}
-        />
-        <Axis
-          placement="bottom"
-          grid
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-          {...props.xAxis}
-        />
+        {#if axis}
+          <Axis
+            placement="left"
+            grid
+            rule
+            format={(value) => format(value, undefined, { variant: 'short' })}
+            {...typeof axis === 'object' ? axis : null}
+            {...props.yAxis}
+          />
+          <Axis
+            placement="bottom"
+            grid
+            rule
+            format={(value) => format(value, undefined, { variant: 'short' })}
+            {...typeof axis === 'object' ? axis : null}
+            {...props.xAxis}
+          />
+        {/if}
       </slot>
 
       <slot name="below-marks" {...slotProps} />

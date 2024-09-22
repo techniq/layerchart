@@ -12,14 +12,6 @@
 
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
 
-  /*
-    TODO:
-    - [ ] Centroid labels
-    - [ ] Outside/offset labels
-    - [x] Multiple/concentric charts (data prop, with different domains) - http://localhost:3002/docs/examples/Arc#concentric
-    - [ ] Segmented arcs - http://localhost:3002/docs/examples/Arc#segmented_arc
-  */
-
   type ChartProps = ComponentProps<Chart<TData>>;
 
   interface $$Props extends ChartProps {
