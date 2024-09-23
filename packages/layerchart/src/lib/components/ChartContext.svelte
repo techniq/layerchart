@@ -1,6 +1,6 @@
 <!-- Wrapper to allow getting LayerCake context from <Chart> and exposing with a strongly type context getter -->
 <script lang="ts" context="module">
-  import { createScale, type AnyScale } from 'layerchart/utils/scales.js';
+  import { createScale, type AnyScale } from '../utils/scales.js';
 
   import type { HierarchyNode } from 'd3-hierarchy';
   import {
