@@ -1,13 +1,15 @@
 <script lang="ts">
   import { accessor, Axis, BarChart, Bars, Highlight, Rule, Svg, Tooltip } from 'layerchart';
-  import { sum } from 'd3-array';
+  import { group, sum } from 'd3-array';
   import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
-  import { createDateSeries, wideData } from '$lib/utils/genData.js';
+  import { createDateSeries, wideData, longData } from '$lib/utils/genData.js';
 
   export let data;
+
+  const dataByFruit = group(longData, (d) => d.fruit);
 
   const dateSeriesData = createDateSeries({
     count: 10,
@@ -17,6 +19,7 @@
     keys: ['value', 'baseline'],
   });
   const horizontalDateSeriesData = dateSeriesData.slice(0, 10);
+  const dateSeriesBaselineData = dateSeriesData.map((d) => ({ ...d, value: d.baseline }));
 </script>
 
 <h1>Examples</h1>
@@ -67,6 +70,30 @@
       series={[
         { key: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
         { key: 'value', color: 'hsl(var(--color-primary))', props: { inset: 8 } },
+      ]}
+    />
+  </div>
+</Preview>
+
+<h2>Series data</h2>
+
+<Preview data={{ dateSeriesData, dateSeriesBaselineData }}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      x="date"
+      y="value"
+      series={[
+        {
+          key: 'baseline',
+          data: dateSeriesBaselineData,
+          color: 'hsl(var(--color-surface-content) / 20%)',
+        },
+        {
+          key: 'value',
+          data: dateSeriesData,
+          color: 'hsl(var(--color-primary))',
+          props: { inset: 16 },
+        },
       ]}
     />
   </div>
@@ -282,6 +309,40 @@
   </div>
 </Preview>
 
+<h2>Group series (series / long data)</h2>
+
+<Preview data={dataByFruit}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      x="year"
+      y="value"
+      series={[
+        { key: 'apples', data: dataByFruit.get('apples'), color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          data: dataByFruit.get('bananas'),
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          key: 'cherries',
+          data: dataByFruit.get('cherries'),
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'dates',
+          data: dataByFruit.get('dates'),
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      seriesLayout="group"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+      }}
+    />
+  </div>
+</Preview>
+
 <h2>Stack series</h2>
 
 <Preview data={wideData}>
@@ -344,6 +405,42 @@
     />
   </div>
 </Preview>
+
+<!-- TODO: Possible to handle series data as separate stacks? -->
+<!--
+<h2>Stack series (series data / long data)</h2>
+
+<Preview data={dataByFruit}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      x="year"
+      y="value"
+      series={[
+        { key: 'apples', data: dataByFruit.get('apples'), color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          data: dataByFruit.get('bananas'),
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          key: 'cherries',
+          data: dataByFruit.get('cherries'),
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'dates',
+          data: dataByFruit.get('dates'),
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      seriesLayout="stack"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+      }}
+    />
+  </div>
+</Preview> -->
 
 <h2>Labels</h2>
 

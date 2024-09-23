@@ -30,20 +30,6 @@
   </div>
 </Preview>
 
-<h2>Single dimension</h2>
-
-<Preview data={randomNormalData}>
-  <div class="h-[24px]">
-    <ScatterChart
-      data={randomNormalData}
-      x="value"
-      y={(d) => 0}
-      axis={false}
-      props={{ highlight: { lines: false } }}
-    />
-  </div>
-</Preview>
-
 <h2>Radius via rScale</h2>
 
 <Preview data={spiralData}>
@@ -103,6 +89,26 @@
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded">
     <ScatterChart data={spiralData} x="x" y="y" labels={{ offset: 10 }} />
+  </div>
+</Preview>
+
+<h2>Single dimension</h2>
+
+<Preview data={randomNormalData}>
+  <div class="h-[24px]">
+    <ScatterChart
+      data={randomNormalData}
+      x="value"
+      y={(d) => 0}
+      axis={false}
+      props={{ highlight: { lines: false } }}
+    >
+      <svelte:fragment slot="tooltip" let:data let:x>
+        <Tooltip.Root let:data>
+          {format(x(data))}
+        </Tooltip.Root>
+      </svelte:fragment>
+    </ScatterChart>
   </div>
 </Preview>
 

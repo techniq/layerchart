@@ -98,7 +98,11 @@
   } = {};
 
   $: allSeriesData = series
-    .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
+    .flatMap((s) =>
+      s.data?.map((d) => {
+        return { seriesKey: s.key, ...d };
+      })
+    )
     .filter((d) => d) as Array<TData & { stackData?: any }>;
 
   $: chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<
@@ -181,8 +185,17 @@
       <slot name="marks" {...slotProps}>
         {#each series as s, i}
           <Bars
-            x={!isVertical ? (stackSeries ? (d) => d.stackData[i] : (s.value ?? s.key)) : undefined}
-            y={isVertical ? (stackSeries ? (d) => d.stackData[i] : (s.value ?? s.key)) : undefined}
+            data={s.data}
+            x={!isVertical
+              ? stackSeries
+                ? (d) => d.stackData[i]
+                : (s.value ?? (s.data ? undefined : s.key))
+              : undefined}
+            y={isVertical
+              ? stackSeries
+                ? (d) => d.stackData[i]
+                : (s.value ?? (s.data ? undefined : s.key))
+              : undefined}
             x1={isVertical && groupSeries ? (d) => s.value ?? s.key : undefined}
             y1={!isVertical && groupSeries ? (d) => s.value ?? s.key : undefined}
             radius={4}
