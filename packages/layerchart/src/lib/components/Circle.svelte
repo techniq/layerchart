@@ -1,7 +1,7 @@
 <script lang="ts">
   import { tick } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
-  import { cls } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   import { motionStore } from '$lib/stores/motionStore.js';
 

@@ -2,17 +2,8 @@
   import { hierarchy } from 'd3-hierarchy';
   import { forceX, forceY, forceManyBody, forceLink } from 'd3-force';
 
-  import {
-    Chart,
-    Circle,
-    ForceSimulation,
-    Group,
-    Link,
-    Svg,
-    Tooltip,
-    TooltipItem,
-  } from 'layerchart';
-  import { cls } from 'svelte-ux';
+  import { Chart, Circle, ForceSimulation, Link, Svg, Tooltip } from 'layerchart';
+  import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -33,7 +24,7 @@
 <Preview data={nodes}>
   <div class="h-[600px] p-4 border rounded">
     <Chart data={nodes} let:tooltip>
-      <Svg>
+      <Svg center>
         <ForceSimulation
           forces={{
             link: linkForce,
@@ -43,37 +34,38 @@
           }}
           let:nodes
         >
-          <Group center>
-            {#key nodes}
-              {#each links as link}
-                <Link data={link} class="stroke-surface-content/20" />
-              {/each}
-            {/key}
-
-            {#each nodes as node}
-              <Circle
-                cx={node.x}
-                cy={node.y}
-                r={3}
-                class={cls(
-                  node.children ? 'fill-surface-100 stroke-surface-content' : 'fill-surface-content'
-                )}
-                on:pointermove={(e) => tooltip.show(e, node)}
-                on:pointerleave={tooltip.hide}
-              />
+          {#key nodes}
+            {#each links as link}
+              <Link data={link} class="stroke-surface-content/20" />
             {/each}
-          </Group>
+          {/key}
+
+          {#each nodes as node}
+            <Circle
+              cx={node.x}
+              cy={node.y}
+              r={3}
+              class={cls(
+                node.children ? 'fill-surface-100 stroke-surface-content' : 'fill-surface-content'
+              )}
+              on:pointermove={(e) => tooltip.show(e, node)}
+              on:pointerleave={tooltip.hide}
+            />
+          {/each}
         </ForceSimulation>
       </Svg>
 
-      <Tooltip header={(d) => d.data.name} let:data>
-        {#if data.data.children}
-          <TooltipItem label="children" value={data.data.children.length} />
-        {/if}
-        {#if data.data.value}
-          <TooltipItem label="value" value={data.data.value} format="integer" />
-        {/if}
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.data.name}</Tooltip.Header>
+        <Tooltip.List>
+          {#if data.data.children}
+            <Tooltip.Item label="children" value={data.data.children.length} />
+          {/if}
+          {#if data.data.value}
+            <Tooltip.Item label="value" value={data.data.value} format="integer" />
+          {/if}
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

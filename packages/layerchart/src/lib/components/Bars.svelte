@@ -6,7 +6,12 @@
   import Rect from './Rect.svelte';
   import { chartDataArray, type Accessor } from '../utils/common.js';
 
-  const { data, rGet, config } = chartContext();
+  const { data: contextData, cGet, config } = chartContext();
+
+  /**
+   * Override `data` from context.  Useful for multiple Bar instances
+   */
+  export let data: any = undefined;
 
   /**
    * Override `x` from context.  Useful for multiple Bar instances
@@ -18,6 +23,16 @@
    */
   export let y: Accessor = undefined;
 
+  /**
+   * Override `x1` from context.  Useful for multiple Bar instances
+   */
+  export let x1: Accessor = undefined;
+
+  /**
+   * Override `y1` from context.  Useful for multiple Bar instances
+   */
+  export let y1: Accessor = undefined;
+
   export let stroke = 'black';
   export let strokeWidth = 0;
   export let radius = 0;
@@ -27,31 +42,24 @@
 
   export let spring: ComponentProps<Rect>['spring'] = undefined;
   export let tweened: ComponentProps<Rect>['tweened'] = undefined;
-
-  // See: https://svelte.dev/repl/7000c5ce05b84cd98ccbfb2768b4be3d?version=3.38.3
-
-  export let groupBy: string | undefined = undefined;
-  export let groupPaddingInner = 0.2;
-  export let groupPaddingOuter = 0;
 </script>
 
 <g class="Bars">
   <slot>
-    {#each chartDataArray($data) as item}
+    {#each chartDataArray(data ?? $contextData) as item}
       <Bar
         bar={item}
         {x}
         {y}
-        fill={$config.r ? $rGet(item) : null}
+        {x1}
+        {y1}
+        fill={$config.c ? $cGet(item) : null}
         {stroke}
         {strokeWidth}
         {radius}
+        {inset}
         {spring}
         {tweened}
-        {groupBy}
-        {inset}
-        {groupPaddingInner}
-        {groupPaddingOuter}
         {...$$restProps}
       />
     {/each}

@@ -15,7 +15,11 @@
     TransformContext,
     Svg,
   } from 'layerchart';
-  import { Button, scrollIntoView, cls, sortFunc, ButtonGroup, timerStore } from 'svelte-ux';
+  import { Button, ButtonGroup } from 'svelte-ux';
+  import { sortFunc } from '@layerstack/utils';
+  import { scrollIntoView } from '@layerstack/svelte-actions';
+  import { cls } from '@layerstack/tailwind';
+  import { timerStore } from '@layerstack/svelte-stores';
 
   import Preview from '$lib/docs/Preview.svelte';
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
@@ -169,9 +173,9 @@
         {/each}
       </Svg>
 
-      <Tooltip>
-        <div slot="header" let:data>{data.properties.name}</div>
-      </Tooltip>
+      <Tooltip.Root let:data>
+        {data.properties.name}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -269,7 +273,9 @@
         />
       </HitCanvas>
 
-      <Tooltip header={(data) => data.properties.name} />
+      <Tooltip.Root let:data>
+        {data.properties.name}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

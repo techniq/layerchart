@@ -2,7 +2,7 @@
   import { geoAlbersUsa } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, HitCanvas, Svg, Tooltip, TooltipItem } from 'layerchart';
+  import { Canvas, Chart, GeoPath, HitCanvas, Svg, Tooltip } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   export let data;
@@ -38,11 +38,15 @@
           class="fill-none stroke-surface-content/20 pointer-events-none"
         />
       </Svg>
-      <Tooltip header={(data) => data.properties.name} let:data>
+
+      <Tooltip.Root let:data>
         {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
-        <TooltipItem label="longitude" value={longitude} format="decimal" />
-        <TooltipItem label="latitude" value={latitude} format="decimal" />
-      </Tooltip>
+        <Tooltip.Header>{data.properties.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="longitude" value={longitude} format="decimal" />
+          <Tooltip.Item label="latitude" value={latitude} format="decimal" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -94,11 +98,14 @@
         />
       </HitCanvas>
 
-      <Tooltip header={(data) => data.properties.name} let:data>
+      <Tooltip.Root let:data>
         {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
-        <TooltipItem label="longitude" value={longitude} format="decimal" />
-        <TooltipItem label="latitude" value={latitude} format="decimal" />
-      </Tooltip>
+        <Tooltip.Header>{data.properties.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="longitude" value={longitude} format="decimal" />
+          <Tooltip.Item label="latitude" value={latitude} format="decimal" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

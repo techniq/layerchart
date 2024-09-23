@@ -1,11 +1,11 @@
-import { flatGroup, max, rollup, sum } from 'd3-array';
+import { flatGroup, group, max, rollup, sum } from 'd3-array';
 import { stack, stackOffsetNone, stackOrderNone } from 'd3-shape';
 import { pivotWider } from './pivot.js';
 
 type OrderType = typeof stackOrderNone; // all orders share the same API
 type OffsetType = typeof stackOffsetNone; // all offsets share the same API
 
-export function createStackData<TData>(
+export function groupStackData<TData>(
   data: TData[],
   options: {
     xKey: string;
@@ -15,27 +15,27 @@ export function createStackData<TData>(
     offset?: OffsetType;
   }
 ): {
-  keys: (string | number)[];
+  keys: Record<string, any>; // TODO: Improve type based on key, groupBy, and stackBy values
   values: number[];
 }[] {
+  const dataByKey = group(data, (d: any) => d[options.xKey]);
+
   if (options.groupBy) {
     // Group then Stack (if needed)
     const groupedData = flatGroup(
       data,
-      // @ts-expect-error
-      (d) => d[options.xKey],
-      // @ts-expect-error
-      (d) => d[options.groupBy ?? '']
+      (d: any) => d[options.xKey],
+      (d: any) => d[options.groupBy ?? '']
     );
 
     const result = groupedData.flatMap((d, i) => {
       const groupKeys = d.slice(0, -1); // all but last item
-      const itemData = d.slice(-1)[0]; // last item
+      const groupData = d.slice(-1)[0]; // last item
 
-      const pivotData = pivotWider(itemData, options.xKey, options.stackBy ?? '', 'value');
+      const pivotData = pivotWider(groupData, options.xKey, options.stackBy ?? '', 'value');
 
       const stackKeys: Array<any> = [
-        ...new Set(itemData.map((d: any) => d[options.stackBy ?? ''])),
+        ...new Set(groupData.map((d: any) => d[options.stackBy ?? ''])),
       ];
       // @ts-expect-error
       const stackData = stack().keys(stackKeys).order(options.order).offset(options.offset)(
@@ -44,10 +44,22 @@ export function createStackData<TData>(
 
       return stackData.flatMap((series) => {
         return series.flatMap((s) => {
+          const keys = {
+            [options.xKey]: groupKeys[0],
+            [options.groupBy ?? '']: groupKeys[1],
+          };
+          if (options.stackBy) {
+            keys[options.stackBy] = series.key;
+          }
+
+          const value = sum(groupData, (d: any) => d.value);
+
           return {
-            ...itemData[0], // TODO: More than one should use stacks or aggregate values?
-            keys: options.stackBy ? [...groupKeys, series.key] : groupKeys,
-            values: options.stackBy ? [s[0], s[1]] : [0, sum(itemData, (d: any) => d.value)],
+            ...keys,
+            keys,
+            value,
+            values: options.stackBy ? [s[0], s[1]] : [0, value],
+            data: dataByKey.get(keys[options.xKey]),
           };
         });
       });
@@ -67,10 +79,16 @@ export function createStackData<TData>(
 
     const result = stackData.flatMap((series) => {
       return series.flatMap((s) => {
+        const keys = {
+          [options.xKey]: s.data[options.xKey],
+          [options.stackBy ?? '']: series.key,
+        };
         return {
-          ...s.data,
-          keys: [s.data[options.xKey], series.key],
+          ...keys,
+          keys,
+          value: s[1] - s[0],
           values: [s[0], s[1]],
+          data: dataByKey.get(keys[options.xKey]),
         };
       });
     });
@@ -82,11 +100,15 @@ export function createStackData<TData>(
       rollup(
         data,
         (items) => {
+          // @ts-expect-error
+          const keys = { [options.xKey]: items[0][options.xKey] };
+          const value = sum(items, (d: any) => d.value);
           return {
-            // @ts-expect-error
-            keys: [items[0][options.xKey]],
-            // @ts-expect-error
-            values: [0, sum(items, (d) => d.value)],
+            ...keys,
+            keys,
+            value,
+            values: [0, value],
+            data: dataByKey.get(keys[options.xKey]),
           };
         },
         // @ts-expect-error
@@ -100,7 +122,7 @@ export function createStackData<TData>(
  * Function to offset each layer by the maximum of the previous layer
  *   - see: https://observablehq.com/@mkfreeman/separated-bar-chart
  */
-// TODO: Try to find way to support separated with createStackData() (which has isolated stacked per group)
+// TODO: Try to find way to support separated with groupStackData() (which has isolated stacked per group)
 // @ts-expect-error
 export function stackOffsetSeparated(series, order) {
   const gap = 200; // TODO: Determine way to pass in as option (curry?)

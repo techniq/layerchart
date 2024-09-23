@@ -2,7 +2,9 @@
   import { geoOrthographic } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Button, ButtonGroup, Field, RangeField, cls, timerStore } from 'svelte-ux';
+  import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
+  import { timerStore } from '@layerstack/svelte-stores';
 
   import {
     Chart,
@@ -140,10 +142,13 @@
         {/each}
       </Svg>
 
-      <Tooltip header={(d) => d.name} let:data>
-        <!-- <TooltipItem label="Latitude" value={data.latitude} format="decimal" />
-        <TooltipItem label="Longitude" value={data.longitude} format="decimal" /> -->
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.name}</Tooltip.Header>
+        <!-- <Tooltip.List>
+          <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
+          <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
+        </Tooltip.List> -->
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

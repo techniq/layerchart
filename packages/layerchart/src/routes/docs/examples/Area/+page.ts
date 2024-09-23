@@ -1,4 +1,4 @@
-import { parse } from 'svelte-ux';
+import { parse } from '@layerstack/utils';
 
 import pageSource from './+page.svelte?raw';
 import type { AppleStockData } from '$static/data/examples/date/apple-stock.js';

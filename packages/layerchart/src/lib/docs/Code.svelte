@@ -1,7 +1,8 @@
 <script lang="ts">
   import Prism from 'prismjs';
   import 'prism-svelte';
-  import { CopyButton, cls } from 'svelte-ux';
+  import { CopyButton } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   export let source: string | null = null;
   export let language = 'svelte';

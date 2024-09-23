@@ -5,13 +5,14 @@
   import type { GeoPermissibleObjects } from 'd3-geo';
   // @ts-expect-error
   import { geoVoronoi } from 'd3-geo-voronoi';
-  import { cls } from 'svelte-ux';
+  import { pointRadial } from 'd3-shape';
+  import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
   import GeoPath from './GeoPath.svelte';
   import { geoContext, type GeoContext } from './GeoContext.svelte';
 
-  const { flatData, xGet, yGet, x: xContext, y: yContext, width, height } = chartContext();
+  const { flatData, xGet, yGet, x: xContext, y: yContext, width, height, radial } = chartContext();
   const geo = geoContext() as GeoContext | undefined;
 
   /** Override data instead of using context */
@@ -24,6 +25,12 @@
 
   const dispatch = createEventDispatcher<{
     click: { data: any; point?: [number, number]; feature?: GeoPermissibleObjects };
+    pointerenter: {
+      event: PointerEvent;
+      data: any;
+      point?: [number, number];
+      feature?: GeoPermissibleObjects;
+    };
     pointermove: {
       event: PointerEvent;
       data: any;
@@ -40,7 +47,14 @@
     const x = Array.isArray(xValue) ? min(xValue) : xValue;
     const y = Array.isArray(yValue) ? min(yValue) : yValue;
 
-    const point = [x, y];
+    let point: [number, number];
+    if ($radial) {
+      const radialPoint = pointRadial(x, y);
+      // Assume radial is also centered
+      point = [radialPoint[0] + $width / 2, radialPoint[1] + $height / 2];
+    } else {
+      point = [x, y];
+    }
     // @ts-expect-error
     point.data = d;
     return point;
@@ -58,7 +72,8 @@
       <GeoPath
         geojson={feature}
         class={cls('fill-transparent', classes.path)}
-        on:pointerenter
+        on:pointerenter={(e) =>
+          dispatch('pointerenter', { event: e, data: feature.properties.site.data, feature })}
         on:pointermove={(e) =>
           dispatch('pointermove', { event: e, data: feature.properties.site.data, feature })}
         on:pointerleave
@@ -78,7 +93,7 @@
       <path
         d={voronoi.renderCell(i)}
         class={cls('fill-transparent', classes.path)}
-        on:pointerenter
+        on:pointerenter={(e) => dispatch('pointerenter', { event: e, data: point.data, point })}
         on:pointermove={(e) => dispatch('pointermove', { event: e, data: point.data, point })}
         on:pointerleave
         on:touchmove={(e) => {

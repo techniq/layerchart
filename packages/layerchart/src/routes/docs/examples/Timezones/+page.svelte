@@ -23,10 +23,10 @@
     Graticule,
     Svg,
     Tooltip,
-    TooltipItem,
     antipode,
   } from 'layerchart';
-  import { Field, SelectField, Switch, timerStore } from 'svelte-ux';
+  import { Field, SelectField, Switch } from 'svelte-ux';
+  import { timerStore } from '@layerstack/svelte-stores';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -152,15 +152,17 @@
         {/if}
       </Svg>
 
-      <Tooltip let:data>
+      <Tooltip.Root let:data>
         {@const { tz_name1st, time_zone } = data.properties}
-        <TooltipItem label="Name" value={tz_name1st} />
-        <TooltipItem label="Timezone" value={time_zone} />
-        <TooltipItem
-          label="Current time"
-          value={formatDate($dateTimer, time_zone.replace('UTC', '').replace('±', '+'))}
-        />
-      </Tooltip>
+        <Tooltip.List>
+          <Tooltip.Item label="Name" value={tz_name1st} />
+          <Tooltip.Item label="Timezone" value={time_zone} />
+          <Tooltip.Item
+            label="Current time"
+            value={formatDate($dateTimer, time_zone.replace('UTC', '').replace('±', '+'))}
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

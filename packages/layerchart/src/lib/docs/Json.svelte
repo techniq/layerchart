@@ -1,6 +1,6 @@
 <script lang="ts">
   import JsonTree from 'svelte-json-tree';
-  import { cls } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   export let value: any;
   export let defaultExpandedPaths = ['$'];

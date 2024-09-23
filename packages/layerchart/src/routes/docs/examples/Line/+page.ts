@@ -1,4 +1,4 @@
-import { parse } from 'svelte-ux';
+import { parse } from '@layerstack/utils';
 
 import pageSource from './+page.svelte?raw';
 

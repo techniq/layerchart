@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { format, cls } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
+  import { format } from '@layerstack/utils';
 
   import { transformContext } from '$lib/components/TransformContext.svelte';
 

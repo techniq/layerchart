@@ -3,7 +3,7 @@
   import { extent, flatGroup, ticks } from 'd3-array';
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { format } from 'date-fns';
-  import { formatDate, PeriodType } from 'svelte-ux/utils/date';
+  import { formatDate, PeriodType } from '@layerstack/utils';
 
   import {
     Axis,
@@ -16,7 +16,6 @@
     Svg,
     Text,
     Tooltip,
-    TooltipItem,
     pivotLonger,
   } from 'layerchart';
 
@@ -104,9 +103,13 @@
         <Spline class="stroke-2 stroke-primary" />
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="value" value={data.value} />
-      </Tooltip>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -226,13 +229,13 @@
       y="value"
       yDomain={[0, null]}
       yNice
-      r="fruit"
-      rScale={scaleOrdinal()}
-      rDomain={Object.keys(fruitColors)}
-      rRange={Object.values(fruitColors)}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={Object.keys(fruitColors)}
+      cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
       tooltip={{ mode: 'voronoi' }}
-      let:rScale
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -242,7 +245,7 @@
           rule
         />
         {#each dataByFruit as [fruit, data]}
-          {@const color = rScale(fruit)}
+          {@const color = cScale(fruit)}
           <Spline {data} class="stroke-2" stroke={color}>
             <svelte:fragment slot="end">
               <circle r={4} fill={color} />
@@ -259,9 +262,13 @@
         {/each}
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label={data.fruit} value={data.value} />
-      </Tooltip>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label={data.fruit} value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -280,7 +287,7 @@
       y="y"
       yDomain={[0, null]}
       yNice
-      padding={{ left: 16, bottom: 24, right: 48 }}
+      padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
       <Svg>
@@ -296,10 +303,13 @@
         <Highlight y={(d) => d.y1} points={{ fill: fruitColors.oranges }} />
         <Highlight lines />
       </Svg>
-      <Tooltip let:data>
-        <TooltipItem label="bananas" value={data.y} />
-        <TooltipItem label="oranges" value={data.y1} />
-      </Tooltip>
+
+      <Tooltip.Root let:data>
+        <Tooltip.List>
+          <Tooltip.Item label="bananas" value={data.y} />
+          <Tooltip.Item label="oranges" value={data.y1} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -315,14 +325,14 @@
       y="value"
       yDomain={[0, null]}
       yNice
-      r="fruit"
-      rScale={scaleOrdinal()}
-      rDomain={Object.keys(fruitColors)}
-      rRange={Object.values(fruitColors)}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={Object.keys(fruitColors)}
+      cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
       tooltip={{ mode: 'voronoi' }}
       let:tooltip
-      let:rScale
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -334,7 +344,7 @@
         {#each dataByFruit as [fruit, data]}
           {@const color =
             tooltip.data == null || tooltip.data.fruit === fruit
-              ? rScale(fruit)
+              ? cScale(fruit)
               : 'hsl(var(--color-surface-content) / 20%)'}
           <Spline {data} class="stroke-2" stroke={color}>
             <svelte:fragment slot="end">
@@ -352,9 +362,12 @@
         {/each}
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label={data.fruit} value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label={data.fruit} value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -370,13 +383,13 @@
       y="value"
       yDomain={[0, null]}
       yNice
-      r="fruit"
-      rScale={scaleOrdinal()}
-      rDomain={Object.keys(fruitColors)}
-      rRange={Object.values(fruitColors)}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={Object.keys(fruitColors)}
+      cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'voronoi' }}
-      let:rScale
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule />
@@ -386,15 +399,18 @@
           rule
         />
         {#each dataByFruit as [fruit, data]}
-          {@const color = rScale(fruit)}
+          {@const color = cScale(fruit)}
           <Spline {data} class="stroke-2" stroke={color} />
         {/each}
         <Labels format="integer" />
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label={data.fruit} value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label={data.fruit} value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

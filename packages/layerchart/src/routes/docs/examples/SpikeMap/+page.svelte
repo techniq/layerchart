@@ -13,7 +13,6 @@
     Svg,
     TransformControls,
     Tooltip,
-    TooltipItem,
   } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -113,30 +112,31 @@
         {/each}
       </Svg>
 
-      <Tooltip
-        header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
-        let:data
-      >
+      <Tooltip.Root let:data>
         {@const d = data.properties.data}
-        <TooltipItem
-          label="Total Population"
-          value={d?.population}
-          format="integer"
-          valueAlign="right"
-        />
-        <TooltipItem
-          label="Est. Population under 18"
-          value={d?.populationUnder18}
-          format="integer"
-          valueAlign="right"
-        />
-        <TooltipItem
-          label="Est. Percent under 18"
-          value={d?.percentUnder18 / 100}
-          format="percentRound"
-          valueAlign="right"
-        />
-      </Tooltip>
+        <Tooltip.Header>{data.properties.name + ' - ' + data.properties.data?.state}</Tooltip.Header
+        >
+        <Tooltip.List>
+          <Tooltip.Item
+            label="Total Population"
+            value={d?.population}
+            format="integer"
+            valueAlign="right"
+          />
+          <Tooltip.Item
+            label="Est. Population under 18"
+            value={d?.populationUnder18}
+            format="integer"
+            valueAlign="right"
+          />
+          <Tooltip.Item
+            label="Est. Percent under 18"
+            value={d?.percentUnder18 / 100}
+            format="percentRound"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -230,30 +230,31 @@
         />
       </HitCanvas>
 
-      <Tooltip
-        header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
-        let:data
-      >
+      <Tooltip.Root let:data>
         {@const d = data.properties.data}
-        <TooltipItem
-          label="Total Population"
-          value={d?.population}
-          format="integer"
-          valueAlign="right"
-        />
-        <TooltipItem
-          label="Est. Population under 18"
-          value={d?.populationUnder18}
-          format="integer"
-          valueAlign="right"
-        />
-        <TooltipItem
-          label="Est. Percent under 18"
-          value={d?.percentUnder18 / 100}
-          format="percentRound"
-          valueAlign="right"
-        />
-      </Tooltip>
+        <Tooltip.Header>{data.properties.name + ' - ' + data.properties.data?.state}</Tooltip.Header
+        >
+        <Tooltip.List>
+          <Tooltip.Item
+            label="Total Population"
+            value={d?.population}
+            format="integer"
+            valueAlign="right"
+          />
+          <Tooltip.Item
+            label="Est. Population under 18"
+            value={d?.populationUnder18}
+            format="integer"
+            valueAlign="right"
+          />
+          <Tooltip.Item
+            label="Est. Percent under 18"
+            value={d?.percentUnder18 / 100}
+            format="percentRound"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

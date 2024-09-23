@@ -17,7 +17,16 @@
   import { feature } from 'topojson-client';
   import type { GeometryCollection, Topology } from 'topojson-specification';
 
-  import { Canvas, Chart, GeoPath, GeoTile, HitCanvas, Tooltip, TooltipItem } from 'layerchart';
+  import {
+    Canvas,
+    Chart,
+    GeoPath,
+    GeoTile,
+    HitCanvas,
+    Svg,
+    Tooltip,
+    TransformControls,
+  } from 'layerchart';
   import {
     CopyButton,
     EmptyMessage,
@@ -74,7 +83,7 @@
     })
   );
 
-  $: features = geojson.features;
+  $: features = geojson?.features;
 </script>
 
 <div class="grid gap-2">
@@ -96,15 +105,26 @@
         geo={{
           projection,
           fitGeojson: geojson,
+          applyTransform: ['translate', 'scale'],
+        }}
+        transform={{
+          translateOnScale: true,
+          initialScrollMode: 'scale',
         }}
         padding={{ top: 8, bottom: 8, left: 8, right: 8 }}
         let:tooltip
       >
         {#if projection === geoMercator}
-          <Canvas>
+          <Svg>
+            <!-- technique: https://observablehq.com/@d3/seamless-zoomable-map-tiles -->
+            <GeoTile url={serviceUrl} zoomDelta={-100} />
+            <GeoTile url={serviceUrl} zoomDelta={-4} />
+            <GeoTile url={serviceUrl} zoomDelta={-1} />
             <GeoTile url={serviceUrl} {zoomDelta} />
-          </Canvas>
+          </Svg>
         {/if}
+
+        <TransformControls />
 
         <Canvas>
           {#if projection === geoMercator}
@@ -158,11 +178,14 @@
           />
         </HitCanvas>
 
-        <Tooltip header={(data) => data.properties.id} let:data>
-          {#each Object.entries(data.properties) as [key, value]}
-            <TooltipItem label={key} {value} />
-          {/each}
-        </Tooltip>
+        <Tooltip.Root let:data>
+          <Tooltip.Header>{data.properties.id}</Tooltip.Header>
+          <Tooltip.List>
+            {#each Object.entries(data.properties) as [key, value]}
+              <Tooltip.Item label={key} {value} />
+            {/each}
+          </Tooltip.List>
+        </Tooltip.Root>
       </Chart>
     {:else}
       <EmptyMessage class="h-full">Please enter input below</EmptyMessage>

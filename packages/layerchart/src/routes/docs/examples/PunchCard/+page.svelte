@@ -3,8 +3,8 @@
   import { max, range } from 'd3-array';
   import { getDay, getWeek } from 'date-fns';
 
-  import { Axis, Chart, Circle, Highlight, Points, Svg, Tooltip, TooltipItem } from 'layerchart';
-  import { formatDate, PeriodType } from 'svelte-ux';
+  import { Axis, Chart, Circle, Highlight, Points, Svg, Tooltip } from 'layerchart';
+  import { formatDate, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -59,9 +59,12 @@
         <Highlight area axis="x" />
         <Highlight area axis="y" />
       </Svg>
-      <Tooltip header={(d) => formatDate(d.date, PeriodType.Day)} let:data>
-        <TooltipItem label="duration" value={data.value} valueAlign="right" />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, PeriodType.Day)}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="duration" value={data.value} valueAlign="right" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

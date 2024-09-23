@@ -1,6 +1,6 @@
 import type { GeometryCollection, Topology } from 'topojson-specification';
 import pageSource from './+page.svelte?raw';
-import { parse } from 'svelte-ux';
+import { parse } from '@layerstack/utils';
 
 export async function load({ fetch }) {
   return {

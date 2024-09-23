@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { format, Checkbox, cls } from 'svelte-ux';
+  import { Checkbox } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
+  import { format } from '@layerstack/utils';
 
   import { chartContext } from '$lib/components/ChartContext.svelte';
   import { geoContext } from '$lib/components/GeoContext.svelte';

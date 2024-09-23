@@ -4,7 +4,7 @@
   import { schemeBlues } from 'd3-scale-chromatic';
   import { geoIdentity, type GeoProjection } from 'd3-geo';
   import { feature } from 'topojson-client';
-  import { format } from 'svelte-ux';
+  import { format } from '@layerstack/utils';
 
   import {
     Canvas,
@@ -14,7 +14,6 @@
     Legend,
     Svg,
     Tooltip,
-    TooltipItem,
     TransformControls,
   } from 'layerchart';
 
@@ -107,30 +106,32 @@
         class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-sm rounded m-1"
       />
 
-      <Tooltip
-        header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
-        let:data
-      >
+      <Tooltip.Root let:data>
         {@const d = populationByFips.get(data.id)}
-        <TooltipItem
-          label="Total Population"
-          value={d?.population}
-          format="integer"
-          valueAlign="right"
-        />
-        <TooltipItem
-          label="Est. Population under 18"
-          value={d?.populationUnder18}
-          format="integer"
-          valueAlign="right"
-        />
-        <TooltipItem
-          label="Est. Percent under 18"
-          value={d?.percentUnder18 ?? 0 / 100}
-          format="percentRound"
-          valueAlign="right"
-        />
-      </Tooltip>
+        <Tooltip.Header>
+          {data.properties.name + ' - ' + data.properties.data?.state}
+        </Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item
+            label="Total Population"
+            value={d?.population}
+            format="integer"
+            valueAlign="right"
+          />
+          <Tooltip.Item
+            label="Est. Population under 18"
+            value={d?.populationUnder18}
+            format="integer"
+            valueAlign="right"
+          />
+          <Tooltip.Item
+            label="Est. Percent under 18"
+            value={d?.percentUnder18 ?? 0 / 100}
+            format="percentRound"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -206,30 +207,32 @@
         class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-sm rounded m-1"
       />
 
-      <Tooltip
-        header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
-        let:data
-      >
+      <Tooltip.Root let:data>
         {@const d = populationByFips.get(data.id)}
-        <TooltipItem
-          label="Total Population"
-          value={d?.population}
-          format="integer"
-          valueAlign="right"
-        />
-        <TooltipItem
-          label="Est. Population under 18"
-          value={d?.populationUnder18}
-          format="integer"
-          valueAlign="right"
-        />
-        <TooltipItem
-          label="Est. Percent under 18"
-          value={d?.percentUnder18 ?? 0 / 100}
-          format="percentRound"
-          valueAlign="right"
-        />
-      </Tooltip>
+        <Tooltip.Header>
+          {data.properties.name + ' - ' + data.properties.data?.state}
+        </Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item
+            label="Total Population"
+            value={d?.population}
+            format="integer"
+            valueAlign="right"
+          />
+          <Tooltip.Item
+            label="Est. Population under 18"
+            value={d?.populationUnder18}
+            format="integer"
+            valueAlign="right"
+          />
+          <Tooltip.Item
+            label="Est. Percent under 18"
+            value={d?.percentUnder18 ?? 0 / 100}
+            format="percentRound"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

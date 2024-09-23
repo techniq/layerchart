@@ -5,15 +5,23 @@ import { type MotionOptions, motionStore } from '$lib/stores/motionStore.js';
 import { scaleBand, type ScaleBand } from 'd3-scale';
 import { unique } from 'svelte-ux/utils/array';
 
-export type AnyScale<Domain = any, Range = any, Input = Domain, Output = any> = {
+export interface AnyScale<Domain = any, Range = any, Input = Domain, Output = any> {
   (value: Input): Output;
   invert?: (value: Output) => Input;
   domain(): Domain[];
+  domain(domain: Iterable<Domain>): this;
   range(): Range[];
+  range(range: Iterable<Range>): this;
   bandwidth?: Function;
   ticks?: Function;
   tickFormat?: Function;
-};
+  copy(): Function;
+}
+
+export type DomainType =
+  | (number | string | Date | null | undefined)[]
+  // 'null' useful for Brush component
+  | null;
 
 /**
  * Implemenation for missing `scaleBand().invert()`
@@ -50,6 +58,26 @@ export function scaleInvert(scale: AnyScale<any, any>, value: number) {
   } else {
     return scale.invert?.(value);
   }
+}
+
+/** Create new copy of scale with domain and range */
+export function createScale(
+  scale: AnyScale,
+  domain: DomainType,
+  range: any[] | Function,
+  context?: Record<any, any>
+) {
+  const scaleCopy = scale.copy() as AnyScale;
+  if (domain) {
+    scaleCopy.domain(domain);
+  }
+
+  if (typeof range === 'function') {
+    scaleCopy.range(range(context));
+  } else {
+    scaleCopy.range(range);
+  }
+  return scaleCopy;
 }
 
 /** Create a `scaleBand()` within another scaleBand()'s bandwidth (typically a x1 of an x0 scale, used for grouping) */

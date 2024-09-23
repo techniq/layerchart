@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Button, Icon, MenuButton, Tooltip, cls } from 'svelte-ux';
+  import { Button, Icon, MenuButton, Tooltip } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   import {
     mdiArrowULeftTop,

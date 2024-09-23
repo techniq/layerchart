@@ -1,8 +1,8 @@
 <script lang="ts">
   import { scaleBand, scaleOrdinal } from 'd3-scale';
 
-  import { Axis, Bars, Chart, Highlight, Points, Svg, Tooltip, TooltipItem } from 'layerchart';
-  import { PeriodType, formatDate } from 'svelte-ux';
+  import { Axis, Bars, Chart, Highlight, Points, Svg, Tooltip } from 'layerchart';
+  import { PeriodType, formatDate } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -22,10 +22,10 @@
       xScale={scaleBand().paddingInner(0.4)}
       y={['high', 'low']}
       yNice
-      r={(d) => (d.close < d.open ? 'desc' : 'asc')}
-      rScale={scaleOrdinal()}
-      rDomain={['desc', 'asc']}
-      rRange={['#e41a1c', '#4daf4a']}
+      c={(d) => (d.close < d.open ? 'desc' : 'asc')}
+      cScale={scaleOrdinal()}
+      cDomain={['desc', 'asc']}
+      cRange={['#e41a1c', '#4daf4a']}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
@@ -36,12 +36,15 @@
         <Bars y={(d) => [d.open, d.close]} radius={2} />
         <Highlight area />
       </Svg>
-      <Tooltip header={(data) => formatDate(data.date, PeriodType.Day)} let:data>
-        <TooltipItem label="Open" value={data.open} format="decimal" />
-        <TooltipItem label="Close" value={data.close} format="decimal" />
-        <TooltipItem label="High" value={data.high} format="decimal" />
-        <TooltipItem label="Low" value={data.low} format="decimal" />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{formatDate(data.date, PeriodType.Day)}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="Open" value={data.open} format="decimal" />
+          <Tooltip.Item label="Close" value={data.close} format="decimal" />
+          <Tooltip.Item label="High" value={data.high} format="decimal" />
+          <Tooltip.Item label="Low" value={data.low} format="decimal" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

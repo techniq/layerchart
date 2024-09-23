@@ -142,9 +142,9 @@
   <div class="h-[40px]">
     <Chart
       data={[{ name: 'One' }, { name: 'Two' }, { name: 'Three' }]}
-      r="name"
-      rScale={scaleOrdinal()}
-      rRange={[
+      c="name"
+      cScale={scaleOrdinal()}
+      cRange={[
         'hsl(var(--color-success))',
         'hsl(var(--color-warning))',
         'hsl(var(--color-danger))',
@@ -161,9 +161,9 @@
   <div class="h-[300px]">
     <Chart
       data={[{ name: 'One' }, { name: 'Two' }, { name: 'Three' }]}
-      r="name"
-      rScale={scaleOrdinal()}
-      rRange={[
+      c="name"
+      cScale={scaleOrdinal()}
+      cRange={[
         'hsl(var(--color-success))',
         'hsl(var(--color-warning))',
         'hsl(var(--color-danger))',

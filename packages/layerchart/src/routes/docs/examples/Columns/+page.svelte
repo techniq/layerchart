@@ -1,9 +1,8 @@
 <script lang="ts">
   import { cubicInOut } from 'svelte/easing';
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
-  import { extent, mean } from 'd3-array';
+  import { mean, sum } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
-  import { format } from 'date-fns';
 
   import {
     Axis,
@@ -19,23 +18,16 @@
     Svg,
     Text,
     Tooltip,
-    TooltipItem,
-    createStackData,
+    groupStackData,
     stackOffsetSeparated,
   } from 'layerchart';
 
-  import {
-    Field,
-    ToggleGroup,
-    ToggleOption,
-    formatDate,
-    PeriodType,
-    Toggle,
-    Switch,
-  } from 'svelte-ux';
+  import { Field, ToggleGroup, ToggleOption, Toggle, Switch } from 'svelte-ux';
+  import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
+  import { unique } from '@layerstack/utils/array';
 
   const data = createDateSeries({
     count: 30,
@@ -46,19 +38,19 @@
   });
   const negativeData = createDateSeries({ count: 30, min: -20, max: 50, value: 'integer' });
 
-  const groupedData = createStackData(longData, { xKey: 'year', groupBy: 'fruit' });
-  const stackedData = createStackData(longData, { xKey: 'year', stackBy: 'fruit' });
-  const groupedStackedData = createStackData(longData, {
+  const groupedData = groupStackData(longData, { xKey: 'year', groupBy: 'fruit' });
+  const stackedData = groupStackData(longData, { xKey: 'year', stackBy: 'fruit' });
+  const groupedStackedData = groupStackData(longData, {
     xKey: 'year',
     groupBy: 'basket',
     stackBy: 'fruit',
   });
-  const stackedPercentData = createStackData(longData, {
+  const stackedPercentData = groupStackData(longData, {
     xKey: 'year',
     stackBy: 'fruit',
     offset: stackOffsetExpand,
   });
-  const stackedSeperatedData = createStackData(longData, {
+  const stackedSeperatedData = groupStackData(longData, {
     xKey: 'year',
     stackBy: 'fruit',
     offset: stackOffsetSeparated,
@@ -75,35 +67,35 @@
   let transitionChartMode = 'group';
   $: transitionChart =
     transitionChartMode === 'group'
-      ? {
+      ? ({
           groupBy: 'fruit',
           stackBy: undefined,
-        }
+        } as const)
       : transitionChartMode === 'stack'
-        ? {
+        ? ({
             groupBy: undefined,
             stackBy: 'fruit',
-          }
+          } as const)
         : transitionChartMode === 'groupStack'
-          ? {
+          ? ({
               groupBy: 'basket',
               stackBy: 'fruit',
-            }
-          : {
+            } as const)
+          : ({
               groupBy: undefined,
               stackBy: undefined,
-            };
-  $: transitionData = createStackData(longData, {
+            } as const);
+  $: transitionData = groupStackData(longData, {
     xKey: 'year',
     groupBy: transitionChart.groupBy,
     stackBy: transitionChart.stackBy,
   }) as {
-    basket: number;
+    year: string;
     fruit: string;
+    basket: number;
     keys: string[];
     value: number;
     values: number[];
-    year: string;
   }[];
 </script>
 
@@ -126,7 +118,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -152,7 +144,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} rounded="top" strokeWidth={1} class="fill-primary" />
@@ -179,15 +171,20 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Highlight area />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="value" value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header
+          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+        >
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -210,7 +207,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars
@@ -220,9 +217,14 @@
         />
         <Highlight area bar={{ class: 'fill-primary', strokeWidth: 1, radius: 4 }} />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="value" value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header
+          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+        >
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -245,7 +247,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars
@@ -261,9 +263,14 @@
           </svelte:fragment>
         </Highlight>
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="value" value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header
+          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+        >
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -284,7 +291,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -309,7 +316,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -336,7 +343,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Rule y={0} />
@@ -364,7 +371,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Rule y={0} />
@@ -392,7 +399,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           ticks={4}
           rule
         />
@@ -419,7 +426,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           ticks={(scale) => scaleTime(scale.domain(), scale.range()).ticks(4)}
           rule
         />
@@ -446,7 +453,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse" let:url>
@@ -474,7 +481,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars>
@@ -509,7 +516,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -543,7 +550,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -577,7 +584,7 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -614,7 +621,7 @@
         <Axis placement="left" grid={{ class: 'stroke-surface-100' }} rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
       </Svg>
@@ -640,7 +647,7 @@
         <Axis placement="left" grid={{ class: 'mix-blend-multiply' }} rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
       </Svg>
@@ -656,7 +663,7 @@
       {data}
       x="date"
       xScale={scaleBand().padding(0.4)}
-      y={(d) => Math.max(d.value, d.baseline)}
+      y={['value', 'baseline']}
       yDomain={[0, null]}
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
@@ -666,17 +673,62 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars y="baseline" radius={4} strokeWidth={1} class="fill-surface-content/20" />
         <Bars y="value" radius={4} strokeWidth={1} inset={8} class="fill-primary" />
         <Highlight area />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="value" value={data.value} />
-        <TooltipItem label="baseline" value={data.baseline} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header
+          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+        >
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+          <Tooltip.Item label="baseline" value={data.baseline} />
+        </Tooltip.List>
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Multiple (diverging)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleBand().padding(0.4)}
+      y={['value', (d) => -d.baseline]}
+      yNice={4}
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule format={(d) => format(Math.abs(d), 'integer')} />
+        <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
+        <Bars y="value" radius={4} rounded="top" strokeWidth={1} class="fill-primary" />
+        <Bars
+          y={(d) => -d.baseline}
+          radius={4}
+          rounded="bottom"
+          strokeWidth={1}
+          class="fill-secondary"
+        />
+        <Rule y={0} />
+        <Highlight area />
+      </Svg>
+      <Tooltip.Root let:data>
+        <Tooltip.Header
+          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+        >
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+          <Tooltip.Item label="baseline" value={data.baseline} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -705,7 +757,7 @@
           <Axis placement="left" grid rule />
           <Axis
             placement="bottom"
-            format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
             rule
           />
           {#if show}
@@ -733,23 +785,53 @@
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={groupedData}
-      flatData={longData}
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-      y="values"
-      yDomain={extent(groupedData.flatMap((d) => d.values))}
+      y="value"
       yNice={4}
-      r={(d) => d}
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={colorKeys}
+      cRange={keyColors}
+      x1="fruit"
+      x1Scale={scaleBand()}
+      x1Domain={colorKeys}
+      x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
       padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'band' }}
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-        <Bars groupBy="fruit" radius={4} strokeWidth={1} />
+        <Bars radius={4} strokeWidth={1} />
+        <Highlight area />
       </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          {#each data.data as d}
+            <Tooltip.Item
+              label={d.fruit}
+              value={d.value}
+              color={cScale(d.fruit)}
+              format="integer"
+              valueAlign="right"
+            />
+          {/each}
+
+          <Tooltip.Separator />
+
+          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
+          <Tooltip.Item
+            label="total"
+            value={sum([...data.data], (d) => d.value)}
+            format="integer"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -763,19 +845,46 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yDomain={extent(stackedData.flatMap((d) => d.values))}
       yNice={4}
-      r={(d) => d.keys[1]}
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={colorKeys}
+      cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'band' }}
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars radius={4} strokeWidth={1} />
+        <Highlight area />
       </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          {#each data.data as d}
+            <Tooltip.Item
+              label={d.fruit}
+              value={d.value}
+              color={cScale(d.fruit)}
+              format="integer"
+              valueAlign="right"
+            />
+          {/each}
+
+          <Tooltip.Separator />
+
+          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
+          <Tooltip.Item
+            label="total"
+            value={sum([...data.data], (d) => d.value)}
+            format="integer"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -789,48 +898,49 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yDomain={extent(stackedPercentData.flatMap((d) => d.values))}
       yNice={4}
-      r={(d) => d.keys[1]}
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={colorKeys}
+      cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'band' }}
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule format="percentRound" />
         <Axis placement="bottom" rule />
         <Bars radius={4} strokeWidth={1} />
+        <Highlight area />
       </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          {#each data.data as d}
+            <Tooltip.Item
+              label={d.fruit}
+              value={d.value}
+              color={cScale(d.fruit)}
+              format="integer"
+              valueAlign="right"
+            />
+          {/each}
+
+          <Tooltip.Separator />
+
+          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
+          <Tooltip.Item
+            label="total"
+            value={sum([...data.data], (d) => d.value)}
+            format="integer"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
-
-<!-- <h2>Stack (Separated)</h2>
-
-<Preview data={stackedSeperatedData}>
-	<div class="h-[300px] p-4 border rounded">
-		<Chart
-			data={stackedSeperatedData}
-			x="year"
-			xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-			y="values"
-      yDomain={extent(stackedSeperatedData.flatMap((d) => d.values))}
-      yNice={4}
-			r={(d) => d.keys[1]}
-			rScale={scaleOrdinal()}
-			rDomain={colorKeys}
-			rRange={keyColors}
-			padding={{ left: 16, bottom: 24 }}
-		>
-			<Svg>
-				<Axis placement="left" grid rule />
-				<Axis placement="bottom" rule />
-				<Bars radius={4} strokeWidth={1} />
-			</Svg>
-		</Chart>
-	</div>
-</Preview> -->
 
 <h2>Grouped and Stacked</h2>
 
@@ -838,23 +948,53 @@
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={groupedStackedData}
-      flatData={longData}
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yDomain={extent(groupedStackedData.flatMap((d) => d.values))}
       yNice={4}
-      r={(d) => d}
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={colorKeys}
+      cRange={keyColors}
+      x1="basket"
+      x1Scale={scaleBand().padding(0.1)}
+      x1Domain={[1, 2]}
+      x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
       padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'band' }}
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-        <Bars groupBy="basket" radius={4} strokeWidth={1} />
+        <Bars radius={4} strokeWidth={1} />
+        <Highlight area />
       </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          {#each data.data as d}
+            <Tooltip.Item
+              label={d.fruit}
+              value={d.value}
+              color={cScale(d.fruit)}
+              format="integer"
+              valueAlign="right"
+            />
+          {/each}
+
+          <Tooltip.Separator />
+
+          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
+          <Tooltip.Item
+            label="total"
+            value={sum([...data.data], (d) => d.value)}
+            format="integer"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -873,39 +1013,36 @@
 
 <Preview data={transitionData}>
   <div class="h-[300px] p-4 border rounded">
-    <!-- Always use stackedData for extents for consistent scale -->
     <Chart
       data={transitionData}
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yDomain={extent(stackedData.flatMap((d) => d.values))}
       yNice={4}
-      r={(d) => {
-        // Color by fruit (last key)
-        return d.keys.at(-1);
-      }}
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={colorKeys}
+      cRange={keyColors}
+      x1={transitionChart.groupBy}
+      x1Scale={scaleBand().padding(0.1)}
+      x1Domain={transitionChart.groupBy
+        ? unique(transitionData.map((d) => d[transitionChart.groupBy]))
+        : undefined}
+      x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
       padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'band' }}
       let:data
-      let:rScale
+      let:cScale
     >
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <g>
           <!-- TODO: 'data' can be used once type issue is resolved -->
-          {#each transitionData as bar (bar.keys
-            .filter((key) => typeof key !== 'number')
-            .join('-'))}
+          {#each transitionData as bar (bar.year + '-' + bar.fruit)}
             <Bar
               {bar}
-              groupBy={transitionChart.groupBy}
-              groupPaddingInner={0.2}
-              groupPaddingOuter={0}
-              fill={rScale(bar.keys.at(-1))}
+              fill={cScale(bar.fruit)}
               radius={4}
               strokeWidth={1}
               tweened={{
@@ -917,7 +1054,113 @@
             />
           {/each}
         </g>
+        <Highlight area />
       </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          {#each data.data as d}
+            <Tooltip.Item
+              label={d.fruit}
+              value={d.value}
+              color={cScale(d.fruit)}
+              format="integer"
+              valueAlign="right"
+            />
+          {/each}
+
+          <Tooltip.Separator />
+
+          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
+          <Tooltip.Item
+            label="total"
+            value={sum([...data.data], (d) => d.value)}
+            format="integer"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Tooltip and click handlers for individual stack/grouped bar</h2>
+
+<div class="grid grid-cols-[1fr,1fr] gap-2 mb-2">
+  <Field label="Mode">
+    <ToggleGroup bind:value={transitionChartMode} variant="outline" size="sm" inset class="w-full">
+      <ToggleOption value="group">Grouped</ToggleOption>
+      <ToggleOption value="stack">Stacked</ToggleOption>
+      <ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
+    </ToggleGroup>
+  </Field>
+</div>
+
+<Preview data={transitionData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={transitionData}
+      x="year"
+      xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      y="values"
+      yNice={4}
+      c="fruit"
+      cScale={scaleOrdinal()}
+      cDomain={colorKeys}
+      cRange={keyColors}
+      x1={transitionChart.groupBy}
+      x1Scale={scaleBand().padding(0.1)}
+      x1Domain={transitionChart.groupBy
+        ? unique(transitionData.map((d) => d[transitionChart.groupBy]))
+        : undefined}
+      x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
+      padding={{ left: 16, bottom: 24 }}
+      let:data
+      let:cScale
+      let:tooltip
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule />
+        <g>
+          <!-- TODO: 'data' can be used once type issue is resolved -->
+          {#each transitionData as bar (bar.year + '-' + bar.fruit)}
+            <Bar
+              {bar}
+              fill={cScale(bar.fruit)}
+              radius={4}
+              strokeWidth={1}
+              tweened={{
+                x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
+                y: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
+                width: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
+                height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
+              }}
+              class="cursor-pointer"
+              on:click={(e) => {
+                alert('You clicked on:\n' + JSON.stringify(bar, null, 2));
+              }}
+              on:pointerenter={(e) => tooltip?.show(e, bar)}
+              on:pointermove={(e) => tooltip?.show(e, bar)}
+              on:pointerleave={(e) => tooltip?.hide()}
+            />
+          {/each}
+        </g>
+      </Svg>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item
+            label={data.fruit}
+            value={data.value}
+            color={cScale(data.fruit)}
+            format="integer"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -945,78 +1188,11 @@
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Highlight area />
-      </Svg>
-    </Chart>
-  </div>
-</Preview>
-
-<h2>Click handlers for stack/grouped bars</h2>
-
-<div class="grid grid-cols-[1fr,1fr] gap-2 mb-2">
-  <Field label="Mode">
-    <ToggleGroup bind:value={transitionChartMode} variant="outline" size="sm" inset class="w-full">
-      <ToggleOption value="group">Grouped</ToggleOption>
-      <ToggleOption value="stack">Stacked</ToggleOption>
-      <ToggleOption value="groupStack">Grouped & Stacked</ToggleOption>
-    </ToggleGroup>
-  </Field>
-</div>
-
-<Preview data={transitionData}>
-  <div class="h-[300px] p-4 border rounded">
-    <!-- Always use stackedData for extents for consistent scale -->
-    <Chart
-      data={transitionData}
-      x="year"
-      xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
-      y="values"
-      yDomain={extent(stackedData.flatMap((d) => d.values))}
-      yNice={4}
-      r={(d) => {
-        // Color by fruit (last key)
-        return d.keys.at(-1);
-      }}
-      rScale={scaleOrdinal()}
-      rDomain={colorKeys}
-      rRange={keyColors}
-      padding={{ left: 16, bottom: 24 }}
-      let:data
-      let:rScale
-    >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" rule />
-        <g>
-          <!-- TODO: 'data' can be used once type issue is resolved -->
-          {#each transitionData as bar (bar.keys
-            .filter((key) => typeof key !== 'number')
-            .join('-'))}
-            <Bar
-              {bar}
-              groupBy={transitionChart.groupBy}
-              groupPaddingInner={0.2}
-              groupPaddingOuter={0}
-              fill={rScale(bar.keys.at(-1))}
-              radius={4}
-              strokeWidth={1}
-              tweened={{
-                x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-                y: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
-                width: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-                height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
-              }}
-              class="cursor-pointer"
-              on:click={(e) => {
-                alert('You clicked on:\n' + JSON.stringify(bar, null, 2));
-              }}
-            />
-          {/each}
-        </g>
       </Svg>
     </Chart>
   </div>

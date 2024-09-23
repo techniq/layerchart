@@ -1,9 +1,10 @@
 // Re-export for easy access (Svg and Canvas are provided by LayerChart)
 export { Html, WebGL } from 'layercake';
 
+export * from './charts/index.js';
+
 export { default as Arc } from './Arc.svelte';
 export { default as Area } from './Area.svelte';
-export { default as AreaStack } from './AreaStack.svelte';
 export { default as Axis } from './Axis.svelte';
 export { default as Bar } from './Bar.svelte';
 export { default as Bars } from './Bars.svelte';
@@ -55,10 +56,7 @@ export { default as Svg } from './layout/Svg.svelte';
 export { default as Text } from './Text.svelte';
 export { default as Threshold } from './Threshold.svelte';
 export { default as TileImage } from './TileImage.svelte';
-export { default as Tooltip } from './Tooltip.svelte';
-export { default as TooltipContext } from './TooltipContext.svelte';
-export { default as TooltipItem } from './TooltipItem.svelte';
-export { default as TooltipSeparator } from './TooltipSeparator.svelte';
+export * as Tooltip from './tooltip/index.js';
 export { default as TransformContext, transformContext } from './TransformContext.svelte';
 export { default as TransformControls } from './TransformControls.svelte';
 export { default as Tree } from './Tree.svelte';

@@ -3,18 +3,10 @@
   import { scaleSqrt } from 'd3-scale';
   import { feature } from 'topojson-client';
 
-  import { Button, ButtonGroup, Field, RangeField, timerStore } from 'svelte-ux';
+  import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
+  import { timerStore } from '@layerstack/svelte-stores';
 
-  import {
-    Chart,
-    GeoCircle,
-    GeoPath,
-    Graticule,
-    Svg,
-    Tooltip,
-    TooltipItem,
-    TransformContext,
-  } from 'layerchart';
+  import { Chart, GeoCircle, GeoPath, Graticule, Svg, Tooltip, TransformContext } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   export let data;
@@ -123,11 +115,14 @@
         {/each}
       </Svg>
 
-      <Tooltip header={(d) => d.place} let:data>
-        <TooltipItem label="Latitude" value={data.latitude} format="decimal" />
-        <TooltipItem label="Longitude" value={data.longitude} format="decimal" />
-        <TooltipItem label="Magnitude" value={data.magnitude} format="decimal" />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.place}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
+          <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
+          <Tooltip.Item label="Magnitude" value={data.magnitude} format="decimal" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

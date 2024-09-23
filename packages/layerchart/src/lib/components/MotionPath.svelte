@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { uniqueId } from 'svelte-ux';
+  import { uniqueId } from '@layerstack/utils';
 
   /** Id of path to move object along */
   export let pathId: string = uniqueId('motionPathId-');

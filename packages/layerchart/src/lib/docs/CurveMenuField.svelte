@@ -1,7 +1,8 @@
 <script lang="ts">
   import * as d3shapes from 'd3-shape';
 
-  import { MenuField, entries } from 'svelte-ux';
+  import { MenuField } from 'svelte-ux';
+  import { entries } from '@layerstack/utils';
 
   export let value: any | undefined = d3shapes['curveLinear'];
   export let showOpenClosed = false;

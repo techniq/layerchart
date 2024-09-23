@@ -1,19 +1,7 @@
 <script lang="ts">
   import { scaleBand } from 'd3-scale';
-
-  import {
-    Area,
-    Axis,
-    Bars,
-    Chart,
-    Highlight,
-    Spline,
-    Svg,
-    Tooltip,
-    TooltipItem,
-  } from 'layerchart';
-
-  import { formatDate, PeriodType } from 'svelte-ux';
+  import { Area, Axis, Bars, Chart, Highlight, Spline, Svg, Tooltip } from 'layerchart';
+  import { formatDate, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -57,10 +45,15 @@
         <Highlight area />
       </Svg>
 
-      <Tooltip header={(data) => formatDate(data.date, PeriodType.Day)} let:data>
-        <TooltipItem label="baseline" value={data.baseline} />
-        <TooltipItem label="value" value={data.value} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>
+          {formatDate(data.date, PeriodType.Day)}
+        </Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="baseline" value={data.baseline} />
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -106,13 +99,18 @@
         <Highlight area />
       </Svg>
 
-      <Tooltip header={(data) => formatDate(data.date, PeriodType.Day)} let:data>
-        <TooltipItem label="open" value={data.open} format="currency" />
-        <TooltipItem label="close" value={data.close} format="currency" />
-        <TooltipItem label="high" value={data.high} format="currency" />
-        <TooltipItem label="low" value={data.low} format="currency" />
-        <TooltipItem label="volume" value={data.volume} format="integer" />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>
+          {formatDate(data.date, PeriodType.Day)}
+        </Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="open" value={data.open} format="currency" />
+          <Tooltip.Item label="close" value={data.close} format="currency" />
+          <Tooltip.Item label="high" value={data.high} format="currency" />
+          <Tooltip.Item label="low" value={data.low} format="currency" />
+          <Tooltip.Item label="volume" value={data.volume} format="integer" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

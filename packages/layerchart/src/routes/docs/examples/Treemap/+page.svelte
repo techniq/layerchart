@@ -15,10 +15,9 @@
     Switch,
     ToggleGroup,
     ToggleOption,
-    format,
-    sortFunc,
-    cls,
   } from 'svelte-ux';
+  import { format, sortFunc } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -32,7 +31,6 @@
     Svg,
     Text,
     Tooltip,
-    TooltipItem,
     Treemap,
     findAncestor,
   } from 'layerchart';
@@ -240,9 +238,13 @@
           </ChartClipPath>
         </Bounds>
       </Svg>
-      <Tooltip header={(data) => data.data.name} let:data>
-        <TooltipItem label="value" value={data.value} format="integer" />
-      </Tooltip>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.data.name}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} format="integer" />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

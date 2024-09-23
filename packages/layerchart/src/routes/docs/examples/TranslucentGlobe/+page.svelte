@@ -11,7 +11,8 @@
     Tooltip,
     TransformContext,
   } from 'layerchart';
-  import { Button, ButtonGroup, Field, RangeField, timerStore } from 'svelte-ux';
+  import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
+  import { timerStore } from '@layerstack/svelte-stores';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -124,9 +125,9 @@
         {/each}
       </Svg>
 
-      <Tooltip>
-        <div slot="header" let:data>{data.properties.name}</div>
-      </Tooltip>
+      <Tooltip.Root let:data>
+        {data.properties.name}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

@@ -3,7 +3,8 @@
   import { feature } from 'topojson-client';
 
   import { Chart, ChartClipPath, GeoPath, Svg, Tooltip } from 'layerchart';
-  import { SelectField, sort } from 'svelte-ux';
+  import { SelectField } from 'svelte-ux';
+  import { sort } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -94,7 +95,10 @@
           class="fill-none stroke-surface-content pointer-events-none"
         />
       </Svg>
-      <Tooltip header={(data) => data.properties.name} />
+
+      <Tooltip.Root let:data>
+        {data.properites.name}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -131,7 +135,10 @@
           />
         </ChartClipPath>
       </Svg>
-      <Tooltip header={(data) => data.properties.name} />
+
+      <Tooltip.Root let:data>
+        {data.properites.name}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

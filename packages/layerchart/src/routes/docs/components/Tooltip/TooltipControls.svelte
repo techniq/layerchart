@@ -2,7 +2,7 @@
   import type { ComponentProps } from 'svelte';
   import { Field, MenuField, MultiSelectField, Switch } from 'svelte-ux';
 
-  import type TooltipContext from '$lib/components/TooltipContext.svelte';
+  import type TooltipContext from '$lib/components/tooltip/TooltipContext.svelte';
   import type Highlight from '$lib/components/Highlight.svelte';
 
   type TooltipContextProps = ComponentProps<TooltipContext>;
@@ -18,7 +18,7 @@
   };
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,1fr,1fr,64px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr,1fr,120px,120px,64px] gap-2 mb-2">
   <MenuField
     label="Mode"
     bind:value={settings.mode}
@@ -42,7 +42,7 @@
       { label: 'area', value: 'area' },
       { label: 'bar', value: 'bar' },
     ]}
-    formatSelected={({ options }) => options.map((x) => x.name).join(', ')}
+    formatSelected={({ options }) => options.map((x) => x.label).join(', ')}
   />
 
   <MenuField

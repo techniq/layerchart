@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { uniqueId } from 'svelte-ux';
+  import { uniqueId } from '@layerstack/utils';
 
   /** Unique id for linearGradient */
   export let id: string = uniqueId('radialGradient-');

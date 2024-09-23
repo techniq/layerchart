@@ -8,15 +8,15 @@
     AppBar,
     AppLayout,
     Button,
+    MenuButton,
     QuickSearch,
     ThemeSelect,
     // ThemeSwitch,
     Tooltip,
     settings,
-    sortFunc,
-    lgScreen,
-    MenuButton,
   } from 'svelte-ux';
+  import { sortFunc } from '@layerstack/utils';
+  import { lgScreen } from '@layerstack/svelte-stores';
 
   import { dev } from '$app/environment';
   import { afterNavigate, goto } from '$app/navigation';

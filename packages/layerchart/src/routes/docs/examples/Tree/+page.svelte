@@ -4,7 +4,8 @@
   import { curveBumpX, curveBumpY, curveStep, curveStepBefore, curveStepAfter } from 'd3-shape';
 
   import { Chart, Group, Link, Rect, Svg, Text, TransformControls, Tree } from 'layerchart';
-  import { Field, ToggleGroup, ToggleOption, cls } from 'svelte-ux';
+  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
   import type { ComponentProps } from 'svelte';

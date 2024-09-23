@@ -1,15 +1,16 @@
 <script lang="ts">
   import { type ComponentProps } from 'svelte';
   import { max, min } from 'd3-array';
-  import type { Series, SeriesPoint } from 'd3-shape';
-  import { cls, notNull } from 'svelte-ux';
+  import { pointRadial, type Series, type SeriesPoint } from 'd3-shape';
+  import { notNull } from '@layerstack/utils/typeGuards';
+  import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
   import Circle from './Circle.svelte';
   import Line from './Line.svelte';
   import Bar from './Bar.svelte';
   import Rect from './Rect.svelte';
-  import { tooltipContext } from './TooltipContext.svelte';
+  import { tooltipContext } from './tooltip/TooltipContext.svelte';
 
   import { isScaleBand } from '$lib/utils/scales.js';
   import { accessor, type Accessor } from '$lib/utils/common.js';
@@ -25,8 +26,9 @@
     yDomain,
     yScale,
     yRange,
-    rGet,
+    cGet,
     config,
+    radial,
   } = chartContext();
   const tooltip = tooltipContext();
 
@@ -60,8 +62,6 @@
   /** Set to false to disable spring transitions */
   export let motion = true;
 
-  // TODO: Fix circle points being backwards for stack (see AreaStack)
-
   const _x = accessor(x);
   const _y = accessor(y);
 
@@ -79,11 +79,11 @@
   $: if (highlightData) {
     const xValue = _x(highlightData);
     const xCoord = Array.isArray(xValue) ? xValue.map((v) => $xScale(v)) : $xScale(xValue);
-    const xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
+    const xOffset = isScaleBand($xScale) && !$radial ? $xScale.bandwidth() / 2 : 0;
 
     const yValue = _y(highlightData);
     const yCoord = Array.isArray(yValue) ? yValue.map((v) => $yScale(v)) : $yScale(yValue);
-    const yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
+    const yOffset = isScaleBand($yScale) && !$radial ? $yScale.bandwidth() / 2 : 0;
 
     // Reset lines
     _lines = [];
@@ -101,17 +101,17 @@
           ..._lines,
           ...xCoord.filter(notNull).map((xItem, i) => ({
             x1: xItem + xOffset,
-            y1: 0,
+            y1: min($yRange) as unknown as number,
             x2: xItem + xOffset,
             y2: max($yRange) as unknown as number,
           })),
         ];
-      } else {
+      } else if (xCoord) {
         _lines = [
           ..._lines,
           {
             x1: xCoord + xOffset,
-            y1: 0,
+            y1: min($yRange) as unknown as number,
             x2: xCoord + xOffset,
             y2: max($yRange) as unknown as number,
           },
@@ -149,17 +149,17 @@
         _lines = [
           ..._lines,
           ...yCoord.filter(notNull).map((yItem, i) => ({
-            x1: 0,
+            x1: min($xRange) as unknown as number,
             y1: yItem + yOffset,
             x2: max($xRange) as unknown as number,
             y2: yItem + yOffset,
           })),
         ];
-      } else {
+      } else if (yCoord) {
         _lines = [
           ..._lines,
           {
-            x1: 0,
+            x1: min($xRange) as unknown as number,
             y1: yCoord + yOffset,
             x2: max($xRange) as unknown as number,
             y2: yCoord + yOffset,
@@ -213,11 +213,10 @@
             .filter((d) => d.point); // remove if no point found (ex. Histogram);
 
           _points = seriesPointsData.map((seriesPoint, i) => {
-            console.log({ seriesPoint });
             return {
               x: $xScale(seriesPoint.point[1]) + xOffset,
               y: yCoord + yOffset,
-              fill: $config.r ? $rGet(seriesPoint.series) : null,
+              fill: $config.c ? $cGet(seriesPoint.series) : null,
             };
           });
         }
@@ -229,7 +228,7 @@
             x: xItem + xOffset,
             y: yCoord + yOffset,
             // TODO: is there a better way to expose the series key/value?
-            fill: $config.r ? $rGet({ ...highlightData, $key }) : null,
+            fill: $config.c ? $cGet({ ...highlightData, $key }) : null,
           };
         });
       }
@@ -256,7 +255,7 @@
           _points = seriesPointsData.map((seriesPoint, i) => ({
             x: xCoord + xOffset,
             y: $yScale(seriesPoint.point[1]) + yOffset,
-            fill: $config.r ? $rGet(seriesPoint.series) : null,
+            fill: $config.c ? $cGet(seriesPoint.series) : null,
           }));
         }
       } else {
@@ -267,18 +266,46 @@
             x: xCoord + xOffset,
             y: yItem + yOffset,
             // TODO: is there a better way to expose the series key/value?
-            fill: $config.r ? $rGet({ ...highlightData, $key }) : null,
+            fill: $config.c ? $cGet({ ...highlightData, $key }) : null,
           };
         });
       }
-    } else {
+    } else if (xCoord != null && yCoord != null) {
       _points = [
         {
           x: xCoord + xOffset,
           y: yCoord + yOffset,
-          fill: $config.r ? $rGet(highlightData) : null,
+          fill: $config.c ? $cGet(highlightData) : null,
         },
       ];
+    } else {
+      _points = [];
+    }
+
+    if ($radial) {
+      // Translate x/y to angle/radius
+      _points = _points.map((p) => {
+        const [x, y] = pointRadial(p.x, p.y);
+        return {
+          ...p,
+          x,
+          y,
+        };
+      });
+
+      _lines = _lines.map((l) => {
+        const [x1, y1] = pointRadial(l.x1, l.y1);
+        const [x2, y2] = pointRadial(l.x2, l.y2);
+        return {
+          ...l,
+          x1,
+          y1,
+          x2,
+          y2,
+        };
+      });
+
+      // TODO: How to handle _areas
     }
   }
 </script>

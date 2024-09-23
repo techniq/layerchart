@@ -1,20 +1,13 @@
 <script lang="ts">
   import { scaleLinear } from 'd3-scale';
-  import { extent, max } from 'd3-array';
 
-  import { Axis, Chart, Highlight, Spline, Svg, Tooltip, TooltipItem } from 'layerchart';
+  import { Axis, Chart, Highlight, Spline, Svg, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
 
   export let data;
 
   const chartData = data.newPassengerCars;
-
-  // Remap efficiency to its equivalent value in sales - https://observablehq.com/@observablehq/plot-dual-axis
-  const efficiencyScale = scaleLinear(extent(chartData, (d) => d.efficiency) as [number, number], [
-    0,
-    max(chartData, (d) => d.sales),
-  ]);
 </script>
 
 <h1>Examples</h1>
@@ -23,15 +16,20 @@
 
 <Preview data={chartData}>
   <div class="h-[300px] p-4 border rounded">
+    <!-- Remap efficiency to its equivalent value in sales - https://observablehq.com/@observablehq/plot-dual-axis -->
     <Chart
       data={chartData}
       x="year"
       y="sales"
       yDomain={[0, null]}
       yNice
+      y1="efficiency"
+      y1Scale={scaleLinear()}
+      y1Range={({ yScale }) => yScale.domain()}
       padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
       tooltip={{ mode: 'bisect-x' }}
       let:height
+      let:y1Scale
     >
       <Svg>
         <Axis
@@ -44,8 +42,8 @@
         />
         <Axis
           placement="right"
-          scale={scaleLinear(efficiencyScale.domain(), [height, 0])}
-          ticks={efficiencyScale.ticks()}
+          scale={scaleLinear(y1Scale.domain(), [height, 0])}
+          ticks={y1Scale.ticks()}
           rule
           label="efficiency (mpg) ↑"
           labelPlacement="start"
@@ -53,15 +51,18 @@
         />
         <Axis placement="bottom" format="none" rule />
         <Spline class="stroke-2 stroke-primary" />
-        <Spline y={(d) => efficiencyScale(d.efficiency)} class="stroke-2 stroke-secondary" />
+        <Spline y={(d) => y1Scale(d.efficiency)} class="stroke-2 stroke-secondary" />
         <Highlight lines points />
-        <Highlight points={{ class: 'fill-secondary' }} y={(d) => efficiencyScale(d.efficiency)} />
+        <Highlight points={{ class: 'fill-secondary' }} y={(d) => y1Scale(d.efficiency)} />
       </Svg>
 
-      <Tooltip header={(data) => data.year} let:data>
-        <TooltipItem label="sales" value={data.sales} format="currencyRound" />
-        <TooltipItem label="efficiency" value={data.efficiency} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="sales" value={data.sales} format="currencyRound" />
+          <Tooltip.Item label="efficiency" value={data.efficiency} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -115,10 +116,13 @@
         <Highlight lines />
       </Svg>
 
-      <Tooltip header={(data) => data.year} let:data>
-        <TooltipItem label="sales" value={data.sales} format="currencyRound" />
-        <TooltipItem label="efficiency" value={data.efficiency} />
-      </Tooltip>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{data.year}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="sales" value={data.sales} format="currencyRound" />
+          <Tooltip.Item label="efficiency" value={data.efficiency} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

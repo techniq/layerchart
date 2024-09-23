@@ -1,6 +1,6 @@
 <script lang="ts">
   import { extent } from 'd3-array';
-  import { cls } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
   import Line from './Line.svelte';

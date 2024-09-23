@@ -3,10 +3,10 @@
   import type { tweened as tweenedStore } from 'svelte/motion';
   import { type Area, area as d3Area, areaRadial } from 'd3-shape';
   import type { CurveFactory } from 'd3-shape';
-  import { max } from 'd3-array';
+  import { max, min } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
 
-  import { cls } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   import { motionStore } from '$lib/stores/motionStore.js';
 
@@ -15,16 +15,23 @@
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
 
-  const { data: contextData, xScale, yScale, xGet, yGet, yRange } = chartContext();
+  const {
+    data: contextData,
+    xScale,
+    yScale,
+    x: contextX,
+    y,
+    yDomain,
+    yRange,
+    config,
+    radial,
+  } = chartContext();
 
   /** Override data instead of using context */
   export let data: any = undefined;
 
   /** Pass `<path d={...} />` explicitly instead of calculating from data / context */
   export let pathData: string | undefined | null = undefined;
-
-  /** Use radial instead of cartesian area generator, mapping `x` to `angle` and `y0`/`y1 to `innerRadius`/`outerRadius.  Radial lines are positioned relative to the origin, use transform (ex. `<Group center>`) to change the origin */
-  export let radial = false;
 
   /** Override x accessor */
   export let x: Accessor = undefined;
@@ -45,9 +52,9 @@
   /** Enable showing line */
   export let line: boolean | Partial<ComponentProps<Spline>> = false;
 
-  const _x = accessor(x);
-  const _y0 = accessor(y0);
-  const _y1 = accessor(y1);
+  const xAccessor = x ? accessor(x) : $contextX;
+  const y0Accessor = y0 ? accessor(y0) : (d: any) => min($yDomain);
+  const y1Accessor = y1 ? accessor(y1) : $y;
 
   $: xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
   $: yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
@@ -57,17 +64,44 @@
     : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
   $: {
-    const path = radial
+    const path = $radial
       ? areaRadial()
-          .angle((d) => (x ? $xScale(_x(d)) : $xGet(d)))
-          .innerRadius((d) => (y0 ? $yScale(_y0(d)) : max($yRange)))
-          .outerRadius((d) => (y1 ? $yScale(_y1(d)) : $yGet(d)))
+          .angle((d) => $xScale(xAccessor(d)))
+          .innerRadius((d) => $yScale(y0Accessor(d)))
+          .outerRadius((d) => $yScale(y1Accessor(d)))
       : d3Area()
-          .x((d) => (x ? $xScale(_x(d)) : $xGet(d)) + xOffset)
-          .y0((d) => (y0 ? $yScale(_y0(d)) : max($yRange)) + yOffset)
-          .y1((d) => (y1 ? $yScale(_y1(d)) : $yGet(d)) + yOffset);
+          .x((d) => $xScale(xAccessor(d)) + xOffset)
+          .y0((d) => {
+            let value = max<number>($yRange)!;
+            if (y0) {
+              value = $yScale(y0Accessor(d));
+            } else if (Array.isArray($config.y) && $config.y[0] === 0) {
+              // Use first value if `y` defined as an array (ex. `<Chart y={[0,1]}>`)
+              // TODO: Would be nice if this also handled multi-series (<Chart y={['apples', 'bananas', 'oranges']}>) as well as delta values (<Chart y={['baseline', 'value']}>)
+              value = $yScale($y(d)[0]);
+            }
+
+            return value + yOffset;
+          })
+          .y1((d) => {
+            let value = max<number>($yRange)!;
+            if (y1) {
+              value = $yScale(y1Accessor(d));
+            } else if (Array.isArray($config.y) && $config.y[1] === 1) {
+              // Use second value if `y` defined as an array (ex. `<Chart y={[0,1]}>`)
+              // TODO: Would be nice if this also handled multi-series (<Chart y={['apples', 'bananas', 'oranges']}>) as well as delta values (<Chart y={['baseline', 'value']}>)
+              value = $yScale($y(d)[1]);
+            } else {
+              // Expect single value defined for `y` (ex. `<Chart y="value">`)
+              value = $yScale($y(d));
+            }
+
+            return value + yOffset;
+          });
+
+    path.defined(defined ?? ((d) => xAccessor(d) != null && y1Accessor(d) != null));
+
     if (curve) path.curve(curve);
-    if (defined) path.defined(defined);
 
     const d = pathData ?? path(data ?? $contextData);
     tweened_d.set(d ?? '');
@@ -75,7 +109,15 @@
 </script>
 
 {#if line}
-  <Spline {data} y={y1} {curve} {defined} {tweened} {...typeof line === 'object' ? line : null} />
+  <Spline
+    {data}
+    {x}
+    y={y1}
+    {curve}
+    {defined}
+    {tweened}
+    {...typeof line === 'object' ? line : null}
+  />
 {/if}
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->

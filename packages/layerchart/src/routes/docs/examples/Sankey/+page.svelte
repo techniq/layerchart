@@ -5,7 +5,9 @@
   import { hierarchy } from 'd3-hierarchy';
   import { interpolateCool } from 'd3-scale-chromatic';
   import { extent } from 'd3-array';
-  import { Icon, cls, sortFunc } from 'svelte-ux';
+  import { Icon } from 'svelte-ux';
+  import { sortFunc } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
   import { mdiArrowRightBold } from '@mdi/js';
 
   import {
@@ -17,16 +19,12 @@
     Svg,
     Text,
     Tooltip,
-    TooltipItem,
-    TooltipSeparator,
     graphFromHierarchy,
     graphFromNode,
   } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import SankeyControls from './SankeyControls.svelte';
-
-  import { simpleData, complexData, greenhouse } from '../_data/graph.js';
 
   export let data;
 
@@ -76,9 +74,9 @@
 
 <h2>Simple</h2>
 
-<Preview data={simpleData}>
+<Preview data={data.simple}>
   <div class="h-[400px] p-4 border rounded">
-    <Chart data={simpleData}>
+    <Chart data={data.simple}>
       <Svg>
         <Sankey nodeId={(d) => d.id} let:links let:nodes>
           {#each links as link ([link.source.id, link.target.id].join('_'))}
@@ -106,9 +104,9 @@
 
 <h2>Tooltip</h2>
 
-<Preview data={structuredClone(greenhouse)}>
+<Preview data={structuredClone(data.greenhouse)}>
   <div class="h-[800px] p-4 border rounded">
-    <Chart data={structuredClone(greenhouse)} let:tooltip>
+    <Chart data={structuredClone(data.greenhouse)} let:tooltip>
       <Svg>
         <Sankey nodeId={(d) => d.name} nodeWidth={8} let:links let:nodes>
           {#each links as link ([link.source.name, link.target.name].join('_'))}
@@ -146,8 +144,8 @@
         </Sankey>
       </Svg>
 
-      <Tooltip let:data>
-        <div slot="header" let:data>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>
           {#if data.node}
             {data.node.name}
           {:else if data.link}
@@ -155,39 +153,41 @@
             <Icon data={mdiArrowRightBold} class="text-white/50" />
             {data.link.target.name}
           {/if}
-        </div>
+        </Tooltip.Header>
 
-        {#if data.node}
-          <TooltipItem label="Total" value={data.node.value} format="decimal" />
+        <Tooltip.List>
+          {#if data.node}
+            <Tooltip.Item label="Total" value={data.node.value} format="decimal" />
 
-          {#if data.node.targetLinks.length}
-            <TooltipSeparator />
-            <div class="col-span-full text-sm">Sources</div>
-            {#each data.node.targetLinks as link}
-              <TooltipItem label={link.source.name} value={link.value} format="decimal" />
-            {/each}
+            {#if data.node.targetLinks.length}
+              <Tooltip.Separator />
+              <div class="col-span-full text-sm">Sources</div>
+              {#each data.node.targetLinks as link}
+                <Tooltip.Item label={link.source.name} value={link.value} format="decimal" />
+              {/each}
+            {/if}
+
+            {#if data.node.sourceLinks.length}
+              <Tooltip.Separator />
+              <div class="col-span-full text-sm">Targets</div>
+              {#each data.node.sourceLinks as link}
+                <Tooltip.Item label={link.target.name} value={link.value} format="decimal" />
+              {/each}
+            {/if}
+          {:else if data.link}
+            <Tooltip.Item label="Value" value={data.link.value} format="decimal" />
           {/if}
-
-          {#if data.node.sourceLinks.length}
-            <TooltipSeparator />
-            <div class="col-span-full text-sm">Targets</div>
-            {#each data.node.sourceLinks as link}
-              <TooltipItem label={link.target.name} value={link.value} format="decimal" />
-            {/each}
-          {/if}
-        {:else if data.link}
-          <TooltipItem label="Value" value={data.link.value} format="decimal" />
-        {/if}
-      </Tooltip>
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
 
 <h2>Node select</h2>
 
-<Preview data={selectedNode ? graphFromNode(selectedNode) : greenhouse}>
+<Preview data={selectedNode ? graphFromNode(selectedNode) : data.greenhouse}>
   <div class="h-[600px] p-4 border rounded">
-    <Chart data={selectedNode ? graphFromNode(selectedNode) : greenhouse}>
+    <Chart data={selectedNode ? graphFromNode(selectedNode) : data.greenhouse}>
       <Svg>
         <Sankey nodeId={(d) => d.name} nodeWidth={8} let:links let:nodes>
           {#each links as link ([link.source.name, link.target.name].join('_'))}
@@ -237,9 +237,9 @@
 
 <SankeyControls bind:nodeAlign bind:nodeColorBy bind:linkColorBy bind:nodePadding bind:nodeWidth />
 
-<Preview data={complexData}>
+<Preview data={data.complex}>
   <div class="h-[800px] p-4 border rounded">
-    <Chart data={complexData} padding={{ right: 164 }} let:tooltip>
+    <Chart data={data.complex} padding={{ right: 164 }} let:tooltip>
       <Svg>
         <Sankey
           {nodeAlign}
@@ -317,8 +317,8 @@
         </Sankey>
       </Svg>
 
-      <Tooltip let:data>
-        <div slot="header" let:data>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>
           {#if data.node}
             {data.node.name}
           {:else if data.link}
@@ -326,30 +326,32 @@
             <Icon data={mdiArrowRightBold} class="text-white/50" />
             {data.link.target.name}
           {/if}
-        </div>
+        </Tooltip.Header>
 
-        {#if data.node}
-          <TooltipItem label="Total" value={data.node.value} format="decimal" />
+        <Tooltip.List>
+          {#if data.node}
+            <Tooltip.Item label="Total" value={data.node.value} format="decimal" />
 
-          {#if data.node.targetLinks.length}
-            <TooltipSeparator />
-            <div class="col-span-full text-sm">Sources</div>
-            {#each data.node.targetLinks as link}
-              <TooltipItem label={link.source.name} value={link.value} format="decimal" />
-            {/each}
+            {#if data.node.targetLinks.length}
+              <Tooltip.Separator />
+              <div class="col-span-full text-sm">Sources</div>
+              {#each data.node.targetLinks as link}
+                <Tooltip.Item label={link.source.name} value={link.value} format="decimal" />
+              {/each}
+            {/if}
+
+            {#if data.node.sourceLinks.length}
+              <Tooltip.Separator />
+              <div class="col-span-full text-sm">Targets</div>
+              {#each data.node.sourceLinks as link}
+                <Tooltip.Item label={link.target.name} value={link.value} format="decimal" />
+              {/each}
+            {/if}
+          {:else if data.link}
+            <Tooltip.Item label="Value" value={data.link.value} format="decimal" />
           {/if}
-
-          {#if data.node.sourceLinks.length}
-            <TooltipSeparator />
-            <div class="col-span-full text-sm">Targets</div>
-            {#each data.node.sourceLinks as link}
-              <TooltipItem label={link.target.name} value={link.value} format="decimal" />
-            {/each}
-          {/if}
-        {:else if data.link}
-          <TooltipItem label="Value" value={data.link.value} format="decimal" />
-        {/if}
-      </Tooltip>
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

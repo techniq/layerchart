@@ -1,6 +1,6 @@
 <script lang="ts">
   import { tick } from 'svelte';
-  import { cls } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
 
   import {
     motionStore,
@@ -47,6 +47,7 @@
   class={cls($$props.fill == null && 'fill-surface-content')}
   {...$$restProps}
   on:click
+  on:pointerenter
   on:pointerover
   on:pointermove
   on:pointerout

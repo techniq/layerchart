@@ -7,16 +7,10 @@
 
   import { Chart, GeoPath, Graticule, Legend, Svg, Tooltip, TransformContext } from 'layerchart';
 
-  import {
-    Button,
-    ButtonGroup,
-    Field,
-    RangeField,
-    format,
-    timerStore,
-    PeriodType,
-    cls,
-  } from 'svelte-ux';
+  import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
+  import { format, PeriodType } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
+  import { timerStore } from '@layerstack/svelte-stores';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -128,7 +122,9 @@
         {/each}
       </Svg>
 
-      <Tooltip header={(d) => format(d.Date, PeriodType.Day, { variant: 'long' })} />
+      <Tooltip.Root let:data>
+        {format(data.Date, PeriodType.Day, { variant: 'long' })}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

@@ -1,9 +1,9 @@
 <script lang="ts">
   import { scaleTime, scaleThreshold } from 'd3-scale';
   import { format } from 'date-fns';
-  import { formatDate, PeriodType } from 'svelte-ux';
+  import { formatDate, PeriodType } from '@layerstack/utils';
 
-  import { Axis, Chart, Highlight, Labels, Points, Svg, Tooltip, TooltipItem } from 'layerchart';
+  import { Axis, Chart, Highlight, Labels, Points, Svg, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -63,9 +63,13 @@
         <Points class="fill-primary/10 stroke-primary" />
         <Highlight points lines />
       </Svg>
-      <Tooltip header={(data) => format(data.date, 'eee, MMMM do')} let:data>
-        <TooltipItem label="value" value={data.value} />
-      </Tooltip>
+
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -91,7 +95,7 @@
           rule
         />
         <Points class="fill-primary/10 stroke-primary" />
-        <Labels format="integer" verticalAnchor="bottom" offset={10} />
+        <Labels format="integer" offset={10} />
       </Svg>
     </Chart>
   </div>
@@ -110,10 +114,10 @@
       y="value"
       yDomain={[0, null]}
       yNice
-      r="value"
-      rScale={scaleThreshold()}
-      rDomain={[50, 90]}
-      rRange={[
+      c="value"
+      cScale={scaleThreshold()}
+      cDomain={[50, 90]}
+      cRange={[
         'hsl(var(--color-danger))',
         'hsl(var(--color-warning))',
         'hsl(var(--color-success))',

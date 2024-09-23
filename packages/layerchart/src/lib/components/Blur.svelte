@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { uniqueId } from 'svelte-ux';
+  import { uniqueId } from '@layerstack/utils';
 
   export let id: string = uniqueId('blur-');
   export let stdDeviation = 5;

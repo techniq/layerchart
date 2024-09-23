@@ -4,7 +4,7 @@
   import { scaleOrdinal } from 'd3-scale';
   import { schemeCategory10 } from 'd3-scale-chromatic';
 
-  import { Chart, Circle, ForceSimulation, Group, Link, Svg } from 'layerchart';
+  import { Chart, Circle, ForceSimulation, Link, Svg } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -26,7 +26,7 @@
 <Preview data={data.miserables}>
   <div class="h-[680px] p-4 border rounded">
     <Chart data={nodes}>
-      <Svg>
+      <Svg center>
         <ForceSimulation
           forces={{
             link: linkForce,
@@ -36,17 +36,15 @@
           }}
           let:nodes
         >
-          <Group center>
-            {#key nodes}
-              {#each links as link}
-                <Link data={link} class="stroke-surface-content/50" curve={curveLinear} />
-              {/each}
-            {/key}
-
-            {#each nodes as node}
-              <Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group)} />
+          {#key nodes}
+            {#each links as link}
+              <Link data={link} class="stroke-surface-content/50" curve={curveLinear} />
             {/each}
-          </Group>
+          {/key}
+
+          {#each nodes as node}
+            <Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group)} />
+          {/each}
         </ForceSimulation>
       </Svg>
     </Chart>

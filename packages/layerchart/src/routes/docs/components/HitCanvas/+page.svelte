@@ -76,7 +76,9 @@
         />
       </HitCanvas>
 
-      <Tooltip header={(data) => data.properties.name} />
+      <Tooltip.Root let:data>
+        {data.properties.name}
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

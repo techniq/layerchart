@@ -9,7 +9,8 @@
   import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
   // import { interpolateString } from 'd3-interpolate';
   import { interpolatePath } from 'd3-interpolate-path';
-  import { cls } from 'svelte-ux';
+  import { max } from 'd3-array';
+  import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
   import Group from './Group.svelte';
@@ -17,7 +18,7 @@
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
 
-  const { data: contextData, xScale, yScale, x: contextX, y: contextY } = chartContext();
+  const { data: contextData, xScale, yScale, x: contextX, y: contextY, radial } = chartContext();
 
   /** Override data instead of using context */
   export let data: any = undefined;
@@ -25,12 +26,9 @@
   /** Pass `<path d={...} />` explicitly instead of calculating from data / context */
   export let pathData: string | undefined | null = undefined;
 
-  /** Use radial instead of cartesian line generator, mapping `x` to `angle` and `y` to `radius`.  Radial lines are positioned relative to the origin, use transform (ex. `<Group center>`) to change the origin */
-  export let radial = false;
-
-  /** Override `x` accessor from Chart context.  Applies to `angle` when `radial=true` */
+  /** Override `x` accessor from Chart context */
   export let x: Accessor = undefined;
-  /** Override `y` accessor from Chart context.  Applies to `radius` when `radial=true` */
+  /** Override `y` accessor from Chart context */
   export let y: Accessor = undefined;
 
   /** Interpolate path data using d3-interpolate-path.  Works best without `draw` enabled */
@@ -51,17 +49,23 @@
   export let defined: Parameters<Line<any>['defined']>[0] | undefined = undefined;
 
   function getScaleValue(data: any, scale: typeof $xScale | typeof $yScale, accessor: Function) {
+    let value = accessor(data);
+
+    if (Array.isArray(value)) {
+      value = max(value);
+    }
+
     if (scale.domain().length) {
       // If scale is defined with domain, map value
-      return scale(accessor(data));
+      return scale(value);
     } else {
       // Use raw value
-      return accessor(data);
+      return value;
     }
   }
 
-  const _x = accessor(x);
-  const _y = accessor(y);
+  const xAccessor = x ? accessor(x) : $contextX;
+  const yAccessor = y ? accessor(y) : $contextY;
 
   $: xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
   $: yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
@@ -71,15 +75,17 @@
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
   $: {
-    const path = radial
+    const path = $radial
       ? lineRadial()
-          .angle((d) => getScaleValue(d, $xScale, x ? _x : $contextX))
-          .radius((d) => getScaleValue(d, $yScale, y ? _y : $contextY))
+          .angle((d) => getScaleValue(d, $xScale, xAccessor))
+          .radius((d) => getScaleValue(d, $yScale, yAccessor))
       : d3Line()
-          .x((d) => getScaleValue(d, $xScale, x ? _x : $contextX) + xOffset)
-          .y((d) => getScaleValue(d, $yScale, y ? _y : $contextY) + yOffset);
+          .x((d) => getScaleValue(d, $xScale, xAccessor) + xOffset)
+          .y((d) => getScaleValue(d, $yScale, yAccessor) + yOffset);
+
+    path.defined(defined ?? ((d) => xAccessor(d) != null && yAccessor(d) != null));
+
     if (curve) path.curve(curve);
-    if (defined) path.defined(defined);
 
     d = pathData ?? path(data ?? $contextData) ?? '';
     tweened_d.set(d);
@@ -133,9 +139,15 @@
   <path
     d={$tweened_d}
     {...$$restProps}
-    class={cls('path-line fill-none', !$$props.stroke && 'stroke-surface-content', $$props.class)}
+    class={cls(
+      'path-line',
+      !$$props.fill && 'fill-none',
+      !$$props.stroke && 'stroke-surface-content',
+      $$props.class
+    )}
     in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
     on:click
+    on:pointerenter
     on:pointermove
     on:pointerleave
     bind:this={pathEl}

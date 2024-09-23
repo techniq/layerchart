@@ -6,7 +6,7 @@
 
   import { chartContext } from './ChartContext.svelte';
   import Rect from './Rect.svelte';
-  import type { TooltipContextValue } from './TooltipContext.svelte';
+  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import MonthPath from './MonthPath.svelte';
   import Text from './Text.svelte';
   import { chartDataArray } from '../utils/common.js';
@@ -27,7 +27,7 @@
    */
   export let tooltip: TooltipContextValue | undefined = undefined;
 
-  const { width, height, x, rGet, data, config } = chartContext();
+  const { width, height, x, cGet, data, config } = chartContext();
 
   $: yearDays = timeDays(start, end);
   $: yearMonths = timeMonths(start, end);
@@ -50,7 +50,7 @@
     return {
       x: timeWeek.count(timeYear(date), date) * cellWidth,
       y: date.getDay() * cellHeight,
-      color: $config.r ? $rGet(cellData) : 'transparent',
+      color: $config.c ? $cGet(cellData) : 'transparent',
       data: cellData,
     };
   });

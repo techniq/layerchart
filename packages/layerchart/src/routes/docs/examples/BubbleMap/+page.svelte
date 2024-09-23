@@ -5,7 +5,7 @@
   import { interpolateViridis } from 'd3-scale-chromatic';
   import { quantize } from 'd3-interpolate';
   import { feature } from 'topojson-client';
-  import { sortFunc } from 'svelte-ux';
+  import { sortFunc } from '@layerstack/utils';
 
   import {
     Chart,
@@ -15,7 +15,6 @@
     Legend,
     Svg,
     Tooltip,
-    TooltipItem,
     TransformControls,
   } from 'layerchart';
 
@@ -129,30 +128,32 @@
         class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-sm rounded m-1"
       />
 
-      <Tooltip
-        header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
-        let:data
-      >
+      <Tooltip.Root let:data>
         {@const d = data.properties.data}
-        <TooltipItem
-          label="Total Population"
-          value={d?.population}
-          format="integer"
-          valueAlign="right"
-        />
-        <TooltipItem
-          label="Est. Population under 18"
-          value={d?.populationUnder18}
-          format="integer"
-          valueAlign="right"
-        />
-        <TooltipItem
-          label="Est. Percent under 18"
-          value={d?.percentUnder18 / 100}
-          format="percentRound"
-          valueAlign="right"
-        />
-      </Tooltip>
+        <Tooltip.Header>
+          {data.properties.name + ' - ' + data.properties.data?.state}
+        </Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item
+            label="Total Population"
+            value={d?.population}
+            format="integer"
+            valueAlign="right"
+          />
+          <Tooltip.Item
+            label="Est. Population under 18"
+            value={d?.populationUnder18}
+            format="integer"
+            valueAlign="right"
+          />
+          <Tooltip.Item
+            label="Est. Percent under 18"
+            value={d?.percentUnder18 / 100}
+            format="percentRound"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>
@@ -239,30 +240,32 @@
 
       <Legend scale={colorScale} title="Est. Percent under 18" placement="top-left" />
 
-      <Tooltip
-        header={(data) => data.properties.name + ' - ' + data.properties.data?.state}
-        let:data
-      >
+      <Tooltip.Root let:data>
         {@const d = data.properties.data}
-        <TooltipItem
-          label="Total Population"
-          value={d?.population}
-          format="integer"
-          valueAlign="right"
-        />
-        <TooltipItem
-          label="Est. Population under 18"
-          value={d?.populationUnder18}
-          format="integer"
-          valueAlign="right"
-        />
-        <TooltipItem
-          label="Est. Percent under 18"
-          value={d?.percentUnder18 / 100}
-          format="percentRound"
-          valueAlign="right"
-        />
-      </Tooltip>
+        <Tooltip.Header>
+          {data.properties.name + ' - ' + data.properties.data?.state}
+        </Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item
+            label="Total Population"
+            value={d?.population}
+            format="integer"
+            valueAlign="right"
+          />
+          <Tooltip.Item
+            label="Est. Population under 18"
+            value={d?.populationUnder18}
+            format="integer"
+            valueAlign="right"
+          />
+          <Tooltip.Item
+            label="Est. Percent under 18"
+            value={d?.percentUnder18 / 100}
+            format="percentRound"
+            valueAlign="right"
+          />
+        </Tooltip.List>
+      </Tooltip.Root>
     </Chart>
   </div>
 </Preview>

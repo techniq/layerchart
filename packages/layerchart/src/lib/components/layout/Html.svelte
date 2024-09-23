@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { cls } from 'svelte-ux';
+  import { cls } from '@layerstack/tailwind';
   import { chartContext } from '../ChartContext.svelte';
 
   /** The layer's outermost `<div>` tag. Useful for bindings. */
