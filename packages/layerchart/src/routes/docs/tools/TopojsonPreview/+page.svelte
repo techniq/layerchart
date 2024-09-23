@@ -17,16 +17,8 @@
   import { feature } from 'topojson-client';
   import type { GeometryCollection, Topology } from 'topojson-specification';
 
-  import {
-    Canvas,
-    Chart,
-    GeoPath,
-    GeoTile,
-    HitCanvas,
-    Svg,
-    Tooltip,
-    TransformControls,
-  } from 'layerchart';
+  import { Canvas, Chart, GeoPath, GeoTile, HitCanvas, Svg, Tooltip } from 'layerchart';
+  import TransformControls from 'layerchart/components/TransformControls.svelte';
   import {
     CopyButton,
     EmptyMessage,

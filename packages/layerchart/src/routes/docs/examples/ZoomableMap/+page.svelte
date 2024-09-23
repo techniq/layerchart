@@ -11,9 +11,9 @@
     HitCanvas,
     Svg,
     Tooltip,
-    TransformControls,
     geoFitObjectTransform,
   } from 'layerchart';
+  import TransformControls from 'layerchart/components/TransformControls.svelte';
   import { SelectField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';

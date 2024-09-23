@@ -3,7 +3,8 @@
   import { hierarchy, type HierarchyNode } from 'd3-hierarchy';
   import { curveBumpX, curveBumpY, curveStep, curveStepBefore, curveStepAfter } from 'd3-shape';
 
-  import { Chart, Group, Link, Rect, Svg, Text, TransformControls, Tree } from 'layerchart';
+  import { Chart, Group, Link, Rect, Svg, Text, Tree } from 'layerchart';
+  import TransformControls from 'layerchart/components/TransformControls.svelte';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
 

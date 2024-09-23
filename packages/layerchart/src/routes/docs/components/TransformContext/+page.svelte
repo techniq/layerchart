@@ -2,7 +2,8 @@
   import type { ComponentProps } from 'svelte';
   import { cubicOut } from 'svelte/easing';
 
-  import { Chart, Circle, Points, Spline, Svg, TransformControls } from 'layerchart';
+  import { Chart, Circle, Points, Spline, Svg } from 'layerchart';
+  import TransformControls from 'layerchart/components/TransformControls.svelte';
   import { Field, RangeField, Switch } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';

@@ -7,16 +7,8 @@
   import { feature } from 'topojson-client';
   import { sortFunc } from '@layerstack/utils';
 
-  import {
-    Chart,
-    Canvas,
-    GeoPath,
-    HitCanvas,
-    Legend,
-    Svg,
-    Tooltip,
-    TransformControls,
-  } from 'layerchart';
+  import { Chart, Canvas, GeoPath, HitCanvas, Legend, Svg, Tooltip } from 'layerchart';
+  import TransformControls from 'layerchart/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
 

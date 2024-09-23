@@ -3,15 +3,8 @@
   import { geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import {
-    Chart,
-    GeoPath,
-    GeoTile,
-    Svg,
-    Tooltip,
-    TransformControls,
-    geoFitObjectTransform,
-  } from 'layerchart';
+  import { Chart, GeoPath, GeoTile, Svg, Tooltip, geoFitObjectTransform } from 'layerchart';
+  import TransformControls from 'layerchart/components/TransformControls.svelte';
   import { Field, RangeField, Switch } from 'svelte-ux';
 
   import GeoDebug from '$lib/docs/GeoDebug.svelte';

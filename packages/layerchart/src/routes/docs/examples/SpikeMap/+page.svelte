@@ -4,16 +4,8 @@
   import { scaleLinear } from 'd3-scale';
   import { feature } from 'topojson-client';
 
-  import {
-    Canvas,
-    Chart,
-    GeoPath,
-    Group,
-    HitCanvas,
-    Svg,
-    TransformControls,
-    Tooltip,
-  } from 'layerchart';
+  import { Canvas, Chart, GeoPath, Group, HitCanvas, Svg, Tooltip } from 'layerchart';
+  import TransformControls from 'layerchart/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
 

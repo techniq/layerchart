@@ -15,16 +15,8 @@
   import { schemeCategory10 } from 'd3-scale-chromatic';
   import { color } from 'd3-color';
 
-  import {
-    Canvas,
-    Chart,
-    GeoPath,
-    GeoTile,
-    HitCanvas,
-    Svg,
-    Tooltip,
-    TransformControls,
-  } from 'layerchart';
+  import { Canvas, Chart, GeoPath, GeoTile, HitCanvas, Svg, Tooltip } from 'layerchart';
+  import TransformControls from 'layerchart/components/TransformControls.svelte';
   import {
     EmptyMessage,
     RangeField,
