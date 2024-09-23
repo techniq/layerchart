@@ -40,7 +40,7 @@
 
   const { mode, scale, translate } = transformContext();
 
-  let transform = center
+  $: transform = center
     ? `translate(${center === 'x' || center === true ? $width / 2 : 0}, ${center === 'y' || center === true ? $height / 2 : 0})`
     : '';
   $: if (mode === 'canvas') {
