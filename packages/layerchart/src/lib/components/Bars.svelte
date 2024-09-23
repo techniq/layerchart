@@ -6,7 +6,12 @@
   import Rect from './Rect.svelte';
   import { chartDataArray, type Accessor } from '../utils/common.js';
 
-  const { data, cGet, config } = chartContext();
+  const { data: contextData, cGet, config } = chartContext();
+
+  /**
+   * Override `data` from context.  Useful for multiple Bar instances
+   */
+  export let data: any = undefined;
 
   /**
    * Override `x` from context.  Useful for multiple Bar instances
@@ -41,7 +46,7 @@
 
 <g class="Bars">
   <slot>
-    {#each chartDataArray($data) as item}
+    {#each chartDataArray(data ?? $contextData) as item}
       <Bar
         bar={item}
         {x}
