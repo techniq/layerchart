@@ -58,7 +58,7 @@ export { default as Threshold } from './Threshold.svelte';
 export { default as TileImage } from './TileImage.svelte';
 export * as Tooltip from './tooltip/index.js';
 export { default as TransformContext, transformContext } from './TransformContext.svelte';
-export { default as TransformControls } from './TransformControls.svelte';
+// export { default as TransformControls } from './TransformControls.svelte'; // TODO: Restore once no longer using `svelet-ux` or `@mdi/js` (as they are dev dependencies)
 export { default as Tree } from './Tree.svelte';
 export { default as Treemap } from './Treemap.svelte';
 export { default as Voronoi } from './Voronoi.svelte';
