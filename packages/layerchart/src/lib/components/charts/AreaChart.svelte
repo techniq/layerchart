@@ -10,6 +10,7 @@
   import Chart from '../Chart.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
+  import Line from '../Line.svelte';
   import Points from '../Points.svelte';
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
@@ -54,6 +55,7 @@
     xAxis?: Partial<ComponentProps<Axis>>;
     yAxis?: Partial<ComponentProps<Axis>>;
     area?: Partial<ComponentProps<Area>>;
+    line?: Partial<ComponentProps<Line>>;
     points?: Partial<ComponentProps<Points>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
@@ -134,6 +136,12 @@
 
       <slot name="marks" {...slotProps}>
         {#each series as s, i}
+          {@const lineProps = {
+            ...props.line,
+            ...(typeof props.area?.line === 'object' ? props.area.line : null),
+            ...(typeof s.props?.line === 'object' ? s.props.line : null),
+          }}
+
           <Area
             data={s.data}
             y0={stackSeries
@@ -146,11 +154,15 @@
               : Array.isArray(s.value)
                 ? s.value[1]
                 : (s.value ?? s.key)}
-            line={{ class: 'stroke-2', stroke: s.color }}
             fill={s.color}
             fill-opacity={0.3}
             {...props.area}
             {...s.props}
+            line={{
+              class: !('stroke-width' in lineProps) ? 'stroke-2' : '',
+              stroke: s.color,
+              ...lineProps,
+            }}
           />
         {/each}
       </slot>
