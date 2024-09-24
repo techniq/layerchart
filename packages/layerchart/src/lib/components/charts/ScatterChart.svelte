@@ -32,7 +32,7 @@
     props?: Partial<ComponentProps<Points>>;
   }[] = [{ key: 'default', data: chartDataArray(data), color: 'hsl(var(--color-primary))' }];
 
-  export let axis: ComponentProps<Axis> | boolean = true;
+  export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
 
   // Default xScale based on first data's `x` value
@@ -57,7 +57,12 @@
   {xScale}
   {y}
   yNice
-  padding={axis === false ? undefined : { left: 16, bottom: 16 }}
+  padding={axis === false
+    ? undefined
+    : {
+        left: axis === true || axis === 'y' ? 16 : 0,
+        bottom: axis === true || axis === 'x' ? 16 : 0,
+      }}
   tooltip={{ mode: 'voronoi' }}
   {...$$restProps}
   let:x
@@ -80,22 +85,27 @@
     <Svg>
       <slot name="axis" {...slotProps}>
         {#if axis}
-          <Axis
-            placement="left"
-            grid
-            rule
-            format={(value) => format(value, undefined, { variant: 'short' })}
-            {...typeof axis === 'object' ? axis : null}
-            {...props.yAxis}
-          />
-          <Axis
-            placement="bottom"
-            grid
-            rule
-            format={(value) => format(value, undefined, { variant: 'short' })}
-            {...typeof axis === 'object' ? axis : null}
-            {...props.xAxis}
-          />
+          {#if axis !== 'x'}
+            <Axis
+              placement="left"
+              grid
+              rule
+              format={(value) => format(value, undefined, { variant: 'short' })}
+              {...typeof axis === 'object' ? axis : null}
+              {...props.yAxis}
+            />
+          {/if}
+
+          {#if axis !== 'y'}
+            <Axis
+              placement="bottom"
+              grid
+              rule
+              format={(value) => format(value, undefined, { variant: 'short' })}
+              {...typeof axis === 'object' ? axis : null}
+              {...props.xAxis}
+            />
+          {/if}
         {/if}
       </slot>
 

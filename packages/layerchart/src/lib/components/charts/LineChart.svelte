@@ -40,7 +40,7 @@
     props?: Partial<ComponentProps<Spline>>;
   }[] = [{ key: 'default', value: y, color: 'hsl(var(--color-primary))' }];
 
-  export let axis: ComponentProps<Axis> | boolean = true;
+  export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let points: ComponentProps<Points> | boolean = false;
 
@@ -73,7 +73,12 @@
   yBaseline={0}
   yNice
   {radial}
-  padding={radial || axis === false ? undefined : { left: 16, bottom: 16 }}
+  padding={radial || axis === false
+    ? undefined
+    : {
+        left: axis === true || axis === 'y' ? 16 : 0,
+        bottom: axis === true || axis === 'x' ? 16 : 0,
+      }}
   tooltip={{ mode: 'bisect-x' }}
   {...$$restProps}
   let:x
@@ -90,22 +95,27 @@
     <Svg center={radial}>
       <slot name="axis" {...slotProps}>
         {#if axis}
-          <Axis
-            placement={radial ? 'radius' : 'left'}
-            grid
-            rule
-            format={(value) => format(value, undefined, { variant: 'short' })}
-            {...typeof axis === 'object' ? axis : null}
-            {...props.yAxis}
-          />
-          <Axis
-            placement={radial ? 'angle' : 'bottom'}
-            grid={radial}
-            rule
-            format={(value) => format(value, undefined, { variant: 'short' })}
-            {...typeof axis === 'object' ? axis : null}
-            {...props.xAxis}
-          />
+          {#if axis !== 'x'}
+            <Axis
+              placement={radial ? 'radius' : 'left'}
+              grid
+              rule
+              format={(value) => format(value, undefined, { variant: 'short' })}
+              {...typeof axis === 'object' ? axis : null}
+              {...props.yAxis}
+            />
+          {/if}
+
+          {#if axis !== 'y'}
+            <Axis
+              placement={radial ? 'angle' : 'bottom'}
+              grid={radial}
+              rule
+              format={(value) => format(value, undefined, { variant: 'short' })}
+              {...typeof axis === 'object' ? axis : null}
+              {...props.xAxis}
+            />
+          {/if}
         {/if}
       </slot>
 

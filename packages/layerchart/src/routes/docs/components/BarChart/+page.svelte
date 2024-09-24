@@ -473,6 +473,22 @@
   </div>
 </Preview>
 
+<h2>Single axis (x)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart data={dateSeriesData} x="date" y="value" axis="x" />
+  </div>
+</Preview>
+
+<h2>Single axis (y)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart data={dateSeriesData} x="date" y="value" axis="y" />
+  </div>
+</Preview>
+
 <h2>Custom tooltip</h2>
 
 <Preview data={dateSeriesData}>

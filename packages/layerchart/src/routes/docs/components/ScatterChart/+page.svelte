@@ -92,6 +92,22 @@
   </div>
 </Preview>
 
+<h2>Single axis (x)</h2>
+
+<Preview data={spiralData}>
+  <div class="h-[400px] p-4 border rounded">
+    <ScatterChart data={spiralData} x="x" y="y" axis="x" />
+  </div>
+</Preview>
+
+<h2>Single axis (y)</h2>
+
+<Preview data={spiralData}>
+  <div class="h-[400px] p-4 border rounded">
+    <ScatterChart data={spiralData} x="x" y="y" axis="y" />
+  </div>
+</Preview>
+
 <h2>Single dimension</h2>
 
 <Preview data={randomNormalData}>
