@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.51.2
+
+### Patch Changes
+
+- feat: Support convenient single-axis display using `axis="x"` or `axis="y"` for all simplified charts ([`e50889679a48a7581a7b118d7b4408f51537c51f`](https://github.com/techniq/layerchart/commit/e50889679a48a7581a7b118d7b4408f51537c51f))
+
 ## 0.51.1
 
 ### Patch Changes
