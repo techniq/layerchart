@@ -1,5 +1,13 @@
 # LayerChart
 
+## 0.51.1
+
+### Patch Changes
+
+- fix(AreaChart): Fix passing line stroke-width overriding series color ([`b60cb6f4217d4f180497bab44d6fc2bae529b9a9`](https://github.com/techniq/layerchart/commit/b60cb6f4217d4f180497bab44d6fc2bae529b9a9))
+
+- feat(AreaChart): Support passing `line` props directly (instead of via `area.line`) ([`b60cb6f4217d4f180497bab44d6fc2bae529b9a9`](https://github.com/techniq/layerchart/commit/b60cb6f4217d4f180497bab44d6fc2bae529b9a9))
+
 ## 0.51.0
 
 ### Minor Changes
