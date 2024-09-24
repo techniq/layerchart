@@ -24,6 +24,7 @@
     axis?: typeof axis;
     orientation?: typeof orientation;
     bandPadding?: typeof bandPadding;
+    groupPadding?: typeof groupPadding;
     props?: typeof props;
   }
 
