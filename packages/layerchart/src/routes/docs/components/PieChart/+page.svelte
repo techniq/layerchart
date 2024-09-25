@@ -215,6 +215,21 @@
   </div>
 </Preview>
 
+<h2>Series props</h2>
+
+<Preview data={dataByYear}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      label="fruit"
+      value="value"
+      series={[
+        { key: 2019, data: dataByYear.get(2019), props: { innerRadius: -20 } },
+        { key: 2018, data: dataByYear.get(2018), props: { outerRadius: -30 } },
+      ]}
+    />
+  </div>
+</Preview>
+
 <h2>Inner component props (Arc class)</h2>
 
 <Preview {data}>

@@ -141,6 +141,7 @@
                 {tooltip}
                 data={d}
                 {...props.arc}
+                {...s.props}
               />
             {:else}
               <Pie
@@ -165,6 +166,7 @@
                     data={arc.data}
                     {tooltip}
                     {...props.arc}
+                    {...s.props}
                   />
                 {/each}
               </Pie>
