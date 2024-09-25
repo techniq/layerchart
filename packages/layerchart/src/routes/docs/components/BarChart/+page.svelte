@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { accessor, Axis, BarChart, Bars, Highlight, Rule, Svg, Tooltip } from 'layerchart';
+  import { accessor, Axis, BarChart, Bars, Highlight, Svg, Tooltip } from 'layerchart';
   import { group, sum } from 'd3-array';
   import { format, PeriodType } from '@layerstack/utils';
 
@@ -119,11 +119,7 @@
           props: { rounded: 'bottom' },
         },
       ]}
-    >
-      <svelte:fragment slot="above-marks">
-        <Rule y={0} />
-      </svelte:fragment>
-    </BarChart>
+    />
   </div>
 </Preview>
 
@@ -140,7 +136,6 @@
       labels={{ format: (value) => format(Math.abs(value), 'metric') }}
       props={{
         xAxis: { format: (value) => format(Math.abs(value), 'metric') },
-        yAxis: { rule: false },
       }}
       series={[
         {
@@ -156,10 +151,6 @@
         },
       ]}
     >
-      <svelte:fragment slot="above-marks">
-        <Rule x={0} />
-      </svelte:fragment>
-
       <svelte:fragment slot="tooltip" let:y let:series>
         <Tooltip.Root let:data>
           <Tooltip.Header>Age: {format(y(data))}</Tooltip.Header>
@@ -200,7 +191,6 @@
       labels={{ format: (value) => format(Math.abs(value), 'percent') }}
       props={{
         xAxis: { format: (value) => format(Math.abs(value), 'percentRound') },
-        yAxis: { rule: false },
       }}
       series={[
         {
@@ -217,10 +207,6 @@
         },
       ]}
     >
-      <svelte:fragment slot="above-marks">
-        <Rule x={0} />
-      </svelte:fragment>
-
       <svelte:fragment slot="tooltip" let:y let:series>
         <Tooltip.Root let:data>
           <Tooltip.Header>Age: {format(y(data))}</Tooltip.Header>

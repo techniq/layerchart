@@ -10,6 +10,7 @@
   import Chart from '../Chart.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
+  import Rule from '../Rule.svelte';
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
@@ -22,6 +23,7 @@
     seriesLayout?: typeof seriesLayout;
     labels?: typeof labels;
     axis?: typeof axis;
+    rule?: typeof rule;
     orientation?: typeof orientation;
     bandPadding?: typeof bandPadding;
     groupPadding?: typeof groupPadding;
@@ -58,6 +60,7 @@
   $: groupSeries = seriesLayout === 'group';
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
+  export let rule: ComponentProps<Rule> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
 
   /** Padding between primary x or y bands/bars, applied to scaleBand().padding() */
@@ -94,6 +97,7 @@
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
     yAxis?: Partial<ComponentProps<Axis>>;
+    rule?: Partial<ComponentProps<Rule>>;
     bars?: Partial<ComponentProps<Bars>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
@@ -186,7 +190,6 @@
             <Axis
               placement="left"
               grid={isVertical}
-              rule
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.yAxis}
@@ -197,10 +200,18 @@
             <Axis
               placement="bottom"
               grid={!isVertical}
-              rule
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.xAxis}
+            />
+          {/if}
+
+          {#if rule}
+            <Rule
+              x={isVertical ? true : 0}
+              y={isVertical ? 0 : true}
+              {...typeof rule === 'object' ? rule : null}
+              {...props.rule}
             />
           {/if}
         {/if}

@@ -8,7 +8,6 @@
     Tooltip,
     pivotLonger,
     LinearGradient,
-    Rule,
     Spline,
   } from 'layerchart';
   import { PeriodType } from 'svelte-ux';
@@ -79,11 +78,10 @@
   }}
 
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={negativeDateSeriesData} x="date" y="value" props={{ xAxis: { rule: false } }}>
+    <AreaChart data={negativeDateSeriesData} x="date" y="value">
       <svelte:fragment slot="marks" let:yScale let:height let:padding>
         {@const thresholdValue = 0}
         {@const thresholdOffset = yScale(thresholdValue) / (height + padding.bottom)}
-        <Rule y={0} />
         <LinearGradient
           stops={[
             [thresholdOffset, colors.positive],

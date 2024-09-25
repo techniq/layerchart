@@ -9,6 +9,7 @@
   import Chart from '../Chart.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
+  import Rule from '../Rule.svelte';
   import Spline from '../Spline.svelte';
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
@@ -41,12 +42,14 @@
   }[] = [{ key: 'default', value: y, color: 'hsl(var(--color-primary))' }];
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
+  export let rule: ComponentProps<Rule> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let points: ComponentProps<Points> | boolean = false;
 
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
     yAxis?: Partial<ComponentProps<Axis>>;
+    rule?: Partial<ComponentProps<Rule>>;
     spline?: Partial<ComponentProps<Spline>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
@@ -99,7 +102,6 @@
             <Axis
               placement={radial ? 'radius' : 'left'}
               grid
-              rule
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.yAxis}
@@ -110,11 +112,14 @@
             <Axis
               placement={radial ? 'angle' : 'bottom'}
               grid={radial}
-              rule
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.xAxis}
             />
+          {/if}
+
+          {#if rule}
+            <Rule x y={0} {...typeof rule === 'object' ? rule : null} {...props.rule} />
           {/if}
         {/if}
       </slot>

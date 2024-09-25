@@ -12,6 +12,7 @@
   import Labels from '../Labels.svelte';
   import Line from '../Line.svelte';
   import Points from '../Points.svelte';
+  import Rule from '../Rule.svelte';
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
@@ -21,6 +22,7 @@
     series?: typeof series;
     labels?: typeof labels;
     axis?: typeof axis;
+    rule?: typeof rule;
     points?: typeof points;
     props?: typeof props;
     seriesLayout?: typeof seriesLayout;
@@ -48,12 +50,14 @@
   $: stackSeries = seriesLayout.startsWith('stack');
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
+  export let rule: ComponentProps<Rule> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let points: ComponentProps<Points> | boolean = false;
 
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
     yAxis?: Partial<ComponentProps<Axis>>;
+    rule?: Partial<ComponentProps<Rule>>;
     area?: Partial<ComponentProps<Area>>;
     line?: Partial<ComponentProps<Line>>;
     points?: Partial<ComponentProps<Points>>;
@@ -134,7 +138,6 @@
             <Axis
               placement={radial ? 'radius' : 'left'}
               grid
-              rule
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.yAxis}
@@ -145,11 +148,14 @@
             <Axis
               placement={radial ? 'angle' : 'bottom'}
               grid={radial}
-              rule
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.xAxis}
             />
+          {/if}
+
+          {#if rule}
+            <Rule x y={0} {...typeof rule === 'object' ? rule : null} {...props.rule} />
           {/if}
         {/if}
       </slot>
