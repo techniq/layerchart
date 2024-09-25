@@ -406,6 +406,68 @@
   </div>
 </Preview>
 
+<h2>Stack series (expand)</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={wideData}
+      x="year"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          key: 'cherries',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'dates',
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      seriesLayout="stackExpand"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+      }}
+    />
+  </div>
+</Preview>
+
+<h2>Stack series (diverging)</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={wideData}
+      x="year"
+      series={[
+        { key: 'apples', value: (d) => -d.apples, color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          key: 'cherries',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'dates',
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      seriesLayout="stackDiverging"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+      }}
+    />
+  </div>
+</Preview>
+
 <!-- TODO: Possible to handle series data as separate stacks? -->
 <!--
 <h2>Stack series (series data / long data)</h2>

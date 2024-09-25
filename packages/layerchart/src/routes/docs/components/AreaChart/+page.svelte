@@ -231,6 +231,52 @@
   </div>
 </Preview>
 
+<h2>Stack series (expand)</h2>
+
+<Preview data={multiSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'oranges',
+          color: 'hsl(var(--color-warning))',
+        },
+      ]}
+      seriesLayout="stackExpand"
+    />
+  </div>
+</Preview>
+
+<h2>Stack series (diverging)</h2>
+
+<Preview data={multiSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', value: (d) => -d.apples, color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'oranges',
+          color: 'hsl(var(--color-warning))',
+        },
+      ]}
+      seriesLayout="stackDiverging"
+    />
+  </div>
+</Preview>
+
 <h2>Labels</h2>
 
 <Preview data={dateSeriesData}>

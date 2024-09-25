@@ -1,7 +1,7 @@
 <script lang="ts" generics="TData">
   import { type ComponentProps } from 'svelte';
   import { scaleBand, scaleLinear } from 'd3-scale';
-  import { stack } from 'd3-shape';
+  import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
 
@@ -52,8 +52,9 @@
   ];
 
   /** Determine how to layout series.  Overlap (default), stack, or group side by side */
-  export let seriesLayout: 'overlap' | 'stack' | 'group' = 'overlap';
-  $: stackSeries = seriesLayout === 'stack';
+  export let seriesLayout: 'overlap' | 'group' | 'stack' | 'stackExpand' | 'stackDiverging' =
+    'overlap';
+  $: stackSeries = seriesLayout.startsWith('stack');
   $: groupSeries = seriesLayout === 'group';
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
@@ -112,7 +113,21 @@
 
   $: if (stackSeries) {
     const seriesKeys = series.map((s) => s.key);
-    const stackData = stack().keys(seriesKeys)(chartDataArray(data)) as any[];
+    // const stackData = stack().keys(seriesKeys)(chartDataArray(data)) as any[];
+
+    const offset =
+      seriesLayout === 'stackExpand'
+        ? stackOffsetExpand
+        : seriesLayout === 'stackDiverging'
+          ? stackOffsetDiverging
+          : stackOffsetNone;
+    const stackData = stack()
+      .keys(seriesKeys)
+      .value((d, key) => {
+        const s = series.find((d) => d.key === key)!;
+        return accessor(s.value ?? s.key)(d as any);
+      })
+      .offset(offset)(chartDataArray(data)) as any[];
 
     chartData = chartData.map((d, i) => {
       return {
@@ -127,7 +142,7 @@
   data={chartData}
   x={x ??
     (stackSeries
-      ? (d) => series.map((s, i) => d.stackData[i][1])
+      ? (d) => series.flatMap((s, i) => d.stackData[i])
       : series.map((s) => s.value ?? s.key))}
   {xScale}
   {xBaseline}
@@ -137,7 +152,7 @@
   {x1Range}
   y={y ??
     (stackSeries
-      ? (d) => series.map((s, i) => d.stackData[i][1])
+      ? (d) => series.flatMap((s, i) => d.stackData[i])
       : series.map((s) => s.value ?? s.key))}
   {yScale}
   {yBaseline}

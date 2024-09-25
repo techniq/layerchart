@@ -1,7 +1,7 @@
 <script lang="ts" generics="TData">
   import { type ComponentProps } from 'svelte';
   import { scaleLinear, scaleTime } from 'd3-scale';
-  import { stack } from 'd3-shape';
+  import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
 
@@ -44,8 +44,8 @@
   }[] = [{ key: 'default', value: y, color: 'hsl(var(--color-primary))' }];
 
   /** Determine how to layout series.  Overlap (default) or stack */
-  export let seriesLayout: 'overlap' | 'stack' = 'overlap';
-  $: stackSeries = seriesLayout === 'stack';
+  export let seriesLayout: 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging' = 'overlap';
+  $: stackSeries = seriesLayout.startsWith('stack');
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
@@ -71,7 +71,19 @@
 
   $: if (stackSeries) {
     const seriesKeys = series.map((s) => s.key);
-    const stackData = stack().keys(seriesKeys)(chartDataArray(data)) as any[];
+    const offset =
+      seriesLayout === 'stackExpand'
+        ? stackOffsetExpand
+        : seriesLayout === 'stackDiverging'
+          ? stackOffsetDiverging
+          : stackOffsetNone;
+    const stackData = stack()
+      .keys(seriesKeys)
+      .value((d, key) => {
+        const s = series.find((d) => d.key === key)!;
+        return accessor(s.value ?? s.key)(d as any);
+      })
+      .offset(offset)(chartDataArray(data)) as any[];
 
     chartData = chartData.map((d, i) => {
       return {
@@ -91,7 +103,7 @@
   {xScale}
   y={y ??
     (stackSeries
-      ? (d) => series.map((s, i) => d.stackData[i][1])
+      ? (d) => series.flatMap((s, i) => d.stackData[i])
       : series.map((s) => s.value ?? s.key))}
   yBaseline={0}
   yNice
