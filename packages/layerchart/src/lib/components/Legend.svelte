@@ -33,12 +33,18 @@
   export let tickFontSize = 10;
   export let tickLength = 4;
   export let placement: Placement | undefined = undefined;
+  export let orientation: 'horizontal' | 'vertical' = 'horizontal';
+
+  /** Determine display ramp (individual color swatches or continuous ramp)*/
+  export let variant: 'ramp' | 'swatches' = 'ramp';
 
   export let classes: {
     root?: string;
     title?: string;
     label?: string;
     tick?: string;
+    swatches?: string;
+    swatch?: string;
   } = {};
 
   $: if (scale == null && cScale) {
@@ -152,45 +158,61 @@
 >
   <div class={cls('text-[10px] font-semibold', classes.title)}>{title}</div>
   <slot values={tickValues ?? []} {scale}>
-    <svg
-      {width}
-      height={height + tickLength + tickFontSize}
-      viewBox="0 0 {width} {height + tickLength + tickFontSize}"
-      class="overflow-visible"
-    >
-      <g>
-        {#if interpolator}
-          <ColorRamp {width} {height} {interpolator} />
-        {:else if swatches}
-          {#each swatches as swatch, i}
-            <rect {...swatch} />
-          {/each}
-        {/if}
-      </g>
-
-      <g>
-        {#each tickValues ?? xScale?.ticks?.(ticks) ?? [] as tick, i}
-          <text
-            text-anchor="middle"
-            x={xScale(tick) + tickLabelOffset}
-            y={height + tickLength + tickFontSize}
-            style:font-size={tickFontSize}
-            class={cls('fill-surface-content text-[10px]', classes.label)}
-          >
-            {tickFormat ? format(tick, tickFormat) : tick}
-          </text>
-
-          {#if tickLine}
-            <line
-              x1={xScale(tick)}
-              y1={0}
-              x2={xScale(tick)}
-              y2={height + tickLength}
-              class={cls('stroke-surface-content', classes.tick)}
-            />
+    {#if variant === 'ramp'}
+      <svg
+        {width}
+        height={height + tickLength + tickFontSize}
+        viewBox="0 0 {width} {height + tickLength + tickFontSize}"
+        class="overflow-visible"
+      >
+        <g>
+          {#if interpolator}
+            <ColorRamp {width} {height} {interpolator} />
+          {:else if swatches}
+            {#each swatches as swatch, i}
+              <rect {...swatch} />
+            {/each}
           {/if}
+        </g>
+
+        <g>
+          {#each tickValues ?? xScale?.ticks?.(ticks) ?? [] as tick, i}
+            <text
+              text-anchor="middle"
+              x={xScale(tick) + tickLabelOffset}
+              y={height + tickLength + tickFontSize}
+              style:font-size={tickFontSize}
+              class={cls('text-[10px] fill-surface-content', classes.label)}
+            >
+              {tickFormat ? format(tick, tickFormat) : tick}
+            </text>
+
+            {#if tickLine}
+              <line
+                x1={xScale(tick)}
+                y1={0}
+                x2={xScale(tick)}
+                y2={height + tickLength}
+                class={cls('stroke-surface-content', classes.tick)}
+              />
+            {/if}
+          {/each}
+        </g>
+      </svg>
+    {:else if variant === 'swatches'}
+      <div class={cls('flex gap-4', orientation === 'vertical' && 'flex-col', classes.swatches)}>
+        {#each tickValues ?? xScale?.ticks?.(ticks) ?? [] as tick}
+          <div class="flex gap-1">
+            <div
+              class={cls('h-4 w-4 rounded-full', classes.swatch)}
+              style:background-color={scale(tick)}
+            />
+            <div class={cls('text-xs text-surface-content', classes.label)}>
+              {tickFormat ? format(tick, tickFormat) : tick}
+            </div>
+          </div>
         {/each}
-      </g>
-    </svg>
+      </div>
+    {/if}
   </slot>
 </div>
