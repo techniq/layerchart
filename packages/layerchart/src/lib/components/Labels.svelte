@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { SvelteComponent, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
   import { format as formatValue, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Text from './Text.svelte';
   import { isScaleBand } from '$lib/utils/scales.js';
   import { chartContext } from './ChartContext.svelte';
-  import Points from './Points.svelte';
+  import Points, { type Point } from './Points.svelte';
 
   export let placement: 'inside' | 'outside' | 'center' = 'outside';
   export let offset = placement === 'center' ? 0 : 4;
@@ -14,11 +14,7 @@
 
   const { yScale } = chartContext();
 
-  // TODO: Add to @layerstack/svelte-types package
-  type ComponentSlots<T> = T extends SvelteComponent<any, any, infer S> ? S : never;
-  type PointsSlotProp = ComponentSlots<Points>['default']['points'];
-
-  $: getTextProps = (point: PointsSlotProp[number]): ComponentProps<Text> => {
+  $: getTextProps = (point: Point): ComponentProps<Text> => {
     const value = isScaleBand($yScale) ? point.xValue : point.yValue;
     const formattedValue = formatValue(value, format ?? $yScale.tickFormat?.());
 
