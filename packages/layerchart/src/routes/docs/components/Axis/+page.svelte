@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { scaleTime } from 'd3-scale';
+  import { scaleLinear, scaleTime } from 'd3-scale';
+  import { range } from 'd3-array';
   import { Field, PeriodType, Switch } from 'svelte-ux';
   import { format } from '@layerstack/utils';
   import { mdScreen } from '@layerstack/svelte-stores';
@@ -480,6 +481,55 @@
         <Axis label="right start" placement="right" labelPlacement="start" rule />
         <Axis label="right middle" placement="right" labelPlacement="middle" rule />
         <Axis label="right end" placement="right" labelPlacement="end" rule />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+  <h2>Multiple axis with same placement</h2>
+
+  <div class="mb-2 flex gap-6">
+    <Field label="Debug:" dense labelPlacement="left" let:id>
+      <Switch {id} bind:checked={debug} />
+    </Field>
+  </div>
+</div>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ right: 90 }}
+      let:height
+    >
+      <Svg>
+        {#if debug}
+          <Frame class="fill-danger/5" />
+          <Frame class="fill-danger/5" full />
+        {/if}
+
+        <Axis
+          label="Celsius"
+          scale={scaleLinear([0, 100], [height, 0])}
+          placement="right"
+          rule
+          labelProps={{ dx: -60 }}
+        />
+        <Axis
+          label="Fahrenheit"
+          scale={scaleLinear([32, 212], [height, 0])}
+          ticks={range(0, 100 + 1, 10).map((x) => x * (9 / 5) + 32)}
+          placement="right"
+          rule
+          class="translate-x-[50px]"
+          labelProps={{ dx: -50 }}
+        />
       </Svg>
     </Chart>
   </div>
