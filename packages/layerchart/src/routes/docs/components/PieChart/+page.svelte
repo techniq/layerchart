@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Arc, LinearGradient, PieChart, Text } from 'layerchart';
+  import { Arc, Group, LinearGradient, PieChart, Text } from 'layerchart';
   import { group } from 'd3-array';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -77,35 +77,38 @@
 <h2>Single value gradient with text</h2>
 
 <Preview {data}>
-  <div class="h-[200px] p-4 border rounded">
+  <div class="h-[160px] p-4 border rounded">
     <PieChart>
       <svelte:fragment slot="marks">
         <LinearGradient class="from-secondary to-primary" let:url>
-          <Arc
-            value={70}
-            domain={[0, 100]}
-            innerRadius={-15}
-            cornerRadius={10}
-            padAngle={0.02}
-            range={[-120, 120]}
-            fill={url}
-            track={{ class: 'fill-none stroke-surface-content/10' }}
-            let:value
-          >
-            <Text
-              value={Math.round(value) + '%'}
-              textAnchor="middle"
-              verticalAnchor="middle"
-              class="text-4xl tabular-nums"
-            />
-          </Arc>
+          <Group y={20}>
+            <Arc
+              value={70}
+              domain={[0, 100]}
+              outerRadius={80}
+              innerRadius={-15}
+              cornerRadius={10}
+              padAngle={0.02}
+              range={[-120, 120]}
+              fill={url}
+              track={{ class: 'fill-none stroke-surface-content/10' }}
+              let:value
+            >
+              <Text
+                value={Math.round(value) + '%'}
+                textAnchor="middle"
+                verticalAnchor="middle"
+                class="text-4xl tabular-nums"
+              />
+            </Arc>
+          </Group>
         </LinearGradient>
       </svelte:fragment>
     </PieChart>
   </div>
 </Preview>
 
-<h2>Single value (arc)</h2>
+<h2>Single value (arc) with custom color</h2>
 
 <Preview>
   <div class="h-[120px] p-4 border rounded">
@@ -115,9 +118,10 @@
       value="value"
       maxValue={100}
       range={[-90, 90]}
-      outerRadius={90}
+      outerRadius={80}
       innerRadius={-20}
       cornerRadius={10}
+      cRange={['hsl(var(--color-success))']}
       props={{
         group: { y: 45 },
       }}
