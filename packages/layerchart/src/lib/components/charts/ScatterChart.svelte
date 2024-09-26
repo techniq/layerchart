@@ -1,12 +1,13 @@
 <script lang="ts" generics="TData">
   import { type ComponentProps } from 'svelte';
-  import { scaleLinear, scaleTime } from 'd3-scale';
+  import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
   import { format } from '@layerstack/utils';
 
   import Axis from '../Axis.svelte';
   import Chart from '../Chart.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
+  import Legend from '../Legend.svelte';
   import Points from '../Points.svelte';
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
@@ -16,6 +17,7 @@
   interface $$Props extends ComponentProps<Chart<TData>> {
     series?: typeof series;
     labels?: typeof labels;
+    legend?: typeof legend;
     axis?: typeof axis;
     props?: typeof props;
   }
@@ -34,9 +36,7 @@
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
-
-  // Default xScale based on first data's `x` value
-  $: xScale = accessor(x)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear();
+  export let legend: ComponentProps<Legend> | boolean = false;
 
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
@@ -44,7 +44,11 @@
     points?: Partial<ComponentProps<Points>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
+    legend?: Partial<ComponentProps<Legend>>;
   } = {};
+
+  // Default xScale based on first data's `x` value
+  $: xScale = accessor(x)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear();
 
   let chartData = series
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
@@ -61,7 +65,7 @@
     ? undefined
     : {
         left: axis === true || axis === 'y' ? 16 : 0,
-        bottom: axis === true || axis === 'x' ? 16 : 0,
+        bottom: (axis === true || axis === 'x' ? 16 : 0) + (legend === true ? 32 : 0),
       }}
   tooltip={{ mode: 'voronoi' }}
   {...$$restProps}
@@ -138,6 +142,21 @@
         />
       {/if}
     </Svg>
+
+    <slot name="legend" {...slotProps}>
+      {#if legend}
+        <Legend
+          scale={scaleOrdinal(
+            series.map((s) => s.key),
+            series.map((s) => s.color)
+          )}
+          placement="bottom"
+          variant="swatches"
+          {...props.legend}
+          {...typeof legend === 'object' ? legend : null}
+        />
+      {/if}
+    </slot>
 
     <slot name="tooltip" {...slotProps}>
       <Tooltip.Root let:data>

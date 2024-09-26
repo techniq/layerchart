@@ -6,6 +6,7 @@
   import Arc from '../Arc.svelte';
   import Chart from '../Chart.svelte';
   import Group from '../Group.svelte';
+  import Legend from '../Legend.svelte';
   import Pie from '../Pie.svelte';
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
@@ -26,6 +27,7 @@
     props?: typeof props;
     series?: typeof series;
     // labels?: typeof labels;
+    legend?: typeof legend;
   }
 
   export let data: ChartProps['data'] = [];
@@ -53,6 +55,8 @@
     props?: Partial<ComponentProps<Arc>>;
   }[] = [{ key: 'default', value: value /*, color: 'hsl(var(--color-primary))'*/ }];
 
+  export let legend: ComponentProps<Legend> | boolean = false;
+
   /**
    * Range [min,max] in degrees.  See also startAngle/endAngle
    */
@@ -79,6 +83,7 @@
     pie?: Partial<ComponentProps<Pie>>;
     group?: Partial<ComponentProps<Group>>;
     arc?: Partial<ComponentProps<Arc>>;
+    legend?: Partial<ComponentProps<Legend>>;
   } = {};
 
   $: allSeriesData = series
@@ -105,6 +110,7 @@
         'hsl(var(--color-warning))',
         'hsl(var(--color-danger))',
       ]}
+  padding={{ bottom: legend === true ? 32 : 0 }}
   {...$$restProps}
   let:x
   let:xScale
@@ -177,6 +183,17 @@
 
       <slot name="above-marks" {...slotProps} />
     </Svg>
+
+    <slot name="legend" {...slotProps}>
+      {#if legend}
+        <Legend
+          placement="bottom"
+          variant="swatches"
+          {...props.legend}
+          {...typeof legend === 'object' ? legend : null}
+        />
+      {/if}
+    </slot>
 
     <slot name="tooltip" {...slotProps}>
       <Tooltip.Root let:data>

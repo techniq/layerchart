@@ -428,6 +428,23 @@
   </div>
 </Preview>
 
+<h2>Legend</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'bananas', color: 'hsl(var(--color-success))' },
+        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+      ]}
+      legend
+    />
+  </div>
+</Preview>
+
 <h2>Custom tooltip</h2>
 
 <Preview data={dateSeriesData}>

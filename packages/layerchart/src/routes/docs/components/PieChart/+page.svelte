@@ -238,11 +238,42 @@
   </div>
 </Preview>
 
+<h2>Legend</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart {data} label="fruit" value="value" legend />
+  </div>
+</Preview>
+
+<h2>Legend (placement with orientation and style)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      {data}
+      label="fruit"
+      value="value"
+      legend={{ placement: 'top-left', orientation: 'vertical', classes: { swatch: 'rounded' } }}
+    />
+  </div>
+</Preview>
+
 <h2>Customize colors</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} label="fruit" value="value" cRange={['red', 'blue', 'green', 'orange']} />
+    <PieChart
+      {data}
+      label="fruit"
+      value="value"
+      cRange={[
+        'hsl(var(--color-success))',
+        'hsl(var(--color-warning))',
+        'hsl(var(--color-danger))',
+        'hsl(var(--color-info))',
+      ]}
+    />
   </div>
 </Preview>
 

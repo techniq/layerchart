@@ -490,6 +490,70 @@
   </div>
 </Preview> -->
 
+<h2>Legend</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={wideData}
+      x="year"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          key: 'cherries',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'dates',
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      seriesLayout="group"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+      }}
+      legend
+    />
+  </div>
+</Preview>
+
+<h2>Legend (placement)</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={wideData}
+      x="year"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          key: 'cherries',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'dates',
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      seriesLayout="group"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+      }}
+      legend={{ placement: 'top-right', classes: { root: 'mt-2' } }}
+    />
+  </div>
+</Preview>
+
 <h2>Labels</h2>
 
 <Preview data={dateSeriesData}>

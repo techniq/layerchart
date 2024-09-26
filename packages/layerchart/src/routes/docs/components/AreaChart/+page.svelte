@@ -363,6 +363,54 @@
   </div>
 </Preview>
 
+<h2>Legend</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'oranges',
+          color: 'hsl(var(--color-warning))',
+        },
+      ]}
+      seriesLayout="stack"
+      legend
+    />
+  </div>
+</Preview>
+
+<h2>Legend (placement)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'oranges',
+          color: 'hsl(var(--color-warning))',
+        },
+      ]}
+      seriesLayout="stack"
+      legend={{ placement: 'top-right' }}
+    />
+  </div>
+</Preview>
+
 <h2>Custom tooltip</h2>
 
 <Preview data={dateSeriesData}>

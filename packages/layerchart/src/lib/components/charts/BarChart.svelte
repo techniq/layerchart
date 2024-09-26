@@ -1,6 +1,6 @@
 <script lang="ts" generics="TData">
   import { type ComponentProps } from 'svelte';
-  import { scaleBand, scaleLinear } from 'd3-scale';
+  import { scaleBand, scaleOrdinal, scaleLinear } from 'd3-scale';
   import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
@@ -10,6 +10,7 @@
   import Chart from '../Chart.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
+  import Legend from '../Legend.svelte';
   import Rule from '../Rule.svelte';
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
@@ -22,6 +23,7 @@
     series?: typeof series;
     seriesLayout?: typeof seriesLayout;
     labels?: typeof labels;
+    legend?: typeof legend;
     axis?: typeof axis;
     rule?: typeof rule;
     orientation?: typeof orientation;
@@ -62,6 +64,7 @@
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
   export let rule: ComponentProps<Rule> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
+  export let legend: ComponentProps<Legend> | boolean = false;
 
   /** Padding between primary x or y bands/bars, applied to scaleBand().padding() */
   export let bandPadding = 0.4;
@@ -99,6 +102,7 @@
     yAxis?: Partial<ComponentProps<Axis>>;
     rule?: Partial<ComponentProps<Rule>>;
     bars?: Partial<ComponentProps<Bars>>;
+    legend?: Partial<ComponentProps<Legend>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
   } = {};
@@ -168,7 +172,7 @@
     ? undefined
     : {
         left: axis === true || axis === 'y' ? 16 : 0,
-        bottom: axis === true || axis === 'x' ? 16 : 0,
+        bottom: (axis === true || axis === 'x' ? 16 : 0) + (legend === true ? 32 : 0),
       }}
   tooltip={{ mode: 'band' }}
   {...$$restProps}
@@ -254,6 +258,21 @@
         <Labels {...props.labels} {...typeof labels === 'object' ? labels : null} />
       {/if}
     </Svg>
+
+    <slot name="legend" {...slotProps}>
+      {#if legend}
+        <Legend
+          scale={scaleOrdinal(
+            series.map((s) => s.key),
+            series.map((s) => s.color)
+          )}
+          placement="bottom"
+          variant="swatches"
+          {...props.legend}
+          {...typeof legend === 'object' ? legend : null}
+        />
+      {/if}
+    </slot>
 
     <slot name="tooltip" {...slotProps}>
       <Tooltip.Root let:data>
