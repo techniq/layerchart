@@ -200,7 +200,13 @@
         </g>
       </svg>
     {:else if variant === 'swatches'}
-      <div class={cls('flex gap-4', orientation === 'vertical' && 'flex-col', classes.swatches)}>
+      <div
+        class={cls(
+          'flex gap-x-4 gap-y-1',
+          orientation === 'vertical' && 'flex-col',
+          classes.swatches
+        )}
+      >
         {#each tickValues ?? xScale?.ticks?.(ticks) ?? [] as tick}
           <div class="flex gap-1">
             <div

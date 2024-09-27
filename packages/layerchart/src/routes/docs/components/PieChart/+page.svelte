@@ -250,7 +250,7 @@
   </div>
 </Preview>
 
-<h2>Legend (placement with orientation and style)</h2>
+<h2>Legend (placement with orientation)</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
@@ -258,7 +258,7 @@
       {data}
       label="fruit"
       value="value"
-      legend={{ placement: 'top-left', orientation: 'vertical', classes: { swatch: 'rounded' } }}
+      legend={{ placement: 'top-left', orientation: 'vertical' }}
     />
   </div>
 </Preview>

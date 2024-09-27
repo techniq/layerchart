@@ -282,6 +282,22 @@
   </div>
 </Preview>
 
+<h2>Vertical orientation</h2>
+
+<Preview>
+  <div class="grid gap-6">
+    <Legend
+      scale={scaleOrdinal(
+        ['<10', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '≥80'],
+        schemeSpectral[10]
+      )}
+      title="Age (years)"
+      variant="swatches"
+      orientation="vertical"
+    />
+  </div>
+</Preview>
+
 <h2>Styling</h2>
 
 <Preview>
