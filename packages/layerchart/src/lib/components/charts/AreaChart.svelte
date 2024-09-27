@@ -159,7 +159,7 @@
           {/if}
 
           {#if rule}
-            <Rule x y={0} {...typeof rule === 'object' ? rule : null} {...props.rule} />
+            <Rule x={0} y={0} {...typeof rule === 'object' ? rule : null} {...props.rule} />
           {/if}
         {/if}
       </slot>

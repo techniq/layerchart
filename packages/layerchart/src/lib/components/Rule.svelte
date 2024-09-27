@@ -7,8 +7,8 @@
 
   const { xScale, yScale, xRange, yRange } = chartContext();
 
-  $: [xRangeMin, xRangeMax] = extent($xRange);
-  $: [yRangeMin, yRangeMax] = extent($yRange);
+  $: [xRangeMin, xRangeMax] = extent<number | Date>($xRange);
+  $: [yRangeMin, yRangeMax] = extent<number | Date>($yRange);
 
   /**
    * Create a vertical `x` line
@@ -27,10 +27,26 @@
    * - Use number | Date value for annotation (xScale(value))
    */
   export let y: number | Date | boolean | 'top' | 'bottom' = false;
+
+  function showRule(value: typeof x | typeof y, axis: 'x' | 'y') {
+    switch (typeof value) {
+      case 'boolean':
+        return value;
+      case 'string':
+        return true;
+      default:
+        if (axis === 'x') {
+          return $xScale(value) >= xRangeMin! && $xScale(value) <= xRangeMax!;
+        } else {
+          return $yScale(value) >= yRangeMin! && $yScale(value) <= yRangeMax!;
+        }
+    }
+  }
 </script>
 
 <g class="rule">
-  {#if x !== false}
+  <!-- TODO: Only draw if number and between min/max domain (or range using scale) -->
+  {#if showRule(x, 'x')}
     <Line
       x1={x === true || x === 'left' ? xRangeMin : x === 'right' ? xRangeMax : $xScale(x)}
       x2={x === true || x === 'left' ? xRangeMin : x === 'right' ? xRangeMax : $xScale(x)}
@@ -41,7 +57,7 @@
     />
   {/if}
 
-  {#if y !== false}
+  {#if showRule(y, 'y')}
     <Line
       x1={$xRange[0] || 0}
       x2={$xRange[1] || 0}

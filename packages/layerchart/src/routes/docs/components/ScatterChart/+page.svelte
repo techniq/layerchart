@@ -38,6 +38,14 @@
   </div>
 </Preview>
 
+<h2>0 baseline/domain</h2>
+
+<Preview data={spiralData}>
+  <div class="h-[400px] p-4 border rounded">
+    <ScatterChart data={spiralData} x="x" y="y" xBaseline={0} yBaseline={0} />
+  </div>
+</Preview>
+
 <h2>Series</h2>
 
 <Preview data={penguinDataBySpecies}>

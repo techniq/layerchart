@@ -9,6 +9,7 @@
   import Labels from '../Labels.svelte';
   import Legend from '../Legend.svelte';
   import Points from '../Points.svelte';
+  import Rule from '../Rule.svelte';
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
@@ -37,6 +38,7 @@
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let legend: ComponentProps<Legend> | boolean = false;
+  export let rule: ComponentProps<Rule> | boolean = true;
 
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
@@ -45,6 +47,7 @@
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
     legend?: Partial<ComponentProps<Legend>>;
+    rule?: Partial<ComponentProps<Rule>>;
   } = {};
 
   // Default xScale based on first data's `x` value
@@ -93,7 +96,6 @@
             <Axis
               placement="left"
               grid
-              rule
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.yAxis}
@@ -104,11 +106,14 @@
             <Axis
               placement="bottom"
               grid
-              rule
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.xAxis}
             />
+          {/if}
+
+          {#if rule}
+            <Rule x={0} y={0} {...typeof rule === 'object' ? rule : null} {...props.rule} />
           {/if}
         {/if}
       </slot>
