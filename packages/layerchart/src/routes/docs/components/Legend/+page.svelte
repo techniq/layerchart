@@ -155,7 +155,7 @@
 <Preview>
   <div class="grid gap-6">
     <Legend scale={scaleQuantize([1, 10], schemePurples[9])} title="Unemployment rate (%)" />
-    <!-- TODO: Update Legend fix swatches for scaleQuantile -->
+    <!-- TODO: Fix Legend swatches for scaleQuantile -->
     <!-- <Legend
       scale={scaleQuantize([1, 10], schemePurples[9])}
       title="Unemployment rate (%)"
@@ -173,7 +173,7 @@
       title="Height (cm)"
       tickFormat="integer"
     />
-    <!-- TODO: Update Legend fix swatches for scaleQuantile -->
+    <!-- TODO: Fix Legend swatches for scaleQuantile -->
     <!-- <Legend
       scale={scaleQuantile(randomNormalData, schemeSpectral[9])}
       title="Height (cm)"
@@ -192,7 +192,7 @@
       title="Unemployment rate (%)"
       tickLength={0}
     />
-    <!-- TODO: Update Legend fix swatches for scaleThreshold -->
+    <!-- TODO: Fix Legend swatches for scaleThreshold -->
     <!-- <Legend
       scale={scaleThreshold([2.5, 3.1, 3.5, 3.9, 6, 7, 8, 9.5], schemeRdBu[9])}
       title="Unemployment rate (%)"
@@ -310,8 +310,9 @@
     title="Temperature (°F)"
     width={600}
     tickFontSize={12}
+    tickFormat={(value) => value + '°'}
     classes={{
-      root: 'ml-10',
+      root: 'border px-3 py-2 bg-surface-200 rounded',
       title: 'text-lg text-center',
       label: 'fill-surface-content/50',
       tick: 'stroke-surface-100',
