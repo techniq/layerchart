@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { accessor, Axis, BarChart, Bars, Highlight, Rule, Svg, Tooltip } from 'layerchart';
+  import { accessor, Axis, BarChart, Bars, Highlight, Svg, Tooltip } from 'layerchart';
   import { group, sum } from 'd3-array';
   import { format, PeriodType } from '@layerstack/utils';
 
@@ -119,11 +119,7 @@
           props: { rounded: 'bottom' },
         },
       ]}
-    >
-      <svelte:fragment slot="above-marks">
-        <Rule y={0} />
-      </svelte:fragment>
-    </BarChart>
+    />
   </div>
 </Preview>
 
@@ -140,7 +136,6 @@
       labels={{ format: (value) => format(Math.abs(value), 'metric') }}
       props={{
         xAxis: { format: (value) => format(Math.abs(value), 'metric') },
-        yAxis: { rule: false },
       }}
       series={[
         {
@@ -156,10 +151,6 @@
         },
       ]}
     >
-      <svelte:fragment slot="above-marks">
-        <Rule x={0} />
-      </svelte:fragment>
-
       <svelte:fragment slot="tooltip" let:y let:series>
         <Tooltip.Root let:data>
           <Tooltip.Header>Age: {format(y(data))}</Tooltip.Header>
@@ -200,7 +191,6 @@
       labels={{ format: (value) => format(Math.abs(value), 'percent') }}
       props={{
         xAxis: { format: (value) => format(Math.abs(value), 'percentRound') },
-        yAxis: { rule: false },
       }}
       series={[
         {
@@ -217,10 +207,6 @@
         },
       ]}
     >
-      <svelte:fragment slot="above-marks">
-        <Rule x={0} />
-      </svelte:fragment>
-
       <svelte:fragment slot="tooltip" let:y let:series>
         <Tooltip.Root let:data>
           <Tooltip.Header>Age: {format(y(data))}</Tooltip.Header>
@@ -406,6 +392,68 @@
   </div>
 </Preview>
 
+<h2>Stack series (expand)</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={wideData}
+      x="year"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          key: 'cherries',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'dates',
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      seriesLayout="stackExpand"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+      }}
+    />
+  </div>
+</Preview>
+
+<h2>Stack series (diverging)</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={wideData}
+      x="year"
+      series={[
+        { key: 'apples', value: (d) => -d.apples, color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          key: 'cherries',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'dates',
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      seriesLayout="stackDiverging"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+      }}
+    />
+  </div>
+</Preview>
+
 <!-- TODO: Possible to handle series data as separate stacks? -->
 <!--
 <h2>Stack series (series data / long data)</h2>
@@ -441,6 +489,70 @@
     />
   </div>
 </Preview> -->
+
+<h2>Legend</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={wideData}
+      x="year"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          key: 'cherries',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'dates',
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      seriesLayout="group"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+      }}
+      legend
+    />
+  </div>
+</Preview>
+
+<h2>Legend (placement)</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={wideData}
+      x="year"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          key: 'cherries',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'dates',
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      seriesLayout="group"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+      }}
+      legend={{ placement: 'top-right', classes: { root: 'mt-2' } }}
+    />
+  </div>
+</Preview>
 
 <h2>Labels</h2>
 

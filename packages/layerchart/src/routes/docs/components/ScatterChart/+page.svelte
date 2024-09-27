@@ -38,6 +38,14 @@
   </div>
 </Preview>
 
+<h2>0 baseline/domain</h2>
+
+<Preview data={spiralData}>
+  <div class="h-[400px] p-4 border rounded">
+    <ScatterChart data={spiralData} x="x" y="y" xBaseline={0} yBaseline={0} />
+  </div>
+</Preview>
+
 <h2>Series</h2>
 
 <Preview data={penguinDataBySpecies}>
@@ -89,6 +97,29 @@
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded">
     <ScatterChart data={spiralData} x="x" y="y" labels={{ offset: 10 }} />
+  </div>
+</Preview>
+
+<h2>Legend</h2>
+
+<Preview data={penguinDataBySpecies}>
+  <div class="h-[400px] p-4 border rounded">
+    <ScatterChart
+      x="flipper_length_mm"
+      y="bill_length_mm"
+      series={penguinDataBySpecies.map(([species, data], i) => {
+        return {
+          key: species,
+          data,
+          color: [
+            'hsl(var(--color-primary))',
+            'hsl(var(--color-secondary))',
+            'hsl(var(--color-success))',
+          ][i],
+        };
+      })}
+      legend
+    />
   </div>
 </Preview>
 

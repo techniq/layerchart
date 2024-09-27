@@ -1,14 +1,16 @@
 <script lang="ts">
   import { extent } from 'd3-array';
+  import { pointRadial } from 'd3-shape';
   import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
+  import Circle from './Circle.svelte';
   import Line from './Line.svelte';
 
-  const { xScale, yScale, xRange, yRange } = chartContext();
+  const { xScale, yScale, xRange, yRange, radial } = chartContext();
 
-  $: [xRangeMin, xRangeMax] = extent($xRange);
-  $: [yRangeMin, yRangeMax] = extent($yRange);
+  $: [xRangeMin, xRangeMax] = extent<number | Date>($xRange);
+  $: [yRangeMin, yRangeMax] = extent<number | Date>($yRange);
 
   /**
    * Create a vertical `x` line
@@ -27,28 +29,67 @@
    * - Use number | Date value for annotation (xScale(value))
    */
   export let y: number | Date | boolean | 'top' | 'bottom' = false;
+
+  function showRule(value: typeof x | typeof y, axis: 'x' | 'y') {
+    switch (typeof value) {
+      case 'boolean':
+        return value;
+      case 'string':
+        return true;
+      default:
+        if (axis === 'x') {
+          return $xScale(value) >= xRangeMin! && $xScale(value) <= xRangeMax!;
+        } else {
+          return $yScale(value) >= yRangeMin! && $yScale(value) <= yRangeMax!;
+        }
+    }
+  }
 </script>
 
 <g class="rule">
-  {#if x !== false}
-    <Line
-      x1={x === true || x === 'left' ? xRangeMin : x === 'right' ? xRangeMax : $xScale(x)}
-      x2={x === true || x === 'left' ? xRangeMin : x === 'right' ? xRangeMax : $xScale(x)}
-      y1={$yRange[0] || 0}
-      y2={$yRange[1] || 0}
-      {...$$restProps}
-      class={cls('stroke-surface-content/50', $$props.class)}
-    />
+  {#if showRule(x, 'x')}
+    {@const xCoord =
+      x === true || x === 'left' ? xRangeMin : x === 'right' ? xRangeMax : $xScale(x)}
+
+    {#if $radial}
+      {@const [x1, y1] = pointRadial(xCoord, Number(yRangeMin))}
+      {@const [x2, y2] = pointRadial(xCoord, Number(yRangeMax))}
+
+      <Line
+        {x1}
+        {y1}
+        {x2}
+        {y2}
+        {...$$restProps}
+        class={cls('test grid stroke-surface-content/10', $$props.class)}
+      />
+    {:else}
+      <Line
+        x1={xCoord}
+        x2={xCoord}
+        y1={$yRange[0] || 0}
+        y2={$yRange[1] || 0}
+        {...$$restProps}
+        class={cls('stroke-surface-content/50', $$props.class)}
+      />
+    {/if}
   {/if}
 
-  {#if y !== false}
-    <Line
-      x1={$xRange[0] || 0}
-      x2={$xRange[1] || 0}
-      y1={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
-      y2={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
-      {...$$restProps}
-      class={cls('stroke-surface-content/50', $$props.class)}
-    />
+  {#if showRule(y, 'y')}
+    {#if $radial}
+      <Circle
+        r={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
+        class={cls('fill-none stroke-surface-content/50', $$props.class)}
+      />
+    {:else}
+      <Line
+        x1={$xRange[0] || 0}
+        x2={$xRange[1] || 0}
+        y1={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
+        y2={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
+        {...$$restProps}
+        class={cls('stroke-surface-content/50', $$props.class)}
+      />
+    {/if}
   {/if}
 </g>

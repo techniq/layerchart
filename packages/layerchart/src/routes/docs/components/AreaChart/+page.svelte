@@ -8,7 +8,6 @@
     Tooltip,
     pivotLonger,
     LinearGradient,
-    Rule,
     Spline,
   } from 'layerchart';
   import { PeriodType } from 'svelte-ux';
@@ -79,11 +78,10 @@
   }}
 
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={negativeDateSeriesData} x="date" y="value" props={{ xAxis: { rule: false } }}>
+    <AreaChart data={negativeDateSeriesData} x="date" y="value">
       <svelte:fragment slot="marks" let:yScale let:height let:padding>
         {@const thresholdValue = 0}
         {@const thresholdOffset = yScale(thresholdValue) / (height + padding.bottom)}
-        <Rule y={0} />
         <LinearGradient
           stops={[
             [thresholdOffset, colors.positive],
@@ -231,6 +229,52 @@
   </div>
 </Preview>
 
+<h2>Stack series (expand)</h2>
+
+<Preview data={multiSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'oranges',
+          color: 'hsl(var(--color-warning))',
+        },
+      ]}
+      seriesLayout="stackExpand"
+    />
+  </div>
+</Preview>
+
+<h2>Stack series (diverging)</h2>
+
+<Preview data={multiSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', value: (d) => -d.apples, color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'oranges',
+          color: 'hsl(var(--color-warning))',
+        },
+      ]}
+      seriesLayout="stackDiverging"
+    />
+  </div>
+</Preview>
+
 <h2>Labels</h2>
 
 <Preview data={dateSeriesData}>
@@ -257,6 +301,7 @@
       y={['minmin', 'maxmax']}
       yRange={({ height }) => [height / 5, height / 2]}
       radial
+      rule={{ class: 'stroke-surface-content/20' }}
       props={{
         area: { line: false, 'fill-opacity': 1 },
         xAxis: { format: PeriodType.Month },
@@ -316,6 +361,54 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <AreaChart data={dateSeriesData} x="date" y="value" axis="y" />
+  </div>
+</Preview>
+
+<h2>Legend</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'oranges',
+          color: 'hsl(var(--color-warning))',
+        },
+      ]}
+      seriesLayout="stack"
+      legend
+    />
+  </div>
+</Preview>
+
+<h2>Legend (placement)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'oranges',
+          color: 'hsl(var(--color-warning))',
+        },
+      ]}
+      seriesLayout="stack"
+      legend={{ placement: 'top-right' }}
+    />
   </div>
 </Preview>
 

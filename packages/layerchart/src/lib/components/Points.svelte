@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+  export type Point = { x: number; y: number; r: number; xValue: any; yValue: any; data: any };
+</script>
+
 <script lang="ts">
   import { getContext, type ComponentProps } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -43,8 +47,6 @@
   export let fill: string | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | string | undefined = undefined;
-
-  type Point = { x: number; y: number; r: number; xValue: any; yValue: any; data: any };
 
   /** Render to canvas */
   export let render: ((ctx: CanvasRenderingContext2D, points: Point[]) => any) | undefined =

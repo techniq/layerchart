@@ -72,6 +72,11 @@
   export let scale: any = undefined;
   $: _scale = scale ?? (['horizontal', 'angle'].includes(orientation) ? $xScale : $yScale);
 
+  export let classes: {
+    root?: string;
+    label?: string;
+  } = {};
+
   $: [xRangeMin, xRangeMax] = extent<number>($xRange) as [number, number];
   $: [yRangeMin, yRangeMax] = extent<number>($yRange) as [number, number];
 
@@ -210,12 +215,13 @@
     ...labelProps,
     class: cls(
       'label text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
+      classes.label,
       labelProps?.class
     ),
   } satisfies ComponentProps<Text>;
 </script>
 
-<g class="Axis placement-{placement}">
+<g class={cls('Axis placement-{placement}', classes.root, $$props.class)}>
   {#if rule !== false}
     {@const lineProps = typeof rule === 'object' ? rule : null}
     {#if orientation === 'vertical'}
@@ -315,7 +321,7 @@
             {tweened}
             {spring}
             {...lineProps}
-            class={cls('test grid stroke-surface-content/10', lineProps?.class)}
+            class={cls('grid stroke-surface-content/10', lineProps?.class)}
           />
         {:else if orientation === 'radius'}
           <circle

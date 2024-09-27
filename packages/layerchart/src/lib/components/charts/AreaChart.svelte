@@ -1,7 +1,7 @@
 <script lang="ts" generics="TData">
   import { type ComponentProps } from 'svelte';
-  import { scaleLinear, scaleTime } from 'd3-scale';
-  import { stack } from 'd3-shape';
+  import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
+  import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
 
@@ -10,19 +10,23 @@
   import Chart from '../Chart.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
+  import Legend from '../Legend.svelte';
   import Line from '../Line.svelte';
   import Points from '../Points.svelte';
+  import Rule from '../Rule.svelte';
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
 
   interface $$Props extends ComponentProps<Chart<TData>> {
-    series?: typeof series;
-    labels?: typeof labels;
     axis?: typeof axis;
+    labels?: typeof labels;
+    legend?: typeof legend;
     points?: typeof points;
     props?: typeof props;
+    rule?: typeof rule;
+    series?: typeof series;
     seriesLayout?: typeof seriesLayout;
   }
 
@@ -44,18 +48,22 @@
   }[] = [{ key: 'default', value: y, color: 'hsl(var(--color-primary))' }];
 
   /** Determine how to layout series.  Overlap (default) or stack */
-  export let seriesLayout: 'overlap' | 'stack' = 'overlap';
-  $: stackSeries = seriesLayout === 'stack';
+  export let seriesLayout: 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging' = 'overlap';
+  $: stackSeries = seriesLayout.startsWith('stack');
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
+  export let rule: ComponentProps<Rule> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
+  export let legend: ComponentProps<Legend> | boolean = false;
   export let points: ComponentProps<Points> | boolean = false;
 
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
     yAxis?: Partial<ComponentProps<Axis>>;
+    rule?: Partial<ComponentProps<Rule>>;
     area?: Partial<ComponentProps<Area>>;
     line?: Partial<ComponentProps<Line>>;
+    legend?: Partial<ComponentProps<Legend>>;
     points?: Partial<ComponentProps<Points>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
@@ -71,7 +79,19 @@
 
   $: if (stackSeries) {
     const seriesKeys = series.map((s) => s.key);
-    const stackData = stack().keys(seriesKeys)(chartDataArray(data)) as any[];
+    const offset =
+      seriesLayout === 'stackExpand'
+        ? stackOffsetExpand
+        : seriesLayout === 'stackDiverging'
+          ? stackOffsetDiverging
+          : stackOffsetNone;
+    const stackData = stack()
+      .keys(seriesKeys)
+      .value((d, key) => {
+        const s = series.find((d) => d.key === key)!;
+        return accessor(s.value ?? s.key)(d as any);
+      })
+      .offset(offset)(chartDataArray(data)) as any[];
 
     chartData = chartData.map((d, i) => {
       return {
@@ -91,7 +111,7 @@
   {xScale}
   y={y ??
     (stackSeries
-      ? (d) => series.map((s, i) => d.stackData[i][1])
+      ? (d) => series.flatMap((s, i) => d.stackData[i])
       : series.map((s) => s.value ?? s.key))}
   yBaseline={0}
   yNice
@@ -100,7 +120,7 @@
     ? undefined
     : {
         left: axis === true || axis === 'y' ? 16 : 0,
-        bottom: axis === true || axis === 'x' ? 16 : 0,
+        bottom: (axis === true || axis === 'x' ? 16 : 0) + (legend === true ? 32 : 0),
       }}
   tooltip={{ mode: 'bisect-x' }}
   {...$$restProps}
@@ -122,7 +142,6 @@
             <Axis
               placement={radial ? 'radius' : 'left'}
               grid
-              rule
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.yAxis}
@@ -133,11 +152,14 @@
             <Axis
               placement={radial ? 'angle' : 'bottom'}
               grid={radial}
-              rule
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.xAxis}
             />
+          {/if}
+
+          {#if rule}
+            <Rule x={0} y={0} {...typeof rule === 'object' ? rule : null} {...props.rule} />
           {/if}
         {/if}
       </slot>
@@ -206,6 +228,21 @@
         <Labels {...props.labels} {...typeof labels === 'object' ? labels : null} />
       {/if}
     </Svg>
+
+    <slot name="legend" {...slotProps}>
+      {#if legend}
+        <Legend
+          scale={scaleOrdinal(
+            series.map((s) => s.key),
+            series.map((s) => s.color)
+          )}
+          placement="bottom"
+          variant="swatches"
+          {...props.legend}
+          {...typeof legend === 'object' ? legend : null}
+        />
+      {/if}
+    </slot>
 
     <slot name="tooltip" {...slotProps}>
       <Tooltip.Root let:data>

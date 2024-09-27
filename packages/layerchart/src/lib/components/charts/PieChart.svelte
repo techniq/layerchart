@@ -6,6 +6,7 @@
   import Arc from '../Arc.svelte';
   import Chart from '../Chart.svelte';
   import Group from '../Group.svelte';
+  import Legend from '../Legend.svelte';
   import Pie from '../Pie.svelte';
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
@@ -15,17 +16,17 @@
   type ChartProps = ComponentProps<Chart<TData>>;
 
   interface $$Props extends ChartProps {
-    label?: typeof label;
-    value?: typeof label;
-    maxValue?: typeof maxValue;
-    range?: typeof range;
-    innerRadius?: typeof innerRadius;
-    outerRadius?: typeof outerRadius;
     cornerRadius?: typeof cornerRadius;
+    innerRadius?: typeof innerRadius;
+    label?: typeof label;
+    legend?: typeof legend;
+    maxValue?: typeof maxValue;
+    outerRadius?: typeof outerRadius;
     padAngle?: typeof padAngle;
     props?: typeof props;
+    range?: typeof range;
     series?: typeof series;
-    // labels?: typeof labels;
+    value?: typeof label;
   }
 
   export let data: ChartProps['data'] = [];
@@ -53,6 +54,8 @@
     props?: Partial<ComponentProps<Arc>>;
   }[] = [{ key: 'default', value: value /*, color: 'hsl(var(--color-primary))'*/ }];
 
+  export let legend: ComponentProps<Legend> | boolean = false;
+
   /**
    * Range [min,max] in degrees.  See also startAngle/endAngle
    */
@@ -79,6 +82,7 @@
     pie?: Partial<ComponentProps<Pie>>;
     group?: Partial<ComponentProps<Group>>;
     arc?: Partial<ComponentProps<Arc>>;
+    legend?: Partial<ComponentProps<Legend>>;
   } = {};
 
   $: allSeriesData = series
@@ -105,6 +109,7 @@
         'hsl(var(--color-warning))',
         'hsl(var(--color-danger))',
       ]}
+  padding={{ bottom: legend === true ? 32 : 0 }}
   {...$$restProps}
   let:x
   let:xScale
@@ -141,6 +146,7 @@
                 {tooltip}
                 data={d}
                 {...props.arc}
+                {...s.props}
               />
             {:else}
               <Pie
@@ -165,6 +171,7 @@
                     data={arc.data}
                     {tooltip}
                     {...props.arc}
+                    {...s.props}
                   />
                 {/each}
               </Pie>
@@ -175,6 +182,17 @@
 
       <slot name="above-marks" {...slotProps} />
     </Svg>
+
+    <slot name="legend" {...slotProps}>
+      {#if legend}
+        <Legend
+          placement="bottom"
+          variant="swatches"
+          {...props.legend}
+          {...typeof legend === 'object' ? legend : null}
+        />
+      {/if}
+    </slot>
 
     <slot name="tooltip" {...slotProps}>
       <Tooltip.Root let:data>
