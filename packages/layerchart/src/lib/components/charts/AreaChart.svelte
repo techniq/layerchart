@@ -142,7 +142,13 @@
             <Axis
               placement={radial ? 'radius' : 'left'}
               grid
-              format={(value) => format(value, undefined, { variant: 'short' })}
+              format={(value) => {
+                if (seriesLayout === 'stackExpand') {
+                  return format(value, 'percentRound');
+                } else {
+                  return format(value, undefined, { variant: 'short' });
+                }
+              }}
               {...typeof axis === 'object' ? axis : null}
               {...props.yAxis}
             />

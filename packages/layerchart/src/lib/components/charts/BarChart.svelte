@@ -194,7 +194,13 @@
             <Axis
               placement="left"
               grid={isVertical}
-              format={(value) => format(value, undefined, { variant: 'short' })}
+              format={(value) => {
+                if (isVertical && seriesLayout === 'stackExpand') {
+                  return format(value, 'percentRound');
+                } else {
+                  return format(value, undefined, { variant: 'short' });
+                }
+              }}
               {...typeof axis === 'object' ? axis : null}
               {...props.yAxis}
             />
@@ -204,7 +210,13 @@
             <Axis
               placement="bottom"
               grid={!isVertical}
-              format={(value) => format(value, undefined, { variant: 'short' })}
+              format={(value) => {
+                if (!isVertical && seriesLayout === 'stackExpand') {
+                  return format(value, 'percentRound');
+                } else {
+                  return format(value, undefined, { variant: 'short' });
+                }
+              }}
               {...typeof axis === 'object' ? axis : null}
               {...props.xAxis}
             />

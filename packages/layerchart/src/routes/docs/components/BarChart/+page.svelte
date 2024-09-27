@@ -417,7 +417,6 @@
       seriesLayout="stackExpand"
       props={{
         xAxis: { format: 'none' },
-        yAxis: { format: 'metric' },
       }}
     />
   </div>
