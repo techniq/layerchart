@@ -109,12 +109,13 @@
       title="Energy (joules)"
       ticks={10}
     />
-    <Legend
+    <!-- TODO: Update Legend to hide swatches/ticks without labels -->
+    <!-- <Legend
       scale={scaleSequentialLog([1, 100], interpolateBlues)}
       title="Energy (joules)"
       ticks={10}
       variant="swatches"
-    />
+    /> -->
   </div>
 </Preview>
 
@@ -154,11 +155,12 @@
 <Preview>
   <div class="grid gap-6">
     <Legend scale={scaleQuantize([1, 10], schemePurples[9])} title="Unemployment rate (%)" />
-    <Legend
+    <!-- TODO: Update Legend fix swatches for scaleQuantile -->
+    <!-- <Legend
       scale={scaleQuantize([1, 10], schemePurples[9])}
       title="Unemployment rate (%)"
       variant="swatches"
-    />
+    /> -->
   </div>
 </Preview>
 
@@ -171,12 +173,13 @@
       title="Height (cm)"
       tickFormat="integer"
     />
-    <Legend
+    <!-- TODO: Update Legend fix swatches for scaleQuantile -->
+    <!-- <Legend
       scale={scaleQuantile(randomNormalData, schemeSpectral[9])}
       title="Height (cm)"
       tickFormat="integer"
       variant="swatches"
-    />
+    /> -->
   </div>
 </Preview>
 
@@ -189,11 +192,12 @@
       title="Unemployment rate (%)"
       tickLength={0}
     />
-    <Legend
+    <!-- TODO: Update Legend fix swatches for scaleThreshold -->
+    <!-- <Legend
       scale={scaleThreshold([2.5, 3.1, 3.5, 3.9, 6, 7, 8, 9.5], schemeRdBu[9])}
       title="Unemployment rate (%)"
       variant="swatches"
-    />
+    /> -->
   </div>
 </Preview>
 
