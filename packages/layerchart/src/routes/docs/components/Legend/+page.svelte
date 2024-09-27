@@ -31,7 +31,8 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  const data = [];
+  const randomExponentialData = range(100).map(() => Math.random() ** 2);
+  const randomNormalData = range(1000).map(randomNormal(100, 20));
 </script>
 
 <h1>Examples</h1>
@@ -122,18 +123,12 @@
 <Preview>
   <div class="grid gap-6">
     <Legend
-      scale={scaleSequentialQuantile(
-        range(100).map(() => Math.random() ** 2),
-        interpolateBlues
-      )}
+      scale={scaleSequentialQuantile(randomExponentialData, interpolateBlues)}
       title="Quantile"
       tickFormat="decimal"
     />
     <Legend
-      scale={scaleSequentialQuantile(
-        range(100).map(() => Math.random() ** 2),
-        interpolateBlues
-      )}
+      scale={scaleSequentialQuantile(randomExponentialData, interpolateBlues)}
       title="Quantile"
       tickFormat="decimal"
       variant="swatches"
@@ -172,12 +167,12 @@
 <Preview>
   <div class="grid gap-6">
     <Legend
-      scale={scaleQuantile(range(1000).map(randomNormal(100, 20)), schemeSpectral[9])}
+      scale={scaleQuantile(randomNormalData, schemeSpectral[9])}
       title="Height (cm)"
       tickFormat="integer"
     />
     <Legend
-      scale={scaleQuantile(range(1000).map(randomNormal(100, 20)), schemeSpectral[9])}
+      scale={scaleQuantile(randomNormalData, schemeSpectral[9])}
       title="Height (cm)"
       tickFormat="integer"
       variant="swatches"
