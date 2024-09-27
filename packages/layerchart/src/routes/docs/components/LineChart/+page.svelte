@@ -96,29 +96,14 @@
       data={multiSeriesFlatData}
       x="date"
       y="value"
-      tooltip={{ mode: 'voronoi' }}
-      let:x
-      let:tooltip
-    >
-      {@const series = [
+      series={[
         { key: 'apples', color: 'hsl(var(--color-danger))' },
         { key: 'bananas', color: 'hsl(var(--color-success))' },
         { key: 'oranges', color: 'hsl(var(--color-warning))' },
       ]}
-      {@const activeSeriesColor = series.find((s) => s.key === tooltip.data?.fruit)?.color}
-      <Svg>
-        <Axis
-          placement="left"
-          grid
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-        />
-        <Axis
-          placement="bottom"
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-        />
-
+      tooltip={{ mode: 'voronoi' }}
+    >
+      <svelte:fragment slot="marks" let:series let:tooltip>
         {#each series as s}
           {@const color =
             tooltip.data == null || tooltip.data.fruit === s.key
@@ -126,16 +111,22 @@
               : 'hsl(var(--color-surface-content) / 20%)'}
           <Spline data={multiSeriesData} y={s.key} class="stroke-2" stroke={color} />
         {/each}
+      </svelte:fragment>
 
+      <svelte:fragment slot="highlight" let:series let:tooltip>
+        {@const activeSeriesColor = series.find((s) => s.key === tooltip.data?.fruit)?.color}
         <Highlight lines points={{ fill: activeSeriesColor }} />
-      </Svg>
+      </svelte:fragment>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(x(data))}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label={data.fruit} value={data.value} color={activeSeriesColor} />
-        </Tooltip.List>
-      </Tooltip.Root>
+      <svelte:fragment slot="tooltip" let:series let:tooltip let:x>
+        {@const activeSeriesColor = series.find((s) => s.key === tooltip.data?.fruit)?.color}
+        <Tooltip.Root let:data>
+          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label={data.fruit} value={data.value} color={activeSeriesColor} />
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
     </LineChart>
   </div>
 </Preview>
