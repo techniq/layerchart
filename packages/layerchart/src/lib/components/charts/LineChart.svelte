@@ -17,12 +17,13 @@
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
 
   interface $$Props extends ComponentProps<Chart<TData>> {
-    series?: typeof series;
+    axis?: typeof axis;
     labels?: typeof labels;
     legend?: typeof legend;
-    axis?: typeof axis;
     points?: typeof points;
     props?: typeof props;
+    rule?: typeof rule;
+    series?: typeof series;
   }
 
   export let data: $$Props['data'] = [];

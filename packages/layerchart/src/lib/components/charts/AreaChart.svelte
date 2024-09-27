@@ -20,13 +20,13 @@
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
 
   interface $$Props extends ComponentProps<Chart<TData>> {
-    series?: typeof series;
-    labels?: typeof labels;
     axis?: typeof axis;
+    labels?: typeof labels;
     legend?: typeof legend;
-    rule?: typeof rule;
     points?: typeof points;
     props?: typeof props;
+    rule?: typeof rule;
+    series?: typeof series;
     seriesLayout?: typeof seriesLayout;
   }
 

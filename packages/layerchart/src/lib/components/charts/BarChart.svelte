@@ -20,16 +20,16 @@
   type ChartProps = ComponentProps<Chart<TData>>;
 
   interface $$Props extends ChartProps {
-    series?: typeof series;
-    seriesLayout?: typeof seriesLayout;
-    labels?: typeof labels;
-    legend?: typeof legend;
     axis?: typeof axis;
-    rule?: typeof rule;
-    orientation?: typeof orientation;
     bandPadding?: typeof bandPadding;
     groupPadding?: typeof groupPadding;
+    labels?: typeof labels;
+    legend?: typeof legend;
+    orientation?: typeof orientation;
     props?: typeof props;
+    rule?: typeof rule;
+    series?: typeof series;
+    seriesLayout?: typeof seriesLayout;
   }
 
   export let data: $$Props['data'] = [];
