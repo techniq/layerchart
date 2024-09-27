@@ -301,6 +301,7 @@
       y={['minmin', 'maxmax']}
       yRange={({ height }) => [height / 5, height / 2]}
       radial
+      rule={{ class: 'stroke-surface-content/20' }}
       props={{
         area: { line: false, 'fill-opacity': 1 },
         xAxis: { format: PeriodType.Month },

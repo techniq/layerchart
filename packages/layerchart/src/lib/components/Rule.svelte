@@ -1,11 +1,13 @@
 <script lang="ts">
   import { extent } from 'd3-array';
+  import { pointRadial } from 'd3-shape';
   import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
+  import Circle from './Circle.svelte';
   import Line from './Line.svelte';
 
-  const { xScale, yScale, xRange, yRange } = chartContext();
+  const { xScale, yScale, xRange, yRange, radial } = chartContext();
 
   $: [xRangeMin, xRangeMax] = extent<number | Date>($xRange);
   $: [yRangeMin, yRangeMax] = extent<number | Date>($yRange);
@@ -45,26 +47,49 @@
 </script>
 
 <g class="rule">
-  <!-- TODO: Only draw if number and between min/max domain (or range using scale) -->
   {#if showRule(x, 'x')}
-    <Line
-      x1={x === true || x === 'left' ? xRangeMin : x === 'right' ? xRangeMax : $xScale(x)}
-      x2={x === true || x === 'left' ? xRangeMin : x === 'right' ? xRangeMax : $xScale(x)}
-      y1={$yRange[0] || 0}
-      y2={$yRange[1] || 0}
-      {...$$restProps}
-      class={cls('stroke-surface-content/50', $$props.class)}
-    />
+    {@const xCoord =
+      x === true || x === 'left' ? xRangeMin : x === 'right' ? xRangeMax : $xScale(x)}
+
+    {#if $radial}
+      {@const [x1, y1] = pointRadial(xCoord, Number(yRangeMin))}
+      {@const [x2, y2] = pointRadial(xCoord, Number(yRangeMax))}
+
+      <Line
+        {x1}
+        {y1}
+        {x2}
+        {y2}
+        {...$$restProps}
+        class={cls('test grid stroke-surface-content/10', $$props.class)}
+      />
+    {:else}
+      <Line
+        x1={xCoord}
+        x2={xCoord}
+        y1={$yRange[0] || 0}
+        y2={$yRange[1] || 0}
+        {...$$restProps}
+        class={cls('stroke-surface-content/50', $$props.class)}
+      />
+    {/if}
   {/if}
 
   {#if showRule(y, 'y')}
-    <Line
-      x1={$xRange[0] || 0}
-      x2={$xRange[1] || 0}
-      y1={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
-      y2={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
-      {...$$restProps}
-      class={cls('stroke-surface-content/50', $$props.class)}
-    />
+    {#if $radial}
+      <Circle
+        r={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
+        class={cls('fill-none stroke-surface-content/50', $$props.class)}
+      />
+    {:else}
+      <Line
+        x1={$xRange[0] || 0}
+        x2={$xRange[1] || 0}
+        y1={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
+        y2={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
+        {...$$restProps}
+        class={cls('stroke-surface-content/50', $$props.class)}
+      />
+    {/if}
   {/if}
 </g>

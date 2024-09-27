@@ -321,7 +321,7 @@
             {tweened}
             {spring}
             {...lineProps}
-            class={cls('test grid stroke-surface-content/10', lineProps?.class)}
+            class={cls('grid stroke-surface-content/10', lineProps?.class)}
           />
         {:else if orientation === 'radius'}
           <circle
