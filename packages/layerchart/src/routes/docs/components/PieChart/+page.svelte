@@ -9,9 +9,9 @@
   const data = dataByYear.get(2019);
 
   const exerciseData = [
-    { label: 'move', value: 400, maxValue: 1000, color: '#ef4444' },
-    { label: 'exercise', value: 20, maxValue: 30, color: '#a3e635' },
-    { label: 'stand', value: 10, maxValue: 12, color: '#22d3ee' },
+    { key: 'move', value: 400, maxValue: 1000, color: '#ef4444' },
+    { key: 'exercise', value: 20, maxValue: 30, color: '#a3e635' },
+    { key: 'stand', value: 10, maxValue: 12, color: '#22d3ee' },
   ];
 </script>
 
@@ -21,7 +21,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} label="fruit" value="value" />
+    <PieChart {data} key="fruit" value="value" />
   </div>
 </Preview>
 
@@ -29,14 +29,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart
-      {data}
-      label="fruit"
-      value="value"
-      innerRadius={-20}
-      cornerRadius={5}
-      padAngle={0.02}
-    />
+    <PieChart {data} key="fruit" value="value" innerRadius={-20} cornerRadius={5} padAngle={0.02} />
   </div>
 </Preview>
 
@@ -46,7 +39,7 @@
   <div class="h-[300px] border rounded">
     <PieChart
       {data}
-      label="fruit"
+      key="fruit"
       value="value"
       range={[-90, 90]}
       outerRadius={300 / 2}
@@ -63,8 +56,8 @@
 <Preview>
   <div class="h-[200px] p-4 border rounded">
     <PieChart
-      data={[{ label: 'Example', value: 70 }]}
-      label="label"
+      data={[{ key: 'Example', value: 70 }]}
+      key="key"
       value="value"
       maxValue={100}
       outerRadius={-25}
@@ -113,8 +106,8 @@
 <Preview>
   <div class="h-[120px] p-4 border rounded">
     <PieChart
-      data={[{ label: 'Example', value: 70 }]}
-      label="label"
+      data={[{ key: 'Example', value: 70 }]}
+      key="key"
       value="value"
       maxValue={100}
       range={[-90, 90]}
@@ -134,7 +127,7 @@
 <Preview data={dataByYear}>
   <div class="h-[300px] p-4 border rounded">
     <PieChart
-      label="fruit"
+      key="fruit"
       value="value"
       series={Array.from(dataByYear, ([key, data]) => ({ key, data }))}
       outerRadius={-25}
@@ -150,7 +143,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <PieChart
-      label="fruit"
+      key="fruit"
       value="value"
       series={data?.map((d) => ({ key: d.fruit, data: [d] }))}
       outerRadius={-25}
@@ -165,7 +158,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <PieChart
-      label="fruit"
+      key="fruit"
       value="value"
       series={data?.map((d) => ({ key: d.fruit, data: [d] }))}
       range={[-90, 90]}
@@ -182,7 +175,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <PieChart
-      label="fruit"
+      key="fruit"
       value="value"
       series={data?.map((d) => ({ key: d.fruit, data: [d] }))}
       props={{
@@ -202,11 +195,11 @@
 <Preview data={exerciseData}>
   <div class="h-[200px] p-4 border rounded">
     <PieChart
-      label="label"
+      key="key"
       value="value"
       series={exerciseData.map((d) => {
         return {
-          key: d.label,
+          key: d.key,
           data: [d],
           maxValue: d.maxValue,
           color: d.color,
@@ -224,7 +217,7 @@
 <Preview data={dataByYear}>
   <div class="h-[300px] p-4 border rounded">
     <PieChart
-      label="fruit"
+      key="fruit"
       value="value"
       series={[
         { key: 2019, data: dataByYear.get(2019), props: { innerRadius: -20 } },
@@ -238,7 +231,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} label="fruit" value="value" props={{ arc: { class: 'stroke-surface-100' } }} />
+    <PieChart {data} key="fruit" value="value" props={{ arc: { class: 'stroke-surface-100' } }} />
   </div>
 </Preview>
 
@@ -246,7 +239,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} label="fruit" value="value" legend />
+    <PieChart {data} key="fruit" value="value" legend />
   </div>
 </Preview>
 
@@ -256,7 +249,7 @@
   <div class="h-[300px] p-4 border rounded">
     <PieChart
       {data}
-      label="fruit"
+      key="fruit"
       value="value"
       legend={{ placement: 'top-left', orientation: 'vertical' }}
     />
@@ -269,7 +262,7 @@
   <div class="h-[300px] p-4 border rounded">
     <PieChart
       {data}
-      label="fruit"
+      key="fruit"
       value="value"
       cRange={[
         'hsl(var(--color-success))',
@@ -285,6 +278,6 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} label="fruit" value="value" labels="centroid" />
+    <PieChart {data} key="fruit" value="value" keys="centroid" />
   </div>
 </Preview> -->

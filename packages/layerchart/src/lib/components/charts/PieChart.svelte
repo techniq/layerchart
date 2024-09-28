@@ -18,6 +18,7 @@
   interface $$Props extends ChartProps {
     cornerRadius?: typeof cornerRadius;
     innerRadius?: typeof innerRadius;
+    key?: typeof key;
     label?: typeof label;
     legend?: typeof legend;
     maxValue?: typeof maxValue;
@@ -30,6 +31,10 @@
   }
 
   export let data: ChartProps['data'] = [];
+
+  /** Key accessor */
+  export let key: Accessor<TData> = 'key';
+  $: keyAccessor = accessor(key);
 
   /** Label accessor */
   export let label: Accessor<TData> = 'label';
@@ -97,8 +102,8 @@
 <Chart
   data={chartData}
   x={value}
-  y={label}
-  c={label}
+  y={key}
+  c={key}
   cRange={seriesColors.length
     ? seriesColors
     : [
@@ -122,7 +127,7 @@
   let:padding
   let:tooltip
 >
-  {@const slotProps = { label, value, x, xScale, y, yScale, width, height, padding, tooltip }}
+  {@const slotProps = { key, label, value, x, xScale, y, yScale, width, height, padding, tooltip }}
   <slot {...slotProps}>
     <Svg center>
       <slot name="below-marks" {...slotProps} />
@@ -198,7 +203,7 @@
       <Tooltip.Root let:data>
         <Tooltip.List>
           <Tooltip.Item
-            label={labelAccessor(data)}
+            label={labelAccessor(data) || keyAccessor(data)}
             value={valueAccessor(data)}
             color={cScale(c(data))}
             {format}
