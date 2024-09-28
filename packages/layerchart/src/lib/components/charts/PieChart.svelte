@@ -191,6 +191,10 @@
     <slot name="legend" {...slotProps}>
       {#if legend}
         <Legend
+          tickFormat={(tick) => {
+            const item = chartData.find((d) => keyAccessor(d) === tick);
+            return item ? (labelAccessor(item) ?? tick) : tick;
+          }}
           placement="bottom"
           variant="swatches"
           {...props.legend}

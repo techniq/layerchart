@@ -256,6 +256,31 @@
   </div>
 </Preview>
 
+<h2>Legend (custom label)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      {data}
+      key="fruit"
+      label={(d) => {
+        switch (d.fruit) {
+          case 'apples':
+            return 'Apples 🍎';
+          case 'bananas':
+            return 'Bananas 🍌';
+          case 'cherries':
+            return 'Cherries 🍒';
+          case 'grapes':
+            return 'Grapes 🍇';
+        }
+      }}
+      value="value"
+      legend
+    />
+  </div>
+</Preview>
+
 <h2>Customize colors</h2>
 
 <Preview {data}>
