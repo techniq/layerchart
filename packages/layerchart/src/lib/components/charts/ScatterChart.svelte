@@ -152,7 +152,7 @@
       {#if legend}
         <Legend
           scale={scaleOrdinal(
-            series.map((s) => s.key),
+            series.map((s) => s.label ?? s.key),
             series.map((s) => s.color)
           )}
           placement="bottom"

@@ -123,6 +123,30 @@
   </div>
 </Preview>
 
+<h2>Legend (custom labels)</h2>
+
+<Preview data={penguinDataBySpecies}>
+  <div class="h-[400px] p-4 border rounded">
+    <ScatterChart
+      x="flipper_length_mm"
+      y="bill_length_mm"
+      series={penguinDataBySpecies.map(([species, data], i) => {
+        return {
+          key: species,
+          label: species + ' 🐧',
+          data,
+          color: [
+            'hsl(var(--color-primary))',
+            'hsl(var(--color-secondary))',
+            'hsl(var(--color-success))',
+          ][i],
+        };
+      })}
+      legend
+    />
+  </div>
+</Preview>
+
 <h2>Single axis (x)</h2>
 
 <Preview data={spiralData}>

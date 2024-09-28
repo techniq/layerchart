@@ -412,6 +412,32 @@
   </div>
 </Preview>
 
+<h2>Legend (custom labels)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', label: 'Apples 🍎 ', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          label: 'Bananas 🍌',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'oranges',
+          label: 'Oranges 🍊',
+          color: 'hsl(var(--color-warning))',
+        },
+      ]}
+      seriesLayout="stack"
+      legend
+    />
+  </div>
+</Preview>
+
 <h2>Custom tooltip</h2>
 
 <Preview data={dateSeriesData}>

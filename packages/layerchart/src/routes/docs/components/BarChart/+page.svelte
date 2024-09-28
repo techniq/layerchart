@@ -553,6 +553,41 @@
   </div>
 </Preview>
 
+<h2>Legend (custom labels)</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={wideData}
+      x="year"
+      series={[
+        { key: 'apples', label: 'Apples 🍎', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          label: 'Bananas 🍌',
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          key: 'cherries',
+          label: 'Cherries 🍒',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'grapes',
+          label: 'Grapes 🍇',
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      seriesLayout="group"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+      }}
+      legend
+    />
+  </div>
+</Preview>
+
 <h2>Labels</h2>
 
 <Preview data={dateSeriesData}>
