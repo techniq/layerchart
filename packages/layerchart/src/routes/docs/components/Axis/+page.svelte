@@ -333,7 +333,7 @@
     >
       <Svg>
         <Axis placement="bottom" rule />
-        <Axis placement="left" rule ticks={(scale) => [45, ...scale.ticks?.()]} format="integer" />
+        <Axis placement="left" rule ticks={(scale) => [45, ...scale.ticks?.()]} />
       </Svg>
     </Chart>
   </div>
@@ -424,6 +424,48 @@
           tickLength={22}
         />
         <Axis placement="left" rule />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Hide `0` tick via ticks</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" rule />
+        <Axis placement="left" rule ticks={(scale) => scale.ticks?.().filter((v) => v)} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Hide `0` tick via format</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" rule />
+        <Axis placement="left" rule format={(v) => v || ''} />
       </Svg>
     </Chart>
   </div>
