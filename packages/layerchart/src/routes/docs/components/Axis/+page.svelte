@@ -13,6 +13,9 @@
 
   const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
 
+  // Added to make svelte-check happy
+  const isNotZero = (v: any) => v !== 0;
+
   let debug = false;
 </script>
 
@@ -444,7 +447,7 @@
     >
       <Svg>
         <Axis placement="bottom" rule />
-        <Axis placement="left" rule ticks={(scale) => scale.ticks?.().filter((v) => v)} />
+        <Axis placement="left" rule ticks={(scale) => scale.ticks?.().filter(isNotZero)} />
       </Svg>
     </Chart>
   </div>
