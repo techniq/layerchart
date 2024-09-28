@@ -250,7 +250,7 @@
           color: 'hsl(var(--color-success))',
         },
         {
-          key: 'dates',
+          key: 'grapes',
           color: 'hsl(var(--color-info))',
         },
       ]}
@@ -282,7 +282,7 @@
           color: 'hsl(var(--color-success))',
         },
         {
-          key: 'dates',
+          key: 'grapes',
           color: 'hsl(var(--color-info))',
         },
       ]}
@@ -315,8 +315,8 @@
           color: 'hsl(var(--color-success))',
         },
         {
-          key: 'dates',
-          data: dataByFruit.get('dates'),
+          key: 'grapes',
+          data: dataByFruit.get('grapes'),
           color: 'hsl(var(--color-info))',
         },
       ]}
@@ -347,7 +347,7 @@
           color: 'hsl(var(--color-success))',
         },
         {
-          key: 'dates',
+          key: 'grapes',
           color: 'hsl(var(--color-info))',
         },
       ]}
@@ -379,7 +379,7 @@
           color: 'hsl(var(--color-success))',
         },
         {
-          key: 'dates',
+          key: 'grapes',
           color: 'hsl(var(--color-info))',
         },
       ]}
@@ -410,7 +410,7 @@
           color: 'hsl(var(--color-success))',
         },
         {
-          key: 'dates',
+          key: 'grapes',
           color: 'hsl(var(--color-info))',
         },
       ]}
@@ -440,7 +440,7 @@
           color: 'hsl(var(--color-success))',
         },
         {
-          key: 'dates',
+          key: 'grapes',
           color: 'hsl(var(--color-info))',
         },
       ]}
@@ -475,8 +475,8 @@
           color: 'hsl(var(--color-success))',
         },
         {
-          key: 'dates',
-          data: dataByFruit.get('dates'),
+          key: 'grapes',
+          data: dataByFruit.get('grapes'),
           color: 'hsl(var(--color-info))',
         },
       ]}
@@ -507,7 +507,7 @@
           color: 'hsl(var(--color-success))',
         },
         {
-          key: 'dates',
+          key: 'grapes ',
           color: 'hsl(var(--color-info))',
         },
       ]}
@@ -539,7 +539,7 @@
           color: 'hsl(var(--color-success))',
         },
         {
-          key: 'dates',
+          key: 'grapes',
           color: 'hsl(var(--color-info))',
         },
       ]}

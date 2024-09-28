@@ -124,32 +124,32 @@ export function createTimeSeries<TKey extends string>(options: {
 }
 
 export const wideData = [
-  { year: 2019, apples: 3840, bananas: 1920, cherries: 960, dates: 400 },
-  { year: 2018, apples: 1600, bananas: 1440, cherries: 960, dates: 400 },
-  { year: 2017, apples: 820, bananas: 1000, cherries: 640, dates: 400 },
-  { year: 2016, apples: 820, bananas: 560, cherries: 720, dates: 400 },
+  { year: 2019, apples: 3840, bananas: 1920, cherries: 960, grapes: 400 },
+  { year: 2018, apples: 1600, bananas: 1440, cherries: 960, grapes: 400 },
+  { year: 2017, apples: 820, bananas: 1000, cherries: 640, grapes: 400 },
+  { year: 2016, apples: 820, bananas: 560, cherries: 720, grapes: 400 },
 ];
 
 export const longData = [
   { year: 2019, basket: 1, fruit: 'apples', value: 3840 },
   { year: 2019, basket: 1, fruit: 'bananas', value: 1920 },
   { year: 2019, basket: 2, fruit: 'cherries', value: 960 },
-  { year: 2019, basket: 2, fruit: 'dates', value: 400 },
+  { year: 2019, basket: 2, fruit: 'grapes', value: 400 },
 
   { year: 2018, basket: 1, fruit: 'apples', value: 1600 },
   { year: 2018, basket: 1, fruit: 'bananas', value: 1440 },
   { year: 2018, basket: 2, fruit: 'cherries', value: 960 },
-  { year: 2018, basket: 2, fruit: 'dates', value: 400 },
+  { year: 2018, basket: 2, fruit: 'grapes', value: 400 },
 
   { year: 2017, basket: 1, fruit: 'apples', value: 820 },
   { year: 2017, basket: 1, fruit: 'bananas', value: 1000 },
   { year: 2017, basket: 2, fruit: 'cherries', value: 640 },
-  { year: 2017, basket: 2, fruit: 'dates', value: 400 },
+  { year: 2017, basket: 2, fruit: 'grapes', value: 400 },
 
   { year: 2016, basket: 1, fruit: 'apples', value: 820 },
   { year: 2016, basket: 1, fruit: 'bananas', value: 560 },
   { year: 2016, basket: 2, fruit: 'cherries', value: 720 },
-  { year: 2016, basket: 2, fruit: 'dates', value: 400 },
+  { year: 2016, basket: 2, fruit: 'grapes', value: 400 },
 ];
 
 export function getPhyllotaxis({

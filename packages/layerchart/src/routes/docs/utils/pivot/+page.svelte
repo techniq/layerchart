@@ -9,7 +9,7 @@
 <h1>pivotLonger</h1>
 
 <Code
-  source="pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'dates'], 'fruit', 'value')"
+  source="pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'grapes'], 'fruit', 'value')"
   language="js"
 />
 
@@ -20,7 +20,7 @@
 <h2>After</h2>
 
 <Json
-  value={pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'dates'], 'fruit', 'value')}
+  value={pivotLonger(wideData, ['apples', 'bananas', 'cherries', 'grapes'], 'fruit', 'value')}
   class="rounded"
 />
 
