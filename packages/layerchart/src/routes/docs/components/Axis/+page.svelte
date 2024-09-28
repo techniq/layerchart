@@ -318,6 +318,27 @@
   </div>
 </Preview>
 
+<h2>Inject tick value</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" rule />
+        <Axis placement="left" rule ticks={(scale) => [45, ...scale.ticks?.()]} format="integer" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>tick count</h2>
 
 <Preview {data}>
