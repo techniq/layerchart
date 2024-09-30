@@ -51,7 +51,6 @@
     {
       key: 'default',
       value: orientation === 'vertical' ? y : x,
-      color: 'hsl(var(--color-primary))',
     },
   ];
 
@@ -193,6 +192,8 @@
   {y1Scale}
   {y1Domain}
   {y1Range}
+  c={isVertical ? y : x}
+  cRange={['hsl(var(--color-primary))']}
   padding={axis === false
     ? undefined
     : {
@@ -209,6 +210,8 @@
   let:height
   let:padding
   let:tooltip
+  let:c
+  let:cScale
 >
   {@const slotProps = {
     x,
@@ -309,7 +312,7 @@
             <Tooltip.Item
               label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
               value={valueAccessor(data)}
-              color={s.color}
+              color={s.color ?? cScale(c(data))}
               {format}
               valueAlign="right"
             />

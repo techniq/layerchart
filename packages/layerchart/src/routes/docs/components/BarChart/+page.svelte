@@ -10,6 +10,7 @@
     Tooltip,
   } from 'layerchart';
   import { group, sum } from 'd3-array';
+  import { scaleThreshold } from 'd3-scale';
   import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -27,6 +28,7 @@
     value: 'integer',
     keys: ['value', 'baseline'],
   });
+  const negativeData = createDateSeries({ count: 10, min: -20, max: 50, value: 'integer' });
   const horizontalDateSeriesData = dateSeriesData.slice(0, 10);
   const dateSeriesBaselineData = dateSeriesData.map((d) => ({ ...d, value: d.baseline }));
 </script>
@@ -38,6 +40,30 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart data={dateSeriesData} x="date" y="value" />
+  </div>
+</Preview>
+
+<h2>Horizontal</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart data={horizontalDateSeriesData} x="value" y="date" orientation="horizontal" />
+  </div>
+</Preview>
+
+<h2>Color scale</h2>
+
+<Preview data={negativeData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={negativeData}
+      x="date"
+      y="value"
+      c="value"
+      cScale={scaleThreshold()}
+      cDomain={[0]}
+      cRange={['hsl(var(--color-danger))', 'hsl(var(--color-success))']}
+    />
   </div>
 </Preview>
 
@@ -59,14 +85,6 @@
         {/each}
       </svelte:fragment>
     </BarChart>
-  </div>
-</Preview>
-
-<h2>Horizontal</h2>
-
-<Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
-    <BarChart data={horizontalDateSeriesData} x="value" y="date" orientation="horizontal" />
   </div>
 </Preview>
 

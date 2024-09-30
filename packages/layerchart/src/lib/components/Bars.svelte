@@ -36,6 +36,7 @@
   export let stroke = 'black';
   export let strokeWidth = 0;
   export let radius = 0;
+  export let fill: string | undefined = undefined;
 
   /** Inset the rect for amount of padding.  Useful with multiple bars (bullet, overlap, etc) */
   export let inset = 0;
@@ -53,7 +54,7 @@
         {y}
         {x1}
         {y1}
-        fill={$config.c ? $cGet(item) : null}
+        fill={fill ?? ($config.c ? $cGet(item) : null)}
         {stroke}
         {strokeWidth}
         {radius}
