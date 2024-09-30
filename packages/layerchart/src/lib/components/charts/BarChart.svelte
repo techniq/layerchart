@@ -144,6 +144,31 @@
       };
     });
   }
+
+  function getBarsProps(s: (typeof series)[number], i: number) {
+    const barsProps: ComponentProps<Bars> = {
+      data: s.data,
+      x: !isVertical
+        ? stackSeries
+          ? (d) => d.stackData[i]
+          : (s.value ?? (s.data ? undefined : s.key))
+        : undefined,
+      y: isVertical
+        ? stackSeries
+          ? (d) => d.stackData[i]
+          : (s.value ?? (s.data ? undefined : s.key))
+        : undefined,
+      x1: isVertical && groupSeries ? (d) => s.value ?? s.key : undefined,
+      y1: !isVertical && groupSeries ? (d) => s.value ?? s.key : undefined,
+      radius: 4,
+      strokeWidth: 1,
+      fill: s.color,
+      ...props.bars,
+      ...s.props,
+    };
+
+    return barsProps;
+  }
 </script>
 
 <Chart
@@ -185,7 +210,18 @@
   let:padding
   let:tooltip
 >
-  {@const slotProps = { x, xScale, y, yScale, width, height, padding, tooltip, series }}
+  {@const slotProps = {
+    x,
+    xScale,
+    y,
+    yScale,
+    width,
+    height,
+    padding,
+    tooltip,
+    series,
+    getBarsProps,
+  }}
   <slot {...slotProps}>
     <Svg>
       <slot name="axis" {...slotProps}>
@@ -232,26 +268,7 @@
 
       <slot name="marks" {...slotProps}>
         {#each series as s, i}
-          <Bars
-            data={s.data}
-            x={!isVertical
-              ? stackSeries
-                ? (d) => d.stackData[i]
-                : (s.value ?? (s.data ? undefined : s.key))
-              : undefined}
-            y={isVertical
-              ? stackSeries
-                ? (d) => d.stackData[i]
-                : (s.value ?? (s.data ? undefined : s.key))
-              : undefined}
-            x1={isVertical && groupSeries ? (d) => s.value ?? s.key : undefined}
-            y1={!isVertical && groupSeries ? (d) => s.value ?? s.key : undefined}
-            radius={4}
-            strokeWidth={1}
-            fill={s.color}
-            {...props.bars}
-            {...s.props}
-          />
+          <Bars {...getBarsProps(s, i)} />
         {/each}
       </slot>
 

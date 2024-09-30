@@ -56,6 +56,19 @@
   let chartData = series
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
     .filter((d) => d) as Array<TData>;
+
+  function getPointsProps(s: (typeof series)[number], i: number) {
+    const pointsProps: ComponentProps<Points> = {
+      data: s.data,
+      stroke: s.color,
+      fill: s.color,
+      'fill-opacity': 0.3,
+      ...props.points,
+      ...s.props,
+    };
+
+    return pointsProps;
+  }
 </script>
 
 <Chart
@@ -121,15 +134,8 @@
       <slot name="below-marks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#each series as s}
-          <Points
-            data={s.data}
-            stroke={s.color}
-            fill={s.color}
-            fill-opacity={0.3}
-            {...props.points}
-            {...s.props}
-          />
+        {#each series as s, i}
+          <Points {...getPointsProps(s, i)} />
         {/each}
       </slot>
 

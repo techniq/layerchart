@@ -70,6 +70,19 @@
 
   // Default xScale based on first data's `x` value
   $: xScale = accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear();
+
+  function getSplineProps(s: (typeof series)[number], i: number) {
+    const splineProps: ComponentProps<Spline> = {
+      data: s.data,
+      y: s.value ?? (s.data ? undefined : s.key),
+      class: 'stroke-2',
+      stroke: s.color,
+      ...props.spline,
+      ...s.props,
+    };
+
+    return splineProps;
+  }
 </script>
 
 <Chart
@@ -97,7 +110,18 @@
   let:padding
   let:tooltip
 >
-  {@const slotProps = { x, xScale, y, yScale, width, height, padding, tooltip, series }}
+  {@const slotProps = {
+    x,
+    xScale,
+    y,
+    yScale,
+    width,
+    height,
+    padding,
+    tooltip,
+    series,
+    getSplineProps,
+  }}
   <slot {...slotProps}>
     <Svg center={radial}>
       <slot name="axis" {...slotProps}>
@@ -131,15 +155,8 @@
       <slot name="below-marks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#each series as s}
-          <Spline
-            data={s.data}
-            y={s.value ?? (s.data ? undefined : s.key)}
-            class="stroke-2"
-            stroke={s.color}
-            {...props.spline}
-            {...s.props}
-          />
+        {#each series as s, i}
+          <Spline {...getSplineProps(s, i)} />
         {/each}
       </slot>
 

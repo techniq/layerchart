@@ -103,6 +103,35 @@
 
   // Default xScale based on first data's `x` value
   $: xScale = accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear();
+
+  function getAreaProps(s: (typeof series)[number], i: number) {
+    const lineProps = {
+      ...props.line,
+      ...(typeof props.area?.line === 'object' ? props.area.line : null),
+      ...(typeof s.props?.line === 'object' ? s.props.line : null),
+    };
+
+    const areaProps: ComponentProps<Area> = {
+      data: s.data,
+      y0: stackSeries ? (d) => d.stackData[i][0] : Array.isArray(s.value) ? s.value[0] : undefined,
+      y1: stackSeries
+        ? (d) => d.stackData[i][1]
+        : Array.isArray(s.value)
+          ? s.value[1]
+          : (s.value ?? s.key),
+      fill: s.color,
+      'fill-opacity': 0.3,
+      ...props.area,
+      ...s.props,
+      line: {
+        class: !('stroke-width' in lineProps) ? 'stroke-2' : '',
+        stroke: s.color,
+        ...lineProps,
+      },
+    };
+
+    return areaProps;
+  }
 </script>
 
 <Chart
@@ -133,7 +162,19 @@
   let:padding
   let:tooltip
 >
-  {@const slotProps = { x, xScale, y, yScale, width, height, padding, tooltip, series }}
+  {@const slotProps = {
+    x,
+    xScale,
+    y,
+    yScale,
+    width,
+    height,
+    padding,
+    tooltip,
+    series,
+    getAreaProps,
+  }}
+
   <slot {...slotProps}>
     <Svg center={radial}>
       <slot name="axis" {...slotProps}>
@@ -174,34 +215,7 @@
 
       <slot name="marks" {...slotProps}>
         {#each series as s, i}
-          {@const lineProps = {
-            ...props.line,
-            ...(typeof props.area?.line === 'object' ? props.area.line : null),
-            ...(typeof s.props?.line === 'object' ? s.props.line : null),
-          }}
-
-          <Area
-            data={s.data}
-            y0={stackSeries
-              ? (d) => d.stackData[i][0]
-              : Array.isArray(s.value)
-                ? s.value[0]
-                : undefined}
-            y1={stackSeries
-              ? (d) => d.stackData[i][1]
-              : Array.isArray(s.value)
-                ? s.value[1]
-                : (s.value ?? s.key)}
-            fill={s.color}
-            fill-opacity={0.3}
-            {...props.area}
-            {...s.props}
-            line={{
-              class: !('stroke-width' in lineProps) ? 'stroke-2' : '',
-              stroke: s.color,
-              ...lineProps,
-            }}
-          />
+          <Area {...getAreaProps(s, i)} />
         {/each}
       </slot>
 

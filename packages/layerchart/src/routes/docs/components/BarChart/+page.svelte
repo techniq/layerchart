@@ -1,5 +1,14 @@
 <script lang="ts">
-  import { accessor, Axis, BarChart, Bars, Highlight, Svg, Tooltip } from 'layerchart';
+  import {
+    accessor,
+    Axis,
+    BarChart,
+    Bars,
+    Highlight,
+    LinearGradient,
+    Svg,
+    Tooltip,
+  } from 'layerchart';
   import { group, sum } from 'd3-array';
   import { format, PeriodType } from '@layerstack/utils';
 
@@ -29,6 +38,27 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart data={dateSeriesData} x="date" y="value" />
+  </div>
+</Preview>
+
+<h2>Gradient</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart data={dateSeriesData} x="date" y="value">
+      <svelte:fragment slot="marks" let:series let:getBarsProps>
+        {#each series as s, i}
+          <LinearGradient
+            class="from-blue-500 to-green-400"
+            vertical
+            units="userSpaceOnUse"
+            let:url
+          >
+            <Bars {...getBarsProps(s, i)} fill={url} />
+          </LinearGradient>
+        {/each}
+      </svelte:fragment>
+    </BarChart>
   </div>
 </Preview>
 
