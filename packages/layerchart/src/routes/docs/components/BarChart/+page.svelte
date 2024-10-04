@@ -555,7 +555,7 @@
           color: 'hsl(var(--color-success))',
         },
         {
-          key: 'grapes ',
+          key: 'grapes',
           color: 'hsl(var(--color-info))',
         },
       ]}
