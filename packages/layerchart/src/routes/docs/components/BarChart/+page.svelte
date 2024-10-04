@@ -10,7 +10,7 @@
     Tooltip,
   } from 'layerchart';
   import { group, sum } from 'd3-array';
-  import { scaleThreshold } from 'd3-scale';
+  import { scaleThreshold, scaleTime } from 'd3-scale';
   import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -31,6 +31,13 @@
   const negativeData = createDateSeries({ count: 10, min: -20, max: 50, value: 'integer' });
   const horizontalDateSeriesData = dateSeriesData.slice(0, 10);
   const dateSeriesBaselineData = dateSeriesData.map((d) => ({ ...d, value: d.baseline }));
+  const largeDateSeriesData = createDateSeries({
+    count: 100,
+    min: 20,
+    max: 100,
+    value: 'integer',
+    keys: ['value', 'baseline'],
+  });
 </script>
 
 <h1>Examples</h1>
@@ -680,6 +687,19 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart data={dateSeriesData} x="date" y="value" axis="y" />
+  </div>
+</Preview>
+
+<h2>Override axis ticks with custom scale</h2>
+
+<Preview data={largeDateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={largeDateSeriesData}
+      x="date"
+      y="value"
+      props={{ xAxis: { ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks() } }}
+    />
   </div>
 </Preview>
 

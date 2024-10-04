@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { scaleLinear, scaleTime } from 'd3-scale';
+  import { scaleLinear, scaleTime, scaleBand } from 'd3-scale';
   import { range } from 'd3-array';
   import { Field, PeriodType, Switch } from 'svelte-ux';
   import { format } from '@layerstack/utils';
@@ -12,6 +12,7 @@
   import Blockquote from '$lib/docs/Blockquote.svelte';
 
   const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
+  const largeData = createDateSeries({ count: 100, min: 50, max: 100, value: 'integer' });
 
   // Added to make svelte-check happy
   const isNotZero = (v: any) => v !== 0;
@@ -469,6 +470,32 @@
       <Svg>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule format={(v) => v || ''} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Override axis ticks with custom scale</h2>
+
+<Preview data={largeData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={largeData}
+      x="date"
+      xScale={scaleBand()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis
+          placement="bottom"
+          rule
+          ticks={(scale) => scaleTime(scale.domain(), scale.range()).ticks()}
+          format={PeriodType.Day}
+        />
+        <Axis placement="left" rule />
       </Svg>
     </Chart>
   </div>
