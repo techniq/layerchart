@@ -73,8 +73,8 @@
         xDomain: [xDomain[0] ?? xDomainMin, xDomain[1] ?? xDomainMax] as [number, number],
         yDomain: [yDomain[0] ?? yDomainMin, yDomain[1] ?? yDomainMax] as [number, number],
         value: {
-          x: $xScale.invert?.(localPoint(frameEl, e)?.x ?? 0 - $padding.left),
-          y: $yScale.invert?.(localPoint(frameEl, e)?.y ?? 0 - $padding.top),
+          x: $xScale.invert?.((localPoint(frameEl, e)?.x ?? 0) - $padding.left),
+          y: $yScale.invert?.((localPoint(frameEl, e)?.y ?? 0) - $padding.top),
         },
       };
 
@@ -82,8 +82,8 @@
 
       const onPointerMove = (e: PointerEvent) => {
         fn(start, {
-          x: $xScale.invert?.(localPoint(frameEl, e)?.x ?? 0 - $padding.left),
-          y: $yScale.invert?.(localPoint(frameEl, e)?.y ?? 0 - $padding.top),
+          x: $xScale.invert?.((localPoint(frameEl, e)?.x ?? 0) - $padding.left),
+          y: $yScale.invert?.((localPoint(frameEl, e)?.y ?? 0) - $padding.top),
         });
 
         // if (xDomain[0] === xDomain[1] || yDomain[0] === yDomain[1]) {
