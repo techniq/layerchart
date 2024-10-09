@@ -340,7 +340,7 @@
       rule={{ class: 'stroke-surface-content/20' }}
       props={{
         area: { line: false, 'fill-opacity': 1 },
-        xAxis: { format: PeriodType.Month },
+        xAxis: { format: PeriodType.Month, tickLength: 0 },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
       }}

@@ -334,7 +334,7 @@
   </div>
 </Preview>
 
-<h2>Radial large series</h2>
+<h2>Large radial series</h2>
 
 <Preview data={data.dailyTemperatures}>
   <div class="h-[500px] p-4 border rounded">
@@ -349,7 +349,7 @@
       rule={{ y: 'top', class: 'stroke-surface-content/20' }}
       props={{
         spline: { class: 'stroke' },
-        xAxis: { format: PeriodType.Month },
+        xAxis: { format: PeriodType.Month, tickLength: 0 },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
       }}

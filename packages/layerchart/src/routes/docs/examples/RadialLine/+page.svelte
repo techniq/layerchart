@@ -39,9 +39,7 @@
       data={pitchData}
       x="name"
       xScale={scaleBand()}
-      xRange={[0, 2 * Math.PI]}
       y="value"
-      yRange={({ height }) => [0, height / 2]}
       yPadding={[0, 10]}
       padding={{ top: 32, bottom: 8 }}
       radial
@@ -69,7 +67,6 @@
       data={data.sfoTemperatures}
       x="date"
       xScale={scaleUtc()}
-      xRange={[0, 2 * Math.PI]}
       y={['minmin', 'maxmax']}
       yRange={({ height }) => [height / 5, height / 2]}
       radial
@@ -88,8 +85,13 @@
           curve={curveCatmullRomClosed}
           class="fill-primary/20"
         />
-        <Axis placement="angle" grid format={PeriodType.Month} />
-        <Axis placement="radius" rule grid format={(v) => v + '° F'} />
+        <Axis placement="angle" grid tickLength={0} format={PeriodType.Month} />
+        <Axis
+          placement="radius"
+          rule={{ y: 'top', class: 'stroke-surface-content/20' }}
+          grid
+          format={(v) => v + '° F'}
+        />
       </Svg>
     </Chart>
   </div>
@@ -103,7 +105,6 @@
       data={data.dailyTemperatures}
       x="date"
       xScale={scaleUtc()}
-      xRange={[0, 2 * Math.PI]}
       y="value"
       yRange={({ height }) => [height / 5, height / 2]}
       yPadding={[0, 20]}
@@ -127,8 +128,14 @@
             opacity={[2023, 2024].includes(year) ? 1 : zScale(year)}
           />
         {/each}
-        <Axis placement="angle" grid format={PeriodType.Month} />
-        <Axis placement="radius" grid rule ticks={4} format={(v) => v + '° F'} />
+        <Axis placement="angle" tickLength={0} grid format={PeriodType.Month} />
+        <Axis
+          placement="radius"
+          grid
+          rule={{ y: 'top', class: 'stroke-surface-content/20' }}
+          ticks={4}
+          format={(v) => v + '° F'}
+        />
       </Svg>
     </Chart>
   </div>

@@ -423,7 +423,7 @@
         <Axis
           placement="bottom"
           rule={{ class: 'stroke-surface-content/10' }}
-          tickLabelProps={{ textAnchor: 'start', dx: 8 }}
+          tickLabelProps={{ textAnchor: 'start', dx: 8, dy: 4 }}
           ticks={(scale) => scale.ticks?.().slice(0, -1)}
           tickLength={22}
         />
@@ -623,6 +623,32 @@
           class="translate-x-[50px]"
           labelProps={{ dx: -50 }}
         />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>radial rule</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
+      <Svg center>
+        <Axis placement="radius" rule />
+        <Axis placement="angle" rule ticks={(scale) => scale.ticks?.().splice(1)} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>radial grid</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
+      <Svg center>
+        <Axis placement="radius" grid />
+        <Axis placement="angle" grid ticks={(scale) => scale.ticks?.().splice(1)} />
       </Svg>
     </Chart>
   </div>
