@@ -72,6 +72,18 @@
   </div>
 </Preview>
 
+<h2>Override color</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart
+      data={dateSeriesData}
+      x="date"
+      series={[{ key: 'value', color: 'hsl(var(--color-secondary))' }]}
+    />
+  </div>
+</Preview>
+
 <h2>Series</h2>
 
 <Preview data={dateSeriesData}>
