@@ -22,16 +22,10 @@
   /**
    * Custom JSON replacer (to use with JSON.stringify()) to convert `Date` instances to `new Date()`
    */
-  function replacer(key: string, value: any): any {
-    // TODO: Improve handling of circular structures and other data types (Map, Set, etc)
-    if (value instanceof Date) {
-      return `new Date('${value.toISOString()}')`;
-    } else if (isLiteralObject(value)) {
-      return fromEntries(
-        entries<string, any>(value).map(([key, value]) => {
-          return [key, replacer(key, value)];
-        })
-      );
+  function replacer(this: any, key: string, value: any): any {
+    // TODO: Improve handling of circular structures and handle other data types (Map, Set, etc)
+    if (this[key] instanceof Date) {
+      return `new Date('${this[key].toISOString()}')`;
     }
 
     return value;
