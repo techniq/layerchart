@@ -142,7 +142,7 @@
       | string[]
       | ((args: { yScale: AnyScale; width: number; height: number }) => number[] | string[]);
     /** Override the default y1 range of `[0, width]` by setting an array or function with argument `({ yScale, width, height})` that returns an array. Setting this prop overrides `x1Reverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
-    cRange?: string[];
+    cRange?: string[] | readonly string[];
 
     /** Reverse the default x range. By default this is `false` and the range is `[0, width]`. Ignored if you set the xRange prop. @default false */
     xReverse?: boolean;
