@@ -7,6 +7,8 @@
 
   import { Button, CopyButton, Dialog, Toggle, Tooltip } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
+  import { entries, fromEntries } from '@layerstack/utils';
+  import { isLiteralObject } from '@layerstack/utils/object';
 
   import Code from './Code.svelte';
   import Json from './Json.svelte';
@@ -17,12 +19,27 @@
   export let highlightedCode = code ? Prism.highlight(code, Prism.languages.svelte, language) : '';
   export let showCode = false;
 
-  let copyValue: string | null = null;
-  try {
-    // TODO: Improve handling of circular structures
-    copyValue = JSON.stringify(data, null, 2);
-  } catch (e) {
-    console.error('Error capturing value to copy', e);
+  /**
+   * Custom JSON replacer (to use with JSON.stringify()) to convert `Date` instances to `new Date()`
+   */
+  function replacer(this: any, key: string, value: any): any {
+    // TODO: Improve handling of circular structures and handle other data types (Map, Set, etc)
+    if (this[key] instanceof Date) {
+      return `new Date('${this[key].toISOString()}')`;
+    }
+
+    return value;
+  }
+
+  function getDataAsString(_data: typeof data) {
+    try {
+      // Regular expression to match quoted instantiation (ex. `"new Date(...)"`) and stripe the quotes  (`new Date(...)`)
+      const datePattern = /"(new \w+\([^)]*\))"/g;
+      return JSON.stringify(_data, replacer, 2).replace(datePattern, '$1');
+    } catch (e) {
+      console.error('Error capturing value to copy', e);
+      return '';
+    }
   }
 </script>
 
@@ -62,11 +79,9 @@
           <div class="text-lg font-semibold">Chart data</div>
         </div>
 
-        {#if copyValue}
-          <Tooltip title="Copy">
-            <CopyButton value={copyValue} variant="fill-light" color="primary" />
-          </Tooltip>
-        {/if}
+        <Tooltip title="Copy">
+          <CopyButton value={() => getDataAsString(data)} variant="fill-light" color="primary" />
+        </Tooltip>
       </div>
 
       <Json value={data} />
