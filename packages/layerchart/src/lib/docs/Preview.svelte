@@ -26,10 +26,7 @@
     // TODO: Improve handling of circular structures and other data types (Map, Set, etc)
     if (value instanceof Date) {
       return `new Date('${value.toISOString()}')`;
-    } else if (Array.isArray(value)) {
-      return value.map((d: any) => replacer('', d));
     } else if (isLiteralObject(value)) {
-      const foo = value;
       return fromEntries(
         entries<string, any>(value).map(([key, value]) => {
           return [key, replacer(key, value)];
