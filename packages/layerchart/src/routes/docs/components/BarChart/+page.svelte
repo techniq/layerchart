@@ -38,6 +38,14 @@
     value: 'integer',
     keys: ['value', 'baseline'],
   });
+
+  const statusDateSeriesData = createDateSeries({
+    count: 50,
+    min: 0,
+    max: 100,
+    value: 'integer',
+    keys: ['value', 'baseline'],
+  });
 </script>
 
 <h1>Examples</h1>
@@ -671,6 +679,43 @@
       bandPadding={0.1}
       props={{ bars: { radius: 1, strokeWidth: 0 } }}
     />
+  </div>
+</Preview>
+
+<h2>Single dimension</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-10">
+    <BarChart
+      data={statusDateSeriesData}
+      x="date"
+      y={(d) => 1}
+      c="value"
+      cScale={scaleThreshold()}
+      cDomain={[10, 50]}
+      cRange={[
+        'hsl(var(--color-danger))',
+        'hsl(var(--color-warning))',
+        'hsl(var(--color-success))',
+      ]}
+      axis="x"
+      bandPadding={0.1}
+      props={{
+        bars: { radius: 4, strokeWidth: 0 },
+        highlight: { bar: { radius: 4, class: 'stroke-current stroke-2 fill-none' } },
+        xAxis: { ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks() },
+        rule: { y: false },
+      }}
+    >
+      <svelte:fragment slot="tooltip" let:x let:y let:c let:cScale>
+        <Tooltip.Root let:data>
+          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="Status" value={c(data)} color={cScale(c(data))} />
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
+    </BarChart>
   </div>
 </Preview>
 
