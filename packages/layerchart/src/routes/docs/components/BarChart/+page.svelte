@@ -669,7 +669,7 @@
       y="value"
       axis={false}
       bandPadding={0.1}
-      props={{ bars: { radius: 1 } }}
+      props={{ bars: { radius: 1, strokeWidth: 0 } }}
     />
   </div>
 </Preview>

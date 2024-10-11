@@ -414,7 +414,13 @@
 
 <Preview data={dateSeriesData}>
   <div class="w-[124px] h-[24px]">
-    <LineChart data={dateSeriesData} x="date" y="value" axis={false} />
+    <LineChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      axis={false}
+      props={{ highlight: { points: { r: 3, class: 'stroke-2 stroke-surface-100' } } }}
+    />
   </div>
 </Preview>
 
