@@ -157,6 +157,8 @@
   let:xScale
   let:y
   let:yScale
+  let:c
+  let:cScale
   let:width
   let:height
   let:padding
@@ -167,6 +169,8 @@
     xScale,
     y,
     yScale,
+    c,
+    cScale,
     width,
     height,
     padding,

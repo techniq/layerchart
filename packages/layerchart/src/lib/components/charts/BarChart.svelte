@@ -206,18 +206,20 @@
   let:xScale
   let:y
   let:yScale
+  let:c
+  let:cScale
   let:width
   let:height
   let:padding
   let:tooltip
-  let:c
-  let:cScale
 >
   {@const slotProps = {
     x,
     xScale,
     y,
     yScale,
+    c,
+    cScale,
     width,
     height,
     padding,
