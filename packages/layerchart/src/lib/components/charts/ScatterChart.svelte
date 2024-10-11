@@ -34,6 +34,7 @@
     color?: string;
     props?: Partial<ComponentProps<Points>>;
   }[] = [{ key: 'default', data: chartDataArray(data), color: 'hsl(var(--color-primary))' }];
+  $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
@@ -159,10 +160,12 @@
     <slot name="legend" {...slotProps}>
       {#if legend}
         <Legend
-          scale={scaleOrdinal(
-            series.map((s) => s.label ?? s.key),
-            series.map((s) => s.color)
-          )}
+          scale={isDefaultSeries
+            ? undefined
+            : scaleOrdinal(
+                series.map((s) => s.label ?? s.key),
+                series.map((s) => s.color)
+              )}
           placement="bottom"
           variant="swatches"
           {...props.legend}

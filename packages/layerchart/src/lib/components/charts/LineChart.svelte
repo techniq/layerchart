@@ -42,6 +42,7 @@
     color?: string;
     props?: Partial<ComponentProps<Spline>>;
   }[] = [{ key: 'default', value: y, color: 'hsl(var(--color-primary))' }];
+  $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
   export let rule: ComponentProps<Rule> | boolean = true;
@@ -198,10 +199,12 @@
     <slot name="legend" {...slotProps}>
       {#if legend}
         <Legend
-          scale={scaleOrdinal(
-            series.map((s) => s.label ?? s.key),
-            series.map((s) => s.color)
-          )}
+          scale={isDefaultSeries
+            ? undefined
+            : scaleOrdinal(
+                series.map((s) => s.label ?? s.key),
+                series.map((s) => s.color)
+              )}
           placement="bottom"
           variant="swatches"
           {...props.legend}

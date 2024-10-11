@@ -685,7 +685,7 @@
 <h2>Single dimension</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-10">
+  <div class="h-[60px]">
     <BarChart
       data={statusDateSeriesData}
       x="date"

@@ -46,6 +46,7 @@
     color?: string;
     props?: Partial<ComponentProps<Area>>;
   }[] = [{ key: 'default', value: y, color: 'hsl(var(--color-primary))' }];
+  $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
 
   /** Determine how to layout series.  Overlap (default) or stack */
   export let seriesLayout: 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging' = 'overlap';
@@ -256,10 +257,12 @@
     <slot name="legend" {...slotProps}>
       {#if legend}
         <Legend
-          scale={scaleOrdinal(
-            series.map((s) => s.label ?? s.key),
-            series.map((s) => s.color)
-          )}
+          scale={isDefaultSeries
+            ? undefined
+            : scaleOrdinal(
+                series.map((s) => s.label ?? s.key),
+                series.map((s) => s.color)
+              )}
           placement="bottom"
           variant="swatches"
           {...props.legend}

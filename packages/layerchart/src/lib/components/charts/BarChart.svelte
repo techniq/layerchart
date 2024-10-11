@@ -53,6 +53,7 @@
       value: orientation === 'vertical' ? y : x,
     },
   ];
+  $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
 
   /** Determine how to layout series.  Overlap (default), stack, or group side by side */
   export let seriesLayout: 'overlap' | 'group' | 'stack' | 'stackExpand' | 'stackDiverging' =
@@ -291,10 +292,12 @@
     <slot name="legend" {...slotProps}>
       {#if legend}
         <Legend
-          scale={scaleOrdinal(
-            series.map((s) => s.label ?? s.key),
-            series.map((s) => s.color)
-          )}
+          scale={isDefaultSeries
+            ? undefined
+            : scaleOrdinal(
+                series.map((s) => s.label ?? s.key),
+                series.map((s) => s.color)
+              )}
           placement="bottom"
           variant="swatches"
           {...props.legend}
