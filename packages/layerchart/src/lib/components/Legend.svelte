@@ -213,7 +213,7 @@
               class={cls('h-4 w-4 rounded-full', classes.swatch)}
               style:background-color={scale(tick)}
             />
-            <div class={cls('text-xs text-surface-content', classes.label)}>
+            <div class={cls('text-xs text-surface-content whitespace-nowrap', classes.label)}>
               {tickFormat ? format(tick, tickFormat) : tick}
             </div>
           </div>
