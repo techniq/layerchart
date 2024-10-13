@@ -106,7 +106,8 @@
 
   export let onClick: ({ data }: { data: any }) => any = () => {};
 
-  const tooltip = writable({
+  /** Exposed to allow binding in Chart */
+  export let tooltip = writable({
     y: 0,
     x: 0,
     data: null as any,

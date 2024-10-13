@@ -203,6 +203,12 @@
 
     /** Expose to support `bind:transformContext` for imperative control (`transformContext.translate(...)`) */
     transformContext?: typeof transformContext;
+
+    /** Exposed via bind: to support `bind:geoProjection` for external access */
+    geoProjection?: typeof geoProjection;
+
+    /** Exposed via bind: to support `bind:tooltipContext` for external access (ex. `tooltipContext.data) */
+    tooltipContext?: typeof tooltipContext;
   }
 
   export let data: TData[] | HierarchyNode<TData> | SankeyGraph<any, any> = [];
@@ -272,8 +278,11 @@
   // @ts-expect-error will only be undefined until bind:transformContext runs
   export let transformContext: TransformContext = undefined;
 
-  // Bound for access within TransformContext
-  let geoProjection: ComponentProps<GeoContext>['geo'] = undefined;
+  /** Expose bound geo projection context */
+  export let geoProjection: ComponentProps<GeoContext>['geo'] = undefined;
+
+  /** Expose bound tooltip context */
+  export let tooltipContext: ComponentProps<TooltipContext>['tooltip'] = undefined;
 
   // Track when mounted since LayerCake initializes width/height with `100` until bound `clientWidth`/`clientWidth` can run
   // Useful to key/remount TransformContext with correct `initialTranslate` / `initialScale` values
@@ -398,7 +407,7 @@
       >
         <GeoContext {...geo} bind:geo={geoProjection} let:projection>
           {@const tooltipProps = typeof tooltip === 'object' ? tooltip : {}}
-          <TooltipContext {...tooltipProps} let:tooltip>
+          <TooltipContext {...tooltipProps} bind:tooltip={tooltipContext} let:tooltip>
             <slot
               {aspectRatio}
               {containerHeight}
