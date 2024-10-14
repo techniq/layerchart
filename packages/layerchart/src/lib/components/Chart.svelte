@@ -111,37 +111,37 @@
     /** The D3 scale that should be used for the  color dimension. Pass in an instantiated D3 scale if you want to override the default or you want to extra options. @default scaleOrdinal */
     cScale?: AnyScale;
 
-    /** Override the default x range of `[0, width]` by setting an array or function with argument `({ width, height})` that returns an array. Setting this prop overrides `xReverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
+    /** Override the default x range of `[0, width]` by setting an array or function with argument `({ width, height})` that returns an array. Setting this prop overrides `xReverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
     xRange?:
       | number[]
       | string[]
       | ((args: { width: number; height: number }) => number[] | string[]);
-    /** Override the default y range of `[0, height]` by setting an array or function with argument `({ width, height})` that returns an array. Setting this prop overrides `yReverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
+    /** Override the default y range of `[0, height]` by setting an array or function with argument `({ width, height})` that returns an array. Setting this prop overrides `yReverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
     yRange?:
       | number[]
       | string[]
       | ((args: { width: number; height: number }) => number[] | string[]);
-    /** Override the default z range of `[0, width]` by setting an array or function with argument `({ width, height})` that returns an array. Setting this prop overrides `zReverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
+    /** Override the default z range of `[0, width]` by setting an array or function with argument `({ width, height})` that returns an array. Setting this prop overrides `zReverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
     zRange?:
       | number[]
       | string[]
       | ((args: { width: number; height: number }) => number[] | string[]);
-    /** Override the default r range of `[1, 25]` by setting an array or function with argument `({ width, height})` that returns an array. Setting this prop overrides `rReverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
+    /** Override the default r range of `[1, 25]` by setting an array or function with argument `({ width, height})` that returns an array. Setting this prop overrides `rReverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
     rRange?:
       | number[]
       | string[]
       | ((args: { width: number; height: number }) => number[] | string[]);
-    /** Set the x1 range by setting an array or function with argument `({ xScale, width, height})` that returns an array. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
+    /** Set the x1 range by setting an array or function with argument `({ xScale, width, height})` that returns an array. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
     x1Range?:
       | number[]
       | string[]
       | ((args: { xScale: AnyScale; width: number; height: number }) => number[] | string[]);
-    /** Set the y1 range by setting an array or function with argument `({ yScale, width, height})` that returns an array. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
+    /** Set the y1 range by setting an array or function with argument `({ yScale, width, height})` that returns an array. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
     y1Range?:
       | number[]
       | string[]
       | ((args: { yScale: AnyScale; width: number; height: number }) => number[] | string[]);
-    /** Override the default y1 range of `[0, width]` by setting an array or function with argument `({ yScale, width, height})` that returns an array. Setting this prop overrides `x1Reverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshhold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
+    /** Override the default y1 range of `[0, width]` by setting an array or function with argument `({ yScale, width, height})` that returns an array. Setting this prop overrides `x1Reverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
     cRange?: string[];
 
     /** Reverse the default x range. By default this is `false` and the range is `[0, width]`. Ignored if you set the xRange prop. @default false */
@@ -272,10 +272,10 @@
   // @ts-expect-error will only be undefined until bind:transformContext runs
   export let transformContext: TransformContext = undefined;
 
-  // Binded for access within TransformContext
+  // Bound for access within TransformContext
   let geoProjection: ComponentProps<GeoContext>['geo'] = undefined;
 
-  // Track when mounted since LayerCake initializes width/height with `100` until binded `clientWidth`/`clientWidth` can run
+  // Track when mounted since LayerCake initializes width/height with `100` until bound `clientWidth`/`clientWidth` can run
   // Useful to key/remount TransformContext with correct `initialTranslate` / `initialScale` values
   let isMounted = false;
   onMount(() => {

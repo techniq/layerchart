@@ -274,7 +274,7 @@
     });
   }
 
-  // Track when mounted since LayerCake initializes width/height with `100` until binded `clientWidth`/`clientWidth` can run
+  // Track when mounted since LayerCake initializes width/height with `100` until bound `clientWidth`/`clientWidth` can run
   let isMounted = false;
   onMount(() => {
     isMounted = true;
