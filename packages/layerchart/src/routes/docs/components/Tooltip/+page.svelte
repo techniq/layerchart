@@ -357,7 +357,7 @@
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
       </Svg>
-      <Tooltip.Root x="data" y="data" let:data>
+      <Tooltip.Root x="data" y="data" xOffset={8} yOffset={8} let:data>
         <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
         <Tooltip.List>
           <Tooltip.Item label="value" value={data.value} />
@@ -407,9 +407,62 @@
 
       <Tooltip.Root
         x="data"
-        y={height}
+        y={height + padding.top + 2}
         anchor="top"
-        class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-2 py-[2px] border border-primary rounded whitespace-nowrap"
+        class="text-[10px] font-semibold text-primary bg-surface-100 px-2 py-[2px] border border-primary rounded whitespace-nowrap"
+        let:data
+      >
+        {formatDate(data.date, PeriodType.Day)}
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
+<h3>Multiple tooltips with fixed single axis (scaleBand)</h3>
+
+<Preview data={dateSeries}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeries}
+      x="date"
+      xScale={scaleBand().padding(0.4)}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24, top: 16 }}
+      tooltip={{ mode: 'band' }}
+      let:height
+      let:padding
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Highlight area />
+      </Svg>
+
+      <Tooltip.Root
+        x="data"
+        y="data"
+        yOffset={2}
+        anchor="bottom"
+        contained={false}
+        class="text-[10px] font-semibold text-primary bg-surface-100 px-2 py-[2px] border border-primary rounded whitespace-nowrap"
+        let:data
+      >
+        {data.value}
+      </Tooltip.Root>
+
+      <Tooltip.Root
+        x="data"
+        y={height + padding.top + 2}
+        anchor="top"
+        contained={false}
+        class="text-[10px] font-semibold text-primary bg-surface-100 px-2 py-[2px] border border-primary rounded whitespace-nowrap"
         let:data
       >
         {formatDate(data.date, PeriodType.Day)}
