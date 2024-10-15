@@ -21,6 +21,9 @@
    */
   export let x: number | Date | boolean | 'left' | 'right' = false;
 
+  /** Pixel offset to apply to `x` coordinate */
+  export let xOffset = 0;
+
   /**
    * Create a horizontal `y` line
    * - If true or 'bottom', will draw at chart bottom (yRange[0])
@@ -29,6 +32,9 @@
    * - Use number | Date value for annotation (xScale(value))
    */
   export let y: number | Date | boolean | 'top' | 'bottom' = false;
+
+  /** Pixel offset to apply to `y` coordinate */
+  export let yOffset = 0;
 
   function showRule(value: typeof x | typeof y, axis: 'x' | 'y') {
     switch (typeof value) {
@@ -49,7 +55,7 @@
 <g class="rule">
   {#if showRule(x, 'x')}
     {@const xCoord =
-      x === true || x === 'left' ? xRangeMin : x === 'right' ? xRangeMax : $xScale(x)}
+      x === true || x === 'left' ? xRangeMin : x === 'right' ? xRangeMax : $xScale(x) + xOffset}
 
     {#if $radial}
       {@const [x1, y1] = pointRadial(xCoord, Number(yRangeMin))}
@@ -78,15 +84,27 @@
   {#if showRule(y, 'y')}
     {#if $radial}
       <Circle
-        r={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
+        r={y === true || y === 'bottom'
+          ? yRangeMax
+          : y === 'top'
+            ? yRangeMin
+            : $yScale(y) + yOffset}
         class={cls('fill-none stroke-surface-content/50', $$props.class)}
       />
     {:else}
       <Line
         x1={$xRange[0] || 0}
         x2={$xRange[1] || 0}
-        y1={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
-        y2={y === true || y === 'bottom' ? yRangeMax : y === 'top' ? yRangeMin : $yScale(y)}
+        y1={y === true || y === 'bottom'
+          ? yRangeMax
+          : y === 'top'
+            ? yRangeMin
+            : $yScale(y) + yOffset}
+        y2={y === true || y === 'bottom'
+          ? yRangeMax
+          : y === 'top'
+            ? yRangeMin
+            : $yScale(y) + yOffset}
         {...$$restProps}
         class={cls('stroke-surface-content/50', $$props.class)}
       />
