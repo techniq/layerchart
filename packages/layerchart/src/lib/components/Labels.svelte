@@ -8,15 +8,24 @@
   import { chartContext } from './ChartContext.svelte';
   import Points, { type Point } from './Points.svelte';
 
+  const { xScale, yScale } = chartContext();
+
+  /** Override axis to use as display value.  By default, uses `y` unless yScale is band scale */
+  export let axis: 'x' | 'y' = isScaleBand($yScale) ? 'x' : 'y';
+
   export let placement: 'inside' | 'outside' | 'center' = 'outside';
   export let offset = placement === 'center' ? 0 : 4;
   export let format: FormatType | undefined = undefined;
 
-  const { yScale } = chartContext();
-
   $: getTextProps = (point: Point): ComponentProps<Text> => {
+    // Used for positioning
     const value = isScaleBand($yScale) ? point.xValue : point.yValue;
-    const formattedValue = formatValue(value, format ?? $yScale.tickFormat?.());
+
+    const displayValue = axis === 'x' ? point.xValue : point.yValue;
+    const formattedValue = formatValue(
+      displayValue,
+      format ?? (axis === 'x' ? $xScale.tickFormat?.() : $yScale.tickFormat?.())
+    );
 
     if (isScaleBand($yScale)) {
       // Position label left/right on horizontal bars
