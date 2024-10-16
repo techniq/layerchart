@@ -85,7 +85,7 @@
   {#if x}
     {@const splineProps = typeof x === 'object' ? x : null}
     <g in:transitionIn={transitionInParams}>
-      {#each xTickVals as x}
+      {#each xTickVals as x (x)}
         {#if $radial}
           <Spline
             data={yTickVals.map((y) => ({ x, y }))}
@@ -127,7 +127,7 @@
   {#if y}
     {@const splineProps = typeof y === 'object' ? y : null}
     <g in:transitionIn={transitionInParams}>
-      {#each yTickVals as y}
+      {#each yTickVals as y (y)}
         {#if $radial}
           {#if radialY === 'circle'}
             <Circle
