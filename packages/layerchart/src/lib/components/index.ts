@@ -30,6 +30,7 @@ export { default as GeoSpline } from './GeoSpline.svelte';
 export { default as GeoTile } from './GeoTile.svelte';
 export { default as GeoVisible } from './GeoVisible.svelte';
 export { default as Graticule } from './Graticule.svelte';
+export { default as Grid } from './Grid.svelte';
 export { default as Group } from './Group.svelte';
 export { default as Highlight } from './Highlight.svelte';
 export { default as HitCanvas } from './HitCanvas.svelte';

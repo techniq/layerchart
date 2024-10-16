@@ -127,7 +127,21 @@
   let:padding
   let:tooltip
 >
-  {@const slotProps = { key, label, value, x, xScale, y, yScale, width, height, padding, tooltip }}
+  {@const slotProps = {
+    key,
+    label,
+    value,
+    x,
+    xScale,
+    y,
+    yScale,
+    c,
+    cScale,
+    width,
+    height,
+    padding,
+    tooltip,
+  }}
   <slot {...slotProps}>
     <Svg center>
       <slot name="below-marks" {...slotProps} />

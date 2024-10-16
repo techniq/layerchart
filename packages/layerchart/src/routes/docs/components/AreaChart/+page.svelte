@@ -275,6 +275,42 @@
   </div>
 </Preview>
 
+<h2>Stack series with gradient</h2>
+
+<Preview data={multiSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'oranges',
+          color: 'hsl(var(--color-warning))',
+        },
+      ]}
+      seriesLayout="stack"
+    >
+      <svelte:fragment slot="marks" let:series let:getAreaProps>
+        {#each series as s, i}
+          <!-- Can also use basic 'transparent' for second stop for better browser compatibility -->
+          <LinearGradient
+            stops={[s.color, 'color-mix(in lch, ' + s.color + ' 10%, transparent)']}
+            vertical
+            let:url
+          >
+            <Area {...getAreaProps(s, i)} fill={url} />
+          </LinearGradient>
+        {/each}
+      </svelte:fragment>
+    </AreaChart>
+  </div>
+</Preview>
+
 <h2>Labels</h2>
 
 <Preview data={dateSeriesData}>
@@ -304,7 +340,7 @@
       rule={{ class: 'stroke-surface-content/20' }}
       props={{
         area: { line: false, 'fill-opacity': 1 },
-        xAxis: { format: PeriodType.Month },
+        xAxis: { format: PeriodType.Month, tickLength: 0 },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
       }}
@@ -344,7 +380,13 @@
 
 <Preview data={dateSeriesData}>
   <div class="w-[124px] h-[24px]">
-    <AreaChart data={dateSeriesData} x="date" y="value" axis={false} />
+    <AreaChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      axis={false}
+      props={{ highlight: { points: { r: 3, class: 'stroke-2 stroke-surface-100' } } }}
+    />
   </div>
 </Preview>
 

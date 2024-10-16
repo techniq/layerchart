@@ -7,20 +7,36 @@
   import { isScaleBand } from '$lib/utils/scales.js';
   import { chartContext } from './ChartContext.svelte';
   import Points, { type Point } from './Points.svelte';
+  import { accessor, type Accessor } from '../utils/common.js';
+
+  const { xScale, yScale } = chartContext();
+
+  /** Override display value accessor.  By default, uses `y` unless yScale is band scale   */
+  export let value: Accessor = undefined;
 
   export let placement: 'inside' | 'outside' | 'center' = 'outside';
   export let offset = placement === 'center' ? 0 : 4;
   export let format: FormatType | undefined = undefined;
 
-  const { yScale } = chartContext();
-
   $: getTextProps = (point: Point): ComponentProps<Text> => {
-    const value = isScaleBand($yScale) ? point.xValue : point.yValue;
-    const formattedValue = formatValue(value, format ?? $yScale.tickFormat?.());
+    // Used for positioning
+    const pointValue = isScaleBand($yScale) ? point.xValue : point.yValue;
+
+    const displayValue = value
+      ? accessor(value)(point.data)
+      : isScaleBand($yScale)
+        ? point.xValue
+        : point.yValue;
+
+    const formattedValue = formatValue(
+      displayValue,
+      format ??
+        (value ? undefined : isScaleBand($yScale) ? $xScale.tickFormat?.() : $yScale.tickFormat?.())
+    );
 
     if (isScaleBand($yScale)) {
       // Position label left/right on horizontal bars
-      if (value < 0) {
+      if (pointValue < 0) {
         // left
         return {
           value: formattedValue,
@@ -43,7 +59,7 @@
       }
     } else {
       // Position label top/bottom on vertical bars
-      if (value < 0) {
+      if (pointValue < 0) {
         // bottom
         return {
           value: formattedValue,

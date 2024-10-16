@@ -72,6 +72,18 @@
   </div>
 </Preview>
 
+<h2>Override color</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart
+      data={dateSeriesData}
+      x="date"
+      series={[{ key: 'value', color: 'hsl(var(--color-secondary))' }]}
+    />
+  </div>
+</Preview>
+
 <h2>Series</h2>
 
 <Preview data={dateSeriesData}>
@@ -185,7 +197,7 @@
       x="name"
       xScale={scaleBand()}
       y="value"
-      yPadding={[0, 10]}
+      yPadding={[0, 8]}
       padding={{ top: 8 }}
       radial
       points
@@ -194,12 +206,52 @@
           curve: curveLinearClosed,
           class: 'stroke-primary fill-primary/20',
         },
+        xAxis: {
+          tickLength: 0,
+        },
         yAxis: {
           ticks: [0, 5, 10],
           format: (d) => '',
-          grid: {
-            class: 'stroke-surface-content/20 fill-surface-200/50',
-          },
+        },
+        grid: {
+          yTicks: [0, 5, 10],
+        },
+        highlight: {
+          lines: false,
+        },
+      }}
+      tooltip={{ mode: 'voronoi' }}
+    />
+  </div>
+</Preview>
+
+<h2>Radar with rounded grid</h2>
+
+<Preview data={pitchData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart
+      data={pitchData}
+      x="name"
+      xScale={scaleBand()}
+      y="value"
+      padding={{ top: 8 }}
+      radial
+      points
+      props={{
+        spline: {
+          curve: curveLinearClosed,
+          class: 'stroke-primary fill-primary/20',
+        },
+        xAxis: {
+          tickLength: 10,
+        },
+        yAxis: {
+          ticks: [0, 5, 10],
+          format: (d) => '',
+        },
+        grid: {
+          yTicks: [0, 5, 10],
+          rounded: true,
         },
         highlight: {
           lines: false,
@@ -218,7 +270,7 @@
       data={budgetData}
       x="name"
       xScale={scaleBand()}
-      yPadding={[0, 10]}
+      yPadding={[0, 8]}
       radial
       series={[
         {
@@ -231,6 +283,9 @@
       props={{
         spline: {
           curve: curveLinearClosed,
+        },
+        xAxis: {
+          tickLength: 0,
         },
         yAxis: {
           ticks: 4,
@@ -334,7 +389,7 @@
   </div>
 </Preview>
 
-<h2>Radial large series</h2>
+<h2>Large radial series</h2>
 
 <Preview data={data.dailyTemperatures}>
   <div class="h-[500px] p-4 border rounded">
@@ -349,7 +404,7 @@
       rule={{ y: 'top', class: 'stroke-surface-content/20' }}
       props={{
         spline: { class: 'stroke' },
-        xAxis: { format: PeriodType.Month },
+        xAxis: { format: PeriodType.Month, tickLength: 0 },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
       }}
@@ -402,7 +457,14 @@
 
 <Preview data={dateSeriesData}>
   <div class="w-[124px] h-[24px]">
-    <LineChart data={dateSeriesData} x="date" y="value" axis={false} />
+    <LineChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      axis={false}
+      grid={false}
+      props={{ highlight: { points: { r: 3, class: 'stroke-2 stroke-surface-100' } } }}
+    />
   </div>
 </Preview>
 

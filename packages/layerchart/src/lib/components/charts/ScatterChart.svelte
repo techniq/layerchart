@@ -5,6 +5,7 @@
 
   import Axis from '../Axis.svelte';
   import Chart from '../Chart.svelte';
+  import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
   import Legend from '../Legend.svelte';
@@ -17,6 +18,7 @@
 
   interface $$Props extends ComponentProps<Chart<TData>> {
     axis?: typeof axis;
+    grid?: typeof grid;
     labels?: typeof labels;
     legend?: typeof legend;
     props?: typeof props;
@@ -34,8 +36,10 @@
     color?: string;
     props?: Partial<ComponentProps<Points>>;
   }[] = [{ key: 'default', data: chartDataArray(data), color: 'hsl(var(--color-primary))' }];
+  $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
+  export let grid: ComponentProps<Grid> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let legend: ComponentProps<Legend> | boolean = false;
   export let rule: ComponentProps<Rule> | boolean = true;
@@ -43,6 +47,7 @@
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
     yAxis?: Partial<ComponentProps<Axis>>;
+    grid?: Partial<ComponentProps<Grid>>;
     points?: Partial<ComponentProps<Points>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
@@ -56,6 +61,19 @@
   let chartData = series
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
     .filter((d) => d) as Array<TData>;
+
+  function getPointsProps(s: (typeof series)[number], i: number) {
+    const pointsProps: ComponentProps<Points> = {
+      data: s.data,
+      stroke: s.color,
+      fill: s.color,
+      'fill-opacity': 0.3,
+      ...props.points,
+      ...s.props,
+    };
+
+    return pointsProps;
+  }
 </script>
 
 <Chart
@@ -76,6 +94,8 @@
   let:xScale
   let:y
   let:yScale
+  let:c
+  let:cScale
   let:r
   let:width
   let:height
@@ -83,19 +103,24 @@
   let:tooltip
   let:config
 >
-  {@const slotProps = { x, xScale, y, yScale, width, height, padding, tooltip, series }}
+  {@const slotProps = { x, xScale, y, yScale, c, cScale, width, height, padding, tooltip, series }}
   {@const activeSeries = tooltip.data
     ? (series.find((s) => s.key === tooltip.data.seriesKey) ?? series[0])
     : null}
 
   <slot {...slotProps}>
     <Svg>
+      <slot name="grid" {...slotProps}>
+        {#if grid}
+          <Grid x y {...typeof grid === 'object' ? grid : null} {...props.grid} />
+        {/if}
+      </slot>
+
       <slot name="axis" {...slotProps}>
         {#if axis}
           {#if axis !== 'x'}
             <Axis
               placement="left"
-              grid
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.yAxis}
@@ -105,7 +130,6 @@
           {#if axis !== 'y'}
             <Axis
               placement="bottom"
-              grid
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.xAxis}
@@ -121,15 +145,8 @@
       <slot name="below-marks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#each series as s}
-          <Points
-            data={s.data}
-            stroke={s.color}
-            fill={s.color}
-            fill-opacity={0.3}
-            {...props.points}
-            {...s.props}
-          />
+        {#each series as s, i}
+          <Points {...getPointsProps(s, i)} />
         {/each}
       </slot>
 
@@ -151,10 +168,12 @@
     <slot name="legend" {...slotProps}>
       {#if legend}
         <Legend
-          scale={scaleOrdinal(
-            series.map((s) => s.label ?? s.key),
-            series.map((s) => s.color)
-          )}
+          scale={isDefaultSeries
+            ? undefined
+            : scaleOrdinal(
+                series.map((s) => s.label ?? s.key),
+                series.map((s) => s.color)
+              )}
           placement="bottom"
           variant="swatches"
           {...props.legend}

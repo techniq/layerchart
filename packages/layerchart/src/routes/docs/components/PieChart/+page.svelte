@@ -1,6 +1,8 @@
 <script lang="ts">
   import { Arc, Group, LinearGradient, PieChart, Text } from 'layerchart';
   import { group } from 'd3-array';
+  import { quantize } from 'd3-interpolate';
+  import { schemeTableau10, interpolateRainbow } from 'd3-scale-chromatic';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { longData } from '$lib/utils/genData.js';
@@ -281,7 +283,7 @@
   </div>
 </Preview>
 
-<h2>Customize colors</h2>
+<h2>Customize colors (CSS variables)</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
@@ -296,6 +298,22 @@
         'hsl(var(--color-info))',
       ]}
     />
+  </div>
+</Preview>
+
+<h2>Customize colors (scheme)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart {data} key="fruit" value="value" cRange={schemeTableau10} />
+  </div>
+</Preview>
+
+<h2>Customize colors (interpolator)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart {data} key="fruit" value="value" cRange={quantize(interpolateRainbow, 5)} />
   </div>
 </Preview>
 

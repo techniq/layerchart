@@ -5,6 +5,7 @@
   import { chartContext } from './../ChartContext.svelte';
   import { tooltipContext } from './TooltipContext.svelte';
   import { motionStore } from '../../stores/motionStore.js';
+  import { isScaleBand } from '../../utils/scales.js';
 
   /** `x` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
   export let x: 'pointer' | 'data' | number | undefined = 'pointer';
@@ -12,9 +13,10 @@
   export let y: 'pointer' | 'data' | number | undefined = 'pointer';
 
   /** Offset added to `x` position */
-  export let xOffset = typeof x === 'number' || typeof y === 'number' ? 0 : 10;
+  export let xOffset = x === 'pointer' ? 10 : 0;
+
   /** Offset added to `y` position */
-  export let yOffset = typeof x === 'number' || typeof y === 'number' ? 0 : 10;
+  export let yOffset = y === 'pointer' ? 10 : 0;
 
   /** Align based on edge of tooltip */
   type Placement =
@@ -42,7 +44,7 @@
     content?: string;
   } = {};
 
-  const { padding, xGet, yGet, containerWidth, containerHeight } = chartContext();
+  const { padding, xScale, xGet, yScale, yGet, containerWidth, containerHeight } = chartContext();
   const tooltip = tooltipContext();
 
   let tooltipWidth = 0;
@@ -59,8 +61,16 @@
   }
 
   $: if ($tooltip?.data) {
+    const xBandOffset = isScaleBand($xScale)
+      ? $xScale.step() / 2 - ($xScale.padding() * $xScale.step()) / 2
+      : 0;
+
     const xValue: number =
-      typeof x === 'number' ? x : x === 'data' ? $xGet($tooltip.data) + $padding.left : $tooltip.x;
+      typeof x === 'number'
+        ? x
+        : x === 'data'
+          ? $xGet($tooltip.data) + $padding.left + xBandOffset
+          : $tooltip.x;
 
     let xAlign: Align = 'start';
     switch (anchor) {
@@ -83,8 +93,15 @@
         break;
     }
 
+    const yBandOffset = isScaleBand($yScale)
+      ? $yScale.step() / 2 - ($yScale.padding() * $yScale.step()) / 2
+      : 0;
     const yValue: number =
-      typeof y === 'number' ? y : y === 'data' ? $yGet($tooltip.data) + $padding.top : $tooltip.y;
+      typeof y === 'number'
+        ? y
+        : y === 'data'
+          ? $yGet($tooltip.data) + $padding.top + yBandOffset
+          : $tooltip.y;
 
     let yAlign: Align = 'start';
     switch (anchor) {

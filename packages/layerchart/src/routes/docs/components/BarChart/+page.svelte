@@ -1,6 +1,16 @@
 <script lang="ts">
-  import { accessor, Axis, BarChart, Bars, Highlight, Svg, Tooltip } from 'layerchart';
+  import {
+    accessor,
+    Axis,
+    BarChart,
+    Bars,
+    Highlight,
+    LinearGradient,
+    Svg,
+    Tooltip,
+  } from 'layerchart';
   import { group, sum } from 'd3-array';
+  import { scaleThreshold, scaleTime } from 'd3-scale';
   import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -18,8 +28,24 @@
     value: 'integer',
     keys: ['value', 'baseline'],
   });
+  const negativeData = createDateSeries({ count: 10, min: -20, max: 50, value: 'integer' });
   const horizontalDateSeriesData = dateSeriesData.slice(0, 10);
   const dateSeriesBaselineData = dateSeriesData.map((d) => ({ ...d, value: d.baseline }));
+  const largeDateSeriesData = createDateSeries({
+    count: 100,
+    min: 20,
+    max: 100,
+    value: 'integer',
+    keys: ['value', 'baseline'],
+  });
+
+  const statusDateSeriesData = createDateSeries({
+    count: 50,
+    min: 0,
+    max: 100,
+    value: 'integer',
+    keys: ['value', 'baseline'],
+  });
 </script>
 
 <h1>Examples</h1>
@@ -37,6 +63,43 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart data={horizontalDateSeriesData} x="value" y="date" orientation="horizontal" />
+  </div>
+</Preview>
+
+<h2>Color scale</h2>
+
+<Preview data={negativeData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={negativeData}
+      x="date"
+      y="value"
+      c="value"
+      cScale={scaleThreshold()}
+      cDomain={[0]}
+      cRange={['hsl(var(--color-danger))', 'hsl(var(--color-success))']}
+    />
+  </div>
+</Preview>
+
+<h2>Gradient</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart data={dateSeriesData} x="date" y="value">
+      <svelte:fragment slot="marks" let:series let:getBarsProps>
+        {#each series as s, i}
+          <LinearGradient
+            class="from-blue-500 to-green-400"
+            vertical
+            units="userSpaceOnUse"
+            let:url
+          >
+            <Bars {...getBarsProps(s, i)} fill={url} />
+          </LinearGradient>
+        {/each}
+      </svelte:fragment>
+    </BarChart>
   </div>
 </Preview>
 
@@ -507,7 +570,7 @@
           color: 'hsl(var(--color-success))',
         },
         {
-          key: 'grapes ',
+          key: 'grapes',
           color: 'hsl(var(--color-info))',
         },
       ]}
@@ -613,9 +676,47 @@
       x="date"
       y="value"
       axis={false}
+      grid={false}
       bandPadding={0.1}
-      props={{ bars: { radius: 1 } }}
+      props={{ bars: { radius: 1, strokeWidth: 0 } }}
     />
+  </div>
+</Preview>
+
+<h2>Single dimension</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[60px]">
+    <BarChart
+      data={statusDateSeriesData}
+      x="date"
+      y={(d) => 1}
+      c="value"
+      cScale={scaleThreshold()}
+      cDomain={[10, 50]}
+      cRange={[
+        'hsl(var(--color-danger))',
+        'hsl(var(--color-warning))',
+        'hsl(var(--color-success))',
+      ]}
+      axis="x"
+      bandPadding={0.1}
+      props={{
+        bars: { radius: 4, strokeWidth: 0 },
+        highlight: { bar: { radius: 4, class: 'stroke-current stroke-2 fill-none' } },
+        xAxis: { ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks() },
+        rule: { y: false },
+      }}
+    >
+      <svelte:fragment slot="tooltip" let:x let:y let:c let:cScale>
+        <Tooltip.Root let:data>
+          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="Status" value={c(data)} color={cScale(c(data))} />
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
+    </BarChart>
   </div>
 </Preview>
 
@@ -632,6 +733,35 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart data={dateSeriesData} x="date" y="value" axis="y" />
+  </div>
+</Preview>
+
+<h2>Override axis ticks with custom scale</h2>
+
+<Preview data={largeDateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={largeDateSeriesData}
+      x="date"
+      y="value"
+      props={{ xAxis: { ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks() } }}
+    />
+  </div>
+</Preview>
+
+<h2>Both axis grid</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true }} />
+  </div>
+</Preview>
+
+<h2>Both axis grid (align between)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true, bandAlign: 'between' }} />
   </div>
 </Preview>
 

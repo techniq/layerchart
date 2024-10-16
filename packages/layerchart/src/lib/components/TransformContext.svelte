@@ -326,7 +326,9 @@
     // Touch events cause pointer events to be interrupted.
     // Typically `touch-action: none` works, but doesn't appear to with SVG, but `preventDefault()` works here
     // https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#touch-action_css_property
-    e.preventDefault();
+    if (mode !== 'none' && !disablePointer) {
+      e.preventDefault();
+    }
   }}
   on:pointerup={onPointerUp}
   on:dblclick={onDoubleClick}

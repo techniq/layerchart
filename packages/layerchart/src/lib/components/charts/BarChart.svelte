@@ -8,6 +8,7 @@
   import Axis from '../Axis.svelte';
   import Bars from '../Bars.svelte';
   import Chart from '../Chart.svelte';
+  import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
   import Legend from '../Legend.svelte';
@@ -21,6 +22,7 @@
 
   interface $$Props extends ChartProps {
     axis?: typeof axis;
+    grid?: typeof grid;
     bandPadding?: typeof bandPadding;
     groupPadding?: typeof groupPadding;
     labels?: typeof labels;
@@ -51,9 +53,9 @@
     {
       key: 'default',
       value: orientation === 'vertical' ? y : x,
-      color: 'hsl(var(--color-primary))',
     },
   ];
+  $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
 
   /** Determine how to layout series.  Overlap (default), stack, or group side by side */
   export let seriesLayout: 'overlap' | 'group' | 'stack' | 'stackExpand' | 'stackDiverging' =
@@ -63,6 +65,7 @@
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
   export let rule: ComponentProps<Rule> | boolean = true;
+  export let grid: ComponentProps<Grid> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let legend: ComponentProps<Legend> | boolean = false;
 
@@ -100,6 +103,7 @@
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
     yAxis?: Partial<ComponentProps<Axis>>;
+    grid?: Partial<ComponentProps<Grid>>;
     rule?: Partial<ComponentProps<Rule>>;
     bars?: Partial<ComponentProps<Bars>>;
     legend?: Partial<ComponentProps<Legend>>;
@@ -144,6 +148,31 @@
       };
     });
   }
+
+  function getBarsProps(s: (typeof series)[number], i: number) {
+    const barsProps: ComponentProps<Bars> = {
+      data: s.data,
+      x: !isVertical
+        ? stackSeries
+          ? (d) => d.stackData[i]
+          : (s.value ?? (s.data ? undefined : s.key))
+        : undefined,
+      y: isVertical
+        ? stackSeries
+          ? (d) => d.stackData[i]
+          : (s.value ?? (s.data ? undefined : s.key))
+        : undefined,
+      x1: isVertical && groupSeries ? (d) => s.value ?? s.key : undefined,
+      y1: !isVertical && groupSeries ? (d) => s.value ?? s.key : undefined,
+      radius: 4,
+      strokeWidth: 1,
+      fill: s.color,
+      ...props.bars,
+      ...s.props,
+    };
+
+    return barsProps;
+  }
 </script>
 
 <Chart
@@ -168,6 +197,8 @@
   {y1Scale}
   {y1Domain}
   {y1Range}
+  c={isVertical ? y : x}
+  cRange={['hsl(var(--color-primary))']}
   padding={axis === false
     ? undefined
     : {
@@ -180,20 +211,45 @@
   let:xScale
   let:y
   let:yScale
+  let:c
+  let:cScale
   let:width
   let:height
   let:padding
   let:tooltip
 >
-  {@const slotProps = { x, xScale, y, yScale, width, height, padding, tooltip, series }}
+  {@const slotProps = {
+    x,
+    xScale,
+    y,
+    yScale,
+    c,
+    cScale,
+    width,
+    height,
+    padding,
+    tooltip,
+    series,
+    getBarsProps,
+  }}
   <slot {...slotProps}>
     <Svg>
+      <slot name="grid" {...slotProps}>
+        {#if grid}
+          <Grid
+            x={!isVertical}
+            y={isVertical}
+            {...typeof grid === 'object' ? grid : null}
+            {...props.grid}
+          />
+        {/if}
+      </slot>
+
       <slot name="axis" {...slotProps}>
         {#if axis}
           {#if axis !== 'x'}
             <Axis
               placement="left"
-              grid={isVertical}
               format={(value) => {
                 if (isVertical && seriesLayout === 'stackExpand') {
                   return format(value, 'percentRound');
@@ -209,7 +265,6 @@
           {#if axis !== 'y'}
             <Axis
               placement="bottom"
-              grid={!isVertical}
               format={(value) => {
                 if (!isVertical && seriesLayout === 'stackExpand') {
                   return format(value, 'percentRound');
@@ -232,26 +287,7 @@
 
       <slot name="marks" {...slotProps}>
         {#each series as s, i}
-          <Bars
-            data={s.data}
-            x={!isVertical
-              ? stackSeries
-                ? (d) => d.stackData[i]
-                : (s.value ?? (s.data ? undefined : s.key))
-              : undefined}
-            y={isVertical
-              ? stackSeries
-                ? (d) => d.stackData[i]
-                : (s.value ?? (s.data ? undefined : s.key))
-              : undefined}
-            x1={isVertical && groupSeries ? (d) => s.value ?? s.key : undefined}
-            y1={!isVertical && groupSeries ? (d) => s.value ?? s.key : undefined}
-            radius={4}
-            strokeWidth={1}
-            fill={s.color}
-            {...props.bars}
-            {...s.props}
-          />
+          <Bars {...getBarsProps(s, i)} />
         {/each}
       </slot>
 
@@ -269,10 +305,12 @@
     <slot name="legend" {...slotProps}>
       {#if legend}
         <Legend
-          scale={scaleOrdinal(
-            series.map((s) => s.label ?? s.key),
-            series.map((s) => s.color)
-          )}
+          scale={isDefaultSeries
+            ? undefined
+            : scaleOrdinal(
+                series.map((s) => s.label ?? s.key),
+                series.map((s) => s.color)
+              )}
           placement="bottom"
           variant="swatches"
           {...props.legend}
@@ -292,7 +330,7 @@
             <Tooltip.Item
               label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
               value={valueAccessor(data)}
-              color={s.color}
+              color={s.color ?? cScale(c(data))}
               {format}
               valueAlign="right"
             />

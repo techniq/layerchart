@@ -13,8 +13,8 @@
   import type { TransitionParams } from 'svelte-ux'; // TODO: Replace with `@layerstack/svelte-types` or similar
 
   import { chartContext } from './ChartContext.svelte';
-  import Circle from './Circle.svelte';
   import Line from './Line.svelte';
+  import Rule from './Rule.svelte';
   import Text from './Text.svelte';
   import { isScaleBand, type AnyScale } from '$lib/utils/scales.js';
 
@@ -33,7 +33,7 @@
   export let labelProps: Partial<ComponentProps<Text>> | undefined = undefined;
 
   /** Draw a rule line.  Use Rule component for greater rendering order control */
-  export let rule: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'> = false;
+  export let rule: boolean | Partial<ComponentProps<Rule>> = false;
 
   /** Draw a grid lines */
   export let grid: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'> = false;
@@ -136,21 +136,21 @@
         return {
           textAnchor: 'middle',
           verticalAnchor: 'end',
-          dy: -6, // manually adjusted until Text supports custom styles
+          dy: -tickLength - 2, // manually adjusted until Text supports custom styles
         };
 
       case 'bottom':
         return {
           textAnchor: 'middle',
           verticalAnchor: 'start',
-          dy: 4, // manually adjusted until Text supports custom styles
+          dy: tickLength, // manually adjusted until Text supports custom styles
         };
 
       case 'left':
         return {
           textAnchor: 'end',
           verticalAnchor: 'middle',
-          dx: -4,
+          dx: -tickLength,
           dy: -2, // manually adjusted until Text supports custom styles
         };
 
@@ -158,18 +158,24 @@
         return {
           textAnchor: 'start',
           verticalAnchor: 'middle',
-          dx: 4,
+          dx: tickLength,
           dy: -2, // manually adjusted until Text supports custom styles
         };
 
       case 'angle':
-        const xValue = _scale(tick);
+        const xValue = _scale(tick); // angle in radians
         return {
           textAnchor:
-            xValue === 0 || xValue === Math.PI ? 'middle' : xValue > Math.PI ? 'end' : 'start',
+            xValue === 0 ||
+            Math.abs(xValue - Math.PI) < 0.01 || // ~180deg
+            Math.abs(xValue - Math.PI * 2) < 0.01 // ~360deg
+              ? 'middle'
+              : xValue > Math.PI
+                ? 'end'
+                : 'start',
           verticalAnchor: 'middle',
-          dx: 0,
-          dy: -2, // manually adjusted until Text supports custom styles
+          dx: Math.sin(xValue) * (tickLength + 2),
+          dy: -Math.cos(xValue) * (tickLength + 4), // manually adjusted until Text supports custom styles
         };
 
       case 'radius':
@@ -223,44 +229,15 @@
 
 <g class={cls('Axis placement-{placement}', classes.root, $$props.class)}>
   {#if rule !== false}
-    {@const lineProps = typeof rule === 'object' ? rule : null}
-    {#if orientation === 'vertical'}
-      <Line
-        x1={placement === 'right' ? xRangeMax : xRangeMin}
-        x2={placement === 'right' ? xRangeMax : xRangeMin}
-        y1={$yRange[0] || 0}
-        y2={$yRange[1] || 0}
-        {tweened}
-        {spring}
-        {...lineProps}
-        class={cls('rule stroke-surface-content/50', lineProps?.class)}
-      />
-    {/if}
-
-    {#if orientation === 'horizontal'}
-      <Line
-        x1={$xRange[0] || 0}
-        x2={$xRange[1] || 0}
-        y1={placement === 'top' ? yRangeMin : yRangeMax}
-        y2={placement === 'top' ? yRangeMin : yRangeMax}
-        {tweened}
-        {spring}
-        {...lineProps}
-        class={cls('rule stroke-surface-content/50', lineProps?.class)}
-      />
-    {/if}
-
-    <!-- TODO: angle rule? -->
-
-    {#if orientation === 'radius'}
-      <Circle
-        r={$yRange[0] || 0}
-        {tweened}
-        {spring}
-        {...lineProps}
-        class={cls('rule stroke-surface-content/20 fill-none', lineProps?.class)}
-      />
-    {/if}
+    {@const ruleProps = typeof rule === 'object' ? rule : null}
+    <Rule
+      x={placement === 'left' || placement === 'right' ? placement : placement === 'angle'}
+      y={placement === 'top' || placement === 'bottom' ? placement : placement === 'radius'}
+      {tweened}
+      {spring}
+      {...ruleProps}
+      class={cls('rule stroke-surface-content/50', ruleProps?.class)}
+    />
   {/if}
 
   {#if label}
@@ -269,10 +246,14 @@
 
   {#each tickVals as tick, index (tick)}
     {@const tickCoords = getCoords(tick)}
-    {@const radialTickCoords = pointRadial(tickCoords.x, tickCoords.y)}
+    {@const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y)}
+    {@const [radialTickMarkCoordsX, radialTickMarkCoordsY] = pointRadial(
+      tickCoords.x,
+      tickCoords.y + tickLength
+    )}
     {@const resolvedTickLabelProps = {
-      x: orientation === 'angle' ? radialTickCoords[0] : tickCoords.x,
-      y: orientation === 'angle' ? radialTickCoords[1] : tickCoords.y,
+      x: orientation === 'angle' ? radialTickCoordsX : tickCoords.x,
+      y: orientation === 'angle' ? radialTickCoordsY : tickCoords.y,
       value: formatValue(tick, format ?? _scale.tickFormat?.() ?? ((v) => v)),
       ...getDefaultTickLabelProps(tick),
       tweened,
@@ -286,50 +267,15 @@
 
     <g in:transitionIn={transitionInParams}>
       {#if grid !== false}
-        {@const lineProps = typeof grid === 'object' ? grid : null}
-        {#if orientation === 'horizontal'}
-          <Line
-            x1={tickCoords.x}
-            y1={yRangeMin}
-            x2={tickCoords.x}
-            y2={yRangeMax}
-            {tweened}
-            {spring}
-            {...lineProps}
-            class={cls('grid stroke-surface-content/10', lineProps?.class)}
-          />
-        {:else if orientation === 'vertical'}
-          <Line
-            x1={0}
-            y1={tickCoords.y}
-            x2={$width}
-            y2={tickCoords.y}
-            {tweened}
-            {spring}
-            {...lineProps}
-            class={cls('grid stroke-surface-content/10', lineProps?.class)}
-          />
-        {:else if orientation === 'angle'}
-          {@const [x1, y1] = pointRadial(tickCoords.x, yRangeMin)}
-          {@const [x2, y2] = pointRadial(tickCoords.x, yRangeMax)}
-
-          <Line
-            {x1}
-            {y1}
-            {x2}
-            {y2}
-            {tweened}
-            {spring}
-            {...lineProps}
-            class={cls('grid stroke-surface-content/10', lineProps?.class)}
-          />
-        {:else if orientation === 'radius'}
-          <circle
-            r={tickCoords.y}
-            {...lineProps}
-            class={cls('grid stroke-surface-content/10 fill-none', lineProps?.class)}
-          />
-        {/if}
+        {@const ruleProps = typeof grid === 'object' ? grid : null}
+        <Rule
+          x={orientation === 'horizontal' || orientation === 'angle' ? tick : false}
+          y={orientation === 'vertical' || orientation === 'radius' ? tick : false}
+          {tweened}
+          {spring}
+          {...ruleProps}
+          class={cls('grid stroke-surface-content/10', ruleProps?.class)}
+        />
       {/if}
 
       <!-- Tick marks -->
@@ -353,7 +299,18 @@
           {spring}
           class="tick stroke-surface-content/50"
         />
+      {:else if orientation === 'angle'}
+        <Line
+          x1={radialTickCoordsX}
+          y1={radialTickCoordsY}
+          x2={radialTickMarkCoordsX}
+          y2={radialTickMarkCoordsY}
+          {tweened}
+          {spring}
+          class="tick stroke-surface-content/50"
+        />
       {/if}
+      <!-- TODO: Add tick marks for radial (angle)? -->
 
       <slot name="tickLabel" labelProps={resolvedTickLabelProps} {index}>
         <Text {...resolvedTickLabelProps} />

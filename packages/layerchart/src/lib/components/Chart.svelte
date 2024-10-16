@@ -142,7 +142,7 @@
       | string[]
       | ((args: { yScale: AnyScale; width: number; height: number }) => number[] | string[]);
     /** Override the default y1 range of `[0, width]` by setting an array or function with argument `({ yScale, width, height})` that returns an array. Setting this prop overrides `x1Reverse`. This can also be a list of numbers or strings for scales with discrete ranges like [scaleThreshold](https://github.com/d3/d3-scale#threshold-scales) or [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales). */
-    cRange?: string[];
+    cRange?: string[] | readonly string[];
 
     /** Reverse the default x range. By default this is `false` and the range is `[0, width]`. Ignored if you set the xRange prop. @default false */
     xReverse?: boolean;
@@ -203,6 +203,12 @@
 
     /** Expose to support `bind:transformContext` for imperative control (`transformContext.translate(...)`) */
     transformContext?: typeof transformContext;
+
+    /** Exposed via bind: to support `bind:geoProjection` for external access */
+    geoProjection?: typeof geoProjection;
+
+    /** Exposed via bind: to support `bind:tooltipContext` for external access (ex. `tooltipContext.data) */
+    tooltipContext?: typeof tooltipContext;
   }
 
   export let data: TData[] | HierarchyNode<TData> | SankeyGraph<any, any> = [];
@@ -272,8 +278,11 @@
   // @ts-expect-error will only be undefined until bind:transformContext runs
   export let transformContext: TransformContext = undefined;
 
-  // Bound for access within TransformContext
-  let geoProjection: ComponentProps<GeoContext>['geo'] = undefined;
+  /** Expose bound geo projection context */
+  export let geoProjection: ComponentProps<GeoContext>['geo'] = undefined;
+
+  /** Expose bound tooltip context */
+  export let tooltipContext: ComponentProps<TooltipContext>['tooltip'] = undefined;
 
   // Track when mounted since LayerCake initializes width/height with `100` until bound `clientWidth`/`clientWidth` can run
   // Useful to key/remount TransformContext with correct `initialTranslate` / `initialScale` values
@@ -398,7 +407,7 @@
       >
         <GeoContext {...geo} bind:geo={geoProjection} let:projection>
           {@const tooltipProps = typeof tooltip === 'object' ? tooltip : {}}
-          <TooltipContext {...tooltipProps} let:tooltip>
+          <TooltipContext {...tooltipProps} bind:tooltip={tooltipContext} let:tooltip>
             <slot
               {aspectRatio}
               {containerHeight}

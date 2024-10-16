@@ -8,6 +8,7 @@
   import Area from '../Area.svelte';
   import Axis from '../Axis.svelte';
   import Chart from '../Chart.svelte';
+  import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
   import Legend from '../Legend.svelte';
@@ -21,6 +22,7 @@
 
   interface $$Props extends ComponentProps<Chart<TData>> {
     axis?: typeof axis;
+    grid?: typeof grid;
     labels?: typeof labels;
     legend?: typeof legend;
     points?: typeof points;
@@ -46,12 +48,14 @@
     color?: string;
     props?: Partial<ComponentProps<Area>>;
   }[] = [{ key: 'default', value: y, color: 'hsl(var(--color-primary))' }];
+  $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
 
   /** Determine how to layout series.  Overlap (default) or stack */
   export let seriesLayout: 'overlap' | 'stack' | 'stackExpand' | 'stackDiverging' = 'overlap';
   $: stackSeries = seriesLayout.startsWith('stack');
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
+  export let grid: ComponentProps<Grid> | boolean = true;
   export let rule: ComponentProps<Rule> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let legend: ComponentProps<Legend> | boolean = false;
@@ -60,6 +64,7 @@
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
     yAxis?: Partial<ComponentProps<Axis>>;
+    grid?: Partial<ComponentProps<Grid>>;
     rule?: Partial<ComponentProps<Rule>>;
     area?: Partial<ComponentProps<Area>>;
     line?: Partial<ComponentProps<Line>>;
@@ -103,6 +108,35 @@
 
   // Default xScale based on first data's `x` value
   $: xScale = accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear();
+
+  function getAreaProps(s: (typeof series)[number], i: number) {
+    const lineProps = {
+      ...props.line,
+      ...(typeof props.area?.line === 'object' ? props.area.line : null),
+      ...(typeof s.props?.line === 'object' ? s.props.line : null),
+    };
+
+    const areaProps: ComponentProps<Area> = {
+      data: s.data,
+      y0: stackSeries ? (d) => d.stackData[i][0] : Array.isArray(s.value) ? s.value[0] : undefined,
+      y1: stackSeries
+        ? (d) => d.stackData[i][1]
+        : Array.isArray(s.value)
+          ? s.value[1]
+          : (s.value ?? s.key),
+      fill: s.color,
+      'fill-opacity': 0.3,
+      ...props.area,
+      ...s.props,
+      line: {
+        class: !('stroke-width' in lineProps) ? 'stroke-2' : '',
+        stroke: s.color,
+        ...lineProps,
+      },
+    };
+
+    return areaProps;
+  }
 </script>
 
 <Chart
@@ -128,20 +162,41 @@
   let:xScale
   let:y
   let:yScale
+  let:c
+  let:cScale
   let:width
   let:height
   let:padding
   let:tooltip
 >
-  {@const slotProps = { x, xScale, y, yScale, width, height, padding, tooltip, series }}
+  {@const slotProps = {
+    x,
+    xScale,
+    y,
+    yScale,
+    c,
+    cScale,
+    width,
+    height,
+    padding,
+    tooltip,
+    series,
+    getAreaProps,
+  }}
+
   <slot {...slotProps}>
     <Svg center={radial}>
+      <slot name="grid" {...slotProps}>
+        {#if grid}
+          <Grid x={radial} y {...typeof grid === 'object' ? grid : null} {...props.grid} />
+        {/if}
+      </slot>
+
       <slot name="axis" {...slotProps}>
         {#if axis}
           {#if axis !== 'x'}
             <Axis
               placement={radial ? 'radius' : 'left'}
-              grid
               format={(value) => {
                 if (seriesLayout === 'stackExpand') {
                   return format(value, 'percentRound');
@@ -157,7 +212,6 @@
           {#if axis !== 'y'}
             <Axis
               placement={radial ? 'angle' : 'bottom'}
-              grid={radial}
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.xAxis}
@@ -174,34 +228,7 @@
 
       <slot name="marks" {...slotProps}>
         {#each series as s, i}
-          {@const lineProps = {
-            ...props.line,
-            ...(typeof props.area?.line === 'object' ? props.area.line : null),
-            ...(typeof s.props?.line === 'object' ? s.props.line : null),
-          }}
-
-          <Area
-            data={s.data}
-            y0={stackSeries
-              ? (d) => d.stackData[i][0]
-              : Array.isArray(s.value)
-                ? s.value[0]
-                : undefined}
-            y1={stackSeries
-              ? (d) => d.stackData[i][1]
-              : Array.isArray(s.value)
-                ? s.value[1]
-                : (s.value ?? s.key)}
-            fill={s.color}
-            fill-opacity={0.3}
-            {...props.area}
-            {...s.props}
-            line={{
-              class: !('stroke-width' in lineProps) ? 'stroke-2' : '',
-              stroke: s.color,
-              ...lineProps,
-            }}
-          />
+          <Area {...getAreaProps(s, i)} />
         {/each}
       </slot>
 
@@ -238,10 +265,12 @@
     <slot name="legend" {...slotProps}>
       {#if legend}
         <Legend
-          scale={scaleOrdinal(
-            series.map((s) => s.label ?? s.key),
-            series.map((s) => s.color)
-          )}
+          scale={isDefaultSeries
+            ? undefined
+            : scaleOrdinal(
+                series.map((s) => s.label ?? s.key),
+                series.map((s) => s.color)
+              )}
           placement="bottom"
           variant="swatches"
           {...props.legend}
