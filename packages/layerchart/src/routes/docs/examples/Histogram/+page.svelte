@@ -57,7 +57,7 @@
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={olympiansBins}
-      x={['x0', 'x1']}
+      x="x0"
       xScale={scaleBand().padding(0.2)}
       y="length"
       yDomain={[0, null]}
@@ -98,7 +98,7 @@
       x="length"
       xDomain={[0, null]}
       xNice
-      y={['x0', 'x1']}
+      y="x0"
       yScale={scaleBand().padding(0.2)}
       padding={{ left: 16, bottom: 16 }}
       tooltip={{ mode: 'band' }}
@@ -190,7 +190,7 @@
   <div class="h-[300px] p-4 border rounded">
     <Chart
       data={randomBins}
-      x={['x0', 'x1']}
+      x="x0"
       xScale={scaleBand().padding(0.2)}
       y="length"
       yDomain={[0, null]}
@@ -242,7 +242,7 @@
     <div class="h-[300px] p-4 border rounded">
       <Chart
         {data}
-        x={['x0', 'x1']}
+        x="x0"
         xScale={scaleBand().padding(0.2)}
         y="length"
         yDomain={[0, null]}
@@ -322,7 +322,7 @@
     <div class="h-[300px] p-4 border rounded">
       <Chart
         {data}
-        x={['x0', 'x1']}
+        x="x0"
         xScale={scaleBand().padding(0.2)}
         y="length"
         yDomain={[0, null]}
