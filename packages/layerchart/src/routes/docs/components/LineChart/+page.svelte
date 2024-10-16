@@ -197,7 +197,7 @@
       x="name"
       xScale={scaleBand()}
       y="value"
-      yPadding={[0, 10]}
+      yPadding={[0, 8]}
       padding={{ top: 8 }}
       radial
       points
@@ -206,12 +206,52 @@
           curve: curveLinearClosed,
           class: 'stroke-primary fill-primary/20',
         },
+        xAxis: {
+          tickLength: 0,
+        },
         yAxis: {
           ticks: [0, 5, 10],
           format: (d) => '',
-          grid: {
-            class: 'stroke-surface-content/20 fill-surface-200/50',
-          },
+        },
+        grid: {
+          yTicks: [0, 5, 10],
+        },
+        highlight: {
+          lines: false,
+        },
+      }}
+      tooltip={{ mode: 'voronoi' }}
+    />
+  </div>
+</Preview>
+
+<h2>Radar with rounded grid</h2>
+
+<Preview data={pitchData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart
+      data={pitchData}
+      x="name"
+      xScale={scaleBand()}
+      y="value"
+      padding={{ top: 8 }}
+      radial
+      points
+      props={{
+        spline: {
+          curve: curveLinearClosed,
+          class: 'stroke-primary fill-primary/20',
+        },
+        xAxis: {
+          tickLength: 10,
+        },
+        yAxis: {
+          ticks: [0, 5, 10],
+          format: (d) => '',
+        },
+        grid: {
+          yTicks: [0, 5, 10],
+          rounded: true,
         },
         highlight: {
           lines: false,
@@ -230,7 +270,7 @@
       data={budgetData}
       x="name"
       xScale={scaleBand()}
-      yPadding={[0, 10]}
+      yPadding={[0, 8]}
       radial
       series={[
         {
@@ -243,6 +283,9 @@
       props={{
         spline: {
           curve: curveLinearClosed,
+        },
+        xAxis: {
+          tickLength: 0,
         },
         yAxis: {
           ticks: 4,
@@ -419,6 +462,7 @@
       x="date"
       y="value"
       axis={false}
+      grid={false}
       props={{ highlight: { points: { r: 3, class: 'stroke-2 stroke-surface-100' } } }}
     />
   </div>

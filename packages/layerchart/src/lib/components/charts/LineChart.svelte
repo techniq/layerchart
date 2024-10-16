@@ -5,6 +5,7 @@
 
   import Axis from '../Axis.svelte';
   import Chart from '../Chart.svelte';
+  import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
   import Legend from '../Legend.svelte';
@@ -18,6 +19,7 @@
 
   interface $$Props extends ComponentProps<Chart<TData>> {
     axis?: typeof axis;
+    grid?: typeof grid;
     labels?: typeof labels;
     legend?: typeof legend;
     points?: typeof points;
@@ -46,6 +48,7 @@
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
   export let rule: ComponentProps<Rule> | boolean = true;
+  export let grid: ComponentProps<Grid> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let legend: ComponentProps<Legend> | boolean = false;
   export let points: ComponentProps<Points> | boolean = false;
@@ -53,6 +56,7 @@
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
     yAxis?: Partial<ComponentProps<Axis>>;
+    grid?: Partial<ComponentProps<Grid>>;
     rule?: Partial<ComponentProps<Rule>>;
     spline?: Partial<ComponentProps<Spline>>;
     legend?: Partial<ComponentProps<Legend>>;
@@ -129,12 +133,17 @@
   }}
   <slot {...slotProps}>
     <Svg center={radial}>
+      <slot name="grid" {...slotProps}>
+        {#if grid}
+          <Grid x={radial} y {...typeof grid === 'object' ? grid : null} {...props.grid} />
+        {/if}
+      </slot>
+
       <slot name="axis" {...slotProps}>
         {#if axis}
           {#if axis !== 'x'}
             <Axis
               placement={radial ? 'radius' : 'left'}
-              grid
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.yAxis}
@@ -144,7 +153,6 @@
           {#if axis !== 'y'}
             <Axis
               placement={radial ? 'angle' : 'bottom'}
-              grid={radial}
               format={(value) => format(value, undefined, { variant: 'short' })}
               {...typeof axis === 'object' ? axis : null}
               {...props.xAxis}

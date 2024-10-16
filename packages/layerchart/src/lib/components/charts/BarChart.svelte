@@ -8,6 +8,7 @@
   import Axis from '../Axis.svelte';
   import Bars from '../Bars.svelte';
   import Chart from '../Chart.svelte';
+  import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
   import Legend from '../Legend.svelte';
@@ -21,6 +22,7 @@
 
   interface $$Props extends ChartProps {
     axis?: typeof axis;
+    grid?: typeof grid;
     bandPadding?: typeof bandPadding;
     groupPadding?: typeof groupPadding;
     labels?: typeof labels;
@@ -63,6 +65,7 @@
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
   export let rule: ComponentProps<Rule> | boolean = true;
+  export let grid: ComponentProps<Grid> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let legend: ComponentProps<Legend> | boolean = false;
 
@@ -100,6 +103,7 @@
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
     yAxis?: Partial<ComponentProps<Axis>>;
+    grid?: Partial<ComponentProps<Grid>>;
     rule?: Partial<ComponentProps<Rule>>;
     bars?: Partial<ComponentProps<Bars>>;
     legend?: Partial<ComponentProps<Legend>>;
@@ -230,12 +234,22 @@
   }}
   <slot {...slotProps}>
     <Svg>
+      <slot name="grid" {...slotProps}>
+        {#if grid}
+          <Grid
+            x={!isVertical}
+            y={isVertical}
+            {...typeof grid === 'object' ? grid : null}
+            {...props.grid}
+          />
+        {/if}
+      </slot>
+
       <slot name="axis" {...slotProps}>
         {#if axis}
           {#if axis !== 'x'}
             <Axis
               placement="left"
-              grid={isVertical}
               format={(value) => {
                 if (isVertical && seriesLayout === 'stackExpand') {
                   return format(value, 'percentRound');
@@ -251,7 +265,6 @@
           {#if axis !== 'y'}
             <Axis
               placement="bottom"
-              grid={!isVertical}
               format={(value) => {
                 if (!isVertical && seriesLayout === 'stackExpand') {
                   return format(value, 'percentRound');

@@ -676,6 +676,7 @@
       x="date"
       y="value"
       axis={false}
+      grid={false}
       bandPadding={0.1}
       props={{ bars: { radius: 1, strokeWidth: 0 } }}
     />
@@ -745,6 +746,22 @@
       y="value"
       props={{ xAxis: { ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks() } }}
     />
+  </div>
+</Preview>
+
+<h2>Both axis grid</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true }} />
+  </div>
+</Preview>
+
+<h2>Both axis grid (align between)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true, bandAlign: 'between' }} />
   </div>
 </Preview>
 
