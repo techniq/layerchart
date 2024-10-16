@@ -36,7 +36,7 @@
   /** Pixel offset to apply to `y` coordinate */
   export let yOffset = 0;
 
-  function showRule(value: typeof x | typeof y, axis: 'x' | 'y') {
+  $: showRule = (value: typeof x | typeof y, axis: 'x' | 'y') => {
     switch (typeof value) {
       case 'boolean':
         return value;
@@ -49,7 +49,7 @@
           return $yScale(value) >= yRangeMin! && $yScale(value) <= yRangeMax!;
         }
     }
-  }
+  };
 </script>
 
 <g class="rule">
