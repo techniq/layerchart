@@ -385,6 +385,7 @@
       x="date"
       y="value"
       axis={false}
+      grid={false}
       props={{ highlight: { points: { r: 3, class: 'stroke-2 stroke-surface-100' } } }}
     />
   </div>

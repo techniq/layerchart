@@ -172,6 +172,7 @@
       x="value"
       y={(d) => 0}
       axis={false}
+      grid={false}
       props={{ highlight: { lines: false } }}
     >
       <svelte:fragment slot="tooltip" let:data let:x>
