@@ -60,6 +60,8 @@
     extent(data.dailyTemperature, (d) => d.value) as [number, number],
     interpolateTurbo
   );
+
+  let dynamicData = ticks(-2, 2, 200).map(Math.sin);
 </script>
 
 <h1>Examples</h1>
@@ -425,6 +427,29 @@
         };
       })}
       tooltip={{ mode: 'manual' }}
+    />
+  </div>
+</Preview>
+
+<h2>Dynamic data</h2>
+
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<Preview data={dynamicData}>
+  <div
+    class="h-[300px] p-4 border rounded"
+    on:mousemove={(e) => {
+      const x = e.clientX;
+      const y = e.clientY;
+      dynamicData = dynamicData.slice(-200).concat(Math.atan2(x, y));
+    }}
+  >
+    <LineChart
+      data={dynamicData.map((d, i) => ({ x: i, y: d }))}
+      x="x"
+      y="y"
+      yBaseline={undefined}
+      tooltip={{ mode: 'manual' }}
+      props={{ yAxis: { tweened: true }, grid: { tweened: true } }}
     />
   </div>
 </Preview>
