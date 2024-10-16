@@ -188,7 +188,7 @@
   </div>
 </Preview>
 
-<h2>Radar</h2>
+<h2>Radar (linear grid)</h2>
 
 <Preview data={pitchData}>
   <div class="h-[300px] p-4 border rounded">
@@ -215,6 +215,7 @@
         },
         grid: {
           yTicks: [0, 5, 10],
+          radialY: 'linear',
         },
         highlight: {
           lines: false,
@@ -225,7 +226,7 @@
   </div>
 </Preview>
 
-<h2>Radar with rounded grid</h2>
+<h2>Radar (rounded grid)</h2>
 
 <Preview data={pitchData}>
   <div class="h-[300px] p-4 border rounded">
@@ -251,7 +252,6 @@
         },
         grid: {
           yTicks: [0, 5, 10],
-          rounded: true,
         },
         highlight: {
           lines: false,
@@ -290,6 +290,9 @@
         yAxis: {
           ticks: 4,
           format: 'metric',
+        },
+        grid: {
+          radialY: 'linear',
         },
         highlight: {
           lines: false,
