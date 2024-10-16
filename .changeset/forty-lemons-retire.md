@@ -2,4 +2,4 @@
 'layerchart': patch
 ---
 
-feat(Labels): Add `axis` prop to override which axis value (x/y) is used for display
+feat(Labels): Add `value` accessor prop to override which value to display (different axis, etc)
