@@ -1,11 +1,10 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
   import { range, ticks } from 'd3-array';
-  import { scaleBand, scaleLinear, scaleSequential } from 'd3-scale';
+  import { scaleLinear, scaleSequential } from 'd3-scale';
   import { interpolateTurbo } from 'd3-scale-chromatic';
-  import { curveCardinal } from 'd3-shape';
 
-  import { Axis, Bars, Chart, LinearGradient, Spline, Svg } from 'layerchart';
+  import { BarChart, Bars, LinearGradient, LineChart } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -72,11 +71,16 @@
 
 <Preview>
   <div class="h-[100px] p-4 border rounded">
-    <Chart data={timeData} x={(d) => d.key} y={(d) => d.value} yDomain={[0, 256]}>
-      <Svg>
-        <Spline curve={curveCardinal} />
-      </Svg>
-    </Chart>
+    <LineChart
+      data={timeData}
+      x="key"
+      y="value"
+      yDomain={[0, 256]}
+      axis={false}
+      grid={false}
+      props={{ spline: { class: 'stroke-surface-content' } }}
+      tooltip={{ mode: 'manual' }}
+    />
   </div>
 </Preview>
 
@@ -84,25 +88,21 @@
 
 <Preview>
   <div class="h-[150px] p-4 border rounded">
-    <Chart
+    <BarChart
       data={frequencyData}
-      x={(d) => d.key}
-      xScale={scaleBand().padding(0.3)}
+      x="key"
       xDomain={range(0, 128)}
-      y={(d) => d.value}
+      y="value"
       yDomain={[0, 256]}
-      yNice
-      padding={{ left: 24, bottom: 0 }}
+      bandPadding={0.2}
+      padding={{ left: 24 }}
+      axis="y"
+      tooltip={{ mode: 'manual' }}
+      props={{
+        yAxis: { format: (d) => decibels(d)?.toFixed(1) },
+      }}
     >
-      <Svg>
-        <Axis placement="left" format={(d) => decibels(d)?.toFixed(1)} grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => /*frequency(d)?.toFixed(1)*/ ''}
-          ticks={10}
-          tickLength={0}
-          rule
-        />
+      <svelte:fragment slot="marks">
         <LinearGradient
           stops={ticks(1, 0, 10).map(colorScale.interpolator())}
           vertical
@@ -111,7 +111,7 @@
         >
           <Bars radius={1} fill={url} />
         </LinearGradient>
-      </Svg>
-    </Chart>
+      </svelte:fragment>
+    </BarChart>
   </div>
 </Preview>
