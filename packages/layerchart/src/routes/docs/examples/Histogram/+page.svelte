@@ -67,7 +67,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule format="metric" tweened />
-        <Axis placement="bottom" rule ticks={4} tweened />
+        <Axis placement="bottom" rule tweened />
         <Bars radius={4} strokeWidth={1} class="fill-primary" tweened />
         <Highlight area />
       </Svg>
@@ -200,7 +200,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule format="metric" tweened />
-        <Axis placement="bottom" rule ticks={4} tweened />
+        <Axis placement="bottom" rule tweened />
         <Bars radius={4} strokeWidth={1} tweened class="fill-primary" />
         <Highlight area />
       </Svg>
@@ -255,7 +255,6 @@
           <Axis
             placement="bottom"
             rule
-            ticks={4}
             format={(d) => format(d, PeriodType.Day)}
             tickLabelProps={{ rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 }}
           />
@@ -335,7 +334,6 @@
           <Axis
             placement="bottom"
             rule
-            ticks={4}
             format={(d) => format(d, PeriodType.Day)}
             tickLabelProps={{ rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 }}
           />
