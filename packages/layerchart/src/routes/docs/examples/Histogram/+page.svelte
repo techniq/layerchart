@@ -1,6 +1,6 @@
 <script lang="ts">
   import { bin } from 'd3-array';
-  import { scaleBand } from 'd3-scale';
+  import { scaleTime } from 'd3-scale';
   import {
     randomBates,
     randomExponential,
@@ -12,7 +12,7 @@
   import { timeDays, timeMonths, timeWeeks } from 'd3-time';
   import { subDays } from 'date-fns';
 
-  import { Axis, Bars, Chart, Highlight, Svg, Tooltip, thresholdTime } from 'layerchart';
+  import { BarChart, Tooltip, thresholdTime } from 'layerchart';
   import { MenuField, RangeField, NumberStepper, State } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
 
@@ -55,37 +55,34 @@
 
 <Preview data={olympiansBins}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart
+    <BarChart
       data={olympiansBins}
       x="x0"
-      xScale={scaleBand().padding(0.2)}
       y="length"
-      yDomain={[0, null]}
-      yNice
-      padding={{ left: 16, bottom: 16 }}
-      tooltip={{ mode: 'band' }}
+      bandPadding={0.2}
+      props={{
+        xAxis: { tweened: true },
+        yAxis: { format: 'metric', tweened: true },
+        bars: { tweened: true },
+      }}
     >
-      <Svg>
-        <Axis placement="left" grid rule format="metric" tweened />
-        <Axis placement="bottom" rule tweened />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" tweened />
-        <Highlight area />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="count" value={data.length} format="integer" />
-          <Tooltip.Separator />
-          {#each data.slice(0, 5) as d}
-            <Tooltip.Item label={d.name} value={d.weight} />
-          {/each}
-          {#if data.length > 5}
-            <span />
-            <span>...</span>
-          {/if}
-        </Tooltip.List>
-      </Tooltip.Root>
-    </Chart>
+      <svelte:fragment slot="tooltip">
+        <Tooltip.Root let:data>
+          <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="count" value={data.length} format="integer" />
+            <Tooltip.Separator />
+            {#each data.slice(0, 5) as d}
+              <Tooltip.Item label={d.name} value={d.weight} />
+            {/each}
+            {#if data.length > 5}
+              <span />
+              <span>...</span>
+            {/if}
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
+    </BarChart>
   </div>
 </Preview>
 
@@ -93,37 +90,35 @@
 
 <Preview data={olympiansBins}>
   <div class="p-4 border rounded" style:height="{16 + 24 + olympiansBins.length * 20}px">
-    <Chart
+    <BarChart
       data={olympiansBins}
       x="length"
-      xDomain={[0, null]}
-      xNice
       y="x0"
-      yScale={scaleBand().padding(0.2)}
-      padding={{ left: 16, bottom: 16 }}
-      tooltip={{ mode: 'band' }}
+      bandPadding={0.2}
+      props={{
+        xAxis: { tweened: true },
+        yAxis: { tweened: true },
+        bars: { tweened: true },
+      }}
+      orientation="horizontal"
     >
-      <Svg>
-        <Axis placement="left" rule tweened />
-        <Axis placement="bottom" grid rule tweened />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" tweened />
-        <Highlight area />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="count" value={data.length} format="integer" />
-          <Tooltip.Separator />
-          {#each data.slice(0, 5) as d}
-            <Tooltip.Item label={d.name} value={d.weight} />
-          {/each}
-          {#if data.length > 5}
-            <span />
-            <span>...</span>
-          {/if}
-        </Tooltip.List>
-      </Tooltip.Root>
-    </Chart>
+      <svelte:fragment slot="tooltip">
+        <Tooltip.Root let:data>
+          <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="count" value={data.length} format="integer" />
+            <Tooltip.Separator />
+            {#each data.slice(0, 5) as d}
+              <Tooltip.Item label={d.name} value={d.weight} />
+            {/each}
+            {#if data.length > 5}
+              <span />
+              <span>...</span>
+            {/if}
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
+    </BarChart>
   </div>
 </Preview>
 
@@ -188,37 +183,34 @@
 
 <Preview data={randomBins}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart
+    <BarChart
       data={randomBins}
       x="x0"
-      xScale={scaleBand().padding(0.2)}
       y="length"
-      yDomain={[0, null]}
-      yNice
-      padding={{ left: 16, bottom: 16 }}
-      tooltip={{ mode: 'band' }}
+      bandPadding={0.2}
+      props={{
+        xAxis: { tweened: true },
+        yAxis: { format: 'metric', tweened: true },
+        bars: { tweened: true },
+      }}
     >
-      <Svg>
-        <Axis placement="left" grid rule format="metric" tweened />
-        <Axis placement="bottom" rule tweened />
-        <Bars radius={4} strokeWidth={1} tweened class="fill-primary" />
-        <Highlight area />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 0.01)}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="count" value={data.length} format="integer" />
-          <Tooltip.Separator />
-          {#each data.slice(0, 5) as d}
-            <Tooltip.Item label="value" value={d} />
-          {/each}
-          {#if data.length > 5}
-            <span />
-            <span>...</span>
-          {/if}
-        </Tooltip.List>
-      </Tooltip.Root>
-    </Chart>
+      <svelte:fragment slot="tooltip">
+        <Tooltip.Root let:data>
+          <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 0.01)}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="count" value={data.length} format="integer" />
+            <Tooltip.Separator />
+            {#each data.slice(0, 5) as d}
+              <Tooltip.Item label="value" value={d} />
+            {/each}
+            {#if data.length > 5}
+              <span />
+              <span>...</span>
+            {/if}
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
+    </BarChart>
   </div>
 </Preview>
 
@@ -240,50 +232,42 @@
 
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded">
-      <Chart
+      <BarChart
         {data}
         x="x0"
-        xScale={scaleBand().padding(0.2)}
         y="length"
-        yDomain={[0, null]}
-        yNice
-        padding={{ left: 16, bottom: 48 }}
-        tooltip={{ mode: 'band' }}
+        bandPadding={0.2}
+        props={{
+          xAxis: { tweened: true },
+          yAxis: { format: 'metric', tweened: true },
+          bars: { tweened: true },
+        }}
       >
-        <Svg>
-          <Axis placement="left" grid rule format="metric" tweened />
-          <Axis
-            placement="bottom"
-            rule
-            format={(d) => format(d, PeriodType.Day)}
-            tickLabelProps={{ rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 }}
-          />
-          <Bars radius={4} strokeWidth={1} class="fill-primary" tweened />
-          <Highlight area />
-        </Svg>
-        <Tooltip.Root let:data>
-          <Tooltip.Header class="text-center">
-            {format(data.x0, PeriodType.Day) +
-              ' - ' +
-              format(data.x1, PeriodType.Day)}</Tooltip.Header
-          >
-          <Tooltip.List>
-            <Tooltip.Item label="count" value={data.length} format="integer" />
-            <Tooltip.Separator />
-            {#each data.slice(0, 5) as d}
-              <Tooltip.Item
-                label="value"
-                value={d}
-                format={(value) => format(value, PeriodType.DayTime)}
-              />
-            {/each}
-            {#if data.length > 5}
-              <span />
-              <span>...</span>
-            {/if}
-          </Tooltip.List>
-        </Tooltip.Root>
-      </Chart>
+        <svelte:fragment slot="tooltip">
+          <Tooltip.Root let:data>
+            <Tooltip.Header class="text-center">
+              {format(data.x0, PeriodType.Day) +
+                ' - ' +
+                format(data.x1, PeriodType.Day)}</Tooltip.Header
+            >
+            <Tooltip.List>
+              <Tooltip.Item label="count" value={data.length} format="integer" />
+              <Tooltip.Separator />
+              {#each data.slice(0, 5) as d}
+                <Tooltip.Item
+                  label="value"
+                  value={d}
+                  format={(value) => format(value, PeriodType.DayTime)}
+                />
+              {/each}
+              {#if data.length > 5}
+                <span />
+                <span>...</span>
+              {/if}
+            </Tooltip.List>
+          </Tooltip.Root>
+        </svelte:fragment>
+      </BarChart>
     </div>
   </Preview>
 </State>
@@ -319,50 +303,48 @@
 
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded">
-      <Chart
+      <BarChart
         {data}
         x="x0"
-        xScale={scaleBand().padding(0.2)}
         y="length"
-        yDomain={[0, null]}
-        yNice
+        bandPadding={0.2}
         padding={{ left: 16, bottom: 48 }}
-        tooltip={{ mode: 'band' }}
+        props={{
+          xAxis: {
+            format: PeriodType.Day,
+            ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks(),
+            tickLabelProps: { rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 },
+            tweened: true,
+          },
+          yAxis: { format: 'metric', tweened: true },
+          bars: { tweened: true },
+        }}
       >
-        <Svg>
-          <Axis placement="left" grid rule format="metric" tweened />
-          <Axis
-            placement="bottom"
-            rule
-            format={(d) => format(d, PeriodType.Day)}
-            tickLabelProps={{ rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 }}
-          />
-          <Bars radius={4} strokeWidth={1} class="fill-primary" tweened />
-          <Highlight area />
-        </Svg>
-        <Tooltip.Root let:data>
-          <Tooltip.Header class="text-center"
-            >{format(data.x0, PeriodType.Day) +
-              ' - ' +
-              format(new Date(data.x1 - 1), PeriodType.Day)}</Tooltip.Header
-          >
-          <Tooltip.Item label="count" value={data.length} format="integer" />
-          <Tooltip.List>
-            <Tooltip.Separator />
-            {#each data.slice(0, 5) as d}
-              <Tooltip.Item
-                label="value"
-                value={d}
-                format={(value) => format(value, PeriodType.DayTime)}
-              />
-            {/each}
-            {#if data.length > 5}
-              <span />
-              <span>...</span>
-            {/if}
-          </Tooltip.List>
-        </Tooltip.Root>
-      </Chart>
+        <svelte:fragment slot="tooltip">
+          <Tooltip.Root let:data>
+            <Tooltip.Header class="text-center">
+              {format(data.x0, PeriodType.Day) +
+                ' - ' +
+                format(data.x1, PeriodType.Day)}</Tooltip.Header
+            >
+            <Tooltip.List>
+              <Tooltip.Item label="count" value={data.length} format="integer" />
+              <Tooltip.Separator />
+              {#each data.slice(0, 5) as d}
+                <Tooltip.Item
+                  label="value"
+                  value={d}
+                  format={(value) => format(value, PeriodType.DayTime)}
+                />
+              {/each}
+              {#if data.length > 5}
+                <span />
+                <span>...</span>
+              {/if}
+            </Tooltip.List>
+          </Tooltip.Root>
+        </svelte:fragment>
+      </BarChart>
     </div>
   </Preview>
 </State>
