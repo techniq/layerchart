@@ -34,9 +34,10 @@
     Force: [
       'Beeswarm',
       'CollisionDetection',
-      'ForceGroup',
-      'ForceGraph',
       'ForceDisjointGraph',
+      'ForceDrag',
+      'ForceGraph',
+      'ForceGroup',
       'ForceLattice',
       'ForceTree',
       'ForceText',

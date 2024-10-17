@@ -83,7 +83,7 @@
   "dependencies": {
     "@layerstack/svelte-actions": "^0.0.6",
     "@layerstack/svelte-stores": "^0.0.6",
-    "@layerstack/tailwind": "^0.0.8",
+    "@layerstack/tailwind": "^0.0.9",
     "@layerstack/utils": "^0.0.5",
     "d3-array": "^3.2.4",
     "d3-color": "^3.1.0",

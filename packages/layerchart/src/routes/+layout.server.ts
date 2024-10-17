@@ -1,7 +1,7 @@
+import { getThemeNames } from '@layerstack/tailwind';
 // import { env } from '$env/dynamic/private';
 
 import themes from '../../themes.json';
-import { getThemeNames } from 'svelte-ux/styles/theme.js';
 
 export async function load() {
   return {
