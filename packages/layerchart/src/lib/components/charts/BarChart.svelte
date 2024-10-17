@@ -278,7 +278,12 @@
           {/if}
 
           {#if rule}
-            <Rule x={0} y={0} {...typeof rule === 'object' ? rule : null} {...props.rule} />
+            <Rule
+              x={isVertical ? false : 0}
+              y={isVertical ? 0 : false}
+              {...typeof rule === 'object' ? rule : null}
+              {...props.rule}
+            />
           {/if}
         {/if}
       </slot>
