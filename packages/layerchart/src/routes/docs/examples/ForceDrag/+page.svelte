@@ -2,12 +2,13 @@
   import { forceManyBody, forceLink, forceCenter } from 'd3-force';
   import { curveLinear } from 'd3-shape';
 
+  import { Field, Switch } from 'svelte-ux';
   import { Chart, ForceSimulation, Link, Svg, Tooltip } from 'layerchart';
   import { cls } from '@layerstack/tailwind';
   import { movable } from '@layerstack/svelte-actions';
+  import { clamp } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { Field, Switch } from 'svelte-ux';
 
   const nodes = Array.from({ length: 13 }, (_, i) => ({ id: i }));
   const links = [
@@ -49,7 +50,7 @@
 </Field>
 
 <Preview data={nodes}>
-  <div class="h-[600px] p-4 border rounded">
+  <div class="h-[600px] p-4 border rounded overflow-hidden">
     <Chart data={nodes} let:width let:height let:tooltip>
       <Svg>
         <ForceSimulation
@@ -78,8 +79,8 @@
                 dragging = true;
               }}
               on:move={(e) => {
-                node.fx = (node.fx ?? node.x) + e.detail.dx;
-                node.fy = (node.fy ?? node.y) + e.detail.dy;
+                node.fx = clamp((node.fx ?? node.x) + e.detail.dx, 0, width);
+                node.fy = clamp((node.fy ?? node.y) + e.detail.dy, 0, height);
                 simulation.alpha(1).restart();
               }}
               on:moveend={(e) => {
@@ -99,7 +100,7 @@
               }}
               on:pointermove={(e) => !dragging && tooltip.show(e, node)}
               on:pointerleave={tooltip.hide}
-              class={cls(node.fx ? 'fill-primary' : 'fill-surface-content')}
+              class={cls('cursor-all-scroll', node.fx ? 'fill-primary' : 'fill-surface-content')}
             />
           {/each}
         </ForceSimulation>

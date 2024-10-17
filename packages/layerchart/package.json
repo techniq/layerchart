@@ -81,7 +81,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@layerstack/svelte-actions": "^0.0.6",
+    "@layerstack/svelte-actions": "^0.0.7",
     "@layerstack/svelte-stores": "^0.0.6",
     "@layerstack/tailwind": "^0.0.9",
     "@layerstack/utils": "^0.0.5",
