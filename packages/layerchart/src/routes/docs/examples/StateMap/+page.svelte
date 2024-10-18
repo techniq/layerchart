@@ -97,7 +97,7 @@
       </Svg>
 
       <Tooltip.Root let:data>
-        {data.properites.name}
+        {data.properties.name}
       </Tooltip.Root>
     </Chart>
   </div>
@@ -137,7 +137,7 @@
       </Svg>
 
       <Tooltip.Root let:data>
-        {data.properites.name}
+        {data.properties.name}
       </Tooltip.Root>
     </Chart>
   </div>
