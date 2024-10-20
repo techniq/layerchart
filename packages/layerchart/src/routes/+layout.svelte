@@ -210,7 +210,7 @@
             window.open(e.detail.value, '_blank');
           }}
         >
-          <span slot="selection" class="hidden" />
+          <span slot="selection" class="hidden"></span>
         </MenuButton>
       {/if}
     </div>

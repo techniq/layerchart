@@ -290,7 +290,7 @@
       >
         <GeoPath
           render={(ctx, { geoPath }) => {
-            for (var feature of states.features) {
+            for (const feature of states.features) {
               const color = nextColor();
 
               ctx.beginPath();
@@ -302,7 +302,7 @@
             }
 
             // Draw county features on top if state selected
-            for (var feature of selectedCountiesFeatures) {
+            for (const feature of selectedCountiesFeatures) {
               const color = nextColor();
 
               ctx.beginPath();
@@ -412,7 +412,7 @@
       >
         <GeoPath
           render={(ctx, { geoPath }) => {
-            for (var feature of states.features) {
+            for (const feature of states.features) {
               const color = nextColor();
 
               ctx.beginPath();
@@ -424,7 +424,7 @@
             }
 
             // Draw county features on top if state selected
-            for (var feature of selectedCountiesFeatures) {
+            for (const feature of selectedCountiesFeatures) {
               const color = nextColor();
 
               ctx.beginPath();
