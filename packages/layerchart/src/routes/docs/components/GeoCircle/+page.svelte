@@ -109,12 +109,15 @@
         {/each}
 
         {#if example === 'single'}
-          <GeoCircle
-            center={[longitude, latitude]}
-            radius={(radius / (6371 * Math.PI * 2)) * 360}
-            {precision}
-            class="fill-danger stroke-none"
-          />
+          <!-- TODO: Not sure why {#key} is needed to fix "ghosting" -->
+          {#key [longitude, latitude]}
+            <GeoCircle
+              center={[longitude, latitude]}
+              radius={(radius / (6371 * Math.PI * 2)) * 360}
+              {precision}
+              class="fill-danger stroke-none"
+            />
+          {/key}
         {:else if example === 'multi'}
           {#each coordinates as coords}
             <GeoCircle

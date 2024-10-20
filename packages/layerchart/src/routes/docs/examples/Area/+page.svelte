@@ -234,7 +234,7 @@
           rule
         />
         {#each dataByFruit as [fruit, data]}
-          {@const color = cScale(fruit)}
+          {@const color = cScale?.(fruit)}
           <Area
             {data}
             fill={color}
@@ -359,7 +359,7 @@
         {#each dataByFruit as [fruit, data]}
           {@const color =
             tooltip.data == null || tooltip.data.fruit === fruit
-              ? cScale(fruit)
+              ? cScale?.(fruit)
               : 'hsl(var(--color-surface-content) / 20%)'}
           <Area
             {data}
@@ -420,7 +420,7 @@
           rule
         />
         {#each dataByFruit as [fruit, data]}
-          {@const color = cScale(fruit)}
+          {@const color = cScale?.(fruit)}
           <Area
             {data}
             fill={color}
@@ -487,7 +487,7 @@
         <Tooltip.Header>{formatDate(data.data.date, 'eee, MMMM do')}</Tooltip.Header>
         <Tooltip.List>
           {#each keys as key}
-            <Tooltip.Item label={key} value={data.data[key]} color={cScale(key)} />
+            <Tooltip.Item label={key} value={data.data[key]} color={cScale?.(key)} />
           {/each}
         </Tooltip.List>
       </Tooltip.Root>

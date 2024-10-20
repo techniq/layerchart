@@ -248,10 +248,11 @@
         </div>
       {/if}
 
-      {#if api}
+      <!-- TODO: Re-enable once Svelte 5 compatibility replacement for sveld is add (issue #435) -->
+      <!-- {#if api}
         <h1>API</h1>
         <ApiDocs {api} />
-      {/if}
+      {/if} -->
     </div>
 
     {#if showTableOfContents && $xlScreen}

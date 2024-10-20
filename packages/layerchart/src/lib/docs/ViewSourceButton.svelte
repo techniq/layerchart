@@ -12,11 +12,11 @@
 </script>
 
 {#if source}
-  <Toggle let:on={open} let:toggle>
+  <Toggle let:on={open} let:toggle let:toggleOff>
     <Button {icon} on:click={toggle} variant="fill-light" color="primary" size="sm">{label}</Button>
     <Dialog
       {open}
-      on:close={toggle}
+      on:close={toggleOff}
       class="max-h-[98dvh] md:max-h-[90dvh] max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto,1fr,auto]"
     >
       <div class="grid grid-cols-[1fr,auto] gap-3 items-center p-4">

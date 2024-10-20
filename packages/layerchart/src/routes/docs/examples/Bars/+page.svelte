@@ -813,7 +813,7 @@
             <Tooltip.Item
               label={d.fruit}
               value={d.value}
-              color={cScale(d.fruit)}
+              color={cScale?.(d.fruit)}
               format="integer"
               valueAlign="right"
             />
@@ -866,7 +866,7 @@
             <Tooltip.Item
               label={d.fruit}
               value={d.value}
-              color={cScale(d.fruit)}
+              color={cScale?.(d.fruit)}
               format="integer"
               valueAlign="right"
             />
@@ -919,7 +919,7 @@
             <Tooltip.Item
               label={d.fruit}
               value={d.value}
-              color={cScale(d.fruit)}
+              color={cScale?.(d.fruit)}
               format="integer"
               valueAlign="right"
             />
@@ -976,7 +976,7 @@
             <Tooltip.Item
               label={d.fruit}
               value={d.value}
-              color={cScale(d.fruit)}
+              color={cScale?.(d.fruit)}
               format="integer"
               valueAlign="right"
             />
@@ -1041,7 +1041,7 @@
           {#each transitionData as bar (bar.year + '-' + bar.fruit)}
             <Bar
               {bar}
-              fill={cScale(bar.fruit)}
+              fill={cScale?.(bar.fruit)}
               radius={4}
               strokeWidth={1}
               tweened={{
@@ -1063,7 +1063,7 @@
             <Tooltip.Item
               label={d.fruit}
               value={d.value}
-              color={cScale(d.fruit)}
+              color={cScale?.(d.fruit)}
               format="integer"
               valueAlign="right"
             />
@@ -1128,7 +1128,7 @@
           {#each transitionData as bar (bar.year + '-' + bar.fruit)}
             <Bar
               {bar}
-              fill={cScale(bar.fruit)}
+              fill={cScale?.(bar.fruit)}
               radius={4}
               strokeWidth={1}
               tweened={{
@@ -1155,7 +1155,7 @@
           <Tooltip.Item
             label={data.fruit}
             value={data.value}
-            color={cScale(data.fruit)}
+            color={cScale?.(data.fruit)}
             format="integer"
             valueAlign="right"
           />
