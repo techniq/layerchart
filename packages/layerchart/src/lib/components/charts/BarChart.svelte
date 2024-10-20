@@ -335,7 +335,7 @@
             <Tooltip.Item
               label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
               value={valueAccessor(data)}
-              color={s.color ?? cScale(c(data))}
+              color={s.color ?? cScale?.(c(data))}
               {format}
               valueAlign="right"
             />

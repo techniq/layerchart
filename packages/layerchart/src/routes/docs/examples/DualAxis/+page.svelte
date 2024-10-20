@@ -42,8 +42,8 @@
         />
         <Axis
           placement="right"
-          scale={scaleLinear(y1Scale.domain(), [height, 0])}
-          ticks={y1Scale.ticks()}
+          scale={scaleLinear(y1Scale?.domain() ?? [], [height, 0])}
+          ticks={y1Scale?.ticks?.()}
           rule
           label="efficiency (mpg) ↑"
           labelPlacement="start"
@@ -51,9 +51,9 @@
         />
         <Axis placement="bottom" format="none" rule />
         <Spline class="stroke-2 stroke-primary" />
-        <Spline y={(d) => y1Scale(d.efficiency)} class="stroke-2 stroke-secondary" />
+        <Spline y={(d) => y1Scale?.(d.efficiency)} class="stroke-2 stroke-secondary" />
         <Highlight lines points />
-        <Highlight points={{ class: 'fill-secondary' }} y={(d) => y1Scale(d.efficiency)} />
+        <Highlight points={{ class: 'fill-secondary' }} y={(d) => y1Scale?.(d.efficiency)} />
       </Svg>
 
       <Tooltip.Root let:data>

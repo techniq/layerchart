@@ -160,8 +160,8 @@
                 outerRadius={(outerRadius ?? 0) < 0 ? i * (outerRadius ?? 0) : outerRadius}
                 {cornerRadius}
                 {padAngle}
-                fill={s.color ?? cScale(c(d))}
-                track={{ fill: s.color ?? cScale(c(d)), 'fill-opacity': 0.1 }}
+                fill={s.color ?? cScale?.(c(d))}
+                track={{ fill: s.color ?? cScale?.(c(d)), 'fill-opacity': 0.1 }}
                 {tooltip}
                 data={d}
                 {...props.arc}
@@ -186,7 +186,7 @@
                     {innerRadius}
                     {cornerRadius}
                     {padAngle}
-                    fill={cScale(c(arc.data))}
+                    fill={cScale?.(c(arc.data))}
                     data={arc.data}
                     {tooltip}
                     {...props.arc}
@@ -223,7 +223,7 @@
           <Tooltip.Item
             label={labelAccessor(data) || keyAccessor(data)}
             value={valueAccessor(data)}
-            color={cScale(c(data))}
+            color={cScale?.(c(data))}
             {format}
           />
         </Tooltip.List>

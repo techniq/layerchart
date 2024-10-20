@@ -130,7 +130,9 @@
   import type Chart from './Chart.svelte';
   import { accessor, chartDataArray } from '../utils/common.js';
 
-  type ChartProps = ComponentProps<Chart<TData>>;
+  // type ChartProps = ComponentProps<Chart<TData>>;
+  // TODO: Handle recursive types (ChartContext => Chart -> ChartContext)
+  type ChartProps = any;
 
   export let x1: ChartProps['x1'] = undefined;
   export let x1Scale: ChartProps['x1Scale'] = undefined;

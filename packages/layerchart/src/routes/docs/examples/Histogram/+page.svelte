@@ -76,7 +76,7 @@
               <Tooltip.Item label={d.name} value={d.weight} />
             {/each}
             {#if data.length > 5}
-              <span />
+              <span></span>
               <span>...</span>
             {/if}
           </Tooltip.List>
@@ -112,7 +112,7 @@
               <Tooltip.Item label={d.name} value={d.weight} />
             {/each}
             {#if data.length > 5}
-              <span />
+              <span></span>
               <span>...</span>
             {/if}
           </Tooltip.List>
@@ -204,7 +204,7 @@
               <Tooltip.Item label="value" value={d} />
             {/each}
             {#if data.length > 5}
-              <span />
+              <span></span>
               <span>...</span>
             {/if}
           </Tooltip.List>
@@ -261,7 +261,7 @@
                 />
               {/each}
               {#if data.length > 5}
-                <span />
+                <span></span>
                 <span>...</span>
               {/if}
             </Tooltip.List>
@@ -338,7 +338,7 @@
                 />
               {/each}
               {#if data.length > 5}
-                <span />
+                <span></span>
                 <span>...</span>
               {/if}
             </Tooltip.List>
