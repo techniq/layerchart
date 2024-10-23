@@ -103,6 +103,18 @@
   </div>
 </Preview>
 
+<h2>Highlight below marks</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart data={dateSeriesData} x="date" y="value" props={{ highlight: { area: false } }}>
+      <svelte:fragment slot="below-marks">
+        <Highlight area={{ class: 'fill-surface-content/10' }} />
+      </svelte:fragment>
+    </BarChart>
+  </div>
+</Preview>
+
 <h2>Series</h2>
 
 <Preview data={dateSeriesData}>
