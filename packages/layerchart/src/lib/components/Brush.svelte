@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
-  import { extent } from 'd3-array';
+  import { extent, min, max } from 'd3-array';
   import { clamp } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
@@ -115,17 +115,31 @@
     };
   }
 
+  /** Add second value while maintaining `Date` or `number` type */
+  function add(value1: Date | number, value2: number) {
+    if (value1 instanceof Date) {
+      return new Date(value1.getTime() + value2);
+    } else {
+      return value1 + value2;
+    }
+  }
+
   const createRange = handler((start, value) => {
     isActive = true;
 
     xDomain = [
-      clamp(Math.min(start.value.x, value.x), xDomainMin, xDomainMax),
-      clamp(Math.max(start.value.x, value.x), xDomainMin, xDomainMax),
+      // @ts-expect-error
+      clamp(min([start.value.x, value.x]), xDomainMin, xDomainMax),
+      // @ts-expect-error
+      clamp(max([start.value.x, value.x]), xDomainMin, xDomainMax),
     ];
+    // xDomain = [start.value.x, value.x];
 
     yDomain = [
-      clamp(Math.min(start.value.y, value.y), yDomainMin, yDomainMax),
-      clamp(Math.max(start.value.y, value.y), yDomainMin, yDomainMax),
+      // @ts-expect-error
+      clamp(min([start.value.y, value.y]), yDomainMin, yDomainMax),
+      // @ts-expect-error
+      clamp(max([start.value.y, value.y]), yDomainMin, yDomainMax),
     ];
   });
 
@@ -135,14 +149,14 @@
       xDomainMin - start.xDomain[0],
       xDomainMax - start.xDomain[1]
     );
-    xDomain = [Number(start.xDomain[0]) + dx, Number(start.xDomain[1]) + dx];
+    xDomain = [add(start.xDomain[0], dx), add(start.xDomain[1], dx)];
 
     const dy = clamp(
       value.y - start.value.y,
       yDomainMin - start.yDomain[0],
       yDomainMax - start.yDomain[1]
     );
-    yDomain = [Number(start.yDomain[0]) + dy, Number(start.yDomain[1]) + dy];
+    yDomain = [add(start.yDomain[0], dy), add(start.yDomain[1], dy)];
   });
 
   const adjustBottom = handler((start, value) => {
