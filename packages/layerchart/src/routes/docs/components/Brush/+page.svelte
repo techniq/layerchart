@@ -19,6 +19,7 @@
     Pattern,
     Points,
     Rule,
+    Text,
     Tooltip,
     Svg,
   } from 'layerchart';
@@ -101,6 +102,69 @@
       </Svg>
     </Chart>
   </div>
+</Preview>
+
+<h2>Handle labels</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[40px]">
+    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value">
+      <Svg>
+        <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
+        <Brush classes={{ range: 'fill-secondary/10', handle: 'fill-secondary/50' }} labels />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Constant labels</h2>
+
+<Preview data={data.appleStock}>
+  <State initial={[null, null]} let:value={xDomain} let:set>
+    <div class="h-[40px]">
+      <Chart
+        data={data.appleStock}
+        x="date"
+        xScale={scaleTime()}
+        y="value"
+        padding={{ left: 80, right: 80 }}
+        let:width
+        let:height
+      >
+        <Svg>
+          <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
+          <Brush
+            classes={{ range: 'fill-secondary/10', handle: 'fill-secondary/50' }}
+            on:change={(e) => {
+              // @ts-expect-error
+              set(e.detail.xDomain);
+            }}
+          />
+
+          {#if xDomain?.[0]}
+            <Text
+              x={-4}
+              y={height / 2}
+              value={format(xDomain[0])}
+              textAnchor="end"
+              verticalAnchor="middle"
+              class="text-xs"
+            />
+          {/if}
+
+          {#if xDomain?.[1]}
+            <Text
+              x={width + 4}
+              y={height / 2}
+              value={format(xDomain[1])}
+              verticalAnchor="middle"
+              class="text-xs"
+            />
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </State>
 </Preview>
 
 <h2>Integrated brush (x-axis)</h2>
