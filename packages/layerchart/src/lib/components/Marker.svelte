@@ -9,9 +9,6 @@
   /** Unique id for marker */
   export let id: string = uniqueId('marker-');
 
-  /** Width of stroke, although used to adjust size */
-  export let strokeWidth = 1;
-
   /** A number used to determine the size of the bounding box the marker content. */
   export let size = 10;
 
@@ -47,7 +44,6 @@
     {refX}
     {refY}
     {viewBox}
-    _stroke-width={strokeWidth}
     class={cls(
       'overflow-visible',
       // stroke
