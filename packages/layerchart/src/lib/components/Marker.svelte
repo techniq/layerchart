@@ -44,20 +44,25 @@
     {refX}
     {refY}
     {viewBox}
+    {...$$restProps}
     class={cls(
       'overflow-visible',
       // stroke
-      ['arrow', 'circle-outline', 'line'].includes(type ?? '')
-        ? 'stroke-[context-stroke]'
-        : type === 'circle'
-          ? 'stroke-surface-100'
-          : 'stroke-none',
+      $$props.stroke == null &&
+        (['arrow', 'circle-outline', 'line'].includes(type ?? '')
+          ? 'stroke-[context-stroke]'
+          : type === 'circle'
+            ? 'stroke-surface-100'
+            : 'stroke-none'),
       // extra stroke attrs
       '[stroke-linecap:round] [stroke-linejoin:round]',
       //fill
-      ['triangle', 'dot', 'circle'].includes(type ?? '') ? 'fill-[context-stroke]' : 'fill-none'
+      $$props.fill == null &&
+        (['triangle', 'dot', 'circle'].includes(type ?? '')
+          ? 'fill-[context-stroke]'
+          : 'fill-none'),
+      $$props.class
     )}
-    {...$$restProps}
   >
     <slot>
       {#if type === 'triangle'}
