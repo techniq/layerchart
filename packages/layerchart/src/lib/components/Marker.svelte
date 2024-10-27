@@ -3,7 +3,7 @@
   import { uniqueId } from '@layerstack/utils';
 
   /** Defined the type of a default marker, or define your own in the slot */
-  export let type: 'arrow' | 'triangle' | 'line' | 'circle' | 'circle-outline' | 'dot' | undefined =
+  export let type: 'arrow' | 'triangle' | 'line' | 'circle' | 'circle-stroke' | 'dot' | undefined =
     undefined;
 
   /** Unique id for marker */
@@ -49,7 +49,7 @@
       'overflow-visible',
       // stroke
       $$props.stroke == null &&
-        (['arrow', 'circle-outline', 'line'].includes(type ?? '')
+        (['arrow', 'circle-stroke', 'line'].includes(type ?? '')
           ? 'stroke-[context-stroke]'
           : type === 'circle'
             ? 'stroke-surface-100'
@@ -60,7 +60,9 @@
       $$props.fill == null &&
         (['triangle', 'dot', 'circle'].includes(type ?? '')
           ? 'fill-[context-stroke]'
-          : 'fill-none'),
+          : type === 'circle-stroke'
+            ? 'fill-surface-100'
+            : 'fill-none'),
       $$props.class
     )}
   >
@@ -69,7 +71,7 @@
         <path d="M 0 0 L 10 5 L 0 10 z" />
       {:else if type === 'arrow'}
         <polyline points="0 0, 10 5, 0 10" />
-      {:else if type === 'circle' || type === 'circle-outline' || type === 'dot'}
+      {:else if type === 'circle' || type === 'circle-stroke' || type === 'dot'}
         <circle cx={5} cy={5} r={5} />
       {:else if type === 'line'}
         <polyline points="5 0, 5 10" />

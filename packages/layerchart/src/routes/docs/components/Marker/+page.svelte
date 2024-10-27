@@ -28,7 +28,7 @@
     };
   });
 
-  const markerTypes = ['arrow', 'triangle', 'dot', 'circle', 'circle-outline', 'line'] as const;
+  const markerTypes = ['arrow', 'triangle', 'dot', 'circle', 'circle-stroke', 'line'] as const;
 </script>
 
 <h1>Examples</h1>
@@ -154,9 +154,13 @@
           <Spline
             {curve}
             class="stroke-primary stroke-2"
-            markerStart={{ type: 'circle', class: 'stroke-2 fill-secondary' }}
+            markerStart={{ type: 'circle', size: 20, class: 'stroke-2 fill-secondary' }}
             markerMid={{ type: 'line', class: 'stroke-2 stroke-accent' }}
-            markerEnd={{ type: 'arrow', class: 'stroke-2 stroke-secondary' }}
+            markerEnd={{
+              type: 'triangle',
+              size: 20,
+              class: 'stroke-2 stroke-surface-100 fill-secondary',
+            }}
           />
         </Svg>
       </Chart>
