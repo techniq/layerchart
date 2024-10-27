@@ -25,6 +25,10 @@
   /** Data of nodes and edges to build graph */
   export let data: DagreGraphData;
 
+  export let nodes = (d: any) => d.nodes;
+  export let nodeId = (d: any) => d.id;
+  export let edges = (d: any) => d.edges;
+
   /** Type of algorithm to assigns a rank to each node in the input graph */
   export let ranker: 'network-simplex' | 'tight-tree' | 'longest-path' = 'network-simplex';
 
@@ -54,9 +58,9 @@
 
   let graph: dagre.graphlib.Graph;
   $: {
-    let graph = new dagre.graphlib.Graph();
+    let g = new dagre.graphlib.Graph();
 
-    graph.setGraph({
+    g.setGraph({
       ranker: ranker,
       rankdir: RankDir[direction],
       align: align ? Align[align] : undefined,
@@ -65,31 +69,33 @@
       edgesep: edgeSeparation,
     });
 
-    graph.setDefaultEdgeLabel(() => {
+    g.setDefaultEdgeLabel(() => {
       return {};
     });
 
-    data.nodes.forEach((n) => {
-      graph.setNode(n.id, {
-        id: n.id,
-        label: typeof n.label === 'string' ? n.label : n.id,
+    nodes(data).forEach((n) => {
+      g.setNode(nodeId(n), {
+        id: nodeId(n),
+        label: typeof n.label === 'string' ? n.label : nodeId(n),
         width: nodeWidth,
         height: nodeHeight,
         ...(typeof n.label === 'object' ? n.label : null),
       });
     });
 
-    data.edges.forEach((e) => {
+    edges(data).forEach((e) => {
       g.setEdge(e.source, e.target);
     });
 
-    graph = filterNodes ? graph.filterNodes((nodeId) => filterNodes(nodeId, graph)) : graph;
+    g = filterNodes ? g.filterNodes((nodeId) => filterNodes(nodeId, graph)) : graph;
 
-    dagre.layout(graph);
+    dagre.layout(g);
+
+    graph = g;
   }
-
-  $: nodes = graph.nodes().map((id) => g.node(id));
-  $: edges = graph.edges().map((edge) => ({ ...edge, ...graph.edge(edge) }));
 </script>
 
-<slot {nodes} {edges} />
+<slot
+  nodes={graph.nodes().map((id) => graph.node(id))}
+  edges={graph.edges().map((edge) => ({ ...edge, ...graph.edge(edge) }))}
+/>
