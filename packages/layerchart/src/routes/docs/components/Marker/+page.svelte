@@ -175,7 +175,7 @@
           <Spline
             {curve}
             class="stroke-primary stroke-2"
-            markerMid={{ type: 'line', class: 'stroke-2 stroke-accent' }}
+            marker={{ type: 'line', class: 'stroke-2 stroke-accent' }}
           />
         </Svg>
       </Chart>
@@ -188,7 +188,7 @@
           <Spline
             {curve}
             class="stroke-primary stroke-2"
-            markerMid={{ type: 'line', orient: 0, class: 'stroke-2 stroke-accent' }}
+            marker={{ type: 'line', orient: 0, class: 'stroke-2 stroke-accent' }}
           />
         </Svg>
       </Chart>
@@ -201,7 +201,7 @@
           <Spline
             {curve}
             class="stroke-primary stroke-2"
-            markerMid={{ type: 'line', orient: 90, class: 'stroke-2 stroke-accent' }}
+            marker={{ type: 'line', orient: 90, class: 'stroke-2 stroke-accent' }}
           />
         </Svg>
       </Chart>

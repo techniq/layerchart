@@ -20,12 +20,15 @@
   export let y2: number;
   export let initialY2 = y2;
 
+  /** Marker to attach to start and end points of path */
+  export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
+    undefined;
   /** Marker to attach to start point of path */
   export let markerStart: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
-    undefined;
+    marker;
   /** Marker to attach to end point of path */
   export let markerEnd: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
-    undefined;
+    marker;
 
   $: markerStartId = markerStart || $$slots['marker-start'] ? uniqueId('marker-') : '';
   $: markerEndId = markerEnd || $$slots['marker-end'] ? uniqueId('marker-') : '';

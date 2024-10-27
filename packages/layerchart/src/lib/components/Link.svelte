@@ -39,15 +39,18 @@
   export let y = (d: any) => (sankey ? d[1] : orientation === 'horizontal' ? d.x : d.y);
   export let curve = orientation === 'horizontal' ? curveBumpX : curveBumpY;
 
+  /** Marker to attach to start, mid, and end points of path */
+  export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
+    undefined;
   /** Marker to attach to start point of path */
   export let markerStart: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
-    undefined;
+    marker;
   /** Marker to attach to all mid points of path */
   export let markerMid: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
-    undefined;
+    marker;
   /** Marker to attach to end point of path */
   export let markerEnd: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
-    undefined;
+    marker;
 
   $: markerStartId = markerStart || $$slots['marker-start'] ? uniqueId('marker-') : '';
   $: markerMidId = markerMid || $$slots['marker-mid'] ? uniqueId('marker-') : '';
