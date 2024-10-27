@@ -19,6 +19,7 @@ export { default as Circle } from './Circle.svelte';
 export { default as CircleClipPath } from './CircleClipPath.svelte';
 export { default as ClipPath } from './ClipPath.svelte';
 export { default as ColorRamp } from './ColorRamp.svelte';
+export { default as Dagre } from './Dagre.svelte';
 export { default as Frame } from './Frame.svelte';
 export { default as ForceSimulation } from './ForceSimulation.svelte';
 export { default as GeoCircle } from './GeoCircle.svelte';
