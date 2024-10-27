@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { tick } from 'svelte';
+  import { tick, type ComponentProps } from 'svelte';
   import { writable } from 'svelte/store';
   import { tweened as tweenedStore } from 'svelte/motion';
   import { draw as _drawTransition } from 'svelte/transition';
@@ -11,9 +11,12 @@
   import { interpolatePath } from 'd3-interpolate-path';
   import { max } from 'd3-array';
   import { cls } from '@layerstack/tailwind';
+  import { uniqueId } from '@layerstack/utils';
 
   import { chartContext } from './ChartContext.svelte';
   import Group from './Group.svelte';
+  import Marker from './Marker.svelte';
+
   import { motionStore } from '$lib/stores/motionStore.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
@@ -47,6 +50,20 @@
    */
   export let curve: CurveFactory | CurveFactoryLineOnly | undefined = undefined;
   export let defined: Parameters<Line<any>['defined']>[0] | undefined = undefined;
+
+  /** Marker to attach to start point of path */
+  export let markerStart: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
+    undefined;
+  /** Marker to attach to all mid points of path */
+  export let markerMid: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
+    undefined;
+  /** Marker to attach to end point of path */
+  export let markerEnd: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
+    undefined;
+
+  $: markerStartId = markerStart || $$slots['marker-start'] ? uniqueId('marker-') : '';
+  $: markerMidId = markerMid || $$slots['marker-mid'] ? uniqueId('marker-') : '';
+  $: markerEndId = markerEnd || $$slots['marker-end'] ? uniqueId('marker-') : '';
 
   function getScaleValue(data: any, scale: typeof $xScale | typeof $yScale, accessor: Function) {
     let value = accessor(data);
@@ -145,6 +162,9 @@
       !$$props.stroke && 'stroke-surface-content',
       $$props.class
     )}
+    marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
+    marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
+    marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
     in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
     on:click
     on:pointerenter
@@ -152,6 +172,32 @@
     on:pointerleave
     bind:this={pathEl}
   />
+
+  <slot name="marker-start" id={markerStartId}>
+    {#if markerStart}
+      <Marker
+        id={markerStartId}
+        type={typeof markerStart === 'string' ? markerStart : undefined}
+        {...typeof markerStart === 'object' ? markerStart : null}
+      />
+    {/if}
+  </slot>
+
+  <slot name="marker-mid" id={markerMidId}>
+    <Marker
+      id={markerMidId}
+      type={typeof markerMid === 'string' ? markerMid : undefined}
+      {...typeof markerMid === 'object' ? markerMid : null}
+    />
+  </slot>
+
+  <slot name="marker-end" id={markerEndId}>
+    <Marker
+      id={markerEndId}
+      type={typeof markerEnd === 'string' ? markerEnd : undefined}
+      {...typeof markerEnd === 'object' ? markerEnd : null}
+    />
+  </slot>
 
   {#if $$slots.start && $startPoint}
     <Group x={$startPoint.x} y={$startPoint.y}>

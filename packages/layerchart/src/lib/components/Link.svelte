@@ -13,11 +13,15 @@
     - [ ] Investigate: https://observablehq.com/@fil/sankey-link-paths
     - [ ] Use for annotations - https://github.com/techniq/layerchart/issues/11
 	*/
+  import type { ComponentProps } from 'svelte';
   import type { tweened as tweenedStore } from 'svelte/motion';
   import { link as d3Link, curveBumpX, curveBumpY } from 'd3-shape';
   import { interpolatePath } from 'd3-interpolate-path';
 
   import { motionStore } from '$lib/stores/motionStore.js';
+  import { uniqueId } from '@layerstack/utils';
+
+  import Marker from './Marker.svelte';
 
   // Override what is used from context
   export let data: any = undefined; // TODO: Update Type
@@ -34,6 +38,20 @@
   export let x = (d: any) => (sankey ? d[0] : orientation === 'horizontal' ? d.y : d.x);
   export let y = (d: any) => (sankey ? d[1] : orientation === 'horizontal' ? d.x : d.y);
   export let curve = orientation === 'horizontal' ? curveBumpX : curveBumpY;
+
+  /** Marker to attach to start point of path */
+  export let markerStart: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
+    undefined;
+  /** Marker to attach to all mid points of path */
+  export let markerMid: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
+    undefined;
+  /** Marker to attach to end point of path */
+  export let markerEnd: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
+    undefined;
+
+  $: markerStartId = markerStart || $$slots['marker-start'] ? uniqueId('marker-') : '';
+  $: markerMidId = markerMid || $$slots['marker-mid'] ? uniqueId('marker-') : '';
+  $: markerEndId = markerEnd || $$slots['marker-end'] ? uniqueId('marker-') : '';
 
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
   // @ts-expect-error
@@ -54,6 +72,9 @@
   class="path-link"
   d={$tweened_d}
   fill="none"
+  marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
+  marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
+  marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
   on:click
   on:pointerover
   on:pointermove
@@ -61,3 +82,29 @@
   on:pointerleave
   {...$$restProps}
 />
+
+<slot name="marker-start" id={markerStartId}>
+  {#if markerStart}
+    <Marker
+      id={markerStartId}
+      type={typeof markerStart === 'string' ? markerStart : undefined}
+      {...typeof markerStart === 'object' ? markerStart : null}
+    />
+  {/if}
+</slot>
+
+<slot name="marker-mid" id={markerMidId}>
+  <Marker
+    id={markerMidId}
+    type={typeof markerMid === 'string' ? markerMid : undefined}
+    {...typeof markerMid === 'object' ? markerMid : null}
+  />
+</slot>
+
+<slot name="marker-end" id={markerEndId}>
+  <Marker
+    id={markerEndId}
+    type={typeof markerEnd === 'string' ? markerEnd : undefined}
+    {...typeof markerEnd === 'object' ? markerEnd : null}
+  />
+</slot>

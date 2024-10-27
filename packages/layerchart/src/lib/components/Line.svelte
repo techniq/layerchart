@@ -1,9 +1,12 @@
 <script lang="ts">
-  import { tick } from 'svelte';
+  import { tick, type ComponentProps } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from '@layerstack/tailwind';
 
   import { motionStore } from '$lib/stores/motionStore.js';
+  import { uniqueId } from '@layerstack/utils';
+
+  import Marker from './Marker.svelte';
 
   export let x1: number;
   export let initialX1 = x1;
@@ -16,6 +19,16 @@
 
   export let y2: number;
   export let initialY2 = y2;
+
+  /** Marker to attach to start point of path */
+  export let markerStart: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
+    undefined;
+  /** Marker to attach to end point of path */
+  export let markerEnd: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
+    undefined;
+
+  $: markerStartId = markerStart || $$slots['marker-start'] ? uniqueId('marker-') : '';
+  $: markerEndId = markerEnd || $$slots['marker-end'] ? uniqueId('marker-') : '';
 
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -39,9 +52,29 @@
   y1={$tweened_y1}
   x2={$tweened_x2}
   y2={$tweened_y2}
+  marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
+  marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
   class={cls($$props.stroke === undefined && 'stroke-surface-content')}
   {...$$restProps}
   on:click
   on:pointermove
   on:pointerleave
 />
+
+<slot name="marker-start" id={markerStartId}>
+  {#if markerStart}
+    <Marker
+      id={markerStartId}
+      type={typeof markerStart === 'string' ? markerStart : undefined}
+      {...typeof markerStart === 'object' ? markerStart : null}
+    />
+  {/if}
+</slot>
+
+<slot name="marker-end" id={markerEndId}>
+  <Marker
+    id={markerEndId}
+    type={typeof markerEnd === 'string' ? markerEnd : undefined}
+    {...typeof markerEnd === 'object' ? markerEnd : null}
+  />
+</slot>
