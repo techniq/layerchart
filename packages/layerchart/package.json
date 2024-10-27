@@ -80,6 +80,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@dagrejs/dagre": "^1.1.4",
     "@layerstack/svelte-actions": "^0.0.9",
     "@layerstack/svelte-stores": "^0.0.9",
     "@layerstack/tailwind": "^0.0.11",
