@@ -777,6 +777,55 @@
   </Preview>
 </Toggle>
 
+<h2>Stagger tween on mount</h2>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto,1fr] gap-2 mb-2">
+    <Field label="Show bars" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+  </div>
+
+  <Preview {data}>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart
+        {data}
+        x="value"
+        xDomain={[0, null]}
+        xNice
+        y="date"
+        yScale={scaleBand().padding(0.4)}
+        padding={{ left: 16, bottom: 24 }}
+      >
+        <Svg>
+          <Axis placement="bottom" grid rule />
+          <Axis
+            placement="left"
+            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
+          {#if show}
+            {#each data as bar, i}
+              <Bar
+                {bar}
+                initialX={0}
+                initialWidth={0}
+                tweened={{
+                  x: { duration: 500, easing: cubicInOut, delay: i * 30 },
+                  width: { duration: 500, easing: cubicInOut, delay: i * 30 },
+                }}
+                radius={4}
+                strokeWidth={1}
+                class="fill-primary"
+              />
+            {/each}
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
+
 <h2>Grouped</h2>
 
 <Preview data={groupedData}>

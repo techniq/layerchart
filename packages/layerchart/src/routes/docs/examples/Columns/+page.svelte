@@ -779,6 +779,55 @@
   </Preview>
 </Toggle>
 
+<h2>Stagger tween on mount</h2>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto,1fr] gap-2 mb-2">
+    <Field label="Show bars" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+  </div>
+
+  <Preview {data}>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart
+        {data}
+        x="date"
+        xScale={scaleBand().padding(0.4)}
+        y="value"
+        yDomain={[0, null]}
+        yNice={4}
+        padding={{ left: 16, bottom: 24 }}
+      >
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis
+            placement="bottom"
+            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
+          {#if show}
+            {#each data as bar, i}
+              <Bar
+                {bar}
+                initialY={300 - 16 * 2 - 2 - 24}
+                initialHeight={0}
+                tweened={{
+                  y: { duration: 500, easing: cubicInOut, delay: i * 30 },
+                  height: { duration: 500, easing: cubicInOut, delay: i * 30 },
+                }}
+                radius={4}
+                strokeWidth={1}
+                class="fill-primary"
+              />
+            {/each}
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
+
 <h2>Grouped</h2>
 
 <Preview data={groupedData}>
@@ -1040,7 +1089,6 @@
         <g>
           <!-- TODO: 'data' can be used once type issue is resolved -->
           {#each transitionData as bar (bar.year + '-' + bar.fruit)}
-            {console.log(bar.year, bar.fruit, { bar })}
             <Bar
               {bar}
               fill={cScale?.(bar.fruit)}
