@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
   import { curveBasis } from 'd3-shape';
+  import { cubicOut } from 'svelte/easing';
   import { cls } from '@layerstack/tailwind';
 
   import { Chart, Dagre, Group, Rect, Spline, Svg, Text, Tooltip } from 'layerchart';
@@ -8,6 +9,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import DagreControls from './DagreControls.svelte';
+  import TransformControls from 'layerchart/components/TransformControls.svelte';
 
   export let data;
 
@@ -37,7 +39,17 @@
   />
 
   <div class="h-[500px] p-4 border rounded overflow-hidden">
-    <Chart data={data.basic} let:tooltip>
+    <Chart
+      data={data.basic}
+      transform={{
+        mode: 'canvas',
+        initialScrollMode: 'scale',
+        tweened: { duration: 800, easing: cubicOut },
+      }}
+      let:tooltip
+    >
+      <TransformControls />
+
       <Svg>
         <Dagre
           data={data.basic}
