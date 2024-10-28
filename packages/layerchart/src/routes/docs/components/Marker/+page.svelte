@@ -21,6 +21,8 @@
   let markerMid = false;
   let markerEnd = true;
 
+  let tweened = true;
+
   $: data = Array.from({ length: pointCount }).map((_, i) => {
     return {
       x: i + 1,
@@ -35,7 +37,7 @@
 
 <h2>Spline</h2>
 
-<div class="grid grid-cols-[auto,auto,auto,1fr,1fr,1fr] gap-2 mb-2">
+<div class="grid grid-cols-[auto,auto,auto,auto,1fr,1fr,1fr] gap-2 mb-2">
   <Field label="Start" let:id>
     <Switch bind:checked={markerStart} {id} size="md" />
   </Field>
@@ -44,6 +46,9 @@
   </Field>
   <Field label="End" let:id>
     <Switch bind:checked={markerEnd} {id} size="md" />
+  </Field>
+  <Field label="Tweeened" let:id>
+    <Switch bind:checked={tweened} {id} size="md" />
   </Field>
   <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
   <CurveMenuField bind:value={curve} />
@@ -63,6 +68,7 @@
               markerStart={markerStart ? marker : undefined}
               markerMid={markerMid ? marker : undefined}
               markerEnd={markerEnd ? marker : undefined}
+              {tweened}
             />
           </Svg>
         </Chart>
@@ -73,7 +79,7 @@
 
 <h2>Spline w/ thicker stroke</h2>
 
-<div class="grid grid-cols-[auto,auto,auto,1fr,1fr,1fr] gap-2 mb-2">
+<div class="grid grid-cols-[auto,auto,auto,auto,1fr,1fr,1fr] gap-2 mb-2">
   <Field label="Start" let:id>
     <Switch bind:checked={markerStart} {id} size="md" />
   </Field>
@@ -82,6 +88,9 @@
   </Field>
   <Field label="End" let:id>
     <Switch bind:checked={markerEnd} {id} size="md" />
+  </Field>
+  <Field label="Tweeened" let:id>
+    <Switch bind:checked={tweened} {id} size="md" />
   </Field>
   <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
   <CurveMenuField bind:value={curve} />
@@ -101,6 +110,7 @@
               markerStart={markerStart ? { type: marker, 'stroke-width': 2 } : undefined}
               markerMid={markerMid ? { type: marker, 'stroke-width': 2 } : undefined}
               markerEnd={markerEnd ? { type: marker, 'stroke-width': 2 } : undefined}
+              {tweened}
             />
           </Svg>
         </Chart>
