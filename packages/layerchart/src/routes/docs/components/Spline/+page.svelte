@@ -151,7 +151,7 @@
               {curve}
               class="stroke-primary stroke-2"
               markerStart="circle"
-              markerEnd="arrow"
+              markerEnd={{ type: 'arrow', class: 'stroke-2' }}
             />
           {/if}
         </Svg>
