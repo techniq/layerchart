@@ -245,6 +245,16 @@
         {/if}
       </slot>
 
+      <slot name="below-marks" {...slotProps} />
+
+      <slot name="marks" {...slotProps}>
+        {#each series as s, i}
+          <Bars {...getBarsProps(s, i)} />
+        {/each}
+      </slot>
+
+      <slot name="above-marks" {...slotProps} />
+
       <slot name="axis" {...slotProps}>
         {#if axis}
           {#if axis !== 'x'}
@@ -287,16 +297,6 @@
           {/if}
         {/if}
       </slot>
-
-      <slot name="below-marks" {...slotProps} />
-
-      <slot name="marks" {...slotProps}>
-        {#each series as s, i}
-          <Bars {...getBarsProps(s, i)} />
-        {/each}
-      </slot>
-
-      <slot name="above-marks" {...slotProps} />
 
       <slot name="highlight" {...slotProps}>
         <Highlight area {...props.highlight} />
