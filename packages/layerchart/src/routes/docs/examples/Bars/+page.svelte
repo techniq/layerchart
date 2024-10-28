@@ -1023,7 +1023,7 @@
       cDomain={colorKeys}
       cRange={keyColors}
       y1={transitionChart.groupBy}
-      y1Scale={scaleBand().padding(0.1)}
+      y1Scale={transitionChart.groupBy ? scaleBand().padding(0.1) : undefined}
       y1Domain={transitionChart.groupBy
         ? unique(transitionData.map((d) => d[transitionChart.groupBy]))
         : undefined}
@@ -1110,7 +1110,7 @@
       cDomain={colorKeys}
       cRange={keyColors}
       y1={transitionChart.groupBy}
-      y1Scale={scaleBand().padding(0.1)}
+      y1Scale={transitionChart.groupBy ? scaleBand().padding(0.1) : undefined}
       y1Domain={transitionChart.groupBy
         ? unique(transitionData.map((d) => d[transitionChart.groupBy]))
         : undefined}

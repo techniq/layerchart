@@ -1024,7 +1024,7 @@
       cDomain={colorKeys}
       cRange={keyColors}
       x1={transitionChart.groupBy}
-      x1Scale={scaleBand().padding(0.1)}
+      x1Scale={transitionChart.groupBy ? scaleBand().padding(0.1) : undefined}
       x1Domain={transitionChart.groupBy
         ? unique(transitionData.map((d) => d[transitionChart.groupBy]))
         : undefined}
@@ -1040,6 +1040,7 @@
         <g>
           <!-- TODO: 'data' can be used once type issue is resolved -->
           {#each transitionData as bar (bar.year + '-' + bar.fruit)}
+            {console.log(bar.year, bar.fruit, { bar })}
             <Bar
               {bar}
               fill={cScale?.(bar.fruit)}
@@ -1110,7 +1111,7 @@
       cDomain={colorKeys}
       cRange={keyColors}
       x1={transitionChart.groupBy}
-      x1Scale={scaleBand().padding(0.1)}
+      x1Scale={transitionChart.groupBy ? scaleBand().padding(0.1) : undefined}
       x1Domain={transitionChart.groupBy
         ? unique(transitionData.map((d) => d[transitionChart.groupBy]))
         : undefined}
