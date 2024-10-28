@@ -152,7 +152,7 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart data={dateSeriesData} x="date" y="value" props={{ highlight: { area: false } }}>
-      <svelte:fragment slot="below-marks">
+      <svelte:fragment slot="belowMarks">
         <Highlight area={{ class: 'fill-surface-content/10' }} />
       </svelte:fragment>
     </BarChart>
@@ -755,7 +755,7 @@
 <Preview data={dateSeriesData}>
   <div class="h-[500px] p-4 border rounded">
     <BarChart data={dateSeriesData} x="value" y="date" labels orientation="horizontal" axis={false}>
-      <svelte:fragment slot="above-marks">
+      <svelte:fragment slot="aboveMarks">
         <Labels x={8} value={(d) => d.date} class="text-sm fill-surface-300 stroke-none" />
       </svelte:fragment>
     </BarChart>
