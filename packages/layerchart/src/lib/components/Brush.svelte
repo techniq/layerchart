@@ -1,14 +1,17 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, type ComponentProps } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
-  import { extent } from 'd3-array';
+  import { extent, min, max } from 'd3-array';
   import { clamp } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
+  import { format as formatValue, type FormatType } from '@layerstack/utils';
 
   import { chartContext } from './ChartContext.svelte';
   import Frame from './Frame.svelte';
-  import { localPoint } from '$lib/utils/event.js';
   import Group from './Group.svelte';
+  import Text from './Text.svelte';
+
+  import { localPoint } from '$lib/utils/event.js';
 
   const { xScale, yScale, width, height, padding } = chartContext();
 
@@ -36,6 +39,8 @@
     number,
   ];
 
+  export let labels: ComponentProps<Text> | boolean = false;
+
   // Capture original domains for reset()
   const originalXDomain = $xScale.domain() as [number, number];
   const originalYDomain = $yScale.domain() as [number, number];
@@ -49,11 +54,15 @@
   /** Attributes passed to handle <rect> elements */
   export let handle: SVGAttributes<SVGRectElement> | undefined = undefined;
 
+  /** Apply format to labels, if shown */
+  export let format: FormatType | undefined = undefined;
+
   export let classes: {
     root?: string;
     frame?: string;
     range?: string;
     handle?: string;
+    labels?: string;
   } = {};
 
   let frameEl: SVGRectElement;
@@ -115,17 +124,31 @@
     };
   }
 
+  /** Add second value while maintaining `Date` or `number` type */
+  function add(value1: Date | number, value2: number) {
+    if (value1 instanceof Date) {
+      return new Date(value1.getTime() + value2);
+    } else {
+      return value1 + value2;
+    }
+  }
+
   const createRange = handler((start, value) => {
     isActive = true;
 
     xDomain = [
-      clamp(Math.min(start.value.x, value.x), xDomainMin, xDomainMax),
-      clamp(Math.max(start.value.x, value.x), xDomainMin, xDomainMax),
+      // @ts-expect-error
+      clamp(min([start.value.x, value.x]), xDomainMin, xDomainMax),
+      // @ts-expect-error
+      clamp(max([start.value.x, value.x]), xDomainMin, xDomainMax),
     ];
+    // xDomain = [start.value.x, value.x];
 
     yDomain = [
-      clamp(Math.min(start.value.y, value.y), yDomainMin, yDomainMax),
-      clamp(Math.max(start.value.y, value.y), yDomainMin, yDomainMax),
+      // @ts-expect-error
+      clamp(min([start.value.y, value.y]), yDomainMin, yDomainMax),
+      // @ts-expect-error
+      clamp(max([start.value.y, value.y]), yDomainMin, yDomainMax),
     ];
   });
 
@@ -135,14 +158,14 @@
       xDomainMin - start.xDomain[0],
       xDomainMax - start.xDomain[1]
     );
-    xDomain = [Number(start.xDomain[0]) + dx, Number(start.xDomain[1]) + dx];
+    xDomain = [add(start.xDomain[0], dx), add(start.xDomain[1], dx)];
 
     const dy = clamp(
       value.y - start.value.y,
       yDomainMin - start.yDomain[0],
       yDomainMax - start.yDomain[1]
     );
-    yDomain = [Number(start.yDomain[0]) + dy, Number(start.yDomain[1]) + dy];
+    yDomain = [add(start.yDomain[0], dy), add(start.yDomain[1], dy)];
   });
 
   const adjustBottom = handler((start, value) => {
@@ -201,6 +224,11 @@
     xDomain[1]?.valueOf() !== originalXDomain[1]?.valueOf() ||
     yDomain[0]?.valueOf() !== originalYDomain[0]?.valueOf() ||
     yDomain[1]?.valueOf() !== originalYDomain[1]?.valueOf();
+
+  /** TODO: Fix types and remove workaround (Svelte 5)*/
+  function any(value: any): any {
+    return value;
+  }
 </script>
 
 <g class={cls('Brush select-none', classes.root, $$props.class)}>
@@ -312,6 +340,64 @@
         </slot>
       </Group>
     {/if}
+
+    <slot name="labels">
+      {#if labels}
+        {@const labelClass = cls(
+          'text-xs',
+          classes.labels,
+          typeof labels === 'object' ? labels.class : null
+        )}
+
+        {#if axis === 'x' || axis === 'both'}
+          <Text
+            x={left}
+            y={rangeTop + rangeHeight / 2}
+            dx={-4}
+            textAnchor="end"
+            verticalAnchor="middle"
+            value={formatValue(any(xDomain[0]), format)}
+            {...typeof labels === 'object' ? labels : null}
+            class={labelClass}
+          />
+
+          <Text
+            x={right}
+            y={rangeTop + rangeHeight / 2}
+            dx={4}
+            textAnchor="start"
+            verticalAnchor="middle"
+            value={formatValue(any(xDomain[1]), format)}
+            {...typeof labels === 'object' ? labels : null}
+            class={labelClass}
+          />
+        {/if}
+
+        {#if axis === 'y' || axis === 'both'}
+          <Text
+            x={rangeLeft + rangeWidth / 2}
+            y={top}
+            dy={-4}
+            textAnchor="middle"
+            verticalAnchor="end"
+            value={formatValue(any(yDomain[1]), format)}
+            {...typeof labels === 'object' ? labels : null}
+            class={labelClass}
+          />
+
+          <Text
+            x={rangeLeft + rangeWidth / 2}
+            y={bottom}
+            dy={4}
+            textAnchor="middle"
+            verticalAnchor="start"
+            value={formatValue(any(yDomain[0]), format)}
+            {...typeof labels === 'object' ? labels : null}
+            class={labelClass}
+          />
+        {/if}
+      {/if}
+    </slot>
 
     <!-- TODO: Add diagonal/corner handles -->
   {/if}
