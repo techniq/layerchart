@@ -101,10 +101,10 @@ export function ancestors(
     return [];
   }
 
-  // TODO: Types from dagre appear incorrect
   const predecessors = graph.predecessors(nodeId) ?? [];
   return [
     ...predecessors,
+    // @ts-expect-error: Types from dagre appear incorrect
     ...predecessors.flatMap((pId) => ancestors(graph, pId, maxDepth, currentDepth + 1)),
   ];
 }
@@ -122,10 +122,10 @@ export function descendants(
     return [];
   }
 
-  // TODO: Types from dagre appear incorrect
   const predecessors = graph.successors(nodeId) ?? [];
   return [
     ...predecessors,
+    // @ts-expect-error: Types from dagre appear incorrect
     ...predecessors.flatMap((pId) => descendants(graph, pId, maxDepth, currentDepth + 1)),
   ];
 }

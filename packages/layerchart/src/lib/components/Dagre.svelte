@@ -73,7 +73,7 @@
       return {};
     });
 
-    nodes(data).forEach((n) => {
+    nodes(data).forEach((n: any) => {
       g.setNode(nodeId(n), {
         id: nodeId(n),
         label: typeof n.label === 'string' ? n.label : nodeId(n),
@@ -83,7 +83,7 @@
       });
     });
 
-    edges(data).forEach((e) => {
+    edges(data).forEach((e: any) => {
       g.setEdge(e.source, e.target);
     });
 
