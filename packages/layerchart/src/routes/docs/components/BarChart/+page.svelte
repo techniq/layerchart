@@ -67,7 +67,50 @@
   </div>
 </Preview>
 
-<h2>Color scale</h2>
+<h2>Color (Bars class)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      props={{ bars: { class: 'fill-secondary' } }}
+    />
+  </div>
+</Preview>
+
+<h2>Color using scale</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart data={dateSeriesData} x="date" y="value" cRange={['hsl(var(--color-secondary))']} />
+  </div>
+</Preview>
+
+<h2>Color per value</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={longData.filter((d) => d.year === 2019)}
+      x="fruit"
+      y="value"
+      c="fruit"
+      cRange={[
+        'hsl(var(--color-danger))',
+        'hsl(var(--color-warning))',
+        'hsl(var(--color-success))',
+        'hsl(var(--color-info))',
+      ]}
+      props={{
+        yAxis: { format: 'metric' },
+      }}
+    />
+  </div>
+</Preview>
+
+<h2>Color threshold</h2>
 
 <Preview data={negativeData}>
   <div class="h-[300px] p-4 border rounded">
@@ -565,7 +608,7 @@
   </div>
 </Preview> -->
 
-<h2>Legend</h2>
+<h2>Legend (series)</h2>
 
 <Preview data={wideData}>
   <div class="h-[300px] p-4 border rounded">
