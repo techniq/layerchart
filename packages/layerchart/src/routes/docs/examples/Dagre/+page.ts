@@ -7,6 +7,7 @@ export async function load() {
     complex: await fetch('/data/examples/graph/complex.json').then((r) => r.json()),
     greenhouse: await fetch('/data/examples/graph/greenhouse.json').then((r) => r.json()),
     flare: await fetch('/data/examples/hierarchy/flare.json').then((r) => r.json()),
+    miserables: await fetch('/data/examples/graph/miserables.json').then((r) => r.json()),
 
     meta: {
       pageSource,
