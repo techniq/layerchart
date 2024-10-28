@@ -144,7 +144,7 @@
   }}
   <slot {...slotProps}>
     <Svg center>
-      <slot name="below-marks" {...slotProps} />
+      <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
         <Group {...props.group}>
@@ -199,7 +199,7 @@
         </Group>
       </slot>
 
-      <slot name="above-marks" {...slotProps} />
+      <slot name="aboveMarks" {...slotProps} />
     </Svg>
 
     <slot name="legend" {...slotProps}>

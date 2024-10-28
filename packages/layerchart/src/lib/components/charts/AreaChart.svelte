@@ -192,7 +192,7 @@
         {/if}
       </slot>
 
-      <slot name="below-marks" {...slotProps} />
+      <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
         {#each series as s, i}
@@ -200,7 +200,7 @@
         {/each}
       </slot>
 
-      <slot name="above-marks" {...slotProps} />
+      <slot name="aboveMarks" {...slotProps} />
 
       <slot name="axis" {...slotProps}>
         {#if axis}

@@ -359,7 +359,7 @@
         },
       ]}
     >
-      <svelte:fragment slot="below-marks">
+      <svelte:fragment slot="belowMarks">
         <Spline y="avg" curve={curveCatmullRom} class="stroke-primary" />
       </svelte:fragment>
     </AreaChart>
