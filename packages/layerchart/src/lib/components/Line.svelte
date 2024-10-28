@@ -30,8 +30,8 @@
   export let markerEnd: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
     marker;
 
-  $: markerStartId = markerStart || $$slots['marker-start'] ? uniqueId('marker-') : '';
-  $: markerEndId = markerEnd || $$slots['marker-end'] ? uniqueId('marker-') : '';
+  $: markerStartId = markerStart || $$slots['markerStart'] ? uniqueId('marker-') : '';
+  $: markerEndId = markerEnd || $$slots['markerEnd'] ? uniqueId('marker-') : '';
 
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -64,7 +64,7 @@
   on:pointerleave
 />
 
-<slot name="marker-start" id={markerStartId}>
+<slot name="markerStart" id={markerStartId}>
   {#if markerStart}
     <Marker
       id={markerStartId}
@@ -74,7 +74,7 @@
   {/if}
 </slot>
 
-<slot name="marker-end" id={markerEndId}>
+<slot name="markerEnd" id={markerEndId}>
   <Marker
     id={markerEndId}
     type={typeof markerEnd === 'string' ? markerEnd : undefined}

@@ -64,9 +64,9 @@
   export let markerEnd: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
     marker;
 
-  $: markerStartId = markerStart || $$slots['marker-start'] ? uniqueId('marker-') : '';
-  $: markerMidId = markerMid || $$slots['marker-mid'] ? uniqueId('marker-') : '';
-  $: markerEndId = markerEnd || $$slots['marker-end'] ? uniqueId('marker-') : '';
+  $: markerStartId = markerStart || $$slots['markerStart'] ? uniqueId('marker-') : '';
+  $: markerMidId = markerMid || $$slots['markerMid'] ? uniqueId('marker-') : '';
+  $: markerEndId = markerEnd || $$slots['markerEnd'] ? uniqueId('marker-') : '';
 
   function getScaleValue(data: any, scale: typeof $xScale | typeof $yScale, accessor: Function) {
     let value = accessor(data);
@@ -176,7 +176,7 @@
     bind:this={pathEl}
   />
 
-  <slot name="marker-start" id={markerStartId}>
+  <slot name="markerStart" id={markerStartId}>
     {#if markerStart}
       <Marker
         id={markerStartId}
@@ -186,7 +186,7 @@
     {/if}
   </slot>
 
-  <slot name="marker-mid" id={markerMidId}>
+  <slot name="markerMid" id={markerMidId}>
     <Marker
       id={markerMidId}
       type={typeof markerMid === 'string' ? markerMid : undefined}
@@ -194,7 +194,7 @@
     />
   </slot>
 
-  <slot name="marker-end" id={markerEndId}>
+  <slot name="markerEnd" id={markerEndId}>
     <Marker
       id={markerEndId}
       type={typeof markerEnd === 'string' ? markerEnd : undefined}
