@@ -5,6 +5,7 @@
     BarChart,
     Bars,
     Highlight,
+    Labels,
     LinearGradient,
     Svg,
     Tooltip,
@@ -676,6 +677,45 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart data={dateSeriesData} x="date" y="value" labels={{ placement: 'inside' }} />
+  </div>
+</Preview>
+
+<h2>Axis labels inside bars</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[500px] p-4 border rounded">
+    <BarChart
+      data={dateSeriesData}
+      x="value"
+      y="date"
+      labels
+      orientation="horizontal"
+      axis="y"
+      rule={false}
+      props={{
+        yAxis: {
+          tickLabelProps: {
+            textAnchor: 'start',
+            dx: 6,
+            class: 'fill-surface-300 stroke-none',
+          },
+          tickLength: 0,
+        },
+      }}
+      padding={{ left: 0, bottom: 16 }}
+    />
+  </div>
+</Preview>
+
+<h2>Axis labels inside bars (using Labels)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[500px] p-4 border rounded">
+    <BarChart data={dateSeriesData} x="value" y="date" labels orientation="horizontal" axis={false}>
+      <svelte:fragment slot="above-marks">
+        <Labels x={8} value={(d) => d.date} class="text-sm fill-surface-300 stroke-none" />
+      </svelte:fragment>
+    </BarChart>
   </div>
 </Preview>
 
