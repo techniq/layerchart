@@ -9,6 +9,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import { Field, Switch, Toggle } from 'svelte-ux';
 
   const data = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
   const data2 = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
@@ -156,17 +157,26 @@
   </div>
 </Preview>
 
-<h2>Tweened</h2>
-
-<Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
-        <Pie tweened />
-      </Svg>
-    </Chart>
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[1fr,auto] gap-2">
+    <h2>Tweened</h2>
+    <Field label="Show" labelPlacement="left" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
   </div>
-</Preview>
+
+  <Preview {data}>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart {data} x="value" c="date" cRange={keyColors}>
+        <Svg center>
+          {#if show}
+            <Pie tweened />
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
 
 <h2>Offset</h2>
 
