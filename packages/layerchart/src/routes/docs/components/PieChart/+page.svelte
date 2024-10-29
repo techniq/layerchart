@@ -8,7 +8,19 @@
   import { longData } from '$lib/utils/genData.js';
 
   const dataByYear = group(longData, (d) => d.year);
-  const data = dataByYear.get(2019);
+  const data = dataByYear.get(2019) ?? [];
+  $: dataWithColor =
+    data?.map((d, i) => {
+      return {
+        ...d,
+        color: [
+          'hsl(var(--color-danger))',
+          'hsl(var(--color-warning))',
+          'hsl(var(--color-success))',
+          'hsl(var(--color-info))',
+        ][i],
+      };
+    }) ?? [];
 
   const exerciseData = [
     { key: 'move', value: 400, maxValue: 1000, color: '#ef4444' },
@@ -314,6 +326,20 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
     <PieChart {data} key="fruit" value="value" cRange={quantize(interpolateRainbow, 5)} />
+  </div>
+</Preview>
+
+<h2>Customize colors (data prop)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      data={dataWithColor}
+      key="fruit"
+      value="value"
+      c="color"
+      cRange={dataWithColor.map((d) => d.color)}
+    />
   </div>
 </Preview>
 
