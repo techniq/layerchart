@@ -10,7 +10,7 @@
 
 - feat(Brush): Add `labels` prop and slot to enable showing values beside each handle ([#265](https://github.com/techniq/layerchart/pull/265))
 
-- breaking: Use camelCase (`aboveMarks`, etc) instead of kebob case (`above-marks`) slot names to fix Svelte 5 {#snippet} compatibility ([#269](https://github.com/techniq/layerchart/pull/269))
+- breaking: Use camelCase (`aboveMarks`, etc) instead of kebob case (`above-marks`) slot names to fix Svelte 5 `{#snippet}` compatibility ([#269](https://github.com/techniq/layerchart/pull/269))
 
 ### Patch Changes
 
