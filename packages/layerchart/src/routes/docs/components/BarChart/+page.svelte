@@ -90,7 +90,7 @@
 
 <h2>Color per value</h2>
 
-<Preview data={wideData}>
+<Preview data={longData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart
       data={longData.filter((d) => d.year === 2019)}
