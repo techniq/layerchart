@@ -11,8 +11,9 @@
 
   let pointCount = 100;
   let showPoints = false;
-  let tweened = true;
-  let draw = false;
+  let show = true;
+  let draw = true;
+  let tweened = false;
 
   let pathGenerator = (x: number) => x;
   let curve: ComponentProps<CurveMenuField>['value'] = undefined;
@@ -41,13 +42,10 @@
     </Field>
   </div>
 
-  <!-- <div class="grid grid-cols-[1fr,1fr,1fr] gap-2">
-    <RangeField label="Frequency" bind:value={frequency} min={1} />
-    <RangeField label="Amplitude" bind:value={amplitude} min={1} />
-    <RangeField label="Phase" bind:value={phase} min={1} />
-  </div> -->
-
-  <div class="grid grid-cols-[100px,100px,1fr] gap-2">
+  <div class="grid grid-cols-[100px,100px,100px,1fr] gap-2">
+    <Field label="Show" let:id>
+      <Switch bind:checked={show} {id} size="md" />
+    </Field>
     <Field label="Draw" let:id>
       <Switch bind:checked={draw} {id} size="md" />
     </Field>
@@ -63,9 +61,11 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-        <Spline {curve} {tweened} {draw} class="stroke-primary stroke-2" />
-        {#if showPoints}
-          <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
+        {#if show}
+          <Spline {curve} {tweened} {draw} class="stroke-primary stroke-2" />
+          {#if showPoints}
+            <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
+          {/if}
         {/if}
       </Svg>
     </Chart>
@@ -121,6 +121,38 @@
           <Axis placement="bottom" rule />
           {#if show}
             <Spline {curve} tweened class="stroke-primary stroke-2" />
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
+
+<h2>markers / arrows</h2>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+    <Field label="Show" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+    <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
+    <CurveMenuField bind:value={curve} />
+    <RangeField label="Points" bind:value={pointCount} min={2} />
+  </div>
+
+  <Preview {data}>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          {#if show}
+            <Spline
+              {curve}
+              class="stroke-primary stroke-2"
+              markerStart="circle"
+              markerEnd={{ type: 'arrow', class: 'stroke-2' }}
+            />
           {/if}
         </Svg>
       </Chart>

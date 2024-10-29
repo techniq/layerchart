@@ -5,7 +5,7 @@
   import { format } from '@layerstack/utils';
   import { mdScreen } from '@layerstack/svelte-stores';
 
-  import { Axis, Chart, Svg, Frame, Rule, Text } from 'layerchart';
+  import { Axis, Chart, Svg, Frame, Rule, Text, Grid } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -194,6 +194,49 @@
 </Preview>
 
 <Blockquote>Top-most axis must have separate rule due to SVG rendering order</Blockquote>
+
+<h2>multiple axis grids and rules (separate grid)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Grid x y />
+        <Axis placement="left" rule />
+        <Axis placement="bottom" rule />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Arrow markers</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule={{ markerEnd: 'arrow' }} />
+        <Axis placement="bottom" grid rule={{ markerEnd: 'arrow' }} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
 
 <h2>rotated labels and styling</h2>
 
