@@ -357,7 +357,35 @@
   </div>
 </Preview>
 
-<h2>Placement</h2>
+<h2>Placement (left)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      {data}
+      key="fruit"
+      value="value"
+      placement="left"
+      legend={{ placement: 'right', orientation: 'vertical' }}
+    />
+  </div>
+</Preview>
+
+<h2>Placement (right)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      {data}
+      key="fruit"
+      value="value"
+      placement="right"
+      legend={{ placement: 'left', orientation: 'vertical' }}
+    />
+  </div>
+</Preview>
+
+<h2>Custom placement</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">

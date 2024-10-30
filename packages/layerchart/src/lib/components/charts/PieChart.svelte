@@ -25,6 +25,7 @@
     outerRadius?: typeof outerRadius;
     padAngle?: typeof padAngle;
     center?: typeof center;
+    placement?: typeof placement;
     props?: typeof props;
     range?: typeof range;
     series?: typeof series;
@@ -84,8 +85,11 @@
   export let cornerRadius = 0;
   export let padAngle = 0;
 
+  /** Placement of PieChart (default: 'center') */
+  export let placement: 'left' | 'center' | 'right' = 'center';
+
   /** Center chart.  Override and use `props.group` for more control */
-  export let center = true;
+  export let center = placement === 'center';
 
   export let props: {
     pie?: Partial<ComponentProps<Pie>>;
@@ -151,7 +155,15 @@
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        <Group {...props.group}>
+        <Group
+          x={placement === 'left'
+            ? height / 2
+            : placement === 'right'
+              ? width - height / 2
+              : undefined}
+          center={['left', 'right'].includes(placement) ? 'y' : undefined}
+          {...props.group}
+        >
           {#each series as s, i}
             {@const singleArc = s.data?.length === 1 || chartData.length === 1}
             {#if singleArc}
