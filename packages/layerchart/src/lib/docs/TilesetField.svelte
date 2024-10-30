@@ -39,6 +39,21 @@
     // https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer/tile/12/1572/1108.pbf
   };
 
+  // https://github.com/leaflet-extras/leaflet-providers/blob/master/leaflet-providers.js#L79
+  // https://www.openstreetmap.org/
+  const openStreetMap = (tileset: string) => (x: number, y: number, z: number) => {
+    // CyclOSM:  https://a.tile-cyclosm.openstreetmap.fr/cyclosm/9/142/197.png
+    // Cycle Map: https://b.tile.thunderforest.com/cycle/9/141/199@2x.png?apikey=6e5478c8a4f54c779f85573c0e399391
+    // TransportMap: https://b.tile.thunderforest.com/transport/9/136/195@2x.png?apikey=6e5478c8a4f54c779f85573c0e399391
+    return `https://tile.openstreetmap.org/${z}/${x}/${y}.png`;
+  };
+
+  // opentopomap.org/
+  const openTopoMap = (tileset: string) => (x: number, y: number, z: number) => {
+    const s = 'a';
+    return `https://${s}.tile.opentopomap.org/${z}/${x}/${y}.png`;
+  };
+
   $: services = {
     'mapbox v1': {
       'streets-v11': mapboxv1('streets-v11'),
@@ -58,6 +73,12 @@
       'terrain-dem': mapboxv4('mapbox.mapbox-terrain-dem-v1'),
       traffic: mapboxv4('mapbox.mapbox-traffic-v1'),
       // 'transit (mapbox v4)': mapboxv4('mapbox.transit-v2'),
+    },
+    OpenStreetMap: {
+      Stardard: openStreetMap(''),
+    },
+    OpenTopoMap: {
+      Stardard: openTopoMap(''),
     },
     'National Map Services': {
       Hydrography: nationalmap('USGSHydroCached'),
