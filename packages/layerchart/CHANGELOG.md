@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.56.0
+
+### Minor Changes
+
+- feat(PieChart): Support `center={false}` to disable default centering, enabling explicit/absolute positioning with `props.group` ([`bb241d5`](https://github.com/techniq/layerchart/commit/bb241d565434984106744aa44ce255b072027be6))
+
 ## 0.55.0
 
 ### Minor Changes
