@@ -24,6 +24,7 @@
     maxValue?: typeof maxValue;
     outerRadius?: typeof outerRadius;
     padAngle?: typeof padAngle;
+    center?: typeof center;
     props?: typeof props;
     range?: typeof range;
     series?: typeof series;
@@ -82,6 +83,9 @@
 
   export let cornerRadius = 0;
   export let padAngle = 0;
+
+  /** Center chart.  Override and use `props.group` for more control */
+  export let center = true;
 
   export let props: {
     pie?: Partial<ComponentProps<Pie>>;
@@ -143,7 +147,7 @@
     tooltip,
   }}
   <slot {...slotProps}>
-    <Svg center>
+    <Svg {center}>
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>

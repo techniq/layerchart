@@ -331,7 +331,7 @@
 
 <h2>Customize colors (data prop)</h2>
 
-<Preview {data}>
+<Preview data={dataWithColor}>
   <div class="h-[300px] p-4 border rounded">
     <PieChart
       data={dataWithColor}
@@ -339,6 +339,35 @@
       value="value"
       c="color"
       cRange={dataWithColor.map((d) => d.color)}
+    />
+  </div>
+</Preview>
+
+<h2>Legend with padding</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      {data}
+      key="fruit"
+      value="value"
+      padding={{ right: 80 }}
+      legend={{ placement: 'right', orientation: 'vertical' }}
+    />
+  </div>
+</Preview>
+
+<h2>Placement</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      {data}
+      key="fruit"
+      value="value"
+      center={false}
+      props={{ group: { x: 200, center: 'y' } }}
+      legend={{ placement: 'right', orientation: 'vertical' }}
     />
   </div>
 </Preview>
