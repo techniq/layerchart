@@ -18,7 +18,7 @@
   let align: ComponentProps<Dagre>['align'] = 'up-left';
   let nodeSeparation: ComponentProps<Dagre>['nodeSeparation'] = 50;
   let rankSeparation: ComponentProps<Dagre>['rankSeparation'] = 50;
-  let edgeSeparation: ComponentProps<Dagre>['rankSeparation'] = 10;
+  let edgeSeparation: ComponentProps<Dagre>['edgeSeparation'] = 10;
   let curve: ComponentProps<CurveMenuField>['value'] = curveBasis;
 </script>
 
