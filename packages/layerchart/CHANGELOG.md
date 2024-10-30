@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.57.0
+
+### Minor Changes
+
+- feat(PieChart): Add `placement` prop to conveniently position chart left or right (useful with legends). Resolves #271 ([`7498738`](https://github.com/techniq/layerchart/commit/7498738869ce393474cc0c5893e7c291dcbf6541))
+
 ## 0.56.0
 
 ### Minor Changes
