@@ -191,7 +191,11 @@
                 <Rect
                   width={node.width}
                   height={node.height}
-                  class="fill-surface-200 stroke-2 stroke-primary/50 group-hover:fill-primary/10 group-hover:cursor-pointer"
+                  class={cls(
+                    'fill-surface-200 stroke-2 stroke-primary/50',
+                    node.label === 'CLOSED' && 'fill-danger/10 stroke-danger/50',
+                    node.label === 'ESTAB' && 'fill-success/10 stroke-success/50'
+                  )}
                   rx={10}
                 />
 
