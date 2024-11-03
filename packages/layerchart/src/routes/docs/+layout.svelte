@@ -222,25 +222,19 @@
                           : item.type === 'github'
                             ? mdiGithub
                             : mdiLink}
-                  <ListItem
-                    title={item.name.toString()}
-                    {icon}
-                    avatar={{ size: 'sm', class: 'text-xs text-white bg-primary' }}
-                    on:click={() => {
-                      if (item.url instanceof URL) {
-                        // open in new window
-                        window.open(item.url);
-                      } else {
-                        // go to route
-                        goto(item.url);
-                      }
-                    }}
-                    class="hover:bg-surface-200 cursor-pointer"
-                  >
-                    <div slot="actions">
-                      <Icon data={mdiChevronRight} class="text-surface-content/50" />
-                    </div>
-                  </ListItem>
+                  <a href={item.url.toString()} class="group">
+                    <ListItem
+                      title={item.name.toString()}
+                      {icon}
+                      avatar={{ size: 'sm', class: 'text-xs text-white bg-primary' }}
+                      list="group"
+                      class="hover:bg-surface-200 cursor-pointer"
+                    >
+                      <div slot="actions">
+                        <Icon data={mdiChevronRight} class="text-surface-content/50" />
+                      </div>
+                    </ListItem>
+                  </a>
                 {/each}
               </div>
             </div>
