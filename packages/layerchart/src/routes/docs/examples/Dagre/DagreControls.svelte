@@ -9,13 +9,17 @@
 
   type DagreProps = ComponentProps<Dagre>;
 
-  export let ranker: DagreProps['ranker'] = 'network-simplex';
-  export let direction: DagreProps['direction'] = 'left-right';
-  export let align: DagreProps['align'] = 'up-left';
-  export let rankSeparation: DagreProps['rankSeparation'] = 50;
-  export let nodeSeparation: DagreProps['nodeSeparation'] = 50;
-  export let edgeSeparation: DagreProps['rankSeparation'] = 10;
-  export let curve: ComponentProps<CurveMenuField>['value'] = curveLinear;
+  export let settings = {
+    ranker: 'network-simplex' as DagreProps['ranker'],
+    direction: 'left-right' as DagreProps['direction'],
+    align: 'up-left' as DagreProps['align'],
+    rankSeparation: 50 as DagreProps['rankSeparation'],
+    nodeSeparation: 50 as DagreProps['nodeSeparation'],
+    edgeSeparation: 10 as DagreProps['rankSeparation'],
+    edgeLabelPosition: 'center' as DagreProps['edgeLabelPosition'],
+    edgeLabelOffset: 10 as DagreProps['edgeLabelOffset'],
+    curve: curveLinear as ComponentProps<CurveMenuField>['value'],
+  };
 </script>
 
 <div class={cls('grid gap-2', $$props.class)}>
@@ -26,7 +30,7 @@
       { label: 'Tight tree', value: 'tight-tree' },
       { label: 'Longest path', value: 'longest-path' },
     ]}
-    bind:value={ranker}
+    bind:value={settings.ranker}
     menuIcon=""
     stepper
     dense
@@ -40,7 +44,7 @@
       { label: 'Left → Right', value: 'left-right' },
       { label: 'Right → Left', value: 'right-left' },
     ]}
-    bind:value={direction}
+    bind:value={settings.direction}
     menuIcon=""
     stepper
     dense
@@ -49,12 +53,13 @@
   <MenuField
     label="Align"
     options={[
+      { label: 'None', value: 'none' },
       { label: 'Up / Left', value: 'up-left' },
       { label: 'Up / Right', value: 'up-right' },
       { label: 'Down / Left', value: 'down-left' },
       { label: 'Down / Right', value: 'down-right' },
     ]}
-    bind:value={align}
+    bind:value={settings.align}
     menuIcon=""
     stepper
     dense
@@ -67,7 +72,7 @@
       { label: 'Default', value: 50 },
       { label: 'Comfortable', value: 100 },
     ]}
-    bind:value={rankSeparation}
+    bind:value={settings.rankSeparation}
     menuIcon=""
     stepper
     dense
@@ -80,7 +85,7 @@
       { label: 'Default', value: 50 },
       { label: 'Comfortable', value: 100 },
     ]}
-    bind:value={nodeSeparation}
+    bind:value={settings.nodeSeparation}
     menuIcon=""
     stepper
     dense
@@ -93,11 +98,37 @@
       { label: 'Default', value: 10 },
       { label: 'Comfortable', value: 20 },
     ]}
-    bind:value={edgeSeparation}
+    bind:value={settings.edgeSeparation}
     menuIcon=""
     stepper
     dense
   />
 
-  <CurveMenuField label="Curve style" bind:value={curve} dense />
+  <MenuField
+    label="Edge label position"
+    options={[
+      { label: 'Left', value: 'left' },
+      { label: 'Center', value: 'center' },
+      { label: 'Right', value: 'right' },
+    ]}
+    bind:value={settings.edgeLabelPosition}
+    menuIcon=""
+    stepper
+    dense
+  />
+
+  <MenuField
+    label="Edge label offset"
+    options={[
+      { label: 'Compact', value: 5 },
+      { label: 'Default', value: 10 },
+      { label: 'Comfortable', value: 20 },
+    ]}
+    bind:value={settings.edgeLabelOffset}
+    menuIcon=""
+    stepper
+    dense
+  />
+
+  <CurveMenuField label="Curve style" bind:value={settings.curve} dense />
 </div>
