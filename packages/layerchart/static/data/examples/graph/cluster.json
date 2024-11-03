@@ -1,0 +1,22 @@
+{
+  "nodes": [
+    { "id": "A" },
+    { "id": "B", "parent": "top_group" },
+    { "id": "C", "parent": "bottom_group" },
+    { "id": "D", "parent": "bottom_group" },
+    { "id": "E", "parent": "bottom_group" },
+    { "id": "F", "parent": "bottom_group" },
+    { "id": "G" },
+    { "id": "group" },
+    { "id": "top_group", "parent": "group" },
+    { "id": "bottom_group", "parent": "group" }
+  ],
+  "links": [
+    { "source": "A", "target": "B" },
+    { "source": "B", "target": "C" },
+    { "source": "B", "target": "D" },
+    { "source": "B", "target": "E" },
+    { "source": "B", "target": "F" },
+    { "source": "B", "target": "G" }
+  ]
+}

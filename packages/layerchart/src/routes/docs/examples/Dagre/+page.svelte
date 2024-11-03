@@ -37,6 +37,17 @@
       edgeLabelOffset: 10,
       curve: curveLinear,
     },
+    cluster: {
+      ranker: 'network-simplex',
+      direction: 'top-bottom',
+      align: 'none',
+      nodeSeparation: 50,
+      rankSeparation: 50,
+      edgeSeparation: 10,
+      edgeLabelPosition: 'center',
+      edgeLabelOffset: 10,
+      curve: curveLinear,
+    },
   } satisfies Record<string, ComponentProps<DagreControls>['settings']>;
 </script>
 
@@ -247,6 +258,91 @@
       {#if showSettings}
         <div transition:slide={{ axis: 'x' }}>
           <DagreControls bind:settings={settings.tcpState} />
+        </div>
+      {/if}
+    </div>
+  </Preview>
+</Toggle>
+
+<Toggle let:on={showSettings} let:toggle>
+  <div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+    <h2>Cluster</h2>
+
+    <Field label="Settings" labelPlacement="left" class="mb-1" let:id>
+      <Switch checked={showSettings} on:change={toggle} {id} size="md" />
+    </Field>
+  </div>
+
+  <Preview data={data.cluster}>
+    <div class="flex gap-2">
+      <div class="flex-1 h-[500px] p-4 border rounded overflow-hidden">
+        <Chart
+          data={data.cluster}
+          transform={{
+            mode: 'canvas',
+            initialScrollMode: 'scale',
+            tweened: { duration: 800, easing: cubicOut },
+          }}
+          let:tooltip
+        >
+          <TransformControls />
+
+          <Svg>
+            <Dagre
+              data={data.cluster}
+              edges={(d) => d.links}
+              compound
+              {...settings.cluster}
+              let:nodes
+              let:edges
+            >
+              <g class="edges">
+                {#each edges as edge, i (edge.v + '-' + edge.w)}
+                  <Spline
+                    data={edge.points}
+                    x="x"
+                    y="y"
+                    class="stroke-surface-content/30"
+                    tweened
+                    curve={settings.cluster?.curve}
+                    markerEnd="arrow"
+                  />
+                {/each}
+              </g>
+
+              <g class="nodes">
+                {#each nodes as node (node.label)}
+                  <Group x={node.x - node.width / 2} y={node.y - node.height / 2} tweened>
+                    <Rect
+                      width={node.width}
+                      height={node.height}
+                      class={cls(
+                        'fill-surface-200 stroke-2 stroke-primary/50 group-hover:fill-primary/10 group-hover:cursor-pointer',
+                        'fill-none'
+                      )}
+                      rx={10}
+                    />
+
+                    <Text
+                      value={node.label}
+                      x={node.width / 2}
+                      y={node.height / 2}
+                      dy={-2}
+                      textAnchor="middle"
+                      verticalAnchor="middle"
+                      class={cls('text-xs pointer-events-none')}
+                    />
+                  </Group>
+                {/each}
+              </g>
+            </Dagre>
+          </Svg>
+        </Chart>
+      </div>
+
+      {#if showSettings}
+        <div transition:slide={{ axis: 'x' }}>
+          <DagreControls bind:settings={settings.cluster} />
         </div>
       {/if}
     </div>

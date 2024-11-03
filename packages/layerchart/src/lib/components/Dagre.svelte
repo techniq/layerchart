@@ -1,7 +1,7 @@
 <script module>
   export type DagreGraphData = {
-    nodes: Array<{ id: string; label?: string | dagre.Label }>;
-    edges: Array<{ source: string; target: string }>;
+    nodes: Array<{ id: string; parent?: string; label?: string | dagre.Label }>;
+    edges: Array<{ source: string; target: string; label?: string }>;
   };
 
   export const RankDir = {
@@ -35,6 +35,15 @@
   export let nodes = (d: any) => d.nodes;
   export let nodeId = (d: any) => d.id;
   export let edges = (d: any) => d.edges;
+
+  /** Set graph as directed (true, default) or undirected (false), which does not treat the order of nodes in an edge as significant. */
+  export let directed = true;
+
+  /** Allow a graph to have multiple edges between the same pair of nodes */
+  export let multigraph = false;
+
+  /** Allow a graph to have compound nodes - nodes which can be the `parent` of other nodes */
+  export let compound = false;
 
   /** Type of algorithm to assigns a rank to each node in the input graph */
   export let ranker: 'network-simplex' | 'tight-tree' | 'longest-path' = 'network-simplex';
@@ -77,7 +86,7 @@
 
   let graph: dagre.graphlib.Graph;
   $: {
-    let g = new dagre.graphlib.Graph();
+    let g = new dagre.graphlib.Graph({ directed, multigraph, compound });
 
     g.setGraph({
       ranker: ranker,
@@ -93,13 +102,19 @@
     });
 
     nodes(data).forEach((n: any) => {
+      const id = nodeId(n);
+
       g.setNode(nodeId(n), {
-        id: nodeId(n),
-        label: typeof n.label === 'string' ? n.label : nodeId(n),
+        id,
+        label: typeof n.label === 'string' ? n.label : id,
         width: nodeWidth,
         height: nodeHeight,
         ...(typeof n.label === 'object' ? n.label : null),
       });
+
+      if (n.parent) {
+        g.setParent(id, n.parent);
+      }
     });
 
     edges(data).forEach((e: any) => {
