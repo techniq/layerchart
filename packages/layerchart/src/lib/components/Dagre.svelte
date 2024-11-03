@@ -12,10 +12,17 @@
   };
 
   export const Align = {
+    none: null,
     'up-left': 'UL',
     'up-right': 'UR',
     'down-left': 'DL',
     'down-right': 'DR',
+  };
+
+  export const EdgeLabelPosition = {
+    left: 'l',
+    center: 'c',
+    right: 'r',
   };
 </script>
 
@@ -47,11 +54,23 @@
   /** Number of pixels that separate edges horizontally in the layout */
   export let edgeSeparation = 10;
 
-  /** Default node width if not defined */
+  /** Default node width if not defined on node */
   export let nodeWidth = 100;
 
-  /** Default node height if not defined */
+  /** Default node height if not defined on node */
   export let nodeHeight = 50;
+
+  /** Default link label width if not defined on edge */
+  export let edgeLabelWidth = 100;
+
+  /** Default edge label height if not defined on edge */
+  export let edgeLabelHeight = 20;
+
+  /** Default edge label height if not defined on edge */
+  export let edgeLabelPosition: keyof typeof EdgeLabelPosition = 'center';
+
+  /** Default pixels to move the label away from the edge if not defined on edge. Applies only when labelpos is l or r.*/
+  export let edgeLabelOffset = 10;
 
   /** Filter nodes */
   export let filterNodes: (nodeId: string, graph: dagre.graphlib.Graph) => boolean = () => true;
@@ -84,7 +103,21 @@
     });
 
     edges(data).forEach((e: any) => {
-      g.setEdge(e.source, e.target);
+      const { source, target, label, ...rest } = e;
+      g.setEdge(
+        e.source,
+        e.target,
+        label
+          ? {
+              label: label,
+              labelpos: EdgeLabelPosition[edgeLabelPosition],
+              labeloffset: edgeLabelOffset,
+              width: edgeLabelWidth,
+              height: edgeLabelHeight,
+              ...rest,
+            }
+          : {}
+      );
     });
 
     g = filterNodes ? g.filterNodes((nodeId) => filterNodes(nodeId, graph)) : graph;
