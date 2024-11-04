@@ -1,5 +1,17 @@
 # LayerChart
 
+## 0.58.0
+
+### Minor Changes
+
+- feat(Pie): Add `sort` prop to specify sorting comparator, or pass `null` to disable default sorting ([`56f84b5`](https://github.com/techniq/layerchart/commit/56f84b5a7b27548ecefca86ef3f88200eb0f1a7d))
+
+- feat(Legend): Add `onClick` when using `variant="swatches"` ([`7629194`](https://github.com/techniq/layerchart/commit/76291940ec1744fcd887e1e6463549f99c1b94cd))
+
+### Patch Changes
+
+- fix(ScatterChart): Reactively rebuild `chartData` when `series` is updated ([`ad04197`](https://github.com/techniq/layerchart/commit/ad0419739652e72c8bc7e7c14edc1ac11b4bc798))
+
 ## 0.57.0
 
 ### Minor Changes
