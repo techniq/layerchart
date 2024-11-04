@@ -6,12 +6,17 @@
   import { Axis, Chart, Highlight, Labels, Points, Svg, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
 
   const data = createDateSeries({ min: 10, max: 100, value: 'integer' });
 </script>
 
 <h1>Examples</h1>
+
+<Blockquote>
+  See also: <a href="/docs/components/ScatterChart">ScatterChart</a> for simplified examples
+</Blockquote>
 
 <h2>Basic</h2>
 

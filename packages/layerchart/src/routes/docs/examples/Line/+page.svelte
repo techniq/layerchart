@@ -20,6 +20,7 @@
   } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
 
   export let data;
@@ -52,6 +53,10 @@
 </script>
 
 <h1>Examples</h1>
+
+<Blockquote>
+  See also: <a href="/docs/components/LineChart">LineChart</a> for simplified examples
+</Blockquote>
 
 <h2>Basic</h2>
 

@@ -26,6 +26,7 @@
   } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
   import { unique } from '@layerstack/utils/array';
 
@@ -100,6 +101,10 @@
 </script>
 
 <h1>Examples</h1>
+
+<Blockquote>
+  See also: <a href="/docs/components/BarChart">BarChart</a> for simplified examples
+</Blockquote>
 
 <h2>Basic</h2>
 

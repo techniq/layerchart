@@ -8,6 +8,7 @@
   import { Area, Axis, Chart, Points, Spline, Svg } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import Blockquote from '$lib/docs/Blockquote.svelte';
 
   export let data;
 
@@ -22,6 +23,10 @@
 </script>
 
 <h1>Examples</h1>
+
+<Blockquote>
+  See also: <a href="/docs/components/LineChart">LineChart</a> for simplified examples
+</Blockquote>
 
 <div class="grid grid-cols-[1fr,auto] gap-2 items-end">
   <h2>Radar</h2>

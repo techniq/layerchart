@@ -16,6 +16,7 @@
   import { round } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import Blockquote from '$lib/docs/Blockquote.svelte';
 
   let value = 75;
   let segments = 60;
@@ -42,6 +43,10 @@
 </script>
 
 <h1>Examples</h1>
+
+<Blockquote>
+  See also: <a href="/docs/components/PieChart">PieChart</a> for simplified examples
+</Blockquote>
 
 <h2>Partial Arc</h2>
 
