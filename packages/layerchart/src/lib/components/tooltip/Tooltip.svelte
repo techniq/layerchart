@@ -160,7 +160,7 @@
 
 {#if $tooltip.data}
   <div
-    class={cls('absolute pointer-events-none z-50', classes.root)}
+    class={cls('absolute pointer-events-none z-50 select-none', classes.root)}
     style:top="{$yPos}px"
     style:left="{$xPos}px"
     transition:fade={{ duration: 100 }}
