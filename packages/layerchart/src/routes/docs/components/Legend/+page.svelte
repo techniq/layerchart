@@ -320,6 +320,22 @@
   />
 </Preview>
 
+<h2>Click handler</h2>
+
+<Preview>
+  <div class="grid gap-6">
+    <Legend
+      scale={scaleOrdinal(
+        ['<10', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '≥80'],
+        schemeSpectral[10]
+      )}
+      title="Age (years)"
+      variant="swatches"
+      onClick={(d) => console.log(d)}
+    />
+  </div>
+</Preview>
+
 <h2>slot override</h2>
 
 <Preview>

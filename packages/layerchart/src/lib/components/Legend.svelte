@@ -35,6 +35,8 @@
   export let placement: Placement | undefined = undefined;
   export let orientation: 'horizontal' | 'vertical' = 'horizontal';
 
+  export let onClick: ((tick: any) => any) | undefined = undefined;
+
   /** Determine display ramp (individual color swatches or continuous ramp)*/
   export let variant: 'ramp' | 'swatches' = 'ramp';
 
@@ -208,15 +210,19 @@
         )}
       >
         {#each tickValues ?? xScale?.ticks?.(ticks) ?? [] as tick}
-          <div class="flex gap-1">
+          {@const color = scale(tick)}
+          <button
+            class={cls('flex gap-1', !onClick && 'cursor-auto')}
+            on:click={() => onClick?.({ tick, color })}
+          >
             <div
               class={cls('h-4 w-4 rounded-full', classes.swatch)}
-              style:background-color={scale(tick)}
+              style:background-color={color}
             ></div>
             <div class={cls('text-xs text-surface-content whitespace-nowrap', classes.label)}>
               {tickFormat ? format(tick, tickFormat) : tick}
             </div>
-          </div>
+          </button>
         {/each}
       </div>
     {/if}
