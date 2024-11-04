@@ -1,8 +1,11 @@
 <script lang="ts">
-  import { Axis, Highlight, Points, ScatterChart, Svg, Tooltip } from 'layerchart';
+  import { Axis, Highlight, Legend, Points, ScatterChart, Svg, Tooltip } from 'layerchart';
+  import { selectionStore } from '@layerstack/svelte-stores';
+  import { cls } from '@layerstack/tailwind';
   import { format } from '@layerstack/utils';
   import { flatGroup } from 'd3-array';
   import { randomNormal } from 'd3-random';
+  import { scaleOrdinal } from 'd3-scale';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { getSpiral } from '$lib/utils/genData.js';
@@ -18,6 +21,20 @@
 
   const random = randomNormal();
   const randomNormalData = Array.from({ length: 100 }, () => ({ value: random() }));
+
+  const pengiunSeries = penguinDataBySpecies.map(([species, data], i) => {
+    return {
+      key: species,
+      data,
+      color: [
+        'hsl(var(--color-primary))',
+        'hsl(var(--color-secondary))',
+        'hsl(var(--color-success))',
+      ][i],
+    };
+  });
+
+  const selection = selectionStore({ initial: pengiunSeries.map((s) => s.key) });
 </script>
 
 <h1>Examples</h1>
@@ -152,6 +169,45 @@
       })}
       legend
     />
+  </div>
+</Preview>
+
+<h2>Legend (show/hide series)</h2>
+
+<Preview data={penguinDataBySpecies}>
+  <div class="h-[400px] p-4 border rounded">
+    <ScatterChart
+      x="flipper_length_mm"
+      y="bill_length_mm"
+      series={pengiunSeries.filter((s) => $selection.isSelected(s.key))}
+      padding={{ left: 16, bottom: 48 }}
+    >
+      <svelte:fragment slot="legend">
+        <Legend
+          scale={scaleOrdinal(
+            pengiunSeries.map((s) => s.key),
+            pengiunSeries.map((s) => s.color)
+          )}
+          variant="swatches"
+          placement="bottom"
+          let:values
+          let:scale
+          class="z-10"
+        >
+          <div class="flex gap-4">
+            {#each values as value}
+              <button
+                class={cls('flex gap-1', !$selection.isSelected(value) && 'opacity-50')}
+                on:click={() => $selection.toggleSelected(value)}
+              >
+                <div class="h-4 w-4 rounded-full" style:background-color={scale(value)}></div>
+                <div class="text-xs text-surface-content/50">{value}</div>
+              </button>
+            {/each}
+          </div>
+        </Legend>
+      </svelte:fragment>
+    </ScatterChart>
   </div>
 </Preview>
 
