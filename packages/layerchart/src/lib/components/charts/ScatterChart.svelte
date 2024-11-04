@@ -58,7 +58,7 @@
   // Default xScale based on first data's `x` value
   $: xScale = accessor(x)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear();
 
-  let chartData = series
+  $: chartData = series
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
     .filter((d) => d) as Array<TData>;
 
