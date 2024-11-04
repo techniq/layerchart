@@ -30,6 +30,14 @@
   </div>
 </Preview>
 
+<h2>Domain padding</h2>
+
+<Preview data={spiralData}>
+  <div class="h-[400px] p-4 border rounded">
+    <ScatterChart data={spiralData} x="x" y="y" xPadding={[20, 20]} yPadding={[20, 20]} />
+  </div>
+</Preview>
+
 <h2>Radius via rScale</h2>
 
 <Preview data={spiralData}>
