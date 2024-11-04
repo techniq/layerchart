@@ -5,6 +5,7 @@ export async function load() {
     meta: {
       pageSource,
       related: [
+        'components/LineChart',
         'components/Spline',
         'components/Tooltip',
         'components/Highlight',
