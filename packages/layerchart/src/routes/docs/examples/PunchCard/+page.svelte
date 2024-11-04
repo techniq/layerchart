@@ -27,8 +27,8 @@
       y={(d) => getDay(d.date)}
       yScale={scaleBand()}
       yDomain={range(7)}
-      r={(d) => d.value}
-      rRange={[0, 12]}
+      r="value"
+      rRange={[0, 16]}
       padding={{ left: 48, bottom: 16 }}
       tooltip={{ mode: 'band' }}
       props={{
