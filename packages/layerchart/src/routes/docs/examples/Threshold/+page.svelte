@@ -1,26 +1,14 @@
 <script lang="ts">
-  import { scaleTime } from 'd3-scale';
-  import { curveLinear, curveStepAfter } from 'd3-shape';
+  import { curveStepAfter } from 'd3-shape';
   import { format } from 'date-fns';
-  import { formatDate, PeriodType } from '@layerstack/utils';
 
-  import {
-    Area,
-    Axis,
-    Chart,
-    Highlight,
-    Labels,
-    Spline,
-    Svg,
-    Threshold,
-    Tooltip,
-  } from 'layerchart';
+  import { AreaChart, Area, Spline, Threshold, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
 
-  let selectedCurve = curveLinear;
+  let selectedCurve = curveStepAfter;
 
   const data = createDateSeries({
     count: 30,
@@ -39,22 +27,14 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart
+    <AreaChart
       {data}
       x="date"
-      xScale={scaleTime()}
       y={['value', 'baseline']}
-      yDomain={[0, null]}
-      yNice
       padding={{ left: 16, bottom: 24 }}
+      tooltip={false}
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+      <svelte:fragment slot="marks">
         <Threshold curve={selectedCurve} let:curve>
           <g slot="above" let:curve>
             <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
@@ -65,8 +45,8 @@
           <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
           <Spline y="value" {curve} class="stroke-[1.5]" />
         </Threshold>
-      </Svg>
-    </Chart>
+      </svelte:fragment>
+    </AreaChart>
   </div>
 </Preview>
 
@@ -74,24 +54,16 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart
+    <AreaChart
       {data}
       x="date"
-      xScale={scaleTime()}
       y={['value', 'baseline']}
-      yDomain={[0, null]}
-      yNice
       padding={{ left: 16, bottom: 24 }}
+      props={{ highlight: { area: true, lines: false, points: false } }}
       tooltip={{ mode: 'bisect-x', findTooltipData: 'left' }}
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <Threshold curve={curveStepAfter} let:curve>
+      <svelte:fragment slot="marks">
+        <Threshold curve={selectedCurve} let:curve>
           <g slot="above" let:curve>
             <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
           </g>
@@ -101,19 +73,20 @@
           <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
           <Spline y="value" {curve} class="stroke-[1.5]" />
         </Threshold>
-        <Highlight area />
-      </Svg>
+      </svelte:fragment>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
-          <Tooltip.Item label="baseline" value={data.baseline} />
-          <Tooltip.Separator />
-          <Tooltip.Item label="variance" value={data.value - data.baseline} />
-        </Tooltip.List>
-      </Tooltip.Root>
-    </Chart>
+      <svelte:fragment slot="tooltip">
+        <Tooltip.Root let:data>
+          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} />
+            <Tooltip.Item label="baseline" value={data.baseline} />
+            <Tooltip.Separator />
+            <Tooltip.Item label="variance" value={data.value - data.baseline} />
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
+    </AreaChart>
   </div>
 </Preview>
 
@@ -121,34 +94,26 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart
+    <AreaChart
       {data}
       x="date"
-      xScale={scaleTime()}
       y={['value', 'baseline']}
-      yDomain={[0, null]}
-      yNice
       padding={{ left: 16, bottom: 24 }}
+      labels
+      tooltip={false}
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <Threshold>
-          <g slot="above">
-            <Area y0="value" y1="baseline" class="fill-success/30" />
+      <svelte:fragment slot="marks">
+        <Threshold let:curve>
+          <g slot="above" let:curve>
+            <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
           </g>
-          <g slot="below">
-            <Area y0="value" y1="baseline" class="fill-danger/30" />
+          <g slot="below" let:curve>
+            <Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
           </g>
-          <Spline y="baseline" class="[stroke-dasharray:4]" />
-          <Spline y="value" class="stroke-[1.5]" />
+          <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
+          <Spline y="value" {curve} class="stroke-[1.5]" />
         </Threshold>
-        <Labels format="integer" />
-      </Svg>
-    </Chart>
+      </svelte:fragment>
+    </AreaChart>
   </div>
 </Preview>
