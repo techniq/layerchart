@@ -64,6 +64,8 @@
    */
   export let tooltip: TooltipContextValue | undefined = undefined;
 
+  export let sort: ((a: any, b: any) => number) | null | undefined = undefined;
+
   const { data: contextData, x, y, xRange, c, cScale, config, width, height } = chartContext();
 
   // @ts-expect-error
@@ -71,12 +73,21 @@
   let tweened_endAngle = motionStore(0, { spring, tweened });
   $: tweened_endAngle.set(resolved_endAngle);
 
-  $: pie = d3pie<any>()
-    // @ts-expect-error
-    .startAngle(startAngle ?? degreesToRadians($config.xRange ? min($xRange) : min(range)))
-    .endAngle($tweened_endAngle)
-    .padAngle(padAngle)
-    .value($x);
+  let pie: ReturnType<typeof d3pie<any>>;
+  $: {
+    pie = d3pie<any>()
+      // @ts-expect-error
+      .startAngle(startAngle ?? degreesToRadians($config.xRange ? min($xRange) : min(range)))
+      .endAngle($tweened_endAngle)
+      .padAngle(padAngle)
+      .value($x);
+
+    if (sort === null) {
+      pie = pie.sort(null);
+    } else if (sort) {
+      pie = pie.sort(sort);
+    }
+  }
 
   $: arcs = pie(data ?? (Array.isArray($contextData) ? $contextData : []));
 </script>

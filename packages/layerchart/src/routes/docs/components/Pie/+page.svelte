@@ -46,6 +46,18 @@
   </div>
 </Preview>
 
+<h2>Disable sorting</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart {data} x="value" c="date" cRange={keyColors}>
+      <Svg center>
+        <Pie sort={null} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Partial range (Chart xRange)</h2>
 
 <Preview {data}>
