@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { scaleBand, scaleLinear } from 'd3-scale';
-  import { max, range } from 'd3-array';
+  import { scaleBand } from 'd3-scale';
+  import { range } from 'd3-array';
   import { getDay, getWeek } from 'date-fns';
 
-  import { Axis, Chart, Circle, Highlight, Points, Svg, Tooltip } from 'layerchart';
+  import { Highlight, ScatterChart, Tooltip } from 'layerchart';
   import { formatDate, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -20,7 +20,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart
+    <ScatterChart
       {data}
       x={(d) => getWeek(d.date)}
       xScale={scaleBand()}
@@ -28,43 +28,29 @@
       yScale={scaleBand()}
       yDomain={range(7)}
       r={(d) => d.value}
-      padding={{ left: 48, bottom: 36 }}
+      rRange={[0, 12]}
+      padding={{ left: 48, bottom: 16 }}
       tooltip={{ mode: 'band' }}
-      let:xScale
-      let:yScale
+      props={{
+        xAxis: { format: (d) => 'Week ' + d },
+        yAxis: { format: (d) => daysOfWeek[d] },
+        rule: { x: true, y: false },
+        grid: { x: false, y: true, bandAlign: 'between' },
+      }}
     >
-      {@const minBandwidth = Math.min(xScale.bandwidth(), yScale.bandwidth())}
-      {@const maxValue = max(data, (d) => d.value) ?? 0}
-      {@const rScale = scaleLinear()
-        .domain([0, maxValue])
-        .range([0, minBandwidth / 2 - 5])}
-      <Svg>
-        <Axis
-          placement="left"
-          format={(d) => daysOfWeek[d]}
-          grid={{ style: 'stroke-dasharray: 2' }}
-          rule
-        />
-        <Axis placement="bottom" format={(d) => 'Week ' + d} />
-        <Points let:points>
-          {#each points as point, index}
-            <Circle
-              cx={point.x}
-              cy={point.y}
-              r={rScale(point.data.value)}
-              class="fill-primary/10 stroke-primary"
-            />
-          {/each}
-        </Points>
+      <svelte:fragment slot="highlight">
         <Highlight area axis="x" />
         <Highlight area axis="y" />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{formatDate(data.date, PeriodType.Day)}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="duration" value={data.value} valueAlign="right" />
-        </Tooltip.List>
-      </Tooltip.Root>
-    </Chart>
+      </svelte:fragment>
+
+      <svelte:fragment slot="tooltip">
+        <Tooltip.Root let:data>
+          <Tooltip.Header>{formatDate(data.date, PeriodType.Day)}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} valueAlign="right" />
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
+    </ScatterChart>
   </div>
 </Preview>
