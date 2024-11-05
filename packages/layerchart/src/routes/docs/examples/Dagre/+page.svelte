@@ -6,7 +6,7 @@
   import { cls } from '@layerstack/tailwind';
 
   import { Chart, Dagre, Group, Rect, Spline, Svg, Text, Tooltip } from 'layerchart';
-  import { Field, Switch, Toggle } from 'svelte-ux';
+  import { Field, MenuField, Switch, Toggle } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import DagreControls from './DagreControls.svelte';
@@ -14,7 +14,21 @@
 
   export let data;
 
+  let selectedGraphValue: keyof typeof data = 'simple';
+  $: selectedGraph = data[selectedGraphValue];
+
   let settings = {
+    playground: {
+      ranker: 'network-simplex',
+      direction: 'left-right',
+      align: 'up-left',
+      nodeSeparation: 50,
+      rankSeparation: 50,
+      edgeSeparation: 10,
+      edgeLabelPosition: 'center',
+      edgeLabelOffset: 10,
+      curve: curveBasis,
+    },
     simple: {
       ranker: 'network-simplex',
       direction: 'left-right',
@@ -54,8 +68,103 @@
 <h1>Examples</h1>
 
 <Toggle let:on={showSettings} let:toggle>
+  <div class="grid grid-cols-[1fr,256px,auto] gap-2 items-end">
+    <h2>Playground</h2>
+
+    <MenuField
+      label="Graph"
+      options={[
+        { label: 'Simple', value: 'simple' },
+        { label: 'Medium', value: 'medium' },
+        { label: 'Large', value: 'large' },
+        { label: 'Les Misérables', value: 'miserables' },
+        { label: 'Generated (simple)', value: 'simpleGenerated' },
+        { label: 'Generated (complex)', value: 'complexGenerated' },
+      ]}
+      bind:value={selectedGraphValue}
+      dense
+      stepper
+    />
+
+    <Field label="Settings" labelPlacement="left" class="mb-1" let:id>
+      <Switch checked={showSettings} on:change={toggle} {id} size="md" />
+    </Field>
+  </div>
+
+  <Preview data={selectedGraph}>
+    <div class="flex gap-2">
+      <div class="flex-1 h-[700px] p-4 border rounded overflow-hidden">
+        <Chart
+          data={selectedGraph}
+          transform={{
+            mode: 'canvas',
+            initialScrollMode: 'scale',
+            tweened: { duration: 800, easing: cubicOut },
+          }}
+        >
+          <TransformControls />
+
+          <Svg>
+            <Dagre
+              data={selectedGraph}
+              edges={(d) => d.links}
+              {...settings.playground}
+              let:nodes
+              let:edges
+            >
+              <g class="edges">
+                {#each edges as edge, i (edge.v + '-' + edge.w)}
+                  <Spline
+                    data={edge.points}
+                    x="x"
+                    y="y"
+                    class="stroke-surface-content/30"
+                    tweened
+                    curve={settings.playground?.curve}
+                    markerEnd="arrow"
+                  />
+                {/each}
+              </g>
+
+              <g class="nodes">
+                {#each nodes as node (node.label)}
+                  <Group x={node.x - node.width / 2} y={node.y - node.height / 2} tweened>
+                    <Rect
+                      width={node.width}
+                      height={node.height}
+                      class="fill-surface-200 stroke-2 stroke-primary/50"
+                      rx={10}
+                    />
+
+                    <Text
+                      value={node.label}
+                      x={node.width / 2}
+                      y={node.height / 2}
+                      dy={-2}
+                      textAnchor="middle"
+                      verticalAnchor="middle"
+                      class={cls('text-xs pointer-events-none')}
+                    />
+                  </Group>
+                {/each}
+              </g>
+            </Dagre>
+          </Svg>
+        </Chart>
+      </div>
+
+      {#if showSettings}
+        <div transition:slide={{ axis: 'x' }}>
+          <DagreControls bind:settings={settings.playground} />
+        </div>
+      {/if}
+    </div>
+  </Preview>
+</Toggle>
+
+<Toggle let:on={showSettings} let:toggle>
   <div class="grid grid-cols-[1fr,auto] gap-2 items-end">
-    <h2>Simple</h2>
+    <h2>Basic</h2>
 
     <Field label="Settings" labelPlacement="left" class="mb-1" let:id>
       <Switch checked={showSettings} on:change={toggle} {id} size="md" />
@@ -72,7 +181,6 @@
             initialScrollMode: 'scale',
             tweened: { duration: 800, easing: cubicOut },
           }}
-          let:tooltip
         >
           <TransformControls />
 
@@ -100,34 +208,11 @@
 
               <g class="nodes">
                 {#each nodes as node (node.label)}
-                  <Group
-                    x={node.x - node.width / 2}
-                    y={node.y - node.height / 2}
-                    tweened
-                    class="group"
-                    on:click={() => {
-                      // @ts-expect-error
-                      selectedNode = node;
-                    }}
-                    on:pointermove={(e) => {
-                      // highlightType = node.id;
-                      tooltip.show(e, node);
-                    }}
-                    on:pointerleave={() => {
-                      // highlightType = null;
-                      tooltip.hide();
-                    }}
-                  >
+                  <Group x={node.x - node.width / 2} y={node.y - node.height / 2} tweened>
                     <Rect
                       width={node.width}
                       height={node.height}
-                      class={cls(
-                        'fill-surface-200 stroke-2 stroke-primary/50 group-hover:fill-primary/10 group-hover:cursor-pointer'
-                        // highlightType &&
-                        //   (highlightType === node.id
-                        //     ? 'stroke-secondary/50 group-hover:fill-secondary/10'
-                        //     : 'opacity-30')
-                      )}
+                      class="fill-surface-200 stroke-2 stroke-primary/50"
                       rx={10}
                     />
 
