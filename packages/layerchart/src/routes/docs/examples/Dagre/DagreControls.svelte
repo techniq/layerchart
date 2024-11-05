@@ -5,6 +5,7 @@
   import { cls } from '@layerstack/tailwind';
 
   import type Dagre from '$lib/components/Dagre.svelte';
+  import type Spline from '$lib/components/Spline.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
   type DagreProps = ComponentProps<Dagre>;
@@ -19,6 +20,7 @@
     edgeLabelPosition: 'center' as DagreProps['edgeLabelPosition'],
     edgeLabelOffset: 10 as DagreProps['edgeLabelOffset'],
     curve: curveLinear as ComponentProps<CurveMenuField>['value'],
+    arrow: 'arrow' as ComponentProps<Spline>['marker'],
   };
 </script>
 
@@ -131,4 +133,19 @@
   />
 
   <CurveMenuField label="Curve style" bind:value={settings.curve} dense />
+  <MenuField
+    label="Arrow / Marker"
+    options={[
+      { label: 'arrow', value: 'arrow' },
+      { label: 'triangle', value: 'triangle' },
+      { label: 'circle', value: 'circle' },
+      { label: 'circle-stroke', value: 'circle-stroke' },
+      { label: 'dot', value: 'dot' },
+      { label: 'line', value: 'line' },
+    ]}
+    bind:value={settings.arrow}
+    menuIcon=""
+    stepper
+    dense
+  />
 </div>
