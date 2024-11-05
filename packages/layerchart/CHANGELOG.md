@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.58.2
+
+### Patch Changes
+
+- fix(Spline): Improve initial `tweened` transition ([`ddddb7e`](https://github.com/techniq/layerchart/commit/ddddb7e09ab6e66cdcd5f2fd81ba04fc9a1c5c4e))
+
 ## 0.58.1
 
 ### Patch Changes
