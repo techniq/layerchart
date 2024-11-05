@@ -28,6 +28,7 @@
       edgeLabelPosition: 'center',
       edgeLabelOffset: 10,
       curve: curveBasis,
+      arrow: 'arrow',
     },
     simple: {
       ranker: 'network-simplex',
@@ -39,6 +40,7 @@
       edgeLabelPosition: 'center',
       edgeLabelOffset: 10,
       curve: curveBasis,
+      arrow: 'arrow',
     },
     tcpState: {
       ranker: 'network-simplex',
@@ -50,6 +52,7 @@
       edgeLabelPosition: 'center',
       edgeLabelOffset: 10,
       curve: curveLinear,
+      arrow: 'triangle',
     },
     cluster: {
       ranker: 'network-simplex',
@@ -61,6 +64,7 @@
       edgeLabelPosition: 'center',
       edgeLabelOffset: 10,
       curve: curveLinear,
+      arrow: 'arrow',
     },
   } satisfies Record<string, ComponentProps<DagreControls>['settings']>;
 </script>
@@ -68,7 +72,7 @@
 <h1>Examples</h1>
 
 <Toggle let:on={showSettings} let:toggle>
-  <div class="grid grid-cols-[1fr,256px,auto] gap-2 items-end">
+  <div class="grid grid-cols-[1fr,256px,auto] gap-2 items-end mb-1">
     <h2>Playground</h2>
 
     <MenuField
@@ -82,11 +86,12 @@
         { label: 'Generated (complex)', value: 'complexGenerated' },
       ]}
       bind:value={selectedGraphValue}
+      menuIcon=""
       dense
       stepper
     />
 
-    <Field label="Settings" labelPlacement="left" class="mb-1" let:id>
+    <Field label="Settings" labelPlacement="inset" let:id dense>
       <Switch checked={showSettings} on:change={toggle} {id} size="md" />
     </Field>
   </div>
@@ -118,10 +123,10 @@
                     data={edge.points}
                     x="x"
                     y="y"
-                    class="stroke-surface-content/30"
+                    class="stroke-surface-content opacity-30"
                     tweened
-                    curve={settings.playground?.curve}
-                    markerEnd="arrow"
+                    curve={settings.playground.curve}
+                    markerEnd={settings.playground.arrow}
                   />
                 {/each}
               </g>
@@ -198,10 +203,10 @@
                     data={edge.points}
                     x="x"
                     y="y"
-                    class="stroke-surface-content/30"
+                    class="stroke-surface-content opacity-30"
                     tweened
-                    curve={settings.simple?.curve}
-                    markerEnd="arrow"
+                    curve={settings.simple.curve}
+                    markerEnd={settings.simple.arrow}
                   />
                 {/each}
               </g>
@@ -282,10 +287,10 @@
                     data={edge.points}
                     x="x"
                     y="y"
-                    class="stroke-surface-content/30"
+                    class="stroke-surface-content opacity-30"
                     tweened
                     curve={settings.tcpState?.curve}
-                    markerEnd="triangle"
+                    markerEnd={settings.tcpState.arrow}
                   />
 
                   <!-- Label background -->
@@ -387,10 +392,10 @@
                     data={edge.points}
                     x="x"
                     y="y"
-                    class="stroke-surface-content/30"
+                    class="stroke-surface-content opacity-30"
                     tweened
                     curve={settings.cluster?.curve}
-                    markerEnd="arrow"
+                    markerEnd={settings.cluster.arrow}
                   />
                 {/each}
               </g>
