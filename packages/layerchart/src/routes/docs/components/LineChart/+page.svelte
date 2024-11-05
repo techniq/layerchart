@@ -88,7 +88,7 @@
 
 <h2>Series</h2>
 
-<Preview data={dateSeriesData}>
+<Preview data={multiSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <LineChart
       data={multiSeriesData}
@@ -431,7 +431,7 @@
   </div>
 </Preview>
 
-<h2>Dynamic data</h2>
+<h2>Dynamic data (move over chart)</h2>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <Preview data={dynamicData}>
@@ -514,7 +514,7 @@
 
 <h2>Legend</h2>
 
-<Preview data={dateSeriesData}>
+<Preview data={multiSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <LineChart
       data={multiSeriesData}
