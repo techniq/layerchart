@@ -90,10 +90,17 @@
   $: xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
   $: yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
 
+  /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
+  function defaultPathData() {
+    const [xRangeMin, xRangeMax] = $xScale.range();
+    const yRangeZero = $yScale(0);
+    return `M${xRangeMin},${yRangeZero} L${xRangeMax},${yRangeZero}`;
+  }
+
   let d: string | null = '';
   // @ts-expect-error
   $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
-  $: tweened_d = motionStore('', { tweened: tweenedOptions });
+  $: tweened_d = motionStore(defaultPathData(), { tweened: tweenedOptions });
   $: {
     const path = $radial
       ? lineRadial()
