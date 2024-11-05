@@ -2,7 +2,7 @@
   import type { ComponentProps } from 'svelte';
 
   import { Axis, Chart, Points, Spline, Svg, Text } from 'layerchart';
-  import { Field, RangeField, Switch, Toggle } from 'svelte-ux';
+  import { Field, RangeField, Switch, Toggle, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
@@ -12,8 +12,7 @@
   let pointCount = 100;
   let showPoints = false;
   let show = true;
-  let draw = true;
-  let tweened = false;
+  let motion: 'draw' | 'tweened' | 'none' = 'tweened';
 
   let pathGenerator = (x: number) => x;
   let curve: ComponentProps<CurveMenuField>['value'] = undefined;
@@ -42,15 +41,16 @@
     </Field>
   </div>
 
-  <div class="grid grid-cols-[100px,100px,100px,1fr] gap-2">
+  <div class="grid grid-cols-[100px,auto,1fr] gap-2">
     <Field label="Show" let:id>
       <Switch bind:checked={show} {id} size="md" />
     </Field>
-    <Field label="Draw" let:id>
-      <Switch bind:checked={draw} {id} size="md" />
-    </Field>
-    <Field label="Tweened" let:id>
-      <Switch bind:checked={tweened} {id} size="md" />
+    <Field label="Motion" classes={{ input: 'mt-1 mb-[6px]' }}>
+      <ToggleGroup bind:value={motion} variant="outline" size="sm">
+        <ToggleOption value="tweened">tweened</ToggleOption>
+        <ToggleOption value="draw">draw</ToggleOption>
+        <ToggleOption value="none">none</ToggleOption>
+      </ToggleGroup>
     </Field>
   </div>
 </div>
@@ -62,9 +62,14 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         {#if show}
-          <Spline {curve} {tweened} {draw} class="stroke-primary stroke-2" />
+          <Spline
+            {curve}
+            tweened={motion === 'tweened'}
+            draw={motion === 'draw'}
+            class="stroke-primary stroke-2"
+          />
           {#if showPoints}
-            <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
+            <Points tweened={motion === 'tweened'} r={3} class="fill-surface-100 stroke-primary" />
           {/if}
         {/if}
       </Svg>
