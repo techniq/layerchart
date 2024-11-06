@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.58.4
+
+### Patch Changes
+
+- fix(Area): Improve initial tweened transition (matching Spline) ([`13c1ce5`](https://github.com/techniq/layerchart/commit/13c1ce5208356233c5b3ca2fb971fe4feefc8e5f))
+
 ## 0.58.3
 
 ### Patch Changes
