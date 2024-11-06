@@ -21,7 +21,15 @@
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
 
-  const { data: contextData, xScale, yScale, x: contextX, y: contextY, radial } = chartContext();
+  const {
+    data: contextData,
+    xScale,
+    yScale,
+    x: contextX,
+    y: contextY,
+    yRange,
+    radial,
+  } = chartContext();
 
   /** Override data instead of using context */
   export let data: any = undefined;
@@ -92,9 +100,19 @@
 
   /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
   function defaultPathData() {
-    const [xRangeMin, xRangeMax] = $xScale.range();
-    const yRangeZero = $yScale(0);
-    return `M${xRangeMin},${yRangeZero} L${xRangeMax},${yRangeZero}`;
+    const path = $radial
+      ? lineRadial()
+          .angle((d) => $xScale(xAccessor(d)))
+          .radius((d) => Math.min($yScale(0), $yRange[0]))
+      : d3Line()
+          .x((d) => $xScale(xAccessor(d)) + xOffset)
+          .y((d) => Math.min($yScale(0), $yRange[0]));
+
+    path.defined(defined ?? ((d) => xAccessor(d) != null && yAccessor(d) != null));
+
+    if (curve) path.curve(curve);
+
+    return path(data ?? $contextData);
   }
 
   let d: string | null = '';
