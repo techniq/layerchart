@@ -59,10 +59,29 @@
   $: xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
   $: yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
 
+  /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
+  function defaultPathData() {
+    const path = $radial
+      ? areaRadial()
+          .angle((d) => $xScale(xAccessor(d)))
+          .innerRadius((d) => Math.min($yScale(0), $yRange[0]))
+          .outerRadius((d) => Math.min($yScale(0), $yRange[0]))
+      : d3Area()
+          .x((d) => $xScale(xAccessor(d)) + xOffset)
+          .y0((d) => Math.min($yScale(0), $yRange[0]))
+          .y1((d) => Math.min($yScale(0), $yRange[0]));
+
+    path.defined(defined ?? ((d) => xAccessor(d) != null && y1Accessor(d) != null));
+
+    if (curve) path.curve(curve);
+
+    return path(data ?? $contextData);
+  }
+
   $: tweenedOptions = tweened
     ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
     : false;
-  $: tweened_d = motionStore('', { tweened: tweenedOptions });
+  $: tweened_d = motionStore(defaultPathData(), { tweened: tweenedOptions });
   $: {
     const path = $radial
       ? areaRadial()

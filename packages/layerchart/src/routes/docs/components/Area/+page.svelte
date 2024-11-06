@@ -8,9 +8,14 @@
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
+  let pointCount = 10;
+  let showPoints = false;
+  let showLine = true;
+  let show = true;
+  let tweened = true;
+
   let pathGenerator = (x: number) => x;
   let curve: ComponentProps<CurveMenuField>['value'] = undefined;
-  let pointCount = 10;
 
   $: data = Array.from({ length: pointCount }).map((_, i) => {
     return {
@@ -18,28 +23,28 @@
       y: pathGenerator?.(i / pointCount) ?? i,
     };
   });
-
-  let showPoints = false;
-  let showLine = true;
-  let tweened = true;
 </script>
 
 <h1>Playground</h1>
 
 <div class="grid gap-2 mb-2">
-  <div class="grid grid-cols-[1fr,1fr,1fr,auto] gap-2">
+  <div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2">
     <PathDataMenuField bind:value={pathGenerator} />
     <CurveMenuField bind:value={curve} />
     <RangeField label="Points" bind:value={pointCount} min={2} />
     <Field label="Show points" let:id>
       <Switch bind:checked={showPoints} {id} size="md" />
     </Field>
-  </div>
-
-  <div class="grid grid-cols-[100px,100px,1fr] gap-2">
-    <Field label="Line" let:id>
+    <Field label="Show Line" let:id>
       <Switch bind:checked={showLine} {id} size="md" />
     </Field>
+  </div>
+
+  <div class="grid grid-cols-[100px,auto,1fr] gap-2">
+    <Field label="Show" let:id>
+      <Switch bind:checked={show} {id} size="md" />
+    </Field>
+
     <Field label="Tweened" let:id>
       <Switch bind:checked={tweened} {id} size="md" />
     </Field>
@@ -52,14 +57,16 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-        <Area
-          {curve}
-          line={showLine && { class: 'stroke-primary stroke-2' }}
-          {tweened}
-          class="fill-primary/10"
-        />
-        {#if showPoints}
-          <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
+        {#if show}
+          <Area
+            {curve}
+            line={showLine && { class: 'stroke-primary stroke-2' }}
+            {tweened}
+            class="fill-primary/10"
+          />
+          {#if showPoints}
+            <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
+          {/if}
         {/if}
       </Svg>
     </Chart>
