@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.58.3
+
+### Patch Changes
+
+- fix(Spline): Refine default path data to handle `0` out of visible range and improve custom curve tweening ([`0b06ee0`](https://github.com/techniq/layerchart/commit/0b06ee0dc07755c2424df4cf0e97d242a1b2f155))
+
 ## 0.58.2
 
 ### Patch Changes
