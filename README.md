@@ -53,6 +53,16 @@ pnpm dev
 pnpm changeset
 ```
 
+## Sponsors
+
+This project is supported by the following beautiful people/organizations:
+
+<p align="center">
+  <a href="https://github.com/sponsors/techniq">
+    <img src='https://github.com/techniq/sponsorkit/blob/main/sponsors.svg?raw=true' alt="Logos from Sponsors" />
+  </a>
+</p>
+
 ## Community
 
 Join the Discord server to ask questions, find collaborators, or just say hi!
