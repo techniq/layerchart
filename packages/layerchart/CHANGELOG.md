@@ -1,5 +1,15 @@
 # LayerChart
 
+## 0.59.0
+
+### Minor Changes
+
+- feat(Bar): Add `none` rounded option ([#280](https://github.com/techniq/layerchart/pull/280))
+
+- feat(Bar): Support `rounded="edge"` for value and orientation aware single edge rounding ([#280](https://github.com/techniq/layerchart/pull/280))
+
+- feat(BarChart): Use new `rounded="edge"` for better default rounding, especially with `seriesLayout="stack"` ([#280](https://github.com/techniq/layerchart/pull/280))
+
 ## 0.58.4
 
 ### Patch Changes
