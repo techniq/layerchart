@@ -151,7 +151,7 @@
 
   function getBarsProps(s: (typeof series)[number], i: number) {
     const valueAccesor = stackSeries
-      ? (d) => d.stackData[i]
+      ? (d: any) => d.stackData[i]
       : (s.value ?? (s.data ? undefined : s.key));
     const barsProps: ComponentProps<Bars> = {
       data: s.data,
