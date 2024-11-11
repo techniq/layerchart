@@ -543,7 +543,12 @@
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', value: (d) => -d.apples, color: 'hsl(var(--color-danger))' },
+        {
+          key: 'apples',
+          value: (d) => -d.apples,
+          color: 'hsl(var(--color-danger))',
+          props: { rounded: 'bottom' },
+        },
         {
           key: 'bananas',
           color: 'hsl(var(--color-warning))',
