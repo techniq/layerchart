@@ -150,21 +150,17 @@
   }
 
   function getBarsProps(s: (typeof series)[number], i: number) {
+    const valueAccesor = stackSeries
+      ? (d) => d.stackData[i]
+      : (s.value ?? (s.data ? undefined : s.key));
     const barsProps: ComponentProps<Bars> = {
       data: s.data,
-      x: !isVertical
-        ? stackSeries
-          ? (d) => d.stackData[i]
-          : (s.value ?? (s.data ? undefined : s.key))
-        : undefined,
-      y: isVertical
-        ? stackSeries
-          ? (d) => d.stackData[i]
-          : (s.value ?? (s.data ? undefined : s.key))
-        : undefined,
+      x: !isVertical ? valueAccesor : undefined,
+      y: isVertical ? valueAccesor : undefined,
       x1: isVertical && groupSeries ? (d) => s.value ?? s.key : undefined,
       y1: !isVertical && groupSeries ? (d) => s.value ?? s.key : undefined,
-      radius: 4,
+      rounded: 'edge',
+      radius: seriesLayout.startsWith('stack') && i !== series.length - 1 ? 0 : 4,
       strokeWidth: 1,
       fill: s.color,
       ...props.bars,
