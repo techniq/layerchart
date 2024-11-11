@@ -43,18 +43,20 @@
 
   export let spring: ComponentProps<Rect>['spring'] = undefined;
   export let tweened: ComponentProps<Rect>['tweened'] = undefined;
+
+  $: _data = chartDataArray(data ?? $contextData);
 </script>
 
 <g class="Bars">
   <slot>
-    {#each chartDataArray(data ?? $contextData) as item}
+    {#each _data as d, i}
       <Bar
-        bar={item}
+        bar={d}
         {x}
         {y}
         {x1}
         {y1}
-        fill={fill ?? ($config.c ? $cGet(item) : null)}
+        fill={fill ?? ($config.c ? $cGet(d) : null)}
         {stroke}
         {strokeWidth}
         {radius}

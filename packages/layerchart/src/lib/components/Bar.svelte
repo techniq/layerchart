@@ -5,10 +5,12 @@
   import Rect from './Rect.svelte';
   import Spline from './Spline.svelte';
 
-  import { createDimensionGetter } from '$lib/utils/rect.js';
-  import type { Accessor } from '../utils/common.js';
+  import { createDimensionGetter } from '../utils/rect.js';
+  import { isScaleBand } from '../utils/scales.js';
+  import { accessor, type Accessor } from '../utils/common.js';
+  import { greatestAbs } from '@layerstack/utils/array';
 
-  const { x: xContext, y: yContext } = chartContext();
+  const { x: xContext, y: yContext, xScale } = chartContext();
 
   export let bar: Object;
 
@@ -40,6 +42,8 @@
   /** Control which corners are rounded with radius.  Uses <path> instead of <rect> when not set to `all` */
   export let rounded:
     | 'all'
+    | 'none'
+    | 'edge'
     | 'top'
     | 'bottom'
     | 'left'
@@ -65,10 +69,27 @@
   });
   $: dimensions = $getDimensions(bar) ?? { x: 0, y: 0, width: 0, height: 0 };
 
-  $: topLeft = ['all', 'top', 'left', 'top-left'].includes(rounded);
-  $: topRight = ['all', 'top', 'right', 'top-right'].includes(rounded);
-  $: bottomLeft = ['all', 'bottom', 'left', 'bottom-left'].includes(rounded);
-  $: bottomRight = ['all', 'bottom', 'right', 'bottom-right'].includes(rounded);
+  $: isVertical = isScaleBand($xScale);
+  $: valueAccessor = accessor(isVertical ? y : x);
+  $: value = valueAccessor(bar);
+  $: resolvedValue = Array.isArray(value) ? greatestAbs(value) : value;
+
+  // Resolved `rounded="edge"` based on orientation and value
+  $: _rounded =
+    rounded === 'edge'
+      ? isVertical
+        ? resolvedValue >= 0
+          ? 'top'
+          : 'bottom'
+        : resolvedValue >= 0
+          ? 'right'
+          : 'left'
+      : rounded;
+
+  $: topLeft = ['all', 'top', 'left', 'top-left'].includes(_rounded);
+  $: topRight = ['all', 'top', 'right', 'top-right'].includes(_rounded);
+  $: bottomLeft = ['all', 'bottom', 'left', 'bottom-left'].includes(_rounded);
+  $: bottomRight = ['all', 'bottom', 'right', 'bottom-right'].includes(_rounded);
 
   $: width = dimensions.width;
   $: height = dimensions.height;
@@ -87,7 +108,7 @@
     .join('');
 </script>
 
-{#if rounded === 'all'}
+{#if _rounded === 'all' || radius === 0}
   <Rect
     {fill}
     {spring}

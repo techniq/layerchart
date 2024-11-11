@@ -229,13 +229,11 @@
         {
           key: 'value',
           color: 'hsl(var(--color-primary))',
-          props: { rounded: 'top' },
         },
         {
           key: 'baseline',
           value: (d) => -d.baseline,
           color: 'hsl(var(--color-secondary))',
-          props: { rounded: 'bottom' },
         },
       ]}
     />
@@ -261,12 +259,10 @@
           key: 'male',
           value: (d) => -d.male,
           color: 'hsl(var(--color-primary))',
-          props: { rounded: 'left' },
         },
         {
           key: 'female',
           color: 'hsl(var(--color-secondary))',
-          props: { rounded: 'right' },
         },
       ]}
     >
@@ -316,13 +312,11 @@
           key: 'male',
           value: (d) => -d.male / totalPopulation,
           color: 'hsl(var(--color-primary))',
-          props: { rounded: 'left' },
         },
         {
           key: 'female',
           value: (d) => d.female / totalPopulation,
           color: 'hsl(var(--color-secondary))',
-          props: { rounded: 'right' },
         },
       ]}
     >
@@ -549,7 +543,12 @@
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', value: (d) => -d.apples, color: 'hsl(var(--color-danger))' },
+        {
+          key: 'apples',
+          value: (d) => -d.apples,
+          color: 'hsl(var(--color-danger))',
+          props: { rounded: 'bottom' },
+        },
         {
           key: 'bananas',
           color: 'hsl(var(--color-warning))',
@@ -797,7 +796,7 @@
       axis="x"
       bandPadding={0.1}
       props={{
-        bars: { radius: 4, strokeWidth: 0 },
+        bars: { radius: 4, strokeWidth: 0, rounded: 'all' },
         highlight: { bar: { radius: 4, class: 'stroke-current stroke-2 fill-none' } },
         xAxis: { ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks() },
         rule: { y: false },

@@ -126,7 +126,7 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Bars strokeWidth={1} class="fill-primary" />
       </Svg>
     </Chart>
   </div>
@@ -179,7 +179,7 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Bars strokeWidth={1} class="fill-primary" />
         <Highlight area />
       </Svg>
       <Tooltip.Root let:data>
@@ -215,11 +215,7 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Bars
-          radius={4}
-          strokeWidth={1}
-          class="fill-primary group-hover:fill-gray-300 transition-colors"
-        />
+        <Bars strokeWidth={1} class="fill-primary group-hover:fill-gray-300 transition-colors" />
         <Highlight area bar={{ class: 'fill-primary', strokeWidth: 1, radius: 4 }} />
       </Svg>
       <Tooltip.Root let:data>
@@ -255,15 +251,11 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Bars
-          radius={4}
-          strokeWidth={1}
-          class="fill-primary group-hover:fill-gray-300 transition-colors"
-        />
+        <Bars strokeWidth={1} class="fill-primary group-hover:fill-gray-300 transition-colors" />
         <Highlight area>
           <svelte:fragment slot="area" let:area>
             <RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} spring>
-              <Bars radius={4} strokeWidth={1} class="fill-primary" />
+              <Bars strokeWidth={1} class="fill-primary" />
             </RectClipPath>
           </svelte:fragment>
         </Highlight>
@@ -299,7 +291,7 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Bars strokeWidth={1} class="fill-primary" />
       </Svg>
     </Chart>
   </div>
@@ -324,7 +316,7 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Bars strokeWidth={1} class="fill-primary" />
       </Svg>
     </Chart>
   </div>
@@ -352,7 +344,7 @@
           rule
         />
         <Rule y={0} />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Bars strokeWidth={1} class="fill-primary" />
         <Labels format="integer" />
       </Svg>
     </Chart>
@@ -380,7 +372,7 @@
           rule
         />
         <Rule y={0} />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Bars strokeWidth={1} class="fill-primary" />
         <Labels placement="inside" format="integer" />
       </Svg>
     </Chart>
@@ -408,7 +400,7 @@
           ticks={4}
           rule
         />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Bars strokeWidth={1} class="fill-primary" />
       </Svg>
     </Chart>
   </div>
@@ -435,7 +427,7 @@
           ticks={(scale) => scaleTime(scale.domain(), scale.range()).ticks(4)}
           rule
         />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Bars strokeWidth={1} class="fill-primary" />
       </Svg>
     </Chart>
   </div>
@@ -462,7 +454,7 @@
           rule
         />
         <LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse" let:url>
-          <Bars radius={4} strokeWidth={1} fill={url} class="stroke-blue-900" />
+          <Bars strokeWidth={1} fill={url} class="stroke-blue-900" />
         </LinearGradient>
       </Svg>
     </Chart>
@@ -493,7 +485,6 @@
           {#each data as bar, i}
             <Bar
               {bar}
-              radius={4}
               strokeWidth={1}
               class={i === data.length - 4 ? 'fill-primary' : 'fill-surface-content'}
             />
@@ -524,7 +515,7 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Bars strokeWidth={1} class="fill-primary" />
         <Pattern id="highlight-pattern" width={8} height={8}>
           <rect width={8} height={8} class="fill-secondary/10" />
           <line x1={8} y2={8} class="stroke-secondary/30" />
@@ -558,7 +549,7 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Bars strokeWidth={1} class="fill-primary" />
         <Highlight
           data={data[3]}
           lines={{ class: 'stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] ' }}
@@ -592,7 +583,7 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Bars strokeWidth={1} class="fill-primary" />
         <Rule y={avg} class="stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] " />
         <Text
           x={width}
@@ -622,7 +613,7 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Bars strokeWidth={1} class="fill-primary" />
         <Axis placement="left" grid={{ class: 'stroke-surface-100' }} rule />
         <Axis
           placement="bottom"
@@ -648,7 +639,7 @@
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Bars strokeWidth={1} class="fill-primary" />
         <Axis placement="left" grid={{ class: 'mix-blend-multiply' }} rule />
         <Axis
           placement="bottom"
@@ -681,8 +672,8 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Bars y="baseline" radius={4} strokeWidth={1} class="fill-surface-content/20" />
-        <Bars y="value" radius={4} strokeWidth={1} inset={8} class="fill-primary" />
+        <Bars y="baseline" strokeWidth={1} class="fill-surface-content/20" />
+        <Bars y="value" strokeWidth={1} inset={8} class="fill-primary" />
         <Highlight area />
       </Svg>
       <Tooltip.Root let:data>
@@ -714,14 +705,8 @@
       <Svg>
         <Axis placement="left" grid rule format={(d) => format(Math.abs(d), 'integer')} />
         <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
-        <Bars y="value" radius={4} rounded="top" strokeWidth={1} class="fill-primary" />
-        <Bars
-          y={(d) => -d.baseline}
-          radius={4}
-          rounded="bottom"
-          strokeWidth={1}
-          class="fill-secondary"
-        />
+        <Bars y="value" rounded="top" strokeWidth={1} class="fill-primary" />
+        <Bars y={(d) => -d.baseline} rounded="bottom" strokeWidth={1} class="fill-secondary" />
         <Rule y={0} />
         <Highlight area />
       </Svg>
@@ -773,7 +758,6 @@
                 y: { duration: 500, easing: cubicInOut },
                 height: { duration: 500, easing: cubicInOut },
               }}
-              radius={4}
               strokeWidth={1}
               class="fill-primary"
             />
@@ -821,7 +805,6 @@
                   y: { duration: 500, easing: cubicInOut, delay: i * 30 },
                   height: { duration: 500, easing: cubicInOut, delay: i * 30 },
                 }}
-                radius={4}
                 strokeWidth={1}
                 class="fill-primary"
               />
@@ -858,7 +841,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-        <Bars radius={4} strokeWidth={1} />
+        <Bars strokeWidth={1} />
         <Highlight area />
       </Svg>
 
@@ -911,7 +894,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-        <Bars radius={4} strokeWidth={1} />
+        <Bars strokeWidth={1} />
         <Highlight area />
       </Svg>
 
@@ -964,7 +947,7 @@
       <Svg>
         <Axis placement="left" grid rule format="percentRound" />
         <Axis placement="bottom" rule />
-        <Bars radius={4} strokeWidth={1} />
+        <Bars strokeWidth={1} />
         <Highlight area />
       </Svg>
 
@@ -1021,7 +1004,7 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-        <Bars radius={4} strokeWidth={1} />
+        <Bars strokeWidth={1} />
         <Highlight area />
       </Svg>
 
@@ -1097,7 +1080,6 @@
             <Bar
               {bar}
               fill={cScale?.(bar.fruit)}
-              radius={4}
               strokeWidth={1}
               tweened={{
                 x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
@@ -1183,7 +1165,6 @@
             <Bar
               {bar}
               fill={cScale?.(bar.fruit)}
-              radius={4}
               strokeWidth={1}
               tweened={{
                 x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
@@ -1245,7 +1226,7 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
+        <Bars strokeWidth={1} class="fill-primary" />
         <Highlight area />
       </Svg>
     </Chart>
