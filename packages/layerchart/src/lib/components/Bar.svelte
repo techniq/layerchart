@@ -42,6 +42,7 @@
   /** Control which corners are rounded with radius.  Uses <path> instead of <rect> when not set to `all` */
   export let rounded:
     | 'all'
+    | 'none'
     | 'edge'
     | 'top'
     | 'bottom'
