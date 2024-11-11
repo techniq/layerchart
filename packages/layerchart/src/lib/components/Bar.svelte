@@ -8,6 +8,7 @@
   import { createDimensionGetter } from '../utils/rect.js';
   import { isScaleBand } from '../utils/scales.js';
   import { accessor, type Accessor } from '../utils/common.js';
+  import { greatestAbs } from '@layerstack/utils/array';
 
   const { x: xContext, y: yContext, xScale } = chartContext();
 
@@ -70,15 +71,16 @@
   $: isVertical = isScaleBand($xScale);
   $: valueAccessor = accessor(isVertical ? y : x);
   $: value = valueAccessor(bar);
+  $: resolvedValue = Array.isArray(value) ? greatestAbs(value) : value;
 
   // Resolved `rounded="edge"` based on orientation and value
   $: _rounded =
     rounded === 'edge'
       ? isVertical
-        ? value >= 0
+        ? resolvedValue >= 0
           ? 'top'
           : 'bottom'
-        : value >= 0
+        : resolvedValue >= 0
           ? 'right'
           : 'left'
       : rounded;
