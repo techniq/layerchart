@@ -229,13 +229,11 @@
         {
           key: 'value',
           color: 'hsl(var(--color-primary))',
-          props: { rounded: 'top' },
         },
         {
           key: 'baseline',
           value: (d) => -d.baseline,
           color: 'hsl(var(--color-secondary))',
-          props: { rounded: 'bottom' },
         },
       ]}
     />
@@ -261,12 +259,10 @@
           key: 'male',
           value: (d) => -d.male,
           color: 'hsl(var(--color-primary))',
-          props: { rounded: 'left' },
         },
         {
           key: 'female',
           color: 'hsl(var(--color-secondary))',
-          props: { rounded: 'right' },
         },
       ]}
     >
@@ -316,13 +312,11 @@
           key: 'male',
           value: (d) => -d.male / totalPopulation,
           color: 'hsl(var(--color-primary))',
-          props: { rounded: 'left' },
         },
         {
           key: 'female',
           value: (d) => d.female / totalPopulation,
           color: 'hsl(var(--color-secondary))',
-          props: { rounded: 'right' },
         },
       ]}
     >
