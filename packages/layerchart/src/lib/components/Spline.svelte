@@ -20,6 +20,7 @@
   import { motionStore } from '$lib/stores/motionStore.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
+  import { flattenPathData } from '../utils/path.js';
 
   const {
     data: contextData,
@@ -29,6 +30,7 @@
     y: contextY,
     yRange,
     radial,
+    config,
   } = chartContext();
 
   /** Override data instead of using context */
@@ -100,19 +102,27 @@
 
   /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
   function defaultPathData() {
-    const path = $radial
-      ? lineRadial()
-          .angle((d) => $xScale(xAccessor(d)))
-          .radius((d) => Math.min($yScale(0), $yRange[0]))
-      : d3Line()
-          .x((d) => $xScale(xAccessor(d)) + xOffset)
-          .y((d) => Math.min($yScale(0), $yRange[0]));
+    if (pathData) {
+      // Flatten all `y` coordinates of pre-defined `pathData`
+      return flattenPathData(pathData, Math.min($yScale(0), $yRange[0]));
+    } else if ($config.x) {
+      // Only use default line if `x` accessor is defined (cartesian chart)
+      const path = $radial
+        ? lineRadial()
+            .angle((d) => $xScale(xAccessor(d)))
+            .radius((d) => Math.min($yScale(0), $yRange[0]))
+        : d3Line()
+            .x((d) => $xScale(xAccessor(d)) + xOffset)
+            .y((d) => Math.min($yScale(0), $yRange[0]));
 
-    path.defined(defined ?? ((d) => xAccessor(d) != null && yAccessor(d) != null));
+      path.defined(defined ?? ((d) => xAccessor(d) != null && yAccessor(d) != null));
 
-    if (curve) path.curve(curve);
+      if (curve) path.curve(curve);
 
-    return path(data ?? $contextData);
+      return path(data ?? $contextData);
+    } else {
+      return '';
+    }
   }
 
   let d: string | null = '';
