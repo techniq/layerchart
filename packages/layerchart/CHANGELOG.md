@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.59.1
+
+### Patch Changes
+
+- fix(Spline): Improve defaultPathData() by handling explicit `pathData` (ex. Bar) and non-cartesian (ex. graph/hierarchy) usage ([`7dcd042`](https://github.com/techniq/layerchart/commit/7dcd0421790b1d13822d8ef99cfa02fa0d5ebf72))
+
 ## 0.59.0
 
 ### Minor Changes
