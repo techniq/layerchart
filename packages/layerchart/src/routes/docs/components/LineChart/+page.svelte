@@ -10,7 +10,7 @@
     Tooltip,
   } from 'layerchart';
   import { scaleBand, scaleSequential } from 'd3-scale';
-  import { curveLinearClosed } from 'd3-shape';
+  import { curveCatmullRom, curveLinearClosed } from 'd3-shape';
   import { extent, flatGroup, ticks } from 'd3-array';
   import { PeriodType } from 'svelte-ux';
   import { format } from '@layerstack/utils';
@@ -82,6 +82,19 @@
       data={dateSeriesData}
       x="date"
       series={[{ key: 'value', color: 'hsl(var(--color-secondary))' }]}
+    />
+  </div>
+</Preview>
+
+<h2>Curve</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      props={{ spline: { curve: curveCatmullRom } }}
     />
   </div>
 </Preview>

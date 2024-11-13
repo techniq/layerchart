@@ -122,6 +122,19 @@
   </div>
 </Preview>
 
+<h2>Curve</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      props={{ area: { curve: curveCatmullRom } }}
+    />
+  </div>
+</Preview>
+
 <h2>Series</h2>
 
 <Preview data={multiSeriesData}>
