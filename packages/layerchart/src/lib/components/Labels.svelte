@@ -92,17 +92,19 @@
 <g class="Labels">
   <Points let:points>
     {#each points as point, i (key(point.data, i))}
-    {#each points as point}
-      <Text
-        class={cls(
-          'text-xs',
-          placement === 'inside'
-            ? 'fill-surface-300 stroke-surface-content'
-            : 'fill-surface-content stroke-surface-100'
-        )}
-        {...getTextProps(point)}
-        {...$$restProps}
-      />
+      {@const textProps = getTextProps(point)}
+      <slot data={point} {textProps}>
+        <Text
+          class={cls(
+            'text-xs',
+            placement === 'inside'
+              ? 'fill-surface-300 stroke-surface-content'
+              : 'fill-surface-content stroke-surface-100'
+          )}
+          {...textProps}
+          {...$$restProps}
+        />
+      </slot>
     {/each}
   </Points>
 </g>
