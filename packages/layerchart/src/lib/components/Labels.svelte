@@ -18,6 +18,9 @@
   export let offset = placement === 'center' ? 0 : 4;
   export let format: FormatType | undefined = undefined;
 
+  /** Define unique value for {#each} `(key)` expressions to improve transitions.  `index` position used by default */
+  export let key: (d: any, index: number) => any = (d, i) => i;
+
   $: getTextProps = (point: Point): ComponentProps<Text> => {
     // Used for positioning
     const pointValue = isScaleBand($yScale) ? point.xValue : point.yValue;
@@ -88,6 +91,7 @@
 
 <g class="Labels">
   <Points let:points>
+    {#each points as point, i (key(point.data, i))}
     {#each points as point}
       <Text
         class={cls(

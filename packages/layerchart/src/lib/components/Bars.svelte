@@ -41,6 +41,9 @@
   /** Inset the rect for amount of padding.  Useful with multiple bars (bullet, overlap, etc) */
   export let inset = 0;
 
+  /** Define unique value for {#each} `(key)` expressions to improve transitions.  `index` position used by default */
+  export let key: (d: any, index: number) => any = (d, i) => i;
+
   export let spring: ComponentProps<Rect>['spring'] = undefined;
   export let tweened: ComponentProps<Rect>['tweened'] = undefined;
 
@@ -49,7 +52,7 @@
 
 <g class="Bars">
   <slot>
-    {#each _data as d, i}
+    {#each _data as d, i (key(d, i))}
       <Bar
         bar={d}
         {x}
