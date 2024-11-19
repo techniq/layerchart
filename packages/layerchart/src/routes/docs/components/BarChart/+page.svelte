@@ -132,7 +132,7 @@
   <div class="h-[300px] p-4 border rounded">
     <BarChart data={dateSeriesData} x="date" y="value">
       <svelte:fragment slot="marks" let:series let:getBarsProps>
-        {#each series as s, i}
+        {#each series as s, i (s.key)}
           <LinearGradient
             class="from-blue-500 to-green-400"
             vertical

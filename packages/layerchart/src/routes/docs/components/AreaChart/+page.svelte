@@ -309,7 +309,7 @@
       seriesLayout="stack"
     >
       <svelte:fragment slot="marks" let:series let:getAreaProps>
-        {#each series as s, i}
+        {#each series as s, i (s.key)}
           <!-- Can also use basic 'transparent' for second stop for better browser compatibility -->
           <LinearGradient
             stops={[s.color, 'color-mix(in lch, ' + s.color + ' 10%, transparent)']}

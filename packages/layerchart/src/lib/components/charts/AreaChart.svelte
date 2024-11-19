@@ -195,7 +195,7 @@
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#each series as s, i}
+        {#each series as s, i (s.key)}
           <Area {...getAreaProps(s, i)} />
         {/each}
       </slot>
@@ -247,7 +247,7 @@
       {/if}
 
       <slot name="highlight" {...slotProps}>
-        {#each series as s, i}
+        {#each series as s, i (s.key)}
           <Highlight
             y={stackSeries ? (d) => d.stackData[i][1] : (s.value ?? s.key)}
             points={{ fill: s.color }}

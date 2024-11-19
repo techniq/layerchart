@@ -244,7 +244,7 @@
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#each series as s, i}
+        {#each series as s, i (s.key)}
           <Bars {...getBarsProps(s, i)} />
         {/each}
       </slot>

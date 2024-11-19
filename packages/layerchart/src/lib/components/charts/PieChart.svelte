@@ -164,7 +164,7 @@
           center={['left', 'right'].includes(placement) ? 'y' : undefined}
           {...props.group}
         >
-          {#each series as s, i}
+          {#each series as s, i (s.key)}
             {@const singleArc = s.data?.length === 1 || chartData.length === 1}
             {#if singleArc}
               {@const d = s.data?.[0] || chartData[0]}

@@ -142,7 +142,7 @@
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#each series as s, i}
+        {#each series as s, i (s.key)}
           <Spline {...getSplineProps(s, i)} />
         {/each}
       </slot>
@@ -192,7 +192,7 @@
       {/if}
 
       <slot name="highlight" {...slotProps}>
-        {#each series as s, i}
+        {#each series as s, i (s.key)}
           <Highlight
             data={s.data}
             y={s.value ?? s.key}

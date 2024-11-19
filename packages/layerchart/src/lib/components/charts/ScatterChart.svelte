@@ -119,7 +119,7 @@
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#each series as s, i}
+        {#each series as s, i (s.key)}
           <Points {...getPointsProps(s, i)} />
         {/each}
       </slot>
