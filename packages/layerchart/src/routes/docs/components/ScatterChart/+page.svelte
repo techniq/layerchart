@@ -181,6 +181,12 @@
       y="bill_length_mm"
       series={pengiunSeries.filter((s) => $selection.isSelected(s.key))}
       padding={{ left: 16, bottom: 48 }}
+      props={{
+        xAxis: { tweened: { duration: 200 } },
+        yAxis: { tweened: { duration: 200 } },
+        grid: { tweened: { duration: 200 } },
+        points: { tweened: { duration: 200 } },
+      }}
     >
       <svelte:fragment slot="legend">
         <Legend
