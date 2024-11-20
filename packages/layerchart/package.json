@@ -117,11 +117,13 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "svelte": "./dist/index.js"
+      "svelte": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./utils/*": {
       "types": "./dist/utils/*.d.ts",
-      "svelte": "./dist/utils/*.js"
+      "svelte": "./dist/utils/*.js",
+      "default": "./dist/utils/*.js"
     }
   },
   "files": [
