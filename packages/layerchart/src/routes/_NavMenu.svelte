@@ -30,7 +30,8 @@
       'Sparkline',
       'Threshold',
     ],
-    'Hierarchy & Graph': ['Pack', 'Partition', 'Sankey', 'Sunburst', 'Tree', 'Treemap'],
+    Hierarchy: ['Pack', 'Partition', 'Sunburst', 'Tree', 'Treemap'],
+    Graph: ['Dagre', 'Sankey'],
     Force: [
       'Beeswarm',
       'CollisionDetection',

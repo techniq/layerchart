@@ -23,4 +23,11 @@
     });
 </script>
 
-<MenuField label="Curve" {options} bind:value stepper classes={{ menuIcon: 'hidden' }} />
+<MenuField
+  label="Curve"
+  {options}
+  bind:value
+  stepper
+  classes={{ menuIcon: 'hidden' }}
+  {...$$restProps}
+/>

@@ -6,7 +6,8 @@ import type {
   SankeyNode,
   SankeyNodeMinimal,
 } from 'd3-sankey';
-import type { HierarchyLink, hierarchy as d3Hierarchy } from 'd3-hierarchy';
+import type { hierarchy as d3Hierarchy } from 'd3-hierarchy';
+import dagre from '@dagrejs/dagre';
 
 /**
  * Convert CSV rows in format: 'source,target,value' to SankeyGraph
@@ -85,4 +86,46 @@ export function nodesFromLinks<N extends SankeyExtraProperties, L extends Sankey
     }
   }
   return Array.from(nodesByName.values());
+}
+
+/**
+ * Get all upstream predecessors for dagre nodeId
+ */
+export function ancestors(
+  graph: dagre.graphlib.Graph,
+  nodeId: string,
+  maxDepth = Infinity,
+  currentDepth = 0
+): dagre.Node[] {
+  if (currentDepth === maxDepth) {
+    return [];
+  }
+
+  const predecessors = graph.predecessors(nodeId) ?? [];
+  return [
+    ...predecessors,
+    // @ts-expect-error: Types from dagre appear incorrect
+    ...predecessors.flatMap((pId) => ancestors(graph, pId, maxDepth, currentDepth + 1)),
+  ];
+}
+
+/**
+ * Get all downstream descendants for dagre nodeId
+ */
+export function descendants(
+  graph: dagre.graphlib.Graph,
+  nodeId: string,
+  maxDepth = Infinity,
+  currentDepth = 0
+): dagre.Node[] {
+  if (currentDepth === maxDepth) {
+    return [];
+  }
+
+  const predecessors = graph.successors(nodeId) ?? [];
+  return [
+    ...predecessors,
+    // @ts-expect-error: Types from dagre appear incorrect
+    ...predecessors.flatMap((pId) => descendants(graph, pId, maxDepth, currentDepth + 1)),
+  ];
 }

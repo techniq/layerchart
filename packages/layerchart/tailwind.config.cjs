@@ -43,5 +43,25 @@ module.exports = {
       }),
     },
   },
-  plugins: [require('@tailwindcss/typography'), svelteUx],
+  plugins: [
+    require('@tailwindcss/typography'),
+    svelteUx,
+    plugin(function ({ addComponents }) {
+      // Consider moving to tailwind plugin
+      addComponents({
+        '.grid-cols-xs': {
+          '@apply grid-cols-[repeat(auto-fill,minmax(200px,1fr))]': {},
+        },
+        '.grid-cols-sm': {
+          '@apply grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]': {},
+        },
+        '.grid-cols-md': {
+          '@apply grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(400px,1fr))]': {},
+        },
+        '.grid-cols-lg': {
+          '@apply grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(600px,1fr))]': {},
+        },
+      });
+    }),
+  ],
 };
