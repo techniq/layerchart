@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { scaleBand } from 'd3-scale';
-  import { Area, Axis, Bars, Chart, Highlight, Spline, Svg, Tooltip } from 'layerchart';
+  import { Area, BarChart, Spline, Tooltip } from 'layerchart';
   import { formatDate, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -23,38 +22,34 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart
+    <BarChart
       data={dateSeries}
       x="date"
-      xScale={scaleBand().padding(0.4)}
       y={['baseline', 'value']}
-      yDomain={[0, null]}
-      yNice={4}
-      padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'band' }}
+      props={{
+        bars: { y: 'baseline' },
+      }}
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <Bars y="baseline" radius={4} class="fill-primary" />
+      <svelte:fragment slot="aboveMarks">
         <Area y1="value" class="fill-secondary/20" line={{ class: 'stroke-secondary' }} />
-        <Highlight area />
-      </Svg>
+      </svelte:fragment>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>
-          {formatDate(data.date, PeriodType.Day)}
-        </Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="baseline" value={data.baseline} />
-          <Tooltip.Item label="value" value={data.value} />
-        </Tooltip.List>
-      </Tooltip.Root>
-    </Chart>
+      <svelte:fragment slot="tooltip">
+        <Tooltip.Root let:data>
+          <Tooltip.Header>
+            {formatDate(data.date, PeriodType.Day)}
+          </Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item
+              label="baseline"
+              value={data.baseline}
+              color="hsl(var(--color-primary))"
+            />
+            <Tooltip.Item label="value" value={data.value} color="hsl(var(--color-secondary))" />
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
+    </BarChart>
   </div>
 </Preview>
 
@@ -63,54 +58,51 @@
 <Preview {data}>
   <div class="h-[300px] grid grid-stack p-4 border rounded">
     <!-- First cahrt (bar), with different domain scale for volume -->
-    <Chart
+    <BarChart
       data={data.appleTicker}
       x="date"
-      xScale={scaleBand().padding(0.4)}
       y="volume"
       yNice={4}
-      padding={{ left: 16, bottom: 24 }}
-    >
-      <Svg>
-        <Bars radius={4} class="fill-surface-content/10" />
-      </Svg>
-    </Chart>
+      axis={false}
+      grid={false}
+      padding={{ left: 16, bottom: 16 }}
+      props={{
+        bars: { class: 'stroke-none fill-surface-content/10' },
+      }}
+    />
 
     <!-- Second chart (line), responsible for tooltip -->
-    <Chart
+    <BarChart
       data={data.appleTicker}
       x="date"
-      xScale={scaleBand().padding(0.4)}
       y={['open', 'close']}
       yNice={4}
-      padding={{ left: 16, bottom: 24 }}
+      yDomain={null}
+      padding={{ left: 16, bottom: 16 }}
       tooltip={{ mode: 'band' }}
+      props={{
+        xAxis: { ticks: 10, rule: true },
+      }}
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-          ticks={10}
-        />
+      <svelte:fragment slot="marks">
         <Spline y="open" class="stroke-primary" />
         <Spline y="close" class="stroke-secondary" />
-        <Highlight area />
-      </Svg>
+      </svelte:fragment>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>
-          {formatDate(data.date, PeriodType.Day)}
-        </Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="open" value={data.open} format="currency" />
-          <Tooltip.Item label="close" value={data.close} format="currency" />
-          <Tooltip.Item label="high" value={data.high} format="currency" />
-          <Tooltip.Item label="low" value={data.low} format="currency" />
-          <Tooltip.Item label="volume" value={data.volume} format="integer" />
-        </Tooltip.List>
-      </Tooltip.Root>
-    </Chart>
+      <svelte:fragment slot="tooltip">
+        <Tooltip.Root let:data>
+          <Tooltip.Header>
+            {formatDate(data.date, PeriodType.Day)}
+          </Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="open" value={data.open} format="currency" />
+            <Tooltip.Item label="close" value={data.close} format="currency" />
+            <Tooltip.Item label="high" value={data.high} format="currency" />
+            <Tooltip.Item label="low" value={data.low} format="currency" />
+            <Tooltip.Item label="volume" value={data.volume} format="integer" />
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
+    </BarChart>
   </div>
 </Preview>
