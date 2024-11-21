@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.59.3
+
+### Patch Changes
+
+- Update `@layerstack/*` packages and remove deep imports (ex. `@layerstack/utils/array`) ([`9621a4e`](https://github.com/techniq/layerchart/commit/9621a4e62c7519b3b1556a28765080c185ef87d8))
+
 ## 0.59.2
 
 ### Patch Changes
