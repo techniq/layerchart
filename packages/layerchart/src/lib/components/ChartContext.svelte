@@ -119,7 +119,7 @@
 </script>
 
 <script lang="ts" generics="TData">
-  import { unique } from '@layerstack/utils/array';
+  import { unique } from '@layerstack/utils';
 
   import { scaleOrdinal } from 'd3-scale';
 
