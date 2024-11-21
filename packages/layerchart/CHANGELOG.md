@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.59.4
+
+### Patch Changes
+
+- fix(ChartContext): Remove last `@layerstack/utils/array` import ([`6b88925`](https://github.com/techniq/layerchart/commit/6b8892597faab114c693673787643f6eabd86700))
+
 ## 0.59.3
 
 ### Patch Changes
