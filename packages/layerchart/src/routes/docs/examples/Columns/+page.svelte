@@ -23,12 +23,11 @@
   } from 'layerchart';
 
   import { Field, ToggleGroup, ToggleOption, Toggle, Switch } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format, PeriodType, unique } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
-  import { unique } from '@layerstack/utils/array';
 
   const data = createDateSeries({
     count: 30,

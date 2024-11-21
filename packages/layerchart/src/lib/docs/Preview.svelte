@@ -7,8 +7,6 @@
 
   import { Button, CopyButton, Dialog, Toggle, Tooltip } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
-  import { entries, fromEntries } from '@layerstack/utils';
-  import { isLiteralObject } from '@layerstack/utils/object';
 
   import Code from './Code.svelte';
   import Json from './Json.svelte';

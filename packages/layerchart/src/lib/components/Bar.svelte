@@ -8,7 +8,7 @@
   import { createDimensionGetter } from '../utils/rect.js';
   import { isScaleBand } from '../utils/scales.js';
   import { accessor, type Accessor } from '../utils/common.js';
-  import { greatestAbs } from '@layerstack/utils/array';
+  import { greatestAbs } from '@layerstack/utils';
 
   const { x: xContext, y: yContext, xScale } = chartContext();
 

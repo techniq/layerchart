@@ -7,7 +7,7 @@
   import type { Readable } from 'svelte/store';
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
-  import { notNull } from '@layerstack/utils/typeGuards';
+  import { notNull } from '@layerstack/utils';
 
   import { chartContext } from './ChartContext.svelte';
   import Circle from './Circle.svelte';

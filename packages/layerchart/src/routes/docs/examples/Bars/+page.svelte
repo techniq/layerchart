@@ -28,7 +28,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
-  import { unique } from '@layerstack/utils/array';
+  import { unique } from '@layerstack/utils';
 
   const data = createDateSeries({
     count: 10,

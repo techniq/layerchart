@@ -3,7 +3,7 @@ import { tweened, spring } from 'svelte/motion';
 
 import { type MotionOptions, motionStore } from '$lib/stores/motionStore.js';
 import { scaleBand, type ScaleBand } from 'd3-scale';
-import { unique } from '@layerstack/utils/array';
+import { unique } from '@layerstack/utils';
 
 export interface AnyScale<Domain = any, Range = any, Input = Domain, Output = any> {
   (value: Input): Output;
