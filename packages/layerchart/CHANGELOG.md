@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.59.5
+
+### Patch Changes
+
+- Update dependencies ([`2d74395`](https://github.com/techniq/layerchart/commit/2d743954c05c86fe198cf5ff1cf9f826574ce86f))
+
 ## 0.59.4
 
 ### Patch Changes
