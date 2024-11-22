@@ -67,7 +67,7 @@
       grid={false}
       padding={{ left: 16, bottom: 16 }}
       props={{
-        bars: { class: 'stroke-none fill-surface-content/10' },
+        bars: { radius: 1, class: 'stroke-none fill-surface-content/10' },
       }}
     />
 
