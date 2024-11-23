@@ -39,6 +39,22 @@
   </div>
 </Preview>
 
+<h2>Outer radius (fixed)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart {data} key="fruit" value="value" outerRadius={100} />
+  </div>
+</Preview>
+
+<h2>Outer radius (offset)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart {data} key="fruit" value="value" outerRadius={-20} />
+  </div>
+</Preview>
+
 <h2>Donut (innerRadius)</h2>
 
 <Preview {data}>

@@ -198,7 +198,7 @@
                   <Arc
                     startAngle={arc.startAngle}
                     endAngle={arc.endAngle}
-                    outerRadius={i * (outerRadius ?? 0)}
+                    outerRadius={series.length > 1 ? i * (outerRadius ?? 0) : outerRadius}
                     {innerRadius}
                     {cornerRadius}
                     {padAngle}
