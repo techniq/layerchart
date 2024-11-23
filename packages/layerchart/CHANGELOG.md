@@ -1,5 +1,13 @@
 # LayerChart
 
+## 0.59.5
+
+### Patch Changes
+
+- Update dependencies ([`2d74395`](https://github.com/techniq/layerchart/commit/2d743954c05c86fe198cf5ff1cf9f826574ce86f))
+
+- fix(PieChart): Fix handling of outerRadius with single series ([`adb40e2`](https://github.com/techniq/layerchart/commit/adb40e2f22fb0a9a7462bffb02ee140b449e9029))
+
 ## 0.59.4
 
 ### Patch Changes
