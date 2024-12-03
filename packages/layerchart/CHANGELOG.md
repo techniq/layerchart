@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.59.6
+
+### Patch Changes
+
+- fix(Legend): Fix reactivity when scale/data changes. Fixes #289 ([`0dea00b`](https://github.com/techniq/layerchart/commit/0dea00b4663d07e11707cb52c3b716df46b59778))
+
 ## 0.59.5
 
 ### Patch Changes
