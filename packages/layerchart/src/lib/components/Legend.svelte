@@ -49,10 +49,7 @@
     swatch?: string;
   } = {};
 
-  $: if (scale == null && cScale) {
-    // Read scale from chart context
-    scale = $cScale;
-  }
+  $: _scale = scale ?? (cScale ? $cScale : null);
 
   let xScale: AnyScale;
   let interpolator: ((t: number) => string) | undefined;
@@ -60,47 +57,47 @@
   let tickLabelOffset = 0;
   let tickLine = true;
 
-  $: if (!scale) {
+  $: if (!_scale) {
     // do nothing
-  } else if (scale.interpolate) {
+  } else if (_scale.interpolate) {
     // Continuous
-    const n = Math.min(scale.domain().length, scale.range().length);
-    xScale = scale.copy().rangeRound(quantize(interpolate(0, width), n));
-    interpolator = scale.copy().domain(quantize(interpolate(0, 1), n));
+    const n = Math.min(_scale.domain().length, _scale.range().length);
+    xScale = _scale.copy().rangeRound(quantize(interpolate(0, width), n));
+    interpolator = _scale.copy().domain(quantize(interpolate(0, 1), n));
     tickFormat = tickFormat ?? xScale.tickFormat?.();
-  } else if (scale.interpolator) {
+  } else if (_scale.interpolator) {
     // Sequential
-    xScale = Object.assign(scale.copy().interpolator(interpolateRound(0, width)), {
+    xScale = Object.assign(_scale.copy().interpolator(interpolateRound(0, width)), {
       range() {
         return [0, width];
       },
     });
-    interpolator = scale.interpolator();
+    interpolator = _scale.interpolator();
 
     // scaleSequentialQuantile doesn’t implement ticks or tickFormat.
     if (!xScale.ticks) {
       if (tickValues === undefined) {
         const n = Math.round(ticks + 1);
-        tickValues = range(n).map((i) => quantile(scale.domain(), i / (n - 1)));
+        tickValues = range(n).map((i) => quantile(_scale.domain(), i / (n - 1)));
       }
       // if (typeof tickFormat !== "function") {
       //   tickFormat = d3.format(tickFormat === undefined ? ",f" : tickFormat);
       // }
     }
     tickFormat = tickFormat ?? xScale.tickFormat?.();
-  } else if (scale.invertExtent) {
+  } else if (_scale.invertExtent) {
     // Threshold
-    const thresholds = scale.thresholds
-      ? scale.thresholds() // scaleQuantize
-      : scale.quantiles
-        ? scale.quantiles() // scaleQuantile
-        : scale.domain(); // scaleThreshold
+    const thresholds = _scale.thresholds
+      ? _scale.thresholds() // scaleQuantize
+      : _scale.quantiles
+        ? _scale.quantiles() // scaleQuantile
+        : _scale.domain(); // scaleThreshold
 
     xScale = scaleLinear()
-      .domain([-1, scale.range().length - 1])
+      .domain([-1, _scale.range().length - 1])
       .rangeRound([0, width]);
 
-    swatches = scale.range().map((d: any, i: number) => {
+    swatches = _scale.range().map((d: any, i: number) => {
       return {
         x: xScale(i - 1),
         y: 0,
@@ -117,19 +114,19 @@
     };
   } else {
     // Ordinal
-    xScale = scaleBand().domain(scale.domain()).rangeRound([0, width]);
+    xScale = scaleBand().domain(_scale.domain()).rangeRound([0, width]);
 
-    swatches = scale.domain().map((d: any) => {
+    swatches = _scale.domain().map((d: any) => {
       return {
         x: xScale(d),
         y: 0,
         width: Math.max(0, xScale.bandwidth() - 1),
         height,
-        fill: scale(d),
+        fill: _scale(d),
       };
     });
 
-    tickValues = scale.domain();
+    tickValues = _scale.domain();
     tickLabelOffset = xScale.bandwidth() / 2;
     tickLine = false;
     tickLength = 0;
@@ -159,7 +156,7 @@
   )}
 >
   <div class={cls('text-[10px] font-semibold', classes.title)}>{title}</div>
-  <slot values={tickValues ?? []} {scale}>
+  <slot values={tickValues ?? []} scale={_scale}>
     {#if variant === 'ramp'}
       <svg
         {width}
@@ -210,7 +207,7 @@
         )}
       >
         {#each tickValues ?? xScale?.ticks?.(ticks) ?? [] as tick}
-          {@const color = scale(tick)}
+          {@const color = _scale(tick)}
           <button
             class={cls('flex gap-1', !onClick && 'cursor-auto')}
             on:click={() => onClick?.({ tick, color })}
