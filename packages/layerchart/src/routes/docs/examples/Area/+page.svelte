@@ -212,6 +212,36 @@
   </div>
 </Preview>
 
+<h2>Gradient (separate stroke)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <LinearGradient class="from-secondary/0 to-secondary" let:url={strokeUrl}>
+          <LinearGradient class="from-primary/50 to-primary/0" vertical let:url={fillUrl}>
+            <Area line={{ stroke: strokeUrl, class: 'stroke-2' }} fill={fillUrl} />
+          </LinearGradient>
+        </LinearGradient>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Multiple series</h2>
 
 <Preview data={multiSeriesFlatData}>
