@@ -6,5 +6,6 @@ coverage/
 .idea/
 .svelte-kit/
 .env
+.DS_Store
 
 test-*
