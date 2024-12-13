@@ -21,12 +21,15 @@ export function circlePath(dimensions: {
   r: number;
   sweep?: 'inside' | 'outside';
 }) {
-  // sweep: 0 (inside), 1 (outside)
+  // https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths#arcs
   const { cx, cy, r, sweep = 'outside' } = dimensions;
+  // sweep: 0 (inside), 1 (outside)
+  const _sweep = sweep === 'outside' ? 1 : 0;
+
   return `
     M ${cx - r} ${cy}
-    a ${r},${r} 0 1,${sweep} ${r * 2},0
-    a ${r},${r} 0 1,${sweep} -${r * 2},0
+    a ${r},${r} 0 1,${_sweep} ${r * 2},0
+    a ${r},${r} 0 1,${_sweep} -${r * 2},0
   `;
 }
 
