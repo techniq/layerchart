@@ -12,7 +12,7 @@
   };
 
   export const Align = {
-    none: null,
+    none: undefined,
     'up-left': 'UL',
     'up-right': 'UR',
     'down-left': 'DL',
@@ -27,7 +27,7 @@
 </script>
 
 <script lang="ts">
-  import dagre from '@dagrejs/dagre';
+  import dagre, { type Edge, type EdgeConfig, type GraphEdge } from '@dagrejs/dagre';
 
   /** Data of nodes and edges to build graph */
   export let data: DagreGraphData;
@@ -141,9 +141,11 @@
 
     graph = g;
   }
+
+  $: graphNodes = graph.nodes().map((id) => graph.node(id));
+  $: graphEdges = graph.edges().map((edge) => ({ ...edge, ...graph.edge(edge) })) as Array<
+    Edge & EdgeConfig & GraphEdge // `EdgeConfig` is excluded when inferred from usage
+  >;
 </script>
 
-<slot
-  nodes={graph.nodes().map((id) => graph.node(id))}
-  edges={graph.edges().map((edge) => ({ ...edge, ...graph.edge(edge) }))}
-/>
+<slot nodes={graphNodes} edges={graphEdges} />
