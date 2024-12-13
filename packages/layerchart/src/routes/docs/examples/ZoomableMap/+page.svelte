@@ -12,6 +12,7 @@
     Svg,
     Tooltip,
     geoFitObjectTransform,
+    renderPathData,
   } from 'layerchart';
   import TransformControls from 'layerchart/components/TransformControls.svelte';
   import { SelectField } from 'svelte-ux';
@@ -289,14 +290,13 @@
         }}
       >
         <GeoPath
-          render={(ctx, { geoPath }) => {
+          render={(ctx, { newGeoPath }) => {
             for (const feature of states.features) {
               const color = nextColor();
 
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
+              const geoPath = newGeoPath();
+              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
+              renderPathData(ctx, geoPath(feature), { fill: color, stroke: color });
 
               setColorData(color, feature);
             }
@@ -305,10 +305,9 @@
             for (const feature of selectedCountiesFeatures) {
               const color = nextColor();
 
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
+              const geoPath = newGeoPath();
+              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
+              renderPathData(ctx, geoPath(feature), { fill: color, stroke: color });
 
               setColorData(color, feature);
             }
@@ -411,14 +410,12 @@
         }}
       >
         <GeoPath
-          render={(ctx, { geoPath }) => {
+          render={(ctx, { newGeoPath }) => {
             for (const feature of states.features) {
               const color = nextColor();
 
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
+              const geoPath = newGeoPath();
+              renderPathData(ctx, geoPath(feature), { fill: color, stroke: color });
 
               setColorData(color, feature);
             }
@@ -427,10 +424,8 @@
             for (const feature of selectedCountiesFeatures) {
               const color = nextColor();
 
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
+              const geoPath = newGeoPath();
+              renderPathData(ctx, geoPath(feature), { fill: color, stroke: color });
 
               setColorData(color, feature);
             }

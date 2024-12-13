@@ -2,7 +2,7 @@
   import { geoIdentity, type GeoProjection } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Chart, Canvas, GeoPath, HitCanvas, Tooltip } from 'layerchart';
+  import { Chart, Canvas, GeoPath, HitCanvas, Tooltip, renderPathData } from 'layerchart';
   import { Field, Switch } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -57,18 +57,13 @@
         {debug}
       >
         <GeoPath
-          render={(ctx, { geoPath }) => {
+          render={(ctx, { newGeoPath }) => {
             for (var feature of counties.features) {
               const color = nextColor();
 
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
-
+              const geoPath = newGeoPath();
               // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
-              ctx.strokeStyle = color;
-              ctx.stroke();
+              renderPathData(ctx, geoPath(feature), { fill: color, stroke: color });
 
               setColorData(color, feature);
             }

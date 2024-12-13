@@ -15,6 +15,7 @@
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoCurvePath } from '$lib/utils/geo.js';
+  import { clearCanvasContext, renderPathData } from '$lib/utils/canvas.js';
 
   export let geojson: GeoPermissibleObjects | null | undefined = undefined;
 
@@ -22,13 +23,13 @@
   export let render:
     | ((
         ctx: CanvasRenderingContext2D,
-        options: { geoPath: ReturnType<typeof geoCurvePath> }
+        options: { newGeoPath: () => ReturnType<typeof geoCurvePath> }
       ) => any)
     | undefined = undefined;
 
   export let fill: string | undefined = undefined;
   export let stroke: string | undefined = undefined;
-  export let strokeWidth: number | string | undefined = undefined;
+  export let strokeWidth: number | undefined = undefined;
 
   /**
    * Tooltip context to setup mouse events to show tooltip for related data
@@ -69,48 +70,28 @@
 
   $: geoPath = geoCurvePath(_projection, curve);
 
-  const DEFAULT_FILL = 'rgb(0, 0, 0)';
-
   $: renderContext = canvas ? 'canvas' : 'svg';
+  $: canvasCtx = canvas?.ctx;
 
-  $: ctx = canvas?.ctx;
-  $: if (renderContext === 'canvas' && $ctx) {
-    let computedStyles: Partial<CSSStyleDeclaration> = {};
-
-    // Transfer classes defined on <GeoPath> to <canvas> to enable window.getComputedStyle() retrieval (Tailwind classes, etc)
-    if (className) {
-      $ctx.canvas.classList.add(...className.split(' '));
-      computedStyles = window.getComputedStyle($ctx.canvas);
-    }
-
-    // console.count('render');
-
-    // Clear with negative offset due to Canvas `context.translate(...)`
-    $ctx.clearRect(-$padding.left, -$padding.top, $containerWidth, $containerHeight);
+  $: if (renderContext === 'canvas' && $canvasCtx) {
+    clearCanvasContext($canvasCtx, {
+      padding: $padding,
+      containerWidth: $containerWidth,
+      containerHeight: $containerHeight,
+    });
 
     if (render) {
-      geoPath = geoCurvePath(_projection, curve, $ctx);
-      render($ctx, { geoPath });
+      // geoPath = geoCurvePath(_projection, curve, $canvasCtx);
+      geoPath = geoCurvePath(_projection, curve);
+      render($canvasCtx, { newGeoPath: () => geoCurvePath(_projection, curve) });
     } else {
-      $ctx.beginPath();
       // Set the context here since setting it in `$: geoPath` is a circular reference
-      geoPath = geoCurvePath(_projection, curve, $ctx);
+      geoPath = geoCurvePath(_projection, curve);
+
       if (geojson) {
-        geoPath(geojson);
+        const pathData = geoPath(geojson);
+        renderPathData($canvasCtx, pathData, { fill, stroke, strokeWidth, class: $$props.class });
       }
-
-      $ctx.fillStyle =
-        fill ??
-        (computedStyles.fill !== DEFAULT_FILL ? computedStyles.fill : undefined) ??
-        'transparent';
-      $ctx.fill();
-
-      $ctx.lineWidth = Number(strokeWidth ?? 0);
-      $ctx.strokeStyle =
-        (stroke ?? computedStyles.stroke === 'none')
-          ? 'transparent'
-          : (computedStyles.stroke ?? '');
-      $ctx.stroke();
     }
   }
 </script>

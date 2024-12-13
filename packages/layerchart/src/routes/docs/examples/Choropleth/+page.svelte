@@ -6,7 +6,16 @@
   import { feature } from 'topojson-client';
   import { format } from '@layerstack/utils';
 
-  import { Canvas, Chart, GeoPath, HitCanvas, Legend, Svg, Tooltip } from 'layerchart';
+  import {
+    Canvas,
+    Chart,
+    GeoPath,
+    HitCanvas,
+    Legend,
+    renderPathData,
+    Svg,
+    Tooltip,
+  } from 'layerchart';
   import TransformControls from 'layerchart/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -150,12 +159,12 @@
 
       <Canvas>
         <GeoPath
-          render={(ctx, { geoPath }) => {
+          render={(ctx, { newGeoPath }) => {
             for (var feature of enrichedCountiesFeatures) {
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = colorScale(feature.properties.data?.population ?? 0);
-              ctx.fill();
+              const geoPath = newGeoPath();
+              renderPathData(ctx, geoPath(feature), {
+                fill: colorScale(feature.properties.data?.population ?? 0),
+              });
             }
           }}
         />
@@ -177,14 +186,13 @@
         on:pointerleave={tooltip.hide}
       >
         <GeoPath
-          render={(ctx, { geoPath }) => {
+          render={(ctx, { newGeoPath }) => {
             for (var feature of enrichedCountiesFeatures) {
               const color = nextColor();
 
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
+              const geoPath = newGeoPath();
+              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
+              renderPathData(ctx, geoPath(feature), { fill: color, stroke: color });
 
               setColorData(color, feature);
             }
