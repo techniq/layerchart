@@ -120,8 +120,6 @@
       if (curve) path.curve(curve);
 
       return path(data ?? $contextData);
-    } else {
-      return '';
     }
   }
 
