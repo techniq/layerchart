@@ -1,5 +1,15 @@
 # LayerChart
 
+## 0.60.0
+
+### Minor Changes
+
+- feat: Add Dagre layout component for directed acyclic graphs (DAGs) ([#268](https://github.com/techniq/layerchart/pull/268))
+
+### Patch Changes
+
+- fix(Spline): Improve initial data display / transition on non-cartesian charts (ex. hierarchy/graph) ([#268](https://github.com/techniq/layerchart/pull/268))
+
 ## 0.59.6
 
 ### Patch Changes
