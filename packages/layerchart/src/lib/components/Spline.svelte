@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { tick, type ComponentProps } from 'svelte';
-  import { writable } from 'svelte/store';
+  import { getContext, onDestroy, tick, type ComponentProps } from 'svelte';
+  import { writable, type Readable } from 'svelte/store';
   import { tweened as tweenedStore } from 'svelte/motion';
   import { draw as _drawTransition } from 'svelte/transition';
   import { cubicInOut } from 'svelte/easing';
@@ -21,6 +21,7 @@
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
   import { flattenPathData } from '../utils/path.js';
+  import { clearCanvasContext, renderPathData } from '../utils/canvas.js';
 
   const {
     data: contextData,
@@ -30,6 +31,9 @@
     y: contextY,
     yRange,
     radial,
+    padding,
+    containerWidth,
+    containerHeight,
     config,
   } = chartContext();
 
@@ -100,6 +104,10 @@
   $: xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
   $: yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
 
+  const canvas = getContext<{ ctx: Readable<CanvasRenderingContext2D> }>('canvas');
+  $: renderContext = canvas ? 'canvas' : 'svg';
+  $: canvasCtx = canvas?.ctx;
+
   /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
   function defaultPathData() {
     if (pathData) {
@@ -153,6 +161,26 @@
     key = Symbol();
   }
 
+  $: if (renderContext === 'canvas' && $canvasCtx) {
+    clearCanvasContext($canvasCtx, {
+      padding: $padding,
+      containerWidth: $containerWidth,
+      containerHeight: $containerHeight,
+    });
+    // TODO: Support `draw`
+    renderPathData($canvasCtx, $tweened_d, { class: $$props.class });
+  }
+
+  onDestroy(() => {
+    if (renderContext === 'canvas' && $canvasCtx) {
+      clearCanvasContext($canvasCtx, {
+        padding: $padding,
+        containerWidth: $containerWidth,
+        containerHeight: $containerHeight,
+      });
+    }
+  });
+
   let pathEl: SVGPathElement | undefined = undefined;
   const startPoint = writable<DOMPoint | undefined>(undefined);
   $: endPoint = motionStore<DOMPoint | undefined>(undefined, {
@@ -187,63 +215,65 @@
   }
 </script>
 
-{#key key}
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <path
-    d={$tweened_d}
-    {...$$restProps}
-    class={cls(
-      'path-line',
-      !$$props.fill && 'fill-none',
-      !$$props.stroke && 'stroke-surface-content',
-      $$props.class
-    )}
-    marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
-    marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
-    marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-    in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
-    on:click
-    on:pointerenter
-    on:pointermove
-    on:pointerleave
-    bind:this={pathEl}
-  />
+{#if renderContext === 'svg'}
+  {#key key}
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <path
+      d={$tweened_d}
+      {...$$restProps}
+      class={cls(
+        'path-line',
+        !$$props.fill && 'fill-none',
+        !$$props.stroke && 'stroke-surface-content',
+        $$props.class
+      )}
+      marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
+      marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
+      marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
+      in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
+      on:click
+      on:pointerenter
+      on:pointermove
+      on:pointerleave
+      bind:this={pathEl}
+    />
 
-  <slot name="markerStart" id={markerStartId}>
-    {#if markerStart}
+    <slot name="markerStart" id={markerStartId}>
+      {#if markerStart}
+        <Marker
+          id={markerStartId}
+          type={typeof markerStart === 'string' ? markerStart : undefined}
+          {...typeof markerStart === 'object' ? markerStart : null}
+        />
+      {/if}
+    </slot>
+
+    <slot name="markerMid" id={markerMidId}>
       <Marker
-        id={markerStartId}
-        type={typeof markerStart === 'string' ? markerStart : undefined}
-        {...typeof markerStart === 'object' ? markerStart : null}
+        id={markerMidId}
+        type={typeof markerMid === 'string' ? markerMid : undefined}
+        {...typeof markerMid === 'object' ? markerMid : null}
       />
+    </slot>
+
+    <slot name="markerEnd" id={markerEndId}>
+      <Marker
+        id={markerEndId}
+        type={typeof markerEnd === 'string' ? markerEnd : undefined}
+        {...typeof markerEnd === 'object' ? markerEnd : null}
+      />
+    </slot>
+
+    {#if $$slots.start && $startPoint}
+      <Group x={$startPoint.x} y={$startPoint.y}>
+        <slot name="start" point={$startPoint} />
+      </Group>
     {/if}
-  </slot>
 
-  <slot name="markerMid" id={markerMidId}>
-    <Marker
-      id={markerMidId}
-      type={typeof markerMid === 'string' ? markerMid : undefined}
-      {...typeof markerMid === 'object' ? markerMid : null}
-    />
-  </slot>
-
-  <slot name="markerEnd" id={markerEndId}>
-    <Marker
-      id={markerEndId}
-      type={typeof markerEnd === 'string' ? markerEnd : undefined}
-      {...typeof markerEnd === 'object' ? markerEnd : null}
-    />
-  </slot>
-
-  {#if $$slots.start && $startPoint}
-    <Group x={$startPoint.x} y={$startPoint.y}>
-      <slot name="start" point={$startPoint} />
-    </Group>
-  {/if}
-
-  {#if $$slots.end && $endPoint}
-    <Group x={$endPoint.x} y={$endPoint.y}>
-      <slot name="end" point={$endPoint} />
-    </Group>
-  {/if}
-{/key}
+    {#if $$slots.end && $endPoint}
+      <Group x={$endPoint.x} y={$endPoint.y}>
+        <slot name="end" point={$endPoint} />
+      </Group>
+    {/if}
+  {/key}
+{/if}
