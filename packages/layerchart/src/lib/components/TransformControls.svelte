@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { type ComponentProps } from 'svelte';
   import { Button, Icon, MenuButton, Tooltip } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
 
@@ -28,6 +29,7 @@
 
   export let placement: Placement = 'top-right';
   export let orientation: 'horizontal' | 'vertical' = 'vertical';
+  export let size: ComponentProps<Button>['size'] = 'md';
 
   type Actions = 'zoomIn' | 'zoomOut' | 'center' | 'reset' | 'scrollMode';
   export let show: Actions[] = ['zoomIn', 'zoomOut', 'center', 'reset', 'scrollMode'];
@@ -64,7 +66,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class={cls(
-    'bg-surface-300/50 rounded-full m-1 backdrop-blur z-10 flex',
+    'bg-surface-300/50 border rounded-full m-1 backdrop-blur z-10 flex',
     orientation === 'vertical' && 'flex-col',
     {
       'top-left': 'absolute top-0 left-0',
@@ -89,6 +91,7 @@
       <Button
         icon={mdiMagnifyPlusOutline}
         on:click={() => transform.zoomIn()}
+        {size}
         class="text-surface-content p-2"
       />
     </Tooltip>
@@ -99,6 +102,7 @@
       <Button
         icon={mdiMagnifyMinusOutline}
         on:click={() => transform.zoomOut()}
+        {size}
         class="text-surface-content p-2"
       />
     </Tooltip>
@@ -109,6 +113,7 @@
       <Button
         icon={mdiImageFilterCenterFocus}
         on:click={() => transform.translateCenter()}
+        {size}
         class="text-surface-content p-2"
       />
     </Tooltip>
@@ -119,6 +124,7 @@
       <Button
         icon={mdiArrowULeftTop}
         on:click={() => transform.reset()}
+        {size}
         class="text-surface-content p-2"
       />
     </Tooltip>
@@ -135,6 +141,7 @@
         ]}
         menuProps={{ placement: menuPlacementByOrientationAndPlacement[orientation][placement] }}
         menuIcon={null}
+        {size}
         value={$scrollMode}
         on:change={(e) => transform.setScrollMode(e.detail.value)}
         class="text-surface-content"
