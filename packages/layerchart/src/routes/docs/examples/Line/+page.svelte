@@ -7,6 +7,7 @@
 
   import {
     Axis,
+    Canvas,
     Chart,
     Highlight,
     Labels,
@@ -80,6 +81,34 @@
         />
         <Spline class="stroke-2 stroke-primary" />
       </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Canvas</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+      </Svg>
+      <Canvas>
+        <Spline class="stroke-2 stroke-primary" />
+      </Canvas>
     </Chart>
   </div>
 </Preview>
