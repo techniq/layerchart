@@ -121,10 +121,12 @@
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
-            <MotionPath duration="3s" let:pathId let:objectId>
-              <Spline id={pathId} {curve} draw={{ duration: 3000, easing: linear }} />
-              <circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
-            </MotionPath>
+            {#key data}
+              <MotionPath duration="3s" let:pathId let:objectId>
+                <Spline id={pathId} {curve} draw={{ duration: 3000, easing: linear }} />
+                <circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
+              </MotionPath>
+            {/key}
           {/if}
         </Svg>
       </Chart>
