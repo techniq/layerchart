@@ -1,18 +1,13 @@
 const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
-/** Render SVG path data onto canvas context.  Supports CSS classes by tranferring to `<canvas>` element for retrieval) */
+/** Render SVG path data onto canvas context.  Supports CSS classes  tranferring to `<canvas>` element for retrieval) */
 export function renderPathData(
   canvasCtx: CanvasRenderingContext2D,
   pathData: string | null,
   props: { fill?: string; stroke?: string; strokeWidth?: number; class?: string } = {}
 ) {
-  let computedStyles: Partial<CSSStyleDeclaration> = {};
-
-  // Transfer classes defined on <Spline>/<GeoPath>/etc to <canvas> to enable window.getComputedStyle() retrieval (Tailwind classes, etc)
-  if (props.class) {
-    canvasCtx.canvas.classList.add(...props.class.split(' '));
-    computedStyles = window.getComputedStyle(canvasCtx.canvas);
-  }
+  // Get classes from nearest `<canvas>` element.  Useful if classes are moved up from underlying component (ex. GeoPath)
+  const computedStyles: Partial<CSSStyleDeclaration> = window.getComputedStyle(canvasCtx.canvas);
 
   const path = new Path2D(pathData ?? '');
 
