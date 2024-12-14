@@ -80,8 +80,12 @@
       containerHeight: $containerHeight,
     });
 
+    // Transfer classes defined on <GeoPath> to <canvas> to enable window.getComputedStyle() retrieval (Tailwind classes, etc)
+    if ($$props.class) {
+      $canvasCtx.canvas.classList.add(...$$props.class.split(' '));
+    }
+
     if (render) {
-      // geoPath = geoCurvePath(_projection, curve, $canvasCtx);
       geoPath = geoCurvePath(_projection, curve);
       render($canvasCtx, { newGeoPath: () => geoCurvePath(_projection, curve) });
     } else {
