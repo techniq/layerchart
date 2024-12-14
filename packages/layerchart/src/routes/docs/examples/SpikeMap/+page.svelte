@@ -4,7 +4,16 @@
   import { scaleLinear } from 'd3-scale';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, Group, HitCanvas, Svg, Tooltip } from 'layerchart';
+  import {
+    Canvas,
+    Chart,
+    GeoPath,
+    Group,
+    HitCanvas,
+    renderPathData,
+    Svg,
+    Tooltip,
+  } from 'layerchart';
   import TransformControls from 'layerchart/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -163,10 +172,11 @@
       <Canvas>
         <GeoPath
           class="stroke-danger fill-danger/25"
-          render={(ctx, { geoPath }) => {
+          render={(ctx, { newGeoPath }) => {
             const computedStyle = window.getComputedStyle(ctx.canvas);
 
             for (var feature of enrichedCountiesFeatures) {
+              const geoPath = newGeoPath();
               const [x, y] = geoPath.centroid(feature);
               const d = feature.properties.data;
               const height = heightScale(d?.population ?? 0);
@@ -207,14 +217,12 @@
         on:pointerleave={tooltip.hide}
       >
         <GeoPath
-          render={(ctx, { geoPath }) => {
+          render={(ctx, { newGeoPath }) => {
             for (var feature of enrichedCountiesFeatures) {
               const color = nextColor();
 
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
+              const geoPath = newGeoPath();
+              renderPathData(ctx, geoPath(feature), { fill: color, stroke: color });
 
               setColorData(color, feature);
             }
