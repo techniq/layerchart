@@ -7,7 +7,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import dots from './dots.json';
+  import dots from './dots.json' with { type: 'json' };
 
   const categoryColor = scaleOrdinal([
     'hsl(var(--color-info))',

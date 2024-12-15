@@ -1,22 +1,13 @@
 <script lang="ts">
   import { Axis, Chart, Point, Svg } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-
-  let data: { x: number; y: number }[];
 </script>
 
 <h1>Examples</h1>
 
 <Preview>
   <div class="h-[300px] p-4 border rounded">
-    <Chart
-      {data}
-      x={(d) => d.x}
-      y={(d) => d.y}
-      xDomain={[0, 100]}
-      yDomain={[0, 100]}
-      padding={{ bottom: 20, left: 20 }}
-    >
+    <Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={{ bottom: 20, left: 20 }}>
       <Svg>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />

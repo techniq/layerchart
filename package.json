@@ -19,7 +19,7 @@
     "@changesets/cli": "2.27.10",
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
     "rimraf": "6.0.1",
-    "wrangler": "^3.90.0"
+    "wrangler": "^3.95.0"
   },
   "packageManager": "pnpm@9.1.1"
 }

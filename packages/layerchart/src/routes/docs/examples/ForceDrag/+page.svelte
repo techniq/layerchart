@@ -69,6 +69,8 @@
           {/key}
 
           {#each nodes as node}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
             <circle
               cx={node.x}
               cy={node.y}
