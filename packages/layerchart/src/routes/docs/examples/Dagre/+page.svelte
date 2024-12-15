@@ -54,6 +54,18 @@
       curve: curveLinear,
       arrow: 'triangle',
     },
+    softwareUserFlow: {
+      ranker: 'network-simplex',
+      direction: 'top-bottom',
+      align: 'none',
+      nodeSeparation: 50,
+      rankSeparation: 50,
+      edgeSeparation: 10,
+      edgeLabelPosition: 'center',
+      edgeLabelOffset: 10,
+      curve: curveLinear,
+      arrow: 'triangle',
+    },
     cluster: {
       ranker: 'network-simplex',
       direction: 'top-bottom',
@@ -348,6 +360,113 @@
       {#if showSettings}
         <div transition:slide={{ axis: 'x' }}>
           <DagreControls bind:settings={settings.tcpState} />
+        </div>
+      {/if}
+    </div>
+  </Preview>
+</Toggle>
+
+<Toggle let:on={showSettings} let:toggle>
+  <div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+    <h2>Software user flow</h2>
+
+    <Field label="Settings" labelPlacement="left" class="mb-1" let:id>
+      <Switch checked={showSettings} on:change={toggle} {id} size="md" />
+    </Field>
+  </div>
+
+  <!-- https://observablehq.com/@mbirk/dagre -->
+
+  <Preview data={data.softwareUserFlow}>
+    <div class="flex gap-2">
+      <div class="flex-1 h-[700px] p-4 border rounded overflow-hidden">
+        <Chart
+          data={data.softwareUserFlow}
+          transform={{
+            mode: 'canvas',
+            initialScale: 0.75,
+            initialTranslate: { x: 0, y: -110 },
+            initialScrollMode: 'scale',
+            tweened: { duration: 800, easing: cubicOut },
+          }}
+        >
+          <TransformControls />
+
+          <Svg>
+            <Dagre
+              data={data.softwareUserFlow}
+              edges={(d) => d.links}
+              {...settings.softwareUserFlow}
+              let:nodes
+              let:edges
+            >
+              <g class="edges">
+                {#each edges as edge, i (edge.v + '-' + edge.w)}
+                  <Spline
+                    data={edge.points}
+                    x="x"
+                    y="y"
+                    class="stroke-surface-content opacity-30"
+                    tweened
+                    curve={settings.softwareUserFlow?.curve}
+                    markerEnd={settings.softwareUserFlow.arrow}
+                  />
+
+                  <!-- Label background -->
+                  <!-- <Rect
+                x={edge.x - edge.width / 2}
+                y={edge.y - edge.height / 2}
+                width={edge.width}
+                height={edge.height}
+                class="fill-surface-100"
+              /> -->
+                  <Text
+                    value={edge.label}
+                    x={edge.x}
+                    y={edge.y}
+                    textAnchor="middle"
+                    verticalAnchor="middle"
+                    class="stroke-2 stroke-surface-100"
+                    {...settings.simple}
+                    tweened
+                  />
+                {/each}
+              </g>
+
+              <g class="nodes">
+                {#each nodes as node (node.label)}
+                  <Group x={node.x - node.width / 2} y={node.y - node.height / 2} tweened>
+                    <Rect
+                      width={node.width}
+                      height={node.height}
+                      class={cls(
+                        'fill-surface-200 stroke-2 stroke-primary/50',
+                        node.label === 'CLOSED' && 'fill-danger/10 stroke-danger/50',
+                        node.label === 'ESTAB' && 'fill-success/10 stroke-success/50'
+                      )}
+                      rx={10}
+                    />
+
+                    <Text
+                      value={node.label}
+                      x={node.width / 2}
+                      y={node.height / 2}
+                      dy={-2}
+                      textAnchor="middle"
+                      verticalAnchor="middle"
+                      class={cls('text-xs pointer-events-none')}
+                    />
+                  </Group>
+                {/each}
+              </g>
+            </Dagre>
+          </Svg>
+        </Chart>
+      </div>
+
+      {#if showSettings}
+        <div transition:slide={{ axis: 'x' }}>
+          <DagreControls bind:settings={settings.softwareUserFlow} />
         </div>
       {/if}
     </div>

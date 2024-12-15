@@ -1,0 +1,21 @@
+{
+  "nodes": [
+    { "id": "uninstalled" },
+    { "id": "installed" },
+    { "id": "main screen" },
+    { "id": "subscriptions" },
+    { "id": "confirmation" },
+    { "id": "subcribed" }
+  ],
+  "links": [
+    { "source": "uninstalled", "target": "installed", "label": "install" },
+    { "source": "installed", "target": "main screen", "label": "launch" },
+    { "source": "main screen", "target": "main screen", "label": "click" },
+    { "source": "main screen", "target": "subscriptions", "label": "subscribe" },
+    { "source": "subscriptions", "target": "confirmation", "label": "choose\nplan" },
+    { "source": "subscriptions", "target": "main screen", "label": "click" },
+    { "source": "confirmation", "target": "subcribed", "label": "confirm" },
+    { "source": "confirmation", "target": "subscriptions", "label": "cancel" },
+    { "source": "subcribed", "target": "main screen", "label": "click" }
+  ]
+}

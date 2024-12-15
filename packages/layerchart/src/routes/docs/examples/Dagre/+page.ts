@@ -47,6 +47,9 @@ export async function load() {
     complex: await fetch('/data/examples/graph/complex.json').then((r) => r.json()),
     miserables: await fetch('/data/examples/graph/miserables.json').then((r) => r.json()),
     tcpState: await fetch('/data/examples/graph/tcp-state.json').then((r) => r.json()),
+    softwareUserFlow: await fetch('/data/examples/graph/software-user-flow.json').then((r) =>
+      r.json()
+    ),
     cluster: await fetch('/data/examples/graph/cluster.json').then((r) => r.json()),
     medium: await fetch('/data/examples/graph/dag-medium.json').then((r) => r.json()),
     large: await fetch('/data/examples/graph/dag-large.json').then((r) => r.json()),
