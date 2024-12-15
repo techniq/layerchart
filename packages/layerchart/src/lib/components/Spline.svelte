@@ -167,6 +167,12 @@
       containerWidth: $containerWidth,
       containerHeight: $containerHeight,
     });
+
+    // Transfer classes defined on <Spline> to <canvas> to enable window.getComputedStyle() retrieval (Tailwind classes, etc)
+    if ($$props.class) {
+      $canvasCtx.canvas.classList.add(...$$props.class.split(' '));
+    }
+
     // TODO: Support `draw`
     renderPathData($canvasCtx, $tweened_d, { class: $$props.class });
   }
