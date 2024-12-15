@@ -71,6 +71,7 @@
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
       </Svg>
+
       <svelte:component this={Context}>
         {#if show}
           <Spline
