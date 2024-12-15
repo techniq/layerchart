@@ -3,7 +3,7 @@ const DEFAULT_FILL = 'rgb(0, 0, 0)';
 /** Render SVG path data onto canvas context.  Supports CSS classes  tranferring to `<canvas>` element for retrieval) */
 export function renderPathData(
   canvasCtx: CanvasRenderingContext2D,
-  pathData: string | null,
+  pathData: string | null | undefined,
   props: { fill?: string; stroke?: string; strokeWidth?: number; class?: string } = {}
 ) {
   // Get classes from nearest `<canvas>` element.  Useful if classes are moved up from underlying component (ex. GeoPath)
