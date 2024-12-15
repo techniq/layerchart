@@ -276,6 +276,35 @@
   </Preview>
 </Toggle>
 
+<h2>Canvas</h2>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+    <Field label="Show" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+    <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
+    <CurveMenuField bind:value={curve} />
+    <RangeField label="Points" bind:value={pointCount} min={2} max={1000} />
+  </div>
+
+  <Preview {data}>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+        </Svg>
+        <Canvas>
+          {#if show}
+            <Spline {curve} tweened class="stroke-primary stroke-2" />
+          {/if}
+        </Canvas>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
+
 <Blockquote>
   Because the draw transition and tweened store use different timers, there is no guarantee they
   will start at the same time
