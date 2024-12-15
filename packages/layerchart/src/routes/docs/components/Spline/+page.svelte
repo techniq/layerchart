@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ComponentProps } from 'svelte';
+  import type { Component, ComponentProps } from 'svelte';
 
   import { Axis, Canvas, Chart, Points, Spline, Svg, Text } from 'layerchart';
   import { Field, RangeField, Switch, Toggle, ToggleGroup, ToggleOption } from 'svelte-ux';
@@ -13,7 +13,7 @@
   let showPoints = false;
   let show = true;
   let motion: 'draw' | 'tweened' | 'none' = 'tweened';
-  let Context: Svg | Canvas = Svg;
+  let Context: Component = Svg;
 
   let pathGenerator = (x: number) => x;
   let curve: ComponentProps<CurveMenuField>['value'] = undefined;
