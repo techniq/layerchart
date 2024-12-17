@@ -1,5 +1,13 @@
 # LayerChart
 
+## 0.60.1
+
+### Patch Changes
+
+- Update dependencies, notable Vite 5=>6 and Svelte 5 to latest (silence/fix `reactive_declaration_non_reactive_property`) ([`30e612d`](https://github.com/techniq/layerchart/commit/30e612d1ef8d4467000a3f4f2a87880762cf5e5d))
+
+- fix(Dagre): Add missing `lang="ts"` and use Svelte 3/4 compat `context="module"` instead of `module` ([`bfed785`](https://github.com/techniq/layerchart/commit/bfed78593b58fbbe000722701d89c3b81005ed8c))
+
 ## 0.60.0
 
 ### Minor Changes
