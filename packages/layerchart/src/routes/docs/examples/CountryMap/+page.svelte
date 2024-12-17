@@ -68,7 +68,8 @@
           <GeoPath
             geojson={feature}
             class="fill-surface-content stroke-surface-100"
-            render={(ctx, { geoPath }) => {
+            render={(ctx, { newGeoPath }) => {
+              const geoPath = newGeoPath();
               const [x, y] = geoPath.centroid(feature);
               const computedStyle = window.getComputedStyle(ctx.canvas);
               ctx.font = '8px sans-serif';
