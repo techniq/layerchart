@@ -1,4 +1,4 @@
-<script module>
+<script lang="ts" context="module">
   export type DagreGraphData = {
     nodes: Array<{ id: string; parent?: string; label?: string | dagre.Label }>;
     edges: Array<{ source: string; target: string; label?: string }>;
