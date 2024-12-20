@@ -74,10 +74,10 @@
   /** Padding between group/series items when using 'seriesLayout="group"', applied to scaleBand().padding() */
   export let groupPadding = 0;
 
-  $: xScale = isVertical ? scaleBand().padding(bandPadding) : scaleLinear();
+  $: xScale = $$props.xScale ?? (isVertical ? scaleBand().padding(bandPadding) : scaleLinear());
   $: xBaseline = isVertical ? undefined : 0;
 
-  $: yScale = isVertical ? scaleLinear() : scaleBand().padding(bandPadding);
+  $: yScale = $$props.yScale ?? (isVertical ? scaleLinear() : scaleBand().padding(bandPadding));
   $: yBaseline = isVertical ? 0 : undefined;
 
   let x1Scale: ChartProps['x1Scale'];

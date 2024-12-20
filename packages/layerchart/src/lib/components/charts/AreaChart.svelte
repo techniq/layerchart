@@ -107,7 +107,8 @@
   }
 
   // Default xScale based on first data's `x` value
-  $: xScale = accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear();
+  $: xScale =
+    $$props.xScale ?? (accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear());
 
   function getAreaProps(s: (typeof series)[number], i: number) {
     const lineProps = {

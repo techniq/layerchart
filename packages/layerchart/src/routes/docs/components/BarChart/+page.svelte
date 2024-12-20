@@ -11,7 +11,7 @@
     Tooltip,
   } from 'layerchart';
   import { group, sum } from 'd3-array';
-  import { scaleThreshold, scaleTime } from 'd3-scale';
+  import { scaleLog, scaleThreshold, scaleTime } from 'd3-scale';
   import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -856,6 +856,22 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true, bandAlign: 'between' }} />
+  </div>
+</Preview>
+
+<h2>Scale override</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <!-- TODO: Not sure why explicit ticks are needed here but not http://layerchart.com/docs/components/Axis#log_scale  -->
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      yScale={scaleLog()}
+      yDomain={[1, 100]}
+      props={{ yAxis: { ticks: [1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 100] } }}
+    />
   </div>
 </Preview>
 

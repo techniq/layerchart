@@ -56,7 +56,14 @@
   } = {};
 
   // Default xScale based on first data's `x` value
-  $: xScale = accessor(x)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear();
+  $: xScale =
+    $$props.xScale ??
+    (accessor(x)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear());
+
+  // Default yScale based on first data's `y` value
+  $: yScale =
+    $$props.yScale ??
+    (accessor(y)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear());
 
   $: chartData = series
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
@@ -81,6 +88,7 @@
   {x}
   {xScale}
   {y}
+  {yScale}
   yNice
   padding={axis === false
     ? undefined

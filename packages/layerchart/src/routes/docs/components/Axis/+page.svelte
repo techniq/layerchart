@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { scaleLinear, scaleTime, scaleBand } from 'd3-scale';
+  import { scaleLinear, scaleTime, scaleBand, scaleLog } from 'd3-scale';
   import { range } from 'd3-array';
   import { Field, PeriodType, Switch } from 'svelte-ux';
   import { format } from '@layerstack/utils';
@@ -692,6 +692,28 @@
       <Svg center>
         <Axis placement="radius" grid />
         <Axis placement="angle" grid ticks={(scale) => scale.ticks?.().splice(1)} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Log scale</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yScale={scaleLog()}
+      yDomain={[1, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" rule />
+        <Axis placement="left" rule />
       </Svg>
     </Chart>
   </div>
