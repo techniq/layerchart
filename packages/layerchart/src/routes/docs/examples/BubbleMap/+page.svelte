@@ -7,7 +7,17 @@
   import { feature } from 'topojson-client';
   import { sortFunc } from '@layerstack/utils';
 
-  import { Chart, Canvas, GeoPath, HitCanvas, Legend, Svg, Tooltip } from 'layerchart';
+  import {
+    Chart,
+    Canvas,
+    GeoPath,
+    HitCanvas,
+    Legend,
+    Svg,
+    Tooltip,
+    renderPathData,
+    circlePath,
+  } from 'layerchart';
   import TransformControls from 'layerchart/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -180,19 +190,21 @@
 
       <Canvas>
         <GeoPath
-          render={(ctx, { geoPath }) => {
+          render={(ctx, { newGeoPath }) => {
             for (var feature of enrichedCountiesFeatures) {
-              const [x, y] = geoPath.centroid(feature);
+              const geoPath = newGeoPath();
+
+              const [cx, cy] = geoPath.centroid(feature);
               const d = feature.properties.data;
-              const radius = rScale(d?.population ?? 0);
+              const r = rScale(d?.population ?? 0);
               const color = colorScale(d?.percentUnder18 ?? 0);
-              ctx.strokeStyle = color;
-              ctx.lineWidth = strokeWidth;
-              ctx.fillStyle = color + (256 * 0.5).toString(16);
-              ctx.beginPath();
-              ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
-              ctx.fill();
-              ctx.stroke();
+
+              const pathData = circlePath({ cx, cy, r });
+              renderPathData(ctx, pathData, {
+                fill: color + (256 * 0.5).toString(16),
+                stroke: color,
+                strokeWidth,
+              });
             }
           }}
         />
@@ -215,14 +227,13 @@
         on:pointerleave={tooltip.hide}
       >
         <GeoPath
-          render={(ctx, { geoPath }) => {
+          render={(ctx, { newGeoPath }) => {
             for (var feature of enrichedCountiesFeatures) {
               const color = nextColor();
 
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
+              const geoPath = newGeoPath();
+              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
+              renderPathData(ctx, geoPath(feature), { fill: color, stroke: color });
 
               setColorData(color, feature);
             }

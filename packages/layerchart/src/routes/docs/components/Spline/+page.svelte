@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { ComponentProps } from 'svelte';
+  import type { Component, ComponentProps } from 'svelte';
 
-  import { Axis, Chart, Points, Spline, Svg, Text } from 'layerchart';
+  import { Axis, Canvas, Chart, Points, Spline, Svg, Text } from 'layerchart';
   import { Field, RangeField, Switch, Toggle, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -13,6 +13,7 @@
   let showPoints = false;
   let show = true;
   let motion: 'draw' | 'tweened' | 'none' = 'tweened';
+  let Context: Component = Svg;
 
   let pathGenerator = (x: number) => x;
   let curve: ComponentProps<CurveMenuField>['value'] = undefined;
@@ -41,10 +42,18 @@
     </Field>
   </div>
 
-  <div class="grid grid-cols-[100px,auto,1fr] gap-2">
+  <div class="grid grid-cols-[100px,auto,auto,1fr] gap-2">
     <Field label="Show" let:id>
       <Switch bind:checked={show} {id} size="md" />
     </Field>
+
+    <Field label="Context" classes={{ input: 'mt-1 mb-[6px]' }}>
+      <ToggleGroup bind:value={Context} variant="outline" size="sm">
+        <ToggleOption value={Svg}>Svg</ToggleOption>
+        <ToggleOption value={Canvas}>Canvas</ToggleOption>
+      </ToggleGroup>
+    </Field>
+
     <Field label="Motion" classes={{ input: 'mt-1 mb-[6px]' }}>
       <ToggleGroup bind:value={motion} variant="outline" size="sm">
         <ToggleOption value="tweened">tweened</ToggleOption>
@@ -61,6 +70,9 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
+      </Svg>
+
+      <svelte:component this={Context}>
         {#if show}
           <Spline
             {curve}
@@ -68,11 +80,15 @@
             draw={motion === 'draw'}
             class="stroke-primary stroke-2"
           />
-          {#if showPoints}
-            <Points tweened={motion === 'tweened'} r={3} class="fill-surface-100 stroke-primary" />
-          {/if}
         {/if}
-      </Svg>
+      </svelte:component>
+
+      <!--  Render separate context for Points to play nice with Canvas (clear, etc) -->
+      <svelte:component this={Context}>
+        {#if show && showPoints}
+          <Points tweened={motion === 'tweened'} r={3} class="fill-surface-100 stroke-primary" />
+        {/if}
+      </svelte:component>
     </Chart>
   </div>
 </Preview>
@@ -256,6 +272,35 @@
             </Spline>
           {/if}
         </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
+
+<h2>Canvas</h2>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+    <Field label="Show" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+    <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
+    <CurveMenuField bind:value={curve} />
+    <RangeField label="Points" bind:value={pointCount} min={2} max={1000} />
+  </div>
+
+  <Preview {data}>
+    <div class="h-[300px] p-4 border rounded">
+      <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+        </Svg>
+        <Canvas>
+          {#if show}
+            <Spline {curve} tweened class="stroke-primary stroke-2" />
+          {/if}
+        </Canvas>
       </Chart>
     </div>
   </Preview>
