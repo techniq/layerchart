@@ -54,7 +54,7 @@
     "autoprefixer": "^10.4.20",
     "marked": "^15.0.3",
     "mdsvex": "^0.12.3",
-    "posthog-js": "^1.95.1",
+    "posthog-js": "^1.203.1",
     "prettier": "^3.4.2",
     "prettier-plugin-svelte": "^3.3.2",
     "prism-svelte": "^0.5.0",
@@ -107,7 +107,6 @@
     "date-fns": "^4.1.0",
     "layercake": "^8.4.2",
     "lodash-es": "^4.17.21",
-    "posthog-js": "^1.200.1",
     "shapefile": "^0.6.6",
     "topojson-client": "^3.1.0"
   },
