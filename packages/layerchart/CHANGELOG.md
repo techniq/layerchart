@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.60.3
+
+### Patch Changes
+
+- Remove `posthog-js` from `dependencies` (only `devDependencies` for docs) ([`0d72288`](https://github.com/techniq/layerchart/commit/0d722889a2d8bb796336fef50e53ae7cc065ef65))
+
 ## 0.60.2
 
 ### Patch Changes
