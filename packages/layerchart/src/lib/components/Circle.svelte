@@ -1,9 +1,13 @@
 <script lang="ts">
-  import { tick } from 'svelte';
+  import { onDestroy, tick } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from '@layerstack/tailwind';
 
   import { motionStore } from '$lib/stores/motionStore.js';
+  import { getCanvasContext } from './layout/Canvas.svelte';
+  import { circlePath } from '../utils/path.js';
+  import { renderPathData } from '../utils/canvas.js';
+  import { computedStyles } from '@layerstack/svelte-actions';
 
   export let cx: number = 0;
   export let initialCx = cx;
@@ -26,16 +30,45 @@
     tweened_cy.set(cy);
     tweened_r.set(r);
   });
+
+  const canvasContext = getCanvasContext();
+  const renderContext = canvasContext ? 'canvas' : 'svg';
+  let _styles: CSSStyleDeclaration;
+
+  function render(ctx: CanvasRenderingContext2D) {
+    const pathData = circlePath({ cx: $tweened_cx, cy: $tweened_cy, r: $tweened_r });
+    renderPathData(ctx, pathData, _styles);
+  }
+
+  $: if (renderContext === 'canvas') {
+    canvasContext.register(render);
+  }
+
+  onDestroy(() => {
+    if (renderContext === 'canvas') {
+      canvasContext.deregister(render);
+    }
+  });
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<circle
-  cx={$tweened_cx}
-  cy={$tweened_cy}
-  r={$tweened_r}
-  class={cls($$props.fill == null && 'fill-surface-content')}
-  {...$$restProps}
-  on:click
-  on:pointermove
-  on:pointerleave
-/>
+{#if renderContext === 'svg'}
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <circle
+    cx={$tweened_cx}
+    cy={$tweened_cy}
+    r={$tweened_r}
+    class={cls($$props.fill == null && 'fill-surface-content')}
+    {...$$restProps}
+    on:click
+    on:pointermove
+    on:pointerleave
+  />
+{/if}
+
+<!-- Hidden div to copy computed styles -->
+{#if renderContext === 'canvas'}
+  <div
+    class={cls('Circle-classes hidden', $$props.class)}
+    use:computedStyles={(styles) => (_styles = styles)}
+  ></div>
+{/if}

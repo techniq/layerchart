@@ -4,6 +4,7 @@
 
   import { Canvas, Chart, GeoPath, Svg, Text } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
+  import ComputedStyles from 'layerchart/components/ComputedStyles.svelte';
 
   export let data;
   const states = feature(data.geojson, data.geojson.objects.states);
@@ -62,29 +63,27 @@
     >
       <Canvas>
         <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
+        <ComputedStyles class="fill-surface-content stroke-surface-100" let:styles>
+          {#each states.features as feature}
+            <GeoPath
+              geojson={feature}
+              render={(ctx, { newGeoPath }) => {
+                const geoPath = newGeoPath();
+                const [x, y] = geoPath.centroid(feature);
+                ctx.font = '8px sans-serif';
+                ctx.textAlign = 'center';
+
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = styles.stroke;
+                ctx.strokeText(feature.properties.name, x, y);
+
+                ctx.fillStyle = styles.fill;
+                ctx.fillText(feature.properties.name, x, y);
+              }}
+            />
+          {/each}
+        </ComputedStyles>
       </Canvas>
-      {#each states.features as feature}
-        <Canvas>
-          <GeoPath
-            geojson={feature}
-            class="fill-surface-content stroke-surface-100"
-            render={(ctx, { newGeoPath }) => {
-              const geoPath = newGeoPath();
-              const [x, y] = geoPath.centroid(feature);
-              const computedStyle = window.getComputedStyle(ctx.canvas);
-              ctx.font = '8px sans-serif';
-              ctx.textAlign = 'center';
-
-              ctx.lineWidth = 2;
-              ctx.strokeStyle = computedStyle.stroke;
-              ctx.strokeText(feature.properties.name, x, y);
-
-              ctx.fillStyle = computedStyle.fill;
-              ctx.fillText(feature.properties.name, x, y);
-            }}
-          />
-        </Canvas>
-      {/each}
     </Chart>
   </div>
 </Preview>

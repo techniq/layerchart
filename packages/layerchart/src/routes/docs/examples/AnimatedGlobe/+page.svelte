@@ -225,25 +225,13 @@
     >
       <Canvas>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
-      </Canvas>
-
-      <Canvas>
         <Graticule class="stroke-surface-content/20" />
-      </Canvas>
-
-      <Canvas>
         <GeoPath geojson={countries} class="stroke-surface-content/50 fill-white" />
-      </Canvas>
-
-      <Canvas>
         <GeoPath geojson={selectedFeature} class="stroke-primary-900 fill-primary" />
-      </Canvas>
-
-      {#if tooltip.data}
-        <Canvas>
+        {#if tooltip.data}
           <GeoPath geojson={tooltip.data} class="fill-surface-content/20" />
-        </Canvas>
-      {/if}
+        {/if}
+      </Canvas>
 
       <HitCanvas
         let:nextColor

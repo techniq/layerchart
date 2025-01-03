@@ -168,8 +168,6 @@
             }
           }}
         />
-      </Canvas>
-      <Canvas>
         <GeoPath geojson={states} class="stroke-black/30" {strokeWidth} />
       </Canvas>
 

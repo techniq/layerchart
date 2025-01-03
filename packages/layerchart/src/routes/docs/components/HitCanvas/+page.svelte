@@ -38,16 +38,12 @@
     >
       <Canvas>
         <GeoPath geojson={states} class="stroke-surface-content" />
-      </Canvas>
-      <Canvas>
         <GeoPath geojson={counties} class="stroke-surface-content/20" />
-      </Canvas>
 
-      {#if tooltip.data}
-        <Canvas>
+        {#if tooltip.data}
           <GeoPath geojson={tooltip.data} class="stroke-surface-content fill-surface-content/20" />
-        </Canvas>
-      {/if}
+        {/if}
+      </Canvas>
 
       <HitCanvas
         let:nextColor

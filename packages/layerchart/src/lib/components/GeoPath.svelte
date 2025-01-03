@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { createEventDispatcher, onDestroy } from 'svelte';
   import {
     geoTransform as d3geoTransform,
     type GeoIdentityTransform,
@@ -9,6 +8,7 @@
     type GeoTransformPrototype,
   } from 'd3-geo';
   import { cls } from '@layerstack/tailwind';
+  import { computedStyles } from '@layerstack/svelte-actions';
 
   import { chartContext } from './ChartContext.svelte';
   import { geoContext } from './GeoContext.svelte';
@@ -16,6 +16,7 @@
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoCurvePath } from '$lib/utils/geo.js';
   import { clearCanvasContext, renderPathData } from '$lib/utils/canvas.js';
+  import { getCanvasContext } from './layout/Canvas.svelte';
 
   export let geojson: GeoPermissibleObjects | null | undefined = undefined;
 
@@ -55,7 +56,6 @@
   }>();
 
   const { containerWidth, containerHeight, padding } = chartContext();
-  const canvas = getContext<{ ctx: Readable<CanvasRenderingContext2D> }>('canvas');
   const geo = geoContext();
 
   /**
@@ -70,34 +70,38 @@
 
   $: geoPath = geoCurvePath(_projection, curve);
 
-  $: renderContext = canvas ? 'canvas' : 'svg';
-  $: canvasCtx = canvas?.ctx;
+  const canvasContext = getCanvasContext();
+  const renderContext = canvasContext ? 'canvas' : 'svg';
+  let _styles: CSSStyleDeclaration;
 
-  $: if (renderContext === 'canvas' && $canvasCtx) {
-    clearCanvasContext($canvasCtx, {
-      padding: $padding,
-      containerWidth: $containerWidth,
-      containerHeight: $containerHeight,
-    });
-
-    // Transfer classes defined on <GeoPath> to <canvas> to enable window.getComputedStyle() retrieval (Tailwind classes, etc)
-    if ($$props.class) {
-      $canvasCtx.canvas.classList.add(...$$props.class.split(' '));
-    }
-
+  function _render(ctx: CanvasRenderingContext2D) {
     if (render) {
-      geoPath = geoCurvePath(_projection, curve);
-      render($canvasCtx, { newGeoPath: () => geoCurvePath(_projection, curve) });
+      render(ctx, { newGeoPath: () => geoCurvePath(_projection, curve) });
     } else {
-      // Set the context here since setting it in `$: geoPath` is a circular reference
-      geoPath = geoCurvePath(_projection, curve);
-
       if (geojson) {
+        console.log('rendering', _styles.fill);
         const pathData = geoPath(geojson);
-        renderPathData($canvasCtx, pathData, { fill, stroke, strokeWidth, class: $$props.class });
+        // renderPathData(ctx, pathData, { ..._styles, fill, stroke, strokeWidth });
+        renderPathData(ctx, pathData, { ..._styles });
       }
     }
   }
+
+  $: if (renderContext === 'canvas') {
+    canvasContext.register(_render);
+  }
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when geojson, projection, or class change
+    geojson && _projection && className;
+    canvasContext.invalidate();
+  }
+
+  onDestroy(() => {
+    if (renderContext === 'canvas') {
+      canvasContext.deregister(_render);
+    }
+  });
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -120,4 +124,12 @@
       class={cls(fill == null && 'fill-transparent', className)}
     />
   </slot>
+{/if}
+
+<!-- Hidden div to copy computed styles -->
+{#if renderContext === 'canvas'}
+  <div
+    class={cls('GeoPath-classes hidden', className)}
+    use:computedStyles={(styles) => (_styles = styles)}
+  ></div>
 {/if}

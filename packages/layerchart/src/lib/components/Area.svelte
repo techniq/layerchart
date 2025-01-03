@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { getContext, onDestroy, type ComponentProps } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { onDestroy, type ComponentProps } from 'svelte';
   import type { tweened as tweenedStore } from 'svelte/motion';
   import { type Area, area as d3Area, areaRadial } from 'd3-shape';
   import type { CurveFactory } from 'd3-shape';
   import { max, min } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
 
+  import { computedStyles } from '@layerstack/svelte-actions';
   import { cls } from '@layerstack/tailwind';
 
   import { motionStore } from '$lib/stores/motionStore.js';
@@ -15,7 +15,8 @@
   import Spline from './Spline.svelte';
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
-  import { clearCanvasContext, renderPathData } from '../utils/canvas.js';
+  import { renderPathData } from '../utils/canvas.js';
+  import { getCanvasContext } from './layout/Canvas.svelte';
 
   const {
     data: contextData,
@@ -26,9 +27,6 @@
     yDomain,
     yRange,
     radial,
-    padding,
-    containerWidth,
-    containerHeight,
     config,
   } = chartContext();
 
@@ -63,10 +61,6 @@
 
   $: xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
   $: yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
-
-  const canvas = getContext<{ ctx: Readable<CanvasRenderingContext2D> }>('canvas');
-  $: renderContext = canvas ? 'canvas' : 'svg';
-  $: canvasCtx = canvas?.ctx;
 
   /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
   function defaultPathData() {
@@ -135,29 +129,26 @@
     tweened_d.set(d ?? '');
   }
 
-  $: if (renderContext === 'canvas' && $canvasCtx) {
-    clearCanvasContext($canvasCtx, {
-      padding: $padding,
-      containerWidth: $containerWidth,
-      containerHeight: $containerHeight,
-    });
+  const canvasContext = getCanvasContext();
+  const renderContext = canvasContext ? 'canvas' : 'svg';
+  let _styles: CSSStyleDeclaration;
 
-    // Transfer classes defined on <Spline> to <canvas> to enable window.getComputedStyle() retrieval (Tailwind classes, etc)
-    if ($$props.class) {
-      $canvasCtx.canvas.classList.add(...$$props.class.split(' '));
-    }
-
+  function render(ctx: CanvasRenderingContext2D) {
     // TODO: Only apply `stroke-` to `Spline`
-    renderPathData($canvasCtx, $tweened_d, { class: $$props.class });
+    renderPathData(ctx, $tweened_d, _styles);
+  }
+
+  $: if (renderContext === 'canvas') {
+    canvasContext.register(render);
+
+    tweened_d.subscribe(() => {
+      canvasContext.invalidate();
+    });
   }
 
   onDestroy(() => {
-    if (renderContext === 'canvas' && $canvasCtx) {
-      clearCanvasContext($canvasCtx, {
-        padding: $padding,
-        containerWidth: $containerWidth,
-        containerHeight: $containerHeight,
-      });
+    if (renderContext === 'canvas') {
+      canvasContext.deregister(render);
     }
   });
 </script>
@@ -186,4 +177,12 @@
     on:pointermove
     on:pointerleave
   />
+{/if}
+
+<!-- Hidden div to copy computed styles -->
+{#if renderContext === 'canvas'}
+  <div
+    class={cls('Area-classes hidden', $$props.class)}
+    use:computedStyles={(styles) => (_styles = styles)}
+  ></div>
 {/if}

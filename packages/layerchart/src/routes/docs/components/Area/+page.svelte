@@ -75,13 +75,10 @@
             {tweened}
             class="fill-primary/10"
           />
-        {/if}
-      </svelte:component>
 
-      <!--  Render separate context for Points to play nice with Canvas (clear, etc) -->
-      <svelte:component this={Context}>
-        {#if show && showPoints}
-          <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
+          {#if showPoints}
+            <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
+          {/if}
         {/if}
       </svelte:component>
     </Chart>
@@ -122,22 +119,17 @@
         <Axis placement="bottom" rule />
       </Svg>
 
-      <!--  Render separate Canvas context for each component to play nice (clear, etc).  See: https://github.com/techniq/layerchart/issues/158#issuecomment-2543416108 -->
       <Canvas>
         {#if show}
           <Area {curve} {tweened} class="fill-primary/10" />
-        {/if}
-      </Canvas>
 
-      <Canvas>
-        {#if show && showLine}
-          <Spline {curve} {tweened} class="stroke-primary stroke-2" />
-        {/if}
-      </Canvas>
+          {#if showLine}
+            <Spline {curve} {tweened} class="stroke-primary stroke-2" />
+          {/if}
 
-      <Canvas>
-        {#if show && showPoints}
-          <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
+          {#if showPoints}
+            <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
+          {/if}
         {/if}
       </Canvas>
     </Chart>

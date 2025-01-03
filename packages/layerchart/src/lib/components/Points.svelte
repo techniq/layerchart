@@ -3,16 +3,20 @@
 </script>
 
 <script lang="ts">
-  import { getContext, type ComponentProps } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { onDestroy, type ComponentProps } from 'svelte';
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
   import { notNull } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
+  import { computedStyles } from '@layerstack/svelte-actions';
 
   import { chartContext } from './ChartContext.svelte';
   import Circle from './Circle.svelte';
   import Link from './Link.svelte';
   import { isScaleBand, type AnyScale } from '../utils/scales.js';
+  import { getCanvasContext } from './layout/Canvas.svelte';
+  import { DEFAULT_FILL, renderPathData } from '../utils/canvas.js';
+  import { circlePath } from 'layerchart/utils/path.js';
 
   const context = chartContext() as any;
   const {
@@ -25,9 +29,6 @@
     yGet,
     cGet,
     rGet,
-    padding,
-    containerWidth,
-    containerHeight,
     config,
     radial,
   } = context;
@@ -54,9 +55,6 @@
 
   let className: string | undefined = undefined;
   export { className as class };
-
-  const canvas = getContext<{ ctx: Readable<CanvasRenderingContext2D> }>('canvas');
-  const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
   function getOffset(value: any, offset: Offset, scale: AnyScale) {
     if (typeof offset === 'function') {
@@ -165,42 +163,30 @@
     }
   });
 
-  $: renderContext = canvas ? 'canvas' : 'svg';
-  $: ctx = canvas?.ctx;
-  $: if (renderContext === 'canvas' && $ctx) {
-    let computedStyles: Partial<CSSStyleDeclaration> = {};
+  const canvasContext = getCanvasContext();
+  const renderContext = canvasContext ? 'canvas' : 'svg';
+  let _styles: CSSStyleDeclaration;
 
-    // Transfer classes defined on <GeoPath> to <canvas> to enable window.getComputedStyle() retrieval (Tailwind classes, etc)
-    if (className) {
-      $ctx.canvas.classList.add(...className.split(' '));
-      computedStyles = window.getComputedStyle($ctx.canvas);
-    }
-
-    // Clear with negative offset due to Canvas `context.translate(...)`
-    $ctx.clearRect(-$padding.left, -$padding.top, $containerWidth, $containerHeight);
-
+  function _render(ctx: CanvasRenderingContext2D) {
     if (render) {
-      render($ctx, points);
+      render(ctx, points);
     } else {
       points.forEach((point) => {
-        $ctx.beginPath();
-        $ctx.arc(point.x, point.y, point.r, 0, 2 * Math.PI, false);
-
-        $ctx.lineWidth = Number(strokeWidth ?? 0);
-        $ctx.strokeStyle =
-          (stroke ?? computedStyles.stroke === 'none')
-            ? 'transparent'
-            : (computedStyles.stroke ?? '');
-        $ctx.stroke();
-
-        $ctx.fillStyle =
-          fill ??
-          (computedStyles.fill !== DEFAULT_FILL ? computedStyles.fill : undefined) ??
-          'transparent';
-        $ctx.fill();
+        const pathData = circlePath({ cx: point.x, cy: point.y, r: point.r });
+        renderPathData(ctx, pathData, _styles);
       });
     }
   }
+
+  $: if (renderContext === 'canvas') {
+    canvasContext.register(_render);
+  }
+
+  onDestroy(() => {
+    if (renderContext === 'canvas') {
+      canvasContext.deregister(_render);
+    }
+  });
 </script>
 
 <slot {points}>
@@ -233,3 +219,11 @@
     </g>
   {/if}
 </slot>
+
+<!-- Hidden div to copy computed styles -->
+{#if renderContext === 'canvas'}
+  <div
+    class={cls('Points-classes hidden', $$props.class)}
+    use:computedStyles={(styles) => (_styles = styles)}
+  ></div>
+{/if}

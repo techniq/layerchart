@@ -1,27 +1,22 @@
-const DEFAULT_FILL = 'rgb(0, 0, 0)';
+export const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
 /** Render SVG path data onto canvas context.  Supports CSS classes  tranferring to `<canvas>` element for retrieval) */
 export function renderPathData(
   canvasCtx: CanvasRenderingContext2D,
   pathData: string | null | undefined,
-  props: { fill?: string; stroke?: string; strokeWidth?: number; class?: string } = {}
+  styles: Partial<CSSStyleDeclaration> = {}
 ) {
-  // Get classes from nearest `<canvas>` element.  Useful if classes are moved up from underlying component (ex. GeoPath)
-  const computedStyles: Partial<CSSStyleDeclaration> = window.getComputedStyle(canvasCtx.canvas);
-
   const path = new Path2D(pathData ?? '');
 
-  const fill = props.fill ?? (computedStyles.fill !== DEFAULT_FILL ? computedStyles.fill : null);
+  const fill = styles.fill === DEFAULT_FILL ? null : styles.fill;
   if (fill) {
     canvasCtx.fillStyle = fill;
     canvasCtx.fill(path);
   }
 
-  const stroke =
-    props.stroke ?? (computedStyles.stroke === 'none' ? null : (computedStyles.stroke ?? null));
+  const stroke = styles.stroke === 'none' ? null : styles.stroke;
   if (stroke) {
-    canvasCtx.lineWidth =
-      props.strokeWidth ?? Number(computedStyles.strokeWidth?.replace('px', ''));
+    canvasCtx.lineWidth = Number(styles.strokeWidth?.replace('px', ''));
     canvasCtx.strokeStyle = stroke;
     canvasCtx.stroke(path);
   }
@@ -48,4 +43,22 @@ export function clearCanvasContext(
     options.containerWidth,
     options.containerHeight
   );
+}
+
+/**
+	Scales a canvas for high DPI / retina displays.
+  @see: https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio#examples
+  @see: https://web.dev/articles/canvas-hidipi
+*/
+export function scaleCanvas(ctx: CanvasRenderingContext2D, width: number, height: number) {
+  const devicePixelRatio = window.devicePixelRatio || 1;
+
+  ctx.canvas.width = width * devicePixelRatio;
+  ctx.canvas.height = height * devicePixelRatio;
+
+  ctx.canvas.style.width = `${width}px`;
+  ctx.canvas.style.height = `${height}px`;
+
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+  return { width: ctx.canvas.width, height: ctx.canvas.height };
 }

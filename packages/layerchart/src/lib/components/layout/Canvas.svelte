@@ -1,11 +1,32 @@
+<script lang="ts" context="module">
+  import { getContext, onDestroy, setContext } from 'svelte';
+
+  type DrawFunction = (ctx: CanvasRenderingContext2D) => any;
+
+  export type CanvasContext = {
+    register(fn: DrawFunction): void;
+    deregister(fn: DrawFunction): void;
+    invalidate(): void;
+  };
+
+  export const canvasContextKey = Symbol();
+
+  export function getCanvasContext() {
+    return getContext<CanvasContext>(canvasContextKey);
+  }
+
+  function setCanvasContext(context: CanvasContext) {
+    setContext(canvasContextKey, context);
+  }
+</script>
+
 <script lang="ts">
-  import { onMount, setContext } from 'svelte';
-  import { writable } from 'svelte/store';
-  import { scaleCanvas } from 'layercake';
+  import { onMount } from 'svelte';
   import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from '../ChartContext.svelte';
   import { transformContext } from '../TransformContext.svelte';
+  import { scaleCanvas } from '../../utils/canvas.js';
 
   const { width, height, containerWidth, containerHeight, padding } = chartContext();
 
@@ -38,15 +59,24 @@
   /** A string passed to `aria-describedby` property on the `<canvas>` tag. */
   export let describedBy: string | undefined = undefined;
 
-  const ctx = writable({});
+  const drawFunctions: DrawFunction[] = [];
+  let pendingInvalidation = false;
+  let frameId: number | undefined;
+
+  const { mode, scale, translate } = transformContext();
 
   onMount(() => {
     context = element?.getContext('2d', { willReadFrequently }) as CanvasRenderingContext2D;
   });
 
-  const { mode, scale, translate } = transformContext();
+  onDestroy(() => {
+    if (frameId) {
+      cancelAnimationFrame(frameId);
+    }
+  });
 
-  $: if (context) {
+  function update() {
+    if (!context) return;
     scaleCanvas(context, $containerWidth, $containerHeight);
     context.clearRect(0, 0, $containerWidth, $containerHeight);
 
@@ -62,12 +92,31 @@
       context.scale($scale, $scale);
     }
 
-    // Force children to re-draw
-    $ctx = context;
+    // console.log({ drawFunctions });
+    drawFunctions.forEach((fn) => {
+      context.save();
+      fn(context);
+      context.restore();
+    });
+
+    pendingInvalidation = false;
   }
 
-  $: ctx.set(context);
-  setContext('canvas', { ctx });
+  $: setCanvasContext({
+    register(fn) {
+      drawFunctions.push(fn);
+      this.invalidate();
+    },
+    deregister(fn) {
+      drawFunctions.splice(drawFunctions.indexOf(fn), 1);
+      this.invalidate();
+    },
+    invalidate() {
+      if (pendingInvalidation) return;
+      pendingInvalidation = true;
+      frameId = requestAnimationFrame(update);
+    },
+  });
 </script>
 
 <canvas

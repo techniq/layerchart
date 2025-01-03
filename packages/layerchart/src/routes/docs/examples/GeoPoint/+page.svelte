@@ -3,8 +3,19 @@
   import { feature } from 'topojson-client';
   import { Field, Switch } from 'svelte-ux';
 
-  import { Canvas, Chart, GeoPath, GeoPoint, Svg, Text, Tooltip } from 'layerchart';
+  import {
+    Canvas,
+    Chart,
+    circlePath,
+    GeoPath,
+    GeoPoint,
+    renderPathData,
+    Svg,
+    Text,
+    Tooltip,
+  } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
+  import ComputedStyles from '$lib/components/ComputedStyles.svelte';
 
   export let data;
 
@@ -257,48 +268,38 @@
     >
       <Canvas>
         <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
+
+        <ComputedStyles class="fill-white stroke-danger" let:styles={pointStyles}>
+          <ComputedStyles class="fill-surface-content stroke-surface-100" let:styles={labelStyles}>
+            {#each data.us.captitals as capital}
+              <!-- Point -->
+              <GeoPoint
+                lat={capital.latitude}
+                long={capital.longitude}
+                render={(ctx, { x, y }) => {
+                  const pathData = circlePath({ cx: x, cy: y, r: 2 });
+                  renderPathData(ctx, pathData, pointStyles);
+                }}
+              />
+
+              <!-- Label -->
+              <GeoPoint
+                lat={capital.latitude}
+                long={capital.longitude}
+                render={(ctx, { x, y }) => {
+                  ctx.font = '8px sans-serif';
+                  ctx.textAlign = 'center';
+                  ctx.lineWidth = 2;
+                  ctx.strokeStyle = labelStyles.stroke;
+                  ctx.fillStyle = labelStyles.fill;
+                  ctx.strokeText(capital.description, x, y - 6);
+                  ctx.fillText(capital.description, x, y - 6);
+                }}
+              />
+            {/each}
+          </ComputedStyles>
+        </ComputedStyles>
       </Canvas>
-
-      {#each data.us.captitals as capital}
-        <Canvas>
-          <!-- Point -->
-          <GeoPoint
-            lat={capital.latitude}
-            long={capital.longitude}
-            class="fill-white stroke-danger"
-            render={(ctx, { x, y }) => {
-              const computedStyle = window.getComputedStyle(ctx.canvas);
-              const radius = 2;
-              ctx.strokeStyle = computedStyle.stroke;
-              ctx.fillStyle = computedStyle.fill;
-              ctx.beginPath();
-              ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
-              ctx.fill();
-              ctx.stroke();
-            }}
-          />
-        </Canvas>
-
-        <!-- Use separate canvas/points for separate stroke/fill classes -->
-        <Canvas>
-          <!-- Label -->
-          <GeoPoint
-            lat={capital.latitude}
-            long={capital.longitude}
-            class="fill-surface-content stroke-surface-100"
-            render={(ctx, { x, y }) => {
-              const computedStyle = window.getComputedStyle(ctx.canvas);
-              ctx.font = '8px sans-serif';
-              ctx.textAlign = 'center';
-              ctx.lineWidth = 2;
-              ctx.strokeStyle = computedStyle.stroke;
-              ctx.fillStyle = computedStyle.fill;
-              ctx.strokeText(capital.description, x, y - 6);
-              ctx.fillText(capital.description, x, y - 6);
-            }}
-          />
-        </Canvas>
-      {/each}
     </Chart>
   </div>
 </Preview>

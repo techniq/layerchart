@@ -186,9 +186,7 @@
           class="fill-surface-content/10 stroke-surface-100"
           {strokeWidth}
         />
-      </Canvas>
 
-      <Canvas>
         <GeoPath
           render={(ctx, { newGeoPath }) => {
             for (var feature of enrichedCountiesFeatures) {

@@ -17,6 +17,7 @@
   import TransformControls from 'layerchart/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import ComputedStyles from 'layerchart/components/ComputedStyles.svelte';
 
   export let data;
 
@@ -167,37 +168,34 @@
           class="fill-surface-content/10 stroke-surface-100"
           {strokeWidth}
         />
-      </Canvas>
 
-      <Canvas>
-        <GeoPath
-          class="stroke-danger fill-danger/25"
-          render={(ctx, { newGeoPath }) => {
-            const computedStyle = window.getComputedStyle(ctx.canvas);
+        <ComputedStyles class="stroke-danger fill-danger/25" let:styles>
+          <GeoPath
+            render={(ctx, { newGeoPath }) => {
+              for (var feature of enrichedCountiesFeatures) {
+                const geoPath = newGeoPath();
+                const [x, y] = geoPath.centroid(feature);
+                const d = feature.properties.data;
+                const height = heightScale(d?.population ?? 0);
 
-            for (var feature of enrichedCountiesFeatures) {
-              const geoPath = newGeoPath();
-              const [x, y] = geoPath.centroid(feature);
-              const d = feature.properties.data;
-              const height = heightScale(d?.population ?? 0);
+                ctx.lineWidth = strokeWidth;
+                ctx.strokeStyle = styles.stroke;
+                ctx.fillStyle = styles.fill;
 
-              ctx.lineWidth = strokeWidth;
-              ctx.strokeStyle = computedStyle.stroke;
-              ctx.fillStyle = computedStyle.fill;
+                const startPoint = [x - width / 2, y];
+                const midPoint = [x, y - height];
+                const endPoint = [x + width / 2, y];
 
-              const startPoint = [x - width / 2, y];
-              const midPoint = [x, y - height];
-              const endPoint = [x + width / 2, y];
-
-              ctx.beginPath();
-              ctx.moveTo(x - width / 2, y); // startPoint
-              ctx.lineTo(x, y - height); // midPoint
-              ctx.lineTo(x + width / 2, y); // endPoint
-              ctx.fill();
-              ctx.stroke();
-            }
-          }}
-        />
+                ctx.beginPath();
+                ctx.moveTo(x - width / 2, y); // startPoint
+                ctx.lineTo(x, y - height); // midPoint
+                ctx.lineTo(x + width / 2, y); // endPoint
+                ctx.fill();
+                ctx.stroke();
+              }
+            }}
+          />
+        </ComputedStyles>
       </Canvas>
 
       {#if tooltip.data}
