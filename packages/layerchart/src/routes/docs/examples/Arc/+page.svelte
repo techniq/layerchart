@@ -135,11 +135,9 @@
         <SpringValue {value} let:value>
           {#each { length: segments } as _, segmentIndex}
             {@const segmentAngle = (2 * Math.PI) / segments}
-            {@const startAngle = segmentIndex * segmentAngle}
-            {@const endAngle = (segmentIndex + 1) * segmentAngle}
             <Arc
-              {startAngle}
-              {endAngle}
+              startAngle={segmentIndex * segmentAngle}
+              endAngle={(segmentIndex + 1) * segmentAngle}
               innerRadius={-20}
               cornerRadius={4}
               padAngle={0.02}
@@ -148,7 +146,7 @@
                   ? 'fill-success-300'
                   : 'fill-surface-content/10'
               )}
-            ></Arc>
+            />
           {/each}
 
           <Text
@@ -179,20 +177,13 @@
             <SpringValue {value} let:value>
               {#each { length: segments } as _, segmentIndex}
                 {@const segmentAngle = (2 * Math.PI) / segments}
-                {@const startAngle = segmentIndex * segmentAngle}
-                {@const endAngle = (segmentIndex + 1) * segmentAngle}
                 <Arc
-                  {startAngle}
-                  {endAngle}
+                  startAngle={segmentIndex * segmentAngle}
+                  endAngle={(segmentIndex + 1) * segmentAngle}
                   innerRadius={-20}
                   cornerRadius={4}
                   padAngle={0.02}
-                  class={cls(
-                    (segmentIndex / segments) * 100 < (value ?? 0)
-                      ? 'fill-success-300'
-                      : 'fill-surface-content/10'
-                  )}
-                ></Arc>
+                />
               {/each}
             </SpringValue>
           </svelte:fragment>
@@ -200,10 +191,9 @@
             {value}
             innerRadius={-20}
             spring
-            let:value
             class="fill-success-300"
             track={{ class: 'fill-surface-content/10' }}
-          ></Arc>
+          />
         </ClipPath>
 
         <Text
