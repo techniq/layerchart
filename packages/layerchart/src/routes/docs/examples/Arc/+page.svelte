@@ -174,7 +174,7 @@
   <div class="h-[240px] p-4 border rounded">
     <Chart>
       <Svg center>
-        <ClipPath useId="clip">
+        <ClipPath>
           <svelte:fragment slot="clip">
             <SpringValue {value} let:value>
               {#each { length: segments } as _, segmentIndex}
