@@ -12,7 +12,9 @@ export async function load() {
         'components/ChartClipPath',
         'components/CircleClipPath',
         'components/RectClipPath',
+        'components/Threshold',
         'examples/GeoTile',
+        'examples/Timezones',
       ],
     },
   };

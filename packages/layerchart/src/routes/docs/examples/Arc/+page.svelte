@@ -4,6 +4,7 @@
   import {
     Arc,
     Chart,
+    ClipPath,
     Group,
     LinearGradient,
     Svg,
@@ -158,6 +159,60 @@
             class="text-6xl tabular-nums"
           />
         </SpringValue>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Segmented Arc (clip/mask)</h2>
+
+<div class="grid grid-flow-col gap-3 mb-2">
+  <RangeField label="Value" bind:value />
+  <RangeField label="Segments" bind:value={segments} min={2} />
+</div>
+<Preview>
+  <div class="h-[240px] p-4 border rounded">
+    <Chart>
+      <Svg center>
+        <ClipPath useId="clip">
+          <svelte:fragment slot="clip">
+            <SpringValue {value} let:value>
+              {#each { length: segments } as _, segmentIndex}
+                {@const segmentAngle = (2 * Math.PI) / segments}
+                {@const startAngle = segmentIndex * segmentAngle}
+                {@const endAngle = (segmentIndex + 1) * segmentAngle}
+                <Arc
+                  {startAngle}
+                  {endAngle}
+                  innerRadius={-20}
+                  cornerRadius={4}
+                  padAngle={0.02}
+                  class={cls(
+                    (segmentIndex / segments) * 100 < (value ?? 0)
+                      ? 'fill-success-300'
+                      : 'fill-surface-content/10'
+                  )}
+                ></Arc>
+              {/each}
+            </SpringValue>
+          </svelte:fragment>
+          <Arc
+            {value}
+            innerRadius={-20}
+            spring
+            let:value
+            class="fill-success-300"
+            track={{ class: 'fill-surface-content/10' }}
+          ></Arc>
+        </ClipPath>
+
+        <Text
+          value={Math.round(value ?? 0)}
+          textAnchor="middle"
+          verticalAnchor="middle"
+          dy={16}
+          class="text-6xl tabular-nums"
+        />
       </Svg>
     </Chart>
   </div>
