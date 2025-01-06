@@ -10,12 +10,11 @@
   import { cls } from '@layerstack/tailwind';
   import { computedStyles } from '@layerstack/svelte-actions';
 
-  import { chartContext } from './ChartContext.svelte';
   import { geoContext } from './GeoContext.svelte';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoCurvePath } from '$lib/utils/geo.js';
-  import { clearCanvasContext, renderPathData } from '$lib/utils/canvas.js';
+  import { renderPathData } from '$lib/utils/canvas.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
 
   export let geojson: GeoPermissibleObjects | null | undefined = undefined;
@@ -55,7 +54,6 @@
     click: { geoPath: ReturnType<typeof geoCurvePath>; event: MouseEvent };
   }>();
 
-  const { containerWidth, containerHeight, padding } = chartContext();
   const geo = geoContext();
 
   /**
@@ -79,7 +77,7 @@
       render(ctx, { newGeoPath: () => geoCurvePath(_projection, curve) });
     } else {
       if (geojson) {
-        console.log('rendering', _styles.fill);
+        // console.log('rendering', _styles.fill);
         const pathData = geoPath(geojson);
         // renderPathData(ctx, pathData, { ..._styles, fill, stroke, strokeWidth });
         renderPathData(ctx, pathData, { ..._styles });
