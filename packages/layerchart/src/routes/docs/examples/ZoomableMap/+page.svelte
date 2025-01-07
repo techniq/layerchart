@@ -283,6 +283,7 @@
             transform.reset();
           } else {
             selectedStateId = feature.id;
+            tooltip.hide();
             const featureTransform = geoFitObjectTransform(projection, [width, height], feature);
             transform.setTranslate(featureTransform.translate);
             transform.setScale(featureTransform.scale);
@@ -397,6 +398,7 @@
             transform.reset();
           } else {
             selectedStateId = feature.id;
+            tooltip.hide();
             let [[left, top], [right, bottom]] = geoPath.bounds(feature);
             let width = right - left;
             let height = bottom - top;
