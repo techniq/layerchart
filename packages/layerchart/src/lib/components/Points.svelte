@@ -15,7 +15,7 @@
   import Link from './Link.svelte';
   import { isScaleBand, type AnyScale } from '../utils/scales.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { DEFAULT_FILL, renderPathData } from '../utils/canvas.js';
+  import { renderPathData } from '../utils/canvas.js';
   import { circlePath } from 'layerchart/utils/path.js';
 
   const context = chartContext() as any;
@@ -47,7 +47,6 @@
 
   export let fill: string | undefined = undefined;
   export let stroke: string | undefined = undefined;
-  export let strokeWidth: number | string | undefined = undefined;
 
   /** Render to canvas */
   export let render: ((ctx: CanvasRenderingContext2D, points: Point[]) => any) | undefined =

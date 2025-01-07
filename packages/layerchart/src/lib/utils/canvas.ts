@@ -4,7 +4,7 @@ export const DEFAULT_FILL = 'rgb(0, 0, 0)';
 export function renderPathData(
   canvasCtx: CanvasRenderingContext2D,
   pathData: string | null | undefined,
-  styles: Partial<CSSStyleDeclaration> = {}
+  styles: Partial<Omit<CSSStyleDeclaration, 'strokeWidth'> & { strokeWidth?: number | string }> = {}
 ) {
   const path = new Path2D(pathData ?? '');
 

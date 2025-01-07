@@ -46,7 +46,7 @@
     });
   }
 
-  $: if (renderContext === 'canvas' && url) {
+  $: if (renderContext === 'canvas') {
     canvasContext.register(render);
   }
 
