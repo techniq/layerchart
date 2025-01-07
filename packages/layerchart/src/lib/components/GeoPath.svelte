@@ -9,6 +9,7 @@
   } from 'd3-geo';
   import { cls } from '@layerstack/tailwind';
   import { computedStyles } from '@layerstack/svelte-actions';
+  import { merge } from 'lodash-es';
 
   import { geoContext } from './GeoContext.svelte';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
@@ -67,6 +68,11 @@
   $: _projection = geoTransform ? d3geoTransform(geoTransform($geo)) : $geo;
 
   $: geoPath = geoCurvePath(_projection, curve);
+  $: {
+    // Recreate `geoPath()` if `geojson` data changes (fixes ghosting issue when rendering to canvas)
+    geojson;
+    geoPath = geoCurvePath(_projection, curve);
+  }
 
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
@@ -79,8 +85,7 @@
       if (geojson) {
         // console.log('rendering', _styles.fill);
         const pathData = geoPath(geojson);
-        // renderPathData(ctx, pathData, { ..._styles, fill, stroke, strokeWidth });
-        renderPathData(ctx, pathData, { ..._styles });
+        renderPathData(ctx, pathData, merge({}, _styles, { fill, stroke, strokeWidth }));
       }
     }
   }
@@ -91,7 +96,7 @@
 
   $: if (renderContext === 'canvas') {
     // Redraw when geojson, projection, or class change
-    geojson && _projection && className;
+    geojson && _projection && className && fill && stroke && strokeWidth;
     canvasContext.invalidate();
   }
 

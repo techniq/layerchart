@@ -16,7 +16,10 @@ export function renderPathData(
 
   const stroke = styles.stroke === 'none' ? null : styles.stroke;
   if (stroke) {
-    canvasCtx.lineWidth = Number(styles.strokeWidth?.replace('px', ''));
+    canvasCtx.lineWidth =
+      typeof styles.strokeWidth === 'string'
+        ? Number(styles.strokeWidth?.replace('px', ''))
+        : (styles.strokeWidth ?? 0);
     canvasCtx.strokeStyle = stroke;
     canvasCtx.stroke(path);
   }

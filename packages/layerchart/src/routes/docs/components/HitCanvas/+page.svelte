@@ -39,7 +39,10 @@
       <Canvas>
         <GeoPath geojson={states} class="stroke-surface-content" />
         <GeoPath geojson={counties} class="stroke-surface-content/20" />
+      </Canvas>
 
+      <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
+      <Canvas>
         {#if tooltip.data}
           <GeoPath geojson={tooltip.data} class="stroke-surface-content fill-surface-content/20" />
         {/if}

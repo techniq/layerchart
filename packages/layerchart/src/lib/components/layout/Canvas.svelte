@@ -77,11 +77,13 @@
 
   function update() {
     if (!context) return;
+    // TODO: only `scaleCanvas()` when containerWidth/Height change (not all invalidations)
+    // scaleCanvas in `update()` to fix `requestAnimationFrame()` timing causing flash of blank canvas
     scaleCanvas(context, $containerWidth, $containerHeight);
+
     context.clearRect(0, 0, $containerWidth, $containerHeight);
 
     context.translate($padding.left ?? 0, $padding.top ?? 0);
-
     if (mode === 'canvas') {
       const center = { x: $width / 2, y: $height / 2 };
       const newTranslate = {
@@ -92,7 +94,6 @@
       context.scale($scale, $scale);
     }
 
-    // console.log({ drawFunctions });
     drawFunctions.forEach((fn) => {
       context.save();
       fn(context);
@@ -102,7 +103,7 @@
     pendingInvalidation = false;
   }
 
-  $: setCanvasContext({
+  const canvasContext: CanvasContext = {
     register(fn) {
       drawFunctions.push(fn);
       this.invalidate();
@@ -116,7 +117,15 @@
       pendingInvalidation = true;
       frameId = requestAnimationFrame(update);
     },
-  });
+  };
+
+  $: {
+    // Redraw when resized
+    $containerWidth, $containerHeight;
+    canvasContext.invalidate();
+  }
+
+  setCanvasContext(canvasContext);
 </script>
 
 <canvas

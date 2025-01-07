@@ -353,9 +353,7 @@
           class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
           strokeWidth={1 / transform.scale}
         />
-      </Canvas>
 
-      <Canvas>
         <!-- TODO: Fade in with delay like SVG -->
         <!-- <g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}> -->
         <GeoPath
@@ -371,6 +369,7 @@
         <!-- </g> -->
       </Canvas>
 
+      <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
       {#if tooltip.data}
         <Canvas>
           <GeoPath

@@ -228,6 +228,10 @@
         <Graticule class="stroke-surface-content/20" />
         <GeoPath geojson={countries} class="stroke-surface-content/50 fill-white" />
         <GeoPath geojson={selectedFeature} class="stroke-primary-900 fill-primary" />
+      </Canvas>
+
+      <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
+      <Canvas>
         {#if tooltip.data}
           <GeoPath geojson={tooltip.data} class="fill-surface-content/20" />
         {/if}
