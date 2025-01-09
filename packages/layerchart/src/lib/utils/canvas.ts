@@ -49,18 +49,19 @@ function getComputedStyles(
     return computedStyles;
   } catch (e) {
     console.error('Unable to get computed styles', e);
-    return null;
+    return {} as CSSStyleDeclaration;
   }
 }
 
-/** Render SVG path data onto canvas context.  Supports CSS variables and classes by tranferring to hidden `<svg>` element before retrieval) */
-export function renderPathData(
+/** Render onto canvas context.  Supports CSS variables and classes by tranferring to hidden `<svg>` element before retrieval) */
+function render(
   canvasCtx: CanvasRenderingContext2D,
-  pathData: string | null | undefined,
+  render: {
+    stroke: (canvasCtx: CanvasRenderingContext2D) => void;
+    fill: (canvasCtx: CanvasRenderingContext2D) => void;
+  },
   styleOptions: ComputedStylesOptions = {}
 ) {
-  const path = new Path2D(pathData ?? '');
-
   // TODO: Consider memoizing?  How about reactiving to CSS variable changes (light/dark mode toggle)
   const computedStyles = getComputedStyles(canvasCtx.canvas, styleOptions);
 
@@ -72,12 +73,32 @@ export function renderPathData(
     canvasCtx.globalAlpha = Number(computedStyles?.opacity);
   }
 
+  // Text properties
+  canvasCtx.font = computedStyles.font;
+
+  // TODO: Hack to handle `textAnchor` with canvas.  Try to find a better approach
+  if (computedStyles.textAnchor === 'middle') {
+    canvasCtx.textAlign = 'center';
+  } else if (computedStyles.textAnchor === 'end') {
+    canvasCtx.textAlign = 'right';
+  } else {
+    canvasCtx.textAlign = computedStyles.textAlign as CanvasTextAlign; // TODO: Handle `justify` and `match-parent`?
+  }
+
+  // TODO: Handle `textBaseline` / `verticalAnchor` (Text)
+  // canvasCtx.textBaseline = 'top';
+  // canvasCtx.textBaseline = 'middle';
+  // canvasCtx.textBaseline = 'bottom';
+  // canvasCtx.textBaseline = 'alphabetic';
+  // canvasCtx.textBaseline = 'hanging';
+  // canvasCtx.textBaseline = 'ideographic';
+
   paintOrder.forEach((attr) => {
     if (attr === 'fill') {
       const fill = computedStyles?.fill === DEFAULT_FILL ? null : computedStyles?.fill;
       if (fill) {
         canvasCtx.fillStyle = fill;
-        canvasCtx.fill(path);
+        render.fill(canvasCtx);
       }
     } else if (attr === 'stroke') {
       const stroke = computedStyles?.stroke === 'none' ? null : computedStyles?.stroke;
@@ -88,10 +109,46 @@ export function renderPathData(
             : (computedStyles?.strokeWidth ?? 1);
 
         canvasCtx.strokeStyle = stroke;
-        canvasCtx.stroke(path);
+        render.stroke(canvasCtx);
       }
     }
   });
+}
+
+/** Render SVG path data onto canvas context.  Supports CSS variables and classes by tranferring to hidden `<svg>` element before retrieval) */
+export function renderPathData(
+  canvasCtx: CanvasRenderingContext2D,
+  pathData: string | null | undefined,
+  styleOptions: ComputedStylesOptions = {}
+) {
+  const path = new Path2D(pathData ?? '');
+
+  render(
+    canvasCtx,
+    {
+      fill: (ctx) => ctx.fill(path),
+      stroke: (ctx) => ctx.stroke(path),
+    },
+    styleOptions
+  );
+}
+
+export function renderText(
+  canvasCtx: CanvasRenderingContext2D,
+  text: string | number | null | undefined,
+  coords: { x: number; y: number },
+  styleOptions: ComputedStylesOptions = {}
+) {
+  if (text) {
+    render(
+      canvasCtx,
+      {
+        fill: (ctx) => ctx.fillText(text.toString(), coords.x, coords.y),
+        stroke: (ctx) => ctx.strokeText(text.toString(), coords.x, coords.y),
+      },
+      styleOptions
+    );
+  }
 }
 
 /** Clear canvas accounting for Canvas `context.translate(...)` */
