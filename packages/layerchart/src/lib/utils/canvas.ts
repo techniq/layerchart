@@ -93,6 +93,8 @@ function render(
   // canvasCtx.textBaseline = 'hanging';
   // canvasCtx.textBaseline = 'ideographic';
 
+  // TODO: Support dashed lines
+
   paintOrder.forEach((attr) => {
     if (attr === 'fill') {
       const fill = computedStyles?.fill === DEFAULT_FILL ? null : computedStyles?.fill;
@@ -149,6 +151,21 @@ export function renderText(
       styleOptions
     );
   }
+}
+
+export function renderRect(
+  canvasCtx: CanvasRenderingContext2D,
+  coords: { x: number; y: number; width: number; height: number },
+  styleOptions: ComputedStylesOptions = {}
+) {
+  render(
+    canvasCtx,
+    {
+      fill: (ctx) => ctx.fillRect(coords.x, coords.y, coords.width, coords.height),
+      stroke: (ctx) => ctx.strokeRect(coords.x, coords.y, coords.width, coords.height),
+    },
+    styleOptions
+  );
 }
 
 /** Clear canvas accounting for Canvas `context.translate(...)` */
