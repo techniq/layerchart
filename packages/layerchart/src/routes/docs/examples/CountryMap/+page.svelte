@@ -2,9 +2,8 @@
   import { geoAlbersUsa } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, Svg, Text } from 'layerchart';
+  import { Canvas, Chart, GeoPath, renderText, Svg, Text } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import ComputedStyles from 'layerchart/components/ComputedStyles.svelte';
 
   export let data;
   const states = feature(data.geojson, data.geojson.objects.states);
@@ -63,26 +62,25 @@
     >
       <Canvas>
         <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
-        <ComputedStyles class="fill-surface-content stroke-surface-100" let:styles>
-          {#each states.features as feature}
-            <GeoPath
-              geojson={feature}
-              render={(ctx, { newGeoPath }) => {
-                const geoPath = newGeoPath();
-                const [x, y] = geoPath.centroid(feature);
-                ctx.font = '8px sans-serif';
-                ctx.textAlign = 'center';
 
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = styles.stroke;
-                ctx.strokeText(feature.properties.name, x, y);
-
-                ctx.fillStyle = styles.fill;
-                ctx.fillText(feature.properties.name, x, y);
-              }}
-            />
-          {/each}
-        </ComputedStyles>
+        {#each states.features as feature}
+          <GeoPath
+            geojson={feature}
+            render={(ctx, { newGeoPath }) => {
+              const geoPath = newGeoPath();
+              const [x, y] = geoPath.centroid(feature);
+              renderText(
+                ctx,
+                feature.properties.name,
+                { x, y },
+                {
+                  classes: 'text-[8px] text-center fill-surface-content stroke-surface-100',
+                  styles: { paintOrder: 'stroke' },
+                }
+              );
+            }}
+          />
+        {/each}
       </Canvas>
     </Chart>
   </div>

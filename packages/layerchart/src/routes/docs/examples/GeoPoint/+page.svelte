@@ -10,12 +10,12 @@
     GeoPath,
     GeoPoint,
     renderPathData,
+    renderText,
     Svg,
     Text,
     Tooltip,
   } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import ComputedStyles from '$lib/components/ComputedStyles.svelte';
 
   export let data;
 
@@ -269,34 +269,34 @@
       <Canvas>
         <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
 
-        <ComputedStyles class="fill-surface-content stroke-surface-100" let:styles={labelStyles}>
-          {#each data.us.captitals as capital}
-            <!-- Point -->
-            <GeoPoint
-              lat={capital.latitude}
-              long={capital.longitude}
-              render={(ctx, { x, y }) => {
-                const pathData = circlePath({ cx: x, cy: y, r: 2 });
-                renderPathData(ctx, pathData, { classes: 'fill-white stroke-danger' });
-              }}
-            />
+        {#each data.us.captitals as capital}
+          <!-- Point -->
+          <GeoPoint
+            lat={capital.latitude}
+            long={capital.longitude}
+            render={(ctx, { x, y }) => {
+              const pathData = circlePath({ cx: x, cy: y, r: 2 });
+              renderPathData(ctx, pathData, { classes: 'fill-white stroke-danger' });
+            }}
+          />
 
-            <!-- Label -->
-            <GeoPoint
-              lat={capital.latitude}
-              long={capital.longitude}
-              render={(ctx, { x, y }) => {
-                ctx.font = '8px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = labelStyles.stroke;
-                ctx.fillStyle = labelStyles.fill;
-                ctx.strokeText(capital.description, x, y - 6);
-                ctx.fillText(capital.description, x, y - 6);
-              }}
-            />
-          {/each}
-        </ComputedStyles>
+          <!-- Label -->
+          <GeoPoint
+            lat={capital.latitude}
+            long={capital.longitude}
+            render={(ctx, { x, y }) => {
+              renderText(
+                ctx,
+                capital.description,
+                { x, y: y - 6 },
+                {
+                  classes: 'text-[8px] text-center fill-surface-content stroke-surface-100',
+                  styles: { paintOrder: 'stroke' },
+                }
+              );
+            }}
+          />
+        {/each}
       </Canvas>
     </Chart>
   </div>
