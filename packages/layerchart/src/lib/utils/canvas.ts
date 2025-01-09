@@ -59,22 +59,30 @@ export function renderPathData(
   // TODO: Consider memoizing?  How about reactiving to CSS variable changes (light/dark mode toggle)
   const computedStyles = getComputedStyles(canvasCtx.canvas, styleOptions);
 
-  const fill = computedStyles?.fill === DEFAULT_FILL ? null : computedStyles?.fill;
-  if (fill) {
-    canvasCtx.fillStyle = fill;
-    canvasCtx.fill(path);
-  }
+  // Adhere to CSS paint order: https://developer.mozilla.org/en-US/docs/Web/CSS/paint-order
+  const paintOrder =
+    computedStyles?.paintOrder === 'stroke' ? ['stroke', 'fill'] : ['fill', 'stroke'];
 
-  const stroke = computedStyles?.stroke === 'none' ? null : computedStyles?.stroke;
-  if (stroke) {
-    canvasCtx.lineWidth =
-      typeof computedStyles?.strokeWidth === 'string'
-        ? Number(computedStyles?.strokeWidth?.replace('px', ''))
-        : (computedStyles?.strokeWidth ?? 1);
+  paintOrder.forEach((attr) => {
+    if (attr === 'fill') {
+      const fill = computedStyles?.fill === DEFAULT_FILL ? null : computedStyles?.fill;
+      if (fill) {
+        canvasCtx.fillStyle = fill;
+        canvasCtx.fill(path);
+      }
+    } else if (attr === 'stroke') {
+      const stroke = computedStyles?.stroke === 'none' ? null : computedStyles?.stroke;
+      if (stroke) {
+        canvasCtx.lineWidth =
+          typeof computedStyles?.strokeWidth === 'string'
+            ? Number(computedStyles?.strokeWidth?.replace('px', ''))
+            : (computedStyles?.strokeWidth ?? 1);
 
-    canvasCtx.strokeStyle = stroke;
-    canvasCtx.stroke(path);
-  }
+        canvasCtx.strokeStyle = stroke;
+        canvasCtx.stroke(path);
+      }
+    }
+  });
 }
 
 /** Clear canvas accounting for Canvas `context.translate(...)` */
