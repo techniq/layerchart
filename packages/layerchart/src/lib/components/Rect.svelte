@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { tick } from 'svelte';
+  import { onDestroy, tick } from 'svelte';
   import { cls } from '@layerstack/tailwind';
 
   import {
@@ -8,6 +8,8 @@
     type SpringOptions,
     type TweenedOptions,
   } from '$lib/stores/motionStore.js';
+  import { getCanvasContext } from './layout/Canvas.svelte';
+  import { renderRect } from 'layerchart/utils/canvas.js';
 
   export let x = 0;
   export let initialX = x;
@@ -20,6 +22,10 @@
 
   export let height: number;
   export let initialHeight = height;
+
+  export let fill: string | undefined = undefined;
+  export let stroke: string | undefined = undefined;
+  export let strokeWidth: number | undefined = undefined;
 
   export let spring: boolean | SpringOptions | { [prop: string]: SpringOptions } = undefined;
   export let tweened: boolean | TweenedOptions | { [prop: string]: TweenedOptions } = undefined;
@@ -35,22 +41,57 @@
     tweened_width.set(width);
     tweened_height.set(height);
   });
+
+  const canvasContext = getCanvasContext();
+  const renderContext = canvasContext ? 'canvas' : 'svg';
+
+  function render(ctx: CanvasRenderingContext2D) {
+    renderRect(
+      ctx,
+      { x: $tweened_x, y: $tweened_y, width: $tweened_width, height: $tweened_height },
+      {
+        styles: { fill, stroke, strokeWidth },
+        classes: $$props.class,
+      }
+    );
+  }
+
+  $: if (renderContext === 'canvas') {
+    canvasContext.register(render);
+  }
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when props changes (TODO: styles, class, etc)
+    $tweened_x && $tweened_y && $tweened_width && $tweened_height;
+    canvasContext.invalidate();
+  }
+
+  onDestroy(() => {
+    if (renderContext === 'canvas') {
+      canvasContext.deregister(render);
+    }
+  });
 </script>
 
-<!-- svelte-ignore a11y-mouse-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<rect
-  x={$tweened_x}
-  y={$tweened_y}
-  width={$tweened_width}
-  height={$tweened_height}
-  class={cls($$props.fill == null && 'fill-surface-content')}
-  {...$$restProps}
-  on:click
-  on:pointerenter
-  on:pointerover
-  on:pointermove
-  on:pointerout
-  on:pointerleave
-  on:dblclick
-/>
+{#if renderContext === 'svg'}
+  <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <rect
+    x={$tweened_x}
+    y={$tweened_y}
+    width={$tweened_width}
+    height={$tweened_height}
+    class={cls($$props.fill == null && 'fill-surface-content')}
+    {fill}
+    {stroke}
+    stroke-width={strokeWidth}
+    {...$$restProps}
+    on:click
+    on:pointerenter
+    on:pointerover
+    on:pointermove
+    on:pointerout
+    on:pointerleave
+    on:dblclick
+  />
+{/if}
