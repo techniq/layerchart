@@ -66,6 +66,7 @@
   export let fill: string | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
+  export let opacity: number | undefined = undefined;
 
   /** Marker to attach to start, mid, and end points of path */
   export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
@@ -164,7 +165,7 @@
 
   function render(ctx: CanvasRenderingContext2D) {
     renderPathData(ctx, $tweened_d, {
-      styles: { stroke, fill, strokeWidth },
+      styles: { stroke, fill, strokeWidth, opacity },
       classes: $$props.class,
     });
   }

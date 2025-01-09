@@ -3,7 +3,12 @@ export const DEFAULT_FILL = 'rgb(0, 0, 0)';
 const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
 
 type ComputedStylesOptions = {
-  styles?: Partial<Omit<CSSStyleDeclaration, 'strokeWidth'> & { strokeWidth?: number | string }>;
+  styles?: Partial<
+    Omit<CSSStyleDeclaration, 'strokeWidth' | 'opacity'> & {
+      strokeWidth?: number | string;
+      opacity?: number | string;
+    }
+  >;
   classes?: string;
 };
 
@@ -62,6 +67,10 @@ export function renderPathData(
   // Adhere to CSS paint order: https://developer.mozilla.org/en-US/docs/Web/CSS/paint-order
   const paintOrder =
     computedStyles?.paintOrder === 'stroke' ? ['stroke', 'fill'] : ['fill', 'stroke'];
+
+  if (computedStyles?.opacity) {
+    canvasCtx.globalAlpha = Number(computedStyles?.opacity);
+  }
 
   paintOrder.forEach((attr) => {
     if (attr === 'fill') {
