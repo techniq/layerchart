@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { tick, type ComponentProps } from 'svelte';
+  import { onDestroy, tick, type ComponentProps } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from '@layerstack/tailwind';
 
@@ -7,6 +7,8 @@
   import { uniqueId } from '@layerstack/utils';
 
   import Marker from './Marker.svelte';
+  import { renderPathData } from '../utils/canvas.js';
+  import { getCanvasContext } from './layout/Canvas.svelte';
 
   export let x1: number;
   export let initialX1 = x1;
@@ -19,6 +21,10 @@
 
   export let y2: number;
   export let initialY2 = y2;
+
+  export let fill: string | undefined = undefined;
+  export let stroke: string | undefined = undefined;
+  export let strokeWidth: number | undefined = undefined;
 
   /** Marker to attach to start and end points of path */
   export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
@@ -47,37 +53,69 @@
     tweened_x2.set(x2);
     tweened_y2.set(y2);
   });
+
+  const canvasContext = getCanvasContext();
+  const renderContext = canvasContext ? 'canvas' : 'svg';
+
+  function render(ctx: CanvasRenderingContext2D) {
+    const pathData = `M ${x1},${y1} L ${x2},${y2}`;
+    renderPathData(ctx, pathData, {
+      styles: { fill, stroke, strokeWidth },
+      classes: $$props.class,
+    });
+  }
+
+  $: if (renderContext === 'canvas') {
+    canvasContext.register(render);
+  }
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when props changes (TODO: styles, class, etc)
+    $tweened_x1 && $tweened_y1 && $tweened_x2 && $tweened_y2;
+    canvasContext.invalidate();
+  }
+
+  onDestroy(() => {
+    if (renderContext === 'canvas') {
+      canvasContext.deregister(render);
+    }
+  });
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<line
-  x1={$tweened_x1}
-  y1={$tweened_y1}
-  x2={$tweened_x2}
-  y2={$tweened_y2}
-  marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
-  marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-  class={cls($$props.stroke === undefined && 'stroke-surface-content')}
-  {...$$restProps}
-  on:click
-  on:pointermove
-  on:pointerleave
-/>
-
-<slot name="markerStart" id={markerStartId}>
-  {#if markerStart}
-    <Marker
-      id={markerStartId}
-      type={typeof markerStart === 'string' ? markerStart : undefined}
-      {...typeof markerStart === 'object' ? markerStart : null}
-    />
-  {/if}
-</slot>
-
-<slot name="markerEnd" id={markerEndId}>
-  <Marker
-    id={markerEndId}
-    type={typeof markerEnd === 'string' ? markerEnd : undefined}
-    {...typeof markerEnd === 'object' ? markerEnd : null}
+{#if renderContext === 'svg'}
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <line
+    x1={$tweened_x1}
+    y1={$tweened_y1}
+    x2={$tweened_x2}
+    y2={$tweened_y2}
+    {fill}
+    {stroke}
+    stroke-width={strokeWidth}
+    marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
+    marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
+    class={cls($$props.stroke === undefined && 'stroke-surface-content')}
+    {...$$restProps}
+    on:click
+    on:pointermove
+    on:pointerleave
   />
-</slot>
+
+  <slot name="markerStart" id={markerStartId}>
+    {#if markerStart}
+      <Marker
+        id={markerStartId}
+        type={typeof markerStart === 'string' ? markerStart : undefined}
+        {...typeof markerStart === 'object' ? markerStart : null}
+      />
+    {/if}
+  </slot>
+
+  <slot name="markerEnd" id={markerEndId}>
+    <Marker
+      id={markerEndId}
+      type={typeof markerEnd === 'string' ? markerEnd : undefined}
+      {...typeof markerEnd === 'object' ? markerEnd : null}
+    />
+  </slot>
+{/if}

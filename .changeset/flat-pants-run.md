@@ -1,5 +1,5 @@
 ---
-'layerchart': patch
+'layerchart': minor
 ---
 
-feat(Circle): Support Canvas render context
+feat(Circle): Support Canvas context
