@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { tick } from 'svelte';
+  import { onDestroy, tick } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from '@layerstack/tailwind';
 
   import { getStringWidth } from '$lib/utils/string.js';
   import { motionStore } from '$lib/stores/motionStore.js';
+  import { getCanvasContext } from './layout/Canvas.svelte';
+  import { renderText } from 'layerchart/utils/canvas.js';
 
   /*
     TODO:
@@ -97,8 +99,13 @@
   /**
    * Convert css value to pixel value (ex. 0.71em => 11.36)
    */
-  function getPixelValue(cssValue: string) {
+  function getPixelValue(cssValue: number | string) {
     // TODO: Properly measure pixel values using DOM (handle inherited font size, zoom, etc)
+
+    if (typeof cssValue === 'number') {
+      return cssValue;
+    }
+
     // @ts-expect-error
     const [match, value, units] = cssValue.match(/([\d.]+)(\D+)/);
     const number = Number(value);
@@ -162,25 +169,66 @@
     tweened_x.set(x);
     tweened_y.set(y);
   });
+
+  const canvasContext = getCanvasContext();
+  const renderContext = canvasContext ? 'canvas' : 'svg';
+
+  function render(ctx: CanvasRenderingContext2D) {
+    wordsByLines.forEach((line, index) => {
+      renderText(
+        ctx,
+        line.words.join(' '),
+        {
+          x: getPixelValue($tweened_x) + getPixelValue(dx),
+          y:
+            getPixelValue($tweened_y) +
+            getPixelValue(dy) +
+            (index === 0 ? startDy : getPixelValue(lineHeight)),
+        },
+        {
+          styles: { paintOrder: 'stroke', textAnchor }, // TODO: fill, stroke, strokeWidth
+          classes: `fill-surface-content ${$$props.class}`,
+        }
+      );
+    });
+  }
+
+  $: if (renderContext === 'canvas') {
+    canvasContext.register(render);
+  }
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when props changes (TODO: styles, class, etc)
+    value && $tweened_x && $tweened_y;
+    canvasContext.invalidate();
+  }
+
+  onDestroy(() => {
+    if (renderContext === 'canvas') {
+      canvasContext.deregister(render);
+    }
+  });
 </script>
 
-<!-- `overflow: visible` allow contents to be shown outside element -->
-<!-- `paint-order: stroke` supports stroke outlining text  -->
-<svg x={dx} y={dy} class="overflow-visible [paint-order:stroke]">
-  {#if isValidXOrY(x) && isValidXOrY(y)}
-    <text
-      x={$tweened_x}
-      y={$tweened_y}
-      {transform}
-      text-anchor={textAnchor}
-      {...$$restProps}
-      class={cls($$props.fill === undefined && 'fill-surface-content', $$props.class)}
-    >
-      {#each wordsByLines as line, index}
-        <tspan x={$tweened_x} dy={index === 0 ? startDy : lineHeight}>
-          {line.words.join(' ')}
-        </tspan>
-      {/each}
-    </text>
-  {/if}
-</svg>
+{#if renderContext === 'svg'}
+  <!-- `overflow: visible` allow contents to be shown outside element -->
+  <!-- `paint-order: stroke` supports stroke outlining text  -->
+  <svg x={dx} y={dy} class="overflow-visible [paint-order:stroke]">
+    {#if isValidXOrY(x) && isValidXOrY(y)}
+      <text
+        x={$tweened_x}
+        y={$tweened_y}
+        {transform}
+        text-anchor={textAnchor}
+        {...$$restProps}
+        class={cls($$props.fill === undefined && 'fill-surface-content', $$props.class)}
+      >
+        {#each wordsByLines as line, index}
+          <tspan x={$tweened_x} dy={index === 0 ? startDy : lineHeight}>
+            {line.words.join(' ')}
+          </tspan>
+        {/each}
+      </text>
+    {/if}
+  </svg>
+{/if}
