@@ -220,7 +220,7 @@
               const color = nextColor();
 
               const geoPath = newGeoPath();
-              renderPathData(ctx, geoPath(feature), { fill: color, stroke: color });
+              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
 
               setColorData(color, feature);
             }

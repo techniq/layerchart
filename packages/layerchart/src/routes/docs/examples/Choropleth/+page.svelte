@@ -163,7 +163,7 @@
             for (var feature of enrichedCountiesFeatures) {
               const geoPath = newGeoPath();
               renderPathData(ctx, geoPath(feature), {
-                fill: colorScale(feature.properties.data?.population ?? 0),
+                styles: { fill: colorScale(feature.properties.data?.population ?? 0) },
               });
             }
           }}
@@ -190,7 +190,7 @@
 
               const geoPath = newGeoPath();
               // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
-              renderPathData(ctx, geoPath(feature), { fill: color, stroke: color });
+              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
 
               setColorData(color, feature);
             }

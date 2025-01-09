@@ -114,7 +114,9 @@
               {@const nodeColor = getNodeColor(node, colorBy)}
               <Circle
                 r={node.r}
-                stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 1)}
+                stroke={hsl(nodeColor)
+                  .darker(colorBy === 'children' ? 0.5 : 1)
+                  .toString()}
                 stroke-width={1 / transform.scale}
                 fill={nodeColor}
               />

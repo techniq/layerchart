@@ -199,9 +199,11 @@
 
               const pathData = circlePath({ cx, cy, r });
               renderPathData(ctx, pathData, {
-                fill: color + (256 * 0.5).toString(16),
-                stroke: color,
-                strokeWidth,
+                styles: {
+                  fill: color + (256 * 0.5).toString(16),
+                  stroke: color,
+                  strokeWidth,
+                },
               });
             }
           }}
@@ -231,7 +233,7 @@
 
               const geoPath = newGeoPath();
               // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
-              renderPathData(ctx, geoPath(feature), { fill: color, stroke: color });
+              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
 
               setColorData(color, feature);
             }

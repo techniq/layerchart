@@ -6,7 +6,6 @@
   import { max, min } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
 
-  import { computedStyles } from '@layerstack/svelte-actions';
   import { cls } from '@layerstack/tailwind';
 
   import { motionStore } from '$lib/stores/motionStore.js';
@@ -54,6 +53,10 @@
 
   /** Enable showing line */
   export let line: boolean | Partial<ComponentProps<Spline>> = false;
+
+  export let fill: string | undefined = undefined;
+  export let stroke: string | undefined = undefined;
+  export let strokeWidth: number | undefined = undefined;
 
   const xAccessor = x ? accessor(x) : $contextX;
   const y0Accessor = y0 ? accessor(y0) : (d: any) => min($yDomain);
@@ -131,11 +134,12 @@
 
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
-  let _styles: CSSStyleDeclaration;
 
   function render(ctx: CanvasRenderingContext2D) {
-    // TODO: Only apply `stroke-` to `Spline`
-    renderPathData(ctx, $tweened_d, _styles);
+    renderPathData(ctx, $tweened_d, {
+      styles: { fill, stroke, strokeWidth },
+      classes: $$props.class,
+    });
   }
 
   $: if (renderContext === 'canvas') {
@@ -177,12 +181,4 @@
     on:pointermove
     on:pointerleave
   />
-{/if}
-
-<!-- Hidden div to copy computed styles -->
-{#if renderContext === 'canvas'}
-  <div
-    class={cls('Area-classes hidden', $$props.class)}
-    use:computedStyles={(styles) => (_styles = styles)}
-  ></div>
 {/if}

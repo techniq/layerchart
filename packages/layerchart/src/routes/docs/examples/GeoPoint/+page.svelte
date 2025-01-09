@@ -269,35 +269,33 @@
       <Canvas>
         <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
 
-        <ComputedStyles class="fill-white stroke-danger" let:styles={pointStyles}>
-          <ComputedStyles class="fill-surface-content stroke-surface-100" let:styles={labelStyles}>
-            {#each data.us.captitals as capital}
-              <!-- Point -->
-              <GeoPoint
-                lat={capital.latitude}
-                long={capital.longitude}
-                render={(ctx, { x, y }) => {
-                  const pathData = circlePath({ cx: x, cy: y, r: 2 });
-                  renderPathData(ctx, pathData, pointStyles);
-                }}
-              />
+        <ComputedStyles class="fill-surface-content stroke-surface-100" let:styles={labelStyles}>
+          {#each data.us.captitals as capital}
+            <!-- Point -->
+            <GeoPoint
+              lat={capital.latitude}
+              long={capital.longitude}
+              render={(ctx, { x, y }) => {
+                const pathData = circlePath({ cx: x, cy: y, r: 2 });
+                renderPathData(ctx, pathData, { classes: 'fill-white stroke-danger' });
+              }}
+            />
 
-              <!-- Label -->
-              <GeoPoint
-                lat={capital.latitude}
-                long={capital.longitude}
-                render={(ctx, { x, y }) => {
-                  ctx.font = '8px sans-serif';
-                  ctx.textAlign = 'center';
-                  ctx.lineWidth = 2;
-                  ctx.strokeStyle = labelStyles.stroke;
-                  ctx.fillStyle = labelStyles.fill;
-                  ctx.strokeText(capital.description, x, y - 6);
-                  ctx.fillText(capital.description, x, y - 6);
-                }}
-              />
-            {/each}
-          </ComputedStyles>
+            <!-- Label -->
+            <GeoPoint
+              lat={capital.latitude}
+              long={capital.longitude}
+              render={(ctx, { x, y }) => {
+                ctx.font = '8px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = labelStyles.stroke;
+                ctx.fillStyle = labelStyles.fill;
+                ctx.strokeText(capital.description, x, y - 6);
+                ctx.fillText(capital.description, x, y - 6);
+              }}
+            />
+          {/each}
         </ComputedStyles>
       </Canvas>
     </Chart>

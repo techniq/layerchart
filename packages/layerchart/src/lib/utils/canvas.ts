@@ -1,25 +1,77 @@
 export const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
-/** Render SVG path data onto canvas context.  Supports CSS classes  tranferring to `<canvas>` element for retrieval) */
+const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
+
+type ComputedStylesOptions = {
+  styles?: Partial<Omit<CSSStyleDeclaration, 'strokeWidth'> & { strokeWidth?: number | string }>;
+  classes?: string;
+};
+
+/**
+ * Appends or reuses `<svg>` element below `<canvas>` to resolve CSS variables and classes (ex. `stroke: hsl(var(--color-primary))` => `stroke: rgb(...)` )
+ */
+function getComputedStyles(
+  canvas: HTMLCanvasElement,
+  { styles, classes }: ComputedStylesOptions = {}
+) {
+  try {
+    // Get or create `<svg>` below `<canvas>`
+    let svg = document.getElementById(CANVAS_STYLES_ELEMENT_ID) as SVGElement | null;
+
+    if (!svg) {
+      svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('id', CANVAS_STYLES_ELEMENT_ID);
+      svg.style.display = 'none';
+      // Add `<svg>` next to `<canvas>` to allow same scope resolution for CSS variables
+      canvas.after(svg);
+    }
+    svg = svg!; // guarantee SVG is set
+
+    // Remove any previously set styles or classes.  Not able to do as part of cleanup below as `window.getComputedStyles()` appearing to be lazily read and removing `style` results in incorrect values, and copying result is very slow
+    svg.removeAttribute('style');
+    svg.removeAttribute('class');
+
+    // Add styles and class to svg element
+    if (styles) {
+      Object.assign(svg.style, styles);
+    }
+
+    if (classes) {
+      svg.setAttribute('class', classes);
+    }
+
+    const computedStyles = window.getComputedStyle(svg);
+    return computedStyles;
+  } catch (e) {
+    console.error('Unable to get computed styles', e);
+    return null;
+  }
+}
+
+/** Render SVG path data onto canvas context.  Supports CSS variables and classes by tranferring to hidden `<svg>` element before retrieval) */
 export function renderPathData(
   canvasCtx: CanvasRenderingContext2D,
   pathData: string | null | undefined,
-  styles: Partial<Omit<CSSStyleDeclaration, 'strokeWidth'> & { strokeWidth?: number | string }> = {}
+  styleOptions: ComputedStylesOptions = {}
 ) {
   const path = new Path2D(pathData ?? '');
 
-  const fill = styles.fill === DEFAULT_FILL ? null : styles.fill;
+  // TODO: Consider memoizing?  How about reactiving to CSS variable changes (light/dark mode toggle)
+  const computedStyles = getComputedStyles(canvasCtx.canvas, styleOptions);
+
+  const fill = computedStyles?.fill === DEFAULT_FILL ? null : computedStyles?.fill;
   if (fill) {
     canvasCtx.fillStyle = fill;
     canvasCtx.fill(path);
   }
 
-  const stroke = styles.stroke === 'none' ? null : styles.stroke;
+  const stroke = computedStyles?.stroke === 'none' ? null : computedStyles?.stroke;
   if (stroke) {
     canvasCtx.lineWidth =
-      typeof styles.strokeWidth === 'string'
-        ? Number(styles.strokeWidth?.replace('px', ''))
-        : (styles.strokeWidth ?? 0);
+      typeof computedStyles?.strokeWidth === 'string'
+        ? Number(computedStyles?.strokeWidth?.replace('px', ''))
+        : (computedStyles?.strokeWidth ?? 1);
+
     canvasCtx.strokeStyle = stroke;
     canvasCtx.stroke(path);
   }

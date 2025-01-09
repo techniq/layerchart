@@ -5,8 +5,6 @@
   import Circle from './Circle.svelte';
   import Group from './Group.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { cls } from '@layerstack/tailwind';
-  import { computedStyles } from '@layerstack/svelte-actions';
 
   /** Latitude */
   export let lat: number;
@@ -25,7 +23,6 @@
 
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
-  let _styles: CSSStyleDeclaration;
 
   function _render(ctx: CanvasRenderingContext2D) {
     render(ctx, { x, y });
@@ -52,18 +49,13 @@
   {/if}
 {/if}
 
-<!-- Hidden div to copy computed styles -->
 {#if renderContext === 'canvas'}
   {#if $$slots.default}
+    <!-- TODO: Handle Canvas translation.  Conslidate with svg use case above (if `render` is not defined) -->
     <!-- <Group {x} {y} {...$$restProps}> -->
     <slot />
     <!-- </Group> -->
   {:else}
-    <!-- <Circle cx={x} cy={y} {...$$restProps} /> -->
+    <Circle cx={x} cy={y} {...$$restProps} />
   {/if}
-
-  <div
-    class={cls('GeoPoint-classes hidden', $$props.class)}
-    use:computedStyles={(styles) => (_styles = styles)}
-  ></div>
 {/if}

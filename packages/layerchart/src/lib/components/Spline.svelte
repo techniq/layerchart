@@ -12,7 +12,6 @@
   import { max } from 'd3-array';
   import { cls } from '@layerstack/tailwind';
   import { uniqueId } from '@layerstack/utils';
-  import { computedStyles } from '@layerstack/svelte-actions';
 
   import { chartContext } from './ChartContext.svelte';
   import Group from './Group.svelte';
@@ -63,6 +62,10 @@
    */
   export let curve: CurveFactory | CurveFactoryLineOnly | undefined = undefined;
   export let defined: Parameters<Line<any>['defined']>[0] | undefined = undefined;
+
+  export let fill: string | undefined = undefined;
+  export let stroke: string | undefined = undefined;
+  export let strokeWidth: number | undefined = undefined;
 
   /** Marker to attach to start, mid, and end points of path */
   export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
@@ -158,10 +161,12 @@
 
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
-  let _styles: CSSStyleDeclaration;
 
   function render(ctx: CanvasRenderingContext2D) {
-    renderPathData(ctx, $tweened_d, _styles);
+    renderPathData(ctx, $tweened_d, {
+      styles: { stroke, fill, strokeWidth },
+      classes: $$props.class,
+    });
   }
 
   $: if (renderContext === 'canvas') {
@@ -224,6 +229,9 @@
         !$$props.stroke && 'stroke-surface-content',
         $$props.class
       )}
+      {fill}
+      {stroke}
+      stroke-width={strokeWidth}
       marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
       marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
       marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
@@ -273,12 +281,4 @@
       </Group>
     {/if}
   {/key}
-{/if}
-
-<!-- Hidden div to copy computed styles -->
-{#if renderContext === 'canvas'}
-  <div
-    class={cls('Spline-classes hidden', $$props.class)}
-    use:computedStyles={(styles) => (_styles = styles)}
-  ></div>
 {/if}

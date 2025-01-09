@@ -7,7 +7,6 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { circlePath } from '../utils/path.js';
   import { renderPathData } from '../utils/canvas.js';
-  import { computedStyles } from '@layerstack/svelte-actions';
 
   export let cx: number = 0;
   export let initialCx = cx;
@@ -21,6 +20,10 @@
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
+  export let fill: string | undefined = undefined;
+  export let stroke: string | undefined = undefined;
+  export let strokeWidth: number | undefined = undefined;
+
   let tweened_cx = motionStore(initialCx, { spring, tweened });
   let tweened_cy = motionStore(initialCy, { spring, tweened });
   let tweened_r = motionStore(initialR, { spring, tweened });
@@ -33,11 +36,13 @@
 
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
-  let _styles: CSSStyleDeclaration;
 
   function render(ctx: CanvasRenderingContext2D) {
     const pathData = circlePath({ cx: $tweened_cx, cy: $tweened_cy, r: $tweened_r });
-    renderPathData(ctx, pathData, _styles);
+    renderPathData(ctx, pathData, {
+      styles: { fill, stroke, strokeWidth },
+      classes: $$props.class,
+    });
   }
 
   $: if (renderContext === 'canvas') {
@@ -57,18 +62,13 @@
     cx={$tweened_cx}
     cy={$tweened_cy}
     r={$tweened_r}
+    {fill}
+    {stroke}
+    stroke-width={strokeWidth}
     class={cls($$props.fill == null && 'fill-surface-content')}
     {...$$restProps}
     on:click
     on:pointermove
     on:pointerleave
   />
-{/if}
-
-<!-- Hidden div to copy computed styles -->
-{#if renderContext === 'canvas'}
-  <div
-    class={cls('Circle-classes hidden', $$props.class)}
-    use:computedStyles={(styles) => (_styles = styles)}
-  ></div>
 {/if}

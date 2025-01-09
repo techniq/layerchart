@@ -135,8 +135,10 @@
                 for (var feature of features) {
                   const geoPath = newGeoPath();
                   renderPathData(ctx, geoPath(feature), {
-                    fill: colorScale(String(feature.id)),
-                    stroke: 'black',
+                    styles: {
+                      fill: colorScale(String(feature.id)),
+                      stroke: 'black',
+                    },
                   });
                 }
               }}
@@ -148,8 +150,10 @@
                 for (var feature of features) {
                   const geoPath = newGeoPath();
                   renderPathData(ctx, geoPath(feature), {
-                    fill: colorScale(String(feature.id)),
-                    stroke: 'black',
+                    styles: {
+                      fill: colorScale(String(feature.id)),
+                      stroke: 'black',
+                    },
                   });
                 }
               }}
@@ -170,8 +174,10 @@
 
                 const geoPath = newGeoPath();
                 renderPathData(ctx, geoPath(feature), {
-                  fill: color,
-                  stroke: color,
+                  styles: {
+                    fill: color,
+                    stroke: color,
+                  },
                 });
 
                 setColorData(color, feature);

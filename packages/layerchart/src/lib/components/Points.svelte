@@ -7,8 +7,6 @@
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
   import { notNull } from '@layerstack/utils';
-  import { cls } from '@layerstack/tailwind';
-  import { computedStyles } from '@layerstack/svelte-actions';
 
   import { chartContext } from './ChartContext.svelte';
   import Circle from './Circle.svelte';
@@ -164,7 +162,6 @@
 
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
-  let _styles: CSSStyleDeclaration;
 
   function _render(ctx: CanvasRenderingContext2D) {
     if (render) {
@@ -172,7 +169,7 @@
     } else {
       points.forEach((point) => {
         const pathData = circlePath({ cx: point.x, cy: point.y, r: point.r });
-        renderPathData(ctx, pathData, _styles);
+        renderPathData(ctx, pathData, { styles: { fill, stroke }, classes: className });
       });
     }
   }
@@ -218,11 +215,3 @@
     </g>
   {/if}
 </slot>
-
-<!-- Hidden div to copy computed styles -->
-{#if renderContext === 'canvas'}
-  <div
-    class={cls('Points-classes hidden', $$props.class)}
-    use:computedStyles={(styles) => (_styles = styles)}
-  ></div>
-{/if}

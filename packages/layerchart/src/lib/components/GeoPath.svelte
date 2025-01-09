@@ -8,8 +8,6 @@
     type GeoTransformPrototype,
   } from 'd3-geo';
   import { cls } from '@layerstack/tailwind';
-  import { computedStyles } from '@layerstack/svelte-actions';
-  import { merge } from 'lodash-es';
 
   import { geoContext } from './GeoContext.svelte';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
@@ -76,16 +74,17 @@
 
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
-  let _styles: CSSStyleDeclaration;
 
   function _render(ctx: CanvasRenderingContext2D) {
     if (render) {
       render(ctx, { newGeoPath: () => geoCurvePath(_projection, curve) });
     } else {
       if (geojson) {
-        // console.log('rendering', _styles.fill);
         const pathData = geoPath(geojson);
-        renderPathData(ctx, pathData, merge({}, _styles, { fill, stroke, strokeWidth }));
+        renderPathData(ctx, pathData, {
+          styles: { fill, stroke, strokeWidth },
+          classes: className,
+        });
       }
     }
   }
@@ -127,12 +126,4 @@
       class={cls(fill == null && 'fill-transparent', className)}
     />
   </slot>
-{/if}
-
-<!-- Hidden div to copy computed styles -->
-{#if renderContext === 'canvas'}
-  <div
-    class={cls('GeoPath-classes hidden', className)}
-    use:computedStyles={(styles) => (_styles = styles)}
-  ></div>
 {/if}
