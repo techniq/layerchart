@@ -58,7 +58,7 @@
   const renderContext = canvasContext ? 'canvas' : 'svg';
 
   function render(ctx: CanvasRenderingContext2D) {
-    const pathData = `M ${x1},${y1} L ${x2},${y2}`;
+    const pathData = `M ${$tweened_x1},${$tweened_y1} L ${$tweened_x2},${$tweened_y2}`;
     renderPathData(ctx, pathData, {
       styles: { fill, stroke, strokeWidth },
       classes: $$props.class,
