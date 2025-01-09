@@ -49,6 +49,12 @@
     canvasContext.register(render);
   }
 
+  $: if (renderContext === 'canvas') {
+    // Redraw when props changes (TODO: styles, class, etc)
+    $tweened_cx && $tweened_cy && $tweened_r;
+    canvasContext.invalidate();
+  }
+
   onDestroy(() => {
     if (renderContext === 'canvas') {
       canvasContext.deregister(render);
