@@ -93,7 +93,13 @@ function render(
   // canvasCtx.textBaseline = 'hanging';
   // canvasCtx.textBaseline = 'ideographic';
 
-  // TODO: Support dashed lines
+  // Dashed lines
+  if (computedStyles.strokeDasharray.includes(',')) {
+    const dashArray = computedStyles.strokeDasharray
+      .split(',')
+      .map((s) => Number(s.replace('px', '')));
+    canvasCtx.setLineDash(dashArray);
+  }
 
   paintOrder.forEach((attr) => {
     if (attr === 'fill') {
