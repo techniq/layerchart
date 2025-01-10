@@ -10,7 +10,7 @@
     LinearGradient,
     Spline,
   } from 'layerchart';
-  import { PeriodType } from 'svelte-ux';
+  import { Field, PeriodType, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -45,22 +45,31 @@
   });
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
   const multiSeriesDataByFruit = group(multiSeriesFlatData, (d) => d.fruit);
+
+  let renderContext: 'svg' | 'canvas' = 'svg';
 </script>
 
 <h1>Examples</h1>
+
+<Field label="Render context">
+  <ToggleGroup bind:value={renderContext} variant="outline">
+    <ToggleOption value="svg">Svg</ToggleOption>
+    <ToggleOption value="canvas">Canvas</ToggleOption>
+  </ToggleGroup>
+</Field>
 
 <h2>Basic</h2>
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={dateSeriesData} x="date" y="value" />
+    <AreaChart data={dateSeriesData} x="date" y="value" {renderContext} />
   </div>
 </Preview>
 
 <h2>Gradient</h2>
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={dateSeriesData} x="date" y="value">
+    <AreaChart data={dateSeriesData} x="date" y="value" {renderContext}>
       <svelte:fragment slot="marks">
         <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
           <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
@@ -78,7 +87,7 @@
   }}
 
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={negativeDateSeriesData} x="date" y="value">
+    <AreaChart data={negativeDateSeriesData} x="date" y="value" {renderContext}>
       <svelte:fragment slot="marks" let:yScale let:height let:padding>
         {@const thresholdValue = 0}
         {@const thresholdOffset = yScale(thresholdValue) / (height + padding.bottom)}
@@ -131,6 +140,7 @@
       x="date"
       y="value"
       props={{ area: { curve: curveCatmullRom } }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -153,6 +163,7 @@
           color: 'hsl(var(--color-warning))',
         },
       ]}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -182,6 +193,7 @@
         },
       ]}
       tooltip={{ mode: 'voronoi' }}
+      {renderContext}
     >
       <svelte:fragment slot="marks" let:series let:tooltip>
         {#each series as s}
@@ -238,6 +250,7 @@
         },
       ]}
       seriesLayout="stack"
+      {renderContext}
     />
   </div>
 </Preview>
@@ -261,6 +274,7 @@
         },
       ]}
       seriesLayout="stackExpand"
+      {renderContext}
     />
   </div>
 </Preview>
@@ -284,6 +298,7 @@
         },
       ]}
       seriesLayout="stackDiverging"
+      {renderContext}
     />
   </div>
 </Preview>
@@ -307,6 +322,7 @@
         },
       ]}
       seriesLayout="stack"
+      {renderContext}
     >
       <svelte:fragment slot="marks" let:series let:getAreaProps>
         {#each series as s, i (s.key)}
@@ -328,7 +344,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={dateSeriesData} x="date" y="value" labels />
+    <AreaChart data={dateSeriesData} x="date" y="value" labels {renderContext} />
   </div>
 </Preview>
 
@@ -336,7 +352,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={dateSeriesData} x="date" y="value" points />
+    <AreaChart data={dateSeriesData} x="date" y="value" points {renderContext} />
   </div>
 </Preview>
 
@@ -371,6 +387,7 @@
           color: 'hsl(var(--color-primary) / 20%)',
         },
       ]}
+      {renderContext}
     >
       <svelte:fragment slot="belowMarks">
         <Spline y="avg" curve={curveCatmullRom} class="stroke-primary" />
@@ -383,7 +400,7 @@
 
 <Preview data={dateSeriesDataWithNulls}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={dateSeriesDataWithNulls} x="date" y="value" points />
+    <AreaChart data={dateSeriesDataWithNulls} x="date" y="value" points {renderContext} />
   </div>
 </Preview>
 
@@ -400,6 +417,7 @@
       axis={false}
       grid={false}
       props={{ highlight: { points: { r: 3, class: 'stroke-2 stroke-surface-100' } } }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -408,7 +426,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={dateSeriesData} x="date" y="value" axis="x" />
+    <AreaChart data={dateSeriesData} x="date" y="value" axis="x" {renderContext} />
   </div>
 </Preview>
 
@@ -416,7 +434,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={dateSeriesData} x="date" y="value" axis="y" />
+    <AreaChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} />
   </div>
 </Preview>
 
@@ -440,6 +458,7 @@
       ]}
       seriesLayout="stack"
       legend
+      {renderContext}
     />
   </div>
 </Preview>
@@ -464,6 +483,7 @@
       ]}
       seriesLayout="stack"
       legend={{ placement: 'top-right' }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -490,6 +510,7 @@
       ]}
       seriesLayout="stack"
       legend
+      {renderContext}
     />
   </div>
 </Preview>
@@ -498,7 +519,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={dateSeriesData} x="date" y="value">
+    <AreaChart data={dateSeriesData} x="date" y="value" {renderContext}>
       <svelte:fragment slot="tooltip" let:x let:y let:height let:padding>
         <Tooltip.Root
           x={padding.left}
@@ -530,7 +551,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={dateSeriesData} x="date" y="value" let:x let:y>
+    <AreaChart data={dateSeriesData} x="date" y="value" let:x let:y {renderContext}>
       <Svg>
         <Axis placement="left" grid rule />
         <Axis

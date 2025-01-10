@@ -4,6 +4,7 @@
   import { format } from '@layerstack/utils';
 
   import Axis from '../Axis.svelte';
+  import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
@@ -26,6 +27,7 @@
     props?: typeof props;
     rule?: typeof rule;
     series?: typeof series;
+    renderContext?: typeof renderContext;
   }
 
   export let data: $$Props['data'] = [];
@@ -64,6 +66,8 @@
     labels?: Partial<ComponentProps<Labels>>;
     points?: Partial<ComponentProps<Points>>;
   } = {};
+
+  export let renderContext: 'svg' | 'canvas' = 'svg';
 
   $: allSeriesData = series
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
@@ -133,7 +137,7 @@
     getSplineProps,
   }}
   <slot {...slotProps}>
-    <Svg center={radial}>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} center={radial}>
       <slot name="grid" {...slotProps}>
         {#if grid}
           <Grid x={radial} y {...typeof grid === 'object' ? grid : null} {...props.grid} />
@@ -203,7 +207,7 @@
           />
         {/each}
       </slot>
-    </Svg>
+    </svelte:component>
 
     <slot name="legend" {...slotProps}>
       {#if legend}

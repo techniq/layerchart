@@ -7,6 +7,7 @@
 
   import Area from '../Area.svelte';
   import Axis from '../Axis.svelte';
+  import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
@@ -30,6 +31,7 @@
     rule?: typeof rule;
     series?: typeof series;
     seriesLayout?: typeof seriesLayout;
+    renderContext?: typeof renderContext;
   }
 
   export let data: $$Props['data'] = [];
@@ -73,6 +75,8 @@
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
   } = {};
+
+  export let renderContext: 'svg' | 'canvas' = 'svg';
 
   $: allSeriesData = series
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
@@ -186,7 +190,7 @@
   }}
 
   <slot {...slotProps}>
-    <Svg center={radial}>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} center={radial}>
       <slot name="grid" {...slotProps}>
         {#if grid}
           <Grid x={radial} y {...typeof grid === 'object' ? grid : null} {...props.grid} />
@@ -261,7 +265,7 @@
       {#if labels}
         <Labels {...props.labels} {...typeof labels === 'object' ? labels : null} />
       {/if}
-    </Svg>
+    </svelte:component>
 
     <slot name="legend" {...slotProps}>
       {#if legend}

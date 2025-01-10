@@ -4,6 +4,7 @@
   import { format } from '@layerstack/utils';
 
   import Axis from '../Axis.svelte';
+  import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
@@ -23,6 +24,7 @@
     legend?: typeof legend;
     props?: typeof props;
     series?: typeof series;
+    renderContext?: typeof renderContext;
   }
 
   export let data: $$Props['data'] = [];
@@ -54,6 +56,8 @@
     legend?: Partial<ComponentProps<Legend>>;
     rule?: Partial<ComponentProps<Rule>>;
   } = {};
+
+  export let renderContext: 'svg' | 'canvas' = 'svg';
 
   // Default xScale based on first data's `x` value
   $: xScale =
@@ -117,7 +121,7 @@
     : null}
 
   <slot {...slotProps}>
-    <Svg>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
       <slot name="grid" {...slotProps}>
         {#if grid}
           <Grid x y {...typeof grid === 'object' ? grid : null} {...props.grid} />
@@ -171,7 +175,7 @@
           {...typeof labels === 'object' ? labels : null}
         />
       {/if}
-    </Svg>
+    </svelte:component>
 
     <slot name="legend" {...slotProps}>
       {#if legend}

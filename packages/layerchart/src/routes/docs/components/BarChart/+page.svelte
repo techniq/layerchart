@@ -4,6 +4,7 @@
     Axis,
     BarChart,
     Bars,
+    Canvas,
     Highlight,
     Labels,
     LinearGradient,
@@ -17,6 +18,8 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, wideData, longData } from '$lib/utils/genData.js';
+  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { render } from 'svelte/server';
 
   export let data;
 
@@ -47,15 +50,24 @@
     value: 'integer',
     keys: ['value', 'baseline'],
   });
+
+  let renderContext: 'svg' | 'canvas' = 'svg';
 </script>
 
 <h1>Examples</h1>
+
+<Field label="Render context">
+  <ToggleGroup bind:value={renderContext} variant="outline">
+    <ToggleOption value="svg">Svg</ToggleOption>
+    <ToggleOption value="canvas">Canvas</ToggleOption>
+  </ToggleGroup>
+</Field>
 
 <h2>Vertical (default)</h2>
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" />
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} />
   </div>
 </Preview>
 
@@ -63,7 +75,13 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={horizontalDateSeriesData} x="value" y="date" orientation="horizontal" />
+    <BarChart
+      data={horizontalDateSeriesData}
+      x="value"
+      y="date"
+      orientation="horizontal"
+      {renderContext}
+    />
   </div>
 </Preview>
 
@@ -76,6 +94,7 @@
       x="date"
       y="value"
       props={{ bars: { class: 'fill-secondary' } }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -84,7 +103,13 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" cRange={['hsl(var(--color-secondary))']} />
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      cRange={['hsl(var(--color-secondary))']}
+      {renderContext}
+    />
   </div>
 </Preview>
 
@@ -106,6 +131,7 @@
       props={{
         yAxis: { format: 'metric' },
       }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -122,6 +148,7 @@
       cScale={scaleThreshold()}
       cDomain={[0]}
       cRange={['hsl(var(--color-danger))', 'hsl(var(--color-success))']}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -130,7 +157,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value">
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext}>
       <svelte:fragment slot="marks" let:series let:getBarsProps>
         {#each series as s, i (s.key)}
           <LinearGradient
@@ -151,7 +178,13 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" props={{ highlight: { area: false } }}>
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      props={{ highlight: { area: false } }}
+      {renderContext}
+    >
       <svelte:fragment slot="belowMarks">
         <Highlight area={{ class: 'fill-surface-content/10' }} />
       </svelte:fragment>
@@ -174,6 +207,7 @@
           props: { inset: 16 },
         },
       ]}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -190,6 +224,7 @@
         { key: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
         { key: 'value', color: 'hsl(var(--color-primary))', props: { inset: 8 } },
       ]}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -214,6 +249,7 @@
           props: { inset: 16 },
         },
       ]}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -236,6 +272,7 @@
           color: 'hsl(var(--color-secondary))',
         },
       ]}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -265,6 +302,7 @@
           color: 'hsl(var(--color-secondary))',
         },
       ]}
+      {renderContext}
     >
       <svelte:fragment slot="tooltip" let:y let:series>
         <Tooltip.Root let:data>
@@ -319,6 +357,7 @@
           color: 'hsl(var(--color-secondary))',
         },
       ]}
+      {renderContext}
     >
       <svelte:fragment slot="tooltip" let:y let:series>
         <Tooltip.Root let:data>
@@ -372,6 +411,7 @@
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
       }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -404,6 +444,7 @@
         xAxis: { format: 'metric' },
         yAxis: { format: 'none' },
       }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -438,6 +479,7 @@
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
       }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -469,6 +511,7 @@
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
       }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -501,6 +544,7 @@
         xAxis: { format: 'metric' },
         yAxis: { format: 'none' },
       }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -531,6 +575,7 @@
       props={{
         xAxis: { format: 'none' },
       }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -567,6 +612,7 @@
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
       }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -603,6 +649,7 @@
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
       }}
+      {renderContext}
     />
   </div>
 </Preview> -->
@@ -635,6 +682,7 @@
         yAxis: { format: 'metric' },
       }}
       legend
+      {renderContext}
     />
   </div>
 </Preview>
@@ -667,6 +715,7 @@
         yAxis: { format: 'metric' },
       }}
       legend={{ placement: 'top-right', classes: { root: 'mt-2' } }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -702,6 +751,7 @@
         yAxis: { format: 'metric' },
       }}
       legend
+      {renderContext}
     />
   </div>
 </Preview>
@@ -710,7 +760,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" labels />
+    <BarChart data={dateSeriesData} x="date" y="value" labels {renderContext} />
   </div>
 </Preview>
 
@@ -718,7 +768,13 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" labels={{ placement: 'inside' }} />
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      labels={{ placement: 'inside' }}
+      {renderContext}
+    />
   </div>
 </Preview>
 
@@ -745,6 +801,7 @@
         },
       }}
       padding={{ left: 0, bottom: 16 }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -753,7 +810,15 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[500px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="value" y="date" labels orientation="horizontal" axis={false}>
+    <BarChart
+      data={dateSeriesData}
+      x="value"
+      y="date"
+      labels
+      orientation="horizontal"
+      axis={false}
+      {renderContext}
+    >
       <svelte:fragment slot="aboveMarks">
         <Labels x={8} value={(d) => d.date} class="text-sm fill-surface-300 stroke-none" />
       </svelte:fragment>
@@ -773,6 +838,7 @@
       grid={false}
       bandPadding={0.1}
       props={{ bars: { radius: 1, strokeWidth: 0 } }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -801,6 +867,7 @@
         xAxis: { ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks() },
         rule: { y: false },
       }}
+      {renderContext}
     >
       <svelte:fragment slot="tooltip" let:x let:y let:c let:cScale>
         <Tooltip.Root let:data>
@@ -818,7 +885,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" axis="x" />
+    <BarChart data={dateSeriesData} x="date" y="value" axis="x" {renderContext} />
   </div>
 </Preview>
 
@@ -826,7 +893,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" axis="y" />
+    <BarChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} />
   </div>
 </Preview>
 
@@ -839,6 +906,7 @@
       x="date"
       y="value"
       props={{ xAxis: { ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks() } }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -847,7 +915,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true }} />
+    <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true }} {renderContext} />
   </div>
 </Preview>
 
@@ -855,7 +923,13 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true, bandAlign: 'between' }} />
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      grid={{ x: true, bandAlign: 'between' }}
+      {renderContext}
+    />
   </div>
 </Preview>
 
@@ -871,6 +945,7 @@
       yScale={scaleLog()}
       yDomain={[1, 100]}
       props={{ yAxis: { ticks: [1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 100] } }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -879,7 +954,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value">
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext}>
       <svelte:fragment slot="tooltip" let:x let:y>
         <Tooltip.Root let:data>
           <Tooltip.Header>{format(x(data), PeriodType.DayTime)}</Tooltip.Header>
@@ -897,7 +972,7 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart data={dateSeriesData} x="date" y="value" let:x let:y>
-      <Svg>
+      <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
         <Axis
           placement="left"
           grid
@@ -911,7 +986,7 @@
         />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Highlight area />
-      </Svg>
+      </svelte:component>
 
       <Tooltip.Root let:data>
         <Tooltip.Header>{format(x(data))}</Tooltip.Header>

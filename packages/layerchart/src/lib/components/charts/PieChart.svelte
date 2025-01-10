@@ -4,6 +4,7 @@
   import { format } from '@layerstack/utils';
 
   import Arc from '../Arc.svelte';
+  import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import Group from '../Group.svelte';
   import Legend from '../Legend.svelte';
@@ -30,6 +31,7 @@
     range?: typeof range;
     series?: typeof series;
     value?: typeof label;
+    renderContext?: typeof renderContext;
   }
 
   export let data: ChartProps['data'] = [];
@@ -98,6 +100,8 @@
     legend?: Partial<ComponentProps<Legend>>;
   } = {};
 
+  export let renderContext: 'svg' | 'canvas' = 'svg';
+
   $: allSeriesData = series
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
     .filter((d) => d) as Array<TData>;
@@ -151,7 +155,7 @@
     tooltip,
   }}
   <slot {...slotProps}>
-    <Svg {center}>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} center>
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
@@ -216,7 +220,7 @@
       </slot>
 
       <slot name="aboveMarks" {...slotProps} />
-    </Svg>
+    </svelte:component>
 
     <slot name="legend" {...slotProps}>
       {#if legend}
