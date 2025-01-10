@@ -104,7 +104,9 @@ function render(
 
   paintOrder.forEach((attr) => {
     if (attr === 'fill') {
-      const fill = computedStyles?.fill === DEFAULT_FILL ? null : computedStyles?.fill;
+      const fill = ['none', DEFAULT_FILL].includes(computedStyles?.fill)
+        ? null
+        : computedStyles?.fill;
       if (fill) {
         const currentGlobalAlpha = canvasCtx.globalAlpha;
         if (computedStyles?.fillOpacity) {
