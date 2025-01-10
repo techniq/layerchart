@@ -4,7 +4,8 @@ const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
 
 type ComputedStylesOptions = {
   styles?: Partial<
-    Omit<CSSStyleDeclaration, 'strokeWidth' | 'opacity'> & {
+    Omit<CSSStyleDeclaration, 'fillOpacity' | 'strokeWidth' | 'opacity'> & {
+      fillOpacity?: number | string;
       strokeWidth?: number | string;
       opacity?: number | string;
     }
@@ -82,7 +83,7 @@ function render(
   } else if (computedStyles.textAnchor === 'end') {
     canvasCtx.textAlign = 'right';
   } else {
-    canvasCtx.textAlign = computedStyles.textAlign as CanvasTextAlign; // TODO: Handle `justify` and `match-parent`?
+    canvasCtx.textAlign = computedStyles.textAlign as CanvasTextAlign; // TODO: Handle/map `justify` and `match-parent`?
   }
 
   // TODO: Handle `textBaseline` / `verticalAnchor` (Text)
@@ -105,6 +106,10 @@ function render(
     if (attr === 'fill') {
       const fill = computedStyles?.fill === DEFAULT_FILL ? null : computedStyles?.fill;
       if (fill) {
+        if (computedStyles?.fillOpacity) {
+          canvasCtx.globalAlpha = Number(computedStyles?.fillOpacity);
+        }
+
         canvasCtx.fillStyle = fill;
         render.fill(canvasCtx);
       }
