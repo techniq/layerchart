@@ -17,7 +17,7 @@
   // https://svelte.dev/repl/09711e43a1264ba18945d7db7cab9335?version=3.38.2
   // https://codepen.io/simeydotme/pen/rrOEmO/
 
-  import { tick } from 'svelte';
+  import { onDestroy, tick } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { arc as d3arc } from 'd3-shape';
@@ -28,6 +28,8 @@
   import { motionStore } from '$lib/stores/motionStore.js';
   import { degreesToRadians } from '$lib/utils/math.js';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
+  import { getCanvasContext } from './layout/Canvas.svelte';
+  import { renderPathData } from '../utils/canvas.js';
 
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -79,6 +81,10 @@
   export let cornerRadius = 0;
   export let padAngle = 0;
   // export let padRadius = 0;
+
+  export let fill: string | undefined = undefined;
+  export let stroke: string | undefined = undefined;
+  export let strokeWidth: number | undefined = undefined;
 
   export let track: boolean | SVGAttributes<SVGPathElement> = false;
 
@@ -183,36 +189,83 @@
    * Data to set when showing tooltip
    */
   export let data: any = undefined;
+
+  const canvasContext = getCanvasContext();
+  const renderContext = canvasContext ? 'canvas' : 'svg';
+
+  function render(ctx: CanvasRenderingContext2D) {
+    ctx.translate(xOffset, yOffset);
+
+    // Track
+    const trackProps = { ...(typeof track === 'object' ? track : null) };
+    renderPathData(ctx, trackArc(), {
+      styles: {
+        fill: trackProps['fill'] ?? undefined,
+        fillOpacity: trackProps['fill-opacity'] ?? undefined,
+        stroke: trackProps['stroke'] ?? undefined,
+        strokeWidth: trackProps['stroke-width'] ?? undefined,
+        opacity: trackProps['opacity'] ?? undefined,
+      },
+      classes: trackProps.class ?? undefined,
+    });
+
+    // Arc
+    renderPathData(ctx, arc(), {
+      styles: { stroke, fill, strokeWidth },
+      classes: $$props.class,
+    });
+  }
+
+  $: if (renderContext === 'canvas') {
+    canvasContext.register(render);
+  }
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when props changes (TODO: styles, class, etc)
+    arc && trackArc;
+    canvasContext.invalidate();
+  }
+
+  onDestroy(() => {
+    if (renderContext === 'canvas') {
+      canvasContext.deregister(render);
+    }
+  });
 </script>
 
-{#if track}
+{#if renderContext === 'svg'}
+  {#if track}
+    <path
+      d={trackArc()}
+      class="track"
+      bind:this={trackArcEl}
+      {...typeof track === 'object' ? track : null}
+    />
+  {/if}
+
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <path
-    d={trackArc()}
-    class="track"
-    bind:this={trackArcEl}
-    {...typeof track === 'object' ? track : null}
+    d={arc()}
+    transform="translate({xOffset}, {yOffset})"
+    {fill}
+    {stroke}
+    stroke-width={strokeWidth}
+    {...$$restProps}
+    on:pointerenter={(e) => tooltip?.show(e, data)}
+    on:pointermove={(e) => tooltip?.show(e, data)}
+    on:pointerleave={(e) => tooltip?.hide()}
+    on:touchmove={(e) => {
+      if (tooltip) {
+        // Prevent touch to not interfer with pointer when using tooltip
+        e.preventDefault();
+      }
+    }}
+    on:click
+    on:pointerenter
+    on:pointermove
+    on:pointerleave
+    on:touchmove
   />
 {/if}
-
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<path
-  d={arc()}
-  transform="translate({xOffset}, {yOffset})"
-  {...$$restProps}
-  on:pointerenter={(e) => tooltip?.show(e, data)}
-  on:pointermove={(e) => tooltip?.show(e, data)}
-  on:pointerleave={(e) => tooltip?.hide()}
-  on:touchmove={(e) => {
-    if (tooltip) {
-      // Prevent touch to not interfer with pointer when using tooltip
-      e.preventDefault();
-    }
-  }}
-  on:click
-  on:pointerenter
-  on:pointermove
-  on:pointerleave
-  on:touchmove
-/>
 
 <slot value={$tweened_value} centroid={trackArcCentroid} {boundingBox} />
