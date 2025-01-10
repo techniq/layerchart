@@ -106,12 +106,16 @@ function render(
     if (attr === 'fill') {
       const fill = computedStyles?.fill === DEFAULT_FILL ? null : computedStyles?.fill;
       if (fill) {
+        const currentGlobalAlpha = canvasCtx.globalAlpha;
         if (computedStyles?.fillOpacity) {
           canvasCtx.globalAlpha = Number(computedStyles?.fillOpacity);
         }
 
         canvasCtx.fillStyle = fill;
         render.fill(canvasCtx);
+
+        // Restore in case it was modified by `fillOpacity`
+        canvasCtx.globalAlpha = currentGlobalAlpha;
       }
     } else if (attr === 'stroke') {
       const stroke = computedStyles?.stroke === 'none' ? null : computedStyles?.stroke;
