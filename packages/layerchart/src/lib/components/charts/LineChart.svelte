@@ -16,7 +16,12 @@
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
-  import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
+  import {
+    accessor,
+    chartDataArray,
+    defaultChartPadding,
+    type Accessor,
+  } from '../../utils/common.js';
 
   interface $$Props extends ComponentProps<Chart<TData>> {
     axis?: typeof axis;
@@ -103,12 +108,7 @@
   yBaseline={0}
   yNice
   {radial}
-  padding={radial || axis === false
-    ? undefined
-    : {
-        left: axis === true || axis === 'y' ? 16 : 0,
-        bottom: (axis === true || axis === 'x' ? 16 : 0) + (legend === true ? 32 : 0),
-      }}
+  padding={radial ? undefined : defaultChartPadding(axis, legend)}
   tooltip={{ mode: 'bisect-x' }}
   {...$$restProps}
   let:x

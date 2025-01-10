@@ -17,7 +17,12 @@
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
-  import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
+  import {
+    accessor,
+    chartDataArray,
+    defaultChartPadding,
+    type Accessor,
+  } from '../../utils/common.js';
 
   type ChartProps = ComponentProps<Chart<TData>>;
 
@@ -199,12 +204,7 @@
   {y1Range}
   c={isVertical ? y : x}
   cRange={['hsl(var(--color-primary))']}
-  padding={axis === false
-    ? undefined
-    : {
-        left: axis === true || axis === 'y' ? 16 : 0,
-        bottom: (axis === true || axis === 'x' ? 16 : 0) + (legend === true ? 32 : 0),
-      }}
+  padding={defaultChartPadding(axis, legend)}
   tooltip={{ mode: 'band' }}
   {...$$restProps}
   let:x
