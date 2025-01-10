@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { tick } from 'svelte';
+  import { onDestroy, tick } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 
   import { chartContext } from './ChartContext.svelte';
   import { motionStore } from '$lib/stores/motionStore.js';
+  import { getCanvasContext } from './layout/Canvas.svelte';
 
   const { width, height } = chartContext();
 
@@ -44,23 +45,49 @@
   $: if (center || x != null || y != null) {
     transform = `translate(${$tweened_x ?? 0}, ${$tweened_y ?? 0})`;
   }
+
+  const canvasContext = getCanvasContext();
+  const renderContext = canvasContext ? 'canvas' : 'svg';
+
+  function render(ctx: CanvasRenderingContext2D) {
+    ctx.translate($tweened_x ?? 0, $tweened_y ?? 0);
+  }
+
+  $: if (renderContext === 'canvas') {
+    canvasContext.register(render);
+  }
+
+  $: if (renderContext === 'canvas') {
+    $tweened_x && $tweened_y;
+    canvasContext.invalidate();
+  }
+
+  onDestroy(() => {
+    if (renderContext === 'canvas') {
+      canvasContext.deregister(render);
+    }
+  });
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<g
-  {transform}
-  {...$$restProps}
-  on:click
-  on:pointerdown
-  on:pointerenter
-  on:pointermove
-  on:pointerleave
-  on:touchmove={(e) => {
-    if (preventTouchMove) {
-      // Prevent touch to not interfer with pointer
-      e.preventDefault();
-    }
-  }}
->
+{#if renderContext === 'canvas'}
   <slot />
-</g>
+{:else if renderContext === 'svg'}
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <g
+    {transform}
+    {...$$restProps}
+    on:click
+    on:pointerdown
+    on:pointerenter
+    on:pointermove
+    on:pointerleave
+    on:touchmove={(e) => {
+      if (preventTouchMove) {
+        // Prevent touch to not interfer with pointer
+        e.preventDefault();
+      }
+    }}
+  >
+    <slot />
+  </g>
+{/if}

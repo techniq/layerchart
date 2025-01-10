@@ -107,9 +107,10 @@
     }
 
     drawFunctions.forEach((fn) => {
-      context.save();
+      // TODO: `.save()` / `.restore()`  breaks `Group`.  Is this needed for resetting styles or other unidentified cases?
+      // context.save();
       fn(context);
-      context.restore();
+      // context.restore();
     });
 
     pendingInvalidation = false;
