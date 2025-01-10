@@ -11,13 +11,13 @@
     Group,
     HitCanvas,
     renderPathData,
+    spikePath,
     Svg,
     Tooltip,
   } from 'layerchart';
   import TransformControls from 'layerchart/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import ComputedStyles from 'layerchart/components/ComputedStyles.svelte';
 
   export let data;
 
@@ -169,33 +169,22 @@
           {strokeWidth}
         />
 
-        <ComputedStyles class="stroke-danger fill-danger/25" let:styles>
-          <GeoPath
-            render={(ctx, { newGeoPath }) => {
-              for (var feature of enrichedCountiesFeatures) {
-                const geoPath = newGeoPath();
-                const [x, y] = geoPath.centroid(feature);
-                const d = feature.properties.data;
-                const height = heightScale(d?.population ?? 0);
+        <GeoPath
+          render={(ctx, { newGeoPath }) => {
+            for (var feature of enrichedCountiesFeatures) {
+              const geoPath = newGeoPath();
+              const [x, y] = geoPath.centroid(feature);
+              const d = feature.properties.data;
+              const height = heightScale(d?.population ?? 0);
 
-                ctx.lineWidth = strokeWidth;
-                ctx.strokeStyle = styles.stroke;
-                ctx.fillStyle = styles.fill;
-
-                const startPoint = [x - width / 2, y];
-                const midPoint = [x, y - height];
-                const endPoint = [x + width / 2, y];
-
-                ctx.beginPath();
-                ctx.moveTo(x - width / 2, y); // startPoint
-                ctx.lineTo(x, y - height); // midPoint
-                ctx.lineTo(x + width / 2, y); // endPoint
-                ctx.fill();
-                ctx.stroke();
-              }
-            }}
-          />
-        </ComputedStyles>
+              const pathData = spikePath({ x, y, width, height });
+              renderPathData(ctx, pathData, {
+                classes: 'stroke-danger fill-danger/25',
+                styles: { strokeWidth },
+              });
+            }
+          }}
+        />
       </Canvas>
 
       {#if tooltip.data}
