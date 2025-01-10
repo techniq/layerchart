@@ -155,7 +155,7 @@
     tooltip,
   }}
   <slot {...slotProps}>
-    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} center>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} {center}>
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
