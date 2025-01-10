@@ -33,6 +33,31 @@ export function circlePath(dimensions: {
   `;
 }
 
+/** Create spike (triangle) using path data  */
+export function spikePath({
+  x,
+  y,
+  width,
+  height,
+}: {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}) {
+  const startPoint = { x: x - width / 2, y };
+  const midPoint = { x, y: y - height };
+  const endPoint = { x: x + width / 2, y };
+
+  const pathData = `
+    M ${startPoint.x},${startPoint.y}
+    L ${midPoint.x},${midPoint.y}
+    L ${endPoint.x},${endPoint.y}
+  `;
+
+  return pathData;
+}
+
 /** Flatten all `y` coordinates to `0` */
 export function flattenPathData(pathData: string, yOverride = 0) {
   let result = pathData;
