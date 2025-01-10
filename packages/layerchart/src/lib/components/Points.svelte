@@ -169,13 +169,14 @@
     }
   }
 
+  let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasContext.register(_render);
+    canvasUnregister = canvasContext.register({ name: 'Points', render: _render });
   }
 
   onDestroy(() => {
     if (renderContext === 'canvas') {
-      canvasContext.deregister(_render);
+      canvasUnregister();
     }
   });
 </script>

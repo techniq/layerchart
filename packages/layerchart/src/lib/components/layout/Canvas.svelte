@@ -1,11 +1,15 @@
 <script lang="ts" context="module">
   import { getContext, onDestroy, setContext } from 'svelte';
 
-  type DrawFunction = (ctx: CanvasRenderingContext2D) => any;
+  type ComponentRender = {
+    name: string;
+    render: (ctx: CanvasRenderingContext2D) => any;
+    retainState?: boolean;
+  };
 
   export type CanvasContext = {
-    register(fn: DrawFunction): void;
-    deregister(fn: DrawFunction): void;
+    /** Register component to render.  Returns method to unregister on component destory */
+    register(component: ComponentRender): () => void;
     invalidate(): void;
   };
 
@@ -64,7 +68,7 @@
    */
   export let center: boolean | 'x' | 'y' = false;
 
-  const drawFunctions: DrawFunction[] = [];
+  let components = new Map<Symbol, ComponentRender>();
   let pendingInvalidation = false;
   let frameId: number | undefined;
 
@@ -106,24 +110,31 @@
       context.scale($scale, $scale);
     }
 
-    drawFunctions.forEach((fn) => {
-      // TODO: `.save()` / `.restore()`  breaks `Group`.  Is this needed for resetting styles or other unidentified cases?
-      // context.save();
-      fn(context);
-      // context.restore();
+    components.forEach((c) => {
+      if (c.retainState) {
+        // Do not call save/restore canvas draw state (https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/save) (ex. Group ctx.translate() affecting children)
+        c.render(context);
+      } else {
+        context.save();
+        c.render(context);
+        context.restore();
+      }
     });
 
     pendingInvalidation = false;
   }
 
   const canvasContext: CanvasContext = {
-    register(fn) {
-      drawFunctions.push(fn);
+    register(component) {
+      const key = Symbol();
+      components.set(key, component);
       this.invalidate();
-    },
-    deregister(fn) {
-      drawFunctions.splice(drawFunctions.indexOf(fn), 1);
-      this.invalidate();
+
+      // Unregister
+      return () => {
+        components.delete(key);
+        this.invalidate();
+      };
     },
     invalidate() {
       if (pendingInvalidation) return;

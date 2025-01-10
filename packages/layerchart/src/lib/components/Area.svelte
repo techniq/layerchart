@@ -142,8 +142,9 @@
     });
   }
 
+  let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasContext.register(render);
+    canvasUnregister = canvasContext.register({ name: 'Area', render });
 
     tweened_d.subscribe(() => {
       canvasContext.invalidate();
@@ -152,7 +153,7 @@
 
   onDestroy(() => {
     if (renderContext === 'canvas') {
-      canvasContext.deregister(render);
+      canvasUnregister();
     }
   });
 </script>

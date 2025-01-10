@@ -53,8 +53,9 @@
     ctx.translate($tweened_x ?? 0, $tweened_y ?? 0);
   }
 
+  let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasContext.register(render);
+    canvasUnregister = canvasContext.register({ name: 'Group', render, retainState: true });
   }
 
   $: if (renderContext === 'canvas') {
@@ -64,7 +65,7 @@
 
   onDestroy(() => {
     if (renderContext === 'canvas') {
-      canvasContext.deregister(render);
+      canvasUnregister();
     }
   });
 </script>

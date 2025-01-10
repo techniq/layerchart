@@ -46,8 +46,9 @@
     });
   }
 
+  let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasContext.register(render);
+    canvasUnregister = canvasContext.register({ name: 'GeoTile', render });
   }
 
   $: if (renderContext === 'canvas') {
@@ -57,7 +58,7 @@
 
   onDestroy(() => {
     if (renderContext === 'canvas') {
-      canvasContext.deregister(render);
+      canvasUnregister();
     }
   });
 </script>

@@ -170,8 +170,9 @@
     });
   }
 
+  let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasContext.register(render);
+    canvasUnregister = canvasContext.register({ name: 'Spline', render });
 
     tweened_d.subscribe(() => {
       canvasContext.invalidate();
@@ -180,7 +181,7 @@
 
   onDestroy(() => {
     if (renderContext === 'canvas') {
-      canvasContext.deregister(render);
+      canvasUnregister();
     }
   });
 
