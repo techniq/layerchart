@@ -32,7 +32,7 @@
   export let title: string | undefined = undefined;
 
   /**
-   * Translate children to center, useful for radial layouts
+   * Translate children to center (useful for radial layouts)
    */
   export let center: boolean | 'x' | 'y' = false;
 

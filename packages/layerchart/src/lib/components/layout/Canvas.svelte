@@ -59,6 +59,11 @@
   /** A string passed to `aria-describedby` property on the `<canvas>` tag. */
   export let describedBy: string | undefined = undefined;
 
+  /**
+   * Translate children to center (useful for radial layouts)
+   */
+  export let center: boolean | 'x' | 'y' = false;
+
   const drawFunctions: DrawFunction[] = [];
   let pendingInvalidation = false;
   let frameId: number | undefined;
@@ -84,7 +89,14 @@
     context.clearRect(0, 0, $containerWidth, $containerHeight);
 
     context.translate($padding.left ?? 0, $padding.top ?? 0);
-    if (mode === 'canvas') {
+
+    if (center) {
+      const newTranslate = {
+        x: center === 'x' || center === true ? $width / 2 : 0,
+        y: center === 'y' || center === true ? $height / 2 : 0,
+      };
+      context.translate(newTranslate.x, newTranslate.y);
+    } else if (mode === 'canvas') {
       const center = { x: $width / 2, y: $height / 2 };
       const newTranslate = {
         x: $translate.x * $scale + center.x - center.x * $scale,
