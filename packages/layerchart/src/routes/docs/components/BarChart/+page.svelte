@@ -19,7 +19,6 @@
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, wideData, longData } from '$lib/utils/genData.js';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { render } from 'svelte/server';
 
   export let data;
 

@@ -180,7 +180,7 @@
                         height={nodeHeight}
                         stroke={colorBy === 'children'
                           ? 'hsl(var(--color-primary-content))'
-                          : hsl(nodeColor).darker(1)}
+                          : hsl(nodeColor).darker(1).toString()}
                         stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                         fill={nodeColor}
                         rx={5}
@@ -262,7 +262,7 @@
                         height={nodeHeight}
                         stroke={colorBy === 'children'
                           ? 'hsl(var(--color-primary-content))'
-                          : hsl(nodeColor).darker(1)}
+                          : hsl(nodeColor).darker(1).toString()}
                         stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                         fill={nodeColor}
                         rx={5}
@@ -353,7 +353,7 @@
                       height={nodeHeight}
                       stroke={colorBy === 'children'
                         ? 'hsl(var(--color-primary-content))'
-                        : hsl(nodeColor).darker(1)}
+                        : hsl(nodeColor).darker(1).toString()}
                       stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                       fill={nodeColor}
                       rx={5}
