@@ -13,8 +13,6 @@
   import Link from './Link.svelte';
   import { isScaleBand, type AnyScale } from '../utils/scales.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { renderPathData } from '../utils/canvas.js';
-  import { circlePath } from 'layerchart/utils/path.js';
 
   const context = chartContext() as any;
   const {
@@ -167,10 +165,7 @@
     if (render) {
       render(ctx, points);
     } else {
-      points.forEach((point) => {
-        const pathData = circlePath({ cx: point.x, cy: point.y, r: point.r });
-        renderPathData(ctx, pathData, { styles: { fill, stroke }, classes: className });
-      });
+      // Rendered below
     }
   }
 
@@ -186,7 +181,7 @@
 </script>
 
 <slot {points}>
-  {#if renderContext === 'svg'}
+  {#if renderContext === 'svg' || (renderContext === 'canvas' && !render)}
     {#if links}
       <g class="link-group">
         {#each _links as link}

@@ -66,13 +66,11 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-      <Svg>
+    <Chart {data} x="x" y="y" yNice padding={{ left: 24, bottom: 24, top: 4, right: 8 }}>
+      <svelte:component this={Context}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
-      </Svg>
 
-      <svelte:component this={Context}>
         {#if show}
           <Spline
             {curve}
@@ -80,13 +78,10 @@
             draw={motion === 'draw'}
             class="stroke-primary stroke-2"
           />
-        {/if}
-      </svelte:component>
 
-      <!--  Render separate context for Points to play nice with Canvas (clear, etc) -->
-      <svelte:component this={Context}>
-        {#if show && showPoints}
-          <Points tweened={motion === 'tweened'} r={3} class="fill-surface-100 stroke-primary" />
+          {#if showPoints}
+            <Points tweened={motion === 'tweened'} r={3} class="fill-surface-100 stroke-primary" />
+          {/if}
         {/if}
       </svelte:component>
     </Chart>
