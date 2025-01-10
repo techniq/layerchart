@@ -42,7 +42,9 @@
   export let links: boolean | Partial<ComponentProps<Link>> = false;
 
   export let fill: string | undefined = undefined;
+  export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = undefined;
+  export let strokeWidth: number | undefined = undefined;
 
   /** Render to canvas */
   export let render: ((ctx: CanvasRenderingContext2D, points: Point[]) => any) | undefined =
@@ -203,7 +205,9 @@
           cy={$radial ? radialPoint[1] : point.y}
           r={point.r}
           fill={fill ?? ($config.c ? $cGet(point.data) : null)}
+          {fillOpacity}
           {stroke}
+          {strokeWidth}
           class={className}
           {...$$restProps}
         />

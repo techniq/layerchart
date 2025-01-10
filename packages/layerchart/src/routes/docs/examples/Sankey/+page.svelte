@@ -290,7 +290,7 @@
                 width={nodeWidth}
                 height={nodeHeight}
                 fill={colorScale(node[nodeColorBy])}
-                fill-opacity={0.5}
+                fillOpacity={0.5}
                 on:pointerover={() => {
                   highlightLinkIndexes = [
                     ...(node.sourceLinks?.map((l) => l.index) ?? []),
@@ -409,7 +409,7 @@
                 width={nodeWidth}
                 height={nodeHeight}
                 fill={colorScale(node[nodeColorBy])}
-                fill-opacity={0.5}
+                fillOpacity={0.5}
                 on:pointerover={() => {
                   highlightLinkIndexes = [
                     ...(node.sourceLinks?.map((l) => l.index) ?? []),

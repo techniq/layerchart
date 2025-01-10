@@ -270,12 +270,7 @@
         />
         {#each dataByFruit as [fruit, data]}
           {@const color = cScale?.(fruit)}
-          <Area
-            {data}
-            fill={color}
-            fill-opacity={0.3}
-            line={{ class: 'stroke-2', stroke: color }}
-          />
+          <Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />
           <Point d={data[data.length - 1]} let:x let:y>
             <circle cx={x} cy={y} r={4} fill={color} />
             <Text
@@ -327,7 +322,7 @@
           y1={(d) => d.apples}
           class="stroke-2"
           fill={fruitColors.apples}
-          fill-opacity={0.3}
+          fillOpacity={0.3}
           line={{ stroke: fruitColors.apples, class: 'stroke-2' }}
         />
 
@@ -335,7 +330,7 @@
           y1={(d) => d.bananas}
           class="stroke-2"
           fill={fruitColors.bananas}
-          fill-opacity={0.3}
+          fillOpacity={0.3}
           line={{ stroke: fruitColors.bananas, class: 'stroke-2' }}
         />
 
@@ -343,7 +338,7 @@
           y1={(d) => d.oranges}
           class="stroke-2"
           fill={fruitColors.oranges}
-          fill-opacity={0.3}
+          fillOpacity={0.3}
           line={{ stroke: fruitColors.oranges, class: 'stroke-2' }}
         />
 
@@ -396,12 +391,7 @@
             tooltip.data == null || tooltip.data.fruit === fruit
               ? cScale?.(fruit)
               : 'hsl(var(--color-surface-content) / 20%)'}
-          <Area
-            {data}
-            fill={color}
-            fill-opacity={0.3}
-            line={{ class: 'stroke-2', stroke: color }}
-          />
+          <Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />
           <Point d={data[data.length - 1]} let:x let:y>
             <circle cx={x} cy={y} r={4} fill={color} />
             <Text
@@ -456,12 +446,7 @@
         />
         {#each dataByFruit as [fruit, data]}
           {@const color = cScale?.(fruit)}
-          <Area
-            {data}
-            fill={color}
-            fill-opacity={0.3}
-            line={{ class: 'stroke-2', stroke: color }}
-          />
+          <Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />
         {/each}
         <Labels format="integer" />
         <Highlight points lines />
@@ -511,7 +496,7 @@
             data={seriesData}
             line={{ stroke: color, 'stroke-width': 2 }}
             fill={color}
-            fill-opacity={0.2}
+            fillOpacity={0.2}
           />
         {/each}
 
@@ -566,7 +551,7 @@
           {@const secondaryColor = secondaryColors[index]}
 
           <LinearGradient stops={[primaryColor, secondaryColor]} vertical let:url>
-            <Area data={seriesData} fill={url} fill-opacity={0.5} line={{ stroke: primaryColor }} />
+            <Area data={seriesData} fill={url} fillOpacity={0.5} line={{ stroke: primaryColor }} />
           </LinearGradient>
         {/each}
       </Svg>
@@ -882,7 +867,7 @@
           vertical
           let:url
         >
-          <Area line={{ stroke: url, class: 'stroke-2' }} fill={url} fill-opacity={0.2} />
+          <Area line={{ stroke: url, class: 'stroke-2' }} fill={url} fillOpacity={0.2} />
         </LinearGradient>
       </Svg>
     </Chart>
@@ -924,7 +909,7 @@
             y0={(d) => 0}
             line={{ stroke: url, class: 'stroke-2' }}
             fill={url}
-            fill-opacity={0.2}
+            fillOpacity={0.2}
           />
         </LinearGradient>
       </Svg>

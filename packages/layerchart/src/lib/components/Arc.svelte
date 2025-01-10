@@ -83,6 +83,7 @@
   // export let padRadius = 0;
 
   export let fill: string | undefined = undefined;
+  export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
 
@@ -211,7 +212,7 @@
 
     // Arc
     renderPathData(ctx, arc(), {
-      styles: { stroke, fill, strokeWidth },
+      styles: { fill, fillOpacity, stroke, strokeWidth },
       classes: $$props.class,
     });
   }
@@ -249,6 +250,7 @@
     d={arc()}
     transform="translate({xOffset}, {yOffset})"
     {fill}
+    fill-opacity={fillOpacity}
     {stroke}
     stroke-width={strokeWidth}
     {...$$restProps}

@@ -55,6 +55,7 @@
   export let line: boolean | Partial<ComponentProps<Spline>> = false;
 
   export let fill: string | undefined = undefined;
+  export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
 
@@ -137,7 +138,7 @@
 
   function render(ctx: CanvasRenderingContext2D) {
     renderPathData(ctx, $tweened_d, {
-      styles: { fill, stroke, strokeWidth },
+      styles: { fill, fillOpacity, stroke, strokeWidth },
       classes: $$props.class,
     });
   }
@@ -176,6 +177,10 @@
   <path
     d={$tweened_d}
     clip-path={clipPath}
+    {fill}
+    fill-opacity={fillOpacity}
+    {stroke}
+    stroke-width={strokeWidth}
     {...$$restProps}
     class={cls('path-area', $$props.class)}
     on:click

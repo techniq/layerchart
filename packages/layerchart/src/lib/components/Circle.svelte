@@ -21,6 +21,7 @@
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
   export let fill: string | undefined = undefined;
+  export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
 
@@ -40,7 +41,7 @@
   function render(ctx: CanvasRenderingContext2D) {
     const pathData = circlePath({ cx: $tweened_cx, cy: $tweened_cy, r: $tweened_r });
     renderPathData(ctx, pathData, {
-      styles: { fill, stroke, strokeWidth },
+      styles: { fill, fillOpacity, stroke, strokeWidth },
       classes: $$props.class,
     });
   }
@@ -70,6 +71,7 @@
     cy={$tweened_cy}
     r={$tweened_r}
     {fill}
+    fill-opacity={fillOpacity}
     {stroke}
     stroke-width={strokeWidth}
     class={cls($$props.fill == null && 'fill-surface-content')}

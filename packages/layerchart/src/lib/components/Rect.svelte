@@ -24,6 +24,7 @@
   export let initialHeight = height;
 
   export let fill: string | undefined = undefined;
+  export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
 
@@ -50,7 +51,7 @@
       ctx,
       { x: $tweened_x, y: $tweened_y, width: $tweened_width, height: $tweened_height },
       {
-        styles: { fill, stroke, strokeWidth },
+        styles: { fill, fillOpacity, stroke, strokeWidth },
         classes: $$props.class,
       }
     );
@@ -84,6 +85,7 @@
     height={$tweened_height}
     class={cls($$props.fill == null && 'fill-surface-content')}
     {fill}
+    fill-opacity={fillOpacity}
     {stroke}
     stroke-width={strokeWidth}
     {...$$restProps}

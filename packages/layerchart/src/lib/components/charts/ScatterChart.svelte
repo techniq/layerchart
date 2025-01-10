@@ -83,7 +83,7 @@
       data: s.data,
       stroke: s.color,
       fill: s.color,
-      'fill-opacity': 0.3,
+      fillOpacity: 0.3,
       ...props.points,
       ...s.props,
     };

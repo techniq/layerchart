@@ -199,7 +199,7 @@
                         : hsl(nodeColor).darker(1).toString()}
                       stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                       fill={nodeColor}
-                      fill-opacity={node.children ? 0.5 : 1}
+                      fillOpacity={node.children ? 0.5 : 1}
                       rx={5}
                     />
                     <RectClipPath width={nodeWidth} height={nodeHeight}>
@@ -340,7 +340,7 @@
                     : hsl(nodeColor).darker(1).toString()}
                   stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                   fill={nodeColor}
-                  fill-opacity={node.children ? 0.5 : 1}
+                  fillOpacity={node.children ? 0.5 : 1}
                   rx={5}
                   tweened={{ delay: 600 }}
                 />

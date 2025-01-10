@@ -104,7 +104,7 @@
             y0={(d) => thresholdValue}
             line={{ stroke: url, class: 'stroke-2' }}
             fill={url}
-            fill-opacity={0.2}
+            fillOpacity={0.2}
           />
         </LinearGradient>
       </svelte:fragment>
@@ -206,7 +206,7 @@
             data={s.data}
             line={{ class: 'stroke-2', stroke: color }}
             fill={color}
-            fill-opacity={0.3}
+            fillOpacity={0.3}
           />
         {/each}
       </svelte:fragment>
@@ -368,7 +368,7 @@
       radial
       rule={{ class: 'stroke-surface-content/20' }}
       props={{
-        area: { line: false, 'fill-opacity': 1 },
+        area: { line: false, fillOpacity: 1 },
         xAxis: { format: PeriodType.Month, tickLength: 0 },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },

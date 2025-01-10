@@ -135,7 +135,7 @@
           ? s.value[1]
           : (s.value ?? s.key),
       fill: s.color,
-      'fill-opacity': 0.3,
+      fillOpacity: 0.3,
       ...props.area,
       ...s.props,
       line: {
