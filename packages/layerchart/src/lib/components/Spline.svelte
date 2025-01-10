@@ -233,6 +233,7 @@
       {fill}
       {stroke}
       stroke-width={strokeWidth}
+      {opacity}
       marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
       marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
       marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
