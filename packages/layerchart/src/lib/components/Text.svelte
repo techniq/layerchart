@@ -60,6 +60,11 @@
   /** Rotational angle of the text */
   export let rotate: number | undefined = undefined;
 
+  export let fill: string | undefined = undefined;
+  export let fillOpacity: number | undefined = undefined;
+  export let stroke: string | undefined = undefined;
+  export let strokeWidth: number | undefined = undefined;
+
   let wordsByLines: { words: string[]; width?: number }[] = [];
   let wordsWithWidth: { word: string; width: number }[] = [];
   let spaceWidth: number = 0;
@@ -186,8 +191,8 @@
             (index === 0 ? startDy : getPixelValue(lineHeight)),
         },
         {
-          styles: { paintOrder: 'stroke', textAnchor }, // TODO: fill, stroke, strokeWidth
-          classes: `fill-surface-content ${$$props.class}`,
+          styles: { fill, fillOpacity, stroke, strokeWidth, paintOrder: 'stroke', textAnchor },
+          classes: cls(fill === undefined && 'fill-surface-content', $$props.class),
         }
       );
     });
@@ -222,7 +227,11 @@
         {transform}
         text-anchor={textAnchor}
         {...$$restProps}
-        class={cls($$props.fill === undefined && 'fill-surface-content', $$props.class)}
+        {fill}
+        fill-opacity={fillOpacity}
+        {stroke}
+        stroke-width={strokeWidth}
+        class={cls(fill === undefined && 'fill-surface-content', $$props.class)}
       >
         {#each wordsByLines as line, index}
           <tspan x={$tweened_x} dy={index === 0 ? startDy : lineHeight}>
