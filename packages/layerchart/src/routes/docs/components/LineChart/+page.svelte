@@ -352,9 +352,9 @@
         <LinearGradient
           stops={ticks(1, 0, 10).map(temperatureColor.interpolator())}
           vertical
-          let:url
+          let:gradient
         >
-          <Spline class="stroke-2" stroke={url} />
+          <Spline class="stroke-2" stroke={gradient} />
         </LinearGradient>
       </svelte:fragment>
 
@@ -391,9 +391,9 @@
           ]}
           units="userSpaceOnUse"
           vertical
-          let:url
+          let:gradient
         >
-          <Spline class="stroke-2" stroke={url} />
+          <Spline class="stroke-2" stroke={gradient} />
         </LinearGradient>
       </svelte:fragment>
     </LineChart>

@@ -54,4 +54,4 @@
   </radialGradient>
 </defs>
 
-<slot {id} url="url(#{id})" />
+<slot {id} gradient="url(#{id})" />

@@ -123,7 +123,7 @@
   <div class="h-[160px] p-4 border rounded">
     <PieChart {renderContext}>
       <svelte:fragment slot="marks">
-        <LinearGradient class="from-secondary to-primary" let:url>
+        <LinearGradient class="from-secondary to-primary" let:gradient>
           <Group y={20}>
             <Arc
               value={70}
@@ -133,7 +133,7 @@
               cornerRadius={10}
               padAngle={0.02}
               range={[-120, 120]}
-              fill={url}
+              fill={gradient}
               track={{ class: 'fill-none stroke-surface-content/10' }}
               let:value
             >

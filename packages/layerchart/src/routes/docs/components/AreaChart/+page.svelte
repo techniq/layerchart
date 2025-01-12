@@ -71,8 +71,8 @@
   <div class="h-[300px] p-4 border rounded">
     <AreaChart data={dateSeriesData} x="date" y="value" {renderContext}>
       <svelte:fragment slot="marks">
-        <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
-          <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+        <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+          <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
         </LinearGradient>
       </svelte:fragment>
     </AreaChart>
@@ -98,12 +98,12 @@
           ]}
           units="userSpaceOnUse"
           vertical
-          let:url
+          let:gradient
         >
           <Area
             y0={(d) => thresholdValue}
-            line={{ stroke: url, class: 'stroke-2' }}
-            fill={url}
+            line={{ stroke: gradient, class: 'stroke-2' }}
+            fill={gradient}
             fillOpacity={0.2}
           />
         </LinearGradient>
@@ -330,9 +330,9 @@
           <LinearGradient
             stops={[s.color, 'color-mix(in lch, ' + s.color + ' 10%, transparent)']}
             vertical
-            let:url
+            let:gradient
           >
-            <Area {...getAreaProps(s, i)} fill={url} />
+            <Area {...getAreaProps(s, i)} fill={gradient} />
           </LinearGradient>
         {/each}
       </svelte:fragment>

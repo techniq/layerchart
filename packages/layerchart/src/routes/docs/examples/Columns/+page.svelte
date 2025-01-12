@@ -452,8 +452,13 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse" let:url>
-          <Bars strokeWidth={1} fill={url} class="stroke-blue-900" />
+        <LinearGradient
+          class="from-blue-500 to-green-400"
+          vertical
+          units="userSpaceOnUse"
+          let:gradient
+        >
+          <Bars strokeWidth={1} fill={gradient} class="stroke-blue-900" />
         </LinearGradient>
       </Svg>
     </Chart>

@@ -85,8 +85,8 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <LinearGradient class="from-primary/10 to-secondary/10" vertical let:url>
-          <Frame class="stroke-primary/10" fill={url} />
+        <LinearGradient class="from-primary/10 to-secondary/10" vertical let:gradient>
+          <Frame class="stroke-primary/10" fill={gradient} />
         </LinearGradient>
         <Axis placement="bottom" />
         <Axis placement="left" />

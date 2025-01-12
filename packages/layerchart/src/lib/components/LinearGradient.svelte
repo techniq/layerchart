@@ -85,7 +85,7 @@
 <!-- TODO: Change `url` slot prop to `gradient` (update all usage) -->
 
 {#if renderContext === 'canvas'}
-  <slot {id} url={canvasGradient} />
+  <slot {id} gradient={canvasGradient} />
 {:else if renderContext === 'svg'}
   <defs>
     <linearGradient
@@ -112,5 +112,5 @@
     </linearGradient>
   </defs>
 
-  <slot {id} url="url(#{id})" />
+  <slot {id} gradient="url(#{id})" />
 {/if}

@@ -204,8 +204,8 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
-          <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+        <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+          <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
         </LinearGradient>
       </Svg>
     </Chart>
@@ -232,9 +232,9 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <LinearGradient class="from-secondary/0 to-secondary" let:url={strokeUrl}>
-          <LinearGradient class="from-primary/50 to-primary/0" vertical let:url={fillUrl}>
-            <Area line={{ stroke: strokeUrl, class: 'stroke-2' }} fill={fillUrl} />
+        <LinearGradient class="from-secondary/0 to-secondary" let:gradient={strokeGradient}>
+          <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient={fillGradient}>
+            <Area line={{ stroke: strokeGradient, class: 'stroke-2' }} fill={fillGradient} />
           </LinearGradient>
         </LinearGradient>
       </Svg>
@@ -550,8 +550,13 @@
           {@const primaryColor = primaryColors[index]}
           {@const secondaryColor = secondaryColors[index]}
 
-          <LinearGradient stops={[primaryColor, secondaryColor]} vertical let:url>
-            <Area data={seriesData} fill={url} fillOpacity={0.5} line={{ stroke: primaryColor }} />
+          <LinearGradient stops={[primaryColor, secondaryColor]} vertical let:gradient>
+            <Area
+              data={seriesData}
+              fill={gradient}
+              fillOpacity={0.5}
+              line={{ stroke: primaryColor }}
+            />
           </LinearGradient>
         {/each}
       </Svg>
@@ -865,9 +870,9 @@
           ]}
           units="userSpaceOnUse"
           vertical
-          let:url
+          let:gradient
         >
-          <Area line={{ stroke: url, class: 'stroke-2' }} fill={url} fillOpacity={0.2} />
+          <Area line={{ stroke: gradient, class: 'stroke-2' }} fill={gradient} fillOpacity={0.2} />
         </LinearGradient>
       </Svg>
     </Chart>
@@ -903,12 +908,12 @@
           ]}
           units="userSpaceOnUse"
           vertical
-          let:url
+          let:gradient
         >
           <Area
             y0={(d) => 0}
-            line={{ stroke: url, class: 'stroke-2' }}
-            fill={url}
+            line={{ stroke: gradient, class: 'stroke-2' }}
+            fill={gradient}
             fillOpacity={0.2}
           />
         </LinearGradient>
@@ -936,10 +941,10 @@
       let:tooltip
     >
       <Svg>
-        <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
-          <Area line={{ class: 'stroke-2 stroke-primary opacity-20' }} fill={url} />
+        <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+          <Area line={{ class: 'stroke-2 stroke-primary opacity-20' }} fill={gradient} />
           <RectClipPath x={0} y={0} width={tooltip.data ? tooltip.x : width} {height} spring>
-            <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+            <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
           </RectClipPath>
         </LinearGradient>
         <Highlight points lines={{ class: 'stroke-primary [stroke-dasharray:unset]' }} />

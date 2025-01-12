@@ -163,9 +163,9 @@
             class="from-blue-500 to-green-400"
             vertical
             units="userSpaceOnUse"
-            let:url
+            let:gradient
           >
-            <Bars {...getBarsProps(s, i)} fill={url} />
+            <Bars {...getBarsProps(s, i)} fill={gradient} />
           </LinearGradient>
         {/each}
       </svelte:fragment>

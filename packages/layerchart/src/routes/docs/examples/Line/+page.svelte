@@ -197,9 +197,9 @@
         <LinearGradient
           stops={ticks(1, 0, 10).map(temperatureColor.interpolator())}
           vertical
-          let:url
+          let:gradient
         >
-          <Spline class="stroke-2" stroke={url} />
+          <Spline class="stroke-2" stroke={gradient} />
         </LinearGradient>
       </Svg>
       <Legend
@@ -243,9 +243,9 @@
           ]}
           units="userSpaceOnUse"
           vertical
-          let:url
+          let:gradient
         >
-          <Spline class="stroke-2" stroke={url} />
+          <Spline class="stroke-2" stroke={gradient} />
         </LinearGradient>
       </Svg>
     </Chart>
