@@ -5,7 +5,7 @@
   import { chartContext } from './ChartContext.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { getComputedStyles } from '../utils/canvas.js';
-  import { parsePercent } from 'layerchart/utils/math.js';
+  import { parsePercent } from '../utils/math.js';
 
   /** Unique id for linearGradient */
   export let id: string = uniqueId('linearGradient-');
@@ -81,8 +81,6 @@
     }
   });
 </script>
-
-<!-- TODO: Change `url` slot prop to `gradient` (update all usage) -->
 
 {#if renderContext === 'canvas'}
   <slot {id} gradient={canvasGradient} />
