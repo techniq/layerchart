@@ -9,7 +9,7 @@
     type TweenedOptions,
   } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { renderRect } from 'layerchart/utils/canvas.js';
+  import { renderRect } from '../utils/canvas.js';
 
   export let x = 0;
   export let initialX = x;

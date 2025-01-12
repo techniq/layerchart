@@ -6,7 +6,7 @@
   import { getStringWidth } from '$lib/utils/string.js';
   import { motionStore } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { renderText } from 'layerchart/utils/canvas.js';
+  import { renderText } from '../utils/canvas.js';
 
   /*
     TODO:
