@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type ComponentProps } from 'svelte';
+  import { onDestroy, type ComponentProps } from 'svelte';
   import type { tweened as tweenedStore } from 'svelte/motion';
   import { type Area, area as d3Area, areaRadial } from 'd3-shape';
   import type { CurveFactory } from 'd3-shape';
@@ -14,6 +14,8 @@
   import Spline from './Spline.svelte';
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
+  import { renderPathData } from '../utils/canvas.js';
+  import { getCanvasContext } from './layout/Canvas.svelte';
 
   const {
     data: contextData,
@@ -23,8 +25,8 @@
     y,
     yDomain,
     yRange,
-    config,
     radial,
+    config,
   } = chartContext();
 
   /** Override data instead of using context */
@@ -51,6 +53,11 @@
 
   /** Enable showing line */
   export let line: boolean | Partial<ComponentProps<Spline>> = false;
+
+  export let fill: string | undefined = undefined;
+  export let fillOpacity: number | undefined = undefined;
+  export let stroke: string | undefined = undefined;
+  export let strokeWidth: number | undefined = undefined;
 
   const xAccessor = x ? accessor(x) : $contextX;
   const y0Accessor = y0 ? accessor(y0) : (d: any) => min($yDomain);
@@ -125,8 +132,34 @@
     const d = pathData ?? path(data ?? $contextData);
     tweened_d.set(d ?? '');
   }
+
+  const canvasContext = getCanvasContext();
+  const renderContext = canvasContext ? 'canvas' : 'svg';
+
+  function render(ctx: CanvasRenderingContext2D) {
+    renderPathData(ctx, $tweened_d, {
+      styles: { fill, fillOpacity, stroke, strokeWidth },
+      classes: $$props.class,
+    });
+  }
+
+  let canvasUnregister: ReturnType<typeof canvasContext.register>;
+  $: if (renderContext === 'canvas') {
+    canvasUnregister = canvasContext.register({ name: 'Area', render });
+
+    tweened_d.subscribe(() => {
+      canvasContext.invalidate();
+    });
+  }
+
+  onDestroy(() => {
+    if (renderContext === 'canvas') {
+      canvasUnregister();
+    }
+  });
 </script>
 
+<!-- TODO: Find way to not clear <Canvas> when rendering Spline (remove Area rendering).  Idea: https://github.com/techniq/layerchart/issues/158#issuecomment-2543416108 -->
 {#if line}
   <Spline
     {data}
@@ -139,13 +172,19 @@
   />
 {/if}
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<path
-  d={$tweened_d}
-  clip-path={clipPath}
-  {...$$restProps}
-  class={cls('path-area', $$props.class)}
-  on:click
-  on:pointermove
-  on:pointerleave
-/>
+{#if renderContext === 'svg'}
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <path
+    d={$tweened_d}
+    clip-path={clipPath}
+    {fill}
+    fill-opacity={fillOpacity}
+    {stroke}
+    stroke-width={strokeWidth}
+    {...$$restProps}
+    class={cls('path-area', $$props.class)}
+    on:click
+    on:pointermove
+    on:pointerleave
+  />
+{/if}

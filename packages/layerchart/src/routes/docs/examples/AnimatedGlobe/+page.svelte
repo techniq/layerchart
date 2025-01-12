@@ -14,6 +14,7 @@
     Tooltip,
     TransformContext,
     Svg,
+    renderPathData,
   } from 'layerchart';
   import { Button, ButtonGroup } from 'svelte-ux';
   import { sortFunc } from '@layerstack/utils';
@@ -224,25 +225,17 @@
     >
       <Canvas>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
-      </Canvas>
-
-      <Canvas>
         <Graticule class="stroke-surface-content/20" />
-      </Canvas>
-
-      <Canvas>
         <GeoPath geojson={countries} class="stroke-surface-content/50 fill-white" />
-      </Canvas>
-
-      <Canvas>
         <GeoPath geojson={selectedFeature} class="stroke-primary-900 fill-primary" />
       </Canvas>
 
-      {#if tooltip.data}
-        <Canvas>
+      <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
+      <Canvas>
+        {#if tooltip.data}
           <GeoPath geojson={tooltip.data} class="fill-surface-content/20" />
-        </Canvas>
-      {/if}
+        {/if}
+      </Canvas>
 
       <HitCanvas
         let:nextColor
@@ -254,18 +247,13 @@
         }}
       >
         <GeoPath
-          render={(ctx, { geoPath }) => {
+          render={(ctx, { newGeoPath }) => {
             for (var feature of countries.features) {
               const color = nextColor();
 
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
-
+              const geoPath = newGeoPath();
               // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
-              ctx.strokeStyle = color;
-              ctx.stroke();
+              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
 
               setColorData(color, feature);
             }

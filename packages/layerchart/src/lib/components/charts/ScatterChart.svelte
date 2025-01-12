@@ -4,6 +4,7 @@
   import { format } from '@layerstack/utils';
 
   import Axis from '../Axis.svelte';
+  import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
@@ -14,7 +15,12 @@
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
-  import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
+  import {
+    accessor,
+    chartDataArray,
+    defaultChartPadding,
+    type Accessor,
+  } from '../../utils/common.js';
 
   interface $$Props extends ComponentProps<Chart<TData>> {
     axis?: typeof axis;
@@ -23,6 +29,7 @@
     legend?: typeof legend;
     props?: typeof props;
     series?: typeof series;
+    renderContext?: typeof renderContext;
   }
 
   export let data: $$Props['data'] = [];
@@ -55,6 +62,8 @@
     rule?: Partial<ComponentProps<Rule>>;
   } = {};
 
+  export let renderContext: 'svg' | 'canvas' = 'svg';
+
   // Default xScale based on first data's `x` value
   $: xScale =
     $$props.xScale ??
@@ -74,7 +83,7 @@
       data: s.data,
       stroke: s.color,
       fill: s.color,
-      'fill-opacity': 0.3,
+      fillOpacity: 0.3,
       ...props.points,
       ...s.props,
     };
@@ -90,12 +99,7 @@
   {y}
   {yScale}
   yNice
-  padding={axis === false
-    ? undefined
-    : {
-        left: axis === true || axis === 'y' ? 16 : 0,
-        bottom: (axis === true || axis === 'x' ? 16 : 0) + (legend === true ? 32 : 0),
-      }}
+  padding={defaultChartPadding(axis, legend)}
   tooltip={{ mode: 'voronoi' }}
   {...$$restProps}
   let:x
@@ -117,7 +121,7 @@
     : null}
 
   <slot {...slotProps}>
-    <Svg>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
       <slot name="grid" {...slotProps}>
         {#if grid}
           <Grid x y {...typeof grid === 'object' ? grid : null} {...props.grid} />
@@ -171,7 +175,7 @@
           {...typeof labels === 'object' ? labels : null}
         />
       {/if}
-    </Svg>
+    </svelte:component>
 
     <slot name="legend" {...slotProps}>
       {#if legend}

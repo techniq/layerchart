@@ -7,6 +7,7 @@
 
   import Axis from '../Axis.svelte';
   import Bars from '../Bars.svelte';
+  import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
@@ -16,7 +17,12 @@
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
-  import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
+  import {
+    accessor,
+    chartDataArray,
+    defaultChartPadding,
+    type Accessor,
+  } from '../../utils/common.js';
 
   type ChartProps = ComponentProps<Chart<TData>>;
 
@@ -32,6 +38,7 @@
     rule?: typeof rule;
     series?: typeof series;
     seriesLayout?: typeof seriesLayout;
+    renderContext?: typeof renderContext;
   }
 
   export let data: $$Props['data'] = [];
@@ -110,6 +117,8 @@
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
   } = {};
+
+  export let renderContext: 'svg' | 'canvas' = 'svg';
 
   $: allSeriesData = series
     .flatMap((s) =>
@@ -195,12 +204,7 @@
   {y1Range}
   c={isVertical ? y : x}
   cRange={['hsl(var(--color-primary))']}
-  padding={axis === false
-    ? undefined
-    : {
-        left: axis === true || axis === 'y' ? 16 : 0,
-        bottom: (axis === true || axis === 'x' ? 16 : 0) + (legend === true ? 32 : 0),
-      }}
+  padding={defaultChartPadding(axis, legend)}
   tooltip={{ mode: 'band' }}
   {...$$restProps}
   let:x
@@ -229,7 +233,7 @@
     getBarsProps,
   }}
   <slot {...slotProps}>
-    <Svg>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
       <slot name="grid" {...slotProps}>
         {#if grid}
           <Grid
@@ -301,7 +305,7 @@
       {#if labels}
         <Labels {...props.labels} {...typeof labels === 'object' ? labels : null} />
       {/if}
-    </Svg>
+    </svelte:component>
 
     <slot name="legend" {...slotProps}>
       {#if legend}

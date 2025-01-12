@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { onDestroy } from 'svelte';
   // @ts-expect-error
   import { tile as d3Tile } from 'd3-tile';
 
@@ -8,6 +7,7 @@
   import { geoContext } from './GeoContext.svelte';
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
+  import { getCanvasContext } from './layout/Canvas.svelte';
 
   export let url: (x: number, y: number, z: number) => string;
   export let zoomDelta = 0;
@@ -16,7 +16,6 @@
   export let debug = false;
 
   const { containerWidth, containerHeight, padding } = chartContext();
-  const canvas = getContext<{ ctx: Readable<CanvasRenderingContext2D> }>('canvas');
   const geo = geoContext();
 
   $: center = $geo([0, 0]) ?? [0, 0];
@@ -34,18 +33,34 @@
     scale,
   } = tiles);
 
-  $: renderContext = canvas ? 'canvas' : 'svg';
+  const canvasContext = getCanvasContext();
+  const renderContext = canvasContext ? 'canvas' : 'svg';
 
-  $: ctx = canvas?.ctx;
-  $: if (renderContext === 'canvas' && $ctx && url) {
+  function render(ctx: CanvasRenderingContext2D) {
     tiles.forEach(([x, y, z]: number[]) => {
       const image = new Image();
       image.onload = () => {
-        $ctx.drawImage(image, (x + tx) * scale, (y + ty) * scale, scale, scale);
+        ctx.drawImage(image, (x + tx) * scale, (y + ty) * scale, scale, scale);
       };
       image.src = url(x, y, z);
     });
   }
+
+  let canvasUnregister: ReturnType<typeof canvasContext.register>;
+  $: if (renderContext === 'canvas') {
+    canvasUnregister = canvasContext.register({ name: 'GeoTile', render });
+  }
+
+  $: if (renderContext === 'canvas') {
+    tile;
+    canvasContext.invalidate();
+  }
+
+  onDestroy(() => {
+    if (renderContext === 'canvas') {
+      canvasUnregister();
+    }
+  });
 </script>
 
 {#if renderContext === 'svg' && url}

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { ComponentProps } from 'svelte';
+  import type { Component, ComponentProps } from 'svelte';
 
-  import { Field, RangeField, Switch } from 'svelte-ux';
-  import { Area, Axis, Chart, Svg, Points } from 'layerchart';
+  import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Area, Axis, Chart, Svg, Points, Canvas, Spline } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
@@ -13,6 +13,7 @@
   let showLine = true;
   let show = true;
   let tweened = true;
+  let Context: Component = Svg;
 
   let pathGenerator = (x: number) => x;
   let curve: ComponentProps<CurveMenuField>['value'] = undefined;
@@ -40,7 +41,66 @@
     </Field>
   </div>
 
-  <div class="grid grid-cols-[100px,auto,1fr] gap-2">
+  <div class="grid grid-cols-[100px,auto,auto,1fr] gap-2">
+    <Field label="Show" let:id>
+      <Switch bind:checked={show} {id} size="md" />
+    </Field>
+
+    <Field label="Context" classes={{ input: 'mt-1 mb-[6px]' }}>
+      <ToggleGroup bind:value={Context} variant="outline" size="sm">
+        <ToggleOption value={Svg}>Svg</ToggleOption>
+        <ToggleOption value={Canvas}>Canvas</ToggleOption>
+      </ToggleGroup>
+    </Field>
+
+    <Field label="Tweened" let:id>
+      <Switch bind:checked={tweened} {id} size="md" />
+    </Field>
+  </div>
+</div>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule />
+      </Svg>
+
+      <svelte:component this={Context}>
+        {#if show}
+          <Area
+            {curve}
+            line={showLine && { class: 'stroke-primary stroke-2' }}
+            {tweened}
+            class="fill-primary/10"
+          />
+
+          {#if showPoints}
+            <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
+          {/if}
+        {/if}
+      </svelte:component>
+    </Chart>
+  </div>
+</Preview>
+
+<h1>Canvas</h1>
+
+<div class="grid gap-2 mb-2">
+  <div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2">
+    <PathDataMenuField bind:value={pathGenerator} />
+    <CurveMenuField bind:value={curve} />
+    <RangeField label="Points" bind:value={pointCount} min={2} />
+    <Field label="Show points" let:id>
+      <Switch bind:checked={showPoints} {id} size="md" />
+    </Field>
+    <Field label="Show Line" let:id>
+      <Switch bind:checked={showLine} {id} size="md" />
+    </Field>
+  </div>
+
+  <div class="grid grid-cols-[100px,auto,auto,1fr] gap-2">
     <Field label="Show" let:id>
       <Switch bind:checked={show} {id} size="md" />
     </Field>
@@ -57,18 +117,21 @@
       <Svg>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
+      </Svg>
+
+      <Canvas>
         {#if show}
-          <Area
-            {curve}
-            line={showLine && { class: 'stroke-primary stroke-2' }}
-            {tweened}
-            class="fill-primary/10"
-          />
+          <Area {curve} {tweened} class="fill-primary/10" />
+
+          {#if showLine}
+            <Spline {curve} {tweened} class="stroke-primary stroke-2" />
+          {/if}
+
           {#if showPoints}
             <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
           {/if}
         {/if}
-      </Svg>
+      </Canvas>
     </Chart>
   </div>
 </Preview>

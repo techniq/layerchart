@@ -9,6 +9,7 @@
   import { isScaleBand } from '../utils/scales.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { greatestAbs } from '@layerstack/utils';
+  import { getCanvasContext } from './layout/Canvas.svelte';
 
   const { x: xContext, y: yContext, xScale } = chartContext();
 
@@ -106,9 +107,12 @@
       z`
     .split('\n')
     .join('');
+
+  const canvasContext = getCanvasContext();
+  const renderContext = canvasContext ? 'canvas' : 'svg';
 </script>
 
-{#if _rounded === 'all' || radius === 0}
+{#if (_rounded === 'all' || radius === 0) && renderContext === 'svg'}
   <Rect
     {fill}
     {spring}

@@ -1,6 +1,8 @@
-import type Chart from '../components/Chart.svelte';
-import { get } from 'lodash-es';
 import type { ComponentProps } from 'svelte';
+import { get } from 'lodash-es';
+
+import type Chart from '../components/Chart.svelte';
+import type LineChart from '../components/charts/LineChart.svelte';
 
 export type Accessor<TData = any> =
   | number
@@ -35,5 +37,24 @@ export function chartDataArray<TData = any>(data: ComponentProps<Chart<TData>>['
     return data.nodes;
   } else {
     return data.descendants();
+  }
+}
+
+// Using LineChart but could any simplified chart
+type SimplifiedChartProps = ComponentProps<LineChart<any>>;
+
+export function defaultChartPadding(
+  axis: SimplifiedChartProps['axis'],
+  legend: SimplifiedChartProps['legend']
+) {
+  if (axis === false) {
+    return undefined;
+  } else {
+    return {
+      top: axis === true || axis === 'y' ? 4 : 0,
+      left: axis === true || axis === 'y' ? 20 : 0,
+      bottom: (axis === true || axis === 'x' ? 20 : 0) + (legend === true ? 32 : 0),
+      right: axis === true || axis === 'x' ? 4 : 0,
+    };
   }
 }

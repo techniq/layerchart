@@ -2,7 +2,7 @@
   import { geoAlbersUsa } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, Svg, Text } from 'layerchart';
+  import { Canvas, Chart, GeoPath, renderText, Svg, Text } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   export let data;
@@ -62,28 +62,26 @@
     >
       <Canvas>
         <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
-      </Canvas>
-      {#each states.features as feature}
-        <Canvas>
+
+        {#each states.features as feature}
           <GeoPath
             geojson={feature}
-            class="fill-surface-content stroke-surface-100"
-            render={(ctx, { geoPath }) => {
+            render={(ctx, { newGeoPath }) => {
+              const geoPath = newGeoPath();
               const [x, y] = geoPath.centroid(feature);
-              const computedStyle = window.getComputedStyle(ctx.canvas);
-              ctx.font = '8px sans-serif';
-              ctx.textAlign = 'center';
-
-              ctx.lineWidth = 2;
-              ctx.strokeStyle = computedStyle.stroke;
-              ctx.strokeText(feature.properties.name, x, y);
-
-              ctx.fillStyle = computedStyle.fill;
-              ctx.fillText(feature.properties.name, x, y);
+              renderText(
+                ctx,
+                feature.properties.name,
+                { x, y },
+                {
+                  classes: 'text-[8px] text-center fill-surface-content stroke-surface-100',
+                  styles: { paintOrder: 'stroke' },
+                }
+              );
             }}
           />
-        </Canvas>
-      {/each}
+        {/each}
+      </Canvas>
     </Chart>
   </div>
 </Preview>

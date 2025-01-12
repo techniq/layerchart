@@ -15,7 +15,16 @@
   import { schemeCategory10 } from 'd3-scale-chromatic';
   import { color } from 'd3-color';
 
-  import { Canvas, Chart, GeoPath, GeoTile, HitCanvas, Svg, Tooltip } from 'layerchart';
+  import {
+    Canvas,
+    Chart,
+    GeoPath,
+    GeoTile,
+    HitCanvas,
+    renderPathData,
+    Svg,
+    Tooltip,
+  } from 'layerchart';
   import TransformControls from 'layerchart/components/TransformControls.svelte';
   import {
     EmptyMessage,
@@ -115,26 +124,30 @@
           {#if projection === geoMercator}
             <!-- <GeoPath {geojson} class="stroke-black fill-black/50" /> -->
             <GeoPath
-              render={(ctx, { geoPath }) => {
+              render={(ctx, { newGeoPath }) => {
                 for (var feature of features) {
-                  ctx.beginPath();
-                  geoPath(feature);
-                  ctx.fillStyle = colorScale(String(feature.id));
-                  ctx.fill();
-                  ctx.stroke();
+                  const geoPath = newGeoPath();
+                  renderPathData(ctx, geoPath(feature), {
+                    styles: {
+                      fill: colorScale(String(feature.id)),
+                      stroke: 'black',
+                    },
+                  });
                 }
               }}
             />
           {:else}
             <!-- <GeoPath {geojson} class="stroke-surface-content fill-surface-100" /> -->
             <GeoPath
-              render={(ctx, { geoPath }) => {
+              render={(ctx, { newGeoPath }) => {
                 for (var feature of features) {
-                  ctx.beginPath();
-                  geoPath(feature);
-                  ctx.fillStyle = colorScale(String(feature.id));
-                  ctx.fill();
-                  ctx.stroke();
+                  const geoPath = newGeoPath();
+                  renderPathData(ctx, geoPath(feature), {
+                    styles: {
+                      fill: colorScale(String(feature.id)),
+                      stroke: 'black',
+                    },
+                  });
                 }
               }}
             />
@@ -148,14 +161,17 @@
           on:pointerleave={tooltip.hide}
         >
           <GeoPath
-            render={(ctx, { geoPath }) => {
+            render={(ctx, { newGeoPath }) => {
               for (var feature of features) {
                 const color = nextColor();
 
-                ctx.beginPath();
-                geoPath(feature);
-                ctx.fillStyle = color;
-                ctx.fill();
+                const geoPath = newGeoPath();
+                renderPathData(ctx, geoPath(feature), {
+                  styles: {
+                    fill: color,
+                    stroke: color,
+                  },
+                });
 
                 setColorData(color, feature);
               }

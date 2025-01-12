@@ -636,7 +636,7 @@
             data={seriesData}
             line={{ stroke: color, 'stroke-width': 2 }}
             fill={color}
-            fill-opacity={0.2}
+            fillOpacity={0.2}
           />
         {/each}
 

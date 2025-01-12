@@ -21,13 +21,41 @@ export function circlePath(dimensions: {
   r: number;
   sweep?: 'inside' | 'outside';
 }) {
-  // sweep: 0 (inside), 1 (outside)
+  // https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths#arcs
   const { cx, cy, r, sweep = 'outside' } = dimensions;
+  // sweep: 0 (inside), 1 (outside)
+  const _sweep = sweep === 'outside' ? 1 : 0;
+
   return `
     M ${cx - r} ${cy}
-    a ${r},${r} 0 1,${sweep} ${r * 2},0
-    a ${r},${r} 0 1,${sweep} -${r * 2},0
+    a ${r},${r} 0 1,${_sweep} ${r * 2},0
+    a ${r},${r} 0 1,${_sweep} -${r * 2},0
   `;
+}
+
+/** Create spike (triangle) using path data  */
+export function spikePath({
+  x,
+  y,
+  width,
+  height,
+}: {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}) {
+  const startPoint = { x: x - width / 2, y };
+  const midPoint = { x, y: y - height };
+  const endPoint = { x: x + width / 2, y };
+
+  const pathData = `
+    M ${startPoint.x},${startPoint.y}
+    L ${midPoint.x},${midPoint.y}
+    L ${endPoint.x},${endPoint.y}
+  `;
+
+  return pathData;
 }
 
 /** Flatten all `y` coordinates to `0` */

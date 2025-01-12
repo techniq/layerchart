@@ -186,8 +186,8 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
-                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
 
@@ -224,8 +224,8 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
-                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
 
@@ -263,8 +263,8 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
-                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
 
@@ -306,8 +306,8 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
-                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
           </Svg>
@@ -376,8 +376,8 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
-                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
           </Svg>
@@ -410,10 +410,10 @@
           <Svg>
             <Axis placement="left" grid rule tweened={{ duration: 200 }} />
             <Axis placement="bottom" rule />
-            <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
+            <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
               <Area
                 line={{ class: 'stroke-2 stroke-primary' }}
-                fill={url}
+                fill={gradient}
                 tweened={{ duration: 200 }}
               />
             </LinearGradient>
@@ -478,9 +478,12 @@
                 <LinearGradient
                   class="from-[hsl(var(--chart-color)/50%)] to-transparent"
                   vertical
-                  let:url
+                  let:gradient
                 >
-                  <Area line={{ class: 'stroke-2 stroke-[hsl(var(--chart-color))]' }} fill={url} />
+                  <Area
+                    line={{ class: 'stroke-2 stroke-[hsl(var(--chart-color))]' }}
+                    fill={gradient}
+                  />
                 </LinearGradient>
               </ChartClipPath>
             </Svg>
@@ -525,8 +528,8 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:url>
-                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={url} />
+              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+                <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
             <Highlight points lines />

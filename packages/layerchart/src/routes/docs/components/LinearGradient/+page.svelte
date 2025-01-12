@@ -66,15 +66,15 @@
   <div class="h-[334px] p-4 border rounded">
     <Chart>
       <Svg>
-        <LinearGradient class="from-green-500 to-blue-500" units="objectBoundingBox" let:url>
+        <LinearGradient class="from-green-500 to-blue-500" units="objectBoundingBox" let:gradient>
           {#each { length: 6 } as _, i}
-            <rect x={0 + i * 120} y={0} width={100} height={140} rx={8} fill={url} />
+            <rect x={0 + i * 120} y={0} width={100} height={140} rx={8} fill={gradient} />
           {/each}
         </LinearGradient>
 
-        <LinearGradient class="from-green-500 to-blue-500" units="userSpaceOnUse" let:url>
+        <LinearGradient class="from-green-500 to-blue-500" units="userSpaceOnUse" let:gradient>
           {#each { length: 6 } as _, i}
-            <rect x={0 + i * 120} y={160} width={100} height={140} rx={8} fill={url} />
+            <rect x={0 + i * 120} y={160} width={100} height={140} rx={8} fill={gradient} />
           {/each}
         </LinearGradient>
       </Svg>

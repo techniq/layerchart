@@ -2,7 +2,7 @@
   import { geoAlbersUsa } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, HitCanvas, Svg, Tooltip } from 'layerchart';
+  import { Canvas, Chart, GeoPath, HitCanvas, Svg, Tooltip, renderPathData } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   export let data;
@@ -65,16 +65,15 @@
     >
       <Canvas>
         <GeoPath geojson={states} class="stroke-surface-content" />
-      </Canvas>
-      <Canvas>
         <GeoPath geojson={counties} class="stroke-surface-content/20" />
       </Canvas>
 
-      {#if tooltip.data}
-        <Canvas>
+      <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
+      <Canvas>
+        {#if tooltip.data}
           <GeoPath geojson={tooltip.data} class="stroke-surface-content fill-surface-content/20" />
-        </Canvas>
-      {/if}
+        {/if}
+      </Canvas>
 
       <HitCanvas
         let:nextColor
@@ -83,15 +82,12 @@
         on:pointerleave={tooltip.hide}
       >
         <GeoPath
-          render={(ctx, { geoPath }) => {
+          render={(ctx, { newGeoPath }) => {
             for (var feature of states.features) {
               const color = nextColor();
-
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
-
+              const geoPath = newGeoPath();
+              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
+              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
               setColorData(color, feature);
             }
           }}

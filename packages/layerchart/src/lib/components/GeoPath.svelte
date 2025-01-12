@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import { createEventDispatcher, onDestroy } from 'svelte';
   import {
     geoTransform as d3geoTransform,
     type GeoIdentityTransform,
@@ -10,11 +9,12 @@
   } from 'd3-geo';
   import { cls } from '@layerstack/tailwind';
 
-  import { chartContext } from './ChartContext.svelte';
   import { geoContext } from './GeoContext.svelte';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoCurvePath } from '$lib/utils/geo.js';
+  import { renderPathData } from '$lib/utils/canvas.js';
+  import { getCanvasContext } from './layout/Canvas.svelte';
 
   export let geojson: GeoPermissibleObjects | null | undefined = undefined;
 
@@ -22,13 +22,13 @@
   export let render:
     | ((
         ctx: CanvasRenderingContext2D,
-        options: { geoPath: ReturnType<typeof geoCurvePath> }
+        options: { newGeoPath: () => ReturnType<typeof geoCurvePath> }
       ) => any)
     | undefined = undefined;
 
   export let fill: string | undefined = undefined;
   export let stroke: string | undefined = undefined;
-  export let strokeWidth: number | string | undefined = undefined;
+  export let strokeWidth: number | undefined = undefined;
 
   /**
    * Tooltip context to setup mouse events to show tooltip for related data
@@ -53,8 +53,6 @@
     click: { geoPath: ReturnType<typeof geoCurvePath>; event: MouseEvent };
   }>();
 
-  const { containerWidth, containerHeight, padding } = chartContext();
-  const canvas = getContext<{ ctx: Readable<CanvasRenderingContext2D> }>('canvas');
   const geo = geoContext();
 
   /**
@@ -68,51 +66,45 @@
   $: _projection = geoTransform ? d3geoTransform(geoTransform($geo)) : $geo;
 
   $: geoPath = geoCurvePath(_projection, curve);
+  $: {
+    // Recreate `geoPath()` if `geojson` data changes (fixes ghosting issue when rendering to canvas)
+    geojson;
+    geoPath = geoCurvePath(_projection, curve);
+  }
 
-  const DEFAULT_FILL = 'rgb(0, 0, 0)';
+  const canvasContext = getCanvasContext();
+  const renderContext = canvasContext ? 'canvas' : 'svg';
 
-  $: renderContext = canvas ? 'canvas' : 'svg';
-
-  $: ctx = canvas?.ctx;
-  $: if (renderContext === 'canvas' && $ctx) {
-    let computedStyles: Partial<CSSStyleDeclaration> = {};
-
-    // Transfer classes defined on <GeoPath> to <canvas> to enable window.getComputedStyle() retrieval (Tailwind classes, etc)
-    if (className) {
-      $ctx.canvas.classList.add(...className.split(' '));
-      computedStyles = window.getComputedStyle($ctx.canvas);
-    }
-
-    // console.count('render');
-
-    // Clear with negative offset due to Canvas `context.translate(...)`
-    $ctx.clearRect(-$padding.left, -$padding.top, $containerWidth, $containerHeight);
-
+  function _render(ctx: CanvasRenderingContext2D) {
     if (render) {
-      geoPath = geoCurvePath(_projection, curve, $ctx);
-      render($ctx, { geoPath });
+      render(ctx, { newGeoPath: () => geoCurvePath(_projection, curve) });
     } else {
-      $ctx.beginPath();
-      // Set the context here since setting it in `$: geoPath` is a circular reference
-      geoPath = geoCurvePath(_projection, curve, $ctx);
       if (geojson) {
-        geoPath(geojson);
+        const pathData = geoPath(geojson);
+        renderPathData(ctx, pathData, {
+          styles: { fill, stroke, strokeWidth },
+          classes: className,
+        });
       }
-
-      $ctx.fillStyle =
-        fill ??
-        (computedStyles.fill !== DEFAULT_FILL ? computedStyles.fill : undefined) ??
-        'transparent';
-      $ctx.fill();
-
-      $ctx.lineWidth = Number(strokeWidth ?? 0);
-      $ctx.strokeStyle =
-        (stroke ?? computedStyles.stroke === 'none')
-          ? 'transparent'
-          : (computedStyles.stroke ?? '');
-      $ctx.stroke();
     }
   }
+
+  let canvasUnregister: ReturnType<typeof canvasContext.register>;
+  $: if (renderContext === 'canvas') {
+    canvasUnregister = canvasContext.register({ name: 'GeoPath', render: _render });
+  }
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when geojson, projection, or class change
+    geojson && _projection && className && fill && stroke && strokeWidth;
+    canvasContext.invalidate();
+  }
+
+  onDestroy(() => {
+    if (renderContext === 'canvas') {
+      canvasUnregister();
+    }
+  });
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->

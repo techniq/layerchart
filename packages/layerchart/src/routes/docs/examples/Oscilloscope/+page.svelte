@@ -107,9 +107,9 @@
           stops={ticks(1, 0, 10).map(colorScale.interpolator())}
           vertical
           units="userSpaceOnUse"
-          let:url
+          let:gradient
         >
-          <Bars radius={1} fill={url} />
+          <Bars radius={1} fill={gradient} />
         </LinearGradient>
       </svelte:fragment>
     </BarChart>

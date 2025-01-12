@@ -1,11 +1,36 @@
+<script lang="ts" context="module">
+  import { getContext, onDestroy, setContext } from 'svelte';
+
+  type ComponentRender = {
+    name: string;
+    render: (ctx: CanvasRenderingContext2D) => any;
+    retainState?: boolean;
+  };
+
+  export type CanvasContext = {
+    /** Register component to render.  Returns method to unregister on component destory */
+    register(component: ComponentRender): () => void;
+    invalidate(): void;
+  };
+
+  export const canvasContextKey = Symbol();
+
+  export function getCanvasContext() {
+    return getContext<CanvasContext>(canvasContextKey);
+  }
+
+  function setCanvasContext(context: CanvasContext) {
+    setContext(canvasContextKey, context);
+  }
+</script>
+
 <script lang="ts">
-  import { onMount, setContext } from 'svelte';
-  import { writable } from 'svelte/store';
-  import { scaleCanvas } from 'layercake';
+  import { onMount } from 'svelte';
   import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from '../ChartContext.svelte';
   import { transformContext } from '../TransformContext.svelte';
+  import { scaleCanvas } from '../../utils/canvas.js';
 
   const { width, height, containerWidth, containerHeight, padding } = chartContext();
 
@@ -38,21 +63,44 @@
   /** A string passed to `aria-describedby` property on the `<canvas>` tag. */
   export let describedBy: string | undefined = undefined;
 
-  const ctx = writable({});
+  /**
+   * Translate children to center (useful for radial layouts)
+   */
+  export let center: boolean | 'x' | 'y' = false;
+
+  let components = new Map<Symbol, ComponentRender>();
+  let pendingInvalidation = false;
+  let frameId: number | undefined;
+
+  const { mode, scale, translate } = transformContext();
 
   onMount(() => {
     context = element?.getContext('2d', { willReadFrequently }) as CanvasRenderingContext2D;
   });
 
-  const { mode, scale, translate } = transformContext();
+  onDestroy(() => {
+    if (frameId) {
+      cancelAnimationFrame(frameId);
+    }
+  });
 
-  $: if (context) {
+  function update() {
+    if (!context) return;
+    // TODO: only `scaleCanvas()` when containerWidth/Height change (not all invalidations)
+    // scaleCanvas in `update()` to fix `requestAnimationFrame()` timing causing flash of blank canvas
     scaleCanvas(context, $containerWidth, $containerHeight);
+
     context.clearRect(0, 0, $containerWidth, $containerHeight);
 
     context.translate($padding.left ?? 0, $padding.top ?? 0);
 
-    if (mode === 'canvas') {
+    if (center) {
+      const newTranslate = {
+        x: center === 'x' || center === true ? $width / 2 : 0,
+        y: center === 'y' || center === true ? $height / 2 : 0,
+      };
+      context.translate(newTranslate.x, newTranslate.y);
+    } else if (mode === 'canvas') {
       const center = { x: $width / 2, y: $height / 2 };
       const newTranslate = {
         x: $translate.x * $scale + center.x - center.x * $scale,
@@ -62,12 +110,46 @@
       context.scale($scale, $scale);
     }
 
-    // Force children to re-draw
-    $ctx = context;
+    components.forEach((c) => {
+      if (c.retainState) {
+        // Do not call save/restore canvas draw state (https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/save) (ex. Group ctx.translate() affecting children)
+        c.render(context);
+      } else {
+        context.save();
+        c.render(context);
+        context.restore();
+      }
+    });
+
+    pendingInvalidation = false;
   }
 
-  $: ctx.set(context);
-  setContext('canvas', { ctx });
+  const canvasContext: CanvasContext = {
+    register(component) {
+      const key = Symbol();
+      components.set(key, component);
+      this.invalidate();
+
+      // Unregister
+      return () => {
+        components.delete(key);
+        this.invalidate();
+      };
+    },
+    invalidate() {
+      if (pendingInvalidation) return;
+      pendingInvalidation = true;
+      frameId = requestAnimationFrame(update);
+    },
+  };
+
+  $: {
+    // Redraw when resized
+    $containerWidth, $containerHeight;
+    canvasContext.invalidate();
+  }
+
+  setCanvasContext(canvasContext);
 </script>
 
 <canvas

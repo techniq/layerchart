@@ -12,6 +12,7 @@
     Svg,
     Tooltip,
     geoFitObjectTransform,
+    renderPathData,
   } from 'layerchart';
   import TransformControls from 'layerchart/components/TransformControls.svelte';
   import { SelectField } from 'svelte-ux';
@@ -282,6 +283,7 @@
             transform.reset();
           } else {
             selectedStateId = feature.id;
+            tooltip.hide();
             const featureTransform = geoFitObjectTransform(projection, [width, height], feature);
             transform.setTranslate(featureTransform.translate);
             transform.setScale(featureTransform.scale);
@@ -289,14 +291,13 @@
         }}
       >
         <GeoPath
-          render={(ctx, { geoPath }) => {
+          render={(ctx, { newGeoPath }) => {
             for (const feature of states.features) {
               const color = nextColor();
 
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
+              const geoPath = newGeoPath();
+              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
+              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
 
               setColorData(color, feature);
             }
@@ -305,10 +306,9 @@
             for (const feature of selectedCountiesFeatures) {
               const color = nextColor();
 
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
+              const geoPath = newGeoPath();
+              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
+              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
 
               setColorData(color, feature);
             }
@@ -354,9 +354,7 @@
           class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
           strokeWidth={1 / transform.scale}
         />
-      </Canvas>
 
-      <Canvas>
         <!-- TODO: Fade in with delay like SVG -->
         <!-- <g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}> -->
         <GeoPath
@@ -372,6 +370,7 @@
         <!-- </g> -->
       </Canvas>
 
+      <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
       {#if tooltip.data}
         <Canvas>
           <GeoPath
@@ -399,6 +398,7 @@
             transform.reset();
           } else {
             selectedStateId = feature.id;
+            tooltip.hide();
             let [[left, top], [right, bottom]] = geoPath.bounds(feature);
             let width = right - left;
             let height = bottom - top;
@@ -411,14 +411,12 @@
         }}
       >
         <GeoPath
-          render={(ctx, { geoPath }) => {
+          render={(ctx, { newGeoPath }) => {
             for (const feature of states.features) {
               const color = nextColor();
 
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
+              const geoPath = newGeoPath();
+              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
 
               setColorData(color, feature);
             }
@@ -427,10 +425,8 @@
             for (const feature of selectedCountiesFeatures) {
               const color = nextColor();
 
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
+              const geoPath = newGeoPath();
+              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
 
               setColorData(color, feature);
             }

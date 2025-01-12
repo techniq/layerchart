@@ -6,6 +6,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { longData } from '$lib/utils/genData.js';
+  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   const dataByYear = group(longData, (d) => d.year);
   const data = dataByYear.get(2019) ?? [];
@@ -27,15 +28,24 @@
     { key: 'exercise', value: 20, maxValue: 30, color: '#a3e635' },
     { key: 'stand', value: 10, maxValue: 12, color: '#22d3ee' },
   ];
+
+  let renderContext: 'svg' | 'canvas' = 'svg';
 </script>
 
 <h1>Examples</h1>
+
+<Field label="Render context">
+  <ToggleGroup bind:value={renderContext} variant="outline">
+    <ToggleOption value="svg">Svg</ToggleOption>
+    <ToggleOption value="canvas">Canvas</ToggleOption>
+  </ToggleGroup>
+</Field>
 
 <h2>Basic</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} key="fruit" value="value" />
+    <PieChart {data} key="fruit" value="value" {renderContext} />
   </div>
 </Preview>
 
@@ -43,7 +53,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} key="fruit" value="value" outerRadius={100} />
+    <PieChart {data} key="fruit" value="value" outerRadius={100} {renderContext} />
   </div>
 </Preview>
 
@@ -51,7 +61,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} key="fruit" value="value" outerRadius={-20} />
+    <PieChart {data} key="fruit" value="value" outerRadius={-20} {renderContext} />
   </div>
 </Preview>
 
@@ -59,7 +69,15 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} key="fruit" value="value" innerRadius={-20} cornerRadius={5} padAngle={0.02} />
+    <PieChart
+      {data}
+      key="fruit"
+      value="value"
+      innerRadius={-20}
+      cornerRadius={5}
+      padAngle={0.02}
+      {renderContext}
+    />
   </div>
 </Preview>
 
@@ -77,6 +95,7 @@
       cornerRadius={10}
       padAngle={0.02}
       props={{ group: { y: 80 } }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -93,6 +112,7 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -101,9 +121,9 @@
 
 <Preview {data}>
   <div class="h-[160px] p-4 border rounded">
-    <PieChart>
+    <PieChart {renderContext}>
       <svelte:fragment slot="marks">
-        <LinearGradient class="from-secondary to-primary" let:url>
+        <LinearGradient class="from-secondary to-primary" let:gradient>
           <Group y={20}>
             <Arc
               value={70}
@@ -113,7 +133,7 @@
               cornerRadius={10}
               padAngle={0.02}
               range={[-120, 120]}
-              fill={url}
+              fill={gradient}
               track={{ class: 'fill-none stroke-surface-content/10' }}
               let:value
             >
@@ -148,6 +168,7 @@
       props={{
         group: { y: 45 },
       }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -164,6 +185,7 @@
       innerRadius={-20}
       cornerRadius={5}
       padAngle={0.01}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -179,6 +201,7 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -196,6 +219,7 @@
       innerRadius={-20}
       cornerRadius={10}
       props={{ group: { y: 70 } }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -216,6 +240,7 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -238,6 +263,7 @@
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={10}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -253,6 +279,7 @@
         { key: 2019, data: dataByYear.get(2019), props: { innerRadius: -20 } },
         { key: 2018, data: dataByYear.get(2018), props: { outerRadius: -30 } },
       ]}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -261,7 +288,13 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} key="fruit" value="value" props={{ arc: { class: 'stroke-surface-100' } }} />
+    <PieChart
+      {data}
+      key="fruit"
+      value="value"
+      props={{ arc: { class: 'stroke-surface-100' } }}
+      {renderContext}
+    />
   </div>
 </Preview>
 
@@ -269,7 +302,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} key="fruit" value="value" legend />
+    <PieChart {data} key="fruit" value="value" legend {renderContext} />
   </div>
 </Preview>
 
@@ -282,6 +315,7 @@
       key="fruit"
       value="value"
       legend={{ placement: 'top-left', orientation: 'vertical' }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -307,6 +341,7 @@
       }}
       value="value"
       legend
+      {renderContext}
     />
   </div>
 </Preview>
@@ -325,6 +360,7 @@
         'hsl(var(--color-danger))',
         'hsl(var(--color-info))',
       ]}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -333,7 +369,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} key="fruit" value="value" cRange={schemeTableau10} />
+    <PieChart {data} key="fruit" value="value" cRange={schemeTableau10} {renderContext} />
   </div>
 </Preview>
 
@@ -341,7 +377,13 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} key="fruit" value="value" cRange={quantize(interpolateRainbow, 5)} />
+    <PieChart
+      {data}
+      key="fruit"
+      value="value"
+      cRange={quantize(interpolateRainbow, 5)}
+      {renderContext}
+    />
   </div>
 </Preview>
 
@@ -355,6 +397,7 @@
       value="value"
       c="color"
       cRange={dataWithColor.map((d) => d.color)}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -369,6 +412,7 @@
       value="value"
       padding={{ right: 80 }}
       legend={{ placement: 'right', orientation: 'vertical' }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -383,6 +427,7 @@
       value="value"
       placement="left"
       legend={{ placement: 'right', orientation: 'vertical' }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -397,6 +442,7 @@
       value="value"
       placement="right"
       legend={{ placement: 'left', orientation: 'vertical' }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -412,6 +458,7 @@
       center={false}
       props={{ group: { x: 200, center: 'y' } }}
       legend={{ placement: 'right', orientation: 'vertical' }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -420,6 +467,6 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
-    <PieChart {data} key="fruit" value="value" keys="centroid" />
+    <PieChart {data} key="fruit" value="value" keys="centroid" {renderContext} />
   </div>
 </Preview> -->

@@ -67,7 +67,7 @@
         {x2}
         {y2}
         {...$$restProps}
-        class={cls('test grid stroke-surface-content/10', $$props.class)}
+        class={cls('stroke-surface-content/10', $$props.class)}
       />
     {:else}
       <Line

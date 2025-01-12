@@ -4,7 +4,17 @@
   import { scaleLinear } from 'd3-scale';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, Group, HitCanvas, Svg, Tooltip } from 'layerchart';
+  import {
+    Canvas,
+    Chart,
+    GeoPath,
+    Group,
+    HitCanvas,
+    renderPathData,
+    spikePath,
+    Svg,
+    Tooltip,
+  } from 'layerchart';
   import TransformControls from 'layerchart/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -158,33 +168,20 @@
           class="fill-surface-content/10 stroke-surface-100"
           {strokeWidth}
         />
-      </Canvas>
 
-      <Canvas>
         <GeoPath
-          class="stroke-danger fill-danger/25"
-          render={(ctx, { geoPath }) => {
-            const computedStyle = window.getComputedStyle(ctx.canvas);
-
+          render={(ctx, { newGeoPath }) => {
             for (var feature of enrichedCountiesFeatures) {
+              const geoPath = newGeoPath();
               const [x, y] = geoPath.centroid(feature);
               const d = feature.properties.data;
               const height = heightScale(d?.population ?? 0);
 
-              ctx.lineWidth = strokeWidth;
-              ctx.strokeStyle = computedStyle.stroke;
-              ctx.fillStyle = computedStyle.fill;
-
-              const startPoint = [x - width / 2, y];
-              const midPoint = [x, y - height];
-              const endPoint = [x + width / 2, y];
-
-              ctx.beginPath();
-              ctx.moveTo(x - width / 2, y); // startPoint
-              ctx.lineTo(x, y - height); // midPoint
-              ctx.lineTo(x + width / 2, y); // endPoint
-              ctx.fill();
-              ctx.stroke();
+              const pathData = spikePath({ x, y, width, height });
+              renderPathData(ctx, pathData, {
+                classes: 'stroke-danger fill-danger/25',
+                styles: { strokeWidth },
+              });
             }
           }}
         />
@@ -207,14 +204,12 @@
         on:pointerleave={tooltip.hide}
       >
         <GeoPath
-          render={(ctx, { geoPath }) => {
+          render={(ctx, { newGeoPath }) => {
             for (var feature of enrichedCountiesFeatures) {
               const color = nextColor();
 
-              ctx.beginPath();
-              geoPath(feature);
-              ctx.fillStyle = color;
-              ctx.fill();
+              const geoPath = newGeoPath();
+              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
 
               setColorData(color, feature);
             }

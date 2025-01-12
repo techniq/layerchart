@@ -59,7 +59,7 @@
     <Chart>
       <Svg center>
         <Group y={16}>
-          <LinearGradient class="from-secondary to-primary" let:url>
+          <LinearGradient class="from-secondary to-primary" let:gradient>
             <Arc
               {value}
               range={[-120, 120]}
@@ -68,7 +68,7 @@
               cornerRadius={5}
               spring
               let:value
-              fill={url}
+              fill={gradient}
               track={{ class: 'fill-none stroke-surface-content/10' }}
             >
               <Text

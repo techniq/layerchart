@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, onMount, setContext } from 'svelte';
-  import { writable } from 'svelte/store';
-  import { scaleCanvas } from 'layercake';
+  import { createEventDispatcher } from 'svelte';
   import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
@@ -26,18 +24,6 @@
       data: any;
     };
   }>();
-
-  const cntxt = {
-    ctx: writable({}),
-  };
-
-  onMount(() => {
-    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext#willreadfrequently
-    scaleCanvas(context, $width, $height);
-  });
-
-  $: cntxt.ctx.set(context);
-  setContext('canvas', cntxt);
 
   function* rgbColorGenerator(step = 500) {
     let nextColor = 1;
@@ -124,9 +110,9 @@
       dispatch('click', { event: e, data });
     }
   }}
-/>
-
-<!-- Do not render while dragging to improve interaction performance -->
-{#if !$dragging}
-  <slot nextColor={() => colorGenerator.next().value} {setColorData}></slot>
-{/if}
+>
+  <!-- Do not render while dragging to improve interaction performance -->
+  {#if !$dragging}
+    <slot nextColor={() => colorGenerator.next().value} {setColorData}></slot>
+  {/if}
+</Canvas>

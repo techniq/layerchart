@@ -54,7 +54,7 @@
     <Chart>
       <Svg center>
         {#key spring}
-          <LinearGradient class="from-secondary to-primary" vertical let:url>
+          <LinearGradient class="from-secondary to-primary" vertical let:gradient>
             <Arc
               {value}
               {domain}
@@ -67,7 +67,7 @@
               {spring}
               let:value
               let:boundingBox
-              fill={url}
+              fill={gradient}
               track={{ class: 'fill-surface-content/5' }}
             >
               <Text
@@ -116,7 +116,11 @@
     <div class="h-[200px] p-4 border rounded">
       <Chart>
         <Svg center>
-          <LinearGradient stops={['hsl(80, 100%, 50%)', 'hsl(200, 100%, 50%)']} vertical let:url>
+          <LinearGradient
+            stops={['hsl(80, 100%, 50%)', 'hsl(200, 100%, 50%)']}
+            vertical
+            let:gradient
+          >
             <Arc
               {value}
               {domain}
@@ -127,7 +131,7 @@
               {padAngle}
               {label}
               let:boundingBox
-              fill={url}
+              fill={gradient}
             >
               <!-- svg center -->
               <!-- <Text
