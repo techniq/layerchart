@@ -5,6 +5,7 @@
   import { chartContext } from './ChartContext.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { getComputedStyles } from '../utils/canvas.js';
+  import { parsePercent } from 'layerchart/utils/math.js';
 
   /** Unique id for linearGradient */
   export let id: string = uniqueId('linearGradient-');
@@ -50,8 +51,7 @@
           styles: { fill: stop[1] },
           classes: $$props.class,
         });
-        // TODO: Convert percentage stops (strings)
-        gradient.addColorStop(stop[0], fill);
+        gradient.addColorStop(parsePercent(stop[0]), fill);
       } else {
         const { fill } = getComputedStyles(ctx.canvas, {
           styles: { fill: stop },
