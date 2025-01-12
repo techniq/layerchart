@@ -383,7 +383,7 @@
   <div class="h-[300px] p-4 border rounded">
     <LineChart data={data.dailyTemperature} x="date" y="value" yDomain={null} {renderContext}>
       <svelte:fragment slot="marks" let:yScale let:height let:padding>
-        {@const thresholdOffset = (yScale(50) / (height + padding.bottom)) * 100 + '%'}
+        {@const thresholdOffset = yScale(50) / (height + padding.bottom)}
         <LinearGradient
           stops={[
             [thresholdOffset, 'hsl(var(--color-danger))'],

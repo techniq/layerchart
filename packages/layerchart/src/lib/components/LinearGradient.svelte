@@ -1,5 +1,10 @@
 <script lang="ts">
+  import { onDestroy } from 'svelte';
   import { uniqueId } from '@layerstack/utils';
+
+  import { chartContext } from './ChartContext.svelte';
+  import { getCanvasContext } from './layout/Canvas.svelte';
+  import { getComputedStyles } from '../utils/canvas.js';
 
   /** Unique id for linearGradient */
   export let id: string = uniqueId('linearGradient-');
@@ -21,31 +26,91 @@
 
   /** Define the coordinate system for attributes (i.e. gradientUnits) */
   export let units: 'objectBoundingBox' | 'userSpaceOnUse' = 'objectBoundingBox';
+
+  const { width, height, padding } = chartContext();
+
+  const canvasContext = getCanvasContext();
+  const renderContext = canvasContext ? 'canvas' : 'svg';
+
+  let canvasGradient: CanvasGradient;
+
+  function render(ctx: CanvasRenderingContext2D) {
+    // TODO: Use x1/y1/x2/y2 values (convert from pecentage strings)
+    const gradient = ctx.createLinearGradient(
+      $padding.left,
+      $padding.top,
+      vertical ? $padding.left : $width - $padding.right,
+      vertical ? $height + $padding.bottom : $padding.top
+    );
+
+    // Use `getComputedStyles()` to convert each stop (if using CSS variables and/or classes) to color values
+    stops.forEach((stop, i) => {
+      if (Array.isArray(stop)) {
+        const { fill } = getComputedStyles(ctx.canvas, {
+          styles: { fill: stop[1] },
+          classes: $$props.class,
+        });
+        // TODO: Convert percentage stops (strings)
+        gradient.addColorStop(stop[0], fill);
+      } else {
+        const { fill } = getComputedStyles(ctx.canvas, {
+          styles: { fill: stop },
+          classes: $$props.class,
+        });
+        gradient.addColorStop(i / (stops.length - 1), fill);
+      }
+    });
+
+    canvasGradient = gradient;
+  }
+
+  let canvasUnregister: ReturnType<typeof canvasContext.register>;
+  $: if (renderContext === 'canvas') {
+    canvasUnregister = canvasContext.register({ name: 'Gradient', render });
+  }
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when props changes (TODO: styles, class, etc)
+    stops && x1 && y1 && x2 && y2 && $width && $height;
+    canvasContext.invalidate();
+  }
+
+  onDestroy(() => {
+    if (renderContext === 'canvas') {
+      canvasUnregister();
+    }
+  });
 </script>
 
-<defs>
-  <linearGradient
-    {id}
-    {x1}
-    {y1}
-    {x2}
-    {y2}
-    gradientTransform={rotate ? `rotate(${rotate})` : ''}
-    gradientUnits={units}
-    {...$$restProps}
-  >
-    <slot name="stops">
-      {#if stops}
-        {#each stops as stop, i}
-          {#if Array.isArray(stop)}
-            <stop offset={stop[0]} stop-color={stop[1]} />
-          {:else}
-            <stop offset="{i * (100 / (stops.length - 1))}%" stop-color={stop} />
-          {/if}
-        {/each}
-      {/if}
-    </slot>
-  </linearGradient>
-</defs>
+<!-- TODO: Change `url` slot prop to `gradient` (update all usage) -->
 
-<slot {id} url="url(#{id})" />
+{#if renderContext === 'canvas'}
+  <slot {id} url={canvasGradient} />
+{:else if renderContext === 'svg'}
+  <defs>
+    <linearGradient
+      {id}
+      {x1}
+      {y1}
+      {x2}
+      {y2}
+      gradientTransform={rotate ? `rotate(${rotate})` : ''}
+      gradientUnits={units}
+      {...$$restProps}
+    >
+      <slot name="stops">
+        {#if stops}
+          {#each stops as stop, i}
+            {#if Array.isArray(stop)}
+              <stop offset={stop[0]} stop-color={stop[1]} />
+            {:else}
+              <stop offset="{i * (100 / (stops.length - 1))}%" stop-color={stop} />
+            {/if}
+          {/each}
+        {/if}
+      </slot>
+    </linearGradient>
+  </defs>
+
+  <slot {id} url="url(#{id})" />
+{/if}

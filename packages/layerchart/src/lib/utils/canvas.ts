@@ -16,7 +16,7 @@ type ComputedStylesOptions = {
 /**
  * Appends or reuses `<svg>` element below `<canvas>` to resolve CSS variables and classes (ex. `stroke: hsl(var(--color-primary))` => `stroke: rgb(...)` )
  */
-function getComputedStyles(
+export function getComputedStyles(
   canvas: HTMLCanvasElement,
   { styles, classes }: ComputedStylesOptions = {}
 ) {
@@ -104,9 +104,13 @@ function render(
 
   paintOrder.forEach((attr) => {
     if (attr === 'fill') {
-      const fill = ['none', DEFAULT_FILL].includes(computedStyles?.fill)
-        ? null
-        : computedStyles?.fill;
+      const fill =
+        (styleOptions.styles?.fill as any) instanceof CanvasGradient
+          ? styleOptions.styles?.fill
+          : ['none', DEFAULT_FILL].includes(computedStyles?.fill)
+            ? null
+            : computedStyles?.fill;
+
       if (fill) {
         const currentGlobalAlpha = canvasCtx.globalAlpha;
         if (computedStyles?.fillOpacity) {
@@ -120,7 +124,12 @@ function render(
         canvasCtx.globalAlpha = currentGlobalAlpha;
       }
     } else if (attr === 'stroke') {
-      const stroke = computedStyles?.stroke === 'none' ? null : computedStyles?.stroke;
+      const stroke =
+        (styleOptions.styles?.stroke as any) instanceof CanvasGradient
+          ? styleOptions.styles?.stroke
+          : computedStyles?.stroke === 'none'
+            ? null
+            : computedStyles?.stroke;
       if (stroke) {
         canvasCtx.lineWidth =
           typeof computedStyles?.strokeWidth === 'string'
