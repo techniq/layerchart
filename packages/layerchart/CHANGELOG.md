@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.70.1
+
+### Patch Changes
+
+- fix: Use relative import instead of alias to fix npm usage ([`9c4a07a`](https://github.com/techniq/layerchart/commit/9c4a07a854380ebd527f83cb2e48080bc231dd1b))
+
 ## 0.70.0
 
 ### Minor Changes
