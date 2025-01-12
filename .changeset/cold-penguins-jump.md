@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-feat: Support `renderContext` prop to switch between Svg (default) and Canvas for all simplified charts (AreaChart, BarChart, LineChart, PieChart, and ScatterChart)
+feat: Update all simplified charts to support `renderContext` prop to switch between Svg (default) and Canvas (AreaChart, BarChart, LineChart, PieChart, and ScatterChart)
