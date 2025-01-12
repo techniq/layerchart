@@ -1,6 +1,6 @@
 # LayerChart
 
-## 0.61.0
+## 0.70.0
 
 ### Minor Changes
 
