@@ -296,7 +296,7 @@
           {@const seriesItems = stackSeries ? [...series].reverse() : series}
           {#each seriesItems as s}
             {@const seriesTooltipData = s.data ? s.data.find((d) => x(d) === x(data)) : data}
-            {@const valueAccessor = accessor(s.value ?? (s.data ? y : s.key))}
+            {@const valueAccessor = accessor(s.value ?? (s.data ? (y as any) : s.key))}
 
             <Tooltip.Item
               label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
@@ -314,7 +314,7 @@
               label="total"
               value={sum(series, (s) => {
                 const seriesTooltipData = s.data ? s.data.find((d) => x(d) === x(data)) : data;
-                const valueAccessor = accessor(s.value ?? (s.data ? y : s.key));
+                const valueAccessor = accessor(s.value ?? (s.data ? (y as any) : s.key));
 
                 return valueAccessor(seriesTooltipData);
               })}

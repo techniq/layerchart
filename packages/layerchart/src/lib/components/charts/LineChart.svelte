@@ -235,7 +235,7 @@
         <Tooltip.List>
           {#each series as s}
             {@const seriesTooltipData = s.data ? s.data.find((d) => x(d) === x(data)) : data}
-            {@const valueAccessor = accessor(s.value ?? (s.data ? y : s.key))}
+            {@const valueAccessor = accessor(s.value ?? (s.data ? (y as any) : s.key))}
 
             <Tooltip.Item
               label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
