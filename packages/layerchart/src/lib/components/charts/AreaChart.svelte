@@ -23,6 +23,7 @@
     accessor,
     chartDataArray,
     defaultChartPadding,
+    findRelatedData,
     type Accessor,
   } from '../../utils/common.js';
 
@@ -254,7 +255,7 @@
       <slot name="highlight" {...slotProps}>
         {#each series as s, i (s.key)}
           {@const seriesTooltipData =
-            s.data && tooltip.data ? s.data.find((d) => x(d) === x(tooltip.data)) : null}
+            s.data && tooltip.data ? findRelatedData(s.data, tooltip.data, x) : null}
 
           <Highlight
             data={seriesTooltipData}
@@ -295,12 +296,12 @@
           <!-- Reverse series order so tooltip items match stacks -->
           {@const seriesItems = stackSeries ? [...series].reverse() : series}
           {#each seriesItems as s}
-            {@const seriesTooltipData = s.data ? s.data.find((d) => x(d) === x(data)) : data}
+            {@const seriesTooltipData = s.data ? findRelatedData(s.data, data, x) : data}
             {@const valueAccessor = accessor(s.value ?? (s.data ? (y as any) : s.key))}
 
             <Tooltip.Item
               label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
-              value={valueAccessor(seriesTooltipData)}
+              value={seriesTooltipData ? valueAccessor(seriesTooltipData) : null}
               color={s.color}
               {format}
               valueAlign="right"

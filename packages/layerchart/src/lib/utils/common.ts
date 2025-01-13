@@ -58,3 +58,13 @@ export function defaultChartPadding(
     };
   }
 }
+
+/**
+ * Find the first instance within `data` with the same value as `original` using prop accessor.
+ * Handles complex objects such as `Date` by invoking `.valueOf()`
+ */
+export function findRelatedData(data: any[], original: any, accessor: Function) {
+  return data.find((d) => {
+    return accessor(d)?.valueOf() === accessor(original)?.valueOf();
+  });
+}
