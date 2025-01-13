@@ -12,7 +12,7 @@
   } from 'layerchart';
   import { scaleBand, scaleSequential } from 'd3-scale';
   import { curveCatmullRom, curveLinearClosed } from 'd3-shape';
-  import { extent, flatGroup, ticks } from 'd3-array';
+  import { extent, flatGroup, group, ticks } from 'd3-array';
   import { Field, PeriodType, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format } from '@layerstack/utils';
 
@@ -39,6 +39,7 @@
     keys,
   });
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
+  const multiSeriesDataByFruit = group(multiSeriesFlatData, (d) => d.fruit);
 
   const pitchData = [
     { name: 'fastball', value: 10 },
@@ -171,6 +172,35 @@
         </Tooltip.Root>
       </svelte:fragment>
     </LineChart>
+  </div>
+</Preview>
+
+<h2>Series (separate data)</h2>
+
+<Preview data={multiSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart
+      x="date"
+      y="value"
+      series={[
+        {
+          key: 'apples',
+          data: multiSeriesDataByFruit.get('apples'),
+          color: 'hsl(var(--color-danger))',
+        },
+        {
+          key: 'bananas',
+          data: multiSeriesDataByFruit.get('bananas'),
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'oranges',
+          data: multiSeriesDataByFruit.get('oranges'),
+          color: 'hsl(var(--color-warning))',
+        },
+      ]}
+      {renderContext}
+    />
   </div>
 </Preview>
 
@@ -317,7 +347,11 @@
           color: 'hsl(var(--color-secondary))',
           props: { class: 'fill-secondary/50' },
         },
-        { key: 'actual', color: 'hsl(var(--color-primary))', props: { class: 'fill-primary/50' } },
+        {
+          key: 'actual',
+          color: 'hsl(var(--color-primary))',
+          props: { class: 'fill-primary/50' },
+        },
       ]}
       props={{
         spline: {

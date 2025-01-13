@@ -231,6 +231,36 @@
   </div>
 </Preview>
 
+<h2>Series (seperate data)</h2>
+
+<Preview data={multiSeriesDataByFruit}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      x="date"
+      y="value"
+      series={[
+        {
+          key: 'apples',
+          data: multiSeriesDataByFruit.get('apples'),
+          color: 'hsl(var(--color-danger))',
+        },
+        {
+          key: 'bananas',
+          data: multiSeriesDataByFruit.get('bananas'),
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'oranges',
+          data: multiSeriesDataByFruit.get('oranges'),
+          color: 'hsl(var(--color-warning))',
+        },
+      ]}
+      tooltip={{ mode: 'voronoi' }}
+      {renderContext}
+    />
+  </div>
+</Preview>
+
 <h2>Stack series</h2>
 
 <Preview data={multiSeriesData}>

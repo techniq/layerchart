@@ -198,9 +198,12 @@
 
       <slot name="highlight" {...slotProps}>
         {#each series as s, i (s.key)}
+          {@const seriesTooltipData =
+            s.data && tooltip.data ? s.data.find((d) => x(d) === x(tooltip.data)) : null}
+
           <Highlight
-            data={s.data}
-            y={s.value ?? s.key}
+            data={seriesTooltipData}
+            y={s.value ?? (s.data ? undefined : s.key)}
             points={{ fill: s.color }}
             lines={i === 0}
             {...props.highlight}
@@ -231,10 +234,12 @@
         <Tooltip.Header>{format(x(data))}</Tooltip.Header>
         <Tooltip.List>
           {#each series as s}
-            {@const valueAccessor = accessor(s.value ?? s.key)}
+            {@const seriesTooltipData = s.data ? s.data.find((d) => x(d) === x(data)) : data}
+            {@const valueAccessor = accessor(s.value ?? (s.data ? y : s.key))}
+
             <Tooltip.Item
               label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
-              value={valueAccessor(data)}
+              value={valueAccessor(seriesTooltipData)}
               color={s.color}
               {format}
             />

@@ -133,7 +133,7 @@
         ? (d) => d.stackData[i][1]
         : Array.isArray(s.value)
           ? s.value[1]
-          : (s.value ?? s.key),
+          : (s.value ?? (s.data ? undefined : s.key)),
       fill: s.color,
       fillOpacity: 0.3,
       ...props.area,
@@ -253,8 +253,12 @@
 
       <slot name="highlight" {...slotProps}>
         {#each series as s, i (s.key)}
+          {@const seriesTooltipData =
+            s.data && tooltip.data ? s.data.find((d) => x(d) === x(tooltip.data)) : null}
+
           <Highlight
-            y={stackSeries ? (d) => d.stackData[i][1] : (s.value ?? s.key)}
+            data={seriesTooltipData}
+            y={stackSeries ? (d) => d.stackData[i][1] : (s.value ?? (s.data ? undefined : s.key))}
             points={{ fill: s.color }}
             lines={i == 0}
             {...props.highlight}
@@ -291,10 +295,12 @@
           <!-- Reverse series order so tooltip items match stacks -->
           {@const seriesItems = stackSeries ? [...series].reverse() : series}
           {#each seriesItems as s}
-            {@const valueAccessor = accessor(s.value ?? s.key)}
+            {@const seriesTooltipData = s.data ? s.data.find((d) => x(d) === x(data)) : data}
+            {@const valueAccessor = accessor(s.value ?? (s.data ? y : s.key))}
+
             <Tooltip.Item
               label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
-              value={valueAccessor(data)}
+              value={valueAccessor(seriesTooltipData)}
               color={s.color}
               {format}
               valueAlign="right"
@@ -307,8 +313,10 @@
             <Tooltip.Item
               label="total"
               value={sum(series, (s) => {
-                const valueAccessor = accessor(s.value ?? s.key);
-                return valueAccessor(data);
+                const seriesTooltipData = s.data ? s.data.find((d) => x(d) === x(data)) : data;
+                const valueAccessor = accessor(s.value ?? (s.data ? y : s.key));
+
+                return valueAccessor(seriesTooltipData);
               })}
               format="integer"
               valueAlign="right"
