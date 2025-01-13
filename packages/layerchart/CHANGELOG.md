@@ -1,5 +1,13 @@
 # LayerChart
 
+## 0.70.2
+
+### Patch Changes
+
+- fix(AreaChart): Fix Area handling of separate series data ([`6a7be43`](https://github.com/techniq/layerchart/commit/6a7be43b8bab9b0a722914ad3c32e08f29cc3e4d))
+
+- fix(LineChart|AreaChart): Fix Tooltip/Highlight handling of separate series data ([`6a7be43`](https://github.com/techniq/layerchart/commit/6a7be43b8bab9b0a722914ad3c32e08f29cc3e4d))
+
 ## 0.70.1
 
 ### Patch Changes
