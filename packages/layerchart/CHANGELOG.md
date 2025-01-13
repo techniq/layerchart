@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.70.3
+
+### Patch Changes
+
+- fix(AreaChart|LineChart): Handling finding closest series data point with complex data types (ex. `Date`) when using seperate series data ([`a75f612`](https://github.com/techniq/layerchart/commit/a75f61274cd2bf76119d9f21ca7dab33104df582))
+
 ## 0.70.2
 
 ### Patch Changes
