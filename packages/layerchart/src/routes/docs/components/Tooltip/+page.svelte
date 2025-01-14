@@ -124,6 +124,7 @@
   ] as const;
   let anchor: ComponentProps<Tooltip.Root>['anchor'] = 'top-left';
   let snap: 'pointer' | 'data' = 'pointer';
+  let contained: ComponentProps<Tooltip.Root>['contained'] = false;
 
   let tooltipContext: ComponentProps<Chart<any>>['tooltipContext'];
 </script>
@@ -472,22 +473,13 @@
 
 <h2>Anchor location</h2>
 
-<div class="grid grid-cols-2 gap-2 mb-2">
+<div class="grid grid-cols-3 gap-2 mb-2">
   <Toggle let:on={open} let:toggle>
     <Field label="Anchor" class="cursor-pointer" on:click={toggle}>
       <span class="text-sm">
         {anchor}
       </span>
     </Field>
-
-    <MenuField
-      label="Snap"
-      bind:value={snap}
-      options={[
-        { label: 'pointer', value: 'pointer' },
-        { label: 'data', value: 'data' },
-      ]}
-    />
 
     <Menu {open} on:close={toggle} placement="bottom-start">
       <div class="grid grid-cols-3 gap-1 p-1">
@@ -503,6 +495,25 @@
       </div>
     </Menu>
   </Toggle>
+
+  <MenuField
+    label="Snap"
+    bind:value={snap}
+    options={[
+      { label: 'pointer', value: 'pointer' },
+      { label: 'data', value: 'data' },
+    ]}
+  />
+
+  <MenuField
+    label="Contained"
+    bind:value={contained}
+    options={[
+      { label: 'none', value: false },
+      { label: 'container', value: 'container' },
+      { label: 'window', value: 'window' },
+    ]}
+  />
 </div>
 
 <Preview data={dateSeries}>
@@ -533,6 +544,7 @@
         xOffset={['top', 'center', 'bottom'].includes(anchor ?? '') ? 0 : 10}
         y={snap}
         yOffset={['left', 'center', 'right'].includes(anchor ?? '') ? 0 : 10}
+        {contained}
         let:data
       >
         <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>

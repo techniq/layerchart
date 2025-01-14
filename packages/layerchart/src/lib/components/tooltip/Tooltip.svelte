@@ -31,7 +31,7 @@
     | 'bottom-right';
   export let anchor: Placement = 'top-left';
 
-  export let contained: 'container' | false = 'container'; // TODO: Support 'window' using getBoundingClientRect()
+  export let contained: 'container' | 'window' | false = 'container';
   export let variant: 'default' | 'invert' | 'none' = 'default';
 
   /** Set to `false` to disable spring transitions */
@@ -134,8 +134,8 @@
     rect.bottom = rect.top + tooltipHeight;
     rect.right = rect.left + tooltipWidth;
 
-    // Check if outside of container and swap align side accordingly
     if (contained === 'container') {
+      // Check if outside of container and swap align side accordingly
       if ((xAlign === 'start' || xAlign === 'center') && rect.right > $containerWidth) {
         rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
       }
@@ -151,11 +151,40 @@
         rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
       }
       rect.bottom = rect.top + tooltipHeight;
+    } else if (contained === 'window') {
+      // Check if outside of window / viewport and swap align side accordingly
+      // Root <div> won't be available on initial mount
+      if (rootEl?.parentElement) {
+        const parentViewportRect = rootEl.parentElement.getBoundingClientRect();
+        if (
+          (xAlign === 'start' || xAlign === 'center') &&
+          parentViewportRect.left + rect.right > window.innerWidth
+        ) {
+          rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
+        }
+        if ((xAlign === 'end' || xAlign === 'center') && parentViewportRect.left + rect.left < 0) {
+          rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
+        }
+        rect.right = rect.left + tooltipWidth;
+
+        if (
+          (yAlign === 'start' || yAlign === 'center') &&
+          parentViewportRect.top + rect.bottom > window.innerHeight
+        ) {
+          rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
+        }
+        if ((yAlign === 'end' || yAlign === 'center') && parentViewportRect.top + rect.top < 0) {
+          rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
+        }
+        rect.bottom = rect.top + tooltipHeight;
+      }
     }
 
     $yPos = rect.top;
     $xPos = rect.left;
   }
+
+  let rootEl: HTMLDivElement;
 </script>
 
 {#if $tooltip.data}
@@ -166,6 +195,7 @@
     transition:fade={{ duration: 100 }}
     bind:clientWidth={tooltipWidth}
     bind:clientHeight={tooltipHeight}
+    bind:this={rootEl}
   >
     <div
       class={cls(

@@ -26,7 +26,7 @@ export async function load() {
           'mix and match',
         ],
         'Multiple instances',
-        'Maintain within chart container, or overflow outside',
+        'Maintain within chart container, window/viewport, or overflow outside',
       ],
       related: ['components/TooltipContext', 'components/Highlight'],
     },
