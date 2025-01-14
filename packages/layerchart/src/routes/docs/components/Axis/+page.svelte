@@ -238,7 +238,36 @@
   </div>
 </Preview>
 
-<h2>rotated labels and styling</h2>
+<h2>tick label styling</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ top: 20, bottom: 36, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis
+          placement="bottom"
+          rule
+          classes={{
+            rule: 'stroke-danger',
+            tick: 'stroke-danger/50',
+            tickLabel: 'fill-danger font-semibold',
+          }}
+        />
+        <Axis placement="left" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>rotated tick labels and styling</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">

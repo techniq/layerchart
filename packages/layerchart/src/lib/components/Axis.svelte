@@ -75,6 +75,9 @@
   export let classes: {
     root?: string;
     label?: string;
+    rule?: string;
+    tick?: string;
+    tickLabel?: string;
   } = {};
 
   $: [xRangeMin, xRangeMax] = extent<number>($xRange) as [number, number];
@@ -236,7 +239,7 @@
       {tweened}
       {spring}
       {...ruleProps}
-      class={cls('rule stroke-surface-content/50', ruleProps?.class)}
+      class={cls('rule stroke-surface-content/50', classes.rule, ruleProps?.class)}
     />
   {/if}
 
@@ -261,6 +264,7 @@
       ...tickLabelProps,
       class: cls(
         'tickLabel text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
+        classes.tickLabel,
         tickLabelProps?.class
       ),
     }}
@@ -274,7 +278,7 @@
           {tweened}
           {spring}
           {...ruleProps}
-          class={cls('grid stroke-surface-content/10', ruleProps?.class)}
+          class={cls('grid stroke-surface-content/10', classes.rule, ruleProps?.class)}
         />
       {/if}
 
@@ -287,7 +291,7 @@
           y2={tickCoords.y + (placement === 'top' ? -tickLength : tickLength)}
           {tweened}
           {spring}
-          class="tick stroke-surface-content/50"
+          class={cls('tick stroke-surface-content/50', classes.tick)}
         />
       {:else if orientation === 'vertical'}
         <Line
@@ -297,7 +301,7 @@
           y2={tickCoords.y}
           {tweened}
           {spring}
-          class="tick stroke-surface-content/50"
+          class={cls('tick stroke-surface-content/50', classes.tick)}
         />
       {:else if orientation === 'angle'}
         <Line
@@ -307,7 +311,7 @@
           y2={radialTickMarkCoordsY}
           {tweened}
           {spring}
-          class="tick stroke-surface-content/50"
+          class={cls('tick stroke-surface-content/50', classes.tick)}
         />
       {/if}
       <!-- TODO: Add tick marks for radial (angle)? -->
