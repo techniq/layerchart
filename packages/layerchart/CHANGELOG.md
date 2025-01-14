@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.70.4
+
+### Patch Changes
+
+- feat(Axis): Add `classes` properties for `rule, `tick`, and `tickLabel` for convenient styling ([`5433da5`](https://github.com/techniq/layerchart/commit/5433da5a0e206fd7b7de2b100813de325ac71668))
+
 ## 0.70.3
 
 ### Patch Changes
