@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.71.0
+
+### Minor Changes
+
+- feat(Tooltip): Support `contained="window"` to keep tooltip within window/viewport (along with `container` and `false`) ([`e00528a`](https://github.com/techniq/layerchart/commit/e00528abf8f2b9eab04cfc7cfb7e6cb2cb980c5d))
+
 ## 0.70.4
 
 ### Patch Changes
