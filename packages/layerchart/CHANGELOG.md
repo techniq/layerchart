@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.71.2
+
+### Patch Changes
+
+- fix(Spline): Remove redundant `{...$restProps}` which also caused default classes to be overridden (ex. `fill-none`) ([`487357a`](https://github.com/techniq/layerchart/commit/487357a5b0b11b9a5a110108cbeb5601daf20587))
+
 ## 0.71.1
 
 ### Patch Changes
