@@ -238,7 +238,6 @@
       marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
       marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
       marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-      {...$$restProps}
       in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
       on:click
       on:pointerenter
