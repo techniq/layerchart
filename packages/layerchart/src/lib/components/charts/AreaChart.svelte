@@ -39,6 +39,7 @@
     seriesLayout?: typeof seriesLayout;
     renderContext?: typeof renderContext;
     onPointClick?: typeof onPointClick;
+    onTooltipClick?: typeof onTooltipClick;
   }
 
   export let data: $$Props['data'] = [];
@@ -69,6 +70,9 @@
   export let labels: ComponentProps<Labels> | boolean = false;
   export let legend: ComponentProps<Legend> | boolean = false;
   export let points: ComponentProps<Points> | boolean = false;
+
+  /** Event dispatched with current tooltip data */
+  export let onTooltipClick: (e: { data: any }) => void = () => {};
 
   /** Event dispatched when Highlight point is clicked (useful with multiple series) */
   export let onPointClick: (e: {
@@ -169,7 +173,7 @@
   yNice
   {radial}
   padding={radial ? undefined : defaultChartPadding(axis, legend)}
-  tooltip={{ mode: 'bisect-x' }}
+  tooltip={{ mode: 'bisect-x', onClick: onTooltipClick }}
   {...$$restProps}
   let:x
   let:xScale

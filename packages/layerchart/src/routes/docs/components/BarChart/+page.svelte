@@ -988,6 +988,23 @@
   </div>
 </Preview>
 
+<h2>Tooltip click</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      onTooltipClick={(e) => {
+        console.log(e);
+        alert(JSON.stringify(e));
+      }}
+      {renderContext}
+    />
+  </div>
+</Preview>
+
 <h2>Custom tooltip</h2>
 
 <Preview data={dateSeriesData}>
