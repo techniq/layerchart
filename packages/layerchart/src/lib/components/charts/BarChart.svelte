@@ -21,6 +21,7 @@
     accessor,
     chartDataArray,
     defaultChartPadding,
+    findRelatedData,
     type Accessor,
   } from '../../utils/common.js';
 
@@ -331,10 +332,11 @@
           <!-- Reverse series order so tooltip items match stacks -->
           {@const seriesItems = stackSeries ? [...series].reverse() : series}
           {#each seriesItems as s}
-            {@const valueAccessor = accessor(s.value ?? s.key)}
+            {@const seriesTooltipData = s.data ? findRelatedData(s.data, data, x) : data}
+            {@const valueAccessor = accessor(s.value ?? (s.data ? (y as any) : s.key))}
             <Tooltip.Item
               label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
-              value={valueAccessor(data)}
+              value={seriesTooltipData ? valueAccessor(seriesTooltipData) : null}
               color={s.color ?? cScale?.(c(data))}
               {format}
               valueAlign="right"
@@ -347,8 +349,9 @@
             <Tooltip.Item
               label="total"
               value={sum(series, (s) => {
-                const valueAccessor = accessor(s.value ?? s.key);
-                return valueAccessor(data);
+                const seriesTooltipData = s.data ? findRelatedData(s.data, data, x) : data;
+                const valueAccessor = accessor(s.value ?? (s.data ? (y as any) : s.key));
+                return valueAccessor(seriesTooltipData);
               })}
               format="integer"
               valueAlign="right"
