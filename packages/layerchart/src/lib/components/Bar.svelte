@@ -118,7 +118,7 @@
     {spring}
     {tweened}
     {stroke}
-    stroke-width={strokeWidth}
+    {strokeWidth}
     rx={radius}
     {...dimensions}
     {...$$restProps}
@@ -135,7 +135,7 @@
     {spring}
     {tweened}
     {stroke}
-    stroke-width={strokeWidth}
+    {strokeWidth}
     {...$$restProps}
     on:click
     on:pointerenter
