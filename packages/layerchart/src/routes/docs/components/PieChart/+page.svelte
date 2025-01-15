@@ -49,6 +49,23 @@
   </div>
 </Preview>
 
+<h2>onArcClick</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      {data}
+      key="fruit"
+      value="value"
+      onArcClick={(e) => {
+        console.log(e);
+        alert(JSON.stringify(e));
+      }}
+      {renderContext}
+    />
+  </div>
+</Preview>
+
 <h2>Outer radius (fixed)</h2>
 
 <Preview {data}>
