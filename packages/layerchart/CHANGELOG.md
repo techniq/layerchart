@@ -1,5 +1,12 @@
 # LayerChart
 
+## 0.71.1
+
+### Patch Changes
+
+- Fixed `strokeWidth` prop on `Bar` component. ([#316](https://github.com/techniq/layerchart/pull/316))
+  Made `Spline` pass `{...$restProps}` to its `<path>` element.
+
 ## 0.71.0
 
 ### Minor Changes
