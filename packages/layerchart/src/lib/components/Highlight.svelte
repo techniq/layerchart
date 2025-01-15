@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+  export type HighlightPointData = { x: any; y: any };
+</script>
+
 <script lang="ts">
   import { type ComponentProps } from 'svelte';
   import { max, min } from 'd3-array';
@@ -62,10 +66,14 @@
   /** Set to false to disable spring transitions */
   export let motion = true;
 
+  export let onAreaClick: (e: { data: any }) => void = () => {};
+  export let onBarClick: (e: { data: any }) => void = () => {};
+  export let onPointClick: (e: { point: (typeof _points)[number]; data: any }) => void = () => {};
+
   const _x = accessor(x);
   const _y = accessor(y);
 
-  let _points: { x: number; y: number; fill: string }[] = [];
+  let _points: { x: number; y: number; fill: string; data: HighlightPointData }[] = [];
   let _lines: { x1: number; y1: number; x2: number; y2: number }[] = [];
   let _area = {
     x: 0,
@@ -217,6 +225,10 @@
               x: $xScale(seriesPoint.point[1]) + xOffset,
               y: yCoord + yOffset,
               fill: $config.c ? $cGet(seriesPoint.series) : null,
+              data: {
+                x: seriesPoint.point[1],
+                y: yValue,
+              },
             };
           });
         }
@@ -229,6 +241,10 @@
             y: yCoord + yOffset,
             // TODO: is there a better way to expose the series key/value?
             fill: $config.c ? $cGet({ ...highlightData, $key }) : null,
+            data: {
+              x: xValue, // TODO: use highlightData[$key]?
+              y: yValue,
+            },
           };
         });
       }
@@ -256,6 +272,10 @@
             x: xCoord + xOffset,
             y: $yScale(seriesPoint.point[1]) + yOffset,
             fill: $config.c ? $cGet(seriesPoint.series) : null,
+            data: {
+              x: xValue,
+              y: seriesPoint.point[1],
+            },
           }));
         }
       } else {
@@ -267,6 +287,10 @@
             y: yItem + yOffset,
             // TODO: is there a better way to expose the series key/value?
             fill: $config.c ? $cGet({ ...highlightData, $key }) : null,
+            data: {
+              x: xValue,
+              y: yValue, // TODO: use highlightData[$key] ?
+            },
           };
         });
       }
@@ -276,6 +300,10 @@
           x: xCoord + xOffset,
           y: yCoord + yOffset,
           fill: $config.c ? $cGet(highlightData) : null,
+          data: {
+            x: xValue,
+            y: yValue,
+          },
         },
       ];
     } else {
@@ -322,7 +350,7 @@
           !area.fill && 'fill-surface-content/5',
           typeof area === 'object' ? area.class : null
         )}
-        on:click
+        on:click={() => onAreaClick({ data: highlightData })}
       />
     </slot>
   {/if}
@@ -343,7 +371,7 @@
           !bar.fill && 'fill-primary',
           typeof bar === 'object' ? bar.class : null
         )}
-        on:click
+        on:click={() => onBarClick({ data: highlightData })}
       />
     </slot>
   {/if}
@@ -382,6 +410,7 @@
             !point.fill && (typeof points === 'boolean' || !points.fill) && 'fill-primary',
             typeof points === 'object' ? points.class : null
           )}
+          on:click={() => onPointClick({ point, data: highlightData })}
         />
       {/each}
     </slot>

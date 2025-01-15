@@ -40,6 +40,8 @@
     series?: typeof series;
     seriesLayout?: typeof seriesLayout;
     renderContext?: typeof renderContext;
+    onBarClick?: typeof onBarClick;
+    onTooltipClick?: typeof onTooltipClick;
   }
 
   export let data: $$Props['data'] = [];
@@ -81,6 +83,13 @@
   export let bandPadding = 0.4;
   /** Padding between group/series items when using 'seriesLayout="group"', applied to scaleBand().padding() */
   export let groupPadding = 0;
+
+  /** Event dispatched with current tooltip data */
+  export let onTooltipClick: (e: { data: any }) => void = () => {};
+
+  // TODO: Need to find a way to have this play nice with `tooltip={{ mode: 'band' }}`
+  /** Event dispatched when individual Bar is clicked (useful with multiple series) */
+  export let onBarClick: (e: { data: any; series: (typeof series)[number] }) => void = () => {};
 
   $: xScale = $$props.xScale ?? (isVertical ? scaleBand().padding(bandPadding) : scaleLinear());
   $: xBaseline = isVertical ? undefined : 0;
@@ -173,6 +182,7 @@
       radius: 4,
       strokeWidth: 1,
       fill: s.color,
+      onBarClick: (e) => onBarClick({ data: e.data, series: s }),
       ...props.bars,
       ...s.props,
     };
@@ -206,7 +216,7 @@
   c={isVertical ? y : x}
   cRange={['hsl(var(--color-primary))']}
   padding={defaultChartPadding(axis, legend)}
-  tooltip={{ mode: 'band' }}
+  tooltip={{ mode: 'band', onClick: onTooltipClick }}
   {...$$restProps}
   let:x
   let:xScale

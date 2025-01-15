@@ -49,6 +49,23 @@
   </div>
 </Preview>
 
+<h2>onTooltipClick</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      {data}
+      key="fruit"
+      value="value"
+      onTooltipClick={(e) => {
+        console.log(e);
+        alert(JSON.stringify(e));
+      }}
+      {renderContext}
+    />
+  </div>
+</Preview>
+
 <h2>Outer radius (fixed)</h2>
 
 <Preview {data}>
@@ -279,6 +296,27 @@
         { key: 2019, data: dataByYear.get(2019), props: { innerRadius: -20 } },
         { key: 2018, data: dataByYear.get(2018), props: { outerRadius: -30 } },
       ]}
+      {renderContext}
+    />
+  </div>
+</Preview>
+
+<h2>Series data (arc click)</h2>
+
+<Preview data={dataByYear}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      key="fruit"
+      value="value"
+      series={Array.from(dataByYear, ([key, data]) => ({ key, data }))}
+      outerRadius={-25}
+      innerRadius={-20}
+      cornerRadius={5}
+      padAngle={0.01}
+      onArcClick={(e) => {
+        console.log(e);
+        alert(JSON.stringify(e));
+      }}
       {renderContext}
     />
   </div>

@@ -286,6 +286,23 @@
   </div>
 </Preview>
 
+<h2>Tooltip click</h2>
+
+<Preview data={spiralData}>
+  <div class="h-[400px] p-4 border rounded">
+    <ScatterChart
+      data={spiralData}
+      x="x"
+      y="y"
+      onTooltipClick={(e) => {
+        console.log(e);
+        alert(JSON.stringify(e));
+      }}
+      {renderContext}
+    />
+  </div>
+</Preview>
+
 <h2>Custom tooltip</h2>
 
 <Preview data={spiralData}>

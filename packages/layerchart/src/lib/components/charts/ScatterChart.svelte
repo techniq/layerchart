@@ -30,6 +30,7 @@
     props?: typeof props;
     series?: typeof series;
     renderContext?: typeof renderContext;
+    onTooltipClick?: typeof onTooltipClick;
   }
 
   export let data: $$Props['data'] = [];
@@ -50,6 +51,9 @@
   export let labels: ComponentProps<Labels> | boolean = false;
   export let legend: ComponentProps<Legend> | boolean = false;
   export let rule: ComponentProps<Rule> | boolean = true;
+
+  /** Event dispatched with current tooltip data */
+  export let onTooltipClick: (e: { data: any }) => void = () => {};
 
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
@@ -100,7 +104,7 @@
   {yScale}
   yNice
   padding={defaultChartPadding(axis, legend)}
-  tooltip={{ mode: 'voronoi' }}
+  tooltip={{ mode: 'voronoi', onClick: onTooltipClick }}
   {...$$restProps}
   let:x
   let:xScale

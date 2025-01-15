@@ -7,7 +7,7 @@
   import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import Grid from '../Grid.svelte';
-  import Highlight from '../Highlight.svelte';
+  import Highlight, { type HighlightPointData } from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
   import Legend from '../Legend.svelte';
   import Points from '../Points.svelte';
@@ -34,6 +34,8 @@
     rule?: typeof rule;
     series?: typeof series;
     renderContext?: typeof renderContext;
+    onPointClick?: typeof onPointClick;
+    onTooltipClick?: typeof onTooltipClick;
   }
 
   export let data: $$Props['data'] = [];
@@ -60,6 +62,15 @@
   export let labels: ComponentProps<Labels> | boolean = false;
   export let legend: ComponentProps<Legend> | boolean = false;
   export let points: ComponentProps<Points> | boolean = false;
+
+  /** Event dispatched with current tooltip data */
+  export let onTooltipClick: (e: { data: any }) => void = () => {};
+
+  /** Event dispatched when Highlight point is clicked (useful with multiple series) */
+  export let onPointClick: (e: {
+    data: HighlightPointData;
+    series: (typeof series)[number];
+  }) => void = () => {};
 
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
@@ -110,7 +121,7 @@
   yNice
   {radial}
   padding={radial ? undefined : defaultChartPadding(axis, legend)}
-  tooltip={{ mode: 'bisect-x' }}
+  tooltip={{ mode: 'bisect-x', onClick: onTooltipClick }}
   {...$$restProps}
   let:x
   let:xScale
@@ -206,6 +217,7 @@
             y={s.value ?? (s.data ? undefined : s.key)}
             points={{ fill: s.color }}
             lines={i === 0}
+            onPointClick={(e) => onPointClick({ ...e, series: s })}
             {...props.highlight}
           />
         {/each}

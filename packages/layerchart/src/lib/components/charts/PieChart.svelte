@@ -30,8 +30,10 @@
     props?: typeof props;
     range?: typeof range;
     series?: typeof series;
-    value?: typeof label;
+    value?: typeof value;
     renderContext?: typeof renderContext;
+    onArcClick?: typeof onArcClick;
+    onTooltipClick?: typeof onTooltipClick;
   }
 
   export let data: ChartProps['data'] = [];
@@ -92,6 +94,13 @@
 
   /** Center chart.  Override and use `props.group` for more control */
   export let center = placement === 'center';
+
+  // TODO: Not usable with manual tooltip / arc path.  Use `onArcClick`?
+  /** Event dispatched with current tooltip data */
+  export let onTooltipClick: (e: { data: any }) => void = () => {};
+
+  /** Event dispatched when individual Arc is clicked  (useful with multiple series) */
+  export let onArcClick: (e: { data: any; series: (typeof series)[number] }) => void = () => {};
 
   export let props: {
     pie?: Partial<ComponentProps<Pie>>;
@@ -184,6 +193,11 @@
                 track={{ fill: s.color ?? cScale?.(c(d)), 'fill-opacity': 0.1 }}
                 {tooltip}
                 data={d}
+                on:click={() => {
+                  onArcClick({ data: d, series: s });
+                  // Workaround for `tooltip={{ mode: 'manual' }}
+                  onTooltipClick({ data: d });
+                }}
                 {...props.arc}
                 {...s.props}
               />
@@ -209,6 +223,11 @@
                     fill={cScale?.(c(arc.data))}
                     data={arc.data}
                     {tooltip}
+                    on:click={() => {
+                      onArcClick({ data: arc.data, series: s });
+                      // Workaround for `tooltip={{ mode: 'manual' }}
+                      onTooltipClick({ data: arc.data });
+                    }}
                     {...props.arc}
                     {...s.props}
                   />
