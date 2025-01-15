@@ -8,9 +8,9 @@
   import { isScaleBand } from '../../utils/scales.js';
 
   /** `x` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
-  export let x: 'pointer' | 'data' | number | undefined = 'pointer';
+  export let x: 'pointer' | 'data' | number = 'pointer';
   /** `y` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
-  export let y: 'pointer' | 'data' | number | undefined = 'pointer';
+  export let y: 'pointer' | 'data' | number = 'pointer';
 
   /** Offset added to `x` position */
   export let xOffset = x === 'pointer' ? 10 : 0;
@@ -135,20 +135,25 @@
     rect.right = rect.left + tooltipWidth;
 
     if (contained === 'container') {
-      // Check if outside of container and swap align side accordingly
-      if ((xAlign === 'start' || xAlign === 'center') && rect.right > $containerWidth) {
-        rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
-      }
-      if ((xAlign === 'end' || xAlign === 'center') && rect.left < $padding.left) {
-        rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
+      // Only attempt repositiong if not fixed (ie. `pointer`/`data`)
+      if (typeof x !== 'number') {
+        // Check if outside of container and swap align side accordingly
+        if ((xAlign === 'start' || xAlign === 'center') && rect.right > $containerWidth) {
+          rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
+        }
+        if ((xAlign === 'end' || xAlign === 'center') && rect.left < $padding.left) {
+          rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
+        }
       }
       rect.right = rect.left + tooltipWidth;
 
-      if ((yAlign === 'start' || yAlign === 'center') && rect.bottom > $containerHeight) {
-        rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
-      }
-      if ((yAlign === 'end' || yAlign === 'center') && rect.top < $padding.top) {
-        rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
+      if (typeof y !== 'number') {
+        if ((yAlign === 'start' || yAlign === 'center') && rect.bottom > $containerHeight) {
+          rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
+        }
+        if ((yAlign === 'end' || yAlign === 'center') && rect.top < $padding.top) {
+          rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
+        }
       }
       rect.bottom = rect.top + tooltipHeight;
     } else if (contained === 'window') {
@@ -156,25 +161,34 @@
       // Root <div> won't be available on initial mount
       if (rootEl?.parentElement) {
         const parentViewportRect = rootEl.parentElement.getBoundingClientRect();
-        if (
-          (xAlign === 'start' || xAlign === 'center') &&
-          parentViewportRect.left + rect.right > window.innerWidth
-        ) {
-          rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
-        }
-        if ((xAlign === 'end' || xAlign === 'center') && parentViewportRect.left + rect.left < 0) {
-          rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
+
+        // Only attempt repositiong if not fixed (ie. `pointer`/`data`)
+        if (typeof x !== 'number') {
+          if (
+            (xAlign === 'start' || xAlign === 'center') &&
+            parentViewportRect.left + rect.right > window.innerWidth
+          ) {
+            rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
+          }
+          if (
+            (xAlign === 'end' || xAlign === 'center') &&
+            parentViewportRect.left + rect.left < 0
+          ) {
+            rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
+          }
         }
         rect.right = rect.left + tooltipWidth;
 
-        if (
-          (yAlign === 'start' || yAlign === 'center') &&
-          parentViewportRect.top + rect.bottom > window.innerHeight
-        ) {
-          rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
-        }
-        if ((yAlign === 'end' || yAlign === 'center') && parentViewportRect.top + rect.top < 0) {
-          rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
+        if (typeof y !== 'number') {
+          if (
+            (yAlign === 'start' || yAlign === 'center') &&
+            parentViewportRect.top + rect.bottom > window.innerHeight
+          ) {
+            rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
+          }
+          if ((yAlign === 'end' || yAlign === 'center') && parentViewportRect.top + rect.top < 0) {
+            rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
+          }
         }
         rect.bottom = rect.top + tooltipHeight;
       }
