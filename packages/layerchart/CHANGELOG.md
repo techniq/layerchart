@@ -4,8 +4,8 @@
 
 ### Patch Changes
 
-- Fixed `strokeWidth` prop on `Bar` component. ([#316](https://github.com/techniq/layerchart/pull/316))
-  Made `Spline` pass `{...$restProps}` to its `<path>` element.
+- fix(Bar): Fix `strokeWidth` prop ([#316](https://github.com/techniq/layerchart/pull/316))
+- fix(Spline): Pass `{...$restProps}` to underlying `<path>` element ([#316](https://github.com/techniq/layerchart/pull/316))
 
 ## 0.71.0
 
