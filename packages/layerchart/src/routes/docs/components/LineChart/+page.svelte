@@ -216,7 +216,10 @@
         { key: 'bananas', color: 'hsl(var(--color-success))' },
         { key: 'oranges', color: 'hsl(var(--color-warning))' },
       ]}
-      onPointClick={(e) => console.log(e)}
+      onPointClick={(e) => {
+        console.log(e);
+        alert(JSON.stringify(e));
+      }}
       {renderContext}
     />
   </div>

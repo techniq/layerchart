@@ -70,7 +70,7 @@
   export let legend: ComponentProps<Legend> | boolean = false;
   export let points: ComponentProps<Points> | boolean = false;
 
-  /** Event dispatched when Highlight point is clicked */
+  /** Event dispatched when Highlight point is clicked (useful with multiple series) */
   export let onPointClick: (e: {
     data: HighlightPointData;
     series: (typeof series)[number];
