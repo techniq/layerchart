@@ -5,6 +5,7 @@
   import Bar from './Bar.svelte';
   import Rect from './Rect.svelte';
   import { chartDataArray, type Accessor } from '../utils/common.js';
+  import type { Insets } from 'layerchart/utils/rect.js';
 
   const { data: contextData, cGet, config } = chartContext();
 
@@ -39,7 +40,7 @@
   export let fill: string | undefined = undefined;
 
   /** Inset the rect for amount of padding.  Useful with multiple bars (bullet, overlap, etc) */
-  export let inset = 0;
+  export let insets: Insets | undefined = undefined;
 
   /** Define unique value for {#each} `(key)` expressions to improve transitions.  `index` position used by default */
   export let key: (d: any, index: number) => any = (d, i) => i;
@@ -66,7 +67,7 @@
         {stroke}
         {strokeWidth}
         {radius}
-        {inset}
+        {insets}
         {spring}
         {tweened}
         on:click={() => onBarClick({ data: d })}

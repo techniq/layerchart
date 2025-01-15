@@ -203,7 +203,7 @@
         {
           key: 'value',
           color: 'hsl(var(--color-primary))',
-          props: { inset: 16 },
+          props: { insets: { x: 8 } },
         },
       ]}
       {renderContext}
@@ -221,7 +221,7 @@
       orientation="horizontal"
       series={[
         { key: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
-        { key: 'value', color: 'hsl(var(--color-primary))', props: { inset: 8 } },
+        { key: 'value', color: 'hsl(var(--color-primary))', props: { insets: { x: 4 } } },
       ]}
       {renderContext}
     />
@@ -245,7 +245,7 @@
           key: 'value',
           data: dateSeriesData,
           color: 'hsl(var(--color-primary))',
-          props: { inset: 16 },
+          props: { insets: { x: 8 } },
         },
       ]}
       {renderContext}
