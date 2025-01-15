@@ -198,6 +198,24 @@
   </div>
 </Preview>
 
+<h2>Series (point click)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'bananas', color: 'hsl(var(--color-success))' },
+        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+      ]}
+      onPointClick={(e) => console.log(e)}
+      {renderContext}
+    />
+  </div>
+</Preview>
+
 <h2>Series (highlight on hover)</h2>
 
 <Preview data={multiSeriesDataByFruit}>
