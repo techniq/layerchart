@@ -516,6 +516,50 @@
   />
 </div>
 
+<h2>Externally access tooltip data</h2>
+
+<Preview data={dateSeries}>
+  <div class="text-sm">
+    {#if $tooltipContext?.data}
+      date: {formatDate($tooltipContext?.data?.date, PeriodType.Day, { variant: 'short' })}
+      value: {$tooltipContext?.data?.value}
+    {:else}
+      [hover chart]
+    {/if}
+  </div>
+
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeries}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+      bind:tooltipContext
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
+        <Highlight points lines />
+      </Svg>
+      <Tooltip.Root let:data>
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
 <Preview data={dateSeries}>
   <div class="h-[300px] p-4 border rounded">
     <Chart
@@ -976,50 +1020,6 @@
         <Tooltip.List>
           <Tooltip.Item label="x" value={data.x} format="decimal" />
           <Tooltip.Item label="y" value={data.y} format="decimal" />
-        </Tooltip.List>
-      </Tooltip.Root>
-    </Chart>
-  </div>
-</Preview>
-
-<h2>Externally access tooltip data</h2>
-
-<Preview data={dateSeries}>
-  <div class="text-sm">
-    {#if $tooltipContext?.data}
-      date: {formatDate($tooltipContext?.data?.date, PeriodType.Day, { variant: 'short' })}
-      value: {$tooltipContext?.data?.value}
-    {:else}
-      [hover chart]
-    {/if}
-  </div>
-
-  <div class="h-[300px] p-4 border rounded">
-    <Chart
-      data={dateSeries}
-      x="date"
-      xScale={scaleTime()}
-      y="value"
-      yDomain={[0, null]}
-      yNice
-      padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
-      bind:tooltipContext
-    >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
-        <Highlight points lines />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
         </Tooltip.List>
       </Tooltip.Root>
     </Chart>
