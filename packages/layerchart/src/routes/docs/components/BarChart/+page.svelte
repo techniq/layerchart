@@ -448,6 +448,45 @@
   </div>
 </Preview>
 
+<h2>Group series (bar click)</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={wideData}
+      x="year"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          key: 'cherries',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'grapes',
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      seriesLayout="group"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+      }}
+      tooltip={false}
+      onBarClick={(e) => {
+        console.log(e);
+        alert(JSON.stringify(e));
+      }}
+      {renderContext}
+    />
+  </div>
+</Preview>
+
+<Blockquote>Currently `onBarClick` conflicts with tooltip and thus must be disabled</Blockquote>
+
 <h2>Group series (series / long data)</h2>
 
 <Preview data={dataByFruit}>
