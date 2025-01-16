@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.72.2
+
+### Patch Changes
+
+- fix(BarChart): Compatibility with Svelte 3/4 after accidental introduction of typescript in markup ([`59dc772`](https://github.com/techniq/layerchart/commit/59dc7728fdf4853ba0aff26f8a924e859b4ea3ac))
+
 ## 0.72.1
 
 ### Patch Changes
