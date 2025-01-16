@@ -83,6 +83,13 @@
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
     points?: Partial<ComponentProps<Points>>;
+    tooltip?: {
+      root?: Partial<ComponentProps<Tooltip.Root>>;
+      header?: Partial<ComponentProps<Tooltip.Header>>;
+      list?: Partial<ComponentProps<Tooltip.List>>;
+      item?: Partial<ComponentProps<Tooltip.Item>>;
+      separator?: Partial<ComponentProps<Tooltip.Separator>>;
+    };
   } = {};
 
   export let renderContext: 'svg' | 'canvas' = 'svg';
@@ -243,9 +250,9 @@
     </slot>
 
     <slot name="tooltip" {...slotProps}>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(x(data))}</Tooltip.Header>
-        <Tooltip.List>
+      <Tooltip.Root {...props.tooltip?.root} let:data>
+        <Tooltip.Header {...props.tooltip?.header}>{format(x(data))}</Tooltip.Header>
+        <Tooltip.List {...props.tooltip?.list}>
           {#each series as s}
             {@const seriesTooltipData = s.data ? findRelatedData(s.data, data, x) : data}
             {@const valueAccessor = accessor(s.value ?? (s.data ? asAny(y) : s.key))}
@@ -255,6 +262,7 @@
               value={seriesTooltipData ? valueAccessor(seriesTooltipData) : null}
               color={s.color}
               {format}
+              {...props.tooltip?.item}
             />
           {/each}
         </Tooltip.List>

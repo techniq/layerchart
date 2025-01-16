@@ -92,6 +92,13 @@
     points?: Partial<ComponentProps<Points>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
+    tooltip?: {
+      root?: Partial<ComponentProps<Tooltip.Root>>;
+      header?: Partial<ComponentProps<Tooltip.Header>>;
+      list?: Partial<ComponentProps<Tooltip.List>>;
+      item?: Partial<ComponentProps<Tooltip.Item>>;
+      separator?: Partial<ComponentProps<Tooltip.Separator>>;
+    };
   } = {};
 
   export let renderContext: 'svg' | 'canvas' = 'svg';
@@ -303,9 +310,9 @@
     </slot>
 
     <slot name="tooltip" {...slotProps}>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(x(data))}</Tooltip.Header>
-        <Tooltip.List>
+      <Tooltip.Root {...props.tooltip?.root} let:data>
+        <Tooltip.Header {...props.tooltip?.header}>{format(x(data))}</Tooltip.Header>
+        <Tooltip.List {...props.tooltip?.list}>
           <!-- Reverse series order so tooltip items match stacks -->
           {@const seriesItems = stackSeries ? [...series].reverse() : series}
           {#each seriesItems as s}
@@ -318,11 +325,12 @@
               color={s.color}
               {format}
               valueAlign="right"
+              {...props.tooltip?.item}
             />
           {/each}
 
           {#if stackSeries}
-            <Tooltip.Separator />
+            <Tooltip.Separator {...props.tooltip?.separator} />
 
             <Tooltip.Item
               label="total"
@@ -334,6 +342,7 @@
               })}
               format="integer"
               valueAlign="right"
+              {...props.tooltip?.root}
             />
           {/if}
         </Tooltip.List>

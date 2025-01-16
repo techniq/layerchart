@@ -64,6 +64,13 @@
     labels?: Partial<ComponentProps<Labels>>;
     legend?: Partial<ComponentProps<Legend>>;
     rule?: Partial<ComponentProps<Rule>>;
+    tooltip?: {
+      root?: Partial<ComponentProps<Tooltip.Root>>;
+      header?: Partial<ComponentProps<Tooltip.Header>>;
+      list?: Partial<ComponentProps<Tooltip.List>>;
+      item?: Partial<ComponentProps<Tooltip.Item>>;
+      separator?: Partial<ComponentProps<Tooltip.Separator>>;
+    };
   } = {};
 
   export let renderContext: 'svg' | 'canvas' = 'svg';
@@ -199,28 +206,31 @@
     </slot>
 
     <slot name="tooltip" {...slotProps}>
-      <Tooltip.Root let:data>
+      <Tooltip.Root {...props.tooltip?.root} let:data>
         {#if activeSeries?.key !== 'default'}
-          <Tooltip.Header color={activeSeries?.color}>
+          <Tooltip.Header {...props.tooltip?.header} color={activeSeries?.color}>
             {activeSeries?.label ?? activeSeries?.key}
           </Tooltip.Header>
         {/if}
-        <Tooltip.List>
+        <Tooltip.List {...props.tooltip?.list}>
           <Tooltip.Item
             label={typeof config.x === 'string' ? config.x : 'x'}
             value={x(data)}
             {format}
+            {...props.tooltip?.item}
           />
           <Tooltip.Item
             label={typeof config.y === 'string' ? config.y : 'y'}
             value={y(data)}
             {format}
+            {...props.tooltip?.item}
           />
           {#if config.r}
             <Tooltip.Item
               label={typeof config.r === 'string' ? config.r : 'r'}
               value={r(data)}
               {format}
+              {...props.tooltip?.item}
             />
           {/if}
         </Tooltip.List>

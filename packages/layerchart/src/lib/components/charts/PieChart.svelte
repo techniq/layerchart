@@ -107,6 +107,13 @@
     group?: Partial<ComponentProps<Group>>;
     arc?: Partial<ComponentProps<Arc>>;
     legend?: Partial<ComponentProps<Legend>>;
+    tooltip?: {
+      root?: Partial<ComponentProps<Tooltip.Root>>;
+      header?: Partial<ComponentProps<Tooltip.Header>>;
+      list?: Partial<ComponentProps<Tooltip.List>>;
+      item?: Partial<ComponentProps<Tooltip.Item>>;
+      separator?: Partial<ComponentProps<Tooltip.Separator>>;
+    };
   } = {};
 
   export let renderContext: 'svg' | 'canvas' = 'svg';
@@ -257,13 +264,14 @@
     </slot>
 
     <slot name="tooltip" {...slotProps}>
-      <Tooltip.Root let:data>
-        <Tooltip.List>
+      <Tooltip.Root {...props.tooltip?.root} let:data>
+        <Tooltip.List {...props.tooltip?.list}>
           <Tooltip.Item
             label={labelAccessor(data) || keyAccessor(data)}
             value={valueAccessor(data)}
             color={cScale?.(c(data))}
             {format}
+            {...props.tooltip?.item}
           />
         </Tooltip.List>
       </Tooltip.Root>
