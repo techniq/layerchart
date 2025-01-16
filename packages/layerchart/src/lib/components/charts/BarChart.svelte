@@ -24,6 +24,7 @@
     findRelatedData,
     type Accessor,
   } from '../../utils/common.js';
+  import { asAny } from '../../utils/types.js';
 
   type ChartProps = ComponentProps<Chart<TData>>;
 
@@ -343,7 +344,7 @@
           {@const seriesItems = stackSeries ? [...series].reverse() : series}
           {#each seriesItems as s}
             {@const seriesTooltipData = s.data ? findRelatedData(s.data, data, x) : data}
-            {@const valueAccessor = accessor(s.value ?? (s.data ? (y as any) : s.key))}
+            {@const valueAccessor = accessor(s.value ?? (s.data ? asAny(y) : s.key))}
             <Tooltip.Item
               label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
               value={seriesTooltipData ? valueAccessor(seriesTooltipData) : null}
@@ -360,7 +361,7 @@
               label="total"
               value={sum(series, (s) => {
                 const seriesTooltipData = s.data ? findRelatedData(s.data, data, x) : data;
-                const valueAccessor = accessor(s.value ?? (s.data ? (y as any) : s.key));
+                const valueAccessor = accessor(s.value ?? (s.data ? asAny(y) : s.key));
                 return valueAccessor(seriesTooltipData);
               })}
               format="integer"
