@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.73.0
+
+### Minor Changes
+
+- feat: Support passing `props.tooltip` to all simplified charts, applying to `Tooltip.Root`, `Tooltip.Item`, etc ([`58d70fc`](https://github.com/techniq/layerchart/commit/58d70fc78c1a8706f962a97d1915f3b458b50fc2))
+
 ## 0.72.2
 
 ### Patch Changes
