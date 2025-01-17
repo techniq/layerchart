@@ -4,19 +4,21 @@
     Area,
     Axis,
     Highlight,
+    LinearGradient,
     Svg,
+    Spline,
+    Text,
     Tooltip,
     pivotLonger,
-    LinearGradient,
-    Spline,
+    accessor,
   } from 'layerchart';
+  import { curveBasis, curveCatmullRom } from 'd3-shape';
+  import { group } from 'd3-array';
   import { Field, PeriodType, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
-  import { curveCatmullRom } from 'd3-shape';
-  import { group } from 'd3-array';
 
   export let data;
 
@@ -45,6 +47,40 @@
   });
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
   const multiSeriesDataByFruit = group(multiSeriesFlatData, (d) => d.fruit);
+
+  const funnelSegments = [
+    { index: 0, value: 100 },
+    { index: 1, value: 50 },
+    { index: 2, value: 25 },
+    { index: 3, value: 10 },
+    { index: 4, value: 2.5 },
+  ];
+
+  function interpolateData(data: any[], options: { x: string; y: string }) {
+    const x = accessor(options.x);
+    const y = accessor(options.y);
+
+    return data.flatMap((current, i, arr) => {
+      if (i === arr.length - 1) {
+        return current;
+      }
+      const next = arr[i + 1];
+
+      const xStep = 0.25;
+      const yStep = Math.abs(y(next) - y(current)) * 0.03;
+
+      const xMid1 = Math.abs(x(current) + xStep);
+      const yMid1 = Math.abs(y(current) - yStep);
+      const xMid2 = Math.abs(x(next) - xStep);
+      const yMid2 = Math.abs(y(next) + yStep);
+
+      return [
+        current,
+        { [options.x]: xMid1, [options.y]: yMid1 },
+        { [options.x]: xMid2, [options.y]: yMid2 },
+      ];
+    });
+  }
 
   let renderContext: 'svg' | 'canvas' = 'svg';
 </script>
@@ -442,6 +478,60 @@
     >
       <svelte:fragment slot="belowMarks">
         <Spline y="avg" curve={curveCatmullRom} class="stroke-primary" />
+      </svelte:fragment>
+    </AreaChart>
+  </div>
+</Preview>
+
+<h2>Funnel</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded">
+    <AreaChart
+      data={interpolateData(funnelSegments, { x: 'index', y: 'value' })}
+      x="index"
+      y={[(d) => d.value, (d) => -d.value]}
+      axis={false}
+      yPadding={[20, 20]}
+      props={{
+        grid: {
+          x: { class: 'stroke-[2] stroke-surface-content/20' },
+          y: false,
+          xTicks: funnelSegments.map((d) => d.index),
+        },
+      }}
+      tooltip={false}
+      {renderContext}
+    >
+      <svelte:fragment slot="marks" let:x let:xScale let:width let:height>
+        {@const segmentWidth = width / (funnelSegments.length - 1)}
+        {@const areas = [
+          { padding: 0, opacity: 1 },
+          { padding: 10, opacity: 0.2 },
+          { padding: 20, opacity: 0.1 },
+        ]}
+
+        <LinearGradient class="from-primary/50 to-secondary/10" let:gradient>
+          {#each areas as a}
+            <Area
+              y0={(d) => d.value + a.padding}
+              y1={(d) => -(d.value + a.padding)}
+              fill={gradient}
+              curve={curveBasis}
+            />
+          {/each}
+        </LinearGradient>
+
+        {#each funnelSegments as s}
+          <Text
+            value={s.value + '%'}
+            x={xScale(x(s)) + segmentWidth / 2}
+            y={height / 2}
+            textAnchor="middle"
+            verticalAnchor="middle"
+            class="text-2xl"
+          />
+        {/each}
       </svelte:fragment>
     </AreaChart>
   </div>
