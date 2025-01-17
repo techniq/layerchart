@@ -529,7 +529,8 @@
             y={height / 2}
             textAnchor="middle"
             verticalAnchor="middle"
-            class="text-2xl"
+            class="text-2xl fill-current opacity-70"
+            dy={3}
           />
         {/each}
       </svelte:fragment>
