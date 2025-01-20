@@ -221,7 +221,7 @@
       orientation="horizontal"
       series={[
         { key: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
-        { key: 'value', color: 'hsl(var(--color-primary))', props: { insets: { x: 4 } } },
+        { key: 'value', color: 'hsl(var(--color-primary))', props: { insets: { y: 4 } } },
       ]}
       {renderContext}
     />
