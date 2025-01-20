@@ -203,7 +203,7 @@
         {
           key: 'value',
           color: 'hsl(var(--color-primary))',
-          props: { inset: 16 },
+          props: { insets: { x: 8 } },
         },
       ]}
       {renderContext}
@@ -221,7 +221,7 @@
       orientation="horizontal"
       series={[
         { key: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
-        { key: 'value', color: 'hsl(var(--color-primary))', props: { inset: 8 } },
+        { key: 'value', color: 'hsl(var(--color-primary))', props: { insets: { y: 4 } } },
       ]}
       {renderContext}
     />
@@ -245,7 +245,7 @@
           key: 'value',
           data: dateSeriesData,
           color: 'hsl(var(--color-primary))',
-          props: { inset: 16 },
+          props: { insets: { x: 8 } },
         },
       ]}
       {renderContext}
@@ -582,6 +582,40 @@
         xAxis: { format: 'metric' },
         yAxis: { format: 'none' },
       }}
+      {renderContext}
+    />
+  </div>
+</Preview>
+
+<h2>Stack series (padded)</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={wideData}
+      x="year"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          key: 'cherries',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'grapes',
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      seriesLayout="stack"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+        bars: { radius: 5.0, rounded: 'all' },
+      }}
+      stackPadding={5.0}
       {renderContext}
     />
   </div>

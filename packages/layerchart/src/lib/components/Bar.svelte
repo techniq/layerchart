@@ -5,7 +5,7 @@
   import Rect from './Rect.svelte';
   import Spline from './Spline.svelte';
 
-  import { createDimensionGetter } from '../utils/rect.js';
+  import { createDimensionGetter, type Insets } from '../utils/rect.js';
   import { isScaleBand } from '../utils/scales.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { greatestAbs } from '@layerstack/utils';
@@ -54,7 +54,7 @@
     | 'bottom-left'
     | 'bottom-right' = 'all';
 
-  export let inset = 0;
+  export let insets: Insets | undefined = undefined;
 
   export let spring: ComponentProps<Rect>['spring'] = undefined;
   export let tweened: ComponentProps<Rect>['tweened'] = undefined;
@@ -66,7 +66,7 @@
     y,
     x1,
     y1,
-    inset,
+    insets,
   });
   $: dimensions = $getDimensions(bar) ?? { x: 0, y: 0, width: 0, height: 0 };
 

@@ -670,7 +670,7 @@
           rule
         />
         <Bars x="baseline" strokeWidth={1} class="fill-surface-content/20" />
-        <Bars x="value" strokeWidth={1} inset={16} class="fill-primary" />
+        <Bars x="value" strokeWidth={1} insets={{ y: 8 }} class="fill-primary" />
         <Highlight area />
       </Svg>
       <Tooltip.Root let:data>
