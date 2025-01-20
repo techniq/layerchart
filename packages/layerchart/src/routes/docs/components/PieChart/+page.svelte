@@ -1,12 +1,13 @@
 <script lang="ts">
   import { Arc, Group, LinearGradient, PieChart, Text } from 'layerchart';
-  import { group } from 'd3-array';
+  import { group, sum } from 'd3-array';
   import { quantize } from 'd3-interpolate';
   import { schemeTableau10, interpolateRainbow } from 'd3-scale-chromatic';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { longData } from '$lib/utils/genData.js';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { format } from '@layerstack/utils';
 
   const dataByYear = group(longData, (d) => d.year);
   const data = dataByYear.get(2019) ?? [];
@@ -94,7 +95,50 @@
       cornerRadius={5}
       padAngle={0.02}
       {renderContext}
-    />
+    >
+      <svelte:fragment slot="aboveMarks">
+        <Text
+          value={format(sum(data, (d) => d.value))}
+          textAnchor="middle"
+          verticalAnchor="middle"
+          class="text-4xl"
+          dy={8}
+        />
+      </svelte:fragment>
+    </PieChart>
+  </div>
+</Preview>
+
+<h2>Donut with inner text</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <PieChart
+      {data}
+      key="fruit"
+      value="value"
+      innerRadius={-20}
+      cornerRadius={5}
+      padAngle={0.02}
+      {renderContext}
+    >
+      <svelte:fragment slot="aboveMarks">
+        <Text
+          value={format(sum(data, (d) => d.value))}
+          textAnchor="middle"
+          verticalAnchor="middle"
+          class="text-4xl"
+          dy={4}
+        />
+        <Text
+          value="total"
+          textAnchor="middle"
+          verticalAnchor="middle"
+          class="text-sm fill-surface-content/50"
+          dy={26}
+        />
+      </svelte:fragment>
+    </PieChart>
   </div>
 </Preview>
 
