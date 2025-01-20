@@ -485,7 +485,7 @@
 
 <h2>Funnel</h2>
 
-<Preview data={dateSeriesData}>
+<Preview data={funnelSegments}>
   <div class="h-[400px] p-4 border rounded">
     <AreaChart
       data={interpolateData(funnelSegments, { x: 'index', y: 'value' })}
