@@ -952,7 +952,7 @@
           rule
         />
         <Bars y="baseline" radius={4} strokeWidth={1} class="fill-surface-content/10" />
-        <Bars y="value" radius={4} strokeWidth={1} insets={{ all: 4 }} class="fill-primary" />
+        <Bars y="value" radius={4} strokeWidth={1} insets={{ x: 4 }} class="fill-primary" />
         <Highlight
           points={charts.multiBars.highlight.includes('points')}
           lines={charts.multiBars.highlight.includes('lines')}
