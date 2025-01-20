@@ -95,17 +95,7 @@
       cornerRadius={5}
       padAngle={0.02}
       {renderContext}
-    >
-      <svelte:fragment slot="aboveMarks">
-        <Text
-          value={format(sum(data, (d) => d.value))}
-          textAnchor="middle"
-          verticalAnchor="middle"
-          class="text-4xl"
-          dy={8}
-        />
-      </svelte:fragment>
-    </PieChart>
+    />
   </div>
 </Preview>
 
