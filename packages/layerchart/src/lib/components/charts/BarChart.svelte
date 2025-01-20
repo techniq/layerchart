@@ -25,6 +25,7 @@
     type Accessor,
   } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
+  import type { Insets } from 'layerchart/utils/rect.js';
 
   type ChartProps = ComponentProps<Chart<TData>>;
 
@@ -33,6 +34,7 @@
     grid?: typeof grid;
     bandPadding?: typeof bandPadding;
     groupPadding?: typeof groupPadding;
+    stackPadding?: typeof stackPadding;
     labels?: typeof labels;
     legend?: typeof legend;
     orientation?: typeof orientation;
@@ -84,6 +86,8 @@
   export let bandPadding = 0.4;
   /** Padding between group/series items when using 'seriesLayout="group"', applied to scaleBand().padding() */
   export let groupPadding = 0;
+  /** Padding between series items within bars when using 'seriesLayout="stack"' */
+  export let stackPadding = 0;
 
   /** Event dispatched with current tooltip data */
   export let onTooltipClick: (e: { data: any }) => void = () => {};
@@ -177,18 +181,41 @@
   }
 
   function getBarsProps(s: (typeof series)[number], i: number) {
-    const valueAccesor = stackSeries
+    const isFirst = i == 0;
+    const isLast = i == series.length - 1;
+
+    const isStackLayout = seriesLayout.startsWith('stack');
+
+    let stackInsets: Insets | undefined = undefined;
+
+    if (isStackLayout) {
+      const stackInset = stackPadding / 2;
+      if (isVertical) {
+        stackInsets = {
+          bottom: isFirst ? undefined : stackInset,
+          top: isLast ? undefined : stackInset,
+        };
+      } else {
+        stackInsets = {
+          left: isFirst ? undefined : stackInset,
+          right: isLast ? undefined : stackInset,
+        };
+      }
+    }
+
+    const valueAccessor = stackSeries
       ? (d: any) => d.stackData[i]
       : (s.value ?? (s.data ? undefined : s.key));
     const barsProps: ComponentProps<Bars> = {
       data: s.data,
-      x: !isVertical ? valueAccesor : undefined,
-      y: isVertical ? valueAccesor : undefined,
+      x: !isVertical ? valueAccessor : undefined,
+      y: isVertical ? valueAccessor : undefined,
       x1: isVertical && groupSeries ? (d) => s.value ?? s.key : undefined,
       y1: !isVertical && groupSeries ? (d) => s.value ?? s.key : undefined,
-      rounded: seriesLayout.startsWith('stack') && i !== series.length - 1 ? 'none' : 'edge',
+      rounded: isStackLayout && i !== series.length - 1 ? 'none' : 'edge',
       radius: 4,
       strokeWidth: 1,
+      insets: stackInsets,
       fill: s.color,
       onBarClick: (e) => onBarClick({ data: e.data, series: s }),
       ...props.bars,

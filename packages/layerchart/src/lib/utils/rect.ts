@@ -5,6 +5,31 @@ import { isScaleBand } from './scales.js';
 import type { ChartContext } from '../components/ChartContext.svelte';
 import { accessor, type Accessor } from './common.js';
 
+/** A set of inset distances, applied to a rectangle to shrink or expand the area represented by that rectangle. */
+export type Insets = {
+  /** Applies an inset all sides of a rectangle: `left`, `right`, `bottom`, and `top` */
+  all?: number;
+  /** Applies an inset all horizontal sides of a rectangle: `left`, and `right`, overriding `all` */
+  x?: number;
+  /** Applies an inset all vertical sides of a rectangle: `top`, and `bottom`, overriding `all` */
+  y?: number;
+  /** Applies an inset the left side of a rectangle, overriding `x` */
+  left?: number;
+  /** Applies an inset the right side of a rectangle, overriding `x` */
+  right?: number;
+  /** Applies an inset the top side of a rectangle, overriding `y` */
+  top?: number;
+  /** Applies an inset the bottom side of a rectangle, overriding `y` */
+  bottom?: number;
+};
+
+type ResolvedInsets = {
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
+};
+
 type DimensionGetterOptions = {
   /** Override `x` accessor from context */
   x?: Accessor;
@@ -14,7 +39,7 @@ type DimensionGetterOptions = {
   x1?: Accessor;
   /** Override `y1` accessor from context */
   y1?: Accessor;
-  inset?: number;
+  insets?: Insets;
 };
 
 export function createDimensionGetter<TData>(
@@ -32,11 +57,10 @@ export function createDimensionGetter<TData>(
     y1Scale,
   } = context;
 
-  const inset = options?.inset ?? 0;
-
   return derived(
     [xScale, x1Scale, yScale, y1Scale, xAccessor, yAccessor, x1Accessor, y1Accessor],
     ([$xScale, $x1Scale, $yScale, $y1Scale, $xAccessor, $yAccessor, $x1Accessor, $y1Accessor]) => {
+      const insets = resolveInsets(options?.insets);
       // Use `xscale.domain()` instead of `$xDomain` to include `nice()` being applied
       const [minXDomain, maxXDomain] = $xScale.domain();
       const [minYDomain, maxYDomain] = $yScale.domain();
@@ -51,11 +75,13 @@ export function createDimensionGetter<TData>(
         if (isScaleBand($yScale)) {
           // Horizontal band
           const y =
-            firstValue($yScale(_y(item)) ?? 0) + ($y1Scale ? $y1Scale(_y1(item)) : 0) + inset / 2;
+            firstValue($yScale(_y(item)) ?? 0) + ($y1Scale ? $y1Scale(_y1(item)) : 0) + insets.top;
           const height = Math.max(
             0,
             $yScale.bandwidth
-              ? ($y1Scale ? ($y1Scale.bandwidth?.() ?? 0) : $yScale.bandwidth()) - inset
+              ? ($y1Scale ? ($y1Scale.bandwidth?.() ?? 0) : $yScale.bandwidth()) -
+                  insets.bottom -
+                  insets.top
               : 0
           );
 
@@ -81,20 +107,20 @@ export function createDimensionGetter<TData>(
             right = min([0, maxXDomain]);
           }
 
-          return {
-            x: $xScale(left),
-            y,
-            width: $xScale(right) - $xScale(left),
-            height,
-          };
+          const x = $xScale(left) + insets.left;
+          const width = Math.max(0, $xScale(right) - $xScale(left) - insets.left - insets.right);
+
+          return { x, y, width, height };
         } else {
           // Vertical band or linear
           const x =
-            firstValue($xScale(_x(item))) + ($x1Scale ? $x1Scale(_x1(item)) : 0) + inset / 2;
+            firstValue($xScale(_x(item))) + ($x1Scale ? $x1Scale(_x1(item)) : 0) + insets.left;
           const width = Math.max(
             0,
             $xScale.bandwidth
-              ? ($x1Scale ? ($x1Scale.bandwidth?.() ?? 0) : $xScale.bandwidth()) - inset
+              ? ($x1Scale ? ($x1Scale.bandwidth?.() ?? 0) : $xScale.bandwidth()) -
+                  insets.left -
+                  insets.right
               : 0
           );
 
@@ -120,12 +146,10 @@ export function createDimensionGetter<TData>(
             bottom = yValue;
           }
 
-          return {
-            x,
-            y: $yScale(top),
-            width,
-            height: $yScale(bottom) - $yScale(top),
-          };
+          const y = $yScale(top) + insets.top;
+          const height = $yScale(bottom) - $yScale(top) - insets.bottom - insets.top;
+
+          return { x, y, width, height };
         }
       };
     }
@@ -138,4 +162,18 @@ export function createDimensionGetter<TData>(
  */
 export function firstValue(value: number | number[]) {
   return Array.isArray(value) ? value[0] : value;
+}
+
+function resolveInsets(insets?: Insets): ResolvedInsets {
+  const all = insets?.all ?? 0;
+
+  const x = insets?.x ?? all;
+  const y = insets?.y ?? all;
+
+  const left = insets?.left ?? x;
+  const right = insets?.right ?? x;
+  const top = insets?.top ?? y;
+  const bottom = insets?.bottom ?? y;
+
+  return { left, right, bottom, top };
 }

@@ -1,5 +1,18 @@
 # LayerChart
 
+## 0.74.0
+
+### Minor Changes
+
+- breaking(Bar|Bars): Replaced `inset: number` prop with `insets: Insets | undefined`. ([#321](https://github.com/techniq/layerchart/pull/321))
+
+  To migrate from `inset` to `insets` replace `inset = n` with:
+
+  - `insets = { x: n / 2 }` if `orientation="vertical"`
+  - `insets = { y: n / 2 }` if `orientation="horizontal"`
+
+- feat(BarChart): Add `stackPadding` prop, which adds a padding between stacked bars. ([#321](https://github.com/techniq/layerchart/pull/321))
+
 ## 0.73.0
 
 ### Minor Changes

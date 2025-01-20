@@ -361,7 +361,7 @@
         spring={motion}
         x={typeof bar === 'object' ? bar.x : undefined}
         y={typeof bar === 'object' ? bar.y : undefined}
-        inset={typeof bar === 'object' ? bar.inset : undefined}
+        insets={typeof bar === 'object' ? bar.insets : undefined}
         stroke={typeof bar === 'object' ? bar.stroke : undefined}
         strokeWidth={typeof bar === 'object' ? bar.strokeWidth : undefined}
         radius={typeof bar === 'object' ? bar.radius : undefined}
