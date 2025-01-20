@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-Added `stackPadding` prop to `BarChart` component, which adds a padding between stacked bars.
+feat(BarChart): Add `stackPadding` prop, which adds a padding between stacked bars.
