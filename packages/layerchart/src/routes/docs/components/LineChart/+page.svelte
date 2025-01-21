@@ -617,9 +617,9 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', label: 'Apples', color: 'hsl(var(--color-danger))' },
+        { key: 'bananas', label: 'Bananas', color: 'hsl(var(--color-success))' },
+        { key: 'oranges', label: 'Oranges', color: 'hsl(var(--color-warning))' },
       ]}
       legend
       {renderContext}

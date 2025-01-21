@@ -3,6 +3,7 @@
   import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
+  import { selectionStore } from '@layerstack/svelte-stores';
 
   import Axis from '../Axis.svelte';
   import Canvas from '../layout/Canvas.svelte';
@@ -107,7 +108,7 @@
   $: xScale =
     $$props.xScale ?? (accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear());
 
-  let highlightSeries: (typeof series)[number] | null = null;
+  let highlightSeriesKey: (typeof series)[number]['key'] | null = null;
 
   function getSplineProps(s: (typeof series)[number], i: number) {
     const splineProps: ComponentProps<Spline> = {
@@ -115,7 +116,7 @@
       y: s.value ?? (s.data ? undefined : s.key),
       class: cls(
         'stroke-2',
-        highlightSeries && s.key !== highlightSeries?.key && 'opacity-20 saturate-0'
+        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-20 saturate-0'
       ),
       stroke: s.color,
       ...props.spline,
@@ -124,6 +125,22 @@
 
     return splineProps;
   }
+
+  const selectedSeries = selectionStore();
+  $: visibleSeries = series.filter((s) => {
+    /*
+      Show if:
+        - none are selected
+        - series is selected
+        - series is highlighted
+    */
+    return (
+      // @ts-expect-error
+      $selectedSeries.selected.length === 0 ||
+      $selectedSeries.isSelected(s.key) ||
+      highlightSeriesKey == s.key
+    );
+  });
 </script>
 
 <Chart
@@ -173,7 +190,7 @@
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#each series as s, i (s.key)}
+        {#each visibleSeries as s, i (s.key)}
           <Spline {...getSplineProps(s, i)} />
         {/each}
       </slot>
@@ -207,7 +224,7 @@
       </slot>
 
       {#if points}
-        {#each series as s}
+        {#each visibleSeries as s}
           <Points
             data={s.data}
             fill={s.color}
@@ -223,7 +240,7 @@
       {/if}
 
       <slot name="highlight" {...slotProps}>
-        {#each series as s, i (s.key)}
+        {#each visibleSeries as s, i (s.key)}
           {@const seriesTooltipData =
             s.data && tooltip.data ? findRelatedData(s.data, tooltip.data, x) : null}
           <Highlight
@@ -232,8 +249,8 @@
             points={{ fill: s.color }}
             lines={i === 0}
             onPointClick={(e) => onPointClick({ ...e, series: s })}
-            onPointEnter={() => (highlightSeries = s)}
-            onPointLeave={() => (highlightSeries = null)}
+            onPointEnter={() => (highlightSeriesKey = s.key)}
+            onPointLeave={() => (highlightSeriesKey = null)}
             {...props.highlight}
           />
         {/each}
@@ -246,11 +263,21 @@
           scale={isDefaultSeries
             ? undefined
             : scaleOrdinal(
-                series.map((s) => s.label ?? s.key),
+                series.map((s) => s.key),
                 series.map((s) => s.color)
               )}
+          tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
           placement="bottom"
           variant="swatches"
+          onClick={(item) => $selectedSeries.toggleSelected(item.value)}
+          onPointerEnter={(item) => (highlightSeriesKey = item.value)}
+          onPointerLeave={(item) => (highlightSeriesKey = null)}
+          classes={{
+            item: (item) =>
+              visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
+                ? 'opacity-50'
+                : '',
+          }}
           {...props.legend}
           {...typeof legend === 'object' ? legend : null}
         />
@@ -261,7 +288,7 @@
       <Tooltip.Root {...props.tooltip?.root} let:data>
         <Tooltip.Header {...props.tooltip?.header}>{format(x(data))}</Tooltip.Header>
         <Tooltip.List {...props.tooltip?.list}>
-          {#each series as s}
+          {#each visibleSeries as s}
             {@const seriesTooltipData = s.data ? findRelatedData(s.data, data, x) : data}
             {@const valueAccessor = accessor(s.value ?? (s.data ? asAny(y) : s.key))}
 
