@@ -105,7 +105,7 @@
 
   export let renderContext: 'svg' | 'canvas' = 'svg';
 
-  $: allSeriesData = series
+  $: allSeriesData = visibleSeries
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
     .filter((d) => d) as Array<TData & { stackData?: any }>;
 
@@ -114,7 +114,7 @@
   >;
 
   $: if (stackSeries) {
-    const seriesKeys = series.map((s) => s.key);
+    const seriesKeys = visibleSeries.map((s) => s.key);
     const offset =
       seriesLayout === 'stackExpand'
         ? stackOffsetExpand
@@ -160,13 +160,13 @@
           : (s.value ?? (s.data ? undefined : s.key)),
       fill: s.color,
       fillOpacity: 0.3,
-      class: cls(highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-20 saturate-0'),
+      class: cls(highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10'),
       ...props.area,
       ...s.props,
       line: {
         class: cls(
           !('stroke-width' in lineProps) && 'stroke-2',
-          highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-20 saturate-0'
+          highlightSeriesKey && highlightSeriesKey !== s.key && 'transition-opacity opacity-10'
         ),
         stroke: s.color,
         ...lineProps,
@@ -199,8 +199,8 @@
   {xScale}
   y={y ??
     (stackSeries
-      ? (d) => series.flatMap((s, i) => d.stackData[i])
-      : series.map((s) => s.value ?? s.key))}
+      ? (d) => visibleSeries.flatMap((s, i) => d.stackData[i])
+      : visibleSeries.map((s) => s.value ?? s.key))}
   yBaseline={0}
   yNice
   {radial}
