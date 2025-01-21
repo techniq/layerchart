@@ -49,6 +49,7 @@
     tick?: string;
     swatches?: string;
     swatch?: string;
+    item?: (item: any) => string;
   } = {};
 
   $: _scale = scale ?? (cScale ? $cScale : null);
@@ -210,11 +211,12 @@
       >
         {#each tickValues ?? xScale?.ticks?.(ticks) ?? [] as tick}
           {@const color = _scale(tick)}
+          {@const item = { value: tick, color }}
           <button
-            class={cls('flex gap-1', !onClick && 'cursor-auto')}
-            on:click={() => onClick?.({ value: tick, color })}
-            on:pointerenter={() => onPointerEnter?.({ value: tick, color })}
-            on:pointerleave={() => onPointerLeave?.({ value: tick, color })}
+            class={cls('flex gap-1', !onClick && 'cursor-auto', classes.item?.(item))}
+            on:click={() => onClick?.(item)}
+            on:pointerenter={() => onPointerEnter?.(item)}
+            on:pointerleave={() => onPointerLeave?.(item)}
           >
             <div
               class={cls('h-4 w-4 rounded-full', classes.swatch)}
