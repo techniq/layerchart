@@ -140,6 +140,7 @@
   {...$$restProps}
   class={cls(
     'inline-block',
+    'z-[1]', // stack above tooltip context layers (band rects, voronoi, ...)
     placement && [
       'absolute',
       {
