@@ -2,4 +2,4 @@
 'layerchart': minor
 ---
 
-feat(AreaChart|BarChart|LineChart): Add Legend integration (highlight & filter)
+feat(AreaChart|BarChart|LineChart|ScatterChart): Add Legend integration (highlight & filter)

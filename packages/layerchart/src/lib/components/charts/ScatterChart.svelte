@@ -2,6 +2,8 @@
   import { type ComponentProps } from 'svelte';
   import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
   import { format } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
+  import { selectionStore } from '@layerstack/svelte-stores';
 
   import Axis from '../Axis.svelte';
   import Canvas from '../layout/Canvas.svelte';
@@ -85,9 +87,11 @@
     $$props.yScale ??
     (accessor(y)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear());
 
-  $: chartData = series
+  $: chartData = visibleSeries
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
     .filter((d) => d) as Array<TData>;
+
+  let highlightSeriesKey: (typeof series)[number]['key'] | null = null;
 
   function getPointsProps(s: (typeof series)[number], i: number) {
     const pointsProps: ComponentProps<Points> = {
@@ -95,12 +99,31 @@
       stroke: s.color,
       fill: s.color,
       fillOpacity: 0.3,
+      class: cls(
+        highlightSeriesKey && highlightSeriesKey !== s.key && 'transition-opacity opacity-10'
+      ),
       ...props.points,
       ...s.props,
     };
 
     return pointsProps;
   }
+
+  const selectedSeries = selectionStore();
+  $: visibleSeries = series.filter((s) => {
+    /*
+      Show if:
+        - none are selected
+        - series is selected
+        - series is highlighted
+    */
+    return (
+      // @ts-expect-error
+      $selectedSeries.selected.length === 0 ||
+      $selectedSeries.isSelected(s.key) ||
+      highlightSeriesKey == s.key
+    );
+  });
 </script>
 
 <Chart
@@ -142,7 +165,7 @@
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#each series as s, i (s.key)}
+        {#each visibleSeries as s, i (s.key)}
           <Points {...getPointsProps(s, i)} />
         {/each}
       </slot>
@@ -194,11 +217,21 @@
           scale={isDefaultSeries
             ? undefined
             : scaleOrdinal(
-                series.map((s) => s.label ?? s.key),
+                series.map((s) => s.key),
                 series.map((s) => s.color)
               )}
+          tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
           placement="bottom"
           variant="swatches"
+          onClick={(item) => $selectedSeries.toggleSelected(item.value)}
+          onPointerEnter={(item) => (highlightSeriesKey = item.value)}
+          onPointerLeave={(item) => (highlightSeriesKey = null)}
+          classes={{
+            item: (item) =>
+              visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
+                ? 'opacity-50'
+                : '',
+          }}
           {...props.legend}
           {...typeof legend === 'object' ? legend : null}
         />
