@@ -115,11 +115,11 @@
   $: if (seriesLayout === 'group') {
     if (isVertical) {
       x1Scale = scaleBand().padding(groupPadding);
-      x1Domain = series.map((s) => s.key);
+      x1Domain = visibleSeries.map((s) => s.key);
       x1Range = ({ xScale }) => [0, xScale.bandwidth?.()];
     } else {
       y1Scale = scaleBand().padding(groupPadding);
-      y1Domain = series.map((s) => s.key);
+      y1Domain = visibleSeries.map((s) => s.key);
       y1Range = ({ yScale }) => [0, yScale.bandwidth?.()];
     }
   }
@@ -235,17 +235,10 @@
 
   const selectedSeries = selectionStore();
   $: visibleSeries = series.filter((s) => {
-    /*
-      Show if:
-        - none are selected
-        - series is selected
-        - series is highlighted
-    */
     return (
       // @ts-expect-error
-      $selectedSeries.selected.length === 0 ||
-      $selectedSeries.isSelected(s.key) ||
-      highlightSeriesKey == s.key
+      $selectedSeries.selected.length === 0 || $selectedSeries.isSelected(s.key)
+      // || highlightSeriesKey == s.key
     );
   });
 </script>
@@ -425,7 +418,7 @@
             />
           {/each}
 
-          {#if stackSeries || groupSeries}
+          {#if (stackSeries || groupSeries) && visibleSeries.length > 1}
             <Tooltip.Separator {...props.tooltip?.separator} />
 
             <Tooltip.Item
