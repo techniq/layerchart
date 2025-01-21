@@ -128,17 +128,10 @@
 
   const selectedSeries = selectionStore();
   $: visibleSeries = series.filter((s) => {
-    /*
-      Show if:
-        - none are selected
-        - series is selected
-        - series is highlighted
-    */
     return (
       // @ts-expect-error
-      $selectedSeries.selected.length === 0 ||
-      $selectedSeries.isSelected(s.key) ||
-      highlightSeriesKey == s.key
+      $selectedSeries.selected.length === 0 || $selectedSeries.isSelected(s.key)
+      // || highlightSeriesKey == s.key
     );
   });
 </script>
