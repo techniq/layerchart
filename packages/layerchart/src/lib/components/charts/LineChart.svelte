@@ -2,6 +2,7 @@
   import { type ComponentProps } from 'svelte';
   import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
   import { format } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
 
   import Axis from '../Axis.svelte';
   import Canvas from '../layout/Canvas.svelte';
@@ -106,11 +107,16 @@
   $: xScale =
     $$props.xScale ?? (accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear());
 
+  let highlightSeries: (typeof series)[number] | null = null;
+
   function getSplineProps(s: (typeof series)[number], i: number) {
     const splineProps: ComponentProps<Spline> = {
       data: s.data,
       y: s.value ?? (s.data ? undefined : s.key),
-      class: 'stroke-2',
+      class: cls(
+        'stroke-2',
+        highlightSeries && s.key !== highlightSeries?.key && 'opacity-20 saturate-0'
+      ),
       stroke: s.color,
       ...props.spline,
       ...s.props,
@@ -226,6 +232,8 @@
             points={{ fill: s.color }}
             lines={i === 0}
             onPointClick={(e) => onPointClick({ ...e, series: s })}
+            onPointEnter={() => (highlightSeries = s)}
+            onPointLeave={() => (highlightSeries = null)}
             {...props.highlight}
           />
         {/each}

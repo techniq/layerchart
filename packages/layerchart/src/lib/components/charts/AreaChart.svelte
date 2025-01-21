@@ -4,6 +4,7 @@
   import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
 
   import Area from '../Area.svelte';
   import Axis from '../Axis.svelte';
@@ -139,6 +140,8 @@
   $: xScale =
     $$props.xScale ?? (accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear());
 
+  let highlightSeries: (typeof series)[number] | null = null;
+
   function getAreaProps(s: (typeof series)[number], i: number) {
     const lineProps = {
       ...props.line,
@@ -156,10 +159,14 @@
           : (s.value ?? (s.data ? undefined : s.key)),
       fill: s.color,
       fillOpacity: 0.3,
+      class: cls(highlightSeries && s.key !== highlightSeries?.key && 'opacity-20 saturate-0'),
       ...props.area,
       ...s.props,
       line: {
-        class: !('stroke-width' in lineProps) ? 'stroke-2' : '',
+        class: cls(
+          !('stroke-width' in lineProps) && 'stroke-2',
+          highlightSeries && s.key !== highlightSeries?.key && 'opacity-20 saturate-0'
+        ),
         stroke: s.color,
         ...lineProps,
       },
@@ -282,6 +289,8 @@
             points={{ fill: s.color }}
             lines={i == 0}
             onPointClick={(e) => onPointClick({ ...e, series: s })}
+            onPointEnter={() => (highlightSeries = s)}
+            onPointLeave={() => (highlightSeries = null)}
             {...props.highlight}
           />
         {/each}

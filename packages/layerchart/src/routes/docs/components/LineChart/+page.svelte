@@ -158,7 +158,7 @@
   </div>
 </Preview>
 
-<h2>Series (highlight on hover)</h2>
+<h2>Series (voronoi tooltip with highlight)</h2>
 
 <Preview data={multiSeriesFlatData}>
   <div class="h-[300px] p-4 border rounded">

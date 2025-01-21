@@ -228,7 +228,6 @@
           color: 'hsl(var(--color-warning))',
         },
       ]}
-      tooltip={{ mode: 'voronoi' }}
       {renderContext}
     />
   </div>
@@ -255,7 +254,7 @@
   </div>
 </Preview>
 
-<h2>Series (highlight on hover)</h2>
+<h2>Series (voronoi tooltip with highlight)</h2>
 
 <Preview data={multiSeriesDataByFruit}>
   <div class="h-[300px] p-4 border rounded">
