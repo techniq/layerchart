@@ -222,7 +222,8 @@
       insets: stackInsets,
       fill: s.color,
       class: cls(
-        highlightSeriesKey && highlightSeriesKey !== s.key && 'transition-opacity opacity-10'
+        'transition-opacity',
+        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10'
       ),
       onBarClick: (e) => onBarClick({ data: e.data, series: s }),
       ...props.bars,

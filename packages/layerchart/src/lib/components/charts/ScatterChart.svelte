@@ -100,7 +100,8 @@
       fill: s.color,
       fillOpacity: 0.3,
       class: cls(
-        highlightSeriesKey && highlightSeriesKey !== s.key && 'transition-opacity opacity-10'
+        'transition-opacity',
+        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10'
       ),
       ...props.points,
       ...s.props,

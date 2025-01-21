@@ -115,8 +115,8 @@
       data: s.data,
       y: s.value ?? (s.data ? undefined : s.key),
       class: cls(
-        'stroke-2',
-        highlightSeriesKey && highlightSeriesKey !== s.key && 'transition-opacity opacity-10'
+        'stroke-2 transition-opacity',
+        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10'
       ),
       stroke: s.color,
       ...props.spline,
