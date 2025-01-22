@@ -118,6 +118,7 @@
 
   const utils = ['pivot'];
   const tools = ['GeojsonPreview', 'TopojsonPreview', 'ShapefilePreview'];
+  const performance = ['expanded', 'expanded_processed', 'chartjs'];
 </script>
 
 <NavItem text="Home" icon={mdiHome} currentUrl={$page.url} path="/" />
@@ -186,6 +187,16 @@
     text={item.replace(/([a-z])([A-Z])/g, '$1 $2')}
     currentUrl={$page.url}
     path="/docs/tools/{item}"
+    class="pl-6 py-2"
+  />
+{/each}
+
+<h1>Performance</h1>
+{#each performance as item}
+  <NavItem
+    text={item.replace(/([a-z])([A-Z])/g, '$1 $2')}
+    currentUrl={$page.url}
+    path="/performance/{item}"
     class="pl-6 py-2"
   />
 {/each}

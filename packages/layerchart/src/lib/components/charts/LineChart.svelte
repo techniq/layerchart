@@ -1,5 +1,5 @@
 <script lang="ts" generics="TData">
-  import { type ComponentProps } from 'svelte';
+  import { onMount, type ComponentProps } from 'svelte';
   import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
@@ -133,6 +133,11 @@
       $selectedSeries.selected.length === 0 || $selectedSeries.isSelected(s.key)
       // || highlightSeriesKey == s.key
     );
+  });
+
+  console.time('LineChart render');
+  onMount(() => {
+    console.timeEnd('LineChart render');
   });
 </script>
 
