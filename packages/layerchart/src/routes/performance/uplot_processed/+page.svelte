@@ -20,6 +20,12 @@
     tooltip: { root: { motion } },
     highlight: { motion },
   });
+
+  let chartData = $derived({
+    cpu: zip(data.chartData.date, data.chartData.cpu),
+    ram: zip(data.chartData.date, data.chartData.ram),
+    tcp: zip(data.chartData.date, data.chartData.tcp),
+  });
 </script>
 
 <div class="grid gap-4 p-4">
@@ -47,10 +53,10 @@
   <div>
     {#key chartProps}
       {#if example === 'single'}
-        <Preview data={data.chartData.cpu[0]}>
+        <Preview data={chartData.cpu[0]}>
           <div class="h-[500px] p-4 border rounded">
             <LineChart
-              data={zip(data.chartData.date, data.chartData.cpu)}
+              data={chartData.cpu}
               x={(d) => d[0]}
               y={(d) => d[1]}
               props={chartProps}
@@ -59,7 +65,7 @@
           </div>
         </Preview>
       {:else if example === 'series'}
-        <Preview data={data.chartData.cpu[0]}>
+        <Preview data={{ cpu: chartData.cpu[0], ram: chartData.ram[0], tcp: chartData.tcp[0] }}>
           <div class="h-[500px] p-4 border rounded">
             <LineChart
               x={(d) => d[0]}
@@ -67,17 +73,17 @@
               series={[
                 {
                   key: 'cpu',
-                  data: zip(data.chartData.date, data.chartData.cpu),
+                  data: chartData.cpu,
                   color: 'hsl(var(--color-danger))',
                 },
                 {
                   key: 'ram',
-                  data: zip(data.chartData.date, data.chartData.ram),
+                  data: chartData.ram,
                   color: 'hsl(var(--color-warning))',
                 },
                 {
                   key: 'tcp',
-                  data: zip(data.chartData.date, data.chartData.tcp),
+                  data: chartData.tcp,
                   color: 'hsl(var(--color-success))',
                 },
               ]}
