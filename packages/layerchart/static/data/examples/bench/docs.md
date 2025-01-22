@@ -25,6 +25,17 @@
 ]
 ```
 
+or
+
+```js
+{
+  date: [Number, ...],
+  cpu: [Number, ...],
+  ram: [Number, ...],
+  tcp: [Number, ...],
+}
+```
+
 Notes:
 
 - Need to know the structure of the data (just array of arrays)
