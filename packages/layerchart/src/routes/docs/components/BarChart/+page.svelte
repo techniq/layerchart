@@ -72,7 +72,7 @@
 
 <h2>Horizontal</h2>
 
-<Preview data={dateSeriesData}>
+<Preview data={horizontalDateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart
       data={horizontalDateSeriesData}
@@ -950,7 +950,7 @@
 
 <h2>Single dimension</h2>
 
-<Preview data={dateSeriesData}>
+<Preview data={statusDateSeriesData}>
   <div class="h-[60px]">
     <BarChart
       data={statusDateSeriesData}

@@ -153,7 +153,7 @@
 
 <h2>Single value</h2>
 
-<Preview>
+<Preview data={[{ key: 'Example', value: 70 }]}>
   <div class="h-[200px] p-4 border rounded">
     <PieChart
       data={[{ key: 'Example', value: 70 }]}
@@ -204,7 +204,7 @@
 
 <h2>Single value (arc) with custom color</h2>
 
-<Preview>
+<Preview data={[{ key: 'Example', value: 70 }]}>
   <div class="h-[120px] p-4 border rounded">
     <PieChart
       data={[{ key: 'Example', value: 70 }]}

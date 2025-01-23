@@ -131,7 +131,7 @@
 
 <h2>Series (separate data)</h2>
 
-<Preview data={multiSeriesData}>
+<Preview data={multiSeriesDataByFruit}>
   <div class="h-[300px] p-4 border rounded">
     <LineChart
       x="date"
@@ -206,7 +206,7 @@
 
 <h2>Series (point click)</h2>
 
-<Preview data={dateSeriesData}>
+<Preview data={multiSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <LineChart
       data={multiSeriesData}
