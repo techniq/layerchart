@@ -179,7 +179,7 @@
 
 <h2>Legend (show/hide series with tweening)</h2>
 
-<Preview data={penguinDataBySpecies}>
+<Preview data={pengiunSeries}>
   <div class="h-[400px] p-4 border rounded">
     <ScatterChart
       x="flipper_length_mm"
