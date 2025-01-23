@@ -2,7 +2,9 @@ import pageSource from './+page.svelte?raw';
 
 export async function load() {
   return {
-    chartData: (await fetch('/data/examples/bench/chartjs/data.json').then((r) => r.json())) as {
+    chartData: (await fetch('/data/examples/bench/series_arrays/data.json').then((r) =>
+      r.json()
+    )) as {
       cpu: {
         x: Date;
         y: Number;
@@ -17,6 +19,7 @@ export async function load() {
       }[];
     },
     meta: {
+      description: 'Array per series, each with `x` / `y` items',
       pageSource,
       hideTableOfContents: true,
     },

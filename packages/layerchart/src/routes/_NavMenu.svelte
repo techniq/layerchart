@@ -118,7 +118,13 @@
 
   const utils = ['pivot'];
   const tools = ['GeojsonPreview', 'TopojsonPreview', 'ShapefilePreview'];
-  const performance = ['expanded', 'expanded_processed', 'chartjs', 'uplot', 'uplot_processed'];
+  const performance = [
+    'wide_data',
+    'wide_data_processed',
+    'series_arrays',
+    'dimension_arrays',
+    'dimension_arrays_processed',
+  ];
 </script>
 
 <NavItem text="Home" icon={mdiHome} currentUrl={$page.url} path="/" />
