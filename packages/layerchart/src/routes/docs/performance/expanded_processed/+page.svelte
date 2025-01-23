@@ -3,7 +3,8 @@
   import { LineChart } from 'layerchart';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
-  import Preview from 'layerchart/docs/Preview.svelte';
+
+  import Preview from '$lib/docs/Preview.svelte';
 
   const { data } = $props();
 
@@ -31,7 +32,7 @@
   );
 </script>
 
-<div class="grid gap-4 p-4">
+<div class="grid gap-4">
   <div class="grid grid-cols-3 gap-3">
     <Field label="Render context">
       <ToggleGroup bind:value={renderContext} variant="outline">

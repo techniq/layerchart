@@ -1,3 +1,5 @@
+import pageSource from './+page.svelte?raw';
+
 export async function load() {
   return {
     chartData: (await fetch('/data/examples/bench/uplot/data.json').then((r) => r.json())) as {
@@ -5,6 +7,10 @@ export async function load() {
       cpu: Number[];
       ram: Number[];
       tcp: Number[];
+    },
+    meta: {
+      pageSource,
+      hideTableOfContents: true,
     },
   };
 }

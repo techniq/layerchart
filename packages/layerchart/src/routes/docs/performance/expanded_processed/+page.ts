@@ -1,3 +1,5 @@
+import pageSource from './+page.svelte?raw';
+
 export async function load() {
   return {
     chartData: (await fetch('/data/examples/bench/expanded/data.json').then((r) => r.json())) as {
@@ -9,5 +11,9 @@ export async function load() {
       used: number;
       free: number;
     }[],
+    meta: {
+      pageSource,
+      hideTableOfContents: true,
+    },
   };
 }

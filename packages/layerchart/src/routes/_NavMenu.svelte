@@ -196,7 +196,7 @@
   <NavItem
     text={item.replace(/([a-z])([A-Z])/g, '$1 $2')}
     currentUrl={$page.url}
-    path="/performance/{item}"
+    path="/docs/performance/{item}"
     class="pl-6 py-2"
   />
 {/each}

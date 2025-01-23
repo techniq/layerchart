@@ -3,9 +3,8 @@
   import { LineChart } from 'layerchart';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format } from '@layerstack/utils';
-  import { zip } from 'd3-array';
 
-  import Preview from '../../../lib/docs/Preview.svelte';
+  import Preview from '$lib/docs/Preview.svelte';
 
   const { data } = $props();
 
@@ -22,7 +21,7 @@
   });
 </script>
 
-<div class="grid gap-4 p-4">
+<div class="grid gap-4">
   <div class="grid grid-cols-3 gap-3">
     <Field label="Render context">
       <ToggleGroup bind:value={renderContext} variant="outline">
@@ -49,37 +48,19 @@
       {#if example === 'single'}
         <Preview data={data.chartData.cpu[0]}>
           <div class="h-[500px] p-4 border rounded">
-            <LineChart
-              data={zip(data.chartData.date, data.chartData.cpu)}
-              x={(d) => d[0]}
-              y={(d) => d[1]}
-              props={chartProps}
-              {renderContext}
-            />
+            <LineChart data={data.chartData.cpu} x="x" y="y" props={chartProps} {renderContext} />
           </div>
         </Preview>
       {:else if example === 'series'}
         <Preview data={data.chartData.cpu[0]}>
           <div class="h-[500px] p-4 border rounded">
             <LineChart
-              x={(d) => d[0]}
-              y={(d) => d[1]}
+              x="x"
+              y="y"
               series={[
-                {
-                  key: 'cpu',
-                  data: zip(data.chartData.date, data.chartData.cpu),
-                  color: 'hsl(var(--color-danger))',
-                },
-                {
-                  key: 'ram',
-                  data: zip(data.chartData.date, data.chartData.ram),
-                  color: 'hsl(var(--color-warning))',
-                },
-                {
-                  key: 'tcp',
-                  data: zip(data.chartData.date, data.chartData.tcp),
-                  color: 'hsl(var(--color-success))',
-                },
+                { key: 'cpu', data: data.chartData.cpu, color: 'hsl(var(--color-danger))' },
+                { key: 'ram', data: data.chartData.ram, color: 'hsl(var(--color-warning))' },
+                { key: 'tcp', data: data.chartData.tcp, color: 'hsl(var(--color-success))' },
               ]}
               props={chartProps}
               {renderContext}

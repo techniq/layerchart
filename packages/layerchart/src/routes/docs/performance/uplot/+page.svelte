@@ -3,17 +3,18 @@
   import { LineChart } from 'layerchart';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format } from '@layerstack/utils';
+  import { zip } from 'd3-array';
 
-  import Preview from '../../../lib/docs/Preview.svelte';
+  import Preview from '$lib/docs/Preview.svelte';
 
   const { data } = $props();
 
   let example = $state<'single'>('single');
-
   let renderContext = $state<'svg' | 'canvas'>('svg');
   let motion = $state(true);
+
   let chartProps = $derived<ComponentProps<typeof LineChart>['props']>({
-    xAxis: { format: (d) => format(new Date(d * 60 * 1000)) },
+    xAxis: { format: (v) => format(new Date(v)) },
     yAxis: { format: 'metric' },
     spline: { class: 'stroke-1' },
     tooltip: { root: { motion } },
@@ -21,7 +22,7 @@
   });
 </script>
 
-<div class="grid gap-4 p-4">
+<div class="grid gap-4">
   <div class="grid grid-cols-3 gap-3">
     <Field label="Render context">
       <ToggleGroup bind:value={renderContext} variant="outline">
@@ -46,31 +47,39 @@
   <div>
     {#key chartProps}
       {#if example === 'single'}
-        <Preview data={data.chartData[0]}>
+        <Preview data={data.chartData.cpu[0]}>
           <div class="h-[500px] p-4 border rounded">
             <LineChart
-              data={data.chartData}
-              x="epoch"
-              y={(d) => 100 - d.idl}
+              data={zip(data.chartData.date, data.chartData.cpu)}
+              x={(d) => d[0]}
+              y={(d) => d[1]}
               props={chartProps}
               {renderContext}
             />
           </div>
         </Preview>
       {:else if example === 'series'}
-        <Preview data={data.chartData[0]}>
+        <Preview data={data.chartData.cpu[0]}>
           <div class="h-[500px] p-4 border rounded">
             <LineChart
-              data={data.chartData}
-              x="epoch"
+              x={(d) => d[0]}
+              y={(d) => d[1]}
               series={[
-                { key: 'cpu', value: (d) => 100 - d.idl, color: 'hsl(var(--color-danger))' },
+                {
+                  key: 'cpu',
+                  data: zip(data.chartData.date, data.chartData.cpu),
+                  color: 'hsl(var(--color-danger))',
+                },
                 {
                   key: 'ram',
-                  value: (d) => (100 * d.writ) / (d.writ + d.used),
+                  data: zip(data.chartData.date, data.chartData.ram),
                   color: 'hsl(var(--color-warning))',
                 },
-                { key: 'tcp', value: (d) => d.send, color: 'hsl(var(--color-success))' },
+                {
+                  key: 'tcp',
+                  data: zip(data.chartData.date, data.chartData.tcp),
+                  color: 'hsl(var(--color-success))',
+                },
               ]}
               props={chartProps}
               {renderContext}
@@ -81,5 +90,5 @@
     {/key}
   </div>
 
-  data: {format(data.chartData.length)} points
+  data: {format(data.chartData.cpu.length)} points
 </div>
