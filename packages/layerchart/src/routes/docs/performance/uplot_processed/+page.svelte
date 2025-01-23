@@ -61,6 +61,7 @@
               y={(d) => d[1]}
               props={chartProps}
               {renderContext}
+              profile
             />
           </div>
         </Preview>
@@ -89,6 +90,7 @@
               ]}
               props={chartProps}
               {renderContext}
+              profile
             />
           </div>
         </Preview>

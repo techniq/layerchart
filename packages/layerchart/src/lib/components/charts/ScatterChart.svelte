@@ -1,5 +1,5 @@
 <script lang="ts" generics="TData">
-  import { type ComponentProps } from 'svelte';
+  import { onMount, type ComponentProps } from 'svelte';
   import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
@@ -29,6 +29,7 @@
     grid?: typeof grid;
     labels?: typeof labels;
     legend?: typeof legend;
+    profile?: typeof profile;
     props?: typeof props;
     series?: typeof series;
     renderContext?: typeof renderContext;
@@ -77,6 +78,9 @@
 
   export let renderContext: 'svg' | 'canvas' = 'svg';
 
+  /** Log initial render performance using `console.time` */
+  export let profile = false;
+
   // Default xScale based on first data's `x` value
   $: xScale =
     $$props.xScale ??
@@ -118,6 +122,13 @@
       // || highlightSeriesKey == s.key
     );
   });
+
+  if (profile) {
+    console.time('ScatterChart render');
+    onMount(() => {
+      console.timeEnd('ScatterChart render');
+    });
+  }
 </script>
 
 <Chart

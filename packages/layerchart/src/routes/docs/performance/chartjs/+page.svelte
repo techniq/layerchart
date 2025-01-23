@@ -48,7 +48,14 @@
       {#if example === 'single'}
         <Preview data={data.chartData.cpu[0]}>
           <div class="h-[500px] p-4 border rounded">
-            <LineChart data={data.chartData.cpu} x="x" y="y" props={chartProps} {renderContext} />
+            <LineChart
+              data={data.chartData.cpu}
+              x="x"
+              y="y"
+              props={chartProps}
+              {renderContext}
+              profile
+            />
           </div>
         </Preview>
       {:else if example === 'series'}
@@ -64,6 +71,7 @@
               ]}
               props={chartProps}
               {renderContext}
+              profile
             />
           </div>
         </Preview>

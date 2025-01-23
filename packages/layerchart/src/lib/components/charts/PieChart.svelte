@@ -1,5 +1,5 @@
 <script lang="ts" generics="TData">
-  import { type ComponentProps } from 'svelte';
+  import { onMount, type ComponentProps } from 'svelte';
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
@@ -29,6 +29,7 @@
     padAngle?: typeof padAngle;
     center?: typeof center;
     placement?: typeof placement;
+    profile?: typeof profile;
     props?: typeof props;
     range?: typeof range;
     series?: typeof series;
@@ -120,6 +121,9 @@
 
   export let renderContext: 'svg' | 'canvas' = 'svg';
 
+  /** Log initial render performance using `console.time` */
+  export let profile = false;
+
   $: allSeriesData = series
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
     .filter((d) => d) as Array<TData>;
@@ -139,6 +143,13 @@
       // || highlightKey == dataKey
     );
   });
+
+  if (profile) {
+    console.time('PieChart render');
+    onMount(() => {
+      console.timeEnd('PieChart render');
+    });
+  }
 </script>
 
 <Chart

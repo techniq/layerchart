@@ -54,6 +54,7 @@
               y={(d) => 100 - d.idl}
               props={chartProps}
               {renderContext}
+              profile
             />
           </div>
         </Preview>
@@ -74,6 +75,7 @@
               ]}
               props={chartProps}
               {renderContext}
+              profile
             />
           </div>
         </Preview>

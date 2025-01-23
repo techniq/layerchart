@@ -1,5 +1,5 @@
 <script lang="ts" generics="TData">
-  import { type ComponentProps } from 'svelte';
+  import { onMount, type ComponentProps } from 'svelte';
   import { scaleBand, scaleOrdinal, scaleLinear } from 'd3-scale';
   import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
   import { sum } from 'd3-array';
@@ -40,6 +40,7 @@
     labels?: typeof labels;
     legend?: typeof legend;
     orientation?: typeof orientation;
+    profile?: typeof profile;
     props?: typeof props;
     rule?: typeof rule;
     series?: typeof series;
@@ -144,6 +145,9 @@
 
   export let renderContext: 'svg' | 'canvas' = 'svg';
 
+  /** Log initial render performance using `console.time` */
+  export let profile = false;
+
   $: allSeriesData = visibleSeries
     .flatMap((s) =>
       s.data?.map((d) => {
@@ -241,6 +245,13 @@
       // || highlightSeriesKey == s.key
     );
   });
+
+  if (profile) {
+    console.time('BarChart render');
+    onMount(() => {
+      console.timeEnd('BarChart render');
+    });
+  }
 </script>
 
 <Chart
