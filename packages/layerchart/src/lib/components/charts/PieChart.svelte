@@ -2,6 +2,8 @@
   import { type ComponentProps } from 'svelte';
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
+  import { selectionStore } from '@layerstack/svelte-stores';
 
   import Arc from '../Arc.svelte';
   import Canvas from '../layout/Canvas.svelte';
@@ -125,13 +127,26 @@
   $: chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<TData>;
 
   $: seriesColors = series.map((s) => s.color).filter((d) => d != null);
+
+  let highlightKey: (typeof series)[number]['key'] | null = null;
+
+  const selectedKeys = selectionStore();
+  $: visibleData = chartData.filter((d) => {
+    const dataKey = keyAccessor(d);
+    return (
+      // @ts-expect-error
+      $selectedKeys.selected.length === 0 || $selectedKeys.isSelected(dataKey)
+      // || highlightKey == dataKey
+    );
+  });
 </script>
 
 <Chart
-  data={chartData}
+  data={visibleData}
   x={value}
   y={key}
   c={key}
+  cDomain={chartData.map(keyAccessor)}
   cRange={seriesColors.length
     ? seriesColors
     : [
@@ -205,6 +220,10 @@
                   // Workaround for `tooltip={{ mode: 'manual' }}
                   onTooltipClick({ data: d });
                 }}
+                class={cls(
+                  'transition-opacity',
+                  highlightKey && highlightKey !== keyAccessor(d) && 'opacity-50'
+                )}
                 {...props.arc}
                 {...s.props}
               />
@@ -235,6 +254,10 @@
                       // Workaround for `tooltip={{ mode: 'manual' }}
                       onTooltipClick({ data: arc.data });
                     }}
+                    class={cls(
+                      'transition-opacity',
+                      highlightKey && highlightKey !== keyAccessor(arc.data) && 'opacity-50'
+                    )}
                     {...props.arc}
                     {...s.props}
                   />
@@ -257,6 +280,15 @@
           }}
           placement="bottom"
           variant="swatches"
+          onClick={(item) => $selectedKeys.toggleSelected(item.value)}
+          onPointerEnter={(item) => (highlightKey = item.value)}
+          onPointerLeave={(item) => (highlightKey = null)}
+          classes={{
+            item: (item) =>
+              visibleData.length && !visibleData.some((d) => keyAccessor(d) === item.value)
+                ? 'opacity-50'
+                : '',
+          }}
           {...props.legend}
           {...typeof legend === 'object' ? legend : null}
         />

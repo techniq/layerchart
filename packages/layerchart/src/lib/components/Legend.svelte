@@ -35,7 +35,9 @@
   export let placement: Placement | undefined = undefined;
   export let orientation: 'horizontal' | 'vertical' = 'horizontal';
 
-  export let onClick: ((tick: any) => any) | undefined = undefined;
+  export let onClick: ((item: any) => any) | undefined = undefined;
+  export let onPointerEnter: ((item: any) => any) | undefined = undefined;
+  export let onPointerLeave: ((item: any) => any) | undefined = undefined;
 
   /** Determine display ramp (individual color swatches or continuous ramp)*/
   export let variant: 'ramp' | 'swatches' = 'ramp';
@@ -47,6 +49,7 @@
     tick?: string;
     swatches?: string;
     swatch?: string;
+    item?: (item: any) => string;
   } = {};
 
   $: _scale = scale ?? (cScale ? $cScale : null);
@@ -137,6 +140,7 @@
   {...$$restProps}
   class={cls(
     'inline-block',
+    'z-[1]', // stack above tooltip context layers (band rects, voronoi, ...)
     placement && [
       'absolute',
       {
@@ -208,9 +212,12 @@
       >
         {#each tickValues ?? xScale?.ticks?.(ticks) ?? [] as tick}
           {@const color = _scale(tick)}
+          {@const item = { value: tick, color }}
           <button
-            class={cls('flex gap-1', !onClick && 'cursor-auto')}
-            on:click={() => onClick?.({ tick, color })}
+            class={cls('flex gap-1', !onClick && 'cursor-auto', classes.item?.(item))}
+            on:click={() => onClick?.(item)}
+            on:pointerenter={() => onPointerEnter?.(item)}
+            on:pointerleave={() => onPointerLeave?.(item)}
           >
             <div
               class={cls('h-4 w-4 rounded-full', classes.swatch)}

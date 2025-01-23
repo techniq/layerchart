@@ -68,7 +68,10 @@
 
   export let onAreaClick: (e: { data: any }) => void = () => {};
   export let onBarClick: (e: { data: any }) => void = () => {};
+
   export let onPointClick: (e: { point: (typeof _points)[number]; data: any }) => void = () => {};
+  export let onPointEnter: (e: { point: (typeof _points)[number]; data: any }) => void = () => {};
+  export let onPointLeave: (e: { point: (typeof _points)[number]; data: any }) => void = () => {};
 
   const _x = accessor(x);
   const _y = accessor(y);
@@ -411,6 +414,8 @@
             typeof points === 'object' ? points.class : null
           )}
           on:click={() => onPointClick({ point, data: highlightData })}
+          on:pointerenter={() => onPointEnter({ point, data: highlightData })}
+          on:pointerleave={() => onPointLeave({ point, data: highlightData })}
         />
       {/each}
     </slot>

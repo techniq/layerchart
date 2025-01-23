@@ -177,6 +177,27 @@
   </div>
 </Preview>
 
+<h2>Legend (show/hide series with tweening)</h2>
+
+<Preview data={penguinDataBySpecies}>
+  <div class="h-[400px] p-4 border rounded">
+    <ScatterChart
+      x="flipper_length_mm"
+      y="bill_length_mm"
+      series={pengiunSeries.filter((s) => $selection.isSelected(s.key))}
+      padding={{ left: 16, bottom: 48 }}
+      props={{
+        xAxis: { tweened: { duration: 200 } },
+        yAxis: { tweened: { duration: 200 } },
+        grid: { tweened: { duration: 200 } },
+        points: { tweened: { duration: 200 } },
+      }}
+      legend
+      {renderContext}
+    />
+  </div>
+</Preview>
+
 <h2>Legend (custom labels)</h2>
 
 <Preview data={penguinDataBySpecies}>
@@ -199,52 +220,6 @@
       legend
       {renderContext}
     />
-  </div>
-</Preview>
-
-<h2>Legend (show/hide series)</h2>
-
-<Preview data={penguinDataBySpecies}>
-  <div class="h-[400px] p-4 border rounded">
-    <ScatterChart
-      x="flipper_length_mm"
-      y="bill_length_mm"
-      series={pengiunSeries.filter((s) => $selection.isSelected(s.key))}
-      padding={{ left: 16, bottom: 48 }}
-      props={{
-        xAxis: { tweened: { duration: 200 } },
-        yAxis: { tweened: { duration: 200 } },
-        grid: { tweened: { duration: 200 } },
-        points: { tweened: { duration: 200 } },
-      }}
-      {renderContext}
-    >
-      <svelte:fragment slot="legend">
-        <Legend
-          scale={scaleOrdinal(
-            pengiunSeries.map((s) => s.key),
-            pengiunSeries.map((s) => s.color)
-          )}
-          variant="swatches"
-          placement="bottom"
-          let:values
-          let:scale
-          class="z-10"
-        >
-          <div class="flex gap-4">
-            {#each values as value}
-              <button
-                class={cls('flex gap-1', !$selection.isSelected(value) && 'opacity-50')}
-                on:click={() => $selection.toggleSelected(value)}
-              >
-                <div class="h-4 w-4 rounded-full" style:background-color={scale(value)}></div>
-                <div class="text-xs text-surface-content/50">{value}</div>
-              </button>
-            {/each}
-          </div>
-        </Legend>
-      </svelte:fragment>
-    </ScatterChart>
   </div>
 </Preview>
 

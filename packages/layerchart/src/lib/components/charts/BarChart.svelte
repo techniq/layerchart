@@ -4,6 +4,8 @@
   import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
+  import { selectionStore } from '@layerstack/svelte-stores';
 
   import Axis from '../Axis.svelte';
   import Bars from '../Bars.svelte';
@@ -113,11 +115,11 @@
   $: if (seriesLayout === 'group') {
     if (isVertical) {
       x1Scale = scaleBand().padding(groupPadding);
-      x1Domain = series.map((s) => s.key);
+      x1Domain = visibleSeries.map((s) => s.key);
       x1Range = ({ xScale }) => [0, xScale.bandwidth?.()];
     } else {
       y1Scale = scaleBand().padding(groupPadding);
-      y1Domain = series.map((s) => s.key);
+      y1Domain = visibleSeries.map((s) => s.key);
       y1Range = ({ yScale }) => [0, yScale.bandwidth?.()];
     }
   }
@@ -142,7 +144,7 @@
 
   export let renderContext: 'svg' | 'canvas' = 'svg';
 
-  $: allSeriesData = series
+  $: allSeriesData = visibleSeries
     .flatMap((s) =>
       s.data?.map((d) => {
         return { seriesKey: s.key, ...d };
@@ -155,7 +157,7 @@
   >;
 
   $: if (stackSeries) {
-    const seriesKeys = series.map((s) => s.key);
+    const seriesKeys = visibleSeries.map((s) => s.key);
     // const stackData = stack().keys(seriesKeys)(chartDataArray(data)) as any[];
 
     const offset =
@@ -180,9 +182,11 @@
     });
   }
 
+  let highlightSeriesKey: (typeof series)[number]['key'] | null = null;
+
   function getBarsProps(s: (typeof series)[number], i: number) {
     const isFirst = i == 0;
-    const isLast = i == series.length - 1;
+    const isLast = i == visibleSeries.length - 1;
 
     const isStackLayout = seriesLayout.startsWith('stack');
 
@@ -212,11 +216,15 @@
       y: isVertical ? valueAccessor : undefined,
       x1: isVertical && groupSeries ? (d) => s.value ?? s.key : undefined,
       y1: !isVertical && groupSeries ? (d) => s.value ?? s.key : undefined,
-      rounded: isStackLayout && i !== series.length - 1 ? 'none' : 'edge',
+      rounded: isStackLayout && i !== visibleSeries.length - 1 ? 'none' : 'edge',
       radius: 4,
       strokeWidth: 1,
       insets: stackInsets,
       fill: s.color,
+      class: cls(
+        'transition-opacity',
+        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10'
+      ),
       onBarClick: (e) => onBarClick({ data: e.data, series: s }),
       ...props.bars,
       ...s.props,
@@ -224,14 +232,23 @@
 
     return barsProps;
   }
+
+  const selectedSeries = selectionStore();
+  $: visibleSeries = series.filter((s) => {
+    return (
+      // @ts-expect-error
+      $selectedSeries.selected.length === 0 || $selectedSeries.isSelected(s.key)
+      // || highlightSeriesKey == s.key
+    );
+  });
 </script>
 
 <Chart
   data={chartData}
   x={x ??
     (stackSeries
-      ? (d) => series.flatMap((s, i) => d.stackData[i])
-      : series.map((s) => s.value ?? s.key))}
+      ? (d) => visibleSeries.flatMap((s, i) => d.stackData[i])
+      : visibleSeries.map((s) => s.value ?? s.key))}
   {xScale}
   {xBaseline}
   xNice={orientation === 'horizontal'}
@@ -240,8 +257,8 @@
   {x1Range}
   y={y ??
     (stackSeries
-      ? (d) => series.flatMap((s, i) => d.stackData[i])
-      : series.map((s) => s.value ?? s.key))}
+      ? (d) => visibleSeries.flatMap((s, i) => d.stackData[i])
+      : visibleSeries.map((s) => s.value ?? s.key))}
   {yScale}
   {yBaseline}
   yNice={orientation === 'vertical'}
@@ -294,7 +311,7 @@
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#each series as s, i (s.key)}
+        {#each visibleSeries as s, i (s.key)}
           <Bars {...getBarsProps(s, i)} />
         {/each}
       </slot>
@@ -359,11 +376,21 @@
           scale={isDefaultSeries
             ? undefined
             : scaleOrdinal(
-                series.map((s) => s.label ?? s.key),
+                series.map((s) => s.key),
                 series.map((s) => s.color)
               )}
+          tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
           placement="bottom"
           variant="swatches"
+          onClick={(item) => $selectedSeries.toggleSelected(item.value)}
+          onPointerEnter={(item) => (highlightSeriesKey = item.value)}
+          onPointerLeave={(item) => (highlightSeriesKey = null)}
+          classes={{
+            item: (item) =>
+              visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
+                ? 'opacity-50'
+                : '',
+          }}
           {...props.legend}
           {...typeof legend === 'object' ? legend : null}
         />
@@ -377,7 +404,7 @@
         >
         <Tooltip.List {...props.tooltip?.list}>
           <!-- Reverse series order so tooltip items match stacks -->
-          {@const seriesItems = stackSeries ? [...series].reverse() : series}
+          {@const seriesItems = stackSeries ? [...visibleSeries].reverse() : visibleSeries}
           {#each seriesItems as s}
             {@const seriesTooltipData = s.data ? findRelatedData(s.data, data, x) : data}
             {@const valueAccessor = accessor(s.value ?? (s.data ? asAny(y) : s.key))}
@@ -391,12 +418,12 @@
             />
           {/each}
 
-          {#if stackSeries || groupSeries}
+          {#if (stackSeries || groupSeries) && visibleSeries.length > 1}
             <Tooltip.Separator {...props.tooltip?.separator} />
 
             <Tooltip.Item
               label="total"
-              value={sum(series, (s) => {
+              value={sum(visibleSeries, (s) => {
                 const seriesTooltipData = s.data ? findRelatedData(s.data, data, x) : data;
                 const valueAccessor = accessor(s.value ?? (s.data ? asAny(y) : s.key));
                 return valueAccessor(seriesTooltipData);

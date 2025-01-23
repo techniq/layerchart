@@ -78,6 +78,7 @@
     {...$$restProps}
     on:click
     on:pointermove
+    on:pointerenter
     on:pointerleave
   />
 {/if}

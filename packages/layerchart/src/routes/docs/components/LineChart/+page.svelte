@@ -131,7 +131,7 @@
 
 <h2>Series (separate data)</h2>
 
-<Preview data={multiSeriesData}>
+<Preview data={multiSeriesDataByFruit}>
   <div class="h-[300px] p-4 border rounded">
     <LineChart
       x="date"
@@ -158,7 +158,7 @@
   </div>
 </Preview>
 
-<h2>Series (highlight on hover)</h2>
+<h2>Series (voronoi tooltip with highlight)</h2>
 
 <Preview data={multiSeriesFlatData}>
   <div class="h-[300px] p-4 border rounded">
@@ -206,7 +206,7 @@
 
 <h2>Series (point click)</h2>
 
-<Preview data={dateSeriesData}>
+<Preview data={multiSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <LineChart
       data={multiSeriesData}
@@ -617,9 +617,9 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', label: 'Apples', color: 'hsl(var(--color-danger))' },
+        { key: 'bananas', label: 'Bananas', color: 'hsl(var(--color-success))' },
+        { key: 'oranges', label: 'Oranges', color: 'hsl(var(--color-warning))' },
       ]}
       legend
       {renderContext}

@@ -72,7 +72,7 @@
 
 <h2>Horizontal</h2>
 
-<Preview data={dateSeriesData}>
+<Preview data={horizontalDateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <BarChart
       data={horizontalDateSeriesData}
@@ -726,7 +726,7 @@
   </div>
 </Preview> -->
 
-<h2>Legend (series)</h2>
+<h2>Legend (group series)</h2>
 
 <Preview data={wideData}>
   <div class="h-[300px] p-4 border rounded">
@@ -749,6 +749,39 @@
         },
       ]}
       seriesLayout="group"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+      }}
+      legend
+      {renderContext}
+    />
+  </div>
+</Preview>
+
+<h2>Legend (stack series)</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={wideData}
+      x="year"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-warning))',
+        },
+        {
+          key: 'cherries',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'grapes',
+          color: 'hsl(var(--color-info))',
+        },
+      ]}
+      seriesLayout="stack"
       props={{
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
@@ -917,7 +950,7 @@
 
 <h2>Single dimension</h2>
 
-<Preview data={dateSeriesData}>
+<Preview data={statusDateSeriesData}>
   <div class="h-[60px]">
     <BarChart
       data={statusDateSeriesData}
