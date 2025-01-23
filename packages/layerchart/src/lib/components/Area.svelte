@@ -59,9 +59,9 @@
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
 
-  const xAccessor = x ? accessor(x) : $contextX;
-  const y0Accessor = y0 ? accessor(y0) : (d: any) => min($yDomain);
-  const y1Accessor = y1 ? accessor(y1) : $y;
+  $: xAccessor = x ? accessor(x) : $contextX;
+  $: y0Accessor = y0 ? accessor(y0) : (d: any) => min($yDomain);
+  $: y1Accessor = y1 ? accessor(y1) : $y;
 
   $: xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
   $: yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;

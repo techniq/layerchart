@@ -101,8 +101,8 @@
     }
   }
 
-  const xAccessor = x ? accessor(x) : $contextX;
-  const yAccessor = y ? accessor(y) : $contextY;
+  $: xAccessor = x ? accessor(x) : $contextX;
+  $: yAccessor = y ? accessor(y) : $contextY;
 
   $: xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
   $: yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
