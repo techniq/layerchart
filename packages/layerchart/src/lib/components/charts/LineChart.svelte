@@ -1,5 +1,5 @@
 <script lang="ts" generics="TData">
-  import { type ComponentProps } from 'svelte';
+  import { onMount, type ComponentProps } from 'svelte';
   import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
@@ -33,6 +33,7 @@
     labels?: typeof labels;
     legend?: typeof legend;
     points?: typeof points;
+    profile?: typeof profile;
     props?: typeof props;
     rule?: typeof rule;
     series?: typeof series;
@@ -96,6 +97,9 @@
 
   export let renderContext: 'svg' | 'canvas' = 'svg';
 
+  /** Log initial render performance using `console.time` */
+  export let profile = false;
+
   $: allSeriesData = series
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
     .filter((d) => d) as Array<TData & { stackData?: any }>;
@@ -134,6 +138,13 @@
       // || highlightSeriesKey == s.key
     );
   });
+
+  if (profile) {
+    console.time('LineChart render');
+    onMount(() => {
+      console.timeEnd('LineChart render');
+    });
+  }
 </script>
 
 <Chart

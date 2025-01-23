@@ -1,5 +1,5 @@
 <script lang="ts" generics="TData">
-  import { type ComponentProps } from 'svelte';
+  import { onMount, type ComponentProps } from 'svelte';
   import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
   import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
   import { sum } from 'd3-array';
@@ -36,6 +36,7 @@
     labels?: typeof labels;
     legend?: typeof legend;
     points?: typeof points;
+    profile?: typeof profile;
     props?: typeof props;
     rule?: typeof rule;
     series?: typeof series;
@@ -104,6 +105,9 @@
   } = {};
 
   export let renderContext: 'svg' | 'canvas' = 'svg';
+
+  /** Log initial render performance using `console.time` */
+  export let profile = false;
 
   $: allSeriesData = visibleSeries
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
@@ -189,6 +193,13 @@
       // || highlightSeriesKey == s.key
     );
   });
+
+  if (profile) {
+    console.time('AreaChart render');
+    onMount(() => {
+      console.timeEnd('AreaChart render');
+    });
+  }
 </script>
 
 <Chart
