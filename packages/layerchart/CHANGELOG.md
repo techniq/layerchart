@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.78.0
+
+### Minor Changes
+
+- feat: Pass `visibleSeries` as slot props (along with `series`) to enable filteirng custom tooltip implementations (slot override) ([`12a8068`](https://github.com/techniq/layerchart/commit/12a8068a9f3a1bed5da56a6e0301b244921b5c69))
+
 ## 0.77.0
 
 ### Minor Changes
