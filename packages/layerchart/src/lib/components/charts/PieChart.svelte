@@ -231,12 +231,14 @@
                   // Workaround for `tooltip={{ mode: 'manual' }}
                   onTooltipClick({ data: d });
                 }}
-                class={cls(
-                  'transition-opacity',
-                  highlightKey && highlightKey !== keyAccessor(d) && 'opacity-50'
-                )}
                 {...props.arc}
                 {...s.props}
+                class={cls(
+                  'transition-opacity',
+                  highlightKey && highlightKey !== keyAccessor(d) && 'opacity-50',
+                  props.arc?.class,
+                  s.props?.class
+                )}
               />
             {:else}
               <Pie

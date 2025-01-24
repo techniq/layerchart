@@ -103,12 +103,14 @@
       stroke: s.color,
       fill: s.color,
       fillOpacity: 0.3,
-      class: cls(
-        'transition-opacity',
-        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10'
-      ),
       ...props.points,
       ...s.props,
+      class: cls(
+        'transition-opacity',
+        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+        props.points?.class,
+        s.props?.class
+      ),
     };
 
     return pointsProps;

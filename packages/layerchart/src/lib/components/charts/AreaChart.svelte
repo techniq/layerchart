@@ -165,20 +165,23 @@
           : (s.value ?? (s.data ? undefined : s.key)),
       fill: s.color,
       fillOpacity: 0.3,
-      class: cls(
-        'transition-opacity',
-        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10'
-      ),
       ...props.area,
       ...s.props,
+      class: cls(
+        'transition-opacity',
+        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+        props.area?.class,
+        s.props?.class
+      ),
       line: {
+        stroke: s.color,
+        ...lineProps,
         class: cls(
           !('stroke-width' in lineProps) && 'stroke-2',
           'transition-opacity',
-          highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10'
+          highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+          lineProps.class
         ),
-        stroke: s.color,
-        ...lineProps,
       },
     };
 

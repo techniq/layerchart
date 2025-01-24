@@ -118,13 +118,15 @@
     const splineProps: ComponentProps<Spline> = {
       data: s.data,
       y: s.value ?? (s.data ? undefined : s.key),
-      class: cls(
-        'stroke-2 transition-opacity',
-        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10'
-      ),
       stroke: s.color,
       ...props.spline,
       ...s.props,
+      class: cls(
+        'stroke-2 transition-opacity',
+        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+        props.spline?.class,
+        s.props?.class
+      ),
     };
 
     return splineProps;
