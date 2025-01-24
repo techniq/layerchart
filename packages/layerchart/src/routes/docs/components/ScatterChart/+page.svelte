@@ -1,11 +1,8 @@
 <script lang="ts">
-  import { Axis, Canvas, Highlight, Legend, Points, ScatterChart, Svg, Tooltip } from 'layerchart';
-  import { selectionStore } from '@layerstack/svelte-stores';
-  import { cls } from '@layerstack/tailwind';
+  import { Axis, Canvas, Highlight, Points, ScatterChart, Svg, Tooltip } from 'layerchart';
   import { format } from '@layerstack/utils';
   import { flatGroup } from 'd3-array';
   import { randomNormal } from 'd3-random';
-  import { scaleOrdinal } from 'd3-scale';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { getSpiral } from '$lib/utils/genData.js';
@@ -34,8 +31,6 @@
       ][i],
     };
   });
-
-  const selection = selectionStore({ initial: pengiunSeries.map((s) => s.key) });
 
   let renderContext: 'svg' | 'canvas' = 'svg';
 </script>
@@ -184,7 +179,7 @@
     <ScatterChart
       x="flipper_length_mm"
       y="bill_length_mm"
-      series={pengiunSeries.filter((s) => $selection.isSelected(s.key))}
+      series={pengiunSeries}
       padding={{ left: 16, bottom: 48 }}
       props={{
         xAxis: { tweened: { duration: 200 } },
