@@ -4,15 +4,15 @@
 
 ### Minor Changes
 
-- feat(TooltipHeader): Support passing `value` and `format` (similar to TooltipItem) to simplify overrides from simplified charts ([#335](https://github.com/techniq/layerchart/pull/335))
-
-- feat(BarChart): Add `<BarChart props={{ tooltip: { hideTotal: true } }}>` to hide total (useful for some group series use cases) ([#335](https://github.com/techniq/layerchart/pull/335))
-
 - feat(TooltipContext): Support lockable tooltips, useful for interactive elements / dense data. Control using `<Chart tooltip={{ locked }}>` ([#333](https://github.com/techniq/layerchart/pull/333))
 
 - feat(Tooltip): Support passing `pointerEvents` to enable clickable tooltip content. Useful with locked tooltips ([#333](https://github.com/techniq/layerchart/pull/333))
 
+- feat(TooltipHeader): Support passing `value` and `format` (similar to TooltipItem) to simplify overrides from simplified charts ([#335](https://github.com/techniq/layerchart/pull/335))
+
 - feat(AreaChart|BarChart|LineChart|ScatterChart): Enabling passing `props={{ tooltip: { header: { format: ... } } }}` ([#335](https://github.com/techniq/layerchart/pull/335))
+
+- feat(BarChart): Add `<BarChart props={{ tooltip: { hideTotal: true } }}>` to hide total (useful for some group series use cases) ([#335](https://github.com/techniq/layerchart/pull/335))
 
 ### Patch Changes
 
