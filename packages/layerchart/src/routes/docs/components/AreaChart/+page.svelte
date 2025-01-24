@@ -14,7 +14,7 @@
   } from 'layerchart';
   import { curveBasis, curveCatmullRom } from 'd3-shape';
   import { group } from 'd3-array';
-  import { Field, PeriodType, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Button, Field, PeriodType, ToggleGroup, ToggleOption, Kbd } from 'svelte-ux';
   import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -83,7 +83,22 @@
   }
 
   let renderContext: 'svg' | 'canvas' = 'svg';
+
+  let lockedTooltip = false;
 </script>
+
+<svelte:window
+  on:keydown={(e) => {
+    if (e.metaKey) {
+      lockedTooltip = true;
+    }
+  }}
+  on:keyup={(e) => {
+    if (!e.metaKey) {
+      lockedTooltip = false;
+    }
+  }}
+/>
 
 <h1>Examples</h1>
 
@@ -699,6 +714,65 @@
           let:data
         >
           {format(x(data), PeriodType.Day)}
+        </Tooltip.Root>
+      </svelte:fragment>
+    </AreaChart>
+  </div>
+</Preview>
+
+<h2>Locking and clickable tooltip</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        {
+          key: 'bananas',
+          color: 'hsl(var(--color-success))',
+        },
+        {
+          key: 'oranges',
+          color: 'hsl(var(--color-warning))',
+        },
+      ]}
+      {renderContext}
+      tooltip={{ locked: lockedTooltip }}
+    >
+      <svelte:fragment slot="tooltip" let:x let:y let:series>
+        <Tooltip.Root pointerEvents let:data>
+          <Tooltip.Header>
+            {format(x(data), PeriodType.Day)}
+          </Tooltip.Header>
+
+          <Tooltip.List>
+            {#each series as s}
+              {@const valueAccessor = accessor(s.value ?? s.key)}
+              {@const value = Math.abs(valueAccessor(data))}
+              <Tooltip.Item label={s.key} color={s.color}>
+                {format(value)}
+
+                <Button
+                  variant="fill-light"
+                  size="sm"
+                  class="ml-2"
+                  on:click={() => {
+                    console.log(
+                      'You clicked on the "' + s.key + '" series with value:"' + value + '"'
+                    );
+                  }}
+                >
+                  Click me
+                </Button>
+              </Tooltip.Item>
+            {/each}
+          </Tooltip.List>
+
+          <Tooltip.Separator />
+
+          <div class="text-xs">Lock position with <Kbd command /> and view console</div>
         </Tooltip.Root>
       </svelte:fragment>
     </AreaChart>

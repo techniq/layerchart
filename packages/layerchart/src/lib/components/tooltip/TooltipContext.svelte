@@ -97,6 +97,9 @@
   /** Similar to d3-selection's raise, re-insert the e.target as the last child of its parent, so to be the top-most element */
   export let raiseTarget = false;
 
+  /** Lock tooltip (keep open, do not update on mouse movement).  Allows for kicking on tooltip */
+  export let locked = false;
+
   /** quadtree search radius
    * @type {number}
    */
@@ -168,6 +171,11 @@
   function showTooltip(e: PointerEvent, tooltipData?: any) {
     // Cancel hiding tooltip if from previous event loop
     clearTimeout(hideTimeoutId);
+
+    if (locked) {
+      // Ignore (keep current position / data)
+      return;
+    }
 
     const referenceNode = (e.target as Element).closest('.layercake-container')!;
     const point = localPoint(referenceNode, e);
@@ -275,6 +283,11 @@
   }
 
   function hideTooltip() {
+    if (locked) {
+      // Ignore (keep open)
+      return;
+    }
+
     // Wait an event loop tick in case `showTooltip` is called immediately on another element, to allow tweeneing (ex. moving between bands/bars)
     hideTimeoutId = setTimeout(() => {
       $tooltip = { ...$tooltip, data: null };
@@ -369,7 +382,7 @@
       .sort(sortFunc('x'));
   }
 
-  $: triggerPointEvents = ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode);
+  $: triggerPointerEvents = ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode);
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -381,13 +394,13 @@
   style:left="{$padding.left}px"
   class={cls(
     'tooltip-trigger absolute touch-none',
-    debug && triggerPointEvents && 'bg-danger/10 outline outline-danger'
+    debug && triggerPointerEvents && 'bg-danger/10 outline outline-danger'
   )}
-  on:pointerenter={triggerPointEvents ? showTooltip : undefined}
-  on:pointermove={triggerPointEvents ? showTooltip : undefined}
-  on:pointerleave={triggerPointEvents ? hideTooltip : undefined}
+  on:pointerenter={triggerPointerEvents ? showTooltip : undefined}
+  on:pointermove={triggerPointerEvents ? showTooltip : undefined}
+  on:pointerleave={triggerPointerEvents ? hideTooltip : undefined}
   on:click={(e) => {
-    if (triggerPointEvents) {
+    if (triggerPointerEvents) {
       onClick({ data: $tooltip?.data });
     }
   }}

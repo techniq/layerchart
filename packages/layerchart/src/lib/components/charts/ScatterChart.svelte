@@ -139,8 +139,8 @@
   {yScale}
   yNice
   padding={defaultChartPadding(axis, legend)}
-  tooltip={{ mode: 'voronoi', onClick: onTooltipClick }}
   {...$$restProps}
+  tooltip={{ mode: 'voronoi', onClick: onTooltipClick, ...$$props.tooltip, ...props.tooltip }}
   let:x
   let:xScale
   let:y
