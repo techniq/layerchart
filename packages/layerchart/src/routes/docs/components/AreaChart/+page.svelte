@@ -123,7 +123,7 @@
     <AreaChart data={dateSeriesData} x="date" y="value" {renderContext}>
       <svelte:fragment slot="marks">
         <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
-          <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
+          <Area line={{ class: 'stroke-primary' }} fill={gradient} />
         </LinearGradient>
       </svelte:fragment>
     </AreaChart>
@@ -153,7 +153,7 @@
         >
           <Area
             y0={(d) => thresholdValue}
-            line={{ stroke: gradient, class: 'stroke-2' }}
+            line={{ stroke: gradient }}
             fill={gradient}
             fillOpacity={0.2}
           />
@@ -303,12 +303,7 @@
               ? s.color
               : 'hsl(var(--color-surface-content) / 20%)'}
 
-          <Area
-            data={s.data}
-            line={{ class: 'stroke-2', stroke: color }}
-            fill={color}
-            fillOpacity={0.3}
-          />
+          <Area data={s.data} line={{ stroke: color }} fill={color} fillOpacity={0.3} />
         {/each}
       </svelte:fragment>
 
@@ -509,7 +504,7 @@
       yPadding={[20, 20]}
       props={{
         grid: {
-          x: { class: 'stroke-[2] stroke-surface-content/20' },
+          x: { class: 'stroke-2 stroke-surface-content/20' },
           y: false,
           xTicks: funnelSegments.map((d) => d.index),
         },
@@ -791,7 +786,7 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
+        <Area line={{ class: 'stroke-primary' }} class="fill-primary/30" />
         <Highlight points lines />
       </Svg>
 

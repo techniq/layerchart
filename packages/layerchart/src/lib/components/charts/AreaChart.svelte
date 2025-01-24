@@ -177,7 +177,6 @@
         stroke: s.color,
         ...lineProps,
         class: cls(
-          !('stroke-width' in lineProps) && 'stroke-2',
           'transition-opacity',
           highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
           lineProps.class

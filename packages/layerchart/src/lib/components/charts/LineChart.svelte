@@ -122,7 +122,7 @@
       ...props.spline,
       ...s.props,
       class: cls(
-        'stroke-2 transition-opacity',
+        'transition-opacity',
         highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
         props.spline?.class,
         s.props?.class

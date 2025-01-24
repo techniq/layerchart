@@ -180,7 +180,7 @@
             tooltip.data == null || tooltip.data.fruit === s.key
               ? s.color
               : 'hsl(var(--color-surface-content) / 20%)'}
-          <Spline data={multiSeriesData} y={s.key} class="stroke-2" stroke={color} />
+          <Spline data={multiSeriesData} y={s.key} stroke={color} />
         {/each}
       </svelte:fragment>
 
@@ -409,7 +409,7 @@
           vertical
           let:gradient
         >
-          <Spline class="stroke-2" stroke={gradient} />
+          <Spline stroke={gradient} />
         </LinearGradient>
       </svelte:fragment>
 
@@ -448,7 +448,7 @@
           vertical
           let:gradient
         >
-          <Spline class="stroke-2" stroke={gradient} />
+          <Spline stroke={gradient} />
         </LinearGradient>
       </svelte:fragment>
     </LineChart>
