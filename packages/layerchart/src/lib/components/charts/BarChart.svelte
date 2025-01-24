@@ -411,9 +411,12 @@
 
     <slot name="tooltip" {...slotProps}>
       <Tooltip.Root {...props.tooltip?.root} let:data>
-        <Tooltip.Header {...props.tooltip?.header}
-          >{format(isVertical ? x(data) : y(data))}</Tooltip.Header
-        >
+        <Tooltip.Header
+          value={isVertical ? x(data) : y(data)}
+          {format}
+          {...props.tooltip?.header}
+        />
+
         <Tooltip.List {...props.tooltip?.list}>
           <!-- Reverse series order so tooltip items match stacks -->
           {@const seriesItems = stackSeries ? [...visibleSeries].reverse() : visibleSeries}

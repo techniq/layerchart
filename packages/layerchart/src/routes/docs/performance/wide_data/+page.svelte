@@ -2,7 +2,7 @@
   import { type ComponentProps } from 'svelte';
   import { LineChart } from 'layerchart';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { format } from '@layerstack/utils';
+  import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -13,10 +13,10 @@
   let renderContext = $state<'svg' | 'canvas'>('svg');
   let motion = $state(true);
   let chartProps = $derived<ComponentProps<typeof LineChart>['props']>({
-    xAxis: { format: (d) => format(new Date(d * 60 * 1000)) },
+    xAxis: { format: (v) => format(new Date(v * 60 * 1000)) },
     yAxis: { format: 'metric' },
     spline: { class: 'stroke-1' },
-    tooltip: { root: { motion } },
+    tooltip: { root: { motion }, header: { format: (v) => format(new Date(v * 60 * 1000)) } },
     highlight: { motion },
   });
 </script>

@@ -246,9 +246,11 @@
     <slot name="tooltip" {...slotProps}>
       <Tooltip.Root {...props.tooltip?.root} let:data>
         {#if activeSeries?.key !== 'default'}
-          <Tooltip.Header {...props.tooltip?.header} color={activeSeries?.color}>
-            {activeSeries?.label ?? activeSeries?.key}
-          </Tooltip.Header>
+          <Tooltip.Header
+            value={activeSeries?.label ?? activeSeries?.key}
+            color={activeSeries?.color}
+            {...props.tooltip?.header}
+          />
         {/if}
         <Tooltip.List {...props.tooltip?.list}>
           <Tooltip.Item
