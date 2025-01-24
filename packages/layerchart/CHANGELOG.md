@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.76.1
+
+### Patch Changes
+
+- fix: Do not override default Legend selected item classes when providing other classes ([`879898a`](https://github.com/techniq/layerchart/commit/879898a2123cdabdfcfacee5767deaf6185574e9))
+
 ## 0.76.0
 
 ### Minor Changes
