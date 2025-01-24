@@ -294,14 +294,16 @@
           onClick={(item) => $selectedKeys.toggleSelected(item.value)}
           onPointerEnter={(item) => (highlightKey = item.value)}
           onPointerLeave={(item) => (highlightKey = null)}
+          {...props.legend}
+          {...typeof legend === 'object' ? legend : null}
           classes={{
             item: (item) =>
               visibleData.length && !visibleData.some((d) => keyAccessor(d) === item.value)
                 ? 'opacity-50'
                 : '',
+            ...props.legend?.classes,
+            ...(typeof legend === 'object' ? legend.classes : null),
           }}
-          {...props.legend}
-          {...typeof legend === 'object' ? legend : null}
         />
       {/if}
     </slot>

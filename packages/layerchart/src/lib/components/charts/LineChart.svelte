@@ -276,14 +276,16 @@
           onClick={(item) => $selectedSeries.toggleSelected(item.value)}
           onPointerEnter={(item) => (highlightSeriesKey = item.value)}
           onPointerLeave={(item) => (highlightSeriesKey = null)}
+          {...props.legend}
+          {...typeof legend === 'object' ? legend : null}
           classes={{
             item: (item) =>
               visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
                 ? 'opacity-50'
                 : '',
+            ...props.legend?.classes,
+            ...(typeof legend === 'object' ? legend.classes : null),
           }}
-          {...props.legend}
-          {...typeof legend === 'object' ? legend : null}
         />
       {/if}
     </slot>
