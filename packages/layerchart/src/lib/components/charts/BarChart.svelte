@@ -279,8 +279,8 @@
   c={isVertical ? y : x}
   cRange={['hsl(var(--color-primary))']}
   padding={defaultChartPadding(axis, legend)}
-  tooltip={{ mode: 'band', onClick: onTooltipClick }}
   {...$$restProps}
+  tooltip={{ mode: 'band', onClick: onTooltipClick, ...$$props.tooltip, ...props.tooltip }}
   let:x
   let:xScale
   let:y

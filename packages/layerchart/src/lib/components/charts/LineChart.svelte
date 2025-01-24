@@ -156,8 +156,8 @@
   yNice
   {radial}
   padding={radial ? undefined : defaultChartPadding(axis, legend)}
-  tooltip={{ mode: 'bisect-x', onClick: onTooltipClick }}
   {...$$restProps}
+  tooltip={{ mode: 'bisect-x', onClick: onTooltipClick, ...$$props.tooltip, ...props.tooltip }}
   let:x
   let:xScale
   let:y
