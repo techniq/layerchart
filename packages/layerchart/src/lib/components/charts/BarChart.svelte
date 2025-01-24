@@ -307,6 +307,7 @@
     padding,
     tooltip,
     series,
+    visibleSeries,
     getBarsProps,
   }}
   <slot {...slotProps}>

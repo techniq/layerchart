@@ -241,6 +241,7 @@
     padding,
     tooltip,
     series,
+    visibleSeries,
     getAreaProps,
   }}
 

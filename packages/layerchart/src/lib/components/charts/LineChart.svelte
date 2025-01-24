@@ -183,6 +183,7 @@
     padding,
     tooltip,
     series,
+    visibleSeries,
     getSplineProps,
   }}
   <slot {...slotProps}>

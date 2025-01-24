@@ -195,6 +195,8 @@
     height,
     padding,
     tooltip,
+    series,
+    visibleData,
   }}
   <slot {...slotProps}>
     <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} {center}>

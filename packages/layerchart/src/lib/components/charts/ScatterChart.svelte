@@ -156,7 +156,21 @@
   let:tooltip
   let:config
 >
-  {@const slotProps = { x, xScale, y, yScale, c, cScale, width, height, padding, tooltip, series }}
+  {@const slotProps = {
+    x,
+    xScale,
+    y,
+    yScale,
+    c,
+    cScale,
+    width,
+    height,
+    padding,
+    tooltip,
+    series,
+    visibleSeries,
+    getPointsProps,
+  }}
   {@const activeSeries = tooltip.data
     ? (series.find((s) => s.key === tooltip.data.seriesKey) ?? series[0])
     : null}
