@@ -374,12 +374,12 @@
             />
           {/each}
 
-          {#if stackSeries}
+          {#if stackSeries && visibleSeries.length > 1}
             <Tooltip.Separator {...props.tooltip?.separator} />
 
             <Tooltip.Item
               label="total"
-              value={sum(series, (s) => {
+              value={sum(visibleSeries, (s) => {
                 const seriesTooltipData = s.data ? s.data.find((d) => x(d) === x(data)) : data;
                 const valueAccessor = accessor(s.value ?? (s.data ? asAny(y) : s.key));
 
