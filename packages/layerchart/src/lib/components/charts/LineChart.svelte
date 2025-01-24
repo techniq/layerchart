@@ -290,7 +290,7 @@
 
     <slot name="tooltip" {...slotProps}>
       <Tooltip.Root {...props.tooltip?.root} let:data>
-        <Tooltip.Header {...props.tooltip?.header}>{format(x(data))}</Tooltip.Header>
+        <Tooltip.Header value={x(data)} {format} {...props.tooltip?.header} />
         <Tooltip.List {...props.tooltip?.list}>
           {#each visibleSeries as s}
             {@const seriesTooltipData = s.data ? findRelatedData(s.data, data, x) : data}

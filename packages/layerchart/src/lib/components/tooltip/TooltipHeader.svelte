@@ -1,6 +1,9 @@
 <script lang="ts">
+  import { format as formatUtil, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
+  export let value: any = undefined;
+  export let format: FormatType | undefined = undefined;
   export let color: string | undefined = undefined;
 
   export let classes: {
@@ -23,5 +26,5 @@
       style:--color={color}
     ></div>
   {/if}
-  <slot />
+  <slot>{format ? formatUtil(value, format) : value}</slot>
 </div>

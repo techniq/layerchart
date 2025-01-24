@@ -409,6 +409,9 @@
       props={{
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
+        tooltip: {
+          header: { format: 'none' },
+        },
       }}
       {renderContext}
     />
@@ -442,6 +445,9 @@
       props={{
         xAxis: { format: 'metric' },
         yAxis: { format: 'none' },
+        tooltip: {
+          header: { format: 'none' },
+        },
       }}
       {renderContext}
     />
@@ -474,6 +480,9 @@
       props={{
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
+        tooltip: {
+          header: { format: 'none' },
+        },
       }}
       tooltip={false}
       onBarClick={(e) => {
@@ -516,6 +525,9 @@
       props={{
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
+        tooltip: {
+          header: { format: 'none' },
+        },
       }}
       {renderContext}
     />
@@ -548,6 +560,9 @@
       props={{
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
+        tooltip: {
+          header: { format: 'none' },
+        },
       }}
       {renderContext}
     />
@@ -581,6 +596,9 @@
       props={{
         xAxis: { format: 'metric' },
         yAxis: { format: 'none' },
+        tooltip: {
+          header: { format: 'none' },
+        },
       }}
       {renderContext}
     />
@@ -614,6 +632,9 @@
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
         bars: { radius: 5.0, rounded: 'all' },
+        tooltip: {
+          header: { format: 'none' },
+        },
       }}
       stackPadding={5.0}
       {renderContext}
@@ -646,6 +667,9 @@
       seriesLayout="stackExpand"
       props={{
         xAxis: { format: 'none' },
+        tooltip: {
+          header: { format: 'none' },
+        },
       }}
       {renderContext}
     />
@@ -683,6 +707,9 @@
       props={{
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
+        tooltip: {
+          header: { format: 'none' },
+        },
       }}
       {renderContext}
     />
@@ -720,6 +747,9 @@
       props={{
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
+                tooltip: {
+          header: { format: 'none' },
+        },
       }}
       {renderContext}
     />
@@ -752,6 +782,9 @@
       props={{
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
+        tooltip: {
+          header: { format: 'none' },
+        },
       }}
       legend
       {renderContext}
@@ -785,6 +818,9 @@
       props={{
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
+        tooltip: {
+          header: { format: 'none' },
+        },
       }}
       legend
       {renderContext}
@@ -818,6 +854,9 @@
       props={{
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
+        tooltip: {
+          header: { format: 'none' },
+        },
       }}
       legend={{ placement: 'top-right', classes: { root: 'mt-2' } }}
       {renderContext}
@@ -854,6 +893,9 @@
       props={{
         xAxis: { format: 'none' },
         yAxis: { format: 'metric' },
+        tooltip: {
+          header: { format: 'none' },
+        },
       }}
       legend
       {renderContext}

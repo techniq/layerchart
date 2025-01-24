@@ -140,6 +140,7 @@
       list?: Partial<ComponentProps<Tooltip.List>>;
       item?: Partial<ComponentProps<Tooltip.Item>>;
       separator?: Partial<ComponentProps<Tooltip.Separator>>;
+      hideTotal?: boolean;
     };
   } = {};
 
@@ -410,9 +411,12 @@
 
     <slot name="tooltip" {...slotProps}>
       <Tooltip.Root {...props.tooltip?.root} let:data>
-        <Tooltip.Header {...props.tooltip?.header}
-          >{format(isVertical ? x(data) : y(data))}</Tooltip.Header
-        >
+        <Tooltip.Header
+          value={isVertical ? x(data) : y(data)}
+          {format}
+          {...props.tooltip?.header}
+        />
+
         <Tooltip.List {...props.tooltip?.list}>
           <!-- Reverse series order so tooltip items match stacks -->
           {@const seriesItems = stackSeries ? [...visibleSeries].reverse() : visibleSeries}
@@ -429,7 +433,7 @@
             />
           {/each}
 
-          {#if (stackSeries || groupSeries) && visibleSeries.length > 1}
+          {#if (stackSeries || groupSeries) && visibleSeries.length > 1 && !props.tooltip?.hideTotal}
             <Tooltip.Separator {...props.tooltip?.separator} />
 
             <Tooltip.Item
