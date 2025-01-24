@@ -140,6 +140,7 @@
       list?: Partial<ComponentProps<Tooltip.List>>;
       item?: Partial<ComponentProps<Tooltip.Item>>;
       separator?: Partial<ComponentProps<Tooltip.Separator>>;
+      hideTotal?: boolean;
     };
   } = {};
 
@@ -429,7 +430,7 @@
             />
           {/each}
 
-          {#if (stackSeries || groupSeries) && visibleSeries.length > 1}
+          {#if (stackSeries || groupSeries) && visibleSeries.length > 1 && !props.tooltip?.hideTotal}
             <Tooltip.Separator {...props.tooltip?.separator} />
 
             <Tooltip.Item
