@@ -8,7 +8,6 @@
     x: number;
     y: number;
     data: any;
-    locked: boolean;
     show(e: PointerEvent, tooltipData?: any): void;
     hide(e?: PointerEvent): void;
   };
@@ -19,7 +18,6 @@
     x: 0,
     y: 0,
     data: null as any,
-    locked: false,
     show: () => {},
     hide: () => {},
   });
