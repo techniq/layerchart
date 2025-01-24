@@ -37,6 +37,9 @@
   /** Set to `false` to disable spring transitions */
   export let motion = true;
 
+  /** Allow pointer events.  Disabled by default to reduce accidental selection, but useful to enable to allow interactdive tooltips (using `locked`) */
+  export let pointerEvents = false;
+
   export let classes: {
     root?: string;
     container?: string;
@@ -203,7 +206,7 @@
 
 {#if $tooltip.data}
   <div
-    class={cls('absolute pointer-events-none z-50 select-none', classes.root)}
+    class={cls('absolute z-50 select-none', !pointerEvents && 'pointer-events-none', classes.root)}
     style:top="{$yPos}px"
     style:left="{$xPos}px"
     transition:fade={{ duration: 100 }}
