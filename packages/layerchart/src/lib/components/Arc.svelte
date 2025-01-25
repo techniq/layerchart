@@ -262,6 +262,7 @@
     fill-opacity={fillOpacity}
     {stroke}
     stroke-width={strokeWidth}
+    class={className}
     {...$$restProps}
     on:pointerenter={(e) => tooltip?.show(e, data)}
     on:pointermove={(e) => tooltip?.show(e, data)}
