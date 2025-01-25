@@ -10,9 +10,9 @@
 
 - fix(getComputedStyles): Ignore transition classes to allow immediate reading of css values (ex. `transition-opacity` affecting `opacity-10`) ([#339](https://github.com/techniq/layerchart/pull/339))
 
-- fix(render): Multiple `fillOpacity` by overall `opacity` for fill to support opacity classes (ex. `opacity-10`) ([#339](https://github.com/techniq/layerchart/pull/339))
+- fix(render): Multiply `fillOpacity` by overall `opacity` for fill to support opacity classes (ex. `opacity-10`) ([#339](https://github.com/techniq/layerchart/pull/339))
 
-- feat: Memoize creating canvas gradients to improve reactivity detection ([#339](https://github.com/techniq/layerchart/pull/339))
+- fix: Memoize creating canvas gradients to improve reactivity detection ([#339](https://github.com/techniq/layerchart/pull/339))
 
 ## 0.78.0
 
