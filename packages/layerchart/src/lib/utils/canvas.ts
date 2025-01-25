@@ -1,3 +1,5 @@
+import { memoize } from 'lodash-es';
+
 export const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
 const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
@@ -234,3 +236,36 @@ export function scaleCanvas(ctx: CanvasRenderingContext2D, width: number, height
   ctx.scale(devicePixelRatio, devicePixelRatio);
   return { width: ctx.canvas.width, height: ctx.canvas.height };
 }
+
+export function _createLinearGradient(
+  canvasCtx: CanvasRenderingContext2D,
+  x0: number,
+  y0: number,
+  x1: number,
+  y1: number,
+  stops: { offset: number; color: string }[]
+) {
+  const gradient = canvasCtx.createLinearGradient(x0, y0, x1, y1);
+
+  stops.forEach(({ offset, color }) => {
+    gradient.addColorStop(offset, color);
+  });
+
+  return gradient;
+}
+
+/** Create linear gradient and memoize result to fix reactivity */
+export const createLinearGradient = memoize(
+  _createLinearGradient,
+  (
+    canvasCtx: CanvasRenderingContext2D,
+    x0: number,
+    y0: number,
+    x1: number,
+    y1: number,
+    stops: { offset: number; color: string }[]
+  ) => {
+    const key = JSON.stringify({ x0, y0, x1, y1, stops });
+    return key;
+  }
+);
