@@ -14,8 +14,8 @@
   } from 'layerchart';
   import { curveBasis, curveCatmullRom } from 'd3-shape';
   import { group } from 'd3-array';
-  import { Button, Field, PeriodType, ToggleGroup, ToggleOption, Kbd } from 'svelte-ux';
-  import { format } from '@layerstack/utils';
+  import { Button, Field, ToggleGroup, ToggleOption, Kbd } from 'svelte-ux';
+  import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';

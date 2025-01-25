@@ -2,8 +2,9 @@
   import { scaleBand, scaleUtc } from 'd3-scale';
   import { flatGroup } from 'd3-array';
   import { curveLinearClosed, curveCatmullRomClosed, curveCatmullRom } from 'd3-shape';
-  import { Field, PeriodType, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
+  import { PeriodType } from '@layerstack/utils';
 
   import { Area, Axis, Chart, Points, Spline, Svg } from 'layerchart';
 

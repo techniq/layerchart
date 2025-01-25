@@ -1,8 +1,8 @@
 <script lang="ts">
   import { scaleLinear, scaleTime, scaleBand, scaleLog } from 'd3-scale';
   import { range } from 'd3-array';
-  import { Field, PeriodType, Switch } from 'svelte-ux';
-  import { format } from '@layerstack/utils';
+  import { Field, Switch } from 'svelte-ux';
+  import { format, PeriodType } from '@layerstack/utils';
   import { mdScreen } from '@layerstack/svelte-stores';
 
   import { Axis, Chart, Svg, Frame, Rule, Text, Grid } from 'layerchart';

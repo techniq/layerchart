@@ -13,8 +13,8 @@
   import { scaleBand, scaleSequential } from 'd3-scale';
   import { curveCatmullRom, curveLinearClosed } from 'd3-shape';
   import { extent, flatGroup, group, ticks } from 'd3-array';
-  import { Field, PeriodType, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { format } from '@layerstack/utils';
+  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';

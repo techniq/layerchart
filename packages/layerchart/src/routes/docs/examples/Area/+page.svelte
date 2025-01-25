@@ -24,8 +24,8 @@
     chartDataArray,
     pivotLonger,
   } from 'layerchart';
-  import { Field, Switch, Toggle, PeriodType } from 'svelte-ux';
-  import { format } from '@layerstack/utils';
+  import { Field, Switch, Toggle } from 'svelte-ux';
+  import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';

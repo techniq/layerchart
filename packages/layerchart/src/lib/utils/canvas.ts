@@ -1,4 +1,6 @@
+import { cls } from '@layerstack/tailwind';
 import { memoize } from 'lodash-es';
+import type { ClassValue } from 'svelte/elements';
 
 export const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
@@ -12,7 +14,7 @@ type ComputedStylesOptions = {
       opacity?: number | string;
     }
   >;
-  classes?: string;
+  classes?: ClassValue;
 };
 
 /**
@@ -47,7 +49,7 @@ export function getComputedStyles(
     if (classes) {
       svg.setAttribute(
         'class',
-        classes
+        cls(classes)
           .split(' ')
           .filter((s) => !s.startsWith('transition-'))
           .join(' ')

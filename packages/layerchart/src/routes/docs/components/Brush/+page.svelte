@@ -1,8 +1,8 @@
 <script lang="ts">
   import { scaleOrdinal, scaleTime } from 'd3-scale';
   import { range } from 'd3-array';
-  import { PeriodType, State } from 'svelte-ux';
-  import { format } from '@layerstack/utils';
+  import { State } from 'svelte-ux';
+  import { format, PeriodType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import { subDays } from 'date-fns';
   import { mdiChevronRight } from '@mdi/js';
