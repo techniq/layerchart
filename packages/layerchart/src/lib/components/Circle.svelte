@@ -89,7 +89,7 @@
     fill-opacity={fillOpacity}
     {stroke}
     stroke-width={strokeWidth}
-    class={cls($$props.fill == null && 'fill-surface-content')}
+    class={cls(fill == null && 'fill-surface-content', className)}
     {...$$restProps}
     on:click
     on:pointermove

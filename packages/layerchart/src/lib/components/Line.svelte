@@ -110,8 +110,8 @@
     stroke-width={strokeWidth}
     marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
     marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
+    class={cls(stroke === undefined && 'stroke-surface-content', className)}
     {...$$restProps}
-    class={cls($$props.stroke === undefined && 'stroke-surface-content', className)}
     on:click
     on:pointermove
     on:pointerleave
