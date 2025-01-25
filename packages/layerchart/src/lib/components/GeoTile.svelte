@@ -46,14 +46,14 @@
     });
   }
 
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'GeoTile', render });
-  }
-
   $: if (renderContext === 'canvas') {
     tile;
     canvasContext.invalidate();
+  }
+
+  let canvasUnregister: ReturnType<typeof canvasContext.register>;
+  $: if (renderContext === 'canvas') {
+    canvasUnregister = canvasContext.register({ name: 'GeoTile', render });
   }
 
   onDestroy(() => {

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onDestroy, tick } from 'svelte';
   import { cls } from '@layerstack/tailwind';
+  import { objectId } from '@layerstack/utils/object';
 
   import {
     motionStore,
@@ -28,6 +29,9 @@
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
 
+  let className: string | undefined = undefined;
+  export { className as class };
+
   export let spring: boolean | SpringOptions | { [prop: string]: SpringOptions } = undefined;
   export let tweened: boolean | TweenedOptions | { [prop: string]: TweenedOptions } = undefined;
 
@@ -52,20 +56,31 @@
       { x: $tweened_x, y: $tweened_y, width: $tweened_width, height: $tweened_height },
       {
         styles: { fill, fillOpacity, stroke, strokeWidth },
-        classes: $$props.class,
+        classes: className,
       }
     );
+  }
+
+  // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
+  $: fillKey = typeof fill === 'object' ? objectId(fill) : fill;
+  $: strokeKey = typeof stroke === 'object' ? objectId(stroke) : stroke;
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when props change
+    $tweened_x &&
+      $tweened_y &&
+      $tweened_width &&
+      $tweened_height &&
+      fillKey &&
+      strokeKey &&
+      strokeWidth &&
+      className;
+    canvasContext.invalidate();
   }
 
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
     canvasUnregister = canvasContext.register({ name: 'Rect', render });
-  }
-
-  $: if (renderContext === 'canvas') {
-    // Redraw when props changes (TODO: styles, class, etc)
-    $tweened_x && $tweened_y && $tweened_width && $tweened_height;
-    canvasContext.invalidate();
   }
 
   onDestroy(() => {
@@ -83,7 +98,7 @@
     y={$tweened_y}
     width={$tweened_width}
     height={$tweened_height}
-    class={cls($$props.fill == null && 'fill-surface-content')}
+    class={cls(fill == null && 'fill-surface-content')}
     {fill}
     fill-opacity={fillOpacity}
     {stroke}

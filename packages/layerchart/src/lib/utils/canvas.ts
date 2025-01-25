@@ -1,3 +1,5 @@
+import { memoize } from 'lodash-es';
+
 export const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
 const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
@@ -43,7 +45,13 @@ export function getComputedStyles(
     }
 
     if (classes) {
-      svg.setAttribute('class', classes);
+      svg.setAttribute(
+        'class',
+        classes
+          .split(' ')
+          .filter((s) => !s.startsWith('transition-'))
+          .join(' ')
+      );
     }
 
     const computedStyles = window.getComputedStyle(svg);
@@ -63,6 +71,8 @@ function render(
   },
   styleOptions: ComputedStylesOptions = {}
 ) {
+  // console.count('render');
+
   // TODO: Consider memoizing?  How about reactiving to CSS variable changes (light/dark mode toggle)
   const computedStyles = getComputedStyles(canvasCtx.canvas, styleOptions);
 
@@ -113,9 +123,10 @@ function render(
 
       if (fill) {
         const currentGlobalAlpha = canvasCtx.globalAlpha;
-        if (computedStyles?.fillOpacity) {
-          canvasCtx.globalAlpha = Number(computedStyles?.fillOpacity);
-        }
+
+        const fillOpacity = Number(computedStyles?.fillOpacity);
+        const opacity = Number(computedStyles?.opacity);
+        canvasCtx.globalAlpha = fillOpacity * opacity;
 
         canvasCtx.fillStyle = fill;
         render.fill(canvasCtx);
@@ -234,3 +245,36 @@ export function scaleCanvas(ctx: CanvasRenderingContext2D, width: number, height
   ctx.scale(devicePixelRatio, devicePixelRatio);
   return { width: ctx.canvas.width, height: ctx.canvas.height };
 }
+
+export function _createLinearGradient(
+  canvasCtx: CanvasRenderingContext2D,
+  x0: number,
+  y0: number,
+  x1: number,
+  y1: number,
+  stops: { offset: number; color: string }[]
+) {
+  const gradient = canvasCtx.createLinearGradient(x0, y0, x1, y1);
+
+  stops.forEach(({ offset, color }) => {
+    gradient.addColorStop(offset, color);
+  });
+
+  return gradient;
+}
+
+/** Create linear gradient and memoize result to fix reactivity */
+export const createLinearGradient = memoize(
+  _createLinearGradient,
+  (
+    canvasCtx: CanvasRenderingContext2D,
+    x0: number,
+    y0: number,
+    x1: number,
+    y1: number,
+    stops: { offset: number; color: string }[]
+  ) => {
+    const key = JSON.stringify({ x0, y0, x1, y1, stops });
+    return key;
+  }
+);

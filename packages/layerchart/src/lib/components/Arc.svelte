@@ -24,6 +24,8 @@
   import { scaleLinear } from 'd3-scale';
   import { min, max } from 'd3-array';
 
+  import { objectId } from '@layerstack/utils/object';
+
   import { chartContext } from './ChartContext.svelte';
   import { motionStore } from '$lib/stores/motionStore.js';
   import { degreesToRadians } from '$lib/utils/math.js';
@@ -86,6 +88,9 @@
   export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
+
+  let className: string | undefined = undefined;
+  export { className as class };
 
   export let track: boolean | SVGAttributes<SVGPathElement> = false;
 
@@ -213,19 +218,23 @@
     // Arc
     renderPathData(ctx, arc(), {
       styles: { fill, fillOpacity, stroke, strokeWidth },
-      classes: $$props.class,
+      classes: className,
     });
+  }
+
+  // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
+  $: fillKey = typeof fill === 'object' ? objectId(fill) : fill;
+  $: strokeKey = typeof stroke === 'object' ? objectId(stroke) : stroke;
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when props change
+    arc && trackArc && fillKey && fillOpacity && strokeKey && strokeWidth && className;
+    canvasContext.invalidate();
   }
 
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
     canvasUnregister = canvasContext.register({ name: 'Arc', render });
-  }
-
-  $: if (renderContext === 'canvas') {
-    // Redraw when props changes (TODO: styles, class, etc)
-    arc && trackArc;
-    canvasContext.invalidate();
   }
 
   onDestroy(() => {

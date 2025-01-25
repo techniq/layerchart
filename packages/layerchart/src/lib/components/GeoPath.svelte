@@ -15,6 +15,7 @@
   import { geoCurvePath } from '$lib/utils/geo.js';
   import { renderPathData } from '$lib/utils/canvas.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
+  import { objectId } from '@layerstack/utils/object';
 
   export let geojson: GeoPermissibleObjects | null | undefined = undefined;
 
@@ -89,15 +90,19 @@
     }
   }
 
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'GeoPath', render: _render });
-  }
+  // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
+  $: fillKey = typeof fill === 'object' ? objectId(fill) : fill;
+  $: strokeKey = typeof stroke === 'object' ? objectId(stroke) : stroke;
 
   $: if (renderContext === 'canvas') {
     // Redraw when geojson, projection, or class change
-    geojson && _projection && className && fill && stroke && strokeWidth;
+    geojson && _projection && fillKey && strokeKey && strokeWidth && className;
     canvasContext.invalidate();
+  }
+
+  let canvasUnregister: ReturnType<typeof canvasContext.register>;
+  $: if (renderContext === 'canvas') {
+    canvasUnregister = canvasContext.register({ name: 'GeoPath', render: _render });
   }
 
   onDestroy(() => {

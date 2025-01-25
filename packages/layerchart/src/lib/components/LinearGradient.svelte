@@ -4,7 +4,7 @@
 
   import { chartContext } from './ChartContext.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { getComputedStyles } from '../utils/canvas.js';
+  import { createLinearGradient, getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';
 
   /** Unique id for linearGradient */
@@ -36,43 +36,45 @@
   let canvasGradient: CanvasGradient;
 
   function render(ctx: CanvasRenderingContext2D) {
-    // TODO: Use x1/y1/x2/y2 values (convert from pecentage strings)
-    const gradient = ctx.createLinearGradient(
-      $padding.left,
-      $padding.top,
-      vertical ? $padding.left : $width - $padding.right,
-      vertical ? $height + $padding.bottom : $padding.top
-    );
-
     // Use `getComputedStyles()` to convert each stop (if using CSS variables and/or classes) to color values
-    stops.forEach((stop, i) => {
+    const _stops = stops.map((stop, i) => {
       if (Array.isArray(stop)) {
         const { fill } = getComputedStyles(ctx.canvas, {
           styles: { fill: stop[1] },
           classes: $$props.class,
         });
-        gradient.addColorStop(parsePercent(stop[0]), fill);
+        return { offset: parsePercent(stop[0]), color: fill };
       } else {
         const { fill } = getComputedStyles(ctx.canvas, {
           styles: { fill: stop },
           classes: $$props.class,
         });
-        gradient.addColorStop(i / (stops.length - 1), fill);
+        return { offset: i / (stops.length - 1), color: fill };
       }
     });
 
+    // TODO: Use x1/y1/x2/y2 values (convert from pecentage strings)
+    const gradient = createLinearGradient(
+      ctx,
+      $padding.left,
+      $padding.top,
+      vertical ? $padding.left : $width - $padding.right,
+      vertical ? $height + $padding.bottom : $padding.top,
+      _stops
+    );
+
     canvasGradient = gradient;
+  }
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when props changes (TODO: styles, class, etc)
+    x1 && y1 && x2 && y2 && stops;
+    canvasContext.invalidate();
   }
 
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
     canvasUnregister = canvasContext.register({ name: 'Gradient', render });
-  }
-
-  $: if (renderContext === 'canvas') {
-    // Redraw when props changes (TODO: styles, class, etc)
-    stops && x1 && y1 && x2 && y2 && $width && $height;
-    canvasContext.invalidate();
   }
 
   onDestroy(() => {
