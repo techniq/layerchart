@@ -124,7 +124,7 @@ function render(
 
         const fillOpacity = Number(computedStyles?.fillOpacity);
         const opacity = Number(computedStyles?.opacity);
-        canvasCtx.globalAlpha = fillOpacity < 1 ? fillOpacity : opacity;
+        canvasCtx.globalAlpha = fillOpacity * opacity;
 
         canvasCtx.fillStyle = fill;
         render.fill(canvasCtx);
