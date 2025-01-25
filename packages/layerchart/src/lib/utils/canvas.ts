@@ -45,7 +45,13 @@ export function getComputedStyles(
     }
 
     if (classes) {
-      svg.setAttribute('class', classes);
+      svg.setAttribute(
+        'class',
+        classes
+          .split(' ')
+          .filter((s) => !s.startsWith('transition-'))
+          .join(' ')
+      );
     }
 
     const computedStyles = window.getComputedStyle(svg);
