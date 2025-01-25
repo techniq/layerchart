@@ -1,5 +1,0 @@
----
-'layerchart': patch
----
-
-Bump dependencies
