@@ -71,6 +71,8 @@ function render(
   },
   styleOptions: ComputedStylesOptions = {}
 ) {
+  // console.count('render');
+
   // TODO: Consider memoizing?  How about reactiving to CSS variable changes (light/dark mode toggle)
   const computedStyles = getComputedStyles(canvasCtx.canvas, styleOptions);
 

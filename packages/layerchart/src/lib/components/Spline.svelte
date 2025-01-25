@@ -12,6 +12,7 @@
   import { max } from 'd3-array';
   import { cls } from '@layerstack/tailwind';
   import { uniqueId } from '@layerstack/utils';
+  import { objectId } from '@layerstack/utils/object';
 
   import { chartContext } from './ChartContext.svelte';
   import Group from './Group.svelte';
@@ -67,6 +68,9 @@
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
   export let opacity: number | undefined = undefined;
+
+  let className: string | undefined = undefined;
+  export { className as class };
 
   /** Marker to attach to start, mid, and end points of path */
   export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
@@ -166,17 +170,23 @@
   function render(ctx: CanvasRenderingContext2D) {
     renderPathData(ctx, $tweened_d, {
       styles: { stroke, fill, strokeWidth, opacity },
-      classes: $$props.class,
+      classes: className,
     });
+  }
+
+  // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
+  $: fillKey = typeof fill === 'object' ? objectId(fill) : fill;
+  $: strokeKey = typeof stroke === 'object' ? objectId(stroke) : stroke;
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when props change
+    $tweened_d && fillKey && strokeKey && strokeWidth && className;
+    canvasContext.invalidate();
   }
 
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
     canvasUnregister = canvasContext.register({ name: 'Spline', render });
-
-    tweened_d.subscribe(() => {
-      canvasContext.invalidate();
-    });
   }
 
   onDestroy(() => {
@@ -225,12 +235,7 @@
     <path
       d={$tweened_d}
       {...$$restProps}
-      class={cls(
-        'path-line',
-        !$$props.fill && 'fill-none',
-        !$$props.stroke && 'stroke-surface-content',
-        $$props.class
-      )}
+      class={cls('path-line', !fill && 'fill-none', !stroke && 'stroke-surface-content', className)}
       {fill}
       {stroke}
       stroke-width={strokeWidth}

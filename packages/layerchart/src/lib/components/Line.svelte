@@ -2,9 +2,10 @@
   import { onDestroy, tick, type ComponentProps } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from '@layerstack/tailwind';
+  import { uniqueId } from '@layerstack/utils';
+  import { objectId } from '@layerstack/utils/object';
 
   import { motionStore } from '$lib/stores/motionStore.js';
-  import { uniqueId } from '@layerstack/utils';
 
   import Marker from './Marker.svelte';
   import { renderPathData } from '../utils/canvas.js';
@@ -25,6 +26,9 @@
   export let fill: string | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
+
+  let className: string | undefined = undefined;
+  export { className as class };
 
   /** Marker to attach to start and end points of path */
   export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
@@ -61,19 +65,30 @@
     const pathData = `M ${$tweened_x1},${$tweened_y1} L ${$tweened_x2},${$tweened_y2}`;
     renderPathData(ctx, pathData, {
       styles: { fill, stroke, strokeWidth },
-      classes: $$props.class,
+      classes: className,
     });
+  }
+
+  // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
+  $: fillKey = typeof fill === 'object' ? objectId(fill) : fill;
+  $: strokeKey = typeof stroke === 'object' ? objectId(stroke) : stroke;
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when props change
+    $tweened_x1 &&
+      $tweened_y1 &&
+      $tweened_x2 &&
+      $tweened_y2 &&
+      fillKey &&
+      strokeKey &&
+      strokeWidth &&
+      className;
+    canvasContext.invalidate();
   }
 
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
     canvasUnregister = canvasContext.register({ name: 'Line', render });
-  }
-
-  $: if (renderContext === 'canvas') {
-    // Redraw when props changes (TODO: styles, class, etc)
-    $tweened_x1 && $tweened_y1 && $tweened_x2 && $tweened_y2;
-    canvasContext.invalidate();
   }
 
   onDestroy(() => {
@@ -95,8 +110,8 @@
     stroke-width={strokeWidth}
     marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
     marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-    class={cls($$props.stroke === undefined && 'stroke-surface-content')}
     {...$$restProps}
+    class={cls($$props.stroke === undefined && 'stroke-surface-content', className)}
     on:click
     on:pointermove
     on:pointerleave

@@ -2,6 +2,7 @@
   import { onDestroy, tick } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from '@layerstack/tailwind';
+  import { objectId } from '@layerstack/utils/object';
 
   import { getStringWidth } from '$lib/utils/string.js';
   import { motionStore } from '$lib/stores/motionStore.js';
@@ -64,6 +65,9 @@
   export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
+
+  let className: string | undefined = undefined;
+  export { className as class };
 
   let wordsByLines: { words: string[]; width?: number }[] = [];
   let wordsWithWidth: { word: string; width: number }[] = [];
@@ -192,21 +196,25 @@
         },
         {
           styles: { fill, fillOpacity, stroke, strokeWidth, paintOrder: 'stroke', textAnchor },
-          classes: cls(fill === undefined && 'fill-surface-content', $$props.class),
+          classes: cls(fill === undefined && 'fill-surface-content', className),
         }
       );
     });
   }
 
+  // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
+  $: fillKey = typeof fill === 'object' ? objectId(fill) : fill;
+  $: strokeKey = typeof stroke === 'object' ? objectId(stroke) : stroke;
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when props change
+    value && $tweened_x && $tweened_y && fillKey && strokeKey && strokeWidth && className;
+    canvasContext.invalidate();
+  }
+
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
     canvasUnregister = canvasContext.register({ name: 'Text', render });
-  }
-
-  $: if (renderContext === 'canvas') {
-    // Redraw when props changes (TODO: styles, class, etc)
-    value && $tweened_x && $tweened_y;
-    canvasContext.invalidate();
   }
 
   onDestroy(() => {
@@ -231,7 +239,7 @@
         fill-opacity={fillOpacity}
         {stroke}
         stroke-width={strokeWidth}
-        class={cls(fill === undefined && 'fill-surface-content', $$props.class)}
+        class={cls(fill === undefined && 'fill-surface-content', className)}
       >
         {#each wordsByLines as line, index}
           <tspan x={$tweened_x} dy={index === 0 ? startDy : lineHeight}>

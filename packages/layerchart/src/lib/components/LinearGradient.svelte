@@ -66,15 +66,15 @@
     canvasGradient = gradient;
   }
 
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'Gradient', render });
-  }
-
   $: if (renderContext === 'canvas') {
     // Redraw when props changes (TODO: styles, class, etc)
     x1 && y1 && x2 && y2 && stops;
     canvasContext.invalidate();
+  }
+
+  let canvasUnregister: ReturnType<typeof canvasContext.register>;
+  $: if (renderContext === 'canvas') {
+    canvasUnregister = canvasContext.register({ name: 'Gradient', render });
   }
 
   onDestroy(() => {
