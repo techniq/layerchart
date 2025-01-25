@@ -121,9 +121,10 @@ function render(
 
       if (fill) {
         const currentGlobalAlpha = canvasCtx.globalAlpha;
-        if (computedStyles?.fillOpacity) {
-          canvasCtx.globalAlpha = Number(computedStyles?.fillOpacity);
-        }
+
+        const fillOpacity = Number(computedStyles?.fillOpacity);
+        const opacity = Number(computedStyles?.opacity);
+        canvasCtx.globalAlpha = fillOpacity < 1 ? fillOpacity : opacity;
 
         canvasCtx.fillStyle = fill;
         render.fill(canvasCtx);
