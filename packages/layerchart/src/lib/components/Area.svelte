@@ -7,6 +7,7 @@
   import { interpolatePath } from 'd3-interpolate-path';
 
   import { cls } from '@layerstack/tailwind';
+  import { objectId } from '@layerstack/utils/object';
 
   import { motionStore } from '$lib/stores/motionStore.js';
 
@@ -58,6 +59,9 @@
   export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
+
+  let className: string | undefined = undefined;
+  export { className as class };
 
   $: xAccessor = x ? accessor(x) : $contextX;
   $: y0Accessor = y0 ? accessor(y0) : (d: any) => min($yDomain);
@@ -139,8 +143,18 @@
   function render(ctx: CanvasRenderingContext2D) {
     renderPathData(ctx, $tweened_d, {
       styles: { fill, fillOpacity, stroke, strokeWidth },
-      classes: $$props.class,
+      classes: className,
     });
+  }
+
+  // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
+  $: fillKey = typeof fill === 'object' ? objectId(fill) : fill;
+  $: strokeKey = typeof stroke === 'object' ? objectId(stroke) : stroke;
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when props change
+    fillKey && fillOpacity && strokeKey && strokeWidth && className;
+    canvasContext.invalidate();
   }
 
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
@@ -182,7 +196,7 @@
     {stroke}
     stroke-width={strokeWidth}
     {...$$restProps}
-    class={cls('path-area', $$props.class)}
+    class={cls('path-area', className)}
     on:click
     on:pointermove
     on:pointerleave

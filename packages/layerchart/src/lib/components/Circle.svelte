@@ -2,6 +2,7 @@
   import { onDestroy, tick } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from '@layerstack/tailwind';
+  import { objectId } from '@layerstack/utils/object';
 
   import { motionStore } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
@@ -25,6 +26,9 @@
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
 
+  let className: string | undefined = undefined;
+  export { className as class };
+
   let tweened_cx = motionStore(initialCx, { spring, tweened });
   let tweened_cy = motionStore(initialCy, { spring, tweened });
   let tweened_r = motionStore(initialR, { spring, tweened });
@@ -46,15 +50,26 @@
     });
   }
 
+  // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
+  $: fillKey = fill && typeof fill === 'object' ? objectId(fill) : fill;
+  $: strokeKey = stroke && typeof stroke === 'object' ? objectId(stroke) : stroke;
+
+  $: if (renderContext === 'canvas') {
+    // Redraw when props changes
+    $tweened_cx &&
+      $tweened_cy &&
+      $tweened_r &&
+      fillKey &&
+      fillOpacity &&
+      strokeKey &&
+      strokeWidth &&
+      className;
+    canvasContext.invalidate();
+  }
+
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
     canvasUnregister = canvasContext.register({ name: 'Circle', render });
-  }
-
-  $: if (renderContext === 'canvas') {
-    // Redraw when props changes (TODO: styles, class, etc)
-    $tweened_cx && $tweened_cy && $tweened_r;
-    canvasContext.invalidate();
   }
 
   onDestroy(() => {

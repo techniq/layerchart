@@ -41,6 +41,7 @@
 
   function render(ctx: CanvasRenderingContext2D) {
     // TODO: Set correct values: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/createRadialGradient.  See also: LinearGradient
+    // TODO: Memoize `createRadialGradient()` (see LinearGradient)
     const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 0);
 
     // Use `getComputedStyles()` to convert each stop (if using CSS variables and/or classes) to color values
