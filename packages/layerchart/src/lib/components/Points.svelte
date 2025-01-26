@@ -13,14 +13,15 @@
   import Link from './Link.svelte';
   import { isScaleBand, type AnyScale } from '../utils/scales.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
+  import { accessor, type Accessor } from '../utils/common.js';
 
   const context = chartContext() as any;
   const {
     data: contextData,
-    x,
+    x: contextX,
     xScale,
     xGet,
-    y,
+    y: contextY,
     yScale,
     yGet,
     cGet,
@@ -33,6 +34,11 @@
 
   /** Override data instead of using context */
   export let data: any = undefined;
+
+  /** Override `x` accessor from Chart context */
+  export let x: Accessor = undefined;
+  /** Override `y` accessor from Chart context */
+  export let y: Accessor = undefined;
 
   export let r = 5;
   export let offsetX: Offset = undefined;
@@ -65,12 +71,15 @@
     }
   }
 
+  $: xAccessor = x ? accessor(x) : $contextX;
+  $: yAccessor = y ? accessor(y) : $contextY;
+
   $: pointsData = data ?? $contextData;
 
   $: points = pointsData
     .flatMap((d: any) => {
-      const xValue = $x(d);
-      const yValue = $y(d);
+      const xValue = xAccessor(d);
+      const yValue = yAccessor(d);
 
       if (Array.isArray(xValue)) {
         /*
@@ -120,8 +129,8 @@
     .filter((p: Point) => p) as Point[];
 
   $: _links = pointsData.flatMap((d: any) => {
-    const xValue = $x(d);
-    const yValue = $y(d);
+    const xValue = xAccessor(d);
+    const yValue = yAccessor(d);
 
     if (Array.isArray(xValue)) {
       /*
