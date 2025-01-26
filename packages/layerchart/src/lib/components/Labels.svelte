@@ -11,8 +11,16 @@
 
   const { xScale, yScale } = chartContext();
 
+  /** Override data instead of using context */
+  export let data: any = undefined;
+
   /** Override display value accessor.  By default, uses `y` unless yScale is band scale   */
   export let value: Accessor = undefined;
+
+  /** Override `x` accessor from Chart context */
+  export let x: Accessor = undefined;
+  /** Override `y` accessor from Chart context */
+  export let y: Accessor = undefined;
 
   export let placement: 'inside' | 'outside' | 'center' = 'outside';
   export let offset = placement === 'center' ? 0 : 4;
@@ -90,19 +98,21 @@
 </script>
 
 <g class="Labels">
-  <Points let:points>
+  <Points {data} {x} {y} let:points>
     {#each points as point, i (key(point.data, i))}
       {@const textProps = getTextProps(point)}
       <slot data={point} {textProps}>
         <Text
+          {...textProps}
+          {...$$restProps}
           class={cls(
             'text-xs',
             placement === 'inside'
               ? 'fill-surface-300 stroke-surface-content'
-              : 'fill-surface-content stroke-surface-100'
+              : 'fill-surface-content stroke-surface-100',
+            textProps.class,
+            $$props.class
           )}
-          {...textProps}
-          {...$$restProps}
         />
       </slot>
     {/each}
