@@ -12,7 +12,6 @@
 
 - fix(AreaChart): Fix labels placements when using `seriesLayout="stack"` ([`5602e04`](https://github.com/techniq/layerchart/commit/5602e043143e092f879b9ec1ebb487733a63fa42))
 
-
 ## 0.79.2
 
 ### Patch Changes
