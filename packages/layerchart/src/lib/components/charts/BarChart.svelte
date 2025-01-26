@@ -163,7 +163,6 @@
 
   $: if (stackSeries) {
     const seriesKeys = visibleSeries.map((s) => s.key);
-    // const stackData = stack().keys(seriesKeys)(chartDataArray(data)) as any[];
 
     const offset =
       seriesLayout === 'stackExpand'
@@ -240,6 +239,24 @@
     return barsProps;
   }
 
+  function getLabelsProps(s: (typeof series)[number], i: number) {
+    const labelsProps: ComponentProps<Labels> = {
+      // TODO: Improve placement when using `seriesLayout="group"`
+      // data: s.data,
+      // y: s.value ?? (s.data ? undefined : s.key),
+      ...props.labels,
+      ...(typeof labels === 'object' ? labels : null),
+      class: cls(
+        'stroke-surface-200 transition-opacity',
+        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+        props.labels?.class,
+        typeof labels === 'object' && labels.class
+      ),
+    };
+
+    return labelsProps;
+  }
+
   const selectedSeries = selectionStore();
   $: visibleSeries = series.filter((s) => {
     return (
@@ -309,6 +326,7 @@
     series,
     visibleSeries,
     getBarsProps,
+    getLabelsProps,
   }}
   <slot {...slotProps}>
     <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
@@ -381,7 +399,9 @@
       </slot>
 
       {#if labels}
-        <Labels {...props.labels} {...typeof labels === 'object' ? labels : null} />
+        {#each visibleSeries as s, i (s.key)}
+          <Labels {...getLabelsProps(s, i)} />
+        {/each}
       {/if}
     </svelte:component>
 

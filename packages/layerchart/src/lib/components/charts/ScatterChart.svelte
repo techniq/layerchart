@@ -116,6 +116,22 @@
     return pointsProps;
   }
 
+  function getLabelsProps(s: (typeof series)[number], i: number) {
+    const labelsProps: ComponentProps<Labels> = {
+      data: s.data,
+      ...props.labels,
+      ...(typeof labels === 'object' ? labels : null),
+      class: cls(
+        'stroke-surface-200 transition-opacity',
+        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+        props.labels?.class,
+        typeof labels === 'object' && labels.class
+      ),
+    };
+
+    return labelsProps;
+  }
+
   const selectedSeries = selectionStore();
   $: visibleSeries = series.filter((s) => {
     return (
@@ -169,6 +185,7 @@
     tooltip,
     series,
     visibleSeries,
+    getLabelsProps,
     getPointsProps,
   }}
   {@const activeSeries = tooltip.data
@@ -224,11 +241,9 @@
       </slot>
 
       {#if labels}
-        <Labels
-          format={(value) => format(value)}
-          {...props.highlight}
-          {...typeof labels === 'object' ? labels : null}
-        />
+        {#each visibleSeries as s, i (s.key)}
+          <Labels {...getLabelsProps(s, i)} />
+        {/each}
       {/if}
     </svelte:component>
 

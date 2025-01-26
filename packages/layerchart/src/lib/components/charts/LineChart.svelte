@@ -132,6 +132,41 @@
     return splineProps;
   }
 
+  function getPointsProps(s: (typeof series)[number], i: number) {
+    const pointsProps: ComponentProps<Points> = {
+      data: s.data,
+      y: s.value ?? (s.data ? undefined : s.key),
+      fill: s.color,
+      ...props.points,
+      ...(typeof points === 'object' ? points : null),
+      class: cls(
+        'stroke-surface-200 transition-opacity',
+        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+        props.points?.class,
+        typeof points === 'object' && points.class
+      ),
+    };
+
+    return pointsProps;
+  }
+
+  function getLabelsProps(s: (typeof series)[number], i: number) {
+    const labelsProps: ComponentProps<Labels> = {
+      data: s.data,
+      y: s.value ?? (s.data ? undefined : s.key),
+      ...props.labels,
+      ...(typeof labels === 'object' ? labels : null),
+      class: cls(
+        'stroke-surface-200 transition-opacity',
+        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+        props.labels?.class,
+        typeof labels === 'object' && labels.class
+      ),
+    };
+
+    return labelsProps;
+  }
+
   const selectedSeries = selectionStore();
   $: visibleSeries = series.filter((s) => {
     return (
@@ -184,6 +219,8 @@
     tooltip,
     series,
     visibleSeries,
+    getLabelsProps,
+    getPointsProps,
     getSplineProps,
   }}
   <slot {...slotProps}>
@@ -231,19 +268,15 @@
       </slot>
 
       {#if points}
-        {#each visibleSeries as s}
-          <Points
-            data={s.data}
-            fill={s.color}
-            class="stroke-surface-200"
-            {...props.points}
-            {...typeof points === 'object' ? points : null}
-          />
+        {#each visibleSeries as s, i (s.key)}
+          <Points {...getPointsProps(s, i)} />
         {/each}
       {/if}
 
       {#if labels}
-        <Labels {...props.labels} {...typeof labels === 'object' ? labels : null} />
+        {#each visibleSeries as s, i (s.key)}
+          <Labels {...getLabelsProps(s, i)} />
+        {/each}
       {/if}
 
       <slot name="highlight" {...slotProps}>
