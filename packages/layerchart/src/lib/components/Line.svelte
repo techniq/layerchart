@@ -70,8 +70,8 @@
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  $: fillKey = typeof fill === 'object' ? objectId(fill) : fill;
-  $: strokeKey = typeof stroke === 'object' ? objectId(stroke) : stroke;
+  $: fillKey = fill && typeof fill === 'object' ? objectId(fill) : fill;
+  $: strokeKey = stroke && typeof stroke === 'object' ? objectId(stroke) : stroke;
 
   $: if (renderContext === 'canvas') {
     // Redraw when props change
