@@ -6,8 +6,10 @@
   import { selectionStore } from '@layerstack/svelte-stores';
 
   import Axis from '../Axis.svelte';
+  import Brush from '../Brush.svelte';
   import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
+  import ChartClipPath from '../ChartClipPath.svelte';
   import Grid from '../Grid.svelte';
   import Highlight, { type HighlightPointData } from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
@@ -29,6 +31,7 @@
 
   interface $$Props extends ComponentProps<Chart<TData>> {
     axis?: typeof axis;
+    brush?: typeof brush;
     grid?: typeof grid;
     labels?: typeof labels;
     legend?: typeof legend;
@@ -46,6 +49,9 @@
   export let x: Accessor<TData> = undefined;
   export let y: Accessor<TData> = undefined;
 
+  /** Set xDomain.  Useful for external brush control */
+  export let xDomain: ComponentProps<typeof Brush>['xDomain'] = undefined;
+
   /** Use radial instead of cartesian coordinates, mapping `x` to `angle` and `y`` to radial.  Radial lines are positioned relative to the origin, use transform (ex. `<Group center>`) to change the origin */
   export let radial = false;
 
@@ -61,11 +67,12 @@
   $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
-  export let rule: ComponentProps<Rule> | boolean = true;
+  export let brush: ({ mode: 'integrated' } & ComponentProps<Brush>) | false = false;
   export let grid: ComponentProps<Grid> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let legend: ComponentProps<Legend> | boolean = false;
   export let points: ComponentProps<Points> | boolean = false;
+  export let rule: ComponentProps<Rule> | boolean = true;
 
   /** Event dispatched with current tooltip data */
   export let onTooltipClick: (e: { data: any }) => void = () => {};
@@ -77,22 +84,24 @@
   }) => void = () => {};
 
   export let props: {
-    xAxis?: Partial<ComponentProps<Axis>>;
-    yAxis?: Partial<ComponentProps<Axis>>;
+    brush?: Partial<ComponentProps<Brush>>;
     grid?: Partial<ComponentProps<Grid>>;
-    rule?: Partial<ComponentProps<Rule>>;
-    spline?: Partial<ComponentProps<Spline>>;
-    legend?: Partial<ComponentProps<Legend>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
+    legend?: Partial<ComponentProps<Legend>>;
     points?: Partial<ComponentProps<Points>>;
+    rule?: Partial<ComponentProps<Rule>>;
+    spline?: Partial<ComponentProps<Spline>>;
     tooltip?: {
+      context?: Partial<ComponentProps<Tooltip.Context>>;
       root?: Partial<ComponentProps<Tooltip.Root>>;
       header?: Partial<ComponentProps<Tooltip.Header>>;
       list?: Partial<ComponentProps<Tooltip.List>>;
       item?: Partial<ComponentProps<Tooltip.Item>>;
       separator?: Partial<ComponentProps<Tooltip.Separator>>;
     };
+    xAxis?: Partial<ComponentProps<Axis>>;
+    yAxis?: Partial<ComponentProps<Axis>>;
   } = {};
 
   export let renderContext: 'svg' | 'canvas' = 'svg';
@@ -187,6 +196,7 @@
 <Chart
   data={chartData}
   {x}
+  {xDomain}
   {xScale}
   y={y ?? series.map((s) => s.value ?? s.key)}
   yBaseline={0}
@@ -194,7 +204,14 @@
   {radial}
   padding={radial ? undefined : defaultChartPadding(axis, legend)}
   {...$$restProps}
-  tooltip={{ mode: 'bisect-x', onClick: onTooltipClick, ...$$props.tooltip, ...props.tooltip }}
+  tooltip={$$props.tooltip === false
+    ? false
+    : {
+        mode: 'bisect-x',
+        onClick: onTooltipClick,
+        ...props.tooltip?.context,
+        ...$$props.tooltip,
+      }}
   let:x
   let:xScale
   let:y
@@ -234,9 +251,11 @@
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#each visibleSeries as s, i (s.key)}
-          <Spline {...getSplineProps(s, i)} />
-        {/each}
+        <ChartClipPath disabled={!brush}>
+          {#each visibleSeries as s, i (s.key)}
+            <Spline {...getSplineProps(s, i)} />
+          {/each}
+        </ChartClipPath>
       </slot>
 
       <slot name="aboveMarks" {...slotProps} />
@@ -286,7 +305,13 @@
           <Highlight
             data={seriesTooltipData}
             y={s.value ?? (s.data ? undefined : s.key)}
-            points={{ fill: s.color }}
+            points={{
+              fill: s.color,
+              class: cls(
+                'transition-opacity',
+                highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10'
+              ),
+            }}
             lines={i === 0}
             onPointClick={(e) => onPointClick({ ...e, series: s })}
             onPointEnter={() => (highlightSeriesKey = s.key)}
@@ -296,6 +321,21 @@
         {/each}
       </slot>
     </svelte:component>
+
+    {#if brush && brush.mode === 'integrated'}
+      <Svg>
+        <Brush
+          axis="x"
+          resetOnEnd
+          {xDomain}
+          on:brushEnd={(e) => {
+            xDomain = e.detail.xDomain;
+          }}
+          {...typeof brush === 'object' ? brush : null}
+          {...props.brush}
+        />
+      </Svg>
+    {/if}
 
     <slot name="legend" {...slotProps}>
       {#if legend}

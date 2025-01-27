@@ -111,6 +111,7 @@
     arc?: Partial<ComponentProps<Arc>>;
     legend?: Partial<ComponentProps<Legend>>;
     tooltip?: {
+      context?: Partial<ComponentProps<Tooltip.Context>>;
       root?: Partial<ComponentProps<Tooltip.Root>>;
       header?: Partial<ComponentProps<Tooltip.Header>>;
       list?: Partial<ComponentProps<Tooltip.List>>;
@@ -170,6 +171,7 @@
       ]}
   padding={{ bottom: legend === true ? 32 : 0 }}
   {...$$restProps}
+  tooltip={props.tooltip?.context}
   let:x
   let:xScale
   let:y
