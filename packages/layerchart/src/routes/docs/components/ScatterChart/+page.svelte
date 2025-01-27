@@ -3,10 +3,11 @@
   import { format } from '@layerstack/utils';
   import { flatGroup } from 'd3-array';
   import { randomNormal } from 'd3-random';
+  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import Blockquote from '$lib/docs/Blockquote.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { getSpiral } from '$lib/utils/genData.js';
-  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   export let data;
 
@@ -304,6 +305,23 @@
     </ScatterChart>
   </div>
 </Preview>
+
+<h2>Brushing</h2>
+
+<Preview data={spiralData}>
+  <div class="h-[400px] p-4 border rounded">
+    <ScatterChart
+      data={spiralData}
+      x="x"
+      y="y"
+      {renderContext}
+      brush={{ mode: 'integrated' }}
+      tooltip={{ mode: 'quadtree' }}
+    />
+  </div>
+</Preview>
+
+<Blockquote>Currently `voronoi` tooltip mode is not supported when using Brush</Blockquote>
 
 <h2>Custom chart</h2>
 

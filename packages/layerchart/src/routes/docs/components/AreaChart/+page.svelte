@@ -774,6 +774,20 @@
   </div>
 </Preview>
 
+<h2>Brushing</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      {renderContext}
+      brush={{ mode: 'integrated' }}
+    />
+  </div>
+</Preview>
+
 <h2>Custom chart</h2>
 
 <Preview data={dateSeriesData}>

@@ -6,8 +6,10 @@
   import { selectionStore } from '@layerstack/svelte-stores';
 
   import Axis from '../Axis.svelte';
+  import Brush from '../Brush.svelte';
   import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
+  import ChartClipPath from '../ChartClipPath.svelte';
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
@@ -26,6 +28,7 @@
 
   interface $$Props extends ComponentProps<Chart<TData>> {
     axis?: typeof axis;
+    brush?: typeof brush;
     grid?: typeof grid;
     labels?: typeof labels;
     legend?: typeof legend;
@@ -40,6 +43,11 @@
   export let x: Accessor<TData> = undefined;
   export let y: Accessor<TData> = undefined;
 
+  /** Set xDomain.  Useful for external brush control */
+  export let xDomain: ComponentProps<typeof Brush>['xDomain'] = undefined;
+  /** Set yDomain.  Useful for external brush control */
+  export let yDomain: ComponentProps<typeof Brush>['yDomain'] = undefined;
+
   export let series: {
     key: string;
     label?: string;
@@ -50,6 +58,7 @@
   $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
+  export let brush: ({ mode: 'integrated' } & ComponentProps<Brush>) | false = false;
   export let grid: ComponentProps<Grid> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let legend: ComponentProps<Legend> | boolean = false;
@@ -59,13 +68,12 @@
   export let onTooltipClick: (e: { data: any }) => void = () => {};
 
   export let props: {
-    xAxis?: Partial<ComponentProps<Axis>>;
-    yAxis?: Partial<ComponentProps<Axis>>;
+    brush?: Partial<ComponentProps<Brush>>;
     grid?: Partial<ComponentProps<Grid>>;
-    points?: Partial<ComponentProps<Points>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
     legend?: Partial<ComponentProps<Legend>>;
+    points?: Partial<ComponentProps<Points>>;
     rule?: Partial<ComponentProps<Rule>>;
     tooltip?: {
       context?: Partial<ComponentProps<Tooltip.Context>>;
@@ -75,6 +83,8 @@
       item?: Partial<ComponentProps<Tooltip.Item>>;
       separator?: Partial<ComponentProps<Tooltip.Separator>>;
     };
+    xAxis?: Partial<ComponentProps<Axis>>;
+    yAxis?: Partial<ComponentProps<Axis>>;
   } = {};
 
   export let renderContext: 'svg' | 'canvas' = 'svg';
@@ -153,8 +163,10 @@
 <Chart
   data={chartData}
   {x}
+  {xDomain}
   {xScale}
   {y}
+  {yDomain}
   {yScale}
   yNice
   padding={defaultChartPadding(axis, legend)}
@@ -211,9 +223,11 @@
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
-        {#each visibleSeries as s, i (s.key)}
-          <Points {...getPointsProps(s, i)} />
-        {/each}
+        <ChartClipPath disabled={!brush}>
+          {#each visibleSeries as s, i (s.key)}
+            <Points {...getPointsProps(s, i)} />
+          {/each}
+        </ChartClipPath>
       </slot>
 
       <slot name="aboveMarks" {...slotProps} />
@@ -254,6 +268,24 @@
         {/each}
       {/if}
     </svelte:component>
+
+    <!-- TODO: Determine how to coordinate with `tooltip={{ mode: 'voronoi' }} -->
+    {#if brush && brush.mode === 'integrated'}
+      <Svg>
+        <Brush
+          axis="both"
+          resetOnEnd
+          {xDomain}
+          {yDomain}
+          on:brushEnd={(e) => {
+            xDomain = e.detail.xDomain;
+            yDomain = e.detail.yDomain;
+          }}
+          {...typeof brush === 'object' ? brush : null}
+          {...props.brush}
+        />
+      </Svg>
+    {/if}
 
     <slot name="legend" {...slotProps}>
       {#if legend}
