@@ -96,6 +96,7 @@
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
     tooltip?: {
+      context?: Partial<ComponentProps<Tooltip.Context>>;
       root?: Partial<ComponentProps<Tooltip.Root>>;
       header?: Partial<ComponentProps<Tooltip.Header>>;
       list?: Partial<ComponentProps<Tooltip.List>>;
@@ -260,7 +261,14 @@
   {radial}
   padding={radial ? undefined : defaultChartPadding(axis, legend)}
   {...$$restProps}
-  tooltip={{ mode: 'bisect-x', onClick: onTooltipClick, ...$$props.tooltip, ...props.tooltip }}
+  tooltip={$$props.tooltip === false
+    ? false
+    : {
+        mode: 'bisect-x',
+        onClick: onTooltipClick,
+        ...props.tooltip?.context,
+        ...$$props.tooltip,
+      }}
   let:x
   let:xScale
   let:y

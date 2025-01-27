@@ -68,6 +68,7 @@
     legend?: Partial<ComponentProps<Legend>>;
     rule?: Partial<ComponentProps<Rule>>;
     tooltip?: {
+      context?: Partial<ComponentProps<Tooltip.Context>>;
       root?: Partial<ComponentProps<Tooltip.Root>>;
       header?: Partial<ComponentProps<Tooltip.Header>>;
       list?: Partial<ComponentProps<Tooltip.List>>;
@@ -158,7 +159,14 @@
   yNice
   padding={defaultChartPadding(axis, legend)}
   {...$$restProps}
-  tooltip={{ mode: 'voronoi', onClick: onTooltipClick, ...$$props.tooltip, ...props.tooltip }}
+  tooltip={$$props.tooltip === false
+    ? false
+    : {
+        mode: 'voronoi',
+        onClick: onTooltipClick,
+        ...props.tooltip?.context,
+        ...$$props.tooltip,
+      }}
   let:x
   let:xScale
   let:y
