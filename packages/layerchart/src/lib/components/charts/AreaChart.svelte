@@ -373,7 +373,13 @@
           <Highlight
             data={seriesTooltipData}
             y={stackSeries ? (d) => d.stackData[i][1] : (s.value ?? (s.data ? undefined : s.key))}
-            points={{ fill: s.color }}
+            points={{
+              fill: s.color,
+              class: cls(
+                'transition-opacity',
+                highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10'
+              ),
+            }}
             lines={i == 0}
             onPointClick={(e) => onPointClick({ ...e, series: s })}
             onPointEnter={() => (highlightSeriesKey = s.key)}
