@@ -12,7 +12,8 @@
   import Text from './Text.svelte';
 
   import { localPoint } from '$lib/utils/event.js';
-  import type { DomainType } from 'layerchart/utils/scales.js';
+  import type { DomainType } from '../utils/scales.js';
+  import { asAny } from '../utils/types.js';
 
   const { xScale, yScale, width, height, padding } = chartContext();
 
@@ -219,11 +220,6 @@
     xDomain?.[1]?.valueOf() !== originalXDomain[1]?.valueOf() ||
     yDomain?.[0]?.valueOf() !== originalYDomain[0]?.valueOf() ||
     yDomain?.[1]?.valueOf() !== originalYDomain[1]?.valueOf();
-
-  /** TODO: Fix types and remove workaround (Svelte 5)*/
-  function any(value: any): any {
-    return value;
-  }
 </script>
 
 <g class={cls('Brush select-none', classes.root, $$props.class)}>
@@ -359,7 +355,7 @@
             dx={-4}
             textAnchor="end"
             verticalAnchor="middle"
-            value={formatValue(any(xDomain?.[0]), format)}
+            value={formatValue(asAny(xDomain?.[0]), format)}
             {...typeof labels === 'object' ? labels : null}
             class={labelClass}
           />
@@ -370,7 +366,7 @@
             dx={4}
             textAnchor="start"
             verticalAnchor="middle"
-            value={formatValue(any(xDomain?.[1]), format)}
+            value={formatValue(asAny(xDomain?.[1]), format)}
             {...typeof labels === 'object' ? labels : null}
             class={labelClass}
           />
@@ -383,7 +379,7 @@
             dy={-4}
             textAnchor="middle"
             verticalAnchor="end"
-            value={formatValue(any(yDomain?.[1]), format)}
+            value={formatValue(asAny(yDomain?.[1]), format)}
             {...typeof labels === 'object' ? labels : null}
             class={labelClass}
           />
@@ -394,7 +390,7 @@
             dy={4}
             textAnchor="middle"
             verticalAnchor="start"
-            value={formatValue(any(yDomain?.[0]), format)}
+            value={formatValue(asAny(yDomain?.[0]), format)}
             {...typeof labels === 'object' ? labels : null}
             class={labelClass}
           />
