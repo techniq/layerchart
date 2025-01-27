@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import { extent, min, max } from 'd3-array';
   import { clamp } from '@layerstack/utils';
@@ -16,12 +16,6 @@
   import { asAny } from '../utils/types.js';
 
   const { xScale, yScale, width, height, padding } = chartContext();
-
-  const dispatch = createEventDispatcher<{
-    change: { xDomain?: DomainType; yDomain?: DomainType };
-    brushStart: { xDomain?: DomainType; yDomain?: DomainType };
-    brushEnd: { xDomain?: DomainType; yDomain?: DomainType };
-  }>();
 
   /** Axis to apply brushing */
   export let axis: 'x' | 'y' | 'both' = 'x';
@@ -61,6 +55,10 @@
     labels?: string;
   } = {};
 
+  export let onChange: (e: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
+  export let onBrushStart: (e: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
+  export let onBrushEnd: (e: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
+
   let frameEl: SVGRectElement;
 
   function handler(
@@ -83,7 +81,7 @@
         },
       };
 
-      dispatch('brushStart', { xDomain, yDomain });
+      onBrushStart({ xDomain, yDomain });
 
       const onPointerMove = (e: PointerEvent) => {
         fn(start, {
@@ -95,17 +93,17 @@
         //   // Ignore?
         //   // TODO: What about when using `x` or `y` axis?
         // } else {
-        dispatch('change', { xDomain, yDomain });
+        onChange({ xDomain, yDomain });
         // }
       };
 
       const onPointerUp = (e: PointerEvent) => {
         if (e.target === frameEl) {
           reset();
-          dispatch('change', { xDomain, yDomain });
+          onChange({ xDomain, yDomain });
         }
 
-        dispatch('brushEnd', { xDomain, yDomain });
+        onBrushEnd({ xDomain, yDomain });
 
         if (resetOnEnd) {
           reset();
@@ -258,7 +256,7 @@
         on:dblclick={() => {
           if (yDomain) {
             yDomain[0] = yDomainMin;
-            dispatch('change', { xDomain, yDomain });
+            onChange({ xDomain, yDomain });
           }
         }}
       >
@@ -303,7 +301,7 @@
         on:dblclick={() => {
           if (xDomain) {
             xDomain[0] = xDomainMin;
-            dispatch('change', { xDomain, yDomain });
+            onChange({ xDomain, yDomain });
           }
         }}
       >
@@ -325,7 +323,7 @@
         on:dblclick={() => {
           if (xDomain) {
             xDomain[1] = xDomainMax;
-            dispatch('change', { xDomain, yDomain });
+            onChange({ xDomain, yDomain });
           }
         }}
       >

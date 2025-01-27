@@ -324,15 +324,16 @@
 
     {#if brush && brush.mode === 'integrated'}
       <Svg>
+        {@const brushProps = { ...(typeof brush === 'object' ? brush : null), ...props.brush }}
         <Brush
           axis="x"
           resetOnEnd
           {xDomain}
-          on:brushEnd={(e) => {
-            xDomain = e.detail.xDomain;
+          {...brushProps}
+          onBrushEnd={(e) => {
+            xDomain = e.xDomain;
+            brushProps.onBrushEnd?.(e);
           }}
-          {...typeof brush === 'object' ? brush : null}
-          {...props.brush}
         />
       </Svg>
     {/if}

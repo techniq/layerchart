@@ -272,17 +272,18 @@
     <!-- TODO: Determine how to coordinate with `tooltip={{ mode: 'voronoi' }} -->
     {#if brush && brush.mode === 'integrated'}
       <Svg>
+        {@const brushProps = { ...(typeof brush === 'object' ? brush : null), ...props.brush }}
         <Brush
           axis="both"
           resetOnEnd
           {xDomain}
           {yDomain}
-          on:brushEnd={(e) => {
-            xDomain = e.detail.xDomain;
-            yDomain = e.detail.yDomain;
+          {...brushProps}
+          onBrushEnd={(e) => {
+            xDomain = e.xDomain;
+            yDomain = e.yDomain;
+            brushProps.onBrushEnd?.(e);
           }}
-          {...typeof brush === 'object' ? brush : null}
-          {...props.brush}
         />
       </Svg>
     {/if}
