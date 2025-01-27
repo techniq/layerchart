@@ -4,13 +4,13 @@
 
 ### Minor Changes
 
-- feat(ChartClipPath|CircleClipPath|RectClipPath): Support passing `disabled` to underlying `ClipPath` ([#348](https://github.com/techniq/layerchart/pull/348))
-
 - feat(AreaChart|LineChart|ScatterChart): Add Brush integration ([#348](https://github.com/techniq/layerchart/pull/348))
 
-### Patch Changes
+- feat(ChartClipPath|CircleClipPath|RectClipPath): Support passing `disabled` to underlying `ClipPath` ([#348](https://github.com/techniq/layerchart/pull/348))
 
 - feat: Support passing `props={{ tooltip: { context: ... } }}` for all simplified charts (still support `tooltip={...}`) ([#348](https://github.com/techniq/layerchart/pull/348))
+
+### Patch Changes
 
 - fix: Restore ability to pass `tooltip={false}` to disable tooltip for all simplified charts ([#348](https://github.com/techniq/layerchart/pull/348))
 
