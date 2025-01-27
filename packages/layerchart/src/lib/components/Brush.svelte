@@ -12,13 +12,14 @@
   import Text from './Text.svelte';
 
   import { localPoint } from '$lib/utils/event.js';
+  import type { DomainType } from 'layerchart/utils/scales.js';
 
   const { xScale, yScale, width, height, padding } = chartContext();
 
   const dispatch = createEventDispatcher<{
-    change: { xDomain?: [any, any]; yDomain?: [any, any] };
-    brushStart: { xDomain?: [any, any]; yDomain?: [any, any] };
-    brushEnd: { xDomain?: [any, any]; yDomain?: [any, any] };
+    change: { xDomain?: DomainType; yDomain?: DomainType };
+    brushStart: { xDomain?: DomainType; yDomain?: DomainType };
+    brushEnd: { xDomain?: DomainType; yDomain?: DomainType };
   }>();
 
   /** Axis to apply brushing */
@@ -30,14 +31,8 @@
   /** Only show range while actively brushing.  Useful with `brushEnd` event */
   export let resetOnEnd = false;
 
-  export let xDomain: [number | Date | null, number | Date | null] = $xScale.domain() as [
-    number,
-    number,
-  ];
-  export let yDomain: [number | Date | null, number | Date | null] = $yScale.domain() as [
-    number,
-    number,
-  ];
+  export let xDomain: DomainType = $xScale.domain() as [number, number];
+  export let yDomain: DomainType = $yScale.domain() as [number, number];
 
   export let labels: ComponentProps<Text> | boolean = false;
 
@@ -79,8 +74,8 @@
   ) {
     return (e: PointerEvent) => {
       const start = {
-        xDomain: [xDomain[0] ?? xDomainMin, xDomain[1] ?? xDomainMax] as [number, number],
-        yDomain: [yDomain[0] ?? yDomainMin, yDomain[1] ?? yDomainMax] as [number, number],
+        xDomain: [xDomain?.[0] ?? xDomainMin, xDomain?.[1] ?? xDomainMax] as [number, number],
+        yDomain: [yDomain?.[0] ?? yDomainMin, yDomain?.[1] ?? yDomainMax] as [number, number],
         value: {
           x: $xScale.invert?.((localPoint(frameEl, e)?.x ?? 0) - $padding.left),
           y: $yScale.invert?.((localPoint(frameEl, e)?.y ?? 0) - $padding.top),
@@ -208,10 +203,10 @@
     yDomain = [yDomainMin, yDomainMax];
   }
 
-  $: top = $yScale(yDomain[1]);
-  $: bottom = $yScale(yDomain[0]);
-  $: left = $xScale(xDomain[0]);
-  $: right = $xScale(xDomain[1]);
+  $: top = $yScale(yDomain?.[1]);
+  $: bottom = $yScale(yDomain?.[0]);
+  $: left = $xScale(xDomain?.[0]);
+  $: right = $xScale(xDomain?.[1]);
 
   $: rangeTop = axis === 'both' || axis === 'y' ? top : 0;
   $: rangeLeft = axis === 'both' || axis === 'x' ? left : 0;
@@ -220,10 +215,10 @@
 
   // Set reactively to handle cases where xDomain/yDomain are set externally (ex. `bind:xDomain`)
   $: isActive =
-    xDomain[0]?.valueOf() !== originalXDomain[0]?.valueOf() ||
-    xDomain[1]?.valueOf() !== originalXDomain[1]?.valueOf() ||
-    yDomain[0]?.valueOf() !== originalYDomain[0]?.valueOf() ||
-    yDomain[1]?.valueOf() !== originalYDomain[1]?.valueOf();
+    xDomain?.[0]?.valueOf() !== originalXDomain[0]?.valueOf() ||
+    xDomain?.[1]?.valueOf() !== originalXDomain[1]?.valueOf() ||
+    yDomain?.[0]?.valueOf() !== originalYDomain[0]?.valueOf() ||
+    yDomain?.[1]?.valueOf() !== originalYDomain[1]?.valueOf();
 
   /** TODO: Fix types and remove workaround (Svelte 5)*/
   function any(value: any): any {
@@ -265,8 +260,10 @@
         class="handle top"
         on:pointerdown={adjustTop}
         on:dblclick={() => {
-          yDomain[0] = yDomainMin;
-          dispatch('change', { xDomain, yDomain });
+          if (yDomain) {
+            yDomain[0] = yDomainMin;
+            dispatch('change', { xDomain, yDomain });
+          }
         }}
       >
         <slot name="handle" edge="top" {rangeWidth} {rangeHeight}>
@@ -285,7 +282,9 @@
         class="handle bottom"
         on:pointerdown={adjustBottom}
         on:dblclick={() => {
-          yDomain[1] = yDomainMax;
+          if (yDomain) {
+            yDomain[1] = yDomainMax;
+          }
         }}
       >
         <slot name="handle" edge="bottom" {rangeWidth} {rangeHeight}>
@@ -306,8 +305,10 @@
         class="handle left"
         on:pointerdown={adjustLeft}
         on:dblclick={() => {
-          xDomain[0] = xDomainMin;
-          dispatch('change', { xDomain, yDomain });
+          if (xDomain) {
+            xDomain[0] = xDomainMin;
+            dispatch('change', { xDomain, yDomain });
+          }
         }}
       >
         <slot name="handle" edge="left" {rangeWidth} {rangeHeight}>
@@ -326,8 +327,10 @@
         class="handle right"
         on:pointerdown={adjustRight}
         on:dblclick={() => {
-          xDomain[1] = xDomainMax;
-          dispatch('change', { xDomain, yDomain });
+          if (xDomain) {
+            xDomain[1] = xDomainMax;
+            dispatch('change', { xDomain, yDomain });
+          }
         }}
       >
         <slot name="handle" edge="right" {rangeWidth} {rangeHeight}>
@@ -356,7 +359,7 @@
             dx={-4}
             textAnchor="end"
             verticalAnchor="middle"
-            value={formatValue(any(xDomain[0]), format)}
+            value={formatValue(any(xDomain?.[0]), format)}
             {...typeof labels === 'object' ? labels : null}
             class={labelClass}
           />
@@ -367,7 +370,7 @@
             dx={4}
             textAnchor="start"
             verticalAnchor="middle"
-            value={formatValue(any(xDomain[1]), format)}
+            value={formatValue(any(xDomain?.[1]), format)}
             {...typeof labels === 'object' ? labels : null}
             class={labelClass}
           />
@@ -380,7 +383,7 @@
             dy={-4}
             textAnchor="middle"
             verticalAnchor="end"
-            value={formatValue(any(yDomain[1]), format)}
+            value={formatValue(any(yDomain?.[1]), format)}
             {...typeof labels === 'object' ? labels : null}
             class={labelClass}
           />
@@ -391,7 +394,7 @@
             dy={4}
             textAnchor="middle"
             verticalAnchor="start"
-            value={formatValue(any(yDomain[0]), format)}
+            value={formatValue(any(yDomain?.[0]), format)}
             {...typeof labels === 'object' ? labels : null}
             class={labelClass}
           />
