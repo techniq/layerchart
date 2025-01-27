@@ -14,9 +14,12 @@
   export let r: number;
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
+
+  /** Disable clipping (show all) */
+  export let disabled: boolean = false;
 </script>
 
-<ClipPath {id} let:url>
+<ClipPath {id} {disabled} let:url>
   <Circle slot="clip" {cx} {cy} {r} {spring} {tweened} {...$$restProps} />
   <slot {id} {url} />
 </ClipPath>

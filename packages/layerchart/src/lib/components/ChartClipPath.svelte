@@ -6,6 +6,9 @@
 
   /** Include padding area (ex. axis) */
   export let full = false;
+
+  /** Disable clipping (show all) */
+  export let disabled: boolean = false;
 </script>
 
 <RectClipPath
@@ -13,6 +16,7 @@
   y={full && $padding.top ? -$padding.top : 0}
   width={$width + (full ? ($padding?.left ?? 0) + ($padding?.right ?? 0) : 0)}
   height={$height + (full ? ($padding?.top ?? 0) + ($padding?.bottom ?? 0) : 0)}
+  {disabled}
   on:click
   {...$$restProps}
 >

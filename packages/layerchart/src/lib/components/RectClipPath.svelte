@@ -14,9 +14,12 @@
   export let height: number;
   export let spring: ComponentProps<Rect>['spring'] = undefined;
   export let tweened: ComponentProps<Rect>['tweened'] = undefined;
+
+  /** Disable clipping (show all) */
+  export let disabled: boolean = false;
 </script>
 
-<ClipPath {id} let:url>
+<ClipPath {id} {disabled} let:url>
   <Rect slot="clip" {x} {y} {width} {height} {spring} {tweened} {...$$restProps} />
   <slot {id} {url} />
 </ClipPath>
