@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.81.0
+
+### Minor Changes
+
+- breaking(Brush): Change events (`change`, `brushStart`, `brushEnd`) to callback functions (`onChange`, `onBrushStart`, `onBrushEnd`). Allows usage from simplified charts and moves towards Svelte 5 api ([`450feb8`](https://github.com/techniq/layerchart/commit/450feb8262179fac7380a8054e4c1528264638f3))
+
 ## 0.80.0
 
 ### Minor Changes
