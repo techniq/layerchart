@@ -2,4 +2,4 @@
 'layerchart': patch
 ---
 
-fix: Properly handle `undefined` fill/stroke when creating objectId for canvas reactivity
+fix: Properly handle `null` fill/stroke when creating objectId for canvas reactivity
