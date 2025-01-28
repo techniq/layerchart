@@ -31,6 +31,12 @@
 
   export let labels: ComponentProps<Text> | boolean = false;
 
+  /** Mode of operation
+   *   `integrated`: use with single chart
+   *   `separated`: use with separate (typically smaller) chart and state can be managed externally (sync with other charts, etc).  Show active selection when domain does not equal original
+   */
+  export let mode: 'integrated' | 'separated' = 'integrated';
+
   // Capture original domains for reset()
   const originalXDomain = $xScale.domain() as [number, number];
   const originalYDomain = $yScale.domain() as [number, number];
@@ -212,12 +218,15 @@
   $: rangeWidth = axis === 'both' || axis === 'x' ? right - left : $width;
   $: rangeHeight = axis === 'both' || axis === 'y' ? bottom - top : $height;
 
-  // Set reactively to handle cases where xDomain/yDomain are set externally (ex. `bind:xDomain`)
-  $: isActive =
-    xDomain?.[0]?.valueOf() !== originalXDomain[0]?.valueOf() ||
-    xDomain?.[1]?.valueOf() !== originalXDomain[1]?.valueOf() ||
-    yDomain?.[0]?.valueOf() !== originalYDomain[0]?.valueOf() ||
-    yDomain?.[1]?.valueOf() !== originalYDomain[1]?.valueOf();
+  let isActive = false;
+  $: if (mode === 'separated') {
+    // Set reactively to handle cases where xDomain/yDomain are set externally (ex. `bind:xDomain`)
+    isActive =
+      xDomain?.[0]?.valueOf() !== originalXDomain[0]?.valueOf() ||
+      xDomain?.[1]?.valueOf() !== originalXDomain[1]?.valueOf() ||
+      yDomain?.[0]?.valueOf() !== originalYDomain[0]?.valueOf() ||
+      yDomain?.[1]?.valueOf() !== originalYDomain[1]?.valueOf();
+  }
 </script>
 
 <g class={cls('Brush select-none', classes.root, $$props.class)}>

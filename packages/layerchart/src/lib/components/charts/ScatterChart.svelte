@@ -58,7 +58,7 @@
   $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
-  export let brush: ({ mode: 'integrated' } & ComponentProps<Brush>) | false = false;
+  export let brush: ComponentProps<Brush> | boolean = false;
   export let grid: ComponentProps<Grid> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let legend: ComponentProps<Legend> | boolean = false;
@@ -270,7 +270,7 @@
     </svelte:component>
 
     <!-- TODO: Determine how to coordinate with `tooltip={{ mode: 'voronoi' }} -->
-    {#if brush && brush.mode === 'integrated'}
+    {#if brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')}
       <Svg>
         {@const brushProps = { ...(typeof brush === 'object' ? brush : null), ...props.brush }}
         <Brush

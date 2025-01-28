@@ -315,7 +315,7 @@
       x="x"
       y="y"
       {renderContext}
-      brush={{ mode: 'integrated' }}
+      brush
       tooltip={{ mode: 'quadtree' }}
     />
   </div>

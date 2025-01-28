@@ -19,6 +19,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import type { DomainType } from '$lib/utils/scales.js';
 
   export let data;
 
@@ -29,6 +30,8 @@
       value: Math.random() < 0.2 ? null : d.value,
     };
   });
+
+  const dateSeriesData2 = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
 
   const negativeDateSeriesData = createDateSeries({
     count: 30,
@@ -85,6 +88,8 @@
   let renderContext: 'svg' | 'canvas' = 'svg';
 
   let lockedTooltip = false;
+
+  let xDomain: DomainType | undefined = null;
 </script>
 
 <svelte:window
@@ -778,13 +783,35 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart
-      data={dateSeriesData}
-      x="date"
-      y="value"
-      {renderContext}
-      brush={{ mode: 'integrated' }}
-    />
+    <AreaChart data={dateSeriesData} x="date" y="value" brush {renderContext} />
+  </div>
+</Preview>
+
+<h2>Brush syncing</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="grid grid-cols-md gap-3">
+    <div class="h-[300px] p-4 border rounded">
+      <AreaChart
+        data={dateSeriesData}
+        x="date"
+        y="value"
+        {xDomain}
+        brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
+        {renderContext}
+      />
+    </div>
+
+    <div class="h-[300px] p-4 border rounded">
+      <AreaChart
+        data={dateSeriesData2}
+        x="date"
+        y="value"
+        {xDomain}
+        brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
+        {renderContext}
+      />
+    </div>
   </div>
 </Preview>
 

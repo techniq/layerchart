@@ -497,7 +497,7 @@
                 line={{ class: 'stroke-2 stroke-[hsl(var(--chart-color))]' }}
                 class="fill-[hsl(var(--chart-color)/20%)]"
               />
-              <Brush bind:xDomain />
+              <Brush bind:xDomain mode="separated" />
             </Svg>
           </Chart>
         </div>
