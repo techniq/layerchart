@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.81.1
+
+### Patch Changes
+
+- fix(Brush): Add `mode: 'integrated' | 'separated'` to better support external state updates (default: `integarted` and no longer shows active selection when brush domain != original domain) ([`120f5e0`](https://github.com/techniq/layerchart/commit/120f5e041dc1d813e8f1de4ef8e182e1306c4d7b))
+
 ## 0.81.0
 
 ### Minor Changes
