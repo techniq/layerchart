@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.81.3
+
+### Patch Changes
+
+- fix(PieChart): Align `interface $Props extends ...` with other simplified charts to fix odd type issue ([`a7133b4`](https://github.com/techniq/layerchart/commit/a7133b45da35108e88f1edeca433824241b3c5e4))
+
 ## 0.81.2
 
 ### Patch Changes
