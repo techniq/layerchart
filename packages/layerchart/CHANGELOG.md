@@ -1,5 +1,13 @@
 # LayerChart
 
+## 0.81.2
+
+### Patch Changes
+
+- feat(Brush): Add `onReset` callback event ([`5b95bc9`](https://github.com/techniq/layerchart/commit/5b95bc95a48e3b050b484bb01ff93ed801c3d21d))
+
+- fix(Brush): On reset, restore original configured domain values and not data derived domain values ([`5b95bc9`](https://github.com/techniq/layerchart/commit/5b95bc95a48e3b050b484bb01ff93ed801c3d21d))
+
 ## 0.81.1
 
 ### Patch Changes
