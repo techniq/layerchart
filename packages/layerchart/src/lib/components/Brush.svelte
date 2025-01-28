@@ -15,7 +15,7 @@
   import type { DomainType } from '../utils/scales.js';
   import { asAny } from '../utils/types.js';
 
-  const { xScale, yScale, width, height, padding } = chartContext();
+  const { xScale, yScale, width, height, padding, config } = chartContext();
 
   /** Axis to apply brushing */
   export let axis: 'x' | 'y' | 'both' = 'x';
@@ -38,8 +38,8 @@
   export let mode: 'integrated' | 'separated' = 'integrated';
 
   // Capture original domains for reset()
-  const originalXDomain = $xScale.domain() as [number, number];
-  const originalYDomain = $yScale.domain() as [number, number];
+  const originalXDomain = $config.xDomain;
+  const originalYDomain = $config.yDomain;
 
   $: [xDomainMin, xDomainMax] = extent<number>($xScale.domain()) as [number, number];
   $: [yDomainMin, yDomainMax] = extent<number>($yScale.domain()) as [number, number];
@@ -64,6 +64,7 @@
   export let onChange: (e: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
   export let onBrushStart: (e: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
   export let onBrushEnd: (e: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
+  export let onReset: (e: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
 
   let frameEl: SVGRectElement;
 
@@ -201,6 +202,8 @@
 
     xDomain = originalXDomain;
     yDomain = originalYDomain;
+
+    onReset({ xDomain, yDomain });
   }
 
   function selectAll() {
@@ -222,10 +225,10 @@
   $: if (mode === 'separated') {
     // Set reactively to handle cases where xDomain/yDomain are set externally (ex. `bind:xDomain`)
     isActive =
-      xDomain?.[0]?.valueOf() !== originalXDomain[0]?.valueOf() ||
-      xDomain?.[1]?.valueOf() !== originalXDomain[1]?.valueOf() ||
-      yDomain?.[0]?.valueOf() !== originalYDomain[0]?.valueOf() ||
-      yDomain?.[1]?.valueOf() !== originalYDomain[1]?.valueOf();
+      xDomain?.[0]?.valueOf() !== originalXDomain?.[0]?.valueOf() ||
+      xDomain?.[1]?.valueOf() !== originalXDomain?.[1]?.valueOf() ||
+      yDomain?.[0]?.valueOf() !== originalYDomain?.[0]?.valueOf() ||
+      yDomain?.[1]?.valueOf() !== originalYDomain?.[1]?.valueOf();
   }
 </script>
 

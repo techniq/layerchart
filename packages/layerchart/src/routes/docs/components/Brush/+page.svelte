@@ -592,14 +592,11 @@
           <Points let:points>
             {#each points as point}
               {@const isSelected =
-                // @ts-expect-error
-                (value.xDomain[0] == null || value.xDomain[0] <= point.data.x) &&
-                // @ts-expect-error
-                (value.xDomain[1] == null || point.data.x <= value.xDomain[1]) &&
-                // @ts-expect-error
-                (value.yDomain[0] == null || value.yDomain[0] <= point.data.y) &&
-                // @ts-expect-error
-                (value.yDomain[1] == null || point.data.y <= value.yDomain[1])}
+                value &&
+                (value.xDomain?.[0] == null || value.xDomain?.[0] <= point.data.x) &&
+                (value.xDomain?.[1] == null || point.data.x <= value.xDomain?.[1]) &&
+                (value.yDomain?.[0] == null || value.yDomain?.[0] <= point.data.y) &&
+                (value.yDomain?.[1] == null || point.data.y <= value.yDomain?.[1])}
 
               <Circle
                 cx={point.x}
