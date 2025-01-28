@@ -5,6 +5,8 @@
   import { chartContext } from './ChartContext.svelte';
   import Canvas from './layout/Canvas.svelte';
   import { transformContext } from './TransformContext.svelte';
+  import { rgbColorGenerator } from '../utils/color.js';
+  import { getPixelColor } from '../utils/canvas.js';
 
   const { width, height } = chartContext();
 
@@ -25,24 +27,7 @@
     };
   }>();
 
-  function* rgbColorGenerator(step = 500) {
-    let nextColor = 1;
-
-    while (nextColor < 16777216) {
-      const rgb = [
-        nextColor & 0xff, // red
-        (nextColor & 0xff00) >> 8, // green
-        (nextColor & 0xff0000) >> 16, // blue
-      ];
-
-      nextColor += step;
-      yield `rgb(${rgb.join(',')})`;
-    }
-
-    return 'rgb(0,0,0)';
-  }
-
-  $: colorGenerator = rgbColorGenerator();
+  let colorGenerator = rgbColorGenerator();
 
   // Reset color generator whenever updated (width/height) so always reusing same colors (and not exhausting)
   const { translate, scale, dragging } = transformContext();
@@ -63,11 +48,7 @@
   let activePointer = false;
 
   function getPointerData(e: PointerEvent | MouseEvent) {
-    const { offsetX, offsetY } = e;
-
-    const dpr = window.devicePixelRatio ?? 1;
-    const imageData = context.getImageData(offsetX * dpr, offsetY * dpr, 1, 1);
-    const [r, g, b, a] = imageData.data;
+    const { r, g, b } = getPixelColor(context, e.offsetX, e.offsetY);
     const colorKey = `rgb(${r},${g},${b})`;
     const data = dataByColor.get(colorKey);
 

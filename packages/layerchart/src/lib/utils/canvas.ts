@@ -280,3 +280,10 @@ export const createLinearGradient = memoize(
     return key;
   }
 );
+
+export function getPixelColor(ctx: CanvasRenderingContext2D, x: number, y: number) {
+  const dpr = window.devicePixelRatio ?? 1;
+  const imageData = ctx.getImageData(x * dpr, y * dpr, 1, 1);
+  const [r, g, b, a] = imageData.data;
+  return { r, g, b, a };
+}
