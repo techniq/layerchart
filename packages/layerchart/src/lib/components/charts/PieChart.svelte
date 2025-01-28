@@ -16,9 +16,7 @@
 
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
 
-  type ChartProps = ComponentProps<Chart<TData>>;
-
-  interface $$Props extends ChartProps {
+  interface $$Props extends ComponentProps<Chart<TData>> {
     cornerRadius?: typeof cornerRadius;
     innerRadius?: typeof innerRadius;
     key?: typeof key;
@@ -39,7 +37,7 @@
     onTooltipClick?: typeof onTooltipClick;
   }
 
-  export let data: ChartProps['data'] = [];
+  export let data: $$Props['data'] = [];
 
   /** Key accessor */
   export let key: Accessor<TData> = 'key';
