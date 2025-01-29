@@ -353,7 +353,7 @@
           !area.fill && 'fill-surface-content/5',
           typeof area === 'object' ? area.class : null
         )}
-        on:click={() => onAreaClick({ data: highlightData })}
+        onclick={() => onAreaClick({ data: highlightData })}
       />
     </slot>
   {/if}
@@ -413,9 +413,9 @@
             !point.fill && (typeof points === 'boolean' || !points.fill) && 'fill-primary',
             typeof points === 'object' ? points.class : null
           )}
-          onClick={() => onPointClick({ point, data: highlightData })}
-          onPointerEnter={() => onPointEnter({ point, data: highlightData })}
-          onPointerLeave={() => onPointLeave({ point, data: highlightData })}
+          onclick={() => onPointClick({ point, data: highlightData })}
+          onpointerenter={() => onPointEnter({ point, data: highlightData })}
+          onpointerleave={() => onPointLeave({ point, data: highlightData })}
         />
       {/each}
     </slot>

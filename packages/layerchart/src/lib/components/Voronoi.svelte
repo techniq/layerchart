@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
   import type { GeoPermissibleObjects } from 'd3-geo';
@@ -23,21 +22,33 @@
     path?: string;
   } = {};
 
-  const dispatch = createEventDispatcher<{
-    click: { data: any; point?: [number, number]; feature?: GeoPermissibleObjects };
-    pointerenter: {
-      event: PointerEvent;
-      data: any;
-      point?: [number, number];
-      feature?: GeoPermissibleObjects;
-    };
-    pointermove: {
-      event: PointerEvent;
-      data: any;
-      point?: [number, number];
-      feature?: GeoPermissibleObjects;
-    };
-  }>();
+  export let onclick:
+    | ((
+        e: MouseEvent,
+        data: { data: any; point?: [number, number]; feature?: GeoPermissibleObjects }
+      ) => void)
+    | undefined = undefined;
+  export let onpointerenter:
+    | ((
+        e: PointerEvent,
+        data: {
+          data: any;
+          point?: [number, number];
+          feature?: GeoPermissibleObjects;
+        }
+      ) => void)
+    | undefined = undefined;
+  export let onpointermove:
+    | ((
+        e: PointerEvent,
+        data: {
+          data: any;
+          point?: [number, number];
+          feature?: GeoPermissibleObjects;
+        }
+      ) => void)
+    | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
 
   $: points = (data ?? $flatData).map((d: any) => {
     // geo voronoi needs raw latitude/longtude, not mapped to range (chart dimensions)
@@ -72,17 +83,15 @@
       <GeoPath
         geojson={feature}
         class={cls('fill-transparent', classes.path)}
-        on:pointerenter={(e) =>
-          dispatch('pointerenter', { event: e, data: feature.properties.site.data, feature })}
-        on:pointermove={(e) =>
-          dispatch('pointermove', { event: e, data: feature.properties.site.data, feature })}
-        on:pointerleave
+        onclick={(e) => onclick?.(e, { data: feature.properties.site.data, feature })}
+        onpointerenter={(e) => onpointerenter?.(e, { data: feature.properties.site.data, feature })}
+        onpointermove={(e) => onpointermove?.(e, { data: feature.properties.site.data, feature })}
+        {onpointerleave}
         on:touchmove={(e) => {
           // Prevent touch to not interfer with pointer
           e.preventDefault();
         }}
         on:pointerdown
-        on:click={(e) => dispatch('click', { data: feature.properties.site.data, feature })}
       />
     {/each}
   {:else}
@@ -93,15 +102,15 @@
       <path
         d={voronoi.renderCell(i)}
         class={cls('fill-transparent', classes.path)}
-        on:pointerenter={(e) => dispatch('pointerenter', { event: e, data: point.data, point })}
-        on:pointermove={(e) => dispatch('pointermove', { event: e, data: point.data, point })}
-        on:pointerleave
+        on:click={(e) => onclick?.(e, { data: point.data, point })}
+        on:pointerenter={(e) => onpointerenter?.(e, { data: point.data, point })}
+        on:pointermove={(e) => onpointermove?.(e, { data: point.data, point })}
+        on:pointerleave={onpointerleave}
         on:touchmove={(e) => {
           // Prevent touch to not interfer with pointer
           e.preventDefault();
         }}
         on:pointerdown
-        on:click={(e) => dispatch('click', { data: point.data, point })}
       />
     {/each}
   {/if}

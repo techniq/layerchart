@@ -63,10 +63,10 @@
   let className: string | undefined = undefined;
   export { className as class };
 
-  export let onClick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onPointerEnter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onPointerMove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onPointerLeave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
 
   $: xAccessor = x ? accessor(x) : $contextX;
   $: y0Accessor = y0 ? accessor(y0) : (d: any) => min($yDomain);
@@ -175,10 +175,10 @@
       name: 'Area',
       render,
       events: {
-        click: onClick,
-        pointerenter: onPointerEnter,
-        pointermove: onPointerMove,
-        pointerleave: onPointerLeave,
+        click: onclick,
+        pointerenter: onpointerenter,
+        pointermove: onpointermove,
+        pointerleave: onpointerleave,
       },
     });
 
@@ -217,9 +217,9 @@
     stroke-width={strokeWidth}
     {...$$restProps}
     class={cls('path-area', className)}
-    on:click={onClick}
-    on:pointerenter={onPointerEnter}
-    on:pointermove={onPointerMove}
-    on:pointerleave={onPointerLeave}
+    on:click={onclick}
+    on:pointerenter={onpointerenter}
+    on:pointermove={onpointermove}
+    on:pointerleave={onpointerleave}
   />
 {/if}

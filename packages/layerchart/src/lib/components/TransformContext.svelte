@@ -54,8 +54,6 @@
 </script>
 
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
   import { chartContext } from './ChartContext.svelte';
   import { motionStore, type MotionOptions, motionFinishHandler } from '$lib/stores/motionStore.js';
 
@@ -90,11 +88,11 @@
   /** Distance/threshold to consider drag vs click (disable click propagation) */
   export let clickDistance = 10;
 
-  const dispatch = createEventDispatcher<{
-    dragstart: null;
-    dragend: null;
-    transform: { scale: number; translate: { x: number; y: number } };
-  }>();
+  export let ondragstart: (() => void) | undefined = undefined;
+  export let ondragend: (() => void) | undefined = undefined;
+  export let ontransform:
+    | ((e: { scale: number; translate: { x: number; y: number } }) => void)
+    | undefined = undefined;
 
   let pointerDown = false;
   const dragging = writable(false);
@@ -161,7 +159,7 @@
     startPoint = localPoint(e);
     startTranslate = $translate;
 
-    dispatch('dragstart');
+    ondragstart?.();
   }
 
   function onPointerMove(e: PointerEvent) {
@@ -194,7 +192,7 @@
   function onPointerUp(e: PointerEvent) {
     pointerDown = false;
     $dragging = false;
-    dispatch('dragend');
+    ondragend?.();
   }
 
   function onClick(e: MouseEvent) {
@@ -297,7 +295,7 @@
     y: center.y - $translate.y,
   };
 
-  $: dispatch('transform', { scale: $scale, translate: $translate });
+  $: ontransform?.({ scale: $scale, translate: $translate });
 
   setTransformContext({
     mode,
@@ -321,7 +319,7 @@
 <div
   on:wheel={onWheel}
   on:pointerdown={onPointerDown}
-  on:pointermove={onPointerMove}
+  on:pointermove={onpointermove}
   on:touchmove={(e) => {
     // Touch events cause pointer events to be interrupted.
     // Typically `touch-action: none` works, but doesn't appear to with SVG, but `preventDefault()` works here
@@ -332,7 +330,7 @@
   }}
   on:pointerup={onPointerUp}
   on:dblclick={onDoubleClick}
-  on:click|capture={onClick}
+  on:click|capture={onclick}
   on:click
   on:keydown
   on:keyup

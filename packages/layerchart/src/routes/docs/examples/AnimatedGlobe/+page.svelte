@@ -5,17 +5,7 @@
 
   import { mdiPlay, mdiStop } from '@mdi/js';
 
-  import {
-    Canvas,
-    Chart,
-    GeoPath,
-    Graticule,
-    HitCanvas,
-    Tooltip,
-    TransformContext,
-    Svg,
-    renderPathData,
-  } from 'layerchart';
+  import { Canvas, Chart, GeoPath, Graticule, Tooltip, TransformContext, Svg } from 'layerchart';
   import { Button, ButtonGroup } from 'svelte-ux';
   import { sortFunc } from '@layerstack/utils';
   import { scrollIntoView } from '@layerstack/svelte-actions';
@@ -226,40 +216,29 @@
       <Canvas>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
         <Graticule class="stroke-surface-content/20" />
-        <GeoPath geojson={countries} class="stroke-surface-content/50 fill-white" />
+
+        <!-- <GeoPath geojson={countries} class="stroke-surface-content/50 fill-white" /> -->
+        {#each countries.features as country}
+          <GeoPath
+            geojson={country}
+            class={cls(
+              'stroke-surface-content/50 fill-white cursor-pointer',
+              selectedFeature === country && 'stroke-primary-900 fill-primary'
+            )}
+            on:click={(e) => (selectedFeature = country)}
+            {tooltip}
+          />
+        {/each}
+
         <GeoPath geojson={selectedFeature} class="stroke-primary-900 fill-primary" />
       </Canvas>
 
       <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
-      <Canvas>
+      <Canvas pointerEvents={false}>
         {#if tooltip.data}
           <GeoPath geojson={tooltip.data} class="fill-surface-content/20" />
         {/if}
       </Canvas>
-
-      <HitCanvas
-        let:nextColor
-        let:setColorData
-        on:pointermove={(e) => tooltip.show(e.detail.event, e.detail.data)}
-        on:pointerleave={tooltip.hide}
-        on:click={(e) => {
-          selectedFeature = e.detail.data;
-        }}
-      >
-        <GeoPath
-          render={(ctx, { newGeoPath }) => {
-            for (var feature of countries.features) {
-              const color = nextColor();
-
-              const geoPath = newGeoPath();
-              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
-              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
-
-              setColorData(color, feature);
-            }
-          }}
-        />
-      </HitCanvas>
 
       <Tooltip.Root let:data>
         {data.properties.name}

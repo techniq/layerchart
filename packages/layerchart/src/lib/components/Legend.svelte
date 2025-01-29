@@ -35,9 +35,9 @@
   export let placement: Placement | undefined = undefined;
   export let orientation: 'horizontal' | 'vertical' = 'horizontal';
 
-  export let onClick: ((item: any) => any) | undefined = undefined;
-  export let onPointerEnter: ((item: any) => any) | undefined = undefined;
-  export let onPointerLeave: ((item: any) => any) | undefined = undefined;
+  export let onclick: ((item: any) => any) | undefined = undefined;
+  export let onpointerenter: ((item: any) => any) | undefined = undefined;
+  export let onpointerleave: ((item: any) => any) | undefined = undefined;
 
   /** Determine display ramp (individual color swatches or continuous ramp)*/
   export let variant: 'ramp' | 'swatches' = 'ramp';
@@ -214,10 +214,10 @@
           {@const color = _scale(tick)}
           {@const item = { value: tick, color }}
           <button
-            class={cls('flex gap-1', !onClick && 'cursor-auto', classes.item?.(item))}
-            on:click={() => onClick?.(item)}
-            on:pointerenter={() => onPointerEnter?.(item)}
-            on:pointerleave={() => onPointerLeave?.(item)}
+            class={cls('flex gap-1', !onclick && 'cursor-auto', classes.item?.(item))}
+            on:click={() => onclick?.(item)}
+            on:pointerenter={() => onpointerenter?.(item)}
+            on:pointerleave={() => onpointerleave?.(item)}
           >
             <div
               class={cls('h-4 w-4 rounded-full', classes.swatch)}

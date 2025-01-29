@@ -87,8 +87,8 @@
         fitGeojson: countries,
         applyTransform: ['rotate'],
       }}
-      on:dragstart={() => timer.stop()}
-      on:dragend={() => {
+      ondragstart={() => timer.stop()}
+      ondragend={() => {
         if (isSpinning) {
           // Restart
           timer.start();
@@ -116,8 +116,8 @@
             geojson={feature}
             fill={hasColor ? colorScale(feature.properties.Date) : undefined}
             class={cls('transition-colors', !hasColor && 'fill-surface-content/10')}
-            on:pointermove={(e) => tooltip?.show(e, feature.properties)}
-            on:pointerleave={(e) => tooltip?.hide()}
+            onpointermove={(e) => tooltip?.show(e, feature.properties)}
+            onpointerleave={(e) => tooltip?.hide()}
           />
         {/each}
       </Svg>

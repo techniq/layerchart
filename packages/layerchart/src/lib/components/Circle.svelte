@@ -29,10 +29,10 @@
   let className: string | undefined = undefined;
   export { className as class };
 
-  export let onClick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onPointerEnter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onPointerMove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onPointerLeave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
 
   let tweened_cx = motionStore(initialCx, { spring, tweened });
   let tweened_cy = motionStore(initialCy, { spring, tweened });
@@ -85,10 +85,10 @@
       name: 'Circle',
       render,
       events: {
-        click: onClick,
-        pointerenter: onPointerEnter,
-        pointermove: onPointerMove,
-        pointerleave: onPointerLeave,
+        click: onclick,
+        pointerenter: onpointerenter,
+        pointermove: onpointermove,
+        pointerleave: onpointerleave,
       },
     });
   }
@@ -112,9 +112,9 @@
     stroke-width={strokeWidth}
     class={cls(fill == null && 'fill-surface-content', className)}
     {...$$restProps}
-    on:click={onClick}
-    on:pointerenter={onPointerEnter}
-    on:pointermove={onPointerMove}
-    on:pointerleave={onPointerLeave}
+    on:click={onclick}
+    on:pointerenter={onpointerenter}
+    on:pointermove={onpointermove}
+    on:pointerleave={onpointerleave}
   />
 {/if}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
   // @ts-expect-error
@@ -25,14 +25,19 @@
     path?: string;
   } = {};
 
-  const dispatch = createEventDispatcher<{
-    click: { points: [number, number][]; polygon: Delaunay.Polygon };
-    pointermove: {
-      event: PointerEvent;
-      points: [number, number][];
-      polygon: Delaunay.Polygon;
-    };
-  }>();
+  export let onclick:
+    | ((e: MouseEvent, data: { points: [number, number][]; polygon: Delaunay.Polygon }) => void)
+    | undefined = undefined;
+  export let onpointermove:
+    | ((
+        e: PointerEvent,
+        data: {
+          points: [number, number][];
+          polygon: Delaunay.Polygon;
+        }
+      ) => void)
+    | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
 
   $: points = (data ?? $flatData).map((d: any) => {
     const xValue = $xContext(d);
@@ -55,9 +60,9 @@
       geojson={polygon}
       {curve}
       class={cls('fill-transparent', classes.path)}
-      on:pointermove={(e) => dispatch('pointermove', { event: e, points, polygon })}
-      on:pointerleave
-      on:click={(e) => dispatch('click', { points, polygon })}
+      onclick={(e) => onclick?.(e, { points, polygon })}
+      onpointermove={(e) => onpointermove?.(e, { points, polygon })}
+      {onpointerleave}
     />
   {:else}
     {@const delaunay = Delaunay.from(points)}
@@ -68,9 +73,9 @@
       y={(d) => d[1]}
       {curve}
       class={cls('fill-transparent', classes.path)}
-      on:pointermove={(e) => dispatch('pointermove', { event: e, points, polygon })}
-      on:pointerleave
-      on:click={(e) => dispatch('click', { points, polygon })}
+      onclick={(e) => onclick?.(e, { points, polygon })}
+      onpointermove={(e) => onpointermove?.(e, { points, polygon })}
+      {onpointerleave}
     />
   {/if}
 </g>

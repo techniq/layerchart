@@ -183,9 +183,9 @@
                 <Group
                   x={xScale(node.x0)}
                   y={yScale(node.y0)}
-                  on:click={() => (node.children ? (selectedNested = node) : null)}
-                  on:pointermove={(e) => tooltip.show(e, node)}
-                  on:pointerleave={tooltip.hide}
+                  onclick={() => (node.children ? (selectedNested = node) : null)}
+                  onpointermove={(e) => tooltip.show(e, node)}
+                  onpointerleave={tooltip.hide}
                 >
                   {@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
                   {@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
@@ -325,7 +325,10 @@
             <Group
               x={node.x0}
               y={node.y0}
-              on:click={() => (node.children ? (selectedCarNode = node) : null)}
+              onclick={() => {
+                console.log('click');
+                node.children ? (selectedCarNode = node) : null;
+              }}
               tweened={{ delay: 600 }}
             >
               {@const nodeWidth = node.x1 - node.x0}
@@ -435,7 +438,7 @@
                 <Group
                   x={xScale(node.x0)}
                   y={yScale(node.y0)}
-                  on:click={() => (node.children ? (selectedZoomable = node) : null)}
+                  onclick={() => (node.children ? (selectedZoomable = node) : null)}
                 >
                   {@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
                   {@const nodeHeight = yScale(node.y1) - yScale(node.y0)}

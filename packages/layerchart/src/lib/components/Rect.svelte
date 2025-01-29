@@ -32,10 +32,10 @@
   let className: string | undefined = undefined;
   export { className as class };
 
-  export let onClick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onPointerEnter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onPointerMove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onPointerLeave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
 
   export let spring: boolean | SpringOptions | { [prop: string]: SpringOptions } = undefined;
   export let tweened: boolean | TweenedOptions | { [prop: string]: TweenedOptions } = undefined;
@@ -92,10 +92,10 @@
       name: 'Rect',
       render,
       events: {
-        click: onClick,
-        pointerenter: onPointerEnter,
-        pointermove: onPointerMove,
-        pointerleave: onPointerLeave,
+        click: onclick,
+        pointerenter: onpointerenter,
+        pointermove: onpointermove,
+        pointerleave: onpointerleave,
       },
     });
   }
@@ -121,12 +121,12 @@
     stroke-width={strokeWidth}
     class={cls(fill == null && 'fill-surface-content', className)}
     {...$$restProps}
-    on:click={onClick}
-    on:pointerenter={onPointerEnter}
+    on:click={onclick}
+    on:pointerenter={onpointerenter}
     on:pointerover
-    on:pointermove={onPointerMove}
+    on:pointermove={onpointermove}
     on:pointerout
-    on:pointerleave={onPointerLeave}
+    on:pointerleave={onpointerleave}
     on:dblclick
   />
 {/if}

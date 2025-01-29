@@ -30,10 +30,10 @@
   let className: string | undefined = undefined;
   export { className as class };
 
-  export let onClick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onPointerEnter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onPointerMove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onPointerLeave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
 
   /** Marker to attach to start and end points of path */
   export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
@@ -104,10 +104,10 @@
       name: 'Line',
       render,
       events: {
-        click: onClick,
-        pointerenter: onPointerEnter,
-        pointermove: onPointerMove,
-        pointerleave: onPointerLeave,
+        click: onclick,
+        pointerenter: onpointerenter,
+        pointermove: onpointermove,
+        pointerleave: onpointerleave,
       },
     });
   }
@@ -133,10 +133,10 @@
     marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
     class={cls(stroke === undefined && 'stroke-surface-content', className)}
     {...$$restProps}
-    on:click={onClick}
-    on:pointerenter={onPointerEnter}
-    on:pointermove={onPointerMove}
-    on:pointerleave={onPointerLeave}
+    on:click={onclick}
+    on:pointerenter={onpointerenter}
+    on:pointermove={onpointermove}
+    on:pointerleave={onpointerleave}
   />
 
   <slot name="markerStart" id={markerStartId}>

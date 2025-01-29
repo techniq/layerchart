@@ -30,10 +30,10 @@
    */
   export let preventTouchMove = false;
 
-  export let onClick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onPointerEnter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onPointerMove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onPointerLeave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
 
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -70,10 +70,10 @@
       render,
       retainState: true,
       events: {
-        click: onClick,
-        pointerenter: onPointerEnter,
-        pointermove: onPointerMove,
-        pointerleave: onPointerLeave,
+        click: onclick,
+        pointerenter: onpointerenter,
+        pointermove: onpointermove,
+        pointerleave: onpointerleave,
       },
     });
   }
@@ -92,11 +92,11 @@
   <g
     {transform}
     {...$$restProps}
-    on:click={onClick}
+    on:click={onclick}
     on:pointerdown
-    on:pointerenter={onPointerEnter}
-    on:pointermove={onPointerMove}
-    on:pointerleave={onPointerLeave}
+    on:pointerenter={onpointerenter}
+    on:pointermove={onpointermove}
+    on:pointerleave={onpointerleave}
     on:touchmove={(e) => {
       if (preventTouchMove) {
         // Prevent touch to not interfer with pointer

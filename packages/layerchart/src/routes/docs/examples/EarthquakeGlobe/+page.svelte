@@ -85,8 +85,8 @@
         fitGeojson: countries,
         applyTransform: ['rotate'],
       }}
-      on:dragstart={() => timer.stop()}
-      on:dragend={() => {
+      ondragstart={() => timer.stop()}
+      ondragend={() => {
         if (isSpinning) {
           // Restart
           timer.start();
@@ -109,8 +109,8 @@
             center={[eq.longitude, eq.latitude]}
             radius={rScale(Math.exp(eq.magnitude))}
             class="stroke-danger fill-danger/20"
-            on:pointermove={(e) => tooltip?.show(e, eq)}
-            on:pointerleave={(e) => tooltip?.hide()}
+            onpointermove={(e) => tooltip?.show(e, eq)}
+            onpointerleave={() => tooltip?.hide()}
           />
         {/each}
       </Svg>

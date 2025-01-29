@@ -295,9 +295,9 @@
           }}
           placement="bottom"
           variant="swatches"
-          onClick={(item) => $selectedKeys.toggleSelected(item.value)}
-          onPointerEnter={(item) => (highlightKey = item.value)}
-          onPointerLeave={(item) => (highlightKey = null)}
+          onclick={(item) => $selectedKeys.toggleSelected(item.value)}
+          onpointerenter={(item) => (highlightKey = item.value)}
+          onpointerleave={(item) => (highlightKey = null)}
           {...props.legend}
           {...typeof legend === 'object' ? legend : null}
           classes={{

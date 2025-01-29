@@ -115,8 +115,8 @@
               data={link}
               stroke-width={link.width}
               class="stroke-surface-content/10"
-              on:pointermove={(e) => tooltip.show(e, { link })}
-              on:pointerleave={tooltip.hide}
+              onpointermove={(e) => tooltip.show(e, { link })}
+              onpointerleave={tooltip.hide}
             />
           {/each}
 
@@ -128,8 +128,8 @@
                 width={nodeWidth}
                 height={nodeHeight}
                 class="fill-primary"
-                on:pointermove={(e) => tooltip.show(e, { node })}
-                on:pointerleave={tooltip.hide}
+                onpointermove={(e) => tooltip.show(e, { node })}
+                onpointerleave={tooltip.hide}
               />
               <Text
                 value={node.name}
@@ -207,7 +207,7 @@
               x={node.x0}
               y={node.y0}
               tweened
-              on:click={() => {
+              onclick={() => {
                 selectedNode =
                   node === selectedNode || node.sourceLinks?.length === 0 ? null : node;
               }}
@@ -272,9 +272,9 @@
                 'transition[stroke-opacity] duration-300',
                 linkColorBy === 'static' && 'stroke-surface-content'
               )}
-              on:pointerover={() => (highlightLinkIndexes = [link.index])}
-              on:pointermove={(e) => tooltip.show(e, { link })}
-              on:pointerout={() => {
+              onpointerenter={() => (highlightLinkIndexes = [link.index])}
+              onpointermove={(e) => tooltip.show(e, { link })}
+              onpointerleave={() => {
                 highlightLinkIndexes = [];
                 tooltip.hide();
               }}
@@ -291,14 +291,14 @@
                 height={nodeHeight}
                 fill={colorScale(node[nodeColorBy])}
                 fillOpacity={0.5}
-                on:pointerover={() => {
+                onpointerenter={() => {
                   highlightLinkIndexes = [
                     ...(node.sourceLinks?.map((l) => l.index) ?? []),
                     ...(node.targetLinks?.map((l) => l.index) ?? []),
                   ];
                 }}
-                on:pointermove={(e) => tooltip.show(e, { node })}
-                on:pointerout={() => {
+                onpointermove={(e) => tooltip.show(e, { node })}
+                onpointerleave={() => {
                   highlightLinkIndexes = [];
                   tooltip.hide();
                 }}
@@ -395,8 +395,8 @@
                 'transition[stroke-opacity] duration-300',
                 linkColorBy === 'static' && 'stroke-surface-content'
               )}
-              on:pointerover={() => (highlightLinkIndexes = [link.index])}
-              on:pointerout={() => (highlightLinkIndexes = [])}
+              onpointerenter={() => (highlightLinkIndexes = [link.index])}
+              onpointerleave={() => (highlightLinkIndexes = [])}
               tweened
             />
           {/each}
@@ -410,13 +410,13 @@
                 height={nodeHeight}
                 fill={colorScale(node[nodeColorBy])}
                 fillOpacity={0.5}
-                on:pointerover={() => {
+                onpointerenter={() => {
                   highlightLinkIndexes = [
                     ...(node.sourceLinks?.map((l) => l.index) ?? []),
                     ...(node.targetLinks?.map((l) => l.index) ?? []),
                   ];
                 }}
-                on:pointerout={() => (highlightLinkIndexes = [])}
+                onpointerleave={() => (highlightLinkIndexes = [])}
                 tweened
               />
               <Text

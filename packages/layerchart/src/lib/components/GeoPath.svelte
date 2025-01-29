@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, onDestroy } from 'svelte';
+  import { onDestroy } from 'svelte';
   import {
     geoTransform as d3geoTransform,
     type GeoIdentityTransform,
@@ -36,12 +36,12 @@
    */
   export let tooltip: TooltipContextValue | undefined = undefined;
 
-  export let onClick:
+  export let onclick:
     | ((e: MouseEvent, geoPath: ReturnType<typeof geoCurvePath>) => void)
     | undefined = undefined;
-  export let onPointerEnter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onPointerMove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onPointerLeave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
 
   /**
    * Curve of path drawn. Imported via d3-shape.
@@ -56,10 +56,6 @@
 
   let className: string | undefined = undefined;
   export { className as class };
-
-  const dispatch = createEventDispatcher<{
-    click: { geoPath: ReturnType<typeof geoCurvePath>; event: MouseEvent };
-  }>();
 
   const geo = geoContext();
 
@@ -116,18 +112,18 @@
 
   // Hide `geoPath` and `tooltip` reactivity
   function _onClick(e: MouseEvent) {
-    onClick?.(e, geoPath);
+    onclick?.(e, geoPath);
   }
   function _onPointerEnter(e: PointerEvent) {
-    onPointerEnter?.(e);
+    onpointerenter?.(e);
     tooltip?.show(e, geojson);
   }
   function _onPointerMove(e: PointerEvent) {
-    onPointerMove?.(e);
+    onpointermove?.(e);
     tooltip?.show(e, geojson);
   }
   function _onPointerLeave(e: PointerEvent) {
-    onPointerLeave?.(e);
+    onpointerleave?.(e);
     tooltip?.hide();
   }
 
@@ -164,7 +160,7 @@
       on:click={_onClick}
       on:pointerenter={_onPointerEnter}
       on:pointermove={_onPointerMove}
-      on:pointerleave={_onPointerMove}
+      on:pointerleave={_onPointerLeave}
       on:pointerdown
       class={cls(fill == null && 'fill-transparent', className)}
     />

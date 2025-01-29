@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   import { cls } from '@layerstack/tailwind';
 
   import { chartContext } from './ChartContext.svelte';
@@ -16,16 +15,10 @@
   /** Show canvas for debugging */
   export let debug = false;
 
-  const dispatch = createEventDispatcher<{
-    pointermove: {
-      event: PointerEvent;
-      data: any;
-    };
-    click: {
-      event: MouseEvent;
-      data: any;
-    };
-  }>();
+  export let onclick: ((e: MouseEvent, data: any) => void) | undefined = undefined;
+  // export let onpointerenter: ((e: PointerEvent, data: any) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent, data: any) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
 
   let colorGenerator = rgbColorGenerator();
 
@@ -53,7 +46,7 @@
     return dataByColor.get(colorKey);
   }
 
-  function dispatchPointerMove(e: PointerEvent) {
+  function _onPointerMove(e: PointerEvent) {
     const data = getPointerData(e);
 
     if (data) {
@@ -61,7 +54,7 @@
     }
 
     // Still dispatch with `undefined data` to hide tooltip, etc
-    dispatch('pointermove', { event: e, data });
+    onpointermove?.(e, data);
   }
 </script>
 
@@ -73,10 +66,12 @@
     // '[image-rendering:pixelated]', // https://developer.mozilla.org/en-US/docs/Web/CSS/image-rendering
     !debug && 'opacity-0'
   )}
-  on:pointerenter={dispatchPointerMove}
-  on:pointermove={dispatchPointerMove}
-  on:pointerleave={() => (activePointer = false)}
-  on:pointerleave
+  on:pointerenter={_onPointerMove}
+  on:pointermove={_onPointerMove}
+  on:pointerleave={(e) => {
+    activePointer = false;
+    onpointerleave?.(e);
+  }}
   on:touchmove={(e) => {
     // Prevent touch to not interfer with pointer if over data
     if (activePointer) {
@@ -86,7 +81,7 @@
   on:click={(e) => {
     const data = getPointerData(e);
     if (data) {
-      dispatch('click', { event: e, data });
+      onclick?.(e, data);
     }
   }}
 >

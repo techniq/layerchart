@@ -331,7 +331,7 @@
       )}
       title="Age (years)"
       variant="swatches"
-      onClick={(d) => console.log(d)}
+      onclick={(d) => console.log(d)}
     />
   </div>
 </Preview>

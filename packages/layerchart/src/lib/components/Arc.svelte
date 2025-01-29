@@ -94,10 +94,10 @@
 
   export let track: boolean | SVGAttributes<SVGPathElement> = false;
 
-  export let onClick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onPointerEnter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onPointerMove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onPointerLeave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
 
   const { yRange } = chartContext();
 
@@ -246,15 +246,15 @@
 
   // Hide `tooltip` reactivity
   function _onPointerEnter(e: PointerEvent) {
-    onPointerEnter?.(e);
+    onpointerenter?.(e);
     tooltip?.show(e, data);
   }
   function _onPointerMove(e: PointerEvent) {
-    onPointerMove?.(e);
+    onpointermove?.(e);
     tooltip?.show(e, data);
   }
   function _onPointerLeave(e: PointerEvent) {
-    onPointerLeave?.(e);
+    onpointerleave?.(e);
     tooltip?.hide();
   }
 
@@ -264,7 +264,7 @@
       name: 'Arc',
       render,
       events: {
-        click: onClick,
+        click: onclick,
         pointerenter: _onPointerEnter,
         pointermove: _onPointerMove,
         pointerleave: _onPointerLeave,
@@ -299,8 +299,8 @@
     stroke-width={strokeWidth}
     class={className}
     {...$$restProps}
-    on:click={onClick}
-    on:pointerenter={onPointerEnter}
+    on:click={onclick}
+    on:pointerenter={onpointerenter}
     on:pointermove={_onPointerMove}
     on:pointerleave={_onPointerLeave}
     on:touchmove={(e) => {

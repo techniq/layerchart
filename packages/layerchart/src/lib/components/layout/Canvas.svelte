@@ -250,11 +250,11 @@
   aria-label={label}
   aria-labelledby={labelledBy}
   aria-describedby={describedBy}
-  on:pointerenter={onPointerMove}
+  on:pointerenter={onpointermove}
   on:pointerenter
-  on:pointermove={onPointerMove}
+  on:pointermove={onpointermove}
   on:pointermove
-  on:pointerleave={onPointerLeave}
+  on:pointerleave={onpointerleave}
   on:pointerleave
   on:touchmove={(e) => {
     // Prevent touch to not interfer with pointer if over data

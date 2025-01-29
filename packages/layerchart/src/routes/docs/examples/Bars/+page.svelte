@@ -1176,9 +1176,9 @@
               on:click={(e) => {
                 alert('You clicked on:\n' + JSON.stringify(bar, null, 2));
               }}
-              on:pointerenter={(e) => tooltip?.show(e, bar)}
-              on:pointermove={(e) => tooltip?.show(e, bar)}
-              on:pointerleave={(e) => tooltip?.hide()}
+              onpointerenter={(e) => tooltip?.show(e, bar)}
+              onpointermove={(e) => tooltip?.show(e, bar)}
+              onpointerleave={(e) => tooltip?.hide()}
             />
           {/each}
         </g>
@@ -1214,7 +1214,7 @@
       padding={{ left: 20, bottom: 20 }}
       tooltip={{
         mode: 'band',
-        onClick({ data }) {
+        onclick({ data }) {
           alert('You clicked on:\n' + JSON.stringify(data, null, 2));
         },
       }}

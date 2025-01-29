@@ -39,6 +39,11 @@
   export let y = (d: any) => (sankey ? d[1] : orientation === 'horizontal' ? d.x : d.y);
   export let curve = orientation === 'horizontal' ? curveBumpX : curveBumpY;
 
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
+
   /** Marker to attach to start, mid, and end points of path */
   export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
     undefined;
@@ -78,11 +83,12 @@
   marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
   marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
   marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-  on:click
+  on:click={onclick}
+  on:pointerenter={onpointerenter}
+  on:pointermove={onpointermove}
+  on:pointerleave={onpointerleave}
   on:pointerover
-  on:pointermove
   on:pointerout
-  on:pointerleave
   {...$$restProps}
 />
 

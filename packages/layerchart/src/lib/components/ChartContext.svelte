@@ -3,13 +3,7 @@
   import { createScale, type AnyScale } from '../utils/scales.js';
 
   import type { HierarchyNode } from 'd3-hierarchy';
-  import {
-    createEventDispatcher,
-    getContext,
-    onMount,
-    setContext,
-    type ComponentProps,
-  } from 'svelte';
+  import { getContext, onMount, setContext } from 'svelte';
   import { derived, writable, type Readable } from 'svelte/store';
 
   export const chartContextKey = Symbol();
@@ -266,9 +260,17 @@
   };
   setChartContext(chartContext);
 
-  const dispatch = createEventDispatcher<ChartEvents>();
+  export let onresize:
+    | ((e: {
+        width: number;
+        height: number;
+        containerWidth: number;
+        containerHeight: number;
+      }) => void)
+    | undefined = undefined;
+
   $: if (isMounted) {
-    dispatch('resize', {
+    onresize?.({
       width: $width,
       height: $height,
       containerWidth: $containerWidth,

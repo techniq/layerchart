@@ -209,6 +209,11 @@
 
     /** Exposed via bind: to support `bind:tooltipContext` for external access (ex. `tooltipContext.data) */
     tooltipContext?: typeof tooltipContext;
+
+    // TransformContext callback events
+    ondragstart?: typeof ondragstart;
+    ondragend?: typeof ondragend;
+    ontransform?: typeof ontransform;
   }
 
   export let data: TData[] | HierarchyNode<TData> | SankeyGraph<any, any> = [];
@@ -283,6 +288,10 @@
 
   /** Expose bound tooltip context */
   export let tooltipContext: ComponentProps<TooltipContext>['tooltip'] = undefined;
+
+  export let ondragstart: ComponentProps<TransformContext>['ondragstart'] = undefined;
+  export let ondragend: ComponentProps<TransformContext>['ondragend'] = undefined;
+  export let ontransform: ComponentProps<TransformContext>['ontransform'] = undefined;
 
   // Track when mounted since LayerCake initializes width/height with `100` until bound `clientWidth`/`clientWidth` can run
   // Useful to key/remount TransformContext with correct `initialTranslate` / `initialScale` values
@@ -401,9 +410,9 @@
           : undefined}
         {...transform}
         let:transform={_transform}
-        on:transform
-        on:dragstart
-        on:dragend
+        {ondragstart}
+        {ontransform}
+        {ondragend}
       >
         <GeoContext {...geo} bind:geo={geoProjection} let:projection>
           {@const tooltipProps = typeof tooltip === 'object' ? tooltip : {}}
