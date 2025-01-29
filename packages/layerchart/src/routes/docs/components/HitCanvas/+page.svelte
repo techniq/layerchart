@@ -36,27 +36,23 @@
       }}
       let:tooltip
     >
-      <Canvas {debug}>
+      <Canvas>
         <GeoPath geojson={states} class="stroke-surface-content" />
-
-        <!-- <GeoPath geojson={counties} class="stroke-surface-content/20" /> -->
-        {#each counties.features as county}
-          <GeoPath geojson={county} class="stroke-surface-content/10" {tooltip} />
-        {/each}
+        <GeoPath geojson={counties} class="stroke-surface-content/20" />
       </Canvas>
 
       <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
-      <Canvas pointerEvents={false}>
+      <Canvas>
         {#if tooltip.data}
           <GeoPath geojson={tooltip.data} class="stroke-surface-content fill-surface-content/20" />
         {/if}
       </Canvas>
 
-      <!-- <HitCanvas
+      <HitCanvas
         let:nextColor
         let:setColorData
-        on:pointermove={(e) => tooltip.show(e.detail.event, e.detail.data)}
-        on:pointerleave={tooltip.hide}
+        onpointermove={(e, data) => tooltip.show(e, data)}
+        onpointerleave={tooltip.hide}
         {debug}
       >
         <GeoPath
@@ -72,7 +68,7 @@
             }
           }}
         />
-      </HitCanvas> -->
+      </HitCanvas>
 
       <Tooltip.Root let:data>
         {data.properties.name}
