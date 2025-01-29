@@ -270,11 +270,9 @@
       <HitCanvas
         let:nextColor
         let:setColorData
-        on:pointermove={(e) => tooltip.show(e.detail.event, e.detail.data)}
-        on:pointerleave={tooltip.hide}
-        on:click={(e) => {
-          const feature = e.detail.data;
-
+        onpointermove={(e, data) => tooltip.show(e, data)}
+        onpointerleave={tooltip.hide}
+        onclick={(e, feature) => {
           if (
             selectedStateId === feature.id ||
             !states.features.some((f) => f.id == feature.id) // County selected
@@ -384,10 +382,9 @@
       <HitCanvas
         let:nextColor
         let:setColorData
-        on:pointermove={(e) => tooltip.show(e.detail.event, e.detail.data)}
-        on:pointerleave={tooltip.hide}
-        on:click={(e) => {
-          const feature = e.detail.data;
+        onpointermove={(e, data) => tooltip.show(e, data)}
+        onpointerleave={tooltip.hide}
+        onclick={(e, feature) => {
           const geoPath = d3geoPath(projection);
 
           if (
