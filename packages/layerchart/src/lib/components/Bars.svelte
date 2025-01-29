@@ -5,7 +5,7 @@
   import Bar from './Bar.svelte';
   import Rect from './Rect.svelte';
   import { chartDataArray, type Accessor } from '../utils/common.js';
-  import type { Insets } from 'layerchart/utils/rect.js';
+  import type { Insets } from '../utils/rect.js';
 
   const { data: contextData, cGet, config } = chartContext();
 

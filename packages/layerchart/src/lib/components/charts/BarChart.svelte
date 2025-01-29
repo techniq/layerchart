@@ -27,7 +27,7 @@
     type Accessor,
   } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
-  import type { Insets } from 'layerchart/utils/rect.js';
+  import type { Insets } from '../../utils/rect.js';
 
   type ChartProps = ComponentProps<Chart<TData>>;
 
