@@ -6,7 +6,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import type { ChartResizeEvent } from 'layerchart/components/ChartContext.svelte';
+  import type { ChartResizeDetail } from 'layerchart/components/ChartContext.svelte';
   import { rasterizeText, type RasterizeTextOptions } from 'layerchart/utils/string.js';
 
   let width = 960;
@@ -18,9 +18,9 @@
   let hasChargeForce = false;
   let transition = false;
 
-  function onResize(e: ChartResizeEvent) {
-    width = e.detail.width;
-    height = e.detail.height;
+  function onResize(e: ChartResizeDetail) {
+    width = e.width;
+    height = e.height;
   }
 
   let mouseNode = {
@@ -92,7 +92,7 @@
       {data}
       let:width
       let:height
-      on:resize={onResize}
+      onresize={onResize}
     >
       <ForceSimulation
         forces={{

@@ -210,6 +210,9 @@
     /** Exposed via bind: to support `bind:tooltipContext` for external access (ex. `tooltipContext.data) */
     tooltipContext?: typeof tooltipContext;
 
+    // ChartContext callback events
+    onresize?: typeof onresize;
+
     // TransformContext callback events
     ondragstart?: typeof ondragstart;
     ondragend?: typeof ondragend;
@@ -289,6 +292,7 @@
   /** Expose bound tooltip context */
   export let tooltipContext: ComponentProps<TooltipContext>['tooltip'] = undefined;
 
+  export let onresize: ComponentProps<ChartContext<TData>>['onresize'] = undefined;
   export let ondragstart: ComponentProps<TransformContext>['ondragstart'] = undefined;
   export let ondragend: ComponentProps<TransformContext>['ondragend'] = undefined;
   export let ontransform: ComponentProps<TransformContext>['ontransform'] = undefined;
@@ -379,7 +383,7 @@
     let:c
     let:cScale
     let:cGet
-    on:resize
+    {onresize}
   >
     {#key isMounted}
       <TransformContext

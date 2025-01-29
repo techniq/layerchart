@@ -96,8 +96,6 @@
     containerHeight: number;
   };
 
-  export type ChartResizeEvent = CustomEvent<ChartResizeDetail>;
-
   export type ChartContext<TData> = LayerCakeContext<TData> & {
     // Additional context values
     radial: Readable<boolean>;
@@ -260,14 +258,7 @@
   };
   setChartContext(chartContext);
 
-  export let onresize:
-    | ((e: {
-        width: number;
-        height: number;
-        containerWidth: number;
-        containerHeight: number;
-      }) => void)
-    | undefined = undefined;
+  export let onresize: ((e: ChartResizeDetail) => void) | undefined = undefined;
 
   $: if (isMounted) {
     onresize?.({
