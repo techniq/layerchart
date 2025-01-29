@@ -568,7 +568,7 @@
           <Spline
             data={dateSeriesDataWithNulls.filter((d) => d.value !== null)}
             y={s.value}
-            class="stroke-2 [stroke-dasharray:3,3]"
+            class="[stroke-dasharray:3,3]"
             stroke={s.color}
           />
         {/each}
