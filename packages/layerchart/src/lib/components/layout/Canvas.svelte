@@ -3,8 +3,14 @@
 
   type ComponentRender = {
     name: string;
-    render: (ctx: CanvasRenderingContext2D) => any;
+    render: (ctx: CanvasRenderingContext2D, styleOverrides?: ComputedStylesOptions) => any;
     retainState?: boolean;
+    events?: {
+      pointerenter?: (e: PointerEvent) => void;
+      pointermove?: (e: PointerEvent) => void;
+      pointerleave?: (e: PointerEvent) => void;
+      click?: (e: MouseEvent) => void;
+    };
   };
 
   export type CanvasContext = {
@@ -30,7 +36,8 @@
 
   import { chartContext } from '../ChartContext.svelte';
   import { transformContext } from '../TransformContext.svelte';
-  import { scaleCanvas } from '../../utils/canvas.js';
+  import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
+  import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
 
   const { width, height, containerWidth, containerHeight, padding } = chartContext();
 
@@ -68,14 +75,59 @@
    */
   export let center: boolean | 'x' | 'y' = false;
 
+  /** Show hit canvas for debugging */
+  export let debug = false;
+
   let components = new Map<Symbol, ComponentRender>();
   let pendingInvalidation = false;
   let frameId: number | undefined;
 
-  const { mode, scale, translate } = transformContext();
+  const { mode, scale, translate, dragging } = transformContext();
+
+  /**
+   * HitCanvas
+   */
+  let hitCanvasElement: HTMLCanvasElement | undefined = undefined;
+  let hitCanvasContext: CanvasRenderingContext2D | undefined = undefined;
+  let colorGenerator = rgbColorGenerator();
+  let activePointer = false;
+  let previousActiveComponent: ComponentRender | undefined;
+  const componentByColor = new Map<string, ComponentRender>();
+
+  function getPointerComponent(e: PointerEvent | MouseEvent) {
+    const color = getPixelColor(hitCanvasContext!, e.offsetX, e.offsetY);
+    const colorKey = getColorStr(color);
+    return componentByColor.get(colorKey);
+  }
+
+  function onPointerMove(e: PointerEvent) {
+    const component = getPointerComponent(e);
+
+    if (component) {
+      activePointer = true;
+    }
+
+    if (previousActiveComponent == null) {
+      component?.events?.pointerenter?.(e);
+    } else if (previousActiveComponent != component) {
+      previousActiveComponent?.events?.pointerleave?.(e);
+      component?.events?.pointermove?.(e);
+    } else {
+      component?.events?.pointermove?.(e);
+    }
+
+    previousActiveComponent = component;
+  }
+  /**
+   * end HitCanvas
+   */
 
   onMount(() => {
     context = element?.getContext('2d', { willReadFrequently }) as CanvasRenderingContext2D;
+
+    hitCanvasContext = hitCanvasElement?.getContext('2d', {
+      willReadFrequently: true,
+    }) as CanvasRenderingContext2D;
   });
 
   onDestroy(() => {
@@ -110,6 +162,16 @@
       context.scale($scale, $scale);
     }
 
+    // Sync hit canvas transform with main canvas
+    if (hitCanvasContext) {
+      scaleCanvas(hitCanvasContext, $containerWidth, $containerHeight);
+      hitCanvasContext.clearRect(0, 0, $containerWidth, $containerHeight);
+      hitCanvasContext.setTransform(context.getTransform());
+
+      // Reset color generator whenever updated so always reusing same colors (and not exhausting)
+      colorGenerator = rgbColorGenerator();
+    }
+
     components.forEach((c) => {
       if (c.retainState) {
         // Do not call save/restore canvas draw state (https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/save) (ex. Group ctx.translate() affecting children)
@@ -118,6 +180,22 @@
         context.save();
         c.render(context);
         context.restore();
+      }
+
+      if (hitCanvasContext && !$dragging) {
+        const color = getColorStr(colorGenerator.next().value);
+        // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
+        const styleOverrides = { styles: { fill: color, stroke: color } };
+
+        if (c.retainState) {
+          c.render(hitCanvasContext, styleOverrides);
+        } else {
+          hitCanvasContext.save();
+          c.render(hitCanvasContext, styleOverrides);
+          hitCanvasContext.restore();
+        }
+
+        componentByColor.set(color, c);
       }
     });
 
@@ -144,8 +222,8 @@
   };
 
   $: {
-    // Redraw when resized
-    $containerWidth, $containerHeight;
+    // Redraw when resized or transform dragging changes
+    $containerWidth, $containerHeight, $dragging;
     canvasContext.invalidate();
   }
 
@@ -164,10 +242,22 @@
   aria-label={label}
   aria-labelledby={labelledBy}
   aria-describedby={describedBy}
+  on:pointerenter={onPointerMove}
   on:pointerenter
+  on:pointermove={onPointerMove}
   on:pointermove
+  on:pointerleave={() => (activePointer = false)}
   on:pointerleave
-  on:pointerleave
+  on:touchmove={(e) => {
+    // Prevent touch to not interfer with pointer if over data
+    if (activePointer) {
+      e.preventDefault();
+    }
+  }}
+  on:click={(e) => {
+    const component = getPointerComponent(e);
+    component?.events?.click?.(e);
+  }}
   on:touchmove
   on:click
 >
@@ -175,5 +265,18 @@
     {fallback || ''}
   </slot>
 </canvas>
+
+<!-- Hit canvas used for hidden context -->
+<canvas
+  bind:this={hitCanvasElement}
+  class={cls(
+    'layerchart-hitcanvas',
+    'absolute top-0 left-0 w-full h-full',
+    'pointer-events-none', // events all handled by main canvas
+    // '[image-rendering:pixelated]', // https://developer.mozilla.org/en-US/docs/Web/CSS/image-rendering
+    'border border-danger',
+    !debug && 'opacity-0'
+  )}
+></canvas>
 
 <slot {element} {context}></slot>

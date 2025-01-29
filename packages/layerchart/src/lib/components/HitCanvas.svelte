@@ -5,7 +5,7 @@
   import { chartContext } from './ChartContext.svelte';
   import Canvas from './layout/Canvas.svelte';
   import { transformContext } from './TransformContext.svelte';
-  import { rgbColorGenerator } from '../utils/color.js';
+  import { getColorStr, rgbColorGenerator } from '../utils/color.js';
   import { getPixelColor } from '../utils/canvas.js';
 
   const { width, height } = chartContext();
@@ -48,8 +48,8 @@
   let activePointer = false;
 
   function getPointerData(e: PointerEvent | MouseEvent) {
-    const { r, g, b } = getPixelColor(context, e.offsetX, e.offsetY);
-    const colorKey = `rgb(${r},${g},${b})`;
+    const color = getPixelColor(context, e.offsetX, e.offsetY);
+    const colorKey = getColorStr(color);
     return dataByColor.get(colorKey);
   }
 
@@ -92,6 +92,6 @@
 >
   <!-- Do not render while dragging to improve interaction performance -->
   {#if !$dragging}
-    <slot nextColor={() => colorGenerator.next().value} {setColorData}></slot>
+    <slot nextColor={() => getColorStr(colorGenerator.next().value)} {setColorData}></slot>
   {/if}
 </Canvas>
