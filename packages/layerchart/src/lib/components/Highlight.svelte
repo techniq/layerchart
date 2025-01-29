@@ -413,9 +413,9 @@
             !point.fill && (typeof points === 'boolean' || !points.fill) && 'fill-primary',
             typeof points === 'object' ? points.class : null
           )}
-          on:click={() => onPointClick({ point, data: highlightData })}
-          on:pointerenter={() => onPointEnter({ point, data: highlightData })}
-          on:pointerleave={() => onPointLeave({ point, data: highlightData })}
+          onClick={() => onPointClick({ point, data: highlightData })}
+          onPointerEnter={() => onPointEnter({ point, data: highlightData })}
+          onPointerLeave={() => onPointLeave({ point, data: highlightData })}
         />
       {/each}
     </slot>

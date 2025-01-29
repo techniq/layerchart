@@ -7,7 +7,7 @@
   import { motionStore } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { circlePath } from '../utils/path.js';
-  import { renderPathData } from '../utils/canvas.js';
+  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   export let cx: number = 0;
   export let initialCx = cx;
@@ -29,6 +29,11 @@
   let className: string | undefined = undefined;
   export { className as class };
 
+  export let onClick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onPointerEnter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onPointerMove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onPointerLeave: ((e: PointerEvent) => void) | undefined = undefined;
+
   let tweened_cx = motionStore(initialCx, { spring, tweened });
   let tweened_cy = motionStore(initialCy, { spring, tweened });
   let tweened_r = motionStore(initialR, { spring, tweened });
@@ -42,12 +47,19 @@
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
 
-  function render(ctx: CanvasRenderingContext2D) {
+  function render(
+    ctx: CanvasRenderingContext2D,
+    styleOverrides: ComputedStylesOptions | undefined
+  ) {
     const pathData = circlePath({ cx: $tweened_cx, cy: $tweened_cy, r: $tweened_r });
-    renderPathData(ctx, pathData, {
-      styles: { fill, fillOpacity, stroke, strokeWidth },
-      classes: $$props.class,
-    });
+    renderPathData(
+      ctx,
+      pathData,
+      styleOverrides ?? {
+        styles: { fill, fillOpacity, stroke, strokeWidth },
+        classes: $$props.class,
+      }
+    );
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
@@ -69,7 +81,16 @@
 
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'Circle', render });
+    canvasUnregister = canvasContext.register({
+      name: 'Circle',
+      render,
+      events: {
+        click: onClick,
+        pointerenter: onPointerEnter,
+        pointermove: onPointerMove,
+        pointerleave: onPointerLeave,
+      },
+    });
   }
 
   onDestroy(() => {
@@ -91,9 +112,9 @@
     stroke-width={strokeWidth}
     class={cls(fill == null && 'fill-surface-content', className)}
     {...$$restProps}
-    on:click
-    on:pointermove
-    on:pointerenter
-    on:pointerleave
+    on:click={onClick}
+    on:pointerenter={onPointerEnter}
+    on:pointermove={onPointerMove}
+    on:pointerleave={onPointerLeave}
   />
 {/if}

@@ -22,8 +22,8 @@
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
   import { flattenPathData } from '../utils/path.js';
-  import { renderPathData } from '../utils/canvas.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
+  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   const {
     data: contextData,
@@ -71,6 +71,11 @@
 
   let className: string | undefined = undefined;
   export { className as class };
+
+  export let onClick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onPointerEnter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onPointerMove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onPointerLeave: ((e: PointerEvent) => void) | undefined = undefined;
 
   /** Marker to attach to start, mid, and end points of path */
   export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
@@ -167,11 +172,18 @@
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
 
-  function render(ctx: CanvasRenderingContext2D) {
-    renderPathData(ctx, $tweened_d, {
-      styles: { stroke, fill, strokeWidth, opacity },
-      classes: className,
-    });
+  function render(
+    ctx: CanvasRenderingContext2D,
+    styleOverrides: ComputedStylesOptions | undefined
+  ) {
+    renderPathData(
+      ctx,
+      $tweened_d,
+      styleOverrides ?? {
+        styles: { stroke, fill, strokeWidth, opacity },
+        classes: className,
+      }
+    );
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
@@ -186,7 +198,16 @@
 
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'Spline', render });
+    canvasUnregister = canvasContext.register({
+      name: 'Spline',
+      render,
+      events: {
+        click: onClick,
+        pointerenter: onPointerEnter,
+        pointermove: onPointerMove,
+        pointerleave: onPointerLeave,
+      },
+    });
   }
 
   onDestroy(() => {
@@ -244,10 +265,10 @@
       marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
       marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
       in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
-      on:click
-      on:pointerenter
-      on:pointermove
-      on:pointerleave
+      on:click={onClick}
+      on:pointerenter={onPointerEnter}
+      on:pointermove={onPointerMove}
+      on:pointerleave={onPointerLeave}
       bind:this={pathEl}
     />
 

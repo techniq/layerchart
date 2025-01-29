@@ -10,7 +10,7 @@
     type TweenedOptions,
   } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { renderRect } from '../utils/canvas.js';
+  import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   export let x = 0;
   export let initialX = x;
@@ -32,6 +32,11 @@
   let className: string | undefined = undefined;
   export { className as class };
 
+  export let onClick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onPointerEnter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onPointerMove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onPointerLeave: ((e: PointerEvent) => void) | undefined = undefined;
+
   export let spring: boolean | SpringOptions | { [prop: string]: SpringOptions } = undefined;
   export let tweened: boolean | TweenedOptions | { [prop: string]: TweenedOptions } = undefined;
 
@@ -50,11 +55,14 @@
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
 
-  function render(ctx: CanvasRenderingContext2D) {
+  function render(
+    ctx: CanvasRenderingContext2D,
+    styleOverrides: ComputedStylesOptions | undefined
+  ) {
     renderRect(
       ctx,
       { x: $tweened_x, y: $tweened_y, width: $tweened_width, height: $tweened_height },
-      {
+      styleOverrides ?? {
         styles: { fill, fillOpacity, stroke, strokeWidth },
         classes: className,
       }
@@ -80,7 +88,16 @@
 
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'Rect', render });
+    canvasUnregister = canvasContext.register({
+      name: 'Rect',
+      render,
+      events: {
+        click: onClick,
+        pointerenter: onPointerEnter,
+        pointermove: onPointerMove,
+        pointerleave: onPointerLeave,
+      },
+    });
   }
 
   onDestroy(() => {
@@ -104,12 +121,12 @@
     stroke-width={strokeWidth}
     class={cls(fill == null && 'fill-surface-content', className)}
     {...$$restProps}
-    on:click
-    on:pointerenter
+    on:click={onClick}
+    on:pointerenter={onPointerEnter}
     on:pointerover
-    on:pointermove
+    on:pointermove={onPointerMove}
     on:pointerout
-    on:pointerleave
+    on:pointerleave={onPointerLeave}
     on:dblclick
   />
 {/if}

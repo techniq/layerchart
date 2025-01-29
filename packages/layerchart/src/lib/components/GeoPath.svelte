@@ -13,7 +13,7 @@
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoCurvePath } from '$lib/utils/geo.js';
-  import { renderPathData } from '$lib/utils/canvas.js';
+  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { objectId } from '@layerstack/utils/object';
 
@@ -32,9 +32,16 @@
   export let strokeWidth: number | undefined = undefined;
 
   /**
-   * Tooltip context to setup mouse events to show tooltip for related data
+   * Tooltip context to setup pointer events to show tooltip for related data
    */
   export let tooltip: TooltipContextValue | undefined = undefined;
+
+  export let onClick:
+    | ((e: MouseEvent, geoPath: ReturnType<typeof geoCurvePath>) => void)
+    | undefined = undefined;
+  export let onPointerEnter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onPointerMove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onPointerLeave: ((e: PointerEvent) => void) | undefined = undefined;
 
   /**
    * Curve of path drawn. Imported via d3-shape.
@@ -76,16 +83,23 @@
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
 
-  function _render(ctx: CanvasRenderingContext2D) {
+  function _render(
+    ctx: CanvasRenderingContext2D,
+    styleOverrides: ComputedStylesOptions | undefined
+  ) {
     if (render) {
       render(ctx, { newGeoPath: () => geoCurvePath(_projection, curve) });
     } else {
       if (geojson) {
         const pathData = geoPath(geojson);
-        renderPathData(ctx, pathData, {
-          styles: { fill, stroke, strokeWidth },
-          classes: className,
-        });
+        renderPathData(
+          ctx,
+          pathData,
+          styleOverrides ?? {
+            styles: { fill, stroke, strokeWidth },
+            classes: className,
+          }
+        );
       }
     }
   }
@@ -100,9 +114,35 @@
     canvasContext.invalidate();
   }
 
+  // Hide `geoPath` and `tooltip` reactivity
+  function _onClick(e: MouseEvent) {
+    onClick?.(e, geoPath);
+  }
+  function _onPointerEnter(e: PointerEvent) {
+    onPointerEnter?.(e);
+    tooltip?.show(e, geojson);
+  }
+  function _onPointerMove(e: PointerEvent) {
+    onPointerMove?.(e);
+    tooltip?.show(e, geojson);
+  }
+  function _onPointerLeave(e: PointerEvent) {
+    onPointerLeave?.(e);
+    tooltip?.hide();
+  }
+
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'GeoPath', render: _render });
+    canvasUnregister = canvasContext.register({
+      name: 'GeoPath',
+      render: _render,
+      events: {
+        click: _onClick,
+        pointerenter: _onPointerEnter,
+        pointermove: _onPointerMove,
+        pointerleave: _onPointerLeave,
+      },
+    });
   }
 
   onDestroy(() => {
@@ -121,14 +161,11 @@
       {fill}
       {stroke}
       stroke-width={strokeWidth}
-      on:pointerenter={(e) => tooltip?.show(e, geojson)}
-      on:pointerenter
-      on:pointermove={(e) => tooltip?.show(e, geojson)}
-      on:pointermove
-      on:pointerleave={(e) => tooltip?.hide()}
-      on:pointerleave
+      on:click={_onClick}
+      on:pointerenter={_onPointerEnter}
+      on:pointermove={_onPointerMove}
+      on:pointerleave={_onPointerMove}
       on:pointerdown
-      on:click={(event) => dispatch('click', { geoPath, event })}
       class={cls(fill == null && 'fill-transparent', className)}
     />
   </slot>

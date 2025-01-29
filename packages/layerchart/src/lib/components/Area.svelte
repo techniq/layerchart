@@ -15,8 +15,8 @@
   import Spline from './Spline.svelte';
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
-  import { renderPathData } from '../utils/canvas.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
+  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   const {
     data: contextData,
@@ -62,6 +62,11 @@
 
   let className: string | undefined = undefined;
   export { className as class };
+
+  export let onClick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onPointerEnter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onPointerMove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onPointerLeave: ((e: PointerEvent) => void) | undefined = undefined;
 
   $: xAccessor = x ? accessor(x) : $contextX;
   $: y0Accessor = y0 ? accessor(y0) : (d: any) => min($yDomain);
@@ -140,11 +145,18 @@
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
 
-  function render(ctx: CanvasRenderingContext2D) {
-    renderPathData(ctx, $tweened_d, {
-      styles: { fill, fillOpacity, stroke, strokeWidth },
-      classes: className,
-    });
+  function render(
+    ctx: CanvasRenderingContext2D,
+    styleOverrides: ComputedStylesOptions | undefined
+  ) {
+    renderPathData(
+      ctx,
+      $tweened_d,
+      styleOverrides ?? {
+        styles: { fill, fillOpacity, stroke, strokeWidth },
+        classes: className,
+      }
+    );
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
@@ -159,7 +171,16 @@
 
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'Area', render });
+    canvasUnregister = canvasContext.register({
+      name: 'Area',
+      render,
+      events: {
+        click: onClick,
+        pointerenter: onPointerEnter,
+        pointermove: onPointerMove,
+        pointerleave: onPointerLeave,
+      },
+    });
 
     tweened_d.subscribe(() => {
       canvasContext.invalidate();
@@ -173,7 +194,6 @@
   });
 </script>
 
-<!-- TODO: Find way to not clear <Canvas> when rendering Spline (remove Area rendering).  Idea: https://github.com/techniq/layerchart/issues/158#issuecomment-2543416108 -->
 {#if line}
   <Spline
     {data}
@@ -197,8 +217,9 @@
     stroke-width={strokeWidth}
     {...$$restProps}
     class={cls('path-area', className)}
-    on:click
-    on:pointermove
-    on:pointerleave
+    on:click={onClick}
+    on:pointerenter={onPointerEnter}
+    on:pointermove={onPointerMove}
+    on:pointerleave={onPointerLeave}
   />
 {/if}
