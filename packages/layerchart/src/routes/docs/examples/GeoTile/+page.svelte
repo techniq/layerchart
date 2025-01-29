@@ -56,7 +56,7 @@
             geojson={feature}
             {tooltip}
             class="stroke-black/20 hover:fill-white/30"
-            on:click={() =>
+            onclick={() =>
               (selectedFeature = selectedFeature === feature ? filteredStates : feature)}
           />
         {/each}
@@ -96,7 +96,7 @@
             geojson={feature}
             {tooltip}
             class="stroke-black/20 hover:fill-white/30"
-            on:click={() =>
+            onclick={() =>
               (selectedFeature = selectedFeature === feature ? filteredStates : feature)}
           />
         {/each}

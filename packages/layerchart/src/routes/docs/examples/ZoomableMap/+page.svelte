@@ -88,9 +88,7 @@
             geojson={feature}
             class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
             {tooltip}
-            on:click={(e) => {
-              const { geoPath, event } = e.detail;
-
+            onclick={() => {
               if (selectedStateId === feature.id) {
                 selectedStateId = null;
                 transform.reset();
@@ -114,7 +112,7 @@
               geojson={feature}
               {tooltip}
               class="stroke-surface-content/10 hover:fill-surface-content/10"
-              on:click={() => {
+              onclick={() => {
                 selectedStateId = null;
                 transform.reset();
               }}
@@ -162,8 +160,7 @@
             class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
             strokeWidth={1 / transform.scale}
             {tooltip}
-            on:click={(e) => {
-              const { geoPath, event } = e.detail;
+            onclick={(e, geoPath) => {
               if (selectedStateId === feature.id) {
                 selectedStateId = null;
                 transform.reset();
@@ -188,7 +185,7 @@
               {tooltip}
               strokeWidth={1 / transform.scale}
               class="stroke-surface-content/10 hover:fill-surface-content/10"
-              on:click={() => {
+              onclick={() => {
                 selectedStateId = null;
                 transform.reset();
               }}
@@ -249,7 +246,7 @@
           geojson={{ type: 'FeatureCollection', features: selectedCountiesFeatures }}
           {tooltip}
           class="stroke-surface-content/10 hover:fill-surface-content/10"
-          on:click={() => {
+          onclick={() => {
             selectedStateId = null;
             transform.reset();
           }}
@@ -360,7 +357,7 @@
           {tooltip}
           strokeWidth={1 / transform.scale}
           class="stroke-surface-content/10 hover:fill-surface-content/10"
-          on:click={() => {
+          onclick={() => {
             selectedStateId = null;
             transform.reset();
           }}

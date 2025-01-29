@@ -73,9 +73,7 @@
             geojson={feature}
             class="stroke-none"
             {tooltip}
-            on:click={(e) => {
-              const { geoPath, event } = e.detail;
-
+            onclick={() => {
               const featureTransform = geoFitObjectTransform(projection, [width, height], feature);
               transform.setTranslate(featureTransform.translate);
               transform.setScale(featureTransform.scale);
@@ -138,9 +136,7 @@
             geojson={feature}
             class="stroke-none"
             {tooltip}
-            on:click={(e) => {
-              const { geoPath, event } = e.detail;
-
+            onclick={() => {
               const featureTransform = geoFitObjectTransform(projection, [width, height], feature);
               transform.setTranslate(featureTransform.translate);
               transform.setScale(featureTransform.scale);
@@ -201,9 +197,7 @@
             geojson={feature}
             class="stroke-none"
             {tooltip}
-            on:click={(e) => {
-              const { geoPath, event } = e.detail;
-
+            onclick={() => {
               const featureTransform = geoFitObjectTransform(projection, [width, height], feature);
               transform.setTranslate(featureTransform.translate);
               transform.setScale(featureTransform.scale);

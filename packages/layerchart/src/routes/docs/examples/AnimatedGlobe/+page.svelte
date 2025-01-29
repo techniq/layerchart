@@ -158,7 +158,7 @@
                 ? 'stroke-primary-900 fill-primary'
                 : 'hover:fill-gray-200'
             )}
-            on:click={(e) => (selectedFeature = country)}
+            onclick={() => (selectedFeature = country)}
             {tooltip}
           />
         {/each}
@@ -225,7 +225,7 @@
               'stroke-surface-content/50 fill-white cursor-pointer',
               selectedFeature === country && 'stroke-primary-900 fill-primary'
             )}
-            on:click={(e) => (selectedFeature = country)}
+            onclick={() => (selectedFeature = country)}
             {tooltip}
           />
         {/each}
