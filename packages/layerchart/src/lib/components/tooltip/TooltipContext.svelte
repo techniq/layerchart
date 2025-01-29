@@ -418,22 +418,22 @@
     {#if mode === 'voronoi'}
       <Svg>
         <Voronoi
-          on:pointerenter={(e) => {
-            showTooltip(e.detail.event, e.detail.data);
+          onpointerenter={(e, { data }) => {
+            showTooltip(e, data);
           }}
-          on:pointermove={(e) => {
-            showTooltip(e.detail.event, e.detail.data);
+          onpointermove={(e, { data }) => {
+            showTooltip(e, data);
           }}
-          on:pointerleave={hideTooltip}
-          on:pointerdown={(e) => {
+          onpointerleave={hideTooltip}
+          onpointerdown={(e) => {
             // @ts-expect-error
             if (e.target?.hasPointerCapture(e.pointerId)) {
               // @ts-expect-error
               e.target.releasePointerCapture(e.pointerId);
             }
           }}
-          on:click={(e) => {
-            onclick({ data: e.detail.data });
+          onclick={(e, { data }) => {
+            onclick({ data });
           }}
           classes={{ path: cls(debug && 'fill-danger/10 stroke-danger') }}
         />

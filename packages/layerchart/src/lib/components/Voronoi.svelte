@@ -49,6 +49,16 @@
       ) => void)
     | undefined = undefined;
   export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerdown:
+    | ((
+        e: PointerEvent,
+        data: {
+          data: any;
+          point?: [number, number];
+          feature?: GeoPermissibleObjects;
+        }
+      ) => void)
+    | undefined = undefined;
 
   $: points = (data ?? $flatData).map((d: any) => {
     // geo voronoi needs raw latitude/longtude, not mapped to range (chart dimensions)
@@ -86,6 +96,7 @@
         onclick={(e) => onclick?.(e, { data: feature.properties.site.data, feature })}
         onpointerenter={(e) => onpointerenter?.(e, { data: feature.properties.site.data, feature })}
         onpointermove={(e) => onpointermove?.(e, { data: feature.properties.site.data, feature })}
+        onpointerdown={(e) => onpointerdown?.(e, { data: feature.properties.site.data, feature })}
         {onpointerleave}
         on:touchmove={(e) => {
           // Prevent touch to not interfer with pointer
@@ -106,6 +117,7 @@
         on:pointerenter={(e) => onpointerenter?.(e, { data: point.data, point })}
         on:pointermove={(e) => onpointermove?.(e, { data: point.data, point })}
         on:pointerleave={onpointerleave}
+        on:pointerdown={(e) => onpointerdown?.(e, { data: point.data, point })}
         on:touchmove={(e) => {
           // Prevent touch to not interfer with pointer
           e.preventDefault();
