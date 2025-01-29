@@ -91,7 +91,7 @@
   let hitCanvasContext: CanvasRenderingContext2D | undefined = undefined;
   let colorGenerator = rgbColorGenerator();
   let activePointer = false;
-  let previousActiveComponent: ComponentRender | undefined;
+  let lastActiveComponent: ComponentRender | undefined;
   const componentByColor = new Map<string, ComponentRender>();
 
   function getPointerComponent(e: PointerEvent | MouseEvent) {
@@ -107,16 +107,24 @@
       activePointer = true;
     }
 
-    if (previousActiveComponent == null) {
+    if (lastActiveComponent == null) {
       component?.events?.pointerenter?.(e);
-    } else if (previousActiveComponent != component) {
-      previousActiveComponent?.events?.pointerleave?.(e);
+    } else if (lastActiveComponent != component) {
+      lastActiveComponent?.events?.pointerleave?.(e);
       component?.events?.pointermove?.(e);
     } else {
       component?.events?.pointermove?.(e);
     }
 
-    previousActiveComponent = component;
+    lastActiveComponent = component;
+  }
+
+  function onPointerLeave(e: PointerEvent) {
+    // Pointer outside of canvas
+    activePointer = false;
+
+    // Call last active component `pointerleave` event in case it was not triggered by hit canvas (quickly exiting canvas element before `pointermove` is triggered)
+    lastActiveComponent?.events?.pointerleave?.(e);
   }
   /**
    * end HitCanvas
@@ -246,7 +254,7 @@
   on:pointerenter
   on:pointermove={onPointerMove}
   on:pointermove
-  on:pointerleave={() => (activePointer = false)}
+  on:pointerleave={onPointerLeave}
   on:pointerleave
   on:touchmove={(e) => {
     // Prevent touch to not interfer with pointer if over data
