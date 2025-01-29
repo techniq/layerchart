@@ -16,7 +16,7 @@
 </script>
 
 <Preview {data}>
-  <div class="h-[400px] p-4 border rounded relative" on:pointermove={onpointermove}>
+  <div class="h-[400px] p-4 border rounded relative" on:pointermove={onPointerMove}>
     <Chart {data} x="x" y="y" let:xScale let:yScale>
       <Svg>
         <ChartClipPath>
