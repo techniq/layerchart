@@ -50,9 +50,7 @@
   function getPointerData(e: PointerEvent | MouseEvent) {
     const { r, g, b } = getPixelColor(context, e.offsetX, e.offsetY);
     const colorKey = `rgb(${r},${g},${b})`;
-    const data = dataByColor.get(colorKey);
-
-    return data;
+    return dataByColor.get(colorKey);
   }
 
   function dispatchPointerMove(e: PointerEvent) {

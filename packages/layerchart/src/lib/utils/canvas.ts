@@ -6,7 +6,7 @@ export const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
 const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
 
-type ComputedStylesOptions = {
+export type ComputedStylesOptions = {
   styles?: Partial<
     Omit<CSSStyleDeclaration, 'fillOpacity' | 'strokeWidth' | 'opacity'> & {
       fillOpacity?: number | string;
