@@ -93,7 +93,7 @@
               x={(orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
               y={(orientation === 'horizontal' ? node.x : node.y) - nodeHeight / 2}
               tweened
-              on:click={() => {
+              onclick={() => {
                 if (expandedNodeNames.includes(node.data.name)) {
                   expandedNodeNames = expandedNodeNames.filter((name) => name !== node.data.name);
                 } else {

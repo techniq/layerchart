@@ -17,7 +17,6 @@
   width={$width + (full ? ($padding?.left ?? 0) + ($padding?.right ?? 0) : 0)}
   height={$height + (full ? ($padding?.top ?? 0) + ($padding?.bottom ?? 0) : 0)}
   {disabled}
-  on:click
   {...$$restProps}
 >
   <slot />

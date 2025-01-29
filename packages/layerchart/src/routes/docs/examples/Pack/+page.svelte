@@ -105,7 +105,7 @@
             <Group
               x={node.x}
               y={node.y}
-              on:click={(e) => {
+              onclick={(e) => {
                 e.stopPropagation();
                 selected = node;
               }}
