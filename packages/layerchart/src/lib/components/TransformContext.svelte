@@ -319,7 +319,7 @@
 <div
   on:wheel={onWheel}
   on:pointerdown={onPointerDown}
-  on:pointermove={onpointermove}
+  on:pointermove={onPointerMove}
   on:touchmove={(e) => {
     // Touch events cause pointer events to be interrupted.
     // Typically `touch-action: none` works, but doesn't appear to with SVG, but `preventDefault()` works here
