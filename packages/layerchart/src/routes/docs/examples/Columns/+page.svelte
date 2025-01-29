@@ -215,7 +215,7 @@
           rule
         />
         <Bars strokeWidth={1} class="fill-primary group-hover:fill-gray-300 transition-colors" />
-        <Highlight area bar={{ class: 'fill-primary', strokeWidth: 1, radius: 4 }} />
+        <Highlight area bar={{ class: 'fill-primary', strokeWidth: 1 }} />
       </Svg>
       <Tooltip.Root let:data>
         <Tooltip.Header
