@@ -241,7 +241,6 @@
   />
 
   {#if isActive}
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <Group x={rangeLeft} y={rangeTop} class="range">
       <slot name="range" {rangeWidth} {rangeHeight}>
         <Rect

@@ -11,7 +11,6 @@
   export let element: SVGRectElement | undefined = undefined;
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <Rect
   x={full && $padding?.left ? -$padding.left : 0}
   y={full && $padding?.top ? -$padding.top : 0}

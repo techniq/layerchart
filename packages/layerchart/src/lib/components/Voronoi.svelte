@@ -108,8 +108,6 @@
   {:else}
     {@const voronoi = Delaunay.from(points).voronoi([0, 0, boundWidth, boundHeight])}
     {#each points as point, i}
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
       {@const pathData = voronoi.renderCell(i)}
       <!-- Wait to render Spline until pathData is available to fix path artifacts from injected tweened points in Spline  -->
       {#if pathData}
