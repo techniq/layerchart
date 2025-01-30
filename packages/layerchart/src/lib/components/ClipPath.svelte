@@ -26,7 +26,7 @@
     <slot />
   {:else}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <g style:clip-path="url(#{id})" on:click on:pointermove on:pointerleave on:keydown>
+    <g style:clip-path="url(#{id})">
       <slot {id} url="url(#{id})" {useId} />
     </g>
   {/if}
