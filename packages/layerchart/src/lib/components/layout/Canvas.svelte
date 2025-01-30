@@ -96,8 +96,8 @@
   let hitCanvasElement: HTMLCanvasElement | undefined = undefined;
   let hitCanvasContext: CanvasRenderingContext2D | undefined = undefined;
   let colorGenerator = rgbColorGenerator();
-  let activePointer = false;
-  let lastActiveComponent: ComponentRender | undefined;
+  let activeCanvas = false;
+  let lastActiveComponent: ComponentRender | undefined | null;
   const componentByColor = new Map<string, ComponentRender>();
 
   function getPointerComponent(e: PointerEvent | MouseEvent | TouchEvent) {
@@ -108,11 +108,8 @@
   }
 
   function onPointerMove(e: PointerEvent) {
+    activeCanvas = true;
     const component = getPointerComponent(e);
-
-    if (component) {
-      activePointer = true;
-    }
 
     if (lastActiveComponent == null) {
       // TODO: Should these be handled differently
@@ -137,11 +134,13 @@
 
   function onPointerLeave(e: PointerEvent) {
     // Pointer outside of canvas
-    activePointer = false;
 
     // Call last active component `pointerleave` event in case it was not triggered by hit canvas (quickly exiting canvas element before `pointermove` is triggered)
     lastActiveComponent?.events?.pointerleave?.(e);
     lastActiveComponent?.events?.pointerout?.(e);
+
+    lastActiveComponent = null;
+    activeCanvas = false;
   }
   /**
    * end HitCanvas
@@ -207,7 +206,8 @@
         context.restore();
       }
 
-      if (hitCanvasContext && !$dragging) {
+      // TODO: rendering hit canvas affects rendering performance when updating programmatically (~10fps) (ex. clicking on countries on Animated Globe).  Using `$moving` causing interactivity to be blocked for too long
+      if (hitCanvasContext && activeCanvas && !$dragging) {
         const color = getColorStr(colorGenerator.next().value);
         // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
         const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
@@ -247,8 +247,8 @@
   };
 
   $: {
-    // Redraw when resized or transform dragging changes
-    $containerWidth, $containerHeight, $dragging;
+    // Redraw when resized, ponter enters canvas (activate hit canvas), or transform dragging changes
+    $containerWidth, $containerHeight, activeCanvas && $dragging;
     canvasContext.invalidate();
   }
 
@@ -283,8 +283,8 @@
   on:pointerleave={onPointerLeave}
   on:pointerleave
   on:touchmove={(e) => {
-    // Prevent touch to not interfer with pointer if over data
-    if (activePointer) {
+    // Prevent touch from interfering with pointer if over data
+    if (lastActiveComponent) {
       e.preventDefault();
     }
 
