@@ -3,18 +3,7 @@
   import { feature } from 'topojson-client';
   import { Field, Switch } from 'svelte-ux';
 
-  import {
-    Canvas,
-    Chart,
-    circlePath,
-    GeoPath,
-    GeoPoint,
-    renderPathData,
-    renderText,
-    Svg,
-    Text,
-    Tooltip,
-  } from 'layerchart';
+  import { Canvas, Chart, Circle, GeoPath, GeoPoint, Svg, Text, Tooltip } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   export let data;
@@ -267,35 +256,20 @@
       }}
     >
       <Canvas>
-        <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
-
+        {#each states.features as feature}
+          <GeoPath geojson={feature} class="fill-surface-content/10 stroke-surface-100" />
+        {/each}
         {#each data.us.captitals as capital}
-          <!-- Point -->
-          <GeoPoint
-            lat={capital.latitude}
-            long={capital.longitude}
-            render={(ctx, { x, y }) => {
-              const pathData = circlePath({ cx: x, cy: y, r: 2 });
-              renderPathData(ctx, pathData, { classes: 'fill-white stroke-danger' });
-            }}
-          />
-
-          <!-- Label -->
-          <GeoPoint
-            lat={capital.latitude}
-            long={capital.longitude}
-            render={(ctx, { x, y }) => {
-              renderText(
-                ctx,
-                capital.description,
-                { x, y: y - 6 },
-                {
-                  classes: 'text-[8px] text-center fill-surface-content stroke-surface-100',
-                  styles: { paintOrder: 'stroke' },
-                }
-              );
-            }}
-          />
+          <GeoPoint lat={capital.latitude} long={capital.longitude} let:x let:y>
+            <Circle cx={x} cy={y} r={2} class="fill-white stroke-danger" />
+            <Text
+              {x}
+              y={y - 6}
+              value={capital.description}
+              textAnchor="middle"
+              class="text-[8px] stroke-surface-100 [stroke-width:2px]"
+            />
+          </GeoPoint>
         {/each}
       </Canvas>
     </Chart>

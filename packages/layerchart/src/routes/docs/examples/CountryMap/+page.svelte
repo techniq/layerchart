@@ -64,22 +64,17 @@
         <GeoPath geojson={states} class="fill-surface-content/10 stroke-surface-100" />
 
         {#each states.features as feature}
-          <GeoPath
-            geojson={feature}
-            render={(ctx, { newGeoPath }) => {
-              const geoPath = newGeoPath();
-              const [x, y] = geoPath.centroid(feature);
-              renderText(
-                ctx,
-                feature.properties.name,
-                { x, y },
-                {
-                  classes: 'text-[8px] text-center fill-surface-content stroke-surface-100',
-                  styles: { paintOrder: 'stroke' },
-                }
-              );
-            }}
-          />
+          <GeoPath geojson={feature} let:geoPath>
+            {@const [x, y] = geoPath.centroid(feature)}
+            <Text
+              {x}
+              {y}
+              value={feature.properties.name}
+              textAnchor="middle"
+              verticalAnchor="middle"
+              class="text-[8px] stroke-surface-100 [stroke-width:2px]"
+            />
+          </GeoPath>
         {/each}
       </Canvas>
     </Chart>
