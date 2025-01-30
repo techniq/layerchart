@@ -10,6 +10,7 @@
   import { chartContext } from './ChartContext.svelte';
   import GeoPath from './GeoPath.svelte';
   import { geoContext, type GeoContext } from './GeoContext.svelte';
+  import Spline from './Spline.svelte';
 
   const { flatData, xGet, yGet, x: xContext, y: yContext, width, height, radial } = chartContext();
   const geo = geoContext() as GeoContext | undefined;
@@ -98,11 +99,10 @@
         onpointermove={(e) => onpointermove?.(e, { data: feature.properties.site.data, feature })}
         onpointerdown={(e) => onpointerdown?.(e, { data: feature.properties.site.data, feature })}
         {onpointerleave}
-        on:touchmove={(e) => {
+        ontouchmove={(e) => {
           // Prevent touch to not interfer with pointer
           e.preventDefault();
         }}
-        on:pointerdown
       />
     {/each}
   {:else}
@@ -110,19 +110,18 @@
     {#each points as point, i}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <path
-        d={voronoi.renderCell(i)}
+      <Spline
+        pathData={voronoi.renderCell(i)}
         class={cls('fill-transparent', classes.path)}
-        on:click={(e) => onclick?.(e, { data: point.data, point })}
-        on:pointerenter={(e) => onpointerenter?.(e, { data: point.data, point })}
-        on:pointermove={(e) => onpointermove?.(e, { data: point.data, point })}
-        on:pointerleave={onpointerleave}
-        on:pointerdown={(e) => onpointerdown?.(e, { data: point.data, point })}
-        on:touchmove={(e) => {
+        onclick={(e) => onclick?.(e, { data: point.data, point })}
+        onpointerenter={(e) => onpointerenter?.(e, { data: point.data, point })}
+        onpointermove={(e) => onpointermove?.(e, { data: point.data, point })}
+        {onpointerleave}
+        onpointerdown={(e) => onpointerdown?.(e, { data: point.data, point })}
+        ontouchmove={(e) => {
           // Prevent touch to not interfer with pointer
           e.preventDefault();
         }}
-        on:pointerdown
       />
     {/each}
   {/if}
