@@ -89,7 +89,7 @@
   let pendingInvalidation = false;
   let frameId: number | undefined;
 
-  const { mode, scale, translate, dragging } = transformContext();
+  const { mode, scale, translate, dragging, moving } = transformContext();
   const tooltip = tooltipContext();
 
   /**
@@ -208,8 +208,10 @@
         context.restore();
       }
 
-      // TODO: rendering hit canvas affects rendering performance when updating programmatically (~10fps) (ex. clicking on countries on Animated Globe).  Using `$moving` causing interactivity to be blocked for too long
-      if (hitCanvasContext && activeCanvas && !$dragging && $tooltip.mode === 'manual') {
+      // Delayed rendering using `activeCanvas` can cause a delay for tooltip interactivity for complex canvases (ex. country choropleth) so only ignore while moving/animating programmatically (ex. clicking on countries on Animated Globe)
+      const inactiveMoving = !activeCanvas && $moving;
+
+      if (hitCanvasContext && !inactiveMoving && !$dragging && $tooltip.mode === 'manual') {
         const color = getColorStr(colorGenerator.next().value);
         // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
         const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
@@ -249,8 +251,8 @@
   };
 
   $: {
-    // Redraw when resized, ponter enters canvas (activate hit canvas), or transform dragging changes
-    $containerWidth, $containerHeight, activeCanvas && $dragging;
+    // Redraw when resized or transform dragging changes.  Note: adding `activeCanvas` (pointer enters/exits canvas) causes initial interactivity issues while canvas is rendering and is not needed
+    $containerWidth, $containerHeight && $dragging;
     canvasContext.invalidate();
   }
 
