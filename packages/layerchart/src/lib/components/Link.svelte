@@ -22,6 +22,7 @@
   import { uniqueId } from '@layerstack/utils';
 
   import Marker from './Marker.svelte';
+  import Spline from './Spline.svelte';
 
   // Override what is used from context
   export let data: any = undefined; // TODO: Update Type
@@ -76,17 +77,17 @@
 
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<path
+<Spline
   class="path-link"
-  d={$tweened_d}
+  pathData={$tweened_d}
   fill="none"
   marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
   marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
   marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-  on:click={onclick}
-  on:pointerenter={onpointerenter}
-  on:pointermove={onpointermove}
-  on:pointerleave={onpointerleave}
+  {onclick}
+  {onpointerenter}
+  {onpointermove}
+  {onpointerleave}
   on:pointerover
   on:pointerout
   {...$$restProps}
