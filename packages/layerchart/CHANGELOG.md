@@ -6,7 +6,7 @@
 
 - feat(Canvas): Integrate hit canvas with component registration system for simplified pointer events ([#354](https://github.com/techniq/layerchart/pull/354))
 
-- breaking: Remove all usage of `createEventDispatcher` with `on{event}` callbacks.  Aligns with Svelte 5 recommendation and unlocks canvas integration ([#354](https://github.com/techniq/layerchart/pull/354))
+- breaking: Remove all usage of `createEventDispatcher` with `on{event}` callbacks. Aligns with Svelte 5 recommendation and unlocks canvas integration ([#354](https://github.com/techniq/layerchart/pull/354))
 
 - breaking: Lowercase all event names (`onTooltipClick` => `ontooltipclick`) for consistency with native events (preparing for Svelte 5) ([#354](https://github.com/techniq/layerchart/pull/354))
 
