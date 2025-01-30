@@ -211,7 +211,15 @@
       // Delayed rendering using `activeCanvas` can cause a delay for tooltip interactivity for complex canvases (ex. country choropleth) so only ignore while moving/animating programmatically (ex. clicking on countries on Animated Globe)
       const inactiveMoving = !activeCanvas && $moving;
 
-      if (hitCanvasContext && !inactiveMoving && !$dragging && $tooltip.mode === 'manual') {
+      const componentHasEvents = c.events && Object.values(c.events).filter((d) => d).length > 0;
+
+      if (
+        hitCanvasContext &&
+        componentHasEvents &&
+        !inactiveMoving &&
+        !$dragging &&
+        $tooltip.mode === 'manual'
+      ) {
         const color = getColorStr(colorGenerator.next().value);
         // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
         const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
