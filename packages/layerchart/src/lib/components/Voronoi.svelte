@@ -93,7 +93,7 @@
     {#each polygons.features as feature}
       <GeoPath
         geojson={feature}
-        class={cls('fill-transparent', classes.path)}
+        class={cls('fill-transparent stroke-transparent', classes.path)}
         onclick={(e) => onclick?.(e, { data: feature.properties.site.data, feature })}
         onpointerenter={(e) => onpointerenter?.(e, { data: feature.properties.site.data, feature })}
         onpointermove={(e) => onpointermove?.(e, { data: feature.properties.site.data, feature })}
@@ -112,7 +112,7 @@
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <Spline
         pathData={voronoi.renderCell(i)}
-        class={cls('fill-transparent', classes.path)}
+        class={cls('fill-transparent stroke-transparent', classes.path)}
         onclick={(e) => onclick?.(e, { data: point.data, point })}
         onpointerenter={(e) => onpointerenter?.(e, { data: point.data, point })}
         onpointermove={(e) => onpointermove?.(e, { data: point.data, point })}
