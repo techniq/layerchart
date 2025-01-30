@@ -98,7 +98,6 @@
     {...$$restProps}
     on:click={onclick}
     on:dblclick={ondblclick}
-    on:pointerdown
     on:pointerenter={onpointerenter}
     on:pointermove={onpointermove}
     on:pointerleave={onpointerleave}

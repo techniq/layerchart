@@ -423,9 +423,9 @@
           tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
           placement="bottom"
           variant="swatches"
-          onclick={(item) => $selectedSeries.toggleSelected(item.value)}
-          onpointerenter={(item) => (highlightSeriesKey = item.value)}
-          onpointerleave={(item) => (highlightSeriesKey = null)}
+          onclick={(e, item) => $selectedSeries.toggleSelected(item.value)}
+          onpointerenter={(e, item) => (highlightSeriesKey = item.value)}
+          onpointerleave={(e) => (highlightSeriesKey = null)}
           {...props.legend}
           {...typeof legend === 'object' ? legend : null}
           classes={{
