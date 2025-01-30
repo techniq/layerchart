@@ -11,33 +11,12 @@
   /** Longitude */
   export let long: number;
 
-  /** Render to canvas */
-  export let render: (
-    ctx: CanvasRenderingContext2D,
-    coords: { x: number; y: number }
-  ) => any = () => {};
-
   const geo = geoContext();
 
   $: [x, y] = $geo([long, lat]) ?? [0, 0];
 
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
-
-  function _render(ctx: CanvasRenderingContext2D) {
-    render(ctx, { x, y });
-  }
-
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'GeoPoint', render: _render });
-  }
-
-  onDestroy(() => {
-    if (renderContext === 'canvas') {
-      canvasUnregister();
-    }
-  });
 </script>
 
 {#if renderContext === 'svg'}
@@ -52,7 +31,7 @@
 
 {#if renderContext === 'canvas'}
   {#if $$slots.default}
-    <!-- TODO: Handle Canvas translation.  Conslidate with svg use case above (if `render` is not defined) -->
+    <!-- TODO: Handle Canvas translation.  Conslidate with svg use case above -->
     <!-- <Group {x} {y} {...$$restProps}> -->
     <slot {x} {y} />
     <!-- </Group> -->

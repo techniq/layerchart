@@ -19,14 +19,6 @@
 
   export let geojson: GeoPermissibleObjects | null | undefined = undefined;
 
-  /** Render to canvas */
-  export let render:
-    | ((
-        ctx: CanvasRenderingContext2D,
-        options: { newGeoPath: () => ReturnType<typeof geoCurvePath> }
-      ) => any)
-    | undefined = undefined;
-
   export let fill: string | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
@@ -80,24 +72,20 @@
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
 
-  function _render(
+  function render(
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
   ) {
-    if (render) {
-      render(ctx, { newGeoPath: () => geoCurvePath(_projection, curve) });
-    } else {
-      if (geojson) {
-        const pathData = geoPath(geojson);
-        renderPathData(
-          ctx,
-          pathData,
-          styleOverrides ?? {
-            styles: { fill, stroke, strokeWidth },
-            classes: className,
-          }
-        );
-      }
+    if (geojson) {
+      const pathData = geoPath(geojson);
+      renderPathData(
+        ctx,
+        pathData,
+        styleOverrides ?? {
+          styles: { fill, stroke, strokeWidth },
+          classes: className,
+        }
+      );
     }
   }
 
@@ -132,7 +120,7 @@
   $: if (renderContext === 'canvas') {
     canvasUnregister = canvasContext.register({
       name: 'GeoPath',
-      render: _render,
+      render,
       events: {
         click: _onClick,
         pointerenter: _onPointerEnter,
