@@ -7,6 +7,7 @@
     retainState?: boolean;
     events?: {
       click?: (e: MouseEvent) => void;
+      dblclick?: (e: MouseEvent) => void;
       pointerenter?: (e: PointerEvent) => void;
       pointermove?: (e: PointerEvent) => void;
       pointerleave?: (e: PointerEvent) => void;
@@ -263,6 +264,10 @@
     component?.events?.click?.(e);
   }}
   on:click
+  on:dblclick={(e) => {
+    const component = getPointerComponent(e);
+    component?.events?.dblclick?.(e);
+  }}
   on:pointerenter={onPointerMove}
   on:pointerenter
   on:pointermove={onPointerMove}
