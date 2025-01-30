@@ -4,12 +4,23 @@
 
   export const tooltipContextKey = Symbol();
 
+  type TooltipMode =
+    | 'bisect-x'
+    | 'bisect-y'
+    | 'band'
+    | 'bisect-band'
+    | 'bounds'
+    | 'voronoi'
+    | 'quadtree'
+    | 'manual';
+
   export type TooltipContextValue = {
     x: number;
     y: number;
     data: any;
     show(e: PointerEvent, tooltipData?: any): void;
     hide(e?: PointerEvent): void;
+    mode: TooltipMode;
   };
 
   export type TooltipContext = Readable<TooltipContextValue>;
@@ -20,6 +31,7 @@
     data: null as any,
     show: () => {},
     hide: () => {},
+    mode: 'manual',
   });
   export function tooltipContext() {
     return getContext<TooltipContext>(tooltipContextKey) ?? defaultContext;
@@ -80,15 +92,7 @@
   /**
    * @type {'bisect-x' | 'bisect-y' | 'band' | 'bisect-band' | 'bounds' | 'voronoi' | 'quadtree' | 'manual'}
    */
-  export let mode:
-    | 'bisect-x'
-    | 'bisect-y'
-    | 'band'
-    | 'bisect-band'
-    | 'bounds'
-    | 'voronoi'
-    | 'quadtree'
-    | 'manual' = 'manual';
+  export let mode: TooltipMode = 'manual';
   /**
    * @type {'closest' | 'left' | 'right'}
    */
@@ -116,6 +120,7 @@
     data: null as any,
     show: showTooltip,
     hide: hideTooltip,
+    mode,
   });
   setTooltipContext(tooltip);
 

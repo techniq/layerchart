@@ -44,6 +44,7 @@
   import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
   import { localPoint } from '../../utils/event.js';
+  import { tooltipContext } from '../tooltip/TooltipContext.svelte';
 
   const { width, height, containerWidth, containerHeight, padding } = chartContext();
 
@@ -89,6 +90,7 @@
   let frameId: number | undefined;
 
   const { mode, scale, translate, dragging } = transformContext();
+  const tooltip = tooltipContext();
 
   /**
    * HitCanvas
@@ -207,7 +209,7 @@
       }
 
       // TODO: rendering hit canvas affects rendering performance when updating programmatically (~10fps) (ex. clicking on countries on Animated Globe).  Using `$moving` causing interactivity to be blocked for too long
-      if (hitCanvasContext && activeCanvas && !$dragging) {
+      if (hitCanvasContext && activeCanvas && !$dragging && $tooltip.mode === 'manual') {
         const color = getColorStr(colorGenerator.next().value);
         // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
         const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
