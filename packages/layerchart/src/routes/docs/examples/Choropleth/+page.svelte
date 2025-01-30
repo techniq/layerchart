@@ -160,11 +160,11 @@
         <GeoPath geojson={states} class="stroke-black/30" {strokeWidth} />
       </Canvas>
 
-      {#if tooltip.data}
-        <Canvas>
+      <Canvas pointerEvents={false}>
+        {#if tooltip.data}
           <GeoPath geojson={tooltip.data} class="stroke-white" {strokeWidth} />
-        </Canvas>
-      {/if}
+        {/if}
+      </Canvas>
 
       <Legend
         scale={colorScale}

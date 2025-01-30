@@ -74,11 +74,11 @@
       </Canvas>
 
       <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
-      {#if tooltip.data}
-        <Canvas>
+      <Canvas pointerEvents={false}>
+        {#if tooltip.data}
           <GeoPath geojson={tooltip.data} class="stroke-surface-content fill-surface-content/20" />
-        </Canvas>
-      {/if}
+        {/if}
+      </Canvas>
 
       <Tooltip.Root let:data>
         {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
