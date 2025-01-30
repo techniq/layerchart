@@ -61,10 +61,16 @@
     labels?: string;
   } = {};
 
-  export let onChange: (e: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
-  export let onBrushStart: (e: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
-  export let onBrushEnd: (e: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
-  export let onReset: (e: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
+  export let onchange: (detail: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
+  export let onbrushstart: (detail: {
+    xDomain?: DomainType;
+    yDomain?: DomainType;
+  }) => void = () => {};
+  export let onbrushend: (detail: {
+    xDomain?: DomainType;
+    yDomain?: DomainType;
+  }) => void = () => {};
+  export let onreset: (detail: { xDomain?: DomainType; yDomain?: DomainType }) => void = () => {};
 
   let frameEl: SVGRectElement;
 
@@ -88,7 +94,7 @@
         },
       };
 
-      onBrushStart({ xDomain, yDomain });
+      onbrushstart({ xDomain, yDomain });
 
       const onPointerMove = (e: PointerEvent) => {
         fn(start, {
@@ -100,17 +106,17 @@
         //   // Ignore?
         //   // TODO: What about when using `x` or `y` axis?
         // } else {
-        onChange({ xDomain, yDomain });
+        onchange({ xDomain, yDomain });
         // }
       };
 
       const onPointerUp = (e: PointerEvent) => {
         if (e.target === frameEl) {
           reset();
-          onChange({ xDomain, yDomain });
+          onchange({ xDomain, yDomain });
         }
 
-        onBrushEnd({ xDomain, yDomain });
+        onbrushend({ xDomain, yDomain });
 
         if (resetOnEnd) {
           reset();
@@ -203,7 +209,7 @@
     xDomain = originalXDomain;
     yDomain = originalYDomain;
 
-    onReset({ xDomain, yDomain });
+    onreset({ xDomain, yDomain });
   }
 
   function selectAll() {
@@ -267,7 +273,7 @@
         ondblclick={() => {
           if (yDomain) {
             yDomain[0] = yDomainMin;
-            onChange({ xDomain, yDomain });
+            onchange({ xDomain, yDomain });
           }
         }}
       >
@@ -312,7 +318,7 @@
         ondblclick={() => {
           if (xDomain) {
             xDomain[0] = xDomainMin;
-            onChange({ xDomain, yDomain });
+            onchange({ xDomain, yDomain });
           }
         }}
       >
@@ -334,7 +340,7 @@
         ondblclick={() => {
           if (xDomain) {
             xDomain[1] = xDomainMax;
-            onChange({ xDomain, yDomain });
+            onchange({ xDomain, yDomain });
           }
         }}
       >
