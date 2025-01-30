@@ -5,6 +5,7 @@
   import type { CurveFactory } from 'd3-shape';
   import { max, min } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
+  import { merge } from 'lodash-es';
 
   import { cls } from '@layerstack/tailwind';
   import { objectId } from '@layerstack/utils/object';
@@ -152,10 +153,12 @@
     renderPathData(
       ctx,
       $tweened_d,
-      styleOverrides ?? {
-        styles: { fill, fillOpacity, stroke, strokeWidth },
-        classes: className,
-      }
+      styleOverrides
+        ? merge({ styles: { strokeWidth } }, styleOverrides)
+        : {
+            styles: { fill, fillOpacity, stroke, strokeWidth },
+            classes: className,
+          }
     );
   }
 

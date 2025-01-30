@@ -4,6 +4,7 @@
   import { cls } from '@layerstack/tailwind';
   import { uniqueId } from '@layerstack/utils';
   import { objectId } from '@layerstack/utils/object';
+  import { merge } from 'lodash-es';
 
   import { motionStore } from '$lib/stores/motionStore.js';
 
@@ -74,10 +75,12 @@
     renderPathData(
       ctx,
       pathData,
-      styleOverrides ?? {
-        styles: { fill, stroke, strokeWidth },
-        classes: className,
-      }
+      styleOverrides
+        ? merge({ styles: { strokeWidth } }, styleOverrides)
+        : {
+            styles: { fill, stroke, strokeWidth },
+            classes: className,
+          }
     );
   }
 

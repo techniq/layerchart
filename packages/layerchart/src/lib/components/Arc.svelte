@@ -23,6 +23,7 @@
   import { arc as d3arc } from 'd3-shape';
   import { scaleLinear } from 'd3-scale';
   import { min, max } from 'd3-array';
+  import { merge } from 'lodash-es';
 
   import { objectId } from '@layerstack/utils/object';
 
@@ -227,10 +228,12 @@
     renderPathData(
       ctx,
       arc(),
-      styleOverrides ?? {
-        styles: { fill, fillOpacity, stroke, strokeWidth },
-        classes: className,
-      }
+      styleOverrides
+        ? merge({ styles: { strokeWidth } }, styleOverrides)
+        : {
+            styles: { fill, fillOpacity, stroke, strokeWidth },
+            classes: className,
+          }
     );
   }
 

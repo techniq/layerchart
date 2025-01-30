@@ -3,6 +3,7 @@
   import type { ClassValue } from 'svelte/elements';
   import { cls } from '@layerstack/tailwind';
   import { objectId } from '@layerstack/utils/object';
+  import { merge } from 'lodash-es';
 
   import {
     motionStore,
@@ -69,10 +70,12 @@
     renderRect(
       ctx,
       { x: $tweened_x, y: $tweened_y, width: $tweened_width, height: $tweened_height },
-      styleOverrides ?? {
-        styles: { fill, fillOpacity, stroke, strokeWidth },
-        classes: className,
-      }
+      styleOverrides
+        ? merge({ styles: { strokeWidth } }, styleOverrides)
+        : {
+            styles: { fill, fillOpacity, stroke, strokeWidth },
+            classes: className,
+          }
     );
   }
 

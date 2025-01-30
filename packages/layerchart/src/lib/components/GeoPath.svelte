@@ -8,6 +8,7 @@
     type GeoTransformPrototype,
   } from 'd3-geo';
   import { cls } from '@layerstack/tailwind';
+  import { merge } from 'lodash-es';
 
   import { geoContext } from './GeoContext.svelte';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
@@ -82,10 +83,12 @@
       renderPathData(
         ctx,
         pathData,
-        styleOverrides ?? {
-          styles: { fill, stroke, strokeWidth },
-          classes: className,
-        }
+        styleOverrides
+          ? merge({ styles: { strokeWidth } }, styleOverrides)
+          : {
+              styles: { fill, stroke, strokeWidth },
+              classes: className,
+            }
       );
     }
   }

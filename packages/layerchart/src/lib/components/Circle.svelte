@@ -3,6 +3,7 @@
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from '@layerstack/tailwind';
   import { objectId } from '@layerstack/utils/object';
+  import { merge } from 'lodash-es';
 
   import { motionStore } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
@@ -55,10 +56,12 @@
     renderPathData(
       ctx,
       pathData,
-      styleOverrides ?? {
-        styles: { fill, fillOpacity, stroke, strokeWidth },
-        classes: $$props.class,
-      }
+      styleOverrides
+        ? merge({ styles: { strokeWidth } }, styleOverrides)
+        : {
+            styles: { fill, fillOpacity, stroke, strokeWidth },
+            classes: className,
+          }
     );
   }
 

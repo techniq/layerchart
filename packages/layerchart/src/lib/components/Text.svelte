@@ -3,6 +3,7 @@
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from '@layerstack/tailwind';
   import { objectId } from '@layerstack/utils/object';
+  import { merge } from 'lodash-es';
 
   import { getStringWidth } from '$lib/utils/string.js';
   import { motionStore } from '$lib/stores/motionStore.js';
@@ -197,10 +198,12 @@
             getPixelValue(dy) +
             (index === 0 ? startDy : getPixelValue(lineHeight)),
         },
-        styleOverrides ?? {
-          styles: { fill, fillOpacity, stroke, strokeWidth, paintOrder: 'stroke', textAnchor },
-          classes: cls(fill === undefined && 'fill-surface-content', className),
-        }
+        styleOverrides
+          ? merge({ styles: { strokeWidth } }, styleOverrides)
+          : {
+              styles: { fill, fillOpacity, stroke, strokeWidth, paintOrder: 'stroke', textAnchor },
+              classes: cls(fill === undefined && 'fill-surface-content', className),
+            }
       );
     });
   }

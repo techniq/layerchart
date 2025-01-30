@@ -4,6 +4,7 @@
   import { tweened as tweenedStore } from 'svelte/motion';
   import { draw as _drawTransition } from 'svelte/transition';
   import { cubicInOut } from 'svelte/easing';
+  import { merge } from 'lodash-es';
 
   import { line as d3Line, lineRadial } from 'd3-shape';
   import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
@@ -183,10 +184,12 @@
     renderPathData(
       ctx,
       $tweened_d,
-      styleOverrides ?? {
-        styles: { stroke, fill, strokeWidth, opacity },
-        classes: className,
-      }
+      styleOverrides
+        ? merge({ styles: { strokeWidth } }, styleOverrides)
+        : {
+            styles: { fill, stroke, strokeWidth, opacity },
+            classes: className,
+          }
     );
   }
 
