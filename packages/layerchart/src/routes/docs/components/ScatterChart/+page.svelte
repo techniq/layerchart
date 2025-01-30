@@ -265,9 +265,9 @@
       data={spiralData}
       x="x"
       y="y"
-      onTooltipClick={(e) => {
-        console.log(e);
-        alert(JSON.stringify(e));
+      ontooltipclick={(e, detail) => {
+        console.log(e, detail);
+        alert(JSON.stringify(detail));
       }}
       {renderContext}
     />

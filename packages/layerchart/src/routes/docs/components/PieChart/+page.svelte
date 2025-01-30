@@ -50,7 +50,7 @@
   </div>
 </Preview>
 
-<h2>onTooltipClick</h2>
+<h2>ontooltipclick</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded">
@@ -58,9 +58,9 @@
       {data}
       key="fruit"
       value="value"
-      onTooltipClick={(e) => {
-        console.log(e);
-        alert(JSON.stringify(e));
+      ontooltipclick={(e, detail) => {
+        console.log(e, detail);
+        alert(JSON.stringify(detail));
       }}
       {renderContext}
     />
@@ -347,9 +347,9 @@
       innerRadius={-20}
       cornerRadius={5}
       padAngle={0.01}
-      onArcClick={(e) => {
-        console.log(e);
-        alert(JSON.stringify(e));
+      onarcclick={(e, detail) => {
+        console.log(e, detail);
+        alert(JSON.stringify(detail));
       }}
       {renderContext}
     />

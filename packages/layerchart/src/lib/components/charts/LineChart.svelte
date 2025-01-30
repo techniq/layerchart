@@ -41,8 +41,8 @@
     rule?: typeof rule;
     series?: typeof series;
     renderContext?: typeof renderContext;
-    onPointClick?: typeof onPointClick;
-    onTooltipClick?: typeof onTooltipClick;
+    onpointclick?: typeof onpointclick;
+    ontooltipclick?: typeof ontooltipclick;
   }
 
   export let data: $$Props['data'] = [];
@@ -75,13 +75,16 @@
   export let rule: ComponentProps<Rule> | boolean = true;
 
   /** Event dispatched with current tooltip data */
-  export let onTooltipClick: (e: { data: any }) => void = () => {};
+  export let ontooltipclick: (e: MouseEvent, details: { data: any }) => void = () => {};
 
   /** Event dispatched when Highlight point is clicked (useful with multiple series) */
-  export let onPointClick: (e: {
-    data: HighlightPointData;
-    series: (typeof series)[number];
-  }) => void = () => {};
+  export let onpointclick: (
+    e: MouseEvent,
+    details: {
+      data: HighlightPointData;
+      series: (typeof series)[number];
+    }
+  ) => void = () => {};
 
   export let props: {
     brush?: Partial<ComponentProps<Brush>>;
@@ -208,7 +211,7 @@
     ? false
     : {
         mode: 'bisect-x',
-        onClick: onTooltipClick,
+        onclick: ontooltipclick,
         ...props.tooltip?.context,
         ...$$props.tooltip,
       }}
@@ -313,9 +316,9 @@
               ),
             }}
             lines={i === 0}
-            onPointClick={(e) => onPointClick({ ...e, series: s })}
-            onPointEnter={() => (highlightSeriesKey = s.key)}
-            onPointLeave={() => (highlightSeriesKey = null)}
+            onpointclick={(e, detail) => onpointclick(e, { ...detail, series: s })}
+            onpointenter={() => (highlightSeriesKey = s.key)}
+            onpointleave={() => (highlightSeriesKey = null)}
             {...props.highlight}
           />
         {/each}

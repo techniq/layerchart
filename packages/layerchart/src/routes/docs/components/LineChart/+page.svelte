@@ -216,9 +216,9 @@
         { key: 'bananas', color: 'hsl(var(--color-success))' },
         { key: 'oranges', color: 'hsl(var(--color-warning))' },
       ]}
-      onPointClick={(e) => {
-        console.log(e);
-        alert(JSON.stringify(e));
+      onpointclick={(e, detail) => {
+        console.log(e, detail);
+        alert(JSON.stringify(detail));
       }}
       {renderContext}
     />
@@ -635,9 +635,9 @@
       data={dateSeriesData}
       x="date"
       y="value"
-      onTooltipClick={(e) => {
-        console.log(e);
-        alert(JSON.stringify(e));
+      ontooltipclick={(e, detail) => {
+        console.log(e, detail);
+        alert(JSON.stringify(detail));
       }}
       {renderContext}
     />

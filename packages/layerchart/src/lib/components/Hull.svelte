@@ -26,12 +26,12 @@
   } = {};
 
   export let onclick:
-    | ((e: MouseEvent, data: { points: [number, number][]; polygon: Delaunay.Polygon }) => void)
+    | ((e: MouseEvent, details: { points: [number, number][]; polygon: Delaunay.Polygon }) => void)
     | undefined = undefined;
   export let onpointermove:
     | ((
         e: PointerEvent,
-        data: {
+        details: {
           points: [number, number][];
           polygon: Delaunay.Polygon;
         }

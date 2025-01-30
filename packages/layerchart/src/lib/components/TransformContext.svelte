@@ -330,7 +330,7 @@
   }}
   on:pointerup={onPointerUp}
   on:dblclick={onDoubleClick}
-  on:click|capture={onclick}
+  on:click|capture={onClick}
   on:click
   on:keydown
   on:keyup

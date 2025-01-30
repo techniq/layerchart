@@ -485,16 +485,16 @@
         },
       }}
       tooltip={false}
-      onBarClick={(e) => {
-        console.log(e);
-        alert(JSON.stringify(e));
+      onbarclick={(e, detail) => {
+        console.log(e, detail);
+        alert(JSON.stringify(detail));
       }}
       {renderContext}
     />
   </div>
 </Preview>
 
-<Blockquote>Currently `onBarClick` conflicts with tooltip and thus must be disabled</Blockquote>
+<Blockquote>Currently `onbarclick` conflicts with tooltip and thus must be disabled</Blockquote>
 
 <h2>Group series (series / long data)</h2>
 
@@ -1105,9 +1105,9 @@
       data={dateSeriesData}
       x="date"
       y="value"
-      onTooltipClick={(e) => {
-        console.log(e);
-        alert(JSON.stringify(e));
+      ontooltipclick={(e, detail) => {
+        console.log(e, detail);
+        alert(JSON.stringify(detail));
       }}
       {renderContext}
     />

@@ -66,12 +66,21 @@
   /** Set to false to disable spring transitions */
   export let motion = true;
 
-  export let onAreaClick: (e: { data: any }) => void = () => {};
-  export let onBarClick: (e: { data: any }) => void = () => {};
+  export let onareaclick: (e: MouseEvent, data: { data: any }) => void = () => {};
+  export let onbarclick: (e: MouseEvent, data: { data: any }) => void = () => {};
 
-  export let onPointClick: (e: { point: (typeof _points)[number]; data: any }) => void = () => {};
-  export let onPointEnter: (e: { point: (typeof _points)[number]; data: any }) => void = () => {};
-  export let onPointLeave: (e: { point: (typeof _points)[number]; data: any }) => void = () => {};
+  export let onpointclick: (
+    e: MouseEvent,
+    data: { point: (typeof _points)[number]; data: any }
+  ) => void = () => {};
+  export let onpointenter: (
+    e: MouseEvent,
+    datae: { point: (typeof _points)[number]; data: any }
+  ) => void = () => {};
+  export let onpointleave: (
+    e: MouseEvent,
+    datae: { point: (typeof _points)[number]; data: any }
+  ) => void = () => {};
 
   const _x = accessor(x);
   const _y = accessor(y);
@@ -353,7 +362,7 @@
           !area.fill && 'fill-surface-content/5',
           typeof area === 'object' ? area.class : null
         )}
-        onclick={() => onAreaClick({ data: highlightData })}
+        onclick={(e) => onareaclick(e, { data: highlightData })}
       />
     </slot>
   {/if}
@@ -374,7 +383,7 @@
           !bar.fill && 'fill-primary',
           typeof bar === 'object' ? bar.class : null
         )}
-        on:click={() => onBarClick({ data: highlightData })}
+        onclick={(e) => onbarclick(e, { data: highlightData })}
       />
     </slot>
   {/if}
@@ -413,9 +422,9 @@
             !point.fill && (typeof points === 'boolean' || !points.fill) && 'fill-primary',
             typeof points === 'object' ? points.class : null
           )}
-          onclick={() => onPointClick({ point, data: highlightData })}
-          onpointerenter={() => onPointEnter({ point, data: highlightData })}
-          onpointerleave={() => onPointLeave({ point, data: highlightData })}
+          onclick={(e) => onpointclick(e, { point, data: highlightData })}
+          onpointerenter={(e) => onpointenter(e, { point, data: highlightData })}
+          onpointerleave={(e) => onpointleave(e, { point, data: highlightData })}
         />
       {/each}
     </slot>

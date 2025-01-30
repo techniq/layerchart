@@ -26,13 +26,13 @@
   export let onclick:
     | ((
         e: MouseEvent,
-        data: { data: any; point?: [number, number]; feature?: GeoPermissibleObjects }
+        details: { data: any; point?: [number, number]; feature?: GeoPermissibleObjects }
       ) => void)
     | undefined = undefined;
   export let onpointerenter:
     | ((
         e: PointerEvent,
-        data: {
+        details: {
           data: any;
           point?: [number, number];
           feature?: GeoPermissibleObjects;
@@ -42,7 +42,7 @@
   export let onpointermove:
     | ((
         e: PointerEvent,
-        data: {
+        details: {
           data: any;
           point?: [number, number];
           feature?: GeoPermissibleObjects;
@@ -53,7 +53,7 @@
   export let onpointerdown:
     | ((
         e: PointerEvent,
-        data: {
+        details: {
           data: any;
           point?: [number, number];
           feature?: GeoPermissibleObjects;

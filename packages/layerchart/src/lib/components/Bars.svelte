@@ -49,7 +49,7 @@
   export let tweened: ComponentProps<Rect>['tweened'] = undefined;
 
   /** Event dispatched when individual Bar is clicked */
-  export let onBarClick: (e: { data: any }) => void = () => {};
+  export let onbarclick: (e: MouseEvent, detail: { data: any }) => void = () => {};
 
   $: _data = chartDataArray(data ?? $contextData);
 </script>
@@ -70,7 +70,7 @@
         {insets}
         {spring}
         {tweened}
-        on:click={() => onBarClick({ data: d })}
+        onclick={(e) => onbarclick(e, { data: d })}
         {...$$restProps}
       />
     {/each}

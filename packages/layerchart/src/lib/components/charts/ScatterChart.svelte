@@ -36,7 +36,7 @@
     props?: typeof props;
     series?: typeof series;
     renderContext?: typeof renderContext;
-    onTooltipClick?: typeof onTooltipClick;
+    ontooltipclick?: typeof ontooltipclick;
   }
 
   export let data: $$Props['data'] = [];
@@ -65,7 +65,7 @@
   export let rule: ComponentProps<Rule> | boolean = true;
 
   /** Event dispatched with current tooltip data */
-  export let onTooltipClick: (e: { data: any }) => void = () => {};
+  export let ontooltipclick: (e: MouseEvent, detail: { data: any }) => void = () => {};
 
   export let props: {
     brush?: Partial<ComponentProps<Brush>>;
@@ -175,7 +175,7 @@
     ? false
     : {
         mode: 'voronoi',
-        onClick: onTooltipClick,
+        onclick: ontooltipclick,
         ...props.tooltip?.context,
         ...$$props.tooltip,
       }}
