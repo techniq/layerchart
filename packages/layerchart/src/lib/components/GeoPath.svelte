@@ -35,6 +35,7 @@
   export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
   export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
   export let onpointerdown: ((e: PointerEvent) => void) | undefined = undefined;
+  export let ontouchmove: ((e: TouchEvent) => void) | undefined = undefined;
 
   /**
    * Curve of path drawn. Imported via d3-shape.
@@ -126,6 +127,8 @@
         pointerenter: _onPointerEnter,
         pointermove: _onPointerMove,
         pointerleave: _onPointerLeave,
+        pointerdown: onpointerdown,
+        touchmove: ontouchmove,
       },
     });
   }
@@ -151,6 +154,7 @@
       on:pointermove={_onPointerMove}
       on:pointerleave={_onPointerLeave}
       on:pointerdown={onpointerdown}
+      on:touchmove={ontouchmove}
       class={cls(fill == null && 'fill-transparent', className)}
     />
   {/if}

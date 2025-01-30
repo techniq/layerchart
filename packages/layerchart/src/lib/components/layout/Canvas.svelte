@@ -6,10 +6,12 @@
     render: (ctx: CanvasRenderingContext2D, styleOverrides?: ComputedStylesOptions) => any;
     retainState?: boolean;
     events?: {
+      click?: (e: MouseEvent) => void;
       pointerenter?: (e: PointerEvent) => void;
       pointermove?: (e: PointerEvent) => void;
       pointerleave?: (e: PointerEvent) => void;
-      click?: (e: MouseEvent) => void;
+      pointerdown?: (e: PointerEvent) => void;
+      touchmove?: (e: TouchEvent) => void;
     };
   };
 
@@ -38,6 +40,7 @@
   import { transformContext } from '../TransformContext.svelte';
   import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
+  import { localPoint } from '../../utils/event.js';
 
   const { width, height, containerWidth, containerHeight, padding } = chartContext();
 
@@ -94,8 +97,9 @@
   let lastActiveComponent: ComponentRender | undefined;
   const componentByColor = new Map<string, ComponentRender>();
 
-  function getPointerComponent(e: PointerEvent | MouseEvent) {
-    const color = getPixelColor(hitCanvasContext!, e.offsetX, e.offsetY);
+  function getPointerComponent(e: PointerEvent | MouseEvent | TouchEvent) {
+    const { x, y } = localPoint(e.target as HTMLCanvasElement, e) ?? { x: 0, y: 0 };
+    const color = getPixelColor(hitCanvasContext!, x, y);
     const colorKey = getColorStr(color);
     return componentByColor.get(colorKey);
   }
@@ -114,6 +118,10 @@
       component?.events?.pointermove?.(e);
     } else {
       component?.events?.pointermove?.(e);
+    }
+
+    if (e.buttons === 1) {
+      component?.events?.pointerdown?.(e);
     }
 
     lastActiveComponent = component;
@@ -250,6 +258,11 @@
   aria-label={label}
   aria-labelledby={labelledBy}
   aria-describedby={describedBy}
+  on:click={(e) => {
+    const component = getPointerComponent(e);
+    component?.events?.click?.(e);
+  }}
+  on:click
   on:pointerenter={onPointerMove}
   on:pointerenter
   on:pointermove={onPointerMove}
@@ -261,13 +274,11 @@
     if (activePointer) {
       e.preventDefault();
     }
-  }}
-  on:click={(e) => {
+
     const component = getPointerComponent(e);
-    component?.events?.click?.(e);
+    component?.events?.touchmove?.(e);
   }}
   on:touchmove
-  on:click
 >
   <slot name="fallback">
     {fallback || ''}

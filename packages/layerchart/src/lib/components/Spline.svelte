@@ -76,6 +76,8 @@
   export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
   export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
   export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerdown: ((e: PointerEvent) => void) | undefined = undefined;
+  export let ontouchmove: ((e: TouchEvent) => void) | undefined = undefined;
 
   /** Marker to attach to start, mid, and end points of path */
   export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
@@ -206,6 +208,8 @@
         pointerenter: onpointerenter,
         pointermove: onpointermove,
         pointerleave: onpointerleave,
+        pointerdown: onpointerdown,
+        touchmove: ontouchmove,
       },
     });
   }
@@ -269,6 +273,8 @@
       on:pointerenter={onpointerenter}
       on:pointermove={onpointermove}
       on:pointerleave={onpointerleave}
+      on:pointerdown={onpointerdown}
+      on:touchmove={ontouchmove}
       bind:this={pathEl}
     />
 
