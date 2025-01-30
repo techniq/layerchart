@@ -213,13 +213,7 @@
 
       const componentHasEvents = c.events && Object.values(c.events).filter((d) => d).length > 0;
 
-      if (
-        hitCanvasContext &&
-        componentHasEvents &&
-        !inactiveMoving &&
-        !$dragging &&
-        $tooltip.mode === 'manual'
-      ) {
+      if (hitCanvasContext && componentHasEvents && !inactiveMoving && !$dragging) {
         const color = getColorStr(colorGenerator.next().value);
         // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
         const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
