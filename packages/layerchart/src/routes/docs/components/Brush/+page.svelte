@@ -397,9 +397,9 @@
           data={data.appleStock.filter(
             (d) =>
               // @ts-expect-error
-              (xDomain[0] == null || d.date >= xDomain[0]) &&
+              (xDomain?.[0] == null || d.date >= xDomain?.[0]) &&
               // @ts-expect-error
-              (xDomain[1] == null || d.date <= xDomain[1])
+              (xDomain?.[1] == null || d.date <= xDomain?.[1])
           )}
           x="date"
           xScale={scaleTime()}
