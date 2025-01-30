@@ -43,7 +43,7 @@
 {#if renderContext === 'svg'}
   {#if $$slots.default}
     <Group {x} {y} {...$$restProps}>
-      <slot />
+      <slot {x} {y} />
     </Group>
   {:else}
     <Circle cx={x} cy={y} {...$$restProps} />
@@ -54,7 +54,7 @@
   {#if $$slots.default}
     <!-- TODO: Handle Canvas translation.  Conslidate with svg use case above (if `render` is not defined) -->
     <!-- <Group {x} {y} {...$$restProps}> -->
-    <slot />
+    <slot {x} {y} />
     <!-- </Group> -->
   {:else}
     <Circle cx={x} cy={y} {...$$restProps} />
