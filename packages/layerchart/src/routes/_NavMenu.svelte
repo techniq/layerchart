@@ -85,7 +85,6 @@
     Interactions: [
       'Brush',
       'Highlight',
-      'HitCanvas',
       'Tooltip',
       'TooltipContext',
       'TransformContext',
