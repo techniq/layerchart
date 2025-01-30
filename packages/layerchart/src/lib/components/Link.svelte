@@ -44,6 +44,8 @@
   export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
   export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
   export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerover: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerout: ((e: PointerEvent) => void) | undefined = undefined;
 
   /** Marker to attach to start, mid, and end points of path */
   export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
@@ -88,8 +90,8 @@
   {onpointerenter}
   {onpointermove}
   {onpointerleave}
-  on:pointerover
-  on:pointerout
+  {onpointerover}
+  {onpointerout}
   {...$$restProps}
 />
 

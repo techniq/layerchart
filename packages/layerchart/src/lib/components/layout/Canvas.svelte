@@ -9,8 +9,10 @@
       click?: (e: MouseEvent) => void;
       dblclick?: (e: MouseEvent) => void;
       pointerenter?: (e: PointerEvent) => void;
+      pointerover?: (e: PointerEvent) => void;
       pointermove?: (e: PointerEvent) => void;
       pointerleave?: (e: PointerEvent) => void;
+      pointerout?: (e: PointerEvent) => void;
       pointerdown?: (e: PointerEvent) => void;
       touchmove?: (e: TouchEvent) => void;
     };
@@ -113,9 +115,14 @@
     }
 
     if (lastActiveComponent == null) {
+      // TODO: Should these be handled differently
       component?.events?.pointerenter?.(e);
+      component?.events?.pointerover?.(e);
     } else if (lastActiveComponent != component) {
+      // TODO: Should these be handled differently
       lastActiveComponent?.events?.pointerleave?.(e);
+      lastActiveComponent?.events?.pointerout?.(e);
+
       component?.events?.pointermove?.(e);
     } else {
       component?.events?.pointermove?.(e);
@@ -134,6 +141,7 @@
 
     // Call last active component `pointerleave` event in case it was not triggered by hit canvas (quickly exiting canvas element before `pointermove` is triggered)
     lastActiveComponent?.events?.pointerleave?.(e);
+    lastActiveComponent?.events?.pointerout?.(e);
   }
   /**
    * end HitCanvas

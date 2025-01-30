@@ -37,9 +37,12 @@
   export { className as class };
 
   export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let ondblclick: ((e: MouseEvent) => void) | undefined = undefined;
   export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
   export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
   export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerover: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerout: ((e: PointerEvent) => void) | undefined = undefined;
 
   export let spring: boolean | SpringOptions | { [prop: string]: SpringOptions } = undefined;
   export let tweened: boolean | TweenedOptions | { [prop: string]: TweenedOptions } = undefined;
@@ -97,9 +100,12 @@
       render,
       events: {
         click: onclick,
+        dblclick: ondblclick,
         pointerenter: onpointerenter,
         pointermove: onpointermove,
         pointerleave: onpointerleave,
+        pointerover: onpointerover,
+        pointerout: onpointerout,
       },
     });
   }
@@ -126,12 +132,12 @@
     class={cls(fill == null && 'fill-surface-content', className)}
     {...$$restProps}
     on:click={onclick}
+    on:dblclick={ondblclick}
     on:pointerenter={onpointerenter}
-    on:pointerover
+    on:pointerover={onpointerover}
     on:pointermove={onpointermove}
-    on:pointerout
+    on:pointerout={onpointerout}
     on:pointerleave={onpointerleave}
-    on:dblclick
     bind:this={element}
   />
 {/if}
