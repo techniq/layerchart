@@ -53,6 +53,7 @@
               x="x"
               y="y"
               props={chartProps}
+              brush
               {renderContext}
               profile
             />
@@ -70,6 +71,7 @@
                 { key: 'tcp', data: data.chartData.tcp, color: 'hsl(var(--color-success))' },
               ]}
               props={chartProps}
+              brush
               {renderContext}
               profile
             />

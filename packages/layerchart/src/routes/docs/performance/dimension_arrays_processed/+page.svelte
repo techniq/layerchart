@@ -60,6 +60,7 @@
               x={(d) => d[0]}
               y={(d) => d[1]}
               props={chartProps}
+              brush
               {renderContext}
               profile
             />
@@ -89,6 +90,7 @@
                 },
               ]}
               props={chartProps}
+              brush
               {renderContext}
               profile
             />
