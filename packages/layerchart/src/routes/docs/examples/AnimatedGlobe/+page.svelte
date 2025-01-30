@@ -150,7 +150,7 @@
         </div>
       {/if}
 
-      <svelte:component this={Context}>
+      <svelte:component this={Context} {debug}>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
         <Graticule class="stroke-surface-content/20" />
 
