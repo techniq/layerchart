@@ -819,7 +819,7 @@
         x="date"
         y="value"
         {xDomain}
-        brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
+        brush={{ onbrushend: (e) => (xDomain = e.xDomain) }}
         {renderContext}
         {debug}
       />
@@ -831,7 +831,7 @@
         x="date"
         y="value"
         {xDomain}
-        brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
+        brush={{ onbrushend: (e) => (xDomain = e.xDomain) }}
         {renderContext}
         {debug}
       />

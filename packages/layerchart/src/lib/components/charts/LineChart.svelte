@@ -338,9 +338,9 @@
           resetOnEnd
           {xDomain}
           {...brushProps}
-          onBrushEnd={(e) => {
+          onbrushend={(e) => {
             xDomain = e.xDomain;
-            brushProps.onBrushEnd?.(e);
+            brushProps.onbrushend?.(e);
           }}
         />
       </Svg>

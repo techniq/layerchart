@@ -135,7 +135,7 @@
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
           <Brush
             classes={{ range: 'fill-secondary/10', handle: 'fill-secondary/50' }}
-            onChange={(e) => {
+            onchange={(e) => {
               // @ts-expect-error
               set(e.xDomain);
             }}
@@ -194,7 +194,7 @@
             <Brush
               axis="x"
               resetOnEnd
-              onBrushEnd={(e) => {
+              onbrushend={(e) => {
                 // @ts-expect-error
                 set(e.xDomain);
               }}
@@ -232,7 +232,7 @@
             <Brush
               axis="y"
               resetOnEnd
-              onBrushEnd={(e) => {
+              onbrushend={(e) => {
                 // @ts-expect-error
                 set(e.yDomain);
               }}
@@ -271,7 +271,7 @@
             <Brush
               axis="both"
               resetOnEnd
-              onBrushEnd={(e) => {
+              onbrushend={(e) => {
                 set({
                   // @ts-expect-error
                   xDomain: e.xDomain,
@@ -325,7 +325,7 @@
           <Svg>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
             <Brush
-              onChange={(e) => {
+              onchange={(e) => {
                 // @ts-expect-error
                 set(e.xDomain);
               }}
@@ -354,7 +354,7 @@
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
             <Brush
               axis="y"
-              onChange={(e) => {
+              onchange={(e) => {
                 // @ts-expect-error
                 set(e.yDomain);
               }}
@@ -432,7 +432,7 @@
           <Svg>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
             <Brush
-              onChange={(e) => {
+              onchange={(e) => {
                 // @ts-expect-error
                 set(e.xDomain);
               }}
@@ -537,7 +537,7 @@
             <Brush
               axis="x"
               resetOnEnd
-              onBrushEnd={(e) => {
+              onbrushend={(e) => {
                 // @ts-expect-error
                 set(e.xDomain);
               }}
@@ -612,7 +612,7 @@
 
           <Brush
             axis="both"
-            onChange={(e) => {
+            onchange={(e) => {
               set({
                 // @ts-expect-error
                 xDomain: e.xDomain,

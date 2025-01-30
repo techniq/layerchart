@@ -285,10 +285,10 @@
           {xDomain}
           {yDomain}
           {...brushProps}
-          onBrushEnd={(e) => {
+          onbrushend={(e) => {
             xDomain = e.xDomain;
             yDomain = e.yDomain;
-            brushProps.onBrushEnd?.(e);
+            brushProps.onbrushend?.(e);
           }}
         />
       </Svg>
