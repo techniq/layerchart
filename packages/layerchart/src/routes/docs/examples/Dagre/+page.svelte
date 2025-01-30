@@ -10,7 +10,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import DagreControls from './DagreControls.svelte';
-  import TransformControls from 'layerchart/components/TransformControls.svelte';
+  import TransformControls from '$lib/components/TransformControls.svelte';
 
   export let data;
 

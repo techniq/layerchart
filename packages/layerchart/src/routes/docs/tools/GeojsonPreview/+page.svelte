@@ -16,7 +16,7 @@
   import { color } from 'd3-color';
 
   import { Canvas, Chart, GeoPath, GeoTile, Svg, Tooltip } from 'layerchart';
-  import TransformControls from 'layerchart/components/TransformControls.svelte';
+  import TransformControls from '$lib/components/TransformControls.svelte';
   import {
     EmptyMessage,
     RangeField,

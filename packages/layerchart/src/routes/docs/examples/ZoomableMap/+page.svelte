@@ -5,7 +5,7 @@
   import { feature } from 'topojson-client';
 
   import { Canvas, Chart, GeoPath, Svg, Tooltip, geoFitObjectTransform } from 'layerchart';
-  import TransformControls from 'layerchart/components/TransformControls.svelte';
+  import TransformControls from '$lib/components/TransformControls.svelte';
   import { SelectField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';

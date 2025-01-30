@@ -7,7 +7,7 @@
   import { format } from '@layerstack/utils';
 
   import { Canvas, Chart, GeoPath, Legend, Svg, Tooltip } from 'layerchart';
-  import TransformControls from 'layerchart/components/TransformControls.svelte';
+  import TransformControls from '$lib/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
 

@@ -8,7 +8,7 @@
   import { sortFunc } from '@layerstack/utils';
 
   import { Chart, Canvas, GeoPath, Legend, Svg, Tooltip, Circle } from 'layerchart';
-  import TransformControls from 'layerchart/components/TransformControls.svelte';
+  import TransformControls from '$lib/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
 

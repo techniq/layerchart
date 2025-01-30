@@ -3,7 +3,7 @@
   import { cubicOut } from 'svelte/easing';
 
   import { Chart, Circle, Points, Spline, Svg } from 'layerchart';
-  import TransformControls from 'layerchart/components/TransformControls.svelte';
+  import TransformControls from '$lib/components/TransformControls.svelte';
   import { Field, RangeField, Switch } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';

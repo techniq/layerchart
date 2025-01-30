@@ -6,8 +6,8 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import type { ChartResizeDetail } from 'layerchart/components/ChartContext.svelte';
-  import { rasterizeText, type RasterizeTextOptions } from 'layerchart/utils/string.js';
+  import type { ChartResizeDetail } from '$lib/components/ChartContext.svelte';
+  import { rasterizeText, type RasterizeTextOptions } from '$lib/utils/string.js';
 
   let width = 960;
   let height = 500;
