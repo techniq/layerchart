@@ -45,10 +45,10 @@
   $: [yDomainMin, yDomainMax] = extent<number>($yScale.domain()) as [number, number];
 
   /** Attributes passed to range <rect> element */
-  export let range: ComponentProps<Rect> | undefined = undefined;
+  export let range: Partial<ComponentProps<Rect>> | undefined = undefined;
 
   /** Attributes passed to handle <rect> elements */
-  export let handle: ComponentProps<Rect> | undefined = undefined;
+  export let handle: Partial<ComponentProps<Rect>> | undefined = undefined;
 
   /** Apply format to labels, if shown */
   export let format: FormatType | undefined = undefined;
