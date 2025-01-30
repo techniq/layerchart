@@ -7,17 +7,7 @@
   import { feature } from 'topojson-client';
   import { sortFunc } from '@layerstack/utils';
 
-  import {
-    Chart,
-    Canvas,
-    GeoPath,
-    HitCanvas,
-    Legend,
-    Svg,
-    Tooltip,
-    renderPathData,
-    circlePath,
-  } from 'layerchart';
+  import { Chart, Canvas, GeoPath, Legend, Svg, Tooltip, Circle } from 'layerchart';
   import TransformControls from 'layerchart/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -90,13 +80,12 @@
       <TransformControls />
 
       <Svg>
-        {#each states.features as feature}
-          <GeoPath
-            geojson={feature}
-            class="fill-surface-content/10 stroke-surface-100"
-            {strokeWidth}
-          />
-        {/each}
+        <GeoPath
+          geojson={states}
+          class="fill-surface-content/10 stroke-surface-100"
+          {strokeWidth}
+        />
+
         {#each enrichedCountiesFeatures as feature}
           <GeoPath geojson={feature} {strokeWidth} let:geoPath>
             {@const [cx, cy] = geoPath.centroid(feature)}
@@ -113,6 +102,7 @@
             />
           </GeoPath>
         {/each}
+
         {#each enrichedCountiesFeatures as feature}
           <GeoPath
             geojson={feature}
@@ -127,7 +117,7 @@
         scale={colorScale}
         title="Est. Percent under 18"
         placement="top-left"
-        class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-sm rounded m-1"
+        class="bg-surface-100/80 px-2 py-1 backdrop-blur-sm rounded m-1"
       />
 
       <Tooltip.Root let:data>
@@ -187,61 +177,39 @@
           {strokeWidth}
         />
 
-        <GeoPath
-          render={(ctx, { newGeoPath }) => {
-            for (var feature of enrichedCountiesFeatures) {
-              const geoPath = newGeoPath();
-
-              const [cx, cy] = geoPath.centroid(feature);
-              const d = feature.properties.data;
-              const r = rScale(d?.population ?? 0);
-              const color = colorScale(d?.percentUnder18 ?? 0);
-
-              const pathData = circlePath({ cx, cy, r });
-              renderPathData(ctx, pathData, {
-                styles: {
-                  fill: color + (256 * 0.5).toString(16),
-                  stroke: color,
-                  strokeWidth,
-                },
-              });
-            }
-          }}
-        />
+        {#each enrichedCountiesFeatures as feature}
+          <GeoPath geojson={feature} {strokeWidth} let:geoPath {tooltip}>
+            {@const [cx, cy] = geoPath.centroid(feature)}
+            {@const d = feature.properties.data}
+            <Circle
+              {cx}
+              {cy}
+              r={rScale(d?.population ?? 0)}
+              fill={colorScale(d?.percentUnder18 ?? 0)}
+              fillOpacity={0.5}
+              stroke={colorScale(d?.percentUnder18 ?? 0)}
+              strokeWidth={strokeWidth / 2}
+            />
+          </GeoPath>
+        {/each}
       </Canvas>
 
-      {#if tooltip.data}
-        <Canvas>
+      <Canvas pointerEvents={false}>
+        {#if tooltip.data}
           <GeoPath
             geojson={tooltip.data}
             class="stroke-none fill-surface-content/10"
             {strokeWidth}
           />
-        </Canvas>
-      {/if}
+        {/if}
+      </Canvas>
 
-      <HitCanvas
-        let:nextColor
-        let:setColorData
-        onpointermove={(e, data) => tooltip.show(e, data)}
-        onpointerleave={tooltip.hide}
-      >
-        <GeoPath
-          render={(ctx, { newGeoPath }) => {
-            for (var feature of enrichedCountiesFeatures) {
-              const color = nextColor();
-
-              const geoPath = newGeoPath();
-              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
-              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
-
-              setColorData(color, feature);
-            }
-          }}
-        />
-      </HitCanvas>
-
-      <Legend scale={colorScale} title="Est. Percent under 18" placement="top-left" />
+      <Legend
+        scale={colorScale}
+        title="Est. Percent under 18"
+        placement="top-left"
+        class="bg-surface-100/80 px-2 py-1 backdrop-blur-sm rounded m-1"
+      />
 
       <Tooltip.Root let:data>
         {@const d = data.properties.data}

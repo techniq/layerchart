@@ -193,7 +193,7 @@
       if (hitCanvasContext && !$dragging) {
         const color = getColorStr(colorGenerator.next().value);
         // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
-        const styleOverrides = { styles: { fill: color, stroke: color } };
+        const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
 
         if (c.retainState) {
           c.render(hitCanvasContext, styleOverrides);

@@ -4,17 +4,7 @@
   import { scaleLinear } from 'd3-scale';
   import { feature } from 'topojson-client';
 
-  import {
-    Canvas,
-    Chart,
-    GeoPath,
-    Group,
-    HitCanvas,
-    renderPathData,
-    spikePath,
-    Svg,
-    Tooltip,
-  } from 'layerchart';
+  import { Canvas, Chart, GeoPath, spikePath, Spline, Svg, Tooltip } from 'layerchart';
   import TransformControls from 'layerchart/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -81,26 +71,22 @@
       <TransformControls />
 
       <Svg>
-        {#each states.features as feature}
-          <GeoPath
-            geojson={feature}
-            class="fill-surface-content/10 stroke-surface-100"
-            {strokeWidth}
-          />
-        {/each}
+        <GeoPath
+          geojson={states}
+          class="fill-surface-content/10 stroke-surface-100"
+          {strokeWidth}
+        />
 
         {#each enrichedCountiesFeatures as feature}
           <GeoPath geojson={feature} {strokeWidth} let:geoPath>
             {@const [x, y] = geoPath.centroid(feature)}
             {@const d = feature.properties.data}
             {@const height = heightScale(d?.population ?? 0)}
-            <Group {x} {y}>
-              <path
-                d="M{-width / 2},0 L0,{-height} L{width / 2},0"
-                class="stroke-danger fill-danger/25"
-                stroke-width={strokeWidth}
-              />
-            </Group>
+            <path
+              d={spikePath({ x, y, width, height })}
+              class="stroke-danger fill-danger/25"
+              stroke-width={strokeWidth}
+            />
           </GeoPath>
         {/each}
 
@@ -169,53 +155,29 @@
           {strokeWidth}
         />
 
-        <GeoPath
-          render={(ctx, { newGeoPath }) => {
-            for (var feature of enrichedCountiesFeatures) {
-              const geoPath = newGeoPath();
-              const [x, y] = geoPath.centroid(feature);
-              const d = feature.properties.data;
-              const height = heightScale(d?.population ?? 0);
-
-              const pathData = spikePath({ x, y, width, height });
-              renderPathData(ctx, pathData, {
-                classes: 'stroke-danger fill-danger/25',
-                styles: { strokeWidth },
-              });
-            }
-          }}
-        />
+        {#each enrichedCountiesFeatures as feature}
+          <GeoPath geojson={feature} {strokeWidth} {tooltip} let:geoPath>
+            {@const [x, y] = geoPath.centroid(feature)}
+            {@const d = feature.properties.data}
+            {@const height = heightScale(d?.population ?? 0)}
+            <Spline
+              pathData={spikePath({ x, y, width, height })}
+              class="stroke-danger fill-danger/25"
+              {strokeWidth}
+            />
+          </GeoPath>
+        {/each}
       </Canvas>
 
-      {#if tooltip.data}
-        <Canvas>
+      <Canvas pointerEvents={false}>
+        {#if tooltip.data}
           <GeoPath
             geojson={tooltip.data}
             class="stroke-none fill-surface-content/10"
             {strokeWidth}
           />
-        </Canvas>
-      {/if}
-
-      <HitCanvas
-        let:nextColor
-        let:setColorData
-        onpointermove={(e, data) => tooltip.show(e, data)}
-        onpointerleave={tooltip.hide}
-      >
-        <GeoPath
-          render={(ctx, { newGeoPath }) => {
-            for (var feature of enrichedCountiesFeatures) {
-              const color = nextColor();
-
-              const geoPath = newGeoPath();
-              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
-
-              setColorData(color, feature);
-            }
-          }}
-        />
-      </HitCanvas>
+        {/if}
+      </Canvas>
 
       <Tooltip.Root let:data>
         {@const d = data.properties.data}

@@ -150,8 +150,8 @@
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-{#if renderContext === 'svg'}
-  <slot {geoPath}>
+<slot {geoPath}>
+  {#if renderContext === 'svg'}
     <path
       {...$$restProps}
       d={geojson ? geoPath(geojson) : ''}
@@ -165,5 +165,5 @@
       on:pointerdown={onpointerdown}
       class={cls(fill == null && 'fill-transparent', className)}
     />
-  </slot>
-{/if}
+  {/if}
+</slot>
