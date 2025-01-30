@@ -15,17 +15,8 @@
   import { schemeCategory10 } from 'd3-scale-chromatic';
   import { color } from 'd3-color';
 
-  import {
-    Canvas,
-    Chart,
-    GeoPath,
-    GeoTile,
-    HitCanvas,
-    renderPathData,
-    Svg,
-    Tooltip,
-  } from 'layerchart';
-  import TransformControls from 'layerchart/components/TransformControls.svelte';
+  import { Canvas, Chart, GeoPath, GeoTile, Svg, Tooltip } from 'layerchart';
+  import TransformControls from '$lib/components/TransformControls.svelte';
   import {
     EmptyMessage,
     RangeField,
@@ -76,8 +67,6 @@
       return c.toString() ?? '';
     })
   );
-
-  $: features = geojson?.features;
 </script>
 
 <div class="grid gap-2">
@@ -121,66 +110,17 @@
         <TransformControls />
 
         <Canvas>
-          {#if projection === geoMercator}
-            <!-- <GeoPath {geojson} class="stroke-black fill-black/50" /> -->
+          {#each geojson?.features as feature}
             <GeoPath
-              render={(ctx, { newGeoPath }) => {
-                for (var feature of features) {
-                  const geoPath = newGeoPath();
-                  renderPathData(ctx, geoPath(feature), {
-                    styles: {
-                      fill: colorScale(String(feature.id)),
-                      stroke: 'black',
-                    },
-                  });
-                }
-              }}
+              geojson={feature}
+              fill={colorScale(String(feature.id))}
+              class="stroke-black"
+              {tooltip}
             />
-          {:else}
-            <!-- <GeoPath {geojson} class="stroke-surface-content fill-surface-100" /> -->
-            <GeoPath
-              render={(ctx, { newGeoPath }) => {
-                for (var feature of features) {
-                  const geoPath = newGeoPath();
-                  renderPathData(ctx, geoPath(feature), {
-                    styles: {
-                      fill: colorScale(String(feature.id)),
-                      stroke: 'black',
-                    },
-                  });
-                }
-              }}
-            />
-          {/if}
+          {/each}
         </Canvas>
 
-        <HitCanvas
-          let:nextColor
-          let:setColorData
-          on:pointermove={(e) => tooltip.show(e.detail.event, e.detail.data)}
-          on:pointerleave={tooltip.hide}
-        >
-          <GeoPath
-            render={(ctx, { newGeoPath }) => {
-              for (var feature of features) {
-                const color = nextColor();
-
-                const geoPath = newGeoPath();
-                renderPathData(ctx, geoPath(feature), {
-                  styles: {
-                    fill: color,
-                    stroke: color,
-                  },
-                });
-
-                setColorData(color, feature);
-              }
-            }}
-          />
-        </HitCanvas>
-
         <Tooltip.Root let:data>
-          <Tooltip.Header>{data.properties.id}</Tooltip.Header>
           <Tooltip.List>
             {#each Object.entries(data.properties) as [key, value]}
               <Tooltip.Item label={key} {value} />

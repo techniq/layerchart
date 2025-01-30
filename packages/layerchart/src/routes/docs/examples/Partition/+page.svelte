@@ -170,7 +170,7 @@
                 <Group
                   x={xScale(node.y0)}
                   y={yScale(node.x0)}
-                  on:click={() => (selectedHorizontal = node)}
+                  onclick={() => (selectedHorizontal = node)}
                 >
                   <RectClipPath width={nodeWidth} height={nodeHeight}>
                     {@const nodeColor = getNodeColor(node, colorBy)}
@@ -252,7 +252,7 @@
                 <Group
                   x={xScale(node.x0)}
                   y={yScale(node.y0)}
-                  on:click={() => (selectedVertical = node)}
+                  onclick={() => (selectedVertical = node)}
                 >
                   <RectClipPath width={nodeWidth} height={nodeHeight}>
                     {@const nodeColor = getNodeColor(node, colorBy)}
@@ -341,7 +341,7 @@
                 <Group
                   x={xScale(node.y0)}
                   y={yScale(node.x0)}
-                  on:click={() => (selectedCarNode = node)}
+                  onclick={() => (selectedCarNode = node)}
                   tweened={{ delay: 600 }}
                 >
                   {@const nodeWidth = xScale(node.y1) - xScale(node.y0)}

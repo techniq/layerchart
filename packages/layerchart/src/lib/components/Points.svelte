@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { onDestroy, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
   import { notNull } from '@layerstack/utils';
@@ -12,7 +12,6 @@
   import Circle from './Circle.svelte';
   import Link from './Link.svelte';
   import { isScaleBand, type AnyScale } from '../utils/scales.js';
-  import { getCanvasContext } from './layout/Canvas.svelte';
   import { accessor, type Accessor } from '../utils/common.js';
 
   const context = chartContext() as any;
@@ -51,10 +50,6 @@
   export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
-
-  /** Render to canvas */
-  export let render: ((ctx: CanvasRenderingContext2D, points: Point[]) => any) | undefined =
-    undefined;
 
   let className: string | undefined = undefined;
   export { className as class };
@@ -168,59 +163,31 @@
       };
     }
   });
-
-  const canvasContext = getCanvasContext();
-  const renderContext = canvasContext ? 'canvas' : 'svg';
-
-  function _render(ctx: CanvasRenderingContext2D) {
-    if (render) {
-      render(ctx, points);
-    } else {
-      // Rendered below
-    }
-  }
-
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'Points', render: _render });
-  }
-
-  onDestroy(() => {
-    if (renderContext === 'canvas') {
-      canvasUnregister();
-    }
-  });
 </script>
 
 <slot {points}>
-  {#if renderContext === 'svg' || (renderContext === 'canvas' && !render)}
-    {#if links}
-      <g class="link-group">
-        {#each _links as link}
-          <Link
-            data={link}
-            class="stroke-surface-content/50"
-            {...typeof links === 'object' ? links : null}
-          />
-        {/each}
-      </g>
-    {/if}
-
-    <g class="point-group">
-      {#each points as point}
-        {@const radialPoint = pointRadial(point.x, point.y)}
-        <Circle
-          cx={$radial ? radialPoint[0] : point.x}
-          cy={$radial ? radialPoint[1] : point.y}
-          r={point.r}
-          fill={fill ?? ($config.c ? $cGet(point.data) : null)}
-          {fillOpacity}
-          {stroke}
-          {strokeWidth}
-          class={className}
-          {...$$restProps}
-        />
-      {/each}
-    </g>
+  {#if links}
+    {#each _links as link}
+      <Link
+        data={link}
+        class="stroke-surface-content/50"
+        {...typeof links === 'object' ? links : null}
+      />
+    {/each}
   {/if}
+
+  {#each points as point}
+    {@const radialPoint = pointRadial(point.x, point.y)}
+    <Circle
+      cx={$radial ? radialPoint[0] : point.x}
+      cy={$radial ? radialPoint[1] : point.y}
+      r={point.r}
+      fill={fill ?? ($config.c ? $cGet(point.data) : null)}
+      {fillOpacity}
+      {stroke}
+      {strokeWidth}
+      class={className}
+      {...$$restProps}
+    />
+  {/each}
 </slot>

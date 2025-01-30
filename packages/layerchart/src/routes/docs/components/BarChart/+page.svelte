@@ -18,7 +18,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, wideData, longData } from '$lib/utils/genData.js';
-  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   export let data;
 
@@ -51,22 +51,29 @@
   });
 
   let renderContext: 'svg' | 'canvas' = 'svg';
+  let debug = false;
 </script>
 
 <h1>Examples</h1>
 
-<Field label="Render context">
-  <ToggleGroup bind:value={renderContext} variant="outline">
-    <ToggleOption value="svg">Svg</ToggleOption>
-    <ToggleOption value="canvas">Canvas</ToggleOption>
-  </ToggleGroup>
-</Field>
+<div class="grid grid-cols-[1fr,auto] gap-2">
+  <Field label="Render context">
+    <ToggleGroup bind:value={renderContext} variant="outline">
+      <ToggleOption value="svg">Svg</ToggleOption>
+      <ToggleOption value="canvas">Canvas</ToggleOption>
+    </ToggleGroup>
+  </Field>
+
+  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
+    <Switch {id} bind:checked={debug} />
+  </Field>
+</div>
 
 <h2>Vertical (default)</h2>
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} />
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -80,6 +87,7 @@
       y="date"
       orientation="horizontal"
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -94,6 +102,7 @@
       y="value"
       props={{ bars: { class: 'fill-secondary' } }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -108,6 +117,7 @@
       y="value"
       cRange={['hsl(var(--color-secondary))']}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -131,6 +141,7 @@
         yAxis: { format: 'metric' },
       }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -148,6 +159,7 @@
       cDomain={[0]}
       cRange={['hsl(var(--color-danger))', 'hsl(var(--color-success))']}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -156,7 +168,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" {renderContext}>
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="marks" let:series let:getBarsProps>
         {#each series as s, i (s.key)}
           <LinearGradient
@@ -183,6 +195,7 @@
       y="value"
       props={{ highlight: { area: false } }}
       {renderContext}
+      {debug}
     >
       <svelte:fragment slot="belowMarks">
         <Highlight area={{ class: 'fill-surface-content/10' }} />
@@ -207,6 +220,7 @@
         },
       ]}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -224,6 +238,7 @@
         { key: 'value', color: 'hsl(var(--color-primary))', props: { insets: { y: 4 } } },
       ]}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -249,6 +264,7 @@
         },
       ]}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -272,6 +288,7 @@
         },
       ]}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -302,6 +319,7 @@
         },
       ]}
       {renderContext}
+      {debug}
     >
       <svelte:fragment slot="tooltip" let:y let:series>
         <Tooltip.Root let:data>
@@ -357,6 +375,7 @@
         },
       ]}
       {renderContext}
+      {debug}
     >
       <svelte:fragment slot="tooltip" let:y let:series>
         <Tooltip.Root let:data>
@@ -414,6 +433,7 @@
         },
       }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -450,6 +470,7 @@
         },
       }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -485,16 +506,17 @@
         },
       }}
       tooltip={false}
-      onBarClick={(e) => {
-        console.log(e);
-        alert(JSON.stringify(e));
+      onbarclick={(e, detail) => {
+        console.log(e, detail);
+        alert(JSON.stringify(detail));
       }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
 
-<Blockquote>Currently `onBarClick` conflicts with tooltip and thus must be disabled</Blockquote>
+<Blockquote>Currently `onbarclick` conflicts with tooltip and thus must be disabled</Blockquote>
 
 <h2>Group series (series / long data)</h2>
 
@@ -530,6 +552,7 @@
         },
       }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -565,6 +588,7 @@
         },
       }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -601,6 +625,7 @@
         },
       }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -638,6 +663,7 @@
       }}
       stackPadding={5.0}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -672,6 +698,7 @@
         },
       }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -712,6 +739,7 @@
         },
       }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -751,7 +779,7 @@
           header: { format: 'none' },
         },
       }}
-      {renderContext}
+      {renderContext} {debug}
     />
   </div>
 </Preview> -->
@@ -788,6 +816,7 @@
       }}
       legend
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -824,6 +853,7 @@
       }}
       legend
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -860,6 +890,7 @@
       }}
       legend={{ placement: 'top-right', classes: { root: 'mt-2' } }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -899,6 +930,7 @@
       }}
       legend
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -907,7 +939,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" labels {renderContext} />
+    <BarChart data={dateSeriesData} x="date" y="value" labels {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -921,6 +953,7 @@
       y="value"
       labels={{ placement: 'inside' }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -949,6 +982,7 @@
       }}
       padding={{ left: 0, bottom: 16 }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -965,6 +999,7 @@
       orientation="horizontal"
       axis={false}
       {renderContext}
+      {debug}
     >
       <svelte:fragment slot="aboveMarks">
         <Labels x={8} value={(d) => d.date} class="text-sm fill-surface-300 stroke-none" />
@@ -986,6 +1021,7 @@
       bandPadding={0.1}
       props={{ bars: { radius: 1, strokeWidth: 0 } }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -1015,6 +1051,7 @@
         rule: { y: false },
       }}
       {renderContext}
+      {debug}
     >
       <svelte:fragment slot="tooltip" let:x let:y let:c let:cScale>
         <Tooltip.Root let:data>
@@ -1032,7 +1069,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" axis="x" {renderContext} />
+    <BarChart data={dateSeriesData} x="date" y="value" axis="x" {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -1040,7 +1077,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} />
+    <BarChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -1054,6 +1091,7 @@
       y="value"
       props={{ xAxis: { ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks() } }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -1062,7 +1100,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true }} {renderContext} />
+    <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true }} {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -1076,6 +1114,7 @@
       y="value"
       grid={{ x: true, bandAlign: 'between' }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -1093,6 +1132,7 @@
       yDomain={[1, 100]}
       props={{ yAxis: { ticks: [1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 100] } }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -1105,11 +1145,12 @@
       data={dateSeriesData}
       x="date"
       y="value"
-      onTooltipClick={(e) => {
-        console.log(e);
-        alert(JSON.stringify(e));
+      ontooltipclick={(e, detail) => {
+        console.log(e, detail);
+        alert(JSON.stringify(detail));
       }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -1118,7 +1159,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <BarChart data={dateSeriesData} x="date" y="value" {renderContext}>
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="tooltip" let:x let:y>
         <Tooltip.Root let:data>
           <Tooltip.Header>{format(x(data), PeriodType.DayTime)}</Tooltip.Header>

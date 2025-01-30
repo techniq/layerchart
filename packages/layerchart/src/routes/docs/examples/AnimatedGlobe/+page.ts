@@ -13,6 +13,7 @@ export async function load({ fetch }) {
     }>,
     meta: {
       pageSource,
+      hideTableOfContents: true,
     },
   };
 }

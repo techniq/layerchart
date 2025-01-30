@@ -82,8 +82,8 @@
         fitGeojson: countries,
         applyTransform: ['rotate'],
       }}
-      on:dragstart={() => timer.stop()}
-      on:dragend={() => {
+      ondragstart={() => timer.stop()}
+      ondragend={() => {
         if (isSpinning) {
           // Restart
           timer.start();

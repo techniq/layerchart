@@ -6,17 +6,8 @@
   import { feature } from 'topojson-client';
   import { format } from '@layerstack/utils';
 
-  import {
-    Canvas,
-    Chart,
-    GeoPath,
-    HitCanvas,
-    Legend,
-    renderPathData,
-    Svg,
-    Tooltip,
-  } from 'layerchart';
-  import TransformControls from 'layerchart/components/TransformControls.svelte';
+  import { Canvas, Chart, GeoPath, Legend, Svg, Tooltip } from 'layerchart';
+  import TransformControls from '$lib/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -82,22 +73,18 @@
           {#each enrichedCountiesFeatures as feature}
             <GeoPath
               geojson={feature}
-              {tooltip}
               fill={colorScale(feature.properties.data?.population ?? 0)}
               class="stroke-none hover:stroke-white"
               {strokeWidth}
+              {tooltip}
             />
           {/each}
         </g>
-        <g>
-          {#each states.features as feature}
-            <GeoPath
-              geojson={feature}
-              class="fill-none stroke-black/30 pointer-events-none"
-              {strokeWidth}
-            />
-          {/each}
-        </g>
+        <GeoPath
+          geojson={states}
+          class="fill-none stroke-black/30 pointer-events-none"
+          {strokeWidth}
+        />
       </Svg>
 
       <Legend
@@ -158,50 +145,32 @@
       <TransformControls />
 
       <Canvas>
-        <GeoPath
-          render={(ctx, { newGeoPath }) => {
-            for (var feature of enrichedCountiesFeatures) {
-              const geoPath = newGeoPath();
-              renderPathData(ctx, geoPath(feature), {
-                styles: { fill: colorScale(feature.properties.data?.population ?? 0) },
-              });
-            }
-          }}
-        />
+        {#each enrichedCountiesFeatures as feature}
+          <GeoPath
+            geojson={feature}
+            fill={colorScale(feature.properties.data?.population ?? 0)}
+            {strokeWidth}
+            class="stroke-none"
+            {tooltip}
+          />
+        {/each}
+      </Canvas>
+
+      <Canvas pointerEvents={false}>
         <GeoPath geojson={states} class="stroke-black/30" {strokeWidth} />
       </Canvas>
 
-      {#if tooltip.data}
-        <Canvas>
+      <Canvas pointerEvents={false}>
+        {#if tooltip.data}
           <GeoPath geojson={tooltip.data} class="stroke-white" {strokeWidth} />
-        </Canvas>
-      {/if}
-
-      <HitCanvas
-        let:nextColor
-        let:setColorData
-        on:pointermove={(e) => tooltip.show(e.detail.event, e.detail.data)}
-        on:pointerleave={tooltip.hide}
-      >
-        <GeoPath
-          render={(ctx, { newGeoPath }) => {
-            for (var feature of enrichedCountiesFeatures) {
-              const color = nextColor();
-
-              const geoPath = newGeoPath();
-              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
-              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
-
-              setColorData(color, feature);
-            }
-          }}
-        />
-      </HitCanvas>
+        {/if}
+      </Canvas>
 
       <Legend
         scale={colorScale}
         title="Population"
         tickFormat={(d) => format(d, 'metric', { maximumSignificantDigits: 2 })}
+        placement="top-left"
         class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-sm rounded m-1"
       />
 

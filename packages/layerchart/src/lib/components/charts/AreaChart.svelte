@@ -35,6 +35,7 @@
   interface $$Props extends ComponentProps<Chart<TData>> {
     axis?: typeof axis;
     brush?: typeof brush;
+    debug?: typeof debug;
     grid?: typeof grid;
     labels?: typeof labels;
     legend?: typeof legend;
@@ -45,8 +46,8 @@
     series?: typeof series;
     seriesLayout?: typeof seriesLayout;
     renderContext?: typeof renderContext;
-    onPointClick?: typeof onPointClick;
-    onTooltipClick?: typeof onTooltipClick;
+    onpointclick?: typeof onpointclick;
+    ontooltipclick?: typeof ontooltipclick;
   }
 
   export let data: $$Props['data'] = [];
@@ -83,13 +84,16 @@
   export let rule: ComponentProps<Rule> | boolean = true;
 
   /** Event dispatched with current tooltip data */
-  export let onTooltipClick: (e: { data: any }) => void = () => {};
+  export let ontooltipclick: (e: MouseEvent, details: { data: any }) => void = () => {};
 
   /** Event dispatched when Highlight point is clicked (useful with multiple series) */
-  export let onPointClick: (e: {
-    data: HighlightPointData;
-    series: (typeof series)[number];
-  }) => void = () => {};
+  export let onpointclick: (
+    e: MouseEvent,
+    details: {
+      data: HighlightPointData;
+      series: (typeof series)[number];
+    }
+  ) => void = () => {};
 
   export let props: {
     area?: Partial<ComponentProps<Area>>;
@@ -117,6 +121,9 @@
 
   /** Log initial render performance using `console.time` */
   export let profile = false;
+
+  /** Enable debug mode */
+  export let debug = false;
 
   $: allSeriesData = visibleSeries
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
@@ -274,7 +281,8 @@
     ? false
     : {
         mode: 'bisect-x',
-        onClick: onTooltipClick,
+        onclick: ontooltipclick,
+        debug,
         ...props.tooltip?.context,
         ...$$props.tooltip,
       }}
@@ -308,7 +316,7 @@
   }}
 
   <slot {...slotProps}>
-    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} center={radial}>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} center={radial} {debug}>
       <slot name="grid" {...slotProps}>
         {#if grid}
           <Grid x={radial} y {...typeof grid === 'object' ? grid : null} {...props.grid} />
@@ -381,9 +389,9 @@
               ),
             }}
             lines={i == 0}
-            onPointClick={(e) => onPointClick({ ...e, series: s })}
-            onPointEnter={() => (highlightSeriesKey = s.key)}
-            onPointLeave={() => (highlightSeriesKey = null)}
+            onpointclick={(e, detail) => onpointclick(e, { ...detail, series: s })}
+            onpointenter={() => (highlightSeriesKey = s.key)}
+            onpointleave={() => (highlightSeriesKey = null)}
             {...props.highlight}
           />
         {/each}
@@ -424,9 +432,9 @@
           tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
           placement="bottom"
           variant="swatches"
-          onClick={(item) => $selectedSeries.toggleSelected(item.value)}
-          onPointerEnter={(item) => (highlightSeriesKey = item.value)}
-          onPointerLeave={(item) => (highlightSeriesKey = null)}
+          onclick={(e, item) => $selectedSeries.toggleSelected(item.value)}
+          onpointerenter={(e, item) => (highlightSeriesKey = item.value)}
+          onpointerleave={(e) => (highlightSeriesKey = null)}
           {...props.legend}
           {...typeof legend === 'object' ? legend : null}
           classes={{

@@ -23,6 +23,7 @@
   import { arc as d3arc } from 'd3-shape';
   import { scaleLinear } from 'd3-scale';
   import { min, max } from 'd3-array';
+  import { merge } from 'lodash-es';
 
   import { objectId } from '@layerstack/utils/object';
 
@@ -31,7 +32,7 @@
   import { degreesToRadians } from '$lib/utils/math.js';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { renderPathData } from '../utils/canvas.js';
+  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -93,6 +94,11 @@
   export { className as class };
 
   export let track: boolean | SVGAttributes<SVGPathElement> = false;
+
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
 
   const { yRange } = chartContext();
 
@@ -199,7 +205,10 @@
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
 
-  function render(ctx: CanvasRenderingContext2D) {
+  function render(
+    ctx: CanvasRenderingContext2D,
+    styleOverrides: ComputedStylesOptions | undefined
+  ) {
     ctx.translate(xOffset, yOffset);
 
     // Track
@@ -216,10 +225,16 @@
     });
 
     // Arc
-    renderPathData(ctx, arc(), {
-      styles: { fill, fillOpacity, stroke, strokeWidth },
-      classes: className,
-    });
+    renderPathData(
+      ctx,
+      arc(),
+      styleOverrides
+        ? merge({ styles: { strokeWidth } }, styleOverrides)
+        : {
+            styles: { fill, fillOpacity, stroke, strokeWidth },
+            classes: className,
+          }
+    );
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
@@ -232,9 +247,32 @@
     canvasContext.invalidate();
   }
 
+  // Hide `tooltip` reactivity
+  function _onPointerEnter(e: PointerEvent) {
+    onpointerenter?.(e);
+    tooltip?.show(e, data);
+  }
+  function _onPointerMove(e: PointerEvent) {
+    onpointermove?.(e);
+    tooltip?.show(e, data);
+  }
+  function _onPointerLeave(e: PointerEvent) {
+    onpointerleave?.(e);
+    tooltip?.hide();
+  }
+
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'Arc', render });
+    canvasUnregister = canvasContext.register({
+      name: 'Arc',
+      render,
+      events: {
+        click: onclick,
+        pointerenter: _onPointerEnter,
+        pointermove: _onPointerMove,
+        pointerleave: _onPointerLeave,
+      },
+    });
   }
 
   onDestroy(() => {
@@ -264,19 +302,16 @@
     stroke-width={strokeWidth}
     class={className}
     {...$$restProps}
-    on:pointerenter={(e) => tooltip?.show(e, data)}
-    on:pointermove={(e) => tooltip?.show(e, data)}
-    on:pointerleave={(e) => tooltip?.hide()}
+    on:click={onclick}
+    on:pointerenter={onpointerenter}
+    on:pointermove={_onPointerMove}
+    on:pointerleave={_onPointerLeave}
     on:touchmove={(e) => {
       if (tooltip) {
         // Prevent touch to not interfer with pointer when using tooltip
         e.preventDefault();
       }
     }}
-    on:click
-    on:pointerenter
-    on:pointermove
-    on:pointerleave
     on:touchmove
   />
 {/if}

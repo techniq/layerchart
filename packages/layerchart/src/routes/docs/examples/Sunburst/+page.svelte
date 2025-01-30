@@ -100,11 +100,11 @@
                 stroke="hsl(0 0% 20%)"
                 class="cursor-pointer"
                 let:centroid
-                on:click={() => {
+                onclick={() => {
                   selected = node;
                 }}
-                on:pointermove={(e) => tooltip.show(e, node)}
-                on:pointerleave={tooltip.hide}
+                onpointermove={(e) => tooltip.show(e, node)}
+                onpointerleave={tooltip.hide}
               >
                 <!-- <text x={centroid[0]} y={centroid[1]}>{node.data.name}</text> -->
               </Arc>

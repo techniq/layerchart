@@ -4,12 +4,23 @@
 
   export const tooltipContextKey = Symbol();
 
+  type TooltipMode =
+    | 'bisect-x'
+    | 'bisect-y'
+    | 'band'
+    | 'bisect-band'
+    | 'bounds'
+    | 'voronoi'
+    | 'quadtree'
+    | 'manual';
+
   export type TooltipContextValue = {
     x: number;
     y: number;
     data: any;
     show(e: PointerEvent, tooltipData?: any): void;
     hide(e?: PointerEvent): void;
+    mode: TooltipMode;
   };
 
   export type TooltipContext = Readable<TooltipContextValue>;
@@ -20,6 +31,7 @@
     data: null as any,
     show: () => {},
     hide: () => {},
+    mode: 'manual',
   });
   export function tooltipContext() {
     return getContext<TooltipContext>(tooltipContextKey) ?? defaultContext;
@@ -80,15 +92,7 @@
   /**
    * @type {'bisect-x' | 'bisect-y' | 'band' | 'bisect-band' | 'bounds' | 'voronoi' | 'quadtree' | 'manual'}
    */
-  export let mode:
-    | 'bisect-x'
-    | 'bisect-y'
-    | 'band'
-    | 'bisect-band'
-    | 'bounds'
-    | 'voronoi'
-    | 'quadtree'
-    | 'manual' = 'manual';
+  export let mode: TooltipMode = 'manual';
   /**
    * @type {'closest' | 'left' | 'right'}
    */
@@ -107,7 +111,7 @@
   /** Enable debug view (show hit targets, etc) */
   export let debug = false;
 
-  export let onClick: ({ data }: { data: any }) => any = () => {};
+  export let onclick: ({ data }: { data: any }) => any = () => {};
 
   /** Exposed to allow binding in Chart */
   export let tooltip = writable({
@@ -116,6 +120,7 @@
     data: null as any,
     show: showTooltip,
     hide: hideTooltip,
+    mode,
   });
   setTooltipContext(tooltip);
 
@@ -401,7 +406,7 @@
   on:pointerleave={triggerPointerEvents ? hideTooltip : undefined}
   on:click={(e) => {
     if (triggerPointerEvents) {
-      onClick({ data: $tooltip?.data });
+      onclick({ data: $tooltip?.data });
     }
   }}
 >
@@ -418,22 +423,22 @@
     {#if mode === 'voronoi'}
       <Svg>
         <Voronoi
-          on:pointerenter={(e) => {
-            showTooltip(e.detail.event, e.detail.data);
+          onpointerenter={(e, { data }) => {
+            showTooltip(e, data);
           }}
-          on:pointermove={(e) => {
-            showTooltip(e.detail.event, e.detail.data);
+          onpointermove={(e, { data }) => {
+            showTooltip(e, data);
           }}
-          on:pointerleave={hideTooltip}
-          on:pointerdown={(e) => {
+          onpointerleave={hideTooltip}
+          onpointerdown={(e) => {
             // @ts-expect-error
             if (e.target?.hasPointerCapture(e.pointerId)) {
               // @ts-expect-error
               e.target.releasePointerCapture(e.pointerId);
             }
           }}
-          on:click={(e) => {
-            onClick({ data: e.detail.data });
+          onclick={(e, { data }) => {
+            onclick({ data });
           }}
           classes={{ path: cls(debug && 'fill-danger/10 stroke-danger') }}
         />
@@ -459,7 +464,7 @@
                 }
               }}
               on:click={(e) => {
-                onClick({ data: rect.data });
+                onclick({ data: rect.data });
               }}
             />
           {/each}

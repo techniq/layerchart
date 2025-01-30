@@ -48,8 +48,8 @@
               class={cls(
                 node.children ? 'fill-surface-100 stroke-surface-content' : 'fill-surface-content'
               )}
-              on:pointermove={(e) => tooltip.show(e, node)}
-              on:pointerleave={tooltip.hide}
+              onpointermove={(e) => tooltip.show(e, node)}
+              onpointerleave={tooltip.hide}
             />
           {/each}
         </ForceSimulation>

@@ -2,7 +2,7 @@
   import { geoAlbersUsa } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, HitCanvas, Svg, Tooltip, renderPathData } from 'layerchart';
+  import { Canvas, Chart, GeoPath, Svg, Tooltip } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   export let data;
@@ -28,14 +28,14 @@
         {#each states.features as feature}
           <GeoPath
             geojson={feature}
-            {tooltip}
             class="stroke-surface-content fill-surface-100 hover:fill-surface-content/20"
+            {tooltip}
           />
         {/each}
 
         <GeoPath
           geojson={counties}
-          class="fill-none stroke-surface-content/20 pointer-events-none"
+          class="fill-none stroke-surface-content/10 pointer-events-none"
         />
       </Svg>
 
@@ -64,35 +64,21 @@
       let:tooltip
     >
       <Canvas>
-        <GeoPath geojson={states} class="stroke-surface-content" />
-        <GeoPath geojson={counties} class="stroke-surface-content/20" />
+        {#each states.features as feature}
+          <GeoPath geojson={feature} class="stroke-surface-content" {tooltip} />
+        {/each}
+      </Canvas>
+
+      <Canvas pointerEvents={false}>
+        <GeoPath geojson={counties} class="stroke-surface-content/10" />
       </Canvas>
 
       <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
-      <Canvas>
+      <Canvas pointerEvents={false}>
         {#if tooltip.data}
           <GeoPath geojson={tooltip.data} class="stroke-surface-content fill-surface-content/20" />
         {/if}
       </Canvas>
-
-      <HitCanvas
-        let:nextColor
-        let:setColorData
-        on:pointermove={(e) => tooltip.show(e.detail.event, e.detail.data)}
-        on:pointerleave={tooltip.hide}
-      >
-        <GeoPath
-          render={(ctx, { newGeoPath }) => {
-            for (var feature of states.features) {
-              const color = nextColor();
-              const geoPath = newGeoPath();
-              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
-              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
-              setColorData(color, feature);
-            }
-          }}
-        />
-      </HitCanvas>
 
       <Tooltip.Root let:data>
         {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}

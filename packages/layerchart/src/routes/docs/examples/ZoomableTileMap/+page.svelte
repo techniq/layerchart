@@ -4,7 +4,7 @@
   import { feature } from 'topojson-client';
 
   import { Chart, GeoPath, GeoTile, Svg, Tooltip, geoFitObjectTransform } from 'layerchart';
-  import TransformControls from 'layerchart/components/TransformControls.svelte';
+  import TransformControls from '$lib/components/TransformControls.svelte';
   import { Field, RangeField, Switch } from 'svelte-ux';
 
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
@@ -73,9 +73,7 @@
             geojson={feature}
             class="stroke-none"
             {tooltip}
-            on:click={(e) => {
-              const { geoPath, event } = e.detail;
-
+            onclick={() => {
               const featureTransform = geoFitObjectTransform(projection, [width, height], feature);
               transform.setTranslate(featureTransform.translate);
               transform.setScale(featureTransform.scale);
@@ -138,9 +136,7 @@
             geojson={feature}
             class="stroke-none"
             {tooltip}
-            on:click={(e) => {
-              const { geoPath, event } = e.detail;
-
+            onclick={() => {
               const featureTransform = geoFitObjectTransform(projection, [width, height], feature);
               transform.setTranslate(featureTransform.translate);
               transform.setScale(featureTransform.scale);
@@ -201,9 +197,7 @@
             geojson={feature}
             class="stroke-none"
             {tooltip}
-            on:click={(e) => {
-              const { geoPath, event } = e.detail;
-
+            onclick={() => {
               const featureTransform = geoFitObjectTransform(projection, [width, height], feature);
               transform.setTranslate(featureTransform.translate);
               transform.setScale(featureTransform.scale);

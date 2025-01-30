@@ -77,17 +77,17 @@
     centerForce.strength(centerStrength);
   }
 
-  function handleStart(event: CustomEvent<null>) {
+  function handleStart() {
     running = true;
   }
 
-  function handleTick(event: CustomEvent<{ alpha: number; alphaTarget: number }>) {
+  function handleTick(e: { alpha: number; alphaTarget: number }) {
     // If we weren't already using `bind:alpha`, then this is
     // where we would get access to the current values of
     // `alpha` and `alphaTarget` and could make adjustments accordingly.
   }
 
-  function handleEnd(event: CustomEvent<null>) {
+  function handleEnd() {
     running = false;
   }
 
@@ -258,9 +258,9 @@
           bind:alphaTarget
           bind:stopped={isStopped}
           bind:static={isStatic}
-          on:start={handleStart}
-          on:tick={handleTick}
-          on:end={handleEnd}
+          onstart={handleStart}
+          ontick={handleTick}
+          onend={handleEnd}
           let:nodes
         >
           {#key nodes}
@@ -283,8 +283,8 @@
               fill={colorScale(node.group)}
               stroke-width={nodeStrokeWidth}
               class="stroke-surface-content"
-              on:pointermove={(e) => tooltip.show(e, node)}
-              on:pointerleave={tooltip.hide}
+              onpointermove={(e) => tooltip.show(e, node)}
+              onpointerleave={tooltip.hide}
             />
           {/each}
         </ForceSimulation>

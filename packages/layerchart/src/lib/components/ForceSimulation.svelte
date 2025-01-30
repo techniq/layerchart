@@ -1,17 +1,8 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
   import { forceSimulation, type Force } from 'd3-force';
   import { chartContext } from './ChartContext.svelte';
 
   const { data } = chartContext();
-
-  const dispatch = createEventDispatcher<{
-    start: null;
-    tick: { alpha: number; alphaTarget: number };
-    change: null;
-    end: null;
-  }>();
 
   // MARK: Public Props
 
@@ -34,6 +25,11 @@
 
   /** Clone data since simulation mutates original */
   export const cloneData: boolean = false;
+
+  export let onstart: (() => void) | undefined = undefined;
+  export let ontick: ((e: { alpha: number; alphaTarget: number }) => void) | undefined = undefined;
+  // export let onchange: | (() => void) | undefined = undefined;
+  export let onend: (() => void) | undefined = undefined;
 
   // MARK: Private Props
 
@@ -248,14 +244,14 @@
     }
 
     paused = false;
-    dispatch('start');
+    onstart?.();
   }
 
   function onTick() {
     pullNodesFromSimulation();
     pullAlphaFromSimulation();
 
-    dispatch('tick', {
+    ontick?.({
       alpha,
       alphaTarget,
     });
@@ -268,7 +264,7 @@
     }
 
     paused = true;
-    dispatch('end');
+    onend?.();
   }
 </script>
 

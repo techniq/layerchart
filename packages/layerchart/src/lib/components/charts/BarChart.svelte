@@ -27,12 +27,13 @@
     type Accessor,
   } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
-  import type { Insets } from 'layerchart/utils/rect.js';
+  import type { Insets } from '../../utils/rect.js';
 
   type ChartProps = ComponentProps<Chart<TData>>;
 
   interface $$Props extends ChartProps {
     axis?: typeof axis;
+    debug?: typeof debug;
     grid?: typeof grid;
     bandPadding?: typeof bandPadding;
     groupPadding?: typeof groupPadding;
@@ -46,8 +47,8 @@
     series?: typeof series;
     seriesLayout?: typeof seriesLayout;
     renderContext?: typeof renderContext;
-    onBarClick?: typeof onBarClick;
-    onTooltipClick?: typeof onTooltipClick;
+    onbarclick?: typeof onbarclick;
+    ontooltipclick?: typeof ontooltipclick;
   }
 
   export let data: $$Props['data'] = [];
@@ -93,11 +94,14 @@
   export let stackPadding = 0;
 
   /** Event dispatched with current tooltip data */
-  export let onTooltipClick: (e: { data: any }) => void = () => {};
+  export let ontooltipclick: (e: MouseEvent, detail: { data: any }) => void = () => {};
 
   // TODO: Need to find a way to have this play nice with `tooltip={{ mode: 'band' }}`
   /** Event dispatched when individual Bar is clicked (useful with multiple series) */
-  export let onBarClick: (e: { data: any; series: (typeof series)[number] }) => void = () => {};
+  export let onbarclick: (
+    e: MouseEvent,
+    detail: { data: any; series: (typeof series)[number] }
+  ) => void = () => {};
 
   $: xScale = $$props.xScale ?? (isVertical ? scaleBand().padding(bandPadding) : scaleLinear());
   $: xBaseline = isVertical ? undefined : 0;
@@ -149,6 +153,9 @@
 
   /** Log initial render performance using `console.time` */
   export let profile = false;
+
+  /** Enable debug mode */
+  export let debug = false;
 
   $: allSeriesData = visibleSeries
     .flatMap((s) =>
@@ -226,7 +233,7 @@
       strokeWidth: 1,
       insets: stackInsets,
       fill: s.color,
-      onBarClick: (e) => onBarClick({ data: e.data, series: s }),
+      onbarclick: (e, detail) => onbarclick(e, { ...detail, series: s }),
       ...props.bars,
       ...s.props,
       class: cls(
@@ -303,7 +310,13 @@
   {...$$restProps}
   tooltip={$$props.tooltip === false
     ? false
-    : { mode: 'band', onClick: onTooltipClick, ...props.tooltip?.context, ...$$props.tooltip }}
+    : {
+        mode: 'band',
+        onclick: ontooltipclick,
+        debug,
+        ...props.tooltip?.context,
+        ...$$props.tooltip,
+      }}
   let:x
   let:xScale
   let:y
@@ -332,7 +345,7 @@
     getLabelsProps,
   }}
   <slot {...slotProps}>
-    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} {debug}>
       <slot name="grid" {...slotProps}>
         {#if grid}
           <Grid
@@ -420,9 +433,9 @@
           tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
           placement="bottom"
           variant="swatches"
-          onClick={(item) => $selectedSeries.toggleSelected(item.value)}
-          onPointerEnter={(item) => (highlightSeriesKey = item.value)}
-          onPointerLeave={(item) => (highlightSeriesKey = null)}
+          onclick={(e, item) => $selectedSeries.toggleSelected(item.value)}
+          onpointerenter={(e, item) => (highlightSeriesKey = item.value)}
+          onpointerleave={(e) => (highlightSeriesKey = null)}
           {...props.legend}
           {...typeof legend === 'object' ? legend : null}
           classes={{

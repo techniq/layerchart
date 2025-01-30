@@ -3,11 +3,12 @@
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from '@layerstack/tailwind';
   import { objectId } from '@layerstack/utils/object';
+  import { merge } from 'lodash-es';
 
   import { motionStore } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { circlePath } from '../utils/path.js';
-  import { renderPathData } from '../utils/canvas.js';
+  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   export let cx: number = 0;
   export let initialCx = cx;
@@ -29,6 +30,11 @@
   let className: string | undefined = undefined;
   export { className as class };
 
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
+
   let tweened_cx = motionStore(initialCx, { spring, tweened });
   let tweened_cy = motionStore(initialCy, { spring, tweened });
   let tweened_r = motionStore(initialR, { spring, tweened });
@@ -42,12 +48,21 @@
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
 
-  function render(ctx: CanvasRenderingContext2D) {
+  function render(
+    ctx: CanvasRenderingContext2D,
+    styleOverrides: ComputedStylesOptions | undefined
+  ) {
     const pathData = circlePath({ cx: $tweened_cx, cy: $tweened_cy, r: $tweened_r });
-    renderPathData(ctx, pathData, {
-      styles: { fill, fillOpacity, stroke, strokeWidth },
-      classes: $$props.class,
-    });
+    renderPathData(
+      ctx,
+      pathData,
+      styleOverrides
+        ? merge({ styles: { strokeWidth } }, styleOverrides)
+        : {
+            styles: { fill, fillOpacity, stroke, strokeWidth },
+            classes: className,
+          }
+    );
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
@@ -69,7 +84,16 @@
 
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'Circle', render });
+    canvasUnregister = canvasContext.register({
+      name: 'Circle',
+      render,
+      events: {
+        click: onclick,
+        pointerenter: onpointerenter,
+        pointermove: onpointermove,
+        pointerleave: onpointerleave,
+      },
+    });
   }
 
   onDestroy(() => {
@@ -91,9 +115,9 @@
     stroke-width={strokeWidth}
     class={cls(fill == null && 'fill-surface-content', className)}
     {...$$restProps}
-    on:click
-    on:pointermove
-    on:pointerenter
-    on:pointerleave
+    on:click={onclick}
+    on:pointerenter={onpointerenter}
+    on:pointermove={onpointermove}
+    on:pointerleave={onpointerleave}
   />
 {/if}

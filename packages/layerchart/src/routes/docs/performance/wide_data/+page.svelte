@@ -53,6 +53,7 @@
               x="epoch"
               y={(d) => 100 - d.idl}
               props={chartProps}
+              brush
               {renderContext}
               profile
             />
@@ -74,6 +75,7 @@
                 { key: 'tcp', value: (d) => d.send, color: 'hsl(var(--color-success))' },
               ]}
               props={chartProps}
+              brush
               {renderContext}
               profile
             />

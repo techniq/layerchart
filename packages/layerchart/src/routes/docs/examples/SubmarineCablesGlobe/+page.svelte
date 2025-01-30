@@ -86,8 +86,8 @@
         fitGeojson: countries,
         applyTransform: ['rotate'],
       }}
-      on:dragstart={() => timer.stop()}
-      on:dragend={() => {
+      ondragstart={() => timer.stop()}
+      ondragend={() => {
         if (isSpinning) {
           // Restart
           timer.start();
@@ -110,8 +110,8 @@
               'stroke-2 fill-none transition-colors',
               !hasColor && 'stroke-surface-content/10'
             )}
-            on:pointermove={(e) => tooltip?.show(e, feature.properties)}
-            on:pointerleave={(e) => tooltip?.hide()}
+            onpointermove={(e) => tooltip?.show(e, feature.properties)}
+            onpointerleave={(e) => tooltip?.hide()}
           />
         {/each}
 
@@ -122,8 +122,8 @@
               center={[long, lat]}
               radius={0.5}
               class="fill-surface-content stroke-surface-100 stroke"
-              on:pointermove={(e) => tooltip?.show(e, feature.properties)}
-              on:pointerleave={(e) => tooltip?.hide()}
+              onpointermove={(e) => tooltip?.show(e, feature.properties)}
+              onpointerleave={(e) => tooltip?.hide()}
             />
           {/each} -->
 

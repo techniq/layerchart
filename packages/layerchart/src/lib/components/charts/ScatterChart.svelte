@@ -36,7 +36,7 @@
     props?: typeof props;
     series?: typeof series;
     renderContext?: typeof renderContext;
-    onTooltipClick?: typeof onTooltipClick;
+    ontooltipclick?: typeof ontooltipclick;
   }
 
   export let data: $$Props['data'] = [];
@@ -65,15 +65,17 @@
   export let rule: ComponentProps<Rule> | boolean = true;
 
   /** Event dispatched with current tooltip data */
-  export let onTooltipClick: (e: { data: any }) => void = () => {};
+  export let ontooltipclick: (e: MouseEvent, detail: { data: any }) => void = () => {};
 
   export let props: {
     brush?: Partial<ComponentProps<Brush>>;
+    debug?: typeof debug;
     grid?: Partial<ComponentProps<Grid>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
     legend?: Partial<ComponentProps<Legend>>;
     points?: Partial<ComponentProps<Points>>;
+    profile?: typeof profile;
     rule?: Partial<ComponentProps<Rule>>;
     tooltip?: {
       context?: Partial<ComponentProps<Tooltip.Context>>;
@@ -91,6 +93,9 @@
 
   /** Log initial render performance using `console.time` */
   export let profile = false;
+
+  /** Enable debug mode */
+  export let debug = false;
 
   // Default xScale based on first data's `x` value
   $: xScale =
@@ -175,7 +180,8 @@
     ? false
     : {
         mode: 'voronoi',
-        onClick: onTooltipClick,
+        onclick: ontooltipclick,
+        debug,
         ...props.tooltip?.context,
         ...$$props.tooltip,
       }}
@@ -213,7 +219,7 @@
     : null}
 
   <slot {...slotProps}>
-    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} {debug}>
       <slot name="grid" {...slotProps}>
         {#if grid}
           <Grid x y {...typeof grid === 'object' ? grid : null} {...props.grid} />
@@ -300,9 +306,9 @@
           tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
           placement="bottom"
           variant="swatches"
-          onClick={(item) => $selectedSeries.toggleSelected(item.value)}
-          onPointerEnter={(item) => (highlightSeriesKey = item.value)}
-          onPointerLeave={(item) => (highlightSeriesKey = null)}
+          onclick={(e, item) => $selectedSeries.toggleSelected(item.value)}
+          onpointerenter={(e, item) => (highlightSeriesKey = item.value)}
+          onpointerleave={(e) => (highlightSeriesKey = null)}
           {...props.legend}
           {...typeof legend === 'object' ? legend : null}
           classes={{

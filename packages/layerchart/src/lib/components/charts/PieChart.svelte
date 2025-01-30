@@ -28,13 +28,14 @@
     center?: typeof center;
     placement?: typeof placement;
     profile?: typeof profile;
+    debug?: typeof debug;
     props?: typeof props;
     range?: typeof range;
     series?: typeof series;
     value?: typeof value;
     renderContext?: typeof renderContext;
-    onArcClick?: typeof onArcClick;
-    onTooltipClick?: typeof onTooltipClick;
+    onarcclick?: typeof onarcclick;
+    ontooltipclick?: typeof ontooltipclick;
   }
 
   export let data: $$Props['data'] = [];
@@ -96,12 +97,15 @@
   /** Center chart.  Override and use `props.group` for more control */
   export let center = placement === 'center';
 
-  // TODO: Not usable with manual tooltip / arc path.  Use `onArcClick`?
+  // TODO: Not usable with manual tooltip / arc path.  Use `onarcclick`?
   /** Event dispatched with current tooltip data */
-  export let onTooltipClick: (e: { data: any }) => void = () => {};
+  export let ontooltipclick: (e: MouseEvent, detail: { data: any }) => void = () => {};
 
   /** Event dispatched when individual Arc is clicked  (useful with multiple series) */
-  export let onArcClick: (e: { data: any; series: (typeof series)[number] }) => void = () => {};
+  export let onarcclick: (
+    e: MouseEvent,
+    detail: { data: any; series: (typeof series)[number] }
+  ) => void = () => {};
 
   export let props: {
     pie?: Partial<ComponentProps<Pie>>;
@@ -122,6 +126,9 @@
 
   /** Log initial render performance using `console.time` */
   export let profile = false;
+
+  /** Enable debug mode */
+  export let debug = false;
 
   $: allSeriesData = series
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
@@ -199,7 +206,7 @@
     visibleData,
   }}
   <slot {...slotProps}>
-    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} {center}>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} {center} {debug}>
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
@@ -228,10 +235,10 @@
                 track={{ fill: s.color ?? cScale?.(c(d)), 'fill-opacity': 0.1 }}
                 {tooltip}
                 data={d}
-                on:click={() => {
-                  onArcClick({ data: d, series: s });
+                onclick={(e) => {
+                  onarcclick(e, { data: d, series: s });
                   // Workaround for `tooltip={{ mode: 'manual' }}
-                  onTooltipClick({ data: d });
+                  ontooltipclick(e, { data: d });
                 }}
                 {...props.arc}
                 {...s.props}
@@ -264,10 +271,10 @@
                     fill={cScale?.(c(arc.data))}
                     data={arc.data}
                     {tooltip}
-                    on:click={() => {
-                      onArcClick({ data: arc.data, series: s });
+                    onclick={(e) => {
+                      onarcclick(e, { data: arc.data, series: s });
                       // Workaround for `tooltip={{ mode: 'manual' }}
-                      onTooltipClick({ data: arc.data });
+                      ontooltipclick(e, { data: arc.data });
                     }}
                     class={cls(
                       'transition-opacity',
@@ -295,9 +302,9 @@
           }}
           placement="bottom"
           variant="swatches"
-          onClick={(item) => $selectedKeys.toggleSelected(item.value)}
-          onPointerEnter={(item) => (highlightKey = item.value)}
-          onPointerLeave={(item) => (highlightKey = null)}
+          onclick={(e, item) => $selectedKeys.toggleSelected(item.value)}
+          onpointerenter={(e, item) => (highlightKey = item.value)}
+          onpointerleave={(e) => (highlightKey = null)}
           {...props.legend}
           {...typeof legend === 'object' ? legend : null}
           classes={{

@@ -30,6 +30,13 @@
    */
   export let preventTouchMove = false;
 
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let ondblclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerdown: ((e: PointerEvent) => void) | undefined = undefined;
+
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
 
@@ -60,7 +67,19 @@
 
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'Group', render, retainState: true });
+    canvasUnregister = canvasContext.register({
+      name: 'Group',
+      render,
+      retainState: true,
+      events: {
+        click: onclick,
+        dblclick: ondblclick,
+        pointerenter: onpointerenter,
+        pointermove: onpointermove,
+        pointerleave: onpointerleave,
+        pointerdown: onpointerdown,
+      },
+    });
   }
 
   onDestroy(() => {
@@ -77,11 +96,12 @@
   <g
     {transform}
     {...$$restProps}
-    on:click
-    on:pointerdown
-    on:pointerenter
-    on:pointermove
-    on:pointerleave
+    on:click={onclick}
+    on:dblclick={ondblclick}
+    on:pointerenter={onpointerenter}
+    on:pointermove={onpointermove}
+    on:pointerleave={onpointerleave}
+    on:pointerdown={onpointerdown}
     on:touchmove={(e) => {
       if (preventTouchMove) {
         // Prevent touch to not interfer with pointer

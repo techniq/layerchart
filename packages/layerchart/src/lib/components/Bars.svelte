@@ -5,7 +5,7 @@
   import Bar from './Bar.svelte';
   import Rect from './Rect.svelte';
   import { chartDataArray, type Accessor } from '../utils/common.js';
-  import type { Insets } from 'layerchart/utils/rect.js';
+  import type { Insets } from '../utils/rect.js';
 
   const { data: contextData, cGet, config } = chartContext();
 
@@ -49,7 +49,7 @@
   export let tweened: ComponentProps<Rect>['tweened'] = undefined;
 
   /** Event dispatched when individual Bar is clicked */
-  export let onBarClick: (e: { data: any }) => void = () => {};
+  export let onbarclick: (e: MouseEvent, detail: { data: any }) => void = () => {};
 
   $: _data = chartDataArray(data ?? $contextData);
 </script>
@@ -70,7 +70,7 @@
         {insets}
         {spring}
         {tweened}
-        on:click={() => onBarClick({ data: d })}
+        onclick={(e) => onbarclick(e, { data: d })}
         {...$$restProps}
       />
     {/each}

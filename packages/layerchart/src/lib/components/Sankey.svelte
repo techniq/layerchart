@@ -1,6 +1,5 @@
 <script lang="ts">
   // https://github.com/d3/d3-sankey
-  import { createEventDispatcher } from 'svelte';
   import {
     sankey as d3Sankey,
     sankeyLeft,
@@ -12,8 +11,6 @@
   } from 'd3-sankey';
 
   import { chartContext } from './ChartContext.svelte';
-
-  const dispatch = createEventDispatcher();
 
   const { data, width, height } = chartContext();
 
@@ -34,6 +31,8 @@
 
   export let links = (d: any) => d.links;
   export let linkSort = undefined;
+
+  export let onupdate: ((data: typeof sankeyData) => void) | undefined = undefined;
 
   $: sankey = d3Sankey()
     .size([$width, $height])
@@ -64,7 +63,7 @@
   $: _nodes = sankeyData.nodes as SankeyNode<NodeExtraProperties, any>[];
   $: _links = sankeyData.links as SankeyLink<NodeExtraProperties, any>[];
 
-  $: dispatch('update', sankeyData);
+  $: onupdate?.(sankeyData);
 </script>
 
 <slot nodes={_nodes} links={_links} />

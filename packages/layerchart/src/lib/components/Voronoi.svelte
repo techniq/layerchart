@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
   import type { GeoPermissibleObjects } from 'd3-geo';
@@ -11,6 +10,7 @@
   import { chartContext } from './ChartContext.svelte';
   import GeoPath from './GeoPath.svelte';
   import { geoContext, type GeoContext } from './GeoContext.svelte';
+  import Spline from './Spline.svelte';
 
   const { flatData, xGet, yGet, x: xContext, y: yContext, width, height, radial } = chartContext();
   const geo = geoContext() as GeoContext | undefined;
@@ -23,21 +23,43 @@
     path?: string;
   } = {};
 
-  const dispatch = createEventDispatcher<{
-    click: { data: any; point?: [number, number]; feature?: GeoPermissibleObjects };
-    pointerenter: {
-      event: PointerEvent;
-      data: any;
-      point?: [number, number];
-      feature?: GeoPermissibleObjects;
-    };
-    pointermove: {
-      event: PointerEvent;
-      data: any;
-      point?: [number, number];
-      feature?: GeoPermissibleObjects;
-    };
-  }>();
+  export let onclick:
+    | ((
+        e: MouseEvent,
+        details: { data: any; point?: [number, number]; feature?: GeoPermissibleObjects }
+      ) => void)
+    | undefined = undefined;
+  export let onpointerenter:
+    | ((
+        e: PointerEvent,
+        details: {
+          data: any;
+          point?: [number, number];
+          feature?: GeoPermissibleObjects;
+        }
+      ) => void)
+    | undefined = undefined;
+  export let onpointermove:
+    | ((
+        e: PointerEvent,
+        details: {
+          data: any;
+          point?: [number, number];
+          feature?: GeoPermissibleObjects;
+        }
+      ) => void)
+    | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerdown:
+    | ((
+        e: PointerEvent,
+        details: {
+          data: any;
+          point?: [number, number];
+          feature?: GeoPermissibleObjects;
+        }
+      ) => void)
+    | undefined = undefined;
 
   $: points = (data ?? $flatData).map((d: any) => {
     // geo voronoi needs raw latitude/longtude, not mapped to range (chart dimensions)
@@ -71,38 +93,38 @@
     {#each polygons.features as feature}
       <GeoPath
         geojson={feature}
-        class={cls('fill-transparent', classes.path)}
-        on:pointerenter={(e) =>
-          dispatch('pointerenter', { event: e, data: feature.properties.site.data, feature })}
-        on:pointermove={(e) =>
-          dispatch('pointermove', { event: e, data: feature.properties.site.data, feature })}
-        on:pointerleave
-        on:touchmove={(e) => {
+        class={cls('fill-transparent stroke-transparent', classes.path)}
+        onclick={(e) => onclick?.(e, { data: feature.properties.site.data, feature })}
+        onpointerenter={(e) => onpointerenter?.(e, { data: feature.properties.site.data, feature })}
+        onpointermove={(e) => onpointermove?.(e, { data: feature.properties.site.data, feature })}
+        onpointerdown={(e) => onpointerdown?.(e, { data: feature.properties.site.data, feature })}
+        {onpointerleave}
+        ontouchmove={(e) => {
           // Prevent touch to not interfer with pointer
           e.preventDefault();
         }}
-        on:pointerdown
-        on:click={(e) => dispatch('click', { data: feature.properties.site.data, feature })}
       />
     {/each}
   {:else}
     {@const voronoi = Delaunay.from(points).voronoi([0, 0, boundWidth, boundHeight])}
     {#each points as point, i}
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <path
-        d={voronoi.renderCell(i)}
-        class={cls('fill-transparent', classes.path)}
-        on:pointerenter={(e) => dispatch('pointerenter', { event: e, data: point.data, point })}
-        on:pointermove={(e) => dispatch('pointermove', { event: e, data: point.data, point })}
-        on:pointerleave
-        on:touchmove={(e) => {
-          // Prevent touch to not interfer with pointer
-          e.preventDefault();
-        }}
-        on:pointerdown
-        on:click={(e) => dispatch('click', { data: point.data, point })}
-      />
+      {@const pathData = voronoi.renderCell(i)}
+      <!-- Wait to render Spline until pathData is available to fix path artifacts from injected tweened points in Spline  -->
+      {#if pathData}
+        <Spline
+          {pathData}
+          class={cls('fill-transparent stroke-transparent', classes.path)}
+          onclick={(e) => onclick?.(e, { data: point.data, point })}
+          onpointerenter={(e) => onpointerenter?.(e, { data: point.data, point })}
+          onpointermove={(e) => onpointermove?.(e, { data: point.data, point })}
+          {onpointerleave}
+          onpointerdown={(e) => onpointerdown?.(e, { data: point.data, point })}
+          ontouchmove={(e) => {
+            // Prevent touch to not interfer with pointer
+            e.preventDefault();
+          }}
+        />
+      {/if}
     {/each}
   {/if}
 </g>

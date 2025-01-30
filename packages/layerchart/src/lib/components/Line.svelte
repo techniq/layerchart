@@ -4,11 +4,12 @@
   import { cls } from '@layerstack/tailwind';
   import { uniqueId } from '@layerstack/utils';
   import { objectId } from '@layerstack/utils/object';
+  import { merge } from 'lodash-es';
 
   import { motionStore } from '$lib/stores/motionStore.js';
 
   import Marker from './Marker.svelte';
-  import { renderPathData } from '../utils/canvas.js';
+  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
 
   export let x1: number;
@@ -29,6 +30,11 @@
 
   let className: string | undefined = undefined;
   export { className as class };
+
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
 
   /** Marker to attach to start and end points of path */
   export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
@@ -61,12 +67,21 @@
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
 
-  function render(ctx: CanvasRenderingContext2D) {
+  function render(
+    ctx: CanvasRenderingContext2D,
+    styleOverrides: ComputedStylesOptions | undefined
+  ) {
     const pathData = `M ${$tweened_x1},${$tweened_y1} L ${$tweened_x2},${$tweened_y2}`;
-    renderPathData(ctx, pathData, {
-      styles: { fill, stroke, strokeWidth },
-      classes: className,
-    });
+    renderPathData(
+      ctx,
+      pathData,
+      styleOverrides
+        ? merge({ styles: { strokeWidth } }, styleOverrides)
+        : {
+            styles: { fill, stroke, strokeWidth },
+            classes: className,
+          }
+    );
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
@@ -88,7 +103,16 @@
 
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'Line', render });
+    canvasUnregister = canvasContext.register({
+      name: 'Line',
+      render,
+      events: {
+        click: onclick,
+        pointerenter: onpointerenter,
+        pointermove: onpointermove,
+        pointerleave: onpointerleave,
+      },
+    });
   }
 
   onDestroy(() => {
@@ -112,9 +136,10 @@
     marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
     class={cls(stroke === undefined && 'stroke-surface-content', className)}
     {...$$restProps}
-    on:click
-    on:pointermove
-    on:pointerleave
+    on:click={onclick}
+    on:pointerenter={onpointerenter}
+    on:pointermove={onpointermove}
+    on:pointerleave={onpointerleave}
   />
 
   <slot name="markerStart" id={markerStartId}>

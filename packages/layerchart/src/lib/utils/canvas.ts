@@ -6,7 +6,7 @@ export const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
 const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
 
-type ComputedStylesOptions = {
+export type ComputedStylesOptions = {
   styles?: Partial<
     Omit<CSSStyleDeclaration, 'fillOpacity' | 'strokeWidth' | 'opacity'> & {
       fillOpacity?: number | string;
@@ -66,52 +66,52 @@ export function getComputedStyles(
 
 /** Render onto canvas context.  Supports CSS variables and classes by tranferring to hidden `<svg>` element before retrieval) */
 function render(
-  canvasCtx: CanvasRenderingContext2D,
+  ctx: CanvasRenderingContext2D,
   render: {
-    stroke: (canvasCtx: CanvasRenderingContext2D) => void;
-    fill: (canvasCtx: CanvasRenderingContext2D) => void;
+    stroke: (ctx: CanvasRenderingContext2D) => void;
+    fill: (ctx: CanvasRenderingContext2D) => void;
   },
   styleOptions: ComputedStylesOptions = {}
 ) {
   // console.count('render');
 
   // TODO: Consider memoizing?  How about reactiving to CSS variable changes (light/dark mode toggle)
-  const computedStyles = getComputedStyles(canvasCtx.canvas, styleOptions);
+  const computedStyles = getComputedStyles(ctx.canvas, styleOptions);
 
   // Adhere to CSS paint order: https://developer.mozilla.org/en-US/docs/Web/CSS/paint-order
   const paintOrder =
     computedStyles?.paintOrder === 'stroke' ? ['stroke', 'fill'] : ['fill', 'stroke'];
 
   if (computedStyles?.opacity) {
-    canvasCtx.globalAlpha = Number(computedStyles?.opacity);
+    ctx.globalAlpha = Number(computedStyles?.opacity);
   }
 
   // Text properties
-  canvasCtx.font = `${computedStyles.fontSize} ${computedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
+  ctx.font = `${computedStyles.fontSize} ${computedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
 
   // TODO: Hack to handle `textAnchor` with canvas.  Try to find a better approach
   if (computedStyles.textAnchor === 'middle') {
-    canvasCtx.textAlign = 'center';
+    ctx.textAlign = 'center';
   } else if (computedStyles.textAnchor === 'end') {
-    canvasCtx.textAlign = 'right';
+    ctx.textAlign = 'right';
   } else {
-    canvasCtx.textAlign = computedStyles.textAlign as CanvasTextAlign; // TODO: Handle/map `justify` and `match-parent`?
+    ctx.textAlign = computedStyles.textAlign as CanvasTextAlign; // TODO: Handle/map `justify` and `match-parent`?
   }
 
   // TODO: Handle `textBaseline` / `verticalAnchor` (Text)
-  // canvasCtx.textBaseline = 'top';
-  // canvasCtx.textBaseline = 'middle';
-  // canvasCtx.textBaseline = 'bottom';
-  // canvasCtx.textBaseline = 'alphabetic';
-  // canvasCtx.textBaseline = 'hanging';
-  // canvasCtx.textBaseline = 'ideographic';
+  // ctx.textBaseline = 'top';
+  // ctx.textBaseline = 'middle';
+  // ctx.textBaseline = 'bottom';
+  // ctx.textBaseline = 'alphabetic';
+  // ctx.textBaseline = 'hanging';
+  // ctx.textBaseline = 'ideographic';
 
   // Dashed lines
   if (computedStyles.strokeDasharray.includes(',')) {
     const dashArray = computedStyles.strokeDasharray
       .split(',')
       .map((s) => Number(s.replace('px', '')));
-    canvasCtx.setLineDash(dashArray);
+    ctx.setLineDash(dashArray);
   }
 
   paintOrder.forEach((attr) => {
@@ -124,17 +124,17 @@ function render(
             : computedStyles?.fill;
 
       if (fill) {
-        const currentGlobalAlpha = canvasCtx.globalAlpha;
+        const currentGlobalAlpha = ctx.globalAlpha;
 
         const fillOpacity = Number(computedStyles?.fillOpacity);
         const opacity = Number(computedStyles?.opacity);
-        canvasCtx.globalAlpha = fillOpacity * opacity;
+        ctx.globalAlpha = fillOpacity * opacity;
 
-        canvasCtx.fillStyle = fill;
-        render.fill(canvasCtx);
+        ctx.fillStyle = fill;
+        render.fill(ctx);
 
         // Restore in case it was modified by `fillOpacity`
-        canvasCtx.globalAlpha = currentGlobalAlpha;
+        ctx.globalAlpha = currentGlobalAlpha;
       }
     } else if (attr === 'stroke') {
       const stroke =
@@ -144,13 +144,13 @@ function render(
             ? null
             : computedStyles?.stroke;
       if (stroke) {
-        canvasCtx.lineWidth =
+        ctx.lineWidth =
           typeof computedStyles?.strokeWidth === 'string'
             ? Number(computedStyles?.strokeWidth?.replace('px', ''))
             : (computedStyles?.strokeWidth ?? 1);
 
-        canvasCtx.strokeStyle = stroke;
-        render.stroke(canvasCtx);
+        ctx.strokeStyle = stroke;
+        render.stroke(ctx);
       }
     }
   });
@@ -158,14 +158,14 @@ function render(
 
 /** Render SVG path data onto canvas context.  Supports CSS variables and classes by tranferring to hidden `<svg>` element before retrieval) */
 export function renderPathData(
-  canvasCtx: CanvasRenderingContext2D,
+  ctx: CanvasRenderingContext2D,
   pathData: string | null | undefined,
   styleOptions: ComputedStylesOptions = {}
 ) {
   const path = new Path2D(pathData ?? '');
 
   render(
-    canvasCtx,
+    ctx,
     {
       fill: (ctx) => ctx.fill(path),
       stroke: (ctx) => ctx.stroke(path),
@@ -175,14 +175,14 @@ export function renderPathData(
 }
 
 export function renderText(
-  canvasCtx: CanvasRenderingContext2D,
+  ctx: CanvasRenderingContext2D,
   text: string | number | null | undefined,
   coords: { x: number; y: number },
   styleOptions: ComputedStylesOptions = {}
 ) {
   if (text) {
     render(
-      canvasCtx,
+      ctx,
       {
         fill: (ctx) => ctx.fillText(text.toString(), coords.x, coords.y),
         stroke: (ctx) => ctx.strokeText(text.toString(), coords.x, coords.y),
@@ -193,12 +193,12 @@ export function renderText(
 }
 
 export function renderRect(
-  canvasCtx: CanvasRenderingContext2D,
+  ctx: CanvasRenderingContext2D,
   coords: { x: number; y: number; width: number; height: number },
   styleOptions: ComputedStylesOptions = {}
 ) {
   render(
-    canvasCtx,
+    ctx,
     {
       fill: (ctx) => ctx.fillRect(coords.x, coords.y, coords.width, coords.height),
       stroke: (ctx) => ctx.strokeRect(coords.x, coords.y, coords.width, coords.height),
@@ -209,7 +209,7 @@ export function renderRect(
 
 /** Clear canvas accounting for Canvas `context.translate(...)` */
 export function clearCanvasContext(
-  canvasCtx: CanvasRenderingContext2D,
+  ctx: CanvasRenderingContext2D,
   options: {
     containerWidth: number;
     containerHeight: number;
@@ -222,7 +222,7 @@ export function clearCanvasContext(
   }
 ) {
   // Clear with negative offset due to Canvas `context.translate(...)`
-  canvasCtx.clearRect(
+  ctx.clearRect(
     -options.padding.left,
     -options.padding.top,
     options.containerWidth,
@@ -249,14 +249,14 @@ export function scaleCanvas(ctx: CanvasRenderingContext2D, width: number, height
 }
 
 export function _createLinearGradient(
-  canvasCtx: CanvasRenderingContext2D,
+  ctx: CanvasRenderingContext2D,
   x0: number,
   y0: number,
   x1: number,
   y1: number,
   stops: { offset: number; color: string }[]
 ) {
-  const gradient = canvasCtx.createLinearGradient(x0, y0, x1, y1);
+  const gradient = ctx.createLinearGradient(x0, y0, x1, y1);
 
   stops.forEach(({ offset, color }) => {
     gradient.addColorStop(offset, color);
@@ -269,7 +269,7 @@ export function _createLinearGradient(
 export const createLinearGradient = memoize(
   _createLinearGradient,
   (
-    canvasCtx: CanvasRenderingContext2D,
+    ctx: CanvasRenderingContext2D,
     x0: number,
     y0: number,
     x1: number,
@@ -280,3 +280,10 @@ export const createLinearGradient = memoize(
     return key;
   }
 );
+
+export function getPixelColor(ctx: CanvasRenderingContext2D, x: number, y: number) {
+  const dpr = window.devicePixelRatio ?? 1;
+  const imageData = ctx.getImageData(x * dpr, y * dpr, 1, 1);
+  const [r, g, b, a] = imageData.data;
+  return { r, g, b, a };
+}

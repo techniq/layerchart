@@ -1,6 +1,5 @@
 <script lang="ts">
   import { type ComponentProps } from 'svelte';
-  import type { SVGAttributes } from 'svelte/elements';
   import { extent, min, max } from 'd3-array';
   import { clamp } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
@@ -14,6 +13,7 @@
   import { localPoint } from '$lib/utils/event.js';
   import type { DomainType } from '../utils/scales.js';
   import { asAny } from '../utils/types.js';
+  import Rect from './Rect.svelte';
 
   const { xScale, yScale, width, height, padding, config } = chartContext();
 
@@ -45,10 +45,10 @@
   $: [yDomainMin, yDomainMax] = extent<number>($yScale.domain()) as [number, number];
 
   /** Attributes passed to range <rect> element */
-  export let range: SVGAttributes<SVGRectElement> | undefined = undefined;
+  export let range: Partial<ComponentProps<Rect>> | undefined = undefined;
 
   /** Attributes passed to handle <rect> elements */
-  export let handle: SVGAttributes<SVGRectElement> | undefined = undefined;
+  export let handle: Partial<ComponentProps<Rect>> | undefined = undefined;
 
   /** Apply format to labels, if shown */
   export let format: FormatType | undefined = undefined;
@@ -235,16 +235,15 @@
 <g class={cls('Brush select-none', classes.root, $$props.class)}>
   <Frame
     class={cls('frame', 'fill-transparent', classes.frame)}
-    on:pointerdown={createRange}
-    on:dblclick={() => selectAll()}
-    bind:rectEl={frameEl}
+    onpointerdown={createRange}
+    ondblclick={() => selectAll()}
+    bind:element={frameEl}
   />
 
   {#if isActive}
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <Group x={rangeLeft} y={rangeTop} class="range">
       <slot name="range" {rangeWidth} {rangeHeight}>
-        <rect
+        <Rect
           width={rangeWidth}
           height={rangeHeight}
           class={cls(
@@ -252,8 +251,8 @@
             range?.fill == null && 'fill-surface-content/10',
             classes.range
           )}
-          on:pointerdown={adjustRange}
-          on:dblclick={() => reset()}
+          onpointerdown={adjustRange}
+          ondblclick={() => reset()}
           {...range}
         />
       </slot>
@@ -264,8 +263,8 @@
         x={rangeLeft}
         y={rangeTop}
         class="handle top"
-        on:pointerdown={adjustTop}
-        on:dblclick={() => {
+        onpointerdown={adjustTop}
+        ondblclick={() => {
           if (yDomain) {
             yDomain[0] = yDomainMin;
             onChange({ xDomain, yDomain });
@@ -273,7 +272,7 @@
         }}
       >
         <slot name="handle" edge="top" {rangeWidth} {rangeHeight}>
-          <rect
+          <Rect
             width={rangeWidth}
             height={handleSize}
             class={cls('fill-transparent cursor-ns-resize select-none', classes.handle)}
@@ -286,15 +285,15 @@
         x={rangeLeft}
         y={bottom - handleSize + 1}
         class="handle bottom"
-        on:pointerdown={adjustBottom}
-        on:dblclick={() => {
+        onpointerdown={adjustBottom}
+        ondblclick={() => {
           if (yDomain) {
             yDomain[1] = yDomainMax;
           }
         }}
       >
         <slot name="handle" edge="bottom" {rangeWidth} {rangeHeight}>
-          <rect
+          <Rect
             width={rangeWidth}
             height={handleSize}
             class={cls('fill-transparent cursor-ns-resize select-none', classes.handle)}
@@ -309,8 +308,8 @@
         x={rangeLeft}
         y={rangeTop}
         class="handle left"
-        on:pointerdown={adjustLeft}
-        on:dblclick={() => {
+        onpointerdown={adjustLeft}
+        ondblclick={() => {
           if (xDomain) {
             xDomain[0] = xDomainMin;
             onChange({ xDomain, yDomain });
@@ -331,8 +330,8 @@
         x={right - handleSize + 1}
         y={rangeTop}
         class="handle right"
-        on:pointerdown={adjustRight}
-        on:dblclick={() => {
+        onpointerdown={adjustRight}
+        ondblclick={() => {
           if (xDomain) {
             xDomain[1] = xDomainMax;
             onChange({ xDomain, yDomain });
@@ -340,7 +339,7 @@
         }}
       >
         <slot name="handle" edge="right" {rangeWidth} {rangeHeight}>
-          <rect
+          <Rect
             width={handleSize}
             height={rangeHeight}
             class={cls('fill-transparent cursor-ew-resize select-none', classes.handle)}

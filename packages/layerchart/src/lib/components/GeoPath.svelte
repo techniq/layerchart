@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, onDestroy } from 'svelte';
+  import { onDestroy } from 'svelte';
   import {
     geoTransform as d3geoTransform,
     type GeoIdentityTransform,
@@ -8,33 +8,35 @@
     type GeoTransformPrototype,
   } from 'd3-geo';
   import { cls } from '@layerstack/tailwind';
+  import { merge } from 'lodash-es';
 
   import { geoContext } from './GeoContext.svelte';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoCurvePath } from '$lib/utils/geo.js';
-  import { renderPathData } from '$lib/utils/canvas.js';
+  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { objectId } from '@layerstack/utils/object';
 
   export let geojson: GeoPermissibleObjects | null | undefined = undefined;
-
-  /** Render to canvas */
-  export let render:
-    | ((
-        ctx: CanvasRenderingContext2D,
-        options: { newGeoPath: () => ReturnType<typeof geoCurvePath> }
-      ) => any)
-    | undefined = undefined;
 
   export let fill: string | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
 
   /**
-   * Tooltip context to setup mouse events to show tooltip for related data
+   * Tooltip context to setup pointer events to show tooltip for related data
    */
   export let tooltip: TooltipContextValue | undefined = undefined;
+
+  export let onclick:
+    | ((e: MouseEvent, geoPath: ReturnType<typeof geoCurvePath>) => void)
+    | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerdown: ((e: PointerEvent) => void) | undefined = undefined;
+  export let ontouchmove: ((e: TouchEvent) => void) | undefined = undefined;
 
   /**
    * Curve of path drawn. Imported via d3-shape.
@@ -49,10 +51,6 @@
 
   let className: string | undefined = undefined;
   export { className as class };
-
-  const dispatch = createEventDispatcher<{
-    click: { geoPath: ReturnType<typeof geoCurvePath>; event: MouseEvent };
-  }>();
 
   const geo = geoContext();
 
@@ -76,17 +74,22 @@
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
 
-  function _render(ctx: CanvasRenderingContext2D) {
-    if (render) {
-      render(ctx, { newGeoPath: () => geoCurvePath(_projection, curve) });
-    } else {
-      if (geojson) {
-        const pathData = geoPath(geojson);
-        renderPathData(ctx, pathData, {
-          styles: { fill, stroke, strokeWidth },
-          classes: className,
-        });
-      }
+  function render(
+    ctx: CanvasRenderingContext2D,
+    styleOverrides: ComputedStylesOptions | undefined
+  ) {
+    if (geojson) {
+      const pathData = geoPath(geojson);
+      renderPathData(
+        ctx,
+        pathData,
+        styleOverrides
+          ? merge({ styles: { strokeWidth } }, styleOverrides)
+          : {
+              styles: { fill, stroke, strokeWidth },
+              classes: className,
+            }
+      );
     }
   }
 
@@ -100,9 +103,37 @@
     canvasContext.invalidate();
   }
 
+  // Hide `geoPath` and `tooltip` reactivity
+  function _onClick(e: MouseEvent) {
+    onclick?.(e, geoPath);
+  }
+  function _onPointerEnter(e: PointerEvent) {
+    onpointerenter?.(e);
+    tooltip?.show(e, geojson);
+  }
+  function _onPointerMove(e: PointerEvent) {
+    onpointermove?.(e);
+    tooltip?.show(e, geojson);
+  }
+  function _onPointerLeave(e: PointerEvent) {
+    onpointerleave?.(e);
+    tooltip?.hide();
+  }
+
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'GeoPath', render: _render });
+    canvasUnregister = canvasContext.register({
+      name: 'GeoPath',
+      render,
+      events: {
+        click: _onClick,
+        pointerenter: _onPointerEnter,
+        pointermove: _onPointerMove,
+        pointerleave: _onPointerLeave,
+        pointerdown: onpointerdown,
+        touchmove: ontouchmove,
+      },
+    });
   }
 
   onDestroy(() => {
@@ -113,23 +144,21 @@
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-{#if renderContext === 'svg'}
-  <slot {geoPath}>
+<slot {geoPath}>
+  {#if renderContext === 'svg'}
     <path
       {...$$restProps}
       d={geojson ? geoPath(geojson) : ''}
       {fill}
       {stroke}
       stroke-width={strokeWidth}
-      on:pointerenter={(e) => tooltip?.show(e, geojson)}
-      on:pointerenter
-      on:pointermove={(e) => tooltip?.show(e, geojson)}
-      on:pointermove
-      on:pointerleave={(e) => tooltip?.hide()}
-      on:pointerleave
-      on:pointerdown
-      on:click={(event) => dispatch('click', { geoPath, event })}
+      on:click={_onClick}
+      on:pointerenter={_onPointerEnter}
+      on:pointermove={_onPointerMove}
+      on:pointerleave={_onPointerLeave}
+      on:pointerdown={onpointerdown}
+      on:touchmove={ontouchmove}
       class={cls(fill == null && 'fill-transparent', className)}
     />
-  </slot>
-{/if}
+  {/if}
+</slot>

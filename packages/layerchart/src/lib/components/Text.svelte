@@ -3,11 +3,12 @@
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from '@layerstack/tailwind';
   import { objectId } from '@layerstack/utils/object';
+  import { merge } from 'lodash-es';
 
   import { getStringWidth } from '$lib/utils/string.js';
   import { motionStore } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { renderText } from '../utils/canvas.js';
+  import { renderText, type ComputedStylesOptions } from '../utils/canvas.js';
 
   /*
     TODO:
@@ -182,7 +183,10 @@
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
 
-  function render(ctx: CanvasRenderingContext2D) {
+  function render(
+    ctx: CanvasRenderingContext2D,
+    styleOverrides: ComputedStylesOptions | undefined
+  ) {
     wordsByLines.forEach((line, index) => {
       renderText(
         ctx,
@@ -194,10 +198,12 @@
             getPixelValue(dy) +
             (index === 0 ? startDy : getPixelValue(lineHeight)),
         },
-        {
-          styles: { fill, fillOpacity, stroke, strokeWidth, paintOrder: 'stroke', textAnchor },
-          classes: cls(fill === undefined && 'fill-surface-content', className),
-        }
+        styleOverrides
+          ? merge({ styles: { strokeWidth } }, styleOverrides)
+          : {
+              styles: { fill, fillOpacity, stroke, strokeWidth, paintOrder: 'stroke', textAnchor },
+              classes: cls(fill === undefined && 'fill-surface-content', className),
+            }
       );
     });
   }

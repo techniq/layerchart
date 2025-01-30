@@ -4,17 +4,8 @@
   import { geoAlbersUsa, geoAlbers, geoMercator, geoPath as d3geoPath } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import {
-    Canvas,
-    Chart,
-    GeoPath,
-    HitCanvas,
-    Svg,
-    Tooltip,
-    geoFitObjectTransform,
-    renderPathData,
-  } from 'layerchart';
-  import TransformControls from 'layerchart/components/TransformControls.svelte';
+  import { Canvas, Chart, GeoPath, Svg, Tooltip, geoFitObjectTransform } from 'layerchart';
+  import TransformControls from '$lib/components/TransformControls.svelte';
   import { SelectField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -88,9 +79,7 @@
             geojson={feature}
             class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
             {tooltip}
-            on:click={(e) => {
-              const { geoPath, event } = e.detail;
-
+            onclick={() => {
               if (selectedStateId === feature.id) {
                 selectedStateId = null;
                 transform.reset();
@@ -113,8 +102,8 @@
             <GeoPath
               geojson={feature}
               {tooltip}
-              class="stroke-surface-content/10 hover:fill-surface-content/10"
-              on:click={() => {
+              class="stroke-surface-content/10 hover:stroke-surface-content/50 hover:fill-surface-content/10"
+              onclick={() => {
                 selectedStateId = null;
                 transform.reset();
               }}
@@ -162,8 +151,7 @@
             class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
             strokeWidth={1 / transform.scale}
             {tooltip}
-            on:click={(e) => {
-              const { geoPath, event } = e.detail;
+            onclick={(e, geoPath) => {
               if (selectedStateId === feature.id) {
                 selectedStateId = null;
                 transform.reset();
@@ -187,8 +175,8 @@
               geojson={feature}
               {tooltip}
               strokeWidth={1 / transform.scale}
-              class="stroke-surface-content/10 hover:fill-surface-content/10"
-              on:click={() => {
+              class="stroke-surface-content/10 hover:stroke-surface-content/50 hover:fill-surface-content/10"
+              onclick={() => {
                 selectedStateId = null;
                 transform.reset();
               }}
@@ -236,85 +224,55 @@
       <TransformControls />
 
       <Canvas>
-        <GeoPath
-          geojson={states}
-          class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
-        />
+        {#each states.features as feature}
+          <GeoPath
+            geojson={feature}
+            class="stroke-surface-content fill-surface-100"
+            {tooltip}
+            onclick={(e, geoPath) => {
+              if (
+                selectedStateId === feature.id ||
+                !states.features.some((f) => f.id == feature.id) // County selected
+              ) {
+                selectedStateId = null;
+                transform.reset();
+              } else {
+                selectedStateId = feature.id;
+                tooltip.hide();
+                const featureTransform = geoFitObjectTransform(
+                  projection,
+                  [width, height],
+                  feature
+                );
+                transform.setTranslate(featureTransform.translate);
+                transform.setScale(featureTransform.scale);
+              }
+            }}
+          />
+        {/each}
+
+        {#each selectedCountiesFeatures as feature (feature.id)}
+          <GeoPath
+            geojson={feature}
+            {tooltip}
+            class="stroke-surface-content/10 hover:fill-surface-content/10"
+            onclick={() => {
+              selectedStateId = null;
+              transform.reset();
+            }}
+          />
+        {/each}
       </Canvas>
 
-      <Canvas>
-        <!-- TODO: Fade in with delay like SVG -->
-        <!-- <g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}> -->
-        <GeoPath
-          geojson={{ type: 'FeatureCollection', features: selectedCountiesFeatures }}
-          {tooltip}
-          class="stroke-surface-content/10 hover:fill-surface-content/10"
-          on:click={() => {
-            selectedStateId = null;
-            transform.reset();
-          }}
-        />
-        <!-- </g> -->
-      </Canvas>
-
-      {#if tooltip.data}
-        <Canvas>
+      <Canvas pointerEvents={false}>
+        {#if tooltip.data}
           <GeoPath
             geojson={tooltip.data}
             strokeWidth={1 / transform.scale}
-            class="stroke-surface-content fill-surface-content/20"
+            class="stroke-surface-content/50 fill-surface-content/20"
           />
-        </Canvas>
-      {/if}
-
-      <HitCanvas
-        let:nextColor
-        let:setColorData
-        on:pointermove={(e) => tooltip.show(e.detail.event, e.detail.data)}
-        on:pointerleave={tooltip.hide}
-        on:click={(e) => {
-          const feature = e.detail.data;
-
-          if (
-            selectedStateId === feature.id ||
-            !states.features.some((f) => f.id == feature.id) // County selected
-          ) {
-            selectedStateId = null;
-            transform.reset();
-          } else {
-            selectedStateId = feature.id;
-            tooltip.hide();
-            const featureTransform = geoFitObjectTransform(projection, [width, height], feature);
-            transform.setTranslate(featureTransform.translate);
-            transform.setScale(featureTransform.scale);
-          }
-        }}
-      >
-        <GeoPath
-          render={(ctx, { newGeoPath }) => {
-            for (const feature of states.features) {
-              const color = nextColor();
-
-              const geoPath = newGeoPath();
-              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
-              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
-
-              setColorData(color, feature);
-            }
-
-            // Draw county features on top if state selected
-            for (const feature of selectedCountiesFeatures) {
-              const color = nextColor();
-
-              const geoPath = newGeoPath();
-              // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
-              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
-
-              setColorData(color, feature);
-            }
-          }}
-        />
-      </HitCanvas>
+        {/if}
+      </Canvas>
 
       <Tooltip.Root let:data>
         {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
@@ -349,90 +307,61 @@
       <TransformControls />
 
       <Canvas>
-        <GeoPath
-          geojson={states}
-          class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
-          strokeWidth={1 / transform.scale}
-        />
+        {#each states.features as feature}
+          <GeoPath
+            geojson={feature}
+            class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
+            strokeWidth={1 / transform.scale}
+            {tooltip}
+            onclick={(e) => {
+              const geoPath = d3geoPath(projection);
 
-        <!-- TODO: Fade in with delay like SVG -->
-        <!-- <g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}> -->
-        <GeoPath
-          geojson={{ type: 'FeatureCollection', features: selectedCountiesFeatures }}
-          {tooltip}
-          strokeWidth={1 / transform.scale}
-          class="stroke-surface-content/10 hover:fill-surface-content/10"
-          on:click={() => {
-            selectedStateId = null;
-            transform.reset();
-          }}
-        />
-        <!-- </g> -->
+              if (
+                selectedStateId === feature.id ||
+                !states.features.some((f) => f.id == feature.id) // County selected
+              ) {
+                selectedStateId = null;
+                transform.reset();
+              } else {
+                selectedStateId = feature.id;
+                tooltip.hide();
+                let [[left, top], [right, bottom]] = geoPath.bounds(feature);
+                let width = right - left;
+                let height = bottom - top;
+                let x = (left + right) / 2;
+                let y = (top + bottom) / 2;
+                const padding = 20;
+
+                transform.zoomTo({ x, y }, { width: width + padding, height: height + padding });
+              }
+            }}
+          />
+        {/each}
+
+        {#each selectedCountiesFeatures as feature (feature.id)}
+          <GeoPath
+            geojson={feature}
+            {tooltip}
+            strokeWidth={1 / transform.scale}
+            class="stroke-surface-content/10 hover:fill-surface-content/10"
+            onclick={() => {
+              selectedStateId = null;
+              transform.reset();
+            }}
+          />
+        {/each}
       </Canvas>
 
       <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
-      {#if tooltip.data}
-        <Canvas>
+      <Canvas pointerEvents={false}>
+        {#if tooltip.data}
           <GeoPath
             geojson={tooltip.data}
             strokeWidth={1 / transform.scale}
-            class="stroke-surface-content fill-surface-content/20"
+            class="stroke-surface-content/50 fill-surface-content/20"
           />
-        </Canvas>
-      {/if}
-
-      <HitCanvas
-        let:nextColor
-        let:setColorData
-        on:pointermove={(e) => tooltip.show(e.detail.event, e.detail.data)}
-        on:pointerleave={tooltip.hide}
-        on:click={(e) => {
-          const feature = e.detail.data;
-          const geoPath = d3geoPath(projection);
-
-          if (
-            selectedStateId === feature.id ||
-            !states.features.some((f) => f.id == feature.id) // County selected
-          ) {
-            selectedStateId = null;
-            transform.reset();
-          } else {
-            selectedStateId = feature.id;
-            tooltip.hide();
-            let [[left, top], [right, bottom]] = geoPath.bounds(feature);
-            let width = right - left;
-            let height = bottom - top;
-            let x = (left + right) / 2;
-            let y = (top + bottom) / 2;
-            const padding = 20;
-
-            transform.zoomTo({ x, y }, { width: width + padding, height: height + padding });
-          }
-        }}
-      >
-        <GeoPath
-          render={(ctx, { newGeoPath }) => {
-            for (const feature of states.features) {
-              const color = nextColor();
-
-              const geoPath = newGeoPath();
-              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
-
-              setColorData(color, feature);
-            }
-
-            // Draw county features on top if state selected
-            for (const feature of selectedCountiesFeatures) {
-              const color = nextColor();
-
-              const geoPath = newGeoPath();
-              renderPathData(ctx, geoPath(feature), { styles: { fill: color, stroke: color } });
-
-              setColorData(color, feature);
-            }
-          }}
-        />
-      </HitCanvas>
+        {/if}
+      </Canvas>
 
       <Tooltip.Root let:data>
         {data.properties.name}

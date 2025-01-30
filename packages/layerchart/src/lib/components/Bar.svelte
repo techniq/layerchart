@@ -56,6 +56,11 @@
 
   export let insets: Insets | undefined = undefined;
 
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
+
   export let spring: ComponentProps<Rect>['spring'] = undefined;
   export let tweened: ComponentProps<Rect>['tweened'] = undefined;
 
@@ -120,13 +125,13 @@
     {stroke}
     {strokeWidth}
     rx={radius}
+    {onclick}
+    {onpointerenter}
+    {onpointermove}
+    {onpointerleave}
+    on:touchmove
     {...dimensions}
     {...$$restProps}
-    on:click
-    on:pointerenter
-    on:pointermove
-    on:pointerleave
-    on:touchmove
   />
 {:else}
   <Spline
@@ -136,11 +141,11 @@
     {tweened}
     {stroke}
     {strokeWidth}
-    {...$$restProps}
-    on:click
-    on:pointerenter
-    on:pointermove
-    on:pointerleave
+    {onclick}
+    {onpointerenter}
+    {onpointermove}
+    {onpointerleave}
     on:touchmove
+    {...$$restProps}
   />
 {/if}

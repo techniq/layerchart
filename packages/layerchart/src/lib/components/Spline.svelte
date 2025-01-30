@@ -4,6 +4,7 @@
   import { tweened as tweenedStore } from 'svelte/motion';
   import { draw as _drawTransition } from 'svelte/transition';
   import { cubicInOut } from 'svelte/easing';
+  import { merge } from 'lodash-es';
 
   import { line as d3Line, lineRadial } from 'd3-shape';
   import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
@@ -22,8 +23,8 @@
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
   import { flattenPathData } from '../utils/path.js';
-  import { renderPathData } from '../utils/canvas.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
+  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   const {
     data: contextData,
@@ -71,6 +72,15 @@
 
   let className: string | undefined = undefined;
   export { className as class };
+
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerdown: ((e: PointerEvent) => void) | undefined = undefined;
+  export let ontouchmove: ((e: TouchEvent) => void) | undefined = undefined;
+  export let onpointerover: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerout: ((e: PointerEvent) => void) | undefined = undefined;
 
   /** Marker to attach to start, mid, and end points of path */
   export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
@@ -167,11 +177,20 @@
   const canvasContext = getCanvasContext();
   const renderContext = canvasContext ? 'canvas' : 'svg';
 
-  function render(ctx: CanvasRenderingContext2D) {
-    renderPathData(ctx, $tweened_d, {
-      styles: { stroke, fill, strokeWidth, opacity },
-      classes: className,
-    });
+  function render(
+    ctx: CanvasRenderingContext2D,
+    styleOverrides: ComputedStylesOptions | undefined
+  ) {
+    renderPathData(
+      ctx,
+      $tweened_d,
+      styleOverrides
+        ? merge({ styles: { strokeWidth } }, styleOverrides)
+        : {
+            styles: { fill, stroke, strokeWidth, opacity },
+            classes: className,
+          }
+    );
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
@@ -186,7 +205,20 @@
 
   let canvasUnregister: ReturnType<typeof canvasContext.register>;
   $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'Spline', render });
+    canvasUnregister = canvasContext.register({
+      name: 'Spline',
+      render,
+      events: {
+        click: onclick,
+        pointerenter: onpointerenter,
+        pointermove: onpointermove,
+        pointerleave: onpointerleave,
+        pointerdown: onpointerdown,
+        pointerover: onpointerover,
+        pointerout: onpointerout,
+        touchmove: ontouchmove,
+      },
+    });
   }
 
   onDestroy(() => {
@@ -244,10 +276,14 @@
       marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
       marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
       in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
-      on:click
-      on:pointerenter
-      on:pointermove
-      on:pointerleave
+      on:click={onclick}
+      on:pointerenter={onpointerenter}
+      on:pointermove={onpointermove}
+      on:pointerleave={onpointerleave}
+      on:pointerdown={onpointerdown}
+      on:pointerover={onpointerover}
+      on:pointerout={onpointerout}
+      on:touchmove={ontouchmove}
       bind:this={pathEl}
     />
 

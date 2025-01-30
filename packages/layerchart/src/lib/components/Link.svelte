@@ -22,6 +22,7 @@
   import { uniqueId } from '@layerstack/utils';
 
   import Marker from './Marker.svelte';
+  import Spline from './Spline.svelte';
 
   // Override what is used from context
   export let data: any = undefined; // TODO: Update Type
@@ -38,6 +39,13 @@
   export let x = (d: any) => (sankey ? d[0] : orientation === 'horizontal' ? d.y : d.x);
   export let y = (d: any) => (sankey ? d[1] : orientation === 'horizontal' ? d.x : d.y);
   export let curve = orientation === 'horizontal' ? curveBumpX : curveBumpY;
+
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerover: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerout: ((e: PointerEvent) => void) | undefined = undefined;
 
   /** Marker to attach to start, mid, and end points of path */
   export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
@@ -69,20 +77,19 @@
   }
 </script>
 
-<!-- svelte-ignore a11y-mouse-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<path
+<Spline
   class="path-link"
-  d={$tweened_d}
+  pathData={$tweened_d}
   fill="none"
   marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
   marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
   marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-  on:click
-  on:pointerover
-  on:pointermove
-  on:pointerout
-  on:pointerleave
+  {onclick}
+  {onpointerenter}
+  {onpointermove}
+  {onpointerleave}
+  {onpointerover}
+  {onpointerout}
   {...$$restProps}
 />
 

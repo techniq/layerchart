@@ -64,6 +64,7 @@
               x="date"
               y="cpu"
               props={chartProps}
+              brush
               {renderContext}
               profile
             />
@@ -84,6 +85,7 @@
                 { key: 'tcp', color: 'hsl(var(--color-success))' },
               ]}
               props={chartProps}
+              brush
               {renderContext}
               profile
             />

@@ -3,13 +3,13 @@
   import { hierarchy, type HierarchyNode } from 'd3-hierarchy';
   import { curveBumpX, curveBumpY, curveStep, curveStepBefore, curveStepAfter } from 'd3-shape';
 
-  import { Chart, Group, Link, Rect, Svg, Text, Tree } from 'layerchart';
-  import TransformControls from 'layerchart/components/TransformControls.svelte';
+  import { Canvas, Chart, Group, Link, Rect, Svg, Text, Tree } from 'layerchart';
+  import TransformControls from '$lib/components/TransformControls.svelte';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import type { ComponentProps } from 'svelte';
+  import type { Component, ComponentProps } from 'svelte';
 
   export let data;
 
@@ -24,6 +24,7 @@
   let orientation: ComponentProps<Tree>['orientation'] = 'horizontal';
   let curve = curveBumpX;
   let layout = 'chart';
+  let Context: Component = Svg;
   let selected;
 
   function getNodeKey(node: HierarchyNode<{ name: string }>) {
@@ -52,8 +53,16 @@
         <ToggleOption value="vertical">Vertical</ToggleOption>
       </ToggleGroup>
     </Field>
+
     <Field label="Curve">
-      <ToggleGroup bind:value={curve} variant="outline" size="sm" inset class="w-full">
+      <ToggleGroup
+        bind:value={curve}
+        variant="outline"
+        size="sm"
+        inset
+        class="w-full"
+        classes={{ options: 'whitespace-nowrap' }}
+      >
         <ToggleOption value={curveBumpX}>BumpX</ToggleOption>
         <ToggleOption value={curveBumpY}>BumpY</ToggleOption>
         <ToggleOption value={curveStep}>Step</ToggleOption>
@@ -61,12 +70,20 @@
         <ToggleOption value={curveStepAfter}>Step After</ToggleOption>
       </ToggleGroup>
     </Field>
+
     <Field label="Layout">
       <ToggleGroup bind:value={layout} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="chart">Chart</ToggleOption>
         <ToggleOption value="node">Node</ToggleOption>
       </ToggleGroup>
     </Field>
+
+    <!-- <Field label="Context">
+      <ToggleGroup bind:value={Context} variant="outline" size="sm" inset class="w-full">
+        <ToggleOption value={Svg}>Svg</ToggleOption>
+        <ToggleOption value={Canvas}>Canvas</ToggleOption>
+      </ToggleGroup>
+    </Field> -->
   </div>
 </div>
 
@@ -80,20 +97,24 @@
     >
       <TransformControls orientation="horizontal" class="-m-2" />
 
-      <Svg>
+      <svelte:component this={Context}>
         <Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : undefined}>
-          <g class="opacity-20">
-            {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
-              <Link data={link} {orientation} {curve} tweened class="stroke-surface-content" />
-            {/each}
-          </g>
+          {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
+            <Link
+              data={link}
+              {orientation}
+              {curve}
+              tweened
+              class="stroke-surface-content opacity-20"
+            />
+          {/each}
 
           {#each nodes as node (getNodeKey(node))}
             <Group
               x={(orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
               y={(orientation === 'horizontal' ? node.x : node.y) - nodeHeight / 2}
               tweened
-              on:click={() => {
+              onclick={() => {
                 if (expandedNodeNames.includes(node.data.name)) {
                   expandedNodeNames = expandedNodeNames.filter((name) => name !== node.data.name);
                 } else {
@@ -134,7 +155,7 @@
             </Group>
           {/each}
         </Tree>
-      </Svg>
+      </svelte:component>
     </Chart>
   </div>
 </Preview>
