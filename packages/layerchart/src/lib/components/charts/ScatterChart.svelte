@@ -69,11 +69,13 @@
 
   export let props: {
     brush?: Partial<ComponentProps<Brush>>;
+    debug?: typeof debug;
     grid?: Partial<ComponentProps<Grid>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
     legend?: Partial<ComponentProps<Legend>>;
     points?: Partial<ComponentProps<Points>>;
+    profile?: typeof profile;
     rule?: Partial<ComponentProps<Rule>>;
     tooltip?: {
       context?: Partial<ComponentProps<Tooltip.Context>>;
@@ -91,6 +93,9 @@
 
   /** Log initial render performance using `console.time` */
   export let profile = false;
+
+  /** Enable debug mode */
+  export let debug = false;
 
   // Default xScale based on first data's `x` value
   $: xScale =
@@ -176,6 +181,7 @@
     : {
         mode: 'voronoi',
         onclick: ontooltipclick,
+        debug,
         ...props.tooltip?.context,
         ...$$props.tooltip,
       }}
@@ -213,7 +219,7 @@
     : null}
 
   <slot {...slotProps}>
-    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} {debug}>
       <slot name="grid" {...slotProps}>
         {#if grid}
           <Grid x y {...typeof grid === 'object' ? grid : null} {...props.grid} />

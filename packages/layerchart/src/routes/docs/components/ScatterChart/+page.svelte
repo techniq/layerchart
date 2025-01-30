@@ -3,7 +3,7 @@
   import { format } from '@layerstack/utils';
   import { flatGroup } from 'd3-array';
   import { randomNormal } from 'd3-random';
-  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
   import Blockquote from '$lib/docs/Blockquote.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -34,22 +34,29 @@
   });
 
   let renderContext: 'svg' | 'canvas' = 'svg';
+  let debug = false;
 </script>
 
 <h1>Examples</h1>
 
-<Field label="Render context">
-  <ToggleGroup bind:value={renderContext} variant="outline">
-    <ToggleOption value="svg">Svg</ToggleOption>
-    <ToggleOption value="canvas">Canvas</ToggleOption>
-  </ToggleGroup>
-</Field>
+<div class="grid grid-cols-[1fr,auto] gap-2">
+  <Field label="Render context">
+    <ToggleGroup bind:value={renderContext} variant="outline">
+      <ToggleOption value="svg">Svg</ToggleOption>
+      <ToggleOption value="canvas">Canvas</ToggleOption>
+    </ToggleGroup>
+  </Field>
+
+  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
+    <Switch {id} bind:checked={debug} />
+  </Field>
+</div>
 
 <h2>Basic</h2>
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded">
-    <ScatterChart data={spiralData} x="x" y="y" {renderContext} />
+    <ScatterChart data={spiralData} x="x" y="y" {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -64,6 +71,7 @@
       xPadding={[20, 20]}
       yPadding={[20, 20]}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -81,6 +89,7 @@
       xNice
       yNice
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -89,7 +98,15 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded">
-    <ScatterChart data={spiralData} x="x" y="y" xBaseline={0} yBaseline={0} {renderContext} />
+    <ScatterChart
+      data={spiralData}
+      x="x"
+      y="y"
+      xBaseline={0}
+      yBaseline={0}
+      {renderContext}
+      {debug}
+    />
   </div>
 </Preview>
 
@@ -112,6 +129,7 @@
         };
       })}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -137,6 +155,7 @@
         };
       })}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -145,7 +164,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded">
-    <ScatterChart data={spiralData} x="x" y="y" labels={{ offset: 10 }} {renderContext} />
+    <ScatterChart data={spiralData} x="x" y="y" labels={{ offset: 10 }} {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -169,6 +188,7 @@
       })}
       legend
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -190,6 +210,7 @@
       }}
       legend
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -215,6 +236,7 @@
       })}
       legend
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -223,7 +245,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded">
-    <ScatterChart data={spiralData} x="x" y="y" axis="x" {renderContext} />
+    <ScatterChart data={spiralData} x="x" y="y" axis="x" {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -231,7 +253,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded">
-    <ScatterChart data={spiralData} x="x" y="y" axis="y" {renderContext} />
+    <ScatterChart data={spiralData} x="x" y="y" axis="y" {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -247,6 +269,7 @@
       grid={false}
       props={{ highlight: { lines: false } }}
       {renderContext}
+      {debug}
     >
       <svelte:fragment slot="tooltip" let:data let:x>
         <Tooltip.Root let:data>
@@ -270,6 +293,7 @@
         alert(JSON.stringify(detail));
       }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -278,7 +302,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded">
-    <ScatterChart data={spiralData} x="x" y="y" {renderContext}>
+    <ScatterChart data={spiralData} x="x" y="y" {renderContext} {debug}>
       <svelte:fragment slot="tooltip" let:x let:y let:padding let:height>
         <Tooltip.Root
           x={padding.left}
@@ -315,6 +339,7 @@
       x="x"
       y="y"
       {renderContext}
+      {debug}
       brush
       tooltip={{ mode: 'quadtree' }}
     />
@@ -327,7 +352,7 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded">
-    <ScatterChart data={spiralData} x="x" y="y" let:x let:y {renderContext}>
+    <ScatterChart data={spiralData} x="x" y="y" let:x let:y {renderContext} {debug}>
       <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" grid rule />

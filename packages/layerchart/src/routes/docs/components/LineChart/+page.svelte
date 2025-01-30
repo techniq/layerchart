@@ -13,7 +13,7 @@
   import { scaleBand, scaleSequential } from 'd3-scale';
   import { curveCatmullRom, curveLinearClosed } from 'd3-shape';
   import { extent, flatGroup, group, ticks } from 'd3-array';
-  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -66,22 +66,29 @@
   let dynamicData = ticks(-2, 2, 200).map(Math.sin);
 
   let renderContext: 'svg' | 'canvas' = 'svg';
+  let debug = false;
 </script>
 
 <h1>Examples</h1>
 
-<Field label="Render context">
-  <ToggleGroup bind:value={renderContext} variant="outline">
-    <ToggleOption value="svg">Svg</ToggleOption>
-    <ToggleOption value="canvas">Canvas</ToggleOption>
-  </ToggleGroup>
-</Field>
+<div class="grid grid-cols-[1fr,auto] gap-2">
+  <Field label="Render context">
+    <ToggleGroup bind:value={renderContext} variant="outline">
+      <ToggleOption value="svg">Svg</ToggleOption>
+      <ToggleOption value="canvas">Canvas</ToggleOption>
+    </ToggleGroup>
+  </Field>
+
+  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
+    <Switch {id} bind:checked={debug} />
+  </Field>
+</div>
 
 <h2>Basic</h2>
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <LineChart data={dateSeriesData} x="date" y="value" {renderContext} />
+    <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -94,6 +101,7 @@
       x="date"
       series={[{ key: 'value', color: 'hsl(var(--color-secondary))' }]}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -108,6 +116,7 @@
       y="value"
       props={{ spline: { curve: curveCatmullRom } }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -125,6 +134,7 @@
         { key: 'oranges', color: 'hsl(var(--color-warning))' },
       ]}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -154,6 +164,7 @@
         },
       ]}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -173,6 +184,7 @@
       ]}
       tooltip={{ mode: 'voronoi' }}
       {renderContext}
+      {debug}
     >
       <svelte:fragment slot="marks" let:series let:tooltip>
         {#each series as s}
@@ -221,6 +233,7 @@
         alert(JSON.stringify(detail));
       }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -229,7 +242,14 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <LineChart data={dateSeriesData} x="date" y="value" labels={{ offset: 10 }} {renderContext} />
+    <LineChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      labels={{ offset: 10 }}
+      {renderContext}
+      {debug}
+    />
   </div>
 </Preview>
 
@@ -237,7 +257,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <LineChart data={dateSeriesData} x="date" y="value" points {renderContext} />
+    <LineChart data={dateSeriesData} x="date" y="value" points {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -252,6 +272,7 @@
       points
       labels={{ offset: 10 }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -272,6 +293,7 @@
         },
       }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -311,6 +333,7 @@
       }}
       tooltip={{ mode: 'voronoi' }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -348,6 +371,7 @@
       }}
       tooltip={{ mode: 'voronoi' }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -394,6 +418,7 @@
       }}
       tooltip={{ mode: 'voronoi' }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -402,7 +427,14 @@
 
 <Preview data={data.dailyTemperature}>
   <div class="h-[300px] p-4 border rounded">
-    <LineChart data={data.dailyTemperature} x="date" y="value" yDomain={null} {renderContext}>
+    <LineChart
+      data={data.dailyTemperature}
+      x="date"
+      y="value"
+      yDomain={null}
+      {renderContext}
+      {debug}
+    >
       <svelte:fragment slot="marks">
         <LinearGradient
           stops={ticks(1, 0, 10).map(temperatureColor.interpolator())}
@@ -436,7 +468,14 @@
 
 <Preview data={data.dailyTemperature}>
   <div class="h-[300px] p-4 border rounded">
-    <LineChart data={data.dailyTemperature} x="date" y="value" yDomain={null} {renderContext}>
+    <LineChart
+      data={data.dailyTemperature}
+      x="date"
+      y="value"
+      yDomain={null}
+      {renderContext}
+      {debug}
+    >
       <svelte:fragment slot="marks" let:yScale let:height let:padding>
         {@const thresholdOffset = yScale(50) / (height + padding.bottom)}
         <LinearGradient
@@ -484,6 +523,7 @@
       })}
       tooltip={{ mode: 'manual' }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -522,6 +562,7 @@
       })}
       tooltip={{ mode: 'manual' }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -546,6 +587,7 @@
       tooltip={{ mode: 'manual' }}
       props={{ yAxis: { tweened: true }, grid: { tweened: true } }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -554,7 +596,7 @@
 
 <Preview data={dateSeriesDataWithNulls}>
   <div class="h-[300px] p-4 border rounded">
-    <LineChart data={dateSeriesDataWithNulls} x="date" y="value" points {renderContext} />
+    <LineChart data={dateSeriesDataWithNulls} x="date" y="value" points {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -562,7 +604,7 @@
 
 <Preview data={dateSeriesDataWithNulls}>
   <div class="h-[300px] p-4 border rounded">
-    <LineChart data={dateSeriesDataWithNulls} x="date" y="value" {renderContext}>
+    <LineChart data={dateSeriesDataWithNulls} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="belowMarks" let:series>
         {#each series as s}
           <Spline
@@ -589,6 +631,7 @@
       grid={false}
       props={{ highlight: { points: { r: 3, class: 'stroke-2 stroke-surface-100' } } }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -597,7 +640,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <LineChart data={dateSeriesData} x="date" y="value" axis="x" {renderContext} />
+    <LineChart data={dateSeriesData} x="date" y="value" axis="x" {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -605,7 +648,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <LineChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} />
+    <LineChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -623,6 +666,7 @@
       ]}
       legend
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -640,6 +684,7 @@
         alert(JSON.stringify(detail));
       }}
       {renderContext}
+      {debug}
     />
   </div>
 </Preview>
@@ -648,7 +693,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <LineChart data={dateSeriesData} x="date" y="value" {renderContext}>
+    <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="tooltip" let:x let:y let:height let:padding>
         <Tooltip.Root
           x={padding.left}
@@ -680,7 +725,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <LineChart data={dateSeriesData} x="date" y="value" {renderContext} brush />
+    <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} brush />
   </div>
 </Preview>
 
@@ -688,7 +733,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <LineChart data={dateSeriesData} x="date" y="value" let:x let:y {renderContext}>
+    <LineChart data={dateSeriesData} x="date" y="value" let:x let:y {renderContext} {debug}>
       <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
         <Axis placement="left" grid rule />
         <Axis

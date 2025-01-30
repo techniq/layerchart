@@ -33,6 +33,7 @@
 
   interface $$Props extends ChartProps {
     axis?: typeof axis;
+    debug?: typeof debug;
     grid?: typeof grid;
     bandPadding?: typeof bandPadding;
     groupPadding?: typeof groupPadding;
@@ -152,6 +153,9 @@
 
   /** Log initial render performance using `console.time` */
   export let profile = false;
+
+  /** Enable debug mode */
+  export let debug = false;
 
   $: allSeriesData = visibleSeries
     .flatMap((s) =>
@@ -306,7 +310,13 @@
   {...$$restProps}
   tooltip={$$props.tooltip === false
     ? false
-    : { mode: 'band', onclick: ontooltipclick, ...props.tooltip?.context, ...$$props.tooltip }}
+    : {
+        mode: 'band',
+        onclick: ontooltipclick,
+        debug,
+        ...props.tooltip?.context,
+        ...$$props.tooltip,
+      }}
   let:x
   let:xScale
   let:y
@@ -335,7 +345,7 @@
     getLabelsProps,
   }}
   <slot {...slotProps}>
-    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} {debug}>
       <slot name="grid" {...slotProps}>
         {#if grid}
           <Grid

@@ -32,6 +32,7 @@
   interface $$Props extends ComponentProps<Chart<TData>> {
     axis?: typeof axis;
     brush?: typeof brush;
+    debug?: typeof debug;
     grid?: typeof grid;
     labels?: typeof labels;
     legend?: typeof legend;
@@ -111,6 +112,9 @@
 
   /** Log initial render performance using `console.time` */
   export let profile = false;
+
+  /** Enable debug mode */
+  export let debug = false;
 
   $: allSeriesData = series
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
@@ -212,6 +216,7 @@
     : {
         mode: 'bisect-x',
         onclick: ontooltipclick,
+        debug,
         ...props.tooltip?.context,
         ...$$props.tooltip,
       }}
@@ -244,7 +249,7 @@
     getSplineProps,
   }}
   <slot {...slotProps}>
-    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} center={radial}>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} center={radial} {debug}>
       <slot name="grid" {...slotProps}>
         {#if grid}
           <Grid x={radial} y {...typeof grid === 'object' ? grid : null} {...props.grid} />

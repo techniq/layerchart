@@ -28,6 +28,7 @@
     center?: typeof center;
     placement?: typeof placement;
     profile?: typeof profile;
+    debug?: typeof debug;
     props?: typeof props;
     range?: typeof range;
     series?: typeof series;
@@ -126,6 +127,9 @@
   /** Log initial render performance using `console.time` */
   export let profile = false;
 
+  /** Enable debug mode */
+  export let debug = false;
+
   $: allSeriesData = series
     .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
     .filter((d) => d) as Array<TData>;
@@ -202,7 +206,7 @@
     visibleData,
   }}
   <slot {...slotProps}>
-    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} {center}>
+    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} {center} {debug}>
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
