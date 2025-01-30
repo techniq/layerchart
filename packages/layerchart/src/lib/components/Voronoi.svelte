@@ -110,19 +110,23 @@
     {#each points as point, i}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <Spline
-        pathData={voronoi.renderCell(i)}
-        class={cls('fill-transparent stroke-transparent', classes.path)}
-        onclick={(e) => onclick?.(e, { data: point.data, point })}
-        onpointerenter={(e) => onpointerenter?.(e, { data: point.data, point })}
-        onpointermove={(e) => onpointermove?.(e, { data: point.data, point })}
-        {onpointerleave}
-        onpointerdown={(e) => onpointerdown?.(e, { data: point.data, point })}
-        ontouchmove={(e) => {
-          // Prevent touch to not interfer with pointer
-          e.preventDefault();
-        }}
-      />
+      {@const pathData = voronoi.renderCell(i)}
+      <!-- Wait to render Spline until pathData is available to fix path artifacts from injected tweened points in Spline  -->
+      {#if pathData}
+        <Spline
+          {pathData}
+          class={cls('fill-transparent stroke-transparent', classes.path)}
+          onclick={(e) => onclick?.(e, { data: point.data, point })}
+          onpointerenter={(e) => onpointerenter?.(e, { data: point.data, point })}
+          onpointermove={(e) => onpointermove?.(e, { data: point.data, point })}
+          {onpointerleave}
+          onpointerdown={(e) => onpointerdown?.(e, { data: point.data, point })}
+          ontouchmove={(e) => {
+            // Prevent touch to not interfer with pointer
+            e.preventDefault();
+          }}
+        />
+      {/if}
     {/each}
   {/if}
 </g>
