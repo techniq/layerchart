@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onDestroy, tick } from 'svelte';
+  import type { ClassValue } from 'svelte/elements';
   import { cls } from '@layerstack/tailwind';
   import { objectId } from '@layerstack/utils/object';
 
@@ -11,6 +12,9 @@
   } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+
+  /** Undlying `<rect>` tag when using <Svg>. Useful for bindings. */
+  export let element: SVGRectElement | undefined = undefined;
 
   export let x = 0;
   export let initialX = x;
@@ -29,7 +33,7 @@
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
 
-  let className: string | undefined = undefined;
+  let className: ClassValue | undefined = undefined;
   export { className as class };
 
   export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
@@ -128,5 +132,6 @@
     on:pointerout
     on:pointerleave={onpointerleave}
     on:dblclick
+    bind:this={element}
   />
 {/if}
