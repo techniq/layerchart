@@ -63,3 +63,12 @@ export function parsePercent(percent: string | number) {
     return Number(percent.replace('%', '')) / 100;
   }
 }
+
+/** Add second value while maintaining `Date` or `number` type */
+export function add(value1: Date | number, value2: number) {
+  if (value1 instanceof Date) {
+    return new Date(value1.getTime() + value2);
+  } else {
+    return value1 + value2;
+  }
+}

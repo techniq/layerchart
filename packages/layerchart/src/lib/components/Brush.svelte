@@ -8,12 +8,13 @@
   import { chartContext } from './ChartContext.svelte';
   import Frame from './Frame.svelte';
   import Group from './Group.svelte';
+  import Rect from './Rect.svelte';
   import Text from './Text.svelte';
 
-  import { localPoint } from '$lib/utils/event.js';
+  import { localPoint } from '../utils/event.js';
   import type { DomainType } from '../utils/scales.js';
   import { asAny } from '../utils/types.js';
-  import Rect from './Rect.svelte';
+  import { add } from '../utils/math.js';
 
   const { xScale, yScale, width, height, padding, config } = chartContext();
 
@@ -147,15 +148,6 @@
       window.addEventListener('pointermove', onPointerMove);
       window.addEventListener('pointerup', onPointerUp);
     };
-  }
-
-  /** Add second value while maintaining `Date` or `number` type */
-  function add(value1: Date | number, value2: number) {
-    if (value1 instanceof Date) {
-      return new Date(value1.getTime() + value2);
-    } else {
-      return value1 + value2;
-    }
   }
 
   const createRange = handler((start, value) => {
