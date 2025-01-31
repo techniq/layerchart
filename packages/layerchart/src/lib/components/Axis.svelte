@@ -4,6 +4,7 @@
   import { cubicIn } from 'svelte/easing';
   import type { SVGAttributes } from 'svelte/elements';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
+  import type { TimeInterval } from 'd3-time';
 
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
@@ -39,7 +40,8 @@
   export let grid: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'> = false;
 
   /** Control the number of ticks*/
-  export let ticks: number | any[] | ((scale: AnyScale) => any) | null | undefined = undefined;
+  export let ticks: number | any[] | ((scale: AnyScale) => any) | TimeInterval | null | undefined =
+    undefined;
 
   /** Length of the tick line */
   export let tickLength = 4;
@@ -86,7 +88,9 @@
   $: tickVals = Array.isArray(ticks)
     ? ticks
     : typeof ticks === 'function'
-      ? ticks(_scale)
+      ? ticks.name === 'interval' // d3-time interval such as `timeDay.every(1)`
+        ? _scale.ticks(ticks)
+        : ticks(_scale)
       : isScaleBand(_scale)
         ? ticks
           ? _scale.domain().filter((v: any, i: number) => i % ticks === 0)

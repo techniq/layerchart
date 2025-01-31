@@ -1,6 +1,7 @@
 <script lang="ts">
   import { scaleLinear, scaleTime, scaleBand, scaleLog } from 'd3-scale';
   import { range } from 'd3-array';
+  import { timeDay } from 'd3-time';
   import { Field, Switch } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
   import { mdScreen } from '@layerstack/svelte-stores';
@@ -451,6 +452,27 @@
     >
       <Svg>
         <Axis placement="bottom" rule ticks={$mdScreen ? 10 : 5} />
+        <Axis placement="left" rule />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>tick time interval</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, 100]}
+      yNice
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Svg>
+        <Axis placement="bottom" rule ticks={timeDay.every(3)} />
         <Axis placement="left" rule />
       </Svg>
     </Chart>
