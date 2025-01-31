@@ -1,5 +1,13 @@
 # LayerChart
 
+## 0.92.1
+
+### Patch Changes
+
+- feat(Brush): Add Logger integration ([`6308357`](https://github.com/techniq/layerchart/commit/630835723ca977c7e9ac4678d6189c85f112a0db))
+
+- fix(Brush): Improve pointer handling (both small (<1px) and large/quick movements) ([`6308357`](https://github.com/techniq/layerchart/commit/630835723ca977c7e9ac4678d6189c85f112a0db))
+
 ## 0.92.0
 
 ### Minor Changes
