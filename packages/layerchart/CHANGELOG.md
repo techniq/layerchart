@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.92.0
+
+### Minor Changes
+
+- feat(Axis): Support passing `ticks` as d3-time interval (ex. `timeDay.every(3)`) ([`57dfdcb`](https://github.com/techniq/layerchart/commit/57dfdcbb7ccf9dfad8372e177c0fcf1c66a72831))
+
 ## 0.91.1
 
 ### Patch Changes
