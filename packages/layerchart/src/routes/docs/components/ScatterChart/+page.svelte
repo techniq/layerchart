@@ -338,10 +338,15 @@
       data={spiralData}
       x="x"
       y="y"
+      props={{
+        points: { tweened: { duration: 200 } },
+        xAxis: { tweened: { duration: 200 } },
+        yAxis: { tweened: { duration: 200 } },
+      }}
+      brush
+      tooltip={false}
       {renderContext}
       {debug}
-      brush
-      tooltip={{ mode: 'quadtree' }}
     />
   </div>
 </Preview>

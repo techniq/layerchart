@@ -725,7 +725,18 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} brush />
+    <LineChart
+      data={data.appleStock}
+      x="date"
+      y="value"
+      brush
+      props={{
+        spline: { tweened: { duration: 200 } },
+        xAxis: { format: undefined, tweened: { duration: 200 } },
+      }}
+      {renderContext}
+      {debug}
+    />
   </div>
 </Preview>
 
