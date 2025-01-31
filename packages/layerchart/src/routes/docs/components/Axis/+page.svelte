@@ -472,7 +472,7 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="bottom" rule ticks={timeDay.every(3)} />
+        <Axis placement="bottom" rule ticks={{ interval: timeDay.every(3) }} />
         <Axis placement="left" rule />
       </Svg>
     </Chart>

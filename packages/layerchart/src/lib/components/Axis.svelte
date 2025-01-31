@@ -9,7 +9,7 @@
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
 
-  import { format as formatValue, type FormatType } from '@layerstack/utils';
+  import { format as formatValue, isLiteralObject, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import type { TransitionParams } from 'svelte-ux'; // TODO: Replace with `@layerstack/svelte-types` or similar
 
@@ -40,8 +40,13 @@
   export let grid: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'> = false;
 
   /** Control the number of ticks*/
-  export let ticks: number | any[] | ((scale: AnyScale) => any) | TimeInterval | null | undefined =
-    undefined;
+  export let ticks:
+    | number
+    | any[]
+    | ((scale: AnyScale) => any)
+    | { interval: TimeInterval | null }
+    | null
+    | undefined = undefined;
 
   /** Length of the tick line */
   export let tickLength = 4;
@@ -88,14 +93,14 @@
   $: tickVals = Array.isArray(ticks)
     ? ticks
     : typeof ticks === 'function'
-      ? ticks.name === 'interval' // d3-time interval such as `timeDay.every(1)`
-        ? _scale.ticks(ticks)
-        : ticks(_scale)
-      : isScaleBand(_scale)
-        ? ticks
-          ? _scale.domain().filter((v: any, i: number) => i % ticks === 0)
-          : _scale.domain()
-        : _scale.ticks(ticks ?? (placement === 'left' || placement === 'right' ? 4 : undefined));
+      ? ticks(_scale)
+      : isLiteralObject(ticks)
+        ? _scale.ticks(ticks.interval) // d3-time interval such as `timeDay.every(1)`
+        : isScaleBand(_scale)
+          ? ticks
+            ? _scale.domain().filter((v: any, i: number) => i % ticks === 0)
+            : _scale.domain()
+          : _scale.ticks(ticks ?? (placement === 'left' || placement === 'right' ? 4 : undefined));
 
   function getCoords(tick: any) {
     switch (placement) {
