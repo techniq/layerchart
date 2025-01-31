@@ -15,7 +15,6 @@
   let chartProps = $derived<ComponentProps<typeof LineChart>['props']>({
     xAxis: { format: PeriodType.Day },
     yAxis: { format: 'metric' },
-    spline: { class: 'stroke-1' },
     tooltip: { root: { motion } },
     highlight: { motion },
   });

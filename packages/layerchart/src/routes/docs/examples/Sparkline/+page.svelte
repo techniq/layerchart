@@ -15,15 +15,7 @@
 <Preview {data}>
   <div>
     <div class="w-[124px] h-[18px]">
-      <LineChart
-        {data}
-        x="date"
-        y="value"
-        yDomain={null}
-        axis={false}
-        grid={false}
-        props={{ spline: { class: 'stroke-1' } }}
-      />
+      <LineChart {data} x="date" y="value" yDomain={null} axis={false} grid={false} />
     </div>
   </div>
 </Preview>
@@ -35,15 +27,7 @@
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pretium, ligula ac sollicitudin
       ullamcorper, leo justo pretium tellus, at gravida ex quam et orci.
       <span class="w-[124px] h-[18px] inline-block">
-        <LineChart
-          {data}
-          x="date"
-          y="value"
-          yDomain={null}
-          axis={false}
-          grid={false}
-          props={{ spline: { class: 'stroke-1' } }}
-        />
+        <LineChart {data} x="date" y="value" yDomain={null} axis={false} grid={false} />
       </span> Sed ipsum justo, facilisis id tempor hendrerit, suscipit eu ipsum. Mauris ut sapien quis
       nibh volutpat venenatis. Ut viverra justo varius sapien convallis venenatis vel faucibus urna.
     </p>
@@ -53,14 +37,7 @@
 <h2>Basic zero axis</h2>
 <Preview {data}>
   <div class="w-[124px] h-[20px] inline-block">
-    <LineChart
-      {data}
-      x="date"
-      y="value"
-      axis={false}
-      grid={false}
-      props={{ spline: { class: 'stroke-1' } }}
-    />
+    <LineChart {data} x="date" y="value" axis={false} grid={false} />
   </div>
 </Preview>
 
@@ -75,7 +52,6 @@
       axis={false}
       grid={false}
       props={{
-        spline: { class: 'stroke-1' },
         highlight: { points: { r: 3, class: 'stroke-none' } },
       }}
     >
@@ -115,7 +91,6 @@
           axis={false}
           grid={false}
           props={{
-            spline: { class: 'stroke-1' },
             highlight: { points: { r: 3, class: 'stroke-none' } },
           }}
         >
