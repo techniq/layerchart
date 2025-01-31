@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.91.1
+
+### Patch Changes
+
+- fix(TooltipContext): Pass `MouseEvent` as first argument to `onclick` (match other event callbacks) ([`180d77a`](https://github.com/techniq/layerchart/commit/180d77a36981dc65bd8bd593e67c1b9f58515cdf))
+
 ## 0.91.0
 
 ### Minor Changes
