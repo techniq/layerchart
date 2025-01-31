@@ -111,7 +111,7 @@
   /** Enable debug view (show hit targets, etc) */
   export let debug = false;
 
-  export let onclick: ({ data }: { data: any }) => any = () => {};
+  export let onclick: (e: MouseEvent, { data }: { data: any }) => any = () => {};
 
   /** Exposed to allow binding in Chart */
   export let tooltip = writable({
@@ -406,7 +406,7 @@
   on:pointerleave={triggerPointerEvents ? hideTooltip : undefined}
   on:click={(e) => {
     if (triggerPointerEvents) {
-      onclick({ data: $tooltip?.data });
+      onclick(e, { data: $tooltip?.data });
     }
   }}
 >
@@ -438,7 +438,7 @@
             }
           }}
           onclick={(e, { data }) => {
-            onclick({ data });
+            onclick(e, { data });
           }}
           classes={{ path: cls(debug && 'fill-danger/10 stroke-danger') }}
         />
@@ -464,7 +464,7 @@
                 }
               }}
               on:click={(e) => {
-                onclick({ data: rect.data });
+                onclick(e, { data: rect.data });
               }}
             />
           {/each}

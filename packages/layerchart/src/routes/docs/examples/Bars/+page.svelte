@@ -1214,7 +1214,7 @@
       padding={{ left: 20, bottom: 20 }}
       tooltip={{
         mode: 'band',
-        onclick({ data }) {
+        onclick(e, { data }) {
           alert('You clicked on:\n' + JSON.stringify(data, null, 2));
         },
       }}
