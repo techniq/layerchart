@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.91.0
+
+### Minor Changes
+
+- breaking(Brush): Lowercase event callbacks ([`1d5ad26`](https://github.com/techniq/layerchart/commit/1d5ad265da731dec3f9ea50113d156de3f477062))
+
 ## 0.90.0
 
 ### Minor Changes
