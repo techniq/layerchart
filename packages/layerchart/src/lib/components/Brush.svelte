@@ -3,7 +3,7 @@
   import { extent, min, max } from 'd3-array';
   import { clamp } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { format as formatValue, type FormatType } from '@layerstack/utils';
+  import { format as formatValue, type FormatType, Logger } from '@layerstack/utils';
 
   import { chartContext } from './ChartContext.svelte';
   import Frame from './Frame.svelte';
@@ -74,6 +74,9 @@
 
   let frameEl: SVGRectElement;
 
+  const logger = new Logger('Brush');
+  const RESET_THRESHOLD = 1; // size of pointer delta to ignore
+
   function handler(
     fn: (
       start: {
@@ -85,35 +88,50 @@
     ) => void
   ) {
     return (e: PointerEvent) => {
+      const startPoint = localPoint(frameEl, e);
       const start = {
         xDomain: [xDomain?.[0] ?? xDomainMin, xDomain?.[1] ?? xDomainMax] as [number, number],
         yDomain: [yDomain?.[0] ?? yDomainMin, yDomain?.[1] ?? yDomainMax] as [number, number],
         value: {
-          x: $xScale.invert?.((localPoint(frameEl, e)?.x ?? 0) - $padding.left),
-          y: $yScale.invert?.((localPoint(frameEl, e)?.y ?? 0) - $padding.top),
+          x: $xScale.invert?.((startPoint?.x ?? 0) - $padding.left),
+          y: $yScale.invert?.((startPoint?.y ?? 0) - $padding.top),
         },
       };
 
       onbrushstart({ xDomain, yDomain });
 
       const onPointerMove = (e: PointerEvent) => {
+        const currentPoint = localPoint(frameEl, e);
         fn(start, {
-          x: $xScale.invert?.((localPoint(frameEl, e)?.x ?? 0) - $padding.left),
-          y: $yScale.invert?.((localPoint(frameEl, e)?.y ?? 0) - $padding.top),
+          x: $xScale.invert?.((currentPoint?.x ?? 0) - $padding.left),
+          y: $yScale.invert?.((currentPoint?.y ?? 0) - $padding.top),
         });
 
-        // if (xDomain[0] === xDomain[1] || yDomain[0] === yDomain[1]) {
-        //   // Ignore?
-        //   // TODO: What about when using `x` or `y` axis?
-        // } else {
         onchange({ xDomain, yDomain });
-        // }
       };
 
       const onPointerUp = (e: PointerEvent) => {
-        if (e.target === frameEl) {
+        const currentPoint = localPoint(frameEl, e);
+        const xPointDelta = Math.abs((startPoint?.x ?? 0) - (currentPoint?.x ?? 0));
+        const yPointDelta = Math.abs((startPoint?.y ?? 0) - (currentPoint?.y ?? 0));
+
+        if (
+          (e.target == frameEl && xPointDelta < RESET_THRESHOLD && yPointDelta < RESET_THRESHOLD) ||
+          rangeWidth < RESET_THRESHOLD ||
+          rangeHeight < RESET_THRESHOLD
+        ) {
+          // Clicked on frame, or pointer delta was <1
+          logger.info('resetting due to frame click');
           reset();
           onchange({ xDomain, yDomain });
+        } else {
+          logger.info('drag', {
+            target: e.target,
+            xPointDelta,
+            yPointDelta,
+            rangeWidth,
+            rangeHeight,
+          });
         }
 
         onbrushend({ xDomain, yDomain });
