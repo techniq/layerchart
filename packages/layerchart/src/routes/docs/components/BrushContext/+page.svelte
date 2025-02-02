@@ -15,7 +15,6 @@
     Circle,
     Highlight,
     LinearGradient,
-    Pattern,
     Points,
     Rule,
     Text,
