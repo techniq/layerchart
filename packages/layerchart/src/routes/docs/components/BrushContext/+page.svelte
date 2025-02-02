@@ -5,7 +5,7 @@
   import { format, PeriodType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import { subDays } from 'date-fns';
-  import { mdiChevronRight } from '@mdi/js';
+  import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
   import {
     Area,
@@ -58,7 +58,7 @@
   </div>
 </Preview>
 
-<h2>Styling via classes</h2>
+<h2>Simple styling</h2>
 
 <Preview data={data.appleStock}>
   <div class="h-[40px]">
@@ -67,7 +67,7 @@
       x="date"
       xScale={scaleTime()}
       y="value"
-      brush={{ classes: { range: 'bg-secondary/10', handle: 'bg-secondary/50 ' } }}
+      brush={{ classes: { range: 'bg-secondary/10', handle: 'bg-secondary/50' } }}
     >
       <Svg>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
@@ -76,46 +76,74 @@
   </div>
 </Preview>
 
-<h2>Styling via props (TODO)</h2>
+<h2>Striped background</h2>
 
 <Preview data={data.appleStock}>
   <div class="h-[40px]">
-    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" brush>
+    <Chart
+      data={data.appleStock}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      brush={{ classes: { range: 'striped-background' } }}
+    >
       <Svg>
-        <Pattern id="range-pattern" width={8} height={8}>
-          <rect width={8} height={8} class="fill-secondary/10" />
-          <line x1={8} y2={8} class="stroke-secondary/30" />
-        </Pattern>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-        <!-- <Brush range={{ fill: 'url(#range-pattern)', class: 'stroke-secondary/50' }} /> -->
       </Svg>
     </Chart>
   </div>
 </Preview>
 
-<h2>Styling via slots (TODO)</h2>
+<h2>Handle arrows</h2>
 
 <Preview data={data.appleStock}>
   <div class="h-[40px]">
-    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" brush>
+    <Chart
+      data={data.appleStock}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      brush={{ classes: { range: 'bg-secondary/10' }, handleSize: 8 }}
+      let:brush
+    >
       <Svg>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-        <!-- <Brush>
-          <svelte:fragment slot="handle" let:edge let:rangeHeight let:rangeWidth>
-            <rect
-              width={8}
-              height={rangeHeight}
-              class={cls('fill-secondary cursor-ew-resize select-none')}
-            />
-            <svg x="-6" y={rangeHeight / 2 - 10} width="20px" height="20px" viewBox="0 0 24 24">
-              <path
-                d={mdiChevronRight}
-                class={cls('fill-secondary-content origin-center', edge === 'left' && 'rotate-180')}
-              />
-            </svg>
-            <path />
-          </svelte:fragment>
-        </Brush> -->
+
+        {#if brush.isActive}
+          <rect
+            x={brush.range.x}
+            width={brush.handleSize}
+            height={brush.range.height}
+            class={cls('fill-secondary cursor-ew-resize select-none')}
+          />
+          <svg
+            x={brush.range.x - 6}
+            y={brush.range.height / 2 - 10}
+            width="20px"
+            height="20px"
+            viewBox="0 0 24 24"
+            class="icon z-20"
+          >
+            <path d={mdiChevronLeft} class="fill-secondary-content origin-center" />
+          </svg>
+
+          <rect
+            x={brush.range.x + brush.range.width - brush.handleSize}
+            width={brush.handleSize}
+            height={brush.range.height}
+            class={cls('fill-secondary cursor-ew-resize select-none')}
+          />
+          <svg
+            x={brush.range.x + brush.range.width - brush.handleSize - 6}
+            y={brush.range.height / 2 - 10}
+            width="20px"
+            height="20px"
+            viewBox="0 0 24 24"
+            class="icon z-20"
+          >
+            <path d={mdiChevronRight} class="fill-secondary-content origin-center" />
+          </svg>
+        {/if}
       </Svg>
     </Chart>
   </div>
@@ -656,3 +684,14 @@
     </div>
   </State>
 </Preview>
+
+<style>
+  :global(.striped-background) {
+    outline: 1px solid hsl(var(--color-secondary) / 50%);
+    background: repeating-linear-gradient(
+      135deg,
+      hsl(var(--color-secondary) / 30%) 0 1px,
+      hsl(var(--color-secondary) / 10%) 0 6px
+    );
+  }
+</style>

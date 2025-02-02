@@ -14,6 +14,7 @@
       width: number;
       height: number;
     };
+    handleSize: number;
   };
 
   export type BrushContext = Readable<BrushContextValue>;
@@ -28,6 +29,7 @@
       width: 0,
       height: 0,
     },
+    handleSize: 0,
   });
   export function brushContext() {
     return getContext<BrushContext>(brushContextKey) ?? defaultContext;
@@ -118,6 +120,7 @@
       width: 0,
       height: 0,
     },
+    handleSize: 0,
   });
   setBrushContext(brush);
 
@@ -313,6 +316,7 @@
     yDomain,
     isActive,
     range: _range,
+    handleSize,
   };
 </script>
 
