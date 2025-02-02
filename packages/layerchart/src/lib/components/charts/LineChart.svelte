@@ -139,7 +139,11 @@
       ...s.props,
       class: cls(
         'transition-opacity',
-        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+        // Checking `visibleSeries.length > 1` fixes re-animated tweened areas on hover
+        visibleSeries.length > 1 &&
+          highlightSeriesKey &&
+          highlightSeriesKey !== s.key &&
+          'opacity-10',
         props.spline?.class,
         s.props?.class
       ),
