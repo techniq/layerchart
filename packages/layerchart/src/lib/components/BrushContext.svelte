@@ -382,7 +382,8 @@
             handle?.class
           )}
           on:pointerdown={adjustTop}
-          on:dblclick={() => {
+          on:dblclick={(e) => {
+            e.stopPropagation();
             if (yDomain) {
               yDomain[0] = yDomainMin;
               onchange({ xDomain, yDomain });
@@ -405,7 +406,8 @@
             handle?.class
           )}
           on:pointerdown={adjustBottom}
-          on:dblclick={() => {
+          on:dblclick={(e) => {
+            e.stopPropagation();
             if (yDomain) {
               yDomain[1] = yDomainMax;
               onchange({ xDomain, yDomain });
@@ -430,7 +432,8 @@
             handle?.class
           )}
           on:pointerdown={adjustLeft}
-          on:dblclick={() => {
+          on:dblclick={(e) => {
+            e.stopPropagation();
             if (xDomain) {
               xDomain[0] = xDomainMin;
               onchange({ xDomain, yDomain });
@@ -453,7 +456,8 @@
             handle?.class
           )}
           on:pointerdown={adjustRight}
-          on:dblclick={() => {
+          on:dblclick={(e) => {
+            e.stopPropagation();
             if (xDomain) {
               xDomain[1] = xDomainMax;
               onchange({ xDomain, yDomain });
