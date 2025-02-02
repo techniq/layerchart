@@ -493,7 +493,7 @@
   </div>
 </Preview>
 
-<h2>Sync brushes with `bind:xDomain` (TODO)</h2>
+<h2>Sync brushes with `bind:xDomain`</h2>
 
 <Preview data={data.appleStock}>
   {@const colorScale = scaleOrdinal([
@@ -635,7 +635,7 @@
 
 <Preview data={randomData}>
   <State initial={{ xDomain: [null, null], yDomain: [null, null] }} let:value let:set>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[400px] p-4 border rounded">
       <Chart
         data={randomData}
         x="x"
@@ -681,6 +681,95 @@
           </Points>
         </Svg>
       </Chart>
+    </div>
+  </State>
+</Preview>
+
+<h2>Minimap</h2>
+
+<Preview data={randomData}>
+  <State initial={{ xDomain: [null, null], yDomain: [null, null] }} let:value let:set>
+    <div class="relative">
+      <div class="h-[400px] p-4 border rounded">
+        <Chart
+          data={randomData}
+          x="x"
+          xDomain={value?.xDomain}
+          y="y"
+          yDomain={value?.yDomain}
+          yNice
+          padding={{ left: 16, bottom: 24 }}
+          brush={{
+            axis: 'both',
+            resetOnEnd: true,
+            onbrushend: (e) => {
+              set({
+                // @ts-expect-error
+                xDomain: e.xDomain,
+                // @ts-expect-error
+                yDomain: e.yDomain,
+              });
+            },
+          }}
+        >
+          <Svg>
+            <Axis placement="left" grid rule />
+            <Axis placement="bottom" rule />
+
+            <ChartClipPath>
+              <Points class="fill-primary/30 stroke-primary" r={4} />
+            </ChartClipPath>
+          </Svg>
+        </Chart>
+      </div>
+
+      <div class="absolute top-0 right-0 w-[25%] h-[25%] border rounded bg-surface-100">
+        <Chart
+          data={randomData}
+          x="x"
+          y="y"
+          yNice
+          brush={{
+            axis: 'both',
+            mode: 'separated',
+            xDomain: value?.xDomain,
+            yDomain: value?.yDomain,
+            onchange: (e) => {
+              set({
+                // @ts-expect-error
+                xDomain: e.xDomain,
+                // @ts-expect-error
+                yDomain: e.yDomain,
+              });
+            },
+          }}
+        >
+          <Svg>
+            <Points let:points>
+              {#each points as point}
+                {@const isSelected =
+                  value &&
+                  (value.xDomain?.[0] == null || value.xDomain?.[0] <= point.data.x) &&
+                  (value.xDomain?.[1] == null || point.data.x <= value.xDomain?.[1]) &&
+                  (value.yDomain?.[0] == null || value.yDomain?.[0] <= point.data.y) &&
+                  (value.yDomain?.[1] == null || point.data.y <= value.yDomain?.[1])}
+
+                <Circle
+                  cx={point.x}
+                  cy={point.y}
+                  r={0.5}
+                  class={cls(
+                    isSelected
+                      ? 'fill-primary/30 stroke-primary'
+                      : 'fill-surface-content/10 stroke-neutral'
+                  )}
+                  spring
+                />
+              {/each}
+            </Points>
+          </Svg>
+        </Chart>
+      </div>
     </div>
   </State>
 </Preview>
