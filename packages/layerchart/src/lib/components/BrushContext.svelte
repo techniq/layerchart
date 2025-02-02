@@ -140,7 +140,7 @@
     ) => void
   ) {
     return (e: PointerEvent) => {
-      logger.info('drag start');
+      logger.debug('drag start');
       e.stopPropagation();
 
       const startPoint = localPoint(rootEl, e);
@@ -180,11 +180,11 @@
           _range.height < RESET_THRESHOLD
         ) {
           // Clicked on frame, or pointer delta was <1
-          logger.info('resetting due to frame click');
+          logger.debug('resetting due to frame click');
           reset();
           onchange({ xDomain, yDomain });
         } else {
-          logger.info('drag end', {
+          logger.debug('drag end', {
             target: e.target,
             xPointDelta,
             yPointDelta,
@@ -209,6 +209,7 @@
   }
 
   const createRange = handler((start, value) => {
+    logger.debug('createRange');
     isActive = true;
 
     xDomain = [
@@ -228,6 +229,7 @@
   });
 
   const adjustRange = handler((start, value) => {
+    logger.debug('adjustRange');
     const dx = clamp(
       value.x - start.value.x,
       xDomainMin - start.xDomain[0],
@@ -244,6 +246,7 @@
   });
 
   const adjustBottom = handler((start, value) => {
+    logger.debug('adjustBottom');
     yDomain = [
       clamp(value.y > start.yDomain[1] ? start.yDomain[1] : value.y, yDomainMin, yDomainMax),
       clamp(value.y > start.yDomain[1] ? value.y : start.yDomain[1], yDomainMin, yDomainMax),
@@ -251,6 +254,7 @@
   });
 
   const adjustTop = handler((start, value) => {
+    logger.debug('adjustTop');
     yDomain = [
       clamp(value.y < start.yDomain[1] ? value.y : start.yDomain[0], yDomainMin, yDomainMax),
       clamp(value.y < start.yDomain[1] ? start.yDomain[0] : value.y, yDomainMin, yDomainMax),
@@ -258,6 +262,7 @@
   });
 
   const adjustLeft = handler((start, value) => {
+    logger.debug('adjustLeft');
     xDomain = [
       clamp(value.x > start.xDomain[1] ? start.xDomain[1] : value.x, xDomainMin, xDomainMax),
       clamp(value.x > start.xDomain[1] ? value.x : start.xDomain[1], xDomainMin, xDomainMax),
@@ -265,6 +270,7 @@
   });
 
   const adjustRight = handler((start, value) => {
+    logger.debug('adjustRight');
     xDomain = [
       clamp(value.x < start.xDomain[0] ? value.x : start.xDomain[0], xDomainMin, xDomainMax),
       clamp(value.x < start.xDomain[0] ? start.xDomain[0] : value.x, xDomainMin, xDomainMax),
@@ -272,6 +278,7 @@
   });
 
   function reset() {
+    logger.debug('reset');
     isActive = false;
 
     xDomain = originalXDomain;
@@ -281,6 +288,7 @@
   }
 
   function selectAll() {
+    logger.debug('selectedAll');
     xDomain = [xDomainMin, xDomainMax];
     yDomain = [yDomainMin, yDomainMax];
   }
@@ -290,10 +298,6 @@
   $: left = $xScale(xDomain?.[0]);
   $: right = $xScale(xDomain?.[1]);
 
-  // $: rangeTop = axis === 'both' || axis === 'y' ? top : 0;
-  // $: rangeLeft = axis === 'both' || axis === 'x' ? left : 0;
-  // $: rangeWidth = axis === 'both' || axis === 'x' ? right - left : $width;
-  // $: rangeHeight = axis === 'both' || axis === 'y' ? bottom - top : $height;
   $: _range = {
     x: axis === 'both' || axis === 'x' ? left : 0,
     y: axis === 'both' || axis === 'y' ? top : 0,
