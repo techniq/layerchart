@@ -170,12 +170,13 @@
         const xPointDelta = Math.abs((startPoint?.x ?? 0) - (currentPoint?.x ?? 0));
         const yPointDelta = Math.abs((startPoint?.y ?? 0) - (currentPoint?.y ?? 0));
 
-        // const isRootEl = e.target == rootEl
-        // TODO: Should this be `not .range or `.handle` instaed?
-        const isRootEl = (e.target as Element).classList.value.includes('layout');
+        // Is click on frame (i.e. not on the `.range` or `.handle`)
+        const isClickOutside = !Array.from((e.target as Element).classList).some((cls) =>
+          ['range', 'handle'].includes(cls)
+        );
 
         if (
-          (isRootEl && xPointDelta < RESET_THRESHOLD && yPointDelta < RESET_THRESHOLD) ||
+          (isClickOutside && xPointDelta < RESET_THRESHOLD && yPointDelta < RESET_THRESHOLD) ||
           _range.width < RESET_THRESHOLD ||
           _range.height < RESET_THRESHOLD
         ) {
