@@ -356,8 +356,8 @@
         style:width="{_range.width}px"
         style:height="{_range.height}px"
         class={cls(
-          'cursor-move select-none',
-          'range absolute bg-surface-content/10',
+          'range',
+          'absolute bg-surface-content/10 cursor-move select-none',
           'z-10',
           classes.range,
           range?.class
