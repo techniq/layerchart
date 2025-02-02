@@ -84,27 +84,6 @@
   </Field>
 </div>
 
-<h2>Brush with point events</h2>
-
-<div class="h-[300px] p-4 border rounded">
-  <LineChart
-    data={multiSeriesData}
-    x="date"
-    series={[
-      { key: 'apples', color: 'hsl(var(--color-danger))' },
-      { key: 'bananas', color: 'hsl(var(--color-success))' },
-      { key: 'oranges', color: 'hsl(var(--color-warning))' },
-    ]}
-    onpointclick={(e, detail) => {
-      console.log(e, detail);
-      alert(JSON.stringify(detail));
-    }}
-    brush
-    {renderContext}
-    {debug}
-  />
-</div>
-
 <h2>Basic</h2>
 
 <Preview data={dateSeriesData}>
@@ -206,6 +185,7 @@
       tooltip={{ mode: 'voronoi' }}
       {renderContext}
       {debug}
+      brush
     >
       <svelte:fragment slot="marks" let:series let:tooltip>
         {#each series as s}
@@ -760,6 +740,27 @@
     />
   </div>
 </Preview>
+
+<h2>Brush with series point events</h2>
+
+<div class="h-[300px] p-4 border rounded">
+  <LineChart
+    data={multiSeriesData}
+    x="date"
+    series={[
+      { key: 'apples', color: 'hsl(var(--color-danger))' },
+      { key: 'bananas', color: 'hsl(var(--color-success))' },
+      { key: 'oranges', color: 'hsl(var(--color-warning))' },
+    ]}
+    onpointclick={(e, detail) => {
+      console.log(e, detail);
+      alert(JSON.stringify(detail));
+    }}
+    brush
+    {renderContext}
+    {debug}
+  />
+</div>
 
 <h2>Custom chart</h2>
 

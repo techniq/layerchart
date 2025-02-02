@@ -9,6 +9,7 @@
   import GeoContext from './GeoContext.svelte';
   import TooltipContext from './tooltip/TooltipContext.svelte';
   import TransformContext from './TransformContext.svelte';
+  import BrushContext from './BrushContext.svelte';
 
   import { accessor, type Accessor } from '$lib/utils/common.js';
   import { isScaleBand, type AnyScale, type DomainType } from '$lib/utils/scales.js';
@@ -195,8 +196,14 @@
     /** Props passed to GeoContext */
     geo?: typeof geo;
 
+    /** Exposed via bind: to support `bind:geoProjection` for external access */
+    geoProjection?: typeof geoProjection;
+
     /** Props passed to TooltipContext */
     tooltip?: typeof tooltip;
+
+    /** Exposed via bind: to support `bind:tooltipContext` for external access (ex. `tooltipContext.data) */
+    tooltipContext?: typeof tooltipContext;
 
     /** Props passed to TransformContext */
     transform?: typeof transform;
@@ -204,11 +211,11 @@
     /** Expose to support `bind:transformContext` for imperative control (`transformContext.translate(...)`) */
     transformContext?: typeof transformContext;
 
-    /** Exposed via bind: to support `bind:geoProjection` for external access */
-    geoProjection?: typeof geoProjection;
+    /** Props passed to BrushContext */
+    brush?: typeof brush;
 
-    /** Exposed via bind: to support `bind:tooltipContext` for external access (ex. `tooltipContext.data) */
-    tooltipContext?: typeof tooltipContext;
+    /** Exposed via bind: to support `bind:brushContext` for external access (ex. `brushContext.xDomain) */
+    brushContext?: typeof brushContext;
 
     // ChartContext callback events
     onresize?: typeof onresize;
@@ -278,19 +285,25 @@
   /** Props passed to GeoContext */
   export let geo: Partial<ComponentProps<GeoContext>> | undefined = undefined;
 
+  /** Expose bound geo projection context */
+  export let geoProjection: ComponentProps<GeoContext>['geo'] = undefined;
+
   /** Props passed to TooltipContext */
   export let tooltip: Partial<ComponentProps<TooltipContext>> | boolean | undefined = undefined;
+
+  /** Expose bound tooltip context */
+  export let tooltipContext: ComponentProps<TooltipContext>['tooltip'] = undefined;
 
   /** Props passed to TransformContext */
   export let transform: Partial<ComponentProps<TransformContext>> | undefined = undefined;
   // @ts-expect-error will only be undefined until bind:transformContext runs
   export let transformContext: TransformContext = undefined;
 
-  /** Expose bound geo projection context */
-  export let geoProjection: ComponentProps<GeoContext>['geo'] = undefined;
+  /** Props passed to BrushContext */
+  export let brush: Partial<ComponentProps<BrushContext>> | boolean | undefined = undefined;
 
-  /** Expose bound tooltip context */
-  export let tooltipContext: ComponentProps<TooltipContext>['tooltip'] = undefined;
+  /** Expose bound brush context */
+  export let brushContext: ComponentProps<BrushContext>['brush'] = undefined;
 
   export let onresize: ComponentProps<ChartContext<TData>>['onresize'] = undefined;
   export let ondragstart: ComponentProps<TransformContext>['ondragstart'] = undefined;
@@ -419,45 +432,49 @@
         {ondragend}
       >
         <GeoContext {...geo} bind:geo={geoProjection} let:projection>
-          {@const tooltipProps = typeof tooltip === 'object' ? tooltip : {}}
-          <TooltipContext {...tooltipProps} bind:tooltip={tooltipContext} let:tooltip>
-            <slot
-              {aspectRatio}
-              {containerHeight}
-              {containerWidth}
-              {height}
-              {width}
-              {element}
-              {projection}
-              transform={_transform}
-              {tooltip}
-              {x}
-              {xScale}
-              {xGet}
-              {y}
-              {yScale}
-              {yGet}
-              {z}
-              {zScale}
-              {zGet}
-              {r}
-              {rScale}
-              {rGet}
-              {x1}
-              {x1Scale}
-              {x1Get}
-              {y1}
-              {y1Scale}
-              {y1Get}
-              {c}
-              {cScale}
-              {cGet}
-              {padding}
-              {data}
-              {flatData}
-              {config}
-            />
-          </TooltipContext>
+          {@const brushProps = typeof brush === 'object' ? brush : { disabled: !brush }}
+          <BrushContext {...brushProps} bind:brush={brushContext} let:brush>
+            {@const tooltipProps = typeof tooltip === 'object' ? tooltip : {}}
+            <TooltipContext {...tooltipProps} bind:tooltip={tooltipContext} let:tooltip>
+              <slot
+                {aspectRatio}
+                {containerHeight}
+                {containerWidth}
+                {height}
+                {width}
+                {element}
+                {projection}
+                transform={_transform}
+                {tooltip}
+                {brush}
+                {x}
+                {xScale}
+                {xGet}
+                {y}
+                {yScale}
+                {yGet}
+                {z}
+                {zScale}
+                {zGet}
+                {r}
+                {rScale}
+                {rGet}
+                {x1}
+                {x1Scale}
+                {x1Get}
+                {y1}
+                {y1Scale}
+                {y1Get}
+                {c}
+                {cScale}
+                {cGet}
+                {padding}
+                {data}
+                {flatData}
+                {config}
+              />
+            </TooltipContext>
+          </BrushContext>
         </GeoContext>
       </TransformContext>
     {/key}

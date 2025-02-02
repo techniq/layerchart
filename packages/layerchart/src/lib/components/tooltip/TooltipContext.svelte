@@ -115,8 +115,8 @@
 
   /** Exposed to allow binding in Chart */
   export let tooltip = writable({
-    y: 0,
     x: 0,
+    y: 0,
     data: null as any,
     show: showTooltip,
     hide: hideTooltip,
@@ -393,12 +393,12 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-  style:width="{$width}px"
-  style:height="{$height}px"
   style:top="{$padding.top}px"
   style:left="{$padding.left}px"
+  style:width="{$width}px"
+  style:height="{$height}px"
   class={cls(
-    'tooltip-trigger absolute touch-none',
+    'TooltipContext absolute touch-none',
     debug && triggerPointerEvents && 'bg-danger/10 outline outline-danger'
   )}
   on:pointerenter={triggerPointerEvents ? showTooltip : undefined}
@@ -410,13 +410,13 @@
     }
   }}
 >
-  <!-- Rendering slot within tooltip-trigger allows pointer events to bubble up (ex. Brush) -->
+  <!-- Rendering slot within TooltipContext to allow pointer events to bubble up (ex. Brush) -->
   <div
     class="absolute"
-    style:width="{$containerWidth}px"
-    style:height="{$containerHeight}px"
     style:top="-{$padding.top ?? 0}px"
     style:left="-{$padding.left ?? 0}px"
+    style:width="{$containerWidth}px"
+    style:height="{$containerHeight}px"
   >
     <slot tooltip={$tooltip} />
 

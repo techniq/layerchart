@@ -1,7 +1,7 @@
 import { parse } from '@layerstack/utils';
 
-import api from '$lib/components/Brush.svelte?raw&sveld';
-import source from '$lib/components/Brush.svelte?raw';
+import api from '$lib/components/BrushContext.svelte?raw&sveld';
+import source from '$lib/components/BrushContext.svelte?raw';
 import pageSource from './+page.svelte?raw';
 import type { AppleStockData } from '$static/data/examples/date/apple-stock.js';
 

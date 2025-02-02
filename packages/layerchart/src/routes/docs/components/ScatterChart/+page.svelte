@@ -344,14 +344,11 @@
         yAxis: { tweened: { duration: 200 } },
       }}
       brush
-      tooltip={false}
       {renderContext}
       {debug}
     />
   </div>
 </Preview>
-
-<Blockquote>Currently `voronoi` tooltip mode is not supported when using Brush</Blockquote>
 
 <h2>Custom chart</h2>
 

@@ -83,7 +83,7 @@
       'Threshold',
     ],
     Interactions: [
-      'Brush',
+      'BrushContext',
       'Highlight',
       'Tooltip',
       'TooltipContext',
