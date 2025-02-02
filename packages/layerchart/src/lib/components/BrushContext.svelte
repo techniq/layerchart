@@ -246,19 +246,19 @@
     yDomain = [add(start.yDomain[0], dy), add(start.yDomain[1], dy)];
   });
 
+  const adjustTop = handler((start, value) => {
+    logger.debug('adjustTop');
+    yDomain = [
+      clamp(value.y < start.yDomain[0] ? value.y : start.yDomain[0], yDomainMin, yDomainMax),
+      clamp(value.y < start.yDomain[0] ? start.yDomain[0] : value.y, yDomainMin, yDomainMax),
+    ];
+  });
+
   const adjustBottom = handler((start, value) => {
     logger.debug('adjustBottom');
     yDomain = [
       clamp(value.y > start.yDomain[1] ? start.yDomain[1] : value.y, yDomainMin, yDomainMax),
       clamp(value.y > start.yDomain[1] ? value.y : start.yDomain[1], yDomainMin, yDomainMax),
-    ];
-  });
-
-  const adjustTop = handler((start, value) => {
-    logger.debug('adjustTop');
-    yDomain = [
-      clamp(value.y < start.yDomain[1] ? value.y : start.yDomain[0], yDomainMin, yDomainMax),
-      clamp(value.y < start.yDomain[1] ? start.yDomain[0] : value.y, yDomainMin, yDomainMax),
     ];
   });
 
