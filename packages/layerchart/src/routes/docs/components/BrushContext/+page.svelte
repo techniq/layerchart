@@ -24,12 +24,13 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { randomWalk } from '$lib/utils/genData.js';
-  import { asAny } from 'layerchart/utils/types.js';
+  import { asAny } from '$lib/utils/types.js';
+  import type { DomainType } from '$lib/utils/scales.js';
 
   export let data;
 
   const now = new Date();
-  let xDomain = [subDays(now, 60), subDays(now, 30)] as [Date, Date];
+  let xDomain = [subDays(now, 60), subDays(now, 30)] as DomainType | undefined;
 
   const seriesData = [
     randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
