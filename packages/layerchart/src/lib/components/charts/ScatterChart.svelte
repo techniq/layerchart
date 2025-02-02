@@ -6,7 +6,7 @@
   import { selectionStore } from '@layerstack/svelte-stores';
 
   import Axis from '../Axis.svelte';
-  import Brush from '../Brush.svelte';
+  import BrushContext from '../BrushContext.svelte';
   import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import ChartClipPath from '../ChartClipPath.svelte';
@@ -44,9 +44,9 @@
   export let y: Accessor<TData> = undefined;
 
   /** Set xDomain.  Useful for external brush control */
-  export let xDomain: ComponentProps<typeof Brush>['xDomain'] = undefined;
+  export let xDomain: ComponentProps<typeof BrushContext>['xDomain'] = undefined;
   /** Set yDomain.  Useful for external brush control */
-  export let yDomain: ComponentProps<typeof Brush>['yDomain'] = undefined;
+  export let yDomain: ComponentProps<typeof BrushContext>['yDomain'] = undefined;
 
   export let series: {
     key: string;
@@ -58,7 +58,7 @@
   $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
-  export let brush: ComponentProps<Brush> | boolean = false;
+  export let brush: ComponentProps<BrushContext> | boolean = false;
   export let grid: ComponentProps<Grid> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let legend: ComponentProps<Legend> | boolean = false;
@@ -68,7 +68,7 @@
   export let ontooltipclick: (e: MouseEvent, detail: { data: any }) => void = () => {};
 
   export let props: {
-    brush?: Partial<ComponentProps<Brush>>;
+    brush?: Partial<ComponentProps<BrushContext>>;
     debug?: typeof debug;
     grid?: Partial<ComponentProps<Grid>>;
     highlight?: Partial<ComponentProps<Highlight>>;
@@ -157,6 +157,8 @@
     );
   });
 
+  $: brushProps = { ...(typeof brush === 'object' ? brush : null), ...props.brush };
+
   if (profile) {
     console.time('ScatterChart render');
     onMount(() => {
@@ -185,6 +187,20 @@
         ...props.tooltip?.context,
         ...$$props.tooltip,
       }}
+  brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
+    ? {
+        axis: 'both',
+        resetOnEnd: true,
+        xDomain,
+        yDomain,
+        ...brushProps,
+        onbrushend: (e) => {
+          xDomain = e.xDomain;
+          yDomain = e.yDomain;
+          brushProps.onbrushend?.(e);
+        },
+      }
+    : false}
   let:x
   let:xScale
   let:y
@@ -274,25 +290,6 @@
         {/each}
       {/if}
     </svelte:component>
-
-    <!-- TODO: Determine how to coordinate with `tooltip={{ mode: 'voronoi' }} -->
-    {#if brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')}
-      <Svg>
-        {@const brushProps = { ...(typeof brush === 'object' ? brush : null), ...props.brush }}
-        <Brush
-          axis="both"
-          resetOnEnd
-          {xDomain}
-          {yDomain}
-          {...brushProps}
-          onbrushend={(e) => {
-            xDomain = e.xDomain;
-            yDomain = e.yDomain;
-            brushProps.onbrushend?.(e);
-          }}
-        />
-      </Svg>
-    {/if}
 
     <slot name="legend" {...slotProps}>
       {#if legend}

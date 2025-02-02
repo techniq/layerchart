@@ -10,7 +10,6 @@
   import {
     Area,
     Axis,
-    Brush,
     Chart,
     ChartClipPath,
     Circle,
@@ -26,6 +25,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { randomWalk } from '$lib/utils/genData.js';
+  import { asAny } from 'layerchart/utils/types.js';
 
   export let data;
 
@@ -46,44 +46,61 @@
 
 <h1>Examples</h1>
 
-<h2>Styling via classes</h2>
+<h2>Basic</h2>
 
 <Preview data={data.appleStock}>
   <div class="h-[40px]">
-    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value">
+    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" brush>
       <Svg>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-        <Brush classes={{ range: 'fill-secondary/10', handle: 'fill-secondary/50' }} />
       </Svg>
     </Chart>
   </div>
 </Preview>
 
-<h2>Styling via props</h2>
+<h2>Styling via classes</h2>
 
 <Preview data={data.appleStock}>
   <div class="h-[40px]">
-    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value">
+    <Chart
+      data={data.appleStock}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      brush={{ classes: { range: 'bg-secondary/10', handle: 'bg-secondary/50 ' } }}
+    >
+      <Svg>
+        <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Styling via props (TODO)</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[40px]">
+    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" brush>
       <Svg>
         <Pattern id="range-pattern" width={8} height={8}>
           <rect width={8} height={8} class="fill-secondary/10" />
           <line x1={8} y2={8} class="stroke-secondary/30" />
         </Pattern>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-        <Brush range={{ fill: 'url(#range-pattern)', class: 'stroke-secondary/50' }} />
+        <!-- <Brush range={{ fill: 'url(#range-pattern)', class: 'stroke-secondary/50' }} /> -->
       </Svg>
     </Chart>
   </div>
 </Preview>
 
-<h2>Styling via slots</h2>
+<h2>Styling via slots (TODO)</h2>
 
 <Preview data={data.appleStock}>
   <div class="h-[40px]">
-    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value">
+    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" brush>
       <Svg>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-        <Brush>
+        <!-- <Brush>
           <svelte:fragment slot="handle" let:edge let:rangeHeight let:rangeWidth>
             <rect
               width={8}
@@ -98,7 +115,7 @@
             </svg>
             <path />
           </svelte:fragment>
-        </Brush>
+        </Brush> -->
       </Svg>
     </Chart>
   </div>
@@ -108,10 +125,26 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[40px]">
-    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value">
+    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" brush let:brush>
       <Svg>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-        <Brush classes={{ range: 'fill-secondary/10', handle: 'fill-secondary/50' }} labels />
+        {#if brush.isActive}
+          <Text
+            x={brush.range.x - 4}
+            y={brush.range.height / 2}
+            value={format(asAny(brush.xDomain?.[0]))}
+            textAnchor="end"
+            verticalAnchor="middle"
+            class="text-xs"
+          />
+          <Text
+            x={brush.range.x + brush.range.width + 4}
+            y={brush.range.height / 2}
+            value={format(asAny(brush.xDomain?.[1]))}
+            verticalAnchor="middle"
+            class="text-xs"
+          />
+        {/if}
       </Svg>
     </Chart>
   </div>
@@ -128,35 +161,27 @@
         xScale={scaleTime()}
         y="value"
         padding={{ left: 80, right: 80 }}
+        brush
+        let:brush
         let:width
         let:height
       >
         <Svg>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-          <Brush
-            classes={{ range: 'fill-secondary/10', handle: 'fill-secondary/50' }}
-            onchange={(e) => {
-              // @ts-expect-error
-              set(e.xDomain);
-            }}
-          />
 
-          {#if xDomain?.[0]}
+          {#if brush.isActive}
             <Text
               x={-4}
               y={height / 2}
-              value={format(xDomain[0])}
+              value={format(asAny(brush.xDomain?.[0]))}
               textAnchor="end"
               verticalAnchor="middle"
               class="text-xs"
             />
-          {/if}
-
-          {#if xDomain?.[1]}
             <Text
               x={width + 4}
               y={height / 2}
-              value={format(xDomain[1])}
+              value={format(asAny(brush.xDomain?.[1]))}
               verticalAnchor="middle"
               class="text-xs"
             />
@@ -181,6 +206,13 @@
           y="value"
           yDomain={[0, null]}
           padding={{ left: 16, bottom: 24 }}
+          brush={{
+            resetOnEnd: true,
+            onbrushend: (e) => {
+              // @ts-expect-error
+              set(e.xDomain);
+            },
+          }}
         >
           <Svg>
             <Axis placement="left" grid rule />
@@ -190,15 +222,6 @@
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
-
-            <Brush
-              axis="x"
-              resetOnEnd
-              onbrushend={(e) => {
-                // @ts-expect-error
-                set(e.xDomain);
-              }}
-            />
           </Svg>
         </Chart>
       </div>
@@ -219,6 +242,14 @@
           y="value"
           {yDomain}
           padding={{ left: 16, bottom: 24 }}
+          brush={{
+            axis: 'y',
+            resetOnEnd: true,
+            onbrushend: (e) => {
+              // @ts-expect-error
+              set(e.yDomain);
+            },
+          }}
         >
           <Svg>
             <Axis placement="left" grid rule />
@@ -228,15 +259,6 @@
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
-
-            <Brush
-              axis="y"
-              resetOnEnd
-              onbrushend={(e) => {
-                // @ts-expect-error
-                set(e.yDomain);
-              }}
-            />
           </Svg>
         </Chart>
       </div>
@@ -258,6 +280,18 @@
           y="value"
           yDomain={value?.yDomain}
           padding={{ left: 16, bottom: 24 }}
+          brush={{
+            axis: 'both',
+            resetOnEnd: true,
+            onbrushend: (e) => {
+              set({
+                // @ts-expect-error
+                xDomain: e.xDomain,
+                // @ts-expect-error
+                yDomain: e.yDomain,
+              });
+            },
+          }}
         >
           <Svg>
             <Axis placement="left" grid rule />
@@ -267,19 +301,6 @@
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
-
-            <Brush
-              axis="both"
-              resetOnEnd
-              onbrushend={(e) => {
-                set({
-                  // @ts-expect-error
-                  xDomain: e.xDomain,
-                  // @ts-expect-error
-                  yDomain: e.yDomain,
-                });
-              }}
-            />
           </Svg>
         </Chart>
       </div>
@@ -321,15 +342,15 @@
           xScale={scaleTime()}
           y="value"
           padding={{ left: 16 }}
+          brush={{
+            onchange: (e) => {
+              // @ts-expect-error
+              set(e.xDomain);
+            },
+          }}
         >
           <Svg>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-            <Brush
-              onchange={(e) => {
-                // @ts-expect-error
-                set(e.xDomain);
-              }}
-            />
           </Svg>
         </Chart>
       </div>
@@ -349,16 +370,16 @@
           xScale={scaleTime()}
           y="value"
           padding={{ bottom: 24 }}
+          brush={{
+            axis: 'y',
+            onchange: (e) => {
+              // @ts-expect-error
+              set(e.yDomain);
+            },
+          }}
         >
           <Svg>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-            <Brush
-              axis="y"
-              onchange={(e) => {
-                // @ts-expect-error
-                set(e.yDomain);
-              }}
-            />
           </Svg>
         </Chart>
       </div>
@@ -428,15 +449,15 @@
           xScale={scaleTime()}
           y="value"
           padding={{ left: 16 }}
+          brush={{
+            onchange: (e) => {
+              // @ts-expect-error
+              set(e.xDomain);
+            },
+          }}
         >
           <Svg>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-            <Brush
-              onchange={(e) => {
-                // @ts-expect-error
-                set(e.xDomain);
-              }}
-            />
           </Svg>
         </Chart>
       </div>
@@ -444,7 +465,7 @@
   </div>
 </Preview>
 
-<h2>Sync brushes with `bind:xDomain`</h2>
+<h2>Sync brushes with `bind:xDomain` (TODO)</h2>
 
 <Preview data={data.appleStock}>
   {@const colorScale = scaleOrdinal([
@@ -491,13 +512,25 @@
         </div>
 
         <div class="h-[20px]">
-          <Chart {data} x="date" xScale={scaleTime()} y="value" padding={{ left: 16 }}>
+          <Chart
+            {data}
+            x="date"
+            xScale={scaleTime()}
+            y="value"
+            padding={{ left: 16 }}
+            brush={{
+              mode: 'separated',
+              xDomain,
+              onchange: (e) => (xDomain = e.xDomain),
+              onreset: (e) => (xDomain = null),
+            }}
+          >
             <Svg>
               <Area
                 line={{ class: 'stroke-2 stroke-[hsl(var(--chart-color))]' }}
                 class="fill-[hsl(var(--chart-color)/20%)]"
               />
-              <Brush bind:xDomain mode="separated" />
+              <!-- <Brush bind:xDomain mode="separated" /> -->
             </Svg>
           </Chart>
         </div>
@@ -521,6 +554,13 @@
           yDomain={[0, null]}
           padding={{ left: 16, bottom: 24 }}
           tooltip={{ mode: 'bisect-x' }}
+          brush={{
+            resetOnEnd: true,
+            onbrushend: (e) => {
+              // @ts-expect-error
+              set(e.xDomain);
+            },
+          }}
           let:height
           let:padding
         >
@@ -533,15 +573,6 @@
               </LinearGradient>
             </ChartClipPath>
             <Highlight points lines />
-
-            <Brush
-              axis="x"
-              resetOnEnd
-              onbrushend={(e) => {
-                // @ts-expect-error
-                set(e.xDomain);
-              }}
-            />
           </Svg>
 
           <Tooltip.Root
@@ -584,6 +615,17 @@
         yDomain={[0, null]}
         yNice
         padding={{ left: 16, bottom: 24 }}
+        brush={{
+          axis: 'both',
+          onchange: (e) => {
+            set({
+              // @ts-expect-error
+              xDomain: e.xDomain,
+              // @ts-expect-error
+              yDomain: e.yDomain,
+            });
+          },
+        }}
       >
         <Svg>
           <Axis placement="left" grid rule />
@@ -609,18 +651,6 @@
               />
             {/each}
           </Points>
-
-          <Brush
-            axis="both"
-            onchange={(e) => {
-              set({
-                // @ts-expect-error
-                xDomain: e.xDomain,
-                // @ts-expect-error
-                yDomain: e.yDomain,
-              });
-            }}
-          />
         </Svg>
       </Chart>
     </div>

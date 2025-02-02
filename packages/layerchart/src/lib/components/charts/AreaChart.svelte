@@ -9,7 +9,7 @@
 
   import Area from '../Area.svelte';
   import Axis from '../Axis.svelte';
-  import Brush from '../Brush.svelte';
+  import BrushContext from '../BrushContext.svelte';
   import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import ChartClipPath from '../ChartClipPath.svelte';
@@ -55,7 +55,7 @@
   export let y: Accessor<TData> = undefined;
 
   /** Set xDomain.  Useful for external brush control */
-  export let xDomain: ComponentProps<typeof Brush>['xDomain'] = undefined;
+  export let xDomain: ComponentProps<typeof BrushContext>['xDomain'] = undefined;
 
   /** Use radial instead of cartesian coordinates, mapping `x` to `angle` and `y`` to radial.  Radial lines are positioned relative to the origin, use transform (ex. `<Group center>`) to change the origin */
   export let radial = false;
@@ -76,7 +76,7 @@
   $: stackSeries = seriesLayout.startsWith('stack');
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
-  export let brush: ComponentProps<Brush> | boolean = false;
+  export let brush: ComponentProps<BrushContext> | boolean = false;
   export let grid: ComponentProps<Grid> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
   export let legend: ComponentProps<Legend> | boolean = false;
@@ -97,7 +97,7 @@
 
   export let props: {
     area?: Partial<ComponentProps<Area>>;
-    brush?: Partial<ComponentProps<Brush>>;
+    brush?: Partial<ComponentProps<BrushContext>>;
     grid?: Partial<ComponentProps<Grid>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
@@ -255,6 +255,8 @@
     );
   });
 
+  $: brushProps = { ...(typeof brush === 'object' ? brush : null), ...props.brush };
+
   if (profile) {
     console.time('AreaChart render');
     onMount(() => {
@@ -286,6 +288,18 @@
         ...props.tooltip?.context,
         ...$$props.tooltip,
       }}
+  brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
+    ? {
+        axis: 'x',
+        resetOnEnd: true,
+        xDomain,
+        ...brushProps,
+        onbrushend: (e) => {
+          xDomain = e.xDomain;
+          brushProps.onbrushend?.(e);
+        },
+      }
+    : false}
   let:x
   let:xScale
   let:y
@@ -403,22 +417,6 @@
         {/each}
       {/if}
     </svelte:component>
-
-    {#if brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')}
-      <Svg>
-        {@const brushProps = { ...(typeof brush === 'object' ? brush : null), ...props.brush }}
-        <Brush
-          axis="x"
-          resetOnEnd
-          {xDomain}
-          {...brushProps}
-          onbrushend={(e) => {
-            xDomain = e.xDomain;
-            brushProps.onbrushend?.(e);
-          }}
-        />
-      </Svg>
-    {/if}
 
     <slot name="legend" {...slotProps}>
       {#if legend}

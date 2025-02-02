@@ -9,7 +9,6 @@ export { default as Axis } from './Axis.svelte';
 export { default as Bar } from './Bar.svelte';
 export { default as Bars } from './Bars.svelte';
 export { default as Blur } from './Blur.svelte';
-export { default as Brush } from './Brush.svelte';
 export { default as Bounds } from './Bounds.svelte';
 export { default as Calendar } from './Calendar.svelte';
 export { default as Canvas } from './layout/Canvas.svelte';
