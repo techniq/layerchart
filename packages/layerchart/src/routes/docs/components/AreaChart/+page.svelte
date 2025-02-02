@@ -16,9 +16,10 @@
   import { group } from 'd3-array';
   import { Button, Field, ToggleGroup, ToggleOption, Kbd, Switch } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
+  import { addDays } from 'date-fns';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { createDateSeries } from '$lib/utils/genData.js';
+  import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
   import type { DomainType } from '$lib/utils/scales.js';
 
   export let data;
@@ -31,7 +32,15 @@
     };
   });
 
-  const dateSeriesData2 = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
+  const now = new Date();
+  const denseDateSeriesData = randomWalk({ count: 1000 }).map((value, i) => ({
+    date: addDays(now, i),
+    value: 10 + value,
+  }));
+  const denseDateSeriesData2 = randomWalk({ count: 1000 }).map((value, i) => ({
+    date: addDays(now, i),
+    value: 10 + value,
+  }));
 
   const negativeDateSeriesData = createDateSeries({
     count: 30,
@@ -822,15 +831,19 @@
 
 <h2>Brush syncing</h2>
 
-<Preview data={dateSeriesData}>
+<Preview data={{ denseDateSeriesData, denseDateSeriesData2 }}>
   <div class="grid grid-cols-md gap-3">
     <div class="h-[300px] p-4 border rounded">
       <AreaChart
-        data={dateSeriesData}
+        data={denseDateSeriesData}
         x="date"
         y="value"
         {xDomain}
         brush={{ onbrushend: (e) => (xDomain = e.xDomain) }}
+        props={{
+          area: { tweened: { duration: 200 } },
+          xAxis: { format: undefined, tweened: { duration: 200 } },
+        }}
         {renderContext}
         {debug}
       />
@@ -838,11 +851,15 @@
 
     <div class="h-[300px] p-4 border rounded">
       <AreaChart
-        data={dateSeriesData2}
+        data={denseDateSeriesData2}
         x="date"
         y="value"
         {xDomain}
         brush={{ onbrushend: (e) => (xDomain = e.xDomain) }}
+        props={{
+          area: { tweened: { duration: 200 } },
+          xAxis: { format: undefined, tweened: { duration: 200 } },
+        }}
         {renderContext}
         {debug}
       />
