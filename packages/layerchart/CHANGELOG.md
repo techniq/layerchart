@@ -12,9 +12,9 @@
 
 - fix: Support highlight pointer events (click/hover) when using brush ([#361](https://github.com/techniq/layerchart/pull/361))
 
-- fix(AreaChart|LineChart): Fix re-animating (tweened) lines/areas on single series point hover ([#361](https://github.com/techniq/layerchart/pull/361))
-
 - fix: Support brushing when using `voronoi` tooltip mode ([#361](https://github.com/techniq/layerchart/pull/361))
+
+- fix(AreaChart|LineChart): Fix re-animating (tweened) lines/areas on single series point hover ([#361](https://github.com/techniq/layerchart/pull/361))
 
 ## 0.92.1
 
