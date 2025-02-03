@@ -66,21 +66,18 @@
   /** Set to false to disable spring transitions */
   export let motion = true;
 
-  export let onareaclick: (e: MouseEvent, data: { data: any }) => void = () => {};
-  export let onbarclick: (e: MouseEvent, data: { data: any }) => void = () => {};
+  export let onareaclick: ((e: MouseEvent, detail: { data: any }) => void) | undefined = undefined;
+  export let onbarclick: ((e: MouseEvent, detail: { data: any }) => void) | undefined = undefined;
 
-  export let onpointclick: (
-    e: MouseEvent,
-    data: { point: (typeof _points)[number]; data: any }
-  ) => void = () => {};
-  export let onpointenter: (
-    e: MouseEvent,
-    datae: { point: (typeof _points)[number]; data: any }
-  ) => void = () => {};
-  export let onpointleave: (
-    e: MouseEvent,
-    datae: { point: (typeof _points)[number]; data: any }
-  ) => void = () => {};
+  export let onpointclick:
+    | ((e: MouseEvent, detail: { point: (typeof _points)[number]; data: any }) => void)
+    | undefined = undefined;
+  export let onpointenter:
+    | ((e: MouseEvent, detail: { point: (typeof _points)[number]; data: any }) => void)
+    | undefined = undefined;
+  export let onpointleave:
+    | ((e: MouseEvent, detail: { point: (typeof _points)[number]; data: any }) => void)
+    | undefined = undefined;
 
   const _x = accessor(x);
   const _y = accessor(y);
@@ -362,7 +359,7 @@
           !area.fill && 'fill-surface-content/5',
           typeof area === 'object' ? area.class : null
         )}
-        onclick={(e) => onareaclick(e, { data: highlightData })}
+        onclick={onareaclick && ((e) => onareaclick(e, { data: highlightData }))}
       />
     </slot>
   {/if}
@@ -383,7 +380,7 @@
           !bar.fill && 'fill-primary',
           typeof bar === 'object' ? bar.class : null
         )}
-        onclick={(e) => onbarclick(e, { data: highlightData })}
+        onclick={onbarclick && ((e) => onbarclick(e, { data: highlightData }))}
       />
     </slot>
   {/if}
@@ -423,9 +420,14 @@
             !point.fill && (typeof points === 'boolean' || !points.fill) && 'fill-primary',
             typeof points === 'object' ? points.class : null
           )}
-          onclick={(e) => onpointclick(e, { point, data: highlightData })}
-          onpointerenter={(e) => onpointenter(e, { point, data: highlightData })}
-          onpointerleave={(e) => onpointleave(e, { point, data: highlightData })}
+          onpointerdown={onpointclick &&
+            ((e) => {
+              // Do not propagate `pointerdown` event to `BrushContext` if `onclick` is provided
+              e.stopPropagation();
+            })}
+          onclick={onpointclick && ((e) => onpointclick(e, { point, data: highlightData }))}
+          onpointerenter={onpointenter && ((e) => onpointenter(e, { point, data: highlightData }))}
+          onpointerleave={onpointleave && ((e) => onpointleave(e, { point, data: highlightData }))}
         />
       {/each}
     </slot>
