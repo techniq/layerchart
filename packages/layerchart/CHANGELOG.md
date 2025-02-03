@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.93.2
+
+### Patch Changes
+
+- fix(Canvas): Properly setup `pointerdown` event (allowing `e.stopPropagation()`) ([`579d771`](https://github.com/techniq/layerchart/commit/579d7710f46cbdc420130b0f04357d23a0286594))
+
 ## 0.93.1
 
 ### Patch Changes
