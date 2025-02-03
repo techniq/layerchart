@@ -31,6 +31,7 @@
   export { className as class };
 
   export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerdown: ((e: PointerEvent) => void) | undefined = undefined;
   export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
   export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
   export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
@@ -89,6 +90,7 @@
       render,
       events: {
         click: onclick,
+        pointerdown: onpointerdown,
         pointerenter: onpointerenter,
         pointermove: onpointermove,
         pointerleave: onpointerleave,
@@ -116,6 +118,7 @@
     class={cls(fill == null && 'fill-surface-content', className)}
     {...$$restProps}
     on:click={onclick}
+    on:pointerdown={onpointerdown}
     on:pointerenter={onpointerenter}
     on:pointermove={onpointermove}
     on:pointerleave={onpointerleave}
