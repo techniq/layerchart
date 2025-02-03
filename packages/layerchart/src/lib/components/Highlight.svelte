@@ -368,13 +368,8 @@
     <slot name="bar" {bar}>
       <Bar
         spring={motion}
-        x={typeof bar === 'object' ? bar.x : undefined}
-        y={typeof bar === 'object' ? bar.y : undefined}
-        insets={typeof bar === 'object' ? bar.insets : undefined}
-        stroke={typeof bar === 'object' ? bar.stroke : undefined}
-        strokeWidth={typeof bar === 'object' ? bar.strokeWidth : undefined}
-        radius={typeof bar === 'object' ? bar.radius : undefined}
         bar={highlightData}
+        {...typeof bar === 'object' ? bar : null}
         class={cls(
           // @ts-expect-error
           !bar.fill && 'fill-primary',
