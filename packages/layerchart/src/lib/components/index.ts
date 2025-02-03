@@ -10,6 +10,7 @@ export { default as Bar } from './Bar.svelte';
 export { default as Bars } from './Bars.svelte';
 export { default as Blur } from './Blur.svelte';
 export { default as Bounds } from './Bounds.svelte';
+export { default as BrushContext } from './BrushContext.svelte';
 export { default as Calendar } from './Calendar.svelte';
 export { default as Canvas } from './layout/Canvas.svelte';
 export { default as Chart } from './Chart.svelte';
