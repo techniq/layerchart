@@ -127,10 +127,6 @@
       component?.events?.pointermove?.(e);
     }
 
-    if (e.buttons === 1) {
-      component?.events?.pointerdown?.(e);
-    }
-
     lastActiveComponent = component;
   }
 
@@ -281,6 +277,10 @@
   on:dblclick={(e) => {
     const component = getPointerComponent(e);
     component?.events?.dblclick?.(e);
+  }}
+  on:pointerdown={(e) => {
+    const component = getPointerComponent(e);
+    component?.events?.pointerdown?.(e);
   }}
   on:pointerenter={onPointerMove}
   on:pointerenter
