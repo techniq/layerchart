@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.93.3
+
+### Patch Changes
+
+- fix(Highlight): Pass all `bar` props to underlying `Bar` (aligning with `lines` and `points`) ([`2a153ea`](https://github.com/techniq/layerchart/commit/2a153eaf7905d54bf2eedd6c688697d9c2e7c62a))
+
 ## 0.93.2
 
 ### Patch Changes
