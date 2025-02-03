@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- feat: Integarte Brush via BrushContext (`<Chart brush={...}>`) ([#361](https://github.com/techniq/layerchart/pull/361))
+- feat: Integrate Brush via BrushContext (`<Chart brush={...}>`) ([#361](https://github.com/techniq/layerchart/pull/361))
 
 - breaking: Remove `Brush` component ([#361](https://github.com/techniq/layerchart/pull/361))
 
