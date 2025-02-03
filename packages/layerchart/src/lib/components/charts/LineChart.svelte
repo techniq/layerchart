@@ -79,13 +79,15 @@
   export let ontooltipclick: (e: MouseEvent, details: { data: any }) => void = () => {};
 
   /** Event dispatched when Highlight point is clicked (useful with multiple series) */
-  export let onpointclick: (
-    e: MouseEvent,
-    details: {
-      data: HighlightPointData;
-      series: (typeof series)[number];
-    }
-  ) => void = () => {};
+  export let onpointclick:
+    | ((
+        e: MouseEvent,
+        details: {
+          data: HighlightPointData;
+          series: (typeof series)[number];
+        }
+      ) => void)
+    | undefined = undefined;
 
   export let props: {
     brush?: Partial<ComponentProps<BrushContext>>;
@@ -339,7 +341,9 @@
               ),
             }}
             lines={i === 0}
-            onpointclick={(e, detail) => onpointclick(e, { ...detail, series: s })}
+            onpointclick={onpointclick
+              ? (e, detail) => onpointclick(e, { ...detail, series: s })
+              : undefined}
             onpointenter={() => (highlightSeriesKey = s.key)}
             onpointleave={() => (highlightSeriesKey = null)}
             {...props.highlight}
