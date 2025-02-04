@@ -242,17 +242,17 @@
         {/if}
       </slot>
 
-      <slot name="belowMarks" {...slotProps} />
+      <ChartClipPath disabled={!brush}>
+        <slot name="belowMarks" {...slotProps} />
 
-      <slot name="marks" {...slotProps}>
-        <ChartClipPath disabled={!brush}>
+        <slot name="marks" {...slotProps}>
           {#each visibleSeries as s, i (s.key)}
             <Points {...getPointsProps(s, i)} />
           {/each}
-        </ChartClipPath>
-      </slot>
+        </slot>
 
-      <slot name="aboveMarks" {...slotProps} />
+        <slot name="aboveMarks" {...slotProps} />
+      </ChartClipPath>
 
       <slot name="axis" {...slotProps}>
         {#if axis}
@@ -280,15 +280,23 @@
         {/if}
       </slot>
 
-      <slot name="highlight" {...slotProps}>
-        <Highlight points={{ fill: activeSeries?.color }} lines axis="both" {...props.highlight} />
-      </slot>
+      <!-- Use `full` to allow labels on edge to not be cropped (bleed into padding) -->
+      <ChartClipPath disabled={!brush} full>
+        <slot name="highlight" {...slotProps}>
+          <Highlight
+            points={{ fill: activeSeries?.color }}
+            lines
+            axis="both"
+            {...props.highlight}
+          />
+        </slot>
 
-      {#if labels}
-        {#each visibleSeries as s, i (s.key)}
-          <Labels {...getLabelsProps(s, i)} />
-        {/each}
-      {/if}
+        {#if labels}
+          {#each visibleSeries as s, i (s.key)}
+            <Labels {...getLabelsProps(s, i)} />
+          {/each}
+        {/if}
+      </ChartClipPath>
     </svelte:component>
 
     <slot name="legend" {...slotProps}>

@@ -346,15 +346,15 @@
         {/if}
       </slot>
 
-      <slot name="belowMarks" {...slotProps} />
+      <ChartClipPath disabled={!brush}>
+        <slot name="belowMarks" {...slotProps} />
 
-      <slot name="marks" {...slotProps}>
-        <ChartClipPath disabled={!brush}>
+        <slot name="marks" {...slotProps}>
           {#each visibleSeries as s, i (s.key)}
             <Area {...getAreaProps(s, i)} />
           {/each}
-        </ChartClipPath>
-      </slot>
+        </slot>
+      </ChartClipPath>
 
       <slot name="aboveMarks" {...slotProps} />
 
@@ -390,43 +390,46 @@
         {/if}
       </slot>
 
-      {#if points}
-        {#each visibleSeries as s, i (s.key)}
-          <Points {...getPointsProps(s, i)} />
-        {/each}
-      {/if}
+      <!-- Use `full` to allow labels on edge to not be cropped (bleed into padding) -->
+      <ChartClipPath disabled={!brush} full>
+        {#if points}
+          {#each visibleSeries as s, i (s.key)}
+            <Points {...getPointsProps(s, i)} />
+          {/each}
+        {/if}
 
-      <slot name="highlight" {...slotProps}>
-        {#each visibleSeries as s, i (s.key)}
-          {@const seriesTooltipData =
-            s.data && tooltip.data ? findRelatedData(s.data, tooltip.data, x) : null}
+        <slot name="highlight" {...slotProps}>
+          {#each visibleSeries as s, i (s.key)}
+            {@const seriesTooltipData =
+              s.data && tooltip.data ? findRelatedData(s.data, tooltip.data, x) : null}
 
-          <Highlight
-            data={seriesTooltipData}
-            y={stackSeries ? (d) => d.stackData[i][1] : (s.value ?? (s.data ? undefined : s.key))}
-            points={{
-              fill: s.color,
-              class: cls(
-                'transition-opacity',
-                highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10'
-              ),
-            }}
-            lines={i == 0}
-            onpointclick={onpointclick
-              ? (e, detail) => onpointclick(e, { ...detail, series: s })
-              : undefined}
-            onpointenter={() => (highlightSeriesKey = s.key)}
-            onpointleave={() => (highlightSeriesKey = null)}
-            {...props.highlight}
-          />
-        {/each}
-      </slot>
+            <Highlight
+              data={seriesTooltipData}
+              y={stackSeries ? (d) => d.stackData[i][1] : (s.value ?? (s.data ? undefined : s.key))}
+              points={{
+                fill: s.color,
+                class: cls(
+                  'transition-opacity',
+                  highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10'
+                ),
+              }}
+              lines={i == 0}
+              onpointclick={onpointclick
+                ? (e, detail) => onpointclick(e, { ...detail, series: s })
+                : undefined}
+              onpointenter={() => (highlightSeriesKey = s.key)}
+              onpointleave={() => (highlightSeriesKey = null)}
+              {...props.highlight}
+            />
+          {/each}
+        </slot>
 
-      {#if labels}
-        {#each visibleSeries as s, i (s.key)}
-          <Labels {...getLabelsProps(s, i)} />
-        {/each}
-      {/if}
+        {#if labels}
+          {#each visibleSeries as s, i (s.key)}
+            <Labels {...getLabelsProps(s, i)} />
+          {/each}
+        {/if}
+      </ChartClipPath>
     </svelte:component>
 
     <slot name="legend" {...slotProps}>

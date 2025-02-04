@@ -468,7 +468,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={dateSeriesData} x="date" y="value" labels {renderContext} {debug} />
+    <AreaChart data={dateSeriesData} x="date" y="value" labels brush {renderContext} {debug} />
   </div>
 </Preview>
 
