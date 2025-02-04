@@ -57,7 +57,7 @@
     mainEl.scrollTo({ top: 0, behavior: 'instant' });
   });
 
-  const groups = ['examples', 'components', 'utils'];
+  const groups = ['examples', 'components', 'utils', 'tools', 'performance'];
   const quickSearchOptions = Object.entries(
     import.meta.glob('./docs/**/+page.(md|svelte)', { query: '?raw', eager: true })
   )
