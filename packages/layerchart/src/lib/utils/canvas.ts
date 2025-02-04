@@ -211,6 +211,28 @@ export function renderRect(
   );
 }
 
+export function renderCircle(
+  ctx: CanvasRenderingContext2D,
+  coords: { cx: number; cy: number; r: number },
+  styleOptions: ComputedStylesOptions = {}
+) {
+  ctx.beginPath();
+  ctx.arc(coords.cx, coords.cy, coords.r, 0, 2 * Math.PI);
+  render(
+    ctx,
+    {
+      fill: (ctx) => {
+        ctx.fill();
+      },
+      stroke: (ctx) => {
+        ctx.stroke();
+      },
+    },
+    styleOptions
+  );
+  ctx.closePath();
+}
+
 /** Clear canvas accounting for Canvas `context.translate(...)` */
 export function clearCanvasContext(
   ctx: CanvasRenderingContext2D,

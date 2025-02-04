@@ -7,8 +7,7 @@
 
   import { motionStore } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { circlePath } from '../utils/path.js';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   export let cx: number = 0;
   export let initialCx = cx;
@@ -53,10 +52,9 @@
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
   ) {
-    const pathData = circlePath({ cx: $tweened_cx, cy: $tweened_cy, r: $tweened_r });
-    renderPathData(
+    renderCircle(
       ctx,
-      pathData,
+      { cx: $tweened_cx, cy: $tweened_cy, r: $tweened_r },
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
