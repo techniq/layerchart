@@ -38,6 +38,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { cls } from '@layerstack/tailwind';
+  import { Logger } from '@layerstack/utils';
 
   import { chartContext } from '../ChartContext.svelte';
   import { transformContext } from '../TransformContext.svelte';
@@ -85,6 +86,8 @@
   /** Show hit canvas for debugging */
   export let debug = false;
 
+  const logger = new Logger('Canvas');
+
   let components = new Map<Symbol, ComponentRender>();
   let pendingInvalidation = false;
   let frameId: number | undefined;
@@ -106,7 +109,9 @@
     const { x, y } = localPoint(e.target as HTMLCanvasElement, e) ?? { x: 0, y: 0 };
     const color = getPixelColor(hitCanvasContext!, x, y);
     const colorKey = getColorStr(color);
-    return componentByColor.get(colorKey);
+    const component = componentByColor.get(colorKey);
+    logger.debug({ colorKey, component, componentByColor });
+    return component;
   }
 
   function onPointerMove(e: PointerEvent) {
