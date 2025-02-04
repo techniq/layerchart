@@ -117,8 +117,10 @@ function render(
   paintOrder.forEach((attr) => {
     if (attr === 'fill') {
       const fill =
-        (styleOptions.styles?.fill as any) instanceof CanvasGradient
-          ? styleOptions.styles?.fill
+        styleOptions.styles?.fill &&
+        ((styleOptions.styles?.fill as any) instanceof CanvasGradient ||
+          !styleOptions.styles?.fill?.includes('var'))
+          ? styleOptions.styles.fill
           : ['none', DEFAULT_FILL].includes(computedStyles?.fill)
             ? null
             : computedStyles?.fill;
@@ -138,7 +140,9 @@ function render(
       }
     } else if (attr === 'stroke') {
       const stroke =
-        (styleOptions.styles?.stroke as any) instanceof CanvasGradient
+        styleOptions.styles?.stroke &&
+        ((styleOptions.styles?.stroke as any) instanceof CanvasGradient ||
+          !styleOptions.styles?.stroke?.includes('var'))
           ? styleOptions.styles?.stroke
           : computedStyles?.stroke === 'none'
             ? null
