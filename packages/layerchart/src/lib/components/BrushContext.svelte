@@ -144,6 +144,15 @@
       e.stopPropagation();
 
       const startPoint = localPoint(rootEl, e);
+
+      if (
+        startPoint &&
+        (startPoint.x < 0 || startPoint.x > $width || startPoint.y < 0 || startPoint.y > $height)
+      ) {
+        logger.debug('ignoring click as outside of chart bounds', { startPoint, $width, $height });
+        return;
+      }
+
       const start = {
         xDomain: [xDomain?.[0] ?? xDomainMin, xDomain?.[1] ?? xDomainMax] as [number, number],
         yDomain: [yDomain?.[0] ?? yDomainMin, yDomain?.[1] ?? yDomainMax] as [number, number],
