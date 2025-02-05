@@ -71,10 +71,7 @@
   export let innerRadius: number | undefined = undefined;
 
   /**
-   * Define outerRadius.  Defaults to yRange max / 2 (ie. chart height / 2)
-   */
-  /**
-   * Define outerRadius. Defaults to yRange max (ie. chart height / 2)
+   * Define outerRadius. Defaults to smallest width (xRange) or height (yRange) dimension (/ 2)
    *   • value >= 1: discrete value
    *   • value < 1: percent of chart height / 2
    *   • value < 0: offset of chart height / 2
@@ -100,7 +97,7 @@
   export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
   export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
 
-  const { yRange } = chartContext();
+  const { xRange, yRange } = chartContext();
 
   $: scale = scaleLinear().domain(domain).range(range);
 
@@ -122,7 +119,7 @@
     }
   }
 
-  $: _outerRadius = getOuterRadius(outerRadius, (max<number>($yRange) ?? 0) / 2);
+  $: _outerRadius = getOuterRadius(outerRadius, (Math.min($xRange[1], $yRange[0]) ?? 0) / 2);
 
   function getInnerRadius(innerRadius: number | undefined, outerRadius: number) {
     if (innerRadius == null) {

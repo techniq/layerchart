@@ -66,7 +66,7 @@
 
   export let sort: ((a: any, b: any) => number) | null | undefined = undefined;
 
-  const { data: contextData, x, y, xRange, c, cScale, config, width, height } = chartContext();
+  const { data: contextData, x, y, xRange, c, cScale, config } = chartContext();
 
   // @ts-expect-error
   $: resolved_endAngle = endAngle ?? degreesToRadians($config.xRange ? max($xRange) : max(range));

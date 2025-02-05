@@ -55,7 +55,7 @@
   <RangeField label="Value" bind:value />
 </div>
 <Preview>
-  <div class="h-[120px] p-4 border rounded">
+  <div class="h-[120px] p-4 border resize overflow-auto">
     <Chart>
       <Svg center>
         <Group y={16}>
@@ -88,7 +88,7 @@
 <h2>Concentric</h2>
 
 <Preview>
-  <div class="h-[200px] p-4 border rounded">
+  <div class="h-[200px] p-4 border resize overflow-auto">
     <Chart>
       <Svg center>
         <Arc
@@ -129,7 +129,7 @@
   <RangeField label="Segments" bind:value={segments} min={2} />
 </div>
 <Preview>
-  <div class="h-[240px] p-4 border rounded">
+  <div class="h-[240px] p-4 border resize overflow-auto">
     <Chart>
       <Svg center>
         <SpringValue {value} let:value>
@@ -169,7 +169,7 @@
   <RangeField label="Segments" bind:value={segments} min={2} />
 </div>
 <Preview>
-  <div class="h-[240px] p-4 border rounded">
+  <div class="h-[240px] p-4 border resize overflow-auto">
     <Chart>
       <Svg center>
         <ClipPath>
@@ -211,7 +211,7 @@
 <h2>Color wheel</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border resize overflow-auto">
     <Chart let:tooltip>
       <Svg center>
         {#each { length: layerCount } as _, layerIndex}
@@ -253,7 +253,7 @@
   </div>
 
   <Preview>
-    <div class="h-[200px] p-4 border rounded">
+    <div class="h-[200px] p-4 border resize overflow-auto">
       <Chart>
         <Svg center>
           {#if show}
