@@ -153,7 +153,7 @@
     context = element?.getContext('2d', { willReadFrequently }) as CanvasRenderingContext2D;
 
     hitCanvasContext = hitCanvasElement?.getContext('2d', {
-      willReadFrequently: true,
+      willReadFrequently: false, // Explicitly set to `false` to resolve pixel artifacts between fill and stroke with the same color (issue #372)
     }) as CanvasRenderingContext2D;
   });
 
