@@ -1,5 +1,13 @@
 # LayerChart
 
+## 0.93.5
+
+### Patch Changes
+
+- fix(Arc|Pie|PieChart): Consider width when responsively setting outerRadius (non-fixed value) ([`54581a4`](https://github.com/techniq/layerchart/commit/54581a4b1493d7ca13ab65a12e199c79a59588d9))
+
+- docs(Arc|Pie|PieChart): Allow all examples to resize to demonsrtrate responsiveness ([`54581a4`](https://github.com/techniq/layerchart/commit/54581a4b1493d7ca13ab65a12e199c79a59588d9))
+
 ## 0.93.4
 
 ### Patch Changes
