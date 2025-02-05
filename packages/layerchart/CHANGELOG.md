@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.93.7
+
+### Patch Changes
+
+- fix(BrushContext): Ignore clicks outside of chart bounds. Fixes clicking on legend item resetting brush ([`2863519`](https://github.com/techniq/layerchart/commit/28635199734fea24dd9027ca79b143d123b42203))
+
 ## 0.93.6
 
 ### Patch Changes
