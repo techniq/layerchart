@@ -71,10 +71,10 @@
   export let innerRadius: number | undefined = undefined;
 
   /**
-   * Define outerRadius. Defaults to smallest width (xRange) or height (yRange) dimension (/ 2)
+   * Define outerRadius. Defaults to smallest width (xRange) or height (yRange) dimension (/2)
    *   • value >= 1: discrete value
-   *   • value < 1: percent of chart height / 2
-   *   • value < 0: offset of chart height / 2
+   *   • value < 1: percent of chart width or height (smallest) / 2
+   *   • value < 0: offset of chart width or height (smallest) / 2
    */
   export let outerRadius: number | undefined = undefined;
 
