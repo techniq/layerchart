@@ -421,8 +421,20 @@
               e.stopPropagation();
             })}
           onclick={onpointclick && ((e) => onpointclick(e, { point, data: highlightData }))}
-          onpointerenter={onpointenter && ((e) => onpointenter(e, { point, data: highlightData }))}
-          onpointerleave={onpointleave && ((e) => onpointleave(e, { point, data: highlightData }))}
+          onpointerenter={onpointenter &&
+            ((e) => {
+              if (onpointclick) {
+                (e.target as HTMLElement | SVGElement).style.cursor = 'pointer';
+              }
+              onpointenter(e, { point, data: highlightData });
+            })}
+          onpointerleave={onpointleave &&
+            ((e) => {
+              if (onpointclick) {
+                (e.target as HTMLElement | SVGElement).style.cursor = 'default';
+              }
+              onpointleave(e, { point, data: highlightData });
+            })}
         />
       {/each}
     </slot>
