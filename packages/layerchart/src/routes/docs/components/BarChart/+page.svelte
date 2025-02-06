@@ -1172,6 +1172,14 @@
   </div>
 </Preview>
 
+<h2>Brush</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart data={dateSeriesData} x="date" y="value" brush {renderContext} {debug} />
+  </div>
+</Preview>
+
 <h2>Custom chart</h2>
 
 <Preview data={dateSeriesData}>
