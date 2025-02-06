@@ -321,8 +321,6 @@
 
     <slot name="tooltip" {...slotProps}>
       <Tooltip.Root {...props.tooltip?.root} let:data>
-        <!-- Workaround Svelte `5.9.4` regression as it's not seeing `keyAccessor(data)` to reactively update -->
-        {@const key = keyAccessor(data)}
         <Tooltip.List {...props.tooltip?.list}>
           <Tooltip.Item
             label={labelAccessor(data) || keyAccessor(data)}
