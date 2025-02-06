@@ -49,7 +49,7 @@
   import { chartContext } from './ChartContext.svelte';
 
   import { localPoint } from '../utils/event.js';
-  import type { DomainType } from '../utils/scales.js';
+  import { scaleInvert, type DomainType } from '../utils/scales.js';
   import { add } from '../utils/math.js';
   import type { HTMLAttributes } from 'svelte/elements';
 
@@ -157,8 +157,8 @@
         xDomain: [xDomain?.[0] ?? xDomainMin, xDomain?.[1] ?? xDomainMax] as [number, number],
         yDomain: [yDomain?.[0] ?? yDomainMin, yDomain?.[1] ?? yDomainMax] as [number, number],
         value: {
-          x: $xScale.invert?.(startPoint?.x ?? 0),
-          y: $yScale.invert?.(startPoint?.y ?? 0),
+          x: scaleInvert($xScale, startPoint?.x ?? 0),
+          y: scaleInvert($yScale, startPoint?.y ?? 0),
         },
       };
 
@@ -167,8 +167,8 @@
       const onPointerMove = (e: PointerEvent) => {
         const currentPoint = localPoint(rootEl, e);
         fn(start, {
-          x: $xScale.invert?.(currentPoint?.x ?? 0),
-          y: $yScale.invert?.(currentPoint?.y ?? 0),
+          x: scaleInvert($xScale, currentPoint?.x ?? 0),
+          y: scaleInvert($yScale, currentPoint?.y ?? 0),
         });
 
         onchange({ xDomain, yDomain });
