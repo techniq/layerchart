@@ -4,6 +4,12 @@
 
 ### Patch Changes
 
+- fix: Update `svelte` to `5.19.9` allowing PieChart tooltip workaround to be removed ([`c0331d3`](https://github.com/techniq/layerchart/commit/c0331d343f1c47a7826255ac70be549edcd3840a))
+
+## 0.93.9
+
+### Patch Changes
+
 - feat(Highlight): Set CSS `cursor: pointer` on hover when point has `onpointclick` set. Works for both svg and canvas rendering contexts ([`e9894cc`](https://github.com/techniq/layerchart/commit/e9894cc5360202204581417fc030b0d15063d207))
 
 ## 0.93.8
