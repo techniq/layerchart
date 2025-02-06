@@ -1,5 +1,13 @@
 # LayerChart
 
+## 0.93.8
+
+### Patch Changes
+
+- fix(PieChart): Workaround Svelte `5.9.5` regression with tooltip label reactivity due to conditional accessor ([`1722d20`](https://github.com/techniq/layerchart/commit/1722d202045e7555536dc2fd1113c4dc7dfb9587))
+
+- Update dependencies ([`ceec65d`](https://github.com/techniq/layerchart/commit/ceec65dd902c2f2ccfc825b1ce0981c6c8fff2fa))
+
 ## 0.93.7
 
 ### Patch Changes
