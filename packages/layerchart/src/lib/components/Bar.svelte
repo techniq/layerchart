@@ -117,7 +117,7 @@
   const renderContext = canvasContext ? 'canvas' : 'svg';
 </script>
 
-{#if (_rounded === 'all' || _rounded === 'none' || radius === 0) && renderContext === 'svg'}
+{#if _rounded === 'all' || _rounded === 'none' || radius === 0}
   <Rect
     {fill}
     {spring}
