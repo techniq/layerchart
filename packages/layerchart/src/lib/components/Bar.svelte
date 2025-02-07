@@ -117,14 +117,14 @@
   const renderContext = canvasContext ? 'canvas' : 'svg';
 </script>
 
-{#if (_rounded === 'all' || radius === 0) && renderContext === 'svg'}
+{#if (_rounded === 'all' || _rounded === 'none' || radius === 0) && renderContext === 'svg'}
   <Rect
     {fill}
     {spring}
     {tweened}
     {stroke}
     {strokeWidth}
-    rx={radius}
+    rx={_rounded === 'none' ? 0 : radius}
     {onclick}
     {onpointerenter}
     {onpointermove}

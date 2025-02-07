@@ -185,6 +185,21 @@
   </div>
 </Preview>
 
+<h2>Remove rounding</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      props={{ bars: { rounded: 'none' } }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
 <h2>Highlight below marks</h2>
 
 <Preview data={dateSeriesData}>
