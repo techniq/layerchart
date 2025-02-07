@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.93.10
+
+### Patch Changes
+
+- fix(Bar): Properly handled `rounded="none"` (use Rect and ignore radius if defined) ([`472f2d8`](https://github.com/techniq/layerchart/commit/472f2d8d969fa17fdf158e3ea7c8675e7ef9b829))
+
 ## 0.93.9
 
 ### Patch Changes
