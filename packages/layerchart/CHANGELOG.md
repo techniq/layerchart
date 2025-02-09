@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.94.1
+
+### Patch Changes
+
+- fix(AreaChart|LineChart|ScatterChart): Allow overriding points props while retaining series color and highlight opacity ([`933f499`](https://github.com/techniq/layerchart/commit/933f499815ff10b947e0c6854a6eda2c7965accf))
+
 ## 0.94.0
 
 ### Minor Changes
