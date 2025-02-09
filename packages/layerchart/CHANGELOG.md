@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.94.0
+
+### Minor Changes
+
+- feat: Add `belowContext` and `aboveContext` slots to all simplified charts ([`b951724`](https://github.com/techniq/layerchart/commit/b9517240fdf66e4c2b057d1e46a3024d96a4eebf))
+
 ## 0.93.10
 
 ### Patch Changes
