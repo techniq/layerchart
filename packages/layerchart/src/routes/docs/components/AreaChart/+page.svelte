@@ -727,7 +727,6 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    {console.log({ markerDates })}
     <AreaChart
       data={dateSeriesData}
       x="date"
