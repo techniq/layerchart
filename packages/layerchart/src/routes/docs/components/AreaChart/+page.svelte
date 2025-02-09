@@ -11,6 +11,8 @@
     Tooltip,
     pivotLonger,
     accessor,
+    Line,
+    Rule,
   } from 'layerchart';
   import { curveBasis, curveCatmullRom } from 'd3-shape';
   import { group } from 'd3-array';
@@ -21,6 +23,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
   import type { DomainType } from '$lib/utils/scales.js';
+  import Html from 'layerchart/components/layout/Html.svelte';
 
   export let data;
 
@@ -98,6 +101,8 @@
   let lockedTooltip = false;
   let xDomain: DomainType | undefined = null;
   let debug = false;
+
+  let markerDates: Date[] = [];
 </script>
 
 <svelte:window
@@ -715,6 +720,52 @@
       {renderContext}
       {debug}
     />
+  </div>
+</Preview>
+
+<h2>Markers</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    {console.log({ markerDates })}
+    <AreaChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      ontooltipclick={(e, detail) => {
+        if (markerDates.includes(detail.data.date)) {
+          markerDates = markerDates.filter((d) => d !== detail.data.date);
+        } else {
+          markerDates = [...markerDates, detail.data.date];
+        }
+      }}
+      {renderContext}
+      {debug}
+    >
+      <svelte:fragment slot="aboveMarks">
+        {#each markerDates as date}
+          <Rule x={date} class="stroke-surface-content/50 stroke-2 [stroke-dasharray:4,4]" />
+        {/each}
+      </svelte:fragment>
+
+      <svelte:fragment slot="aboveContext" let:xScale let:height>
+        <Html>
+          {#each markerDates as date}
+            <Button
+              class="absolute translate-x-[-50%] text-[10px] bg-surface-100 border border-primary"
+              style="top: {height + 2}px; left: {xScale(date)}px"
+              size="sm"
+              on:click={(e) => {
+                e.stopPropagation();
+                markerDates = markerDates.filter((d) => d !== date);
+              }}
+            >
+              Remove
+            </Button>
+          {/each}
+        </Html>
+      </svelte:fragment>
+    </AreaChart>
   </div>
 </Preview>
 

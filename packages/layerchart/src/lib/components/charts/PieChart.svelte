@@ -206,6 +206,8 @@
     visibleData,
   }}
   <slot {...slotProps}>
+    <slot name="belowContext" {...slotProps} />
+
     <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} {center} {debug}>
       <slot name="belowMarks" {...slotProps} />
 
@@ -292,6 +294,8 @@
 
       <slot name="aboveMarks" {...slotProps} />
     </svelte:component>
+
+    <slot name="aboveContext" {...slotProps} />
 
     <slot name="legend" {...slotProps}>
       {#if legend}

@@ -345,6 +345,8 @@
     getLabelsProps,
   }}
   <slot {...slotProps}>
+    <slot name="belowContext" {...slotProps} />
+
     <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} {debug}>
       <slot name="grid" {...slotProps}>
         {#if grid}
@@ -420,6 +422,8 @@
         {/each}
       {/if}
     </svelte:component>
+
+    <slot name="aboveContext" {...slotProps} />
 
     <slot name="legend" {...slotProps}>
       {#if legend}

@@ -269,6 +269,8 @@
     getSplineProps,
   }}
   <slot {...slotProps}>
+    <slot name="belowContext" {...slotProps} />
+
     <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} center={radial} {debug}>
       <slot name="grid" {...slotProps}>
         {#if grid}
@@ -354,6 +356,8 @@
         </slot>
       </ChartClipPath>
     </svelte:component>
+
+    <slot name="aboveContext" {...slotProps} />
 
     <slot name="legend" {...slotProps}>
       {#if legend}
