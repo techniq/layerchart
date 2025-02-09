@@ -286,10 +286,13 @@
       <ChartClipPath disabled={!brush} full>
         <slot name="highlight" {...slotProps}>
           <Highlight
-            points={{ fill: activeSeries?.color }}
             lines
             axis="both"
             {...props.highlight}
+            points={{
+              fill: activeSeries?.color,
+              ...(typeof props.highlight?.points === 'object' ? props.highlight.points : null),
+            }}
           />
         </slot>
 

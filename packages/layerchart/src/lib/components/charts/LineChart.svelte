@@ -334,16 +334,12 @@
           {#each visibleSeries as s, i (s.key)}
             {@const seriesTooltipData =
               s.data && tooltip.data ? findRelatedData(s.data, tooltip.data, x) : null}
+            {@const highlightPointsProps =
+              typeof props.highlight?.points === 'object' ? props.highlight.points : null}
+
             <Highlight
               data={seriesTooltipData}
               y={s.value ?? (s.data ? undefined : s.key)}
-              points={{
-                fill: s.color,
-                class: cls(
-                  'transition-opacity',
-                  highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10'
-                ),
-              }}
               lines={i === 0}
               onpointclick={onpointclick
                 ? (e, detail) => onpointclick(e, { ...detail, series: s })
@@ -351,6 +347,15 @@
               onpointenter={() => (highlightSeriesKey = s.key)}
               onpointleave={() => (highlightSeriesKey = null)}
               {...props.highlight}
+              points={{
+                ...highlightPointsProps,
+                fill: s.color,
+                class: cls(
+                  'transition-opacity',
+                  highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+                  highlightPointsProps?.class
+                ),
+              }}
             />
           {/each}
         </slot>
