@@ -22,7 +22,7 @@
 
 <div class="grid gap-2 mb-2">
   <TextField label="value" bind:value />
-  <div class="grid grid-cols-[1fr,1fr,1fr] gap-2">
+  <div class="grid grid-cols-[1fr_1fr_1fr] gap-2">
     <RangeField label="x" bind:value={x} min={-300} max={300} />
     <RangeField label="y" bind:value={y} min={-300} max={300} />
     <RangeField label="width" bind:value={width} max={300} />

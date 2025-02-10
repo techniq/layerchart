@@ -25,7 +25,7 @@
 
 <h1>Examples</h1>
 
-<div class="grid grid-cols-[1fr,1fr,1fr] gap-2">
+<div class="grid grid-cols-[1fr_1fr_1fr] gap-2">
   <CurveMenuField bind:value={curve} showOpenClosed />
 </div>
 

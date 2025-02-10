@@ -29,7 +29,7 @@
 <h1>Playground</h1>
 
 <div class="grid gap-2 mb-2">
-  <div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2">
+  <div class="grid grid-cols-[1fr_1fr_1fr_auto_auto] gap-2">
     <PathDataMenuField bind:value={pathGenerator} />
     <CurveMenuField bind:value={curve} />
     <RangeField label="Points" bind:value={pointCount} min={2} />
@@ -88,7 +88,7 @@
 <h1>Canvas</h1>
 
 <div class="grid gap-2 mb-2">
-  <div class="grid grid-cols-[1fr,1fr,1fr,auto,auto] gap-2">
+  <div class="grid grid-cols-[1fr_1fr_1fr_auto_auto] gap-2">
     <PathDataMenuField bind:value={pathGenerator} />
     <CurveMenuField bind:value={curve} />
     <RangeField label="Points" bind:value={pointCount} min={2} />

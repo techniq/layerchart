@@ -56,7 +56,7 @@
 
 <h1>Examples</h1>
 
-<div class="grid grid-cols-[1fr,auto] gap-2">
+<div class="grid grid-cols-[1fr_auto] gap-2">
   <Field label="Render context">
     <ToggleGroup bind:value={renderContext} variant="outline">
       <ToggleOption value="svg">Svg</ToggleOption>

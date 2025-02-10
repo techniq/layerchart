@@ -112,7 +112,7 @@
 <h3>Zoomable</h3>
 
 <div class="grid gap-1 mb-4">
-  <div class="grid grid-cols-[6fr,3fr] gap-1">
+  <div class="grid grid-cols-[6fr_3fr] gap-1">
     <Field label="Tile">
       <ToggleGroup bind:value={tile} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="squarify">Squarify</ToggleOption>
@@ -254,7 +254,7 @@
 <h3>Grouped and Filterable</h3>
 
 <div class="grid gap-1 mb-4">
-  <div class="grid grid-cols-[6fr,3fr] gap-1">
+  <div class="grid grid-cols-[6fr_3fr] gap-1">
     <Field label="Tile">
       <ToggleGroup bind:value={tile} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="squarify">Squarify</ToggleOption>
@@ -387,7 +387,7 @@
 <h3>Zoomable</h3>
 
 <div class="grid grid-flow-col gap-4 mb-4">
-  <div class="grid grid-cols-[6fr,3fr] gap-2">
+  <div class="grid grid-cols-[6fr_3fr] gap-2">
     <Field label="Tile">
       <ToggleGroup bind:value={tile} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="squarify">Squarify</ToggleOption>

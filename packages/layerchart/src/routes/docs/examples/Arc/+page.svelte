@@ -246,7 +246,7 @@
 <h2>Tween value on mount</h2>
 
 <Toggle on let:on={show} let:toggle>
-  <div class="grid grid-cols-[auto,1fr] gap-2 mb-2">
+  <div class="grid grid-cols-[auto_1fr] gap-2 mb-2">
     <Field label="Show" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>

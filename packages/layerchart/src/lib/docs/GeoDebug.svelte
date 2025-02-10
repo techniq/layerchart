@@ -30,7 +30,7 @@
       {/each}
     </div>
 
-    <div class="grid grid-cols-[auto,1fr]">
+    <div class="grid grid-cols-[auto_1fr]">
       <span class="opacity-50">center:</span>
       <span class="text-right">
         {$geo.center?.()}

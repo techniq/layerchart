@@ -38,7 +38,7 @@
 
 <h1>Examples</h1>
 
-<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
   <h2>SVG</h2>
 
   <div class="mb-2 flex gap-6">

@@ -18,7 +18,7 @@
   };
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,120px,120px,64px] gap-2 mb-2">
+<div class="grid grid-cols-[1fr_1fr_120px_120px_64px] gap-2 mb-2">
   <MenuField
     label="Mode"
     bind:value={settings.mode}

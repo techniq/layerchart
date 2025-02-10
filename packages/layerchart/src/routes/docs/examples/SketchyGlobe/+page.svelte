@@ -39,14 +39,14 @@
   $timer;
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,1fr] gap-2">
+<div class="grid grid-cols-[1fr_1fr_1fr] gap-2">
   <CurveMenuField bind:value={curve} showOpenClosed />
   <RangeField label="Min area" bind:value={minArea} min={0} max={3} step={0.01} />
 </div>
 
 <h1>Examples</h1>
 
-<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
   <h2>SVG</h2>
 
   <div class="mb-2 flex gap-6">

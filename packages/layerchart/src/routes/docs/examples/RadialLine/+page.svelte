@@ -29,7 +29,7 @@
   See also: <a href="/docs/components/LineChart">LineChart</a> for simplified examples
 </Blockquote>
 
-<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
   <h2>Radar</h2>
   <Field label="curve: " labelPlacement="left" class="mb-1" dense>
     <ToggleGroup bind:value={curve} size="sm">

@@ -55,7 +55,7 @@
   </div>
 </Preview>
 
-<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
   <h2>Draggable globe with EdgeFade</h2>
 
   <div class="mb-2">

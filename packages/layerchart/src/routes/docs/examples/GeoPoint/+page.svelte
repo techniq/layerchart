@@ -53,7 +53,7 @@
   </div>
 </Preview>
 
-<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
   <h2>World Capitals</h2>
   <div class="mb-2">
     <Field dense let:id>
@@ -123,7 +123,7 @@
   </div>
 </Preview>
 
-<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
   <h2>US Airports</h2>
   <div class="mb-2">
     <Field dense let:id>
@@ -186,7 +186,7 @@
   </div>
 </Preview>
 
-<div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
   <h2>World Airports</h2>
   <div class="mb-2">
     <Field dense let:id>

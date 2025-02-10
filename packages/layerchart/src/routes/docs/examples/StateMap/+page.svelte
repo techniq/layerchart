@@ -33,7 +33,7 @@
   ];
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,1fr] gap-2 my-2">
+<div class="grid grid-cols-[1fr_1fr_1fr] gap-2 my-2">
   <SelectField
     label="State"
     options={stateOptions}

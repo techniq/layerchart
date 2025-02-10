@@ -88,7 +88,7 @@
   let debug = false;
 </script>
 
-<div class="grid grid-cols-[1fr,auto] gap-2 mb-3">
+<div class="grid grid-cols-[1fr_auto] gap-2 mb-3">
   <Field label="Render context">
     <ToggleGroup bind:value={Context} variant="outline">
       <ToggleOption value={Svg}>Svg</ToggleOption>

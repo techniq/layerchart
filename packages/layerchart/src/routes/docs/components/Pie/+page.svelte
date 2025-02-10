@@ -170,7 +170,7 @@
 </Preview>
 
 <Toggle on let:on={show} let:toggle>
-  <div class="grid grid-cols-[1fr,auto] gap-2">
+  <div class="grid grid-cols-[1fr_auto] gap-2">
     <h2>Tweened</h2>
     <Field label="Show" labelPlacement="left" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />

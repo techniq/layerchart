@@ -27,7 +27,7 @@
   let debug = false;
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,auto] gap-2 my-2">
+<div class="grid grid-cols-[1fr_1fr_auto] gap-2 my-2">
   <TilesetField bind:serviceUrl />
   <RangeField label="Zoom delta" bind:value={zoomDelta} min={-5} max={5} />
   <Field label="Debug" let:id>

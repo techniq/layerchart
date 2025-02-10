@@ -84,7 +84,7 @@
 <h1>Examples</h1>
 
 <Toggle let:on={showSettings} let:toggle>
-  <div class="grid grid-cols-[1fr,256px,auto] gap-2 items-end mb-1">
+  <div class="grid grid-cols-[1fr_256px_auto] gap-2 items-end mb-1">
     <h2>Playground</h2>
 
     <MenuField
@@ -180,7 +180,7 @@
 </Toggle>
 
 <Toggle let:on={showSettings} let:toggle>
-  <div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+  <div class="grid grid-cols-[1fr_auto] gap-2 items-end">
     <h2>Basic</h2>
 
     <Field label="Settings" labelPlacement="left" class="mb-1" let:id>
@@ -260,7 +260,7 @@
 </Toggle>
 
 <Toggle let:on={showSettings} let:toggle>
-  <div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+  <div class="grid grid-cols-[1fr_auto] gap-2 items-end">
     <h2>TCP State Diagram</h2>
 
     <Field label="Settings" labelPlacement="left" class="mb-1" let:id>
@@ -367,7 +367,7 @@
 </Toggle>
 
 <Toggle let:on={showSettings} let:toggle>
-  <div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+  <div class="grid grid-cols-[1fr_auto] gap-2 items-end">
     <h2>Software user flow</h2>
 
     <Field label="Settings" labelPlacement="left" class="mb-1" let:id>
@@ -475,7 +475,7 @@
 
 <!-- TODO: Match dagre d3 example - https://dagrejs.github.io/project/dagre-d3/latest/demo/clusters.html -->
 <!-- <Toggle let:on={showSettings} let:toggle>
-  <div class="grid grid-cols-[1fr,auto] gap-2 items-end">
+  <div class="grid grid-cols-[1fr_auto] gap-2 items-end">
     <h2>Cluster</h2>
 
     <Field label="Settings" labelPlacement="left" class="mb-1" let:id>

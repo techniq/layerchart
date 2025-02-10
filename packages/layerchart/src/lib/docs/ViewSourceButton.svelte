@@ -19,7 +19,7 @@
       on:close={toggleOff}
       class="max-h-[98dvh] md:max-h-[90dvh] max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto,1fr,auto]"
     >
-      <div class="grid grid-cols-[1fr,auto] gap-3 items-center p-4">
+      <div class="grid grid-cols-[1fr_auto] gap-3 items-center p-4">
         <div class="overflow-auto">
           <div class="text-lg font-semibold">{label}</div>
           <div class="text-xs text-surface-content/50 truncate">{href}</div>

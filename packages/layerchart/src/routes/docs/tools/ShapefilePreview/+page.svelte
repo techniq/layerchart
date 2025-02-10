@@ -51,7 +51,7 @@
 </script>
 
 <div class="grid gap-2">
-  <div class="grid grid-cols-[1fr,auto] gap-2 items-center">
+  <div class="grid grid-cols-[1fr_auto] gap-2 items-center">
     <TextField
       label="File"
       bind:value={file}

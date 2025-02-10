@@ -84,7 +84,7 @@
   const sun = [longitude - equationOfTime(t) / 4, declination(t)] as [number, number];
 </script>
 
-<div class="grid grid-cols-[1fr,auto,auto,2fr] gap-2 my-2">
+<div class="grid grid-cols-[1fr_auto_auto_2fr] gap-2 my-2">
   <SelectField
     label="Projections"
     options={projections}

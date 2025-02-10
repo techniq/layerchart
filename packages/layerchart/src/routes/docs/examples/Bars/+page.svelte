@@ -724,7 +724,7 @@
 <h2>Tween on mount</h2>
 
 <Toggle on let:on={show} let:toggle>
-  <div class="grid grid-cols-[auto,1fr] gap-2 mb-2">
+  <div class="grid grid-cols-[auto_1fr] gap-2 mb-2">
     <Field label="Show bars" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>
@@ -769,7 +769,7 @@
 <h2>Stagger tween on mount</h2>
 
 <Toggle on let:on={show} let:toggle>
-  <div class="grid grid-cols-[auto,1fr] gap-2 mb-2">
+  <div class="grid grid-cols-[auto_1fr] gap-2 mb-2">
     <Field label="Show bars" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>
@@ -1036,7 +1036,7 @@
 
 <h2>Grouped, Stacked, or Both (transition)</h2>
 
-<div class="grid grid-cols-[1fr,1fr] gap-2 mb-2">
+<div class="grid grid-cols-[1fr_1fr] gap-2 mb-2">
   <Field label="Mode">
     <ToggleGroup bind:value={transitionChartMode} variant="outline" size="sm" inset class="w-full">
       <ToggleOption value="group">Grouped</ToggleOption>
@@ -1122,7 +1122,7 @@
 
 <h2>Tooltip and click handlers for individual stack/grouped bar</h2>
 
-<div class="grid grid-cols-[1fr,1fr] gap-2 mb-2">
+<div class="grid grid-cols-[1fr_1fr] gap-2 mb-2">
   <Field label="Mode">
     <ToggleGroup bind:value={transitionChartMode} variant="outline" size="sm" inset class="w-full">
       <ToggleOption value="group">Grouped</ToggleOption>

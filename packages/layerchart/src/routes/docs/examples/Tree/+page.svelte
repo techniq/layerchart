@@ -46,7 +46,7 @@
 <h2>Basic</h2>
 
 <div class="grid gap-1 mb-4">
-  <div class="grid grid-cols-[1fr,2fr,1fr] gap-1">
+  <div class="grid grid-cols-[1fr_2fr_1fr] gap-1">
     <Field label="Orientation">
       <ToggleGroup bind:value={orientation} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="horizontal">Horizontal</ToggleOption>

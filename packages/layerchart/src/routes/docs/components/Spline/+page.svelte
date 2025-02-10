@@ -33,7 +33,7 @@
 <h1>Playground</h1>
 
 <div class="grid gap-2 mb-2">
-  <div class="grid grid-cols-[1fr,1fr,1fr,auto] gap-2">
+  <div class="grid grid-cols-[1fr_1fr_1fr_auto] gap-2">
     <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
     <CurveMenuField bind:value={curve} />
     <RangeField label="Points" bind:value={pointCount} min={2} />
@@ -93,7 +93,7 @@
 <h2>draw</h2>
 
 <Toggle on let:on={show} let:toggle>
-  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+  <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
     <Field label="Show" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>
@@ -120,7 +120,7 @@
 <h2>tweened</h2>
 
 <Toggle on let:on={show} let:toggle>
-  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+  <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
     <Field label="Show" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>
@@ -147,7 +147,7 @@
 <h2>markers / arrows</h2>
 
 <Toggle on let:on={show} let:toggle>
-  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+  <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
     <Field label="Show" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>
@@ -179,7 +179,7 @@
 <h2>basic start and end slots</h2>
 
 <Toggle on let:on={show} let:toggle>
-  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+  <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
     <Field label="Show" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>
@@ -209,7 +209,7 @@
 <h2>label using start/end slots</h2>
 
 <Toggle on let:on={show} let:toggle>
-  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+  <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
     <Field label="Show" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>
@@ -246,7 +246,7 @@
 <h2>end slot with draw</h2>
 
 <Toggle on let:on={show} let:toggle>
-  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+  <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
     <Field label="Show" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>
@@ -275,7 +275,7 @@
 <h2>Canvas</h2>
 
 <Toggle on let:on={show} let:toggle>
-  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+  <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
     <Field label="Show" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>

@@ -23,14 +23,14 @@
 
 <h1>Examples</h1>
 
-<div class="grid grid-cols-[1fr,auto] gap-2 mb-2">
+<div class="grid grid-cols-[1fr_auto] gap-2 mb-2">
   <RangeField label="Angle" bind:value={angle} min={1} max={360} />
   <Field label="Tweened" let:id>
     <Switch bind:checked={tweened} {id} size="md" />
   </Field>
 </div>
 
-<div class="grid grid-cols-[1fr,1fr,auto,auto] gap-2 mb-2">
+<div class="grid grid-cols-[1fr_1fr_auto_auto] gap-2 mb-2">
   <RangeField label="Points" bind:value={pointCount} min={1} max={2000} />
   <CurveMenuField bind:value={curve} showOpenClosed />
   <Field label="Show points" let:id>

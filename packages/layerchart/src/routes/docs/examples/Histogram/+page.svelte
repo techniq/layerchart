@@ -122,7 +122,7 @@
   </div>
 </Preview>
 
-<div class="grid grid-cols-[1fr,148px] gap-2 my-2">
+<div class="grid grid-cols-[1fr_148px] gap-2 my-2">
   <MenuField
     label="Generator"
     options={[
@@ -220,7 +220,7 @@
 
   <h2>Date / time (count)</h2>
 
-  <div class="grid grid-cols-[148px,148px] gap-2 mb-2">
+  <div class="grid grid-cols-[148px_148px] gap-2 mb-2">
     <NumberStepper label="Date range" bind:value={dateRange} class="w-full" />
     <NumberStepper
       label="Thresholds"
@@ -283,7 +283,7 @@
 
   <h2>Date / time (interval)</h2>
 
-  <div class="grid grid-cols-[148px,148px] gap-2 mb-2">
+  <div class="grid grid-cols-[148px_148px] gap-2 mb-2">
     <NumberStepper label="Date range" bind:value={dateRange} class="w-full" />
     <MenuField
       label="Interval"

@@ -32,7 +32,7 @@
 <h2>Repeat indefinitely</h2>
 
 <Toggle on let:on={show} let:toggle>
-  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+  <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
     <Field label="Show" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>
@@ -62,7 +62,7 @@
 <h2>Rotate object with path</h2>
 
 <Toggle on let:on={show} let:toggle>
-  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+  <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
     <Field label="Show" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>
@@ -105,7 +105,7 @@
 <h2>Sync with draw</h2>
 
 <Toggle on let:on={show} let:toggle>
-  <div class="grid grid-cols-[auto,1fr,1fr,1fr] gap-2 mb-2">
+  <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
     <Field label="Show" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>

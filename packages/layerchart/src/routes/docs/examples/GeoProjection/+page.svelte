@@ -43,7 +43,7 @@
   let roll = 0;
 </script>
 
-<div class="grid grid-cols-[1fr,1fr,auto] gap-2 my-2">
+<div class="grid grid-cols-[1fr_1fr_auto] gap-2 my-2">
   <SelectField
     label="Projections"
     options={projections}
@@ -57,7 +57,7 @@
     <Switch bind:checked={detailed} {id} />
   </Field>
 </div>
-<div class="grid grid-cols-[1fr,1fr,1fr] gap-2 my-2">
+<div class="grid grid-cols-[1fr_1fr_1fr] gap-2 my-2">
   <RangeField label="Yaw" bind:value={yaw} min={-360} max={360} />
   <RangeField label="Pitch" bind:value={pitch} min={-90} max={90} />
   <RangeField label="Roll" bind:value={roll} min={-180} max={180} />
