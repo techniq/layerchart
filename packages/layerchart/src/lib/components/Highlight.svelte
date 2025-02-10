@@ -18,6 +18,7 @@
 
   import { isScaleBand } from '$lib/utils/scales.js';
   import { accessor, type Accessor } from '$lib/utils/common.js';
+  import { asAny } from '$lib/utils/types.js';
 
   const {
     data: contextData,
@@ -424,14 +425,14 @@
           onpointerenter={onpointenter &&
             ((e) => {
               if (onpointclick) {
-                (e.target as HTMLElement | SVGElement).style.cursor = 'pointer';
+                asAny(e.target).style.cursor = 'pointer';
               }
               onpointenter(e, { point, data: highlightData });
             })}
           onpointerleave={onpointleave &&
             ((e) => {
               if (onpointclick) {
-                (e.target as HTMLElement | SVGElement).style.cursor = 'default';
+                asAny(e.target).style.cursor = 'default';
               }
               onpointleave(e, { point, data: highlightData });
             })}
