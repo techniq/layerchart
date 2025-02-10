@@ -516,6 +516,46 @@
   />
 </div>
 
+<Preview data={dateSeries}>
+  <div class="h-[300px] p-4 border rounded">
+    <Chart
+      data={dateSeries}
+      x="date"
+      xScale={scaleTime()}
+      y="value"
+      yDomain={[0, null]}
+      yNice
+      padding={{ left: 16, bottom: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis
+          placement="bottom"
+          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+          rule
+        />
+        <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
+        <Highlight points lines />
+      </Svg>
+      <Tooltip.Root
+        {anchor}
+        x={snap}
+        xOffset={['top', 'center', 'bottom'].includes(anchor ?? '') ? 0 : 10}
+        y={snap}
+        yOffset={['left', 'center', 'right'].includes(anchor ?? '') ? 0 : 10}
+        {contained}
+        let:data
+      >
+        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+        <Tooltip.List>
+          <Tooltip.Item label="value" value={data.value} />
+        </Tooltip.List>
+      </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Externally access tooltip data</h2>
 
 <Preview data={dateSeries}>
@@ -551,46 +591,6 @@
         <Highlight points lines />
       </Svg>
       <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
-        </Tooltip.List>
-      </Tooltip.Root>
-    </Chart>
-  </div>
-</Preview>
-
-<Preview data={dateSeries}>
-  <div class="h-[300px] p-4 border rounded">
-    <Chart
-      data={dateSeries}
-      x="date"
-      xScale={scaleTime()}
-      y="value"
-      yDomain={[0, null]}
-      yNice
-      padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
-    >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
-        <Highlight points lines />
-      </Svg>
-      <Tooltip.Root
-        {anchor}
-        x={snap}
-        xOffset={['top', 'center', 'bottom'].includes(anchor ?? '') ? 0 : 10}
-        y={snap}
-        yOffset={['left', 'center', 'right'].includes(anchor ?? '') ? 0 : 10}
-        {contained}
-        let:data
-      >
         <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
         <Tooltip.List>
           <Tooltip.Item label="value" value={data.value} />
