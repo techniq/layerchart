@@ -860,6 +860,43 @@
   </div>
 </Preview>
 
+<h2>Fixed tooltip below chart with hide delay</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <AreaChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'bananas', color: 'hsl(var(--color-success))' },
+        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+      ]}
+      {renderContext}
+      {debug}
+      tooltip={{ hideDelay: 1000 }}
+    >
+      <svelte:fragment slot="tooltip" let:x let:y let:series let:height>
+        <Tooltip.Root x="data" y={height + 24} pointerEvents let:data>
+          <Tooltip.Header>
+            {format(x(data), PeriodType.Day)}
+          </Tooltip.Header>
+
+          <Tooltip.List>
+            {#each series as s}
+              {@const valueAccessor = accessor(s.value ?? s.key)}
+              {@const value = valueAccessor(data)}
+              <Tooltip.Item label={s.key} color={s.color}>
+                {format(value)}
+              </Tooltip.Item>
+            {/each}
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
+    </AreaChart>
+  </div>
+</Preview>
+
 <h2>Brushing</h2>
 
 <Preview data={dateSeriesData}>

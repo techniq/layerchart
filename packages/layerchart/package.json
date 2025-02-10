@@ -63,7 +63,7 @@
     "rehype-slug": "^6.0.0",
     "shapefile": "^0.6.6",
     "solar-calculator": "^0.3.0",
-    "svelte": "^5.19.9",
+    "svelte": "5.19.4",
     "svelte-check": "^4.1.4",
     "svelte-json-tree": "^2.2.0",
     "svelte-ux": "^0.90.0",
