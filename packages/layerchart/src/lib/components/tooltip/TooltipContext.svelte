@@ -308,17 +308,6 @@
     }, hideDelay);
   }
 
-  function handleTooltipHover(hovering: boolean) {
-    isHoveringTooltip = hovering;
-    if (hovering && hideTimeoutId) {
-      // Cancel hiding if user hovers over tooltip
-      clearTimeout(hideTimeoutId);
-    } else if (!hovering) {
-      // Hide when user leaves tooltip
-      hideTooltip();
-    }
-  }
-
   let quadtree: Quadtree<[number, number]>;
   $: if (mode === 'quadtree') {
     quadtree = d3Quadtree()
@@ -421,9 +410,19 @@
     'TooltipContext absolute touch-none',
     debug && triggerPointerEvents && 'bg-danger/10 outline outline-danger'
   )}
-  on:pointerenter={triggerPointerEvents ? showTooltip : undefined}
+  on:pointerenter={(e) => {
+    isHoveringTooltip = true;
+    if (triggerPointerEvents) {
+      showTooltip(e);
+    }
+  }}
   on:pointermove={triggerPointerEvents ? showTooltip : undefined}
-  on:pointerleave={triggerPointerEvents ? hideTooltip : undefined}
+  on:pointerleave={(e) => {
+    isHoveringTooltip = false;
+    if (triggerPointerEvents) {
+      hideTooltip();
+    }
+  }}
   on:click={(e) => {
     if (triggerPointerEvents) {
       onclick(e, { data: $tooltip?.data });
@@ -438,12 +437,7 @@
     style:width="{$containerWidth}px"
     style:height="{$containerHeight}px"
   >
-    <div
-      on:pointerenter={() => handleTooltipHover(true)}
-      on:pointerleave={() => handleTooltipHover(false)}
-    >
-      <slot tooltip={$tooltip} />
-    </div>
+    <slot tooltip={$tooltip} />
 
     {#if mode === 'voronoi'}
       <Svg>
