@@ -132,6 +132,10 @@
 
   let highlightSeriesKey: (typeof series)[number]['key'] | null = null;
 
+  function setHighlightSeriesKey(seriesKey: typeof highlightSeriesKey) {
+    highlightSeriesKey = seriesKey;
+  }
+
   function getSplineProps(s: (typeof series)[number], i: number) {
     const splineProps: ComponentProps<Spline> = {
       data: s.data,
@@ -267,6 +271,7 @@
     getLabelsProps,
     getPointsProps,
     getSplineProps,
+    setHighlightSeriesKey,
   }}
   <slot {...slotProps}>
     <slot name="belowContext" {...slotProps} />
@@ -406,6 +411,8 @@
               value={seriesTooltipData ? valueAccessor(seriesTooltipData) : null}
               color={s.color}
               {format}
+              onpointerenter={() => (highlightSeriesKey = s.key)}
+              onpointerleave={() => (highlightSeriesKey = null)}
               {...props.tooltip?.item}
             />
           {/each}

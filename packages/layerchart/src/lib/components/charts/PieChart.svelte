@@ -140,6 +140,10 @@
 
   let highlightKey: (typeof series)[number]['key'] | null = null;
 
+  function setHighlightKey(key: typeof highlightKey) {
+    highlightKey = key ?? null;
+  }
+
   const selectedKeys = selectionStore();
   $: visibleData = chartData.filter((d) => {
     const dataKey = keyAccessor(d);
@@ -204,6 +208,7 @@
     tooltip,
     series,
     visibleData,
+    setHighlightKey,
   }}
   <slot {...slotProps}>
     <slot name="belowContext" {...slotProps} />
@@ -331,6 +336,8 @@
             value={valueAccessor(data)}
             color={cScale?.(c(data))}
             {format}
+            onpointerenter={() => (highlightKey = keyAccessor(data))}
+            onpointerleave={() => (highlightKey = null)}
             {...props.tooltip?.item}
           />
         </Tooltip.List>
