@@ -27,6 +27,7 @@ export async function load() {
         ],
         'Multiple instances',
         'Maintain within chart container, window/viewport, or overflow outside',
+        'Configurable hide delay to prevent accidental hiding when moving to tooltip',
       ],
       related: ['components/TooltipContext', 'components/Highlight'],
     },
