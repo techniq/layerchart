@@ -22,7 +22,7 @@
 >
   {#if color}
     <div
-      class={cls('color', 'inline-block size-2 rounded-full bg-[--color]', classes.color)}
+      class={cls('color', 'inline-block size-2 rounded-full bg-[var(--color)]', classes.color)}
       style:--color={color}
     ></div>
   {/if}

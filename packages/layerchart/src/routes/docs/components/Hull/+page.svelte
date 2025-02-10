@@ -54,7 +54,7 @@
             {curve}
             style="--group-color:{groupColor(group)}"
             classes={{
-              path: 'pointer-events-none stroke-[--group-color] fill-[--group-color] [fill-opacity:0.1]',
+              path: 'pointer-events-none stroke-[var(--group-color)] fill-[var(--group-color)] [fill-opacity:0.1]',
             }}
           />
         {/each}
