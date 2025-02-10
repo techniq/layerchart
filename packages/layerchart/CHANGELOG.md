@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.94.3
+
+### Patch Changes
+
+- fix(Highlight): Fix Svelte 3/4 compat ([`1107a7d`](https://github.com/techniq/layerchart/commit/1107a7d92b03923e4eb90af2ebb26aa9a2e52d4a))
+
 ## 0.94.2
 
 ### Patch Changes
