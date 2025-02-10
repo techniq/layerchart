@@ -196,6 +196,10 @@
 
   let highlightSeriesKey: (typeof series)[number]['key'] | null = null;
 
+  function setHighlightSeriesKey(seriesKey: typeof highlightSeriesKey) {
+    highlightSeriesKey = seriesKey;
+  }
+
   function getBarsProps(s: (typeof series)[number], i: number) {
     const isFirst = i == 0;
     const isLast = i == visibleSeries.length - 1;
@@ -343,6 +347,7 @@
     visibleSeries,
     getBarsProps,
     getLabelsProps,
+    setHighlightSeriesKey,
   }}
   <slot {...slotProps}>
     <slot name="belowContext" {...slotProps} />
@@ -474,6 +479,8 @@
               color={s.color ?? cScale?.(c(data))}
               {format}
               valueAlign="right"
+              onpointerenter={() => (highlightSeriesKey = s.key)}
+              onpointerleave={() => (highlightSeriesKey = null)}
               {...props.tooltip?.item}
             />
           {/each}

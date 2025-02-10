@@ -166,6 +166,10 @@
 
   let highlightSeriesKey: (typeof series)[number]['key'] | null = null;
 
+  function setHighlightSeriesKey(seriesKey: typeof highlightSeriesKey) {
+    highlightSeriesKey = seriesKey;
+  }
+
   function getAreaProps(s: (typeof series)[number], i: number) {
     const lineProps = {
       ...props.line,
@@ -336,6 +340,7 @@
     getAreaProps,
     getLabelsProps,
     getPointsProps,
+    setHighlightSeriesKey,
   }}
 
   <slot {...slotProps}>
@@ -486,6 +491,8 @@
               color={s.color}
               {format}
               valueAlign="right"
+              onpointerenter={() => (highlightSeriesKey = s.key)}
+              onpointerleave={() => (highlightSeriesKey = null)}
               {...props.tooltip?.item}
             />
           {/each}
