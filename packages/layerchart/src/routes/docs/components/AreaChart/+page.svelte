@@ -12,7 +12,7 @@
     pivotLonger,
     accessor,
     Line,
-    Rule,
+    Circle,
   } from 'layerchart';
   import { curveBasis, curveCatmullRom } from 'd3-shape';
   import { group } from 'd3-array';
@@ -24,6 +24,7 @@
   import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
   import type { DomainType } from '$lib/utils/scales.js';
   import Html from 'layerchart/components/layout/Html.svelte';
+  import Blockquote from 'layerchart/docs/Blockquote.svelte';
 
   export let data;
 
@@ -102,7 +103,7 @@
   let xDomain: DomainType | undefined = null;
   let debug = false;
 
-  let markerDates: Date[] = [];
+  let markerPoints: { date: Date; value: number }[] = [];
 </script>
 
 <svelte:window
@@ -732,31 +733,43 @@
       x="date"
       y="value"
       ontooltipclick={(e, detail) => {
-        if (markerDates.includes(detail.data.date)) {
-          markerDates = markerDates.filter((d) => d !== detail.data.date);
+        if (markerPoints.includes(detail.data)) {
+          markerPoints = markerPoints.filter((d) => d !== detail.data);
         } else {
-          markerDates = [...markerDates, detail.data.date];
+          markerPoints = [...markerPoints, detail.data];
         }
       }}
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="aboveMarks">
-        {#each markerDates as date}
-          <Rule x={date} class="stroke-surface-content/50 stroke-2 [stroke-dasharray:4,4]" />
+      <svelte:fragment slot="aboveMarks" let:xScale let:yScale let:height>
+        {#each markerPoints as p}
+          <Line
+            x1={xScale(p.date)}
+            y1={height}
+            x2={xScale(p.date)}
+            y2={yScale(p.value)}
+            class="stroke-surface-content/50 stroke-2 [stroke-dasharray:4,4]"
+          />
+          <Circle
+            cx={xScale(p.date)}
+            cy={yScale(p.value)}
+            r={4}
+            class="fill-primary stroke-[4] stroke-primary/50"
+          />
         {/each}
       </svelte:fragment>
 
       <svelte:fragment slot="aboveContext" let:xScale let:height>
         <Html>
-          {#each markerDates as date}
+          {#each markerPoints as p}
             <Button
               class="absolute translate-x-[-50%] text-[10px] bg-surface-100 border border-primary"
-              style="top: {height + 2}px; left: {xScale(date)}px"
+              style="top: {height + 2}px; left: {xScale(p.date)}px"
               size="sm"
               on:click={(e) => {
                 e.stopPropagation();
-                markerDates = markerDates.filter((d) => d !== date);
+                markerPoints = markerPoints.filter((p2) => p !== p2);
               }}
             >
               Remove
@@ -767,6 +780,8 @@
     </AreaChart>
   </div>
 </Preview>
+
+<Blockquote>Click to add/remove markers</Blockquote>
 
 <h2>Custom tooltip</h2>
 
