@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.94.2
+
+### Patch Changes
+
+- fix: Use correct `_` instead of `,` grid-col-[...] separator for custom values. Fixes Tailwind 4 compatability ([`90a12f4`](https://github.com/techniq/layerchart/commit/90a12f41409a0b5d9ab830c2146c41b06744681a))
+
 ## 0.94.1
 
 ### Patch Changes
