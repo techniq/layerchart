@@ -113,6 +113,10 @@
 
   let highlightSeriesKey: (typeof series)[number]['key'] | null = null;
 
+  function setHighlightSeriesKey(seriesKey: typeof highlightSeriesKey) {
+    highlightSeriesKey = seriesKey ?? null;
+  }
+
   function getPointsProps(s: (typeof series)[number], i: number) {
     const pointsProps: ComponentProps<Points> = {
       data: s.data,
@@ -229,6 +233,7 @@
     visibleSeries,
     getLabelsProps,
     getPointsProps,
+    setHighlightSeriesKey,
   }}
   {@const activeSeries = tooltip.data
     ? (series.find((s) => s.key === tooltip.data.seriesKey) ?? series[0])
@@ -349,12 +354,16 @@
             label={typeof config.x === 'string' ? config.x : 'x'}
             value={x(data)}
             {format}
+            onpointerenter={() => (highlightSeriesKey = activeSeries?.key ?? null)}
+            onpointerleave={() => (highlightSeriesKey = null)}
             {...props.tooltip?.item}
           />
           <Tooltip.Item
             label={typeof config.y === 'string' ? config.y : 'y'}
             value={y(data)}
             {format}
+            onpointerenter={() => (highlightSeriesKey = activeSeries?.key ?? null)}
+            onpointerleave={() => (highlightSeriesKey = null)}
             {...props.tooltip?.item}
           />
           {#if config.r}
@@ -362,6 +371,8 @@
               label={typeof config.r === 'string' ? config.r : 'r'}
               value={r(data)}
               {format}
+              onpointerenter={() => (highlightSeriesKey = activeSeries?.key ?? null)}
+              onpointerleave={() => (highlightSeriesKey = null)}
               {...props.tooltip?.item}
             />
           {/if}

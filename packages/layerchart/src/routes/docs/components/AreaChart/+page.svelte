@@ -837,7 +837,7 @@
       {debug}
       tooltip={{ locked: lockedTooltip }}
     >
-      <svelte:fragment slot="tooltip" let:x let:y let:series>
+      <svelte:fragment slot="tooltip" let:x let:y let:series let:setHighlightSeriesKey>
         <Tooltip.Root pointerEvents let:data>
           <Tooltip.Header>
             {format(x(data), PeriodType.Day)}
@@ -847,7 +847,12 @@
             {#each series as s}
               {@const valueAccessor = accessor(s.value ?? s.key)}
               {@const value = Math.abs(valueAccessor(data))}
-              <Tooltip.Item label={s.key} color={s.color}>
+              <Tooltip.Item
+                label={s.key}
+                color={s.color}
+                onpointerenter={() => setHighlightSeriesKey(s.key)}
+                onpointerleave={() => setHighlightSeriesKey(null)}
+              >
                 {format(value)}
 
                 <Button
@@ -891,7 +896,7 @@
       {debug}
       tooltip={{ hideDelay: 1000 }}
     >
-      <svelte:fragment slot="tooltip" let:x let:y let:series let:height>
+      <svelte:fragment slot="tooltip" let:x let:y let:series let:height let:setHighlightSeriesKey>
         <Tooltip.Root x="data" y={height + 24} pointerEvents let:data>
           <Tooltip.Header>
             {format(x(data), PeriodType.Day)}
@@ -901,7 +906,12 @@
             {#each series as s}
               {@const valueAccessor = accessor(s.value ?? s.key)}
               {@const value = valueAccessor(data)}
-              <Tooltip.Item label={s.key} color={s.color}>
+              <Tooltip.Item
+                label={s.key}
+                color={s.color}
+                onpointerenter={() => setHighlightSeriesKey(s.key)}
+                onpointerleave={() => setHighlightSeriesKey(null)}
+              >
                 {format(value)}
               </Tooltip.Item>
             {/each}
