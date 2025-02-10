@@ -101,7 +101,7 @@
   /** Similar to d3-selection's raise, re-insert the e.target as the last child of its parent, so to be the top-most element */
   export let raiseTarget = false;
 
-  /** Lock tooltip (keep open, do not update on mouse movement).  Allows for kicking on tooltip */
+  /** Lock tooltip (keep open, do not update on mouse movement).  Allows for clicking on tooltip */
   export let locked = false;
 
   /** quadtree search radius
@@ -124,6 +124,10 @@
   });
   setTooltipContext(tooltip);
 
+  /** Delay in ms before hiding tooltip */
+  export let hideDelay = 0;
+
+  let isHoveringTooltip = false;
   let hideTimeoutId: NodeJS.Timeout;
 
   $: bisectX = bisector((d: any) => {
@@ -175,7 +179,9 @@
 
   function showTooltip(e: PointerEvent, tooltipData?: any) {
     // Cancel hiding tooltip if from previous event loop
-    clearTimeout(hideTimeoutId);
+    if (hideTimeoutId) {
+      clearTimeout(hideTimeoutId);
+    }
 
     if (locked) {
       // Ignore (keep current position / data)
@@ -294,9 +300,23 @@
     }
 
     // Wait an event loop tick in case `showTooltip` is called immediately on another element, to allow tweeneing (ex. moving between bands/bars)
+    // Additional hideDelay can be configured to extend this delay further
     hideTimeoutId = setTimeout(() => {
-      $tooltip = { ...$tooltip, data: null };
-    });
+      if (!isHoveringTooltip) {
+        $tooltip = { ...$tooltip, data: null };
+      }
+    }, hideDelay);
+  }
+
+  function handleTooltipHover(hovering: boolean) {
+    isHoveringTooltip = hovering;
+    if (hovering && hideTimeoutId) {
+      // Cancel hiding if user hovers over tooltip
+      clearTimeout(hideTimeoutId);
+    } else if (!hovering) {
+      // Hide when user leaves tooltip
+      hideTooltip();
+    }
   }
 
   let quadtree: Quadtree<[number, number]>;
@@ -418,7 +438,12 @@
     style:width="{$containerWidth}px"
     style:height="{$containerHeight}px"
   >
-    <slot tooltip={$tooltip} />
+    <div
+      on:pointerenter={() => handleTooltipHover(true)}
+      on:pointerleave={() => handleTooltipHover(false)}
+    >
+      <slot tooltip={$tooltip} />
+    </div>
 
     {#if mode === 'voronoi'}
       <Svg>
