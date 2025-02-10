@@ -9,6 +9,10 @@
   export let valueAlign: 'left' | 'right' | 'center' = 'left';
   export let color: string | undefined = undefined;
 
+  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
+  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
+
   export let classes: {
     root?: string;
     label?: string;
@@ -17,7 +21,13 @@
   } = {};
 </script>
 
-<div class={cls('contents', classes.root, $$props.class)} {...$$restProps}>
+<div
+  class={cls('contents', classes.root, $$props.class)}
+  on:click={onclick}
+  on:pointerenter={onpointerenter}
+  on:pointerleave={onpointerleave}
+  {...$$restProps}
+>
   <div class={cls('label', 'flex items-center gap-2 whitespace-nowrap', classes.label)}>
     {#if color}
       <div
