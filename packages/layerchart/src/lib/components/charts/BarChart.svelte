@@ -9,6 +9,7 @@
 
   import Axis from '../Axis.svelte';
   import Bars from '../Bars.svelte';
+  import BrushContext from '../BrushContext.svelte';
   import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import Grid from '../Grid.svelte';
@@ -33,6 +34,7 @@
 
   interface $$Props extends ChartProps {
     axis?: typeof axis;
+    brush?: typeof brush;
     debug?: typeof debug;
     grid?: typeof grid;
     bandPadding?: typeof bandPadding;
@@ -54,6 +56,9 @@
   export let data: $$Props['data'] = [];
   export let x: Accessor<TData> = undefined;
   export let y: Accessor<TData> = undefined;
+
+  /** Set xDomain.  Useful for external brush control */
+  export let xDomain: ComponentProps<typeof BrushContext>['xDomain'] = undefined;
 
   export let orientation: 'vertical' | 'horizontal' = 'vertical';
   $: isVertical = orientation === 'vertical';
@@ -81,6 +86,7 @@
   $: groupSeries = seriesLayout === 'group';
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
+  export let brush: ComponentProps<BrushContext> | boolean = false;
   export let rule: ComponentProps<Rule> | boolean = true;
   export let grid: ComponentProps<Grid> | boolean = true;
   export let labels: ComponentProps<Labels> | boolean = false;
@@ -130,14 +136,13 @@
   }
 
   export let props: {
-    xAxis?: Partial<ComponentProps<Axis>>;
-    yAxis?: Partial<ComponentProps<Axis>>;
-    grid?: Partial<ComponentProps<Grid>>;
-    rule?: Partial<ComponentProps<Rule>>;
     bars?: Partial<ComponentProps<Bars>>;
+    brush?: Partial<ComponentProps<BrushContext>>;
+    grid?: Partial<ComponentProps<Grid>>;
     legend?: Partial<ComponentProps<Legend>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
+    rule?: Partial<ComponentProps<Rule>>;
     tooltip?: {
       context?: Partial<ComponentProps<Tooltip.Context>>;
       root?: Partial<ComponentProps<Tooltip.Root>>;
@@ -147,6 +152,8 @@
       separator?: Partial<ComponentProps<Tooltip.Separator>>;
       hideTotal?: boolean;
     };
+    xAxis?: Partial<ComponentProps<Axis>>;
+    yAxis?: Partial<ComponentProps<Axis>>;
   } = {};
 
   export let renderContext: 'svg' | 'canvas' = 'svg';
@@ -278,6 +285,8 @@
     );
   });
 
+  $: brushProps = { ...(typeof brush === 'object' ? brush : null), ...props.brush };
+
   if (profile) {
     console.time('BarChart render');
     onMount(() => {
@@ -321,6 +330,22 @@
         ...props.tooltip?.context,
         ...$$props.tooltip,
       }}
+  brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
+    ? {
+        axis: 'x',
+        // resetOnEnd: true,
+        xDomain,
+        ...brushProps,
+        onchange: (e) => {
+          console.log('change', e.xDomain);
+          brushProps.onchange?.(e);
+        },
+        onbrushend: (e) => {
+          xDomain = e.xDomain;
+          brushProps.onbrushend?.(e);
+        },
+      }
+    : false}
   let:x
   let:xScale
   let:y
