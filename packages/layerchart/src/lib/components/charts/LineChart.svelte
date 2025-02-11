@@ -75,6 +75,9 @@
   export let points: ComponentProps<Points> | boolean = false;
   export let rule: ComponentProps<Rule> | boolean = true;
 
+  /** Expose tooltip context for external access */
+  export let tooltipContext: ComponentProps<Tooltip.Context>['tooltip'] = undefined;
+
   /** Event dispatched with current tooltip data */
   export let ontooltipclick: (e: MouseEvent, details: { data: any }) => void = () => {};
 
@@ -232,6 +235,7 @@
         ...props.tooltip?.context,
         ...$$props.tooltip,
       }}
+  bind:tooltipContext
   brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
     ? {
         axis: 'x',

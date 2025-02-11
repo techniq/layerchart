@@ -97,6 +97,9 @@
   /** Center chart.  Override and use `props.group` for more control */
   export let center = placement === 'center';
 
+  /** Expose tooltip context for external access */
+  export let tooltipContext: ComponentProps<Tooltip.Context>['tooltip'] = undefined;
+
   // TODO: Not usable with manual tooltip / arc path.  Use `onarcclick`?
   /** Event dispatched with current tooltip data */
   export let ontooltipclick: (e: MouseEvent, detail: { data: any }) => void = () => {};
@@ -181,6 +184,7 @@
   padding={{ bottom: legend === true ? 32 : 0 }}
   {...$$restProps}
   tooltip={props.tooltip?.context}
+  bind:tooltipContext
   let:x
   let:xScale
   let:y

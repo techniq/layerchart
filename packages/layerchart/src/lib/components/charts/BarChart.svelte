@@ -93,6 +93,9 @@
   /** Padding between series items within bars when using 'seriesLayout="stack"' */
   export let stackPadding = 0;
 
+  /** Expose tooltip context for external access */
+  export let tooltipContext: ComponentProps<Tooltip.Context>['tooltip'] = undefined;
+
   /** Event dispatched with current tooltip data */
   export let ontooltipclick: (e: MouseEvent, detail: { data: any }) => void = () => {};
 
@@ -321,6 +324,7 @@
         ...props.tooltip?.context,
         ...$$props.tooltip,
       }}
+  bind:tooltipContext
   let:x
   let:xScale
   let:y
