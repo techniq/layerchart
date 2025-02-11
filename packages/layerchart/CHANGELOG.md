@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.96.0
+
+### Minor Changes
+
+- feat(AreaChart|BarChart|LineChart|PieChart|ScatterChart): Expose `tooltipContext` to enable `bind:` usage for external access ([#394](https://github.com/techniq/layerchart/pull/394))
+
 ## 0.95.0
 
 ### Minor Changes
