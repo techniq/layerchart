@@ -42,13 +42,12 @@
 
 <script lang="ts">
   import { extent, min, max } from 'd3-array';
-  import { clamp } from '@layerstack/utils';
+  import { clamp, localPoint } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import { Logger } from '@layerstack/utils';
 
   import { chartContext } from './ChartContext.svelte';
 
-  import { localPoint } from '../utils/event.js';
   import type { DomainType } from '../utils/scales.js';
   import { add } from '../utils/math.js';
   import type { HTMLAttributes } from 'svelte/elements';
@@ -143,7 +142,7 @@
       logger.debug('drag start');
       e.stopPropagation();
 
-      const startPoint = localPoint(rootEl, e);
+      const startPoint = localPoint(e, rootEl);
 
       if (
         startPoint &&
@@ -165,7 +164,7 @@
       onbrushstart({ xDomain, yDomain });
 
       const onPointerMove = (e: PointerEvent) => {
-        const currentPoint = localPoint(rootEl, e);
+        const currentPoint = localPoint(e, rootEl);
         fn(start, {
           x: $xScale.invert?.(currentPoint?.x ?? 0),
           y: $yScale.invert?.(currentPoint?.y ?? 0),
@@ -175,7 +174,7 @@
       };
 
       const onPointerUp = (e: PointerEvent) => {
-        const currentPoint = localPoint(rootEl, e);
+        const currentPoint = localPoint(e, rootEl);
         const xPointDelta = Math.abs((startPoint?.x ?? 0) - (currentPoint?.x ?? 0));
         const yPointDelta = Math.abs((startPoint?.y ?? 0) - (currentPoint?.y ?? 0));
 

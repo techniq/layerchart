@@ -47,7 +47,7 @@
   import { writable } from 'svelte/store';
   import { bisector, max, min } from 'd3-array';
   import { quadtree as d3Quadtree, type Quadtree } from 'd3-quadtree';
-  import { sortFunc } from '@layerstack/utils';
+  import { sortFunc, localPoint } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Svg from './../layout/Svg.svelte';
@@ -55,7 +55,6 @@
   import ChartClipPath from './../ChartClipPath.svelte';
   import Voronoi from './../Voronoi.svelte';
 
-  import { localPoint } from '$lib/utils/event.js';
   import { isScaleBand, scaleInvert } from '$lib/utils/scales.js';
   import { cartesianToPolar } from '$lib/utils/math.js';
   import { quadtreeRects } from '$lib/utils/quadtree.js';
@@ -189,7 +188,7 @@
     }
 
     const referenceNode = (e.target as Element).closest('.layercake-container')!;
-    const point = localPoint(referenceNode, e);
+    const point = localPoint(e, referenceNode);
     const pointerX = point?.x ?? 0;
     const pointerY = point?.y ?? 0;
 

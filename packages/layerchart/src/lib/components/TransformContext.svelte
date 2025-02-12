@@ -56,6 +56,7 @@
 <script lang="ts">
   import { chartContext } from './ChartContext.svelte';
   import { motionStore, type MotionOptions, motionFinishHandler } from '$lib/stores/motionStore.js';
+  import { localPoint } from '@layerstack/utils';
 
   const { width, height } = chartContext();
 
@@ -162,7 +163,7 @@
     ondragstart?.();
   }
 
-  function onPointerMove(e: PointerEvent) {
+  function onPointerMove(e: PointerEvent & { currentTarget: HTMLDivElement }) {
     if (!pointerDown) return;
 
     e.preventDefault(); // Stop text selection
@@ -178,7 +179,6 @@
 
     if ($dragging) {
       e.stopPropagation(); // Stop tooltip from trigging (along with `capture: true`)
-      // @ts-expect-error
       e.currentTarget?.setPointerCapture(e.pointerId);
 
       setTranslate(
@@ -279,13 +279,6 @@
   export function setScale(value: number, options?: MotionOptions) {
     // @ts-expect-error
     scaling.handle(scale.set(value, options));
-  }
-
-  function localPoint(e: PointerEvent | MouseEvent | WheelEvent) {
-    return {
-      x: e.offsetX,
-      y: e.offsetY,
-    };
   }
 
   $: center = { x: $width / 2, y: $height / 2 };

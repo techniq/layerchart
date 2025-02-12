@@ -38,14 +38,13 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { cls } from '@layerstack/tailwind';
-  import { Logger } from '@layerstack/utils';
+  import { Logger, localPoint } from '@layerstack/utils';
 
   import { setRenderContext } from '../Chart.svelte';
   import { chartContext } from '../ChartContext.svelte';
   import { transformContext } from '../TransformContext.svelte';
   import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
-  import { localPoint } from '../../utils/event.js';
   const { width, height, containerWidth, containerHeight, padding } = chartContext();
 
   /** The `<canvas>` tag. Useful for bindings. */
@@ -104,7 +103,7 @@
   const componentByColor = new Map<string, ComponentRender>();
 
   function getPointerComponent(e: PointerEvent | MouseEvent | TouchEvent) {
-    const { x, y } = localPoint(e.target as HTMLCanvasElement, e) ?? { x: 0, y: 0 };
+    const { x, y } = localPoint(e);
     const color = getPixelColor(hitCanvasContext!, x, y);
     const colorKey = getColorStr(color);
     const component = componentByColor.get(colorKey);
