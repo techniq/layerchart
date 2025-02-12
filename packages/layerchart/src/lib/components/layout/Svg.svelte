@@ -37,7 +37,6 @@
   export let center: boolean | 'x' | 'y' = false;
 
   const { containerWidth, containerHeight, width, height, padding } = chartContext();
-
   const { mode, scale, translate } = transformContext();
 
   $: transform = center

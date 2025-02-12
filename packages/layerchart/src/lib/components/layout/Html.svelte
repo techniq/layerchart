@@ -1,6 +1,7 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { chartContext } from '../ChartContext.svelte';
+  import { transformContext } from '../TransformContext.svelte';
 
   /** The layer's outermost `<div>` tag. Useful for bindings. */
   export let element: HTMLDivElement | undefined = undefined;
@@ -23,9 +24,27 @@
   /** A string passed to the `aria-describedby` property on the `<div>` tag. */
   export let describedBy: string | undefined = undefined;
 
-  const { padding } = chartContext();
+  /**
+   * Translate children to center (useful for radial layouts)
+   */
+  export let center: boolean | 'x' | 'y' = false;
 
   $: roleVal = role || (label || labelledBy || describedBy ? 'figure' : undefined);
+
+  const { width, height, padding } = chartContext();
+  const { mode, scale, translate } = transformContext();
+
+  $: transform = center
+    ? `translate(${center === 'x' || center === true ? $width / 2 : 0}, ${center === 'y' || center === true ? $height / 2 : 0})`
+    : '';
+  $: if (mode === 'canvas') {
+    const center = { x: $width / 2, y: $height / 2 };
+    const newTranslate = {
+      x: $translate.x * $scale + center.x - center.x * $scale,
+      y: $translate.y * $scale + center.y - center.y * $scale,
+    };
+    transform = `translate(${newTranslate.x}px,${newTranslate.y}px) scale(${$scale})`;
+  }
 </script>
 
 <div
@@ -36,6 +55,8 @@
     pointerEvents === false && 'pointer-events-none',
     $$props.class
   )}
+  style:transform
+  style:transform-origin="top left"
   style:z-index={zIndex}
   style:pointer-events={pointerEvents === false ? 'none' : null}
   style:top="{$padding.top}px"
