@@ -112,4 +112,23 @@
   >
     <slot />
   </g>
+{:else}
+  <div
+    style:transform
+    {...$$restProps}
+    on:click={onclick}
+    on:dblclick={ondblclick}
+    on:pointerenter={onpointerenter}
+    on:pointermove={onpointermove}
+    on:pointerleave={onpointerleave}
+    on:pointerdown={onpointerdown}
+    on:touchmove={(e) => {
+      if (preventTouchMove) {
+        // Prevent touch to not interfer with pointer
+        e.preventDefault();
+      }
+    }}
+  >
+    <slot />
+  </div>
 {/if}
