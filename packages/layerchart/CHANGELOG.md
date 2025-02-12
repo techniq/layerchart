@@ -2,15 +2,13 @@
 
 ## 0.98.0
 
-### Minor Changes
+### Patch Changes
 
 - fix(TransformContext): Fix drag occasional jumping when `<Html>` is the top layer ([`f54a603`](https://github.com/techniq/layerchart/commit/f54a603ececfee32a66aee44b0b533a1da837d64))
 
-### Patch Changes
+- fix(Group): Apply `display:absolute` when within `html` render context ([`7036725`](https://github.com/techniq/layerchart/commit/70367253036fbd725fcd10065d265cde2d866afc))
 
 - refactor: Use @layerstack/utils `localPoint()` ([`f54a603`](https://github.com/techniq/layerchart/commit/f54a603ececfee32a66aee44b0b533a1da837d64))
-
-- fix(Group): Apply `display:absolute` when within `html` render context ([`7036725`](https://github.com/techniq/layerchart/commit/70367253036fbd725fcd10065d265cde2d866afc))
 
 ## 0.97.0
 
