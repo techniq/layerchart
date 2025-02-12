@@ -3,7 +3,7 @@
   import { hierarchy, type HierarchyNode } from 'd3-hierarchy';
   import { curveBumpX, curveBumpY, curveStep, curveStepBefore, curveStepAfter } from 'd3-shape';
 
-  import { Canvas, Chart, Group, Link, Rect, Svg, Text, Tree } from 'layerchart';
+  import { Canvas, Chart, Group, Html, Link, Rect, Svg, Text, Tree } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
@@ -42,8 +42,6 @@
 </script>
 
 <h1>Examples</h1>
-
-<h2>Basic</h2>
 
 <div class="grid gap-1 mb-4">
   <div class="grid grid-cols-[1fr_2fr_1fr] gap-1">
@@ -87,6 +85,8 @@
   </div>
 </div>
 
+<h2>Basic</h2>
+
 <Preview data={complexDataHierarchy}>
   <div class="h-[800px] p-4 border rounded overflow-hidden relative">
     <Chart
@@ -97,8 +97,8 @@
     >
       <TransformControls orientation="horizontal" class="-m-2" />
 
-      <svelte:component this={Context}>
-        <Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : undefined}>
+      <Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : undefined}>
+        <svelte:component this={Context}>
           {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
             <Link
               data={link}
@@ -154,8 +154,66 @@
               />
             </Group>
           {/each}
-        </Tree>
-      </svelte:component>
+        </svelte:component>
+      </Tree>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Html nodes</h2>
+
+<Preview data={complexDataHierarchy}>
+  <div class="h-[800px] p-4 border rounded overflow-hidden relative">
+    <Chart
+      data={complexDataHierarchy}
+      padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}
+      transform={{ mode: 'canvas', tweened: { duration: 800, easing: cubicOut } }}
+      let:transform
+    >
+      <TransformControls orientation="horizontal" class="-m-2" />
+
+      <Tree let:nodes let:links {orientation} nodeSize={layout === 'node' ? nodeSize : undefined}>
+        <svelte:component this={Context}>
+          {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
+            <Link
+              data={link}
+              {orientation}
+              {curve}
+              tweened
+              class="stroke-surface-content opacity-20"
+            />
+          {/each}
+        </svelte:component>
+
+        <Html>
+          {#each nodes as node (getNodeKey(node))}
+            {@const x = (orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
+            {@const y = (orientation === 'horizontal' ? node.x : node.y) - nodeHeight / 2}
+            <div
+              class={cls(
+                'absolute bg-surface-100 rounded-full outline outline-1',
+                'text-xs text-center',
+                node.data.children
+                  ? 'outline-primary hover:outline-2 text-primary cursor-pointer'
+                  : 'outline-secondary text-secondary outline-dashed'
+              )}
+              style:transform="translate({x}px, {y}px)"
+              style:width="{nodeWidth}px"
+              style:height="{nodeHeight}px"
+              onclick={() => {
+                if (expandedNodeNames.includes(node.data.name)) {
+                  expandedNodeNames = expandedNodeNames.filter((name) => name !== node.data.name);
+                } else {
+                  expandedNodeNames = [...expandedNodeNames, node.data.name];
+                }
+                selected = node;
+              }}
+            >
+              {node.data.name}
+            </div>
+          {/each}
+        </Html>
+      </Tree>
     </Chart>
   </div>
 </Preview>
