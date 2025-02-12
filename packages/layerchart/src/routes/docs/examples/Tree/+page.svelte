@@ -195,7 +195,7 @@
               tweened
               style="width: {nodeWidth}px; height: {nodeHeight}px;"
               class={cls(
-                'absolute bg-surface-100 rounded-full outline outline-1',
+                'bg-surface-100 rounded-full outline outline-1',
                 'text-xs text-center',
                 node.data.children
                   ? 'outline-primary hover:outline-2 text-primary cursor-pointer'

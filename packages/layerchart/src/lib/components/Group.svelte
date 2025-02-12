@@ -1,12 +1,12 @@
 <script lang="ts">
   import { onDestroy, tick } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
+  import { cls } from '@layerstack/tailwind';
 
   import { getRenderContext } from './Chart.svelte';
   import { chartContext } from './ChartContext.svelte';
   import { motionStore } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
-
   const { width, height } = chartContext();
 
   /**
@@ -116,6 +116,7 @@
   <div
     style:transform
     {...$$restProps}
+    class={cls('absolute', $$restProps.class)}
     on:click={onclick}
     on:dblclick={ondblclick}
     on:pointerenter={onpointerenter}
