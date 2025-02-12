@@ -102,7 +102,7 @@
       'Graticule',
       'TileImage',
     ],
-    Layout: ['ForceSimulation', 'Pack', 'Partition', 'Sankey', 'Treemap'],
+    Layout: ['ForceSimulation', 'Pack', 'Partition', 'Sankey', 'Tree', 'Treemap'],
     Clipping: ['ClipPath', 'ChartClipPath', 'CircleClipPath', 'RectClipPath'],
     Other: [
       'Blur',
