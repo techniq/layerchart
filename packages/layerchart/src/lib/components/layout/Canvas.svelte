@@ -45,7 +45,6 @@
   import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
   import { localPoint } from '../../utils/event.js';
-  import { tooltipContext } from '../tooltip/TooltipContext.svelte';
 
   const { width, height, containerWidth, containerHeight, padding } = chartContext();
 
@@ -93,7 +92,6 @@
   let frameId: number | undefined;
 
   const { mode, scale, translate, dragging, moving } = transformContext();
-  const tooltip = tooltipContext();
 
   /**
    * HitCanvas
