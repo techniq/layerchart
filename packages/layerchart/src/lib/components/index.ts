@@ -1,5 +1,5 @@
 // Re-export for easy access (Svg and Canvas are provided by LayerChart)
-export { Html, WebGL } from 'layercake';
+export { WebGL } from 'layercake';
 
 export * from './charts/index.js';
 
@@ -34,6 +34,7 @@ export { default as Graticule } from './Graticule.svelte';
 export { default as Grid } from './Grid.svelte';
 export { default as Group } from './Group.svelte';
 export { default as Highlight } from './Highlight.svelte';
+export { default as Html } from './layout/Html.svelte';
 export { default as Hull } from './Hull.svelte';
 export { default as Labels } from './Labels.svelte';
 export { default as Legend } from './Legend.svelte';

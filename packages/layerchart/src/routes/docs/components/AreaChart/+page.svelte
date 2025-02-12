@@ -4,6 +4,7 @@
     Area,
     Axis,
     Highlight,
+    Html,
     LinearGradient,
     Svg,
     Spline,
@@ -23,7 +24,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
   import type { DomainType } from '$lib/utils/scales.js';
-  import Html from 'layerchart/components/layout/Html.svelte';
   import Blockquote from 'layerchart/docs/Blockquote.svelte';
   import type { ComponentProps } from 'svelte';
 
