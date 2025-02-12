@@ -11,6 +11,7 @@
     type SpringOptions,
     type TweenedOptions,
   } from '$lib/stores/motionStore.js';
+  import { getRenderContext } from './Chart.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
@@ -60,8 +61,8 @@
     tweened_height.set(height);
   });
 
+  const renderContext = getRenderContext();
   const canvasContext = getCanvasContext();
-  const renderContext = canvasContext ? 'canvas' : 'svg';
 
   function render(
     ctx: CanvasRenderingContext2D,

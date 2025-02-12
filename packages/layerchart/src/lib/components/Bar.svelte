@@ -5,11 +5,12 @@
   import Rect from './Rect.svelte';
   import Spline from './Spline.svelte';
 
+  import { getRenderContext } from './Chart.svelte';
+  import { getCanvasContext } from './layout/Canvas.svelte';
   import { createDimensionGetter, type Insets } from '../utils/rect.js';
   import { isScaleBand } from '../utils/scales.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { greatestAbs } from '@layerstack/utils';
-  import { getCanvasContext } from './layout/Canvas.svelte';
 
   const { x: xContext, y: yContext, xScale } = chartContext();
 
@@ -113,8 +114,8 @@
     .split('\n')
     .join('');
 
+  const renderContext = getRenderContext();
   const canvasContext = getCanvasContext();
-  const renderContext = canvasContext ? 'canvas' : 'svg';
 </script>
 
 {#if _rounded === 'all' || _rounded === 'none' || radius === 0}

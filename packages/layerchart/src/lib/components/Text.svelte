@@ -5,9 +5,10 @@
   import { objectId } from '@layerstack/utils/object';
   import { merge } from 'lodash-es';
 
+  import { getRenderContext } from './Chart.svelte';
+  import { getCanvasContext } from './layout/Canvas.svelte';
   import { getStringWidth } from '$lib/utils/string.js';
   import { motionStore } from '$lib/stores/motionStore.js';
-  import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderText, type ComputedStylesOptions } from '../utils/canvas.js';
 
   /*
@@ -180,8 +181,8 @@
     tweened_y.set(y);
   });
 
+  const renderContext = getRenderContext();
   const canvasContext = getCanvasContext();
-  const renderContext = canvasContext ? 'canvas' : 'svg';
 
   function render(
     ctx: CanvasRenderingContext2D,

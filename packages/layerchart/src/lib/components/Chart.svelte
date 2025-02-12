@@ -1,3 +1,21 @@
+<script lang="ts" context="module">
+  import { getContext, setContext } from 'svelte';
+
+  export const renderContextKey = Symbol();
+
+  type RenderContext = 'canvas' | 'svg' | 'html';
+
+  /** Get render context.  Useful to conditionally render components based on the render context. */
+  export function getRenderContext() {
+    return getContext<RenderContext>(renderContextKey);
+  }
+
+  /** Set by Canavs, Html, or Svg render/layout component */
+  export function setRenderContext(context: RenderContext) {
+    setContext(renderContextKey, context);
+  }
+</script>
+
 <script lang="ts" generics="TData">
   import { onMount, type ComponentProps } from 'svelte';
   import { LayerCake } from 'layercake';

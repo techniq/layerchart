@@ -1,5 +1,7 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
+
+  import { setRenderContext } from '../Chart.svelte';
   import { chartContext } from '../ChartContext.svelte';
   import { transformContext } from '../TransformContext.svelte';
 
@@ -45,6 +47,8 @@
     };
     transform = `translate(${newTranslate.x}px,${newTranslate.y}px) scale(${$scale})`;
   }
+
+  setRenderContext('html');
 </script>
 
 <div

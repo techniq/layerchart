@@ -10,12 +10,13 @@
   import { cls } from '@layerstack/tailwind';
   import { merge } from 'lodash-es';
 
+  import { getRenderContext } from './Chart.svelte';
+  import { getCanvasContext } from './layout/Canvas.svelte';
   import { geoContext } from './GeoContext.svelte';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoCurvePath } from '$lib/utils/geo.js';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { getCanvasContext } from './layout/Canvas.svelte';
   import { objectId } from '@layerstack/utils/object';
 
   export let geojson: GeoPermissibleObjects | null | undefined = undefined;
@@ -71,8 +72,8 @@
     geoPath = geoCurvePath(_projection, curve);
   }
 
+  const renderContext = getRenderContext();
   const canvasContext = getCanvasContext();
-  const renderContext = canvasContext ? 'canvas' : 'svg';
 
   function render(
     ctx: CanvasRenderingContext2D,

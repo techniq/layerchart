@@ -5,6 +5,7 @@
   import Circle from './Circle.svelte';
   import Group from './Group.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
+  import { getRenderContext } from './Chart.svelte';
 
   /** Latitude */
   export let lat: number;
@@ -15,8 +16,8 @@
 
   $: [x, y] = $geo([long, lat]) ?? [0, 0];
 
+  const renderContext = getRenderContext();
   const canvasContext = getCanvasContext();
-  const renderContext = canvasContext ? 'canvas' : 'svg';
 </script>
 
 {#if renderContext === 'svg'}

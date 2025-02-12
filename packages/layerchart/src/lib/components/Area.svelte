@@ -12,13 +12,13 @@
 
   import { motionStore } from '$lib/stores/motionStore.js';
 
+  import { getRenderContext } from './Chart.svelte';
   import { chartContext } from './ChartContext.svelte';
   import Spline from './Spline.svelte';
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-
   const {
     data: contextData,
     xScale,
@@ -143,8 +143,8 @@
     tweened_d.set(d ?? '');
   }
 
+  const renderContext = getRenderContext();
   const canvasContext = getCanvasContext();
-  const renderContext = canvasContext ? 'canvas' : 'svg';
 
   function render(
     ctx: CanvasRenderingContext2D,

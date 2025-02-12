@@ -25,6 +25,7 @@
   import { flattenPathData } from '../utils/path.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import { getRenderContext } from './Chart.svelte';
 
   const {
     data: contextData,
@@ -174,8 +175,8 @@
     key = Symbol();
   }
 
+  const renderContext = getRenderContext();
   const canvasContext = getCanvasContext();
-  const renderContext = canvasContext ? 'canvas' : 'svg';
 
   function render(
     ctx: CanvasRenderingContext2D,

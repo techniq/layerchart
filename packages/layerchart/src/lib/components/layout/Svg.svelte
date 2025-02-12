@@ -1,6 +1,7 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
 
+  import { setRenderContext } from '../Chart.svelte';
   import { chartContext } from '../ChartContext.svelte';
   import { transformContext } from '../TransformContext.svelte';
 
@@ -50,6 +51,8 @@
     };
     transform = `translate(${newTranslate.x},${newTranslate.y}) scale(${$scale})`;
   }
+
+  setRenderContext('svg');
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->

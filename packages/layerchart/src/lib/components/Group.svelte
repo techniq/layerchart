@@ -2,6 +2,7 @@
   import { onDestroy, tick } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 
+  import { getRenderContext } from './Chart.svelte';
   import { chartContext } from './ChartContext.svelte';
   import { motionStore } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
@@ -50,11 +51,11 @@
 
   let transform: string | undefined = undefined;
   $: if (center || x != null || y != null) {
-    transform = `translate(${$tweened_x ?? 0}, ${$tweened_y ?? 0})`;
+    transform = `translate(${$tweened_x ?? 0}px, ${$tweened_y ?? 0}px)`;
   }
 
+  const renderContext = getRenderContext();
   const canvasContext = getCanvasContext();
-  const renderContext = canvasContext ? 'canvas' : 'svg';
 
   function render(ctx: CanvasRenderingContext2D) {
     ctx.translate($tweened_x ?? 0, $tweened_y ?? 0);
@@ -92,9 +93,9 @@
 {#if renderContext === 'canvas'}
   <slot />
 {:else if renderContext === 'svg'}
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- TODO: Find out why `<svelte:element this={renderContext === 'html' ? 'div' : 'g'}>` doesn't work for the SVG use case -->
   <g
-    {transform}
+    style:transform
     {...$$restProps}
     on:click={onclick}
     on:dblclick={ondblclick}

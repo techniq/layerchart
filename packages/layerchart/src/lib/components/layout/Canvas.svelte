@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  import { getContext, onDestroy, setContext } from 'svelte';
+  import { getContext, setContext } from 'svelte';
 
   type ComponentRender = {
     name: string;
@@ -36,16 +36,16 @@
 </script>
 
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { cls } from '@layerstack/tailwind';
   import { Logger } from '@layerstack/utils';
 
+  import { setRenderContext } from '../Chart.svelte';
   import { chartContext } from '../ChartContext.svelte';
   import { transformContext } from '../TransformContext.svelte';
   import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
   import { localPoint } from '../../utils/event.js';
-
   const { width, height, containerWidth, containerHeight, padding } = chartContext();
 
   /** The `<canvas>` tag. Useful for bindings. */
@@ -258,6 +258,7 @@
   }
 
   setCanvasContext(canvasContext);
+  setRenderContext('canvas');
 </script>
 
 <canvas

@@ -2,6 +2,7 @@
   import { onDestroy } from 'svelte';
   import { uniqueId } from '@layerstack/utils';
 
+  import { getRenderContext } from './Chart.svelte';
   import { chartContext } from './ChartContext.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { getComputedStyles } from '../utils/canvas.js';
@@ -34,8 +35,8 @@
 
   const { width, height, padding } = chartContext();
 
+  const renderContext = getRenderContext();
   const canvasContext = getCanvasContext();
-  const renderContext = canvasContext ? 'canvas' : 'svg';
 
   let canvasGradient: CanvasGradient;
 

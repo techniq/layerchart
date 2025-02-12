@@ -27,6 +27,7 @@
 
   import { objectId } from '@layerstack/utils/object';
 
+  import { getRenderContext } from './Chart.svelte';
   import { chartContext } from './ChartContext.svelte';
   import { motionStore } from '$lib/stores/motionStore.js';
   import { degreesToRadians } from '$lib/utils/math.js';
@@ -199,8 +200,8 @@
    */
   export let data: any = undefined;
 
+  const renderContext = getRenderContext();
   const canvasContext = getCanvasContext();
-  const renderContext = canvasContext ? 'canvas' : 'svg';
 
   function render(
     ctx: CanvasRenderingContext2D,

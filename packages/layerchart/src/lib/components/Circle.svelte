@@ -5,6 +5,7 @@
   import { objectId } from '@layerstack/utils/object';
   import { merge } from 'lodash-es';
 
+  import { getRenderContext } from './Chart.svelte';
   import { motionStore } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
@@ -45,8 +46,8 @@
     tweened_r.set(r);
   });
 
+  const renderContext = getRenderContext();
   const canvasContext = getCanvasContext();
-  const renderContext = canvasContext ? 'canvas' : 'svg';
 
   function render(
     ctx: CanvasRenderingContext2D,

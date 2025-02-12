@@ -11,6 +11,7 @@
   import Marker from './Marker.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
+  import { getRenderContext } from './Chart.svelte';
 
   export let x1: number;
   export let initialX1 = x1;
@@ -64,8 +65,8 @@
     tweened_y2.set(y2);
   });
 
+  const renderContext = getRenderContext();
   const canvasContext = getCanvasContext();
-  const renderContext = canvasContext ? 'canvas' : 'svg';
 
   function render(
     ctx: CanvasRenderingContext2D,
