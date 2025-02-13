@@ -58,7 +58,7 @@
   import { motionStore, type MotionOptions, motionFinishHandler } from '$lib/stores/motionStore.js';
   import { localPoint } from '@layerstack/utils';
 
-  const { width, height } = chartContext();
+  const { width, height, padding } = chartContext();
 
   export let mode: TransformMode = 'none';
 
@@ -112,11 +112,11 @@
   }
 
   export function zoomIn() {
-    scaleTo(1.25, { x: $width / 2, y: $height / 2 });
+    scaleTo(1.25, { x: ($width + $padding.left) / 2, y: ($height + $padding.top) / 2 });
   }
 
   export function zoomOut() {
-    scaleTo(0.8, { x: $width / 2, y: $height / 2 });
+    scaleTo(0.8, { x: ($width + $padding.left) / 2, y: ($height + $padding.top) / 2 });
   }
 
   export function translateCenter() {
@@ -245,12 +245,12 @@
 
     // Translate towards point (ex. mouse cursor/center) while zooming in/out
     const invertTransformPoint = {
-      x: (point.x - $translate.x) / currentScale,
-      y: (point.y - $translate.y) / currentScale,
+      x: (point.x - $padding.left - $translate.x) / currentScale,
+      y: (point.y - $padding.top - $translate.y) / currentScale,
     };
     const newTranslate = {
-      x: point.x - invertTransformPoint.x * newScale,
-      y: point.y - invertTransformPoint.y * newScale,
+      x: point.x - $padding.left - invertTransformPoint.x * newScale,
+      y: point.y - $padding.top - invertTransformPoint.y * newScale,
     };
     setTranslate(newTranslate, options);
   }

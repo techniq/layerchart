@@ -117,6 +117,7 @@
       let:transform
       let:width
       let:height
+      let:padding
     >
       {#if debug}
         <div class="absolute top-0 left-0 z-10 grid gap-1">
@@ -144,7 +145,8 @@
       </Svg>
 
       <Tooltip.Root let:data>
-        {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
+        {@const [longitude, latitude] =
+          projection.invert?.([tooltip.x - padding.left, tooltip.y - padding.top]) ?? []}
         <Tooltip.Header>{data.properties.name}</Tooltip.Header>
         <Tooltip.List>
           <Tooltip.Item label="longitude" value={longitude} format="decimal" />
