@@ -136,15 +136,15 @@
       );
     });
 
-    g = filterNodes ? g.filterNodes((nodeId) => filterNodes(nodeId, graph)) : graph;
+    g = filterNodes ? g.filterNodes((nodeId) => filterNodes(nodeId, graph!)) : graph!;
 
     dagre.layout(g);
 
     graph = g;
   }
 
-  $: graphNodes = graph.nodes().map((id) => graph.node(id));
-  $: graphEdges = graph.edges().map((edge) => ({ ...edge, ...graph.edge(edge) })) as Array<
+  $: graphNodes = graph!.nodes().map((id) => graph!.node(id));
+  $: graphEdges = graph!.edges().map((edge) => ({ ...edge, ...graph!.edge(edge) })) as Array<
     Edge & EdgeConfig & GraphEdge // `EdgeConfig` is excluded when inferred from usage
   >;
 </script>
