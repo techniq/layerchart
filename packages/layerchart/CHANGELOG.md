@@ -2,6 +2,16 @@
 
 ## 0.98.0
 
+### Minor Changes
+
+- breaking(TransformContext): Remove `translateOnScale` prop (always enabled now) ([#398](https://github.com/techniq/layerchart/pull/398))
+
+### Patch Changes
+
+- fix(TransformContext): Translate towards pointer position when scroll zooming and using `transform={{ mode: 'canvas' }}` (matching geo context applyTransform behavior) ([#398](https://github.com/techniq/layerchart/pull/398))
+
+## 0.98.0
+
 ### Patch Changes
 
 - fix(TransformContext): Fix drag occasional jumping when `<Html>` is the top layer ([`f54a603`](https://github.com/techniq/layerchart/commit/f54a603ececfee32a66aee44b0b533a1da837d64))
