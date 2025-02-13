@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.99.0
+
+### Minor Changes
+
+- feat(Dagre): Expose access to Dagre Graph instance via `bind:graph` ([`48bc672`](https://github.com/techniq/layerchart/commit/48bc6729d4339b924660f12202cb437a0dacb4b3))
+
 ## 0.98.2
 
 ### Patch Changes
