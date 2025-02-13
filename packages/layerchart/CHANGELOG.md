@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.98.2
+
+### Patch Changes
+
+- fix(TooltipContext): Bypass bounds checking when using `mode="manual"` (default) ([`160659e`](https://github.com/techniq/layerchart/commit/160659ebe226499edbf17809bc2a91c94db3cbb2))
+
 ## 0.98.1
 
 ### Patch Changes
