@@ -128,6 +128,7 @@
 
   let isHoveringTooltip = false;
   let hideTimeoutId: NodeJS.Timeout;
+  let tooltipContextNode: HTMLDivElement;
 
   $: bisectX = bisector((d: any) => {
     const value = $x(d);
@@ -187,20 +188,15 @@
       return;
     }
 
-    const referenceNode = (e.target as Element).closest('.layercake-container')!;
-    const point = localPoint(e, referenceNode);
-    const pointerX = point?.x ?? 0;
-    const pointerY = point?.y ?? 0;
+    const containerNode = (e.target as Element).closest('.layercake-container')!;
+    const point = localPoint(e, containerNode);
 
     if (
-      // @ts-expect-error
-      pointerX < e.currentTarget?.offsetLeft ||
-      // @ts-expect-error
-      pointerX > e.currentTarget?.offsetLeft + e.currentTarget?.offsetWidth ||
-      // @ts-expect-error
-      pointerY < e.currentTarget?.offsetTop ||
-      // @ts-expect-error
-      pointerY > e.currentTarget?.offsetTop + e.currentTarget?.offsetHeight
+      mode !== 'manual' &&
+      (point.x < tooltipContextNode.offsetLeft ||
+        point.x > tooltipContextNode.offsetLeft + tooltipContextNode.offsetWidth ||
+        point.y < tooltipContextNode.offsetTop ||
+        point.y > tooltipContextNode.offsetTop + tooltipContextNode.offsetHeight)
     ) {
       // Ignore if within padding of chart
       hideTooltip();
@@ -215,10 +211,10 @@
           let xValueAtPoint: any;
           if ($radial) {
             // Assume radial is always centered
-            const { radians } = cartesianToPolar(pointerX - $width / 2, pointerY - $height / 2);
+            const { radians } = cartesianToPolar(point.x - $width / 2, point.y - $height / 2);
             xValueAtPoint = scaleInvert($xScale, radians);
           } else {
-            xValueAtPoint = scaleInvert($xScale, pointerX - $padding.left);
+            xValueAtPoint = scaleInvert($xScale, point.x - $padding.left);
           }
 
           const index = bisectX($flatData, xValueAtPoint, 1);
@@ -230,7 +226,7 @@
 
         case 'bisect-y': {
           // `y` value at pointer coordinate
-          const yValueAtPoint = scaleInvert($yScale, pointerY - $padding.top);
+          const yValueAtPoint = scaleInvert($yScale, point.y - $padding.top);
 
           const index = bisectY($flatData, yValueAtPoint, 1);
           const previousValue = $flatData[index - 1];
@@ -241,8 +237,8 @@
 
         case 'bisect-band': {
           // `x` and `y` values at pointer coordinate
-          const xValueAtPoint = scaleInvert($xScale, pointerX);
-          const yValueAtPoint = scaleInvert($yScale, pointerY);
+          const xValueAtPoint = scaleInvert($xScale, point.x);
+          const yValueAtPoint = scaleInvert($yScale, point.y);
 
           if (isScaleBand($xScale)) {
             // Find point closest to pointer within the x band
@@ -269,7 +265,7 @@
         }
 
         case 'quadtree': {
-          tooltipData = quadtree.find(pointerX, pointerY, radius);
+          tooltipData = quadtree.find(point.x, point.y, radius);
           break;
         }
       }
@@ -282,8 +278,8 @@
 
       $tooltip = {
         ...$tooltip,
-        x: pointerX,
-        y: pointerY,
+        x: point.x,
+        y: point.y,
         data: tooltipData,
       };
     } else {
@@ -427,6 +423,7 @@
       onclick(e, { data: $tooltip?.data });
     }
   }}
+  bind:this={tooltipContextNode}
 >
   <!-- Rendering slot within TooltipContext to allow pointer events to bubble up (ex. Brush) -->
   <div
