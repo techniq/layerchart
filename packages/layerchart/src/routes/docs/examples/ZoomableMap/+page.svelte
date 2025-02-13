@@ -62,7 +62,6 @@
       }}
       transform={{
         initialScrollMode: 'none',
-        translateOnScale: true,
         tweened: { duration: 800, easing: cubicOut },
       }}
       let:projection
@@ -212,7 +211,6 @@
       }}
       transform={{
         initialScrollMode: 'none',
-        translateOnScale: true,
         tweened: { duration: 800, easing: cubicOut },
       }}
       let:projection

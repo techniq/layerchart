@@ -92,7 +92,10 @@
     <Chart
       data={complexDataHierarchy}
       padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}
-      transform={{ mode: 'canvas', tweened: { duration: 800, easing: cubicOut } }}
+      transform={{
+        mode: 'canvas',
+        tweened: { duration: 800, easing: cubicOut },
+      }}
       let:transform
     >
       <TransformControls orientation="horizontal" class="-m-2" />
@@ -167,7 +170,10 @@
     <Chart
       data={complexDataHierarchy}
       padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}
-      transform={{ mode: 'canvas', tweened: { duration: 800, easing: cubicOut } }}
+      transform={{
+        mode: 'canvas',
+        tweened: { duration: 800, easing: cubicOut },
+      }}
       let:transform
     >
       <TransformControls orientation="horizontal" class="-m-2" />

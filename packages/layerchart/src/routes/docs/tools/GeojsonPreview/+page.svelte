@@ -91,7 +91,6 @@
           applyTransform: ['translate', 'scale'],
         }}
         transform={{
-          translateOnScale: true,
           initialScrollMode: 'scale',
         }}
         padding={{ top: 8, bottom: 8, left: 8, right: 8 }}
