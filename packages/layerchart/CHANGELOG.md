@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.98.1
+
+### Patch Changes
+
+- fix(TransformContext): Account for Chart padding when zooming to point ([`2c2e06c`](https://github.com/techniq/layerchart/commit/2c2e06cf96c6f28f313633a0eecda9704455d042))
+
 ## 0.98.0
 
 ### Minor Changes
