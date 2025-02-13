@@ -84,7 +84,8 @@
   /** Filter nodes */
   export let filterNodes: (nodeId: string, graph: dagre.graphlib.Graph) => boolean = () => true;
 
-  let graph: dagre.graphlib.Graph;
+  /** Exposed to access to Dagre Graph instance via `bind:graph` */
+  export let graph: dagre.graphlib.Graph | undefined = undefined;
   $: {
     let g = new dagre.graphlib.Graph({ directed, multigraph, compound });
 
@@ -148,4 +149,4 @@
   >;
 </script>
 
-<slot nodes={graphNodes} edges={graphEdges} />
+<slot nodes={graphNodes} edges={graphEdges} {graph} />
