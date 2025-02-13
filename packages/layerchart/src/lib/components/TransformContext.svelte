@@ -61,22 +61,14 @@
   const { width, height } = chartContext();
 
   export let mode: TransformMode = 'none';
-  /** Translate towards point (ex. mouse cursor/center) while zooming in/out */
-  export let translateOnScale = false;
 
   export let spring: boolean | Parameters<typeof motionStore>[1]['spring'] = undefined;
   export let tweened: boolean | Parameters<typeof motionStore>[1]['tweened'] = undefined;
 
-  export let processTranslate = (
-    x: number,
-    y: number,
-    deltaX: number,
-    deltaY: number,
-    scale: number
-  ) => {
+  export let processTranslate = (x: number, y: number, deltaX: number, deltaY: number) => {
     return {
-      x: x + deltaX / scale,
-      y: y + deltaY / scale,
+      x: x + deltaX,
+      y: y + deltaY,
     };
   };
 
@@ -182,7 +174,7 @@
       e.currentTarget?.setPointerCapture(e.pointerId);
 
       setTranslate(
-        processTranslate(startTranslate.x, startTranslate.y, deltaX, deltaY, $scale),
+        processTranslate(startTranslate.x, startTranslate.y, deltaX, deltaY),
         // @ts-expect-error
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
@@ -232,7 +224,7 @@
     } else if ($scrollMode === 'translate') {
       translate.update(
         (startTranslate) =>
-          processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY, $scale),
+          processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY),
         // @ts-expect-error
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
@@ -251,18 +243,16 @@
     const newScale = $scale * value;
     setScale(newScale, options);
 
-    if (translateOnScale) {
-      // Translate towards point (ex. mouse cursor/center) while zooming in/out
-      const invertTransformPoint = {
-        x: (point.x - $translate.x) / currentScale,
-        y: (point.y - $translate.y) / currentScale,
-      };
-      const newTranslate = {
-        x: point.x - invertTransformPoint.x * newScale,
-        y: point.y - invertTransformPoint.y * newScale,
-      };
-      setTranslate(newTranslate, options);
-    }
+    // Translate towards point (ex. mouse cursor/center) while zooming in/out
+    const invertTransformPoint = {
+      x: (point.x - $translate.x) / currentScale,
+      y: (point.y - $translate.y) / currentScale,
+    };
+    const newTranslate = {
+      x: point.x - invertTransformPoint.x * newScale,
+      y: point.y - invertTransformPoint.y * newScale,
+    };
+    setTranslate(newTranslate, options);
   }
 
   const translating = motionFinishHandler();

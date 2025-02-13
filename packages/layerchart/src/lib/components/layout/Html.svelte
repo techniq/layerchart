@@ -40,12 +40,7 @@
     ? `translate(${center === 'x' || center === true ? $width / 2 : 0}, ${center === 'y' || center === true ? $height / 2 : 0})`
     : '';
   $: if (mode === 'canvas') {
-    const center = { x: $width / 2, y: $height / 2 };
-    const newTranslate = {
-      x: $translate.x * $scale + center.x - center.x * $scale,
-      y: $translate.y * $scale + center.y - center.y * $scale,
-    };
-    transform = `translate(${newTranslate.x}px,${newTranslate.y}px) scale(${$scale})`;
+    transform = `translate(${$translate.x}px,${$translate.y}px) scale(${$scale})`;
   }
 
   setRenderContext('html');

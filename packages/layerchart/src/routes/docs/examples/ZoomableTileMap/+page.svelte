@@ -48,7 +48,6 @@
         applyTransform: ['translate', 'scale'],
       }}
       transform={{
-        translateOnScale: true,
         initialScrollMode: 'scale',
       }}
       let:tooltip
@@ -105,7 +104,6 @@
         applyTransform: ['translate', 'scale'],
       }}
       transform={{
-        translateOnScale: true,
         initialScrollMode: 'scale',
       }}
       padding={{
@@ -168,7 +166,6 @@
         applyTransform: ['translate', 'scale'],
       }}
       transform={{
-        translateOnScale: true,
         initialScrollMode: 'scale',
       }}
       let:tooltip

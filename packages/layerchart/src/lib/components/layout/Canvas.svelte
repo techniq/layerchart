@@ -177,12 +177,7 @@
       };
       context.translate(newTranslate.x, newTranslate.y);
     } else if (mode === 'canvas') {
-      const center = { x: $width / 2, y: $height / 2 };
-      const newTranslate = {
-        x: $translate.x * $scale + center.x - center.x * $scale,
-        y: $translate.y * $scale + center.y - center.y * $scale,
-      };
-      context.translate(newTranslate.x, newTranslate.y);
+      context.translate($translate.x, $translate.y);
       context.scale($scale, $scale);
     }
 
