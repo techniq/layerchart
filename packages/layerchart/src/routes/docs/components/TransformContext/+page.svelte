@@ -2,7 +2,7 @@
   import type { ComponentProps } from 'svelte';
   import { cubicOut } from 'svelte/easing';
 
-  import { Chart, Circle, Points, Spline, Svg } from 'layerchart';
+  import { Chart, Circle, Html, Points, Spline, Svg } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
   import { Field, RangeField, Switch } from 'svelte-ux';
 
@@ -42,7 +42,7 @@
 </div>
 
 <Preview {data}>
-  <div class="h-[500px] p-4 border rounded relative overflow-hidden">
+  <div class="h-[500px] aspect-square p-4 border rounded relative overflow-hidden">
     <Chart
       {data}
       x="x"
@@ -72,6 +72,58 @@
           </Points>
         {/if}
       </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Pan/Zoom SVG image</h2>
+
+<Preview {data}>
+  <div class="h-[500px] _aspect-square p-4 border rounded relative overflow-hidden">
+    <Chart
+      {data}
+      x="x"
+      y="y"
+      transform={{
+        mode: 'canvas',
+        tweened: { duration: 800, easing: cubicOut },
+        initialScrollMode: 'scale',
+      }}
+    >
+      <TransformControls />
+      <Svg>
+        <image
+          href="https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg"
+          width="100%"
+          height="100%"
+        />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Pan/Zoom HTML image</h2>
+
+<Preview {data}>
+  <div class="h-[500px] _aspect-square p-4 border rounded relative overflow-hidden">
+    <Chart
+      {data}
+      x="x"
+      y="y"
+      transform={{
+        mode: 'canvas',
+        tweened: { duration: 800, easing: cubicOut },
+        initialScrollMode: 'scale',
+      }}
+    >
+      <TransformControls />
+      <Html>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Ghostscript_Tiger.svg/512px-Ghostscript_Tiger.svg.png?20091116194118"
+          height="100%"
+          alt="Ghostscript Tiger"
+        />
+      </Html>
     </Chart>
   </div>
 </Preview>
