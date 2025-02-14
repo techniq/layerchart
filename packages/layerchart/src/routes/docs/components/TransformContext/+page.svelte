@@ -78,12 +78,9 @@
 
 <h2>Pan/Zoom SVG image</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[500px] _aspect-square p-4 border rounded relative overflow-hidden">
     <Chart
-      {data}
-      x="x"
-      y="y"
       transform={{
         mode: 'canvas',
         tweened: { duration: 800, easing: cubicOut },
@@ -104,12 +101,9 @@
 
 <h2>Pan/Zoom HTML image</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[500px] _aspect-square p-4 border rounded relative overflow-hidden">
     <Chart
-      {data}
-      x="x"
-      y="y"
       transform={{
         mode: 'canvas',
         tweened: { duration: 800, easing: cubicOut },
@@ -118,11 +112,13 @@
     >
       <TransformControls />
       <Html>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Ghostscript_Tiger.svg/512px-Ghostscript_Tiger.svg.png?20091116194118"
-          height="100%"
-          alt="Ghostscript Tiger"
-        />
+        <div class="h-full flex justify-center">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Ghostscript_Tiger.svg/512px-Ghostscript_Tiger.svg.png?20091116194118"
+            alt="Ghostscript Tiger"
+            class="h-full"
+          />
+        </div>
       </Html>
     </Chart>
   </div>
