@@ -78,12 +78,9 @@
 
 <h2>Pan/Zoom SVG image</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[500px] _aspect-square p-4 border rounded relative overflow-hidden">
     <Chart
-      {data}
-      x="x"
-      y="y"
       transform={{
         mode: 'canvas',
         tweened: { duration: 800, easing: cubicOut },
@@ -104,12 +101,9 @@
 
 <h2>Pan/Zoom HTML image</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[500px] _aspect-square p-4 border rounded relative overflow-hidden">
     <Chart
-      {data}
-      x="x"
-      y="y"
       transform={{
         mode: 'canvas',
         tweened: { duration: 800, easing: cubicOut },
