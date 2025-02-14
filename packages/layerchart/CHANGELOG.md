@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.99.1
+
+### Patch Changes
+
+- fix(Svg|Html): Do not accidentally lose transform on browser resize ([`74ecd20`](https://github.com/techniq/layerchart/commit/74ecd2091917ee837de15a7ecdaef2d9ebedcdec))
+
 ## 0.99.0
 
 ### Minor Changes
