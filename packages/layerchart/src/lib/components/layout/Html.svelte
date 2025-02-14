@@ -36,11 +36,11 @@
   const { width, height, padding } = chartContext();
   const { mode, scale, translate } = transformContext();
 
-  $: transform = center
-    ? `translate(${center === 'x' || center === true ? $width / 2 : 0}, ${center === 'y' || center === true ? $height / 2 : 0})`
-    : '';
+  let transform = '';
   $: if (mode === 'canvas') {
     transform = `translate(${$translate.x}px,${$translate.y}px) scale(${$scale})`;
+  } else if (center) {
+    transform = `translate(${center === 'x' || center === true ? $width / 2 : 0}px, ${center === 'y' || center === true ? $height / 2 : 0}px)`;
   }
 
   setRenderContext('html');
