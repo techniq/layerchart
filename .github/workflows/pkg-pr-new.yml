@@ -19,6 +19,6 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm build
+      - run: pnpm package
 
       - run: pnpx pkg-pr-new publish --compact './packages/*'
