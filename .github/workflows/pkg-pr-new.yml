@@ -24,3 +24,5 @@ jobs:
       - run: pnpm package
 
       - run: pnpx pkg-pr-new publish --compact './packages/*'
+
+      - run: ls -R .
