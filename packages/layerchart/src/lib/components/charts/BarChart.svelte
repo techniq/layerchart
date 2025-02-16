@@ -312,7 +312,7 @@
   {y1Domain}
   {y1Range}
   c={isVertical ? y : x}
-  cRange={['hsl(var(--color-primary))']}
+  cRange={['var(--default-series-color-primary)']}
   padding={defaultChartPadding(axis, legend)}
   {...$$restProps}
   tooltip={$$props.tooltip === false

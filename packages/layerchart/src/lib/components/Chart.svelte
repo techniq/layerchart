@@ -495,3 +495,14 @@
     {/key}
   </ChartContext>
 </LayerCake>
+
+<style>
+  :global(.layercake-container) {
+    --default-series-color-primary: theme(colors.primary);
+    --default-series-color-secondary: theme(colors.secondary);
+    --default-series-color-info: theme(colors.info);
+    --default-series-color-success: theme(colors.success);
+    --default-series-color-warning: theme(colors.warning);
+    --default-series-color-danger: theme(colors.danger);
+  }
+</style>

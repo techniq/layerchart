@@ -65,7 +65,7 @@
     maxValue?: number;
     color?: string;
     props?: Partial<ComponentProps<Arc>>;
-  }[] = [{ key: 'default', value: value /*, color: 'hsl(var(--color-primary))'*/ }];
+  }[] = [{ key: 'default', value: value }];
 
   export let legend: ComponentProps<Legend> | boolean = false;
 
@@ -174,12 +174,12 @@
   cRange={seriesColors.length
     ? seriesColors
     : [
-        'hsl(var(--color-primary))',
-        'hsl(var(--color-secondary))',
-        'hsl(var(--color-info))',
-        'hsl(var(--color-success))',
-        'hsl(var(--color-warning))',
-        'hsl(var(--color-danger))',
+        'var(--default-series-color-primary)',
+        'var(--default-series-color-secondary)',
+        'var(--default-series-color-info)',
+        'var(--default-series-color-success)',
+        'var(--default-series-color-warning)',
+        'var(--default-series-color-danger)',
       ]}
   padding={{ bottom: legend === true ? 32 : 0 }}
   {...$$restProps}
