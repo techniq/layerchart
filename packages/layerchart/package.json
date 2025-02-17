@@ -22,7 +22,7 @@
     "@changesets/cli": "^2.27.12",
     "@mdi/js": "^7.4.47",
     "@rollup/plugin-dsv": "^3.0.5",
-    "@sveltejs/adapter-cloudflare": "^5.0.2",
+    "@sveltejs/adapter-cloudflare": "^4.9.0",
     "@sveltejs/kit": "^2.17.1",
     "@sveltejs/package": "^2.3.10",
     "@sveltejs/vite-plugin-svelte": "^5.0.3",
