@@ -411,12 +411,14 @@
       showTooltip(e);
     }
   }}
-  on:pointermove={triggerPointerEvents ? showTooltip : undefined}
+  on:pointermove={(e) => {
+    if (triggerPointerEvents) {
+      showTooltip(e);
+    }
+  }}
   on:pointerleave={(e) => {
     isHoveringTooltip = false;
-    if (triggerPointerEvents) {
-      hideTooltip();
-    }
+    hideTooltip();
   }}
   on:click={(e) => {
     if (triggerPointerEvents) {

@@ -896,7 +896,7 @@
       ]}
       {renderContext}
       {debug}
-      tooltip={{ hideDelay: 1000 }}
+      tooltip={{ hideDelay: 500 }}
     >
       <svelte:fragment slot="tooltip" let:x let:y let:series let:height let:setHighlightSeriesKey>
         <Tooltip.Root x="data" y={height + 24} pointerEvents let:data>
