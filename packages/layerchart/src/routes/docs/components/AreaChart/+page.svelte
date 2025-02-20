@@ -18,7 +18,7 @@
   import { curveBasis, curveCatmullRom } from 'd3-shape';
   import { group } from 'd3-array';
   import { Button, Field, ToggleGroup, ToggleOption, Kbd, Switch } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format, localPoint, PeriodType } from '@layerstack/utils';
   import { addDays } from 'date-fns';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -140,7 +140,28 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} />
+    <AreaChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      {renderContext}
+      {debug}
+      props={{
+        canvas: {
+          class: 'cursor-crosshair',
+          // onpointermove: (e) => {
+          //   console.log('onpointermove', e);
+          //   const { x, y } = localPoint(e);
+
+          //   if (x > 20 && y < 240) {
+          //     e.target.classList.add('cursor-crosshair');
+          //   } else {
+          //     e.target.classList.remove('cursor-crosshair');
+          //   }
+          // },
+        },
+      }}
+    />
   </div>
 </Preview>
 
