@@ -31,7 +31,7 @@ export function polarToCartesian(angle: number, radius: number) {
 export function cartesianToPolar(x: number, y: number) {
   let radians = Math.atan2(y, x);
 
-  radians += Math.PI / 2;
+  radians += Math.PI / 2; // shift 90 degrees to align 0deg at 12 o'clock
 
   // Ensure the result is between 0 and 2π
   if (radians < 0) {
