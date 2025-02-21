@@ -20,8 +20,8 @@ export function radiansToDegrees(radians: number) {
  */
 export function polarToCartesian(angle: number, radius: number) {
   return {
-    x: radius * Math.cos(angle),
-    y: radius * Math.sin(angle),
+    x: Math.cos(angle) * radius,
+    y: Math.sin(angle) * radius,
   };
 }
 

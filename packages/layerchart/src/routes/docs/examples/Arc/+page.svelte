@@ -4,17 +4,20 @@
   import {
     Arc,
     Chart,
+    Circle,
     ClipPath,
     Group,
     LinearGradient,
     Svg,
     Text,
     Tooltip,
+    cartesianToPolar,
+    degreesToRadians,
     radiansToDegrees,
   } from 'layerchart';
   import { Field, RangeField, SpringValue, Switch, Toggle } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
-  import { round } from '@layerstack/utils';
+  import { localPoint, round } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
@@ -292,3 +295,63 @@
     </div>
   </Preview>
 </Toggle>
+
+<h2>Draggable arc</h2>
+
+<Preview>
+  <div class="h-[200px] p-4 border resize overflow-auto">
+    <Chart let:width let:height>
+      <Svg center>
+        {@const radius = height / 2}
+        {@const arcWidth = 20}
+        {@const circleRadius = 10}
+        {@const maxValue = 100}
+        <Arc
+          {value}
+          domain={[0, maxValue]}
+          innerRadius={-arcWidth}
+          cornerRadius={10}
+          class="fill-secondary"
+          track={{ class: 'fill-secondary/10' }}
+        />
+        {@const angle =
+          (value / maxValue) * 360 - 90 - radiansToDegrees(circleRadius / (radius - arcWidth / 2))}
+        <Circle
+          cx={Math.cos(degreesToRadians(angle)) * (radius - arcWidth / 2)}
+          cy={Math.sin(degreesToRadians(angle)) * (radius - arcWidth / 2)}
+          r={circleRadius}
+          class="stroke-black/10 fill-black/10"
+          onpointermove={(e) => {
+            if (e.buttons !== 1) {
+              // button not pressed, ignoring
+              return;
+            }
+
+            // @ts-expect-error
+            e.currentTarget?.setPointerCapture(e.pointerId);
+
+            // pointer releative to center of chart and arc center
+            const { x, y } = localPoint(e);
+            const centerX = x - width / 2;
+            const centerY = y - height / 2;
+
+            const pointerAngle = radiansToDegrees(cartesianToPolar(centerX, centerY).radians);
+
+            const newValue = Math.round((pointerAngle / 360) * maxValue);
+            // Refine clamping to prevent wrapping around below 0 / above max
+            // if (value > maxValue / 4 && newValue < maxValue / 4) {
+            //   // Do not allow wrapping around above max
+            //   value = maxValue;
+            // } else if (value < maxValue / 4 && newValue > maxValue / 4) {
+            //   // Do not allow wrapping around below 0
+            //   value = 0;
+            // } else {
+            //   value = newValue;
+            // }
+            value = newValue;
+          }}
+        />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
