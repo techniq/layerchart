@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Text } from 'layerchart';
+  import { Chart, Svg, Text } from 'layerchart';
   import type { ComponentProps } from 'svelte';
   import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
@@ -62,21 +62,25 @@
 </div>
 
 <div class="flex items-center justify-center bg-surface-100 p-4">
-  <svg width={resizeSvg ? width : 300} class="h-56 border border-surface-content/10">
-    <Text
-      {value}
-      {x}
-      {y}
-      {width}
-      {textAnchor}
-      {verticalAnchor}
-      {lineHeight}
-      {rotate}
-      {scaleToFit}
-    />
+  <div class="h-56 border border-surface-content/10" style:width="{resizeSvg ? width : 300}px">
+    <Chart>
+      <Svg>
+        <Text
+          {value}
+          {x}
+          {y}
+          {width}
+          {textAnchor}
+          {verticalAnchor}
+          {lineHeight}
+          {rotate}
+          {scaleToFit}
+        />
 
-    {#if showAnchor}
-      <circle cx={x} cy={y} r="2" fill="red" />
-    {/if}
-  </svg>
+        {#if showAnchor}
+          <circle cx={x} cy={y} r="2" fill="red" />
+        {/if}
+      </Svg>
+    </Chart>
+  </div>
 </div>
