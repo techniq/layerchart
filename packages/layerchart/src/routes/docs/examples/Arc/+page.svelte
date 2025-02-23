@@ -175,9 +175,9 @@
   <div class="h-[240px] p-4 border resize overflow-auto">
     <Chart>
       <Svg center>
-        <ClipPath>
-          <svelte:fragment slot="clip">
-            <SpringValue {value} let:value>
+        <SpringValue {value} let:value>
+          <ClipPath>
+            <svelte:fragment slot="clip">
               {#each { length: segments } as _, segmentIndex}
                 {@const segmentAngle = (2 * Math.PI) / segments}
                 <Arc
@@ -188,24 +188,24 @@
                   padAngle={0.02}
                 />
               {/each}
-            </SpringValue>
-          </svelte:fragment>
-          <Arc
-            {value}
-            innerRadius={-20}
-            spring
-            class="fill-success-300"
-            track={{ class: 'fill-surface-content/10' }}
-          />
-        </ClipPath>
+            </svelte:fragment>
+            <Arc
+              value={value ?? 0}
+              innerRadius={-20}
+              spring
+              class="fill-success-300"
+              track={{ class: 'fill-surface-content/10' }}
+            />
+          </ClipPath>
 
-        <Text
-          value={Math.round(value ?? 0)}
-          textAnchor="middle"
-          verticalAnchor="middle"
-          dy={16}
-          class="text-6xl tabular-nums"
-        />
+          <Text
+            value={Math.round(value ?? 0)}
+            textAnchor="middle"
+            verticalAnchor="middle"
+            dy={16}
+            class="text-6xl tabular-nums"
+          />
+        </SpringValue>
       </Svg>
     </Chart>
   </div>
@@ -302,18 +302,73 @@
   <div class="h-[200px] p-4 border resize overflow-auto">
     <Chart let:width let:height>
       <Svg center>
-        {@const radius = height / 2}
         {@const arcWidth = 20}
-        {@const circleRadius = 10}
         {@const maxValue = 100}
-        <Arc
-          {value}
-          domain={[0, maxValue]}
-          innerRadius={-arcWidth}
-          cornerRadius={10}
-          class="fill-secondary"
-          track={{ class: 'fill-secondary/10' }}
-        />
+        <SpringValue {value} let:value={springValue}>
+          <Arc
+            value={springValue ?? 0}
+            domain={[0, maxValue]}
+            innerRadius={-arcWidth}
+            cornerRadius={10}
+            class="fill-secondary pointer-events-none"
+            track={{
+              class: 'fill-secondary/10',
+              onpointerdown: (e) => {
+                // pointer releative to center of chart and arc center
+                const { x, y } = localPoint(e);
+                const centerX = x - width / 2;
+                const centerY = y - height / 2;
+
+                const pointerAngle = radiansToDegrees(cartesianToPolar(centerX, centerY).radians);
+                value = Math.round((pointerAngle / 360) * maxValue);
+              },
+              onpointermove: (e) => {
+                if (e.buttons !== 1) {
+                  // button not pressed, ignoring
+                  return;
+                }
+
+                // @ts-expect-error
+                e.currentTarget?.setPointerCapture(e.pointerId);
+
+                // pointer releative to center of chart and arc center
+                const { x, y } = localPoint(e);
+                const centerX = x - width / 2;
+                const centerY = y - height / 2;
+
+                const pointerAngle = radiansToDegrees(cartesianToPolar(centerX, centerY).radians);
+
+                const newValue = Math.round((pointerAngle / 360) * maxValue);
+
+                // 1.) No clamping
+                // value = newValue;
+
+                // 2.) Clamp to prevent wrapping around below 0 / above max
+                if (value > maxValue * 0.75 && newValue < maxValue * 0.25) {
+                  // Do not allow wrapping around above max
+                  value = maxValue;
+                } else if (value < maxValue * 0.25 && newValue > maxValue * 0.75) {
+                  // Do not allow wrapping around below 0
+                  value = 0;
+                } else {
+                  value = newValue;
+                }
+              },
+            }}
+          />
+
+          <Text
+            value={Math.round(springValue ?? 0)}
+            textAnchor="middle"
+            verticalAnchor="middle"
+            dy={10}
+            class="text-5xl tabular-nums"
+          />
+        </SpringValue>
+
+        <!--
+        {@const radius = height / 2}
+        {@const circleRadius = 10}
         {@const angle =
           (value / maxValue) * 360 - 90 - radiansToDegrees(circleRadius / (radius - arcWidth / 2))}
         <Circle
@@ -321,36 +376,7 @@
           cy={Math.sin(degreesToRadians(angle)) * (radius - arcWidth / 2)}
           r={circleRadius}
           class="stroke-black/10 fill-black/10"
-          onpointermove={(e) => {
-            if (e.buttons !== 1) {
-              // button not pressed, ignoring
-              return;
-            }
-
-            // @ts-expect-error
-            e.currentTarget?.setPointerCapture(e.pointerId);
-
-            // pointer releative to center of chart and arc center
-            const { x, y } = localPoint(e);
-            const centerX = x - width / 2;
-            const centerY = y - height / 2;
-
-            const pointerAngle = radiansToDegrees(cartesianToPolar(centerX, centerY).radians);
-
-            const newValue = Math.round((pointerAngle / 360) * maxValue);
-            // Refine clamping to prevent wrapping around below 0 / above max
-            // if (value > maxValue / 4 && newValue < maxValue / 4) {
-            //   // Do not allow wrapping around above max
-            //   value = maxValue;
-            // } else if (value < maxValue / 4 && newValue > maxValue / 4) {
-            //   // Do not allow wrapping around below 0
-            //   value = 0;
-            // } else {
-            //   value = newValue;
-            // }
-            value = newValue;
-          }}
-        />
+        /> -->
       </Svg>
     </Chart>
   </div>
