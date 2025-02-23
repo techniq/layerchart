@@ -121,11 +121,9 @@ function render(
         ((styleOptions.styles?.fill as any) instanceof CanvasGradient ||
           !styleOptions.styles?.fill?.includes('var'))
           ? styleOptions.styles.fill
-          : ['none', DEFAULT_FILL].includes(computedStyles?.fill)
-            ? null
-            : computedStyles?.fill;
+          : computedStyles?.fill;
 
-      if (fill) {
+      if (fill && !['none', DEFAULT_FILL].includes(fill)) {
         const currentGlobalAlpha = ctx.globalAlpha;
 
         const fillOpacity = Number(computedStyles?.fillOpacity);
@@ -144,10 +142,9 @@ function render(
         ((styleOptions.styles?.stroke as any) instanceof CanvasGradient ||
           !styleOptions.styles?.stroke?.includes('var'))
           ? styleOptions.styles?.stroke
-          : computedStyles?.stroke === 'none'
-            ? null
-            : computedStyles?.stroke;
-      if (stroke) {
+          : computedStyles?.stroke;
+
+      if (stroke && !['none'].includes(stroke)) {
         ctx.lineWidth =
           typeof computedStyles?.strokeWidth === 'string'
             ? Number(computedStyles?.strokeWidth?.replace('px', ''))
