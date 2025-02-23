@@ -17,23 +17,16 @@
   // https://svelte.dev/repl/09711e43a1264ba18945d7db7cab9335?version=3.38.2
   // https://codepen.io/simeydotme/pen/rrOEmO/
 
-  import { onDestroy, tick } from 'svelte';
-  import type { SVGAttributes } from 'svelte/elements';
+  import { tick, type ComponentProps } from 'svelte';
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { arc as d3arc } from 'd3-shape';
   import { scaleLinear } from 'd3-scale';
-  import { min, max } from 'd3-array';
-  import { merge } from 'lodash-es';
 
-  import { objectId } from '@layerstack/utils/object';
-
-  import { getRenderContext } from './Chart.svelte';
   import { chartContext } from './ChartContext.svelte';
   import { motionStore } from '$lib/stores/motionStore.js';
   import { degreesToRadians } from '$lib/utils/math.js';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
-  import { getCanvasContext } from './layout/Canvas.svelte';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import Spline from './Spline.svelte';
 
   export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
@@ -85,13 +78,13 @@
 
   export let fill: string | undefined = undefined;
   export let fillOpacity: number | undefined = undefined;
-  export let stroke: string | undefined = undefined;
+  export let stroke: string | undefined = 'none';
   export let strokeWidth: number | undefined = undefined;
 
   let className: string | undefined = undefined;
   export { className as class };
 
-  export let track: boolean | SVGAttributes<SVGPathElement> = false;
+  export let track: boolean | Partial<ComponentProps<Spline>> = false;
 
   export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
   export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
@@ -200,118 +193,50 @@
    */
   export let data: any = undefined;
 
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
-
-  function render(
-    ctx: CanvasRenderingContext2D,
-    styleOverrides: ComputedStylesOptions | undefined
-  ) {
-    ctx.translate(xOffset, yOffset);
-
-    // Track
-    const trackProps = { ...(typeof track === 'object' ? track : null) };
-    renderPathData(ctx, trackArc(), {
-      styles: {
-        fill: trackProps['fill'] ?? undefined,
-        fillOpacity: trackProps['fill-opacity'] ?? undefined,
-        stroke: trackProps['stroke'] ?? undefined,
-        strokeWidth: trackProps['stroke-width'] ?? undefined,
-        opacity: trackProps['opacity'] ?? undefined,
-      },
-      classes: trackProps.class ?? undefined,
-    });
-
-    // Arc
-    renderPathData(
-      ctx,
-      arc(),
-      styleOverrides
-        ? merge({ styles: { strokeWidth } }, styleOverrides)
-        : {
-            styles: { fill, fillOpacity, stroke, strokeWidth },
-            classes: className,
-          }
-    );
-  }
-
-  // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  $: fillKey = fill && typeof fill === 'object' ? objectId(fill) : fill;
-  $: strokeKey = stroke && typeof stroke === 'object' ? objectId(stroke) : stroke;
-
-  $: if (renderContext === 'canvas') {
-    // Redraw when props change
-    arc && trackArc && fillKey && fillOpacity && strokeKey && strokeWidth && className;
-    canvasContext.invalidate();
-  }
-
-  // Hide `tooltip` reactivity
-  function _onPointerEnter(e: PointerEvent) {
+  function onPointerEnter(e: PointerEvent) {
     onpointerenter?.(e);
     tooltip?.show(e, data);
   }
-  function _onPointerMove(e: PointerEvent) {
+  function onPointerMove(e: PointerEvent) {
     onpointermove?.(e);
     tooltip?.show(e, data);
   }
-  function _onPointerLeave(e: PointerEvent) {
+  function onPointerLeave(e: PointerEvent) {
     onpointerleave?.(e);
     tooltip?.hide();
   }
-
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({
-      name: 'Arc',
-      render,
-      events: {
-        click: onclick,
-        pointerenter: _onPointerEnter,
-        pointermove: _onPointerMove,
-        pointerleave: _onPointerLeave,
-      },
-    });
-  }
-
-  onDestroy(() => {
-    if (renderContext === 'canvas') {
-      canvasUnregister();
-    }
-  });
 </script>
 
-{#if renderContext === 'svg'}
-  {#if track}
-    <path
-      d={trackArc()}
-      class="track"
-      bind:this={trackArcEl}
-      {...typeof track === 'object' ? track : null}
-    />
-  {/if}
-
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <path
-    d={arc()}
-    transform="translate({xOffset}, {yOffset})"
-    {fill}
-    fill-opacity={fillOpacity}
-    {stroke}
-    stroke-width={strokeWidth}
-    class={className}
-    {...$$restProps}
-    on:click={onclick}
-    on:pointerenter={onpointerenter}
-    on:pointermove={_onPointerMove}
-    on:pointerleave={_onPointerLeave}
-    on:touchmove={(e) => {
-      if (tooltip) {
-        // Prevent touch to not interfer with pointer when using tooltip
-        e.preventDefault();
-      }
-    }}
-    on:touchmove
+{#if track}
+  <Spline
+    pathData={trackArc()}
+    class="track"
+    stroke="none"
+    bind:pathEl={trackArcEl}
+    {...typeof track === 'object' ? track : null}
   />
 {/if}
+
+<Spline
+  pathData={arc()}
+  transform="translate({xOffset}, {yOffset})"
+  {fill}
+  fill-opacity={fillOpacity}
+  {stroke}
+  stroke-width={strokeWidth}
+  class={className}
+  {...$$restProps}
+  {onclick}
+  onpointerenter={onPointerEnter}
+  onpointermove={onPointerMove}
+  onpointerleave={onPointerLeave}
+  ontouchmove={(e) => {
+    if (tooltip) {
+      // Prevent touch to not interfer with pointer when using tooltip
+      e.preventDefault();
+    }
+  }}
+  on:touchmove
+/>
 
 <slot value={$tweened_value} centroid={trackArcCentroid} {boundingBox} />
