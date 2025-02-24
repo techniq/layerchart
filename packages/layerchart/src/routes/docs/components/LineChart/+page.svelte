@@ -604,8 +604,23 @@
       x="x"
       y="y"
       yBaseline={undefined}
-      tooltip={{ mode: 'manual' }}
-      props={{ yAxis: { tweened: true }, grid: { tweened: true } }}
+      tooltip={false}
+      props={{
+        yAxis: { tweened: true },
+        grid: { tweened: true },
+        // spline: {
+        //   draw: {
+        //     // easing function to only draw the last data point
+        //     easing: (t) => {
+        //       const totalDataPoints = dynamicData.length;
+        //       const percentage = (totalDataPoints - 10) / totalDataPoints;
+        //       const minT = 1 * percentage;
+        //       return minT + t * (1 - minT);
+        //     },
+        //     duration: 300,
+        //   },
+        // },
+      }}
       {renderContext}
       {debug}
     />
