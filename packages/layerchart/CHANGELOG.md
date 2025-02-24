@@ -1,5 +1,11 @@
 # LayerChart
 
+## 0.99.4
+
+### Patch Changes
+
+- feat(Canvas|Html|Svg): Add `ignoreTransform` prop to ignore `TransformContext` for layer. Use to add static elements such as custom legends within a rendering context ([`e93bda3`](https://github.com/techniq/layerchart/commit/e93bda3dad62ab5a1ba4d91ee5837b36ba1916cd))
+
 ## 0.99.3
 
 ### Patch Changes
