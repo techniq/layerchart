@@ -81,6 +81,9 @@
    */
   export let center: boolean | 'x' | 'y' = false;
 
+  /** Ignore TransformContext.  Useful to add static elements such as legends. */
+  export let ignoreTransform = false;
+
   /** Show hit canvas for debugging */
   export let debug = false;
 
@@ -176,7 +179,7 @@
         y: center === 'y' || center === true ? $height / 2 : 0,
       };
       context.translate(newTranslate.x, newTranslate.y);
-    } else if (mode === 'canvas') {
+    } else if (mode === 'canvas' && !ignoreTransform) {
       context.translate($translate.x, $translate.y);
       context.scale($scale, $scale);
     }

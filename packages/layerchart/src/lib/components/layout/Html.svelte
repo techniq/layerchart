@@ -31,13 +31,16 @@
    */
   export let center: boolean | 'x' | 'y' = false;
 
+  /** Ignore TransformContext.  Useful to add static elements such as legends. */
+  export let ignoreTransform = false;
+
   $: roleVal = role || (label || labelledBy || describedBy ? 'figure' : undefined);
 
   const { width, height, padding } = chartContext();
   const { mode, scale, translate } = transformContext();
 
   let transform = '';
-  $: if (mode === 'canvas') {
+  $: if (mode === 'canvas' && !ignoreTransform) {
     transform = `translate(${$translate.x}px,${$translate.y}px) scale(${$scale})`;
   } else if (center) {
     transform = `translate(${center === 'x' || center === true ? $width / 2 : 0}px, ${center === 'y' || center === true ? $height / 2 : 0}px)`;
