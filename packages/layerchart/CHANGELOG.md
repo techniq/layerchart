@@ -1,5 +1,13 @@
 # LayerChart
 
+## 0.99.5
+
+### Patch Changes
+
+- docs: Update @layerstack and Svelte UX packages to fix autofocus and SSR issues ([`3ce8060`](https://github.com/techniq/layerchart/commit/3ce8060be01cd1bd4e1d42110e7c478ce8bea9d9))
+
+- Update dependencies ([#415](https://github.com/techniq/layerchart/pull/415))
+
 ## 0.99.4
 
 ### Patch Changes
