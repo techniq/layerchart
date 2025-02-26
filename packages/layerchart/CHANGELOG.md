@@ -1,5 +1,11 @@
 # LayerChart
 
+## 1.0.0
+
+### Major Changes
+
+- Version 1.0 (Svelte 3-5 and Tailwind 3 compatible) ([`123c9f6`](https://github.com/techniq/layerchart/commit/123c9f689b40b35f08185f8206cf0c5e7eb5ed34))
+
 ## 0.99.5
 
 ### Patch Changes
