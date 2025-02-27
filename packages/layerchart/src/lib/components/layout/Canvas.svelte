@@ -118,19 +118,17 @@
     activeCanvas = true;
     const component = getPointerComponent(e);
 
-    if (lastActiveComponent == null) {
-      // TODO: Should these be handled differently
+    if (component != lastActiveComponent) {
+      // TODO: Should `pointerleave`/`pointerout` and `pointerenter`/`pointerover` be handled differently?
+      if (lastActiveComponent) {
+        lastActiveComponent.events?.pointerleave?.(e);
+        lastActiveComponent.events?.pointerout?.(e);
+      }
+
       component?.events?.pointerenter?.(e);
       component?.events?.pointerover?.(e);
-    } else if (lastActiveComponent != component) {
-      // TODO: Should these be handled differently
-      lastActiveComponent?.events?.pointerleave?.(e);
-      lastActiveComponent?.events?.pointerout?.(e);
-
-      component?.events?.pointermove?.(e);
-    } else {
-      component?.events?.pointermove?.(e);
     }
+    component?.events?.pointermove?.(e);
 
     lastActiveComponent = component;
   }
