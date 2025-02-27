@@ -124,7 +124,10 @@
 
   /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
   function defaultPathData() {
-    if (pathData) {
+    if (!tweenedOptions) {
+      // If not tweened, return empty string (faster initial render)
+      return '';
+    } else if (pathData) {
       // Flatten all `y` coordinates of pre-defined `pathData`
       return flattenPathData(pathData, Math.min($yScale(0), $yRange[0]));
     } else if ($config.x) {
