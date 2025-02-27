@@ -1008,6 +1008,9 @@
         canvas: {
           class: 'cursor-crosshair',
         },
+        svg: {
+          class: 'cursor-crosshair',
+        },
       }}
       {renderContext}
       {debug}
