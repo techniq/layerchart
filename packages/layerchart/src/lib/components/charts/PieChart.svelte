@@ -52,6 +52,10 @@
   export let value: Accessor<TData> = 'value';
   $: valueAccessor = accessor(value);
 
+  /** Color accessor*/
+  export let c: Accessor<TData> = key;
+  $: cAccessor = accessor(c);
+
   /** Maximum possible value, useful when `data` is single item */
   export let maxValue: number | undefined = undefined;
 
@@ -169,18 +173,20 @@
   data={visibleData}
   x={value}
   y={key}
-  c={key}
+  {c}
   cDomain={chartData.map(keyAccessor)}
   cRange={seriesColors.length
     ? seriesColors
-    : [
-        'hsl(var(--color-primary))',
-        'hsl(var(--color-secondary))',
-        'hsl(var(--color-info))',
-        'hsl(var(--color-success))',
-        'hsl(var(--color-warning))',
-        'hsl(var(--color-danger))',
-      ]}
+    : c !== key
+      ? chartData.map((d) => cAccessor(d))
+      : [
+          'hsl(var(--color-primary))',
+          'hsl(var(--color-secondary))',
+          'hsl(var(--color-info))',
+          'hsl(var(--color-success))',
+          'hsl(var(--color-warning))',
+          'hsl(var(--color-danger))',
+        ]}
   padding={{ bottom: legend === true ? 32 : 0 }}
   {...$$restProps}
   tooltip={props.tooltip?.context}

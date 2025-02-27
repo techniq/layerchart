@@ -488,15 +488,7 @@
 
 <Preview data={dataWithColor}>
   <div class="h-[300px] p-4 border rounded resize overflow-auto">
-    <PieChart
-      data={dataWithColor}
-      key="fruit"
-      value="value"
-      c="color"
-      cRange={dataWithColor.map((d) => d.color)}
-      {renderContext}
-      {debug}
-    />
+    <PieChart data={dataWithColor} key="fruit" value="value" c="color" {renderContext} {debug} />
   </div>
 </Preview>
 
