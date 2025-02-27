@@ -140,18 +140,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
-    <AreaChart
-      data={dateSeriesData}
-      x="date"
-      y="value"
-      {renderContext}
-      {debug}
-      props={{
-        canvas: {
-          class: 'cursor-crosshair',
-        },
-      }}
-    />
+    <AreaChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -1006,7 +995,6 @@
 </Preview> -->
 
 <h2>Brushing</h2>
-
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <AreaChart
@@ -1017,6 +1005,9 @@
       props={{
         area: { tweened: { duration: 200 } },
         xAxis: { format: undefined, tweened: { duration: 200 } },
+        canvas: {
+          class: 'cursor-crosshair',
+        },
       }}
       {renderContext}
       {debug}
