@@ -112,14 +112,6 @@
   }
 
   function onPointerMove(e: PointerEvent) {
-    // const { x, y } = localPoint(e);
-
-    // if (x > 20 && y < 240) {
-    //   (e.target as Element).classList.add('cursor-crosshair');
-    // } else {
-    //   (e.target as Element).classList.remove('cursor-crosshair');
-    // }
-
     activeCanvas = true;
     const component = getPointerComponent(e);
 

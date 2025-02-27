@@ -149,16 +149,6 @@
       props={{
         canvas: {
           class: 'cursor-crosshair',
-          // onpointermove: (e) => {
-          //   console.log('onpointermove', e);
-          //   const { x, y } = localPoint(e);
-
-          //   if (x > 20 && y < 240) {
-          //     e.target.classList.add('cursor-crosshair');
-          //   } else {
-          //     e.target.classList.remove('cursor-crosshair');
-          //   }
-          // },
         },
       }}
     />
