@@ -354,7 +354,7 @@
 
     <svelte:component
       this={renderContext === 'canvas' ? Canvas : Svg}
-      {(...renderContext === 'canvas' ? props.canvas : props.svg as any)}
+      {...(renderContext === 'canvas' ? props.canvas : props.svg) as any}
       center={radial}
       {debug}
     >
