@@ -1,5 +1,15 @@
 # LayerChart
 
+## 1.0.1
+
+### Patch Changes
+
+- fix(PieChart): Simplify customizing colors using prop on data items by only requiring `c` color accessor (ex. `[{ color: '...'}]`) ([`e9786db`](https://github.com/techniq/layerchart/commit/e9786dbadeceec29366171ecbc37799225712d85))
+
+- fix(Spline): Improve initial render performance when tweened disabled (default) ([#418](https://github.com/techniq/layerchart/pull/418))
+
+- fix(Canvas): Call `pointerenter`/`pointerover` events when moving over overlapping components (ex. series highlight points) ([`ef7f74b`](https://github.com/techniq/layerchart/commit/ef7f74bd1eb2209f27cc912e283e99beb84f503b))
+
 ## 1.0.0
 
 ### Major Changes
