@@ -18,7 +18,7 @@
   import { curveBasis, curveCatmullRom } from 'd3-shape';
   import { group } from 'd3-array';
   import { Button, Field, ToggleGroup, ToggleOption, Kbd, Switch } from 'svelte-ux';
-  import { format, localPoint, PeriodType } from '@layerstack/utils';
+  import { format, PeriodType } from '@layerstack/utils';
   import { addDays } from 'date-fns';
 
   import Preview from '$lib/docs/Preview.svelte';
