@@ -115,6 +115,8 @@
     group?: Partial<ComponentProps<Group>>;
     arc?: Partial<ComponentProps<Arc>>;
     legend?: Partial<ComponentProps<Legend>>;
+    canvas?: Partial<ComponentProps<Canvas>>;
+    svg?: Partial<ComponentProps<Svg>>;
     tooltip?: {
       context?: Partial<ComponentProps<Tooltip.Context>>;
       root?: Partial<ComponentProps<Tooltip.Root>>;
@@ -217,7 +219,12 @@
   <slot {...slotProps}>
     <slot name="belowContext" {...slotProps} />
 
-    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} {center} {debug}>
+    <svelte:component
+      this={renderContext === 'canvas' ? Canvas : Svg}
+      {...(renderContext === 'canvas' ? props.canvas : props.svg) as any}
+      {center}
+      {debug}
+    >
       <slot name="belowMarks" {...slotProps} />
 
       <slot name="marks" {...slotProps}>
