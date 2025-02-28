@@ -205,7 +205,7 @@
     highlightSeriesKey = seriesKey;
   }
 
-  function getBarsProps(s: (typeof series)[number], i: number) {
+  $: getBarsProps = (s: (typeof series)[number], i: number) => {
     const isFirst = i == 0;
     const isLast = i == visibleSeries.length - 1;
 
@@ -254,7 +254,7 @@
     };
 
     return barsProps;
-  }
+  };
 
   function getLabelsProps(s: (typeof series)[number], i: number) {
     const labelsProps: ComponentProps<Labels> = {

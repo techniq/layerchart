@@ -141,7 +141,7 @@
     highlightSeriesKey = seriesKey;
   }
 
-  function getSplineProps(s: (typeof series)[number], i: number) {
+  $: getSplineProps = (s: (typeof series)[number], i: number) => {
     const splineProps: ComponentProps<Spline> = {
       data: s.data,
       y: s.value ?? (s.data ? undefined : s.key),
@@ -161,7 +161,7 @@
     };
 
     return splineProps;
-  }
+  };
 
   function getPointsProps(s: (typeof series)[number], i: number) {
     const pointsProps: ComponentProps<Points> = {
