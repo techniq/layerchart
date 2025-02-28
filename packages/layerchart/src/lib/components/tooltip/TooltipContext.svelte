@@ -192,7 +192,7 @@
     const point = localPoint(e, containerNode);
 
     if (
-      mode !== 'manual' &&
+      tooltipData === null && // mode !== 'manual' but support annotations
       (point.x < tooltipContextNode.offsetLeft ||
         point.x > tooltipContextNode.offsetLeft + tooltipContextNode.offsetWidth ||
         point.y < tooltipContextNode.offsetTop ||

@@ -2,19 +2,21 @@
   import {
     Axis,
     Canvas,
+    Circle,
     Highlight,
     LinearGradient,
     LineChart,
     pivotLonger,
     Spline,
     Svg,
+    Text,
     Tooltip,
   } from 'layerchart';
   import { scaleBand, scaleSequential } from 'd3-scale';
   import { curveCatmullRom, curveLinearClosed } from 'd3-shape';
   import { extent, flatGroup, group, ticks } from 'd3-array';
   import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format, PeriodType, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -67,6 +69,17 @@
 
   let renderContext: 'svg' | 'canvas' = 'svg';
   let debug = false;
+
+  // Get a few random points to use for annotations
+  $: annotations = [...dateSeriesData]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 5)
+    .sort(sortFunc('date'))
+    .map((d, i) => ({
+      date: d.date,
+      label: String.fromCharCode(65 + i),
+      description: `This is an annotation for ${format(d.date)}`,
+    }));
 </script>
 
 <h1>Examples</h1>
@@ -750,6 +763,60 @@
           let:data
         >
           {format(x(data), PeriodType.Day)}
+        </Tooltip.Root>
+      </svelte:fragment>
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Simple annotations</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+      <svelte:fragment slot="aboveContext" let:xScale let:height let:tooltip>
+        <Svg>
+          {#each annotations as annotation}
+            <Circle
+              cx={xScale(annotation.date)}
+              cy={height}
+              r={6}
+              class="fill-secondary"
+              onpointermove={(e) => {
+                e.stopPropagation();
+                tooltip.show(e, { annotation });
+              }}
+              onpointerleave={() => {
+                tooltip.hide();
+              }}
+            />
+            <Text
+              x={xScale(annotation.date)}
+              y={height}
+              textAnchor="middle"
+              verticalAnchor="middle"
+              dy={-2}
+              class="text-[10px] fill-secondary-content font-semibold pointer-events-none"
+              value={annotation.label}
+            />
+          {/each}
+        </Svg>
+      </svelte:fragment>
+
+      <svelte:fragment slot="tooltip" let:x let:y>
+        <Tooltip.Root let:data>
+          {#if data.annotation}
+            <!-- Annotation -->
+            <div class="whitespace-nowrap">
+              {data.annotation.description}
+            </div>
+          {:else}
+            <!-- Normal tooltip -->
+            <Tooltip.Header>{format(x(data), PeriodType.DayTime)}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={y(data)} />
+            </Tooltip.List>
+          {/if}
         </Tooltip.Root>
       </svelte:fragment>
     </LineChart>
