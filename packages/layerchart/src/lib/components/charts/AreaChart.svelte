@@ -175,7 +175,7 @@
     highlightSeriesKey = seriesKey;
   }
 
-  function getAreaProps(s: (typeof series)[number], i: number) {
+  $: getAreaProps = (s: (typeof series)[number], i: number) => {
     const lineProps = {
       ...props.line,
       ...(typeof props.area?.line === 'object' ? props.area.line : null),
@@ -219,7 +219,7 @@
     };
 
     return areaProps;
-  }
+  };
 
   function getPointsProps(s: (typeof series)[number], i: number) {
     const pointsProps: ComponentProps<Points> = {

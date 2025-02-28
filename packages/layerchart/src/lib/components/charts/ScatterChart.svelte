@@ -123,7 +123,7 @@
     highlightSeriesKey = seriesKey ?? null;
   }
 
-  function getPointsProps(s: (typeof series)[number], i: number) {
+  $: getPointsProps = (s: (typeof series)[number], i: number) => {
     const pointsProps: ComponentProps<Points> = {
       data: s.data,
       stroke: s.color,
@@ -140,7 +140,7 @@
     };
 
     return pointsProps;
-  }
+  };
 
   function getLabelsProps(s: (typeof series)[number], i: number) {
     const labelsProps: ComponentProps<Labels> = {
