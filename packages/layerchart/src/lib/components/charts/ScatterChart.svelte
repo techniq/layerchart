@@ -25,6 +25,7 @@
     defaultChartPadding,
     type Accessor,
   } from '../../utils/common.js';
+  import { asAny } from '../../utils/types.js';
 
   interface $$Props extends ComponentProps<Chart<TData>> {
     axis?: typeof axis;
@@ -250,7 +251,7 @@
 
     <svelte:component
       this={renderContext === 'canvas' ? Canvas : Svg}
-      {...(renderContext === 'canvas' ? props.canvas : props.svg) as any}
+      {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
       {debug}
     >
       <slot name="grid" {...slotProps}>

@@ -15,6 +15,7 @@
   import * as Tooltip from '../tooltip/index.js';
 
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
+  import { asAny } from '../../utils/types.js';
 
   interface $$Props extends ComponentProps<Chart<TData>> {
     cornerRadius?: typeof cornerRadius;
@@ -221,7 +222,7 @@
 
     <svelte:component
       this={renderContext === 'canvas' ? Canvas : Svg}
-      {...(renderContext === 'canvas' ? props.canvas : props.svg) as any}
+      {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
       {center}
       {debug}
     >
