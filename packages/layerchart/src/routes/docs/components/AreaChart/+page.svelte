@@ -995,7 +995,6 @@
 </Preview> -->
 
 <h2>Brushing</h2>
-
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded">
     <AreaChart
@@ -1006,6 +1005,12 @@
       props={{
         area: { tweened: { duration: 200 } },
         xAxis: { format: undefined, tweened: { duration: 200 } },
+        canvas: {
+          class: 'cursor-crosshair',
+        },
+        svg: {
+          class: 'cursor-crosshair',
+        },
       }}
       {renderContext}
       {debug}

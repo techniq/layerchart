@@ -135,12 +135,14 @@
   export let props: {
     xAxis?: Partial<ComponentProps<Axis>>;
     yAxis?: Partial<ComponentProps<Axis>>;
+    canvas?: Partial<ComponentProps<Canvas>>;
     grid?: Partial<ComponentProps<Grid>>;
     rule?: Partial<ComponentProps<Rule>>;
     bars?: Partial<ComponentProps<Bars>>;
     legend?: Partial<ComponentProps<Legend>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
+    svg?: Partial<ComponentProps<Svg>>;
     tooltip?: {
       context?: Partial<ComponentProps<Tooltip.Context>>;
       root?: Partial<ComponentProps<Tooltip.Root>>;
@@ -356,7 +358,11 @@
   <slot {...slotProps}>
     <slot name="belowContext" {...slotProps} />
 
-    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} {debug}>
+    <svelte:component
+      this={renderContext === 'canvas' ? Canvas : Svg}
+      {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
+      {debug}
+    >
       <slot name="grid" {...slotProps}>
         {#if grid}
           <Grid

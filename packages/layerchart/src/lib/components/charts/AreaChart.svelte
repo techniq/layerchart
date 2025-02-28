@@ -103,6 +103,7 @@
   export let props: {
     area?: Partial<ComponentProps<Area>>;
     brush?: Partial<ComponentProps<BrushContext>>;
+    canvas?: Partial<ComponentProps<Canvas>>;
     grid?: Partial<ComponentProps<Grid>>;
     highlight?: Partial<ComponentProps<Highlight>>;
     labels?: Partial<ComponentProps<Labels>>;
@@ -110,6 +111,7 @@
     line?: Partial<ComponentProps<Line>>;
     points?: Partial<ComponentProps<Points>>;
     rule?: Partial<ComponentProps<Rule>>;
+    svg?: Partial<ComponentProps<Svg>>;
     tooltip?: {
       context?: Partial<ComponentProps<Tooltip.Context>>;
       root?: Partial<ComponentProps<Tooltip.Root>>;
@@ -350,7 +352,12 @@
   <slot {...slotProps}>
     <slot name="belowContext" {...slotProps} />
 
-    <svelte:component this={renderContext === 'canvas' ? Canvas : Svg} center={radial} {debug}>
+    <svelte:component
+      this={renderContext === 'canvas' ? Canvas : Svg}
+      {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
+      center={radial}
+      {debug}
+    >
       <slot name="grid" {...slotProps}>
         {#if grid}
           <Grid x={radial} y {...typeof grid === 'object' ? grid : null} {...props.grid} />
