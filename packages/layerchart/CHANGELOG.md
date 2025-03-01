@@ -1,5 +1,15 @@
 # LayerChart
 
+## 1.0.3
+
+### Patch Changes
+
+- fix(Area|Link|Spline): Fix advertant tweening due to non-granular object reactivity with tweened options ([#429](https://github.com/techniq/layerchart/pull/429))
+
+- fix(TooltipContext): Properly detect non-manual modes for pointer chart bounds detection ([#433](https://github.com/techniq/layerchart/pull/433))
+
+- fix(TransformContext): Fix `zoomTo()` regression (Pack/Zoomable map examples) ([#430](https://github.com/techniq/layerchart/pull/430))
+
 ## 1.0.2
 
 ### Patch Changes
