@@ -130,15 +130,15 @@
     center: { x: number; y: number },
     rect?: { width: number; height: number }
   ) {
-    // TODO: Improve with geo/projection
+    const newScale = rect ? ($width < $height ? $width / rect.width : $height / rect.height) : 1;
 
     $translate = {
-      x: $width / 2 - center.x,
-      y: $height / 2 - center.y,
+      x: $width / 2 - center.x * newScale,
+      y: $height / 2 - center.y * newScale,
     };
 
     if (rect) {
-      $scale = $width < $height ? $width / rect.width : $height / rect.height;
+      $scale = newScale;
     }
   }
 
