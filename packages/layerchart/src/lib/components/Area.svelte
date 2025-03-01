@@ -95,7 +95,7 @@
     return path(data ?? $contextData);
   }
 
-  $: tweenedOptions = tweened
+  const tweenedOptions = tweened
     ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
     : false;
   $: tweened_d = motionStore(defaultPathData(), { tweened: tweenedOptions });

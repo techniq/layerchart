@@ -149,8 +149,9 @@
   }
 
   let d: string | null = '';
-  // @ts-expect-error
-  $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
+  const tweenedOptions = tweened
+    ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
+    : false;
   $: tweened_d = motionStore(defaultPathData(), { tweened: tweenedOptions });
   $: {
     const path = $radial

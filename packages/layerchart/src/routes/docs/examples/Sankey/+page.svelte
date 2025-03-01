@@ -80,7 +80,7 @@
       <Svg>
         <Sankey nodeId={(d) => d.id} let:links let:nodes>
           {#each links as link ([link.source.id, link.target.id].join('_'))}
-            <Link sankey data={link} stroke-width={link.width} class="stroke-surface-content/10" />
+            <Link sankey data={link} strokeWidth={link.width} class="stroke-surface-content/10" />
           {/each}
           {#each nodes as node (node.id)}
             {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
@@ -113,7 +113,7 @@
             <Link
               sankey
               data={link}
-              stroke-width={link.width}
+              strokeWidth={link.width}
               class="stroke-surface-content/10"
               onpointermove={(e) => tooltip.show(e, { link })}
               onpointerleave={tooltip.hide}
@@ -194,7 +194,7 @@
             <Link
               sankey
               data={link}
-              stroke-width={link.width}
+              strokeWidth={link.width}
               tweened
               class="stroke-surface-content/10"
             />
@@ -267,7 +267,7 @@
               !highlightLinkIndexes.includes(link.index)
                 ? linkOpacity.inactive
                 : linkOpacity.default}
-              stroke-width={link.width}
+              strokeWidth={link.width}
               class={cls(
                 'transition[stroke-opacity] duration-300',
                 linkColorBy === 'static' && 'stroke-surface-content'
@@ -390,7 +390,7 @@
               !highlightLinkIndexes.includes(link.index)
                 ? linkOpacity.inactive
                 : linkOpacity.default}
-              stroke-width={link.width}
+              strokeWidth={link.width}
               class={cls(
                 'transition[stroke-opacity] duration-300',
                 linkColorBy === 'static' && 'stroke-surface-content'
