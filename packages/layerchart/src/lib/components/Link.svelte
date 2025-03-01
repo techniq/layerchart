@@ -65,8 +65,9 @@
   $: markerEndId = markerEnd || $$slots['markerEnd'] ? uniqueId('marker-') : '';
 
   export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
-  // @ts-expect-error
-  $: tweenedOptions = tweened ? { interpolate: interpolatePath, ...tweened } : false;
+  const tweenedOptions = tweened
+    ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
+    : false;
   $: tweened_d = motionStore('', { tweened: tweenedOptions });
 
   $: {
