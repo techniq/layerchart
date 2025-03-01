@@ -117,7 +117,7 @@
                 stroke={hsl(nodeColor)
                   .darker(colorBy === 'children' ? 0.5 : 1)
                   .toString()}
-                stroke-width={1 / transform.scale}
+                strokeWidth={1 / transform.scale}
                 fill={nodeColor}
               />
             </Group>
