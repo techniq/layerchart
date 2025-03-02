@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy, type ComponentProps } from 'svelte';
+  import { onMount, onDestroy, type ComponentProps } from 'svelte';
   import type { tweened as tweenedStore } from 'svelte/motion';
   import { type Area, area as d3Area, areaRadial } from 'd3-shape';
   import type { CurveFactory } from 'd3-shape';
@@ -8,6 +8,7 @@
   import { merge } from 'lodash-es';
 
   import { cls } from '@layerstack/tailwind';
+  import { uniqueId } from '@layerstack/utils';
   import { objectId } from '@layerstack/utils/object';
 
   import { motionStore } from '$lib/stores/motionStore.js';
@@ -58,7 +59,7 @@
 
   export let fill: string | undefined = undefined;
   export let fillOpacity: number | undefined = undefined;
-  export let stroke: string | undefined = undefined;
+  export let stroke: string | undefined = line ? "stroke-primary" : undefined;
   export let strokeWidth: number | undefined = undefined;
 
   let className: string | undefined = undefined;
@@ -95,10 +96,24 @@
     return path(data ?? $contextData);
   }
 
+  $: [firstPoint, lastPoint] = foo(data ?? $contextData)
+
+  function foo(data) {
+    const isPointDefined = defined ?? ((d) => xAccessor(d) != null && y1Accessor(d) != null)
+    const definedPoints = data.filter(isPointDefined)
+
+    return [
+        definedPoints[0],
+        definedPoints[definedPoints.length - 1]
+    ];
+  }
+
+  $: defaultData = defaultPathData()
+
   const tweenedOptions = tweened
     ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
     : false;
-  $: tweened_d = motionStore(defaultPathData(), { tweened: tweenedOptions });
+  $: tweened_d = motionStore(defaultData, { tweened: tweenedOptions });
   $: {
     const path = $radial
       ? areaRadial()
@@ -190,6 +205,19 @@
     });
   }
 
+  let pathEl;
+  let pathLength = 0;
+
+  $: cdata = data ?? $contextData
+  $: leftLegLength = $yScale(y0Accessor(firstPoint)) - $yScale(y1Accessor(firstPoint))
+  $: rightLegLength = $yScale(y0Accessor(lastPoint)) - $yScale(y1Accessor(lastPoint))
+  $: bottomPathLength = $xScale($xScale.domain()[1]) - $xScale($xScale.domain()[0])
+  $: topPathLength = pathLength - leftLegLength - rightLegLength - bottomPathLength
+
+  onMount(()=>{
+    pathLength = pathEl.getTotalLength();
+  })
+
   onDestroy(() => {
     if (renderContext === 'canvas') {
       canvasUnregister();
@@ -197,7 +225,24 @@
   });
 </script>
 
-{#if line}
+{#if renderContext === 'svg'}
+  <path bind:this={pathEl}
+    d={$tweened_d}
+    clip-path={clipPath}
+    {fill}
+    fill-opacity={fillOpacity}
+    {stroke}
+    stroke-width={strokeWidth}
+    pathLength={pathLength}
+    stroke-dasharray={line ? `${topPathLength} ${pathLength - topPathLength}` : undefined}
+    {...$$restProps}
+    class={cls('path-area', line && 'path-line stroke-2 stroke-primary', className)}
+    on:click={onclick}
+    on:pointerenter={onpointerenter}
+    on:pointermove={onpointermove}
+    on:pointerleave={onpointerleave}
+  />
+{:else if line}
   <Spline
     {data}
     {x}
@@ -209,20 +254,3 @@
   />
 {/if}
 
-{#if renderContext === 'svg'}
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <path
-    d={$tweened_d}
-    clip-path={clipPath}
-    {fill}
-    fill-opacity={fillOpacity}
-    {stroke}
-    stroke-width={strokeWidth}
-    {...$$restProps}
-    class={cls('path-area', className)}
-    on:click={onclick}
-    on:pointerenter={onpointerenter}
-    on:pointermove={onpointermove}
-    on:pointerleave={onpointerleave}
-  />
-{/if}
