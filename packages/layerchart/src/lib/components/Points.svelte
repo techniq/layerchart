@@ -143,6 +143,7 @@
           x: xMax + getOffset(xMax, offsetX, $xScale) - ($config.r ? $rGet(d) : r),
           y: y,
         },
+        data: d,
       };
     } else if (Array.isArray(yValue)) {
       /*
@@ -160,6 +161,7 @@
           x: x,
           y: yMax + getOffset(yMax, offsetY, $yScale),
         },
+        data: d,
       };
     }
   });
@@ -170,7 +172,7 @@
     {#each _links as link}
       <Link
         data={link}
-        class="stroke-surface-content/50"
+        stroke={fill ?? ($config.c ? $cGet(link.data) : null)}
         {...typeof links === 'object' ? links : null}
       />
     {/each}
