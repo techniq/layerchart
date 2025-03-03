@@ -363,15 +363,17 @@
               onpointenter={() => (highlightSeriesKey = s.key)}
               onpointleave={() => (highlightSeriesKey = null)}
               {...props.highlight}
-              points={{
-                ...highlightPointsProps,
-                fill: s.color,
-                class: cls(
-                  'transition-opacity',
-                  highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
-                  highlightPointsProps?.class
-                ),
-              }}
+              points={props.highlight?.points == false
+                ? false
+                : {
+                    ...highlightPointsProps,
+                    fill: s.color,
+                    class: cls(
+                      'transition-opacity',
+                      highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+                      highlightPointsProps?.class
+                    ),
+                  }}
             />
           {/each}
         </slot>
