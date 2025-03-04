@@ -39,12 +39,14 @@
   import { onMount, onDestroy } from 'svelte';
   import { cls } from '@layerstack/tailwind';
   import { Logger, localPoint } from '@layerstack/utils';
+  import { darkColorScheme } from '@layerstack/svelte-stores';
 
   import { setRenderContext } from '../Chart.svelte';
   import { chartContext } from '../ChartContext.svelte';
   import { transformContext } from '../TransformContext.svelte';
   import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
+
   const { width, height, containerWidth, containerHeight, padding } = chartContext();
 
   /** The `<canvas>` tag. Useful for bindings. */
@@ -153,6 +155,24 @@
     hitCanvasContext = hitCanvasElement?.getContext('2d', {
       willReadFrequently: false, // Explicitly set to `false` to resolve pixel artifacts between fill and stroke with the same color (issue #372)
     }) as CanvasRenderingContext2D;
+
+    // Invalidate/redraw if color scheme changes, either via browser `prefers-color-scheme` (including emulation) or by changing `<html class="dark">` or `<html data-theme="...">`
+    darkColorScheme.subscribe(() => {
+      canvasContext.invalidate();
+    });
+
+    const observer = new MutationObserver(() => {
+      canvasContext.invalidate();
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class', 'data-theme'],
+    });
+
+    return () => {
+      observer.disconnect();
+    };
   });
 
   onDestroy(() => {
