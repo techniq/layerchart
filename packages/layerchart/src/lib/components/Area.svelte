@@ -17,6 +17,7 @@
   import Spline from './Spline.svelte';
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
+  import { flattenPathData } from '../utils/path.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   const {
@@ -78,21 +79,30 @@
 
   /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
   function defaultPathData() {
-    const path = $radial
-      ? areaRadial()
-          .angle((d) => $xScale(xAccessor(d)))
-          .innerRadius((d) => Math.min($yScale(0), $yRange[0]))
-          .outerRadius((d) => Math.min($yScale(0), $yRange[0]))
-      : d3Area()
-          .x((d) => $xScale(xAccessor(d)) + xOffset)
-          .y0((d) => Math.min($yScale(0), $yRange[0]))
-          .y1((d) => Math.min($yScale(0), $yRange[0]));
+    if (!tweenedOptions) {
+      // If not tweened, return empty string (faster initial render)
+      return '';
+    } else if (pathData) {
+      // Flatten all `y` coordinates of pre-defined `pathData`
+      return flattenPathData(pathData, Math.min($yScale(0), $yRange[0]));
+    } else if ($config.x) {
+      // Only use default line if `x` accessor is defined (cartesian chart)
+      const path = $radial
+        ? areaRadial()
+            .angle((d) => $xScale(xAccessor(d)))
+            .innerRadius((d) => Math.min($yScale(0), $yRange[0]))
+            .outerRadius((d) => Math.min($yScale(0), $yRange[0]))
+        : d3Area()
+            .x((d) => $xScale(xAccessor(d)) + xOffset)
+            .y0((d) => Math.min($yScale(0), $yRange[0]))
+            .y1((d) => Math.min($yScale(0), $yRange[0]));
 
-    path.defined(defined ?? ((d) => xAccessor(d) != null && y1Accessor(d) != null));
+      path.defined(defined ?? ((d) => xAccessor(d) != null && y1Accessor(d) != null));
 
-    if (curve) path.curve(curve);
+      if (curve) path.curve(curve);
 
-    return path(data ?? $contextData);
+      return path(data ?? $contextData);
+    }
   }
 
   const tweenedOptions = tweened
