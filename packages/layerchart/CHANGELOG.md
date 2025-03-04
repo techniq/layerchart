@@ -1,5 +1,11 @@
 # LayerChart
 
+## 1.0.5
+
+### Patch Changes
+
+- fix(Canvas): Redraw if color scheme / theme changes, either via browser `prefers-color-scheme` (including emulation) or by changing `<html class="dark">` or `<html data-theme="...">` ([#440](https://github.com/techniq/layerchart/pull/440))
+
 ## 1.0.4
 
 ### Patch Changes
