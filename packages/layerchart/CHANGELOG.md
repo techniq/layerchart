@@ -1,5 +1,15 @@
 # LayerChart
 
+## 1.0.4
+
+### Patch Changes
+
+- fix(Points): Support coloring lines using color `c` scale ([#436](https://github.com/techniq/layerchart/pull/436))
+
+- fix(Area): Apply same `defaultPathData` logic as Spline. Provides better initial performance when not tweened and fixes Svelte 4 compatability issue ([#435](https://github.com/techniq/layerchart/pull/435))
+
+- fix(AreaChart|LineChart): Hide highlight points when set to `false` ([#437](https://github.com/techniq/layerchart/pull/437))
+
 ## 1.0.3
 
 ### Patch Changes
