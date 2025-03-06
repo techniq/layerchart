@@ -421,7 +421,8 @@
     hideTooltip();
   }}
   on:click={(e) => {
-    if (triggerPointerEvents) {
+    // Ignore clicks without data (triggered from Legend clicks, for example)
+    if (triggerPointerEvents && $tooltip?.data != null) {
       onclick(e, { data: $tooltip?.data });
     }
   }}
