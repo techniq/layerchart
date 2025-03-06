@@ -1,5 +1,11 @@
 # LayerChart
 
+## 1.0.6
+
+### Patch Changes
+
+- fix(TooltipContext): Ignore clicks without data (triggered from Legend clicks, for example) ([#444](https://github.com/techniq/layerchart/pull/444))
+
 ## 1.0.5
 
 ### Patch Changes
