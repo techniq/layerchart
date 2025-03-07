@@ -4,6 +4,7 @@
     Canvas,
     Circle,
     Highlight,
+    Labels,
     LinearGradient,
     LineChart,
     pivotLonger,
@@ -268,6 +269,31 @@
       {renderContext}
       {debug}
     />
+  </div>
+</Preview>
+
+<h2>Series (labels on point hover)</h2>
+
+<Preview data={multiSeriesData}>
+  <div class="h-[300px] p-4 border rounded">
+    <LineChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'bananas', color: 'hsl(var(--color-success))' },
+        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+      ]}
+      {renderContext}
+      {debug}
+    >
+      <svelte:fragment slot="aboveMarks" let:getLabelsProps let:series let:highlightSeriesKey>
+        {#if highlightSeriesKey}
+          {@const activeSeriesIndex = series.findIndex((s) => s.key === highlightSeriesKey)}
+          <Labels {...getLabelsProps(series[activeSeriesIndex], activeSeriesIndex)} offset={10} />
+        {/if}
+      </svelte:fragment>
+    </LineChart>
   </div>
 </Preview>
 
