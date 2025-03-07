@@ -289,7 +289,8 @@
     >
       <svelte:fragment slot="aboveMarks" let:getLabelsProps let:series let:highlightSeriesKey>
         {#if highlightSeriesKey}
-          {@const activeSeriesIndex = series.findIndex((s) => s.key === highlightSeriesKey)}
+          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
+          {@const activeSeriesIndex = [...series].findIndex((s) => s.key === highlightSeriesKey)}
           <Labels {...getLabelsProps(series[activeSeriesIndex], activeSeriesIndex)} offset={10} />
         {/if}
       </svelte:fragment>
