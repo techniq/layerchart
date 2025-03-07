@@ -277,6 +277,7 @@
     getLabelsProps,
     getPointsProps,
     getSplineProps,
+    highlightSeriesKey,
     setHighlightSeriesKey,
   }}
   <slot {...slotProps}>

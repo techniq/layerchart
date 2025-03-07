@@ -346,6 +346,7 @@
     getAreaProps,
     getLabelsProps,
     getPointsProps,
+    highlightSeriesKey,
     setHighlightSeriesKey,
   }}
 

@@ -353,6 +353,7 @@
     visibleSeries,
     getBarsProps,
     getLabelsProps,
+    highlightSeriesKey,
     setHighlightSeriesKey,
   }}
   <slot {...slotProps}>

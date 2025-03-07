@@ -240,6 +240,7 @@
     visibleSeries,
     getLabelsProps,
     getPointsProps,
+    highlightSeriesKey,
     setHighlightSeriesKey,
   }}
   {@const activeSeries = tooltip.data

@@ -221,6 +221,7 @@
     tooltip,
     series,
     visibleData,
+    highlightKey,
     setHighlightKey,
   }}
   <slot {...slotProps}>
