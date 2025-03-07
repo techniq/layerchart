@@ -1,5 +1,11 @@
 # LayerChart
 
+## 1.0.7
+
+### Patch Changes
+
+- feat: Add `highlightSeriesKey` as slot prop for all simplified chart slots ([`af73389`](https://github.com/techniq/layerchart/commit/af73389356177bb68d658c67a506fe3e3d7180a3))
+
 ## 1.0.6
 
 ### Patch Changes
