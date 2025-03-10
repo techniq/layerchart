@@ -1,0 +1,8 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "layerchart": "1.0.7"
+  },
+  "changesets": []
+}
