@@ -5,8 +5,6 @@
   import Rect from './Rect.svelte';
   import Spline from './Spline.svelte';
 
-  import { getRenderContext } from './Chart.svelte';
-  import { getCanvasContext } from './layout/Canvas.svelte';
   import { createDimensionGetter, type Insets } from '../utils/rect.js';
   import { isScaleBand } from '../utils/scales.js';
   import { accessor, type Accessor } from '../utils/common.js';
@@ -37,6 +35,7 @@
   export let y1: Accessor = undefined;
 
   export let fill: string | undefined = undefined;
+  export let fillOpacity: number | undefined = undefined;
   export let stroke = 'black';
   export let strokeWidth = 0;
   export let radius = 0;
@@ -113,19 +112,17 @@
       z`
     .split('\n')
     .join('');
-
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
 </script>
 
 {#if _rounded === 'all' || _rounded === 'none' || radius === 0}
   <Rect
     {fill}
-    {spring}
-    {tweened}
+    {fillOpacity}
     {stroke}
     {strokeWidth}
     rx={_rounded === 'none' ? 0 : radius}
+    {spring}
+    {tweened}
     {onclick}
     {onpointerenter}
     {onpointermove}
@@ -138,10 +135,11 @@
   <Spline
     {pathData}
     {fill}
-    {spring}
-    {tweened}
+    {fillOpacity}
     {stroke}
     {strokeWidth}
+    {spring}
+    {tweened}
     {onclick}
     {onpointerenter}
     {onpointermove}

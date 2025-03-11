@@ -258,7 +258,7 @@
                 {cornerRadius}
                 {padAngle}
                 fill={s.color ?? cScale?.(c(d))}
-                track={{ fill: s.color ?? cScale?.(c(d)), 'fill-opacity': 0.1 }}
+                track={{ fill: s.color ?? cScale?.(c(d)), fillOpacity: 0.1 }}
                 {tooltip}
                 data={d}
                 onclick={(e) => {

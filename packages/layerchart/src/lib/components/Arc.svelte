@@ -221,7 +221,7 @@
   pathData={arc()}
   transform="translate({xOffset}, {yOffset})"
   {fill}
-  fill-opacity={fillOpacity}
+  {fillOpacity}
   {stroke}
   stroke-width={strokeWidth}
   class={className}
