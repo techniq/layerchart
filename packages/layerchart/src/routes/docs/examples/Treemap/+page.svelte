@@ -150,7 +150,7 @@
       let:item
       on:click={() => (selectedNested = item)}
       base
-      class="px-2 py-1 rounded"
+      class="px-2 py-1 rounded-sm"
     >
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
@@ -158,7 +158,7 @@
       </div>
     </Button>
   </Breadcrumb>
-  <div class="h-[800px] p-4 border rounded">
+  <div class="h-[800px] p-4 border rounded-sm">
     <Chart data={complexDataHierarchy.copy()} let:tooltip>
       <Svg>
         <Bounds
@@ -297,7 +297,7 @@
       let:item
       on:click={() => (selectedCarNode = item)}
       base
-      class="px-2 py-1 rounded"
+      class="px-2 py-1 rounded-sm"
     >
       <div class="text-left">
         <div class="text-sm">{item.data[0] ?? 'Overall'}</div>
@@ -305,7 +305,7 @@
       </div>
     </Button>
   </Breadcrumb>
-  <div class="h-[800px] p-4 border rounded">
+  <div class="h-[800px] p-4 border rounded-sm">
     <Chart data={groupedHierarchy}>
       <Svg>
         <Treemap
@@ -415,7 +415,7 @@
       let:item
       on:click={() => (selectedZoomable = item)}
       base
-      class="px-2 py-1 rounded"
+      class="px-2 py-1 rounded-sm"
     >
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
@@ -423,7 +423,7 @@
       </div>
     </Button>
   </Breadcrumb>
-  <div class="h-[600px] p-4 border rounded">
+  <div class="h-[600px] p-4 border rounded-sm">
     <Chart data={complexDataHierarchy.copy()}>
       <Svg>
         <Bounds

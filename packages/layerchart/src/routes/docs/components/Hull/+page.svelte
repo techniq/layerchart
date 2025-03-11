@@ -32,7 +32,7 @@
 <h2>Scatter</h2>
 
 <Preview data={data.groupData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={data.groupData}
       x="x"

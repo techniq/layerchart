@@ -28,7 +28,7 @@
 <h2>Responsive cell size (default)</h2>
 
 <Preview {data}>
-  <div class="h-[200px] p-4 border rounded">
+  <div class="h-[200px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -63,7 +63,7 @@
 <h2>Fixed cell size</h2>
 
 <Preview {data}>
-  <div class="h-[200px] p-4 border rounded overflow-hidden">
+  <div class="h-[200px] p-4 border rounded-sm overflow-hidden">
     <Chart
       {data}
       x="date"
@@ -98,7 +98,7 @@
 <h2>Multiple Years</h2>
 
 <Preview {data}>
-  <div class="h-[716px] p-4 border rounded overflow-hidden">
+  <div class="h-[716px] p-4 border rounded-sm overflow-hidden">
     <Chart
       {data}
       x="date"

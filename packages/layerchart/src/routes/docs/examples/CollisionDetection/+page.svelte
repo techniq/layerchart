@@ -29,7 +29,7 @@
 <h1>Examples</h1>
 
 <Preview data={randomData}>
-  <div class="h-[600px] p-4 border rounded overflow-hidden">
+  <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
     <Chart data={randomData} let:width let:height>
       <Svg>
         <ForceSimulation

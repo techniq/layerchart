@@ -69,7 +69,7 @@
 <h2>Basic</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -95,7 +95,7 @@
 <h2>With Tooltip and Highlight</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -129,7 +129,7 @@
 <h2>With Labels</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -156,7 +156,7 @@
 <h2>Explicit axis ticks (min/max)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -187,7 +187,7 @@
 <h2>Gradient</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -215,7 +215,7 @@
 <h2>Gradient (separate stroke)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -245,7 +245,7 @@
 <h2>Multiple series</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"
@@ -300,7 +300,7 @@
 <h2>Multiple series (using overrides)</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesData}
       x="date"
@@ -362,7 +362,7 @@
 <h2>Multiple series (highlight on hover)</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"
@@ -421,7 +421,7 @@
 <h2>Multiple series with labels</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"
@@ -464,7 +464,7 @@
 <h2>Stack</h2>
 
 <Preview data={stackData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={stackData}
       flatData={flatten(stackData)}
@@ -518,7 +518,7 @@
 <h2>Stack with gradient</h2>
 
 <Preview data={stackData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={stackData}
       flatData={flatten(stackData)}
@@ -574,7 +574,7 @@
   </div>
 
   <Preview data={dateSeriesData}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart
         data={dateSeriesData}
         x="date"
@@ -613,7 +613,7 @@
   </div>
 
   <Preview data={dateSeriesData}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart
         data={dateSeriesData}
         x="date"
@@ -653,7 +653,7 @@
   </div>
 
   <Preview data={dateSeriesData}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart
         data={dateSeriesData}
         x="date"
@@ -692,7 +692,7 @@
 <h2>Threshold with RectClipPath</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
@@ -723,7 +723,7 @@
 <h2>Threshold with RectClipPath (over/under)</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
@@ -754,7 +754,7 @@
 <h2>Highlight color based on value using color scale</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
@@ -797,7 +797,7 @@
 <h2>Highlight color based on value using tooltip slot prop</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
@@ -844,7 +844,7 @@
 <h2>Threshold with LinearGradient</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
@@ -882,7 +882,7 @@
 <h2>Threshold with LinearGradient (over/under)</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
@@ -925,7 +925,7 @@
 <h2>Clipped area on Tooltip</h2>
 
 <Preview data={data.appleStock}>
-  <div class="h-[300px] border rounded">
+  <div class="h-[300px] border rounded-sm">
     <Chart
       data={data.appleStock}
       x="date"
@@ -970,7 +970,7 @@
         y={height + padding.top + 2}
         anchor="top"
         variant="none"
-        class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded whitespace-nowrap"
+        class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded-sm whitespace-nowrap"
         let:data
       >
         {format(data.date, PeriodType.Day)}

@@ -21,7 +21,7 @@
 <h2>Common scale</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={dateSeries}
       x="date"
@@ -56,7 +56,7 @@
 <h2>Stacked Charts</h2>
 
 <Preview {data}>
-  <div class="h-[300px] grid grid-stack p-4 border rounded">
+  <div class="h-[300px] grid grid-stack p-4 border rounded-sm">
     <!-- First cahrt (bar), with different domain scale for volume -->
     <BarChart
       data={data.appleTicker}

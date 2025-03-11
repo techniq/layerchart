@@ -12,7 +12,7 @@
   let showCenter = false;
 </script>
 
-<div class={cls('bg-surface-300/50 rounded m-1 backdrop-blur p-2 tabular-nums', $$props.class)}>
+<div class={cls('bg-surface-300/50 rounded-sm m-1 backdrop-blur-sm p-2 tabular-nums', $$props.class)}>
   <div class="grid gap-2 text-xs">
     <div><span class="opacity-50">scale:</span> {format($geo.scale(), 'decimal')}</div>
 
@@ -48,6 +48,6 @@
 
 {#if showCenter}
   <div
-    class="absolute w-2 h-2 bg-danger/80 rounded-full z-[1] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+    class="absolute w-2 h-2 bg-danger/80 rounded-full z-1 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
   ></div>
 {/if}

@@ -53,7 +53,7 @@
     {#key chartProps}
       {#if example === 'single'}
         <Preview data={chartData.cpu[0]}>
-          <div class="h-[500px] p-4 border rounded">
+          <div class="h-[500px] p-4 border rounded-sm">
             <LineChart
               data={chartData.cpu}
               x={(d) => d[0]}
@@ -67,7 +67,7 @@
         </Preview>
       {:else if example === 'series'}
         <Preview data={{ cpu: chartData.cpu[0], ram: chartData.ram[0], tcp: chartData.tcp[0] }}>
-          <div class="h-[500px] p-4 border rounded">
+          <div class="h-[500px] p-4 border rounded-sm">
             <LineChart
               x={(d) => d[0]}
               y={(d) => d[1]}

@@ -46,7 +46,7 @@
     {#key chartProps}
       {#if example === 'single'}
         <Preview data={data.chartData[0]}>
-          <div class="h-[500px] p-4 border rounded">
+          <div class="h-[500px] p-4 border rounded-sm">
             <LineChart
               data={data.chartData}
               x="epoch"
@@ -60,7 +60,7 @@
         </Preview>
       {:else if example === 'series'}
         <Preview data={data.chartData[0]}>
-          <div class="h-[500px] p-4 border rounded">
+          <div class="h-[500px] p-4 border rounded-sm">
             <LineChart
               data={data.chartData}
               x="epoch"

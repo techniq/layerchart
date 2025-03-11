@@ -44,7 +44,7 @@
 </div>
 
 <Preview data={dots}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dots}
       x="category"

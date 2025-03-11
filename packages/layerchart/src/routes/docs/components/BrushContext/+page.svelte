@@ -223,7 +223,7 @@
 <h2>Integrated brush (x-axis)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[null, null]} let:value={xDomain} let:set>
       <div class="h-[300px]">
         <Chart
@@ -260,7 +260,7 @@
 <h2>Integrated brush (y-axis)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[0, null]} let:value={yDomain} let:set>
       <div class="h-[300px]">
         <Chart
@@ -297,7 +297,7 @@
 <h2>Integrated brush (both axis / area)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={{ xDomain: [null, null], yDomain: [0, null] }} let:value let:set>
       <div class="h-[300px]">
         <Chart
@@ -339,7 +339,7 @@
 <h2>Separate chart (clip data)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[null, null]} let:value={xDomain} let:set>
       <div class="h-[300px]">
         <Chart
@@ -389,7 +389,7 @@
 <h2>Separate chart (clip data: y-axis)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid grid-cols-[40px,1fr] gap-2">
+  <div class="border rounded-sm p-4 grid grid-cols-[40px_1fr] gap-2">
     <State initial={[0, null]} let:value={yDomain} let:set>
       <div>
         <Chart
@@ -439,7 +439,7 @@
 <h2>Separate chart (filter data)</h2>
 
 <Preview {data}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[null, null]} let:value={xDomain} let:set>
       <div class="h-[300px]">
         <Chart
@@ -505,7 +505,7 @@
 
   <div class="grid grid-cols-2 gap-4">
     {#each seriesData as data, i}
-      <div class="border rounded p-4 grid gap-1" style:--chart-color={colorScale(String(i))}>
+      <div class="border rounded-sm p-4 grid gap-1" style:--chart-color={colorScale(String(i))}>
         <div class="h-[100px]">
           <Chart
             {data}
@@ -570,7 +570,7 @@
 <h2>Tooltip interop</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[null, null]} let:value={xDomain} let:set>
       <div class="h-[300px]">
         <Chart
@@ -608,7 +608,7 @@
             xOffset={4}
             anchor="bottom"
             variant="none"
-            class="text-sm font-semibold text-primary leading-3 bg-surface-100/80 backdrop-blur-sm px-2 py-1 rounded"
+            class="text-sm font-semibold text-primary leading-3 bg-surface-100/80 backdrop-blur-xs px-2 py-1 rounded-sm"
             let:data
           >
             {format(data.value, 'currency')}
@@ -620,7 +620,7 @@
             yOffset={2}
             anchor="top"
             variant="none"
-            class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded whitespace-nowrap"
+            class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded-sm whitespace-nowrap"
             let:data
           >
             {format(data.date, PeriodType.Day)}
@@ -635,7 +635,7 @@
 
 <Preview data={randomData}>
   <State initial={{ xDomain: [null, null], yDomain: [null, null] }} let:value let:set>
-    <div class="h-[400px] p-4 border rounded">
+    <div class="h-[400px] p-4 border rounded-sm">
       <Chart
         data={randomData}
         x="x"
@@ -690,7 +690,7 @@
 <Preview data={randomData}>
   <State initial={{ xDomain: [null, null], yDomain: [null, null] }} let:value let:set>
     <div class="relative">
-      <div class="h-[400px] p-4 border rounded">
+      <div class="h-[400px] p-4 border rounded-sm">
         <Chart
           data={randomData}
           x="x"
@@ -723,7 +723,7 @@
         </Chart>
       </div>
 
-      <div class="absolute top-0 right-0 w-[25%] h-[25%] border rounded bg-surface-100">
+      <div class="absolute top-0 right-0 w-[25%] h-[25%] border rounded-sm bg-surface-100">
         <Chart
           data={randomData}
           x="x"

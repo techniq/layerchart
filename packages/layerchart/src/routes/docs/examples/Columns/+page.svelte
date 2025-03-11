@@ -108,7 +108,7 @@
 <h2>Basic</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -134,7 +134,7 @@
 <h2>Rounded (top-only)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -160,7 +160,7 @@
 <h2>Tooltip and Highlight</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -196,7 +196,7 @@
 <h2>Tooltip and Bar Highlight</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded group">
+  <div class="h-[300px] p-4 border rounded-sm group">
     <Chart
       {data}
       x="date"
@@ -232,7 +232,7 @@
 <h2>Tooltip and Clipped Highlight</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded group">
+  <div class="h-[300px] p-4 border rounded-sm group">
     <Chart
       {data}
       x="date"
@@ -274,7 +274,7 @@
 <h2>Calculated value domain (positive)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={createDateSeries({ count: 30, min: 50, max: 100 })}
       x="date"
@@ -299,7 +299,7 @@
 <h2>Calculated value domain (negative)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={createDateSeries({ count: 30, min: -100, max: -50 })}
       x="date"
@@ -324,7 +324,7 @@
 <h2>Outside Labels (default)</h2>
 
 <Preview data={negativeData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeData}
       x="date"
@@ -353,7 +353,7 @@
 <h2>Inside Labels</h2>
 
 <Preview data={negativeData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeData}
       x="date"
@@ -381,7 +381,7 @@
 <h2>Limit ticks (count)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -408,7 +408,7 @@
 <h2>Limit ticks (second scale)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -435,7 +435,7 @@
 <h2>Gradient</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -468,7 +468,7 @@
 <h2>Customize individual styles</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -502,7 +502,7 @@
 <h2>Highlight individual bar</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -536,7 +536,7 @@
 <h2>Highlight individual bar (line)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -567,7 +567,7 @@
 <h2>Average annotation Rule</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -606,7 +606,7 @@
 <h2>with grid on top</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -632,7 +632,7 @@
 <h2>with grid on top (mix-blend)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -658,7 +658,7 @@
 <h2>Multiple (overlapping)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -696,7 +696,7 @@
 <h2>Multiple (diverging)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -709,7 +709,7 @@
       <Svg>
         <Axis placement="left" grid rule format={(d) => format(Math.abs(d), 'integer')} />
         <Axis placement="bottom" format={(d) => format(d, PeriodType.Day, { variant: 'short' })} />
-        <Bars y="value" rounded="top" strokeWidth={1} class="fill-primary" />
+        <Bars y="value" rounded-sm="top" strokeWidth={1} class="fill-primary" />
         <Bars y={(d) => -d.baseline} rounded="bottom" strokeWidth={1} class="fill-secondary" />
         <Rule y={0} />
         <Highlight area />
@@ -737,7 +737,7 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart
         {data}
         x="date"
@@ -782,7 +782,7 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart
         {data}
         x="date"
@@ -827,7 +827,7 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart
         {data}
         x="date"
@@ -875,7 +875,7 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart
         {data}
         x="date"
@@ -917,7 +917,7 @@
 <h2>Grouped</h2>
 
 <Preview data={groupedData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={groupedData}
       x="year"
@@ -974,7 +974,7 @@
 <h2>Stacked</h2>
 
 <Preview data={stackedData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={stackedData}
       x="year"
@@ -1027,7 +1027,7 @@
 <h2>Stacked (Percent)</h2>
 
 <Preview data={stackedPercentData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={stackedPercentData}
       x="year"
@@ -1080,7 +1080,7 @@
 <h2>Grouped and Stacked</h2>
 
 <Preview data={groupedStackedData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={groupedStackedData}
       x="year"
@@ -1147,7 +1147,7 @@
 </div>
 
 <Preview data={transitionData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={transitionData}
       x="year"
@@ -1232,7 +1232,7 @@
 </div>
 
 <Preview data={transitionData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={transitionData}
       x="year"
@@ -1301,7 +1301,7 @@
 <h2>Click handler</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"

@@ -32,7 +32,7 @@
 <h2>Basic</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x={['startDate', 'endDate']}
@@ -76,7 +76,7 @@
 <h2>Colors</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x={['startDate', 'endDate']}

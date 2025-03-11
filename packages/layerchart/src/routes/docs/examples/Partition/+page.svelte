@@ -138,7 +138,7 @@
       let:item
       on:click={() => (selectedHorizontal = item)}
       base
-      class="px-2 py-1 rounded"
+      class="px-2 py-1 rounded-sm"
     >
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
@@ -146,7 +146,7 @@
       </div>
     </Button>
   </Breadcrumb>
-  <div class="h-[600px] p-4 border rounded">
+  <div class="h-[600px] p-4 border rounded-sm">
     <Chart data={horizontalHierarchy} let:width>
       <Svg>
         <Bounds
@@ -224,7 +224,7 @@
       let:item
       on:click={() => (selectedVertical = item)}
       base
-      class="px-2 py-1 rounded"
+      class="px-2 py-1 rounded-sm"
     >
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
@@ -232,7 +232,7 @@
       </div>
     </Button>
   </Breadcrumb>
-  <div class="h-[600px] p-4 border rounded">
+  <div class="h-[600px] p-4 border rounded-sm">
     <Chart data={verticalHierarchy} let:height>
       <Svg>
         <Bounds
@@ -316,7 +316,7 @@
       let:item
       on:click={() => (selectedCarNode = item)}
       base
-      class="px-2 py-1 rounded"
+      class="px-2 py-1 rounded-sm"
     >
       <div class="text-left">
         <div class="text-sm">{item.data[0] ?? 'Overall'}</div>
@@ -324,7 +324,7 @@
       </div>
     </Button>
   </Breadcrumb>
-  <div class="h-[600px] p-4 border rounded">
+  <div class="h-[600px] p-4 border rounded-sm">
     <Chart data={groupedHierarchy}>
       <Svg>
         <Bounds

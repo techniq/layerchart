@@ -55,7 +55,7 @@
 <h2>Basic</h2>
 
 <Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart data={spiralData} x="x" y="y" {renderContext} {debug} />
   </div>
 </Preview>
@@ -63,7 +63,7 @@
 <h2>Domain padding</h2>
 
 <Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart
       data={spiralData}
       x="x"
@@ -79,7 +79,7 @@
 <h2>Radius via rScale</h2>
 
 <Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart
       data={spiralData}
       x="x"
@@ -97,7 +97,7 @@
 <h2>0 baseline/domain</h2>
 
 <Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart
       data={spiralData}
       x="x"
@@ -113,7 +113,7 @@
 <h2>Series</h2>
 
 <Preview data={penguinDataBySpecies}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart
       x="flipper_length_mm"
       y="bill_length_mm"
@@ -137,7 +137,7 @@
 <h2>Series with radius</h2>
 
 <Preview data={penguinDataBySpecies}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart
       x="flipper_length_mm"
       y="bill_length_mm"
@@ -163,7 +163,7 @@
 <h2>Labels</h2>
 
 <Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart data={spiralData} x="x" y="y" labels={{ offset: 10 }} {renderContext} {debug} />
   </div>
 </Preview>
@@ -171,7 +171,7 @@
 <h2>Legend</h2>
 
 <Preview data={penguinDataBySpecies}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart
       x="flipper_length_mm"
       y="bill_length_mm"
@@ -196,7 +196,7 @@
 <h2>Legend (show/hide series with tweening)</h2>
 
 <Preview data={pengiunSeries}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart
       x="flipper_length_mm"
       y="bill_length_mm"
@@ -218,7 +218,7 @@
 <h2>Legend (custom labels)</h2>
 
 <Preview data={penguinDataBySpecies}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart
       x="flipper_length_mm"
       y="bill_length_mm"
@@ -244,7 +244,7 @@
 <h2>Single axis (x)</h2>
 
 <Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart data={spiralData} x="x" y="y" axis="x" {renderContext} {debug} />
   </div>
 </Preview>
@@ -252,7 +252,7 @@
 <h2>Single axis (y)</h2>
 
 <Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart data={spiralData} x="x" y="y" axis="y" {renderContext} {debug} />
   </div>
 </Preview>
@@ -283,7 +283,7 @@
 <h2>Tooltip click</h2>
 
 <Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart
       data={spiralData}
       x="x"
@@ -301,7 +301,7 @@
 <h2>Custom tooltip</h2>
 
 <Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart data={spiralData} x="x" y="y" {renderContext} {debug}>
       <svelte:fragment slot="tooltip" let:x let:y let:padding let:height>
         <Tooltip.Root
@@ -309,7 +309,7 @@
           y="data"
           anchor="right"
           contained={false}
-          class="text-[10px] font-semibold text-primary bg-surface-100 mr-[2px] px-1 py-[2px] border border-primary rounded whitespace-nowrap"
+          class="text-[10px] font-semibold text-primary bg-surface-100 mr-[2px] px-1 py-[2px] border border-primary rounded-sm whitespace-nowrap"
           let:data
         >
           {format(y(data), 'integer')}
@@ -319,7 +319,7 @@
           x="data"
           y={height}
           anchor="top"
-          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[1px] px-2 py-[1px] border border-primary rounded whitespace-nowrap"
+          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[1px] px-2 py-[1px] border border-primary rounded-sm whitespace-nowrap"
           contained={false}
           let:data
         >
@@ -333,7 +333,7 @@
 <h2>Brushing</h2>
 
 <Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart
       data={spiralData}
       x="x"
@@ -353,7 +353,7 @@
 <h2>Custom chart</h2>
 
 <Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart data={spiralData} x="x" y="y" let:x let:y {renderContext} {debug}>
       <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
         <Axis placement="left" grid rule />

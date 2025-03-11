@@ -64,14 +64,14 @@
 
 <Preview data={complexHierarchy}>
   <Breadcrumb items={selected?.ancestors().reverse() ?? []}>
-    <Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded">
+    <Button slot="item" let:item on:click={() => (selected = item)} base class="px-2 py-1 rounded-sm">
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
         <div class="text-xs text-surface-content/50">{format(item.value ?? 0, 'integer')}</div>
       </div>
     </Button>
   </Breadcrumb>
-  <div class="h-[600px] p-4 border rounded">
+  <div class="h-[600px] p-4 border rounded-sm">
     <Chart data={complexHierarchy} let:tooltip>
       <Svg center>
         <Bounds

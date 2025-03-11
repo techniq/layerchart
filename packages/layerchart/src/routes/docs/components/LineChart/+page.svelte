@@ -101,7 +101,7 @@
 <h2>Basic</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} />
   </div>
 </Preview>
@@ -109,7 +109,7 @@
 <h2>Override color</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -123,7 +123,7 @@
 <h2>Curve</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -138,7 +138,7 @@
 <h2>Series</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
@@ -156,7 +156,7 @@
 <h2>Series (separate data)</h2>
 
 <Preview data={multiSeriesDataByFruit}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       x="date"
       y="value"
@@ -186,7 +186,7 @@
 <h2>Series (voronoi tooltip with highlight)</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesFlatData}
       x="date"
@@ -234,7 +234,7 @@
 <h2>Series (point click)</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
@@ -256,7 +256,7 @@
 <h2>Series (custom highlight point)</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
@@ -275,7 +275,7 @@
 <h2>Series (labels on point hover)</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
@@ -301,7 +301,7 @@
 <h2>Labels</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -316,7 +316,7 @@
 <h2>Points</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" points {renderContext} {debug} />
   </div>
 </Preview>
@@ -324,7 +324,7 @@
 <h2>Labels with Points</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -340,7 +340,7 @@
 <h2>Labels within points</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -361,7 +361,7 @@
 <h2>Radar (linear grid)</h2>
 
 <Preview data={pitchData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={pitchData}
       x="name"
@@ -401,7 +401,7 @@
 <h2>Radar (rounded grid)</h2>
 
 <Preview data={pitchData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={pitchData}
       x="name"
@@ -439,7 +439,7 @@
 <h2>Radar with series data</h2>
 
 <Preview data={budgetData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={budgetData}
       x="name"
@@ -486,7 +486,7 @@
 <h2>Gradient encoding</h2>
 
 <Preview data={data.dailyTemperature}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={data.dailyTemperature}
       x="date"
@@ -527,7 +527,7 @@
 <h2>Gradient threshold</h2>
 
 <Preview data={data.dailyTemperature}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={data.dailyTemperature}
       x="date"
@@ -557,7 +557,7 @@
 <h2>Large series</h2>
 
 <Preview data={data.dailyTemperatures}>
-  <div class="h-[500px] p-4 border rounded">
+  <div class="h-[500px] p-4 border rounded-sm">
     <LineChart
       x="date"
       y="value"
@@ -591,7 +591,7 @@
 <h2>Large radial series</h2>
 
 <Preview data={data.dailyTemperatures}>
-  <div class="h-[500px] p-4 border rounded">
+  <div class="h-[500px] p-4 border rounded-sm">
     <LineChart
       x="date"
       y="value"
@@ -632,7 +632,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <Preview data={dynamicData}>
   <div
-    class="h-[300px] p-4 border rounded"
+    class="h-[300px] p-4 border rounded-sm"
     on:mousemove={(e) => {
       const x = e.clientX;
       const y = e.clientY;
@@ -670,7 +670,7 @@
 <h2>Null gaps</h2>
 
 <Preview data={dateSeriesDataWithNulls}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesDataWithNulls} x="date" y="value" points {renderContext} {debug} />
   </div>
 </Preview>
@@ -678,7 +678,7 @@
 <h2>Null with dashed lines</h2>
 
 <Preview data={dateSeriesDataWithNulls}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesDataWithNulls} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="belowMarks" let:series>
         {#each series as s}
@@ -714,7 +714,7 @@
 <h2>Single axis (x)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" axis="x" {renderContext} {debug} />
   </div>
 </Preview>
@@ -722,7 +722,7 @@
 <h2>Single axis (y)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} {debug} />
   </div>
 </Preview>
@@ -730,7 +730,7 @@
 <h2>Legend</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
@@ -749,7 +749,7 @@
 <h2>Tooltip click</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -767,7 +767,7 @@
 <h2>Custom tooltip</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="tooltip" let:x let:y let:height let:padding>
         <Tooltip.Root
@@ -775,7 +775,7 @@
           y="data"
           anchor="right"
           contained={false}
-          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-1 py-[2px] border border-primary rounded whitespace-nowrap"
+          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-1 py-[2px] border border-primary rounded-sm whitespace-nowrap"
           let:data
         >
           {y(data)}
@@ -785,7 +785,7 @@
           x="data"
           y={height}
           anchor="top"
-          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-2 py-[2px] border border-primary rounded whitespace-nowrap"
+          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-2 py-[2px] border border-primary rounded-sm whitespace-nowrap"
           contained={false}
           let:data
         >
@@ -799,7 +799,7 @@
 <h2>Simple annotations</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="aboveContext" let:xScale let:height let:tooltip>
         <Svg>
@@ -853,7 +853,7 @@
 <h2>Brushing</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={data.appleStock}
       x="date"
@@ -871,7 +871,7 @@
 
 <h2>Brush with series point events</h2>
 
-<div class="h-[300px] p-4 border rounded">
+<div class="h-[300px] p-4 border rounded-sm">
   <LineChart
     data={multiSeriesData}
     x="date"
@@ -893,7 +893,7 @@
 <h2>Custom chart</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" let:x let:y {renderContext} {debug}>
       <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
         <Axis placement="left" grid rule />

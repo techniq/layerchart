@@ -19,7 +19,7 @@
 <h1>Examples</h1>
 
 <Preview data={data.usSenators}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={data.usSenators}
       x={(d) => d.date_of_birth.getFullYear()}

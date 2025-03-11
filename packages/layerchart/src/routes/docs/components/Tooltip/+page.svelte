@@ -134,7 +134,7 @@
 <h2>Basic</h2>
 
 <Preview data={dateSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -168,7 +168,7 @@
 <h2>Custom content</h2>
 
 <Preview data={dateSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -197,7 +197,7 @@
 <h2>color swatch</h2>
 
 <Preview data={dateSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -231,7 +231,7 @@
 <h2>color swatch using theme</h2>
 
 <Preview data={dateSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -265,7 +265,7 @@
 <h2>invert variant</h2>
 
 <Preview data={dateSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -302,7 +302,7 @@
 <h3>Default (mouse position with offset)</h3>
 
 <Preview data={dateSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -336,7 +336,7 @@
 <h3>Data snapping</h3>
 
 <Preview data={dateSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -370,7 +370,7 @@
 <h3>Multiple tooltips with fixed single axis</h3>
 
 <Preview data={dateSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -399,7 +399,7 @@
         y="data"
         anchor="right"
         contained={false}
-        class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-1 py-[2px] border border-primary rounded whitespace-nowrap"
+        class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-1 py-[2px] border border-primary rounded-sm whitespace-nowrap"
         let:data
       >
         {data.value}
@@ -409,7 +409,7 @@
         x="data"
         y={height + padding.top + 2}
         anchor="top"
-        class="text-[10px] font-semibold text-primary bg-surface-100 px-2 py-[2px] border border-primary rounded whitespace-nowrap"
+        class="text-[10px] font-semibold text-primary bg-surface-100 px-2 py-[2px] border border-primary rounded-sm whitespace-nowrap"
         let:data
       >
         {formatDate(data.date, PeriodType.Day)}
@@ -421,7 +421,7 @@
 <h3>Multiple tooltips with fixed single axis (scaleBand)</h3>
 
 <Preview data={dateSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -451,7 +451,7 @@
         yOffset={2}
         anchor="bottom"
         contained={false}
-        class="text-[10px] font-semibold text-primary bg-surface-100 px-2 py-[2px] border border-primary rounded whitespace-nowrap"
+        class="text-[10px] font-semibold text-primary bg-surface-100 px-2 py-[2px] border border-primary rounded-sm whitespace-nowrap"
         let:data
       >
         {data.value}
@@ -462,7 +462,7 @@
         y={height + padding.top + 2}
         anchor="top"
         contained={false}
-        class="text-[10px] font-semibold text-primary bg-surface-100 px-2 py-[2px] border border-primary rounded whitespace-nowrap"
+        class="text-[10px] font-semibold text-primary bg-surface-100 px-2 py-[2px] border border-primary rounded-sm whitespace-nowrap"
         let:data
       >
         {formatDate(data.date, PeriodType.Day)}
@@ -517,7 +517,7 @@
 </div>
 
 <Preview data={dateSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -568,7 +568,7 @@
     {/if}
   </div>
 
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -609,7 +609,7 @@
 
 <TooltipControls bind:settings={charts.area} />
 <Preview data={dateSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -659,7 +659,7 @@
 
 <TooltipControls bind:settings={charts.areaStack} />
 <Preview data={stackData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={stackData}
       flatData={flatten(stackData)}
@@ -726,7 +726,7 @@
 
 <TooltipControls bind:settings={charts.dateTime} />
 <Preview data={timeSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={timeSeries}
       x="startDate"
@@ -773,7 +773,7 @@
 <TooltipControls bind:settings={charts.duration} />
 
 <Preview data={timeSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={timeSeries}
       x={['startDate', 'endDate']}
@@ -824,7 +824,7 @@
 <TooltipControls bind:settings={charts.multiDuration} />
 
 <Preview data={overlapTimeSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={overlapTimeSeries}
       x={['startDate', 'endDate']}
@@ -876,7 +876,7 @@
 <TooltipControls bind:settings={charts.bars} />
 
 <Preview data={dateSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -930,7 +930,7 @@
 <TooltipControls bind:settings={charts.multiBars} />
 
 <Preview data={dateSeries}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -990,7 +990,7 @@
 <TooltipControls bind:settings={charts.scatter} />
 
 <Preview data={spiralData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={spiralData}
       x="x"

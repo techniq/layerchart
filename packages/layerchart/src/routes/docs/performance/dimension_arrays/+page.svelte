@@ -47,7 +47,7 @@
     {#key chartProps}
       {#if example === 'single'}
         <Preview data={[data.chartData.date[0], data.chartData.cpu[0]]}>
-          <div class="h-[500px] p-4 border rounded">
+          <div class="h-[500px] p-4 border rounded-sm">
             <LineChart
               data={zip(data.chartData.date, data.chartData.cpu)}
               x={(d) => d[0]}
@@ -68,7 +68,7 @@
             tcp: data.chartData.tcp[0],
           }}
         >
-          <div class="h-[500px] p-4 border rounded">
+          <div class="h-[500px] p-4 border rounded-sm">
             <LineChart
               x={(d) => d[0]}
               y={(d) => d[1]}

@@ -139,14 +139,14 @@
 <h2>Basic</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} />
   </div>
 </Preview>
 
 <h2>Gradient</h2>
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="marks">
         <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
@@ -164,7 +164,7 @@
     negative: 'hsl(var(--color-danger))',
   }}
 
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={negativeDateSeriesData} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="marks" let:yScale let:height let:padding>
         {@const thresholdValue = 0}
@@ -212,7 +212,7 @@
 <h2>Curve</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={dateSeriesData}
       x="date"
@@ -227,7 +227,7 @@
 <h2>Series</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={multiSeriesData}
       x="date"
@@ -251,7 +251,7 @@
 <h2>Series (separate data)</h2>
 
 <Preview data={multiSeriesDataByFruit}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       x="date"
       y="value"
@@ -281,7 +281,7 @@
 <h2>Series (point click)</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={multiSeriesData}
       x="date"
@@ -303,7 +303,7 @@
 <h2>Series (voronoi tooltip with highlight)</h2>
 
 <Preview data={multiSeriesDataByFruit}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       x="date"
       y="value"
@@ -362,7 +362,7 @@
 <h2>Stack series</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={multiSeriesData}
       x="date"
@@ -387,7 +387,7 @@
 <h2>Stack series (expand)</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={multiSeriesData}
       x="date"
@@ -412,7 +412,7 @@
 <h2>Stack series (diverging)</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={multiSeriesData}
       x="date"
@@ -437,7 +437,7 @@
 <h2>Stack series with gradient</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={multiSeriesData}
       x="date"
@@ -475,7 +475,7 @@
 <h2>Labels</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={dateSeriesData} x="date" y="value" labels brush {renderContext} {debug} />
   </div>
 </Preview>
@@ -483,7 +483,7 @@
 <h2>Points</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={dateSeriesData} x="date" y="value" points {renderContext} {debug} />
   </div>
 </Preview>
@@ -491,7 +491,7 @@
 <h2>Radial</h2>
 
 <Preview data={data.sfoTemperatures}>
-  <div class="h-[500px] p-4 border rounded">
+  <div class="h-[500px] p-4 border rounded-sm">
     <AreaChart
       data={data.sfoTemperatures}
       x="date"
@@ -532,7 +532,7 @@
 <h2>Funnel</h2>
 
 <Preview data={funnelSegments}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <AreaChart
       data={interpolateData(funnelSegments, { x: 'index', y: 'value' })}
       x="index"
@@ -588,7 +588,7 @@
 <h2>Null gaps</h2>
 
 <Preview data={dateSeriesDataWithNulls}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={dateSeriesDataWithNulls} x="date" y="value" points {renderContext} {debug} />
   </div>
 </Preview>
@@ -615,7 +615,7 @@
 <h2>Single axis (x)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={dateSeriesData} x="date" y="value" axis="x" {renderContext} {debug} />
   </div>
 </Preview>
@@ -623,7 +623,7 @@
 <h2>Single axis (y)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} {debug} />
   </div>
 </Preview>
@@ -631,7 +631,7 @@
 <h2>Legend</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={multiSeriesData}
       x="date"
@@ -657,7 +657,7 @@
 <h2>Legend (placement)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={multiSeriesData}
       x="date"
@@ -683,7 +683,7 @@
 <h2>Legend (custom labels)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={multiSeriesData}
       x="date"
@@ -711,7 +711,7 @@
 <h2>Tooltip click</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={dateSeriesData}
       x="date"
@@ -729,7 +729,7 @@
 <h2>Markers</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={dateSeriesData}
       x="date"
@@ -757,7 +757,7 @@
             cx={xScale(p.date)}
             cy={yScale(p.value)}
             r={4}
-            class="fill-primary stroke-[4] stroke-primary/50"
+            class="fill-primary stroke-4 stroke-primary/50"
           />
         {/each}
       </svelte:fragment>
@@ -788,7 +788,7 @@
 <h2>Custom tooltip</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="tooltip" let:x let:y let:height let:padding>
         <Tooltip.Root
@@ -796,7 +796,7 @@
           y="data"
           anchor="right"
           contained={false}
-          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-1 py-[2px] border border-primary rounded whitespace-nowrap"
+          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-1 py-[2px] border border-primary rounded-sm whitespace-nowrap"
           let:data
         >
           {y(data)}
@@ -806,7 +806,7 @@
           x="data"
           y={height}
           anchor="top"
-          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-2 py-[2px] border border-primary rounded whitespace-nowrap"
+          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-2 py-[2px] border border-primary rounded-sm whitespace-nowrap"
           contained={false}
           let:data
         >
@@ -820,7 +820,7 @@
 <h2>Locking and clickable tooltip</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={multiSeriesData}
       x="date"
@@ -885,7 +885,7 @@
 <h2>Fixed tooltip below chart with hide delay</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={multiSeriesData}
       x="date"
@@ -935,7 +935,7 @@
       [hover chart]
     {/if}
   </div>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={denseDateSeriesData}
       x="date"
@@ -962,7 +962,7 @@
     {/if}
   </div>
 
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeries}
       x="date"
@@ -996,7 +996,7 @@
 
 <h2>Brushing</h2>
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       data={data.appleStock}
       x="date"
@@ -1022,7 +1022,7 @@
 
 <Preview data={{ denseDateSeriesData, denseDateSeriesData2 }}>
   <div class="grid grid-cols-md gap-3">
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <AreaChart
         data={denseDateSeriesData}
         x="date"
@@ -1038,7 +1038,7 @@
       />
     </div>
 
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <AreaChart
         data={denseDateSeriesData2}
         x="date"
@@ -1059,7 +1059,7 @@
 <h2>Custom chart</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={dateSeriesData} x="date" y="value" let:x let:y {renderContext} {debug}>
       <Svg>
         <Axis placement="left" grid rule />
