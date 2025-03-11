@@ -28,9 +28,6 @@
 
 html {
   @apply bg-surface-200 accent-primary;
-  /* background-image:
-      radial-gradient(at 0% 0%, hsl(var(--color-secondary) / 0.33) 0px, transparent 50%),
-      radial-gradient(at 98% 1%, hsl(var(--color-primary) / 0.33) 0px, transparent 50%); */
 }
 
 nav h1 {
