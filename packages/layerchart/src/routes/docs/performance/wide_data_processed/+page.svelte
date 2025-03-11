@@ -76,12 +76,12 @@
               data={chartData}
               x="date"
               series={[
-                { key: 'cpu', color: 'hsl(var(--color-danger))' },
+                { key: 'cpu', color: 'var(--color-danger)' },
                 {
                   key: 'ram',
-                  color: 'hsl(var(--color-warning))',
+                  color: 'var(--color-warning)',
                 },
-                { key: 'tcp', color: 'hsl(var(--color-success))' },
+                { key: 'tcp', color: 'var(--color-success)' },
               ]}
               props={chartProps}
               brush

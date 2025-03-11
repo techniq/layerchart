@@ -36,10 +36,10 @@
       cScale={scaleThreshold().unknown('transparent')}
       cDomain={[25, 50, 75]}
       cRange={[
-        'hsl(var(--color-primary-100))',
-        'hsl(var(--color-primary-300))',
-        'hsl(var(--color-primary-500))',
-        'hsl(var(--color-primary-700))',
+        'var(--color-primary-100)',
+        'var(--color-primary-300)',
+        'var(--color-primary-500)',
+        'var(--color-primary-700)',
       ]}
       let:tooltip
     >
@@ -71,10 +71,10 @@
       cScale={scaleThreshold().unknown('transparent')}
       cDomain={[25, 50, 75]}
       cRange={[
-        'hsl(var(--color-primary-100))',
-        'hsl(var(--color-primary-300))',
-        'hsl(var(--color-primary-500))',
-        'hsl(var(--color-primary-700))',
+        'var(--color-primary-100)',
+        'var(--color-primary-300)',
+        'var(--color-primary-500)',
+        'var(--color-primary-700)',
       ]}
       let:tooltip
     >
@@ -106,10 +106,10 @@
       cScale={scaleThreshold().unknown('transparent')}
       cDomain={[25, 50, 75]}
       cRange={[
-        'hsl(var(--color-primary-100))',
-        'hsl(var(--color-primary-300))',
-        'hsl(var(--color-primary-500))',
-        'hsl(var(--color-primary-700))',
+        'var(--color-primary-100)',
+        'var(--color-primary-300)',
+        'var(--color-primary-500)',
+        'var(--color-primary-700)',
       ]}
       padding={{ left: 20 }}
       let:tooltip

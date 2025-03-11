@@ -25,11 +25,7 @@
     return {
       key: species,
       data,
-      color: [
-        'hsl(var(--color-primary))',
-        'hsl(var(--color-secondary))',
-        'hsl(var(--color-success))',
-      ][i],
+      color: ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-success)'][i],
     };
   });
 
@@ -121,11 +117,7 @@
         return {
           key: species,
           data,
-          color: [
-            'hsl(var(--color-primary))',
-            'hsl(var(--color-secondary))',
-            'hsl(var(--color-success))',
-          ][i],
+          color: ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-success)'][i],
         };
       })}
       {renderContext}
@@ -147,11 +139,7 @@
         return {
           key: species,
           data,
-          color: [
-            'hsl(var(--color-primary))',
-            'hsl(var(--color-secondary))',
-            'hsl(var(--color-success))',
-          ][i],
+          color: ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-success)'][i],
         };
       })}
       {renderContext}
@@ -179,11 +167,7 @@
         return {
           key: species,
           data,
-          color: [
-            'hsl(var(--color-primary))',
-            'hsl(var(--color-secondary))',
-            'hsl(var(--color-success))',
-          ][i],
+          color: ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-success)'][i],
         };
       })}
       legend
@@ -227,11 +211,7 @@
           key: species,
           label: species + ' 🐧',
           data,
-          color: [
-            'hsl(var(--color-primary))',
-            'hsl(var(--color-secondary))',
-            'hsl(var(--color-success))',
-          ][i],
+          color: ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-success)'][i],
         };
       })}
       legend

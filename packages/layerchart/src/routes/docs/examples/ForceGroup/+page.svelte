@@ -10,9 +10,9 @@
   import dots from './dots.json' with { type: 'json' };
 
   const categoryColor = scaleOrdinal([
-    'hsl(var(--color-info))',
-    'hsl(var(--color-warning))',
-    'hsl(var(--color-danger))',
+    'var(--color-info)',
+    'var(--color-warning)',
+    'var(--color-danger)',
   ]);
 
   let groupBy = true;

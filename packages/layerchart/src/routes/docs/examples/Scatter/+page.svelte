@@ -122,11 +122,7 @@
       c="value"
       cScale={scaleThreshold()}
       cDomain={[50, 90]}
-      cRange={[
-        'hsl(var(--color-danger))',
-        'hsl(var(--color-warning))',
-        'hsl(var(--color-success))',
-      ]}
+      cRange={['var(--color-danger)', 'var(--color-warning)', 'var(--color-success)']}
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>

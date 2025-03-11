@@ -65,13 +65,13 @@
               data={data.chartData}
               x="epoch"
               series={[
-                { key: 'cpu', value: (d) => 100 - d.idl, color: 'hsl(var(--color-danger))' },
+                { key: 'cpu', value: (d) => 100 - d.idl, color: 'var(--color-danger)' },
                 {
                   key: 'ram',
                   value: (d) => (100 * d.writ) / (d.writ + d.used),
-                  color: 'hsl(var(--color-warning))',
+                  color: 'var(--color-warning)',
                 },
-                { key: 'tcp', value: (d) => d.send, color: 'hsl(var(--color-success))' },
+                { key: 'tcp', value: (d) => d.send, color: 'var(--color-success)' },
               ]}
               props={chartProps}
               brush

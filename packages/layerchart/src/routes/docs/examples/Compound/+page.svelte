@@ -40,12 +40,8 @@
             {formatDate(data.date, PeriodType.Day)}
           </Tooltip.Header>
           <Tooltip.List>
-            <Tooltip.Item
-              label="baseline"
-              value={data.baseline}
-              color="hsl(var(--color-primary))"
-            />
-            <Tooltip.Item label="value" value={data.value} color="hsl(var(--color-secondary))" />
+            <Tooltip.Item label="baseline" value={data.baseline} color="var(--color-primary)" />
+            <Tooltip.Item label="value" value={data.value} color="var(--color-secondary)" />
           </Tooltip.List>
         </Tooltip.Root>
       </svelte:fragment>

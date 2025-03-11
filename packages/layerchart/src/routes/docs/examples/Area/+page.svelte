@@ -54,9 +54,9 @@
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 
   const fruitColors = {
-    apples: 'hsl(var(--color-danger))',
-    bananas: 'hsl(var(--color-success))',
-    oranges: 'hsl(var(--color-info))',
+    apples: 'var(--color-danger)',
+    bananas: 'var(--color-success)',
+    oranges: 'var(--color-info)',
   };
 </script>
 
@@ -536,9 +536,9 @@
           rule
         />
         {@const primaryColors = [
-          'hsl(var(--color-danger-500))',
-          'hsl(var(--color-success-500))',
-          'hsl(var(--color-info-500))',
+          'var(--color-danger)',
+          'var(--color-success)',
+          'var(--color-info)',
         ]}
         {@const secondaryColors = [
           'hsl(var(--color-danger-500) / 10%)',
@@ -766,7 +766,7 @@
       c={(d) => (d.value < 0 ? 'under' : 'over')}
       cScale={scaleOrdinal()}
       cDomain={['over', 'under']}
-      cRange={['hsl(var(--color-success))', 'hsl(var(--color-danger))']}
+      cRange={['var(--color-success)', 'var(--color-danger)']}
       let:width
       let:height
       let:yScale
@@ -865,8 +865,8 @@
         <Rule y={0} />
         <LinearGradient
           stops={[
-            [thresholdOffset, 'hsl(var(--color-success))'],
-            [thresholdOffset, 'hsl(var(--color-danger))'],
+            [thresholdOffset, 'var(--color-success)'],
+            [thresholdOffset, 'var(--color-danger)'],
           ]}
           units="userSpaceOnUse"
           vertical
@@ -903,8 +903,8 @@
         <Rule y={0} />
         <LinearGradient
           stops={[
-            [thresholdOffset, 'hsl(var(--color-success))'],
-            [thresholdOffset, 'hsl(var(--color-danger))'],
+            [thresholdOffset, 'var(--color-success)'],
+            [thresholdOffset, 'var(--color-danger)'],
           ]}
           units="userSpaceOnUse"
           vertical

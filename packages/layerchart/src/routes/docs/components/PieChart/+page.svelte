@@ -16,10 +16,10 @@
       return {
         ...d,
         color: [
-          'hsl(var(--color-danger))',
-          'hsl(var(--color-warning))',
-          'hsl(var(--color-success))',
-          'hsl(var(--color-info))',
+          'var(--color-danger)',
+          'var(--color-warning)',
+          'var(--color-success)',
+          'var(--color-info)',
         ][i],
       };
     }) ?? [];
@@ -227,7 +227,7 @@
       outerRadius={80}
       innerRadius={-20}
       cornerRadius={10}
-      cRange={['hsl(var(--color-success))']}
+      cRange={['var(--color-success)']}
       props={{
         group: { y: 45 },
       }}
@@ -450,10 +450,10 @@
       key="fruit"
       value="value"
       cRange={[
-        'hsl(var(--color-success))',
-        'hsl(var(--color-warning))',
-        'hsl(var(--color-danger))',
-        'hsl(var(--color-info))',
+        'var(--color-success)',
+        'var(--color-warning)',
+        'var(--color-danger)',
+        'var(--color-info)',
       ]}
       {renderContext}
       {debug}

@@ -59,10 +59,10 @@
 
   const colorKeys = [...new Set(longData.map((x) => x.fruit))];
   const keyColors = [
-    'hsl(var(--color-info))',
-    'hsl(var(--color-success))',
-    'hsl(var(--color-warning))',
-    'hsl(var(--color-danger))',
+    'var(--color-info)',
+    'var(--color-success)',
+    'var(--color-warning)',
+    'var(--color-danger)',
   ];
 
   let transitionChartMode = 'group';

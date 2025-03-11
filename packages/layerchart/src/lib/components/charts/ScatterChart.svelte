@@ -55,7 +55,7 @@
     data: TData[];
     color?: string;
     props?: Partial<ComponentProps<Points>>;
-  }[] = [{ key: 'default', data: chartDataArray(data), color: 'hsl(var(--color-primary))' }];
+  }[] = [{ key: 'default', data: chartDataArray(data), color: 'var(--color-primary)' }];
   $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
 
   export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;

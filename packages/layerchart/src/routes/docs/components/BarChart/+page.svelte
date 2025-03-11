@@ -115,7 +115,7 @@
       data={dateSeriesData}
       x="date"
       y="value"
-      cRange={['hsl(var(--color-secondary))']}
+      cRange={['var(--color-secondary)']}
       {renderContext}
       {debug}
     />
@@ -132,10 +132,10 @@
       y="value"
       c="fruit"
       cRange={[
-        'hsl(var(--color-danger))',
-        'hsl(var(--color-warning))',
-        'hsl(var(--color-success))',
-        'hsl(var(--color-info))',
+        'var(--color-danger)',
+        'var(--color-warning)',
+        'var(--color-success)',
+        'var(--color-info)',
       ]}
       props={{
         yAxis: { format: 'metric' },
@@ -157,7 +157,7 @@
       c="value"
       cScale={scaleThreshold()}
       cDomain={[0]}
-      cRange={['hsl(var(--color-danger))', 'hsl(var(--color-success))']}
+      cRange={['var(--color-danger)', 'var(--color-success)']}
       {renderContext}
       {debug}
     />
@@ -230,7 +230,7 @@
         { key: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
         {
           key: 'value',
-          color: 'hsl(var(--color-primary))',
+          color: 'var(--color-primary)',
           props: { insets: { x: 8 } },
         },
       ]}
@@ -250,7 +250,7 @@
       orientation="horizontal"
       series={[
         { key: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
-        { key: 'value', color: 'hsl(var(--color-primary))', props: { insets: { y: 4 } } },
+        { key: 'value', color: 'var(--color-primary)', props: { insets: { y: 4 } } },
       ]}
       {renderContext}
       {debug}
@@ -274,7 +274,7 @@
         {
           key: 'value',
           data: dateSeriesData,
-          color: 'hsl(var(--color-primary))',
+          color: 'var(--color-primary)',
           props: { insets: { x: 8 } },
         },
       ]}
@@ -294,12 +294,12 @@
       series={[
         {
           key: 'value',
-          color: 'hsl(var(--color-primary))',
+          color: 'var(--color-primary)',
         },
         {
           key: 'baseline',
           value: (d) => -d.baseline,
-          color: 'hsl(var(--color-secondary))',
+          color: 'var(--color-secondary)',
         },
       ]}
       {renderContext}
@@ -326,11 +326,11 @@
         {
           key: 'male',
           value: (d) => -d.male,
-          color: 'hsl(var(--color-primary))',
+          color: 'var(--color-primary)',
         },
         {
           key: 'female',
-          color: 'hsl(var(--color-secondary))',
+          color: 'var(--color-secondary)',
         },
       ]}
       {renderContext}
@@ -381,12 +381,12 @@
         {
           key: 'male',
           value: (d) => -d.male / totalPopulation,
-          color: 'hsl(var(--color-primary))',
+          color: 'var(--color-primary)',
         },
         {
           key: 'female',
           value: (d) => d.female / totalPopulation,
-          color: 'hsl(var(--color-secondary))',
+          color: 'var(--color-secondary)',
         },
       ]}
       {renderContext}
@@ -425,18 +425,18 @@
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="group"
@@ -462,18 +462,18 @@
       orientation="horizontal"
       y="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="group"
@@ -498,18 +498,18 @@
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="group"
@@ -541,21 +541,21 @@
       x="year"
       y="value"
       series={[
-        { key: 'apples', data: dataByFruit.get('apples'), color: 'hsl(var(--color-danger))' },
+        { key: 'apples', data: dataByFruit.get('apples'), color: 'var(--color-danger)' },
         {
           key: 'bananas',
           data: dataByFruit.get('bananas'),
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
           data: dataByFruit.get('cherries'),
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
           data: dataByFruit.get('grapes'),
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="group"
@@ -580,18 +580,18 @@
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="stack"
@@ -617,18 +617,18 @@
       orientation="horizontal"
       y="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="stack"
@@ -653,18 +653,18 @@
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="stack"
@@ -691,18 +691,18 @@
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="stackExpand"
@@ -729,20 +729,20 @@
         {
           key: 'apples',
           value: (d) => -d.apples,
-          color: 'hsl(var(--color-danger))',
+          color: 'var(--color-danger)',
           props: { rounded: 'bottom' },
         },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="stackDiverging"
@@ -769,21 +769,21 @@
       x="year"
       y="value"
       series={[
-        { key: 'apples', data: dataByFruit.get('apples'), color: 'hsl(var(--color-danger))' },
+        { key: 'apples', data: dataByFruit.get('apples'), color: 'var(--color-danger)' },
         {
           key: 'bananas',
           data: dataByFruit.get('bananas'),
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
           data: dataByFruit.get('cherries'),
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
           data: dataByFruit.get('grapes'),
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="stack"
@@ -807,18 +807,18 @@
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="group"
@@ -844,18 +844,18 @@
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="stack"
@@ -881,18 +881,18 @@
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="group"
@@ -918,21 +918,21 @@
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', label: 'Apples 🍎', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', label: 'Apples 🍎', color: 'var(--color-danger)' },
         {
           key: 'bananas',
           label: 'Bananas 🍌',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
           label: 'Cherries 🍒',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
           label: 'Grapes 🍇',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="group"
@@ -1052,11 +1052,7 @@
       c="value"
       cScale={scaleThreshold()}
       cDomain={[10, 50]}
-      cRange={[
-        'hsl(var(--color-danger))',
-        'hsl(var(--color-warning))',
-        'hsl(var(--color-success))',
-      ]}
+      cRange={['var(--color-danger)', 'var(--color-warning)', 'var(--color-success)']}
       axis="x"
       bandPadding={0.1}
       props={{

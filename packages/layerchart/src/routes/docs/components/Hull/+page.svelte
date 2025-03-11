@@ -17,9 +17,9 @@
   const states = feature(data.us.geojson, data.us.geojson.objects.states);
 
   const groupColor = scaleOrdinal([
-    'hsl(var(--color-info))',
-    'hsl(var(--color-warning))',
-    'hsl(var(--color-danger))',
+    'var(--color-info)',
+    'var(--color-warning)',
+    'var(--color-danger)',
   ]);
 </script>
 

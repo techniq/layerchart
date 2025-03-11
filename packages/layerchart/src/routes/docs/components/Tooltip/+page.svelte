@@ -255,7 +255,7 @@
       <Tooltip.Root let:data>
         <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
         <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} color="hsl(var(--color-primary))" />
+          <Tooltip.Item label="value" value={data.value} color="var(--color-primary)" />
         </Tooltip.List>
       </Tooltip.Root>
     </Chart>
@@ -670,7 +670,7 @@
       c="key"
       cScale={scaleOrdinal()}
       cDomain={keys}
-      cRange={['hsl(var(--color-info))', 'hsl(var(--color-success))', 'hsl(var(--color-warning))']}
+      cRange={['var(--color-info)', 'var(--color-success)', 'var(--color-warning)']}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{
         mode: charts.areaStack.mode,

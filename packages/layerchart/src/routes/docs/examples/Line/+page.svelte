@@ -42,9 +42,9 @@
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 
   const fruitColors = {
-    apples: 'hsl(var(--color-info))',
-    bananas: 'hsl(var(--color-success))',
-    oranges: 'hsl(var(--color-warning))',
+    apples: 'var(--color-info)',
+    bananas: 'var(--color-success)',
+    oranges: 'var(--color-warning)',
   };
 
   const temperatureColor = scaleSequential(
@@ -238,8 +238,8 @@
         />
         <LinearGradient
           stops={[
-            [thresholdOffset, 'hsl(var(--color-info))'],
-            [thresholdOffset, 'hsl(var(--color-danger))'],
+            [thresholdOffset, 'var(--color-info)'],
+            [thresholdOffset, 'var(--color-danger)'],
           ]}
           units="userSpaceOnUse"
           vertical

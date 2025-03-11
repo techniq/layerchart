@@ -75,17 +75,17 @@
                 {
                   key: 'cpu',
                   data: chartData.cpu,
-                  color: 'hsl(var(--color-danger))',
+                  color: 'var(--color-danger)',
                 },
                 {
                   key: 'ram',
                   data: chartData.ram,
-                  color: 'hsl(var(--color-warning))',
+                  color: 'var(--color-warning)',
                 },
                 {
                   key: 'tcp',
                   data: chartData.tcp,
-                  color: 'hsl(var(--color-success))',
+                  color: 'var(--color-success)',
                 },
               ]}
               props={chartProps}

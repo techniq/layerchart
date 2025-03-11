@@ -18,10 +18,10 @@
 
   const colorKeys = [...new Set(data.map((d) => d.date))];
   const keyColors = [
-    'hsl(var(--color-info))',
-    'hsl(var(--color-success))',
-    'hsl(var(--color-warning))',
-    'hsl(var(--color-danger))',
+    'var(--color-info)',
+    'var(--color-success)',
+    'var(--color-warning)',
+    'var(--color-danger)',
   ];
 
   const keyClasses = [

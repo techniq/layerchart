@@ -9,7 +9,7 @@
 
   export let data;
 
-  const genderColor = scaleOrdinal(['hsl(var(--color-info))', 'hsl(var(--color-warning))']);
+  const genderColor = scaleOrdinal(['var(--color-info)', 'var(--color-warning)']);
 
   const xForce = forceX().strength(0.95);
   const yForce = forceY().strength(0.075);

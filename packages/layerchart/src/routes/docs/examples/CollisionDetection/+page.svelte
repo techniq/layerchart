@@ -13,9 +13,9 @@
   const randomData = Array.from({ length: 200 }, (_, i) => ({ r: r(), group: i && (i % n) + 1 }));
 
   const groupColor = scaleOrdinal([
-    'hsl(var(--color-info))',
-    'hsl(var(--color-warning))',
-    'hsl(var(--color-danger))',
+    'var(--color-info)',
+    'var(--color-warning)',
+    'var(--color-danger)',
   ]);
 
   const xForce = forceX().strength(0.01);

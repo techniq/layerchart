@@ -90,7 +90,7 @@
   function getNodeColor(node: HierarchyNode<any>, colorBy: string) {
     switch (colorBy) {
       case 'children':
-        return node.children ? 'hsl(var(--color-primary-500))' : 'hsl(var(--color-primary-400))';
+        return node.children ? 'var(--color-primary-500)' : 'var(--color-primary-400)';
       case 'depth':
         return sequentialColor(node.depth).toString();
       case 'parent':
@@ -195,7 +195,7 @@
                       width={nodeWidth}
                       height={nodeHeight}
                       stroke={colorBy === 'children'
-                        ? 'hsl(var(--color-primary-content))'
+                        ? 'var(--color-primary-content)'
                         : hsl(nodeColor).darker(1).toString()}
                       stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                       fill={nodeColor}
@@ -339,7 +339,7 @@
                   width={nodeWidth}
                   height={nodeHeight}
                   stroke={colorBy === 'children'
-                    ? 'hsl(var(--color-primary-content))'
+                    ? 'var(--color-primary-content)'
                     : hsl(nodeColor).darker(1).toString()}
                   stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                   fill={nodeColor}
@@ -450,7 +450,7 @@
                           width={nodeWidth}
                           height={nodeHeight}
                           stroke={colorBy === 'children'
-                            ? 'hsl(var(--color-primary-content))'
+                            ? 'var(--color-primary-content)'
                             : hsl(nodeColor).darker(1).toString()}
                           stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                           fill={nodeColor}

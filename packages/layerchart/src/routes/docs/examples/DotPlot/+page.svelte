@@ -84,10 +84,10 @@
       y="name"
       c="name"
       cRange={[
-        'hsl(var(--color-danger))',
-        'hsl(var(--color-warning))',
-        'hsl(var(--color-success))',
-        'hsl(var(--color-info))',
+        'var(--color-danger)',
+        'var(--color-warning)',
+        'var(--color-success)',
+        'var(--color-info)',
       ]}
       yScale={scaleBand()}
       padding={{ left: 36, bottom: 36 }}

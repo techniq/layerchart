@@ -160,8 +160,8 @@
 <h2>Threshold Gradient</h2>
 <Preview data={dateSeriesData}>
   {@const colors = {
-    positive: 'hsl(var(--color-success))',
-    negative: 'hsl(var(--color-danger))',
+    positive: 'var(--color-success)',
+    negative: 'var(--color-danger)',
   }}
 
   <div class="h-[300px] p-4 border rounded-sm">
@@ -232,14 +232,14 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'oranges',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
       ]}
       {renderContext}
@@ -259,17 +259,17 @@
         {
           key: 'apples',
           data: multiSeriesDataByFruit.get('apples'),
-          color: 'hsl(var(--color-danger))',
+          color: 'var(--color-danger)',
         },
         {
           key: 'bananas',
           data: multiSeriesDataByFruit.get('bananas'),
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'oranges',
           data: multiSeriesDataByFruit.get('oranges'),
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
       ]}
       {renderContext}
@@ -286,9 +286,9 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       onpointclick={(e, detail) => {
         console.log(e, detail);
@@ -311,17 +311,17 @@
         {
           key: 'apples',
           data: multiSeriesDataByFruit.get('apples'),
-          color: 'hsl(var(--color-danger))',
+          color: 'var(--color-danger)',
         },
         {
           key: 'bananas',
           data: multiSeriesDataByFruit.get('bananas'),
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'oranges',
           data: multiSeriesDataByFruit.get('oranges'),
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
       ]}
       tooltip={{ mode: 'voronoi' }}
@@ -367,14 +367,14 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'oranges',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
       ]}
       seriesLayout="stack"
@@ -392,14 +392,14 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'oranges',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
       ]}
       seriesLayout="stackExpand"
@@ -417,14 +417,14 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', value: (d) => -d.apples, color: 'hsl(var(--color-danger))' },
+        { key: 'apples', value: (d) => -d.apples, color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'oranges',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
       ]}
       seriesLayout="stackDiverging"
@@ -442,14 +442,14 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'oranges',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
       ]}
       seriesLayout="stack"
@@ -636,14 +636,14 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'oranges',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
       ]}
       seriesLayout="stack"
@@ -662,14 +662,14 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'oranges',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
       ]}
       seriesLayout="stack"
@@ -688,16 +688,16 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', label: 'Apples 🍎 ', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', label: 'Apples 🍎 ', color: 'var(--color-danger)' },
         {
           key: 'bananas',
           label: 'Bananas 🍌',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'oranges',
           label: 'Oranges 🍊',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
       ]}
       seriesLayout="stack"
@@ -825,14 +825,14 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'oranges',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
       ]}
       {renderContext}
@@ -890,9 +890,9 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       {renderContext}
       {debug}

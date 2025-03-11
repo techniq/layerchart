@@ -113,7 +113,7 @@
     <LineChart
       data={dateSeriesData}
       x="date"
-      series={[{ key: 'value', color: 'hsl(var(--color-secondary))' }]}
+      series={[{ key: 'value', color: 'var(--color-secondary)' }]}
       {renderContext}
       {debug}
     />
@@ -143,9 +143,9 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       {renderContext}
       {debug}
@@ -164,17 +164,17 @@
         {
           key: 'apples',
           data: multiSeriesDataByFruit.get('apples'),
-          color: 'hsl(var(--color-danger))',
+          color: 'var(--color-danger)',
         },
         {
           key: 'bananas',
           data: multiSeriesDataByFruit.get('bananas'),
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'oranges',
           data: multiSeriesDataByFruit.get('oranges'),
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
       ]}
       {renderContext}
@@ -192,9 +192,9 @@
       x="date"
       y="value"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       tooltip={{ mode: 'voronoi' }}
       {renderContext}
@@ -239,9 +239,9 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       onpointclick={(e, detail) => {
         console.log(e, detail);
@@ -261,9 +261,9 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       props={{ highlight: { points: { r: 8, strokeWidth: 4 } } }}
       {renderContext}
@@ -280,9 +280,9 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       {renderContext}
       {debug}
@@ -449,12 +449,12 @@
       series={[
         {
           key: 'budget',
-          color: 'hsl(var(--color-secondary))',
+          color: 'var(--color-secondary)',
           props: { class: 'fill-secondary/50' },
         },
         {
           key: 'actual',
-          color: 'hsl(var(--color-primary))',
+          color: 'var(--color-primary)',
           props: { class: 'fill-primary/50' },
         },
       ]}
@@ -540,8 +540,8 @@
         {@const thresholdOffset = yScale(50) / (height + padding.bottom)}
         <LinearGradient
           stops={[
-            [thresholdOffset, 'hsl(var(--color-danger))'],
-            [thresholdOffset, 'hsl(var(--color-info))'],
+            [thresholdOffset, 'var(--color-danger)'],
+            [thresholdOffset, 'var(--color-info)'],
           ]}
           units="userSpaceOnUse"
           vertical
@@ -574,10 +574,10 @@
           data,
           color:
             year === 2024
-              ? 'hsl(var(--color-primary))'
+              ? 'var(--color-primary)'
               : year === 2023
                 ? 'hsl(var(--color-primary) / 50%)'
-                : 'hsl(var(--color-surface-content))',
+                : 'var(--color-surface-content)',
           props: { opacity: [2023, 2024].includes(year) ? 1 : 0.1 },
         };
       })}
@@ -613,10 +613,10 @@
           data,
           color:
             year === 2024
-              ? 'hsl(var(--color-primary))'
+              ? 'var(--color-primary)'
               : year === 2023
                 ? 'hsl(var(--color-primary) / 50%)'
-                : 'hsl(var(--color-surface-content))',
+                : 'var(--color-surface-content)',
           props: { opacity: [2023, 2024].includes(year) ? 1 : 0.1 },
         };
       })}
@@ -735,9 +735,9 @@
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', label: 'Apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', label: 'Bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', label: 'Oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', label: 'Apples', color: 'var(--color-danger)' },
+        { key: 'bananas', label: 'Bananas', color: 'var(--color-success)' },
+        { key: 'oranges', label: 'Oranges', color: 'var(--color-warning)' },
       ]}
       legend
       {renderContext}
@@ -876,9 +876,9 @@
     data={multiSeriesData}
     x="date"
     series={[
-      { key: 'apples', color: 'hsl(var(--color-danger))' },
-      { key: 'bananas', color: 'hsl(var(--color-success))' },
-      { key: 'oranges', color: 'hsl(var(--color-warning))' },
+      { key: 'apples', color: 'var(--color-danger)' },
+      { key: 'bananas', color: 'var(--color-success)' },
+      { key: 'oranges', color: 'var(--color-warning)' },
     ]}
     onpointclick={(e, detail) => {
       console.log(e, detail);
