@@ -26,6 +26,7 @@
   import type { DomainType } from '$lib/utils/scales.js';
   import Blockquote from 'layerchart/docs/Blockquote.svelte';
   import type { ComponentProps } from 'svelte';
+  import { cls } from '@layerstack/tailwind';
 
   export let data;
 
@@ -330,12 +331,11 @@
     >
       <svelte:fragment slot="marks" let:series let:tooltip>
         {#each series as s}
-          {@const color =
-            tooltip.data == null || tooltip.data.fruit === s.key
-              ? s.color
-              : 'hsl(var(--color-surface-content) / 20%)'}
+          {@const activeSeries = tooltip.data == null || tooltip.data.fruit === s.key}
 
-          <Area data={s.data} line={{ stroke: color }} fill={color} fillOpacity={0.3} />
+          <g class={cls(!activeSeries && 'opacity-20 saturate-0')}>
+            <Area data={s.data} line={{ stroke: s.color }} fill={s.color} fillOpacity={0.3} />
+          </g>
         {/each}
       </svelte:fragment>
 
@@ -510,13 +510,15 @@
           key: 'min_max',
           label: 'min/max',
           value: ['min', 'max'],
-          color: 'hsl(var(--color-primary) / 20%)',
+          color: 'var(--color-primary)',
+          props: { opacity: 0.2, line: { opacity: 0.2 } },
         },
         {
           key: 'minmin_maxmax',
           label: 'minmin/maxmax',
           value: ['minmin', 'maxmax'],
-          color: 'hsl(var(--color-primary) / 20%)',
+          color: 'var(--color-primary)',
+          props: { opacity: 0.2, line: { opacity: 0.2 } },
         },
       ]}
       {renderContext}
@@ -569,7 +571,7 @@
           {/each}
         </LinearGradient>
 
-        {#each funnelSegments as s}
+        {#each funnelSegments.slice(0, -1) as s}
           <Text
             value={s.value + '%'}
             x={xScale(x(s)) + segmentWidth / 2}

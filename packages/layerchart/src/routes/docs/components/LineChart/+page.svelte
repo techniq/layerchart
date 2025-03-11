@@ -22,6 +22,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import { interpolateTurbo } from 'd3-scale-chromatic';
+  import { cls } from '@layerstack/tailwind';
 
   export let data;
 
@@ -203,11 +204,13 @@
     >
       <svelte:fragment slot="marks" let:series let:tooltip>
         {#each series as s}
-          {@const color =
-            tooltip.data == null || tooltip.data.fruit === s.key
-              ? s.color
-              : 'hsl(var(--color-surface-content) / 20%)'}
-          <Spline data={multiSeriesData} y={s.key} stroke={color} />
+          {@const active = tooltip.data == null || tooltip.data.fruit === s.key}
+          <Spline
+            data={multiSeriesData}
+            y={s.key}
+            stroke={s.color}
+            class={cls(!active && 'opacity-20 saturate-0')}
+          />
         {/each}
       </svelte:fragment>
 
@@ -572,13 +575,8 @@
         return {
           key: year,
           data,
-          color:
-            year === 2024
-              ? 'var(--color-primary)'
-              : year === 2023
-                ? 'hsl(var(--color-primary) / 50%)'
-                : 'var(--color-surface-content)',
-          props: { opacity: [2023, 2024].includes(year) ? 1 : 0.1 },
+          color: year >= 2023 ? 'var(--color-primary)' : 'var(--color-surface-content)',
+          props: { opacity: year === 2024 ? 1 : year === 2023 ? 0.5 : 0.1 },
         };
       })}
       tooltip={{ mode: 'manual' }}
@@ -611,13 +609,8 @@
         return {
           key: year,
           data,
-          color:
-            year === 2024
-              ? 'var(--color-primary)'
-              : year === 2023
-                ? 'hsl(var(--color-primary) / 50%)'
-                : 'var(--color-surface-content)',
-          props: { opacity: [2023, 2024].includes(year) ? 1 : 0.1 },
+          color: year >= 2023 ? 'var(--color-primary)' : 'var(--color-surface-content)',
+          props: { opacity: year === 2024 ? 1 : year === 2023 ? 0.5 : 0.1 },
         };
       })}
       tooltip={{ mode: 'manual' }}

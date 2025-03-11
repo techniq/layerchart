@@ -4,6 +4,7 @@
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { format } from 'date-fns';
   import { formatDate, PeriodType } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
 
   import {
     Axis,
@@ -376,23 +377,23 @@
           rule
         />
         {#each dataByFruit as [fruit, data]}
-          {@const color =
-            tooltip.data == null || tooltip.data.fruit === fruit
-              ? cScale?.(fruit)
-              : 'hsl(var(--color-surface-content) / 20%)'}
-          <Spline {data} class="stroke-2" stroke={color}>
-            <svelte:fragment slot="end">
-              <circle r={4} fill={color} />
-              <Text
-                value={fruit}
-                verticalAnchor="middle"
-                dx={6}
-                dy={-2}
-                class="text-xs"
-                fill={color}
-              />
-            </svelte:fragment>
-          </Spline>
+          {@const active = tooltip.data == null || tooltip.data.fruit === fruit}
+          {@const color = cScale?.(fruit)}
+          <g class={cls(!active && 'opacity-20 saturate-0')}>
+            <Spline {data} class="stroke-2" stroke={color}>
+              <svelte:fragment slot="end">
+                <circle r={4} fill={color} />
+                <Text
+                  value={fruit}
+                  verticalAnchor="middle"
+                  dx={6}
+                  dy={-2}
+                  class="text-xs"
+                  fill={color}
+                />
+              </svelte:fragment>
+            </Spline>
+          </g>
         {/each}
         <Highlight points lines />
       </Svg>

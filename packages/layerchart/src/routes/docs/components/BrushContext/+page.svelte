@@ -525,14 +525,11 @@
               <Rule y={0} />
               <ChartClipPath>
                 <LinearGradient
-                  class="from-[hsl(var(--chart-color)/50%)] to-transparent"
+                  class="from-[color-mix(in_lch,var(--chart-color)_50%,_transparent)] to-transparent"
                   vertical
                   let:gradient
                 >
-                  <Area
-                    line={{ class: 'stroke-2 stroke-[hsl(var(--chart-color))]' }}
-                    fill={gradient}
-                  />
+                  <Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />
                 </LinearGradient>
               </ChartClipPath>
             </Svg>
@@ -555,8 +552,8 @@
           >
             <Svg>
               <Area
-                line={{ class: 'stroke-2 stroke-[hsl(var(--chart-color))]' }}
-                class="fill-[hsl(var(--chart-color)/20%)]"
+                line={{ class: 'stroke-2 stroke-(--chart-color)' }}
+                class="fill-(--chart-color) opacity-20"
               />
               <!-- <Brush bind:xDomain mode="separated" /> -->
             </Svg>
@@ -776,11 +773,11 @@
 
 <style>
   :global(.striped-background) {
-    outline: 1px solid hsl(var(--color-secondary) / 50%);
+    outline: 1px solid color-mix(in lch, var(--color-secondary) 50%, transparent);
     background: repeating-linear-gradient(
       135deg,
-      hsl(var(--color-secondary) / 30%) 0 1px,
-      hsl(var(--color-secondary) / 10%) 0 6px
+      color-mix(in lch, var(--color-secondary) 30%, transparent) 0 1px,
+      color-mix(in lch, var(--color-secondary) 10%, transparent) 0 6px
     );
   }
 </style>

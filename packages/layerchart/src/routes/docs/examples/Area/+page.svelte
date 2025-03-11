@@ -26,6 +26,7 @@
   } from 'layerchart';
   import { Field, Switch, Toggle } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
@@ -387,24 +388,29 @@
           rule
         />
         {#each dataByFruit as [fruit, data]}
-          {@const color =
-            tooltip.data == null || tooltip.data.fruit === fruit
-              ? cScale?.(fruit)
-              : 'hsl(var(--color-surface-content) / 20%)'}
-          <Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />
-          <Point d={data[data.length - 1]} let:x let:y>
-            <circle cx={x} cy={y} r={4} fill={color} />
-            <Text
-              {x}
-              {y}
-              value={fruit}
-              verticalAnchor="middle"
-              dx={6}
-              dy={-2}
-              class="text-xs"
+          {@const active = tooltip.data == null || tooltip.data.fruit === fruit}
+          {@const color = cScale?.(fruit)}
+          <g class={cls(!active && 'opacity-20 saturate-0')}>
+            <Area
+              {data}
               fill={color}
+              fillOpacity={0.3}
+              line={{ class: 'stroke-2', stroke: color }}
             />
-          </Point>
+            <Point d={data[data.length - 1]} let:x let:y>
+              <circle cx={x} cy={y} r={4} fill={color} />
+              <Text
+                {x}
+                {y}
+                value={fruit}
+                verticalAnchor="middle"
+                dx={6}
+                dy={-2}
+                class="text-xs"
+                fill={color}
+              />
+            </Point>
+          </g>
         {/each}
         <Highlight points lines />
       </Svg>
@@ -541,9 +547,9 @@
           'var(--color-info)',
         ]}
         {@const secondaryColors = [
-          'hsl(var(--color-danger-500) / 10%)',
-          'hsl(var(--color-success-500) / 10%)',
-          'hsl(var(--color-info-500) / 10%)',
+          'color-mix(in lch, var(--color-danger) 10%, transparent)',
+          'color-mix(in lch, var(--color-success) 10%, transparent)',
+          'color-mix(in lch, var(--color-info) 10%, transparent)',
         ]}
 
         {#each chartDataArray(stackData) as seriesData, index}

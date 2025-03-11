@@ -301,7 +301,7 @@
       series={data?.map((d) => ({ key: d.fruit, data: [d] }))}
       props={{
         arc: {
-          track: { fill: 'hsl(var(--color-surface-content) / 10%)' },
+          track: { fill: 'var(--color-surface-content)', fillOpacity: 0.1 },
         },
       }}
       outerRadius={-25}

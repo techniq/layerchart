@@ -227,7 +227,7 @@
       data={dateSeriesData}
       x="date"
       series={[
-        { key: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
+        { key: 'baseline', color: 'var(--color-surface-content)', props: { fillOpacity: 0.2 } },
         {
           key: 'value',
           color: 'var(--color-primary)',
@@ -249,7 +249,7 @@
       y="date"
       orientation="horizontal"
       series={[
-        { key: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
+        { key: 'baseline', color: 'var(--color-surface-content)', props: { fillOpacity: 0.2 } },
         { key: 'value', color: 'var(--color-primary)', props: { insets: { y: 4 } } },
       ]}
       {renderContext}
@@ -269,7 +269,8 @@
         {
           key: 'baseline',
           data: dateSeriesBaselineData,
-          color: 'hsl(var(--color-surface-content) / 20%)',
+          color: 'var(--color-surface-content)',
+          props: { fillOpacity: 0.2 },
         },
         {
           key: 'value',
