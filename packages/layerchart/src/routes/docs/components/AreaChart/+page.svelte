@@ -150,7 +150,7 @@
   <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="marks">
-        <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+        <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
           <Area line={{ class: 'stroke-primary' }} fill={gradient} />
         </LinearGradient>
       </svelte:fragment>

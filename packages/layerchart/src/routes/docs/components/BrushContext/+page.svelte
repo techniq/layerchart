@@ -246,7 +246,7 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+              <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
@@ -283,7 +283,7 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+              <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
@@ -325,7 +325,7 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+              <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
@@ -355,7 +355,7 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+              <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
@@ -425,7 +425,7 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+              <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
@@ -459,7 +459,7 @@
           <Svg>
             <Axis placement="left" grid rule tweened={{ duration: 200 }} />
             <Axis placement="bottom" rule />
-            <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+            <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
               <Area
                 line={{ class: 'stroke-2 stroke-primary' }}
                 fill={gradient}
@@ -593,7 +593,7 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+              <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>

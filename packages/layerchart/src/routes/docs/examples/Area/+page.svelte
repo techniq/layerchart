@@ -205,7 +205,7 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+        <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
           <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
         </LinearGradient>
       </Svg>
@@ -233,8 +233,8 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <LinearGradient class="from-secondary/0 to-secondary" let:gradient={strokeGradient}>
-          <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient={fillGradient}>
+        <LinearGradient class="from-secondary/1 to-secondary" let:gradient={strokeGradient}>
+          <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient={fillGradient}>
             <Area line={{ stroke: strokeGradient, class: 'stroke-2' }} fill={fillGradient} />
           </LinearGradient>
         </LinearGradient>
@@ -947,7 +947,7 @@
       let:tooltip
     >
       <Svg>
-        <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+        <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
           <Area line={{ class: 'stroke-2 stroke-primary opacity-20' }} fill={gradient} />
           <RectClipPath x={0} y={0} width={tooltip.data ? tooltip.x : width} {height} spring>
             <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
