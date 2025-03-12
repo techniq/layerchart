@@ -14,6 +14,18 @@
 
 - fix: Remove `shapefile` and `topojson-client` as duplicated `dependencies` (`devDependencies` only) ([`da03573`](https://github.com/techniq/layerchart/commit/da035735ceaf2c685d9829b543eee3441da9685c))
 
+## 2.0.0-next.0
+
+### Major Changes
+
+- Tailwind 4 support ([#449](https://github.com/techniq/layerchart/pull/449))
+
+### Patch Changes
+
+- fix: Support `opacity` prop/style when Canvas rendered for all primatives ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix(Spline): Pass `fillOpacity` prop (instead of `fill-opacity`) to support Canvas ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 1.0.7
 
 ### Patch Changes
