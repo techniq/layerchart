@@ -15,7 +15,7 @@
 <h2>Single chart with remapping scale</h2>
 
 <Preview data={chartData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <!-- Remap efficiency to its equivalent value in sales - https://observablehq.com/@observablehq/plot-dual-axis -->
     <Chart
       data={chartData}
@@ -70,7 +70,7 @@
 <h2>Stacked Charts</h2>
 
 <Preview data={chartData}>
-  <div class="h-[300px] grid grid-stack p-4 border rounded">
+  <div class="h-[300px] grid grid-stack p-4 border rounded-sm">
     <!-- Sales chart-->
     <Chart
       data={chartData}

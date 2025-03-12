@@ -75,7 +75,7 @@
 <h2>Simple</h2>
 
 <Preview data={data.simple}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <Chart data={data.simple}>
       <Svg>
         <Sankey nodeId={(d) => d.id} let:links let:nodes>
@@ -105,7 +105,7 @@
 <h2>Tooltip</h2>
 
 <Preview data={structuredClone(data.greenhouse)}>
-  <div class="h-[800px] p-4 border rounded">
+  <div class="h-[800px] p-4 border rounded-sm">
     <Chart data={structuredClone(data.greenhouse)} let:tooltip>
       <Svg>
         <Sankey nodeId={(d) => d.name} nodeWidth={8} let:links let:nodes>
@@ -186,7 +186,7 @@
 <h2>Node select</h2>
 
 <Preview data={selectedNode ? graphFromNode(selectedNode) : data.greenhouse}>
-  <div class="h-[600px] p-4 border rounded">
+  <div class="h-[600px] p-4 border rounded-sm">
     <Chart data={selectedNode ? graphFromNode(selectedNode) : data.greenhouse}>
       <Svg>
         <Sankey nodeId={(d) => d.name} nodeWidth={8} let:links let:nodes>
@@ -238,7 +238,7 @@
 <SankeyControls bind:nodeAlign bind:nodeColorBy bind:linkColorBy bind:nodePadding bind:nodeWidth />
 
 <Preview data={data.complex}>
-  <div class="h-[800px] p-4 border rounded">
+  <div class="h-[800px] p-4 border rounded-sm">
     <Chart data={data.complex} padding={{ right: 164 }} let:tooltip>
       <Svg>
         <Sankey
@@ -361,7 +361,7 @@
 <SankeyControls bind:nodeAlign bind:nodeColorBy bind:linkColorBy bind:nodePadding bind:nodeWidth />
 
 <Preview data={hierarchyGraph}>
-  <div class="h-[2000px] p-4 border rounded">
+  <div class="h-[2000px] p-4 border rounded-sm">
     <Chart data={hierarchyGraph} padding={{ right: 100 }}>
       <Svg>
         <Sankey

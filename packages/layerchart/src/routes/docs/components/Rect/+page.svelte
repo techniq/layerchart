@@ -6,7 +6,7 @@
 <h1>Examples</h1>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={{ bottom: 20, left: 20 }}>
       <Svg>
         <Axis placement="bottom" rule />

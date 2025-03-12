@@ -15,7 +15,7 @@
 
 <!-- TODO: Should use xScale={scaleTime()} once `<Bar>` / createDimensionGetter() supports it -->
 <Preview data={data.appleTicker}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={data.appleTicker}
       x="date"

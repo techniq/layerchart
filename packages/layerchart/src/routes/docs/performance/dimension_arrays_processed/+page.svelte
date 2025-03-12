@@ -53,7 +53,7 @@
     {#key chartProps}
       {#if example === 'single'}
         <Preview data={chartData.cpu[0]}>
-          <div class="h-[500px] p-4 border rounded">
+          <div class="h-[500px] p-4 border rounded-sm">
             <LineChart
               data={chartData.cpu}
               x={(d) => d[0]}
@@ -67,7 +67,7 @@
         </Preview>
       {:else if example === 'series'}
         <Preview data={{ cpu: chartData.cpu[0], ram: chartData.ram[0], tcp: chartData.tcp[0] }}>
-          <div class="h-[500px] p-4 border rounded">
+          <div class="h-[500px] p-4 border rounded-sm">
             <LineChart
               x={(d) => d[0]}
               y={(d) => d[1]}
@@ -75,17 +75,17 @@
                 {
                   key: 'cpu',
                   data: chartData.cpu,
-                  color: 'hsl(var(--color-danger))',
+                  color: 'var(--color-danger)',
                 },
                 {
                   key: 'ram',
                   data: chartData.ram,
-                  color: 'hsl(var(--color-warning))',
+                  color: 'var(--color-warning)',
                 },
                 {
                   key: 'tcp',
                   data: chartData.tcp,
-                  color: 'hsl(var(--color-success))',
+                  color: 'var(--color-success)',
                 },
               ]}
               props={chartProps}

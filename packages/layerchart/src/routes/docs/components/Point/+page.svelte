@@ -8,7 +8,7 @@
 <h1>Examples</h1>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x={(d) => d.x}

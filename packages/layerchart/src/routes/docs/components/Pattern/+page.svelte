@@ -8,7 +8,7 @@
 <h2>Lines</h2>
 
 <Preview>
-  <div class="h-[334px] p-4 border rounded">
+  <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
       <Svg>
         <Pattern id="line-pattern-1" width={4} height={4}>
@@ -50,7 +50,7 @@
 <h2>Circles</h2>
 
 <Preview>
-  <div class="h-[334px] p-4 border rounded">
+  <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
       <Svg>
         <Pattern id="circle-pattern-1" width={4} height={4}>
@@ -98,7 +98,7 @@
 <h2>With Fill color</h2>
 
 <Preview>
-  <div class="h-[334px] p-4 border rounded">
+  <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
       <Svg>
         <Pattern id="fill-pattern-1" width={4} height={4}>
@@ -152,7 +152,7 @@
 <h2>With LinearGradient</h2>
 
 <Preview>
-  <div class="h-[334px] p-4 border rounded">
+  <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
       <Svg>
         <LinearGradient id="gradient-1" stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']} />
@@ -230,7 +230,7 @@
 <h2>LinearGradient as Pattern</h2>
 
 <Preview>
-  <div class="h-[334px] p-4 border rounded">
+  <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
       <Svg>
         <LinearGradient id="gradient-1" stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']} />

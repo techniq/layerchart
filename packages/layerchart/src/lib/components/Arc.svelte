@@ -80,6 +80,7 @@
   export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = 'none';
   export let strokeWidth: number | undefined = undefined;
+  export let opacity: number | undefined = undefined;
 
   let className: string | undefined = undefined;
   export { className as class };
@@ -221,9 +222,10 @@
   pathData={arc()}
   transform="translate({xOffset}, {yOffset})"
   {fill}
-  fill-opacity={fillOpacity}
+  {fillOpacity}
   {stroke}
   stroke-width={strokeWidth}
+  {opacity}
   class={className}
   {...$$restProps}
   {onclick}
