@@ -21,7 +21,7 @@
 <h2>Common scale</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={dateSeries}
       x="date"
@@ -40,12 +40,8 @@
             {formatDate(data.date, PeriodType.Day)}
           </Tooltip.Header>
           <Tooltip.List>
-            <Tooltip.Item
-              label="baseline"
-              value={data.baseline}
-              color="hsl(var(--color-primary))"
-            />
-            <Tooltip.Item label="value" value={data.value} color="hsl(var(--color-secondary))" />
+            <Tooltip.Item label="baseline" value={data.baseline} color="var(--color-primary)" />
+            <Tooltip.Item label="value" value={data.value} color="var(--color-secondary)" />
           </Tooltip.List>
         </Tooltip.Root>
       </svelte:fragment>
@@ -56,7 +52,7 @@
 <h2>Stacked Charts</h2>
 
 <Preview {data}>
-  <div class="h-[300px] grid grid-stack p-4 border rounded">
+  <div class="h-[300px] grid grid-stack p-4 border rounded-sm">
     <!-- First cahrt (bar), with different domain scale for volume -->
     <BarChart
       data={data.appleTicker}

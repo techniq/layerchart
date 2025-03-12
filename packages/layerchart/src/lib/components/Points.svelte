@@ -50,6 +50,7 @@
   export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
+  export let opacity: number | undefined = undefined;
 
   let className: string | undefined = undefined;
   export { className as class };
@@ -188,6 +189,7 @@
       {fillOpacity}
       {stroke}
       {strokeWidth}
+      {opacity}
       class={className}
       {...$$restProps}
     />

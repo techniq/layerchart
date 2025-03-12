@@ -1,4 +1,4 @@
-<div class="prose max-w-none bg-surface-100 p-3 px-5 m-2 rounded shadow-lg border">
+<div class="prose max-w-none bg-surface-100 p-3 px-5 m-2 rounded-sm shadow-lg border">
 
 <h1>Welcome to LayerChart</h1>
 

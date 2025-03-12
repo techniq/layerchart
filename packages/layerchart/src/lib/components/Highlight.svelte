@@ -412,7 +412,7 @@
           strokeWidth={6}
           {...typeof points === 'object' ? points : null}
           class={cls(
-            'stroke-white [paint-order:stroke] drop-shadow',
+            'stroke-white [paint-order:stroke] drop-shadow-sm',
             !point.fill && (typeof points === 'boolean' || !points.fill) && 'fill-primary',
             typeof points === 'object' ? points.class : null
           )}

@@ -26,6 +26,7 @@
   } from 'layerchart';
   import { Field, Switch, Toggle } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
@@ -54,9 +55,9 @@
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 
   const fruitColors = {
-    apples: 'hsl(var(--color-danger))',
-    bananas: 'hsl(var(--color-success))',
-    oranges: 'hsl(var(--color-info))',
+    apples: 'var(--color-danger)',
+    bananas: 'var(--color-success)',
+    oranges: 'var(--color-info)',
   };
 </script>
 
@@ -69,7 +70,7 @@
 <h2>Basic</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -95,7 +96,7 @@
 <h2>With Tooltip and Highlight</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -129,7 +130,7 @@
 <h2>With Labels</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -156,7 +157,7 @@
 <h2>Explicit axis ticks (min/max)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -187,7 +188,7 @@
 <h2>Gradient</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -204,7 +205,7 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+        <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
           <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
         </LinearGradient>
       </Svg>
@@ -215,7 +216,7 @@
 <h2>Gradient (separate stroke)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -232,8 +233,8 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <LinearGradient class="from-secondary/0 to-secondary" let:gradient={strokeGradient}>
-          <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient={fillGradient}>
+        <LinearGradient class="from-secondary/1 to-secondary" let:gradient={strokeGradient}>
+          <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient={fillGradient}>
             <Area line={{ stroke: strokeGradient, class: 'stroke-2' }} fill={fillGradient} />
           </LinearGradient>
         </LinearGradient>
@@ -245,7 +246,7 @@
 <h2>Multiple series</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"
@@ -300,7 +301,7 @@
 <h2>Multiple series (using overrides)</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesData}
       x="date"
@@ -362,7 +363,7 @@
 <h2>Multiple series (highlight on hover)</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"
@@ -387,24 +388,29 @@
           rule
         />
         {#each dataByFruit as [fruit, data]}
-          {@const color =
-            tooltip.data == null || tooltip.data.fruit === fruit
-              ? cScale?.(fruit)
-              : 'hsl(var(--color-surface-content) / 20%)'}
-          <Area {data} fill={color} fillOpacity={0.3} line={{ class: 'stroke-2', stroke: color }} />
-          <Point d={data[data.length - 1]} let:x let:y>
-            <circle cx={x} cy={y} r={4} fill={color} />
-            <Text
-              {x}
-              {y}
-              value={fruit}
-              verticalAnchor="middle"
-              dx={6}
-              dy={-2}
-              class="text-xs"
+          {@const active = tooltip.data == null || tooltip.data.fruit === fruit}
+          {@const color = cScale?.(fruit)}
+          <g class={cls(!active && 'opacity-20 saturate-0')}>
+            <Area
+              {data}
               fill={color}
+              fillOpacity={0.3}
+              line={{ class: 'stroke-2', stroke: color }}
             />
-          </Point>
+            <Point d={data[data.length - 1]} let:x let:y>
+              <circle cx={x} cy={y} r={4} fill={color} />
+              <Text
+                {x}
+                {y}
+                value={fruit}
+                verticalAnchor="middle"
+                dx={6}
+                dy={-2}
+                class="text-xs"
+                fill={color}
+              />
+            </Point>
+          </g>
         {/each}
         <Highlight points lines />
       </Svg>
@@ -421,7 +427,7 @@
 <h2>Multiple series with labels</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"
@@ -464,7 +470,7 @@
 <h2>Stack</h2>
 
 <Preview data={stackData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={stackData}
       flatData={flatten(stackData)}
@@ -518,7 +524,7 @@
 <h2>Stack with gradient</h2>
 
 <Preview data={stackData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={stackData}
       flatData={flatten(stackData)}
@@ -536,14 +542,14 @@
           rule
         />
         {@const primaryColors = [
-          'hsl(var(--color-danger-500))',
-          'hsl(var(--color-success-500))',
-          'hsl(var(--color-info-500))',
+          'var(--color-danger)',
+          'var(--color-success)',
+          'var(--color-info)',
         ]}
         {@const secondaryColors = [
-          'hsl(var(--color-danger-500) / 10%)',
-          'hsl(var(--color-success-500) / 10%)',
-          'hsl(var(--color-info-500) / 10%)',
+          'color-mix(in lch, var(--color-danger) 10%, transparent)',
+          'color-mix(in lch, var(--color-success) 10%, transparent)',
+          'color-mix(in lch, var(--color-info) 10%, transparent)',
         ]}
 
         {#each chartDataArray(stackData) as seriesData, index}
@@ -574,7 +580,7 @@
   </div>
 
   <Preview data={dateSeriesData}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart
         data={dateSeriesData}
         x="date"
@@ -613,7 +619,7 @@
   </div>
 
   <Preview data={dateSeriesData}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart
         data={dateSeriesData}
         x="date"
@@ -653,7 +659,7 @@
   </div>
 
   <Preview data={dateSeriesData}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart
         data={dateSeriesData}
         x="date"
@@ -692,7 +698,7 @@
 <h2>Threshold with RectClipPath</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
@@ -723,7 +729,7 @@
 <h2>Threshold with RectClipPath (over/under)</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
@@ -754,7 +760,7 @@
 <h2>Highlight color based on value using color scale</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
@@ -766,7 +772,7 @@
       c={(d) => (d.value < 0 ? 'under' : 'over')}
       cScale={scaleOrdinal()}
       cDomain={['over', 'under']}
-      cRange={['hsl(var(--color-success))', 'hsl(var(--color-danger))']}
+      cRange={['var(--color-success)', 'var(--color-danger)']}
       let:width
       let:height
       let:yScale
@@ -797,7 +803,7 @@
 <h2>Highlight color based on value using tooltip slot prop</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
@@ -844,7 +850,7 @@
 <h2>Threshold with LinearGradient</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
@@ -865,8 +871,8 @@
         <Rule y={0} />
         <LinearGradient
           stops={[
-            [thresholdOffset, 'hsl(var(--color-success))'],
-            [thresholdOffset, 'hsl(var(--color-danger))'],
+            [thresholdOffset, 'var(--color-success)'],
+            [thresholdOffset, 'var(--color-danger)'],
           ]}
           units="userSpaceOnUse"
           vertical
@@ -882,7 +888,7 @@
 <h2>Threshold with LinearGradient (over/under)</h2>
 
 <Preview data={negativeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={negativeDateSeriesData}
       x="date"
@@ -903,8 +909,8 @@
         <Rule y={0} />
         <LinearGradient
           stops={[
-            [thresholdOffset, 'hsl(var(--color-success))'],
-            [thresholdOffset, 'hsl(var(--color-danger))'],
+            [thresholdOffset, 'var(--color-success)'],
+            [thresholdOffset, 'var(--color-danger)'],
           ]}
           units="userSpaceOnUse"
           vertical
@@ -925,7 +931,7 @@
 <h2>Clipped area on Tooltip</h2>
 
 <Preview data={data.appleStock}>
-  <div class="h-[300px] border rounded">
+  <div class="h-[300px] border rounded-sm">
     <Chart
       data={data.appleStock}
       x="date"
@@ -941,7 +947,7 @@
       let:tooltip
     >
       <Svg>
-        <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+        <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
           <Area line={{ class: 'stroke-2 stroke-primary opacity-20' }} fill={gradient} />
           <RectClipPath x={0} y={0} width={tooltip.data ? tooltip.x : width} {height} spring>
             <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
@@ -970,7 +976,7 @@
         y={height + padding.top + 2}
         anchor="top"
         variant="none"
-        class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded whitespace-nowrap"
+        class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded-sm whitespace-nowrap"
         let:data
       >
         {format(data.date, PeriodType.Day)}

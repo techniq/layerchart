@@ -22,6 +22,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import { interpolateTurbo } from 'd3-scale-chromatic';
+  import { cls } from '@layerstack/tailwind';
 
   export let data;
 
@@ -101,7 +102,7 @@
 <h2>Basic</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} />
   </div>
 </Preview>
@@ -109,11 +110,11 @@
 <h2>Override color</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
-      series={[{ key: 'value', color: 'hsl(var(--color-secondary))' }]}
+      series={[{ key: 'value', color: 'var(--color-secondary)' }]}
       {renderContext}
       {debug}
     />
@@ -123,7 +124,7 @@
 <h2>Curve</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -138,14 +139,14 @@
 <h2>Series</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       {renderContext}
       {debug}
@@ -156,7 +157,7 @@
 <h2>Series (separate data)</h2>
 
 <Preview data={multiSeriesDataByFruit}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       x="date"
       y="value"
@@ -164,17 +165,17 @@
         {
           key: 'apples',
           data: multiSeriesDataByFruit.get('apples'),
-          color: 'hsl(var(--color-danger))',
+          color: 'var(--color-danger)',
         },
         {
           key: 'bananas',
           data: multiSeriesDataByFruit.get('bananas'),
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'oranges',
           data: multiSeriesDataByFruit.get('oranges'),
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
       ]}
       {renderContext}
@@ -186,15 +187,15 @@
 <h2>Series (voronoi tooltip with highlight)</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesFlatData}
       x="date"
       y="value"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       tooltip={{ mode: 'voronoi' }}
       {renderContext}
@@ -203,11 +204,13 @@
     >
       <svelte:fragment slot="marks" let:series let:tooltip>
         {#each series as s}
-          {@const color =
-            tooltip.data == null || tooltip.data.fruit === s.key
-              ? s.color
-              : 'hsl(var(--color-surface-content) / 20%)'}
-          <Spline data={multiSeriesData} y={s.key} stroke={color} />
+          {@const active = tooltip.data == null || tooltip.data.fruit === s.key}
+          <Spline
+            data={multiSeriesData}
+            y={s.key}
+            stroke={s.color}
+            class={cls(!active && 'opacity-20 saturate-0')}
+          />
         {/each}
       </svelte:fragment>
 
@@ -234,14 +237,14 @@
 <h2>Series (point click)</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       onpointclick={(e, detail) => {
         console.log(e, detail);
@@ -256,14 +259,14 @@
 <h2>Series (custom highlight point)</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       props={{ highlight: { points: { r: 8, strokeWidth: 4 } } }}
       {renderContext}
@@ -275,14 +278,14 @@
 <h2>Series (labels on point hover)</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       {renderContext}
       {debug}
@@ -301,7 +304,7 @@
 <h2>Labels</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -316,7 +319,7 @@
 <h2>Points</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" points {renderContext} {debug} />
   </div>
 </Preview>
@@ -324,7 +327,7 @@
 <h2>Labels with Points</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -340,7 +343,7 @@
 <h2>Labels within points</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -361,7 +364,7 @@
 <h2>Radar (linear grid)</h2>
 
 <Preview data={pitchData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={pitchData}
       x="name"
@@ -401,7 +404,7 @@
 <h2>Radar (rounded grid)</h2>
 
 <Preview data={pitchData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={pitchData}
       x="name"
@@ -439,7 +442,7 @@
 <h2>Radar with series data</h2>
 
 <Preview data={budgetData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={budgetData}
       x="name"
@@ -449,12 +452,12 @@
       series={[
         {
           key: 'budget',
-          color: 'hsl(var(--color-secondary))',
+          color: 'var(--color-secondary)',
           props: { class: 'fill-secondary/50' },
         },
         {
           key: 'actual',
-          color: 'hsl(var(--color-primary))',
+          color: 'var(--color-primary)',
           props: { class: 'fill-primary/50' },
         },
       ]}
@@ -486,7 +489,7 @@
 <h2>Gradient encoding</h2>
 
 <Preview data={data.dailyTemperature}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={data.dailyTemperature}
       x="date"
@@ -527,7 +530,7 @@
 <h2>Gradient threshold</h2>
 
 <Preview data={data.dailyTemperature}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={data.dailyTemperature}
       x="date"
@@ -540,8 +543,8 @@
         {@const thresholdOffset = yScale(50) / (height + padding.bottom)}
         <LinearGradient
           stops={[
-            [thresholdOffset, 'hsl(var(--color-danger))'],
-            [thresholdOffset, 'hsl(var(--color-info))'],
+            [thresholdOffset, 'var(--color-danger)'],
+            [thresholdOffset, 'var(--color-info)'],
           ]}
           units="userSpaceOnUse"
           vertical
@@ -550,6 +553,29 @@
           <Spline stroke={gradient} />
         </LinearGradient>
       </svelte:fragment>
+
+      <svelte:fragment slot="highlight" let:tooltip let:y>
+        {#if tooltip.data}
+          <Highlight
+            lines
+            points={{ fill: y(tooltip.data) > 50 ? 'var(--color-danger)' : 'var(--color-info)' }}
+          />
+        {/if}
+      </svelte:fragment>
+
+      <svelte:fragment slot="tooltip" let:x let:y>
+        <Tooltip.Root let:data>
+          {@const value = y(data)}
+          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item
+              label="value"
+              {value}
+              color={value > 50 ? 'var(--color-danger)' : 'var(--color-info)'}
+            />
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
     </LineChart>
   </div>
 </Preview>
@@ -557,7 +583,7 @@
 <h2>Large series</h2>
 
 <Preview data={data.dailyTemperatures}>
-  <div class="h-[500px] p-4 border rounded">
+  <div class="h-[500px] p-4 border rounded-sm">
     <LineChart
       x="date"
       y="value"
@@ -572,13 +598,8 @@
         return {
           key: year,
           data,
-          color:
-            year === 2024
-              ? 'hsl(var(--color-primary))'
-              : year === 2023
-                ? 'hsl(var(--color-primary) / 50%)'
-                : 'hsl(var(--color-surface-content))',
-          props: { opacity: [2023, 2024].includes(year) ? 1 : 0.1 },
+          color: year >= 2023 ? 'var(--color-primary)' : 'var(--color-surface-content)',
+          props: { opacity: year === 2024 ? 1 : year === 2023 ? 0.5 : 0.1 },
         };
       })}
       tooltip={{ mode: 'manual' }}
@@ -591,7 +612,7 @@
 <h2>Large radial series</h2>
 
 <Preview data={data.dailyTemperatures}>
-  <div class="h-[500px] p-4 border rounded">
+  <div class="h-[500px] p-4 border rounded-sm">
     <LineChart
       x="date"
       y="value"
@@ -611,13 +632,8 @@
         return {
           key: year,
           data,
-          color:
-            year === 2024
-              ? 'hsl(var(--color-primary))'
-              : year === 2023
-                ? 'hsl(var(--color-primary) / 50%)'
-                : 'hsl(var(--color-surface-content))',
-          props: { opacity: [2023, 2024].includes(year) ? 1 : 0.1 },
+          color: year >= 2023 ? 'var(--color-primary)' : 'var(--color-surface-content)',
+          props: { opacity: year === 2024 ? 1 : year === 2023 ? 0.5 : 0.1 },
         };
       })}
       tooltip={{ mode: 'manual' }}
@@ -632,7 +648,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <Preview data={dynamicData}>
   <div
-    class="h-[300px] p-4 border rounded"
+    class="h-[300px] p-4 border rounded-sm"
     on:mousemove={(e) => {
       const x = e.clientX;
       const y = e.clientY;
@@ -670,7 +686,7 @@
 <h2>Null gaps</h2>
 
 <Preview data={dateSeriesDataWithNulls}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesDataWithNulls} x="date" y="value" points {renderContext} {debug} />
   </div>
 </Preview>
@@ -678,7 +694,7 @@
 <h2>Null with dashed lines</h2>
 
 <Preview data={dateSeriesDataWithNulls}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesDataWithNulls} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="belowMarks" let:series>
         {#each series as s}
@@ -714,7 +730,7 @@
 <h2>Single axis (x)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" axis="x" {renderContext} {debug} />
   </div>
 </Preview>
@@ -722,7 +738,7 @@
 <h2>Single axis (y)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} {debug} />
   </div>
 </Preview>
@@ -730,14 +746,14 @@
 <h2>Legend</h2>
 
 <Preview data={multiSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={multiSeriesData}
       x="date"
       series={[
-        { key: 'apples', label: 'Apples', color: 'hsl(var(--color-danger))' },
-        { key: 'bananas', label: 'Bananas', color: 'hsl(var(--color-success))' },
-        { key: 'oranges', label: 'Oranges', color: 'hsl(var(--color-warning))' },
+        { key: 'apples', label: 'Apples', color: 'var(--color-danger)' },
+        { key: 'bananas', label: 'Bananas', color: 'var(--color-success)' },
+        { key: 'oranges', label: 'Oranges', color: 'var(--color-warning)' },
       ]}
       legend
       {renderContext}
@@ -749,7 +765,7 @@
 <h2>Tooltip click</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={dateSeriesData}
       x="date"
@@ -767,7 +783,7 @@
 <h2>Custom tooltip</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="tooltip" let:x let:y let:height let:padding>
         <Tooltip.Root
@@ -775,7 +791,7 @@
           y="data"
           anchor="right"
           contained={false}
-          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-1 py-[2px] border border-primary rounded whitespace-nowrap"
+          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-1 py-[2px] border border-primary rounded-sm whitespace-nowrap"
           let:data
         >
           {y(data)}
@@ -785,7 +801,7 @@
           x="data"
           y={height}
           anchor="top"
-          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-2 py-[2px] border border-primary rounded whitespace-nowrap"
+          class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-2 py-[2px] border border-primary rounded-sm whitespace-nowrap"
           contained={false}
           let:data
         >
@@ -799,7 +815,7 @@
 <h2>Simple annotations</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="aboveContext" let:xScale let:height let:tooltip>
         <Svg>
@@ -853,7 +869,7 @@
 <h2>Brushing</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={data.appleStock}
       x="date"
@@ -871,14 +887,14 @@
 
 <h2>Brush with series point events</h2>
 
-<div class="h-[300px] p-4 border rounded">
+<div class="h-[300px] p-4 border rounded-sm">
   <LineChart
     data={multiSeriesData}
     x="date"
     series={[
-      { key: 'apples', color: 'hsl(var(--color-danger))' },
-      { key: 'bananas', color: 'hsl(var(--color-success))' },
-      { key: 'oranges', color: 'hsl(var(--color-warning))' },
+      { key: 'apples', color: 'var(--color-danger)' },
+      { key: 'bananas', color: 'var(--color-success)' },
+      { key: 'oranges', color: 'var(--color-warning)' },
     ]}
     onpointclick={(e, detail) => {
       console.log(e, detail);
@@ -893,7 +909,7 @@
 <h2>Custom chart</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" let:x let:y {renderContext} {debug}>
       <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
         <Axis placement="left" grid rule />

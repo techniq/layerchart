@@ -4,6 +4,7 @@
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { format } from 'date-fns';
   import { formatDate, PeriodType } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
 
   import {
     Axis,
@@ -42,9 +43,9 @@
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 
   const fruitColors = {
-    apples: 'hsl(var(--color-info))',
-    bananas: 'hsl(var(--color-success))',
-    oranges: 'hsl(var(--color-warning))',
+    apples: 'var(--color-info)',
+    bananas: 'var(--color-success)',
+    oranges: 'var(--color-warning)',
   };
 
   const temperatureColor = scaleSequential(
@@ -62,7 +63,7 @@
 <h2>Basic</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -88,7 +89,7 @@
 <h2>Canvas</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -116,7 +117,7 @@
 <h2>With Tooltip and Highlight</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -151,7 +152,7 @@
 <h2>With Labels</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -178,7 +179,7 @@
 <h2>Gradient encoding</h2>
 
 <Preview data={temperatureData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={temperatureData}
       x="date"
@@ -216,7 +217,7 @@
 <h2>Gradient threshold</h2>
 
 <Preview data={temperatureData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={temperatureData}
       x="date"
@@ -238,8 +239,8 @@
         />
         <LinearGradient
           stops={[
-            [thresholdOffset, 'hsl(var(--color-info))'],
-            [thresholdOffset, 'hsl(var(--color-danger))'],
+            [thresholdOffset, 'var(--color-info)'],
+            [thresholdOffset, 'var(--color-danger)'],
           ]}
           units="userSpaceOnUse"
           vertical
@@ -255,7 +256,7 @@
 <h2>Multiple series</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"
@@ -310,7 +311,7 @@
 <h2>Multiple series (using overrides)</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={Array.from({ length: 90 }).map((_, i) => ({
         x: i,
@@ -351,7 +352,7 @@
 <h2>Multiple series (highlight on hover)</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"
@@ -376,23 +377,23 @@
           rule
         />
         {#each dataByFruit as [fruit, data]}
-          {@const color =
-            tooltip.data == null || tooltip.data.fruit === fruit
-              ? cScale?.(fruit)
-              : 'hsl(var(--color-surface-content) / 20%)'}
-          <Spline {data} class="stroke-2" stroke={color}>
-            <svelte:fragment slot="end">
-              <circle r={4} fill={color} />
-              <Text
-                value={fruit}
-                verticalAnchor="middle"
-                dx={6}
-                dy={-2}
-                class="text-xs"
-                fill={color}
-              />
-            </svelte:fragment>
-          </Spline>
+          {@const active = tooltip.data == null || tooltip.data.fruit === fruit}
+          {@const color = cScale?.(fruit)}
+          <g class={cls(!active && 'opacity-20 saturate-0')}>
+            <Spline {data} class="stroke-2" stroke={color}>
+              <svelte:fragment slot="end">
+                <circle r={4} fill={color} />
+                <Text
+                  value={fruit}
+                  verticalAnchor="middle"
+                  dx={6}
+                  dy={-2}
+                  class="text-xs"
+                  fill={color}
+                />
+              </svelte:fragment>
+            </Spline>
+          </g>
         {/each}
         <Highlight points lines />
       </Svg>
@@ -409,7 +410,7 @@
 <h2>Multiple series with labels</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"

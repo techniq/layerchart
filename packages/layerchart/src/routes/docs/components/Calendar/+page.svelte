@@ -28,7 +28,7 @@
 <h2>Responsive cell size (default)</h2>
 
 <Preview {data}>
-  <div class="h-[200px] p-4 border rounded">
+  <div class="h-[200px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -36,10 +36,10 @@
       cScale={scaleThreshold().unknown('transparent')}
       cDomain={[25, 50, 75]}
       cRange={[
-        'hsl(var(--color-primary-100))',
-        'hsl(var(--color-primary-300))',
-        'hsl(var(--color-primary-500))',
-        'hsl(var(--color-primary-700))',
+        'var(--color-primary-100)',
+        'var(--color-primary-300)',
+        'var(--color-primary-500)',
+        'var(--color-primary-700)',
       ]}
       let:tooltip
     >
@@ -63,7 +63,7 @@
 <h2>Fixed cell size</h2>
 
 <Preview {data}>
-  <div class="h-[200px] p-4 border rounded overflow-hidden">
+  <div class="h-[200px] p-4 border rounded-sm overflow-hidden">
     <Chart
       {data}
       x="date"
@@ -71,10 +71,10 @@
       cScale={scaleThreshold().unknown('transparent')}
       cDomain={[25, 50, 75]}
       cRange={[
-        'hsl(var(--color-primary-100))',
-        'hsl(var(--color-primary-300))',
-        'hsl(var(--color-primary-500))',
-        'hsl(var(--color-primary-700))',
+        'var(--color-primary-100)',
+        'var(--color-primary-300)',
+        'var(--color-primary-500)',
+        'var(--color-primary-700)',
       ]}
       let:tooltip
     >
@@ -98,7 +98,7 @@
 <h2>Multiple Years</h2>
 
 <Preview {data}>
-  <div class="h-[716px] p-4 border rounded overflow-hidden">
+  <div class="h-[716px] p-4 border rounded-sm overflow-hidden">
     <Chart
       {data}
       x="date"
@@ -106,10 +106,10 @@
       cScale={scaleThreshold().unknown('transparent')}
       cDomain={[25, 50, 75]}
       cRange={[
-        'hsl(var(--color-primary-100))',
-        'hsl(var(--color-primary-300))',
-        'hsl(var(--color-primary-500))',
-        'hsl(var(--color-primary-700))',
+        'var(--color-primary-100)',
+        'var(--color-primary-300)',
+        'var(--color-primary-500)',
+        'var(--color-primary-700)',
       ]}
       padding={{ left: 20 }}
       let:tooltip

@@ -67,6 +67,7 @@
   export let defined: Parameters<Line<any>['defined']>[0] | undefined = undefined;
 
   export let fill: string | undefined = undefined;
+  export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
   export let opacity: number | undefined = undefined;
@@ -192,7 +193,7 @@
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
-            styles: { fill, stroke, strokeWidth, opacity },
+            styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
             classes: className,
           }
     );
@@ -204,7 +205,7 @@
 
   $: if (renderContext === 'canvas') {
     // Redraw when props change
-    $tweened_d && fillKey && strokeKey && strokeWidth && className;
+    $tweened_d && fillKey && fillOpacity && strokeKey && strokeWidth && className;
     canvasContext.invalidate();
   }
 
@@ -274,6 +275,7 @@
       {...$$restProps}
       class={cls('path-line', !fill && 'fill-none', !stroke && 'stroke-surface-content', className)}
       {fill}
+      fill-opacity={fillOpacity}
       {stroke}
       stroke-width={strokeWidth}
       {opacity}

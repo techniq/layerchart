@@ -87,7 +87,7 @@
   function getNodeColor(node: HierarchyNode<any>, colorBy: string) {
     switch (colorBy) {
       case 'children':
-        return node.children ? 'hsl(var(--color-primary))' : 'hsl(var(--color-primary-600))';
+        return node.children ? 'var(--color-primary)' : 'var(--color-primary-600)';
       case 'depth':
         return sequentialColor(node.depth).toString();
       case 'parent':
@@ -138,7 +138,7 @@
       let:item
       on:click={() => (selectedHorizontal = item)}
       base
-      class="px-2 py-1 rounded"
+      class="px-2 py-1 rounded-sm"
     >
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
@@ -146,7 +146,7 @@
       </div>
     </Button>
   </Breadcrumb>
-  <div class="h-[600px] p-4 border rounded">
+  <div class="h-[600px] p-4 border rounded-sm">
     <Chart data={horizontalHierarchy} let:width>
       <Svg>
         <Bounds
@@ -179,7 +179,7 @@
                         width={nodeWidth}
                         height={nodeHeight}
                         stroke={colorBy === 'children'
-                          ? 'hsl(var(--color-primary-content))'
+                          ? 'var(--color-primary-content)'
                           : hsl(nodeColor).darker(1).toString()}
                         stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                         fill={nodeColor}
@@ -224,7 +224,7 @@
       let:item
       on:click={() => (selectedVertical = item)}
       base
-      class="px-2 py-1 rounded"
+      class="px-2 py-1 rounded-sm"
     >
       <div class="text-left">
         <div class="text-sm">{item.data.name}</div>
@@ -232,7 +232,7 @@
       </div>
     </Button>
   </Breadcrumb>
-  <div class="h-[600px] p-4 border rounded">
+  <div class="h-[600px] p-4 border rounded-sm">
     <Chart data={verticalHierarchy} let:height>
       <Svg>
         <Bounds
@@ -261,7 +261,7 @@
                         width={nodeWidth}
                         height={nodeHeight}
                         stroke={colorBy === 'children'
-                          ? 'hsl(var(--color-primary-content))'
+                          ? 'var(--color-primary-content)'
                           : hsl(nodeColor).darker(1).toString()}
                         stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                         fill={nodeColor}
@@ -316,7 +316,7 @@
       let:item
       on:click={() => (selectedCarNode = item)}
       base
-      class="px-2 py-1 rounded"
+      class="px-2 py-1 rounded-sm"
     >
       <div class="text-left">
         <div class="text-sm">{item.data[0] ?? 'Overall'}</div>
@@ -324,7 +324,7 @@
       </div>
     </Button>
   </Breadcrumb>
-  <div class="h-[600px] p-4 border rounded">
+  <div class="h-[600px] p-4 border rounded-sm">
     <Chart data={groupedHierarchy}>
       <Svg>
         <Bounds
@@ -352,7 +352,7 @@
                       width={nodeWidth}
                       height={nodeHeight}
                       stroke={colorBy === 'children'
-                        ? 'hsl(var(--color-primary-content))'
+                        ? 'var(--color-primary-content)'
                         : hsl(nodeColor).darker(1).toString()}
                       stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                       fill={nodeColor}

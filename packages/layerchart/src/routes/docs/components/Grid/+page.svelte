@@ -16,7 +16,7 @@
 <h2>Both axis</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -35,7 +35,7 @@
 <h2>Single axis (x)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -54,7 +54,7 @@
 <h2>Single axis (y)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -73,7 +73,7 @@
 <h2>Dashed lines</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -92,7 +92,7 @@
 <h2>Band scale (align center / default)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -116,7 +116,7 @@
 <h2>Band scale (align between)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -140,7 +140,7 @@
 <h2>Radial</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
       <Svg center>
         <Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y />
@@ -152,7 +152,7 @@
 <h2>Radial (linear)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
       <Svg center>
         <Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y radialY="linear" />
@@ -164,7 +164,7 @@
 <h2>Integer-only ticks</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -189,7 +189,7 @@
 <h2>Explicit ticks</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -209,7 +209,7 @@
 <h2>Inject tick value</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -229,7 +229,7 @@
 <h2>Tick count</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -249,7 +249,7 @@
 <h2>Tick count (responsive)</h2>
 
 <Preview {data}>
-  <div class="h-[100px] p-4 border rounded">
+  <div class="h-[100px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -269,7 +269,7 @@
 <h2>Remove default tick count</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"

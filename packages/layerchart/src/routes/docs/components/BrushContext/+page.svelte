@@ -223,7 +223,7 @@
 <h2>Integrated brush (x-axis)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[null, null]} let:value={xDomain} let:set>
       <div class="h-[300px]">
         <Chart
@@ -246,7 +246,7 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+              <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
@@ -260,7 +260,7 @@
 <h2>Integrated brush (y-axis)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[0, null]} let:value={yDomain} let:set>
       <div class="h-[300px]">
         <Chart
@@ -283,7 +283,7 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+              <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
@@ -297,7 +297,7 @@
 <h2>Integrated brush (both axis / area)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={{ xDomain: [null, null], yDomain: [0, null] }} let:value let:set>
       <div class="h-[300px]">
         <Chart
@@ -325,7 +325,7 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+              <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
@@ -339,7 +339,7 @@
 <h2>Separate chart (clip data)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[null, null]} let:value={xDomain} let:set>
       <div class="h-[300px]">
         <Chart
@@ -355,7 +355,7 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+              <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
@@ -389,7 +389,7 @@
 <h2>Separate chart (clip data: y-axis)</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid grid-cols-[40px,1fr] gap-2">
+  <div class="border rounded-sm p-4 grid grid-cols-[40px_1fr] gap-2">
     <State initial={[0, null]} let:value={yDomain} let:set>
       <div>
         <Chart
@@ -425,7 +425,7 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+              <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
@@ -439,7 +439,7 @@
 <h2>Separate chart (filter data)</h2>
 
 <Preview {data}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[null, null]} let:value={xDomain} let:set>
       <div class="h-[300px]">
         <Chart
@@ -459,7 +459,7 @@
           <Svg>
             <Axis placement="left" grid rule tweened={{ duration: 200 }} />
             <Axis placement="bottom" rule />
-            <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+            <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
               <Area
                 line={{ class: 'stroke-2 stroke-primary' }}
                 fill={gradient}
@@ -505,7 +505,7 @@
 
   <div class="grid grid-cols-2 gap-4">
     {#each seriesData as data, i}
-      <div class="border rounded p-4 grid gap-1" style:--chart-color={colorScale(String(i))}>
+      <div class="border rounded-sm p-4 grid gap-1" style:--chart-color={colorScale(String(i))}>
         <div class="h-[100px]">
           <Chart
             {data}
@@ -525,14 +525,11 @@
               <Rule y={0} />
               <ChartClipPath>
                 <LinearGradient
-                  class="from-[hsl(var(--chart-color)/50%)] to-transparent"
+                  class="from-[color-mix(in_lch,var(--chart-color)_50%,_transparent)] to-transparent"
                   vertical
                   let:gradient
                 >
-                  <Area
-                    line={{ class: 'stroke-2 stroke-[hsl(var(--chart-color))]' }}
-                    fill={gradient}
-                  />
+                  <Area line={{ class: 'stroke-2 stroke-(--chart-color)' }} fill={gradient} />
                 </LinearGradient>
               </ChartClipPath>
             </Svg>
@@ -555,8 +552,8 @@
           >
             <Svg>
               <Area
-                line={{ class: 'stroke-2 stroke-[hsl(var(--chart-color))]' }}
-                class="fill-[hsl(var(--chart-color)/20%)]"
+                line={{ class: 'stroke-2 stroke-(--chart-color)' }}
+                class="fill-(--chart-color) opacity-20"
               />
               <!-- <Brush bind:xDomain mode="separated" /> -->
             </Svg>
@@ -570,7 +567,7 @@
 <h2>Tooltip interop</h2>
 
 <Preview data={data.appleStock}>
-  <div class="border rounded p-4 grid gap-1">
+  <div class="border rounded-sm p-4 grid gap-1">
     <State initial={[null, null]} let:value={xDomain} let:set>
       <div class="h-[300px]">
         <Chart
@@ -596,7 +593,7 @@
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
-              <LinearGradient class="from-primary/50 to-primary/0" vertical let:gradient>
+              <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </LinearGradient>
             </ChartClipPath>
@@ -608,7 +605,7 @@
             xOffset={4}
             anchor="bottom"
             variant="none"
-            class="text-sm font-semibold text-primary leading-3 bg-surface-100/80 backdrop-blur-sm px-2 py-1 rounded"
+            class="text-sm font-semibold text-primary leading-3 bg-surface-100/80 backdrop-blur-xs px-2 py-1 rounded-sm"
             let:data
           >
             {format(data.value, 'currency')}
@@ -620,7 +617,7 @@
             yOffset={2}
             anchor="top"
             variant="none"
-            class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded whitespace-nowrap"
+            class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded-sm whitespace-nowrap"
             let:data
           >
             {format(data.date, PeriodType.Day)}
@@ -635,7 +632,7 @@
 
 <Preview data={randomData}>
   <State initial={{ xDomain: [null, null], yDomain: [null, null] }} let:value let:set>
-    <div class="h-[400px] p-4 border rounded">
+    <div class="h-[400px] p-4 border rounded-sm">
       <Chart
         data={randomData}
         x="x"
@@ -690,7 +687,7 @@
 <Preview data={randomData}>
   <State initial={{ xDomain: [null, null], yDomain: [null, null] }} let:value let:set>
     <div class="relative">
-      <div class="h-[400px] p-4 border rounded">
+      <div class="h-[400px] p-4 border rounded-sm">
         <Chart
           data={randomData}
           x="x"
@@ -723,7 +720,7 @@
         </Chart>
       </div>
 
-      <div class="absolute top-0 right-0 w-[25%] h-[25%] border rounded bg-surface-100">
+      <div class="absolute top-0 right-0 w-[25%] h-[25%] border rounded-sm bg-surface-100">
         <Chart
           data={randomData}
           x="x"
@@ -776,11 +773,11 @@
 
 <style>
   :global(.striped-background) {
-    outline: 1px solid hsl(var(--color-secondary) / 50%);
+    outline: 1px solid color-mix(in lch, var(--color-secondary) 50%, transparent);
     background: repeating-linear-gradient(
       135deg,
-      hsl(var(--color-secondary) / 30%) 0 1px,
-      hsl(var(--color-secondary) / 10%) 0 6px
+      color-mix(in lch, var(--color-secondary) 30%, transparent) 0 1px,
+      color-mix(in lch, var(--color-secondary) 10%, transparent) 0 6px
     );
   }
 </style>

@@ -17,11 +17,11 @@
   } = {};
 </script>
 
-<div class={cls('Code', 'rounded', classes.root, $$props.class)}>
+<div class={cls('Code', 'rounded-sm', classes.root, $$props.class)}>
   {#if source}
     <div class="relative">
       <pre
-        class={cls('language-{language} rounded', classes.pre)}
+        class={cls('language-{language} rounded-sm', classes.pre)}
         style="margin: 0; white-space: normal;">
           <code class={cls('language-{language}', classes.code)}>{@html highlightedSource}</code>
       </pre>
