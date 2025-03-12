@@ -553,6 +553,29 @@
           <Spline stroke={gradient} />
         </LinearGradient>
       </svelte:fragment>
+
+      <svelte:fragment slot="highlight" let:tooltip let:y>
+        {#if tooltip.data}
+          <Highlight
+            lines
+            points={{ fill: y(tooltip.data) > 50 ? 'var(--color-danger)' : 'var(--color-info)' }}
+          />
+        {/if}
+      </svelte:fragment>
+
+      <svelte:fragment slot="tooltip" let:x let:y>
+        <Tooltip.Root let:data>
+          {@const value = y(data)}
+          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item
+              label="value"
+              {value}
+              color={value > 50 ? 'var(--color-danger)' : 'var(--color-info)'}
+            />
+          </Tooltip.List>
+        </Tooltip.Root>
+      </svelte:fragment>
     </LineChart>
   </div>
 </Preview>
