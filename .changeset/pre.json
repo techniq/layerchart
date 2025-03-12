@@ -4,5 +4,9 @@
   "initialVersions": {
     "layerchart": "1.0.7"
   },
-  "changesets": []
+  "changesets": [
+    "pink-showers-hunt",
+    "polite-parts-learn",
+    "witty-clocks-divide"
+  ]
 }
