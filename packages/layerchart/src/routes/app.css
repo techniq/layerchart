@@ -38,6 +38,18 @@ nav h2 {
   @apply pt-4 pb-2 pl-4 text-xs text-surface-content font-bold;
 }
 
+.prose {
+  h1 {
+    @apply text-2xl font-extrabold;
+  }
+  h2 {
+    @apply text-xl font-bold mt-3;
+  }
+  h3 {
+    @apply text-lg font-semibold;
+  }
+}
+
 main :is(h1, h2, h3):not(.prose *, .related *, .ApiDocs *) {
   scroll-margin-top: calc(var(--headerHeight) + 148px); /* app header + docs header */
 }

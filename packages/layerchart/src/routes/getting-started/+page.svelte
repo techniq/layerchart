@@ -92,7 +92,7 @@
       target="_blank">Tailwind</a
     >
   </div>
-  <Code source={`@source '../../node_modules/layerchart/dist';`} language="js" />
+  <Code source={`@source '../../node_modules/layerchart/dist';`} language="css" />
 
   <h2>Usage</h2>
 
