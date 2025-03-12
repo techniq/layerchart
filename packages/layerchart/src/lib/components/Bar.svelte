@@ -38,6 +38,7 @@
   export let fillOpacity: number | undefined = undefined;
   export let stroke = 'black';
   export let strokeWidth = 0;
+  export let opacity: number | undefined = undefined;
   export let radius = 0;
 
   /** Control which corners are rounded with radius.  Uses <path> instead of <rect> when not set to `all` */
@@ -120,6 +121,7 @@
     {fillOpacity}
     {stroke}
     {strokeWidth}
+    {opacity}
     rx={_rounded === 'none' ? 0 : radius}
     {spring}
     {tweened}
@@ -138,6 +140,7 @@
     {fillOpacity}
     {stroke}
     {strokeWidth}
+    {opacity}
     {spring}
     {tweened}
     {onclick}

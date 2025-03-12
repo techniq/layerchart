@@ -28,6 +28,7 @@
   export let fill: string | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
+  export let opacity: number | undefined = undefined;
 
   let className: string | undefined = undefined;
   export { className as class };
@@ -79,7 +80,7 @@
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
-            styles: { fill, stroke, strokeWidth },
+            styles: { fill, stroke, strokeWidth, opacity },
             classes: className,
           }
     );
@@ -98,6 +99,7 @@
       fillKey &&
       strokeKey &&
       strokeWidth &&
+      opacity &&
       className;
     canvasContext.invalidate();
   }
@@ -133,6 +135,7 @@
     {fill}
     {stroke}
     stroke-width={strokeWidth}
+    {opacity}
     marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
     marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
     class={cls(stroke === undefined && 'stroke-surface-content', className)}
