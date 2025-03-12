@@ -42,7 +42,7 @@
     </Field>
   </div>
 
-  <div class="grid grid-cols-[100px,auto,auto,1fr] gap-2">
+  <div class="grid grid-cols-[100px_auto_auto_1fr] gap-2">
     <Field label="Show" let:id>
       <Switch bind:checked={show} {id} size="md" />
     </Field>
@@ -65,7 +65,7 @@
 </div>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="x" y="y" yNice padding={{ left: 24, bottom: 24, top: 4, right: 8 }}>
       <svelte:component this={Context}>
         <Axis placement="left" grid rule />
@@ -103,7 +103,7 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
         <Svg>
           <Axis placement="left" grid rule />
@@ -130,7 +130,7 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
         <Svg>
           <Axis placement="left" grid rule />
@@ -157,7 +157,7 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
         <Svg>
           <Axis placement="left" grid rule />
@@ -189,7 +189,7 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
         <Svg>
           <Axis placement="left" grid rule />
@@ -219,7 +219,7 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 48, bottom: 24, right: 48 }}>
         <Svg>
           <Axis placement="left" grid rule />
@@ -256,7 +256,7 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
         <Svg>
           <Axis placement="left" grid rule />
@@ -285,7 +285,7 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
         <Svg>
           <Axis placement="left" grid rule />

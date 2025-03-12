@@ -66,7 +66,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class={cls(
-    'bg-surface-300/50 border rounded-full m-1 backdrop-blur z-10 flex',
+    'bg-surface-300/50 border rounded-full m-1 backdrop-blur-sm z-10 flex',
     orientation === 'vertical' && 'flex-col',
     {
       'top-left': 'absolute top-0 left-0',

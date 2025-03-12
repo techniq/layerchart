@@ -24,6 +24,7 @@
   export let fill: string | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
+  export let opacity: number | undefined = undefined;
 
   /**
    * Tooltip context to setup pointer events to show tooltip for related data
@@ -87,7 +88,7 @@
         styleOverrides
           ? merge({ styles: { strokeWidth } }, styleOverrides)
           : {
-              styles: { fill, stroke, strokeWidth },
+              styles: { fill, stroke, strokeWidth, opacity },
               classes: className,
             }
       );
@@ -100,7 +101,7 @@
 
   $: if (renderContext === 'canvas') {
     // Redraw when geojson, projection, or class change
-    geojson && _projection && fillKey && strokeKey && strokeWidth && className;
+    geojson && _projection && fillKey && strokeKey && strokeWidth && opacity && className;
     canvasContext.invalidate();
   }
 
@@ -153,6 +154,7 @@
       {fill}
       {stroke}
       stroke-width={strokeWidth}
+      {opacity}
       on:click={_onClick}
       on:pointerenter={_onPointerEnter}
       on:pointermove={_onPointerMove}

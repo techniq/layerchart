@@ -10,9 +10,9 @@
   import dots from './dots.json' with { type: 'json' };
 
   const categoryColor = scaleOrdinal([
-    'hsl(var(--color-info))',
-    'hsl(var(--color-warning))',
-    'hsl(var(--color-danger))',
+    'var(--color-info)',
+    'var(--color-warning)',
+    'var(--color-danger)',
   ]);
 
   let groupBy = true;
@@ -44,7 +44,7 @@
 </div>
 
 <Preview data={dots}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dots}
       x="category"

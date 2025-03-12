@@ -70,7 +70,7 @@
 <h2>Time</h2>
 
 <Preview>
-  <div class="h-[100px] p-4 border rounded">
+  <div class="h-[100px] p-4 border rounded-sm">
     <LineChart
       data={timeData}
       x="key"
@@ -87,7 +87,7 @@
 <h2>Frequency</h2>
 
 <Preview>
-  <div class="h-[150px] p-4 border rounded">
+  <div class="h-[150px] p-4 border rounded-sm">
     <BarChart
       data={frequencyData}
       x="key"

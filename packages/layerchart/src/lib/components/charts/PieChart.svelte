@@ -70,7 +70,7 @@
     maxValue?: number;
     color?: string;
     props?: Partial<ComponentProps<Arc>>;
-  }[] = [{ key: 'default', value: value /*, color: 'hsl(var(--color-primary))'*/ }];
+  }[] = [{ key: 'default', value: value /*, color: 'var(--color-primary)'*/ }];
 
   export let legend: ComponentProps<Legend> | boolean = false;
 
@@ -183,12 +183,12 @@
     : c !== key
       ? chartData.map((d) => cAccessor(d))
       : [
-          'hsl(var(--color-primary))',
-          'hsl(var(--color-secondary))',
-          'hsl(var(--color-info))',
-          'hsl(var(--color-success))',
-          'hsl(var(--color-warning))',
-          'hsl(var(--color-danger))',
+          'var(--color-primary)',
+          'var(--color-secondary)',
+          'var(--color-info)',
+          'var(--color-success)',
+          'var(--color-warning)',
+          'var(--color-danger)',
         ]}
   padding={{ bottom: legend === true ? 32 : 0 }}
   {...$$restProps}
@@ -258,7 +258,7 @@
                 {cornerRadius}
                 {padAngle}
                 fill={s.color ?? cScale?.(c(d))}
-                track={{ fill: s.color ?? cScale?.(c(d)), 'fill-opacity': 0.1 }}
+                track={{ fill: s.color ?? cScale?.(c(d)), fillOpacity: 0.1 }}
                 {tooltip}
                 data={d}
                 onclick={(e) => {

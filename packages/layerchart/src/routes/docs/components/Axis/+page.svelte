@@ -26,7 +26,7 @@
 <h2>left / bottom placement</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -47,7 +47,7 @@
 <h2>top / right placement</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -68,7 +68,7 @@
 <h2>rule (left/bottom placement)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -89,7 +89,7 @@
 <h2>rule (top/right placement)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -110,7 +110,7 @@
 <h2>grid</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -131,7 +131,7 @@
 <h2>dashed grid lines</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -152,7 +152,7 @@
 <h2>multiple axis grids with single rule</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -175,7 +175,7 @@
 <h2>multiple axis grids and rules</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -199,7 +199,7 @@
 <h2>multiple axis grids and rules (separate grid)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -221,7 +221,7 @@
 <h2>Arrow markers</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -242,7 +242,7 @@
 <h2>tick label styling</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -271,7 +271,7 @@
 <h2>rotated tick labels and styling</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -300,7 +300,7 @@
 <h2>Remove ticks hashes</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -321,7 +321,7 @@
 <h2>show only first/last ticks with alignment</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -351,7 +351,7 @@
 <h2>integer-only ticks</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -377,7 +377,7 @@
 <h2>explicit ticks</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -398,7 +398,7 @@
 <h2>Inject tick value</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -419,7 +419,7 @@
 <h2>tick count</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -440,7 +440,7 @@
 <h2>tick count (responsive)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -461,7 +461,7 @@
 <h2>tick time interval</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -482,7 +482,7 @@
 <h2>remove default tick count</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -503,7 +503,7 @@
 <h2>label next to hash</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -530,7 +530,7 @@
 <h2>Hide `0` tick via ticks</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -551,7 +551,7 @@
 <h2>Hide `0` tick via format</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -572,7 +572,7 @@
 <h2>Override axis ticks with custom scale</h2>
 
 <Preview data={largeData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={largeData}
       x="date"
@@ -606,7 +606,7 @@
 </div>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -645,7 +645,7 @@
 </div>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -684,7 +684,7 @@
 </div>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -725,7 +725,7 @@
 <h2>radial rule</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
       <Svg center>
         <Axis placement="radius" rule />
@@ -738,7 +738,7 @@
 <h2>radial grid</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
       <Svg center>
         <Axis placement="radius" grid />
@@ -751,7 +751,7 @@
 <h2>Log scale</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"

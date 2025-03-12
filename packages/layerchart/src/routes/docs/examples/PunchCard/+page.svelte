@@ -19,7 +19,7 @@
 <h2>Basic</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <ScatterChart
       {data}
       x={(d) => getWeek(d.date)}
