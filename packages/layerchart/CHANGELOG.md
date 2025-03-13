@@ -14,6 +14,12 @@
 
 - fix: Remove `shapefile` and `topojson-client` as duplicated `dependencies` (`devDependencies` only) ([`da03573`](https://github.com/techniq/layerchart/commit/da035735ceaf2c685d9829b543eee3441da9685c))
 
+## 2.0.0-next.1
+
+### Patch Changes
+
+- Switch from @tailwindcss/postcss to @tailwindcss/vite. Update all non-major packages ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.0
 
 ### Major Changes
