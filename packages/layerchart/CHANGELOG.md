@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.1
+
+### Patch Changes
+
+- Switch from @tailwindcss/postcss to @tailwindcss/vite. Update all non-major packages ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.0
 
 ### Major Changes
