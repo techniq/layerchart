@@ -18,7 +18,7 @@ export type ComputedStylesOptions = {
 };
 
 /**
- * Appends or reuses `<svg>` element below `<canvas>` to resolve CSS variables and classes (ex. `stroke: hsl(var(--color-primary))` => `stroke: rgb(...)` )
+ * Appends or reuses `<svg>` element below `<canvas>` to resolve CSS variables and classes (ex. `stroke: var(--color-primary)` => `stroke: rgb(...)` )
  */
 export function getComputedStyles(
   canvas: HTMLCanvasElement,

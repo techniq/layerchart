@@ -18,7 +18,7 @@
 <h2>Svg</h2>
 
 <Preview {data}>
-  <div class="h-[400px] p-4 border rounded relative" on:pointermove={onPointerMove}>
+  <div class="h-[400px] p-4 border rounded-sm relative" on:pointermove={onPointerMove}>
     <Chart {data} x="x" y="y" let:xScale let:yScale>
       <Svg>
         <ChartClipPath>
@@ -39,7 +39,7 @@
 <h2>Canvas</h2>
 
 <Preview {data}>
-  <div class="h-[400px] p-4 border rounded relative" on:pointermove={onPointerMove}>
+  <div class="h-[400px] p-4 border rounded-sm relative" on:pointermove={onPointerMove}>
     <Chart {data} x="x" y="y" let:xScale let:yScale>
       <Canvas>
         <ChartClipPath>

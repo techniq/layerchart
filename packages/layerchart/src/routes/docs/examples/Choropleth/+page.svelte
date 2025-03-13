@@ -91,7 +91,7 @@
         scale={colorScale}
         title="Population"
         tickFormat={(d) => format(d, 'metric', { maximumSignificantDigits: 2 })}
-        class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-sm rounded m-1"
+        class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-xs rounded-sm m-1"
       />
 
       <Tooltip.Root let:data>
@@ -171,7 +171,7 @@
         title="Population"
         tickFormat={(d) => format(d, 'metric', { maximumSignificantDigits: 2 })}
         placement="top-left"
-        class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-sm rounded m-1"
+        class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-xs rounded-sm m-1"
       />
 
       <Tooltip.Root let:data>

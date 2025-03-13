@@ -40,7 +40,7 @@
 </div>
 
 <Preview data={pitchData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={pitchData}
       x="name"
@@ -68,7 +68,7 @@
 <h2>Line with Areas</h2>
 
 <Preview data={data.sfoTemperatures}>
-  <div class="h-[500px] p-4 border rounded">
+  <div class="h-[500px] p-4 border rounded-sm">
     <Chart
       data={data.sfoTemperatures}
       x="date"
@@ -106,7 +106,7 @@
 <h2>Multi-year Lines</h2>
 
 <Preview data={data.dailyTemperatures}>
-  <div class="h-[500px] p-4 border rounded">
+  <div class="h-[500px] p-4 border rounded-sm">
     <Chart
       data={data.dailyTemperatures}
       x="date"

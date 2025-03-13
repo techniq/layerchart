@@ -102,7 +102,7 @@
 </div>
 
 <Preview data={countries}>
-  <div class="h-[600px] grid grid-cols-[224px,1fr] relative">
+  <div class="h-[600px] grid grid-cols-[224px_1fr] relative">
     <div class="absolute top-0 right-0 z-10 flex items-center gap-3">
       {#if isPlaying && selectedFeature}
         <span class="text-sm px-2 py-1 font-semibold text-primary bg-primary/5 rounded-full">

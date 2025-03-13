@@ -117,7 +117,7 @@
         scale={colorScale}
         title="Est. Percent under 18"
         placement="top-left"
-        class="bg-surface-100/80 px-2 py-1 backdrop-blur-sm rounded m-1"
+        class="bg-surface-100/80 px-2 py-1 backdrop-blur-xs rounded-sm m-1"
       />
 
       <Tooltip.Root let:data>
@@ -208,7 +208,7 @@
         scale={colorScale}
         title="Est. Percent under 18"
         placement="top-left"
-        class="bg-surface-100/80 px-2 py-1 backdrop-blur-sm rounded m-1"
+        class="bg-surface-100/80 px-2 py-1 backdrop-blur-xs rounded-sm m-1"
       />
 
       <Tooltip.Root let:data>

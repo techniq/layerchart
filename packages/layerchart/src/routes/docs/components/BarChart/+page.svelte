@@ -72,7 +72,7 @@
 <h2>Vertical (default)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} />
   </div>
 </Preview>
@@ -80,7 +80,7 @@
 <h2>Horizontal</h2>
 
 <Preview data={horizontalDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={horizontalDateSeriesData}
       x="value"
@@ -95,7 +95,7 @@
 <h2>Color (Bars class)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={dateSeriesData}
       x="date"
@@ -110,12 +110,12 @@
 <h2>Color using scale</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={dateSeriesData}
       x="date"
       y="value"
-      cRange={['hsl(var(--color-secondary))']}
+      cRange={['var(--color-secondary)']}
       {renderContext}
       {debug}
     />
@@ -125,17 +125,17 @@
 <h2>Color per value</h2>
 
 <Preview data={longData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={longData.filter((d) => d.year === 2019)}
       x="fruit"
       y="value"
       c="fruit"
       cRange={[
-        'hsl(var(--color-danger))',
-        'hsl(var(--color-warning))',
-        'hsl(var(--color-success))',
-        'hsl(var(--color-info))',
+        'var(--color-danger)',
+        'var(--color-warning)',
+        'var(--color-success)',
+        'var(--color-info)',
       ]}
       props={{
         yAxis: { format: 'metric' },
@@ -149,7 +149,7 @@
 <h2>Color threshold</h2>
 
 <Preview data={negativeData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={negativeData}
       x="date"
@@ -157,7 +157,7 @@
       c="value"
       cScale={scaleThreshold()}
       cDomain={[0]}
-      cRange={['hsl(var(--color-danger))', 'hsl(var(--color-success))']}
+      cRange={['var(--color-danger)', 'var(--color-success)']}
       {renderContext}
       {debug}
     />
@@ -167,7 +167,7 @@
 <h2>Gradient</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="marks" let:series let:getBarsProps>
         {#each series as s, i (s.key)}
@@ -188,7 +188,7 @@
 <h2>Remove rounding</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={dateSeriesData}
       x="date"
@@ -203,7 +203,7 @@
 <h2>Highlight below marks</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={dateSeriesData}
       x="date"
@@ -222,15 +222,15 @@
 <h2>Series</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={dateSeriesData}
       x="date"
       series={[
-        { key: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
+        { key: 'baseline', color: 'var(--color-surface-content)', props: { fillOpacity: 0.2 } },
         {
           key: 'value',
-          color: 'hsl(var(--color-primary))',
+          color: 'var(--color-primary)',
           props: { insets: { x: 8 } },
         },
       ]}
@@ -243,14 +243,14 @@
 <h2>Series (horizontal)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[400px] p-4 border rounded">
+  <div class="h-[400px] p-4 border rounded-sm">
     <BarChart
       data={dateSeriesData}
       y="date"
       orientation="horizontal"
       series={[
-        { key: 'baseline', color: 'hsl(var(--color-surface-content) / 20%)' },
-        { key: 'value', color: 'hsl(var(--color-primary))', props: { insets: { y: 4 } } },
+        { key: 'baseline', color: 'var(--color-surface-content)', props: { fillOpacity: 0.2 } },
+        { key: 'value', color: 'var(--color-primary)', props: { insets: { y: 4 } } },
       ]}
       {renderContext}
       {debug}
@@ -261,7 +261,7 @@
 <h2>Series data</h2>
 
 <Preview data={{ dateSeriesData, dateSeriesBaselineData }}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       x="date"
       y="value"
@@ -269,12 +269,13 @@
         {
           key: 'baseline',
           data: dateSeriesBaselineData,
-          color: 'hsl(var(--color-surface-content) / 20%)',
+          color: 'var(--color-surface-content)',
+          props: { fillOpacity: 0.2 },
         },
         {
           key: 'value',
           data: dateSeriesData,
-          color: 'hsl(var(--color-primary))',
+          color: 'var(--color-primary)',
           props: { insets: { x: 8 } },
         },
       ]}
@@ -287,19 +288,19 @@
 <h2>Series (diverging)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={dateSeriesData}
       x="date"
       series={[
         {
           key: 'value',
-          color: 'hsl(var(--color-primary))',
+          color: 'var(--color-primary)',
         },
         {
           key: 'baseline',
           value: (d) => -d.baseline,
-          color: 'hsl(var(--color-secondary))',
+          color: 'var(--color-secondary)',
         },
       ]}
       {renderContext}
@@ -312,7 +313,7 @@
 
 <Preview data={data.worldPopulationDemographics}>
   {@const totalPopulation = sum(data.worldPopulationDemographics, (d) => d.male + d.female)}
-  <div class="h-[600px] p-4 border rounded">
+  <div class="h-[600px] p-4 border rounded-sm">
     <BarChart
       data={data.worldPopulationDemographics}
       y="age"
@@ -326,11 +327,11 @@
         {
           key: 'male',
           value: (d) => -d.male,
-          color: 'hsl(var(--color-primary))',
+          color: 'var(--color-primary)',
         },
         {
           key: 'female',
-          color: 'hsl(var(--color-secondary))',
+          color: 'var(--color-secondary)',
         },
       ]}
       {renderContext}
@@ -367,7 +368,7 @@
 
 <Preview data={data.worldPopulationDemographics}>
   {@const totalPopulation = sum(data.worldPopulationDemographics, (d) => d.male + d.female)}
-  <div class="h-[600px] p-4 border rounded">
+  <div class="h-[600px] p-4 border rounded-sm">
     <BarChart
       data={data.worldPopulationDemographics}
       y="age"
@@ -381,12 +382,12 @@
         {
           key: 'male',
           value: (d) => -d.male / totalPopulation,
-          color: 'hsl(var(--color-primary))',
+          color: 'var(--color-primary)',
         },
         {
           key: 'female',
           value: (d) => d.female / totalPopulation,
-          color: 'hsl(var(--color-secondary))',
+          color: 'var(--color-secondary)',
         },
       ]}
       {renderContext}
@@ -420,23 +421,23 @@
 <h2>Group series</h2>
 
 <Preview data={wideData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="group"
@@ -456,24 +457,24 @@
 <h2>Group series (horizontal)</h2>
 
 <Preview data={wideData}>
-  <div class="h-[500px] p-4 border rounded">
+  <div class="h-[500px] p-4 border rounded-sm">
     <BarChart
       data={wideData}
       orientation="horizontal"
       y="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="group"
@@ -493,23 +494,23 @@
 <h2>Group series (bar click)</h2>
 
 <Preview data={wideData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="group"
@@ -536,26 +537,26 @@
 <h2>Group series (series / long data)</h2>
 
 <Preview data={dataByFruit}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       x="year"
       y="value"
       series={[
-        { key: 'apples', data: dataByFruit.get('apples'), color: 'hsl(var(--color-danger))' },
+        { key: 'apples', data: dataByFruit.get('apples'), color: 'var(--color-danger)' },
         {
           key: 'bananas',
           data: dataByFruit.get('bananas'),
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
           data: dataByFruit.get('cherries'),
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
           data: dataByFruit.get('grapes'),
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="group"
@@ -575,23 +576,23 @@
 <h2>Stack series</h2>
 
 <Preview data={wideData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="stack"
@@ -611,24 +612,24 @@
 <h2>Stack series (horizontal)</h2>
 
 <Preview data={wideData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={wideData}
       orientation="horizontal"
       y="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="stack"
@@ -648,23 +649,23 @@
 <h2>Stack series (padded)</h2>
 
 <Preview data={wideData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="stack"
@@ -686,23 +687,23 @@
 <h2>Stack series (expand)</h2>
 
 <Preview data={wideData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="stackExpand"
@@ -721,7 +722,7 @@
 <h2>Stack series (diverging)</h2>
 
 <Preview data={wideData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={wideData}
       x="year"
@@ -729,20 +730,20 @@
         {
           key: 'apples',
           value: (d) => -d.apples,
-          color: 'hsl(var(--color-danger))',
+          color: 'var(--color-danger)',
           props: { rounded: 'bottom' },
         },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="stackDiverging"
@@ -764,26 +765,26 @@
 <h2>Stack series (series data / long data)</h2>
 
 <Preview data={dataByFruit}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       x="year"
       y="value"
       series={[
-        { key: 'apples', data: dataByFruit.get('apples'), color: 'hsl(var(--color-danger))' },
+        { key: 'apples', data: dataByFruit.get('apples'), color: 'var(--color-danger)' },
         {
           key: 'bananas',
           data: dataByFruit.get('bananas'),
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
           data: dataByFruit.get('cherries'),
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
           data: dataByFruit.get('grapes'),
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="stack"
@@ -802,23 +803,23 @@
 <h2>Legend (group series)</h2>
 
 <Preview data={wideData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="group"
@@ -839,23 +840,23 @@
 <h2>Legend (stack series)</h2>
 
 <Preview data={wideData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="stack"
@@ -876,23 +877,23 @@
 <h2>Legend (placement)</h2>
 
 <Preview data={wideData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', color: 'var(--color-danger)' },
         {
           key: 'bananas',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="group"
@@ -913,26 +914,26 @@
 <h2>Legend (custom labels)</h2>
 
 <Preview data={wideData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={wideData}
       x="year"
       series={[
-        { key: 'apples', label: 'Apples 🍎', color: 'hsl(var(--color-danger))' },
+        { key: 'apples', label: 'Apples 🍎', color: 'var(--color-danger)' },
         {
           key: 'bananas',
           label: 'Bananas 🍌',
-          color: 'hsl(var(--color-warning))',
+          color: 'var(--color-warning)',
         },
         {
           key: 'cherries',
           label: 'Cherries 🍒',
-          color: 'hsl(var(--color-success))',
+          color: 'var(--color-success)',
         },
         {
           key: 'grapes',
           label: 'Grapes 🍇',
-          color: 'hsl(var(--color-info))',
+          color: 'var(--color-info)',
         },
       ]}
       seriesLayout="group"
@@ -953,7 +954,7 @@
 <h2>Labels</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value" labels {renderContext} {debug} />
   </div>
 </Preview>
@@ -961,7 +962,7 @@
 <h2>Labels (inside placement)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={dateSeriesData}
       x="date"
@@ -976,7 +977,7 @@
 <h2>Axis labels inside bars</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[500px] p-4 border rounded">
+  <div class="h-[500px] p-4 border rounded-sm">
     <BarChart
       data={dateSeriesData}
       x="value"
@@ -1005,7 +1006,7 @@
 <h2>Axis labels inside bars (using Labels)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[500px] p-4 border rounded">
+  <div class="h-[500px] p-4 border rounded-sm">
     <BarChart
       data={dateSeriesData}
       x="value"
@@ -1052,11 +1053,7 @@
       c="value"
       cScale={scaleThreshold()}
       cDomain={[10, 50]}
-      cRange={[
-        'hsl(var(--color-danger))',
-        'hsl(var(--color-warning))',
-        'hsl(var(--color-success))',
-      ]}
+      cRange={['var(--color-danger)', 'var(--color-warning)', 'var(--color-success)']}
       axis="x"
       bandPadding={0.1}
       props={{
@@ -1083,7 +1080,7 @@
 <h2>Single axis (x)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value" axis="x" {renderContext} {debug} />
   </div>
 </Preview>
@@ -1091,7 +1088,7 @@
 <h2>Single axis (y)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} {debug} />
   </div>
 </Preview>
@@ -1099,7 +1096,7 @@
 <h2>Override axis ticks with custom scale</h2>
 
 <Preview data={largeDateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={largeDateSeriesData}
       x="date"
@@ -1114,7 +1111,7 @@
 <h2>Both axis grid</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value" grid={{ x: true }} {renderContext} {debug} />
   </div>
 </Preview>
@@ -1122,7 +1119,7 @@
 <h2>Both axis grid (align between)</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={dateSeriesData}
       x="date"
@@ -1137,7 +1134,7 @@
 <h2>Scale override</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <!-- TODO: Not sure why explicit ticks are needed here but not http://layerchart.com/docs/components/Axis#log_scale  -->
     <BarChart
       data={dateSeriesData}
@@ -1155,7 +1152,7 @@
 <h2>Tooltip click</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={dateSeriesData}
       x="date"
@@ -1173,7 +1170,7 @@
 <h2>Custom tooltip</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
       <svelte:fragment slot="tooltip" let:x let:y>
         <Tooltip.Root let:data>
@@ -1190,7 +1187,7 @@
 <h2>Custom chart</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value" let:x let:y>
       <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
         <Axis

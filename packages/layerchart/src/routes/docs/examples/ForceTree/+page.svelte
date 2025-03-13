@@ -22,7 +22,7 @@
 <h1>Examples</h1>
 
 <Preview data={nodes}>
-  <div class="h-[600px] p-4 border rounded">
+  <div class="h-[600px] p-4 border rounded-sm">
     <Chart data={nodes} let:tooltip>
       <Svg center>
         <ForceSimulation

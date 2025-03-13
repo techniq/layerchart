@@ -88,7 +88,7 @@
 <h2>Basic</h2>
 
 <Preview data={complexDataHierarchy}>
-  <div class="h-[800px] p-4 border rounded overflow-hidden relative">
+  <div class="h-[800px] p-4 border rounded-sm overflow-hidden relative">
     <Chart
       data={complexDataHierarchy}
       padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}
@@ -166,7 +166,7 @@
 <h2>Html nodes</h2>
 
 <Preview data={complexDataHierarchy}>
-  <div class="h-[800px] p-4 border rounded overflow-hidden relative">
+  <div class="h-[800px] p-4 border rounded-sm overflow-hidden relative">
     <Chart
       data={complexDataHierarchy}
       padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}

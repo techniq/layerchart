@@ -1,0 +1,13 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "layerchart": "1.0.7"
+  },
+  "changesets": [
+    "pink-showers-hunt",
+    "polite-parts-learn",
+    "tall-poems-take",
+    "witty-clocks-divide"
+  ]
+}

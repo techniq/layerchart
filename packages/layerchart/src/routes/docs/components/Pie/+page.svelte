@@ -18,10 +18,10 @@
 
   const colorKeys = [...new Set(data.map((d) => d.date))];
   const keyColors = [
-    'hsl(var(--color-info))',
-    'hsl(var(--color-success))',
-    'hsl(var(--color-warning))',
-    'hsl(var(--color-danger))',
+    'var(--color-info)',
+    'var(--color-success)',
+    'var(--color-warning)',
+    'var(--color-danger)',
   ];
 
   const keyClasses = [
@@ -37,7 +37,7 @@
 <h2>Basic</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg center>
         <Pie />
@@ -49,7 +49,7 @@
 <h2>Disable sorting</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg center>
         <Pie sort={null} />
@@ -61,7 +61,7 @@
 <h2>Partial range (Chart xRange)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" xRange={[-90, 90]} c="date" cRange={keyColors}>
       <Svg center>
         <Pie />
@@ -73,7 +73,7 @@
 <h2>Partial range (range prop)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg center>
         <Pie range={[-90, 90]} />
@@ -85,7 +85,7 @@
 <h2>Pad angle</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg center>
         <Pie padAngle={0.05} />
@@ -97,7 +97,7 @@
 <h2>Pad angle</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg center>
         <Pie innerRadius={100} padAngle={0.03} />
@@ -111,7 +111,7 @@
 <h3>If value >= 1, value will be treated as discrete</h3>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg center>
         <Pie innerRadius={100} />
@@ -123,7 +123,7 @@
 <h3>If value >= 0 and less than 1, value will be treated as a percentage of outerRadius</h3>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg center>
         <Pie innerRadius={0.9} />
@@ -135,7 +135,7 @@
 <h3>If value less than 0, value will be treated as a offset of outerRadius</h3>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg center>
         <Pie innerRadius={-30} />
@@ -147,7 +147,7 @@
 <h2>Outer radius</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg center>
         <Pie outerRadius={100} />
@@ -159,7 +159,7 @@
 <h2>Multiple (data prop)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg center>
         <Pie innerRadius={100} {data} />
@@ -178,7 +178,7 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded resize overflow-auto">
+    <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
       <Chart {data} x="value" c="date" cRange={keyColors}>
         <Svg center>
           {#if show}
@@ -193,7 +193,7 @@
 <h2>Offset</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg center>
         <Pie offset={4} />
@@ -205,7 +205,7 @@
 <h2>default slot / render each `Arc`</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg center>
         <Pie let:arcs>
@@ -227,7 +227,7 @@
 <h2>Centroid labels</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date">
       <Svg center>
         <Pie let:arcs>
@@ -269,7 +269,7 @@
 <h2>Tooltip</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors} let:tooltip>
       <Svg center>
         <Pie {tooltip} />
@@ -293,7 +293,7 @@
 <h2>Tooltip with Arcs (slot)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors} let:tooltip>
       <Svg center>
         <Pie let:arcs>
@@ -354,7 +354,7 @@
 <h3>left</h3>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors} let:height>
       <Svg>
         <Group x={height / 2} center="y">
@@ -368,7 +368,7 @@
 <h3>center</h3>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg center>
         <Pie />
@@ -380,7 +380,7 @@
 <h3>right</h3>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors} let:width let:height>
       <Svg>
         <Group x={width - height / 2} center="y">

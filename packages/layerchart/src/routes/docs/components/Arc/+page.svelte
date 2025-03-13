@@ -50,7 +50,7 @@
 </div>
 
 <Preview>
-  <div class="h-[200px] p-4 border rounded">
+  <div class="h-[200px] p-4 border rounded-sm">
     <Chart>
       <Svg center>
         {#key spring}
@@ -113,7 +113,7 @@
 {/if} -->
 
   <Preview>
-    <div class="h-[200px] p-4 border rounded">
+    <div class="h-[200px] p-4 border rounded-sm">
       <Chart>
         <Svg center>
           <LinearGradient

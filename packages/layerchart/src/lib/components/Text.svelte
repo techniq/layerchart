@@ -67,6 +67,7 @@
   export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
+  export let opacity: number | undefined = undefined;
 
   let className: string | undefined = undefined;
   export { className as class };
@@ -202,7 +203,15 @@
         styleOverrides
           ? merge({ styles: { strokeWidth } }, styleOverrides)
           : {
-              styles: { fill, fillOpacity, stroke, strokeWidth, paintOrder: 'stroke', textAnchor },
+              styles: {
+                fill,
+                fillOpacity,
+                stroke,
+                strokeWidth,
+                opacity,
+                paintOrder: 'stroke',
+                textAnchor,
+              },
               classes: cls(fill === undefined && 'fill-surface-content', className),
             }
       );
@@ -215,7 +224,14 @@
 
   $: if (renderContext === 'canvas') {
     // Redraw when props change
-    value && $tweened_x && $tweened_y && fillKey && strokeKey && strokeWidth && className;
+    value &&
+      $tweened_x &&
+      $tweened_y &&
+      fillKey &&
+      strokeKey &&
+      strokeWidth &&
+      opacity &&
+      className;
     canvasContext.invalidate();
   }
 
@@ -246,6 +262,7 @@
         fill-opacity={fillOpacity}
         {stroke}
         stroke-width={strokeWidth}
+        {opacity}
         class={cls(fill === undefined && 'fill-surface-content', className)}
       >
         {#each wordsByLines as line, index}

@@ -81,7 +81,7 @@
 </div>
 
 <Preview {data}>
-  <div class="h-[500px] p-4 border rounded overflow-hidden">
+  <div class="h-[500px] p-4 border rounded-sm overflow-hidden">
     <Chart
       x="x"
       xDomain={[0, 1]}

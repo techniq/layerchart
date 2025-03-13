@@ -38,13 +38,13 @@
       },
       AppBar: {
         classes:
-          'bg-primary text-primary-content shadow-md [text-shadow:1px_1px_2px_theme(colors.primary-700)]',
+          'bg-primary text-primary-content shadow-md [text-shadow:1px_1px_2px_var(--color-primary-700)]',
       },
       NavItem: {
         classes: {
           root: 'text-sm text-surface-content/70 pl-6 py-2 hover:bg-surface-100/70 relative',
           active:
-            'text-primary bg-surface-100 font-medium before:absolute before:bg-primary before:rounded-full before:w-1 before:h-2/3 before:left-[6px] shadow z-10',
+            'text-primary bg-surface-100 font-medium before:absolute before:bg-primary before:rounded-full before:w-1 before:h-2/3 before:left-[6px] shadow-sm z-10',
         },
       },
     },

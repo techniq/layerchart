@@ -59,7 +59,7 @@
   <div class="grid gap-2">
     {#each markerTypes as marker}
       <div>{marker}</div>
-      <div class="h-[100px] p-4 border rounded">
+      <div class="h-[100px] p-4 border rounded-sm">
         <Chart {data} x="x" y="y">
           <Svg>
             <Spline
@@ -101,7 +101,7 @@
   <div class="grid gap-2">
     {#each markerTypes as marker}
       <div>{marker}</div>
-      <div class="h-[100px] p-4 border rounded">
+      <div class="h-[100px] p-4 border rounded-sm">
         <Chart {data} x="x" y="y">
           <Svg>
             <Spline
@@ -121,7 +121,7 @@
 
 <h2>Line</h2>
 
-<div class="grid grid-cols-[60px,60px] gap-2 mb-2">
+<div class="grid grid-cols-[60px_60px] gap-2 mb-2">
   <Field label="Start" let:id>
     <Switch bind:checked={markerStart} {id} size="md" />
   </Field>
@@ -134,7 +134,7 @@
   <div class="grid gap-2">
     {#each markerTypes as marker}
       <div>{marker}</div>
-      <div class="h-[35px] p-4 border rounded">
+      <div class="h-[35px] p-4 border rounded-sm">
         <Chart {data} x="x" y="y" let:width>
           <Svg>
             <Line
@@ -158,7 +158,7 @@
 
 <Preview {data}>
   <div class="grid gap-2">
-    <div class="h-[200px] p-4 border rounded">
+    <div class="h-[200px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y">
         <Svg>
           <Spline
@@ -183,7 +183,7 @@
 <Preview {data}>
   <div class="grid gap-2">
     <div>default (auto)</div>
-    <div class="h-[200px] p-4 border rounded">
+    <div class="h-[200px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y">
         <Svg>
           <Spline
@@ -196,7 +196,7 @@
     </div>
 
     <div>0</div>
-    <div class="h-[200px] p-4 border rounded">
+    <div class="h-[200px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y">
         <Svg>
           <Spline
@@ -209,7 +209,7 @@
     </div>
 
     <div>90</div>
-    <div class="h-[200px] p-4 border rounded">
+    <div class="h-[200px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y">
         <Svg>
           <Spline

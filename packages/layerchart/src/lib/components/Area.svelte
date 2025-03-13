@@ -61,6 +61,7 @@
   export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
+  export let opacity: number | undefined = undefined;
 
   let className: string | undefined = undefined;
   export { className as class };
@@ -166,7 +167,7 @@
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
-            styles: { fill, fillOpacity, stroke, strokeWidth },
+            styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
             classes: className,
           }
     );
@@ -178,7 +179,7 @@
 
   $: if (renderContext === 'canvas') {
     // Redraw when props change
-    fillKey && fillOpacity && strokeKey && strokeWidth && className;
+    fillKey && fillOpacity && strokeKey && strokeWidth && opacity && className;
     canvasContext.invalidate();
   }
 
@@ -228,6 +229,7 @@
     fill-opacity={fillOpacity}
     {stroke}
     stroke-width={strokeWidth}
+    {opacity}
     {...$$restProps}
     class={cls('path-area', className)}
     on:click={onclick}

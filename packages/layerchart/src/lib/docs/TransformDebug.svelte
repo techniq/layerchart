@@ -8,7 +8,9 @@
   const { translate, scale } = transform;
 </script>
 
-<div class={cls('bg-surface-300/50 rounded m-1 backdrop-blur p-2 tabular-nums', $$props.class)}>
+<div
+  class={cls('bg-surface-300/50 rounded-sm m-1 backdrop-blur-sm p-2 tabular-nums', $$props.class)}
+>
   <div class="grid gap-2 text-xs">
     <div><span class="opacity-50">scale:</span> {format($scale, 'decimal')}</div>
 

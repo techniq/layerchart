@@ -26,7 +26,7 @@
 <h2>Basic</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       {data}
       x="date"
@@ -53,7 +53,7 @@
 <h2>With Tooltip and Highlight</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       {data}
       x="date"
@@ -93,7 +93,7 @@
 <h2>With Labels</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
       {data}
       x="date"

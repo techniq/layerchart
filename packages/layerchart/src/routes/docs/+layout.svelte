@@ -74,7 +74,7 @@
 </script>
 
 <div
-  class="[@media(min-height:900px)]:sticky top-[var(--headerHeight)] z-[60] bg-surface-200/90 backdrop-blur px-5 py-4 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)calc(100%-4px),rgba(0,0,0,0))]"
+  class="[@media(min-height:900px)]:sticky top-[var(--headerHeight)] z-60 bg-surface-200/90 backdrop-blur-sm px-5 py-4 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)calc(100%-4px),rgba(0,0,0,0))]"
 >
   {#if title}
     <div>
@@ -95,7 +95,7 @@
       {#if status}
         <span
           class={cls(
-            'text-sm  px-2 rounded',
+            'text-sm  px-2 rounded-sm',
             status === 'beta' && 'bg-yellow-500/20 text-yellow-800',
             status === 'deprecated' && 'bg-red-500/20 text-red-900'
           )}
@@ -251,7 +251,7 @@
 
     {#if showTableOfContents && $xlScreen}
       <div
-        class="w-[224px] sticky top-[calc(var(--headerHeight)+10px)] pr-2 max-h-[calc(100dvh-64px)] overflow-auto z-[60]"
+        class="w-[224px] sticky top-[calc(var(--headerHeight)+10px)] pr-2 max-h-[calc(100dvh-64px)] overflow-auto z-60"
       >
         <div class="text-xs uppercase leading-8 tracking-widest text-surface-content/50">
           On this page

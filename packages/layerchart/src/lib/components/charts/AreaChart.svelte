@@ -68,7 +68,7 @@
     data?: TData[];
     color?: string;
     props?: Partial<ComponentProps<Area>>;
-  }[] = [{ key: 'default', value: y, color: 'hsl(var(--color-primary))' }];
+  }[] = [{ key: 'default', value: y, color: 'var(--color-primary)' }];
   $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
 
   /** Determine how to layout series.  Overlap (default) or stack */

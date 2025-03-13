@@ -17,9 +17,9 @@
   const states = feature(data.us.geojson, data.us.geojson.objects.states);
 
   const groupColor = scaleOrdinal([
-    'hsl(var(--color-info))',
-    'hsl(var(--color-warning))',
-    'hsl(var(--color-danger))',
+    'var(--color-info)',
+    'var(--color-warning)',
+    'var(--color-danger)',
   ]);
 </script>
 
@@ -32,7 +32,7 @@
 <h2>Scatter</h2>
 
 <Preview data={data.groupData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={data.groupData}
       x="x"

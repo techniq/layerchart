@@ -42,7 +42,7 @@
 </div>
 
 <Preview {data}>
-  <div class="h-[500px] aspect-square p-4 border rounded relative overflow-hidden">
+  <div class="h-[500px] aspect-square p-4 border rounded-sm relative overflow-hidden">
     <Chart
       {data}
       x="x"
@@ -79,7 +79,7 @@
 <h2>Pan/Zoom SVG image</h2>
 
 <Preview>
-  <div class="h-[500px] p-4 border rounded relative overflow-hidden">
+  <div class="h-[500px] p-4 border rounded-sm relative overflow-hidden">
     <Chart
       transform={{
         mode: 'canvas',
@@ -102,7 +102,7 @@
 <h2>Pan/Zoom HTML image</h2>
 
 <Preview>
-  <div class="h-[500px] p-4 border rounded relative overflow-hidden">
+  <div class="h-[500px] p-4 border rounded-sm relative overflow-hidden">
     <Chart
       transform={{
         mode: 'canvas',

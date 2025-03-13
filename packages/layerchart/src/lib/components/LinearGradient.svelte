@@ -29,6 +29,9 @@
   /** Define the coordinate system for attributes (i.e. gradientUnits) */
   export let units: 'objectBoundingBox' | 'userSpaceOnUse' = 'objectBoundingBox';
 
+  let className: string | undefined = undefined;
+  export { className as class };
+
   const { width, height, padding } = chartContext();
 
   const renderContext = getRenderContext();
@@ -42,13 +45,13 @@
       if (Array.isArray(stop)) {
         const { fill } = getComputedStyles(ctx.canvas, {
           styles: { fill: stop[1] },
-          classes: $$props.class,
+          classes: className,
         });
         return { offset: parsePercent(stop[0]), color: fill };
       } else {
         const { fill } = getComputedStyles(ctx.canvas, {
           styles: { fill: stop },
-          classes: $$props.class,
+          classes: className,
         });
         return { offset: i / (stops.length - 1), color: fill };
       }
@@ -68,8 +71,7 @@
   }
 
   $: if (renderContext === 'canvas') {
-    // Redraw when props changes (TODO: styles, class, etc)
-    x1 && y1 && x2 && y2 && stops;
+    x1 && y1 && x2 && y2 && stops && className;
     canvasContext.invalidate();
   }
 
@@ -103,9 +105,13 @@
         {#if stops}
           {#each stops as stop, i}
             {#if Array.isArray(stop)}
-              <stop offset={stop[0]} stop-color={stop[1]} />
+              <stop offset={stop[0]} stop-color={stop[1]} class={className} />
             {:else}
-              <stop offset="{i * (100 / (stops.length - 1))}%" stop-color={stop} />
+              <stop
+                offset="{i * (100 / (stops.length - 1))}%"
+                stop-color={stop}
+                class={className}
+              />
             {/if}
           {/each}
         {/if}

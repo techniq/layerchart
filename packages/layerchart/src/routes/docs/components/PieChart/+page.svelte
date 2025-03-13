@@ -16,10 +16,10 @@
       return {
         ...d,
         color: [
-          'hsl(var(--color-danger))',
-          'hsl(var(--color-warning))',
-          'hsl(var(--color-success))',
-          'hsl(var(--color-info))',
+          'var(--color-danger)',
+          'var(--color-warning)',
+          'var(--color-success)',
+          'var(--color-info)',
         ][i],
       };
     }) ?? [];
@@ -52,7 +52,7 @@
 <h2>Basic</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart {data} key="fruit" value="value" {renderContext} {debug} />
   </div>
 </Preview>
@@ -60,7 +60,7 @@
 <h2>ontooltipclick</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       {data}
       key="fruit"
@@ -78,7 +78,7 @@
 <h2>Outer radius (fixed)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart {data} key="fruit" value="value" outerRadius={100} {renderContext} {debug} />
   </div>
 </Preview>
@@ -86,7 +86,7 @@
 <h2>Outer radius (offset)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart {data} key="fruit" value="value" outerRadius={-20} {renderContext} {debug} />
   </div>
 </Preview>
@@ -94,7 +94,7 @@
 <h2>Donut (innerRadius)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       {data}
       key="fruit"
@@ -111,7 +111,7 @@
 <h2>Donut with inner text</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       {data}
       key="fruit"
@@ -145,7 +145,7 @@
 <h2>Arc (range)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] border rounded resize overflow-auto">
+  <div class="h-[300px] border rounded-sm resize overflow-auto">
     <PieChart
       {data}
       key="fruit"
@@ -165,7 +165,7 @@
 <h2>Single value</h2>
 
 <Preview data={[{ key: 'Example', value: 70 }]}>
-  <div class="h-[200px] p-4 border rounded resize overflow-auto">
+  <div class="h-[200px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       data={[{ key: 'Example', value: 70 }]}
       key="key"
@@ -183,7 +183,7 @@
 <h2>Single value gradient with text</h2>
 
 <Preview {data}>
-  <div class="h-[160px] p-4 border rounded resize overflow-auto">
+  <div class="h-[160px] p-4 border rounded-sm resize overflow-auto">
     <PieChart {renderContext} {debug}>
       <svelte:fragment slot="marks">
         <LinearGradient class="from-secondary to-primary" let:gradient>
@@ -217,7 +217,7 @@
 <h2>Single value (arc) with custom color</h2>
 
 <Preview data={[{ key: 'Example', value: 70 }]}>
-  <div class="h-[120px] p-4 border rounded resize overflow-auto">
+  <div class="h-[120px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       data={[{ key: 'Example', value: 70 }]}
       key="key"
@@ -227,7 +227,7 @@
       outerRadius={80}
       innerRadius={-20}
       cornerRadius={10}
-      cRange={['hsl(var(--color-success))']}
+      cRange={['var(--color-success)']}
       props={{
         group: { y: 45 },
       }}
@@ -240,7 +240,7 @@
 <h2>Series data</h2>
 
 <Preview data={dataByYear}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       key="fruit"
       value="value"
@@ -258,7 +258,7 @@
 <h2>Series data (individual tracks)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       key="fruit"
       value="value"
@@ -275,7 +275,7 @@
 <h2>Series data (arc)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       key="fruit"
       value="value"
@@ -294,14 +294,14 @@
 <h2>Series data (track color)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       key="fruit"
       value="value"
       series={data?.map((d) => ({ key: d.fruit, data: [d] }))}
       props={{
         arc: {
-          track: { fill: 'hsl(var(--color-surface-content) / 10%)' },
+          track: { fill: 'var(--color-surface-content)', fillOpacity: 0.1 },
         },
       }}
       outerRadius={-25}
@@ -316,7 +316,7 @@
 <h2>Series data (individual tracks, max value, and color)</h2>
 
 <Preview data={exerciseData}>
-  <div class="h-[200px] p-4 border rounded resize overflow-auto">
+  <div class="h-[200px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       key="key"
       value="value"
@@ -340,7 +340,7 @@
 <h2>Series props</h2>
 
 <Preview data={dataByYear}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       key="fruit"
       value="value"
@@ -357,7 +357,7 @@
 <h2>Series data (arc click)</h2>
 
 <Preview data={dataByYear}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       key="fruit"
       value="value"
@@ -379,7 +379,7 @@
 <h2>Inner component props (Arc class)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       {data}
       key="fruit"
@@ -394,7 +394,7 @@
 <h2>Legend</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart {data} key="fruit" value="value" legend {renderContext} {debug} />
   </div>
 </Preview>
@@ -402,7 +402,7 @@
 <h2>Legend (placement with orientation)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       {data}
       key="fruit"
@@ -417,7 +417,7 @@
 <h2>Legend (custom label)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       {data}
       key="fruit"
@@ -444,16 +444,16 @@
 <h2>Customize colors (CSS variables)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       {data}
       key="fruit"
       value="value"
       cRange={[
-        'hsl(var(--color-success))',
-        'hsl(var(--color-warning))',
-        'hsl(var(--color-danger))',
-        'hsl(var(--color-info))',
+        'var(--color-success)',
+        'var(--color-warning)',
+        'var(--color-danger)',
+        'var(--color-info)',
       ]}
       {renderContext}
       {debug}
@@ -464,7 +464,7 @@
 <h2>Customize colors (scheme)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart {data} key="fruit" value="value" cRange={schemeTableau10} {renderContext} {debug} />
   </div>
 </Preview>
@@ -472,7 +472,7 @@
 <h2>Customize colors (interpolator)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       {data}
       key="fruit"
@@ -487,7 +487,7 @@
 <h2>Customize colors (data prop)</h2>
 
 <Preview data={dataWithColor}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart data={dataWithColor} key="fruit" value="value" c="color" {renderContext} {debug} />
   </div>
 </Preview>
@@ -495,7 +495,7 @@
 <h2>Legend with padding</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       {data}
       key="fruit"
@@ -511,7 +511,7 @@
 <h2>Placement (left)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       {data}
       key="fruit"
@@ -527,7 +527,7 @@
 <h2>Placement (right)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       {data}
       key="fruit"
@@ -543,7 +543,7 @@
 <h2>Custom placement</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart
       {data}
       key="fruit"
@@ -560,7 +560,7 @@
 <!-- <h2>Centroid labels</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded resize overflow-auto">
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <PieChart {data} key="fruit" value="value" keys="centroid" {renderContext} {debug} />
   </div>
 </Preview> -->

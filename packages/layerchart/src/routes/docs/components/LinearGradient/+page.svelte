@@ -8,7 +8,7 @@
 <h2>Direction with custom colors</h2>
 
 <Preview>
-  <div class="h-[334px] p-4 border rounded">
+  <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
       <Svg>
         <LinearGradient id="gradient-1" stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']} />
@@ -40,7 +40,7 @@
 <h2>Tailwind colors</h2>
 
 <Preview>
-  <div class="h-[334px] p-4 border rounded">
+  <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
       <Svg>
         <LinearGradient id="tw-1" class="from-pink-500 to-yellow-500" vertical />
@@ -63,7 +63,7 @@
 <h2>units <small>`objectBoundingBox` (default) vs `userSpaceOnUse`</small></h2>
 
 <Preview>
-  <div class="h-[334px] p-4 border rounded">
+  <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
       <Svg>
         <LinearGradient class="from-green-500 to-blue-500" units="objectBoundingBox" let:gradient>

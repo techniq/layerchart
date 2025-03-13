@@ -46,7 +46,7 @@
     {#key chartProps}
       {#if example === 'single'}
         <Preview data={data.chartData.cpu[0]}>
-          <div class="h-[500px] p-4 border rounded">
+          <div class="h-[500px] p-4 border rounded-sm">
             <LineChart
               data={data.chartData.cpu}
               x="x"
@@ -60,14 +60,14 @@
         </Preview>
       {:else if example === 'series'}
         <Preview data={data.chartData.cpu[0]}>
-          <div class="h-[500px] p-4 border rounded">
+          <div class="h-[500px] p-4 border rounded-sm">
             <LineChart
               x="x"
               y="y"
               series={[
-                { key: 'cpu', data: data.chartData.cpu, color: 'hsl(var(--color-danger))' },
-                { key: 'ram', data: data.chartData.ram, color: 'hsl(var(--color-warning))' },
-                { key: 'tcp', data: data.chartData.tcp, color: 'hsl(var(--color-success))' },
+                { key: 'cpu', data: data.chartData.cpu, color: 'var(--color-danger)' },
+                { key: 'ram', data: data.chartData.ram, color: 'var(--color-warning)' },
+                { key: 'tcp', data: data.chartData.tcp, color: 'var(--color-success)' },
               ]}
               props={chartProps}
               brush

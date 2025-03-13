@@ -34,6 +34,7 @@
   export let fillOpacity: number | undefined = undefined;
   export let stroke: string | undefined = undefined;
   export let strokeWidth: number | undefined = undefined;
+  export let opacity: number | undefined = undefined;
 
   let className: ClassValue | undefined = undefined;
   export { className as class };
@@ -74,7 +75,7 @@
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
-            styles: { fill, fillOpacity, stroke, strokeWidth },
+            styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
             classes: className,
           }
     );
@@ -93,6 +94,7 @@
       fillKey &&
       strokeKey &&
       strokeWidth &&
+      opacity &&
       className;
     canvasContext.invalidate();
   }
@@ -133,6 +135,7 @@
     fill-opacity={fillOpacity}
     {stroke}
     stroke-width={strokeWidth}
+    {opacity}
     class={cls(fill == null && 'fill-surface-content', className)}
     {...$$restProps}
     on:click={onclick}

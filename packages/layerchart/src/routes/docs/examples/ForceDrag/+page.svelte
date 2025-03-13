@@ -50,7 +50,7 @@
 </Field>
 
 <Preview data={nodes}>
-  <div class="h-[600px] p-4 border rounded overflow-hidden">
+  <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
     <Chart data={nodes} let:width let:height let:tooltip>
       <Svg>
         <ForceSimulation

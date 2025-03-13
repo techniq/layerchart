@@ -216,7 +216,7 @@
   >
     <div
       class={cls(
-        variant !== 'none' && ['text-sm py-1 px-2 h-full rounded elevation-1'],
+        variant !== 'none' && ['text-sm py-1 px-2 h-full rounded-sm elevation-1'],
         {
           default: [
             'bg-surface-100/90 dark:bg-surface-300/90 backdrop-filter backdrop-blur-[2px] text-surface-content',

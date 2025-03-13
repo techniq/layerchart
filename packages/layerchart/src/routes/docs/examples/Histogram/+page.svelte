@@ -54,7 +54,7 @@
 <h2>Vertical</h2>
 
 <Preview data={olympiansBins}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={olympiansBins}
       x="x0"
@@ -89,7 +89,7 @@
 <h2>Horizontal</h2>
 
 <Preview data={olympiansBins}>
-  <div class="p-4 border rounded" style:height="{16 + 24 + olympiansBins.length * 20}px">
+  <div class="p-4 border rounded-sm" style:height="{16 + 24 + olympiansBins.length * 20}px">
     <BarChart
       data={olympiansBins}
       x="length"
@@ -182,7 +182,7 @@
 <h2>Random distribution</h2>
 
 <Preview data={randomBins}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={randomBins}
       x="x0"
@@ -231,7 +231,7 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <BarChart
         {data}
         x="x0"
@@ -302,7 +302,7 @@
   </div>
 
   <Preview {data}>
-    <div class="h-[300px] p-4 border rounded">
+    <div class="h-[300px] p-4 border rounded-sm">
       <BarChart
         {data}
         x="x0"

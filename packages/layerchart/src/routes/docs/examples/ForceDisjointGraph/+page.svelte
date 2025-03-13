@@ -24,7 +24,7 @@
 <h1>Examples</h1>
 
 <Preview data={data.miserables}>
-  <div class="h-[680px] p-4 border rounded">
+  <div class="h-[680px] p-4 border rounded-sm">
     <Chart data={nodes}>
       <Svg center>
         <ForceSimulation

@@ -110,7 +110,7 @@
 
   <Preview data={selectedGraph}>
     <div class="flex gap-2">
-      <div class="flex-1 h-[700px] p-4 border rounded overflow-hidden">
+      <div class="flex-1 h-[700px] p-4 border rounded-sm overflow-hidden">
         <Chart
           data={selectedGraph}
           transform={{
@@ -190,7 +190,7 @@
 
   <Preview data={data.basic}>
     <div class="flex gap-2">
-      <div class="flex-1 h-[500px] p-4 border rounded overflow-hidden">
+      <div class="flex-1 h-[500px] p-4 border rounded-sm overflow-hidden">
         <Chart
           data={data.basic}
           transform={{
@@ -272,7 +272,7 @@
 
   <Preview data={data.tcpState}>
     <div class="flex gap-2">
-      <div class="flex-1 h-[700px] p-4 border rounded overflow-hidden">
+      <div class="flex-1 h-[700px] p-4 border rounded-sm overflow-hidden">
         <Chart
           data={data.tcpState}
           transform={{
@@ -379,7 +379,7 @@
 
   <Preview data={data.softwareUserFlow}>
     <div class="flex gap-2">
-      <div class="flex-1 h-[700px] p-4 border rounded overflow-hidden">
+      <div class="flex-1 h-[700px] p-4 border rounded-sm overflow-hidden">
         <Chart
           data={data.softwareUserFlow}
           transform={{
@@ -485,7 +485,7 @@
 
   <Preview data={data.cluster}>
     <div class="flex gap-2">
-      <div class="flex-1 h-[500px] p-4 border rounded overflow-hidden">
+      <div class="flex-1 h-[500px] p-4 border rounded-sm overflow-hidden">
         <Chart
           data={data.cluster}
           transform={{
