@@ -968,6 +968,25 @@
   $effect(() => {
     isMounted = true;
   });
+
+  $effect(() => {
+    if (box && debug === true && (ssr === true || typeof window !== 'undefined')) {
+      printDebug({
+        data,
+        flatData: typeof flatData !== 'undefined' ? flatData : null,
+        boundingBox: box,
+        activeGetters,
+        x: xProp,
+        y: yProp,
+        z: zProp,
+        r: rProp,
+        xScale,
+        yScale,
+        zScale,
+        rScale,
+      });
+    }
+  });
 </script>
 
 {#if ssr === true || typeof window !== 'undefined'}
