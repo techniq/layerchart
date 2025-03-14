@@ -23,7 +23,9 @@
     createScale,
     getRange,
   } from '$lib/utils/layout.js';
-  import type { Snippet } from 'svelte';
+  import type { ComponentProps, Snippet } from 'svelte';
+  import GeoContext from './GeoContext.svelte';
+  import TooltipContext from './tooltip/TooltipContext.svelte';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -559,14 +561,21 @@
 
     children?: Snippet<[{ context: ChartContext<T> }]>;
 
-    /** Props passed to GeoContext */
-    // geo?: typeof geo;
+    /**
+     * Props passed to GeoContext
+     */
+    geo?: Partial<ComponentProps<typeof GeoContext>>;
 
-    // /** Exposed via bind: to support `bind:geoProjection` for external access */
-    // geoProjection?: typeof geoProjection;
+    /**
+     * Exposed via `bind:` to support `bind:geoProjection`
+     * for external access.
+     */
+    geoProjection?: ComponentProps<typeof GeoContext>['geo'];
 
-    // /** Props passed to TooltipContext */
-    // tooltip?: typeof tooltip;
+    /**
+     * Props passed to TooltipContext
+     */
+    tooltip?: Partial<ComponentProps<typeof TooltipContext>> | boolean;
 
     // /** Exposed via bind: to support `bind:tooltipContext` for external access (ex. `tooltipContext.data) */
     // tooltipContext?: typeof tooltipContext;
@@ -983,7 +992,7 @@
 
   $effect(() => {
     if (box && debug === true && (ssr === true || typeof window !== 'undefined')) {
-      printDebug({
+      logDebug({
         data,
         flatData: typeof flatData !== 'undefined' ? flatData : null,
         boundingBox: box,

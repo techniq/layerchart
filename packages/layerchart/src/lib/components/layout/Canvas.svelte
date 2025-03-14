@@ -43,7 +43,7 @@
 
   import { setRenderContext } from '../Chart.svelte';
   import { chartContext } from '../ChartContext.svelte';
-  import { transformContext } from '../TransformContext.svelte';
+  import { getTransformContext } from '../TransformContext.svelte';
   import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
 
@@ -95,7 +95,7 @@
   let pendingInvalidation = false;
   let frameId: number | undefined;
 
-  const { mode, scale, translate, dragging, moving } = transformContext();
+  const { mode, scale, translate, dragging, moving } = getTransformContext();
 
   /**
    * HitCanvas

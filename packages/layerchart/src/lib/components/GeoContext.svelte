@@ -1,8 +1,9 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   import { type GeoPermissibleObjects, type GeoProjection } from 'd3-geo';
-  import { chartContext } from './ChartContext.svelte';
-  import { transformContext } from './TransformContext.svelte';
+  import { getTransformContext } from './TransformContext.svelte';
   import { Context } from 'runed';
+  import { getChartContext } from './Chart-Next.svelte';
+  import type { Snippet } from 'svelte';
 
   /**
    * Access or set the current GeoContext.
@@ -55,6 +56,8 @@
      * @bindable
      */
     geo?: GeoProjection;
+
+    children: Snippet<[{ projection: GeoProjection | undefined }]>;
   };
 </script>
 
@@ -73,24 +76,20 @@
     reflectX,
     reflectY,
     geo = $bindable(),
+    children,
   }: GeoContextProps = $props();
 
-  $effect.pre(() => {
-    geo = projection?.();
-  });
-
-  const { width, height } = chartContext();
+  const ctx = getChartContext();
+  const transformCtx = getTransformContext();
 
   setGeoContext(geo);
 
-  const { scale: transformScale, translate: transformTranslate } = transformContext();
+  const fitSizeRange = $derived(
+    fixedAspectRatio ? [100, 100 / fixedAspectRatio] : [ctx.width, ctx.height]
+  ) as [number, number];
 
-  $: fitSizeRange = (fixedAspectRatio ? [100, 100 / fixedAspectRatio] : [$width, $height]) as [
-    number,
-    number,
-  ];
-
-  $: if (projection) {
+  $effect(() => {
+    if (!projection) return;
     const _projection = projection();
 
     if (fitGeojson && 'fitSize' in _projection) {
@@ -103,7 +102,7 @@
       }
 
       if (applyTransform.includes('scale')) {
-        _projection.scale($transformScale);
+        _projection.scale(transformCtx.scale);
       }
     }
 
@@ -114,8 +113,8 @@
 
       if (applyTransform.includes('rotate')) {
         _projection.rotate([
-          $transformTranslate.x, // yaw
-          $transformTranslate.y, // pitch
+          transformCtx.translate.x, // yaw
+          transformCtx.translate.y, // pitch
           // TODO: `roll` from `transformContext`?
         ]);
       }
@@ -127,7 +126,7 @@
       }
 
       if (applyTransform.includes('translate')) {
-        _projection.translate([$transformTranslate.x, $transformTranslate.y]);
+        _projection.translate([transformCtx.translate.x, transformCtx.translate.y]);
       }
     }
 
@@ -151,8 +150,12 @@
       _projection.clipExtent(clipExtent);
     }
 
-    geo.set(_projection);
-  }
+    geo = _projection;
+  });
 </script>
 
-<slot projection={$geo} />
+{@render children({
+  get projection() {
+    return geo;
+  },
+})}

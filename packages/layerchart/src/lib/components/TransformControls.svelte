@@ -14,7 +14,7 @@
     mdiCancel,
   } from '@mdi/js';
 
-  import { transformContext } from './TransformContext.svelte';
+  import { getTransformContext } from './TransformContext.svelte';
 
   type Placement =
     | 'top-left'
@@ -59,7 +59,7 @@
     },
   } as const;
 
-  const transform = transformContext();
+  const transform = getTransformContext();
   const scrollMode = transform.scrollMode;
 </script>
 

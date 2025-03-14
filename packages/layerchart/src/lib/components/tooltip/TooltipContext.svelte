@@ -43,7 +43,6 @@
 </script>
 
 <script lang="ts">
-  import { raise } from 'layercake';
   import { writable } from 'svelte/store';
   import { bisector, max, min } from 'd3-array';
   import { quadtree as d3Quadtree, type Quadtree } from 'd3-quadtree';
@@ -58,6 +57,7 @@
   import { isScaleBand, scaleInvert } from '$lib/utils/scales.js';
   import { cartesianToPolar } from '$lib/utils/math.js';
   import { quadtreeRects } from '$lib/utils/quadtree.js';
+  import { raise } from 'layerchart/utils/layout.js';
 
   const {
     flatData,
@@ -80,7 +80,7 @@
   /*
 		TODO: Defaults to consider (if possible to detect scale type, which might not be possible)
 		- scaleTime / scaleLinear: bisect
-		- scaleTime / scaleLinear (multi/stack): bisect 
+		- scaleTime / scaleLinear (multi/stack): bisect
 		- scaleTime / scaleBand: bisect (or band)
 		- scaleTime (multi) / scaleBand: bounds (or possible band if not overlapping)
 		- scaleBand, scaleLinear: band (or bounds)

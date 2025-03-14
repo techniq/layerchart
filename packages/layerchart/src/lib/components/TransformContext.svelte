@@ -54,11 +54,11 @@
 
   const TransformContext = new Context<TransformContextValue>('TransformContext');
 
-  export function transformContext() {
+  export function getTransformContext() {
     return TransformContext.getOr(defaultContext);
   }
 
-  function setTransformContext(transform: TransformContextValue) {
+  export function setTransformContext(transform: TransformContextValue) {
     return TransformContext.set(transform);
   }
 
