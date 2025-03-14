@@ -1,17 +1,15 @@
 <script lang="ts">
-  import { tick, type ComponentProps, type Snippet } from 'svelte';
+  import { tick } from 'svelte';
   import { cls } from '@layerstack/tailwind';
   import { uniqueId } from '@layerstack/utils';
   import { objectId } from '@layerstack/utils/object';
   import { merge } from 'lodash-es';
   import { motionState, type SpringOptions, type TweenedOptions } from '$lib/stores/motionStore.js';
-  import Marker from './Marker.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { getRenderContext } from './Chart.svelte';
   import type { SVGAttributes } from 'svelte/elements';
-
-  type MarkerOptions = ComponentProps<typeof Marker>['type'] | ComponentProps<typeof Marker>;
+  import MarkerWrapper, { type MarkerOptions } from './MarkerWrapper.svelte';
 
   let {
     x1,
@@ -27,9 +25,7 @@
     opacity,
     fill,
     stroke,
-    markerOptions,
-    markerStartOptions,
-    markerEndOptions,
+    marker,
     markerEnd,
     markerStart,
     spring,
@@ -54,19 +50,17 @@
     onpointermove?: (e: PointerEvent) => void;
     onpointerleave?: (e: PointerEvent) => void;
     /** Marker to attach to start and end points of path */
-    markerOptions?: MarkerOptions;
+    marker?: MarkerOptions;
     /** Marker to attach to start point of path */
-    markerStartOptions?: MarkerOptions;
+    markerStart?: MarkerOptions;
     /** Marker to attach to end point of path */
-    markerEndOptions?: MarkerOptions;
-    markerStart?: Snippet<[{ id: string }]>;
-    markerEnd?: Snippet<[{ id: string }]>;
+    markerEnd?: MarkerOptions;
     spring?: boolean | SpringOptions;
     tweened?: boolean | TweenedOptions;
   } & SVGAttributes<SVGLineElement> = $props();
 
-  const markerStartId = $derived(markerStartOptions || markerStart ? uniqueId('marker-') : '');
-  const markerEndId = $derived(markerEndOptions || markerEnd ? uniqueId('marker-') : '');
+  const markerStartId = $derived(markerStart || markerStart ? uniqueId('marker-') : '');
+  const markerEndId = $derived(markerEnd || markerEnd ? uniqueId('marker-') : '');
 
   const tweenedX1 = motionState(initialX1, { spring, tweened });
   const tweenedY1 = motionState(initialY1, { spring, tweened });
@@ -145,22 +139,6 @@
     class={cls(stroke === undefined && 'stroke-surface-content', className)}
     {...restProps}
   />
-  {#if markerStart}
-    {@render markerStart({ id: markerStartId })}
-  {:else if markerStartOptions}
-    <Marker
-      id={markerStartId}
-      type={typeof markerStartOptions === 'string' ? markerStartOptions : undefined}
-      {...typeof markerStartOptions === 'object' ? markerStartOptions : null}
-    />
-  {/if}
-  {#if markerEnd}
-    {@render markerEnd({ id: markerEndId })}
-  {:else if markerEndOptions}
-    <Marker
-      id={markerEndId}
-      type={typeof markerEndOptions === 'string' ? markerEndOptions : undefined}
-      {...typeof markerEndOptions === 'object' ? markerEndOptions : null}
-    />
-  {/if}
+  <MarkerWrapper id={markerStartId} marker={markerStart ?? marker} />
+  <MarkerWrapper id={markerEndId} marker={markerEnd ?? marker} />
 {/if}
