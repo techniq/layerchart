@@ -911,16 +911,16 @@
       return extents;
     },
     get xDomain() {
-      return xDomain;
+      return xDomainPossiblyNice;
     },
     get yDomain() {
-      return yDomain;
+      return yDomainPossiblyNIce;
     },
     get zDomain() {
-      return zDomain;
+      return zDomainPossiblyNice;
     },
     get rDomain() {
-      return rDomain;
+      return rDomainPossiblyNice;
     },
     get xRange() {
       return xRange;
