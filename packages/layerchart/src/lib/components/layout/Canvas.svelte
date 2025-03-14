@@ -1,5 +1,88 @@
-<script lang="ts" context="module">
-  import { getContext, setContext } from 'svelte';
+<script lang="ts" module>
+  export type CanvasPropsWithoutHTML = {
+    /**
+     * The `<canvas>` tag. Useful for bindings.
+     *
+     * @bindable
+     */
+    element?: HTMLCanvasElement | null;
+
+    /**
+     * The `<canvas>`'s 2d context. Useful for bindings.
+     *
+     * @bindable
+     */
+    context?: CanvasRenderingContext2D;
+
+    /**
+     * Force the use of a software (instead of hardware accelerated) 2D canvas and can save memory
+     * when calling getImageData() frequently.
+     *
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext#willreadfrequently
+     *
+     * @default false
+     */
+    willReadFrequently?: boolean;
+
+    /**
+     * The layer's z-index.
+     */
+    zIndex?: number;
+
+    /**
+     * Set this to `false` to set `pointer-events: none;` on the entire layer.
+     */
+    pointerEvents?: boolean;
+
+    /**
+     * Text to display if the browser won't render a canvas tag.
+     * You can also set arbitrary HTML via this prop as a snippet.
+     */
+    fallback?: string | Snippet;
+
+    /**
+     * A string passed to the `aria-label` on the `<canvas>` tag.
+     */
+    label?: string;
+
+    /**
+     * A string passed to the `aria-labelledby` on the `<canvas>` tag.
+     */
+    labelledBy?: string;
+
+    /**
+     * A string passed to `aria-describedby` property on the `<canvas>` tag.
+     */
+    describedBy?: string;
+
+    /**
+     * Translate children to center (useful for radial layouts)
+     *
+     * @default false
+     */
+    center?: boolean | 'x' | 'y';
+
+    /**
+     * Ignore TransformContext. Useful to add static elements such as legends.
+     *
+     * @default false
+     */
+    ignoreTransform?: boolean;
+
+    /**
+     * Show hit canvas for debugging
+     *
+     * @default false
+     */
+    debug?: boolean;
+
+    children?: Snippet<
+      [{ element: HTMLCanvasElement; canvasContext: CanvasRenderingContext2D | undefined }]
+    >;
+  };
+
+  export type CanvasProps = CanvasPropsWithoutHTML &
+    Without<HTMLCanvasAttributes, CanvasPropsWithoutHTML>;
 
   type ComponentRender = {
     name: string;
@@ -18,76 +101,66 @@
     };
   };
 
-  export type CanvasContext = {
+  export type CanvasContextValue = {
     /** Register component to render.  Returns method to unregister on component destory */
     register(component: ComponentRender): () => void;
     invalidate(): void;
   };
 
-  export const canvasContextKey = Symbol();
+  const CanvasContext = new Context<CanvasContextValue>('CanvasContext');
 
   export function getCanvasContext() {
-    return getContext<CanvasContext>(canvasContextKey);
+    return CanvasContext.get();
   }
 
-  function setCanvasContext(context: CanvasContext) {
-    setContext(canvasContextKey, context);
+  function setCanvasContext(context: CanvasContextValue) {
+    return CanvasContext.set(context);
   }
 </script>
 
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy, type Snippet, untrack } from 'svelte';
   import { cls } from '@layerstack/tailwind';
   import { Logger, localPoint } from '@layerstack/utils';
   import { darkColorScheme } from '@layerstack/svelte-stores';
 
   import { setRenderContext } from '../Chart.svelte';
-  import { chartContext } from '../ChartContext.svelte';
   import { getTransformContext } from '../TransformContext.svelte';
   import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
+  import { Context } from 'runed';
+  import type { HTMLCanvasAttributes } from 'svelte/elements';
+  import type { Without } from 'layerchart/utils/types.js';
+  import { getChartContext } from '../Chart-Next.svelte';
 
-  const { width, height, containerWidth, containerHeight, padding } = chartContext();
+  let {
+    element = $bindable(null),
+    context = $bindable(),
+    willReadFrequently = false,
+    debug = false,
+    zIndex = 0,
+    pointerEvents = true,
+    fallback,
+    label,
+    labelledBy,
+    describedBy,
+    center = false,
+    ignoreTransform = false,
+    class: className,
+    children,
+    onclick,
+    ondblclick,
+    onpointerenter,
+    onpointermove,
+    onpointerleave,
+    onpointerdown,
+    ontouchmove,
 
-  /** The `<canvas>` tag. Useful for bindings. */
-  export let element: HTMLCanvasElement | undefined = undefined;
+    ...restProps
+  }: CanvasProps = $props();
 
-  /** The `<canvas>`'s 2d context. Useful for bindings. */
-  // @ts-expect-error: set during onMount()
-  export let context: CanvasRenderingContext2D = undefined;
-
-  /** Force the use of a software (instead of hardware accelerated) 2D canvas and can save memory when calling getImageData() frequently.
-   * see: https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext#willreadfrequently */
-  export let willReadFrequently = false;
-
-  /** The layer's z-index. */
-  export let zIndex = undefined;
-
-  /** Set this to `false` to set `pointer-events: none;` on the entire layer. */
-  export let pointerEvents: boolean | undefined = undefined;
-
-  /** Text to display if the browser won't render a canvas tag. You can also set arbitrary HTML via the "fallback" slot but this is fine if you just need text. If you use the "fallback" slot, this prop is ignored. */
-  export let fallback = '';
-
-  /** A string passed to the `aria-label` on the `<canvas>` tag. */
-  export let label: string | undefined = undefined;
-
-  /** A string passed to the `aria-labelledby` on the `<canvas>` tag. */
-  export let labelledBy: string | undefined = undefined;
-
-  /** A string passed to `aria-describedby` property on the `<canvas>` tag. */
-  export let describedBy: string | undefined = undefined;
-
-  /**
-   * Translate children to center (useful for radial layouts)
-   */
-  export let center: boolean | 'x' | 'y' = false;
-
-  /** Ignore TransformContext.  Useful to add static elements such as legends. */
-  export let ignoreTransform = false;
-
-  /** Show hit canvas for debugging */
-  export let debug = false;
+  const ctx = getChartContext();
+  const transformCtx = getTransformContext();
 
   const logger = new Logger('Canvas');
 
@@ -95,16 +168,15 @@
   let pendingInvalidation = false;
   let frameId: number | undefined;
 
-  const { mode, scale, translate, dragging, moving } = getTransformContext();
-
   /**
    * HitCanvas
    */
-  let hitCanvasElement: HTMLCanvasElement | undefined = undefined;
-  let hitCanvasContext: CanvasRenderingContext2D | undefined = undefined;
+  let hitCanvasElement: HTMLCanvasElement | undefined = $state();
+  let hitCanvasContext: CanvasRenderingContext2D | undefined = $state();
   let colorGenerator = rgbColorGenerator();
-  let activeCanvas = false;
-  let lastActiveComponent: ComponentRender | undefined | null;
+  let activeCanvas = $state(false);
+  let lastActiveComponent: ComponentRender | undefined | null = $state();
+
   const componentByColor = new Map<string, ComponentRender>();
 
   function getPointerComponent(e: PointerEvent | MouseEvent | TouchEvent) {
@@ -172,47 +244,44 @@
 
     return () => {
       observer.disconnect();
+      if (frameId) {
+        cancelAnimationFrame(frameId);
+      }
     };
-  });
-
-  onDestroy(() => {
-    if (frameId) {
-      cancelAnimationFrame(frameId);
-    }
   });
 
   function update() {
     if (!context) return;
     // TODO: only `scaleCanvas()` when containerWidth/Height change (not all invalidations)
     // scaleCanvas in `update()` to fix `requestAnimationFrame()` timing causing flash of blank canvas
-    scaleCanvas(context, $containerWidth, $containerHeight);
+    scaleCanvas(context, ctx.containerWidth, ctx.containerHeight);
 
-    context.clearRect(0, 0, $containerWidth, $containerHeight);
+    context.clearRect(0, 0, ctx.containerWidth, ctx.containerHeight);
 
-    context.translate($padding.left ?? 0, $padding.top ?? 0);
+    context.translate(ctx.padding.left ?? 0, ctx.padding.top ?? 0);
 
     if (center) {
       const newTranslate = {
-        x: center === 'x' || center === true ? $width / 2 : 0,
-        y: center === 'y' || center === true ? $height / 2 : 0,
+        x: center === 'x' || center === true ? ctx.width / 2 : 0,
+        y: center === 'y' || center === true ? ctx.height / 2 : 0,
       };
       context.translate(newTranslate.x, newTranslate.y);
-    } else if (mode === 'canvas' && !ignoreTransform) {
-      context.translate($translate.x, $translate.y);
-      context.scale($scale, $scale);
+    } else if (transformCtx.mode === 'canvas' && !ignoreTransform) {
+      context.translate(transformCtx.translate.x, transformCtx.translate.y);
+      context.scale(transformCtx.scale, transformCtx.scale);
     }
 
     // Sync hit canvas transform with main canvas
     if (hitCanvasContext) {
-      scaleCanvas(hitCanvasContext, $containerWidth, $containerHeight);
-      hitCanvasContext.clearRect(0, 0, $containerWidth, $containerHeight);
+      scaleCanvas(hitCanvasContext, ctx.containerWidth, ctx.containerHeight);
+      hitCanvasContext.clearRect(0, 0, ctx.containerWidth, ctx.containerHeight);
       hitCanvasContext.setTransform(context.getTransform());
 
       // Reset color generator whenever updated so always reusing same colors (and not exhausting)
       colorGenerator = rgbColorGenerator();
     }
 
-    components.forEach((c) => {
+    for (const [_, c] of components) {
       if (c.retainState) {
         // Do not call save/restore canvas draw state (https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/save) (ex. Group ctx.translate() affecting children)
         c.render(context);
@@ -223,11 +292,11 @@
       }
 
       // Delayed rendering using `activeCanvas` can cause a delay for tooltip interactivity for complex canvases (ex. country choropleth) so only ignore while moving/animating programmatically (ex. clicking on countries on Animated Globe)
-      const inactiveMoving = !activeCanvas && $moving;
+      const inactiveMoving = !activeCanvas && transformCtx.moving;
 
       const componentHasEvents = c.events && Object.values(c.events).filter((d) => d).length > 0;
 
-      if (hitCanvasContext && componentHasEvents && !inactiveMoving && !$dragging) {
+      if (hitCanvasContext && componentHasEvents && !inactiveMoving && !transformCtx.dragging) {
         const color = getColorStr(colorGenerator.next().value);
         // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
         const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
@@ -242,12 +311,12 @@
 
         componentByColor.set(color, c);
       }
-    });
+    }
 
     pendingInvalidation = false;
   }
 
-  const canvasContext: CanvasContext = {
+  const canvasContext: CanvasContextValue = {
     register(component) {
       const key = Symbol();
       components.set(key, component);
@@ -266,11 +335,12 @@
     },
   };
 
-  $: {
-    // Redraw when resized or transform dragging changes.  Note: adding `activeCanvas` (pointer enters/exits canvas) causes initial interactivity issues while canvas is rendering and is not needed
-    $containerWidth, $containerHeight && $dragging;
-    canvasContext.invalidate();
-  }
+  $effect.pre(() => {
+    [ctx.containerWidth, ctx.containerHeight, transformCtx.dragging];
+    untrack(() => {
+      canvasContext.invalidate();
+    });
+  });
 
   setCanvasContext(canvasContext);
   setRenderContext('canvas');
@@ -280,34 +350,43 @@
   bind:this={element}
   style:z-index={zIndex}
   class={cls(
-    'layercake-layout-canvas',
+    'layerchart-layout-canvas',
     'absolute top-0 left-0 w-full h-full',
     pointerEvents === false && 'pointer-events-none',
-    $$props.class
+    className
   )}
   aria-label={label}
   aria-labelledby={labelledBy}
   aria-describedby={describedBy}
-  on:click={(e) => {
+  onclick={(e) => {
     const component = getPointerComponent(e);
     component?.events?.click?.(e);
+    onclick?.(e);
   }}
-  on:click
-  on:dblclick={(e) => {
+  ondblclick={(e) => {
     const component = getPointerComponent(e);
     component?.events?.dblclick?.(e);
+    ondblclick?.(e);
   }}
-  on:pointerdown={(e) => {
+  onpointerdown={(e) => {
     const component = getPointerComponent(e);
     component?.events?.pointerdown?.(e);
+    onpointerdown?.(e);
   }}
-  on:pointerenter={onPointerMove}
-  on:pointerenter
-  on:pointermove={onPointerMove}
-  on:pointermove
-  on:pointerleave={onPointerLeave}
-  on:pointerleave
-  on:touchmove={(e) => {
+  onpointerenter={(e) => {
+    onpointerenter?.(e);
+    onPointerMove(e);
+  }}
+  onpointermove={(e) => {
+    onpointermove?.(e);
+    onPointerMove(e);
+  }}
+  onpointerleave={(e) => {
+    onpointerleave?.(e);
+    onPointerLeave(e);
+  }}
+  ontouchmove={(e) => {
+    ontouchmove?.(e);
     // Prevent touch from interfering with pointer if over data
     if (lastActiveComponent) {
       e.preventDefault();
@@ -316,11 +395,15 @@
     const component = getPointerComponent(e);
     component?.events?.touchmove?.(e);
   }}
-  on:touchmove
+  {...restProps}
 >
-  <slot name="fallback">
-    {fallback || ''}
-  </slot>
+  {#if fallback}
+    {#if typeof fallback === 'function'}
+      {@render fallback()}
+    {:else}
+      {fallback}
+    {/if}
+  {/if}
 </canvas>
 
 <!-- Hit canvas used for hidden context -->
@@ -336,4 +419,4 @@
   )}
 ></canvas>
 
-<slot {element} {context}></slot>
+{@render children?.({ element, canvasContext: context })}
