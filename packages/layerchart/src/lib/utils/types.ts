@@ -1,3 +1,5 @@
+import type { AnyScale } from './scales.js';
+
 /**
  * Useful to workaround Svelte 3/4 markup type issues
  * TODO: Remove usage after migrating to Svelte 5
@@ -17,3 +19,42 @@ export function asAny(x: any): any {
  * // Result type will be { a: number; }
  */
 export type Without<T extends object, U extends object> = Omit<T, keyof U>;
+
+export type AxisKey = 'x' | 'y' | 'z' | 'r';
+
+export type Extents = {
+  [K in AxisKey]?: Array<number | string>;
+};
+
+export type Padding = {
+  top?: Number;
+  right?: Number;
+  bottom?: Number;
+  left?: Number;
+};
+
+export type Nice = boolean | number;
+
+export type BaseRange =
+  | number[]
+  | string[]
+  | ((args: { width: number; height: number }) => number[] | string[]);
+
+export type YRangeWithScale =
+  | number[]
+  | string[]
+  | ((args: { yScale: AnyScale; width: number; height: number }) => number[] | string[]);
+
+export type XRangeWithScale =
+  | number[]
+  | string[]
+  | ((args: { xScale: AnyScale; width: number; height: number }) => number[] | string[]);
+
+export type FieldAccessors<T> = {
+  x?: (d: T) => number | string | (number | string)[];
+  y?: (d: T) => number | string | (number | string)[];
+  z?: (d: T) => number | string | (number | string)[];
+  r?: (d: T) => number | string | (number | string)[];
+};
+
+export type PaddingArray = [number, number] | undefined;

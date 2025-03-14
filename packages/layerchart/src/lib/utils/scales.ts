@@ -3,7 +3,7 @@ import { tweened, spring } from 'svelte/motion';
 
 import { type MotionOptions, motionStore } from '$lib/stores/motionStore.js';
 import { scaleBand, type ScaleBand } from 'd3-scale';
-import { unique } from '@layerstack/utils';
+import { unique, type FormatType } from '@layerstack/utils';
 
 export interface AnyScale<Domain = any, Range = any, Input = Domain, Output = any> {
   (value: Input): Output;
@@ -12,10 +12,10 @@ export interface AnyScale<Domain = any, Range = any, Input = Domain, Output = an
   domain(domain: Iterable<Domain>): this;
   range(): Range[];
   range(range: Iterable<Range>): this;
-  bandwidth?: Function;
-  ticks?: Function;
-  tickFormat?: Function;
-  copy(): Function;
+  bandwidth?: () => number;
+  ticks?: (count: number) => any;
+  tickFormat?: FormatType;
+  copy(): this;
 }
 
 export type DomainType =

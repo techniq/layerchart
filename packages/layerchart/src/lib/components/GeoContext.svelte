@@ -1,26 +1,15 @@
 <script lang="ts" context="module">
   import { getContext, setContext } from 'svelte';
   import { writable, type Writable } from 'svelte/store';
-  import {
-    type GeoIdentityTransform,
-    type GeoPermissibleObjects,
-    type GeoProjection,
-  } from 'd3-geo';
-
+  import { type GeoPermissibleObjects, type GeoProjection } from 'd3-geo';
   import { chartContext } from './ChartContext.svelte';
   import { transformContext } from './TransformContext.svelte';
+  import { Context } from 'runed';
 
-  export const geoContextKey = Symbol();
-
-  export type GeoContext = Writable<GeoProjection /* | GeoIdentityTransform*/>;
-
-  export function geoContext() {
-    return getContext<GeoContext>(geoContextKey);
-  }
-
-  function setGeoContext(geo: GeoContext) {
-    setContext(geoContextKey, geo);
-  }
+  /**
+   * Access or set the current GeoContext.
+   */
+  export const GeoContext = new Context<GeoProjection>('GeoContext');
 </script>
 
 <script lang="ts">

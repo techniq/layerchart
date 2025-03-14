@@ -95,3 +95,7 @@ function getPixel(imageData: ImageData, x: number, y: number) {
   var d = imageData.data;
   return [d[i], d[i + 1], d[i + 2], d[i + 3]];
 }
+
+export function toTitleCase(str: string) {
+  return str.replace(/^\w/, (d) => d.toUpperCase());
+}
