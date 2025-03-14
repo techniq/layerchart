@@ -5,7 +5,7 @@
   import { printDebug } from '$lib/utils/debug.js';
   import { filterObject } from '$lib/utils/filter-object.js';
   import type { AnyScale, DomainType } from '$lib/utils/scales.js';
-  import { useDebounce } from 'runed';
+  import { Context, useDebounce } from 'runed';
   import type {
     AxisKey,
     BaseRange,
@@ -23,8 +23,70 @@
     createScale,
     getRange,
   } from '$lib/utils/layout.js';
+  import type { Snippet } from 'svelte';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
+
+  type ContextType<T> = {
+    activeGetters: Record<AxisKey, (d: T) => any>;
+    width: number;
+    height: number;
+    percentRange: boolean;
+    aspectRatio: number;
+    containerWidth: number;
+    containerHeight: number;
+    x: (d: T) => number;
+    y: (d: T) => number;
+    z: (d: T) => number;
+    r: (d: T) => number;
+    data: T;
+    xNice: Nice;
+    yNice: Nice;
+    zNice: Nice;
+    rNice: Nice;
+    xDomainSort: boolean;
+    yDomainSort: boolean;
+    zDomainSort: boolean;
+    rDomainSort: boolean;
+    xReverse: boolean;
+    yReverse: boolean;
+    zReverse: boolean;
+    rReverse: boolean;
+    xPadding: PaddingArray;
+    yPadding: PaddingArray;
+    zPadding: PaddingArray;
+    rPadding: PaddingArray;
+    padding: Padding;
+    flatData: any[];
+    extents: Extents;
+    xDomain: DomainType;
+    yDomain: DomainType;
+    zDomain: DomainType;
+    rDomain: DomainType;
+    xRange: any[] | null;
+    yRange: any[] | null;
+    zRange: any[] | null;
+    rRange: any[] | null;
+    custom: Record<string, any>;
+    xScale: AnyScale;
+    yScale: AnyScale;
+    zScale: AnyScale;
+    rScale: AnyScale;
+    yGet: (d: T) => number;
+    xGet: (d: T) => number;
+    zGet: (d: T) => number;
+    rGet: (d: T) => number;
+  };
+
+  const ChartContext = new Context<ContextType<any>>('ChartContext');
+
+  export function getChartContext<T>(): ContextType<T> {
+    return ChartContext.get();
+  }
+
+  export function setChartContext<T>(context: ContextType<T>): ContextType<T> {
+    return ChartContext.set(context);
+  }
 
   export type ChartPropsWithoutHTML<T> = {
     /**
@@ -483,6 +545,8 @@
      */
     radial?: boolean;
 
+    children?: Snippet<[{ context: ContextType<T> }]>;
+
     /** Props passed to GeoContext */
     // geo?: typeof geo;
 
@@ -572,6 +636,7 @@
     zRange: zRangeProp,
     rRange: rRangeProp,
     custom = {},
+    children,
   }: ChartPropsWithoutHTML<TData> = $props();
 
   const logDebug = useDebounce(printDebug, 200);
@@ -751,58 +816,7 @@
 
   const aspectRatio = $derived(width / height);
 
-  type ContextType = {
-    activeGetters: Record<AxisKey, (d: TData) => any>;
-    width: number;
-    height: number;
-    percentRange: boolean;
-    aspectRatio: number;
-    containerWidth: number;
-    containerHeight: number;
-    x: (d: TData) => number;
-    y: (d: TData) => number;
-    z: (d: TData) => number;
-    r: (d: TData) => number;
-    data: TData;
-    xNice: Nice;
-    yNice: Nice;
-    zNice: Nice;
-    rNice: Nice;
-    xDomainSort: boolean;
-    yDomainSort: boolean;
-    zDomainSort: boolean;
-    rDomainSort: boolean;
-    xReverse: boolean;
-    yReverse: boolean;
-    zReverse: boolean;
-    rReverse: boolean;
-    xPadding: PaddingArray;
-    yPadding: PaddingArray;
-    zPadding: PaddingArray;
-    rPadding: PaddingArray;
-    padding: Padding;
-    flatData: any[];
-    extents: Extents;
-    xDomain: DomainType;
-    yDomain: DomainType;
-    zDomain: DomainType;
-    rDomain: DomainType;
-    xRange: any[] | null;
-    yRange: any[] | null;
-    zRange: any[] | null;
-    rRange: any[] | null;
-    custom: Record<string, any>;
-    xScale: AnyScale;
-    yScale: AnyScale;
-    zScale: AnyScale;
-    rScale: AnyScale;
-    yGet: (d: TData) => number;
-    xGet: (d: TData) => number;
-    zGet: (d: TData) => number;
-    rGet: (d: TData) => number;
-  };
-
-  const myObj: ContextType = {
+  const context: ContextType<TData> = {
     get activeGetters() {
       return activeGetters;
     },
@@ -949,7 +963,37 @@
     },
   };
 
+  setChartContext(context);
+
   $effect(() => {
     isMounted = true;
   });
 </script>
+
+{#if ssr === true || typeof window !== 'undefined'}
+  <div
+    bind:this={ref}
+    class="layerchart-container"
+    style:position
+    style:top={position === 'absolute' ? '0' : null}
+    style:right={position === 'absolute' ? '0' : null}
+    style:bottom={position === 'absolute' ? '0' : null}
+    style:left={position === 'absolute' ? '0' : null}
+    style:pointer-events={pointerEvents === false ? 'none' : null}
+    bind:clientWidth={containerWidth}
+    bind:clientHeight={containerHeight}
+  >
+    {@render children?.({ context })}
+  </div>
+{/if}
+
+<style>
+  .layerchart-container,
+  .layerchart-container :global(*) {
+    box-sizing: border-box;
+  }
+  .layerchart-container {
+    width: 100%;
+    height: 100%;
+  }
+</style>
