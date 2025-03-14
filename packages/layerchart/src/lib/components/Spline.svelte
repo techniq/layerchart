@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { onDestroy, tick, type ComponentProps } from 'svelte';
+  import { onDestroy, tick, type ComponentProps, type Snippet } from 'svelte';
   import { writable } from 'svelte/store';
-  import { tweened as tweenedStore } from 'svelte/motion';
   import { draw as _drawTransition } from 'svelte/transition';
   import { cubicInOut } from 'svelte/easing';
   import { merge } from 'lodash-es';
@@ -19,7 +18,7 @@
   import Group from './Group.svelte';
   import Marker from './Marker.svelte';
 
-  import { motionStore } from '$lib/stores/motionStore.js';
+  import { motionStore, type TweenedOptions } from '$lib/stores/motionStore.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
   import { flattenPathData } from '../utils/path.js';
@@ -38,68 +37,84 @@
     config,
   } = chartContext();
 
-  /** Override data instead of using context */
-  export let data: any = undefined;
+  type MarkerOptions = ComponentProps<typeof Marker>['type'] | ComponentProps<typeof Marker>;
 
-  /** Pass `<path d={...} />` explicitly instead of calculating from data / context */
-  export let pathData: string | undefined | null = undefined;
+  let {
+    data,
+    pathData,
+    x,
+    y,
+    tweened,
+    draw,
+    curve,
+    defined,
+    fill,
+    stroke,
+    strokeWidth,
+    fillOpacity,
+    class: className,
+    markerOptions,
+    markerStartOptions,
+    markerMidOptions,
+    markerEndOptions,
+    markerStart,
+    markerMid,
+    markerEnd,
+    opacity,
+    ...restProps
+  }: {
+    /** Override data instead of using context */
+    data?: any;
+    /** Pass `<path d={...} />` explicitly instead of calculating from data / context */
+    pathData?: string | undefined | null;
+    /** Override `x` accessor from Chart context */
+    x?: Accessor;
+    /** Override `y` accessor from Chart context */
+    y?: Accessor;
+    /** Interpolate path data using d3-interpolate-path.  Works best without `draw` enabled */
+    tweened?: boolean | TweenedOptions;
+    /** Draw path over time.  Works best without `tweened` enabled */
+    draw?: boolean | Parameters<typeof _drawTransition>[1];
+    /**
+     * Curve of spline drawn. Imported via d3-shape.
+     *
+     * @example
+     * import { curveNatural } from 'd3-shape';
+     * <Spline curve={curveNatrual} />
+     *
+     * @type {CurveFactory | CurveFactoryLineOnly | undefined}
+     */
+    curve?: CurveFactory | CurveFactoryLineOnly;
+    defined?: Parameters<Line<any>['defined']>[0];
+    fill?: string;
+    fillOpacity?: number;
+    stroke?: string;
+    strokeWidth?: number;
+    class?: string;
+    onclick?: (e: MouseEvent) => void;
+    onpointerenter?: (e: PointerEvent) => void;
+    onpointermove?: (e: PointerEvent) => void;
+    onpointerleave?: (e: PointerEvent) => void;
+    onpointerdown?: (e: PointerEvent) => void;
+    ontouchmove?: (e: TouchEvent) => void;
+    onpointerover?: (e: PointerEvent) => void;
+    onpointerout?: (e: PointerEvent) => void;
+    markerOptions?: MarkerOptions;
+    markerStartOptions?: MarkerOptions;
+    markerMidOptions?: MarkerOptions;
+    markerEndOptions?: MarkerOptions;
+    /** Marker to attach to start point of path */
+    markerStart?: Snippet<[{ id: string }]>;
+    /** Marker to attach to all mid points of path */
+    markerMid?: Snippet<[{ id: string }]>;
+    /** Marker to attach to end point of path */
+    markerEnd?: Snippet<[{ id: string }]>;
+    opacity?: number | string;
+  } = $props();
 
-  /** Override `x` accessor from Chart context */
-  export let x: Accessor = undefined;
-  /** Override `y` accessor from Chart context */
-  export let y: Accessor = undefined;
-
-  /** Interpolate path data using d3-interpolate-path.  Works best without `draw` enabled */
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
-  /** Draw path over time.  Works best without `tweened` enabled */
-  export let draw: boolean | Parameters<typeof _drawTransition>[1] = undefined;
-
-  /**
-   * Curve of spline drawn. Imported via d3-shape.
-   *
-   * @example
-   * import { curveNatural } from 'd3-shape';
-   * <Spline curve={curveNatrual} />
-   *
-   * @type {CurveFactory | CurveFactoryLineOnly | undefined}
-   */
-  export let curve: CurveFactory | CurveFactoryLineOnly | undefined = undefined;
-  export let defined: Parameters<Line<any>['defined']>[0] | undefined = undefined;
-
-  export let fill: string | undefined = undefined;
-  export let fillOpacity: number | undefined = undefined;
-  export let stroke: string | undefined = undefined;
-  export let strokeWidth: number | undefined = undefined;
-  export let opacity: number | undefined = undefined;
-
-  let className: string | undefined = undefined;
-  export { className as class };
-
-  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerdown: ((e: PointerEvent) => void) | undefined = undefined;
-  export let ontouchmove: ((e: TouchEvent) => void) | undefined = undefined;
-  export let onpointerover: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerout: ((e: PointerEvent) => void) | undefined = undefined;
-
-  /** Marker to attach to start, mid, and end points of path */
-  export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
-    undefined;
-  /** Marker to attach to start point of path */
-  export let markerStart: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
-    marker;
-  /** Marker to attach to all mid points of path */
-  export let markerMid: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
-    marker;
-  /** Marker to attach to end point of path */
-  export let markerEnd: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
-    marker;
-
-  $: markerStartId = markerStart || $$slots['markerStart'] ? uniqueId('marker-') : '';
-  $: markerMidId = markerMid || $$slots['markerMid'] ? uniqueId('marker-') : '';
-  $: markerEndId = markerEnd || $$slots['markerEnd'] ? uniqueId('marker-') : '';
+  const markerStartId = $derived(markerStartOptions || markerStart ? uniqueId('marker-') : '');
+  const markerMidId = $derived(markerMidOptions || markerMid ? uniqueId('marker-') : '');
+  const markerEndId = $derived(markerEndOptions || markerEnd ? uniqueId('marker-') : '');
 
   function getScaleValue(data: any, scale: typeof $xScale | typeof $yScale, accessor: Function) {
     let value = accessor(data);
@@ -117,11 +132,11 @@
     }
   }
 
-  $: xAccessor = x ? accessor(x) : $contextX;
-  $: yAccessor = y ? accessor(y) : $contextY;
+  const xAccessor = $derived(x ? accessor(x) : $contextX);
+  const yAccessor = $derived(y ? accessor(y) : $contextY);
 
-  $: xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
-  $: yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
+  const yOffset = $derived(isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0);
+  const xOffset = $derived(isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0);
 
   /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
   function defaultPathData() {
@@ -215,14 +230,14 @@
       name: 'Spline',
       render,
       events: {
-        click: onclick,
-        pointerenter: onpointerenter,
-        pointermove: onpointermove,
-        pointerleave: onpointerleave,
-        pointerdown: onpointerdown,
-        pointerover: onpointerover,
-        pointerout: onpointerout,
-        touchmove: ontouchmove,
+        click: restProps.onclick,
+        pointerenter: restProps.onpointerenter,
+        pointermove: restProps.onpointermove,
+        pointerleave: restProps.onpointerleave,
+        pointerdown: restProps.onpointerdown,
+        pointerover: restProps.onpointerover,
+        pointerout: restProps.onpointerout,
+        touchmove: restProps.ontouchmove,
       },
     });
   }

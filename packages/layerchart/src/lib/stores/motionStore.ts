@@ -1,23 +1,47 @@
 import { writable } from 'svelte/store';
-import { spring, tweened } from 'svelte/motion';
+import { Spring, spring, Tween, tweened } from 'svelte/motion';
 
-export type SpringOptions = Parameters<typeof spring<any>>[1];
-export type TweenedOptions = Parameters<typeof tweened<any>>[1];
+type ConstructorParameters<T> = T extends new (...args: infer P) => any ? P : never;
 
-export type MotionOptions = {
-  spring?: boolean | SpringOptions;
-  tweened?: boolean | TweenedOptions;
+export type SpringOptions<T = any> = ConstructorParameters<typeof Spring<T>>[1];
+export type TweenedOptions<T = any> = ConstructorParameters<typeof Tween<T>>[1];
+
+export type MotionOptions<T = any> = {
+  spring?: boolean | SpringOptions<T>;
+  tweened?: boolean | TweenedOptions<T>;
 };
 
-export type PropMotionOptions = {
-  spring?: boolean | SpringOptions | { [prop: string]: SpringOptions };
-  tweened?: boolean | TweenedOptions | { [prop: string]: TweenedOptions };
+export type PropMotionOptions<T = any> = {
+  spring?: boolean | SpringOptions<T> | { [prop: string]: SpringOptions<T> };
+  tweened?: boolean | TweenedOptions<T> | { [prop: string]: TweenedOptions<T> };
 };
+
+/**
+ * Convenient wrapper to create a motion store (spring(), tweened()) based on properties,
+ * or fallback to basic writable state.
+ */
+export function motionState<T = any>(value: T, options: MotionOptions<T>) {
+  if (options.spring) {
+    return new Spring<T>(value, options.spring === true ? undefined : options.spring);
+  } else if (options.tweened) {
+    return new Tween<T>(value, options.tweened === true ? undefined : options.tweened);
+  } else {
+    let current = $state(value);
+    return {
+      set(newValue: T) {
+        current = newValue;
+      },
+      get current() {
+        return current;
+      },
+    };
+  }
+}
 
 /**
  * Convenient wrapper to create a motion store (spring(), tweened()) based on properties, or fall back to basic writable() store
  */
-export function motionStore<T = any>(value: T, options: MotionOptions) {
+export function motionStore<T = any>(value: T, options: MotionOptions<T>) {
   if (options.spring) {
     return spring<T>(value, options.spring === true ? undefined : options.spring);
   } else if (options.tweened) {
@@ -30,7 +54,7 @@ export function motionStore<T = any>(value: T, options: MotionOptions) {
 /**
  * Helper to resolve motion options with specific property option (useful for specifying per-prop delays)
  */
-export function resolveOptions(prop: string, options: PropMotionOptions) {
+export function resolveOptions(prop: string, options: PropMotionOptions<any>) {
   return {
     spring:
       typeof options.spring === 'boolean' || options.spring == null
@@ -55,6 +79,30 @@ export function resolveOptions(prop: string, options: PropMotionOptions) {
             ? options.tweened
             : false,
   };
+}
+
+export class MotionFinishState {
+  #latestIndex = 0;
+  #current = $state(false);
+
+  handle = (promise: Promise<void> | void) => {
+    this.#latestIndex += 1;
+    if (!promise) {
+      this.#current = false;
+      return;
+    }
+    let currIndex = this.#latestIndex;
+    this.#current = true;
+    promise.then(() => {
+      if (currIndex === this.#latestIndex) {
+        this.#current = false;
+      }
+    });
+  };
+
+  get current() {
+    return this.#current;
+  }
 }
 
 export function motionFinishHandler() {
