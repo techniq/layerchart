@@ -1,13 +1,11 @@
 <script lang="ts" module>
   // this is the LayerCake replacement component
   import { scaleLinear, scaleSqrt } from 'd3-scale';
-  import { calcScaleExtents } from '$lib/utils/calc-scale-extents.js';
   import { type Accessor, accessor } from '$lib/utils/common.js';
   import { printDebug } from '$lib/utils/debug.js';
   import { filterObject } from '$lib/utils/filter-object.js';
   import type { AnyScale, DomainType } from '$lib/utils/scales.js';
   import { useDebounce } from 'runed';
-  import calcDomain from 'layerchart/utils/calc-domain.js';
   import type {
     AxisKey,
     BaseRange,
@@ -18,9 +16,13 @@
     XRangeWithScale,
     YRangeWithScale,
   } from 'layerchart/utils/types.js';
-  import { createScale } from 'layerchart/utils/create-scale.js';
-  import { createGetter } from 'layerchart/utils/create-getter.js';
-  import { getRange } from 'layerchart/utils/get-range.js';
+  import {
+    calcDomain,
+    calcScaleExtents,
+    createGetter,
+    createScale,
+    getRange,
+  } from '$lib/utils/layout.js';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 

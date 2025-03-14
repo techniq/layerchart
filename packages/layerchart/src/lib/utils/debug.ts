@@ -1,6 +1,6 @@
 import { rgb } from 'd3-color';
-import findScaleName from './find-scale-name.js';
 import { toTitleCase } from './string.js';
+import { findScaleName } from './layout.js';
 
 const indent = '    ';
 
