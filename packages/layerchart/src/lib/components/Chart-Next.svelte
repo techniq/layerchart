@@ -27,7 +27,7 @@
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
-  type ContextType<T> = {
+  export type ChartContext<T = any> = {
     activeGetters: Record<AxisKey, (d: T) => any>;
     width: number;
     height: number;
@@ -78,14 +78,26 @@
     rGet: (d: T) => number;
   };
 
-  const ChartContext = new Context<ContextType<any>>('ChartContext');
+  const _ChartContext = new Context<ChartContext>('ChartContext');
 
-  export function getChartContext<T>(): ContextType<T> {
-    return ChartContext.get();
+  export function getChartContext<T>(): ChartContext<T> {
+    return _ChartContext.get();
   }
 
-  export function setChartContext<T>(context: ContextType<T>): ContextType<T> {
-    return ChartContext.set(context);
+  export function setChartContext<T>(context: ChartContext<T>): ChartContext<T> {
+    return _ChartContext.set(context);
+  }
+
+  export type RenderContext = 'svg' | 'canvas' | 'html';
+
+  const _RenderContext = new Context<RenderContext>('RenderContext');
+
+  export function getRenderContext(): RenderContext {
+    return _RenderContext.get();
+  }
+
+  export function setRenderContext(context: RenderContext): RenderContext {
+    return _RenderContext.set(context);
   }
 
   export type ChartPropsWithoutHTML<T> = {
@@ -490,7 +502,7 @@
      *  where values are subtracted from the parent container's width and height, the same as a
      * [D3 margin convention](https://bl.ocks.org/mbostock/3019563).
      */
-    padding?: { top?: Number; right?: Number; bottom?: Number; left?: Number };
+    padding?: { top?: number; right?: number; bottom?: number; left?: number };
 
     /**
      * Manually set the extents of the x, y or r scale as a two-dimensional array of the min and
@@ -498,10 +510,10 @@
      * that dimension.
      */
     extents?: {
-      x?: [min: Number, max: Number];
-      y?: [min: Number, max: Number];
-      r?: [min: Number, max: Number];
-      z?: [min: Number, max: Number];
+      x?: [min: number, max: number];
+      y?: [min: number, max: number];
+      r?: [min: number, max: number];
+      z?: [min: number, max: number];
     };
 
     /**
@@ -545,7 +557,7 @@
      */
     radial?: boolean;
 
-    children?: Snippet<[{ context: ContextType<T> }]>;
+    children?: Snippet<[{ context: ChartContext<T> }]>;
 
     /** Props passed to GeoContext */
     // geo?: typeof geo;
@@ -816,7 +828,7 @@
 
   const aspectRatio = $derived(width / height);
 
-  const context: ContextType<TData> = {
+  const context: ChartContext<TData> = {
     get activeGetters() {
       return activeGetters;
     },

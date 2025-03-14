@@ -1,6 +1,4 @@
 <script lang="ts" context="module">
-  import { getContext, setContext } from 'svelte';
-  import { writable, type Writable } from 'svelte/store';
   import { type GeoPermissibleObjects, type GeoProjection } from 'd3-geo';
   import { chartContext } from './ChartContext.svelte';
   import { transformContext } from './TransformContext.svelte';
@@ -9,44 +7,80 @@
   /**
    * Access or set the current GeoContext.
    */
-  export const GeoContext = new Context<GeoProjection>('GeoContext');
+  const GeoContext = new Context<GeoProjection | undefined>('GeoContext');
+
+  export function getGeoContext() {
+    return GeoContext.get();
+  }
+
+  export function setGeoContext(geo: GeoProjection | undefined) {
+    return GeoContext.set(geo);
+  }
+
+  export type GeoContextProps = {
+    /**
+     * A d3 projection function. Pass this in as an uncalled function, e.g.
+     * `projection={geoAlbersUsa}`.
+     */
+    projection?: () => GeoProjection;
+    fitGeojson?: GeoPermissibleObjects;
+    /**
+     * By default, the map fills to fit the $width and $height. If instead you want a
+     * fixed-aspect ratio, like for a server-side rendered map, set that here.
+     */
+    fixedAspectRatio?: number;
+    clipAngle?: number;
+    clipExtent?: [[number, number], [number, number]];
+    rotate?: {
+      /** Lambda (Center Meridian) */
+      yaw: number;
+      /** Phi */
+      pitch: number;
+      /** Gamma */
+      roll: number;
+    };
+    scale?: number;
+    translate?: [number, number];
+    center?: [number, number];
+    /**
+     * Apply TransformContext to the selected properties.  Typically `translate` or `rotate` are
+     * mutually selected
+     */
+    applyTransform?: ('scale' | 'translate' | 'rotate')[];
+    reflectX?: boolean;
+    reflectY?: boolean;
+    /**
+     * Exposed to allow binding in Chart
+     *
+     * @bindable
+     */
+    geo?: GeoProjection;
+  };
 </script>
 
 <script lang="ts">
+  let {
+    projection,
+    fitGeojson,
+    fixedAspectRatio,
+    clipAngle,
+    clipExtent,
+    rotate,
+    scale,
+    translate,
+    center,
+    applyTransform = [],
+    reflectX,
+    reflectY,
+    geo = $bindable(),
+  }: GeoContextProps = $props();
+
+  $effect.pre(() => {
+    geo = projection?.();
+  });
+
   const { width, height } = chartContext();
 
-  /** @type {Function} projection - A d3 projection function. Pass this in as an uncalled function, e.g. `projection={geoAlbersUsa}`. */
-  export let projection: (() => GeoProjection) /* | GeoIdentityTransform*/ | undefined = undefined;
-
-  export let fitGeojson: GeoPermissibleObjects | undefined = undefined;
-
-  /** By default, the map fills to fit the $width and $height. If instead you want a fixed-aspect ratio, like for a server-side rendered map, set that here. */
-  export let fixedAspectRatio: number | undefined = undefined;
-
-  export let clipAngle: number | undefined = undefined;
-  export let clipExtent: [[number, number], [number, number]] | undefined = undefined;
-  export let rotate:
-    | {
-        /** Lambda (Center Meridian) */
-        yaw: number;
-        /** Phi */
-        pitch: number;
-        /** Gamma */
-        roll: number;
-      }
-    | undefined = undefined;
-  export let scale: number | undefined = undefined;
-  export let translate: [number, number] | undefined = undefined;
-  export let center: [number, number] | undefined = undefined;
-
-  /** Apply TransformContext to the selected properties.  Typically `translate` or `rotate` are mutually selected  */
-  export let applyTransform: ('scale' | 'translate' | 'rotate')[] = [];
-
-  export let reflectX: boolean | undefined = undefined;
-  export let reflectY: boolean | undefined = undefined;
-
-  /** Exposed to allow binding in Chart */
-  export let geo = writable(projection?.());
   setGeoContext(geo);
 
   const { scale: transformScale, translate: transformTranslate } = transformContext();

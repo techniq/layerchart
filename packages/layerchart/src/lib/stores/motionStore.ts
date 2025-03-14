@@ -20,7 +20,7 @@ export type PropMotionOptions<T = any> = {
  * Convenient wrapper to create a motion store (spring(), tweened()) based on properties,
  * or fallback to basic writable state.
  */
-export function motionState<T = any>(value: T, options: MotionOptions<T>) {
+export function motionState<T>(value: T, options: MotionOptions<T>) {
   if (options.spring) {
     return new Spring<T>(value, options.spring === true ? undefined : options.spring);
   } else if (options.tweened) {
@@ -28,7 +28,7 @@ export function motionState<T = any>(value: T, options: MotionOptions<T>) {
   } else {
     let current = $state(value);
     return {
-      set(newValue: T) {
+      set(newValue: T, _options?: MotionOptions<T>) {
         current = newValue;
       },
       get current() {

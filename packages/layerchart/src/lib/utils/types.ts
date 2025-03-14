@@ -27,10 +27,10 @@ export type Extents = {
 };
 
 export type Padding = {
-  top?: Number;
-  right?: Number;
-  bottom?: Number;
-  left?: Number;
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
 };
 
 export type Nice = boolean | number;
