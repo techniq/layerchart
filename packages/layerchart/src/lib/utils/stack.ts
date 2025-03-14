@@ -1,9 +1,9 @@
 import { flatGroup, group, max, rollup, sum } from 'd3-array';
-import { stack, stackOffsetNone, stackOrderNone } from 'd3-shape';
+import { stack } from 'd3-shape';
 import { pivotWider } from './pivot.js';
 
-type OrderType = typeof stackOrderNone; // all orders share the same API
-type OffsetType = typeof stackOffsetNone; // all offsets share the same API
+type OrderType = typeof import('d3-shape').stackOrderNone; // all orders share the same API
+type OffsetType = typeof import('d3-shape').stackOffsetNone; // all offsets share the same API
 
 export function groupStackData<TData>(
   data: TData[],
