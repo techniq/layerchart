@@ -119,7 +119,7 @@
      */
     ref?: HTMLElement;
 
-    children?: Snippet<[{ tooltip: TooltipContextValue }]>;
+    children?: Snippet<[{ tooltipContext: TooltipContextValue }]>;
   };
 
   export type TooltipContextProps = TooltipContextPropsWithoutHTML &
@@ -155,16 +155,35 @@
     onclick = () => {},
     radius = Infinity,
     raiseTarget = false,
-    tooltip = {
-      x: 0,
-      y: 0,
-      data: null as any,
-      show: showTooltip,
-      hide: hideTooltip,
-      mode,
-    },
+    tooltip = $bindable() as TooltipContextValue,
     children,
   }: TooltipContextProps = $props();
+
+  tooltip = {
+    x: 0,
+    y: 0,
+    data: null as any,
+    show: showTooltip,
+    hide: hideTooltip,
+    mode,
+  };
+
+  const tooltipContext = {
+    get x() {
+      return tooltip!.x;
+    },
+    get y() {
+      return tooltip!.y;
+    },
+    get data() {
+      return tooltip!.data;
+    },
+    show: showTooltip,
+    hide: hideTooltip,
+    get mode() {
+      return tooltip!.mode;
+    },
+  };
 
   /*
 		TODO: Defaults to consider (if possible to detect scale type, which might not be possible)
@@ -176,7 +195,7 @@
 		- scaleBand, scaleLinear: band (or bounds) - multiple (overlapping) bars
 		- scaleLinear, scaleLinear: voronoi (or quadtree)
 	*/
-  setTooltipContext(tooltip);
+  setTooltipContext(tooltipContext);
 
   let isHoveringTooltip = false;
   let hideTimeoutId: ReturnType<typeof setTimeout>;
@@ -500,7 +519,7 @@
     style:width="{ctx.containerWidth}px"
     style:height="{ctx.containerHeight}px"
   >
-    {@render children?.({ tooltip })}
+    {@render children?.({ tooltipContext })}
 
     {#if mode === 'voronoi'}
       <Svg>

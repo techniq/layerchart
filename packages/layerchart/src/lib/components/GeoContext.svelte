@@ -5,16 +5,20 @@
   import { getChartContext } from './Chart-Next.svelte';
   import type { Snippet } from 'svelte';
 
+  export type GeoContextValue = {
+    projection: GeoProjection | undefined;
+  };
+
   /**
    * Access or set the current GeoContext.
    */
-  const GeoContext = new Context<GeoProjection | undefined>('GeoContext');
+  const GeoContext = new Context<GeoContextValue>('GeoContext');
 
   export function getGeoContext() {
-    return GeoContext.get();
+    return GeoContext.getOr({ projection: undefined });
   }
 
-  export function setGeoContext(geo: GeoProjection | undefined) {
+  export function setGeoContext(geo: GeoContextValue) {
     return GeoContext.set(geo);
   }
 
@@ -55,9 +59,9 @@
      *
      * @bindable
      */
-    geo?: GeoProjection;
+    geo?: GeoContextValue;
 
-    children: Snippet<[{ projection: GeoProjection | undefined }]>;
+    children: Snippet<[{ geoContext: GeoContextValue }]>;
   };
 </script>
 
@@ -75,14 +79,27 @@
     applyTransform = [],
     reflectX,
     reflectY,
-    geo = $bindable(),
+    geo = $bindable() as GeoContextValue,
     children,
   }: GeoContextProps = $props();
 
   const ctx = getChartContext();
   const transformCtx = getTransformContext();
 
-  setGeoContext(geo);
+  if (geo === undefined) {
+    geo = {
+      projection: undefined,
+    };
+  }
+
+  const geoContext = setGeoContext({
+    get projection() {
+      return geo.projection;
+    },
+    set projection(v: GeoProjection | undefined) {
+      geo.projection = v;
+    },
+  });
 
   const fitSizeRange = $derived(
     fixedAspectRatio ? [100, 100 / fixedAspectRatio] : [ctx.width, ctx.height]
@@ -150,10 +167,10 @@
       _projection.clipExtent(clipExtent);
     }
 
-    geo = _projection;
+    geoContext.projection = _projection;
   });
 </script>
 
 {@render children({
-  projection: geo,
+  geoContext,
 })}

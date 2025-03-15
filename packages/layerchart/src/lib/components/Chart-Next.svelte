@@ -30,8 +30,8 @@
     createLayerCakeScale,
   } from '$lib/utils/layout.js';
   import type { ComponentProps, Snippet } from 'svelte';
-  import GeoContext from './GeoContext.svelte';
-  import TooltipContext from './tooltip/TooltipContext.svelte';
+  import GeoContext, { type GeoContextValue } from './GeoContext.svelte';
+  import TooltipContext, { type TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { extent, max, min } from 'd3-array';
   import type { HierarchyNode } from 'd3-hierarchy';
   import type { SankeyGraph } from 'd3-sankey';
@@ -39,6 +39,7 @@
   import { geoFitObjectTransform } from 'layerchart/utils/geo.js';
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
   import type { GeoProjection } from 'd3-geo';
+  import BrushContext, { type BrushContextValue } from './BrushContext.svelte';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -102,7 +103,7 @@
     zPadding: PaddingArray;
     rPadding: PaddingArray;
     padding: Padding;
-    flatData: T[] | HierarchyNode<T> | SankeyGraph<any, any>;
+    flatData: T[];
     extents: Extents;
     xDomain: DomainType;
     yDomain: DomainType;
@@ -112,7 +113,7 @@
     x1Domain: DomainType;
     y1Domain: DomainType;
     xRange: any[];
-    yRange: YRangeWithScale;
+    yRange: any[];
     zRange: any[];
     rRange: any[];
     cRange: readonly string[] | string[] | undefined;
@@ -614,7 +615,9 @@
         {
           context: ChartContext<T>;
           transformContext: TransformContextValue;
-          geoProjection: GeoProjection | undefined;
+          geoContext: GeoContextValue;
+          tooltipContext: TooltipContextValue;
+          brushContext: BrushContextValue;
         },
       ]
     >;
@@ -627,8 +630,10 @@
     /**
      * Exposed via `bind:` to support `bind:geoProjection`
      * for external access.
+     *
+     * @bindable
      */
-    geoProjection?: ComponentProps<typeof GeoContext>['geo'];
+    geoContext?: GeoContextValue;
 
     /**
      * Props passed to TooltipContext
@@ -643,9 +648,6 @@
      */
     tooltipContext?: ComponentProps<typeof TooltipContext>['tooltip'];
 
-    // /** Exposed via bind: to support `bind:tooltipContext` for external access (ex. `tooltipContext.data) */
-    // tooltipContext?: typeof tooltipContext;
-
     /**
      * Props passed to TransformContext
      */
@@ -659,11 +661,14 @@
      */
     transformContext?: TransformContext;
 
-    // /** Props passed to BrushContext */
-    // brush?: typeof brush;
+    /** Props passed to BrushContext */
+    brush?: Partial<ComponentProps<typeof BrushContext>>;
 
-    // /** Exposed via bind: to support `bind:brushContext` for external access (ex. `brushContext.xDomain) */
-    // brushContext?: typeof brushContext;
+    /**
+     * Exposed via bind: to support `bind:brushContext` for
+     * external access (ex. `brushContext.xDomain)
+     */
+    brushContext?: BrushContextValue;
 
     /**
      * A callback function that is called when the chart is resized.
@@ -743,11 +748,15 @@
     onResize,
     geo,
     transformContext = $bindable(),
-    geoProjection = $bindable(),
+    geoContext = $bindable(),
+    brushContext = $bindable(),
+    tooltipContext = $bindable(),
+    tooltip,
     transform,
     onTransform,
     ondragend,
     ondragstart,
+    brush,
   }: ChartPropsWithoutHTML<TData> = $props();
 
   const logDebug = useDebounce(printDebug, 200);
@@ -780,7 +789,7 @@
   const x1 = $derived(accessor(x1Prop));
   const y1 = $derived(accessor(y1Prop));
 
-  const flatData = $derived(flatDataProp || data);
+  const flatData = $derived(flatDataProp || data) as TData[];
   const filteredExtents = $derived(filterObject(extentsProp));
 
   const activeGetters = {
@@ -1261,10 +1270,10 @@
   const processTranslate = $derived.by(() => {
     if (!geo) return undefined;
     return (x: number, y: number, deltaX: number, deltaY: number) => {
-      if (geo.applyTransform?.includes('rotate') && geoProjection) {
+      if (geo.applyTransform?.includes('rotate') && geoContext?.projection) {
         // When applying transform to rotate, invert `y` values and reduce sensitivity based on projection scale
         // see: https://observablehq.com/@benoldenburg/simple-globe and https://observablehq.com/@michael-keith/draggable-globe-in-d3
-        const projectionScale = geoProjection.scale() ?? 0;
+        const projectionScale = geoContext.projection.scale() ?? 0;
         const sensitivity = 75;
         return {
           x: x + deltaX * (sensitivity / projectionScale),
@@ -1276,6 +1285,9 @@
       }
     };
   });
+
+  const brushProps = $derived(typeof brush === 'object' ? brush : { disabled: !brush });
+  const tooltipProps = $derived(typeof tooltip === 'object' ? tooltip : {});
 </script>
 
 {#if ssr === true || typeof window !== 'undefined'}
@@ -1304,9 +1316,23 @@
         {ondragend}
       >
         {#snippet children({ transformContext })}
-          <GeoContext {...geo} bind:geo={geoProjection}>
-            {#snippet children({ projection })}
-              {@render _children?.({ context, transformContext, geoProjection: projection })}
+          <GeoContext {...geo} bind:geo={geoContext}>
+            {#snippet children({ geoContext })}
+              <BrushContext {...brushProps} bind:brush={brushContext}>
+                {#snippet children({ brushContext })}
+                  <TooltipContext {...tooltipProps} bind:tooltip={tooltipContext}>
+                    {#snippet children({ tooltipContext })}
+                      {@render _children?.({
+                        context,
+                        transformContext,
+                        geoContext,
+                        tooltipContext,
+                        brushContext,
+                      })}
+                    {/snippet}
+                  </TooltipContext>
+                {/snippet}
+              </BrushContext>
             {/snippet}
           </GeoContext>
         {/snippet}
