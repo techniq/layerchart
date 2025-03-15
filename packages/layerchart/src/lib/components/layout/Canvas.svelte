@@ -128,7 +128,7 @@
   import { getTransformContext } from '../TransformContext.svelte';
   import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
-  import { Context } from 'runed';
+  import { Context, watch } from 'runed';
   import type { HTMLCanvasAttributes } from 'svelte/elements';
   import type { Without } from 'layerchart/utils/types.js';
   import { getChartContext } from '../Chart-Next.svelte';
@@ -335,12 +335,12 @@
     },
   };
 
-  $effect.pre(() => {
-    [ctx.containerWidth, ctx.containerHeight, transformCtx.dragging];
-    untrack(() => {
+  watch.pre(
+    [() => ctx.containerHeight, () => ctx.containerWidth, () => transformCtx.dragging],
+    () => {
       canvasContext.invalidate();
-    });
-  });
+    }
+  );
 
   setCanvasContext(canvasContext);
   setRenderContext('canvas');

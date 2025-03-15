@@ -5,13 +5,14 @@
      *
      * @bindable
      */
-    element?: SVGElement | null;
+    ref?: SVGElement;
+
     /**
      * A reference to the layer's `<g>` tag.
      *
      * @bindable
      */
-    innerElement?: SVGGElement | null;
+    innerRef?: SVGGElement;
 
     /**
      * The layer's z-index.
@@ -81,8 +82,8 @@
   import { getChartContext, setRenderContext } from '../Chart-Next.svelte';
 
   let {
-    element = $bindable(null),
-    innerElement = $bindable(null),
+    ref = $bindable(),
+    innerRef = $bindable(),
     zIndex = 0,
     pointerEvents,
     viewBox,
@@ -113,7 +114,7 @@
 </script>
 
 <svg
-  bind:this={element}
+  bind:this={ref}
   {viewBox}
   width={ctx.containerWidth}
   height={ctx.containerHeight}
@@ -143,16 +144,16 @@
   </defs>
 
   <g
-    bind:this={innerElement}
+    bind:this={innerRef}
     class="layerchart-layout-svg_g"
     transform="translate({ctx.padding.left}, {ctx.padding.top})"
   >
     {#if transform}
       <g {transform}>
-        {@render children?.({ element: element as SVGElement })}
+        {@render children?.({ element: ref as SVGElement })}
       </g>
     {:else}
-      {@render children?.({ element: element as SVGElement })}
+      {@render children?.({ element: ref as SVGElement })}
     {/if}
   </g>
 </svg>

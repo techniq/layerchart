@@ -78,6 +78,7 @@
     xGet: (d: T) => number;
     zGet: (d: T) => number;
     rGet: (d: T) => number;
+    radial: boolean;
   };
 
   const _ChartContext = new Context<ChartContext>('ChartContext');
@@ -556,6 +557,8 @@
      * Use radial instead of cartesian coordinates, mapping `x` to `angle` and `y`` to radial.
      * Radial lines are positioned relative to the origin, use transform (ex. `<Group center>`)
      * to change the origin
+     *
+     * @default false
      */
     radial?: boolean;
 
@@ -658,6 +661,7 @@
     rRange: rRangeProp,
     custom = {},
     children,
+    radial = false,
   }: ChartPropsWithoutHTML<TData> = $props();
 
   const logDebug = useDebounce(printDebug, 200);
@@ -981,6 +985,9 @@
     },
     get rGet() {
       return rGet;
+    },
+    get radial() {
+      return radial;
     },
   };
 

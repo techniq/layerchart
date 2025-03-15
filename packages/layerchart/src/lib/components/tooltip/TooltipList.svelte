@@ -1,13 +1,21 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
+  import type { HTMLAttributes } from 'svelte/elements';
+
+  let {
+    ref = $bindable(),
+    class: className,
+    children,
+    ...restProps
+  }: HTMLAttributes<HTMLElement> & {
+    ref?: HTMLElement;
+  } = $props();
 </script>
 
 <div
-  class={cls(
-    'TooltipList',
-    'grid grid-cols-[1fr_auto] gap-x-2 gap-y-1 items-center',
-    $$props.class
-  )}
+  bind:this={ref}
+  class={cls('TooltipList', 'grid grid-cols-[1fr_auto] gap-x-2 gap-y-1 items-center', className)}
+  {...restProps}
 >
-  <slot />
+  {@render children?.()}
 </div>

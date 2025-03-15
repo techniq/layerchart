@@ -619,7 +619,7 @@ export function getRange(scale: AnyScale) {
     }
     console.error("[LayerChart] Your scale doesn't have a `.range` method?");
   }
-  return null;
+  return [];
 }
 
 export function createGetter<TData>(accessor: (d: TData) => any, scale: AnyScale) {

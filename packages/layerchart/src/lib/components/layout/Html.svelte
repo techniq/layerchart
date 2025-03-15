@@ -4,9 +4,9 @@
     /**
      * A reference to the layer's outermost `<div>` tag.
      *
-     * @bindable()
+     * @bindable
      */
-    element?: HTMLDivElement | null;
+    ref?: HTMLElement;
 
     /**
      * The layer's z-index.
@@ -51,7 +51,7 @@
      */
     ignoreTransform?: boolean;
 
-    children?: Snippet<[{ element: HTMLElement }]>;
+    children?: Snippet<[{ ref: HTMLElement }]>;
   };
 
   export type HTMLProps = HTMLPropsWithoutHTML &
@@ -66,7 +66,7 @@
   import type { Snippet } from 'svelte';
 
   let {
-    element = $bindable(null),
+    ref = $bindable(),
     zIndex = 0,
     pointerEvents = true,
     role,
@@ -97,7 +97,7 @@
 </script>
 
 <div
-  bind:this={element}
+  bind:this={ref}
   class={cls(
     'layerchart-layout-html',
     'absolute top-0 left-0',
@@ -118,5 +118,5 @@
   aria-describedby={describedBy}
   {...restProps}
 >
-  {@render children?.({ element: element as HTMLElement })}
+  {@render children?.({ ref })}
 </div>
