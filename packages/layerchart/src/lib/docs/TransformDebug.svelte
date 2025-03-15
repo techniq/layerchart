@@ -2,9 +2,9 @@
   import { cls } from '@layerstack/tailwind';
   import { format } from '@layerstack/utils';
 
-  import { transformContext } from '$lib/components/TransformContext.svelte';
+  import { getTransformContext } from '$lib/components/TransformContext.svelte';
 
-  const transform = transformContext();
+  const transform = getTransformContext();
   const { translate, scale } = transform;
 </script>
 

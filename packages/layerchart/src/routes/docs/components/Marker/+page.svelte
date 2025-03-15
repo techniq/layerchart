@@ -143,7 +143,7 @@
               y1={0}
               y2={0}
               class="stroke-primary"
-              markerStart={markerStart ? marker : undefined}
+              markerStartOptions={markerStart ? marker : undefined}
               markerMid={markerMid ? marker : undefined}
               markerEnd={markerEnd ? marker : undefined}
             />

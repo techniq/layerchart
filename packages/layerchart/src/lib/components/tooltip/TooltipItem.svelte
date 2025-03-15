@@ -1,44 +1,151 @@
+<script lang="ts" module>
+  import type { HTMLAttributes } from 'svelte/elements';
+  import type { Without } from 'layerchart/utils/types.js';
+
+  export type TooltipItemPropsWithoutHTML = {
+    /**
+     * The label to display in the tooltip item.
+     */
+    label?: string | number | null | undefined | Snippet;
+    /**
+     * Value to be formatted and displayed in absence of the
+     * default `children` snippet
+     */
+    value?: any;
+
+    /**
+     * Format to use when displaying the value.
+     */
+    format?: FormatType;
+
+    /**
+     * Alignment of the value.
+     *
+     * @default 'left'
+     */
+    valueAlign?: 'left' | 'right' | 'center';
+
+    /**
+     * Color to use for the color dot.
+     */
+    color?: string;
+
+    /**
+     * Classes to apply to the parts of the tooltip item.
+     *
+     * @default {}
+     */
+    classes?: {
+      root?: string;
+      label?: string;
+      value?: string;
+      color?: string;
+    };
+
+    props?: {
+      root?: HTMLAttributes<HTMLElement>;
+      label?: HTMLAttributes<HTMLElement>;
+      value?: HTMLAttributes<HTMLElement>;
+      color?: HTMLAttributes<HTMLElement>;
+    };
+
+    /**
+     * A reference to the tooltip item's outermost `<div>` tag.
+     */
+    ref?: HTMLElement;
+
+    /**
+     * A reference to the tooltip item's label `<div>` tag.
+     */
+    labelRef?: HTMLElement;
+
+    /**
+     * A reference to the tooltip item's value `<div>` tag.
+     */
+    valueRef?: HTMLElement;
+
+    /**
+     * A reference to the tooltip item's color `<div>` tag.
+     */
+    colorRef?: HTMLElement;
+  };
+
+  export type TooltipItemProps = TooltipItemPropsWithoutHTML &
+    Without<HTMLAttributes<HTMLElement>, TooltipItemPropsWithoutHTML>;
+</script>
+
 <script lang="ts">
   import { format as formatUtil, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
+  import type { Snippet } from 'svelte';
 
-  export let label: any;
-  /** Value to be formatted and displayed.  Can also be passed as default slot */
-  export let value: any = undefined;
-  export let format: FormatType | undefined = undefined;
-  export let valueAlign: 'left' | 'right' | 'center' = 'left';
-  export let color: string | undefined = undefined;
-
-  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
-
-  export let classes: {
-    root?: string;
-    label?: string;
-    value?: string;
-    color?: string;
-  } = {};
+  let {
+    ref: ref = $bindable(),
+    labelRef = $bindable(),
+    valueRef = $bindable(),
+    colorRef = $bindable(),
+    label,
+    value,
+    format,
+    valueAlign = 'left',
+    color,
+    classes = {
+      root: '',
+      label: '',
+      value: '',
+      color: '',
+    },
+    props = {
+      root: {},
+      label: {},
+      value: {},
+      color: {},
+    },
+    class: className,
+    children,
+    ...restProps
+  }: TooltipItemProps = $props();
 </script>
 
 <div
-  class={cls('contents', classes.root, $$props.class)}
-  on:click={onclick}
-  on:pointerenter={onpointerenter}
-  on:pointerleave={onpointerleave}
-  {...$$restProps}
+  {...props.root}
+  class={cls('contents', classes.root, className, props.root?.class)}
+  {...restProps}
+  bind:this={ref}
 >
-  <div class={cls('label', 'flex items-center gap-2 whitespace-nowrap', classes.label)}>
+  <div
+    {...props.label}
+    class={cls(
+      'label',
+      'flex items-center gap-2 whitespace-nowrap',
+      classes.label,
+      props.label?.class
+    )}
+    bind:this={labelRef}
+  >
     {#if color}
       <div
-        class={cls('color', 'inline-block size-2 rounded-full bg-[var(--color)]', classes.color)}
+        {...props.color}
+        class={cls(
+          'color',
+          'inline-block size-2 rounded-full bg-[var(--color)]',
+          classes.color,
+          props.color?.class
+        )}
         style:--color={color}
+        bind:this={colorRef}
       ></div>
     {/if}
-    <slot name="label">{label}</slot>
+    {#if typeof label === 'function'}
+      {@render label()}
+    {:else}
+      {label}
+    {/if}
   </div>
 
   <div
+    bind:this={valueRef}
+    {...props.value}
     class={cls(
       'value',
       'tabular-nums',
@@ -47,9 +154,13 @@
         'text-center': valueAlign === 'center',
       },
       classes.value,
-      $$props.class
+      props.value?.class
     )}
   >
-    <slot>{format ? formatUtil(value, format) : value}</slot>
+    {#if children}
+      {@render children()}
+    {:else}
+      {format ? formatUtil(value, format) : value}
+    {/if}
   </div>
 </div>

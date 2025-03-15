@@ -20,7 +20,7 @@
           x2={400}
           y2={50}
           class="stroke-2 stroke-accent"
-          markerStart="circle"
+          markerStartOptions="circle"
           markerEnd="arrow"
         />
       </Svg>

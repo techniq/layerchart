@@ -1,3 +1,105 @@
+<script lang="ts" module>
+  type ArcPropsWithoutHTML = {
+    spring?: boolean | SpringOptions;
+    tweened?: boolean | TweenedOptions;
+
+    value?: number;
+    initialValue?: number;
+
+    /**
+     * Domain [min,max] in degrees
+     *
+     * @default [0, 100];
+     */
+    domain?: [number, number];
+
+    /**
+     * Range [min,max] in degrees. See also startAngle/endAngle
+     *
+     * @default [0, 360]
+     */
+    range?: [number, number];
+
+    /**
+     * Start angle in radians
+     */
+    startAngle?: number;
+
+    /**
+     * End angle in radians
+     */
+    endAngle?: number;
+
+    /**
+     * Define innerRadius. Defaults to yRange min
+     *   • value >= 1: discrete value
+     *   • value < 1: percent of `outerRadius`
+     *   • value < 0: offset of `outerRadius`
+     */
+    innerRadius?: number;
+
+    /**
+     * Define outerRadius. Defaults to smallest width (xRange) or height (yRange) dimension (/2)
+     *   • value >= 1: discrete value
+     *   • value < 1: percent of chart width or height (smallest) / 2
+     *   • value < 0: offset of chart width or height (smallest) / 2
+     */
+    outerRadius?: number;
+
+    /**
+     * Corner radius of the arc
+     *
+     * @default 0
+     */
+    cornerRadius?: number;
+
+    /**
+     * Angle between the arcs
+     *
+     * @default 0
+     */
+    padAngle?: number;
+
+    fill?: string;
+    fillOpacity?: number;
+    stroke?: string;
+    strokeWidth?: number;
+    opacity?: number;
+
+    /**
+     * Offset arc from center
+     *
+     * @default 0
+     */
+    offset?: number;
+
+    /**
+     * Tooltip context to setup pointer events to show tooltip for related data.
+     *
+     * **Must set `data` prop as well**
+     */
+    tooltipContext?: TooltipContextValue;
+
+    /**
+     * Data to set when showing tooltip
+     */
+    data?: any;
+
+    /**
+     * Track
+     */
+    track?: boolean | Partial<ComponentProps<Spline>>;
+
+    /**
+     * Event handlers
+     */
+    onclick?: (e: MouseEvent) => void;
+    onpointerenter?: (e: PointerEvent) => void;
+    onpointermove?: (e: PointerEvent) => void;
+    onpointerleave?: (e: PointerEvent) => void;
+  };
+</script>
+
 <script lang="ts">
   /*
 		TODO:
@@ -23,78 +125,60 @@
   import { scaleLinear } from 'd3-scale';
 
   import { chartContext } from './ChartContext.svelte';
-  import { motionStore } from '$lib/stores/motionStore.js';
+  import {
+    motionState,
+    motionStore,
+    type SpringOptions,
+    type TweenedOptions,
+  } from '$lib/stores/motionStore.js';
   import { degreesToRadians } from '$lib/utils/math.js';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import Spline from './Spline.svelte';
+  import { watch } from 'runed';
+  import { getChartContext } from './Chart-Next.svelte';
 
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
+  let {
+    spring,
+    tweened,
+    value = 0,
+    initialValue = value,
+    domain = [0, 100],
+    range = [0, 360], // degrees
+    startAngle: startAngleProp,
+    endAngle: endAngleProp,
+    innerRadius: innerRadiusProp,
+    outerRadius: outerRadiusProp,
+    cornerRadius = 0,
+    padAngle = 0,
+    fill,
+    fillOpacity,
+    stroke = 'none',
+    strokeWidth,
+    opacity,
+    data,
+    offset = 0,
+    onclick = () => {},
+    onpointerenter = () => {},
+    onpointermove = () => {},
+    onpointerleave = () => {},
+    tooltipContext,
+    track = false,
+  }: ArcPropsWithoutHTML = $props();
 
-  export let value = 0;
-  export let initialValue = value;
-  let tweened_value = motionStore(initialValue, { spring, tweened });
+  const tweenedState = $derived(motionState(initialValue, { spring, tweened }));
 
-  $: tick().then(() => {
-    tweened_value.set(value);
-  });
+  watch(
+    () => value,
+    () => {
+      tick().then(() => {
+        tweenedState.set(value);
+      });
+    }
+  );
 
-  export let domain = [0, 100];
+  const ctx = getChartContext();
 
-  /**
-   * Range [min,max] in degrees.  See also startAngle/endAngle
-   */
-  export let range = [0, 360]; // degrees
-
-  /**
-   * Start angle in radians
-   */
-  export let startAngle: number | undefined = undefined;
-
-  /**
-   * End angle in radians
-   */
-  export let endAngle: number | undefined = undefined;
-
-  /**
-   * Define innerRadius. Defaults to yRange min
-   *   • value >= 1: discrete value
-   *   • value < 1: percent of `outerRadius`
-   *   • value < 0: offset of `outerRadius`
-   */
-  export let innerRadius: number | undefined = undefined;
-
-  /**
-   * Define outerRadius. Defaults to smallest width (xRange) or height (yRange) dimension (/2)
-   *   • value >= 1: discrete value
-   *   • value < 1: percent of chart width or height (smallest) / 2
-   *   • value < 0: offset of chart width or height (smallest) / 2
-   */
-  export let outerRadius: number | undefined = undefined;
-
-  export let cornerRadius = 0;
-  export let padAngle = 0;
-  // export let padRadius = 0;
-
-  export let fill: string | undefined = undefined;
-  export let fillOpacity: number | undefined = undefined;
-  export let stroke: string | undefined = 'none';
-  export let strokeWidth: number | undefined = undefined;
-  export let opacity: number | undefined = undefined;
-
-  let className: string | undefined = undefined;
-  export { className as class };
-
-  export let track: boolean | Partial<ComponentProps<Spline>> = false;
-
-  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
-
-  const { xRange, yRange } = chartContext();
-
-  $: scale = scaleLinear().domain(domain).range(range);
+  const scale = $derived(scaleLinear().domain(domain).range(range));
 
   function getOuterRadius(outerRadius: number | undefined, chartRadius: number) {
     if (!outerRadius) {
@@ -114,11 +198,13 @@
     }
   }
 
-  $: _outerRadius = getOuterRadius(outerRadius, (Math.min($xRange[1], $yRange[0]) ?? 0) / 2);
+  const outerRadius = $derived(
+    getOuterRadius(outerRadiusProp, (Math.min(ctx.xRange[1], ctx.yRange[0]) ?? 0) / 2)
+  );
 
   function getInnerRadius(innerRadius: number | undefined, outerRadius: number) {
     if (innerRadius == null) {
-      return Math.min(...$yRange);
+      return Math.min(...ctx.yRange);
     } else if (innerRadius > 1) {
       // discrete value
       return innerRadius;
@@ -133,32 +219,38 @@
       return innerRadius;
     }
   }
-  $: _innerRadius = getInnerRadius(innerRadius, _outerRadius);
 
-  $: arc = d3arc()
-    .innerRadius(_innerRadius)
-    .outerRadius(_outerRadius)
-    .startAngle(startAngle ?? degreesToRadians(range[0]))
-    .endAngle(endAngle ?? degreesToRadians(scale($tweened_value)))
-    .cornerRadius(cornerRadius)
-    .padAngle(padAngle) as Function;
-  // .padRadius(padRadius);
+  const innerRadius = $derived(getInnerRadius(innerRadiusProp, outerRadius));
 
-  $: trackArc = d3arc()
-    .innerRadius(_innerRadius)
-    .outerRadius(_outerRadius)
-    .startAngle(startAngle ?? degreesToRadians(range[0]))
-    .endAngle(endAngle ?? degreesToRadians(range[1]))
-    .cornerRadius(cornerRadius)
-    .padAngle(padAngle) as Function;
-  // .padRadius(padRadius);
+  const startAngle = $derived(startAngleProp ?? degreesToRadians(range[0]));
+  const endAngle = $derived(endAngleProp ?? degreesToRadians(range[1]));
 
-  // @ts-expect-error
-  $: trackArcCentroid = trackArc.centroid();
-  // $: console.log(trackArcCentroid)
+  const arc = $derived(
+    d3arc()
+      .innerRadius(innerRadius)
+      .outerRadius(outerRadius)
+      .startAngle(startAngle)
+      .endAngle(endAngle)
+      .cornerRadius(cornerRadius)
+      .padAngle(padAngle)
+  ) as Function;
 
-  let trackArcEl: SVGPathElement | undefined = undefined;
-  $: boundingBox = trackArcEl ? trackArcEl.getBBox() : ({} as DOMRect);
+  const trackArc = $derived(
+    d3arc()
+      .innerRadius(innerRadius)
+      .outerRadius(outerRadius)
+      .startAngle(startAngle)
+      .endAngle(endAngle)
+      .cornerRadius(cornerRadius)
+      .padAngle(padAngle)
+  ) as Function;
+
+  // @ts-expect-error - idk
+  const trackArcCentroid = trackArc.centroid();
+
+  let trackArcEl: SVGPathElement = $state(null!);
+
+  const boundingBox = $derived(trackArcEl ? trackArcEl.getBBox() : ({} as DOMRect));
 
   // $: labelArcCenterOffset = {
   //   x: outerRadius - boundingBox.width / 2,
@@ -176,35 +268,21 @@
   // };
   // $: console.log(labelArcBottomOffset)
 
-  /**
-   * Offset arc from center
-   */
-  export let offset = 0;
-  $: angle = ((startAngle ?? 0) + (endAngle ?? 0)) / 2;
-  $: xOffset = Math.sin(angle) * offset;
-  $: yOffset = -Math.cos(angle) * offset;
-
-  /**
-   * Tooltip context to setup pointer events to show tooltip for related data.  Must set `data` prop as well
-   */
-  export let tooltip: TooltipContextValue | undefined = undefined;
-
-  /**
-   * Data to set when showing tooltip
-   */
-  export let data: any = undefined;
+  const angle = $derived(((startAngle ?? 0) + (endAngle ?? 0)) / 2);
+  const xOffset = $derived(Math.sin(angle) * offset);
+  const yOffset = $derived(-Math.cos(angle) * offset);
 
   function onPointerEnter(e: PointerEvent) {
     onpointerenter?.(e);
-    tooltip?.show(e, data);
+    tooltipContext?.show(e, data);
   }
   function onPointerMove(e: PointerEvent) {
     onpointermove?.(e);
-    tooltip?.show(e, data);
+    tooltipContext?.show(e, data);
   }
   function onPointerLeave(e: PointerEvent) {
     onpointerleave?.(e);
-    tooltip?.hide();
+    tooltipContext?.hide();
   }
 </script>
 
@@ -213,7 +291,7 @@
     pathData={trackArc()}
     class="track"
     stroke="none"
-    bind:pathEl={trackArcEl}
+    bind:pathRef={trackArcEl}
     {...typeof track === 'object' ? track : null}
   />
 {/if}
@@ -233,7 +311,7 @@
   onpointermove={onPointerMove}
   onpointerleave={onPointerLeave}
   ontouchmove={(e) => {
-    if (tooltip) {
+    if (tooltipContext) {
       // Prevent touch to not interfer with pointer when using tooltip
       e.preventDefault();
     }
@@ -241,4 +319,4 @@
   on:touchmove
 />
 
-<slot value={$tweened_value} centroid={trackArcCentroid} {boundingBox} />
+<slot value={tweenedState.current} centroid={trackArcCentroid} {boundingBox} />

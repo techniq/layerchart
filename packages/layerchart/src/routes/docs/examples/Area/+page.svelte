@@ -4,7 +4,6 @@
   import { flatGroup } from 'd3-array';
   import { stack } from 'd3-shape';
   import { format as formatDate } from 'date-fns';
-  import { flatten } from 'layercake';
 
   import {
     Area,
@@ -31,6 +30,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import flatten from 'layerchart/utils/layout.js';
 
   export let data;
 

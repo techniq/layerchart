@@ -1,7 +1,68 @@
-<script lang="ts">
-  import { onDestroy, type ComponentProps } from 'svelte';
-  import type { tweened as tweenedStore } from 'svelte/motion';
+<script lang="ts" module>
   import { type Area, area as d3Area, areaRadial } from 'd3-shape';
+  import type { SVGAttributes } from 'svelte/elements';
+  import type { Without } from 'layerchart/utils/types.js';
+
+  export type AreaPropsWithoutHTML = {
+    /** Override data instead of using context */
+    data?: any;
+
+    /**
+     * Pass `<path d={...} />` explicitly instead of calculating from data / context
+     */
+    pathData?: string | null;
+
+    /**
+     * Override x accessor
+     */
+    x?: Accessor;
+
+    /**
+     * Override y0 accessor. Defaults to max($yRange)
+     */
+    y0?: Accessor;
+
+    /**
+     * Override y1 accessor. Defaults to y accessor
+     */
+    y1?: Accessor;
+
+    /**
+     * Interpolate path data using d3-interpolate-path
+     */
+    tweened?: boolean | TweenedOptions;
+
+    clipPath?: string;
+
+    curve?: CurveFactory;
+
+    defined?: Parameters<Area<any>['defined']>[0];
+
+    /**
+     * Enable showing line
+     *
+     * @default false
+     */
+    line?: boolean | Partial<ComponentProps<Spline>>;
+
+    fill?: string;
+    fillOpacity?: number;
+    stroke?: string;
+    strokeWidth?: number;
+    opacity?: number;
+
+    onclick?: (event: MouseEvent) => void;
+    onpointerenter?: (event: PointerEvent) => void;
+    onpointermove?: (event: PointerEvent) => void;
+    onpointerleave?: (event: PointerEvent) => void;
+  };
+
+  export type AreaProps = AreaPropsWithoutHTML &
+    Without<SVGAttributes<SVGPathElement>, AreaPropsWithoutHTML>;
+</script>
+
+<script lang="ts" generics="TData">
+  import { getContext, onDestroy, type ComponentProps } from 'svelte';
   import type { CurveFactory } from 'd3-shape';
   import { max, min } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
@@ -10,73 +71,48 @@
   import { cls } from '@layerstack/tailwind';
   import { objectId } from '@layerstack/utils/object';
 
-  import { motionStore } from '$lib/stores/motionStore.js';
-
   import { getRenderContext } from './Chart.svelte';
-  import { chartContext } from './ChartContext.svelte';
   import Spline from './Spline.svelte';
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
   import { flattenPathData } from '../utils/path.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  const {
-    data: contextData,
-    xScale,
-    yScale,
-    x: contextX,
-    y,
-    yDomain,
-    yRange,
-    radial,
-    config,
-  } = chartContext();
+  import { getChartContext } from './Chart-Next.svelte';
+  import { motionState, type TweenedOptions } from 'layerchart/stores/motionStore.js';
+  import { watch } from 'runed';
 
-  /** Override data instead of using context */
-  export let data: any = undefined;
+  const ctx = getChartContext<any>();
 
-  /** Pass `<path d={...} />` explicitly instead of calculating from data / context */
-  export let pathData: string | undefined | null = undefined;
+  let {
+    clipPath,
+    curve,
+    data,
+    defined,
+    fill,
+    fillOpacity,
+    line = false,
+    opacity,
+    pathData,
+    stroke,
+    strokeWidth,
+    tweened,
+    x,
+    y0,
+    y1,
+    class: className,
+    onclick,
+    onpointerenter,
+    onpointermove,
+    onpointerleave,
+    ...restProps
+  }: AreaProps = $props();
 
-  /** Override x accessor */
-  export let x: Accessor = undefined;
-
-  /** Override y0 accessor.  Defaults to max($yRange) */
-  export let y0: Accessor = undefined;
-  /** Override y1 accessor.  Defaults to y accessor */
-  export let y1: Accessor = undefined;
-
-  /** Interpolate path data using d3-interpolate-path */
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
-
-  export let clipPath: string | undefined = undefined;
-
-  export let curve: CurveFactory | undefined = undefined;
-  export let defined: Parameters<Area<any>['defined']>[0] | undefined = undefined;
-
-  /** Enable showing line */
-  export let line: boolean | Partial<ComponentProps<Spline>> = false;
-
-  export let fill: string | undefined = undefined;
-  export let fillOpacity: number | undefined = undefined;
-  export let stroke: string | undefined = undefined;
-  export let strokeWidth: number | undefined = undefined;
-  export let opacity: number | undefined = undefined;
-
-  let className: string | undefined = undefined;
-  export { className as class };
-
-  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
-
-  $: xAccessor = x ? accessor(x) : $contextX;
-  $: y0Accessor = y0 ? accessor(y0) : (d: any) => min($yDomain);
-  $: y1Accessor = y1 ? accessor(y1) : $y;
-
-  $: xOffset = isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0;
-  $: yOffset = isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0;
+  const xAccessor = $derived(x ? accessor(x) : ctx.x);
+  const y0Accessor = $derived(y0 ? accessor(y0) : (d: any) => min(ctx.yDomain));
+  const y1Accessor = $derived(y1 ? accessor(y1) : ctx.y);
+  const xOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
+  const yOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
 
   /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
   function defaultPathData() {
@@ -85,74 +121,79 @@
       return '';
     } else if (pathData) {
       // Flatten all `y` coordinates of pre-defined `pathData`
-      return flattenPathData(pathData, Math.min($yScale(0), $yRange[0]));
-    } else if ($config.x) {
+      return flattenPathData(pathData, Math.min(ctx.yScale(0), ctx.yRange[0]));
+    } else if (ctx.config.x) {
       // Only use default line if `x` accessor is defined (cartesian chart)
-      const path = $radial
+      const path = ctx.radial
         ? areaRadial()
-            .angle((d) => $xScale(xAccessor(d)))
-            .innerRadius((d) => Math.min($yScale(0), $yRange[0]))
-            .outerRadius((d) => Math.min($yScale(0), $yRange[0]))
+            .angle((d) => ctx.xScale(xAccessor(d)))
+            .innerRadius((d) => Math.min(ctx.yScale(0), ctx.yRange[0]))
+            .outerRadius((d) => Math.min(ctx.yScale(0), ctx.yRange[0]))
         : d3Area()
-            .x((d) => $xScale(xAccessor(d)) + xOffset)
-            .y0((d) => Math.min($yScale(0), $yRange[0]))
-            .y1((d) => Math.min($yScale(0), $yRange[0]));
+            .x((d) => ctx.xScale(xAccessor(d)) + xOffset)
+            .y0((d) => Math.min(ctx.yScale(0), ctx.yRange[0]))
+            .y1((d) => Math.min(ctx.yScale(0), ctx.yRange[0]));
 
       path.defined(defined ?? ((d) => xAccessor(d) != null && y1Accessor(d) != null));
 
       if (curve) path.curve(curve);
 
-      return path(data ?? $contextData);
+      // TODO: type this appropriately otherwise we will have bugs in the future
+      return path((data ?? Array.isArray(ctx.data)) ? (ctx.data as [number, number][]) : []);
     }
   }
 
-  const tweenedOptions = tweened
-    ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
-    : false;
-  $: tweened_d = motionStore(defaultPathData(), { tweened: tweenedOptions });
-  $: {
-    const path = $radial
+  const tweenedOptions = $derived(
+    tweened
+      ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
+      : false
+  );
+
+  const tweenedState = $derived(motionState(defaultPathData(), { tweened: tweenedOptions }));
+
+  $effect(() => {
+    const path = ctx.radial
       ? areaRadial()
-          .angle((d) => $xScale(xAccessor(d)))
-          .innerRadius((d) => $yScale(y0Accessor(d)))
-          .outerRadius((d) => $yScale(y1Accessor(d)))
+          .angle((d) => ctx.xScale(xAccessor(d)))
+          .innerRadius((d) => ctx.yScale(y0Accessor(d)))
+          .outerRadius((d) => ctx.yScale(y1Accessor(d)))
       : d3Area()
-          .x((d) => $xScale(xAccessor(d)) + xOffset)
+          .x((d) => ctx.xScale(xAccessor(d)) + xOffset)
           .y0((d) => {
-            let value = max<number>($yRange)!;
+            let value = max<number>(ctx.yRange)!;
             if (y0) {
-              value = $yScale(y0Accessor(d));
-            } else if (Array.isArray($config.y) && $config.y[0] === 0) {
+              value = ctx.yScale(y0Accessor(d));
+            } else if (Array.isArray(ctx.config.y) && ctx.config.y[0] === 0) {
               // Use first value if `y` defined as an array (ex. `<Chart y={[0,1]}>`)
               // TODO: Would be nice if this also handled multi-series (<Chart y={['apples', 'bananas', 'oranges']}>) as well as delta values (<Chart y={['baseline', 'value']}>)
-              value = $yScale($y(d)[0]);
+              value = ctx.yScale(ctx.y(d)[0]);
             }
 
             return value + yOffset;
           })
           .y1((d) => {
-            let value = max<number>($yRange)!;
+            let value = max<number>(ctx.yRange)!;
             if (y1) {
-              value = $yScale(y1Accessor(d));
-            } else if (Array.isArray($config.y) && $config.y[1] === 1) {
+              value = ctx.yScale(y1Accessor(d));
+            } else if (Array.isArray(ctx.config.y) && ctx.config.y[1] === 1) {
               // Use second value if `y` defined as an array (ex. `<Chart y={[0,1]}>`)
               // TODO: Would be nice if this also handled multi-series (<Chart y={['apples', 'bananas', 'oranges']}>) as well as delta values (<Chart y={['baseline', 'value']}>)
-              value = $yScale($y(d)[1]);
+              value = ctx.yScale(ctx.y(d)[1]);
             } else {
               // Expect single value defined for `y` (ex. `<Chart y="value">`)
-              value = $yScale($y(d));
+              value = ctx.yScale(ctx.y(d));
             }
 
             return value + yOffset;
           });
 
-    path.defined(defined ?? ((d) => xAccessor(d) != null && y1Accessor(d) != null));
+    path.defined(defined ?? ((d: any) => xAccessor(d) != null && y1Accessor(d) != null));
 
     if (curve) path.curve(curve);
 
-    const d = pathData ?? path(data ?? $contextData);
-    tweened_d.set(d ?? '');
-  }
+    const d = pathData ?? path(data ?? ctx.data);
+    tweenedState.set(d ?? '');
+  });
 
   const renderContext = getRenderContext();
   const canvasContext = getCanvasContext();
@@ -163,29 +204,37 @@
   ) {
     renderPathData(
       ctx,
-      $tweened_d,
+      tweenedState.current,
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: className,
+            classes: className ?? '',
           }
     );
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  $: fillKey = fill && typeof fill === 'object' ? objectId(fill) : fill;
-  $: strokeKey = stroke && typeof stroke === 'object' ? objectId(stroke) : stroke;
+  const fillKey = $derived(fill && typeof fill === 'object' ? objectId(fill) : fill);
+  const strokeKey = $derived(stroke && typeof stroke === 'object' ? objectId(stroke) : stroke);
 
-  $: if (renderContext === 'canvas') {
-    // Redraw when props change
-    fillKey && fillOpacity && strokeKey && strokeWidth && opacity && className;
-    canvasContext.invalidate();
-  }
+  watch(
+    [
+      () => fillKey,
+      () => fillOpacity,
+      () => strokeKey,
+      () => strokeWidth,
+      () => opacity,
+      () => className,
+    ],
+    () => {
+      if (renderContext !== 'canvas') return;
+      canvasContext.invalidate();
+    }
+  );
 
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({
+  $effect(() => {
+    return canvasContext.register({
       name: 'Area',
       render,
       events: {
@@ -195,17 +244,15 @@
         pointerleave: onpointerleave,
       },
     });
-
-    tweened_d.subscribe(() => {
-      canvasContext.invalidate();
-    });
-  }
-
-  onDestroy(() => {
-    if (renderContext === 'canvas') {
-      canvasUnregister();
-    }
   });
+
+  watch(
+    () => tweenedState.current,
+    () => {
+      if (renderContext !== 'canvas') return;
+      canvasContext.invalidate();
+    }
+  );
 </script>
 
 {#if line}
@@ -221,20 +268,19 @@
 {/if}
 
 {#if renderContext === 'svg'}
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <path
-    d={$tweened_d}
+    d={tweenedState.current}
     clip-path={clipPath}
     {fill}
     fill-opacity={fillOpacity}
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
-    {...$$restProps}
+    {...restProps}
     class={cls('path-area', className)}
-    on:click={onclick}
-    on:pointerenter={onpointerenter}
-    on:pointermove={onpointermove}
-    on:pointerleave={onpointerleave}
+    {onclick}
+    {onpointerenter}
+    {onpointermove}
+    {onpointerleave}
   />
 {/if}
