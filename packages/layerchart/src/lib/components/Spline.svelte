@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import { onDestroy, tick, type Snippet } from 'svelte';
+  import { tick, type Snippet } from 'svelte';
 
   export type SplinePropsWithoutHTML = {
     /**
@@ -80,12 +80,12 @@
     /**
      * Insert content inside the start group
      */
-    start?: Snippet<[{ point: DOMPoint }]>;
+    startContent?: Snippet<[{ point: DOMPoint }]>;
 
     /**
      * Insert content inside the end group
      */
-    end?: Snippet<[{ point: DOMPoint }]>;
+    endContent?: Snippet<[{ point: DOMPoint }]>;
 
     /**
      * A reference to the `<path>` element.
@@ -125,7 +125,6 @@
   import type { SVGAttributes } from 'svelte/elements';
   import MarkerWrapper from './MarkerWrapper.svelte';
   import { getChartContext } from './Chart-Next.svelte';
-  import { watch } from 'runed';
   import { createKey } from 'layerchart/utils/key.svelte.js';
 
   const ctx = getChartContext();
@@ -147,8 +146,8 @@
     markerStart,
     markerMid,
     markerEnd,
-    start,
-    end,
+    startContent,
+    endContent,
     opacity,
     ref = $bindable(),
     ...restProps
@@ -330,7 +329,7 @@
   });
 
   $effect(() => {
-    if (!start || !end) return;
+    if (!startContent || !endContent) return;
     d;
     tick().then(() => {
       if (!ref) return;
@@ -363,15 +362,15 @@
     <MarkerWrapper id={markerMidId} marker={markerMid} />
     <MarkerWrapper id={markerEndId} marker={markerEnd} />
 
-    {#if start && startPoint}
+    {#if startContent && startPoint}
       <Group x={startPoint.x} y={startPoint.y}>
-        {@render start({ point: startPoint })}
+        {@render startContent({ point: startPoint })}
       </Group>
     {/if}
 
-    {#if end && endPoint.current}
+    {#if endContent && endPoint.current}
       <Group x={endPoint.current.x} y={endPoint.current.y}>
-        {@render end({ point: endPoint.current })}
+        {@render endContent({ point: endPoint.current })}
       </Group>
     {/if}
   {/key}

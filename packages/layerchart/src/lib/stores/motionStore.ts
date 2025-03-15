@@ -34,22 +34,30 @@ export type PropMotionOptions<T = any> = {
   tweened?: boolean | TweenedOptions<T> | { [prop: string]: TweenedOptions<T> };
 };
 
+export interface MotionState<T> {
+  set(newValue: T, options?: MotionProps<T>): void;
+  get current(): T;
+}
+
 /**
  * Convenient wrapper to create a motion store (spring(), tweened()) based on properties,
  * or fallback to basic writable state.
  */
-export function motionState<T>(value: T, options: MotionProps<T>) {
+export function motionState<T = any>(
+  value: T,
+  options: MotionProps<T>
+): Spring<T> | Tween<T> | MotionState<T> {
   if (options.spring) {
-    return new Spring<T>(value, options.spring === true ? undefined : options.spring);
+    return new Spring<T>(value, options.spring === true ? undefined : options.spring) as Spring<T>;
   } else if (options.tweened) {
-    return new Tween<T>(value, options.tweened === true ? undefined : options.tweened);
+    return new Tween<T>(value, options.tweened === true ? undefined : options.tweened) as Tween<T>;
   } else {
-    let current = $state(value);
+    let current: T = $state(value);
     return {
       set(newValue: T, _options?: MotionProps<T>) {
         current = newValue;
       },
-      get current() {
+      get current(): T {
         return current;
       },
     };

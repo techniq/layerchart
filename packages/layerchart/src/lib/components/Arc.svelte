@@ -1,8 +1,12 @@
 <script lang="ts" module>
-  type ArcPropsWithoutHTML = {
-    spring?: boolean | SpringOptions;
-    tweened?: boolean | TweenedOptions;
+  import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';
+  import type { ComponentProps, Snippet } from 'svelte';
+  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
+  import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
+  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
+  import type { Without } from '$lib/utils/types.js';
 
+  export type ArcPropsWithoutHTML = {
     value?: number;
     initialValue?: number;
 
@@ -86,18 +90,32 @@
     data?: any;
 
     /**
-     * Track
+     * Pass true to enable the track with default props, or pass an object
+     * of props to enable the track.
      */
-    track?: boolean | Partial<ComponentProps<Spline>>;
+    track?: boolean | Partial<ComponentProps<typeof Spline>>;
 
     /**
-     * Event handlers
+     * A reference to the track element
+     *
+     * @bindable
      */
-    onclick?: (e: MouseEvent) => void;
-    onpointerenter?: (e: PointerEvent) => void;
-    onpointermove?: (e: PointerEvent) => void;
-    onpointerleave?: (e: PointerEvent) => void;
-  };
+    trackRef?: SVGPathElement;
+
+    /**
+     * A reference to the arc element
+     *
+     * @bindable
+     */
+    ref?: SVGPathElement;
+
+    children?: Snippet<[{ centroid: [number, number]; boundingBox: DOMRect; value: number }]>;
+  } & MotionProps;
+
+  export type ArcProps = ArcPropsWithoutHTML &
+    // we omit the spline props to avoid conflicts with attribute names since we are
+    // passing them through to `<Spline />`
+    Without<SVGAttributes<SVGPathElement>, ArcPropsWithoutHTML & SplinePropsWithoutHTML>;
 </script>
 
 <script lang="ts">
@@ -119,18 +137,16 @@
   // https://svelte.dev/repl/09711e43a1264ba18945d7db7cab9335?version=3.38.2
   // https://codepen.io/simeydotme/pen/rrOEmO/
 
-  import { tick, type ComponentProps } from 'svelte';
   import { arc as d3arc } from 'd3-shape';
   import { scaleLinear } from 'd3-scale';
 
-  import { motionState, type SpringOptions, type TweenedOptions } from '$lib/stores/motionStore.js';
   import { degreesToRadians } from '$lib/utils/math.js';
-  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
-  import Spline from './Spline.svelte';
-  import { watch } from 'runed';
   import { getChartContext } from './Chart-Next.svelte';
+  import { afterTick } from 'layerchart/utils/after-tick.js';
 
   let {
+    ref = $bindable(),
+    trackRef = $bindable(),
     spring,
     tweened,
     value = 0,
@@ -150,24 +166,22 @@
     opacity,
     data,
     offset = 0,
-    onclick = () => {},
     onpointerenter = () => {},
     onpointermove = () => {},
     onpointerleave = () => {},
+    ontouchmove = () => {},
     tooltipContext,
     track = false,
-  }: ArcPropsWithoutHTML = $props();
+    children,
+    ...restProps
+  }: ArcProps = $props();
 
   const tweenedState = $derived(motionState(initialValue, { spring, tweened }));
 
-  watch(
-    () => value,
-    () => {
-      tick().then(() => {
-        tweenedState.set(value);
-      });
-    }
-  );
+  $effect(() => {
+    value;
+    afterTick(() => tweenedState.set(value));
+  });
 
   const ctx = getChartContext();
 
@@ -223,7 +237,7 @@
       .innerRadius(innerRadius)
       .outerRadius(outerRadius)
       .startAngle(startAngle)
-      .endAngle(endAngle)
+      .endAngle(endAngleProp ?? degreesToRadians(scale(tweenedState.current)))
       .cornerRadius(cornerRadius)
       .padAngle(padAngle)
   ) as Function;
@@ -238,45 +252,34 @@
       .padAngle(padAngle)
   ) as Function;
 
-  // @ts-expect-error - idk
-  const trackArcCentroid = trackArc.centroid();
+  // @ts-expect-error - todo - fix type
+  const trackArcCentroid = $derived(trackArc.centroid()) as [number, number];
 
   let trackArcEl: SVGPathElement = $state(null!);
 
   const boundingBox = $derived(trackArcEl ? trackArcEl.getBBox() : ({} as DOMRect));
 
-  // $: labelArcCenterOffset = {
-  //   x: outerRadius - boundingBox.width / 2,
-  //   // x: 0,
-  //   y: (outerRadius - boundingBox.height / 2) * -1,
-  // };
-  // $: console.log(labelArcCenterOffset)
-
-  // $: labelArcBottomOffset = {
-  //   // x: outerRadius - boundingBox.width / 2,
-  //   x: outerRadius - boundingBox.width / 2,
-  //   // x: 0,
-  //   // y: (outerRadius - boundingBox.height) * -1
-  //   y: (outerRadius - boundingBox.height) * -1,
-  // };
-  // $: console.log(labelArcBottomOffset)
-
   const angle = $derived(((startAngle ?? 0) + (endAngle ?? 0)) / 2);
   const xOffset = $derived(Math.sin(angle) * offset);
   const yOffset = $derived(-Math.cos(angle) * offset);
 
-  function onPointerEnter(e: PointerEvent) {
+  const onPointerEnter: PointerEventHandler<SVGPathElement> = (e) => {
     onpointerenter?.(e);
+    if (e.defaultPrevented) return;
     tooltipContext?.show(e, data);
-  }
-  function onPointerMove(e: PointerEvent) {
+  };
+
+  const onPointerMove: PointerEventHandler<SVGPathElement> = (e) => {
     onpointermove?.(e);
+    if (e.defaultPrevented) return;
     tooltipContext?.show(e, data);
-  }
-  function onPointerLeave(e: PointerEvent) {
+  };
+
+  const onPointerLeave: PointerEventHandler<SVGPathElement> = (e) => {
     onpointerleave?.(e);
+    if (e.defaultPrevented) return;
     tooltipContext?.hide();
-  }
+  };
 </script>
 
 {#if track}
@@ -284,12 +287,13 @@
     pathData={trackArc()}
     class="track"
     stroke="none"
-    bind:pathRef={trackArcEl}
-    {...typeof track === 'object' ? track : null}
+    bind:ref={trackRef}
+    {...typeof track === 'object' ? track : {}}
   />
 {/if}
 
 <Spline
+  bind:ref
   pathData={arc()}
   transform="translate({xOffset}, {yOffset})"
   {fill}
@@ -297,19 +301,16 @@
   {stroke}
   stroke-width={strokeWidth}
   {opacity}
-  class={className}
-  {...$$restProps}
-  {onclick}
+  {...restProps}
   onpointerenter={onPointerEnter}
   onpointermove={onPointerMove}
   onpointerleave={onPointerLeave}
   ontouchmove={(e) => {
-    if (tooltipContext) {
-      // Prevent touch to not interfer with pointer when using tooltip
-      e.preventDefault();
-    }
+    ontouchmove?.(e);
+    if (!tooltipContext) return;
+    // Prevent touch to not interfere with pointer when using tooltip
+    e.preventDefault();
   }}
-  on:touchmove
 />
 
-<slot value={tweenedState.current} centroid={trackArcCentroid} {boundingBox} />
+{@render children?.({ centroid: trackArcCentroid, boundingBox, value: tweenedState.current })}
