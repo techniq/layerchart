@@ -18,7 +18,7 @@
   import Group from './Group.svelte';
   import Marker from './Marker.svelte';
 
-  import { motionStore, type TweenedOptions } from '$lib/stores/motionStore.js';
+  import { motionState, motionStore, type TweenedOptions } from '$lib/stores/motionStore.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
   import { flattenPathData } from '../utils/path.js';
@@ -250,7 +250,8 @@
 
   let pathEl: SVGPathElement | undefined = undefined;
   const startPoint = writable<DOMPoint | undefined>(undefined);
-  $: endPoint = motionStore<DOMPoint | undefined>(undefined, {
+
+  const endPoint = motionState<DOMPoint | undefined>(undefined, {
     tweened: draw
       ? {
           duration: (typeof draw === 'object' && draw.duration) || 800,
