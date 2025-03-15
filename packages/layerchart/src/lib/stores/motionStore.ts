@@ -6,9 +6,27 @@ type ConstructorParameters<T> = T extends new (...args: infer P) => any ? P : ne
 export type SpringOptions<T = any> = ConstructorParameters<typeof Spring<T>>[1];
 export type TweenedOptions<T = any> = ConstructorParameters<typeof Tween<T>>[1];
 
-export type MotionOptions<T = any> = {
-  spring?: boolean | SpringOptions<T>;
-  tweened?: boolean | TweenedOptions<T>;
+export type SpringProp<T = any> = boolean | SpringOptions<T>;
+export type TweenedProp<T = any> = boolean | TweenedOptions<T>;
+
+export type MotionProps<T = any> = {
+  /**
+   * Tweened options for the motion state.
+   *
+   * - `true` - default spring options will be used
+   * - `false` - no spring animation will be applied
+   * - `SpringOptions` - spring options for the motion state
+   */
+  spring?: SpringProp<T>;
+
+  /**
+   * Tweened options for the motion state.
+   *
+   * - `true` - default tweened options will be used
+   * - `false` - no tween animation will be applied
+   * - `TweenedOptions` - tween options for the motion state
+   */
+  tweened?: TweenedProp<T>;
 };
 
 export type PropMotionOptions<T = any> = {
@@ -20,7 +38,7 @@ export type PropMotionOptions<T = any> = {
  * Convenient wrapper to create a motion store (spring(), tweened()) based on properties,
  * or fallback to basic writable state.
  */
-export function motionState<T>(value: T, options: MotionOptions<T>) {
+export function motionState<T>(value: T, options: MotionProps<T>) {
   if (options.spring) {
     return new Spring<T>(value, options.spring === true ? undefined : options.spring);
   } else if (options.tweened) {
@@ -28,7 +46,7 @@ export function motionState<T>(value: T, options: MotionOptions<T>) {
   } else {
     let current = $state(value);
     return {
-      set(newValue: T, _options?: MotionOptions<T>) {
+      set(newValue: T, _options?: MotionProps<T>) {
         current = newValue;
       },
       get current() {
@@ -41,7 +59,7 @@ export function motionState<T>(value: T, options: MotionOptions<T>) {
 /**
  * Convenient wrapper to create a motion store (spring(), tweened()) based on properties, or fall back to basic writable() store
  */
-export function motionStore<T = any>(value: T, options: MotionOptions<T>) {
+export function motionStore<T = any>(value: T, options: MotionProps<T>) {
   if (options.spring) {
     return spring<T>(value, options.spring === true ? undefined : options.spring);
   } else if (options.tweened) {
@@ -52,7 +70,8 @@ export function motionStore<T = any>(value: T, options: MotionOptions<T>) {
 }
 
 /**
- * Helper to resolve motion options with specific property option (useful for specifying per-prop delays)
+ * Helper to resolve motion options with specific property option
+ * (useful for specifying per-prop delays)
  */
 export function resolveOptions(prop: string, options: PropMotionOptions<any>) {
   return {

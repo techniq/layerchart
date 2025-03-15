@@ -12,9 +12,9 @@
   export type TransformContextValue = {
     mode: TransformMode;
     scale: number;
-    setScale(value: number, options?: MotionOptions): void;
+    setScale(value: number, options?: MotionProps): void;
     translate: { x: number; y: number };
-    setTranslate(point: { x: number; y: number }, options?: MotionOptions): void;
+    setTranslate(point: { x: number; y: number }, options?: MotionProps): void;
     moving: boolean;
     dragging: boolean;
     scrollMode: TransformScrollMode;
@@ -122,7 +122,7 @@
 <script lang="ts">
   import {
     motionStore,
-    type MotionOptions,
+    type MotionProps,
     type SpringOptions,
     type TweenedOptions,
     motionState,
@@ -349,11 +349,11 @@
 
   const moving = $derived(dragging || translating.current || scaling.current);
 
-  export function setTranslate(point: { x: number; y: number }, options?: MotionOptions) {
+  export function setTranslate(point: { x: number; y: number }, options?: MotionProps) {
     translating.handle(translate.set(point, options));
   }
 
-  export function setScale(value: number, options?: MotionOptions) {
+  export function setScale(value: number, options?: MotionProps) {
     scaling.handle(scale.set(value, options));
   }
 

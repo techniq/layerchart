@@ -1,18 +1,76 @@
+<script lang="ts" module>
+  export type GroupPropsWithoutHTML = {
+    /**
+     * Translate x
+     */
+    x?: number;
+
+    /**
+     * Initial translate x
+     *
+     * @default x
+     */
+    initialX?: number;
+
+    /**
+     * Translate y
+     */
+    y?: number;
+
+    /**
+     * Initial translate y
+     *
+     * @default y
+     */
+    initialY?: number;
+
+    /**
+     * Center within chart
+     *
+     * @default false
+     */
+    center?: boolean | 'x' | 'y';
+
+    /**
+     * Prevent `touchmove` default, which can interfere with `pointermove` when
+     * used with `Tooltip`, for example.
+     *
+     * @default false
+     */
+    preventTouchMove?: boolean;
+
+    children?: Snippet;
+
+    /**
+     * A reference to the rendered DOM element, which could be
+     * either nothing, a `<g>` element (when using `<Svg>`), or a `<div>` element
+     * (when using `<Html>`).
+     *
+     * @bindable
+     */
+    ref?: Element;
+
+    // this feels dirty, perhaps we could discriminate union it but we'd need to force a prop
+    [key: string]: any;
+  } & MotionProps;
+
+  export type GroupProps = GroupPropsWithoutHTML &
+    Without<HTMLAttributes<Element>, GroupPropsWithoutHTML>;
+</script>
+
 <script lang="ts">
   import { tick, type Snippet } from 'svelte';
   import { cls } from '@layerstack/tailwind';
   import { watch } from 'runed';
 
   import { getRenderContext } from './Chart.svelte';
-  import { chartContext } from './ChartContext.svelte';
-  import { motionState, type SpringOptions, type TweenedOptions } from '$lib/stores/motionStore.js';
+  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { fromStore } from 'svelte/store';
+  import type { HTMLAttributes } from 'svelte/elements';
+  import type { Without } from 'layerchart/utils/types.js';
+  import { getChartContext } from './Chart-Next.svelte';
 
-  const { width: widthStore, height: heightStore } = chartContext();
-
-  const width = fromStore(widthStore);
-  const height = fromStore(heightStore);
+  const ctx = getChartContext();
 
   let {
     x,
@@ -25,49 +83,18 @@
     tweened,
     class: className,
     children,
-    ref = $bindable(null),
+    ref = $bindable(),
     ...restProps
-  }: {
-    /**
-     * Translate x
-     */
-    x?: number;
-    initialX?: number;
-    /**
-     * Translate y
-     */
-    y?: number;
-    initialY?: number;
-    /**
-     * Center within chart
-     */
-    center?: boolean | 'x' | 'y';
-    /**
-     * Prevent `touchmove` default, which can interfere with `pointermove` when used with `Tooltip`, for example
-     */
-    preventTouchMove?: boolean;
-    spring?: boolean | SpringOptions;
-    tweened?: boolean | TweenedOptions;
-    onclick?: (e: MouseEvent) => void;
-    ondblclick?: (e: MouseEvent) => void;
-    onpointerenter?: (e: PointerEvent) => void;
-    onpointermove?: (e: PointerEvent) => void;
-    onpointerleave?: (e: PointerEvent) => void;
-    onpointerdown?: (e: PointerEvent) => void;
-    ontouchmove?: (e: TouchEvent) => void;
-    children?: Snippet;
-    ref?: Element | null;
-    // this feels dirty, perhaps we could discriminate union it but we'd need to force a prop
-    [key: string]: any;
-  } = $props();
+  }: GroupProps = $props();
 
-  const tweenedX = motionState(initialX, { spring, tweened });
-  const tweenedY = motionState(initialY, { spring, tweened });
+  const tweenedX = $derived(motionState(initialX, { spring, tweened }));
+  const tweenedY = $derived(motionState(initialY, { spring, tweened }));
 
-  watch([() => x, () => y, () => center, () => width.current, () => height.current], () => {
+  $effect(() => {
+    [x, y, center, ctx.width, ctx.height];
     tick().then(() => {
-      tweenedX.set(x ?? (center === 'x' || center === true ? width.current / 2 : 0));
-      tweenedY.set(y ?? (center === 'y' || center === true ? height.current / 2 : 0));
+      tweenedX.set(x ?? (center === 'x' || center === true ? ctx.width / 2 : 0));
+      tweenedY.set(y ?? (center === 'y' || center === true ? ctx.height / 2 : 0));
     });
   });
 
@@ -86,15 +113,13 @@
   }
 
   watch([() => tweenedX.current, () => tweenedY.current], () => {
-    if (renderContext === 'canvas') {
-      canvasContext.invalidate();
-    }
+    if (renderContext !== 'canvas') return;
+    canvasContext.invalidate();
   });
 
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-
-  if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({
+  $effect(() => {
+    if (renderContext !== 'canvas') return;
+    return canvasContext.register({
       name: 'Group',
       render,
       retainState: true,
@@ -107,15 +132,6 @@
         pointerdown: restProps.onpointerdown,
       },
     });
-  }
-
-  $effect(() => {
-    const ctx = renderContext;
-    return () => {
-      if (ctx === 'canvas') {
-        canvasUnregister();
-      }
-    };
   });
 
   function handleTouchMove(e: TouchEvent) {

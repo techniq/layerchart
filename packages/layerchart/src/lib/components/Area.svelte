@@ -81,6 +81,7 @@
   import { getChartContext } from './Chart-Next.svelte';
   import { motionState, type TweenedOptions } from 'layerchart/stores/motionStore.js';
   import { watch } from 'runed';
+  import { createKey } from 'layerchart/utils/key.svelte.js';
 
   const ctx = getChartContext<any>();
 
@@ -215,23 +216,14 @@
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  const fillKey = $derived(fill && typeof fill === 'object' ? objectId(fill) : fill);
-  const strokeKey = $derived(stroke && typeof stroke === 'object' ? objectId(stroke) : stroke);
+  const fillKey = createKey(() => fill);
+  const strokeKey = createKey(() => stroke);
 
-  watch(
-    [
-      () => fillKey,
-      () => fillOpacity,
-      () => strokeKey,
-      () => strokeWidth,
-      () => opacity,
-      () => className,
-    ],
-    () => {
-      if (renderContext !== 'canvas') return;
-      canvasContext.invalidate();
-    }
-  );
+  $effect(() => {
+    if (renderContext !== 'canvas') return;
+    [fillKey.current, fillOpacity, strokeKey.current, strokeWidth, opacity, className];
+    canvasContext.invalidate();
+  });
 
   $effect(() => {
     return canvasContext.register({

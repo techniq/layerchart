@@ -84,25 +84,29 @@
   export type CanvasProps = CanvasPropsWithoutHTML &
     Without<HTMLCanvasAttributes, CanvasPropsWithoutHTML>;
 
-  type ComponentRender = {
+  type ComponentRender<T extends Element> = {
     name: string;
     render: (ctx: CanvasRenderingContext2D, styleOverrides?: ComputedStylesOptions) => any;
     retainState?: boolean;
     events?: {
-      click?: (e: MouseEvent) => void;
-      dblclick?: (e: MouseEvent) => void;
-      pointerenter?: (e: PointerEvent) => void;
-      pointerover?: (e: PointerEvent) => void;
-      pointermove?: (e: PointerEvent) => void;
-      pointerleave?: (e: PointerEvent) => void;
-      pointerout?: (e: PointerEvent) => void;
-      pointerdown?: (e: PointerEvent) => void;
-      touchmove?: (e: TouchEvent) => void;
+      click?: MouseEventHandler<T> | null;
+      dblclick?: MouseEventHandler<T> | null;
+      pointerenter?: PointerEventHandler<T> | null;
+      pointerover?: PointerEventHandler<T> | null;
+      pointermove?: PointerEventHandler<T> | null;
+      pointerleave?: PointerEventHandler<T> | null;
+      pointerout?: PointerEventHandler<T> | null;
+      pointerdown?: PointerEventHandler<T> | null;
+      touchmove?: TouchEventHandler<T> | null;
     };
   };
 
   export type CanvasContextValue = {
-    /** Register component to render.  Returns method to unregister on component destory */
+    /**
+     * Register component to render.
+     *
+     * Returns method to unregister on component destroy
+     */
     register(component: ComponentRender): () => void;
     invalidate(): void;
   };
@@ -119,7 +123,7 @@
 </script>
 
 <script lang="ts">
-  import { onMount, onDestroy, type Snippet, untrack } from 'svelte';
+  import { onMount, type Snippet } from 'svelte';
   import { cls } from '@layerstack/tailwind';
   import { Logger, localPoint } from '@layerstack/utils';
   import { darkColorScheme } from '@layerstack/svelte-stores';
@@ -129,7 +133,12 @@
   import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
   import { Context, watch } from 'runed';
-  import type { HTMLCanvasAttributes } from 'svelte/elements';
+  import type {
+    HTMLCanvasAttributes,
+    MouseEventHandler,
+    PointerEventHandler,
+    TouchEventHandler,
+  } from 'svelte/elements';
   import type { Without } from 'layerchart/utils/types.js';
   import { getChartContext } from '../Chart-Next.svelte';
 
@@ -155,7 +164,6 @@
     onpointerleave,
     onpointerdown,
     ontouchmove,
-
     ...restProps
   }: CanvasProps = $props();
 

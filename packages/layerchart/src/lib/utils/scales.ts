@@ -1,7 +1,7 @@
 import { derived } from 'svelte/store';
 import { tweened, spring } from 'svelte/motion';
 
-import { type MotionOptions, motionStore } from '$lib/stores/motionStore.js';
+import { type MotionProps, motionStore } from '$lib/stores/motionStore.js';
 import { scaleBand, type ScaleBand } from 'd3-scale';
 import { unique } from '@layerstack/utils';
 
@@ -206,7 +206,7 @@ export function springScale<Domain, Range>(
 /**
  * Create a store wrapper around a d3-scale which interpolates the domain and/or range using `tweened()` or `spring()` stores.  Fallbacks to `writable()` store if not interpolating
  */
-export function motionScale<Domain, Range>(scale: AnyScale, options: MotionOptions) {
+export function motionScale<Domain, Range>(scale: AnyScale, options: MotionProps) {
   const domainStore = motionStore<Domain>(undefined as Domain, options);
   const rangeStore = motionStore<Range>(undefined as Range, options);
 

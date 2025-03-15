@@ -120,17 +120,10 @@
   // https://codepen.io/simeydotme/pen/rrOEmO/
 
   import { tick, type ComponentProps } from 'svelte';
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { arc as d3arc } from 'd3-shape';
   import { scaleLinear } from 'd3-scale';
 
-  import { chartContext } from './ChartContext.svelte';
-  import {
-    motionState,
-    motionStore,
-    type SpringOptions,
-    type TweenedOptions,
-  } from '$lib/stores/motionStore.js';
+  import { motionState, type SpringOptions, type TweenedOptions } from '$lib/stores/motionStore.js';
   import { degreesToRadians } from '$lib/utils/math.js';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import Spline from './Spline.svelte';

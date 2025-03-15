@@ -1,43 +1,134 @@
+<script lang="ts" module>
+  import { onDestroy, tick, type Snippet } from 'svelte';
+
+  export type SplinePropsWithoutHTML = {
+    /**
+     * Override data instead of using context
+     */
+    data?: any;
+
+    /**
+     * Pass `<path d={...} />` explicitly instead of calculating
+     * from data / context
+     */
+    pathData?: string | undefined | null;
+
+    /**
+     * Override `x` accessor from Chart context
+     */
+    x?: Accessor;
+
+    /**
+     * Override `y` accessor from Chart context
+     */
+    y?: Accessor;
+
+    /**
+     * Interpolate path data using d3-interpolate-path.
+     * Works best without `draw` enabled
+     */
+    tweened?: TweenedProp;
+
+    /** Draw path over time.  Works best without `tweened` enabled */
+    draw?: boolean | Parameters<typeof _drawTransition>[1];
+
+    /**
+     * Curve of spline drawn. Imported via d3-shape.
+     *
+     * @example
+     * import { curveNatural } from 'd3-shape';
+     * <Spline curve={curveNatural} />
+     *
+     * @type {CurveFactory | CurveFactoryLineOnly | undefined}
+     */
+    curve?: CurveFactory | CurveFactoryLineOnly;
+
+    /**
+     * Function to determine if a point is defined
+     *
+     * @example
+     * <Spline defined={(d) => d.value !== null} />
+     */
+    defined?: Parameters<Line<any>['defined']>[0];
+
+    fill?: string;
+    fillOpacity?: number;
+    stroke?: string;
+    strokeWidth?: number;
+    opacity?: number | string;
+
+    /**
+     * Marker to attach to both start and end points of the line
+     */
+    marker?: MarkerOptions;
+
+    /**
+     * Marker to attach to the middle point of the line
+     */
+    markerMid?: MarkerOptions;
+
+    /**
+     * Marker to attach to the start point of the line
+     */
+    markerStart?: MarkerOptions;
+
+    /**
+     * Marker to attach to the end point of the line
+     */
+    markerEnd?: MarkerOptions;
+
+    /**
+     * Insert content inside the start group
+     */
+    start?: Snippet<[{ point: DOMPoint }]>;
+
+    /**
+     * Insert content inside the end group
+     */
+    end?: Snippet<[{ point: DOMPoint }]>;
+
+    /**
+     * A reference to the `<path>` element.
+     *
+     * @bindable
+     */
+    ref?: SVGPathElement;
+  };
+
+  export type SplineProps = SplinePropsWithoutHTML &
+    Without<SVGAttributes<SVGPathElement>, SplinePropsWithoutHTML>;
+</script>
+
 <script lang="ts">
-  import { onDestroy, tick, type ComponentProps, type Snippet } from 'svelte';
-  import { writable } from 'svelte/store';
   import { draw as _drawTransition } from 'svelte/transition';
   import { cubicInOut } from 'svelte/easing';
   import { merge } from 'lodash-es';
 
   import { line as d3Line, lineRadial } from 'd3-shape';
   import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
-  // import { interpolateString } from 'd3-interpolate';
   import { interpolatePath } from 'd3-interpolate-path';
   import { max } from 'd3-array';
   import { cls } from '@layerstack/tailwind';
   import { uniqueId } from '@layerstack/utils';
-  import { objectId } from '@layerstack/utils/object';
 
-  import { chartContext } from './ChartContext.svelte';
   import Group from './Group.svelte';
-  import Marker from './Marker.svelte';
 
-  import { motionState, motionStore, type TweenedOptions } from '$lib/stores/motionStore.js';
+  import { motionState, type TweenedProp } from '$lib/stores/motionStore.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
   import { flattenPathData } from '../utils/path.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getRenderContext } from './Chart.svelte';
+  import type { MarkerOptions } from './MarkerWrapper.svelte';
+  import type { Without } from 'layerchart/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
+  import MarkerWrapper from './MarkerWrapper.svelte';
+  import { getChartContext } from './Chart-Next.svelte';
+  import { watch } from 'runed';
+  import { createKey } from 'layerchart/utils/key.svelte.js';
 
-  const {
-    data: contextData,
-    xScale,
-    yScale,
-    x: contextX,
-    y: contextY,
-    yRange,
-    radial,
-    config,
-  } = chartContext();
-
-  type MarkerOptions = ComponentProps<typeof Marker>['type'] | ComponentProps<typeof Marker>;
+  const ctx = getChartContext();
 
   let {
     data,
@@ -53,70 +144,25 @@
     strokeWidth,
     fillOpacity,
     class: className,
-    markerOptions,
-    markerStartOptions,
-    markerMidOptions,
-    markerEndOptions,
     markerStart,
     markerMid,
     markerEnd,
+    start,
+    end,
     opacity,
+    ref = $bindable(),
     ...restProps
-  }: {
-    /** Override data instead of using context */
-    data?: any;
-    /** Pass `<path d={...} />` explicitly instead of calculating from data / context */
-    pathData?: string | undefined | null;
-    /** Override `x` accessor from Chart context */
-    x?: Accessor;
-    /** Override `y` accessor from Chart context */
-    y?: Accessor;
-    /** Interpolate path data using d3-interpolate-path.  Works best without `draw` enabled */
-    tweened?: boolean | TweenedOptions;
-    /** Draw path over time.  Works best without `tweened` enabled */
-    draw?: boolean | Parameters<typeof _drawTransition>[1];
-    /**
-     * Curve of spline drawn. Imported via d3-shape.
-     *
-     * @example
-     * import { curveNatural } from 'd3-shape';
-     * <Spline curve={curveNatrual} />
-     *
-     * @type {CurveFactory | CurveFactoryLineOnly | undefined}
-     */
-    curve?: CurveFactory | CurveFactoryLineOnly;
-    defined?: Parameters<Line<any>['defined']>[0];
-    fill?: string;
-    fillOpacity?: number;
-    stroke?: string;
-    strokeWidth?: number;
-    class?: string;
-    onclick?: (e: MouseEvent) => void;
-    onpointerenter?: (e: PointerEvent) => void;
-    onpointermove?: (e: PointerEvent) => void;
-    onpointerleave?: (e: PointerEvent) => void;
-    onpointerdown?: (e: PointerEvent) => void;
-    ontouchmove?: (e: TouchEvent) => void;
-    onpointerover?: (e: PointerEvent) => void;
-    onpointerout?: (e: PointerEvent) => void;
-    markerOptions?: MarkerOptions;
-    markerStartOptions?: MarkerOptions;
-    markerMidOptions?: MarkerOptions;
-    markerEndOptions?: MarkerOptions;
-    /** Marker to attach to start point of path */
-    markerStart?: Snippet<[{ id: string }]>;
-    /** Marker to attach to all mid points of path */
-    markerMid?: Snippet<[{ id: string }]>;
-    /** Marker to attach to end point of path */
-    markerEnd?: Snippet<[{ id: string }]>;
-    opacity?: number | string;
-  } = $props();
+  }: SplineProps = $props();
 
-  const markerStartId = $derived(markerStartOptions || markerStart ? uniqueId('marker-') : '');
-  const markerMidId = $derived(markerMidOptions || markerMid ? uniqueId('marker-') : '');
-  const markerEndId = $derived(markerEndOptions || markerEnd ? uniqueId('marker-') : '');
+  const markerStartId = $derived(markerStart ? uniqueId('marker-') : '');
+  const markerMidId = $derived(markerMid ? uniqueId('marker-') : '');
+  const markerEndId = $derived(markerEnd ? uniqueId('marker-') : '');
 
-  function getScaleValue(data: any, scale: typeof $xScale | typeof $yScale, accessor: Function) {
+  function getScaleValue(
+    data: any,
+    scale: typeof ctx.xScale | typeof ctx.yScale,
+    accessor: Function
+  ) {
     let value = accessor(data);
 
     if (Array.isArray(value)) {
@@ -132,11 +178,17 @@
     }
   }
 
-  const xAccessor = $derived(x ? accessor(x) : $contextX);
-  const yAccessor = $derived(y ? accessor(y) : $contextY);
+  const xAccessor = $derived(x ? accessor(x) : ctx.x);
+  const yAccessor = $derived(y ? accessor(y) : ctx.y);
 
-  const yOffset = $derived(isScaleBand($xScale) ? $xScale.bandwidth() / 2 : 0);
-  const xOffset = $derived(isScaleBand($yScale) ? $yScale.bandwidth() / 2 : 0);
+  const yOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
+  const xOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
+
+  const tweenedOptions = $derived(
+    tweened
+      ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
+      : false
+  );
 
   /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
   function defaultPathData() {
@@ -145,55 +197,60 @@
       return '';
     } else if (pathData) {
       // Flatten all `y` coordinates of pre-defined `pathData`
-      return flattenPathData(pathData, Math.min($yScale(0), $yRange[0]));
-    } else if ($config.x) {
+      return flattenPathData(pathData, Math.min(ctx.yScale(0), ctx.yRange[0]));
+    } else if (ctx.config.x) {
       // Only use default line if `x` accessor is defined (cartesian chart)
-      const path = $radial
+      const path = ctx.radial
         ? lineRadial()
-            .angle((d) => $xScale(xAccessor(d)))
-            .radius((d) => Math.min($yScale(0), $yRange[0]))
+            .angle((d) => ctx.xScale(xAccessor(d)))
+            .radius((d) => Math.min(ctx.yScale(0), ctx.yRange[0]))
         : d3Line()
-            .x((d) => $xScale(xAccessor(d)) + xOffset)
-            .y((d) => Math.min($yScale(0), $yRange[0]));
+            .x((d) => ctx.xScale(xAccessor(d)) + xOffset)
+            .y((d) => Math.min(ctx.yScale(0), ctx.yRange[0]));
 
       path.defined(defined ?? ((d) => xAccessor(d) != null && yAccessor(d) != null));
 
       if (curve) path.curve(curve);
 
-      return path(data ?? $contextData);
+      return path(data ?? ctx.data);
     }
   }
 
-  let d: string | null = '';
-  const tweenedOptions = tweened
-    ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
-    : false;
-  $: tweened_d = motionStore(defaultPathData(), { tweened: tweenedOptions });
-  $: {
-    const path = $radial
+  const tweenedState = $derived(
+    motionState(defaultPathData(), {
+      tweened: tweenedOptions,
+    })
+  );
+
+  const d = $derived.by(() => {
+    const path = ctx.radial
       ? lineRadial()
-          .angle((d) => getScaleValue(d, $xScale, xAccessor))
-          .radius((d) => getScaleValue(d, $yScale, yAccessor))
+          .angle((d) => getScaleValue(d, ctx.xScale, xAccessor))
+          .radius((d) => getScaleValue(d, ctx.yScale, yAccessor))
       : d3Line()
-          .x((d) => getScaleValue(d, $xScale, xAccessor) + xOffset)
-          .y((d) => getScaleValue(d, $yScale, yAccessor) + yOffset);
+          .x((d) => getScaleValue(d, ctx.xScale, xAccessor) + xOffset)
+          .y((d) => getScaleValue(d, ctx.yScale, yAccessor) + yOffset);
 
     path.defined(defined ?? ((d) => xAccessor(d) != null && yAccessor(d) != null));
-
     if (curve) path.curve(curve);
 
-    d = pathData ?? path(data ?? $contextData) ?? '';
-    tweened_d.set(d);
-  }
+    return pathData ?? path(data ?? ctx.data) ?? '';
+  });
 
-  $: drawTransition = draw ? _drawTransition : () => ({});
+  $effect(() => {
+    tweenedState.set(d);
+  });
 
-  let key = Symbol();
-  $: if (draw) {
+  const drawTransition = $derived(draw ? _drawTransition : () => ({}));
+
+  let key = $state(Symbol());
+
+  $effect(() => {
+    if (!draw) return;
+    [tweenedState.current];
     // Anytime the path data changes, redraw
-    $tweened_d;
     key = Symbol();
-  }
+  });
 
   const renderContext = getRenderContext();
   const canvasContext = getCanvasContext();
@@ -204,7 +261,7 @@
   ) {
     renderPathData(
       ctx,
-      $tweened_d,
+      tweenedState.current,
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
@@ -215,18 +272,19 @@
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  $: fillKey = fill && typeof fill === 'object' ? objectId(fill) : fill;
-  $: strokeKey = stroke && typeof stroke === 'object' ? objectId(stroke) : stroke;
+  const fillKey = createKey(() => fill);
+  const strokeKey = createKey(() => stroke);
 
-  $: if (renderContext === 'canvas') {
+  $effect(() => {
+    if (renderContext !== 'canvas') return;
     // Redraw when props change
-    $tweened_d && fillKey && fillOpacity && strokeKey && strokeWidth && className;
+    [fillKey.current, fillOpacity, strokeKey.current, strokeWidth, opacity, className];
     canvasContext.invalidate();
-  }
+  });
 
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({
+  $effect(() => {
+    if (renderContext !== 'canvas') return;
+    return canvasContext.register({
       name: 'Spline',
       render,
       events: {
@@ -240,26 +298,30 @@
         touchmove: restProps.ontouchmove,
       },
     });
-  }
-
-  onDestroy(() => {
-    if (renderContext === 'canvas') {
-      canvasUnregister();
-    }
   });
 
-  let pathEl: SVGPathElement | undefined = undefined;
-  const startPoint = writable<DOMPoint | undefined>(undefined);
+  let startPoint = $state<DOMPoint | undefined>();
+
+  const endPointDuration = $derived.by(() => {
+    if (
+      typeof draw === 'object' &&
+      draw.duration !== undefined &&
+      typeof draw.duration !== 'function'
+    ) {
+      return draw.duration;
+    }
+    return 800;
+  });
 
   const endPoint = motionState<DOMPoint | undefined>(undefined, {
     tweened: draw
       ? {
-          duration: (typeof draw === 'object' && draw.duration) || 800,
-          easing: (typeof draw === 'object' && draw.easing) || cubicInOut,
-          interpolate(a, b) {
+          duration: () => endPointDuration,
+          easing: typeof draw === 'object' && draw.easing ? draw.easing : cubicInOut,
+          interpolate() {
             return (t: number) => {
-              const totalLength = pathEl?.getTotalLength() ?? 0;
-              const point = pathEl?.getPointAtLength(totalLength * t);
+              const totalLength = ref?.getTotalLength() ?? 0;
+              const point = ref?.getPointAtLength(totalLength * t);
               return point;
             };
           },
@@ -267,28 +329,23 @@
       : false,
   });
 
-  $: {
-    if ($$slots.start || $$slots.end) {
-      // Wait for path data to update DOM, then update
-      d;
-      tick().then(() => {
-        if (pathEl) {
-          startPoint.set(pathEl.getPointAtLength(0));
-
-          const totalLength = pathEl.getTotalLength();
-          endPoint.set(pathEl.getPointAtLength(totalLength));
-        }
-      });
-    }
-  }
+  $effect(() => {
+    if (!start || !end) return;
+    d;
+    tick().then(() => {
+      if (!ref) return;
+      startPoint = ref.getPointAtLength(0);
+      const totalLength = ref.getTotalLength();
+      endPoint.set(ref.getPointAtLength(totalLength));
+    });
+  });
 </script>
 
 {#if renderContext === 'svg'}
   {#key key}
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <path
-      d={$tweened_d}
-      {...$$restProps}
+      d={tweenedState.current}
+      {...restProps}
       class={cls('path-line', !fill && 'fill-none', !stroke && 'stroke-surface-content', className)}
       {fill}
       fill-opacity={fillOpacity}
@@ -299,52 +356,22 @@
       marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
       marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
       in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
-      on:click={onclick}
-      on:pointerenter={onpointerenter}
-      on:pointermove={onpointermove}
-      on:pointerleave={onpointerleave}
-      on:pointerdown={onpointerdown}
-      on:pointerover={onpointerover}
-      on:pointerout={onpointerout}
-      on:touchmove={ontouchmove}
-      bind:this={pathEl}
+      {...restProps}
+      bind:this={ref}
     />
+    <MarkerWrapper id={markerStartId} marker={markerStart} />
+    <MarkerWrapper id={markerMidId} marker={markerMid} />
+    <MarkerWrapper id={markerEndId} marker={markerEnd} />
 
-    <slot name="markerStart" id={markerStartId}>
-      {#if markerStart}
-        <Marker
-          id={markerStartId}
-          type={typeof markerStart === 'string' ? markerStart : undefined}
-          {...typeof markerStart === 'object' ? markerStart : null}
-        />
-      {/if}
-    </slot>
-
-    <slot name="markerMid" id={markerMidId}>
-      <Marker
-        id={markerMidId}
-        type={typeof markerMid === 'string' ? markerMid : undefined}
-        {...typeof markerMid === 'object' ? markerMid : null}
-      />
-    </slot>
-
-    <slot name="markerEnd" id={markerEndId}>
-      <Marker
-        id={markerEndId}
-        type={typeof markerEnd === 'string' ? markerEnd : undefined}
-        {...typeof markerEnd === 'object' ? markerEnd : null}
-      />
-    </slot>
-
-    {#if $$slots.start && $startPoint}
-      <Group x={$startPoint.x} y={$startPoint.y}>
-        <slot name="start" point={$startPoint} />
+    {#if start && startPoint}
+      <Group x={startPoint.x} y={startPoint.y}>
+        {@render start({ point: startPoint })}
       </Group>
     {/if}
 
-    {#if $$slots.end && $endPoint}
-      <Group x={$endPoint.x} y={$endPoint.y}>
-        <slot name="end" point={$endPoint} />
+    {#if end && endPoint.current}
+      <Group x={endPoint.current.x} y={endPoint.current.y}>
+        {@render end({ point: endPoint.current })}
       </Group>
     {/if}
   {/key}
