@@ -4,7 +4,7 @@
   import { type Accessor, accessor } from '$lib/utils/common.js';
   import { printDebug } from '$lib/utils/debug.js';
   import { filterObject } from '$lib/utils/filter-object.js';
-  import type { AnyScale, DomainType } from '$lib/utils/scales.js';
+  import { isScaleBand, type AnyScale, type DomainType } from '$lib/utils/scales.js';
   import { Context, useDebounce } from 'runed';
   import type {
     AxisKey,
@@ -26,6 +26,7 @@
   import type { ComponentProps, Snippet } from 'svelte';
   import GeoContext from './GeoContext.svelte';
   import TooltipContext from './tooltip/TooltipContext.svelte';
+  import { max, min } from 'd3-array';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -65,10 +66,10 @@
     yDomain: DomainType;
     zDomain: DomainType;
     rDomain: DomainType;
-    xRange: any[] | null;
-    yRange: any[] | null;
-    zRange: any[] | null;
-    rRange: any[] | null;
+    xRange: any[];
+    yRange: any[];
+    zRange: any[];
+    rRange: any[];
     custom: Record<string, any>;
     xScale: AnyScale;
     yScale: AnyScale;
@@ -232,23 +233,6 @@
      * access it through the context.
      */
     c?: Accessor<T>;
-
-    /**
-     * Set a min or max. For linear scales, if you want to inherit the value from the data's
-     * extent, set that value to `null`. This value can also be an array because sometimes your
-     * scales are [piecewise](https://github.com/d3/d3-scale#continuous_domain) or are a list of
-     * discrete values such as in [ordinal scales](https://github.com/d3/d3-scale#ordinal-scales),
-     * useful for color series. Set it to a function that receives the computed domain and lets you
-     * return a modified domain, useful for sorting values.
-     */
-    xDomain?: DomainType;
-
-    /**
-     * Set a min or max. For linear scales, if you want to inherit the value from the data's
-     * extent, set that value to `null`.  Set it to a function that receives the computed domain
-     * and lets you return a modified domain, useful for sorting values.
-     */
-    yDomain?: DomainType;
 
     /**
      * Set a min or max. For linear scales, if you want to inherit the value from the data's
@@ -479,24 +463,32 @@
     /**
      * ***Only used when scale is ordinal.***
      * Set whether the calculated unique items come back sorted.
+     *
+     * @default false
      */
     xDomainSort?: boolean;
 
     /**
      * ***Only used when scale is ordinal.***
      * Set whether the calculated unique items come back sorted.
+     *
+     * @default false
      */
     yDomainSort?: boolean;
 
     /**
      * ***Only used when scale is ordinal.***
      * Set whether the calculated unique items come back sorted.
+     *
+     * @default false
      */
     zDomainSort?: boolean;
 
     /**
      * ***Only used when scale is ordinal.***
      * Set whether the calculated unique items come back sorted.
+     *
+     * @default false
      */
     rDomainSort?: boolean;
 
@@ -520,18 +512,23 @@
     };
 
     /**
-     * Any extra configuration values you want available on the Chart context. This could be
-     * useful for color lookups or additional constants.
+     * Any extra configuration values you want available on the Chart context.
+     * This could be useful for color lookups or additional constants.
      */
     custom?: Record<string, any>;
 
     /**
-     * Enable debug printing to the console. Useful to inspect your scales and dimensions.
+     * Enable debug printing to the console.
+     * Useful to inspect your scales and dimensions.
+     *
+     * @default false
      */
     debug?: boolean;
 
     /**
      * Show warnings in the console.
+     *
+     * @default true
      */
     verbose?: boolean;
 
@@ -580,6 +577,14 @@
      */
     tooltip?: Partial<ComponentProps<typeof TooltipContext>> | boolean;
 
+    /**
+     * Exposed via `bind:` to support `bind:tooltipContext`
+     * for external access.
+     *
+     * @bindable
+     */
+    tooltipContext?: ComponentProps<typeof TooltipContext>['tooltip'];
+
     // /** Exposed via bind: to support `bind:tooltipContext` for external access (ex. `tooltipContext.data) */
     // tooltipContext?: typeof tooltipContext;
 
@@ -621,8 +626,6 @@
     z: zProp,
     r: rProp,
     data = [] as TData,
-    xDomain: xDomainProp,
-    yDomain: yDomainProp,
     zDomain: zDomainProp,
     rDomain: rDomainProp,
     xNice = false,
@@ -647,24 +650,64 @@
     verbose = true,
     debug = false,
     extents: extentsProp = {},
-    xDomainSort = true,
-    yDomainSort = true,
-    zDomainSort = true,
-    rDomainSort = true,
+    xDomainSort = false,
+    yDomainSort = false,
+    zDomainSort = false,
+    rDomainSort = false,
     xReverse = false,
-    yReverse = false,
     zReverse = false,
     rReverse = false,
     xRange: xRangeProp,
-    yRange: yRangeProp,
+    yRange: _yRangeProp,
     zRange: zRangeProp,
     rRange: rRangeProp,
+    xBaseline = null,
+    yBaseline = null,
     custom = {},
     children,
     radial = false,
   }: ChartPropsWithoutHTML<TData> = $props();
 
   const logDebug = useDebounce(printDebug, 200);
+
+  const _xDomain: DomainType | undefined = $derived.by(() => {
+    if (xBaseline != null && Array.isArray(data)) {
+      const xValues = data.flatMap(accessor(xProp));
+      return [min([xBaseline, ...xValues]), max([xBaseline, ...xValues])];
+    }
+  });
+
+  const _yDomain: DomainType | undefined = $derived.by(() => {
+    if (yBaseline != null && Array.isArray(data)) {
+      const yValues = data.flatMap(accessor(yProp));
+      return [min([yBaseline, ...yValues]), max([yBaseline, ...yValues])];
+    }
+  });
+
+  const yRangeProp = $derived(
+    _yRangeProp ?? (radial ? ({ height }: { height: number }) => [0, height / 2] : undefined)
+  );
+
+  /**
+   * Preserve a copy of our passed in settings before we modify them.
+   * Return this to the user's context so they can reference things if
+   * needed. Add the active keys since those aren't on our settings
+   * object. This is mostly an escape hatch.
+   */
+  const config = $derived({
+    x: xProp,
+    y: yProp,
+    z: zProp,
+    r: rProp,
+    zDomain: zDomainProp,
+    rDomain: rDomainProp,
+    xRange: xRangeProp,
+    yRange: yRangeProp,
+    zRange: zRangeProp,
+    rRange: rRangeProp,
+  });
+
+  const yReverse = $derived(yScaleProp ? !isScaleBand(yScaleProp) : true);
 
   const x = $derived(accessor(xProp));
   const y = $derived(accessor(yProp));
@@ -757,8 +800,8 @@
     }
   });
 
-  const xDomain = $derived(calcDomain('x', extents, xDomainProp));
-  const yDomain = $derived(calcDomain('y', extents, yDomainProp));
+  const xDomain = $derived(calcDomain('x', extents, _xDomain));
+  const yDomain = $derived(calcDomain('y', extents, _yDomain));
   const zDomain = $derived(calcDomain('z', extents, zDomainProp));
   const rDomain = $derived(calcDomain('r', extents, rDomainProp));
 
