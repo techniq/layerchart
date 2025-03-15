@@ -42,6 +42,8 @@
     opacity?: number;
     radius?: number;
 
+    insets?: Insets;
+
     /**
      * Control which corners are rounded with radius. Uses <path> instead of <rect> when not set
      * to `all`
@@ -60,11 +62,11 @@
       | 'bottom-right';
   } & MotionProps;
 
-  export type BarProps = BarPropsWithoutHTML & Without<SVGAttributes<Element>, BarPropsWithoutHTML>;
+  export type BarProps = BarPropsWithoutHTML &
+    Without<Omit<SVGAttributes<Element>, 'width' | 'height' | 'x' | 'y'>, BarPropsWithoutHTML>;
 </script>
 
 <script lang="ts">
-  import { chartContext } from './ChartContext.svelte';
   import Rect from './Rect.svelte';
   import Spline from './Spline.svelte';
 
@@ -93,8 +95,9 @@
     rounded: roundedProp = 'all',
     spring,
     tweened,
+    insets,
     ...restProps
-  }: BarPropsWithoutHTML = $props();
+  }: BarProps = $props();
 
   const stroke = $derived(strokeProp ? strokeProp : 'black');
 
@@ -103,6 +106,7 @@
     y,
     x1,
     y1,
+    insets,
   }));
 
   const dimensions = $derived(getDimension(bar) ?? { x: 0, y: 0, width: 0, height: 0 });

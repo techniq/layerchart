@@ -1,69 +1,100 @@
+<script lang="ts" module>
+  export type RectPropsWithoutHTML = {
+    /**
+     * @default 0
+     */
+    x?: number;
+
+    /**
+     * @default x
+     */
+    initialX?: number;
+
+    /**
+     * @default 0
+     */
+    y?: number;
+
+    /**
+     * @default y
+     */
+    initialY?: number;
+    width: number;
+    initialWidth?: number;
+    height: number;
+    initialHeight?: number;
+    fill?: string;
+    fillOpacity?: number;
+    stroke?: string;
+    strokeWidth?: number;
+    opacity?: number;
+    /**
+     * Underlying `<rect>` tag when using <Svg>. Useful for bindings.
+     *
+     * @bindable
+     */
+    ref?: SVGRectElement;
+  } & MotionProps;
+
+  export type RectProps = RectPropsWithoutHTML &
+    Without<SVGAttributes<SVGRectElement>, RectPropsWithoutHTML>;
+</script>
+
 <script lang="ts">
-  import { onDestroy, tick } from 'svelte';
-  import type { ClassValue } from 'svelte/elements';
   import { cls } from '@layerstack/tailwind';
-  import { objectId } from '@layerstack/utils/object';
   import { merge } from 'lodash-es';
 
-  import {
-    motionStore,
-    resolveOptions,
-    type SpringOptions,
-    type TweenedOptions,
-  } from '$lib/stores/motionStore.js';
+  import { motionState, resolveOptions, type MotionProps } from '$lib/stores/motionStore.js';
   import { getRenderContext } from './Chart.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import { afterTick } from 'layerchart/utils/after-tick.js';
+  import { createKey } from 'layerchart/utils/key.svelte.js';
+  import type { Without } from 'layerchart/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
 
-  /** Undlying `<rect>` tag when using <Svg>. Useful for bindings. */
-  export let element: SVGRectElement | undefined = undefined;
+  let {
+    height,
+    width,
+    x = 0,
+    y = 0,
+    initialX = x,
+    initialY = y,
+    fill,
+    fillOpacity,
+    stroke,
+    initialHeight = height,
+    initialWidth = width,
+    strokeWidth,
+    opacity,
+    ref = $bindable(),
+    spring,
+    tweened,
+    class: className,
+    ...restProps
+  }: RectProps = $props();
 
-  export let x = 0;
-  export let initialX = x;
+  const tweenedX = $derived(motionState(initialX, resolveOptions('x', { spring, tweened })));
+  const tweenedY = $derived(motionState(initialY, resolveOptions('y', { spring, tweened })));
+  const tweenedWidth = $derived(
+    motionState(initialWidth, resolveOptions('width', { spring, tweened }))
+  );
+  const tweenedHeight = $derived(
+    motionState(initialHeight, resolveOptions('height', { spring, tweened }))
+  );
 
-  export let y = 0;
-  export let initialY = y;
+  const renderCtx = getRenderContext();
+  const canvasCtx = getCanvasContext();
 
-  export let width: number;
-  export let initialWidth = width;
-
-  export let height: number;
-  export let initialHeight = height;
-
-  export let fill: string | undefined = undefined;
-  export let fillOpacity: number | undefined = undefined;
-  export let stroke: string | undefined = undefined;
-  export let strokeWidth: number | undefined = undefined;
-  export let opacity: number | undefined = undefined;
-
-  let className: ClassValue | undefined = undefined;
-  export { className as class };
-
-  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let ondblclick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerover: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerout: ((e: PointerEvent) => void) | undefined = undefined;
-
-  export let spring: boolean | SpringOptions | { [prop: string]: SpringOptions } = undefined;
-  export let tweened: boolean | TweenedOptions | { [prop: string]: TweenedOptions } = undefined;
-
-  let tweened_x = motionStore(initialX, resolveOptions('x', { spring, tweened }));
-  let tweened_y = motionStore(initialY, resolveOptions('y', { spring, tweened }));
-  let tweened_width = motionStore(initialWidth, resolveOptions('width', { spring, tweened }));
-  let tweened_height = motionStore(initialHeight, resolveOptions('height', { spring, tweened }));
-
-  $: tick().then(() => {
-    tweened_x.set(x);
-    tweened_y.set(y);
-    tweened_width.set(width);
-    tweened_height.set(height);
+  $effect(() => {
+    [x, y, width, height];
+    afterTick(() => {
+      tweenedX.set(x);
+      tweenedY.set(y);
+      tweenedWidth.set(width);
+      tweenedHeight.set(height);
+    });
   });
-
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -71,7 +102,12 @@
   ) {
     renderRect(
       ctx,
-      { x: $tweened_x, y: $tweened_y, width: $tweened_width, height: $tweened_height },
+      {
+        x: tweenedX.current,
+        y: tweenedY.current,
+        width: tweenedWidth.current,
+        height: tweenedHeight.current,
+      },
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
@@ -82,26 +118,12 @@
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  $: fillKey = fill && typeof fill === 'object' ? objectId(fill) : fill;
-  $: strokeKey = stroke && typeof stroke === 'object' ? objectId(stroke) : stroke;
+  const fillKey = createKey(() => fill);
+  const strokeKey = createKey(() => stroke);
 
-  $: if (renderContext === 'canvas') {
-    // Redraw when props change
-    $tweened_x &&
-      $tweened_y &&
-      $tweened_width &&
-      $tweened_height &&
-      fillKey &&
-      strokeKey &&
-      strokeWidth &&
-      opacity &&
-      className;
-    canvasContext.invalidate();
-  }
-
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
+    return canvasCtx.register({
       name: 'Rect',
       render,
       events: {
@@ -114,37 +136,38 @@
         pointerout: onpointerout,
       },
     });
-  }
+  });
 
-  onDestroy(() => {
-    if (renderContext === 'canvas') {
-      canvasUnregister();
-    }
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
+    [
+      tweenedX.current,
+      tweenedY.current,
+      tweenedWidth.current,
+      tweenedHeight.current,
+      fillKey.current,
+      strokeKey.current,
+      strokeWidth,
+      opacity,
+      className,
+    ];
+    canvasCtx.invalidate();
   });
 </script>
 
-{#if renderContext === 'svg'}
-  <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+{#if renderCtx === 'svg'}
   <rect
-    x={$tweened_x}
-    y={$tweened_y}
-    width={$tweened_width}
-    height={$tweened_height}
+    x={tweenedX.current}
+    y={tweenedY.current}
+    width={tweenedWidth.current}
+    height={tweenedHeight.current}
     {fill}
     fill-opacity={fillOpacity}
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
     class={cls(fill == null && 'fill-surface-content', className)}
-    {...$$restProps}
-    on:click={onclick}
-    on:dblclick={ondblclick}
-    on:pointerenter={onpointerenter}
-    on:pointerover={onpointerover}
-    on:pointermove={onpointermove}
-    on:pointerout={onpointerout}
-    on:pointerleave={onpointerleave}
-    bind:this={element}
+    {...restProps}
+    bind:this={ref}
   />
 {/if}
