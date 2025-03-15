@@ -106,7 +106,7 @@
     flatData: T[];
     extents: Extents;
     xDomain: DomainType;
-    yDomain: DomainType;
+    yDomain: number[];
     zDomain: DomainType;
     rDomain: DomainType;
     cDomain: DomainType;
@@ -984,7 +984,7 @@
   const cGet = $derived(createGetter(c, cScale));
 
   const xDomainPossiblyNice = $derived(xScale.domain());
-  const yDomainPossiblyNIce = $derived(yScale.domain());
+  const yDomainPossiblyNice = $derived(yScale.domain());
   const zDomainPossiblyNice = $derived(zScale.domain());
   const rDomainPossiblyNice = $derived(rScale.domain());
 
@@ -1004,7 +1004,7 @@
     x1: x1Prop,
     y1: y1Prop,
     xDomain: _xDomain ?? null,
-    yDomain: _yDomain ?? null,
+    yDomain,
     zDomain: zDomainProp ?? null,
     rDomain: rDomainProp ?? null,
     x1Domain: x1DomainProp ?? null,
@@ -1129,7 +1129,7 @@
       return xDomainPossiblyNice;
     },
     get yDomain() {
-      return yDomainPossiblyNIce;
+      return yDomainPossiblyNice;
     },
     get zDomain() {
       return zDomainPossiblyNice;
