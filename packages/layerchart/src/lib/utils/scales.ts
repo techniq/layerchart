@@ -3,20 +3,58 @@ import { tweened, spring } from 'svelte/motion';
 
 import { type MotionOptions, motionStore } from '$lib/stores/motionStore.js';
 import { scaleBand, type ScaleBand } from 'd3-scale';
-import { unique, type FormatType } from '@layerstack/utils';
+import { unique } from '@layerstack/utils';
 
-export interface AnyScale<Domain = any, Range = any, Input = Domain, Output = any> {
-  (value: Input): Output;
-  invert?: (value: Output) => Input;
-  domain(): Domain[];
-  domain(domain: Iterable<Domain>): this;
-  range(): Range[];
-  range(range: Iterable<Range>): this;
+export type AnyScale<
+  TInput extends SingleDomainType = any,
+  TOutput extends SingleDomainType = any,
+  TScaleArgs extends any[] | readonly any[] = any[],
+> = {
+  (value: TInput): TOutput;
+  domain(domain: TInput[] | readonly TInput[]): AnyScale<TInput, TOutput, TScaleArgs>;
+  domain(): TInput[];
+  range(range: TOutput[] | readonly TOutput[]): AnyScale<TInput, TOutput, TScaleArgs>;
+  range(): TOutput[];
+  copy: () => AnyScale<TInput, TOutput, TScaleArgs>;
+  invert?: (value: TOutput) => TInput;
   bandwidth?: () => number;
-  ticks?: (count: number) => any;
-  tickFormat?: FormatType;
-  copy(): this;
+  ticks?: (count?: number) => TInput[];
+  tickFormat?: (count?: number) => (value: TInput) => string;
+  clamp?: (clamp: boolean) => AnyScale<TInput, TOutput, TScaleArgs>;
+  interpolate?: (
+    interpolate: (a: TOutput, b: TOutput) => (t: number) => TOutput
+  ) => AnyScale<TInput, TOutput, TScaleArgs>;
+  nice?: (count?: number) => AnyScale<TInput, TOutput, TScaleArgs>;
+  interpolator?(interpolator: (t: number) => TOutput): AnyScale<TInput, TOutput, TScaleArgs>;
+  interpolator?(): (t: number) => TOutput; // Getter
+};
+
+// export interface AnyScale<Domain = any, Range = any, Input = Domain, Output = any> {
+//   (value: Input): Output;
+//   invert?: (value: Output) => Input;
+//   domain(): Domain[];
+//   domain(domain: Iterable<Domain>): this;
+//   range(): Range[];
+//   range(range: Iterable<Range>): this;
+//   bandwidth?: () => number;
+//   ticks?: (count: number) => any;
+//   tickFormat?: FormatType;
+//   copy(): this;
+// }
+
+function isAnyScale(scale: any): scale is AnyScale {
+  return typeof scale === 'function' && typeof scale.range === 'function';
 }
+
+export function getRange(scale: any) {
+  if (isAnyScale(scale)) {
+    return scale.range();
+  }
+  console.error("[LayerChart] Your scale doesn't have a `.range` method?");
+  return [];
+}
+
+export type SingleDomainType = number | string | Date | null | undefined;
 
 export type DomainType =
   | (number | string | Date | null | undefined)[]
@@ -67,7 +105,7 @@ export function createScale(
   range: any[] | readonly any[] | Function,
   context?: Record<any, any>
 ) {
-  const scaleCopy = scale.copy() as AnyScale;
+  const scaleCopy = scale.copy();
   if (domain) {
     scaleCopy.domain(domain);
   }

@@ -1,5 +1,13 @@
 import type { DomainType } from './scales.js';
-import type { AxisKey, BaseRange, Extents, FieldAccessors, Nice, PaddingArray } from './types.js';
+import type {
+  AxisKey,
+  BaseRange,
+  DataType,
+  Extents,
+  FieldAccessors,
+  Nice,
+  PaddingArray,
+} from './types.js';
 import type { AnyScale } from './scales.js';
 import { arraysEqual } from './array.js';
 import { toTitleCase } from './string.js';
@@ -70,7 +78,7 @@ export function partialDomain(domain: number[] = [], directive?: Array<number | 
   return domain;
 }
 
-type CreateScaleOpts = {
+type CreateLayerCakeScaleOpts = {
   domain: number[];
   extents: Extents;
   scale: AnyScale & {
@@ -86,7 +94,7 @@ type CreateScaleOpts = {
   percentRange: boolean;
 };
 
-export function createScale(
+export function createLayerCakeScale(
   axis: AxisKey,
   {
     domain,
@@ -99,7 +107,7 @@ export function createScale(
     height,
     range,
     percentRange,
-  }: CreateScaleOpts
+  }: CreateLayerCakeScaleOpts
 ): AnyScale {
   const defaultRange = getDefaultRange(axis, width, height, reverse, range, percentRange);
   const trueScale = scale.copy();
@@ -344,7 +352,7 @@ interface ScaleGroups<T> {
  * @returns {Extents} Calculated extents for each scale
  */
 export function calcScaleExtents<T>(
-  flatData: T[],
+  flatData: DataType<T>,
   getters: FieldAccessors<T>,
   activeScales: ActiveScales
 ): UniqueResults {
@@ -409,14 +417,14 @@ export interface UniqueResults {
  * returns an object like this: { x: [0, 10, 5], y: [-10, 0, 10] }
  *
  * @template T The type of data objects in the input array
- * @param {T[]} data A flat array of data objects
- * @param {FieldAccessors<T>} fields An object containing accessor functions for fields
- * @param {SortOptions} [sortOptions={}] Sorting options for the results
- * @returns {UniqueResults} An object with unique values for each specified field
+ * @param  data A flat array of data objects
+ * @param  fields An object containing accessor functions for fields
+ * @param  [sortOptions={}] Sorting options for the results
+ * @returns  An object with unique values for each specified field
  * @throws {TypeError} If data is not an array or fields is not a valid object
  */
 export function calcUniques<T>(
-  data: T[],
+  data: DataType<T>,
   fields: FieldAccessors<T>,
   sortOptions: SortOptions = {}
 ): UniqueResults {
@@ -612,19 +620,10 @@ export function getPadFunctions(scale: ScaleWithProps): TransformFunctions {
   }
 }
 
-export function getRange(scale: AnyScale) {
-  if (typeof scale === 'function') {
-    if (typeof scale.range === 'function') {
-      return scale.range();
-    }
-    console.error("[LayerChart] Your scale doesn't have a `.range` method?");
-  }
-  return [];
-}
-
-export function createGetter<TData>(accessor: (d: TData) => any, scale: AnyScale) {
+export function createGetter<TData>(accessor: (d: TData) => any, scale: AnyScale | null) {
   return (d: TData) => {
     const val = accessor(d);
+    if (!scale) return undefined;
     if (Array.isArray(val)) {
       return val.map((v) => scale(v));
     }
@@ -644,7 +643,7 @@ export function createGetter<TData>(accessor: (d: TData) => any, scale: AnyScale
  * @param fields An object containing `x`, `y`, `r` or `z` keys that equal an accessor function.
  * @returns An object with the same structure as `fields` but with min/max arrays.
  */
-export function calcExtents<T>(data: T[], fields: FieldAccessors<T>): UniqueResults {
+export function calcExtents<T>(data: DataType<T>, fields: FieldAccessors<T>): UniqueResults {
   if (!Array.isArray(data)) {
     throw new TypeError(
       `The first argument of calcExtents() must be an array. You passed in a ${typeof data}. If you got this error using the <LayerCake> component, consider passing a flat array to the \`flatData\` prop. More info: https://layercake.graphics/guide/#flatdata`

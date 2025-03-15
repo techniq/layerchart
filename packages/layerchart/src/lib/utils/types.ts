@@ -1,4 +1,6 @@
+import type { HierarchyNode } from 'd3-hierarchy';
 import type { AnyScale } from './scales.js';
+import type { SankeyGraph } from 'd3-sankey';
 
 /**
  * Useful to workaround Svelte 3/4 markup type issues
@@ -58,3 +60,5 @@ export type FieldAccessors<T> = {
 };
 
 export type PaddingArray = [number, number] | undefined;
+
+export type DataType<T> = T[] | HierarchyNode<T> | SankeyGraph<any, any>;

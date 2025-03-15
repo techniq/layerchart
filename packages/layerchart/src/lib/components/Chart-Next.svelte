@@ -1,14 +1,21 @@
 <script lang="ts" module>
   // this is the LayerCake replacement component
-  import { scaleLinear, scaleSqrt } from 'd3-scale';
-  import { type Accessor, accessor } from '$lib/utils/common.js';
+  import { scaleLinear, scaleOrdinal, scaleSqrt } from 'd3-scale';
+  import { type Accessor, accessor, chartDataArray } from '$lib/utils/common.js';
   import { printDebug } from '$lib/utils/debug.js';
   import { filterObject } from '$lib/utils/filter-object.js';
-  import { isScaleBand, type AnyScale, type DomainType } from '$lib/utils/scales.js';
-  import { Context, useDebounce } from 'runed';
+  import {
+    createScale,
+    getRange,
+    isScaleBand,
+    type AnyScale,
+    type DomainType,
+  } from '$lib/utils/scales.js';
+  import { Context, useDebounce, watch } from 'runed';
   import type {
     AxisKey,
     BaseRange,
+    DataType,
     Extents,
     Nice,
     Padding,
@@ -20,17 +27,31 @@
     calcDomain,
     calcScaleExtents,
     createGetter,
-    createScale,
-    getRange,
+    createLayerCakeScale,
   } from '$lib/utils/layout.js';
   import type { ComponentProps, Snippet } from 'svelte';
   import GeoContext from './GeoContext.svelte';
   import TooltipContext from './tooltip/TooltipContext.svelte';
-  import { max, min } from 'd3-array';
+  import { extent, max, min } from 'd3-array';
+  import type { HierarchyNode } from 'd3-hierarchy';
+  import type { SankeyGraph } from 'd3-sankey';
+  import { unique } from '@layerstack/utils';
+  import { geoFitObjectTransform } from 'layerchart/utils/geo.js';
+  import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
+  import TransformContext from './TransformContext.svelte';
+  import TransformControls from './TransformControls.svelte';
+  import type { GeoProjection } from 'd3-geo';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
-  export type ChartContext<T = any> = {
+  export type ChartResizeDetail = {
+    width: number;
+    height: number;
+    containerWidth: number;
+    containerHeight: number;
+  };
+
+  export type ChartContext<T> = {
     activeGetters: Record<AxisKey, (d: T) => any>;
     width: number;
     height: number;
@@ -38,11 +59,14 @@
     aspectRatio: number;
     containerWidth: number;
     containerHeight: number;
-    x: (d: T) => number;
-    y: (d: T) => number;
-    z: (d: T) => number;
-    r: (d: T) => number;
-    data: T;
+    x: (d: T) => any;
+    y: (d: T) => any;
+    z: (d: T) => any;
+    r: (d: T) => any;
+    x1: (d: T) => any;
+    y1: (d: T) => any;
+    c: (d: T) => any;
+    data: DataType<T>;
     xNice: Nice;
     yNice: Nice;
     zNice: Nice;
@@ -60,29 +84,41 @@
     zPadding: PaddingArray;
     rPadding: PaddingArray;
     padding: Padding;
-    flatData: any[];
+    flatData: T[] | HierarchyNode<T> | SankeyGraph<any, any>;
     extents: Extents;
     xDomain: DomainType;
     yDomain: DomainType;
     zDomain: DomainType;
     rDomain: DomainType;
+    cDomain: DomainType;
+    x1Domain: DomainType;
+    y1Domain: DomainType;
     xRange: any[];
-    yRange: any[];
+    yRange: YRangeWithScale;
     zRange: any[];
     rRange: any[];
+    cRange: readonly string[] | string[] | undefined;
+    x1Range: XRangeWithScale | undefined;
+    y1Range: YRangeWithScale | undefined;
     custom: Record<string, any>;
     xScale: AnyScale;
     yScale: AnyScale;
     zScale: AnyScale;
     rScale: AnyScale;
-    yGet: (d: T) => number;
-    xGet: (d: T) => number;
-    zGet: (d: T) => number;
-    rGet: (d: T) => number;
+    cScale: AnyScale | null;
+    x1Scale: AnyScale | null;
+    y1Scale: AnyScale | null;
+    yGet: (d: T) => any;
+    xGet: (d: T) => any;
+    zGet: (d: T) => any;
+    rGet: (d: T) => any;
+    cGet: (d: T) => any;
+    x1Get: (d: T) => any;
+    y1Get: (d: T) => any;
     radial: boolean;
   };
 
-  const _ChartContext = new Context<ChartContext>('ChartContext');
+  const _ChartContext = new Context<ChartContext<any>>('ChartContext');
 
   export function getChartContext<T>(): ChartContext<T> {
     return _ChartContext.get();
@@ -171,19 +207,15 @@
     ref?: HTMLElement | null;
 
     /**
-     * x The x accessor. The key in each row of data that corresponds to the x-field.
-     * This can be a string, an accessor function, a number or an array of any combination of those
-     * types. This property gets converted to a function when you access it through the context.
-     *
      * If `data` is not a flat array of objects and you want to use any of the scales, set a flat
      * version of the data via the `flatData` prop.
      */
-    data?: T;
+    data?: T[] | HierarchyNode<T> | SankeyGraph<any, any>;
 
     /**
      * A flat version of data.
      */
-    flatData?: any[];
+    flatData?: T[] | HierarchyNode<T> | SankeyGraph<any, any>;
 
     /**
      * The x accessor. The key in each row of data that corresponds to the x-field. This can be a
@@ -559,7 +591,15 @@
      */
     radial?: boolean;
 
-    children?: Snippet<[{ context: ChartContext<T> }]>;
+    children?: Snippet<
+      [
+        {
+          context: ChartContext<T>;
+          transformContext: TransformContextValue;
+          geoProjection: GeoProjection | undefined;
+        },
+      ]
+    >;
 
     /**
      * Props passed to GeoContext
@@ -588,11 +628,18 @@
     // /** Exposed via bind: to support `bind:tooltipContext` for external access (ex. `tooltipContext.data) */
     // tooltipContext?: typeof tooltipContext;
 
-    // /** Props passed to TransformContext */
-    // transform?: typeof transform;
+    /**
+     * Props passed to TransformContext
+     */
+    transform?: Partial<ComponentProps<typeof TransformContext>>;
 
-    // /** Expose to support `bind:transformContext` for imperative control (`transformContext.translate(...)`) */
-    // transformContext?: typeof transformContext;
+    /**
+     * Expose to support `bind:transformContext` for
+     * imperative control (`transformContext.translate(...)`)
+     *
+     * @bindable
+     */
+    transformContext?: TransformContext;
 
     // /** Props passed to BrushContext */
     // brush?: typeof brush;
@@ -600,13 +647,15 @@
     // /** Exposed via bind: to support `bind:brushContext` for external access (ex. `brushContext.xDomain) */
     // brushContext?: typeof brushContext;
 
-    // ChartContext callback events
-    // onresize?: typeof onresize;
+    /**
+     * A callback function that is called when the chart is resized.
+     */
+    onResize?: (e: ChartResizeDetail) => void;
 
     // TransformContext callback events
-    // ondragstart?: typeof ondragstart;
-    // ondragend?: typeof ondragend;
-    // ontransform?: typeof ontransform;
+    ondragstart?: ComponentProps<typeof TransformContext>['ondragstart'];
+    ondragend?: ComponentProps<typeof TransformContext>['ondragend'];
+    onTransform?: ComponentProps<typeof TransformContext>['onTransform'];
   };
 </script>
 
@@ -625,7 +674,7 @@
     y: yProp,
     z: zProp,
     r: rProp,
-    data = [] as TData,
+    data = [],
     zDomain: zDomainProp,
     rDomain: rDomainProp,
     xNice = false,
@@ -636,15 +685,10 @@
     yPadding,
     zPadding,
     rPadding,
-    // @ts-expect-error - shh
     xScale: xScaleProp = scaleLinear(),
-    // @ts-expect-error - shh
     yScale: yScaleProp = scaleLinear(),
-    // @ts-expect-error - shh
     zScale: zScaleProp = scaleLinear(),
-    // @ts-expect-error - shh
     rScale: rScaleProp = scaleSqrt(),
-    // @ts-expect-error - shh
     flatData: flatDataProp = data,
     padding: paddingProp = {},
     verbose = true,
@@ -657,15 +701,35 @@
     xReverse = false,
     zReverse = false,
     rReverse = false,
-    xRange: xRangeProp,
     yRange: _yRangeProp,
     zRange: zRangeProp,
     rRange: rRangeProp,
     xBaseline = null,
     yBaseline = null,
     custom = {},
-    children,
+    children: _children,
     radial = false,
+    xRange: xRangeProp = radial ? [0, 2 * Math.PI] : undefined,
+    x1: x1Prop,
+    x1Domain: x1DomainProp,
+    x1Range: x1RangeProp,
+    x1Scale: x1ScaleProp,
+    y1: y1Prop,
+    y1Domain: y1DomainProp,
+    y1Range: y1RangeProp,
+    y1Scale: y1ScaleProp,
+    c: cProp,
+    cScale: cScaleProp,
+    cDomain: cDomainProp,
+    cRange: cRangeProp,
+    onResize,
+    geo,
+    transformContext = $bindable(),
+    geoProjection = $bindable(),
+    transform,
+    onTransform,
+    ondragend,
+    ondragstart,
   }: ChartPropsWithoutHTML<TData> = $props();
 
   const logDebug = useDebounce(printDebug, 200);
@@ -688,31 +752,16 @@
     _yRangeProp ?? (radial ? ({ height }: { height: number }) => [0, height / 2] : undefined)
   );
 
-  /**
-   * Preserve a copy of our passed in settings before we modify them.
-   * Return this to the user's context so they can reference things if
-   * needed. Add the active keys since those aren't on our settings
-   * object. This is mostly an escape hatch.
-   */
-  const config = $derived({
-    x: xProp,
-    y: yProp,
-    z: zProp,
-    r: rProp,
-    zDomain: zDomainProp,
-    rDomain: rDomainProp,
-    xRange: xRangeProp,
-    yRange: yRangeProp,
-    zRange: zRangeProp,
-    rRange: rRangeProp,
-  });
-
   const yReverse = $derived(yScaleProp ? !isScaleBand(yScaleProp) : true);
 
   const x = $derived(accessor(xProp));
   const y = $derived(accessor(yProp));
   const z = $derived(accessor(zProp));
   const r = $derived(accessor(rProp));
+  const c = $derived(accessor(cProp));
+  const x1 = $derived(accessor(x1Prop));
+  const y1 = $derived(accessor(y1Prop));
+
   const flatData = $derived(flatDataProp || data);
   const filteredExtents = $derived(filterObject(extentsProp));
 
@@ -804,9 +853,12 @@
   const yDomain = $derived(calcDomain('y', extents, _yDomain));
   const zDomain = $derived(calcDomain('z', extents, zDomainProp));
   const rDomain = $derived(calcDomain('r', extents, rDomainProp));
+  const x1Domain = $derived(x1DomainProp ?? extent(chartDataArray(data), x1));
+  const y1Domain = $derived(y1DomainProp ?? extent(chartDataArray(data), y1));
+  const cDomain = $derived(cDomainProp ?? unique(chartDataArray(data).map(c)));
 
   const xScale = $derived(
-    createScale('x', {
+    createLayerCakeScale('x', {
       scale: xScaleProp,
       domain: xDomain,
       extents,
@@ -823,7 +875,7 @@
   const xGet = $derived(createGetter(x, xScale));
 
   const yScale = $derived(
-    createScale('y', {
+    createLayerCakeScale('y', {
       scale: yScaleProp,
       domain: yDomain,
       extents,
@@ -840,7 +892,7 @@
   const yGet = $derived(createGetter(y, yScale));
 
   const zScale = $derived(
-    createScale('z', {
+    createLayerCakeScale('z', {
       scale: zScaleProp,
       domain: zDomain,
       extents,
@@ -856,7 +908,7 @@
   const zGet = $derived(createGetter(z, zScale));
 
   const rScale = $derived(
-    createScale('r', {
+    createLayerCakeScale('r', {
       scale: rScaleProp,
       domain: rDomain,
       extents,
@@ -871,6 +923,38 @@
   );
 
   const rGet = $derived(createGetter(r, rScale));
+
+  const x1Scale = $derived(
+    x1ScaleProp && x1RangeProp
+      ? createScale(x1ScaleProp, x1Domain, x1RangeProp, {
+          xScale: xScale,
+          width,
+          height,
+        })
+      : null
+  );
+
+  const x1Get = $derived(createGetter(x1, x1Scale));
+
+  const y1Scale = $derived(
+    y1ScaleProp && y1RangeProp
+      ? createScale(y1ScaleProp, y1Domain, y1RangeProp, {
+          yScale: yScale,
+          width,
+          height,
+        })
+      : null
+  );
+
+  const y1Get = $derived(createGetter(y1, y1Scale));
+
+  const cScale = $derived(
+    cRangeProp
+      ? createScale(cScaleProp ?? scaleOrdinal(), cDomain, cRangeProp, { width, height })
+      : null
+  );
+
+  const cGet = $derived(createGetter(c, cScale));
 
   const xDomainPossiblyNice = $derived(xScale.domain());
   const yDomainPossiblyNIce = $derived(yScale.domain());
@@ -917,6 +1001,15 @@
     },
     get r() {
       return r;
+    },
+    get c() {
+      return c;
+    },
+    get x1() {
+      return x1;
+    },
+    get y1() {
+      return y1;
     },
     get data() {
       return data;
@@ -990,6 +1083,15 @@
     get rDomain() {
       return rDomainPossiblyNice;
     },
+    get cDomain() {
+      return cDomain;
+    },
+    get x1Domain() {
+      return x1Domain;
+    },
+    get y1Domain() {
+      return y1Domain;
+    },
     get xRange() {
       return xRange;
     },
@@ -1001,6 +1103,15 @@
     },
     get rRange() {
       return rRange;
+    },
+    get cRange() {
+      return cRangeProp;
+    },
+    get x1Range() {
+      return x1RangeProp;
+    },
+    get y1Range() {
+      return y1RangeProp;
     },
     get custom() {
       return custom;
@@ -1028,6 +1139,24 @@
     },
     get rGet() {
       return rGet;
+    },
+    get cGet() {
+      return cGet;
+    },
+    get x1Get() {
+      return x1Get;
+    },
+    get y1Get() {
+      return y1Get;
+    },
+    get cScale() {
+      return cScale;
+    },
+    get x1Scale() {
+      return x1Scale;
+    },
+    get y1Scale() {
+      return y1Scale;
     },
     get radial() {
       return radial;
@@ -1058,6 +1187,50 @@
       });
     }
   });
+
+  watch(
+    [
+      () => isMounted,
+      () => context.width,
+      () => context.height,
+      () => context.containerWidth,
+      () => context.containerHeight,
+    ],
+    () => {
+      if (!isMounted) return;
+      onResize?.({
+        width: context.width,
+        height: context.height,
+        containerWidth: context.containerWidth,
+        containerHeight: context.containerHeight,
+      });
+    }
+  );
+
+  const initialTransform = $derived(
+    geo?.applyTransform?.includes('translate') && geo?.fitGeojson && geo?.projection
+      ? geoFitObjectTransform(geo.projection(), [width, height], geo.fitGeojson)
+      : undefined
+  );
+
+  const processTranslate = $derived.by(() => {
+    if (!geo) return undefined;
+    return (x: number, y: number, deltaX: number, deltaY: number) => {
+      if (geo.applyTransform?.includes('rotate') && geoProjection) {
+        // When applying transform to rotate, invert `y` values and reduce sensitivity based on projection scale
+        // see: https://observablehq.com/@benoldenburg/simple-globe and https://observablehq.com/@michael-keith/draggable-globe-in-d3
+        const projectionScale = geoProjection.scale() ?? 0;
+        const sensitivity = 75;
+        return {
+          x: x + deltaX * (sensitivity / projectionScale),
+          y: y + deltaY * (sensitivity / projectionScale) * -1,
+        };
+      } else {
+        // Apply default TransformContext.processTransform (passing `undefined` below appears to not work when checking for `geo?.applyTransform` exists)
+        return { x: x + deltaX, y: y + deltaY };
+      }
+    };
+  });
 </script>
 
 {#if ssr === true || typeof window !== 'undefined'}
@@ -1073,7 +1246,27 @@
     bind:clientWidth={containerWidth}
     bind:clientHeight={containerHeight}
   >
-    {@render children?.({ context })}
+    {#key isMounted}
+      <TransformContext
+        bind:this={transformContext}
+        mode={(transform?.mode ?? geo?.applyTransform?.length) ? 'manual' : 'none'}
+        initialTranslate={initialTransform?.translate}
+        initialScale={initialTransform?.scale}
+        {processTranslate}
+        {...transform}
+        {ondragstart}
+        {onTransform}
+        {ondragend}
+      >
+        {#snippet children({ transformContext })}
+          <GeoContext {...geo} bind:geo={geoProjection}>
+            {#snippet children({ projection })}
+              {@render _children?.({ context, transformContext, geoProjection: projection })}
+            {/snippet}
+          </GeoContext>
+        {/snippet}
+      </TransformContext>
+    {/key}
   </div>
 {/if}
 

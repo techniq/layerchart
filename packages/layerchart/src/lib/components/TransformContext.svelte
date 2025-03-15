@@ -1,3 +1,5 @@
+<svelte:options runes />
+
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
 
@@ -52,14 +54,14 @@
     zoomTo: () => {},
   };
 
-  const TransformContext = new Context<TransformContextValue>('TransformContext');
+  const _TransformContext = new Context<TransformContextValue>('TransformContext');
 
   export function getTransformContext() {
-    return TransformContext.getOr(defaultContext);
+    return _TransformContext.getOr(defaultContext);
   }
 
   export function setTransformContext(transform: TransformContextValue) {
-    return TransformContext.set(transform);
+    return _TransformContext.set(transform);
   }
 
   type TransformContextPropsWithoutHTML = {
@@ -111,7 +113,7 @@
     ondragstart?: () => void;
     ondragend?: () => void;
     ref?: HTMLElement | null;
-    children?: Snippet<[{ transform: TransformContextValue }]>;
+    children?: Snippet<[{ transformContext: TransformContextValue }]>;
   };
 
   type TransformContextProps = TransformContextPropsWithoutHTML &
@@ -416,5 +418,5 @@
   bind:this={ref}
   {...restProps}
 >
-  {@render children?.({ transform: transformContext })}
+  {@render children?.({ transformContext: transformContext })}
 </div>

@@ -155,7 +155,5 @@
 </script>
 
 {@render children({
-  get projection() {
-    return geo;
-  },
+  projection: geo,
 })}
