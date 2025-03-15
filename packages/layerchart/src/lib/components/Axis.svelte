@@ -1,9 +1,106 @@
-<script lang="ts">
-  import { type ComponentProps } from 'svelte';
+<script lang="ts" module>
+  import type { Transition, TransitionParams, Without } from 'layerchart/utils/types.js';
+
+  export type AxisPropsWithoutHTML<In extends Transition = Transition> = {
+    /**
+     * Location of axis
+     */
+    placement: 'top' | 'bottom' | 'left' | 'right' | 'angle' | 'radius';
+
+    /**
+     * Axis label
+     * @default ''
+     */
+    label?: string;
+
+    /**
+     * Location of axis label
+     * @default 'middle'
+     */
+    labelPlacement?: 'start' | 'middle' | 'end';
+
+    /**
+     * Props applied to label Text
+     */
+    labelProps?: Partial<ComponentProps<typeof Text>>;
+
+    /**
+     * Draw a rule line. Use Rule component for greater rendering order control
+     * @default false
+     */
+    rule?: boolean | Partial<ComponentProps<typeof Rule>>;
+
+    /**
+     * Draw grid lines
+     * @default false
+     */
+    grid?: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'>;
+
+    /**
+     * Control the number of ticks
+     */
+    ticks?: number | any[] | ((scale: AnyScale) => any) | { interval: TimeInterval | null } | null;
+
+    /**
+     * Length of the tick line
+     * @default 4
+     */
+    tickLength?: number;
+
+    /**
+     * Format tick labels
+     */
+    format?: FormatType;
+
+    /**
+     * Props to apply to each tick label
+     */
+    tickLabelProps?: Partial<ComponentProps<typeof Text>>;
+
+    /**
+     * A snippet to render your own custom tick label.
+     */
+    tickLabel?: Snippet<[{ props: ComponentProps<typeof Text>; index: number }]>;
+
+    /**
+     * Transition function for entering elements
+     * @default tweened ? fade : () => ({})
+     */
+    transitionIn?: In;
+
+    /**
+     * Parameters for the transitionIn function
+     * @default { easing: cubicIn }
+     */
+    transitionInParams?: TransitionParams<In>;
+
+    /**
+     * Scale for the axis
+     */
+    scale?: any;
+
+    /**
+     * Classes for styling various parts of the axis
+     * @default {}
+     */
+    classes?: {
+      root?: string;
+      label?: string;
+      rule?: string;
+      tick?: string;
+      tickLabel?: string;
+    };
+  } & MotionProps;
+
+  export type AxisProps<In extends Transition = Transition> = AxisPropsWithoutHTML<In> &
+    Without<SVGAttributes<SVGGElement>, AxisPropsWithoutHTML<In>>;
+</script>
+
+<script lang="ts" generics="T extends Transition = Transition">
+  import { type ComponentProps, type Snippet } from 'svelte';
   import { fade } from 'svelte/transition';
   import { cubicIn } from 'svelte/easing';
   import type { SVGAttributes } from 'svelte/elements';
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import type { TimeInterval } from 'd3-time';
 
   import { extent } from 'd3-array';
@@ -11,133 +108,106 @@
 
   import { format as formatValue, isLiteralObject, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import type { TransitionParams } from 'svelte-ux'; // TODO: Replace with `@layerstack/svelte-types` or similar
 
-  import { chartContext } from './ChartContext.svelte';
   import Line from './Line.svelte';
   import Rule from './Rule.svelte';
   import Text from './Text.svelte';
   import { isScaleBand, type AnyScale } from '$lib/utils/scales.js';
+  import type { MotionProps } from 'layerchart/stores/motionStore.js';
+  import { getChartContext } from './Chart-Next.svelte';
 
-  const { xScale, yScale, xRange, yRange, width, height, padding } = chartContext();
+  let {
+    placement,
+    label = '',
+    labelPlacement = 'middle',
+    labelProps,
+    rule = false,
+    grid = false,
+    ticks,
+    tickLength = 4,
+    format,
+    tickLabelProps,
+    spring,
+    tweened,
+    // @ts-expect-error - shut it typescript we know what we're doing
+    transitionIn = tweened ? fade : () => ({}),
+    transitionInParams = { easing: cubicIn },
+    scale: scaleProp,
+    classes = {},
+    class: className,
+    tickLabel,
+    ...restProps
+  }: AxisProps<T> = $props();
 
-  /** Location of axis */
-  export let placement: 'top' | 'bottom' | 'left' | 'right' | 'angle' | 'radius';
+  const ctx = getChartContext();
 
-  /** Axis label */
-  export let label = '';
-
-  /** Location of axis label */
-  export let labelPlacement: 'start' | 'middle' | 'end' = 'middle';
-
-  /** Props applied label Text */
-  export let labelProps: Partial<ComponentProps<Text>> | undefined = undefined;
-
-  /** Draw a rule line.  Use Rule component for greater rendering order control */
-  export let rule: boolean | Partial<ComponentProps<Rule>> = false;
-
-  /** Draw a grid lines */
-  export let grid: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'> = false;
-
-  /** Control the number of ticks*/
-  export let ticks:
-    | number
-    | any[]
-    | ((scale: AnyScale) => any)
-    | { interval: TimeInterval | null }
-    | null
-    | undefined = undefined;
-
-  /** Length of the tick line */
-  export let tickLength = 4;
-
-  /** Format tick labels */
-  export let format: FormatType | undefined = undefined;
-
-  /** Props to apply to each tick label */
-  export let tickLabelProps: Partial<ComponentProps<Text>> | undefined = undefined;
-
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
-
-  export let transitionIn = tweened
-    ? fade
-    : () => {
-        return {};
-      };
-  export let transitionInParams: TransitionParams = { easing: cubicIn };
-
-  $: orientation =
+  const orientation = $derived(
     placement === 'angle'
       ? 'angle'
       : placement === 'radius'
         ? 'radius'
         : ['top', 'bottom'].includes(placement)
           ? 'horizontal'
-          : 'vertical';
+          : 'vertical'
+  );
 
-  export let scale: any = undefined;
-  $: _scale = scale ?? (['horizontal', 'angle'].includes(orientation) ? $xScale : $yScale);
+  const scale = $derived(
+    scaleProp ?? (['horizontal', 'angle'].includes(orientation) ? ctx.xScale : ctx.yScale)
+  );
 
-  export let classes: {
-    root?: string;
-    label?: string;
-    rule?: string;
-    tick?: string;
-    tickLabel?: string;
-  } = {};
+  const xRangeMinMax = $derived(extent<number>(ctx.xRange)) as [number, number];
+  const yRangeMinMax = $derived(extent<number>(ctx.yRange)) as [number, number];
 
-  $: [xRangeMin, xRangeMax] = extent<number>($xRange) as [number, number];
-  $: [yRangeMin, yRangeMax] = extent<number>($yRange) as [number, number];
-
-  $: tickVals = Array.isArray(ticks)
-    ? ticks
-    : typeof ticks === 'function'
-      ? ticks(_scale)
-      : isLiteralObject(ticks)
-        ? _scale.ticks(ticks.interval) // d3-time interval such as `timeDay.every(1)`
-        : isScaleBand(_scale)
-          ? ticks
-            ? _scale.domain().filter((v: any, i: number) => i % ticks === 0)
-            : _scale.domain()
-          : _scale.ticks(ticks ?? (placement === 'left' || placement === 'right' ? 4 : undefined));
+  const tickVals = $derived(
+    Array.isArray(ticks)
+      ? ticks
+      : typeof ticks === 'function'
+        ? ticks(scale)
+        : isLiteralObject(ticks)
+          ? scale.ticks(ticks.interval) // d3-time interval such as `timeDay.every(1)`
+          : isScaleBand(scale)
+            ? ticks
+              ? scale.domain().filter((v: any, i: number) => i % ticks === 0)
+              : scale.domain()
+            : scale.ticks(ticks ?? (placement === 'left' || placement === 'right' ? 4 : undefined))
+  );
 
   function getCoords(tick: any) {
     switch (placement) {
       case 'top':
         return {
-          x: _scale(tick) + (isScaleBand(_scale) ? _scale.bandwidth() / 2 : 0),
-          y: yRangeMin,
+          x: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
+          y: yRangeMinMax[0],
         };
 
       case 'bottom':
         return {
-          x: _scale(tick) + (isScaleBand(_scale) ? _scale.bandwidth() / 2 : 0),
-          y: yRangeMax,
+          x: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
+          y: yRangeMinMax[1],
         };
 
       case 'left':
         return {
-          x: xRangeMin,
-          y: _scale(tick) + (isScaleBand(_scale) ? _scale.bandwidth() / 2 : 0),
+          x: xRangeMinMax[0],
+          y: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
         };
 
       case 'right':
         return {
-          x: xRangeMax,
-          y: _scale(tick) + (isScaleBand(_scale) ? _scale.bandwidth() / 2 : 0),
+          x: xRangeMinMax[1],
+          y: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
         };
 
       case 'angle':
         return {
-          x: _scale(tick),
-          y: yRangeMax,
+          x: scale(tick),
+          y: yRangeMinMax[1],
         };
 
       case 'radius':
         return {
-          x: xRangeMin,
-          y: _scale(tick),
+          x: xRangeMinMax[0],
+          y: scale(tick),
         };
     }
   }
@@ -175,7 +245,7 @@
         };
 
       case 'angle':
-        const xValue = _scale(tick); // angle in radians
+        const xValue = scale(tick); // angle in radians
         return {
           textAnchor:
             xValue === 0 ||
@@ -200,34 +270,59 @@
     }
   }
 
-  $: resolvedLabelProps = {
-    value: label,
-    x:
-      placement === 'left' || (orientation === 'horizontal' && labelPlacement === 'start')
-        ? -$padding.left
-        : placement === 'right' || (orientation === 'horizontal' && labelPlacement === 'end')
-          ? $width + $padding.right
-          : $width / 2,
-    y:
-      placement === 'top' || (orientation === 'vertical' && labelPlacement === 'start')
-        ? -$padding.top
-        : orientation === 'vertical' && labelPlacement === 'middle'
-          ? $height / 2
-          : placement === 'bottom' || labelPlacement === 'end'
-            ? $height + $padding.bottom
-            : 0,
-    textAnchor:
-      labelPlacement === 'middle'
-        ? 'middle'
-        : placement === 'right' || (orientation === 'horizontal' && labelPlacement === 'end')
-          ? 'end'
-          : 'start',
-    verticalAnchor:
+  const resolvedLabelX = $derived.by(() => {
+    if (placement === 'left' || (orientation === 'horizontal' && labelPlacement === 'start')) {
+      return -ctx.padding.left;
+    } else if (
+      placement === 'right' ||
+      (orientation === 'horizontal' && labelPlacement === 'end')
+    ) {
+      return ctx.width + ctx.padding.right;
+    }
+
+    return ctx.width / 2;
+  });
+
+  const resolvedLabelY = $derived.by(() => {
+    if (placement === 'top' || (orientation === 'vertical' && labelPlacement === 'start')) {
+      return -ctx.padding.top;
+    } else if (orientation === 'vertical' && labelPlacement === 'middle') {
+      return ctx.height / 2;
+    } else if (placement === 'bottom' || labelPlacement === 'end') {
+      return ctx.height + ctx.padding.bottom;
+    }
+    return '0';
+  });
+
+  const resolvedLabelTextAnchor = $derived.by(() => {
+    if (labelPlacement === 'middle') {
+      return 'middle';
+    } else if (
+      placement === 'right' ||
+      (orientation === 'horizontal' && labelPlacement === 'end')
+    ) {
+      return 'end';
+    }
+    return 'start';
+  });
+
+  const resolvedLabelVerticalAnchor = $derived.by(() => {
+    if (
       placement === 'top' ||
       (orientation === 'vertical' && labelPlacement === 'start') ||
       (placement === 'left' && labelPlacement === 'middle')
-        ? 'start'
-        : 'end',
+    ) {
+      return 'start';
+    }
+    return 'end';
+  });
+
+  const resolvedLabelProps = $derived({
+    value: label,
+    x: resolvedLabelX,
+    y: resolvedLabelY,
+    textAnchor: resolvedLabelTextAnchor,
+    verticalAnchor: resolvedLabelVerticalAnchor,
     rotate: orientation === 'vertical' && labelPlacement === 'middle' ? -90 : 0,
     capHeight: '.5rem', // text-[10px]
     ...labelProps,
@@ -236,10 +331,10 @@
       classes.label,
       labelProps?.class
     ),
-  } satisfies ComponentProps<Text>;
+  }) satisfies ComponentProps<Text>;
 </script>
 
-<g class={cls('Axis placement-{placement}', classes.root, $$props.class)}>
+<g {...restProps} class={cls('Axis placement-{placement}', classes.root, className)}>
   {#if rule !== false}
     {@const ruleProps = typeof rule === 'object' ? rule : null}
     <Rule
@@ -266,7 +361,7 @@
     {@const resolvedTickLabelProps = {
       x: orientation === 'angle' ? radialTickCoordsX : tickCoords.x,
       y: orientation === 'angle' ? radialTickCoordsY : tickCoords.y,
-      value: formatValue(tick, format ?? _scale.tickFormat?.() ?? ((v) => v)),
+      value: formatValue(tick, format ?? scale.tickFormat?.() ?? ((v) => v)),
       ...getDefaultTickLabelProps(tick),
       tweened,
       spring,
@@ -325,9 +420,11 @@
       {/if}
       <!-- TODO: Add tick marks for radial (angle)? -->
 
-      <slot name="tickLabel" labelProps={resolvedTickLabelProps} {index}>
+      {#if tickLabel}
+        {@render tickLabel({ props: resolvedTickLabelProps, index })}
+      {:else}
         <Text {...resolvedTickLabelProps} />
-      </slot>
+      {/if}
     </g>
   {/each}
 </g>

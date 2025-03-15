@@ -1,6 +1,7 @@
 import type { HierarchyNode } from 'd3-hierarchy';
 import type { AnyScale } from './scales.js';
 import type { SankeyGraph } from 'd3-sankey';
+import type { TransitionConfig } from 'svelte/transition';
 
 /**
  * Useful to workaround Svelte 3/4 markup type issues
@@ -62,3 +63,6 @@ export type FieldAccessors<T> = {
 export type PaddingArray = [number, number] | undefined;
 
 export type DataType<T> = T[] | HierarchyNode<T> | SankeyGraph<any, any>;
+
+export type Transition = (node: Element, params?: any) => TransitionConfig;
+export type TransitionParams<T extends Transition> = Parameters<T>[1];

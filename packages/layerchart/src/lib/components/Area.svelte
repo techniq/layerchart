@@ -2,6 +2,8 @@
   import { type Area, area as d3Area, areaRadial } from 'd3-shape';
   import type { SVGAttributes } from 'svelte/elements';
   import type { Without } from 'layerchart/utils/types.js';
+  import type { ComponentProps } from 'svelte';
+  import { accessor, type Accessor } from '../utils/common.js';
 
   export type AreaPropsWithoutHTML = {
     /** Override data instead of using context */
@@ -43,47 +45,40 @@
      *
      * @default false
      */
-    line?: boolean | Partial<ComponentProps<Spline>>;
+    line?: boolean | Partial<ComponentProps<typeof Spline>>;
 
     fill?: string;
     fillOpacity?: number;
     stroke?: string;
     strokeWidth?: number;
     opacity?: number;
-
-    onclick?: (event: MouseEvent) => void;
-    onpointerenter?: (event: PointerEvent) => void;
-    onpointermove?: (event: PointerEvent) => void;
-    onpointerleave?: (event: PointerEvent) => void;
   };
 
   export type AreaProps = AreaPropsWithoutHTML &
     Without<SVGAttributes<SVGPathElement>, AreaPropsWithoutHTML>;
 </script>
 
-<script lang="ts" generics="TData">
-  import { getContext, onDestroy, type ComponentProps } from 'svelte';
+<script lang="ts">
   import type { CurveFactory } from 'd3-shape';
   import { max, min } from 'd3-array';
   import { interpolatePath } from 'd3-interpolate-path';
   import { merge } from 'lodash-es';
 
   import { cls } from '@layerstack/tailwind';
-  import { objectId } from '@layerstack/utils/object';
 
   import { getRenderContext } from './Chart.svelte';
   import Spline from './Spline.svelte';
-  import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
   import { flattenPathData } from '../utils/path.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getChartContext } from './Chart-Next.svelte';
   import { motionState, type TweenedOptions } from 'layerchart/stores/motionStore.js';
-  import { watch } from 'runed';
   import { createKey } from 'layerchart/utils/key.svelte.js';
 
-  const ctx = getChartContext<any>();
+  const ctx = getChartContext();
+  const renderCtx = getRenderContext();
+  const canvasCtx = getCanvasContext();
 
   let {
     clipPath,
@@ -128,12 +123,12 @@
       const path = ctx.radial
         ? areaRadial()
             .angle((d) => ctx.xScale(xAccessor(d)))
-            .innerRadius((d) => Math.min(ctx.yScale(0), ctx.yRange[0]))
-            .outerRadius((d) => Math.min(ctx.yScale(0), ctx.yRange[0]))
+            .innerRadius(() => Math.min(ctx.yScale(0), ctx.yRange[0]))
+            .outerRadius(() => Math.min(ctx.yScale(0), ctx.yRange[0]))
         : d3Area()
             .x((d) => ctx.xScale(xAccessor(d)) + xOffset)
-            .y0((d) => Math.min(ctx.yScale(0), ctx.yRange[0]))
-            .y1((d) => Math.min(ctx.yScale(0), ctx.yRange[0]));
+            .y0(() => Math.min(ctx.yScale(0), ctx.yRange[0]))
+            .y1(() => Math.min(ctx.yScale(0), ctx.yRange[0]));
 
       path.defined(defined ?? ((d) => xAccessor(d) != null && y1Accessor(d) != null));
 
@@ -196,9 +191,6 @@
     tweenedState.set(d ?? '');
   });
 
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
-
   function render(
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
@@ -220,13 +212,13 @@
   const strokeKey = createKey(() => stroke);
 
   $effect(() => {
-    if (renderContext !== 'canvas') return;
+    if (renderCtx !== 'canvas') return;
     [fillKey.current, fillOpacity, strokeKey.current, strokeWidth, opacity, className];
-    canvasContext.invalidate();
+    canvasCtx.invalidate();
   });
 
   $effect(() => {
-    return canvasContext.register({
+    return canvasCtx.register({
       name: 'Area',
       render,
       events: {
@@ -238,13 +230,11 @@
     });
   });
 
-  watch(
-    () => tweenedState.current,
-    () => {
-      if (renderContext !== 'canvas') return;
-      canvasContext.invalidate();
-    }
-  );
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
+    tweenedState.current;
+    canvasCtx.invalidate();
+  });
 </script>
 
 {#if line}
@@ -259,7 +249,7 @@
   />
 {/if}
 
-{#if renderContext === 'svg'}
+{#if renderCtx === 'svg'}
   <path
     d={tweenedState.current}
     clip-path={clipPath}
