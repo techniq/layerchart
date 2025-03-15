@@ -38,8 +38,6 @@
   import { unique } from '@layerstack/utils';
   import { geoFitObjectTransform } from 'layerchart/utils/geo.js';
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
-  import TransformContext from './TransformContext.svelte';
-  import TransformControls from './TransformControls.svelte';
   import type { GeoProjection } from 'd3-geo';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
@@ -51,6 +49,25 @@
     containerHeight: number;
   };
 
+  export type PreservedChartConfig<T> = Pick<
+    ChartContext<T>,
+    | 'xDomain'
+    | 'yDomain'
+    | 'zDomain'
+    | 'rDomain'
+    | 'cDomain'
+    | 'x1Domain'
+    | 'y1Domain'
+    | 'xRange'
+    | 'yRange'
+    | 'zRange'
+    | 'rRange'
+    | 'cRange'
+    | 'x1Range'
+    | 'y1Range'
+  > &
+    Pick<ChartPropsWithoutHTML<T>, 'x' | 'y' | 'z' | 'r' | 'c' | 'x1' | 'y1'>;
+
   export type ChartContext<T> = {
     activeGetters: Record<AxisKey, (d: T) => any>;
     width: number;
@@ -59,6 +76,7 @@
     aspectRatio: number;
     containerWidth: number;
     containerHeight: number;
+    config: PreservedChartConfig<T>;
     x: (d: T) => any;
     y: (d: T) => any;
     z: (d: T) => any;
@@ -968,9 +986,36 @@
 
   const aspectRatio = $derived(width / height);
 
+  const config = $derived({
+    x: xProp,
+    y: yProp,
+    z: zProp,
+    r: rProp,
+    c: cProp,
+    x1: x1Prop,
+    y1: y1Prop,
+    xDomain: _xDomain ?? null,
+    yDomain: _yDomain ?? null,
+    zDomain: zDomainProp ?? null,
+    rDomain: rDomainProp ?? null,
+    x1Domain: x1DomainProp ?? null,
+    y1Domain: y1DomainProp ?? null,
+    cDomain: cDomainProp ?? null,
+    xRange: xRange,
+    yRange: yRange,
+    zRange: zRange,
+    rRange: rRange,
+    cRange: cRangeProp,
+    x1Range: x1RangeProp,
+    y1Range: y1RangeProp,
+  });
+
   const context: ChartContext<TData> = {
     get activeGetters() {
       return activeGetters;
+    },
+    get config() {
+      return config;
     },
     get width() {
       return width;

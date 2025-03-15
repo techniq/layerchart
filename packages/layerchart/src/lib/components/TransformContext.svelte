@@ -26,37 +26,36 @@
     zoomTo(center: { x: number; y: number }, rect?: { width: number; height: number }): void;
   };
 
-  let defaultTranslate = $state(DEFAULT_TRANSLATE);
-  let defaultScale = $state(DEFAULT_SCALE);
-
-  const defaultContext: TransformContextValue = {
-    mode: 'none',
-    get scale() {
-      return defaultScale;
-    },
-    setScale: (value: number) => {
-      defaultScale = value;
-    },
-    get translate() {
-      return defaultTranslate;
-    },
-    setTranslate: (value: { x: 0; y: 0 }) => {
-      defaultTranslate = value;
-    },
-    moving: false,
-    dragging: false,
-    scrollMode: 'none',
-    setScrollMode: () => {},
-    reset: () => {},
-    zoomIn: () => {},
-    zoomOut: () => {},
-    translateCenter: () => {},
-    zoomTo: () => {},
-  };
-
   const _TransformContext = new Context<TransformContextValue>('TransformContext');
 
   export function getTransformContext() {
+    let defaultTranslate = $state(DEFAULT_TRANSLATE);
+    let defaultScale = $state(DEFAULT_SCALE);
+
+    const defaultContext: TransformContextValue = {
+      mode: 'none',
+      get scale() {
+        return defaultScale;
+      },
+      setScale: (value: number) => {
+        defaultScale = value;
+      },
+      get translate() {
+        return defaultTranslate;
+      },
+      setTranslate: (value: { x: 0; y: 0 }) => {
+        defaultTranslate = value;
+      },
+      moving: false,
+      dragging: false,
+      scrollMode: 'none',
+      setScrollMode: () => {},
+      reset: () => {},
+      zoomIn: () => {},
+      zoomOut: () => {},
+      translateCenter: () => {},
+      zoomTo: () => {},
+    };
     return _TransformContext.getOr(defaultContext);
   }
 
