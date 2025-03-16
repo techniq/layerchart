@@ -207,13 +207,15 @@
 
   $effect(() => {
     if (renderCtx !== 'canvas') return;
-    [fillKey.current, fillOpacity, strokeKey.current, strokeWidth, opacity, className];
-    canvasCtx.invalidate();
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    tweenedState.current;
+    [
+      fillKey.current,
+      fillOpacity,
+      strokeKey.current,
+      strokeWidth,
+      opacity,
+      className,
+      tweenedState.current,
+    ];
     canvasCtx.invalidate();
   });
 

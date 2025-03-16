@@ -104,7 +104,6 @@
     if (center || x != null || y != null) {
       return `translate(${tweenedX.current}px, ${tweenedY.current}px)`;
     }
-    return undefined;
   });
 
   const renderContext = getRenderContext();
