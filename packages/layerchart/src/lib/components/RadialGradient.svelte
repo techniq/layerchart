@@ -1,62 +1,147 @@
+<script lang="ts" module>
+  import type { Snippet } from 'svelte';
+  import type { Without } from 'layerchart/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
+
+  export type RadialGradientPropsWithoutHTML = {
+    /**
+     * Unique id for radialGradient
+     * @default `uniqueId('radialGradient-')`
+     */
+    id?: string;
+
+    /**
+     * Array array of strings (colors), will equally distributed from 0-100%.
+     * If array of tuples, will use first value as the offset, and second as color
+     *
+     * @default ['var(--tw-gradient-from)', 'var(--tw-gradient-to)']
+     */
+    stops?: string[] | [string | number, string][];
+
+    /**
+     * The x coordinate of the center of the gradient
+     * @default '50%'
+     */
+    cx?: string;
+
+    /**
+     * The y coordinate of the center of the gradient
+     * @default '50%'
+     */
+    cy?: string;
+
+    /**
+     * The x coordinate of the focal point of the gradient
+     * @default cx
+     */
+    fx?: string;
+
+    /**
+     * The y coordinate of the focal point of the gradient
+     * @default cy
+     */
+    fy?: string;
+
+    /**
+     * The radius of the gradient
+     */
+    r?: string;
+
+    // TODO: Svelte / Typescript does not know `<radialRadiant fr="...">`
+    // fr = '0%';
+
+    /**
+     * Indicates how the gradient behaves if it starts or ends inside the bounds
+     * of the shape containing the gradient
+     *
+     * @default 'pad'
+     */
+    spreadMethod?: 'pad' | 'reflect' | 'repeat';
+
+    /**
+     * Transform attribute for the gradient
+     */
+    transform?: string | null;
+
+    /**
+     * Define the coordinate system for attributes (i.e. gradientUnits)
+     *
+     * @default 'objectBoundingBox'
+     */
+    units?: 'objectBoundingBox' | 'userSpaceOnUse';
+
+    children?: Snippet<[{ id: string; gradient: CanvasGradient | undefined | string }]>;
+
+    /**
+     * A bindable reference to the underlying `<radialGradient>` element
+     * @bindable
+     */
+    ref?: SVGRadialGradientElement;
+
+    /**
+     * Render as a child of the gradient and will opt out of the default stops
+     * being rendered.
+     */
+    stopsContent?: Snippet;
+  };
+
+  export type RadialGradientProps = RadialGradientPropsWithoutHTML &
+    Without<SVGAttributes<SVGRadialGradientElement>, RadialGradientPropsWithoutHTML>;
+</script>
+
 <script lang="ts">
-  import { onDestroy } from 'svelte';
   import { uniqueId } from '@layerstack/utils';
 
   import { getRenderContext } from './Chart.svelte';
-  import { chartContext } from './ChartContext.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';
+  import { getChartContext } from './Chart-Next.svelte';
 
-  /** Unique id for linearGradient */
-  export let id: string = uniqueId('radialGradient-');
+  let {
+    id = uniqueId('radialGradient-'),
+    stops = ['var(--tw-gradient-from)', 'var(--tw-gradient-to)'],
+    cx = '50%',
+    cy = '50%',
+    fx = cx,
+    fy = cy,
+    r = '50%',
+    spreadMethod = 'pad',
+    transform = undefined,
+    units = 'objectBoundingBox',
+    ref = $bindable(),
+    children,
+    stopsContent,
+    ...restProps
+  }: RadialGradientProps = $props();
 
-  /** Array array of strings (colors), will equally distributed from 0-100%.  If array of tuples, will use first value as the offset, and second as color */
-  export let stops: string[] | [string | number, string][] = [
-    'var(--tw-gradient-from)',
-    'var(--tw-gradient-to)',
-  ];
-
-  export let cx = '50%';
-  export let cy = '50%';
-  export let fx = cx;
-  export let fy = cy;
-  export let r = '50%';
   // TODO: Svelte / Typescript does not know `<radialRadiant fr="...">`
   // export let fr = '0%';
 
-  /** Indicates how the gradient behaves if it starts or ends inside the bounds of the shape containing the gradient */
-  export let spreadMethod: 'pad' | 'reflect' | 'repeat' = 'pad';
+  const ctx = getChartContext();
 
-  export let transform: string | null | undefined = undefined;
+  const renderCtx = getRenderContext();
+  const canvasCtx = getCanvasContext();
 
-  /** Define the coordinate system for attributes (i.e. gradientUnits) */
-  export let units: 'objectBoundingBox' | 'userSpaceOnUse' = 'objectBoundingBox';
+  let canvasGradient = $state<CanvasGradient>();
 
-  const { width, height, padding } = chartContext();
-
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
-
-  let canvasGradient: CanvasGradient;
-
-  function render(ctx: CanvasRenderingContext2D) {
+  function render(_ctx: CanvasRenderingContext2D) {
     // TODO: Set correct values: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/createRadialGradient.  See also: LinearGradient
     // TODO: Memoize `createRadialGradient()` (see LinearGradient)
-    const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 0);
+    const gradient = _ctx.createRadialGradient(0, 0, 0, 0, 0, 0);
 
     // Use `getComputedStyles()` to convert each stop (if using CSS variables and/or classes) to color values
     stops.forEach((stop, i) => {
       if (Array.isArray(stop)) {
-        const { fill } = getComputedStyles(ctx.canvas, {
+        const { fill } = getComputedStyles(_ctx.canvas, {
           styles: { fill: stop[1] },
-          classes: $$props.class,
+          classes: restProps.class,
         });
         gradient.addColorStop(parsePercent(stop[0]), fill);
       } else {
-        const { fill } = getComputedStyles(ctx.canvas, {
+        const { fill } = getComputedStyles(_ctx.canvas, {
           styles: { fill: stop },
-          classes: $$props.class,
+          classes: restProps.class,
         });
         gradient.addColorStop(i / (stops.length - 1), fill);
       }
@@ -65,27 +150,25 @@
     canvasGradient = gradient;
   }
 
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'Gradient', render });
-  }
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
+    return canvasCtx.register({
+      name: 'Gradient',
+      render,
+    });
+  });
 
-  $: if (renderContext === 'canvas') {
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
     // Redraw when props changes (TODO: styles, class, etc)
-    stops && cx && cy && fx && fy && $width && $height;
-    canvasContext.invalidate();
-  }
-
-  onDestroy(() => {
-    if (renderContext === 'canvas') {
-      canvasUnregister();
-    }
+    [stops, cx, cy, fx, fy, ctx.width, ctx.height, restProps.class, restProps.style];
+    canvasCtx.invalidate();
   });
 </script>
 
-{#if renderContext === 'canvas'}
-  <slot {id} gradient={canvasGradient} />
-{:else if renderContext === 'svg'}
+{#if renderCtx === 'canvas'}
+  {@render children?.({ id, gradient: canvasGradient })}
+{:else if renderCtx === 'svg'}
   <defs>
     <radialGradient
       {id}
@@ -97,21 +180,22 @@
       {spreadMethod}
       gradientTransform={transform}
       gradientUnits={units}
-      {...$$restProps}
+      {...restProps}
+      bind:this={ref}
     >
-      <slot name="stops">
-        {#if stops}
-          {#each stops as stop, i}
-            {#if Array.isArray(stop)}
-              <stop offset={stop[0]} stop-color={stop[1]} />
-            {:else}
-              <stop offset="{i * (100 / (stops.length - 1))}%" stop-color={stop} />
-            {/if}
-          {/each}
-        {/if}
-      </slot>
+      {#if stopsContent}
+        {@render stopsContent()}
+      {:else if stops}
+        {#each stops as stop, i}
+          {#if Array.isArray(stop)}
+            <stop offset={stop[0]} stop-color={stop[1]} />
+          {:else}
+            <stop offset="{i * (100 / (stops.length - 1))}%" stop-color={stop} />
+          {/if}
+        {/each}
+      {/if}
     </radialGradient>
   </defs>
 
-  <slot {id} gradient="url(#{id})" />
+  {@render children?.({ id, gradient: `url(#${id})` })}
 {/if}
