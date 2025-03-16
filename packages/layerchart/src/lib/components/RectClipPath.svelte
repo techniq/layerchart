@@ -1,4 +1,10 @@
 <script lang="ts" module>
+  import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
+  import type { MotionProps } from 'layerchart/stores/motionStore.js';
+  import type { Without } from 'layerchart/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
+  import type { Snippet } from 'svelte';
+
   export type BaseRectClipPathPropsWithoutHTML = {
     /**
      * A unique id for the clipPath.
@@ -57,14 +63,9 @@
 </script>
 
 <script lang="ts">
-  import type { ComponentProps, Snippet } from 'svelte';
   import { uniqueId } from '@layerstack/utils';
 
   import ClipPath from './ClipPath.svelte';
-  import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
-  import type { MotionProps } from 'layerchart/stores/motionStore.js';
-  import type { Without } from 'layerchart/utils/types.js';
-  import type { SVGAttributes } from 'svelte/elements';
 
   let {
     id = uniqueId('clipPath-'),
@@ -78,8 +79,7 @@
 
 <ClipPath {id} {disabled}>
   {#snippet children({ url })}
-    <Rect slot="clip" {x} {y} {...restProps} />
+    <Rect {x} {y} {...restProps} />
     {@render childrenProp?.({ id, url })}
-    <slot {id} {url} />
   {/snippet}
 </ClipPath>

@@ -1,5 +1,12 @@
 <script lang="ts" module>
   import { tick, type Snippet } from 'svelte';
+  import type { MarkerOptions } from './MarkerWrapper.svelte';
+  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
+  import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
+
+  import { motionState, type TweenedProp } from '$lib/stores/motionStore.js';
+  import { accessor, type Accessor } from '../utils/common.js';
 
   export type SplinePropsWithoutHTML = {
     /**
@@ -99,24 +106,17 @@
   import { merge } from 'lodash-es';
 
   import { line as d3Line, lineRadial } from 'd3-shape';
-  import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
   import { interpolatePath } from 'd3-interpolate-path';
   import { max } from 'd3-array';
   import { cls } from '@layerstack/tailwind';
   import { uniqueId } from '@layerstack/utils';
 
   import Group from './Group.svelte';
-
-  import { motionState, type TweenedProp } from '$lib/stores/motionStore.js';
-  import { accessor, type Accessor } from '../utils/common.js';
   import { isScaleBand } from '../utils/scales.js';
   import { flattenPathData } from '../utils/path.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getRenderContext } from './Chart.svelte';
-  import type { MarkerOptions } from './MarkerWrapper.svelte';
-  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
-  import type { SVGAttributes } from 'svelte/elements';
   import MarkerWrapper from './MarkerWrapper.svelte';
   import { getChartContext } from './Chart-Next.svelte';
   import { createKey } from 'layerchart/utils/key.svelte.js';

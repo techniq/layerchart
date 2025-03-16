@@ -1,4 +1,9 @@
 <script lang="ts" module>
+  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
+  import { motionState, resolveOptions, type MotionProps } from '$lib/stores/motionStore.js';
+  import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+
   export type RectPropsWithoutHTML = {
     /**
      * @default 0
@@ -40,14 +45,10 @@
   import { cls } from '@layerstack/tailwind';
   import { merge } from 'lodash-es';
 
-  import { motionState, resolveOptions, type MotionProps } from '$lib/stores/motionStore.js';
   import { getRenderContext } from './Chart.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { afterTick } from 'layerchart/utils/after-tick.js';
   import { createKey } from 'layerchart/utils/key.svelte.js';
-  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
-  import type { SVGAttributes } from 'svelte/elements';
 
   let {
     height,

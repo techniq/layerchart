@@ -1,4 +1,8 @@
 <script lang="ts" module>
+  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
+  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
+
   export type TextPropsWithoutHTML = {
     /**
      * text value
@@ -125,11 +129,9 @@
   import { getRenderContext } from './Chart.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { getStringWidth } from '$lib/utils/string.js';
-  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
   import { renderText, type ComputedStylesOptions } from '../utils/canvas.js';
   import { afterTick } from 'layerchart/utils/after-tick.js';
-  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
-  import type { SVGAttributes } from 'svelte/elements';
+
   import { createKey } from 'layerchart/utils/key.svelte.js';
 
   /*
