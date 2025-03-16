@@ -104,7 +104,7 @@
     padding: Padding;
     flatData: T[];
     extents: Extents;
-    xDomain: DomainType;
+    xDomain: number[];
     yDomain: number[];
     zDomain: DomainType;
     rDomain: DomainType;
@@ -760,11 +760,12 @@
 
   const logDebug = useDebounce(printDebug, 200);
 
-  const _xDomain: DomainType | undefined = $derived.by(() => {
+  const _xDomain: DomainType = $derived.by(() => {
     if (xBaseline != null && Array.isArray(data)) {
       const xValues = data.flatMap(accessor(xProp));
       return [min([xBaseline, ...xValues]), max([xBaseline, ...xValues])];
     }
+    return [];
   });
 
   const _yDomain: DomainType | undefined = $derived.by(() => {
@@ -1002,7 +1003,7 @@
     c: cProp,
     x1: x1Prop,
     y1: y1Prop,
-    xDomain: _xDomain ?? null,
+    xDomain,
     yDomain,
     zDomain: zDomainProp ?? null,
     rDomain: rDomainProp ?? null,

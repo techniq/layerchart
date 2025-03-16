@@ -1,4 +1,8 @@
 <script lang="ts" module>
+  import type { Snippet } from 'svelte';
+  import type { HTMLAttributes } from 'svelte/elements';
+  import type { Without } from 'layerchart/utils/types.js';
+
   export type GroupPropsWithoutHTML = {
     /**
      * Translate x
@@ -59,16 +63,15 @@
 </script>
 
 <script lang="ts">
-  import { tick, type Snippet } from 'svelte';
   import { cls } from '@layerstack/tailwind';
   import { watch } from 'runed';
 
   import { getRenderContext } from './Chart.svelte';
   import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import type { HTMLAttributes } from 'svelte/elements';
-  import type { Without } from 'layerchart/utils/types.js';
+
   import { getChartContext } from './Chart-Next.svelte';
+  import { afterTick } from 'layerchart/utils/after-tick.js';
 
   const ctx = getChartContext();
 
@@ -92,7 +95,7 @@
 
   $effect(() => {
     [x, y, center, ctx.width, ctx.height];
-    tick().then(() => {
+    afterTick(() => {
       tweenedX.set(x ?? (center === 'x' || center === true ? ctx.width / 2 : 0));
       tweenedY.set(y ?? (center === 'y' || center === true ? ctx.height / 2 : 0));
     });
@@ -111,12 +114,6 @@
   function render(ctx: CanvasRenderingContext2D) {
     ctx.translate(tweenedX.current ?? 0, tweenedY.current ?? 0);
   }
-
-  watch([() => tweenedX.current, () => tweenedY.current], () => {
-    if (renderContext !== 'canvas') return;
-    canvasContext.invalidate();
-  });
-
   $effect(() => {
     if (renderContext !== 'canvas') return;
     return canvasContext.register({
@@ -132,6 +129,12 @@
         pointerdown: restProps.onpointerdown,
       },
     });
+  });
+
+  $effect(() => {
+    if (renderContext !== 'canvas') return;
+    [tweenedX.current, tweenedY.current];
+    canvasContext.invalidate();
   });
 
   function handleTouchMove(e: TouchEvent) {

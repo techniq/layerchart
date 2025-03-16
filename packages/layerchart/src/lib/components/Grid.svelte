@@ -1,57 +1,124 @@
+<script lang="ts" module>
+  export type TicksConfig = number | any[] | ((scale: AnyScale) => any) | null | undefined;
+
+  export type GridPropsWithoutHTML<In extends Transition = Transition> = {
+    /**
+     * Draw a x-axis lines
+     *
+     * @default false
+     */
+    x?: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'>;
+
+    /**
+     * Draw a y-axis lines
+     *
+     * @default false
+     */
+    y?: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'>;
+
+    /**
+     * Control the number of x-axis ticks
+     *
+     */
+    xTicks?: TicksConfig;
+
+    /**
+     * Control the number of y-axis ticks
+     *
+     * @default !isScaleBand(ctx.yScale) ? 4 : undefined
+     */
+    yTicks?: TicksConfig;
+
+    /**
+     * Line alignment when band scale is used (x or y axis)
+     *
+     * @default 'center'
+     */
+    bandAlign?: 'center' | 'between';
+
+    /**
+     * Render `y` lines with circles or linear splines
+     *
+     * @default 'circle'
+     */
+    radialY?: 'circle' | 'linear';
+
+    /**
+     * Classes to apply to the rendered elements.
+     *
+     * @default {}
+     */
+    classes?: {
+      root?: string;
+      line?: string;
+    };
+
+    /**
+     * Transition function for entering elements
+     * @default tweened ? fade : () => ({})
+     */
+    transitionIn?: In;
+
+    /**
+     * Parameters for the transitionIn function
+     * @default { easing: cubicIn }
+     */
+    transitionInParams?: TransitionParams<In>;
+
+    /**
+     * A reference to the underlying outermost `<g>` element.
+     *
+     * @bindable
+     */
+    ref?: SVGGElement;
+  } & MotionProps;
+
+  export type GridProps<In extends Transition = Transition> = Omit<
+    GridPropsWithoutHTML<In> & Without<SVGAttributes<SVGGElement>, GridPropsWithoutHTML<In>>,
+    'children'
+  >;
+</script>
+
 <script lang="ts">
   import type { SVGAttributes } from 'svelte/elements';
   import { fade } from 'svelte/transition';
   import { cubicIn } from 'svelte/easing';
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 
   import { curveLinearClosed } from 'd3-shape';
 
   import { cls } from '@layerstack/tailwind';
-  import type { TransitionParams } from 'svelte-ux'; // TODO: Replace with `@layerstack/svelte-types` or similar
 
-  import { chartContext } from './ChartContext.svelte';
   import { isScaleBand, type AnyScale } from '$lib/utils/scales.js';
 
   import Rule from './Rule.svelte';
   import Spline from './Spline.svelte';
   import Circle from './Circle.svelte';
+  import type { Transition, TransitionParams, Without } from 'layerchart/utils/types.js';
+  import { getChartContext } from './Chart-Next.svelte';
+  import type { MotionProps } from 'layerchart/stores/motionStore.js';
 
-  type TicksConfig = number | any[] | ((scale: AnyScale) => any) | null | undefined;
+  const ctx = getChartContext();
 
-  const { xScale, yScale, radial } = chartContext();
-
-  /** Draw a x-axis lines */
-  export let x: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'> = false;
-
-  /** Draw a y-axis lines */
-  export let y: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'> = false;
-
-  /** Control the number of x-axis ticks */
-  export let xTicks: TicksConfig = undefined;
-
-  /** Control the number of y-axis ticks */
-  export let yTicks: TicksConfig = !isScaleBand($yScale) ? 4 : undefined;
-
-  /** Line alignment when band scale is used (x or y axis) */
-  export let bandAlign: 'center' | 'between' = 'center';
-
-  /** Render `y` lines with circles or linear splines */
-  export let radialY: 'circle' | 'linear' = 'circle';
-
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
-
-  export let transitionIn = tweened
-    ? fade
-    : () => {
-        return {};
-      };
-  export let transitionInParams: TransitionParams = { easing: cubicIn };
-
-  export let classes: {
-    root?: string;
-    line?: string;
-  } = {};
+  let {
+    x = false,
+    y = false,
+    xTicks,
+    yTicks = !isScaleBand(ctx.yScale) ? 4 : undefined,
+    bandAlign = 'center',
+    radialY = 'circle',
+    spring,
+    tweened,
+    transitionIn = tweened
+      ? fade
+      : () => {
+          return {};
+        },
+    transitionInParams = { easing: cubicIn },
+    classes = {},
+    class: className,
+    ref = $bindable(),
+    ...restProps
+  }: GridProps = $props();
 
   function getTickVals(scale: AnyScale, ticks: TicksConfig): any[] {
     return Array.isArray(ticks)
@@ -62,39 +129,45 @@
           ? ticks
             ? scale.domain().filter((v: any, i: number) => i % ticks === 0)
             : scale.domain()
-          : scale.ticks?.(ticks);
+          : (scale.ticks?.(ticks ?? undefined) ?? []);
   }
 
-  $: xTickVals = getTickVals($xScale, xTicks);
-  $: yTickVals = getTickVals($yScale, yTicks);
+  const xTickVals = $derived(getTickVals(ctx.xScale, xTicks));
+  const yTickVals = $derived(getTickVals(ctx.yScale, yTicks));
 
-  $: xBandOffset = isScaleBand($xScale)
-    ? bandAlign === 'between'
-      ? -($xScale.padding() * $xScale.step()) / 2 // before
-      : $xScale.step() / 2 - ($xScale.padding() * $xScale.step()) / 2 // center
-    : 0;
+  const xBandOffset = $derived(
+    isScaleBand(ctx.xScale)
+      ? bandAlign === 'between'
+        ? -(ctx.xScale.padding() * ctx.xScale.step()) / 2 // before
+        : ctx.xScale.step() / 2 - (ctx.xScale.padding() * ctx.xScale.step()) / 2 // center
+      : 0
+  );
 
-  $: yBandOffset = isScaleBand($yScale)
-    ? bandAlign === 'between'
-      ? -($yScale.padding() * $yScale.step()) / 2 // before
-      : $yScale.step() / 2 - ($yScale.padding() * $yScale.step()) / 2 // center
-    : 0;
+  const yBandOffset = $derived(
+    isScaleBand(ctx.yScale)
+      ? bandAlign === 'between'
+        ? -(ctx.yScale.padding() * ctx.yScale.step()) / 2 // before
+        : ctx.yScale.step() / 2 - (ctx.yScale.padding() * ctx.yScale.step()) / 2 // center
+      : 0
+  );
 </script>
 
-<g class={cls('Grid', classes.root, $$props.class)}>
+<g bind:this={ref} class={cls('Grid', classes.root, className)} {...restProps}>
   {#if x}
     {@const splineProps = typeof x === 'object' ? x : null}
     <g in:transitionIn={transitionInParams}>
       {#each xTickVals as x (x)}
-        {#if $radial}
+        {#if ctx.radial}
+          <!--
+			NOTE: this has xOffset and spring being passed, but this component/the underlying
+		   elements don't accept that prop?
+		   -->
           <Spline
             data={yTickVals.map((y) => ({ x, y }))}
             x="x"
             y="y"
-            xOffset={xBandOffset}
             curve={curveLinearClosed}
             {tweened}
-            {spring}
             {...splineProps}
             class={cls('stroke-surface-content/10', classes.line, splineProps?.class)}
           />
@@ -111,10 +184,10 @@
       {/each}
 
       <!-- Add extra rule after last band -->
-      {#if isScaleBand($xScale) && bandAlign === 'between' && !$radial && xTickVals.length}
+      {#if isScaleBand(ctx.xScale) && bandAlign === 'between' && !ctx.radial && xTickVals.length}
         <Rule
           x={xTickVals[xTickVals.length - 1]}
-          xOffset={xBandOffset + $xScale.step()}
+          xOffset={xBandOffset + ctx.xScale.step()}
           {tweened}
           {spring}
           {...splineProps}
@@ -128,23 +201,25 @@
     {@const splineProps = typeof y === 'object' ? y : null}
     <g in:transitionIn={transitionInParams}>
       {#each yTickVals as y (y)}
-        {#if $radial}
+        {#if ctx.radial}
           {#if radialY === 'circle'}
             <Circle
-              r={$yScale(y)}
+              r={ctx.yScale(y)}
               {tweened}
               {spring}
               {...splineProps}
               class={cls('fill-none stroke-surface-content/10', classes.line, splineProps?.class)}
             />
           {:else}
+            <!--
+		 	NOTE: this has yOffset and spring being passed, but this component/the underlying
+		   elements don't accept that prop?
+		   -->
             <Spline
               data={xTickVals.map((x) => ({ x, y }))}
               x="x"
               y="y"
-              yOffset={yBandOffset}
               {tweened}
-              {spring}
               curve={curveLinearClosed}
               {...splineProps}
               class={cls('stroke-surface-content/10', classes.line, splineProps?.class)}
@@ -163,10 +238,10 @@
       {/each}
 
       <!-- Add extra rule after last band -->
-      {#if isScaleBand($yScale) && bandAlign === 'between' && !$radial && yTickVals.length}
+      {#if isScaleBand(ctx.yScale) && bandAlign === 'between' && !ctx.radial && yTickVals.length}
         <Rule
           y={yTickVals[yTickVals.length - 1]}
-          yOffset={yBandOffset + $yScale.step()}
+          yOffset={yBandOffset + ctx.yScale.step()}
           {tweened}
           {spring}
           {...splineProps}
