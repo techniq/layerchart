@@ -1,51 +1,104 @@
+<script lang="ts" module>
+  export type LabelsPropsWithoutHTML = {
+    /**
+     * Override data instead of using context
+     */
+    data?: any;
+
+    /**
+     * Override display value accessor.  By default, uses `y` unless yScale is band scale
+     */
+    value?: Accessor;
+
+    /**
+     * Override `x` accessor from Chart context
+     */
+    x?: Accessor;
+
+    /**
+     * Override `y` accessor from Chart context
+     */
+    y?: Accessor;
+
+    /**
+     * The placement of the label relative to the point
+     * @default 'outside'
+     */
+    placement?: 'inside' | 'outside' | 'center';
+
+    /**
+     * The offset of the label from the point
+     *
+     * @default placement === 'center' ? 0 : 4
+     */
+    offset?: number;
+
+    /**
+     * The format of the label
+     */
+    format?: FormatType;
+
+    /**
+     * Define unique value for {#each} `(key)` expressions to improve transitions.
+     * `index` position used by default
+     *
+     * @default (d, index) => index
+     */
+    key?: (d: any, index: number) => any;
+
+    children?: Snippet<[{ data: Point; textProps: ComponentProps<typeof Text> }]>;
+  };
+
+  export type LabelsProps = LabelsPropsWithoutHTML & Without<TextProps, LabelsPropsWithoutHTML>;
+</script>
+
 <script lang="ts">
-  import { type ComponentProps } from 'svelte';
+  import { type ComponentProps, type Snippet } from 'svelte';
   import { format as formatValue, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
-  import Text from './Text.svelte';
+  import Text, { type TextProps } from './Text.svelte';
   import { isScaleBand } from '$lib/utils/scales.js';
-  import { chartContext } from './ChartContext.svelte';
   import Points, { type Point } from './Points.svelte';
   import { accessor, type Accessor } from '../utils/common.js';
+  import { getChartContext } from './Chart-Next.svelte';
+  import type { Without } from 'layerchart/utils/types.js';
 
-  const { xScale, yScale } = chartContext();
+  const ctx = getChartContext();
 
-  /** Override data instead of using context */
-  export let data: any = undefined;
+  let {
+    data,
+    value,
+    x,
+    y,
+    placement = 'outside',
+    offset = placement === 'center' ? 0 : 4,
+    format,
+    key = (d: any, i: number) => i,
+    ...restProps
+  }: LabelsPropsWithoutHTML = $props();
 
-  /** Override display value accessor.  By default, uses `y` unless yScale is band scale   */
-  export let value: Accessor = undefined;
-
-  /** Override `x` accessor from Chart context */
-  export let x: Accessor = undefined;
-  /** Override `y` accessor from Chart context */
-  export let y: Accessor = undefined;
-
-  export let placement: 'inside' | 'outside' | 'center' = 'outside';
-  export let offset = placement === 'center' ? 0 : 4;
-  export let format: FormatType | undefined = undefined;
-
-  /** Define unique value for {#each} `(key)` expressions to improve transitions.  `index` position used by default */
-  export let key: (d: any, index: number) => any = (d, i) => i;
-
-  $: getTextProps = (point: Point): ComponentProps<Text> => {
+  function getTextProps(point: Point): ComponentProps<typeof Text> {
     // Used for positioning
-    const pointValue = isScaleBand($yScale) ? point.xValue : point.yValue;
+    const pointValue = isScaleBand(ctx.yScale) ? point.xValue : point.yValue;
 
     const displayValue = value
       ? accessor(value)(point.data)
-      : isScaleBand($yScale)
+      : isScaleBand(ctx.yScale)
         ? point.xValue
         : point.yValue;
 
     const formattedValue = formatValue(
       displayValue,
       format ??
-        (value ? undefined : isScaleBand($yScale) ? $xScale.tickFormat?.() : $yScale.tickFormat?.())
+        (value
+          ? undefined
+          : isScaleBand(ctx.yScale)
+            ? ctx.xScale.tickFormat?.()
+            : ctx.yScale.tickFormat?.())
     );
 
-    if (isScaleBand($yScale)) {
+    if (isScaleBand(ctx.yScale)) {
       // Position label left/right on horizontal bars
       if (pointValue < 0) {
         // left
@@ -94,7 +147,7 @@
         };
       }
     }
-  };
+  }
 </script>
 
 <g class="Labels">

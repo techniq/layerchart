@@ -87,7 +87,7 @@
     markerMid = marker,
     tweened,
     ...restProps
-  }: LinkPropsWithoutHTML = $props();
+  }: LinkProps = $props();
 
   const markerStartId = $derived(markerStart || marker ? uniqueId('marker-') : '');
   const markerMidId = $derived(markerMid || marker ? uniqueId('marker-') : '');
