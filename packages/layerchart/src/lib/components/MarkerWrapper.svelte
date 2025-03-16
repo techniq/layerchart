@@ -1,5 +1,7 @@
 <script lang="ts" module>
   import Marker from './Marker.svelte';
+  import type { ComponentProps, Snippet } from 'svelte';
+
   export type MarkerOptions =
     | ComponentProps<typeof Marker>['type']
     | ComponentProps<typeof Marker>
@@ -7,8 +9,6 @@
 </script>
 
 <script lang="ts">
-  import type { ComponentProps, Snippet } from 'svelte';
-
   let {
     id,
     marker,

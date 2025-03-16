@@ -1,4 +1,11 @@
 <script lang="ts" module>
+  import Text, { type TextProps } from './Text.svelte';
+  import { type ComponentProps, type Snippet } from 'svelte';
+  import { format as formatValue, type FormatType } from '@layerstack/utils';
+  import type { Without } from 'layerchart/utils/types.js';
+  import Points, { type Point } from './Points.svelte';
+  import { accessor, type Accessor } from '../utils/common.js';
+
   export type LabelsPropsWithoutHTML = {
     /**
      * Override data instead of using context
@@ -53,16 +60,10 @@
 </script>
 
 <script lang="ts">
-  import { type ComponentProps, type Snippet } from 'svelte';
-  import { format as formatValue, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
-  import Text, { type TextProps } from './Text.svelte';
   import { isScaleBand } from '$lib/utils/scales.js';
-  import Points, { type Point } from './Points.svelte';
-  import { accessor, type Accessor } from '../utils/common.js';
   import { getChartContext } from './Chart-Next.svelte';
-  import type { Without } from 'layerchart/utils/types.js';
 
   const ctx = getChartContext();
 

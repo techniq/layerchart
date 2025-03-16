@@ -1,5 +1,17 @@
 <script lang="ts" module>
   import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+  import type { Snippet } from 'svelte';
+  import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
+  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
+  import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
+  import {
+    geoTransform as d3geoTransform,
+    type GeoIdentityTransform,
+    type GeoPermissibleObjects,
+    type GeoProjection,
+    type GeoTransformPrototype,
+  } from 'd3-geo';
+  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   export type GeoPathPropsWithoutHTML = {
     /**
@@ -53,26 +65,14 @@
 </script>
 
 <script lang="ts">
-  import { onDestroy, type Snippet } from 'svelte';
-  import {
-    geoTransform as d3geoTransform,
-    type GeoIdentityTransform,
-    type GeoPermissibleObjects,
-    type GeoProjection,
-    type GeoTransformPrototype,
-  } from 'd3-geo';
   import { cls } from '@layerstack/tailwind';
   import { merge } from 'lodash-es';
 
   import { getRenderContext } from './Chart.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
-  import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoCurvePath } from '$lib/utils/geo.js';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getGeoContext } from './GeoContext.svelte';
   import { createKey } from 'layerchart/utils/key.svelte.js';
-  import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
 
   let {
     fill,

@@ -1,4 +1,8 @@
 <script lang="ts" module>
+  import Spline, { type SplineProps } from './Spline.svelte';
+  import { curveNatural, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
+  import type { Without } from 'layerchart/utils/types.js';
+
   export type GeoSplinePropsWithoutHTML = {
     /**
      * Link between two points on the globe.
@@ -29,12 +33,9 @@
 </script>
 
 <script lang="ts">
-  import { curveNatural, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoOrthographic, geoInterpolate } from 'd3-geo';
 
-  import Spline, { type SplineProps } from './Spline.svelte';
   import { getGeoContext } from './GeoContext.svelte';
-  import type { Without } from 'layerchart/utils/types.js';
 
   let {
     link,

@@ -1,4 +1,8 @@
 <script lang="ts" module>
+  import type { Without } from 'layerchart/utils/types.js';
+  import type { ComponentProps } from 'svelte';
+  import GeoPath, { type GeoPathProps } from './GeoPath.svelte';
+
   export type GraticulePropsWithoutHTML = {
     lines?: Partial<ComponentProps<typeof GeoPath>> | boolean | undefined;
     outline?: Partial<ComponentProps<typeof GeoPath>> | boolean | undefined;
@@ -11,10 +15,6 @@
 
 <script lang="ts">
   import { geoGraticule } from 'd3-geo';
-  import type { ComponentProps } from 'svelte';
-
-  import GeoPath, { type GeoPathProps } from './GeoPath.svelte';
-  import type { Without } from 'layerchart/utils/types.js';
 
   let { lines, outline, step = [10, 10], ...restProps }: GraticuleProps = $props();
 

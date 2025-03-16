@@ -1,4 +1,10 @@
 <script lang="ts" module>
+  import type { SVGAttributes } from 'svelte/elements';
+  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
+  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import MarkerWrapper, { type MarkerOptions } from './MarkerWrapper.svelte';
+  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+
   export type LinePropsWithoutHTML = {
     /**
      * The x-coordinate of the line's starting point
@@ -102,15 +108,12 @@
   import { cls } from '@layerstack/tailwind';
   import { uniqueId } from '@layerstack/utils';
   import { merge } from 'lodash-es';
-  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { getRenderContext } from './Chart.svelte';
-  import type { SVGAttributes } from 'svelte/elements';
-  import MarkerWrapper, { type MarkerOptions } from './MarkerWrapper.svelte';
-  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
-  import { watch } from 'runed';
+
   import { createKey } from 'layerchart/utils/key.svelte.js';
+  import { afterTick } from 'layerchart/utils/after-tick.js';
 
   let {
     x1,
@@ -143,8 +146,9 @@
   const tweenedX2 = motionState(initialX2, { spring, tweened });
   const tweenedY2 = motionState(initialY2, { spring, tweened });
 
-  watch([() => x1, () => y1, () => x2, () => y2], () => {
-    tick().then(() => {
+  $effect(() => {
+    [x1, y1, x2, y1];
+    afterTick(() => {
       tweenedX1.set(x1);
       tweenedY1.set(y1);
       tweenedX2.set(x2);
@@ -152,8 +156,8 @@
     });
   });
 
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
+  const renderCtx = getRenderContext();
+  const canvasCtx = getCanvasContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -176,15 +180,15 @@
   const strokeKey = createKey(() => stroke);
 
   $effect(() => {
-    if (renderContext !== 'canvas') return;
+    if (renderCtx !== 'canvas') return;
     [tweenedX1.current, tweenedY1.current, tweenedX2.current, tweenedY2.current];
     [fillKey.current, strokeKey.current, strokeWidth, opacity, className];
-    canvasContext.invalidate();
+    canvasCtx.invalidate();
   });
 
   $effect(() => {
-    if (renderContext !== 'canvas') return;
-    return canvasContext.register({
+    if (renderCtx !== 'canvas') return;
+    return canvasCtx.register({
       name: 'Line',
       render,
       events: {
@@ -197,7 +201,7 @@
   });
 </script>
 
-{#if renderContext === 'svg'}
+{#if renderCtx === 'svg'}
   <line
     x1={tweenedX1.current}
     y1={tweenedY1.current}

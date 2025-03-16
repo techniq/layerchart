@@ -1,4 +1,7 @@
 <script lang="ts" module>
+  import type { Without } from 'layerchart/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
+
   export type MarkerPropsWithoutHTML = {
     /**
      * The type of marker to render (e.g., arrow, triangle, etc.)
@@ -71,8 +74,6 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { uniqueId } from '@layerstack/utils';
-  import type { Without } from 'layerchart/utils/types.js';
-  import type { SVGAttributes } from 'svelte/elements';
 
   let {
     type,

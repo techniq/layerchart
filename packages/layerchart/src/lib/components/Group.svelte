@@ -2,6 +2,7 @@
   import type { Snippet } from 'svelte';
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Without } from 'layerchart/utils/types.js';
+  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
 
   export type GroupPropsWithoutHTML = {
     /**
@@ -64,10 +65,8 @@
 
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { watch } from 'runed';
 
   import { getRenderContext } from './Chart.svelte';
-  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
 
   import { getChartContext } from './Chart-Next.svelte';

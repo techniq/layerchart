@@ -1,4 +1,6 @@
 <script lang="ts" module>
+  import type { Snippet } from 'svelte';
+
   export type GeoVisibleProps = {
     /** Latitude */
     lat: number;
@@ -10,7 +12,6 @@
 
 <script lang="ts">
   import { isVisible } from '$lib/utils/geo.js';
-  import type { Snippet } from 'svelte';
   import { getGeoContext } from './GeoContext.svelte';
 
   let { lat, long, children }: GeoVisibleProps = $props();
