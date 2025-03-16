@@ -65,8 +65,6 @@
 
   type TransformContextPropsWithoutHTML = {
     mode?: TransformMode;
-    spring?: boolean | SpringOptions;
-    tweened?: boolean | TweenedOptions;
     processTranslate?: (
       x: number,
       y: number,
@@ -113,7 +111,7 @@
     ondragend?: () => void;
     ref?: HTMLElement | null;
     children?: Snippet<[{ transformContext: TransformContextValue }]>;
-  };
+  } & MotionProps;
 
   type TransformContextProps = TransformContextPropsWithoutHTML &
     Without<HTMLAttributes<HTMLElement>, TransformContextPropsWithoutHTML>;

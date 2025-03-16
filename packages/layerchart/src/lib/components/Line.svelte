@@ -104,7 +104,6 @@
 </script>
 
 <script lang="ts">
-  import { tick } from 'svelte';
   import { cls } from '@layerstack/tailwind';
   import { uniqueId } from '@layerstack/utils';
   import { merge } from 'lodash-es';
