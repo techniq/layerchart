@@ -1,41 +1,56 @@
-<script lang="ts">
-  import { type HierarchyPointNode, tree as d3Tree, type TreeLayout } from 'd3-hierarchy';
-  import { chartContext } from './ChartContext.svelte';
+<script lang="ts" module>
+  export type TreeProps = {
+    /**
+     * Sets this tree layout’s node size to the specified two-element array of numbers `[width, height]`.
+     * If unset, layout size is used instead.  When a node size is specified, the root node is always
+     * positioned at `⟨0, 0⟩`.
+     *
+     * see: https://github.com/d3/d3-hierarchy#tree_nodeSize
+     */
+    nodeSize?: [number, number];
 
-  const { data, width, height } = chartContext();
+    /**
+     * see: https://github.com/d3/d3-hierarchy#tree_separation
+     */
+    separation?: (a: HierarchyPointNode<any>, b: HierarchyPointNode<any>) => number;
 
-  /**
-   * Sets this tree layout’s node size to the specified two-element array of numbers `[width, height]`.
-   * If unset, layout size is used instead.  When a node size is specified, the root node is always
-   * positioned at `⟨0, 0⟩`.
-   *
-   * see: https://github.com/d3/d3-hierarchy#tree_nodeSize
-   */
-  export let nodeSize: [number, number] | undefined = undefined;
+    /**
+     * Orientation of the tree layout.
+     *
+     * @default 'horizontal'
+     */
+    orientation?: 'vertical' | 'horizontal';
 
-  /**
-   * see: https://github.com/d3/d3-hierarchy#tree_separation
-   */
-  export let separation:
-    | ((a: HierarchyPointNode<any>, b: HierarchyPointNode<any>) => number)
-    | undefined = undefined;
-
-  export let orientation: 'vertical' | 'horizontal' = 'horizontal';
-
-  let tree: TreeLayout<any>;
-  $: {
-    tree = d3Tree().size(orientation === 'horizontal' ? [$height, $width] : [$width, $height]);
-
-    if (nodeSize) {
-      tree.nodeSize(nodeSize);
-    }
-    if (separation) {
-      tree.separation(separation);
-    }
-  }
-
-  // @ts-expect-error
-  $: treeData = tree($data);
+    children?: Snippet<[{ nodes: HierarchyPointNode<any>[]; links: HierarchyPointLink<any>[] }]>;
+  };
 </script>
 
-<slot nodes={treeData.descendants()} links={treeData.links()} />
+<script lang="ts">
+  import { type HierarchyPointNode, tree as d3Tree, type HierarchyPointLink } from 'd3-hierarchy';
+  import type { Snippet } from 'svelte';
+  import { getChartContext } from './Chart-Next.svelte';
+
+  let { nodeSize, separation, orientation = 'horizontal', children }: TreeProps = $props();
+
+  const ctx = getChartContext();
+
+  const tree = $derived.by(() => {
+    const _tree = d3Tree().size(
+      orientation === 'horizontal' ? [ctx.height, ctx.width] : [ctx.width, ctx.height]
+    );
+
+    if (nodeSize) {
+      _tree.nodeSize(nodeSize);
+    }
+
+    if (separation) {
+      _tree.separation(separation);
+    }
+    return _tree;
+  });
+
+  // @ts-expect-error
+  const treeData = $derived(tree(ctx.data));
+</script>
+
+{@render children?.({ nodes: treeData.descendants(), links: treeData.links() })}
