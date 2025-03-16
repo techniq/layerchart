@@ -9,7 +9,15 @@
     TData,
     typeof Area,
     AreaChartExtraSnippetProps<TData>
-  >;
+  > & {
+    /**
+     * The event to be dispatched when the point is clicked.
+     */
+    onPointClick?: (
+      e: MouseEvent,
+      details: { data: HighlightPointData; series: SeriesData<TData, typeof Area> }
+    ) => void;
+  };
 </script>
 
 <script lang="ts" generics="TData">
@@ -27,7 +35,7 @@
   import Chart from '../Chart-Next.svelte';
   import ChartClipPath from '../ChartClipPath.svelte';
   import Grid from '../Grid.svelte';
-  import Highlight from '../Highlight.svelte';
+  import Highlight, { type HighlightPointData } from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
   import Legend from '../Legend.svelte';
   import Points from '../Points.svelte';

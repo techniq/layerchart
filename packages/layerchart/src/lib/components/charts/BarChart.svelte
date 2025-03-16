@@ -1,3 +1,72 @@
+<script lang="ts" module>
+  export type BarChartExtraSnippetProps<TData> = {
+    getBarsProps: (s: SeriesData<TData, typeof Bars>, i: number) => ComponentProps<typeof Bars>;
+    getLabelsProps: (s: SeriesData<TData, typeof Bars>, i: number) => ComponentProps<typeof Labels>;
+  };
+
+  export type BarChartPropsObjProp = Omit<
+    SimplifiedChartPropsObject,
+    'area' | 'brush' | 'line' | 'points'
+  > & {
+    bars?: Partial<ComponentProps<typeof Bars>>;
+  };
+
+  export type BarChartProps<TData> = Omit<
+    SimplifiedChartProps<TData, typeof Bars, BarChartExtraSnippetProps<TData>>,
+    'props' | 'seriesLayout'
+  > & {
+    /**
+     * Padding between primary x or y bands/bars, applied to scaleBand().padding()
+     *
+     * @default 0.4
+     */
+    bandPadding?: number;
+    /**
+     * Padding between group/series items when using 'seriesLayout="group"', applied to scaleBand().padding()
+     *
+     * @default 0
+     */
+    groupPadding?: number;
+    /**
+     * Padding between series items within bars when using 'seriesLayout="stack"'
+     *
+     * @default 0
+     */
+    stackPadding?: number;
+
+    /**
+     * The orientation of the bar chart.
+     *
+     * @default 'vertical'
+     */
+    orientation?: 'vertical' | 'horizontal';
+
+    props?: BarChartPropsObjProp;
+
+    /**
+     * A function called when a bar is clicked
+     */
+    onBarClick?: (
+      e: MouseEvent,
+      detail: { data: any; series: SeriesData<TData, typeof Bars> }
+    ) => void;
+
+    /**
+     * The layout of the series.
+     *
+     * @default 'overlap'
+     */
+    seriesLayout?:
+      | SimplifiedChartProps<TData, typeof Bars, BarChartExtraSnippetProps<TData>>['seriesLayout']
+      | 'group';
+
+    /**
+     * The y scale to use for the chart.
+     */
+    yScale?: AnyScale;
+  };
+</script>
+
 <script lang="ts" generics="TData">
   import { onMount, type ComponentProps } from 'svelte';
   import { scaleBand, scaleOrdinal, scaleLinear } from 'd3-scale';
@@ -10,7 +79,7 @@
   import Axis from '../Axis.svelte';
   import Bars from '../Bars.svelte';
   import Canvas from '../layout/Canvas.svelte';
-  import Chart from '../Chart.svelte';
+  import Chart from '../Chart-Next.svelte';
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
@@ -24,188 +93,152 @@
     chartDataArray,
     defaultChartPadding,
     findRelatedData,
-    type Accessor,
   } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
   import type { Insets } from '../../utils/rect.js';
+  import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
+  import type { AnyScale } from 'layerchart/utils/scales.js';
+  import { createHighlightSeriesKey } from './utils.svelte.js';
 
-  type ChartProps = ComponentProps<Chart<TData>>;
+  let {
+    data = [],
+    x: xProp,
+    y: yProp,
+    xDomain,
+    radial = false,
+    orientation = 'vertical',
+    series = [
+      {
+        key: 'default',
+        value: orientation === 'vertical' ? yProp : xProp,
+      },
+    ],
+    seriesLayout = 'overlap',
+    axis = true,
+    brush = false,
+    grid = true,
+    labels = false,
+    legend = false,
+    points = false,
+    rule = true,
+    tooltipContext,
+    onTooltipClick = () => {},
+    onBarClick = () => {},
+    props = {},
+    renderContext = 'svg',
+    profile = false,
+    debug = false,
+    xScale: xScaleProp,
+    yScale: yScaleProp,
+    bandPadding = 0.4,
+    groupPadding = 0,
+    stackPadding = 0,
+    tooltip,
+    children: childrenProp,
+    aboveContext,
+    belowContext,
+    belowMarks,
+    aboveMarks,
+    marks,
+    highlight,
+    ...restProps
+  }: BarChartProps<TData> = $props();
 
-  interface $$Props extends ChartProps {
-    axis?: typeof axis;
-    debug?: typeof debug;
-    grid?: typeof grid;
-    bandPadding?: typeof bandPadding;
-    groupPadding?: typeof groupPadding;
-    stackPadding?: typeof stackPadding;
-    labels?: typeof labels;
-    legend?: typeof legend;
-    orientation?: typeof orientation;
-    profile?: typeof profile;
-    props?: typeof props;
-    rule?: typeof rule;
-    series?: typeof series;
-    seriesLayout?: typeof seriesLayout;
-    renderContext?: typeof renderContext;
-    onbarclick?: typeof onbarclick;
-    ontooltipclick?: typeof ontooltipclick;
-  }
+  const isVertical = $derived(orientation === 'vertical');
+  const isDefaultSeries = $derived(series.length === 1 && series[0].key === 'default');
+  const stackSeries = $derived(seriesLayout.startsWith('stack'));
+  const groupSeries = $derived(seriesLayout === 'group');
+  const xScale = $derived(
+    xScaleProp ?? (isVertical ? scaleBand().padding(bandPadding) : scaleLinear())
+  );
+  const xBaseline = $derived(isVertical ? 0 : undefined);
+  const yScale = $derived(
+    yScaleProp ?? (isVertical ? scaleLinear() : scaleBand().padding(bandPadding))
+  );
+  const yBaseline = $derived(isVertical ? undefined : 0);
 
-  export let data: $$Props['data'] = [];
-  export let x: Accessor<TData> = undefined;
-  export let y: Accessor<TData> = undefined;
+  const selectedSeries = selectionStore();
+  const visibleSeries = $derived(
+    series.filter((s) => {
+      return (
+        // @ts-expect-error
+        $selectedSeries.selected.length === 0 || $selectedSeries.isSelected(s.key)
+        // || highlightSeriesKey == s.key
+      );
+    })
+  );
 
-  export let orientation: 'vertical' | 'horizontal' = 'vertical';
-  $: isVertical = orientation === 'vertical';
+  const x1Scale = $derived(
+    groupSeries && isVertical ? scaleBand().padding(groupPadding) : undefined
+  );
+  const x1Domain = $derived(
+    groupSeries && isVertical ? visibleSeries.map((s) => s.key) : undefined
+  );
 
-  export let series: {
-    key: string;
-    label?: string;
-    value?: Accessor<TData>;
-    /** Provider series data, else uses chart data (with value/key accessor) */
-    data?: TData[];
-    color?: string;
-    props?: Partial<ComponentProps<Bars>>;
-  }[] = [
-    {
-      key: 'default',
-      value: orientation === 'vertical' ? y : x,
-    },
-  ];
-  $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
+  const x1Range = $derived(
+    groupSeries && isVertical
+      ? // TODO: can we do something better here where we don't need to cast this
+        // feels fragile!
+        ({ xScale }: { xScale: AnyScale }) => [0, xScale.bandwidth!()]
+      : undefined
+  );
 
-  /** Determine how to layout series.  Overlap (default), stack, or group side by side */
-  export let seriesLayout: 'overlap' | 'group' | 'stack' | 'stackExpand' | 'stackDiverging' =
-    'overlap';
-  $: stackSeries = seriesLayout.startsWith('stack');
-  $: groupSeries = seriesLayout === 'group';
+  const y1Scale = $derived(
+    groupSeries && !isVertical ? scaleBand().padding(groupPadding) : undefined
+  );
+  const y1Domain = $derived(
+    groupSeries && !isVertical ? visibleSeries.map((s) => s.key) : undefined
+  );
+  const y1Range = $derived(
+    groupSeries && !isVertical
+      ? // TODO: can we do something better here where we don't need to cast this
+        // feels fragile!
+        ({ yScale }: { yScale: AnyScale }) => [0, yScale.bandwidth!()]
+      : undefined
+  );
 
-  export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
-  export let rule: ComponentProps<Rule> | boolean = true;
-  export let grid: ComponentProps<Grid> | boolean = true;
-  export let labels: ComponentProps<Labels> | boolean = false;
-  export let legend: ComponentProps<Legend> | boolean = false;
+  const allSeriesData = $derived(
+    visibleSeries
+      .flatMap((s) =>
+        s.data?.map((d) => {
+          return { seriesKey: s.key, ...d };
+        })
+      )
+      .filter((d) => d) as Array<TData & { stackData?: any }>
+  );
 
-  /** Padding between primary x or y bands/bars, applied to scaleBand().padding() */
-  export let bandPadding = 0.4;
-  /** Padding between group/series items when using 'seriesLayout="group"', applied to scaleBand().padding() */
-  export let groupPadding = 0;
-  /** Padding between series items within bars when using 'seriesLayout="stack"' */
-  export let stackPadding = 0;
+  const chartData = $derived.by(() => {
+    let _chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<TData>;
+    if (stackSeries) {
+      const seriesKeys = visibleSeries.map((s) => s.key);
 
-  /** Expose tooltip context for external access */
-  export let tooltipContext: ComponentProps<Tooltip.Context>['tooltip'] = undefined;
+      const offset =
+        seriesLayout === 'stackExpand'
+          ? stackOffsetExpand
+          : seriesLayout === 'stackDiverging'
+            ? stackOffsetDiverging
+            : stackOffsetNone;
+      const stackData = stack()
+        .keys(seriesKeys)
+        .value((d, key) => {
+          const s = series.find((d) => d.key === key)!;
+          return accessor(s.value ?? s.key)(d as any);
+        })
+        .offset(offset)(chartDataArray(data)) as any[];
 
-  /** Event dispatched with current tooltip data */
-  export let ontooltipclick: (e: MouseEvent, detail: { data: any }) => void = () => {};
-
-  // TODO: Need to find a way to have this play nice with `tooltip={{ mode: 'band' }}`
-  /** Event dispatched when individual Bar is clicked (useful with multiple series) */
-  export let onbarclick: (
-    e: MouseEvent,
-    detail: { data: any; series: (typeof series)[number] }
-  ) => void = () => {};
-
-  $: xScale = $$props.xScale ?? (isVertical ? scaleBand().padding(bandPadding) : scaleLinear());
-  $: xBaseline = isVertical ? undefined : 0;
-
-  $: yScale = $$props.yScale ?? (isVertical ? scaleLinear() : scaleBand().padding(bandPadding));
-  $: yBaseline = isVertical ? 0 : undefined;
-
-  let x1Scale: ChartProps['x1Scale'];
-  let x1Domain: ChartProps['x1Domain'];
-  let x1Range: ChartProps['x1Range'];
-
-  let y1Scale: ChartProps['y1Scale'];
-  let y1Domain: ChartProps['y1Domain'];
-  let y1Range: ChartProps['y1Range'];
-
-  $: if (seriesLayout === 'group') {
-    if (isVertical) {
-      x1Scale = scaleBand().padding(groupPadding);
-      x1Domain = visibleSeries.map((s) => s.key);
-      x1Range = ({ xScale }) => [0, xScale.bandwidth?.()];
-    } else {
-      y1Scale = scaleBand().padding(groupPadding);
-      y1Domain = visibleSeries.map((s) => s.key);
-      y1Range = ({ yScale }) => [0, yScale.bandwidth?.()];
+      _chartData = _chartData.map((d, i) => {
+        return {
+          ...d,
+          stackData: stackData.map((sd) => sd[i]),
+        };
+      });
     }
-  }
+    return _chartData;
+  });
 
-  export let props: {
-    xAxis?: Partial<ComponentProps<Axis>>;
-    yAxis?: Partial<ComponentProps<Axis>>;
-    canvas?: Partial<ComponentProps<Canvas>>;
-    grid?: Partial<ComponentProps<Grid>>;
-    rule?: Partial<ComponentProps<Rule>>;
-    bars?: Partial<ComponentProps<Bars>>;
-    legend?: Partial<ComponentProps<Legend>>;
-    highlight?: Partial<ComponentProps<Highlight>>;
-    labels?: Partial<ComponentProps<Labels>>;
-    svg?: Partial<ComponentProps<Svg>>;
-    tooltip?: {
-      context?: Partial<ComponentProps<Tooltip.Context>>;
-      root?: Partial<ComponentProps<Tooltip.Root>>;
-      header?: Partial<ComponentProps<Tooltip.Header>>;
-      list?: Partial<ComponentProps<Tooltip.List>>;
-      item?: Partial<ComponentProps<Tooltip.Item>>;
-      separator?: Partial<ComponentProps<Tooltip.Separator>>;
-      hideTotal?: boolean;
-    };
-  } = {};
+  const highlightSeriesKey = createHighlightSeriesKey();
 
-  export let renderContext: 'svg' | 'canvas' = 'svg';
-
-  /** Log initial render performance using `console.time` */
-  export let profile = false;
-
-  /** Enable debug mode */
-  export let debug = false;
-
-  $: allSeriesData = visibleSeries
-    .flatMap((s) =>
-      s.data?.map((d) => {
-        return { seriesKey: s.key, ...d };
-      })
-    )
-    .filter((d) => d) as Array<TData & { stackData?: any }>;
-
-  $: chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<
-    TData & { stackData?: any }
-  >;
-
-  $: if (stackSeries) {
-    const seriesKeys = visibleSeries.map((s) => s.key);
-
-    const offset =
-      seriesLayout === 'stackExpand'
-        ? stackOffsetExpand
-        : seriesLayout === 'stackDiverging'
-          ? stackOffsetDiverging
-          : stackOffsetNone;
-    const stackData = stack()
-      .keys(seriesKeys)
-      .value((d, key) => {
-        const s = series.find((d) => d.key === key)!;
-        return accessor(s.value ?? s.key)(d as any);
-      })
-      .offset(offset)(chartDataArray(data)) as any[];
-
-    chartData = chartData.map((d, i) => {
-      return {
-        ...d,
-        stackData: stackData.map((sd) => sd[i]),
-      };
-    });
-  }
-
-  let highlightSeriesKey: (typeof series)[number]['key'] | null = null;
-
-  function setHighlightSeriesKey(seriesKey: typeof highlightSeriesKey) {
-    highlightSeriesKey = seriesKey;
-  }
-
-  $: getBarsProps = (s: (typeof series)[number], i: number) => {
+  function getBarsProps(s: SeriesData<TData, typeof Bars>, i: number) {
     const isFirst = i == 0;
     const isLast = i == visibleSeries.length - 1;
 
@@ -231,7 +264,7 @@
     const valueAccessor = stackSeries
       ? (d: any) => d.stackData[i]
       : (s.value ?? (s.data ? undefined : s.key));
-    const barsProps: ComponentProps<Bars> = {
+    const barsProps: ComponentProps<typeof Bars> = {
       data: s.data,
       x: !isVertical ? valueAccessor : undefined,
       y: isVertical ? valueAccessor : undefined,
@@ -242,22 +275,22 @@
       strokeWidth: 1,
       insets: stackInsets,
       fill: s.color,
-      onbarclick: (e, detail) => onbarclick(e, { ...detail, series: s }),
+      onBarClick: (e, detail) => onBarClick(e, { ...detail, series: s }),
       ...props.bars,
       ...s.props,
       class: cls(
         'transition-opacity',
-        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+        highlightSeriesKey.current && highlightSeriesKey.current !== s.key && 'opacity-10',
         props.bars?.class,
         s.props?.class
       ),
     };
 
     return barsProps;
-  };
+  }
 
-  function getLabelsProps(s: (typeof series)[number], i: number) {
-    const labelsProps: ComponentProps<Labels> = {
+  function getLabelsProps(s: SeriesData<TData, typeof Bars>, i: number) {
+    const labelsProps: ComponentProps<typeof Labels> = {
       // TODO: Improve placement when using `seriesLayout="group"`
       // data: s.data,
       // y: s.value ?? (s.data ? undefined : s.key),
@@ -265,7 +298,7 @@
       ...(typeof labels === 'object' ? labels : null),
       class: cls(
         'stroke-surface-200 transition-opacity',
-        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+        highlightSeriesKey.current && highlightSeriesKey.current !== s.key && 'opacity-10',
         props.labels?.class,
         typeof labels === 'object' && labels.class
       ),
@@ -273,15 +306,6 @@
 
     return labelsProps;
   }
-
-  const selectedSeries = selectionStore();
-  $: visibleSeries = series.filter((s) => {
-    return (
-      // @ts-expect-error
-      $selectedSeries.selected.length === 0 || $selectedSeries.isSelected(s.key)
-      // || highlightSeriesKey == s.key
-    );
-  });
 
   if (profile) {
     console.time('BarChart render');
@@ -293,9 +317,10 @@
 
 <Chart
   data={chartData}
-  x={x ??
+  x={xProp ??
     (stackSeries
-      ? (d) => visibleSeries.flatMap((s, i) => d.stackData[i])
+      ? // @ts-expect-error - TODO: lets fix this somehow
+        (d) => visibleSeries.flatMap((s, i) => d.stackData[i])
       : visibleSeries.map((s) => s.value ?? s.key))}
   {xScale}
   {xBaseline}
@@ -303,9 +328,10 @@
   {x1Scale}
   {x1Domain}
   {x1Range}
-  y={y ??
+  y={yProp ??
     (stackSeries
-      ? (d) => visibleSeries.flatMap((s, i) => d.stackData[i])
+      ? // @ts-expect-error - TODO: lets fix this somehow
+        (d) => visibleSeries.flatMap((s, i) => d.stackData[i])
       : visibleSeries.map((s) => s.value ?? s.key))}
   {yScale}
   {yBaseline}
@@ -313,59 +339,47 @@
   {y1Scale}
   {y1Domain}
   {y1Range}
-  c={isVertical ? y : x}
+  c={isVertical ? yProp : xProp}
   cRange={['var(--color-primary)']}
   padding={defaultChartPadding(axis, legend)}
-  {...$$restProps}
-  tooltip={$$props.tooltip === false
+  {...restProps}
+  tooltip={tooltip === false
     ? false
     : {
         mode: 'band',
-        onclick: ontooltipclick,
+        onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
-        ...$$props.tooltip,
+        ...props.tooltip,
       }}
   bind:tooltipContext
-  let:x
-  let:xScale
-  let:y
-  let:yScale
-  let:c
-  let:cScale
-  let:width
-  let:height
-  let:padding
-  let:tooltip
 >
-  {@const slotProps = {
-    x,
-    xScale,
-    y,
-    yScale,
-    c,
-    cScale,
-    width,
-    height,
-    padding,
-    tooltip,
-    series,
-    visibleSeries,
-    getBarsProps,
-    getLabelsProps,
-    highlightSeriesKey,
-    setHighlightSeriesKey,
-  }}
-  <slot {...slotProps}>
-    <slot name="belowContext" {...slotProps} />
+  {#snippet children({ context, brushContext, geoContext, tooltipContext, transformContext })}
+    {@const slotProps = {
+      context,
+      tooltipContext,
+      brushContext,
+      geoContext,
+      transformContext,
+      series,
+      visibleSeries,
+      getBarsProps,
+      getLabelsProps,
+      get highlightSeriesKey() {
+        return highlightSeriesKey.current;
+      },
+      setHighlightSeriesKey: highlightSeriesKey.set,
+    }}
+    {#if childrenProp}
+      {@render childrenProp(slotProps)}
+    {:else}
+      {@const Component = renderContext === 'canvas' ? Canvas : Svg}
+      {@render belowContext?.(slotProps)}
 
-    <svelte:component
-      this={renderContext === 'canvas' ? Canvas : Svg}
-      {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
-      {debug}
-    >
-      <slot name="grid" {...slotProps}>
-        {#if grid}
+      <Component {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)} {debug}>
+        {#if typeof grid === 'function'}
+          {@render grid(slotProps)}
+        {:else if grid}
           <Grid
             x={!isVertical}
             y={isVertical}
@@ -373,20 +387,21 @@
             {...props.grid}
           />
         {/if}
-      </slot>
+        {@render belowMarks?.(slotProps)}
 
-      <slot name="belowMarks" {...slotProps} />
+        {#if typeof marks === 'function'}
+          {@render marks(slotProps)}
+        {:else}
+          {#each visibleSeries as s, i (s.key)}
+            <Bars {...getBarsProps(s, i)} />
+          {/each}
+        {/if}
 
-      <slot name="marks" {...slotProps}>
-        {#each visibleSeries as s, i (s.key)}
-          <Bars {...getBarsProps(s, i)} />
-        {/each}
-      </slot>
+        {@render aboveMarks?.(slotProps)}
 
-      <slot name="aboveMarks" {...slotProps} />
-
-      <slot name="axis" {...slotProps}>
-        {#if axis}
+        {#if typeof axis === 'function'}
+          {@render axis(slotProps)}
+        {:else if axis}
           {#if axis !== 'x'}
             <Axis
               placement="left"
@@ -426,23 +441,25 @@
             />
           {/if}
         {/if}
-      </slot>
 
-      <slot name="highlight" {...slotProps}>
-        <Highlight area {...props.highlight} />
-      </slot>
+        {#if typeof highlight === 'function'}
+          {@render highlight(slotProps)}
+        {:else}
+          <Highlight area {...props.highlight} />
+        {/if}
 
-      {#if labels}
-        {#each visibleSeries as s, i (s.key)}
-          <Labels {...getLabelsProps(s, i)} />
-        {/each}
-      {/if}
-    </svelte:component>
+        {#if labels}
+          {#each visibleSeries as s, i (s.key)}
+            <Labels {...getLabelsProps(s, i)} />
+          {/each}
+        {/if}
+      </Component>
 
-    <slot name="aboveContext" {...slotProps} />
+      {@render aboveContext?.(slotProps)}
 
-    <slot name="legend" {...slotProps}>
-      {#if legend}
+      {#if typeof legend === 'function'}
+        {@render legend(slotProps)}
+      {:else if legend}
         <Legend
           scale={isDefaultSeries
             ? undefined
@@ -454,8 +471,8 @@
           placement="bottom"
           variant="swatches"
           onclick={(e, item) => $selectedSeries.toggleSelected(item.value)}
-          onpointerenter={(e, item) => (highlightSeriesKey = item.value)}
-          onpointerleave={(e) => (highlightSeriesKey = null)}
+          onpointerenter={(e, item) => (highlightSeriesKey.current = item.value)}
+          onpointerleave={(e) => (highlightSeriesKey.current = null)}
           {...props.legend}
           {...typeof legend === 'object' ? legend : null}
           classes={{
@@ -468,51 +485,59 @@
           }}
         />
       {/if}
-    </slot>
 
-    <slot name="tooltip" {...slotProps}>
-      <Tooltip.Root {...props.tooltip?.root} let:data>
-        <Tooltip.Header
-          value={isVertical ? x(data) : y(data)}
-          {format}
-          {...props.tooltip?.header}
-        />
-
-        <Tooltip.List {...props.tooltip?.list}>
-          <!-- Reverse series order so tooltip items match stacks -->
-          {@const seriesItems = stackSeries ? [...visibleSeries].reverse() : visibleSeries}
-          {#each seriesItems as s}
-            {@const seriesTooltipData = s.data ? findRelatedData(s.data, data, x) : data}
-            {@const valueAccessor = accessor(s.value ?? (s.data ? asAny(y) : s.key))}
-            <Tooltip.Item
-              label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
-              value={seriesTooltipData ? valueAccessor(seriesTooltipData) : null}
-              color={s.color ?? cScale?.(c(data))}
+      {#if typeof tooltip === 'function'}
+        {@render tooltip(slotProps)}
+      {:else}
+        <Tooltip.Root {...props.tooltip?.root}>
+          {#snippet children({ data })}
+            <Tooltip.Header
+              value={isVertical ? context.x(data) : context.y(data)}
               {format}
-              valueAlign="right"
-              onpointerenter={() => (highlightSeriesKey = s.key)}
-              onpointerleave={() => (highlightSeriesKey = null)}
-              {...props.tooltip?.item}
+              {...props.tooltip?.header}
             />
-          {/each}
 
-          {#if (stackSeries || groupSeries) && visibleSeries.length > 1 && !props.tooltip?.hideTotal}
-            <Tooltip.Separator {...props.tooltip?.separator} />
+            <Tooltip.List {...props.tooltip?.list}>
+              <!-- Reverse series order so tooltip items match stacks -->
+              {@const seriesItems = stackSeries ? [...visibleSeries].reverse() : visibleSeries}
+              {#each seriesItems as s}
+                {@const seriesTooltipData = s.data
+                  ? findRelatedData(s.data, data, context.x)
+                  : data}
+                {@const valueAccessor = accessor(s.value ?? (s.data ? context.y : s.key))}
+                <Tooltip.Item
+                  label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
+                  value={seriesTooltipData ? valueAccessor(seriesTooltipData) : null}
+                  color={s.color ?? context.cScale?.(context.c(data))}
+                  {format}
+                  valueAlign="right"
+                  onpointerenter={() => (highlightSeriesKey.current = s.key)}
+                  onpointerleave={() => (highlightSeriesKey.current = null)}
+                  {...props.tooltip?.item}
+                />
+              {/each}
 
-            <Tooltip.Item
-              label="total"
-              value={sum(visibleSeries, (s) => {
-                const seriesTooltipData = s.data ? findRelatedData(s.data, data, x) : data;
-                const valueAccessor = accessor(s.value ?? (s.data ? asAny(y) : s.key));
-                return valueAccessor(seriesTooltipData);
-              })}
-              format="integer"
-              valueAlign="right"
-              {...props.tooltip?.item}
-            />
-          {/if}
-        </Tooltip.List>
-      </Tooltip.Root>
-    </slot>
-  </slot>
+              {#if (stackSeries || groupSeries) && visibleSeries.length > 1 && !props.tooltip?.hideTotal}
+                <Tooltip.Separator {...props.tooltip?.separator} />
+
+                <Tooltip.Item
+                  label="total"
+                  value={sum(visibleSeries, (s) => {
+                    const seriesTooltipData = s.data
+                      ? findRelatedData(s.data, data, context.x)
+                      : data;
+                    const valueAccessor = accessor(s.value ?? (s.data ? context.y : s.key));
+                    return valueAccessor(seriesTooltipData);
+                  })}
+                  format="integer"
+                  valueAlign="right"
+                  {...props.tooltip?.item}
+                />
+              {/if}
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/if}
+    {/if}
+  {/snippet}
 </Chart>

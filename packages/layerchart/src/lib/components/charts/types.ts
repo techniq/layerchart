@@ -5,7 +5,6 @@ import type { AnyScale } from '$lib/utils/scales.js';
 import type { Area, Axis, Labels, Legend, Points, Rule } from '../index.js';
 import type TooltipContext from '../tooltip/TooltipContext.svelte';
 import type { TooltipContextValue } from '../tooltip/TooltipContext.svelte';
-import type { HighlightPointData } from '../Highlight.svelte';
 import type { Canvas } from 'layercake';
 import type Highlight from '../Highlight.svelte';
 import type Line from '../Line.svelte';
@@ -80,6 +79,31 @@ export type SimplifiedChartSnippetProps<TData, TComponent extends Component, TSn
 export type SimplifiedChartSnippet<TData, TComponent extends Component, TSnippetProps> = Snippet<
   [SimplifiedChartSnippetProps<TData, TComponent, TSnippetProps>]
 >;
+
+export type SimplifiedChartPropsObject = {
+  area?: Partial<ComponentProps<typeof Area>>;
+  brush?: Partial<ComponentProps<typeof BrushContext>>;
+  canvas?: Partial<ComponentProps<typeof Canvas>>;
+  grid?: Partial<ComponentProps<typeof Grid>>;
+  highlight?: Partial<ComponentProps<typeof Highlight>>;
+  labels?: Partial<ComponentProps<typeof Labels>>;
+  legend?: Partial<ComponentProps<typeof Legend>>;
+  line?: Partial<ComponentProps<typeof Line>>;
+  points?: Partial<ComponentProps<typeof Points>>;
+  rule?: Partial<ComponentProps<typeof Rule>>;
+  svg?: Partial<ComponentProps<typeof Svg>>;
+  tooltip?: {
+    context?: Partial<ComponentProps<typeof TooltipContext>>;
+    root?: Partial<ComponentProps<typeof Tooltip>>;
+    header?: Partial<ComponentProps<typeof TooltipHeader>>;
+    list?: Partial<ComponentProps<typeof TooltipList>>;
+    item?: Partial<ComponentProps<typeof TooltipItem>>;
+    separator?: Partial<ComponentProps<typeof TooltipSeparator>>;
+    hideTotal?: boolean;
+  };
+  xAxis?: Partial<ComponentProps<typeof Axis>>;
+  yAxis?: Partial<ComponentProps<typeof Axis>>;
+};
 
 export type SimplifiedChartProps<
   TData,
@@ -211,42 +235,13 @@ export type SimplifiedChartProps<
    *
    */
   onTooltipClick?: (e: MouseEvent, details: { data: any }) => void;
-  /**
-   * The event to be dispatched when the point is clicked.
-   *
-   */
-  onPointClick?: (
-    e: MouseEvent,
-    details: { data: HighlightPointData; series: SeriesData<TData, TComponent> }
-  ) => void;
+
   /**
    * The props to be used for the chart.
    *
    * @default {}
    */
-  props?: {
-    area?: Partial<ComponentProps<typeof Area>>;
-    brush?: Partial<ComponentProps<typeof BrushContext>>;
-    canvas?: Partial<ComponentProps<typeof Canvas>>;
-    grid?: Partial<ComponentProps<typeof Grid>>;
-    highlight?: Partial<ComponentProps<typeof Highlight>>;
-    labels?: Partial<ComponentProps<typeof Labels>>;
-    legend?: Partial<ComponentProps<typeof Legend>>;
-    line?: Partial<ComponentProps<typeof Line>>;
-    points?: Partial<ComponentProps<typeof Points>>;
-    rule?: Partial<ComponentProps<typeof Rule>>;
-    svg?: Partial<ComponentProps<typeof Svg>>;
-    tooltip?: {
-      context?: Partial<ComponentProps<typeof TooltipContext>>;
-      root?: Partial<ComponentProps<typeof Tooltip>>;
-      header?: Partial<ComponentProps<typeof TooltipHeader>>;
-      list?: Partial<ComponentProps<typeof TooltipList>>;
-      item?: Partial<ComponentProps<typeof TooltipItem>>;
-      separator?: Partial<ComponentProps<typeof TooltipSeparator>>;
-    };
-    xAxis?: Partial<ComponentProps<typeof Axis>>;
-    yAxis?: Partial<ComponentProps<typeof Axis>>;
-  };
+  props?: SimplifiedChartPropsObject;
   /**
    * The render context to be used for the chart.
    *

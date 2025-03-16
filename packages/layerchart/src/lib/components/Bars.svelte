@@ -21,7 +21,7 @@
     children?: Snippet;
   } & Omit<BarPropsWithoutHTML, 'bar' | 'children'>;
 
-  export type BarsProps = BarsPropsWithoutHTML & BarProps;
+  export type BarsProps = BarsPropsWithoutHTML & Omit<BarProps, 'bar'>;
 </script>
 
 <script lang="ts">
@@ -37,7 +37,7 @@
     onBarClick = () => {},
     children,
     ...restProps
-  }: BarsPropsWithoutHTML = $props();
+  }: BarsProps = $props();
 
   const ctx = getChartContext();
   const data = $derived(chartDataArray(dataProp ?? ctx.data));
