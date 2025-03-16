@@ -1,24 +1,36 @@
+<script lang="ts" module>
+  import GeoPath, { type GeoPathProps } from './GeoPath.svelte';
+  import type { Without } from 'layerchart/utils/types.js';
+  export type GeoCirclePropsWithoutHTML = {
+    /**
+     * The radius of the circle in degrees.
+     * @default 90
+     */
+    radius?: number;
+
+    /**
+     * The center point of the circle in degrees ([longitude, latitude]).
+     * @default [0, 0]
+     */
+    center?: [number, number];
+
+    /**
+     * The precision of the circle in degrees.
+     * @default 6
+     */
+    precision?: number;
+  };
+
+  export type GeoCircleProps = GeoCirclePropsWithoutHTML &
+    Without<GeoPathProps, GeoCirclePropsWithoutHTML>;
+</script>
+
 <script lang="ts">
   import { geoCircle } from 'd3-geo';
 
-  import GeoPath from './GeoPath.svelte';
-  import type { ComponentProps } from 'svelte';
+  let { radius = 90, center = [0, 0], precision = 6, ...restProps }: GeoCircleProps = $props();
 
-  /** Radius in degrees.  Default: 90 */
-  export let radius = 90;
-
-  /** Center point of circle in degree ([longitude, latitude]).  Default [0, 0] */
-  export let center: [number, number] = [0, 0];
-
-  /** sets the circle precision to the specified angle in degrees */
-  export let precision = 6;
-
-  export let onclick: ComponentProps<typeof GeoPath>['onclick'] = undefined;
-  export let onpointerenter: ComponentProps<typeof GeoPath>['onpointerenter'] = undefined;
-  export let onpointermove: ComponentProps<typeof GeoPath>['onpointermove'] = undefined;
-  export let onpointerleave: ComponentProps<typeof GeoPath>['onpointerleave'] = undefined;
-
-  $: geojson = geoCircle().radius(radius).center(center).precision(precision)();
+  const geojson = $derived(geoCircle().radius(radius).center(center).precision(precision)());
 </script>
 
-<GeoPath {geojson} {onclick} {onpointerenter} {onpointermove} {onpointerleave} {...$$restProps} />
+<GeoPath {geojson} {...restProps} />

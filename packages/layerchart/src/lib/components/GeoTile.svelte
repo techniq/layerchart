@@ -1,4 +1,6 @@
 <script lang="ts" module>
+  import type { Snippet } from 'svelte';
+
   export type GeoTilePropsWithoutHTML = {
     url: (x: number, y: number, z: number) => string;
     /**
@@ -34,7 +36,6 @@
 </script>
 
 <script lang="ts">
-  import { onDestroy, type Snippet } from 'svelte';
   // @ts-expect-error
   import { tile as d3Tile } from 'd3-tile';
 
@@ -88,15 +89,16 @@
 
   $effect(() => {
     if (renderCtx !== 'canvas') return;
+    tile;
+    canvasCtx.invalidate();
+  });
+
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
     return canvasCtx.register({
       name: 'GeoTile',
       render,
     });
-  });
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    tile;
-    canvasCtx.invalidate();
   });
 </script>
 

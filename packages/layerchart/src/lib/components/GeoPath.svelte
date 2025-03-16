@@ -129,6 +129,21 @@
 
   $effect(() => {
     if (renderCtx !== 'canvas') return;
+    // Redraw when geojson, projection, or class change
+    [
+      geojson &&
+        projection &&
+        fillKey.current &&
+        strokeKey.current &&
+        strokeWidth &&
+        opacity &&
+        className,
+    ];
+    canvasCtx.invalidate();
+  });
+
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
     return canvasCtx.register({
       name: 'GeoPath',
       render,
@@ -141,21 +156,6 @@
         touchmove: ontouchmove,
       },
     });
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    // Redraw when geojson, projection, or class change
-    [
-      geojson &&
-        projection &&
-        fillKey.current &&
-        strokeKey.current &&
-        strokeWidth &&
-        opacity &&
-        className,
-    ];
-    canvasCtx.invalidate();
   });
 
   // Hide `geoPath` and `tooltip` reactivity

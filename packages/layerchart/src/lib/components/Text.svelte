@@ -327,11 +327,6 @@
 
   $effect(() => {
     if (renderCtx !== 'canvas') return;
-    return canvasCtx.register({ name: 'Text', render });
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
     [
       value,
       tweenedX.current,
@@ -343,6 +338,11 @@
       className,
     ];
     canvasCtx.invalidate();
+  });
+
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
+    return canvasCtx.register({ name: 'Text', render });
   });
 </script>
 

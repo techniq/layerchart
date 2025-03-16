@@ -1,4 +1,7 @@
 <script lang="ts" module>
+  import type { MotionProps } from 'layerchart/stores/motionStore.js';
+  import ClipPath, { type ClipPathPropsWithoutHTML } from './ClipPath.svelte';
+
   export type CircleClipPathPropsWithoutHTML = {
     /**
      * A unique id for the clipPath.
@@ -50,13 +53,9 @@
 </script>
 
 <script lang="ts">
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
-
   import { uniqueId } from '@layerstack/utils';
 
-  import ClipPath, { type ClipPathPropsWithoutHTML } from './ClipPath.svelte';
   import Circle from './Circle.svelte';
-  import type { MotionProps } from 'layerchart/stores/motionStore.js';
 
   let {
     id = uniqueId('clipPath-'),

@@ -1,4 +1,8 @@
 <script lang="ts" module>
+  import type { Without } from 'layerchart/utils/types.js';
+  import type { Snippet } from 'svelte';
+  import type { SVGAttributes } from 'svelte/elements';
+
   export type ClipPathPropsWithoutHTML = {
     /**
      * A unique id for the clipPath.
@@ -39,9 +43,6 @@
 
 <script lang="ts">
   import { uniqueId } from '@layerstack/utils';
-  import type { Without } from 'layerchart/utils/types.js';
-  import type { Snippet } from 'svelte';
-  import type { SVGAttributes } from 'svelte/elements';
 
   let {
     id = uniqueId('clipPath-'),

@@ -1,4 +1,7 @@
 <script lang="ts" module>
+  import dagre, { type Edge, type EdgeConfig, type GraphEdge } from '@dagrejs/dagre';
+  import { untrack, type Snippet } from 'svelte';
+
   export type DagreGraphData = {
     nodes: Array<{ id: string; parent?: string; label?: string | dagre.Label }>;
     edges: Array<{ source: string; target: string; label?: string }>;
@@ -160,9 +163,6 @@
 </script>
 
 <script lang="ts">
-  import dagre, { type Edge, type EdgeConfig, type GraphEdge } from '@dagrejs/dagre';
-  import { untrack, type Snippet } from 'svelte';
-
   let {
     data,
     nodes = (d: any) => d.nodes,

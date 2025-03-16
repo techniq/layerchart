@@ -119,6 +119,22 @@
 
   $effect(() => {
     if (renderCtx !== 'canvas') return;
+    [
+      tweenedX.current,
+      tweenedY.current,
+      tweenedWidth.current,
+      tweenedHeight.current,
+      fillKey.current,
+      strokeKey.current,
+      strokeWidth,
+      opacity,
+      className,
+    ];
+    canvasCtx.invalidate();
+  });
+
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
     return canvasCtx.register({
       name: 'Rect',
       render,
@@ -132,22 +148,6 @@
         pointerout: onpointerout,
       },
     });
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    [
-      tweenedX.current,
-      tweenedY.current,
-      tweenedWidth.current,
-      tweenedHeight.current,
-      fillKey.current,
-      strokeKey.current,
-      strokeWidth,
-      opacity,
-      className,
-    ];
-    canvasCtx.invalidate();
   });
 </script>
 

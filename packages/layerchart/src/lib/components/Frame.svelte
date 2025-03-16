@@ -1,5 +1,6 @@
 <script lang="ts" module>
   import type { Without } from 'layerchart/utils/types.js';
+  import Rect, { type RectProps, type RectPropsWithoutHTML } from './Rect.svelte';
 
   export type FramePropsWithoutHTML = RectPropsWithoutHTML & {
     /**
@@ -17,7 +18,6 @@
 </script>
 
 <script lang="ts">
-  import Rect, { type RectProps, type RectPropsWithoutHTML } from './Rect.svelte';
   import { getChartContext } from './Chart-Next.svelte';
 
   let { ref = $bindable(), full = false, ...restProps }: FrameProps = $props();

@@ -212,6 +212,12 @@
   });
 
   $effect(() => {
+    if (renderCtx !== 'canvas') return;
+    tweenedState.current;
+    canvasCtx.invalidate();
+  });
+
+  $effect(() => {
     return canvasCtx.register({
       name: 'Area',
       render,
@@ -222,12 +228,6 @@
         pointerleave: onpointerleave,
       },
     });
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    tweenedState.current;
-    canvasCtx.invalidate();
   });
 </script>
 

@@ -1,5 +1,6 @@
 <script lang="ts" module>
   import { forceSimulation, type Force, type Simulation, type SimulationNodeDatum } from 'd3-force';
+  import type { Snippet } from 'svelte';
 
   type Forces = Record<string, Force<any, any>>;
 
@@ -78,7 +79,6 @@
 
 <script lang="ts">
   import { getChartContext } from './Chart-Next.svelte';
-  import type { Snippet } from 'svelte';
 
   let {
     forces,

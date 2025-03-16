@@ -84,7 +84,10 @@
   export type CanvasProps = CanvasPropsWithoutHTML &
     Without<HTMLCanvasAttributes, CanvasPropsWithoutHTML>;
 
-  type ComponentRender<T extends Element> = {
+  // TODO: consider adding a dependency array option here, which would trigger
+  // invalidate when any of those values change, rather than needing to do it in every
+  // component
+  type ComponentRender<T extends Element = Element> = {
     name: string;
     render: (ctx: CanvasRenderingContext2D, styleOverrides?: ComputedStylesOptions) => any;
     retainState?: boolean;
@@ -107,7 +110,7 @@
      *
      * Returns method to unregister on component destroy
      */
-    register(component: ComponentRender): () => void;
+    register<T extends Element>(component: ComponentRender<T>): () => void;
     invalidate(): void;
   };
 
@@ -172,7 +175,7 @@
 
   const logger = new Logger('Canvas');
 
-  let components = new Map<Symbol, ComponentRender>();
+  let components = new Map<Symbol, ComponentRender<Element>>();
   let pendingInvalidation = false;
   let frameId: number | undefined;
 
@@ -196,7 +199,7 @@
     return component;
   }
 
-  function onPointerMove(e: PointerEvent) {
+  const onPointerMove: PointerEventHandler<Element> = (e) => {
     activeCanvas = true;
     const component = getPointerComponent(e);
 
@@ -213,9 +216,9 @@
     component?.events?.pointermove?.(e);
 
     lastActiveComponent = component;
-  }
+  };
 
-  function onPointerLeave(e: PointerEvent) {
+  const onPointerLeave: PointerEventHandler<Element> = (e) => {
     // Pointer outside of canvas
 
     // Call last active component `pointerleave` event in case it was not triggered by hit canvas (quickly exiting canvas element before `pointermove` is triggered)
@@ -224,7 +227,7 @@
 
     lastActiveComponent = null;
     activeCanvas = false;
-  }
+  };
   /**
    * end HitCanvas
    */
@@ -327,7 +330,7 @@
   const canvasContext: CanvasContextValue = {
     register(component) {
       const key = Symbol();
-      components.set(key, component);
+      components.set(key, component as ComponentRender<Element>);
       this.invalidate();
 
       // Unregister

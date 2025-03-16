@@ -126,21 +126,6 @@
 
   $effect(() => {
     if (renderCtx !== 'canvas') return;
-    return canvasCtx.register({
-      name: 'Circle',
-      render,
-      events: {
-        click: restProps.onclick,
-        pointerdown: restProps.onpointerdown,
-        pointerenter: restProps.onpointerenter,
-        pointermove: restProps.onpointermove,
-        pointerleave: restProps.onpointerleave,
-      },
-    });
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
     [
       tweenedCx.current,
       tweenedCy.current,
@@ -154,6 +139,21 @@
     ];
 
     canvasCtx.invalidate();
+  });
+
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
+    return canvasCtx.register({
+      name: 'Circle',
+      render,
+      events: {
+        click: restProps.onclick,
+        pointerdown: restProps.onpointerdown,
+        pointerenter: restProps.onpointerenter,
+        pointermove: restProps.onpointermove,
+        pointerleave: restProps.onpointerleave,
+      },
+    });
   });
 </script>
 
