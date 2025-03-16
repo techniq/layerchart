@@ -66,3 +66,34 @@ export type DataType<T> = T[] | HierarchyNode<T> | SankeyGraph<any, any>;
 
 export type Transition = (node: Element, params?: any) => TransitionConfig;
 export type TransitionParams<T extends Transition> = Parameters<T>[1];
+
+/**
+ * Common style properties that apply to many components.
+ * Includes `fill`, `fillOpacity`, `stroke`, `strokeWidth`, and `opacity`.
+ */
+export type CommonStyleProps = {
+  /**
+   * The fill color of the element.
+   */
+  fill?: string;
+
+  /**
+   * The fill opacity of the element.
+   */
+  fillOpacity?: number;
+
+  /**
+   * The stroke color of the element.
+   */
+  stroke?: string;
+
+  /**
+   * The stroke width of the element.
+   */
+  strokeWidth?: number;
+
+  /**
+   * The opacity of the element. (0 to 1)
+   */
+  opacity?: number;
+};

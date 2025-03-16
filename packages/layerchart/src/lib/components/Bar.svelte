@@ -32,14 +32,6 @@
      */
     y1?: Accessor;
 
-    fill?: string;
-    fillOpacity?: number;
-
-    stroke?: string | null;
-    strokeWidth?: number;
-
-    // General styling
-    opacity?: number;
     radius?: number;
 
     insets?: Insets;
@@ -60,7 +52,8 @@
       | 'top-right'
       | 'bottom-left'
       | 'bottom-right';
-  } & MotionProps;
+  } & MotionProps &
+    CommonStyleProps;
 
   export type BarProps = BarPropsWithoutHTML &
     Without<Omit<SVGAttributes<Element>, 'width' | 'height' | 'x' | 'y'>, BarPropsWithoutHTML>;
@@ -75,7 +68,7 @@
   import { greatestAbs } from '@layerstack/utils';
   import type { MotionProps } from 'layerchart/stores/motionStore.js';
   import { getChartContext } from './Chart-Next.svelte';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
 
   const ctx = getChartContext();

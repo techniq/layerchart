@@ -23,18 +23,14 @@
     initialWidth?: number;
     height: number;
     initialHeight?: number;
-    fill?: string;
-    fillOpacity?: number;
-    stroke?: string;
-    strokeWidth?: number;
-    opacity?: number;
     /**
      * Underlying `<rect>` tag when using <Svg>. Useful for bindings.
      *
      * @bindable
      */
     ref?: SVGRectElement;
-  } & MotionProps;
+  } & MotionProps &
+    CommonStyleProps;
 
   export type RectProps = RectPropsWithoutHTML &
     Without<SVGAttributes<SVGRectElement>, RectPropsWithoutHTML>;
@@ -50,7 +46,7 @@
   import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { afterTick } from 'layerchart/utils/after-tick.js';
   import { createKey } from 'layerchart/utils/key.svelte.js';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
 
   let {

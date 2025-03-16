@@ -51,12 +51,6 @@
      */
     defined?: Parameters<Line<any>['defined']>[0];
 
-    fill?: string;
-    fillOpacity?: number;
-    stroke?: string;
-    strokeWidth?: number;
-    opacity?: number | string;
-
     /**
      * Marker to attach to both start and end points of the line
      */
@@ -93,7 +87,7 @@
      * @bindable
      */
     ref?: SVGPathElement;
-  };
+  } & CommonStyleProps;
 
   export type SplineProps = SplinePropsWithoutHTML &
     Without<SVGAttributes<SVGPathElement>, SplinePropsWithoutHTML>;
@@ -121,7 +115,7 @@
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getRenderContext } from './Chart.svelte';
   import type { MarkerOptions } from './MarkerWrapper.svelte';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import MarkerWrapper from './MarkerWrapper.svelte';
   import { getChartContext } from './Chart-Next.svelte';
@@ -276,13 +270,6 @@
 
   $effect(() => {
     if (renderContext !== 'canvas') return;
-    // Redraw when props change
-    [fillKey.current, fillOpacity, strokeKey.current, strokeWidth, opacity, className];
-    canvasContext.invalidate();
-  });
-
-  $effect(() => {
-    if (renderContext !== 'canvas') return;
     return canvasContext.register({
       name: 'Spline',
       render,
@@ -297,6 +284,13 @@
         touchmove: restProps.ontouchmove,
       },
     });
+  });
+
+  $effect(() => {
+    if (renderContext !== 'canvas') return;
+    // Redraw when props change
+    [fillKey.current, fillOpacity, strokeKey.current, strokeWidth, opacity, className];
+    canvasContext.invalidate();
   });
 
   let startPoint = $state<DOMPoint | undefined>();

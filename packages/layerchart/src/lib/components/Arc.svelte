@@ -4,7 +4,7 @@
   import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
   import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
-  import type { Without } from '$lib/utils/types.js';
+  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 
   export type ArcPropsWithoutHTML = {
     value?: number;
@@ -64,12 +64,6 @@
      */
     padAngle?: number;
 
-    fill?: string;
-    fillOpacity?: number;
-    stroke?: string;
-    strokeWidth?: number;
-    opacity?: number;
-
     /**
      * Offset arc from center
      *
@@ -110,7 +104,8 @@
     ref?: SVGPathElement;
 
     children?: Snippet<[{ centroid: [number, number]; boundingBox: DOMRect; value: number }]>;
-  } & MotionProps;
+  } & MotionProps &
+    CommonStyleProps;
 
   export type ArcProps = ArcPropsWithoutHTML &
     // we omit the spline props to avoid conflicts with attribute names since we are

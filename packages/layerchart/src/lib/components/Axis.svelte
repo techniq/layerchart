@@ -212,7 +212,7 @@
     }
   }
 
-  function getDefaultTickLabelProps(tick: any): ComponentProps<Text> {
+  function getDefaultTickLabelProps(tick: any): ComponentProps<typeof Text> {
     switch (placement) {
       case 'top':
         return {
@@ -331,7 +331,7 @@
       classes.label,
       labelProps?.class
     ),
-  }) satisfies ComponentProps<Text>;
+  }) satisfies ComponentProps<typeof Text>;
 </script>
 
 <g {...restProps} class={cls('Axis placement-{placement}', classes.root, className)}>

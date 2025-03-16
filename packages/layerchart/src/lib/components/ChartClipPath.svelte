@@ -1,23 +1,47 @@
+<script lang="ts" module>
+  import type { Snippet } from 'svelte';
+
+  export type ChartClipPathPropsWithoutHTML = {
+    /**
+     * Include padding area (ex. axis)
+     *
+     * @default false
+     */
+    full?: boolean;
+
+    /**
+     * Disable clipping (show all)
+     *
+     * @default false
+     */
+    disabled?: boolean;
+
+    children?: Snippet;
+  };
+</script>
+
 <script lang="ts">
-  import { chartContext } from './ChartContext.svelte';
+  import { getChartContext } from './Chart-Next.svelte';
+
   import RectClipPath from './RectClipPath.svelte';
 
-  const { width, height, padding } = chartContext();
+  let {
+    full = false,
+    disabled = false,
+    children,
+    ...restProps
+  }: ChartClipPathPropsWithoutHTML = $props();
 
-  /** Include padding area (ex. axis) */
-  export let full = false;
-
-  /** Disable clipping (show all) */
-  export let disabled: boolean = false;
+  const ctx = getChartContext();
 </script>
 
 <RectClipPath
-  x={full && $padding.left ? -$padding.left : 0}
-  y={full && $padding.top ? -$padding.top : 0}
-  width={$width + (full ? ($padding?.left ?? 0) + ($padding?.right ?? 0) : 0)}
-  height={$height + (full ? ($padding?.top ?? 0) + ($padding?.bottom ?? 0) : 0)}
+  x={full && ctx.padding.left ? -ctx.padding.left : 0}
+  y={full && ctx.padding.top ? -ctx.padding.top : 0}
+  width={ctx.width + (full ? (ctx.padding?.left ?? 0) + (ctx.padding?.right ?? 0) : 0)}
+  height={ctx.height + (full ? (ctx.padding?.top ?? 0) + (ctx.padding?.bottom ?? 0) : 0)}
   {disabled}
-  {...$$restProps}
+  {...restProps}
 >
-  <slot />
+  {@render children?.()}
 </RectClipPath>

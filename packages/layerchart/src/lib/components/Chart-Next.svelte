@@ -38,7 +38,6 @@
   import { unique } from '@layerstack/utils';
   import { geoFitObjectTransform } from 'layerchart/utils/geo.js';
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
-  import type { GeoProjection } from 'd3-geo';
   import BrushContext, { type BrushContextValue } from './BrushContext.svelte';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };

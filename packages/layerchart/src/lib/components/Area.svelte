@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import { type Area, area as d3Area, areaRadial } from 'd3-shape';
   import type { SVGAttributes } from 'svelte/elements';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
   import type { ComponentProps } from 'svelte';
   import { accessor, type Accessor } from '../utils/common.js';
 
@@ -46,13 +46,7 @@
      * @default false
      */
     line?: boolean | Partial<ComponentProps<typeof Spline>>;
-
-    fill?: string;
-    fillOpacity?: number;
-    stroke?: string;
-    strokeWidth?: number;
-    opacity?: number;
-  };
+  } & CommonStyleProps;
 
   export type AreaProps = AreaPropsWithoutHTML &
     Without<SVGAttributes<SVGPathElement>, AreaPropsWithoutHTML>;

@@ -57,26 +57,6 @@
     initialY2?: number;
 
     /**
-     * The fill color of the line
-     */
-    fill?: string;
-
-    /**
-     * The stroke color of the line
-     */
-    stroke?: string;
-
-    /**
-     * The width of the line's stroke
-     */
-    strokeWidth?: number;
-
-    /**
-     * The opacity of the line (optional, between 0 and 1)
-     */
-    opacity?: number;
-
-    /**
      * Event handler for when the line is clicked
      */
     onclick?: (e: MouseEvent) => void;
@@ -110,7 +90,8 @@
      * Marker to attach to the end point of the line
      */
     markerEnd?: MarkerOptions;
-  } & MotionProps;
+  } & MotionProps &
+    CommonStyleProps;
 
   export type LineProps = LinePropsWithoutHTML &
     Without<SVGAttributes<SVGLineElement>, LinePropsWithoutHTML>;
@@ -120,7 +101,6 @@
   import { tick } from 'svelte';
   import { cls } from '@layerstack/tailwind';
   import { uniqueId } from '@layerstack/utils';
-  import { objectId } from '@layerstack/utils/object';
   import { merge } from 'lodash-es';
   import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
@@ -128,7 +108,7 @@
   import { getRenderContext } from './Chart.svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import MarkerWrapper, { type MarkerOptions } from './MarkerWrapper.svelte';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
   import { watch } from 'runed';
   import { createKey } from 'layerchart/utils/key.svelte.js';
 
@@ -151,6 +131,7 @@
     markerStart,
     spring,
     tweened,
+    fillOpacity,
     ...restProps
   }: LineProps = $props();
 
@@ -224,6 +205,7 @@
     y2={tweenedY2.current}
     {fill}
     {stroke}
+    fill-opacity={fillOpacity}
     stroke-width={strokeWidth}
     {opacity}
     marker-start={markerStartId ? `url(#${markerStartId})` : undefined}

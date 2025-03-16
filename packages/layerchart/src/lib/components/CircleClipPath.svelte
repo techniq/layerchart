@@ -1,25 +1,79 @@
+<script lang="ts" module>
+  export type CircleClipPathPropsWithoutHTML = {
+    /**
+     * A unique id for the clipPath.
+     *
+     * @default `uniqueId('clipPath-')`
+     */
+    id?: string;
+
+    /**
+     * The center x position of the circle.
+     *
+     * @default 0
+     */
+    cx?: number;
+
+    /**
+     * The center y position of the circle.
+     *
+     * @default 0
+     */
+    cy?: number;
+
+    /**
+     * The radius of the circle.
+     *
+     * @required
+     */
+    r: number;
+
+    /**
+     * Whether to disable clipping (show all).
+     *
+     * @default false
+     */
+    disabled?: boolean;
+
+    /**
+     * A bindable reference to the underlying `<circle>` element'
+     *
+     * @bindable
+     */
+    ref?: SVGCircleElement;
+
+    /**
+     * The children snippet to render content inside the clipPath.
+     */
+    children?: ClipPathPropsWithoutHTML['children'];
+  } & MotionProps;
+</script>
+
 <script lang="ts">
   import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 
   import { uniqueId } from '@layerstack/utils';
 
-  import ClipPath from './ClipPath.svelte';
+  import ClipPath, { type ClipPathPropsWithoutHTML } from './ClipPath.svelte';
   import Circle from './Circle.svelte';
+  import type { MotionProps } from 'layerchart/stores/motionStore.js';
 
-  /** Unique id for clipPath */
-  export let id: string = uniqueId('clipPath-');
-
-  export let cx: number = 0;
-  export let cy: number = 0;
-  export let r: number;
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
-
-  /** Disable clipping (show all) */
-  export let disabled: boolean = false;
+  let {
+    id = uniqueId('clipPath-'),
+    cx = 0,
+    cy = 0,
+    r,
+    spring,
+    tweened,
+    disabled = false,
+    ref = $bindable(),
+    children,
+    ...restProps
+  }: CircleClipPathPropsWithoutHTML = $props();
 </script>
 
-<ClipPath {id} {disabled} let:url>
-  <Circle slot="clip" {cx} {cy} {r} {spring} {tweened} {...$$restProps} />
-  <slot {id} {url} />
+<ClipPath {id} {disabled} {children}>
+  {#snippet clip()}
+    <Circle {cx} {cy} {r} {spring} {tweened} {...restProps} bind:ref />
+  {/snippet}
 </ClipPath>

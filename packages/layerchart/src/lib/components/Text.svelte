@@ -1,15 +1,136 @@
+<script lang="ts" module>
+  export type TextPropsWithoutHTML = {
+    /**
+     * text value
+     * @default 0
+     */
+    value?: string | number;
+
+    /**
+     * Maximum width to occupy (approximate as words are not split)
+     */
+    width?: number;
+
+    /**
+     * x position of the text
+     *
+     * @default 0
+     */
+    x?: string | number;
+
+    /**
+     * Initial x position of the text
+     *
+     * @default x
+     */
+    initialX?: string | number;
+
+    /**
+     * y position of the text
+     *
+     * @default 0
+     */
+    y?: string | number;
+
+    /**
+     * Initial y position of the text
+     *
+     * @default y
+     */
+    initialY?: string | number;
+
+    /**
+     * dx offset of the text
+     *
+     * @default 0
+     */
+    dx?: string | number;
+
+    /**
+     * dy offset of the text
+     *
+     * @default 0
+     */
+    dy?: string | number;
+
+    /**
+     * Desired "line height" of the text, implemented as y offsets
+     *
+     * @default "1em"
+     */
+    lineHeight?: string;
+
+    /**
+     * Cap height of the text
+     * @default '0.71em'
+     */
+    capHeight?: string;
+
+    /**
+     * Whether to scale the fontSize to accommodate the specified width
+     *
+     * @default false
+     */
+
+    scaleToFit?: boolean;
+
+    /**
+     * Horizontal text anchor
+     *
+     * @default 'start'
+     */
+    textAnchor?: 'start' | 'middle' | 'end' | 'inherit';
+
+    /**
+     * Vertical text anchor
+     *
+     * @default 'end'
+     */
+    verticalAnchor?: 'start' | 'middle' | 'end' | 'inherit';
+
+    /**
+     * Rotational angle of the text
+     */
+    rotate?: number;
+
+    /**
+     * A bindable reference to the wrapping `<svg>` element.
+     *
+     * @bindable
+     */
+    svgRef?: SVGElement;
+
+    /**
+     * Props to pass to the wrapping `<svg>` element.
+     */
+    svgProps?: Omit<SVGAttributes<SVGElement>, 'children'>;
+
+    /**
+     * A bindable reference to the inner `<text>` element
+     *
+     * @bindable
+     */
+    ref?: SVGTextElement;
+  } & MotionProps &
+    CommonStyleProps;
+
+  export type TextProps = TextPropsWithoutHTML &
+    Without<SVGAttributes<SVGTextElement>, TextPropsWithoutHTML>;
+</script>
+
 <script lang="ts">
-  import { onDestroy, tick } from 'svelte';
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from '@layerstack/tailwind';
-  import { objectId } from '@layerstack/utils/object';
   import { merge } from 'lodash-es';
 
   import { getRenderContext } from './Chart.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { getStringWidth } from '$lib/utils/string.js';
-  import { motionStore } from '$lib/stores/motionStore.js';
+  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
   import { renderText, type ComputedStylesOptions } from '../utils/canvas.js';
+  import { afterTick } from 'layerchart/utils/after-tick.js';
+  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
+  import { createKey } from 'layerchart/utils/key.svelte.js';
 
   /*
     TODO:
@@ -25,88 +146,74 @@
       - https://github.com/airbnb/visx/blob/master/packages/visx-demo/src/pages/text.tsx
   */
 
-  /** text value */
-  export let value: string | number = 0;
-
-  /** Maximum width to occupy (approximate as words are not split) */
-  export let width: number | undefined = undefined;
-
-  /** x position of the text */
-  export let x: string | number = 0;
-  export let initialX = x;
-
-  /** y position of the text */
-  export let y: string | number = 0;
-  export let initialY = y;
-
-  /** dx offset of the text */
-  export let dx: string | number = 0;
-
-  /** dy offset of the text */
-  export let dy: string | number = 0;
-
-  /** Desired "line height" of the text, implemented as y offsets */
-  export let lineHeight = '1em';
-
-  /** Cap height of the text */
-  export let capHeight = '0.71em'; // Magic number from d3
-
-  /** Whether to scale the fontSize to accommodate the specified width  */
-  export let scaleToFit: boolean = false;
-
-  /** Horizontal text anchor */
-  export let textAnchor: 'start' | 'middle' | 'end' | 'inherit' = 'start';
-
-  /** Vertical text anchor */
-  export let verticalAnchor: 'start' | 'middle' | 'end' | 'inherit' = 'end'; // default SVG behavior
-
-  /** Rotational angle of the text */
-  export let rotate: number | undefined = undefined;
-
-  export let fill: string | undefined = undefined;
-  export let fillOpacity: number | undefined = undefined;
-  export let stroke: string | undefined = undefined;
-  export let strokeWidth: number | undefined = undefined;
-  export let opacity: number | undefined = undefined;
-
-  let className: string | undefined = undefined;
-  export { className as class };
-
-  let wordsByLines: { words: string[]; width?: number }[] = [];
-  let wordsWithWidth: { word: string; width: number }[] = [];
-  let spaceWidth: number = 0;
+  let {
+    value,
+    x = 0,
+    initialX = x,
+    y = 0,
+    initialY = y,
+    dx = 0,
+    dy = 0,
+    lineHeight = '1em',
+    capHeight = '0.71em',
+    width,
+    scaleToFit = false,
+    textAnchor = 'start',
+    verticalAnchor = 'end',
+    rotate,
+    opacity = 1,
+    strokeWidth = 0,
+    stroke,
+    fill,
+    fillOpacity,
+    spring,
+    tweened,
+    svgRef = $bindable(),
+    ref = $bindable(),
+    class: className,
+    svgProps = {},
+    ...restProps
+  }: TextProps = $props();
 
   let style: CSSStyleDeclaration | undefined = undefined; // TODO: read from DOM?
 
-  $: words = value != null ? value.toString().split(/(?:(?!\u00A0+)\s+)/) : [];
+  const renderCtx = getRenderContext();
+  const canvasCtx = getCanvasContext();
 
-  $: wordsWithWidth = words.map((word) => ({
-    word,
-    width: getStringWidth(word, style) || 0,
-  }));
+  const words = $derived(value != null ? value.toString().split(/(?:(?!\u00A0+)\s+)/) : []);
 
-  $: spaceWidth = getStringWidth('\u00A0', style) || 0;
+  const wordsWithWidth = $derived(
+    words.map((word) => ({
+      word,
+      width: getStringWidth(word, style) || 0,
+    }))
+  );
 
-  $: wordsByLines = wordsWithWidth.reduce((result: typeof wordsByLines, item) => {
-    const currentLine = result[result.length - 1];
+  const spaceWidth = $derived(getStringWidth('\u00A0', style) || 0);
 
-    if (
-      currentLine &&
-      (width == null || scaleToFit || (currentLine.width || 0) + item.width + spaceWidth < width)
-    ) {
-      // Word can be added to an existing line
-      currentLine.words.push(item.word);
-      currentLine.width = currentLine.width || 0;
-      currentLine.width += item.width + spaceWidth;
-    } else {
-      // Add first word to line or word is too long to scaleToFit on existing line
-      const newLine = { words: [item.word], width: item.width };
-      result.push(newLine);
-    }
+  const wordsByLines = $derived(
+    wordsWithWidth.reduce((result: { words: string[]; width?: number }[], item) => {
+      const currentLine = result[result.length - 1];
 
-    return result;
-  }, []);
-  $: lines = wordsByLines.length;
+      if (
+        currentLine &&
+        (width == null || scaleToFit || (currentLine.width || 0) + item.width + spaceWidth < width)
+      ) {
+        // Word can be added to an existing line
+        currentLine.words.push(item.word);
+        currentLine.width = currentLine.width || 0;
+        currentLine.width += item.width + spaceWidth;
+      } else {
+        // Add first word to line or word is too long to scaleToFit on existing line
+        const newLine = { words: [item.word], width: item.width };
+        result.push(newLine);
+      }
+
+      return result;
+    }, [])
+  );
+
+  const lines = $derived(wordsByLines.length);
 
   /**
    * Convert css value to pixel value (ex. 0.71em => 11.36)
@@ -114,14 +221,11 @@
   function getPixelValue(cssValue: number | string) {
     // TODO: Properly measure pixel values using DOM (handle inherited font size, zoom, etc)
 
-    if (typeof cssValue === 'number') {
-      return cssValue;
-    }
+    if (typeof cssValue === 'number') return cssValue;
 
-    // @ts-expect-error
-    const [match, value, units] = cssValue.match(/([\d.]+)(\D+)/);
-    const number = Number(value);
-    switch (units) {
+    const result = cssValue.match(/([\d.]+)(\D+)/);
+    const number = Number(result?.[1]);
+    switch (result?.[2]) {
       case 'px':
         return number;
       case 'em':
@@ -132,35 +236,37 @@
     }
   }
 
-  let startDy = 0;
-  $: if (verticalAnchor === 'start') {
-    startDy = getPixelValue(capHeight);
-  } else if (verticalAnchor === 'middle') {
-    startDy = ((lines - 1) / 2) * -getPixelValue(lineHeight) + getPixelValue(capHeight) / 2;
-  } else {
-    startDy = (lines - 1) * -getPixelValue(lineHeight);
-  }
+  const startDy = $derived.by(() => {
+    if (verticalAnchor === 'start') {
+      return getPixelValue(capHeight);
+    } else if (verticalAnchor === 'middle') {
+      return ((lines - 1) / 2) * -getPixelValue(lineHeight) + getPixelValue(capHeight) / 2;
+    } else {
+      return (lines - 1) * -getPixelValue(lineHeight);
+    }
+  });
 
-  let scaleTransform = '';
-  $: if (
-    scaleToFit &&
-    lines > 0 &&
-    typeof x == 'number' &&
-    typeof y == 'number' &&
-    typeof width == 'number'
-  ) {
-    const lineWidth = wordsByLines[0].width || 1;
-    const sx = width / lineWidth;
-    const sy = sx;
-    const originX = x - sx * x;
-    const originY = y - sy * y;
-    scaleTransform = `matrix(${sx}, 0, 0, ${sy}, ${originX}, ${originY})`;
-  } else {
-    scaleTransform = '';
-  }
-  $: rotateTransform = rotate ? `rotate(${rotate}, ${x}, ${y})` : '';
+  const scaleTransform = $derived.by(() => {
+    if (
+      scaleToFit &&
+      lines > 0 &&
+      typeof x == 'number' &&
+      typeof y == 'number' &&
+      typeof width == 'number'
+    ) {
+      const lineWidth = wordsByLines[0].width || 1;
+      const sx = width / lineWidth;
+      const sy = sx;
+      const originX = x - sx * x;
+      const originY = y - sy * y;
+      return `matrix(${sx}, 0, 0, ${sy}, ${originX}, ${originY})`;
+    } else {
+      return '';
+    }
+  });
 
-  $: transform = `${scaleTransform} ${rotateTransform}`;
+  const rotateTransform = $derived(rotate ? `rotate(${rotate}, ${x}, ${y})` : '');
+  const transform = $derived(`${scaleTransform} ${rotateTransform}`);
 
   function isValidXOrY(xOrY: string | number | undefined) {
     return (
@@ -171,19 +277,16 @@
     );
   }
 
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
+  const tweenedX = $derived(motionState(initialX, { spring, tweened }));
+  const tweenedY = $derived(motionState(initialY, { spring, tweened }));
 
-  let tweened_x = motionStore(initialX, { spring, tweened });
-  let tweened_y = motionStore(initialY, { spring, tweened });
-
-  $: tick().then(() => {
-    tweened_x.set(x);
-    tweened_y.set(y);
+  $effect(() => {
+    [x, y];
+    afterTick(() => {
+      tweenedX.set(x);
+      tweenedY.set(y);
+    });
   });
-
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -194,9 +297,9 @@
         ctx,
         line.words.join(' '),
         {
-          x: getPixelValue($tweened_x) + getPixelValue(dx),
+          x: getPixelValue(tweenedX.current) + getPixelValue(dx),
           y:
-            getPixelValue($tweened_y) +
+            getPixelValue(tweenedY.current) +
             getPixelValue(dy) +
             (index === 0 ? startDy : getPixelValue(lineHeight)),
         },
@@ -219,45 +322,47 @@
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  $: fillKey = fill && typeof fill === 'object' ? objectId(fill) : fill;
-  $: strokeKey = stroke && typeof stroke === 'object' ? objectId(stroke) : stroke;
+  const fillKey = createKey(() => fill);
+  const strokeKey = createKey(() => stroke);
 
-  $: if (renderContext === 'canvas') {
-    // Redraw when props change
-    value &&
-      $tweened_x &&
-      $tweened_y &&
-      fillKey &&
-      strokeKey &&
-      strokeWidth &&
-      opacity &&
-      className;
-    canvasContext.invalidate();
-  }
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
+    return canvasCtx.register({ name: 'Text', render });
+  });
 
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'Text', render });
-  }
-
-  onDestroy(() => {
-    if (renderContext === 'canvas') {
-      canvasUnregister();
-    }
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
+    [
+      value,
+      tweenedX.current,
+      tweenedY.current,
+      fillKey.current,
+      strokeKey.current,
+      strokeWidth,
+      opacity,
+      className,
+    ];
+    canvasCtx.invalidate();
   });
 </script>
 
-{#if renderContext === 'svg'}
+{#if renderCtx === 'svg'}
   <!-- `overflow: visible` allow contents to be shown outside element -->
   <!-- `paint-order: stroke` supports stroke outlining text  -->
-  <svg x={dx} y={dy} class="overflow-visible [paint-order:stroke]">
+  <svg
+    x={dx}
+    y={dy}
+    {...svgProps}
+    class={cls('overflow-visible [paint-order:stroke]', svgProps?.class)}
+    bind:this={svgRef}
+  >
     {#if isValidXOrY(x) && isValidXOrY(y)}
       <text
-        x={$tweened_x}
-        y={$tweened_y}
+        x={tweenedX.current}
+        y={tweenedY.current}
         {transform}
         text-anchor={textAnchor}
-        {...$$restProps}
+        {...restProps}
         {fill}
         fill-opacity={fillOpacity}
         {stroke}
@@ -266,7 +371,7 @@
         class={cls(fill === undefined && 'fill-surface-content', className)}
       >
         {#each wordsByLines as line, index}
-          <tspan x={$tweened_x} dy={index === 0 ? startDy : lineHeight}>
+          <tspan x={tweenedX.current} dy={index === 0 ? startDy : lineHeight}>
             {line.words.join(' ')}
           </tspan>
         {/each}

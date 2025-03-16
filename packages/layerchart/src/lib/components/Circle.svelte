@@ -1,54 +1,108 @@
+<script lang="ts" module>
+  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+
+  export type CirclePropsWithoutHTML = {
+    /**
+     * The center x position of the circle.
+     *
+     * @default 0
+     */
+    cx?: number;
+
+    /**
+     * The initial center x position of the circle.
+     *
+     * @default cx
+     */
+    initialCx?: number;
+
+    /**
+     * The center y position of the circle.
+     *
+     * @default 0
+     */
+    cy?: number;
+
+    /**
+     * The initial center y position of the circle.
+     *
+     * @default cy
+     */
+    initialCy?: number;
+
+    /**
+     * The radius of the circle.
+     *
+     * @default 1
+     */
+    r?: number;
+
+    /**
+     * The initial radius of the circle.
+     *
+     * @default r
+     */
+    initialR?: number;
+
+    /**
+     * A bindable reference to the `<circle>` element
+     *
+     * @bindable
+     */
+    ref?: SVGCircleElement;
+  } & MotionProps &
+    CommonStyleProps;
+
+  export type CircleProps = CirclePropsWithoutHTML &
+    Without<SVGAttributes<SVGCircleElement>, CirclePropsWithoutHTML>;
+</script>
+
 <script lang="ts">
-  import { onDestroy, tick } from 'svelte';
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from '@layerstack/tailwind';
-  import { objectId } from '@layerstack/utils/object';
   import { merge } from 'lodash-es';
 
   import { getRenderContext } from './Chart.svelte';
-  import { motionStore } from '$lib/stores/motionStore.js';
+  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import type { SVGAttributes } from 'svelte/elements';
+  import { afterTick } from 'layerchart/utils/after-tick.js';
+  import { createKey } from 'layerchart/utils/key.svelte.js';
 
-  export let cx: number = 0;
-  export let initialCx = cx;
+  let {
+    cx = 0,
+    initialCx = cx,
+    cy = 0,
+    initialCy = cy,
+    r = 1,
+    initialR = r,
+    spring,
+    tweened,
+    fill,
+    fillOpacity,
+    stroke,
+    strokeWidth,
+    opacity,
+    class: className,
+    ref = $bindable(),
+    ...restProps
+  }: CircleProps = $props();
 
-  export let cy: number = 0;
-  export let initialCy = cy;
+  const renderCtx = getRenderContext();
+  const canvasCtx = getCanvasContext();
 
-  export let r: number = 1;
-  export let initialR = r;
+  const tweenedCx = $derived(motionState(initialCx, { spring, tweened }));
+  const tweenedCy = $derived(motionState(initialCy, { spring, tweened }));
+  const tweenedR = $derived(motionState(initialR, { spring, tweened }));
 
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
-
-  export let fill: string | undefined = undefined;
-  export let fillOpacity: number | undefined = undefined;
-  export let stroke: string | undefined = undefined;
-  export let strokeWidth: number | undefined = undefined;
-  export let opacity: number | undefined = undefined;
-
-  let className: string | undefined = undefined;
-  export { className as class };
-
-  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onpointerdown: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
-
-  let tweened_cx = motionStore(initialCx, { spring, tweened });
-  let tweened_cy = motionStore(initialCy, { spring, tweened });
-  let tweened_r = motionStore(initialR, { spring, tweened });
-
-  $: tick().then(() => {
-    tweened_cx.set(cx);
-    tweened_cy.set(cy);
-    tweened_r.set(r);
+  $effect(() => {
+    [cx, cy, r];
+    afterTick(() => {
+      tweenedCx.set(cx);
+      tweenedCy.set(cy);
+      tweenedR.set(r);
+    });
   });
-
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -56,7 +110,7 @@
   ) {
     renderCircle(
       ctx,
-      { cx: $tweened_cx, cy: $tweened_cy, r: $tweened_r },
+      { cx: tweenedCx.current, cy: tweenedCy.current, r: tweenedR.current },
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
@@ -67,62 +121,54 @@
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  $: fillKey = fill && typeof fill === 'object' ? objectId(fill) : fill;
-  $: strokeKey = stroke && typeof stroke === 'object' ? objectId(stroke) : stroke;
+  const fillKey = createKey(() => fill);
+  const strokeKey = createKey(() => stroke);
 
-  $: if (renderContext === 'canvas') {
-    // Redraw when props changes
-    $tweened_cx &&
-      $tweened_cy &&
-      $tweened_r &&
-      fillKey &&
-      fillOpacity &&
-      strokeKey &&
-      strokeWidth &&
-      opacity &&
-      className;
-    canvasContext.invalidate();
-  }
-
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
+    return canvasCtx.register({
       name: 'Circle',
       render,
       events: {
-        click: onclick,
-        pointerdown: onpointerdown,
-        pointerenter: onpointerenter,
-        pointermove: onpointermove,
-        pointerleave: onpointerleave,
+        click: restProps.onclick,
+        pointerdown: restProps.onpointerdown,
+        pointerenter: restProps.onpointerenter,
+        pointermove: restProps.onpointermove,
+        pointerleave: restProps.onpointerleave,
       },
     });
-  }
+  });
 
-  onDestroy(() => {
-    if (renderContext === 'canvas') {
-      canvasUnregister();
-    }
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
+    [
+      tweenedCx.current,
+      tweenedCy.current,
+      tweenedR.current,
+      fillKey.current,
+      fillOpacity,
+      strokeKey.current,
+      strokeWidth,
+      opacity,
+      className,
+    ];
+
+    canvasCtx.invalidate();
   });
 </script>
 
-{#if renderContext === 'svg'}
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+{#if renderCtx === 'svg'}
   <circle
-    cx={$tweened_cx}
-    cy={$tweened_cy}
-    r={$tweened_r}
+    bind:this={ref}
+    cx={tweenedCx.current}
+    cy={tweenedCy.current}
+    r={tweenedR.current}
     {fill}
     fill-opacity={fillOpacity}
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
     class={cls(fill == null && 'fill-surface-content', className)}
-    {...$$restProps}
-    on:click={onclick}
-    on:pointerdown={onpointerdown}
-    on:pointerenter={onpointerenter}
-    on:pointermove={onpointermove}
-    on:pointerleave={onpointerleave}
+    {...restProps}
   />
 {/if}

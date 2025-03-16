@@ -44,7 +44,7 @@
       let:tooltip
     >
       <Svg>
-        <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltip} monthPath />
+        <Calendar start={firstDayOfYear} end={lastDayOfYear} tooltipContext={tooltip} monthPath />
       </Svg>
 
       <Tooltip.Root let:data>
@@ -79,7 +79,13 @@
       let:tooltip
     >
       <Svg>
-        <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltip} cellSize={16} monthPath />
+        <Calendar
+          start={firstDayOfYear}
+          end={lastDayOfYear}
+          tooltipContext={tooltip}
+          cellSize={16}
+          monthPath
+        />
       </Svg>
 
       <Tooltip.Root let:data>
@@ -128,7 +134,7 @@
               textAnchor="middle"
               verticalAnchor="start"
             />
-            <Calendar {start} {end} {tooltip} cellSize={16} monthPath />
+            <Calendar {start} {end} tooltipContext={tooltip} cellSize={16} monthPath />
           </Group>
         {/each}
       </Svg>
