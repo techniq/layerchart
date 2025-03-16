@@ -92,7 +92,7 @@
      *
      * @default false
      */
-    bar: boolean | Partial<ComponentProps<typeof Bar>> | Snippet;
+    bar?: boolean | Partial<ComponentProps<typeof Bar>> | Snippet;
 
     /**
      * Set to false to disable spring transitions

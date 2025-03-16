@@ -1,8 +1,9 @@
-import type { ComponentProps } from 'svelte';
+import type { Component, ComponentProps } from 'svelte';
 import { get } from 'lodash-es';
 
 import type Chart from '../components/Chart.svelte';
 import type LineChart from '../components/charts/LineChart.svelte';
+import type { SimplifiedChartProps } from 'layerchart/components/charts/types.js';
 
 export type Accessor<TData = any> =
   | number
@@ -40,12 +41,9 @@ export function chartDataArray<TData = any>(data: ComponentProps<Chart<TData>>['
   }
 }
 
-// Using LineChart but could any simplified chart
-type SimplifiedChartProps = ComponentProps<LineChart<any>>;
-
-export function defaultChartPadding(
-  axis: SimplifiedChartProps['axis'],
-  legend: SimplifiedChartProps['legend']
+export function defaultChartPadding<TData, SeriesComponent extends Component, TSnippetProps>(
+  axis: SimplifiedChartProps<TData, SeriesComponent, TSnippetProps>['axis'],
+  legend: SimplifiedChartProps<TData, SeriesComponent, TSnippetProps>['legend']
 ) {
   if (axis === false) {
     return undefined;

@@ -11,7 +11,7 @@
     type AnyScale,
     type DomainType,
   } from '$lib/utils/scales.js';
-  import { Context, useDebounce, watch } from 'runed';
+  import { Context, useDebounce } from 'runed';
   import type {
     AxisKey,
     BaseRange,
@@ -283,6 +283,26 @@
      * access it through the context.
      */
     c?: Accessor<T>;
+
+    /**
+     * Set a min or max. For linear scales, if you want to inherit the value from the data's
+     * extent, set that value to `null`. This value can also be an array because sometimes your
+     * scales are [piecewise](https://github.com/d3/d3-scale#continuous_domain) or are a list of
+     * discrete values such as in [ordinal scales](https://github.com/d3/d3-scale#ordinal-scales),
+     * useful for color series. Set it to a function that receives the computed domain and lets you
+     * return a modified domain, useful for sorting values.
+     */
+    xDomain?: DomainType;
+
+    /**
+     * Set a min or max. For linear scales, if you want to inherit the value from the data's
+     * extent, set that value to `null`. This value can also be an array because sometimes your
+     * scales are [piecewise](https://github.com/d3/d3-scale#continuous_domain) or are a list of
+     * discrete values such as in [ordinal scales](https://github.com/d3/d3-scale#ordinal-scales),
+     * useful for color series. Set it to a function that receives the computed domain and lets you
+     * return a modified domain, useful for sorting values.
+     */
+    yDomain?: DomainType;
 
     /**
      * Set a min or max. For linear scales, if you want to inherit the value from the data's
@@ -661,7 +681,7 @@
     transformContext?: TransformContext;
 
     /** Props passed to BrushContext */
-    brush?: Partial<ComponentProps<typeof BrushContext>>;
+    brush?: Partial<ComponentProps<typeof BrushContext>> | boolean;
 
     /**
      * Exposed via bind: to support `bind:brushContext` for
@@ -697,6 +717,8 @@
     z: zProp,
     r: rProp,
     data = [],
+    xDomain: xDomainProp,
+    yDomain: yDomainProp,
     zDomain: zDomainProp,
     rDomain: rDomainProp,
     xNice = false,
@@ -761,6 +783,7 @@
   const logDebug = useDebounce(printDebug, 200);
 
   const _xDomain: DomainType = $derived.by(() => {
+    if (xDomainProp) return xDomainProp;
     if (xBaseline != null && Array.isArray(data)) {
       const xValues = data.flatMap(accessor(xProp));
       return [min([xBaseline, ...xValues]), max([xBaseline, ...xValues])];
@@ -769,6 +792,7 @@
   });
 
   const _yDomain: DomainType | undefined = $derived.by(() => {
+    if (yDomainProp) return yDomainProp;
     if (yBaseline != null && Array.isArray(data)) {
       const yValues = data.flatMap(accessor(yProp));
       return [min([yBaseline, ...yValues]), max([yBaseline, ...yValues])];
@@ -1242,24 +1266,15 @@
     }
   });
 
-  watch(
-    [
-      () => isMounted,
-      () => context.width,
-      () => context.height,
-      () => context.containerWidth,
-      () => context.containerHeight,
-    ],
-    () => {
-      if (!isMounted) return;
-      onResize?.({
-        width: context.width,
-        height: context.height,
-        containerWidth: context.containerWidth,
-        containerHeight: context.containerHeight,
-      });
-    }
-  );
+  $effect(() => {
+    if (!isMounted) return;
+    onResize?.({
+      width: context.width,
+      height: context.height,
+      containerWidth: context.containerWidth,
+      containerHeight: context.containerHeight,
+    });
+  });
 
   const initialTransform = $derived(
     geo?.applyTransform?.includes('translate') && geo?.fitGeojson && geo?.projection

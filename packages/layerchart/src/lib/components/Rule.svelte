@@ -43,7 +43,7 @@
     Without<Partial<LinePropsWithoutHTML>, BaseRulePropsWithoutHTML>;
 
   export type RuleProps = RulePropsWithoutHTML &
-    Without<SVGAttributes<SVGLineElement>, RulePropsWithoutHTML>;
+    Without<SVGAttributes<SVGElement>, RulePropsWithoutHTML>;
 </script>
 
 <script lang="ts">
@@ -61,6 +61,7 @@
     y = false,
     yOffset = 0,
     class: className,
+    children,
     ...restProps
   }: RuleProps = $props();
 

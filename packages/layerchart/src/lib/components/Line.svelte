@@ -80,7 +80,7 @@
     CommonStyleProps;
 
   export type LineProps = LinePropsWithoutHTML &
-    Without<SVGAttributes<SVGLineElement>, LinePropsWithoutHTML>;
+    Without<SVGAttributes<SVGPathElement>, LinePropsWithoutHTML>;
 </script>
 
 <script lang="ts">
