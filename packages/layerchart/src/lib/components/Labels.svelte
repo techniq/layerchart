@@ -74,9 +74,11 @@
     placement = 'outside',
     offset = placement === 'center' ? 0 : 4,
     format,
-    key = (d: any, i: number) => i,
+    key = (_: any, i: number) => i,
+    children: childrenProp,
+    class: className,
     ...restProps
-  }: LabelsPropsWithoutHTML = $props();
+  }: LabelsProps = $props();
 
   function getTextProps(point: Point): ComponentProps<typeof Text> {
     // Used for positioning
@@ -151,23 +153,27 @@
 </script>
 
 <g class="Labels">
-  <Points {data} {x} {y} let:points>
-    {#each points as point, i (key(point.data, i))}
-      {@const textProps = getTextProps(point)}
-      <slot data={point} {textProps}>
-        <Text
-          {...textProps}
-          {...$$restProps}
-          class={cls(
-            'text-xs',
-            placement === 'inside'
-              ? 'fill-surface-300 stroke-surface-content'
-              : 'fill-surface-content stroke-surface-100',
-            textProps.class,
-            $$props.class
-          )}
-        />
-      </slot>
-    {/each}
+  <Points {data} {x} {y}>
+    {#snippet children({ points })}
+      {#each points as point, i (key(point.data, i))}
+        {@const textProps = getTextProps(point)}
+        {#if childrenProp}
+          {@render childrenProp({ data: point, textProps })}
+        {:else}
+          <Text
+            {...textProps}
+            {...restProps}
+            class={cls(
+              'text-xs',
+              placement === 'inside'
+                ? 'fill-surface-300 stroke-surface-content'
+                : 'fill-surface-content stroke-surface-100',
+              textProps.class,
+              className
+            )}
+          />
+        {/if}
+      {/each}
+    {/snippet}
   </Points>
 </g>

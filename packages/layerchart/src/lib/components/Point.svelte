@@ -1,14 +1,25 @@
-<script lang="ts">
-  import { chartContext } from './ChartContext.svelte';
+<script lang="ts" module>
+  import type { Snippet } from 'svelte';
 
-  const context = chartContext() as any;
-  const { xGet, yGet } = context;
+  export type PointProps = {
+    /**
+     * Single data point to translate to x/y
+     */
+    d: any;
 
-  /** Single data point to translate to x/y */
-  export let d;
-
-  $: x = $xGet(d);
-  $: y = $yGet(d);
+    /**
+     * Children containing the x and y values
+     */
+    children?: Snippet<[{ x: number; y: number }]>;
+  };
 </script>
 
-<slot {x} {y} />
+<script lang="ts">
+  import { getChartContext } from './Chart-Next.svelte';
+
+  let { d, children }: PointProps = $props();
+
+  const ctx = getChartContext();
+</script>
+
+{@render children?.({ x: ctx.xGet(d), y: ctx.yGet(d) })}
