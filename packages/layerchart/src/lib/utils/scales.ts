@@ -15,8 +15,10 @@ export type AnyScale<
   domain(): TInput[];
   range(range: TOutput[] | readonly TOutput[]): AnyScale<TInput, TOutput, TScaleArgs>;
   range(): TOutput[];
+  rangeRound?: (range: TOutput[] | readonly TOutput[]) => AnyScale<TInput, TOutput, TScaleArgs>;
   copy: () => AnyScale<TInput, TOutput, TScaleArgs>;
   invert?: (value: TOutput) => TInput;
+  invertExtent?: (value: TOutput) => [TInput, TInput];
   bandwidth?: () => number;
   ticks?: (count?: number) => TInput[];
   tickFormat?: (count?: number) => (value: TInput) => string;
@@ -27,6 +29,8 @@ export type AnyScale<
   nice?: (count?: number) => AnyScale<TInput, TOutput, TScaleArgs>;
   interpolator?(interpolator: (t: number) => TOutput): AnyScale<TInput, TOutput, TScaleArgs>;
   interpolator?(): (t: number) => TOutput; // Getter
+  thresholds?: () => TInput[];
+  quantiles?: () => TInput[];
 };
 
 // export interface AnyScale<Domain = any, Range = any, Input = Domain, Output = any> {
