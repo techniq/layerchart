@@ -1,27 +1,41 @@
-<script lang="ts">
-  import { pack as d3Pack } from 'd3-hierarchy';
-  import { chartContext } from './ChartContext.svelte';
+<script lang="ts" module>
+  import { pack as d3Pack, type HierarchyCircularNode } from 'd3-hierarchy';
+  import type { Snippet } from 'svelte';
 
-  const { data, width, height } = chartContext();
+  export type PackProps = {
+    /**
+     * The size of the pack layout.
+     */
+    size?: [number, number];
 
-  export let size: [number, number] | undefined = undefined;
+    /**
+     * The padding between nodes in the pack layout.
+     *
+     * @see https://github.com/d3/d3-hierarchy#pack_padding
+     */
+    padding?: number;
 
-  /**
-   * see: https://github.com/d3/d3-hierarchy#pack_padding
-   */
-  export let padding: number | undefined = undefined;
-
-  let pack: ReturnType<typeof d3Pack>;
-  $: {
-    pack = d3Pack().size(size ?? [$width, $height]);
-
-    if (padding) {
-      pack.padding(padding);
-    }
-  }
-
-  // @ts-expect-error
-  $: packData = pack($data);
+    children?: Snippet<[{ nodes: HierarchyCircularNode<unknown>[] }]>;
+  };
 </script>
 
-<slot nodes={packData.descendants()} />
+<script lang="ts">
+  import { getChartContext } from './Chart-Next.svelte';
+
+  const ctx = getChartContext();
+
+  let { size, padding, children }: PackProps = $props();
+
+  const pack = $derived.by(() => {
+    const _pack = d3Pack().size(size ?? [ctx.width, ctx.height]);
+    if (padding) {
+      _pack.padding(padding);
+    }
+    return _pack;
+  });
+
+  // @ts-expect-error - TODO: Can we fix this?
+  const packData = $derived(pack(ctx.data));
+</script>
+
+{@render children?.({ nodes: packData.descendants() })}
