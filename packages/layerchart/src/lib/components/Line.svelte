@@ -63,26 +63,6 @@
     initialY2?: number;
 
     /**
-     * Event handler for when the line is clicked
-     */
-    onclick?: (e: MouseEvent) => void;
-
-    /**
-     * Event handler for when a pointer enters the line
-     */
-    onpointerenter?: (e: PointerEvent) => void;
-
-    /**
-     * Event handler for when a pointer moves over the line
-     */
-    onpointermove?: (e: PointerEvent) => void;
-
-    /**
-     * Event handler for when a pointer leaves the line
-     */
-    onpointerleave?: (e: PointerEvent) => void;
-
-    /**
      * Marker to attach to both start and end points of the line
      */
     marker?: MarkerOptions;
