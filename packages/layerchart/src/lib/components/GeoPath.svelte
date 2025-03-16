@@ -1,5 +1,59 @@
+<script lang="ts" module>
+  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+
+  export type GeoPathPropsWithoutHTML = {
+    /**
+     * GeoJSON data to render
+     */
+    geojson?: GeoPermissibleObjects | null;
+
+    /**
+     * Tooltip context to setup pointer events to show tooltip for related data
+     */
+    tooltipContext?: TooltipContextValue | undefined;
+
+    /**
+     * Click event handler
+     */
+    onclick?:
+      | ((e: MouseEvent, geoPath: ReturnType<typeof geoCurvePath> | undefined) => void)
+      | undefined;
+
+    /**
+     * Curve of path drawn. Imported via d3-shape.
+     *
+     * @example
+     * import { curveCatmullRom } from 'd3-shape';
+     * <GeoPath curve={curveCatmullRom} />
+     *
+     * @default curveLinearClosed
+     */
+    curve?: CurveFactory | CurveFactoryLineOnly;
+
+    /**
+     * Apply geo transform to projection.
+     * Useful to draw straight lines with `geoMercator` projection.
+     *
+     * @see https://d3js.org/d3-geo/projection#geoTransform
+     * @see https://stackoverflow.com/a/56409480/191902
+     **/
+    geoTransform?: (projection: GeoProjection | GeoIdentityTransform) => GeoTransformPrototype;
+
+    /**
+     * A reference to the underlying `<path>` element
+     * @bindable
+     */
+    ref?: SVGPathElement;
+
+    children?: Snippet<[{ geoPath: ReturnType<typeof geoCurvePath> | undefined }]>;
+  } & CommonStyleProps;
+
+  export type GeoPathProps = GeoPathPropsWithoutHTML &
+    Without<SVGAttributes<SVGPathElement>, GeoPathPropsWithoutHTML>;
+</script>
+
 <script lang="ts">
-  import { onDestroy } from 'svelte';
+  import { onDestroy, type Snippet } from 'svelte';
   import {
     geoTransform as d3geoTransform,
     type GeoIdentityTransform,
@@ -12,119 +66,70 @@
 
   import { getRenderContext } from './Chart.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { geoContext } from './GeoContext.svelte';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import { geoCurvePath } from '$lib/utils/geo.js';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { objectId } from '@layerstack/utils/object';
+  import { getGeoContext } from './GeoContext.svelte';
+  import { createKey } from 'layerchart/utils/key.svelte.js';
+  import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
 
-  export let geojson: GeoPermissibleObjects | null | undefined = undefined;
+  let {
+    fill,
+    stroke,
+    strokeWidth,
+    opacity,
+    geoTransform,
+    geojson,
+    tooltipContext,
+    curve = curveLinearClosed,
+    onclick,
+    class: className,
+    ref = $bindable(),
+    children,
+    ...restProps
+  }: GeoPathProps = $props();
 
-  export let fill: string | undefined = undefined;
-  export let stroke: string | undefined = undefined;
-  export let strokeWidth: number | undefined = undefined;
-  export let opacity: number | undefined = undefined;
+  const geo = getGeoContext();
 
-  /**
-   * Tooltip context to setup pointer events to show tooltip for related data
-   */
-  export let tooltip: TooltipContextValue | undefined = undefined;
+  const projection = $derived(
+    geoTransform && geo.projection ? d3geoTransform(geoTransform(geo.projection)) : geo.projection
+  );
 
-  export let onclick:
-    | ((e: MouseEvent, geoPath: ReturnType<typeof geoCurvePath>) => void)
-    | undefined = undefined;
-  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerdown: ((e: PointerEvent) => void) | undefined = undefined;
-  export let ontouchmove: ((e: TouchEvent) => void) | undefined = undefined;
-
-  /**
-   * Curve of path drawn. Imported via d3-shape.
-   *
-   * @example
-   * import { curveCatmullRom } from 'd3-shape';
-   * <GeoPath curve={curveCatmullRom} />
-   *
-   * @type {CurveFactory | CurveFactoryLineOnly | undefined}
-   */
-  export let curve: CurveFactory | CurveFactoryLineOnly = curveLinearClosed;
-
-  let className: string | undefined = undefined;
-  export { className as class };
-
-  const geo = geoContext();
-
-  /**
-   * Apply geo transform to projection.  Useful to draw straight lines with `geoMercator` projection.
-   * See: https://d3js.org/d3-geo/projection#geoTransform and https://stackoverflow.com/a/56409480/191902
-   **/
-  export let geoTransform:
-    | ((projection: GeoProjection | GeoIdentityTransform) => GeoTransformPrototype)
-    | undefined = undefined;
-
-  $: _projection = geoTransform ? d3geoTransform(geoTransform($geo)) : $geo;
-
-  $: geoPath = geoCurvePath(_projection, curve);
-  $: {
-    // Recreate `geoPath()` if `geojson` data changes (fixes ghosting issue when rendering to canvas)
+  const geoPath = $derived.by(() => {
     geojson;
-    geoPath = geoCurvePath(_projection, curve);
-  }
+    if (!projection) return;
+    return geoCurvePath(projection, curve);
+  });
 
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
+  const renderCtx = getRenderContext();
+  const canvasCtx = getCanvasContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
   ) {
-    if (geojson) {
-      const pathData = geoPath(geojson);
-      renderPathData(
-        ctx,
-        pathData,
-        styleOverrides
-          ? merge({ styles: { strokeWidth } }, styleOverrides)
-          : {
-              styles: { fill, stroke, strokeWidth, opacity },
-              classes: className,
-            }
-      );
-    }
+    if (!geojson) return;
+    const pathData = geoPath?.(geojson);
+    renderPathData(
+      ctx,
+      pathData,
+      styleOverrides
+        ? merge({ styles: { strokeWidth } }, styleOverrides)
+        : {
+            styles: { fill, stroke, strokeWidth, opacity },
+            classes: className,
+          }
+    );
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  $: fillKey = fill && typeof fill === 'object' ? objectId(fill) : fill;
-  $: strokeKey = stroke && typeof stroke === 'object' ? objectId(stroke) : stroke;
+  const fillKey = createKey(() => fill);
+  const strokeKey = createKey(() => stroke);
 
-  $: if (renderContext === 'canvas') {
-    // Redraw when geojson, projection, or class change
-    geojson && _projection && fillKey && strokeKey && strokeWidth && opacity && className;
-    canvasContext.invalidate();
-  }
-
-  // Hide `geoPath` and `tooltip` reactivity
-  function _onClick(e: MouseEvent) {
-    onclick?.(e, geoPath);
-  }
-  function _onPointerEnter(e: PointerEvent) {
-    onpointerenter?.(e);
-    tooltip?.show(e, geojson);
-  }
-  function _onPointerMove(e: PointerEvent) {
-    onpointermove?.(e);
-    tooltip?.show(e, geojson);
-  }
-  function _onPointerLeave(e: PointerEvent) {
-    onpointerleave?.(e);
-    tooltip?.hide();
-  }
-
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
+    return canvasCtx.register({
       name: 'GeoPath',
       render,
       events: {
@@ -136,32 +141,59 @@
         touchmove: ontouchmove,
       },
     });
+  });
+
+  $effect(() => {
+    if (renderCtx !== 'canvas') return;
+    // Redraw when geojson, projection, or class change
+    [
+      geojson &&
+        projection &&
+        fillKey.current &&
+        strokeKey.current &&
+        strokeWidth &&
+        opacity &&
+        className,
+    ];
+    canvasCtx.invalidate();
+  });
+
+  // Hide `geoPath` and `tooltip` reactivity
+  function _onClick(e: MouseEvent) {
+    onclick?.(e, geoPath);
   }
 
-  onDestroy(() => {
-    if (renderContext === 'canvas') {
-      canvasUnregister();
-    }
-  });
+  const _onPointerEnter: PointerEventHandler<SVGPathElement> = (e) => {
+    restProps.onpointerenter?.(e);
+    tooltipContext?.show(e, geojson);
+  };
+
+  const _onPointerMove: PointerEventHandler<SVGPathElement> = (e) => {
+    restProps.onpointermove?.(e);
+    tooltipContext?.show(e, geojson);
+  };
+
+  const _onPointerLeave: PointerEventHandler<SVGPathElement> = (e) => {
+    restProps.onpointerleave?.(e);
+    tooltipContext?.hide();
+  };
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<slot {geoPath}>
-  {#if renderContext === 'svg'}
-    <path
-      {...$$restProps}
-      d={geojson ? geoPath(geojson) : ''}
-      {fill}
-      {stroke}
-      stroke-width={strokeWidth}
-      {opacity}
-      on:click={_onClick}
-      on:pointerenter={_onPointerEnter}
-      on:pointermove={_onPointerMove}
-      on:pointerleave={_onPointerLeave}
-      on:pointerdown={onpointerdown}
-      on:touchmove={ontouchmove}
-      class={cls(fill == null && 'fill-transparent', className)}
-    />
-  {/if}
-</slot>
+{#if children}
+  {@render children({ geoPath })}
+{:else if renderCtx === 'svg'}
+  <path
+    bind:this={ref}
+    {...restProps}
+    d={geojson ? geoPath?.(geojson) : ''}
+    {fill}
+    {stroke}
+    stroke-width={strokeWidth}
+    {opacity}
+    onclick={_onClick}
+    onpointerenter={_onPointerEnter}
+    onpointermove={_onPointerMove}
+    onpointerleave={_onPointerLeave}
+    class={cls(fill == null && 'fill-transparent', className)}
+  />
+{/if}

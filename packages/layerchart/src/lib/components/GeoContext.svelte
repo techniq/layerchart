@@ -15,7 +15,7 @@
   const GeoContext = new Context<GeoContextValue>('GeoContext');
 
   export function getGeoContext() {
-    return GeoContext.getOr({ projection: undefined });
+    return GeoContext.getOr({ projection: undefined } as GeoContextValue);
   }
 
   export function setGeoContext(geo: GeoContextValue) {

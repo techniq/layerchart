@@ -1,42 +1,69 @@
+<script lang="ts" module>
+  import type { Snippet } from 'svelte';
+  import type { SVGAttributes } from 'svelte/elements';
+  import Circle, { type CirclePropsWithoutHTML } from './Circle.svelte';
+  import type { Without } from 'layerchart/utils/types.js';
+
+  export type GeoPointPropsWithoutHTML = {
+    /**
+     * Latitude of the point.
+     */
+    lat: number;
+
+    /**
+     * Longitude of the point.
+     */
+    long: number;
+
+    /**
+     * A bindable reference to the underlying element, which
+     * can be a `<circle>` or `<g>` element.
+     */
+    ref?: SVGElement;
+
+    children?: Snippet<[{ x: number; y: number }]>;
+  };
+
+  export type GeoPointProps = Omit<
+    GeoPointPropsWithoutHTML &
+      Without<SVGAttributes<SVGElement>, GeoPointPropsWithoutHTML & CirclePropsWithoutHTML>,
+    'x' | 'y'
+  >;
+</script>
+
 <script lang="ts">
-  import { onDestroy } from 'svelte';
-
-  import { geoContext } from './GeoContext.svelte';
-  import Circle from './Circle.svelte';
   import Group from './Group.svelte';
-  import { getCanvasContext } from './layout/Canvas.svelte';
   import { getRenderContext } from './Chart.svelte';
+  import { getGeoContext } from './GeoContext.svelte';
 
-  /** Latitude */
-  export let lat: number;
-  /** Longitude */
-  export let long: number;
+  let { lat, long, ref = $bindable(), children, ...restProps }: GeoPointProps = $props();
 
-  const geo = geoContext();
+  const geoCtx = getGeoContext();
 
-  $: [x, y] = $geo([long, lat]) ?? [0, 0];
+  const points = $derived(geoCtx.projection?.([long, lat]) ?? [0, 0]);
+  const x = $derived(points[0]);
+  const y = $derived(points[1]);
 
   const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
 </script>
 
 {#if renderContext === 'svg'}
-  {#if $$slots.default}
-    <Group {x} {y} {...$$restProps}>
-      <slot {x} {y} />
+  {#if children}
+    <Group {x} {y} {...restProps}>
+      {@render children({ x, y })}
     </Group>
   {:else}
-    <Circle cx={x} cy={y} {...$$restProps} />
+    <Circle cx={x} cy={y} {...restProps} />
   {/if}
 {/if}
 
 {#if renderContext === 'canvas'}
-  {#if $$slots.default}
-    <!-- TODO: Handle Canvas translation.  Conslidate with svg use case above -->
+  {#if children}
+    <!-- TODO: Handle Canvas translation. Consolidate with svg use case above -->
     <!-- <Group {x} {y} {...$$restProps}> -->
-    <slot {x} {y} />
+    {@render children({ x, y })}
     <!-- </Group> -->
   {:else}
-    <Circle cx={x} cy={y} {...$$restProps} />
+    <Circle cx={x} cy={y} {...restProps} />
   {/if}
 {/if}

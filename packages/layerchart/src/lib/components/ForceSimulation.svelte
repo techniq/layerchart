@@ -1,39 +1,110 @@
-<script lang="ts">
-  import { forceSimulation, type Force } from 'd3-force';
-  import { chartContext } from './ChartContext.svelte';
-
-  const { data } = chartContext();
-
-  // MARK: Public Props
+<script lang="ts" module>
+  import { forceSimulation, type Force, type Simulation, type SimulationNodeDatum } from 'd3-force';
 
   type Forces = Record<string, Force<any, any>>;
-  export let forces: Forces;
 
-  export let alpha: number = 1;
-  export let alphaTarget: number = 0;
-  export let alphaDecay: number = 1 - Math.pow(0.001, 1 / 300);
-  export let alphaMin: number = 0.001;
+  export type ForceSimulationProps = {
+    /**
+     * Force simulation parameters
+     */
+    forces: Forces;
 
-  export let velocityDecay = 0.4;
+    /**
+     * Current alpha value of the simulation
+     * @default 1
+     */
+    alpha?: number;
 
-  /** Stop simulation */
-  export let stopped = false;
+    /**
+     * Target alpha value for the simulation
+     * @default 0
+     */
+    alphaTarget?: number;
 
-  let _static = false;
-  /** If true, will only update nodes after simulation has completed */
-  export { _static as static };
+    /**
+     * Alpha decay rate per tick
+     * @default 1 - Math.pow(0.001, 1 / 300)
+     */
+    alphaDecay?: number;
+
+    /**
+     * Minimum alpha value at which simulation stops
+     * @default 0.001
+     */
+    alphaMin?: number;
+
+    /**
+     * Velocity decay factor applied to nodes each tick
+     * @default 0.4
+     */
+    velocityDecay?: number;
+
+    /**
+     * Stop simulation
+     * @default false
+     */
+    stopped?: boolean;
+
+    /**
+     * If true, will only update nodes after simulation has completed
+     * @default false
+     */
+    static?: boolean;
+
+    /**
+     * Clone data since simulation mutates original
+     * @default false
+     */
+    cloneData?: boolean;
+
+    /**
+     * Callback function triggered when simulation starts
+     */
+    onStart?: () => void;
+
+    /**
+     * Callback function triggered on each simulation tick
+     */
+    onTick?: (e: { alpha: number; alphaTarget: number }) => void;
+
+    /**
+     * Callback function triggered when simulation ends
+     */
+    onEnd?: () => void;
+
+    children?: Snippet<[{ nodes: any[]; simulation: Simulation<SimulationNodeDatum, undefined> }]>;
+  };
+</script>
+
+<script lang="ts">
+  import { getChartContext } from './Chart-Next.svelte';
+  import type { Snippet } from 'svelte';
+
+  let {
+    forces,
+    alpha = 1,
+    alphaTarget = 0,
+    alphaDecay = 1 - Math.pow(0.001, 1 / 300),
+    alphaMin = 0.001,
+    velocityDecay = 0.4,
+    stopped = false,
+    static: staticProp,
+    onStart: onStartProp = () => {},
+    onTick: onTickProp = () => {},
+    onEnd: onEndProp = () => {},
+    children,
+  }: ForceSimulationProps = $props();
+
+  const ctx = getChartContext();
+
+  // MARK: Public Props
 
   /** Clone data since simulation mutates original */
   export const cloneData: boolean = false;
 
-  export let onstart: (() => void) | undefined = undefined;
-  export let ontick: ((e: { alpha: number; alphaTarget: number }) => void) | undefined = undefined;
-  // export let onchange: | (() => void) | undefined = undefined;
-  export let onend: (() => void) | undefined = undefined;
-
   // MARK: Private Props
 
-  let nodes: any[] = [];
+  let nodes: SimulationNodeDatum[] = $state([]);
 
   const simulation = forceSimulation().stop();
 
@@ -45,44 +116,43 @@
 
   // MARK: Reactivity Effects
 
-  $: {
+  $effect(() => {
     // Any time the `stopped` prop gets toggled we
     // update the running state of the simulation:
-
     if (stopped) {
       pauseDynamicSimulation();
     } else {
       runOrResumeSimulation();
     }
-  }
+  });
 
-  $: {
+  $effect(() => {
     // Any time the `static` prop gets toggled we
     // either attach or detach our internal event listeners:
-    if (_static) {
+    if (staticProp) {
       simulation.on('tick', null).on('end', null);
     } else {
       simulation.on('tick', onTick).on('end', onEnd);
     }
 
     runOrResumeSimulation();
-  }
+  });
 
-  $: {
-    // Any time the `$data` store gets changed we
+  $effect(() => {
+    // Any time the `data` store gets changed we
     // pass them to the internal d3 simulation object:
-    pushNodesToSimulation($data as any[]);
+    pushNodesToSimulation(ctx.data as any[]);
     runOrResumeSimulation();
-  }
+  });
 
-  $: {
+  $effect(() => {
     // Any time the `forces` prop gets changed we
     // pass them to the internal d3 simulation object:
     pushForcesToSimulation(forces);
     runOrResumeSimulation();
-  }
+  });
 
-  $: {
+  $effect(() => {
     // Any time the `alpha` prop gets changed we
     // pass it to the internal d3 simulation object:
     pushAlphaToSimulation(alpha);
@@ -93,9 +163,9 @@
     if (simulation.alpha() >= simulation.alphaMin()) {
       runOrResumeSimulation();
     }
-  }
+  });
 
-  $: {
+  $effect(() => {
     // Any time any of the the alpha props get changed we
     // pass them all to the internal d3 simulation object
     // (they are cheap, so passing them as a batch is fine!):
@@ -117,7 +187,7 @@
       .velocityDecay(velocityDecay);
 
     runOrResumeSimulation();
-  }
+  });
 
   // MARK: Push State
 
@@ -160,7 +230,7 @@
   // MARK: Resume / Pause
 
   function runOrResumeSimulation() {
-    if (_static) {
+    if (staticProp) {
       runStaticSimulationToCompletion();
     } else {
       resumeDynamicSimulation();
@@ -173,7 +243,7 @@
       return;
     }
 
-    if (!_static) {
+    if (!staticProp) {
       // Only static simulations are run to completion.
       return;
     }
@@ -212,7 +282,7 @@
       return;
     }
 
-    if (_static) {
+    if (staticProp) {
       // Only dynamic simulations can be resumed.
       return;
     }
@@ -244,17 +314,14 @@
     }
 
     paused = false;
-    onstart?.();
+    onStartProp();
   }
 
   function onTick() {
     pullNodesFromSimulation();
     pullAlphaFromSimulation();
 
-    ontick?.({
-      alpha,
-      alphaTarget,
-    });
+    onTickProp({ alpha, alphaTarget });
   }
 
   function onEnd() {
@@ -264,8 +331,8 @@
     }
 
     paused = true;
-    onend?.();
+    onEndProp();
   }
 </script>
 
-<slot {nodes} {simulation} />
+{@render children?.({ nodes, simulation })}
