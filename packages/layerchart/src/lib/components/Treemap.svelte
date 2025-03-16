@@ -1,3 +1,75 @@
+<script lang="ts" module>
+  export type TreemapProps = {
+    /**
+     * The tile function to use for the treemap layout.
+     *
+     * @default treemapSquarify
+     */
+    tile?:
+      | typeof treemapSquarify
+      | 'binary'
+      | 'squarify'
+      | 'resquarify'
+      | 'dice'
+      | 'slice'
+      | 'sliceDice';
+    /**
+     * The padding between nodes.
+     *
+     * @default 0
+     */
+    padding?: number;
+
+    /**
+     * The inner padding between nodes.
+     *
+     * @default 0
+     */
+    paddingInner?: number;
+
+    /**
+     * The outer padding between nodes.
+     *
+     * @default 0
+     */
+    paddingOuter?: number;
+
+    /**
+     * The top padding between nodes.
+     *
+     * @default 0
+     */
+    paddingTop?: number;
+
+    /**
+     * The bottom padding between nodes.
+     *
+     * @default 0
+     */
+    paddingBottom?: number;
+    /**
+     * The left padding between nodes.
+     *
+     */
+    paddingLeft?: number;
+
+    /**
+     * The right padding between nodes.
+     *
+     */
+    paddingRight?: number;
+
+    /**
+     * The selected node.
+     *
+     * @default null
+     */
+    selected?: HierarchyRectangularNode<any> | null;
+
+    children?: Snippet<[{ nodes: HierarchyRectangularNode<unknown>[] }]>;
+  };
+</script>
+
 <script lang="ts">
   import {
     treemap as d3treemap,
@@ -9,33 +81,28 @@
     treemapSquarify,
     type HierarchyNode,
     type HierarchyRectangularNode,
-    type TreemapLayout,
   } from 'd3-hierarchy';
 
-  import { chartContext } from './ChartContext.svelte';
   import { aspectTile } from '../utils/treemap.js';
+  import { getChartContext } from './Chart-Next.svelte';
+  import type { Snippet } from 'svelte';
 
-  const { data, width, height } = chartContext();
+  let {
+    tile = treemapSquarify,
+    padding = 0,
+    paddingInner = 0,
+    paddingOuter = 0,
+    paddingTop = 0,
+    paddingBottom = 0,
+    paddingLeft,
+    paddingRight,
+    selected = null,
+    children,
+  }: TreemapProps = $props();
 
-  export let tile:
-    | typeof treemapSquarify
-    | 'binary'
-    | 'squarify'
-    | 'resquarify'
-    | 'dice'
-    | 'slice'
-    | 'sliceDice' = treemapSquarify;
-  export let padding = 0;
-  export let paddingInner = 0;
-  export let paddingOuter = 0;
-  export let paddingTop = 0;
-  export let paddingBottom = 0;
-  export let paddingLeft: number | undefined = undefined;
-  export let paddingRight: number | undefined = undefined;
+  const ctx = getChartContext();
 
-  export let selected: HierarchyRectangularNode<any> | null | undefined = null;
-
-  $: tileFunc =
+  const tileFunc = $derived(
     tile === 'squarify'
       ? treemapSquarify
       : tile === 'resquarify'
@@ -48,41 +115,48 @@
               ? treemapSlice
               : tile === 'sliceDice'
                 ? treemapSliceDice
-                : tile;
+                : tile
+  );
 
-  let treemap: TreemapLayout<any>;
-  $: {
-    treemap = d3treemap()
-      .size([$width, $height])
-      .tile(aspectTile(tileFunc, $width, $height));
+  const treemap = $derived.by(() => {
+    const _treemap = d3treemap()
+      .size([ctx.width, ctx.height])
+      .tile(aspectTile(tileFunc, ctx.width, ctx.height));
 
     if (padding) {
-      treemap.padding(padding);
+      _treemap.padding(padding);
     }
+
     if (paddingInner) {
-      treemap.paddingInner(paddingInner);
+      _treemap.paddingInner(paddingInner);
     }
+
     if (paddingOuter) {
-      treemap.paddingOuter(paddingOuter);
+      _treemap.paddingOuter(paddingOuter);
     }
+
     if (paddingTop) {
-      treemap.paddingTop(paddingTop);
+      _treemap.paddingTop(paddingTop);
     }
+
     if (paddingBottom) {
-      treemap.paddingBottom(paddingBottom);
+      _treemap.paddingBottom(paddingBottom);
     }
+
     if (paddingLeft) {
-      treemap.paddingLeft(paddingLeft);
+      _treemap.paddingLeft(paddingLeft);
     }
     if (paddingRight) {
-      treemap.paddingRight(paddingRight);
+      _treemap.paddingRight(paddingRight);
     }
-  }
+    return _treemap;
+  });
 
-  $: treemapData = treemap($data as HierarchyNode<any>);
+  const treemapData = $derived(treemap(ctx.data as HierarchyNode<any>));
 
-  // TODO: Remove selected
-  $: selected = treemapData; // set initial selection
+  $effect(() => {
+    selected = treemapData;
+  });
 </script>
 
-<slot nodes={treemapData.descendants()} />
+{@render children?.({ nodes: treemapData.descendants() })}
