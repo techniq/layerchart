@@ -1,15 +1,22 @@
-<script lang="ts">
-  import { geoContext } from './GeoContext.svelte';
-  import { isVisible } from '$lib/utils/geo.js';
-
-  /** Latitude */
-  export let lat: number;
-  /** Longitude */
-  export let long: number;
-
-  const geo = geoContext();
+<script lang="ts" module>
+  export type GeoVisibleProps = {
+    /** Latitude */
+    lat: number;
+    /** Longitude */
+    long: number;
+    children?: Snippet;
+  };
 </script>
 
-{#if isVisible($geo)([long, lat])}
-  <slot />
+<script lang="ts">
+  import { isVisible } from '$lib/utils/geo.js';
+  import type { Snippet } from 'svelte';
+  import { getGeoContext } from './GeoContext.svelte';
+
+  let { lat, long, children }: GeoVisibleProps = $props();
+  const geoCtx = getGeoContext();
+</script>
+
+{#if geoCtx.projection && isVisible(geoCtx.projection)([long, lat])}
+  {@render children?.()}
 {/if}
