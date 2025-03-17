@@ -53,7 +53,6 @@
   import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { selectionStore } from '@layerstack/svelte-stores';
 
   import Axis from '../Axis.svelte';
   import Canvas from '../layout/Canvas.svelte';
@@ -78,6 +77,7 @@
   import { asAny } from '../../utils/types.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { createHighlightKey } from './utils.svelte.js';
+  import { createSelectionState } from 'layerchart/stores/selectionState.svelte.js';
 
   let {
     data = [],
@@ -191,15 +191,9 @@
     return labelsProps;
   }
 
-  const selectedSeries = selectionStore();
+  const selectedSeries = createSelectionState();
   const visibleSeries = $derived(
-    series.filter((s) => {
-      return (
-        // @ts-expect-error
-        $selectedSeries.selected.length === 0 || $selectedSeries.isSelected(s.key)
-        // || highlightSeriesKey == s.key
-      );
-    })
+    series.filter((s) => selectedSeries.isEmpty() || selectedSeries.isSelected(s.key))
   );
 
   const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
@@ -391,7 +385,7 @@
           tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
           placement="bottom"
           variant="swatches"
-          onclick={(_, item) => $selectedSeries.toggleSelected(item.value)}
+          onclick={(_, item) => selectedSeries.toggleSelected(item.value)}
           onpointerenter={(_, item) => (highlightKey.current = item.value)}
           onpointerleave={(_) => (highlightKey.current = null)}
           {...props.legend}

@@ -119,10 +119,7 @@
 
 <script lang="ts">
   import {
-    motionStore,
     type MotionProps,
-    type SpringOptions,
-    type TweenedOptions,
     motionState,
     MotionFinishState,
   } from '$lib/stores/motionState.svelte.js';
@@ -306,7 +303,7 @@
       scaleTo(
         Math.pow(2, scaleBy),
         point,
-        // @ts-expect-error
+        // @ts-expect-error - TODO: idk
         spring ? { hard: true } : tweened ? { duration: 0 } : undefined
       );
     } else if (scrollMode === 'translate') {
@@ -324,7 +321,7 @@
   function scaleTo(
     value: number,
     point: { x: number; y: number },
-    options: Parameters<typeof motionStore>[1] | undefined = undefined
+    options: Parameters<typeof motionState>[1] | undefined = undefined
   ) {
     const currentScale = scale.current;
     const newScale = scale.current * value;

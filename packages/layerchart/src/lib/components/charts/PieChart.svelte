@@ -145,6 +145,7 @@
   import { asAny } from '../../utils/types.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { createHighlightKey } from './utils.svelte.js';
+  import { createSelectionState } from 'layerchart/stores/selectionState.svelte.js';
 
   let {
     data = [],
@@ -199,28 +200,20 @@
   const seriesColors = $derived(series.map((s) => s.color).filter((d) => d != null));
 
   const highlightKey = createHighlightKey<TData, typeof Arc>();
-  const selectedKeys = selectionStore();
+  const selectedKeys = createSelectionState();
+  const selectedSeries = createSelectionState();
 
   const visibleData = $derived(
     chartData.filter((d) => {
       const dataKey = keyAccessor(d);
-      return (
-        // @ts-expect-error
-        $selectedKeys.selected.length === 0 || $selectedKeys.isSelected(dataKey)
-        // || highlightKey == dataKey
-      );
+      return selectedKeys.isEmpty() || selectedKeys.isSelected(dataKey);
     })
   );
 
   // TODO: note, I added this because it wasn't consistent with all the other charts
   // unsure if it is correct but will validate with Sean
   const visibleSeries = $derived(
-    series.filter((s) => {
-      return (
-        // @ts-expect-error - we can fix this
-        $selectedKeys.selected.length === 0 || $selectedKeys.isSelected(s.key)
-      );
-    })
+    series.filter((s) => selectedSeries.isEmpty() || selectedSeries.isSelected(s.key))
   );
 
   if (profile) {
@@ -385,7 +378,10 @@
           }}
           placement="bottom"
           variant="swatches"
-          onclick={(e, item) => $selectedKeys.toggleSelected(item.value)}
+          onclick={(e, item) => {
+            selectedKeys.toggleSelected(item.value);
+            selectedSeries.toggleSelected(item.value);
+          }}
           onpointerenter={(e, item) => (highlightKey.current = item.value)}
           onpointerleave={(e) => (highlightKey.current = null)}
           {...props.legend}

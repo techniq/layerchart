@@ -14,7 +14,9 @@ export type SelectionProps<T> = {
   max?: number;
 };
 
-export function selectionStore<T>(props: SelectionProps<T> = {}) {
+export type SelectionState<T> = ReturnType<typeof createSelectionState<T>>;
+
+export function createSelectionState<T>(props: SelectionProps<T> = {}) {
   const selected = uniqueState(props.initial ?? []);
   const selectedArr = $derived([...selected.current.values()]);
   let all = $state(props.all ?? []);
@@ -23,6 +25,10 @@ export function selectionStore<T>(props: SelectionProps<T> = {}) {
 
   function isSelected(value: T) {
     return selected.current.has(value);
+  }
+
+  function isEmpty() {
+    return selectedArr.length === 0;
   }
 
   function isAllSelected() {
@@ -100,6 +106,7 @@ export function selectionStore<T>(props: SelectionProps<T> = {}) {
     isAllSelected,
     isAnySelected,
     isMaxSelected,
+    isEmpty,
     clear,
     reset,
     get all() {

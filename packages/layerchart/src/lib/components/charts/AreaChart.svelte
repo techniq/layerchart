@@ -47,7 +47,6 @@
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { selectionStore } from '@layerstack/svelte-stores';
 
   import Area from '../Area.svelte';
   import Axis from '../Axis.svelte';
@@ -73,6 +72,7 @@
   import Spline from '../Spline.svelte';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { createHighlightKey } from './utils.svelte.js';
+  import { createSelectionState } from 'layerchart/stores/selectionState.svelte.js';
 
   let {
     data = [],
@@ -111,14 +111,10 @@
   const isDefaultSeries = $derived(series.length === 1 && series[0].key === 'default');
   const stackSeries = $derived(seriesLayout.startsWith('stack'));
 
+  const selectedSeries = createSelectionState();
+
   const visibleSeries = $derived(
-    series.filter((s) => {
-      return (
-        // @ts-expect-error
-        $selectedSeries.selected.length === 0 || $selectedSeries.isSelected(s.key)
-        // || highlightSeriesKey == s.key
-      );
-    })
+    series.filter((s) => selectedSeries.isEmpty() || selectedSeries.isSelected(s.key))
   );
 
   const allSeriesData = $derived(
@@ -252,8 +248,6 @@
 
     return labelsProps;
   }
-
-  const selectedSeries = selectionStore();
 
   const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
 
@@ -456,7 +450,7 @@
             tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
             placement="bottom"
             variant="swatches"
-            onclick={(e, item) => $selectedSeries.toggleSelected(item.value)}
+            onclick={(e, item) => selectedSeries.toggleSelected(item.value)}
             onpointerenter={(e, item) => (highlightKey.current = item.value)}
             onpointerleave={(e) => (highlightKey.current = null)}
             {...props.legend}

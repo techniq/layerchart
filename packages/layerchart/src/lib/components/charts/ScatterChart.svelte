@@ -1,4 +1,8 @@
 <script lang="ts" module>
+  import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
+  import type { AnyScale } from 'layerchart/utils/scales.js';
+  import { onMount, type ComponentProps } from 'svelte';
+
   export type ScatterChartExtraSnippetProps<TData> = {
     getLabelsProps: (
       s: SeriesData<TData, typeof Points>,
@@ -37,11 +41,9 @@
 </script>
 
 <script lang="ts" generics="TData">
-  import { onMount, type ComponentProps } from 'svelte';
   import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { selectionStore } from '@layerstack/svelte-stores';
 
   import Axis from '../Axis.svelte';
   import BrushContext from '../BrushContext.svelte';
@@ -57,16 +59,10 @@
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
-  import {
-    accessor,
-    chartDataArray,
-    defaultChartPadding,
-    type Accessor,
-  } from '../../utils/common.js';
+  import { accessor, chartDataArray, defaultChartPadding } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
-  import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { createHighlightKey } from './utils.svelte.js';
-  import type { AnyScale } from 'layerchart/utils/scales.js';
+  import { createSelectionState } from 'layerchart/stores/selectionState.svelte.js';
 
   let {
     data = [],
@@ -116,15 +112,10 @@
       (accessor(yProp)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear())
   );
 
-  const selectedSeries = selectionStore();
+  const selectedSeries = createSelectionState();
+
   const visibleSeries = $derived(
-    series.filter((s) => {
-      return (
-        // @ts-expect-error
-        $selectedSeries.selected.length === 0 || $selectedSeries.isSelected(s.key)
-        // || highlightSeriesKey == s.key
-      );
-    })
+    series.filter((s) => selectedSeries.isEmpty() || selectedSeries.isSelected(s.key))
   );
 
   const chartData = $derived(
@@ -331,7 +322,7 @@
           tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
           placement="bottom"
           variant="swatches"
-          onclick={(e, item) => $selectedSeries.toggleSelected(item.value)}
+          onclick={(e, item) => selectedSeries.toggleSelected(item.value)}
           onpointerenter={(e, item) => (highlightKey.current = item.value)}
           onpointerleave={(e) => (highlightKey.current = null)}
           {...props.legend}
