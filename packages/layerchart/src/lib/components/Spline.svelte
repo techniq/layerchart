@@ -120,6 +120,7 @@
   import MarkerWrapper from './MarkerWrapper.svelte';
   import { getChartContext } from './Chart-Next.svelte';
   import { createKey } from 'layerchart/utils/key.svelte.js';
+  import { afterTick } from 'layerchart/utils/afterTick.js';
 
   const ctx = getChartContext();
 
@@ -326,7 +327,7 @@
   $effect(() => {
     if (!startContent || !endContent) return;
     d;
-    tick().then(() => {
+    afterTick(() => {
       if (!ref) return;
       startPoint = ref.getPointAtLength(0);
       const totalLength = ref.getTotalLength();

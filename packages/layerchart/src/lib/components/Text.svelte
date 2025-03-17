@@ -130,7 +130,7 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { getStringWidth } from '$lib/utils/string.js';
   import { renderText, type ComputedStylesOptions } from '../utils/canvas.js';
-  import { afterTick } from 'layerchart/utils/after-tick.js';
+  import { afterTick } from 'layerchart/utils/afterTick.js';
 
   import { createKey } from 'layerchart/utils/key.svelte.js';
 

@@ -92,7 +92,7 @@
   import { getRenderContext } from './Chart.svelte';
 
   import { createKey } from 'layerchart/utils/key.svelte.js';
-  import { afterTick } from 'layerchart/utils/after-tick.js';
+  import { afterTick } from 'layerchart/utils/afterTick.js';
 
   let {
     x1,

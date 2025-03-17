@@ -47,7 +47,7 @@
 
   import { getRenderContext } from './Chart.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { afterTick } from 'layerchart/utils/after-tick.js';
+  import { afterTick } from 'layerchart/utils/afterTick.js';
   import { createKey } from 'layerchart/utils/key.svelte.js';
 
   let {

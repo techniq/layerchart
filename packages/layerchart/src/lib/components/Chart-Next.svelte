@@ -3,7 +3,7 @@
   import { scaleLinear, scaleOrdinal, scaleSqrt } from 'd3-scale';
   import { type Accessor, accessor, chartDataArray } from '$lib/utils/common.js';
   import { printDebug } from '$lib/utils/debug.js';
-  import { filterObject } from '$lib/utils/filter-object.js';
+  import { filterObject } from 'layerchart/utils/filterObject.js';
   import {
     createScale,
     getRange,

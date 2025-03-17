@@ -137,7 +137,7 @@
 
   import { degreesToRadians } from '$lib/utils/math.js';
   import { getChartContext } from './Chart-Next.svelte';
-  import { afterTick } from 'layerchart/utils/after-tick.js';
+  import { afterTick } from 'layerchart/utils/afterTick.js';
 
   let {
     ref = $bindable(),
