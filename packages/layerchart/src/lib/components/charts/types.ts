@@ -2,10 +2,9 @@ import type { Accessor } from '$lib/utils/common.js';
 import type { Component, ComponentProps, Snippet } from 'svelte';
 import type BrushContext from '../BrushContext.svelte';
 import type { AnyScale } from '$lib/utils/scales.js';
-import type { Area, Axis, Labels, Legend, Points, Rule } from '../index.js';
+import type { Area, Axis, Group, Labels, Legend, Points, Rule, Spline } from '../index.js';
 import type TooltipContext from '../tooltip/TooltipContext.svelte';
 import type { TooltipContextValue } from '../tooltip/TooltipContext.svelte';
-import type { Canvas } from 'layercake';
 import type Highlight from '../Highlight.svelte';
 import type Line from '../Line.svelte';
 import type Svg from '../layout/Svg.svelte';
@@ -19,11 +18,19 @@ import type { ChartContext } from '../Chart-Next.svelte';
 import type { GeoContextValue } from '../GeoContext.svelte';
 import type { TransformContextValue } from '../TransformContext.svelte';
 import type Grid from '../Grid.svelte';
+import type Bars from '../Bars.svelte';
+import type Pie from '../Pie.svelte';
+import type Arc from '../Arc.svelte';
+import type Canvas from '../layout/Canvas.svelte';
 
 export type SeriesData<TData, TComponent extends Component> = {
   key: string;
   label?: string;
   value?: Accessor<TData>;
+  /**
+   * Maximum possible value. Useful when `data` is a single item
+   */
+  maxValue?: number;
   data?: TData[];
   color?: string;
   props?: Partial<ComponentProps<TComponent>>;
@@ -68,12 +75,12 @@ export type SimplifiedChartSnippetProps<TData, TComponent extends Component, TSn
   /**
    * The current highlight series key for the chart.
    */
-  highlightSeriesKey: SeriesData<TData, TComponent>['key'] | null;
+  highlightKey: SeriesData<TData, TComponent>['key'] | null;
 
   /**
    * A function to set the highlight series key for the chart.
    */
-  setHighlightSeriesKey: (seriesKey: SeriesData<TData, TComponent>['key'] | null) => void;
+  setHighlightKey: (seriesKey: SeriesData<TData, TComponent>['key'] | null) => void;
 } & TSnippetProps;
 
 export type SimplifiedChartSnippet<TData, TComponent extends Component, TSnippetProps> = Snippet<
@@ -82,13 +89,18 @@ export type SimplifiedChartSnippet<TData, TComponent extends Component, TSnippet
 
 export type SimplifiedChartPropsObject = {
   area?: Partial<ComponentProps<typeof Area>>;
+  arc?: Partial<ComponentProps<typeof Arc>>;
+  bars?: Partial<ComponentProps<typeof Bars>>;
   brush?: Partial<ComponentProps<typeof BrushContext>>;
   canvas?: Partial<ComponentProps<typeof Canvas>>;
   grid?: Partial<ComponentProps<typeof Grid>>;
+  group?: Partial<ComponentProps<typeof Group>>;
   highlight?: Partial<ComponentProps<typeof Highlight>>;
   labels?: Partial<ComponentProps<typeof Labels>>;
   legend?: Partial<ComponentProps<typeof Legend>>;
   line?: Partial<ComponentProps<typeof Line>>;
+  pie?: Partial<ComponentProps<typeof Pie>>;
+  spline?: Partial<ComponentProps<typeof Spline>>;
   points?: Partial<ComponentProps<typeof Points>>;
   rule?: Partial<ComponentProps<typeof Rule>>;
   svg?: Partial<ComponentProps<typeof Svg>>;
@@ -108,7 +120,7 @@ export type SimplifiedChartPropsObject = {
 export type SimplifiedChartProps<
   TData,
   TComponent extends Component,
-  TSnippetProps,
+  TSnippetProps = {},
   ChartSnippet = SimplifiedChartSnippet<TData, TComponent, TSnippetProps>,
 > = {
   /**
@@ -236,12 +248,6 @@ export type SimplifiedChartProps<
    */
   onTooltipClick?: (e: MouseEvent, details: { data: any }) => void;
 
-  /**
-   * The props to be used for the chart.
-   *
-   * @default {}
-   */
-  props?: SimplifiedChartPropsObject;
   /**
    * The render context to be used for the chart.
    *

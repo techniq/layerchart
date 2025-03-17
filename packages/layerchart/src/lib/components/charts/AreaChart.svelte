@@ -5,6 +5,24 @@
     getPointsProps: (s: SeriesData<TData, typeof Area>, i: number) => ComponentProps<typeof Points>;
   };
 
+  export type AreaChartPropsObjProp = Pick<
+    SimplifiedChartPropsObject,
+    | 'area'
+    | 'brush'
+    | 'canvas'
+    | 'grid'
+    | 'highlight'
+    | 'labels'
+    | 'legend'
+    | 'line'
+    | 'points'
+    | 'rule'
+    | 'svg'
+    | 'tooltip'
+    | 'xAxis'
+    | 'yAxis'
+  >;
+
   export type AreaChartProps<TData> = SimplifiedChartProps<
     TData,
     typeof Area,
@@ -17,6 +35,8 @@
       e: MouseEvent,
       details: { data: HighlightPointData; series: SeriesData<TData, typeof Area> }
     ) => void;
+
+    props?: AreaChartPropsObjProp;
   };
 </script>
 
@@ -51,8 +71,8 @@
   } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
   import Spline from '../Spline.svelte';
-  import type { SeriesData, SimplifiedChartProps } from './types.js';
-  import { createHighlightSeriesKey } from './utils.svelte.js';
+  import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
+  import { createHighlightKey } from './utils.svelte.js';
 
   let {
     data = [],
@@ -142,7 +162,7 @@
     xScaleProp ?? (accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear())
   );
 
-  const highlightSeriesKey = createHighlightSeriesKey<TData, typeof Area>();
+  const highlightKey = createHighlightKey<TData, typeof Area>();
 
   function getAreaProps(s: SeriesData<TData, typeof Area>, i: number) {
     const lineProps: ComponentProps<typeof Spline> = {
@@ -167,8 +187,8 @@
         'transition-opacity',
         // Checking `visibleSeries.length > 1` fixes re-animated tweened areas on hover
         visibleSeries.length > 1 &&
-          highlightSeriesKey.current &&
-          highlightSeriesKey.current !== s.key &&
+          highlightKey.current &&
+          highlightKey.current !== s.key &&
           'opacity-10',
         props.area?.class,
         s.props?.class
@@ -179,8 +199,8 @@
         class: cls(
           'transition-opacity',
           visibleSeries.length > 1 &&
-            highlightSeriesKey.current &&
-            highlightSeriesKey.current !== s.key &&
+            highlightKey.current &&
+            highlightKey.current !== s.key &&
             'opacity-10',
           lineProps.class
         ),
@@ -203,7 +223,7 @@
       ...(typeof points === 'object' ? points : null),
       class: cls(
         'stroke-surface-200 transition-opacity',
-        highlightSeriesKey.current && highlightSeriesKey.current !== s.key && 'opacity-10',
+        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
         props.points?.class,
         typeof points === 'object' && points.class
       ),
@@ -224,7 +244,7 @@
       ...(typeof labels === 'object' ? labels : null),
       class: cls(
         'stroke-surface-200 transition-opacity',
-        highlightSeriesKey.current && highlightSeriesKey.current !== s.key && 'opacity-10',
+        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
         props.labels?.class,
         typeof labels === 'object' && labels.class
       ),
@@ -297,8 +317,8 @@
       getAreaProps,
       getLabelsProps,
       getPointsProps,
-      highlightSeriesKey: highlightSeriesKey.current,
-      setHighlightSeriesKey: highlightSeriesKey.set,
+      highlightKey: highlightKey.current,
+      setHighlightKey: highlightKey.set,
     }}
 
     {#if childrenProp}
@@ -394,8 +414,8 @@
                 onPointClick={onPointClick
                   ? (e, detail) => onPointClick(e, { ...detail, series: s })
                   : undefined}
-                onPointEnter={() => (highlightSeriesKey.current = s.key)}
-                onPointLeave={() => (highlightSeriesKey.current = null)}
+                onPointEnter={() => (highlightKey.current = s.key)}
+                onPointLeave={() => (highlightKey.current = null)}
                 {...props.highlight}
                 points={props.highlight?.points == false
                   ? false
@@ -404,9 +424,7 @@
                       fill: s.color,
                       class: cls(
                         'transition-opacity',
-                        highlightSeriesKey.current &&
-                          highlightSeriesKey.current !== s.key &&
-                          'opacity-10',
+                        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
                         highlightPointsProps?.class
                       ),
                     }}
@@ -439,8 +457,8 @@
             placement="bottom"
             variant="swatches"
             onclick={(e, item) => $selectedSeries.toggleSelected(item.value)}
-            onpointerenter={(e, item) => (highlightSeriesKey.current = item.value)}
-            onpointerleave={(e) => (highlightSeriesKey.current = null)}
+            onpointerenter={(e, item) => (highlightKey.current = item.value)}
+            onpointerleave={(e) => (highlightKey.current = null)}
             {...props.legend}
             {...typeof legend === 'object' ? legend : null}
             classes={{
@@ -477,8 +495,8 @@
                   color={s.color}
                   {format}
                   valueAlign="right"
-                  onpointerenter={() => (highlightSeriesKey.current = s.key)}
-                  onpointerleave={() => (highlightSeriesKey.current = null)}
+                  onpointerenter={() => (highlightKey.current = s.key)}
+                  onpointerleave={() => (highlightKey.current = null)}
                   {...props.tooltip?.item}
                 />
               {/each}

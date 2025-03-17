@@ -1,7 +1,7 @@
 import type { Component } from 'svelte';
 import type { SeriesData } from './types.js';
 
-export function createHighlightSeriesKey<TData, SeriesComponent extends Component>() {
+export function createHighlightKey<TData, SeriesComponent extends Component>() {
   let current = $state<SeriesData<TData, SeriesComponent>['key'] | null>(null);
 
   function set(seriesKey: SeriesData<TData, SeriesComponent>['key'] | null) {

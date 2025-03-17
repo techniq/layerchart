@@ -1,3 +1,130 @@
+<script lang="ts" module>
+  export type PieChartExtraSnippetProps<TData> = {
+    key: Accessor<TData>;
+    label: Accessor<TData>;
+    value: Accessor<TData>;
+    visibleData: TData[];
+  };
+  export type PieChartPropsObjProp = Pick<
+    SimplifiedChartPropsObject,
+    'pie' | 'group' | 'arc' | 'legend' | 'canvas' | 'svg' | 'tooltip'
+  >;
+
+  export type PieChartProps<TData> = Pick<
+    SimplifiedChartProps<TData, typeof Arc, PieChartExtraSnippetProps<TData>>,
+    | 'aboveContext'
+    | 'aboveMarks'
+    | 'belowContext'
+    | 'belowMarks'
+    | 'children'
+    | 'data'
+    | 'debug'
+    | 'legend'
+    | 'marks'
+    | 'onTooltipClick'
+    | 'profile'
+    | 'renderContext'
+    | 'series'
+    | 'tooltip'
+    | 'tooltipContext'
+  > & {
+    /**
+     * Key accessor
+     *
+     * @default 'key'
+     */
+    key?: Accessor<TData>;
+
+    /**
+     * Label accessor
+     *
+     * @default 'label'
+     */
+    label?: Accessor<TData>;
+
+    /**
+     * Value accessor
+     *
+     * @default 'value'
+     */
+    value?: Accessor<TData>;
+
+    /**
+     * Color accessor
+     *
+     * @default key
+     */
+    c?: Accessor<TData>;
+
+    /**
+     * Maximum possible value, useful when `data` is single item
+     */
+    maxValue?: number;
+
+    /**
+     * Range [min, max] in degrees.
+     *
+     * See also `startAngle`/`endAngle`
+     *
+     * @default [0, 360]
+     */
+    range?: [number, number] | number[];
+
+    props?: PieChartPropsObjProp;
+
+    /**
+     * Inner radius of the arc.
+     *   value >= 1: discrete value
+     *   value >  0: percent of `outerRadius`
+     *   value <  0: offset of `outerRadius`
+     */
+    innerRadius?: number;
+
+    /**
+     * Outer radius of the arc.
+     */
+    outerRadius?: number;
+
+    /**
+     * Corner radius of the arc
+     *
+     * @default 0
+     */
+    cornerRadius?: number;
+
+    /**
+     * Angle between the arcs
+     *
+     * @default 0
+     */
+    padAngle?: number;
+
+    /**
+     * Placement of the PieChart
+     *
+     * @default 'center'
+     */
+    placement?: 'left' | 'center' | 'right';
+
+    /**
+     * Center the chart.
+     *
+     * Override and use `props.group` for more control.
+     *
+     * @default placement === 'center'
+     */
+    center?: boolean;
+
+    /**
+     * A callback function triggered when the arc is clicked.
+     */
+    onArcClick?: (
+      e: MouseEvent,
+      detail: { data: any; series: SeriesData<TData, typeof Arc> }
+    ) => void;
+  };
+</script>
+
 <script lang="ts" generics="TData">
   import { onMount, type ComponentProps } from 'svelte';
   import { sum } from 'd3-array';
@@ -7,7 +134,7 @@
 
   import Arc from '../Arc.svelte';
   import Canvas from '../layout/Canvas.svelte';
-  import Chart from '../Chart.svelte';
+  import Chart from '../Chart-Next.svelte';
   import Group from '../Group.svelte';
   import Legend from '../Legend.svelte';
   import Pie from '../Pie.svelte';
@@ -16,153 +143,85 @@
 
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
+  import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
+  import { createHighlightKey } from './utils.svelte.js';
 
-  interface $$Props extends ComponentProps<Chart<TData>> {
-    cornerRadius?: typeof cornerRadius;
-    innerRadius?: typeof innerRadius;
-    key?: typeof key;
-    label?: typeof label;
-    legend?: typeof legend;
-    maxValue?: typeof maxValue;
-    outerRadius?: typeof outerRadius;
-    padAngle?: typeof padAngle;
-    center?: typeof center;
-    placement?: typeof placement;
-    profile?: typeof profile;
-    debug?: typeof debug;
-    props?: typeof props;
-    range?: typeof range;
-    series?: typeof series;
-    value?: typeof value;
-    renderContext?: typeof renderContext;
-    onarcclick?: typeof onarcclick;
-    ontooltipclick?: typeof ontooltipclick;
-  }
+  let {
+    data = [],
+    key = 'key',
+    label = 'label',
+    value = 'value',
+    range = [0, 360],
+    c = key,
+    innerRadius,
+    outerRadius,
+    cornerRadius = 0,
+    padAngle = 0,
+    placement = 'center',
+    maxValue,
+    center = placement === 'center',
+    series = [{ key: 'default', value: value }],
+    legend = false,
+    tooltipContext,
+    onArcClick = () => {},
+    // TODO: Not usable with manual tooltip / arc path.  Use `onArcClick`?
+    /** Event dispatched with current tooltip data */
+    onTooltipClick = () => {},
+    props = {},
+    renderContext = 'svg',
+    profile = false,
+    debug = false,
+    tooltip,
+    children: childrenProp,
+    aboveContext,
+    belowContext,
+    belowMarks,
+    aboveMarks,
+    marks,
+    ...restProps
+  }: PieChartProps<TData> = $props();
 
-  export let data: $$Props['data'] = [];
+  const keyAccessor = $derived(accessor(key));
+  const labelAccessor = $derived(accessor(label));
+  const valueAccessor = $derived(accessor(value));
+  const cAccessor = $derived(accessor(c));
 
-  /** Key accessor */
-  export let key: Accessor<TData> = 'key';
-  $: keyAccessor = accessor(key);
+  const allSeriesData = $derived(
+    series
+      .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
+      .filter((d) => d) as Array<TData>
+  );
 
-  /** Label accessor */
-  export let label: Accessor<TData> = 'label';
-  $: labelAccessor = accessor(label);
+  const chartData = $derived(
+    allSeriesData.length ? allSeriesData : chartDataArray(data)
+  ) as Array<TData>;
 
-  /** Value accessor */
-  export let value: Accessor<TData> = 'value';
-  $: valueAccessor = accessor(value);
+  const seriesColors = $derived(series.map((s) => s.color).filter((d) => d != null));
 
-  /** Color accessor*/
-  export let c: Accessor<TData> = key;
-  $: cAccessor = accessor(c);
-
-  /** Maximum possible value, useful when `data` is single item */
-  export let maxValue: number | undefined = undefined;
-
-  export let series: {
-    key: string | number;
-    label?: string;
-    value?: Accessor<TData>;
-    /** Provider series data, else uses chart data (with value/key accessor) */
-    data?: TData[];
-    /** Maximum possible value, useful when `data` is single item */
-    maxValue?: number;
-    color?: string;
-    props?: Partial<ComponentProps<Arc>>;
-  }[] = [{ key: 'default', value: value /*, color: 'var(--color-primary)'*/ }];
-
-  export let legend: ComponentProps<Legend> | boolean = false;
-
-  /**
-   * Range [min,max] in degrees.  See also startAngle/endAngle
-   */
-  export let range = [0, 360];
-
-  /**
-   * Define innerRadius.
-   *   value >= 1: discrete value
-   *   value >  0: percent of `outerRadius`
-   *   value <  0: offset of `outerRadius`
-   *   default: yRange min
-   */
-  export let innerRadius: number | undefined = undefined;
-
-  /**
-   * Define outerRadius.  Defaults to yRange max/2 (ie. chart height / 2)
-   */
-  export let outerRadius: number | undefined = undefined;
-
-  export let cornerRadius = 0;
-  export let padAngle = 0;
-
-  /** Placement of PieChart (default: 'center') */
-  export let placement: 'left' | 'center' | 'right' = 'center';
-
-  /** Center chart.  Override and use `props.group` for more control */
-  export let center = placement === 'center';
-
-  /** Expose tooltip context for external access */
-  export let tooltipContext: ComponentProps<Tooltip.Context>['tooltip'] = undefined;
-
-  // TODO: Not usable with manual tooltip / arc path.  Use `onarcclick`?
-  /** Event dispatched with current tooltip data */
-  export let ontooltipclick: (e: MouseEvent, detail: { data: any }) => void = () => {};
-
-  /** Event dispatched when individual Arc is clicked  (useful with multiple series) */
-  export let onarcclick: (
-    e: MouseEvent,
-    detail: { data: any; series: (typeof series)[number] }
-  ) => void = () => {};
-
-  export let props: {
-    pie?: Partial<ComponentProps<Pie>>;
-    group?: Partial<ComponentProps<Group>>;
-    arc?: Partial<ComponentProps<Arc>>;
-    legend?: Partial<ComponentProps<Legend>>;
-    canvas?: Partial<ComponentProps<Canvas>>;
-    svg?: Partial<ComponentProps<Svg>>;
-    tooltip?: {
-      context?: Partial<ComponentProps<Tooltip.Context>>;
-      root?: Partial<ComponentProps<Tooltip.Root>>;
-      header?: Partial<ComponentProps<Tooltip.Header>>;
-      list?: Partial<ComponentProps<Tooltip.List>>;
-      item?: Partial<ComponentProps<Tooltip.Item>>;
-      separator?: Partial<ComponentProps<Tooltip.Separator>>;
-    };
-  } = {};
-
-  export let renderContext: 'svg' | 'canvas' = 'svg';
-
-  /** Log initial render performance using `console.time` */
-  export let profile = false;
-
-  /** Enable debug mode */
-  export let debug = false;
-
-  $: allSeriesData = series
-    .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
-    .filter((d) => d) as Array<TData>;
-
-  $: chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<TData>;
-
-  $: seriesColors = series.map((s) => s.color).filter((d) => d != null);
-
-  let highlightKey: (typeof series)[number]['key'] | null = null;
-
-  function setHighlightKey(key: typeof highlightKey) {
-    highlightKey = key ?? null;
-  }
-
+  const highlightKey = createHighlightKey<TData, typeof Arc>();
   const selectedKeys = selectionStore();
-  $: visibleData = chartData.filter((d) => {
-    const dataKey = keyAccessor(d);
-    return (
-      // @ts-expect-error
-      $selectedKeys.selected.length === 0 || $selectedKeys.isSelected(dataKey)
-      // || highlightKey == dataKey
-    );
-  });
+
+  const visibleData = $derived(
+    chartData.filter((d) => {
+      const dataKey = keyAccessor(d);
+      return (
+        // @ts-expect-error
+        $selectedKeys.selected.length === 0 || $selectedKeys.isSelected(dataKey)
+        // || highlightKey == dataKey
+      );
+    })
+  );
+
+  // TODO: note, I added this because it wasn't consistent with all the other charts
+  // unsure if it is correct but will validate with Sean
+  const visibleSeries = $derived(
+    series.filter((s) => {
+      return (
+        // @ts-expect-error - we can fix this
+        $selectedKeys.selected.length === 0 || $selectedKeys.isSelected(s.key)
+      );
+    })
+  );
 
   if (profile) {
     console.time('PieChart render');
@@ -191,138 +250,134 @@
           'var(--color-danger)',
         ]}
   padding={{ bottom: legend === true ? 32 : 0 }}
-  {...$$restProps}
+  {...restProps}
   tooltip={props.tooltip?.context}
   bind:tooltipContext
-  let:x
-  let:xScale
-  let:y
-  let:c
-  let:cScale
-  let:yScale
-  let:width
-  let:height
-  let:padding
-  let:tooltip
 >
-  {@const slotProps = {
-    key,
-    label,
-    value,
-    x,
-    xScale,
-    y,
-    yScale,
-    c,
-    cScale,
-    width,
-    height,
-    padding,
-    tooltip,
-    series,
-    visibleData,
-    highlightKey,
-    setHighlightKey,
-  }}
-  <slot {...slotProps}>
-    <slot name="belowContext" {...slotProps} />
+  {#snippet children({ brushContext, context, geoContext, tooltipContext, transformContext })}
+    {@const slotProps = {
+      label,
+      key,
+      value,
+      context,
+      tooltipContext,
+      brushContext,
+      geoContext,
+      transformContext,
+      series,
+      visibleSeries,
+      visibleData,
+      highlightKey: highlightKey.current,
+      setHighlightKey: highlightKey.set,
+    }}
+    {#if childrenProp}
+      {@render childrenProp(slotProps)}
+    {:else}
+      {@render belowContext?.(slotProps)}
+      {@const Component = renderContext === 'canvas' ? Canvas : Svg}
 
-    <svelte:component
-      this={renderContext === 'canvas' ? Canvas : Svg}
-      {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
-      {center}
-      {debug}
-    >
-      <slot name="belowMarks" {...slotProps} />
+      <Component
+        this={renderContext === 'canvas' ? Canvas : Svg}
+        {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
+        {center}
+        {debug}
+      >
+        {@render belowMarks?.(slotProps)}
 
-      <slot name="marks" {...slotProps}>
-        <Group
-          x={placement === 'left'
-            ? height / 2
-            : placement === 'right'
-              ? width - height / 2
-              : undefined}
-          center={['left', 'right'].includes(placement) ? 'y' : undefined}
-          {...props.group}
-        >
-          {#each series as s, i (s.key)}
-            {@const singleArc = s.data?.length === 1 || chartData.length === 1}
-            {#if singleArc}
-              {@const d = s.data?.[0] || chartData[0]}
-              <Arc
-                value={valueAccessor(d)}
-                domain={[0, s.maxValue ?? maxValue ?? sum(chartData, valueAccessor)]}
-                {range}
-                {innerRadius}
-                outerRadius={(outerRadius ?? 0) < 0 ? i * (outerRadius ?? 0) : outerRadius}
-                {cornerRadius}
-                {padAngle}
-                fill={s.color ?? cScale?.(c(d))}
-                track={{ fill: s.color ?? cScale?.(c(d)), fillOpacity: 0.1 }}
-                {tooltip}
-                data={d}
-                onclick={(e) => {
-                  onarcclick(e, { data: d, series: s });
-                  // Workaround for `tooltip={{ mode: 'manual' }}
-                  ontooltipclick(e, { data: d });
-                }}
-                {...props.arc}
-                {...s.props}
-                class={cls(
-                  'transition-opacity',
-                  highlightKey && highlightKey !== keyAccessor(d) && 'opacity-50',
-                  props.arc?.class,
-                  s.props?.class
-                )}
-              />
-            {:else}
-              <Pie
-                data={s.data}
-                {range}
-                {innerRadius}
-                {outerRadius}
-                {cornerRadius}
-                {padAngle}
-                {...props.pie}
-                let:arcs
-              >
-                {#each arcs as arc}
-                  <Arc
-                    startAngle={arc.startAngle}
-                    endAngle={arc.endAngle}
-                    outerRadius={series.length > 1 ? i * (outerRadius ?? 0) : outerRadius}
-                    {innerRadius}
-                    {cornerRadius}
-                    {padAngle}
-                    fill={cScale?.(c(arc.data))}
-                    data={arc.data}
-                    {tooltip}
-                    onclick={(e) => {
-                      onarcclick(e, { data: arc.data, series: s });
-                      // Workaround for `tooltip={{ mode: 'manual' }}
-                      ontooltipclick(e, { data: arc.data });
-                    }}
-                    class={cls(
-                      'transition-opacity',
-                      highlightKey && highlightKey !== keyAccessor(arc.data) && 'opacity-50'
-                    )}
-                    {...props.arc}
-                    {...s.props}
-                  />
-                {/each}
-              </Pie>
-            {/if}
-          {/each}
-        </Group>
-      </slot>
+        {#if typeof marks === 'function'}
+          {@render marks(slotProps)}
+        {:else}
+          <Group
+            x={placement === 'left'
+              ? context.height / 2
+              : placement === 'right'
+                ? context.width - context.height / 2
+                : undefined}
+            center={['left', 'right'].includes(placement) ? 'y' : undefined}
+            {...props.group}
+          >
+            {#each series as s, i (s.key)}
+              {@const singleArc = s.data?.length === 1 || chartData.length === 1}
+              {#if singleArc}
+                {@const d = s.data?.[0] || chartData[0]}
+                <Arc
+                  value={valueAccessor(d)}
+                  domain={[0, s.maxValue ?? maxValue ?? sum(chartData, valueAccessor)]}
+                  {range}
+                  {innerRadius}
+                  outerRadius={(outerRadius ?? 0) < 0 ? i * (outerRadius ?? 0) : outerRadius}
+                  {cornerRadius}
+                  {padAngle}
+                  fill={s.color ?? context.cScale?.(context.c(d))}
+                  track={{ fill: s.color ?? context.cScale?.(context.c(d)), fillOpacity: 0.1 }}
+                  {tooltipContext}
+                  data={d}
+                  onclick={(e) => {
+                    onArcClick(e, { data: d, series: s });
+                    // Workaround for `tooltip={{ mode: 'manual' }}
+                    onTooltipClick(e, { data: d });
+                  }}
+                  {...props.arc}
+                  {...s.props}
+                  class={cls(
+                    'transition-opacity',
+                    highlightKey.current && highlightKey.current !== keyAccessor(d) && 'opacity-50',
+                    props.arc?.class,
+                    s.props?.class
+                  )}
+                />
+              {:else}
+                <Pie
+                  data={s.data}
+                  {range}
+                  {innerRadius}
+                  {outerRadius}
+                  {cornerRadius}
+                  {padAngle}
+                  {...props.pie}
+                >
+                  {#snippet children({ arcs })}
+                    {#each arcs as arc}
+                      <Arc
+                        startAngle={arc.startAngle}
+                        endAngle={arc.endAngle}
+                        outerRadius={series.length > 1 ? i * (outerRadius ?? 0) : outerRadius}
+                        {innerRadius}
+                        {cornerRadius}
+                        {padAngle}
+                        fill={context.cScale?.(context.c(arc.data))}
+                        data={arc.data}
+                        {tooltipContext}
+                        onclick={(e) => {
+                          onArcClick(e, { data: arc.data, series: s });
+                          // Workaround for `tooltip={{ mode: 'manual' }}
+                          onTooltipClick(e, { data: arc.data });
+                        }}
+                        class={cls(
+                          'transition-opacity',
+                          highlightKey.current &&
+                            highlightKey.current !== keyAccessor(arc.data) &&
+                            'opacity-50'
+                        )}
+                        {...props.arc}
+                        {...s.props}
+                      />
+                    {/each}
+                  {/snippet}
+                </Pie>
+              {/if}
+            {/each}
+          </Group>
+        {/if}
 
-      <slot name="aboveMarks" {...slotProps} />
-    </svelte:component>
+        {@render aboveMarks?.(slotProps)}
+      </Component>
 
-    <slot name="aboveContext" {...slotProps} />
+      {@render aboveContext?.(slotProps)}
 
-    <slot name="legend" {...slotProps}>
-      {#if legend}
+      {#if typeof legend === 'function'}
+        {@render legend(slotProps)}
+      {:else if legend}
         <Legend
           tickFormat={(tick) => {
             const item = chartData.find((d) => keyAccessor(d) === tick);
@@ -331,8 +386,8 @@
           placement="bottom"
           variant="swatches"
           onclick={(e, item) => $selectedKeys.toggleSelected(item.value)}
-          onpointerenter={(e, item) => (highlightKey = item.value)}
-          onpointerleave={(e) => (highlightKey = null)}
+          onpointerenter={(e, item) => (highlightKey.current = item.value)}
+          onpointerleave={(e) => (highlightKey.current = null)}
           {...props.legend}
           {...typeof legend === 'object' ? legend : null}
           classes={{
@@ -345,22 +400,26 @@
           }}
         />
       {/if}
-    </slot>
 
-    <slot name="tooltip" {...slotProps}>
-      <Tooltip.Root {...props.tooltip?.root} let:data>
-        <Tooltip.List {...props.tooltip?.list}>
-          <Tooltip.Item
-            label={labelAccessor(data) || keyAccessor(data)}
-            value={valueAccessor(data)}
-            color={cScale?.(c(data))}
-            {format}
-            onpointerenter={() => (highlightKey = keyAccessor(data))}
-            onpointerleave={() => (highlightKey = null)}
-            {...props.tooltip?.item}
-          />
-        </Tooltip.List>
-      </Tooltip.Root>
-    </slot>
-  </slot>
+      {#if typeof tooltip === 'function'}
+        {@render tooltip(slotProps)}
+      {:else if tooltip}
+        <Tooltip.Root {...props.tooltip?.root}>
+          {#snippet children({ data })}
+            <Tooltip.List {...props.tooltip?.list}>
+              <Tooltip.Item
+                label={labelAccessor(data) || keyAccessor(data)}
+                value={valueAccessor(data)}
+                color={context.cScale?.(context.c(data))}
+                {format}
+                onpointerenter={() => (highlightKey.current = keyAccessor(data))}
+                onpointerleave={() => (highlightKey.current = null)}
+                {...props.tooltip?.item}
+              />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/if}
+    {/if}
+  {/snippet}
 </Chart>

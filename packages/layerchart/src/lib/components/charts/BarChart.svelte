@@ -4,16 +4,24 @@
     getLabelsProps: (s: SeriesData<TData, typeof Bars>, i: number) => ComponentProps<typeof Labels>;
   };
 
-  export type BarChartPropsObjProp = Omit<
+  export type BarChartPropsObjProp = Pick<
     SimplifiedChartPropsObject,
-    'area' | 'brush' | 'line' | 'points'
-  > & {
-    bars?: Partial<ComponentProps<typeof Bars>>;
-  };
+    | 'xAxis'
+    | 'yAxis'
+    | 'canvas'
+    | 'grid'
+    | 'rule'
+    | 'bars'
+    | 'legend'
+    | 'highlight'
+    | 'labels'
+    | 'svg'
+    | 'tooltip'
+  >;
 
   export type BarChartProps<TData> = Omit<
     SimplifiedChartProps<TData, typeof Bars, BarChartExtraSnippetProps<TData>>,
-    'props' | 'seriesLayout'
+    'seriesLayout'
   > & {
     /**
      * Padding between primary x or y bands/bars, applied to scaleBand().padding()
@@ -98,7 +106,7 @@
   import type { Insets } from '../../utils/rect.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import type { AnyScale } from 'layerchart/utils/scales.js';
-  import { createHighlightSeriesKey } from './utils.svelte.js';
+  import { createHighlightKey } from './utils.svelte.js';
 
   let {
     data = [],
@@ -236,7 +244,7 @@
     return _chartData;
   });
 
-  const highlightSeriesKey = createHighlightSeriesKey();
+  const highlightKey = createHighlightKey();
 
   function getBarsProps(s: SeriesData<TData, typeof Bars>, i: number) {
     const isFirst = i == 0;
@@ -280,7 +288,7 @@
       ...s.props,
       class: cls(
         'transition-opacity',
-        highlightSeriesKey.current && highlightSeriesKey.current !== s.key && 'opacity-10',
+        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
         props.bars?.class,
         s.props?.class
       ),
@@ -298,7 +306,7 @@
       ...(typeof labels === 'object' ? labels : null),
       class: cls(
         'stroke-surface-200 transition-opacity',
-        highlightSeriesKey.current && highlightSeriesKey.current !== s.key && 'opacity-10',
+        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
         props.labels?.class,
         typeof labels === 'object' && labels.class
       ),
@@ -365,10 +373,8 @@
       visibleSeries,
       getBarsProps,
       getLabelsProps,
-      get highlightSeriesKey() {
-        return highlightSeriesKey.current;
-      },
-      setHighlightSeriesKey: highlightSeriesKey.set,
+      highlightKey: highlightKey.current,
+      setHighlightKey: highlightKey.set,
     }}
     {#if childrenProp}
       {@render childrenProp(slotProps)}
@@ -471,8 +477,8 @@
           placement="bottom"
           variant="swatches"
           onclick={(e, item) => $selectedSeries.toggleSelected(item.value)}
-          onpointerenter={(e, item) => (highlightSeriesKey.current = item.value)}
-          onpointerleave={(e) => (highlightSeriesKey.current = null)}
+          onpointerenter={(e, item) => (highlightKey.current = item.value)}
+          onpointerleave={(e) => (highlightKey.current = null)}
           {...props.legend}
           {...typeof legend === 'object' ? legend : null}
           classes={{
@@ -511,8 +517,8 @@
                   color={s.color ?? context.cScale?.(context.c(data))}
                   {format}
                   valueAlign="right"
-                  onpointerenter={() => (highlightSeriesKey.current = s.key)}
-                  onpointerleave={() => (highlightSeriesKey.current = null)}
+                  onpointerenter={() => (highlightKey.current = s.key)}
+                  onpointerleave={() => (highlightKey.current = null)}
                   {...props.tooltip?.item}
                 />
               {/each}
