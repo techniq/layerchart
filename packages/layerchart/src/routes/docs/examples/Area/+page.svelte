@@ -85,7 +85,6 @@
 </Blockquote>
 
 <h2>Basic</h2>
-<!--
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
@@ -620,14 +619,14 @@
       </Svg>
     </Chart>
   </div>
-</Preview> -->
+</Preview>
 
 <h2>Clip tween on mount</h2>
 
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[auto_1fr] gap-2 mb-2">
     <Field label="Show area" let:id>
-      <Switch checked={show} onchange={toggle} {id} size="md" />
+      <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>
   </div>
 
@@ -746,7 +745,6 @@
     </div>
   </Preview>
 </Toggle>
-<!--
 <h2>Threshold with RectClipPath</h2>
 
 <Preview data={negativeDateSeriesData}>
@@ -1086,4 +1084,4 @@
       {/snippet}
     </Chart>
   </div>
-</Preview> -->
+</Preview>
