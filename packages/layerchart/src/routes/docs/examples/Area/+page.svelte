@@ -30,7 +30,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
-  import flatten from 'layerchart/utils/layout.js';
+  import flatten from 'layerchart/utils/chart.js';
 
   let { data } = $props();
 

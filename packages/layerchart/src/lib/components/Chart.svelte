@@ -28,7 +28,7 @@
     calcScaleExtents,
     createGetter,
     createLayerCakeScale,
-  } from '$lib/utils/layout.js';
+  } from 'layerchart/utils/chart.js';
   import { onMount, type ComponentProps, type Snippet } from 'svelte';
   import GeoContext, { type GeoContextValue } from './GeoContext.svelte';
   import TooltipContext, { type TooltipContextValue } from './tooltip/TooltipContext.svelte';

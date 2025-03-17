@@ -19,7 +19,7 @@ type DomainArray = Array<number | null>;
 type NormalizeArray<T> =
   T extends Array<infer U> ? (U extends string | number ? number[] : never) : never;
 
-function normalizeExtent(values: Array<number | string> | undefined): number[] {
+function normalizeExtent(values: Array<number | string | Date> | undefined): number[] {
   if (!values) return [0, 0];
 
   return values.map((value): number => {
@@ -29,6 +29,10 @@ function normalizeExtent(values: Array<number | string> | undefined): number[] {
     if (typeof value === 'string') {
       const num = Number(value);
       return Number.isNaN(num) ? 0 : num;
+    }
+    if (value instanceof Date) {
+      const timestamp = value.getTime();
+      return Number.isNaN(timestamp) ? 0 : timestamp;
     }
     return 0;
   });
