@@ -143,7 +143,7 @@
     TouchEventHandler,
   } from 'svelte/elements';
   import type { Without } from 'layerchart/utils/types.js';
-  import { getChartContext } from '../Chart-Next.svelte';
+  import { getChartContext } from '../Chart.svelte';
 
   let {
     element = $bindable(null),

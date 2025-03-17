@@ -1,4 +1,4 @@
-import type { DomainType } from './scales.js';
+import type { DomainType } from './scales.svelte.js';
 import type {
   AxisKey,
   BaseRange,
@@ -8,7 +8,7 @@ import type {
   Nice,
   PaddingArray,
 } from './types.js';
-import type { AnyScale } from './scales.js';
+import type { AnyScale } from './scales.svelte.js';
 import { arraysEqual } from './array.js';
 import { toTitleCase } from './string.js';
 import { InternSet } from 'd3-array';

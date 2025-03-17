@@ -66,7 +66,7 @@
      */
     ignoreTransform?: boolean;
 
-    children?: Snippet<[{ element: SVGElement }]>;
+    children?: Snippet<[{ ref: SVGElement }]>;
   };
 
   export type SVGProps = SVGPropsWithoutHTML &
@@ -79,7 +79,7 @@
   import type { Snippet } from 'svelte';
   import type { Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
-  import { getChartContext, setRenderContext } from '../Chart-Next.svelte';
+  import { getChartContext, setRenderContext } from '../Chart.svelte';
 
   let {
     ref = $bindable(),
@@ -150,10 +150,10 @@
   >
     {#if transform}
       <g {transform}>
-        {@render children?.({ element: ref as SVGElement })}
+        {@render children?.({ ref })}
       </g>
     {:else}
-      {@render children?.({ element: ref as SVGElement })}
+      {@render children?.({ ref })}
     {/if}
   </g>
 </svg>

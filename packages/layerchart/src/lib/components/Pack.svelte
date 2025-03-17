@@ -20,7 +20,7 @@
 </script>
 
 <script lang="ts">
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
 
   const ctx = getChartContext();
 

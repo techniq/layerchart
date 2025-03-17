@@ -126,7 +126,7 @@
   import { localPoint } from '@layerstack/utils';
   import { Context, watch } from 'runed';
   import type { Without } from 'layerchart/utils/types.js';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
   import { cls } from '@layerstack/tailwind';
 

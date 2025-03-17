@@ -62,8 +62,8 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
 
-  import { isScaleBand } from '$lib/utils/scales.js';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { isScaleBand } from '$lib/utils/scales.svelte.js';
+  import { getChartContext } from './Chart.svelte';
 
   const ctx = getChartContext();
 

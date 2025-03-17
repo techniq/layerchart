@@ -1,5 +1,5 @@
 import type { HierarchyNode } from 'd3-hierarchy';
-import type { AnyScale } from './scales.js';
+import type { AnyScale } from './scales.svelte.js';
 import type { SankeyGraph } from 'd3-sankey';
 import type { TransitionConfig } from 'svelte/transition';
 

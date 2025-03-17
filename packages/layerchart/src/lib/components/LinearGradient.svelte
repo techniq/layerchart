@@ -84,7 +84,7 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { createLinearGradient, getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
 
   let {
     id = uniqueId('linearGradient-'),

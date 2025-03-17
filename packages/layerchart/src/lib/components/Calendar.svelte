@@ -31,7 +31,7 @@
      *
      * @default false
      */
-    monthPath?: boolean | Partial<ComponentProps<MonthPath>>;
+    monthPath?: boolean | Partial<ComponentProps<typeof MonthPath>>;
 
     /**
      * Tooltip context to setup mouse events to show tooltip for related data
@@ -59,7 +59,7 @@
   import MonthPath from './MonthPath.svelte';
   import Text from './Text.svelte';
   import { chartDataArray } from '../utils/common.js';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import type { Without } from 'layerchart/utils/types.js';
 

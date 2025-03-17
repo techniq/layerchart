@@ -28,7 +28,7 @@
 <script lang="ts">
   import { type HierarchyPointNode, tree as d3Tree, type HierarchyPointLink } from 'd3-hierarchy';
   import type { Snippet } from 'svelte';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
 
   let { nodeSize, separation, orientation = 'horizontal', children }: TreeProps = $props();
 

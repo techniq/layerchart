@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
-  import type { AnyScale } from 'layerchart/utils/scales.js';
+  import type { AnyScale } from 'layerchart/utils/scales.svelte.js';
   import { onMount, type ComponentProps } from 'svelte';
 
   export type ScatterChartExtraSnippetProps<TData> = {

@@ -56,7 +56,7 @@
 
   import Circle, { type CircleProps } from './Circle.svelte';
   import Link from './Link.svelte';
-  import { isScaleBand, type AnyScale } from '../utils/scales.js';
+  import { isScaleBand, type AnyScale } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
   import { getChartContext } from './Chart-Next.svelte';

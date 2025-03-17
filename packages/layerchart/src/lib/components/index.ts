@@ -1,6 +1,3 @@
-// Re-export for easy access (Svg and Canvas are provided by LayerChart)
-export { WebGL } from 'layercake';
-
 export * from './charts/index.js';
 
 export { default as Arc } from './Arc.svelte';
@@ -13,7 +10,7 @@ export { default as Bounds } from './Bounds.svelte';
 export { default as BrushContext } from './BrushContext.svelte';
 export { default as Calendar } from './Calendar.svelte';
 export { default as Canvas } from './layout/Canvas.svelte';
-export { default as Chart } from './Chart.svelte';
+export { default as Chart, getChartContext, getRenderContext } from './Chart.svelte';
 export { default as ChartClipPath } from './ChartClipPath.svelte';
 export { default as Circle } from './Circle.svelte';
 export { default as CircleClipPath } from './CircleClipPath.svelte';
@@ -23,7 +20,7 @@ export { default as Dagre } from './Dagre.svelte';
 export { default as Frame } from './Frame.svelte';
 export { default as ForceSimulation } from './ForceSimulation.svelte';
 export { default as GeoCircle } from './GeoCircle.svelte';
-export { default as GeoContext, geoContext } from './GeoContext.svelte';
+export { default as GeoContext, getGeoContext } from './GeoContext.svelte';
 export { default as GeoEdgeFade } from './GeoEdgeFade.svelte';
 export { default as GeoPath } from './GeoPath.svelte';
 export { default as GeoPoint } from './GeoPoint.svelte';
@@ -67,3 +64,4 @@ export {
 export { default as Tree } from './Tree.svelte';
 export { default as Treemap } from './Treemap.svelte';
 export { default as Voronoi } from './Voronoi.svelte';
+export { default as WebGL } from './layout/WebGL.svelte';

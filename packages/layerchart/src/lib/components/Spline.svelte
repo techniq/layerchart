@@ -112,7 +112,7 @@
   import { uniqueId } from '@layerstack/utils';
 
   import Group from './Group.svelte';
-  import { isScaleBand } from '../utils/scales.js';
+  import { isScaleBand } from '../utils/scales.svelte.js';
   import { flattenPathData } from '../utils/path.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';

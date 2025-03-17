@@ -69,7 +69,7 @@
   import { getRenderContext } from './Chart.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
 
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
   import { afterTick } from 'layerchart/utils/afterTick.js';
 
   const ctx = getChartContext();

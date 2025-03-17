@@ -62,7 +62,7 @@
   import { cls } from '@layerstack/tailwind';
   import { getTransformContext } from '../TransformContext.svelte';
   import type { Without } from 'layerchart/utils/types.js';
-  import { getChartContext, setRenderContext } from '../Chart-Next.svelte';
+  import { getChartContext, setRenderContext } from '../Chart.svelte';
   import type { Snippet } from 'svelte';
 
   let {

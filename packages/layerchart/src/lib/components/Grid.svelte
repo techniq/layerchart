@@ -90,12 +90,12 @@
 
   import { cls } from '@layerstack/tailwind';
 
-  import { isScaleBand, type AnyScale } from '$lib/utils/scales.js';
+  import { isScaleBand, type AnyScale } from '$lib/utils/scales.svelte.js';
 
   import Rule from './Rule.svelte';
   import Spline from './Spline.svelte';
   import Circle from './Circle.svelte';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
 
   const ctx = getChartContext();
 

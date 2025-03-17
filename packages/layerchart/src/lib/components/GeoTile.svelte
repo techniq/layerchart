@@ -39,11 +39,10 @@
   // @ts-expect-error
   import { tile as d3Tile } from 'd3-tile';
 
-  import { getRenderContext } from './Chart.svelte';
+  import { getRenderContext, getChartContext } from './Chart.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
-  import { getChartContext } from './Chart-Next.svelte';
   import { getGeoContext } from './GeoContext.svelte';
 
   let {

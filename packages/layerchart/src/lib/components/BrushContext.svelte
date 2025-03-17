@@ -142,7 +142,7 @@
   import { cls } from '@layerstack/tailwind';
   import { Logger } from '@layerstack/utils';
 
-  import type { DomainType } from '../utils/scales.js';
+  import type { DomainType } from '../utils/scales.svelte.js';
   import { add } from '../utils/math.js';
   import type { HTMLAttributes } from 'svelte/elements';
   import { getChartContext } from './Chart-Next.svelte';

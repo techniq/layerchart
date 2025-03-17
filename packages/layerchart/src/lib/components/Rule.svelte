@@ -53,7 +53,7 @@
 
   import Circle from './Circle.svelte';
   import Line, { type LinePropsWithoutHTML } from './Line.svelte';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
 
   let {
     x = false,

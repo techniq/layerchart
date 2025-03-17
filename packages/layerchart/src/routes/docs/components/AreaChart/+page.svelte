@@ -23,7 +23,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
-  import type { DomainType } from '$lib/utils/scales.js';
+  import type { DomainType } from '$lib/utils/scales.svelte.js';
   import Blockquote from 'layerchart/docs/Blockquote.svelte';
   import type { ComponentProps } from 'svelte';
   import { cls } from '@layerstack/tailwind';

@@ -116,7 +116,7 @@
   import { notNull } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
-  import { isScaleBand } from '$lib/utils/scales.js';
+  import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { asAny } from '$lib/utils/types.js';
   import { getChartContext } from './Chart-Next.svelte';
   import { getTooltipContext } from './tooltip/TooltipContext.svelte';

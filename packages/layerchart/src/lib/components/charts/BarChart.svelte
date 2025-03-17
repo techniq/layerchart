@@ -104,7 +104,7 @@
   import { asAny } from '../../utils/types.js';
   import type { Insets } from '../../utils/rect.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
-  import type { AnyScale } from 'layerchart/utils/scales.js';
+  import type { AnyScale } from 'layerchart/utils/scales.svelte.js';
   import { createHighlightKey } from './utils.svelte.js';
   import { createSelectionState } from 'layerchart/stores/selectionState.svelte.js';
 

@@ -136,7 +136,7 @@
   import ChartClipPath from './../ChartClipPath.svelte';
   import Voronoi from './../Voronoi.svelte';
 
-  import { isScaleBand, scaleInvert } from '$lib/utils/scales.js';
+  import { isScaleBand, scaleInvert } from '$lib/utils/scales.svelte.js';
   import { cartesianToPolar } from '$lib/utils/math.js';
   import { quadtreeRects } from '$lib/utils/quadtree.js';
   import { raise } from '$lib/utils/layout.js';

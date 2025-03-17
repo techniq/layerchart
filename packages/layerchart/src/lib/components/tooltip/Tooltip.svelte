@@ -129,7 +129,7 @@
   import { fade } from 'svelte/transition';
   import { cls } from '@layerstack/tailwind';
 
-  import { isScaleBand } from '../../utils/scales.js';
+  import { isScaleBand } from '../../utils/scales.svelte.js';
   import { getChartContext } from '../Chart-Next.svelte';
   import { getTooltipContext } from './TooltipContext.svelte';
   import { motionState } from 'layerchart/stores/motionState.svelte.js';

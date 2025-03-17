@@ -25,7 +25,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { randomWalk } from '$lib/utils/genData.js';
   import { asAny } from '$lib/utils/types.js';
-  import type { DomainType } from '$lib/utils/scales.js';
+  import type { DomainType } from '$lib/utils/scales.svelte.js';
 
   export let data;
 

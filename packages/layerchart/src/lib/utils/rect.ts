@@ -1,7 +1,7 @@
 import { derived } from 'svelte/store';
 import { max, min } from 'd3-array';
 
-import { isScaleBand } from './scales.js';
+import { isScaleBand } from './scales.svelte.js';
 import type { ChartContext } from '../components/ChartContext.svelte';
 import { accessor, type Accessor } from './common.js';
 

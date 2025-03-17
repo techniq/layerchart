@@ -63,7 +63,7 @@
   import Rect from './Rect.svelte';
   import Spline from './Spline.svelte';
 
-  import { isScaleBand } from '../utils/scales.js';
+  import { isScaleBand } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { greatestAbs } from '@layerstack/utils';
   import type { MotionProps } from 'layerchart/stores/motionState.svelte.js';
