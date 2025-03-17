@@ -104,7 +104,7 @@
     orientation;
     const link = d3Link(curve).source(source).target(target).x(x).y(y);
     const d = link(data) ?? '';
-    tweenedState.set(d);
+    tweenedState.target = d;
   });
 </script>
 

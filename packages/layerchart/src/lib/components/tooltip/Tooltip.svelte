@@ -309,8 +309,8 @@
     }
 
     untrack(() => {
-      yPos.set(rect.top);
-      xPos.set(rect.left);
+      yPos.target = rect.top;
+      xPos.target = rect.left;
     });
   });
 </script>

@@ -95,8 +95,8 @@
   $effect(() => {
     [x, y, center, ctx.width, ctx.height];
     afterTick(() => {
-      tweenedX.set(x ?? (center === 'x' || center === true ? ctx.width / 2 : 0));
-      tweenedY.set(y ?? (center === 'y' || center === true ? ctx.height / 2 : 0));
+      tweenedX.target = x ?? (center === 'x' || center === true ? ctx.width / 2 : 0);
+      tweenedY.target = y ?? (center === 'y' || center === true ? ctx.height / 2 : 0);
     });
   });
 

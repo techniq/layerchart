@@ -285,8 +285,8 @@
   $effect(() => {
     [x, y];
     afterTick(() => {
-      tweenedX.set(x);
-      tweenedY.set(y);
+      tweenedX.target = x;
+      tweenedY.target = y;
     });
   });
 

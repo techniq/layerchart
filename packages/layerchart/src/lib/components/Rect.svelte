@@ -86,10 +86,10 @@
   $effect(() => {
     [x, y, width, height];
     afterTick(() => {
-      tweenedX.set(x);
-      tweenedY.set(y);
-      tweenedWidth.set(width);
-      tweenedHeight.set(height);
+      tweenedX.target = x;
+      tweenedY.target = y;
+      tweenedWidth.target = width;
+      tweenedHeight.target = height;
     });
   });
 

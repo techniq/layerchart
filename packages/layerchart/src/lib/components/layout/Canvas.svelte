@@ -116,8 +116,14 @@
 
   const CanvasContext = new Context<CanvasContextValue>('CanvasContext');
 
+  const defaultCanvasContext: CanvasContextValue = {
+    // @ts-expect-error - shh
+    register: () => {},
+    invalidate: () => {},
+  };
+
   export function getCanvasContext() {
-    return CanvasContext.get();
+    return CanvasContext.getOr(defaultCanvasContext);
   }
 
   function setCanvasContext(context: CanvasContextValue) {

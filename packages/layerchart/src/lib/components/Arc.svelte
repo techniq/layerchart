@@ -175,7 +175,7 @@
 
   $effect(() => {
     value;
-    afterTick(() => tweenedState.set(value));
+    afterTick(() => (tweenedState.target = value));
   });
 
   const ctx = getChartContext();

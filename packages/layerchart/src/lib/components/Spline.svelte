@@ -233,7 +233,7 @@
   });
 
   $effect(() => {
-    tweenedState.set(d);
+    tweenedState.target = d;
   });
 
   const drawTransition = $derived(draw ? _drawTransition : () => ({}));
@@ -331,7 +331,7 @@
       if (!ref) return;
       startPoint = ref.getPointAtLength(0);
       const totalLength = ref.getTotalLength();
-      endPoint.set(ref.getPointAtLength(totalLength));
+      endPoint.target = ref.getPointAtLength(totalLength);
     });
   });
 </script>

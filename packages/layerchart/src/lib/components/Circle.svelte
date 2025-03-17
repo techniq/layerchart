@@ -98,9 +98,9 @@
   $effect(() => {
     [cx, cy, r];
     afterTick(() => {
-      tweenedCx.set(cx);
-      tweenedCy.set(cy);
-      tweenedR.set(r);
+      tweenedCx.target = cx;
+      tweenedCy.target = cy;
+      tweenedR.target = r;
     });
   });
 

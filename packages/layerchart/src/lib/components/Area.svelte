@@ -182,7 +182,7 @@
     if (curve) path.curve(curve);
 
     const d = pathData ?? path(data ?? ctx.data);
-    tweenedState.set(d ?? '');
+    tweenedState.target = d ?? '';
   });
 
   function render(

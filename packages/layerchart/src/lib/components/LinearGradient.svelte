@@ -64,7 +64,7 @@
      */
     ref?: SVGLinearGradientElement;
 
-    children?: Snippet<[{ id: string; gradient: CanvasGradient | undefined | string }]>;
+    children?: Snippet<[{ id: string; gradient: string }]>;
 
     /**
      * Render as a child of the gradient and will opt out of the default stops
@@ -156,7 +156,11 @@
 </script>
 
 {#if renderCtx === 'canvas'}
-  {@render children?.({ id, gradient: canvasGradient })}
+  <!--
+	TODO: we can probably pass the context to coerce this type so we don't need a bunch
+	of predicates to check if the gradient is a CanvasGradient or not...
+	-->
+  {@render children?.({ id, gradient: '' })}
 {:else if renderCtx === 'svg'}
   <defs>
     <linearGradient

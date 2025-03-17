@@ -34,8 +34,9 @@ export type PropMotionOptions<T = any> = {
 };
 
 export interface MotionState<T> {
-  set(newValue: T, options?: MotionProps<T>): void;
+  set(newValue: T, options?: MotionProps<T>): Promise<void>;
   get current(): T;
+  set target(v: T);
 }
 
 /**
@@ -58,6 +59,9 @@ export function motionState<T = any>(
       },
       get current(): T {
         return current;
+      },
+      set target(v: T) {
+        current = v;
       },
     };
   }

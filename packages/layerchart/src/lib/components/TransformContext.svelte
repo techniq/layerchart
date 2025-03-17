@@ -176,8 +176,8 @@
   }
 
   export function reset() {
-    translate.set(initialTranslate ?? DEFAULT_TRANSLATE);
-    scale.set(initialScale ?? DEFAULT_SCALE);
+    translate.target = initialTranslate ?? DEFAULT_TRANSLATE;
+    scale.target = initialScale ?? DEFAULT_SCALE;
   }
 
   export function zoomIn() {
@@ -189,10 +189,10 @@
   }
 
   export function translateCenter() {
-    translate.set({
+    translate.target = {
       x: 0,
       y: 0,
-    });
+    };
   }
 
   export function zoomTo(
@@ -205,13 +205,13 @@
         : ctx.height / rect.height
       : 1;
 
-    translate.set({
+    translate.target = {
       x: ctx.width / 2 - center.x * newScale,
       y: ctx.height / 2 - center.y * newScale,
-    });
+    };
 
     if (rect) {
-      scale.set(newScale);
+      scale.target = newScale;
     }
   }
 
@@ -308,10 +308,13 @@
       );
     } else if (scrollMode === 'translate') {
       const startTranslate = translate.current;
-      translate.set(
-        processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY),
-        spring ? { hard: true } : tweened ? { duration: 0 } : undefined
-      );
+      translate
+        .set(
+          processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY),
+          spring ? { hard: true } : tweened ? { duration: 0 } : undefined
+        )
+        .then(() => {})
+        .catch(() => {});
     }
   }
 
