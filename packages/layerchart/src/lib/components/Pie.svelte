@@ -76,7 +76,7 @@
 
   import Arc from './Arc.svelte';
   import { degreesToRadians } from '$lib/utils/math.js';
-  import { motionState, motionStore, type MotionProps } from '$lib/stores/motionStore.js';
+  import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { getChartContext } from './Chart-Next.svelte';
   import type { Snippet } from 'svelte';

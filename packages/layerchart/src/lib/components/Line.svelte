@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { SVGAttributes } from 'svelte/elements';
-  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
+  import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import MarkerWrapper, { type MarkerOptions } from './MarkerWrapper.svelte';
   import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';

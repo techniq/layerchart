@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
-  import { motionState, resolveOptions, type MotionProps } from '$lib/stores/motionStore.js';
+  import { motionState, resolveOptions, type MotionProps } from '$lib/stores/motionState.svelte.js';
   import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   export type RectPropsWithoutHTML = {

@@ -125,7 +125,7 @@
     type TweenedOptions,
     motionState,
     MotionFinishState,
-  } from '$lib/stores/motionStore.js';
+  } from '$lib/stores/motionState.svelte.js';
   import { localPoint } from '@layerstack/utils';
   import { Context, watch } from 'runed';
   import type { Without } from 'layerchart/utils/types.js';

@@ -1,7 +1,7 @@
 import { derived } from 'svelte/store';
 import { tweened, spring } from 'svelte/motion';
 
-import { type MotionProps, motionStore } from '$lib/stores/motionStore.js';
+import { type MotionProps, motionStore } from '$lib/stores/motionState.svelte.js';
 import { scaleBand, type ScaleBand } from 'd3-scale';
 import { unique } from '@layerstack/utils';
 

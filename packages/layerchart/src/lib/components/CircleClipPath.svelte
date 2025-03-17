@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { MotionProps } from 'layerchart/stores/motionStore.js';
+  import type { MotionProps } from 'layerchart/stores/motionState.svelte.js';
   import ClipPath, { type ClipPathPropsWithoutHTML } from './ClipPath.svelte';
 
   export type CircleClipPathPropsWithoutHTML = {

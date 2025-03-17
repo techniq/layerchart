@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { MotionProps } from 'layerchart/stores/motionStore.js';
+  import type { MotionProps } from 'layerchart/stores/motionState.svelte.js';
   import type { Snippet } from 'svelte';
 
   export type BoundsExtents = Partial<{ x0: number; y0: number; x1: number; y1: number }>;

@@ -1,5 +1,4 @@
-import { writable } from 'svelte/store';
-import { Spring, spring, Tween, tweened } from 'svelte/motion';
+import { Spring, Tween } from 'svelte/motion';
 
 type ConstructorParameters<T> = T extends new (...args: infer P) => any ? P : never;
 
@@ -64,16 +63,27 @@ export function motionState<T = any>(
   }
 }
 
-/**
- * Convenient wrapper to create a motion store (spring(), tweened()) based on properties, or fall back to basic writable() store
- */
-export function motionStore<T = any>(value: T, options: MotionProps<T>) {
-  if (options.spring) {
-    return spring<T>(value, options.spring === true ? undefined : options.spring);
-  } else if (options.tweened) {
-    return tweened<T>(value, options.tweened === true ? undefined : options.tweened);
-  } else {
-    return writable<T>(value);
+export class MotionFinishState {
+  #latestIndex = 0;
+  #current = $state(false);
+
+  handle = (promise: Promise<void> | void) => {
+    this.#latestIndex += 1;
+    if (!promise) {
+      this.#current = false;
+      return;
+    }
+    let currIndex = this.#latestIndex;
+    this.#current = true;
+    promise.then(() => {
+      if (currIndex === this.#latestIndex) {
+        this.#current = false;
+      }
+    });
+  };
+
+  get current() {
+    return this.#current;
   }
 }
 
@@ -105,55 +115,5 @@ export function resolveOptions(prop: string, options: PropMotionOptions<any>) {
               )
             ? options.tweened
             : false,
-  };
-}
-
-export class MotionFinishState {
-  #latestIndex = 0;
-  #current = $state(false);
-
-  handle = (promise: Promise<void> | void) => {
-    this.#latestIndex += 1;
-    if (!promise) {
-      this.#current = false;
-      return;
-    }
-    let currIndex = this.#latestIndex;
-    this.#current = true;
-    promise.then(() => {
-      if (currIndex === this.#latestIndex) {
-        this.#current = false;
-      }
-    });
-  };
-
-  get current() {
-    return this.#current;
-  }
-}
-
-export function motionFinishHandler() {
-  let latestIndex = 0;
-  const moving = writable(false);
-  const handle = function (promise: Promise<void> | void) {
-    latestIndex += 1;
-    if (!promise) {
-      // The store returned nothing, which means that the motion store is immediate.
-      moving.set(false);
-      return;
-    }
-
-    let thisIndex = latestIndex;
-    moving.set(true);
-    promise.then(() => {
-      if (thisIndex === latestIndex) {
-        moving.set(false);
-      }
-    });
-  };
-
-  return {
-    subscribe: moving.subscribe,
-    handle,
   };
 }

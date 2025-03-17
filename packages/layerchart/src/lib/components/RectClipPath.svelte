@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
-  import type { MotionProps } from 'layerchart/stores/motionStore.js';
+  import type { MotionProps } from 'layerchart/stores/motionState.svelte.js';
   import type { Without } from 'layerchart/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import type { Snippet } from 'svelte';

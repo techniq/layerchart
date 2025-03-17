@@ -5,7 +5,7 @@
   import type { SVGAttributes } from 'svelte/elements';
   import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
 
-  import { motionState, type TweenedProp } from '$lib/stores/motionStore.js';
+  import { motionState, type TweenedProp } from '$lib/stores/motionState.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
 
   export type SplinePropsWithoutHTML = {

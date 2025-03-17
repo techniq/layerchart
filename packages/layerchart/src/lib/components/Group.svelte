@@ -2,7 +2,7 @@
   import type { Snippet } from 'svelte';
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Without } from 'layerchart/utils/types.js';
-  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
+  import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
 
   export type GroupPropsWithoutHTML = {
     /**

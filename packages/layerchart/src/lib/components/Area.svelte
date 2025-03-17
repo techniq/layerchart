@@ -67,7 +67,7 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getChartContext } from './Chart-Next.svelte';
-  import { motionState, type TweenedOptions } from 'layerchart/stores/motionStore.js';
+  import { motionState, type TweenedOptions } from 'layerchart/stores/motionState.svelte.js';
   import { createKey } from 'layerchart/utils/key.svelte.js';
 
   const ctx = getChartContext();

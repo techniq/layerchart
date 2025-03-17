@@ -1,4 +1,4 @@
-import { motionState, type MotionProps } from 'layerchart/stores/motionStore.js';
+import { motionState, type MotionProps } from 'layerchart/stores/motionState.svelte.js';
 import type { AnyScale } from './scales.js';
 
 // this may need to become a getter for options so we can reactively update after mount

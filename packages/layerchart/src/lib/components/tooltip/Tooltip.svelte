@@ -132,7 +132,7 @@
   import { isScaleBand } from '../../utils/scales.js';
   import { getChartContext } from '../Chart-Next.svelte';
   import { getTooltipContext } from './TooltipContext.svelte';
-  import { motionState } from 'layerchart/stores/motionStore.js';
+  import { motionState } from 'layerchart/stores/motionState.svelte.js';
   import { untrack, type Snippet } from 'svelte';
   import type { Without } from 'layerchart/utils/types.js';
   import type { HTMLAttributes } from 'svelte/elements';

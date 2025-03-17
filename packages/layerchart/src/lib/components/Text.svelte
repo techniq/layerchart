@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
-  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
+  import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
 
   export type TextPropsWithoutHTML = {
     /**

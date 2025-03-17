@@ -2,7 +2,7 @@
   import type { MarkerOptions } from './MarkerWrapper.svelte';
   import type { Without } from 'layerchart/utils/types.js';
   import Spline, { type SplineProps } from './Spline.svelte';
-  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
+  import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
   import { link as d3Link, curveBumpX, curveBumpY, type CurveFactory } from 'd3-shape';
 
   export type LinkPropsWithoutHTML = {

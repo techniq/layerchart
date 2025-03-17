@@ -113,7 +113,7 @@
   import Rule from './Rule.svelte';
   import Text from './Text.svelte';
   import { isScaleBand, type AnyScale } from '$lib/utils/scales.js';
-  import type { MotionProps } from 'layerchart/stores/motionStore.js';
+  import type { MotionProps } from 'layerchart/stores/motionState.svelte.js';
   import { getChartContext } from './Chart-Next.svelte';
 
   let {

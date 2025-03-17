@@ -62,7 +62,7 @@
   import { merge } from 'lodash-es';
 
   import { getRenderContext } from './Chart.svelte';
-  import { motionState, type MotionProps } from '$lib/stores/motionStore.js';
+  import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import type { SVGAttributes } from 'svelte/elements';

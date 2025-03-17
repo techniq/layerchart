@@ -1,7 +1,7 @@
 <script lang="ts" module>
   export type TicksConfig = number | any[] | ((scale: AnyScale) => any) | null | undefined;
   import type { Transition, TransitionParams, Without } from 'layerchart/utils/types.js';
-  import type { MotionProps } from 'layerchart/stores/motionStore.js';
+  import type { MotionProps } from 'layerchart/stores/motionState.svelte.js';
   import type { SVGAttributes } from 'svelte/elements';
 
   export type GridPropsWithoutHTML<In extends Transition = Transition> = {
