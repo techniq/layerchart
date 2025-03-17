@@ -831,7 +831,13 @@
     },
   };
 
-  const padding = $derived(Object.assign(defaultPadding, paddingProp));
+  const padding = $derived({
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    ...paddingProp,
+  });
 
   let isMounted = $state(false);
 
@@ -1029,11 +1035,11 @@
     y1: y1Prop,
     xDomain,
     yDomain,
-    zDomain: zDomainProp ?? null,
-    rDomain: rDomainProp ?? null,
-    x1Domain: x1DomainProp ?? null,
-    y1Domain: y1DomainProp ?? null,
-    cDomain: cDomainProp ?? null,
+    zDomain: zDomainProp ?? [],
+    rDomain: rDomainProp ?? [],
+    x1Domain: x1DomainProp ?? [],
+    y1Domain: y1DomainProp ?? [],
+    cDomain: cDomainProp ?? [],
     xRange: xRange,
     yRange: yRange,
     zRange: zRange,

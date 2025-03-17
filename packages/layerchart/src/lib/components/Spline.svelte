@@ -179,11 +179,9 @@
   const yOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
   const xOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
 
-  const tweenedOptions = $derived(
-    tweened
-      ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
-      : false
-  );
+  const tweenedOptions = tweened
+    ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
+    : false;
 
   /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
   function defaultPathData() {
@@ -211,11 +209,9 @@
     }
   }
 
-  const tweenedState = $derived(
-    motionState(defaultPathData(), {
-      tweened: tweenedOptions,
-    })
-  );
+  const tweenedState = motionState(defaultPathData(), {
+    tweened: tweenedOptions,
+  });
 
   const d = $derived.by(() => {
     const path = ctx.radial
@@ -247,8 +243,8 @@
     key = Symbol();
   });
 
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
+  const renderCtx = getRenderContext();
+  const canvasCtx = getCanvasContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -271,8 +267,8 @@
   const strokeKey = createKey(() => stroke);
 
   $effect(() => {
-    if (renderContext !== 'canvas') return;
-    return canvasContext.register({
+    if (renderCtx !== 'canvas') return;
+    return canvasCtx.register({
       name: 'Spline',
       render,
       events: {
@@ -289,10 +285,10 @@
   });
 
   $effect(() => {
-    if (renderContext !== 'canvas') return;
+    if (renderCtx !== 'canvas') return;
     // Redraw when props change
     [fillKey.current, fillOpacity, strokeKey.current, strokeWidth, opacity, className];
-    canvasContext.invalidate();
+    canvasCtx.invalidate();
   });
 
   let startPoint = $state<DOMPoint | undefined>();
@@ -325,7 +321,7 @@
   });
 
   $effect(() => {
-    if (!startContent || !endContent) return;
+    if (!startContent && !endContent) return;
     d;
     afterTick(() => {
       if (!ref) return;
@@ -336,7 +332,7 @@
   });
 </script>
 
-{#if renderContext === 'svg'}
+{#if renderCtx === 'svg'}
   {#key key}
     <path
       d={tweenedState.current}

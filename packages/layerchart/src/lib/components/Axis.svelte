@@ -334,7 +334,7 @@
   }) satisfies ComponentProps<typeof Text>;
 </script>
 
-<g {...restProps} class={cls('Axis placement-{placement}', classes.root, className)}>
+<g {...restProps} class={cls(`Axis placement-${placement}`, classes.root, className)}>
   {#if rule !== false}
     {@const ruleProps = typeof rule === 'object' ? rule : null}
     <Rule

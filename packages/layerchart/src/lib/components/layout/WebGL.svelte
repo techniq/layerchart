@@ -127,7 +127,7 @@
 
 <canvas
   bind:this={ref}
-  class="layercake-layout-webgl"
+  class="layerchart-layout-webgl"
   style:z-index={zIndex}
   style:pointer-events={pointerEvents === false ? 'none' : null}
   style:top={ctx.padding.top + 'px'}

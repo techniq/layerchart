@@ -101,10 +101,14 @@
   const xAccessor = $derived(x ? accessor(x) : ctx.x);
   const y0Accessor = $derived(y0 ? accessor(y0) : (d: any) => min(ctx.yDomain));
   const y1Accessor = $derived(y1 ? accessor(y1) : ctx.y);
+
   const xOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
   const yOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
 
-  /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
+  /**
+   * Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not
+   * reactive (only set on initial mount)
+   */
   function defaultPathData() {
     if (!tweenedOptions) {
       // If not tweened, return empty string (faster initial render)
@@ -129,17 +133,15 @@
       if (curve) path.curve(curve);
 
       // TODO: type this appropriately otherwise we will have bugs in the future
-      return path((data ?? Array.isArray(ctx.data)) ? (ctx.data as [number, number][]) : []);
+      return path(data ?? ctx.data);
     }
   }
 
-  const tweenedOptions = $derived(
-    tweened
-      ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
-      : false
-  );
+  const tweenedOptions = tweened
+    ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
+    : false;
 
-  const tweenedState = $derived(motionState(defaultPathData(), { tweened: tweenedOptions }));
+  const tweenedState = motionState(defaultPathData(), { tweened: tweenedOptions });
 
   $effect(() => {
     const path = ctx.radial
@@ -220,6 +222,7 @@
   });
 
   $effect(() => {
+    if (renderCtx !== 'canvas') return;
     return canvasCtx.register({
       name: 'Area',
       render,
