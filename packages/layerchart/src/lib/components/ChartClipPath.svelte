@@ -29,7 +29,7 @@
   import RectClipPath, { type RectClipPathProps } from './RectClipPath.svelte';
   import type { Without } from 'layerchart/utils/types.js';
 
-  let { full = false, disabled = false, children, ...restProps }: ChartClipPathProps = $props();
+  let { full = false, disabled = false, ...restProps }: ChartClipPathProps = $props();
 
   const ctx = getChartContext();
 </script>
@@ -41,6 +41,4 @@
   height={ctx.height + (full ? (ctx.padding?.top ?? 0) + (ctx.padding?.bottom ?? 0) : 0)}
   width={ctx.width + (full ? (ctx.padding?.left ?? 0) + (ctx.padding?.right ?? 0) : 0)}
   {...restProps}
->
-  {@render children?.()}
-</RectClipPath>
+/>

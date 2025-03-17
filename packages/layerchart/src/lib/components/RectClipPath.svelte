@@ -78,8 +78,10 @@
 </script>
 
 <ClipPath {id} {disabled}>
-  {#snippet children({ url })}
+  {#snippet clip()}
     <Rect {x} {y} {...restProps} />
+  {/snippet}
+  {#snippet children({ url })}
     {@render childrenProp?.({ id, url })}
   {/snippet}
 </ClipPath>

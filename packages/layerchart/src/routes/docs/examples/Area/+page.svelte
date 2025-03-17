@@ -662,7 +662,7 @@
     </div>
   </Preview>
 </Toggle>
-<!--
+
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[auto_1fr] gap-2 mb-2">
     <Field label="Show area" let:id>
@@ -746,7 +746,7 @@
     </div>
   </Preview>
 </Toggle>
-
+<!--
 <h2>Threshold with RectClipPath</h2>
 
 <Preview data={negativeDateSeriesData}>
