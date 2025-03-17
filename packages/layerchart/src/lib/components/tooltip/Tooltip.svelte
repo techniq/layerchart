@@ -12,7 +12,7 @@
 
   export type Align = 'start' | 'center' | 'end';
 
-  export type TooltipProps = {
+  export type TooltipPropsWithoutHTML = {
     /**
      * `x` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an
      * explicit fixed position.
@@ -123,6 +123,9 @@
       content?: HTMLAttributes<HTMLElement>;
     };
   };
+
+  export type TooltipProps = TooltipPropsWithoutHTML &
+    Without<HTMLAttributes<HTMLElement>, TooltipPropsWithoutHTML>;
 </script>
 
 <script lang="ts">
@@ -134,8 +137,8 @@
   import { getTooltipContext } from './TooltipContext.svelte';
   import { motionState } from 'layerchart/stores/motionState.svelte.js';
   import { untrack, type Snippet } from 'svelte';
-  import type { Without } from 'layerchart/utils/types.js';
   import type { HTMLAttributes } from 'svelte/elements';
+  import type { Without } from 'layerchart/utils/types.js';
 
   let {
     anchor = 'top-left',

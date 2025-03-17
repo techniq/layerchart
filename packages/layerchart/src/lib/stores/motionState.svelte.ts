@@ -16,7 +16,7 @@ export type MotionProps<T = any> = {
    * - `false` - no spring animation will be applied
    * - `SpringOptions` - spring options for the motion state
    */
-  spring?: SpringProp<T>;
+  spring?: SpringProp<T> | { [prop: string]: SpringProp<T> } | boolean;
 
   /**
    * Tweened options for the motion state.
@@ -25,7 +25,7 @@ export type MotionProps<T = any> = {
    * - `false` - no tween animation will be applied
    * - `TweenedOptions` - tween options for the motion state
    */
-  tweened?: TweenedProp<T>;
+  tweened?: TweenedProp<T> | { [prop: string]: TweenedProp<T> } | boolean;
 };
 
 export type PropMotionOptions<T = any> = {

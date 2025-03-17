@@ -18,19 +18,18 @@
 
     children?: Snippet;
   };
+
+  export type ChartClipPathProps = ChartClipPathPropsWithoutHTML &
+    Without<Omit<RectClipPathProps, 'width' | 'height'>, ChartClipPathPropsWithoutHTML>;
 </script>
 
 <script lang="ts">
   import { getChartContext } from './Chart.svelte';
 
-  import RectClipPath from './RectClipPath.svelte';
+  import RectClipPath, { type RectClipPathProps } from './RectClipPath.svelte';
+  import type { Without } from 'layerchart/utils/types.js';
 
-  let {
-    full = false,
-    disabled = false,
-    children,
-    ...restProps
-  }: ChartClipPathPropsWithoutHTML = $props();
+  let { full = false, disabled = false, children, ...restProps }: ChartClipPathProps = $props();
 
   const ctx = getChartContext();
 </script>
@@ -38,9 +37,9 @@
 <RectClipPath
   x={full && ctx.padding.left ? -ctx.padding.left : 0}
   y={full && ctx.padding.top ? -ctx.padding.top : 0}
-  width={ctx.width + (full ? (ctx.padding?.left ?? 0) + (ctx.padding?.right ?? 0) : 0)}
-  height={ctx.height + (full ? (ctx.padding?.top ?? 0) + (ctx.padding?.bottom ?? 0) : 0)}
   {disabled}
+  height={ctx.height + (full ? (ctx.padding?.top ?? 0) + (ctx.padding?.bottom ?? 0) : 0)}
+  width={ctx.width + (full ? (ctx.padding?.left ?? 0) + (ctx.padding?.right ?? 0) : 0)}
   {...restProps}
 >
   {@render children?.()}

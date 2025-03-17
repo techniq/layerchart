@@ -4,7 +4,6 @@
   import {
     Arc,
     Chart,
-    Circle,
     ClipPath,
     Group,
     LinearGradient,
@@ -12,7 +11,6 @@
     Text,
     Tooltip,
     cartesianToPolar,
-    degreesToRadians,
     radiansToDegrees,
   } from 'layerchart';
   import { Field, RangeField, SpringValue, Switch, Toggle } from 'svelte-ux';
