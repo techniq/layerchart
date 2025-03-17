@@ -1,6 +1,6 @@
 import pageSource from './+page.svelte?raw';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     chartData: (await fetch('/data/examples/bench/wide_data/data.json').then((r) => r.json())) as {
       epoch: number;

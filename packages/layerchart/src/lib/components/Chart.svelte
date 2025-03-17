@@ -1334,6 +1334,7 @@
         {ondragend}
       >
         {#snippet children({ transformContext })}
+          <!-- svelte-ignore ownership_invalid_binding -->
           <GeoContext {...geo} bind:geo={geoContext}>
             {#snippet children({ geoContext })}
               <BrushContext {...brushProps} bind:brush={brushContext}>

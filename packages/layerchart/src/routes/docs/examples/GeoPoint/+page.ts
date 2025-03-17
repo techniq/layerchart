@@ -6,7 +6,7 @@ import type { USStateCapitalsData } from '$static/data/examples/geo/us-state-cap
 import type { WorldAirportsData } from '$static/data/examples/geo/world-airports.js';
 import type { WorldCapitalsData } from '$static/data/examples/geo/world-capitals.js';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     us: {
       geojson: (await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then((r) =>

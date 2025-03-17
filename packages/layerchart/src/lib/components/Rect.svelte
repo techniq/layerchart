@@ -71,14 +71,11 @@
     ...restProps
   }: RectProps = $props();
 
-  const tweenedX = $derived(motionState(initialX, resolveOptions('x', { spring, tweened })));
-  const tweenedY = $derived(motionState(initialY, resolveOptions('y', { spring, tweened })));
-  const tweenedWidth = $derived(
-    motionState(initialWidth, resolveOptions('width', { spring, tweened }))
-  );
-  const tweenedHeight = $derived(
-    motionState(initialHeight, resolveOptions('height', { spring, tweened }))
-  );
+  const tweenedX = motionState(initialX, resolveOptions('x', { spring, tweened }));
+  const tweenedY = motionState(initialY, resolveOptions('y', { spring, tweened }));
+  const tweenedWidth = motionState(initialWidth, resolveOptions('width', { spring, tweened }));
+
+  const tweenedHeight = motionState(initialHeight, resolveOptions('height', { spring, tweened }));
 
   const renderCtx = getRenderContext();
   const canvasCtx = getCanvasContext();

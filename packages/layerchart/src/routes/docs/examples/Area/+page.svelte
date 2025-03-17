@@ -2,7 +2,7 @@
   import { cubicInOut } from 'svelte/easing';
   import { scaleOrdinal, scaleTime } from 'd3-scale';
   import { flatGroup } from 'd3-array';
-  import { stack } from 'd3-shape';
+  import { stack, type Series } from 'd3-shape';
   import { format as formatDate } from 'date-fns';
 
   import {
@@ -50,7 +50,24 @@
     value: 'integer',
     keys,
   });
-  const stackData = stack().keys(keys)(multiSeriesData);
+
+  type FlatStackData = {
+    data: {
+      date: Date;
+    };
+  };
+
+  type B = Series<
+    {
+      date: number;
+    },
+    string
+  >[];
+
+  type c = B[number][number]['data']['date'];
+
+  const stackData = stack().keys(keys)(multiSeriesData) as B;
+
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 
@@ -68,7 +85,7 @@
 </Blockquote>
 
 <h2>Basic</h2>
-
+<!--
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
@@ -92,7 +109,7 @@
     </Chart>
   </div>
 </Preview>
-<!--
+
 <h2>With Tooltip and Highlight</h2>
 
 <Preview data={dateSeriesData}>
@@ -603,14 +620,14 @@
       </Svg>
     </Chart>
   </div>
-</Preview>
+</Preview> -->
 
 <h2>Clip tween on mount</h2>
 
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[auto_1fr] gap-2 mb-2">
     <Field label="Show area" let:id>
-      <Switch checked={show} on:change={toggle} {id} size="md" />
+      <Switch checked={show} onchange={toggle} {id} size="md" />
     </Field>
   </div>
 
@@ -645,7 +662,7 @@
     </div>
   </Preview>
 </Toggle>
-
+<!--
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[auto_1fr] gap-2 mb-2">
     <Field label="Show area" let:id>
