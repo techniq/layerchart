@@ -1,4 +1,4 @@
-import type { ChartContext } from 'layerchart/components/Chart-Next.svelte';
+import type { ChartContext } from 'layerchart/components/Chart.svelte';
 import { accessor, type Accessor } from './common.js';
 import { isScaleBand } from './scales.svelte.js';
 import { max, min } from 'd3-array';

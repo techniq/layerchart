@@ -14,7 +14,7 @@ import type TooltipList from '../tooltip/TooltipList.svelte';
 import type TooltipItem from '../tooltip/TooltipItem.svelte';
 import type TooltipSeparator from '../tooltip/TooltipSeparator.svelte';
 import type { BrushContextValue } from '../BrushContext.svelte';
-import type { ChartContext } from '../Chart-Next.svelte';
+import type { ChartContext } from '../Chart.svelte';
 import type { GeoContextValue } from '../GeoContext.svelte';
 import type { TransformContextValue } from '../TransformContext.svelte';
 import type Grid from '../Grid.svelte';

@@ -67,7 +67,7 @@
   import { accessor, type Accessor } from '../utils/common.js';
   import { greatestAbs } from '@layerstack/utils';
   import type { MotionProps } from 'layerchart/stores/motionState.svelte.js';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
   import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
 

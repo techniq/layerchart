@@ -59,7 +59,7 @@
   import { isScaleBand, type AnyScale } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
 
   const ctx = getChartContext();
 

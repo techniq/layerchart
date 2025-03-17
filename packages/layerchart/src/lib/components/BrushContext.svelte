@@ -145,7 +145,7 @@
   import type { DomainType } from '../utils/scales.svelte.js';
   import { add } from '../utils/math.js';
   import type { HTMLAttributes } from 'svelte/elements';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
   import { on } from 'svelte/events';
   import { untrack, type Snippet } from 'svelte';
 

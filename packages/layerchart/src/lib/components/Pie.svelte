@@ -78,7 +78,7 @@
   import { degreesToRadians } from '$lib/utils/math.js';
   import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
 
   /*

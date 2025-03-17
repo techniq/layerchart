@@ -118,7 +118,7 @@
 
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { asAny } from '$lib/utils/types.js';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
   import { getTooltipContext } from './tooltip/TooltipContext.svelte';
 
   const ctx = getChartContext();

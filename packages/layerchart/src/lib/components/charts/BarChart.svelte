@@ -86,7 +86,7 @@
   import Axis from '../Axis.svelte';
   import Bars from '../Bars.svelte';
   import Canvas from '../layout/Canvas.svelte';
-  import Chart from '../Chart-Next.svelte';
+  import Chart from '../Chart.svelte';
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';

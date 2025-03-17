@@ -130,7 +130,7 @@
   import { cls } from '@layerstack/tailwind';
 
   import { isScaleBand } from '../../utils/scales.svelte.js';
-  import { getChartContext } from '../Chart-Next.svelte';
+  import { getChartContext } from '../Chart.svelte';
   import { getTooltipContext } from './TooltipContext.svelte';
   import { motionState } from 'layerchart/stores/motionState.svelte.js';
   import { untrack, type Snippet } from 'svelte';

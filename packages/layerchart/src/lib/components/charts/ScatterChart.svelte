@@ -48,7 +48,7 @@
   import Axis from '../Axis.svelte';
   import BrushContext from '../BrushContext.svelte';
   import Canvas from '../layout/Canvas.svelte';
-  import Chart from '../Chart-Next.svelte';
+  import Chart from '../Chart.svelte';
   import ChartClipPath from '../ChartClipPath.svelte';
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';

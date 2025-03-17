@@ -136,7 +136,7 @@
   import { scaleLinear } from 'd3-scale';
 
   import { degreesToRadians } from '$lib/utils/math.js';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
   import { afterTick } from 'layerchart/utils/afterTick.js';
 
   let {

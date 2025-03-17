@@ -118,7 +118,7 @@
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getRenderContext } from './Chart.svelte';
   import MarkerWrapper from './MarkerWrapper.svelte';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
   import { createKey } from 'layerchart/utils/key.svelte.js';
   import { afterTick } from 'layerchart/utils/afterTick.js';
 

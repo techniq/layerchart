@@ -2,7 +2,7 @@
   import { type GeoPermissibleObjects, type GeoProjection } from 'd3-geo';
   import { getTransformContext } from './TransformContext.svelte';
   import { Context } from 'runed';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
 
   export type GeoContextValue = {

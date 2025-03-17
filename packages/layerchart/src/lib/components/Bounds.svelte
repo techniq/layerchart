@@ -18,7 +18,7 @@
 <script lang="ts">
   import { scaleLinear } from 'd3-scale';
 
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
   import { motionScaleState } from 'layerchart/utils/scales.svelte.js';
 
   let { domain, range, spring, tweened, children }: BoundsProps = $props();

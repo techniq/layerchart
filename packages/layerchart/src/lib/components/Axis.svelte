@@ -114,7 +114,7 @@
   import Text from './Text.svelte';
   import { isScaleBand, type AnyScale } from '$lib/utils/scales.svelte.js';
   import type { MotionProps } from 'layerchart/stores/motionState.svelte.js';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
 
   let {
     placement,

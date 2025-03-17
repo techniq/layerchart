@@ -84,7 +84,7 @@
   } from 'd3-hierarchy';
 
   import { aspectTile } from '../utils/treemap.js';
-  import { getChartContext } from './Chart-Next.svelte';
+  import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
 
   let {

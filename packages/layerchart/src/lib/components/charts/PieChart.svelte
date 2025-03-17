@@ -134,7 +134,7 @@
 
   import Arc from '../Arc.svelte';
   import Canvas from '../layout/Canvas.svelte';
-  import Chart from '../Chart-Next.svelte';
+  import Chart from '../Chart.svelte';
   import Group from '../Group.svelte';
   import Legend from '../Legend.svelte';
   import Pie from '../Pie.svelte';

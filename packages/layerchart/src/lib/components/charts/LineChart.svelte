@@ -56,7 +56,7 @@
 
   import Axis from '../Axis.svelte';
   import Canvas from '../layout/Canvas.svelte';
-  import Chart from '../Chart-Next.svelte';
+  import Chart from '../Chart.svelte';
   import ChartClipPath from '../ChartClipPath.svelte';
   import Grid from '../Grid.svelte';
   import Highlight, { type HighlightPointData } from '../Highlight.svelte';
