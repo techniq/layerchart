@@ -91,10 +91,6 @@
     y0,
     y1,
     class: className,
-    onclick,
-    onpointerenter,
-    onpointermove,
-    onpointerleave,
     ...restProps
   }: AreaProps = $props();
 
@@ -104,6 +100,11 @@
 
   const xOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
   const yOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
+  $effect(() => {});
+
+  const tweenedOptions = tweened
+    ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
+    : false;
 
   /**
    * Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not
@@ -137,20 +138,23 @@
     }
   }
 
-  const tweenedOptions = tweened
-    ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
-    : false;
-
   const tweenedState = motionState(defaultPathData(), { tweened: tweenedOptions });
 
-  $effect(() => {
-    const path = ctx.radial
+  const path = $derived.by(() => {
+    const _path = ctx.radial
       ? areaRadial()
           .angle((d) => ctx.xScale(xAccessor(d)))
           .innerRadius((d) => ctx.yScale(y0Accessor(d)))
           .outerRadius((d) => ctx.yScale(y1Accessor(d)))
       : d3Area()
-          .x((d) => ctx.xScale(xAccessor(d)) + xOffset)
+          .x((d) => {
+            const v = xAccessor(d);
+            // console.log('v', v);
+            const res = ctx.xScale(v);
+
+            // console.log(res);
+            return res + xOffset;
+          })
           .y0((d) => {
             let value = max<number>(ctx.yRange)!;
             if (y0) {
@@ -179,12 +183,17 @@
             return value + yOffset;
           });
 
-    path.defined(defined ?? ((d: any) => xAccessor(d) != null && y1Accessor(d) != null));
+    _path.defined(defined ?? ((d: any) => xAccessor(d) != null && y1Accessor(d) != null));
 
-    if (curve) path.curve(curve);
+    if (curve) _path.curve(curve);
 
-    const d = pathData ?? path(data ?? ctx.data);
-    tweenedState.target = d ?? '';
+    return _path;
+  });
+
+  const d = $derived(pathData ?? path(data ?? ctx.data));
+
+  $effect(() => {
+    tweenedState.target = d;
   });
 
   function render(
@@ -227,10 +236,10 @@
       name: 'Area',
       render,
       events: {
-        click: onclick,
-        pointerenter: onpointerenter,
-        pointermove: onpointermove,
-        pointerleave: onpointerleave,
+        click: restProps.onclick,
+        pointerenter: restProps.onpointerenter,
+        pointermove: restProps.onpointermove,
+        pointerleave: restProps.onpointerleave,
       },
     });
   });
@@ -259,9 +268,5 @@
     {opacity}
     {...restProps}
     class={cls('path-area', className)}
-    {onclick}
-    {onpointerenter}
-    {onpointermove}
-    {onpointerleave}
   />
 {/if}

@@ -92,7 +92,7 @@
     </Chart>
   </div>
 </Preview>
-
+<!--
 <h2>With Tooltip and Highlight</h2>
 
 <Preview data={dateSeriesData}>
@@ -1069,4 +1069,4 @@
       {/snippet}
     </Chart>
   </div>
-</Preview>
+</Preview> -->

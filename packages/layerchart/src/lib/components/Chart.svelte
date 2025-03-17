@@ -29,7 +29,7 @@
     createGetter,
     createLayerCakeScale,
   } from '$lib/utils/layout.js';
-  import type { ComponentProps, Snippet } from 'svelte';
+  import { onMount, type ComponentProps, type Snippet } from 'svelte';
   import GeoContext, { type GeoContextValue } from './GeoContext.svelte';
   import TooltipContext, { type TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { extent, max, min } from 'd3-array';
@@ -832,10 +832,7 @@
   };
 
   const padding = $derived({
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
+    ...defaultPadding,
     ...paddingProp,
   });
 
@@ -918,7 +915,6 @@
     createLayerCakeScale('x', {
       scale: xScaleProp,
       domain: xDomain,
-      extents,
       padding: xPadding,
       nice: xNice,
       reverse: xReverse,
@@ -926,6 +922,7 @@
       range: xRangeProp,
       height,
       width,
+      extents: filteredExtents,
     })
   );
 
@@ -935,7 +932,6 @@
     createLayerCakeScale('y', {
       scale: yScaleProp,
       domain: yDomain,
-      extents,
       padding: yPadding,
       nice: yNice,
       reverse: yReverse,
@@ -943,6 +939,7 @@
       range: yRangeProp,
       height,
       width,
+      extents: filteredExtents,
     })
   );
 
@@ -952,7 +949,6 @@
     createLayerCakeScale('z', {
       scale: zScaleProp,
       domain: zDomain,
-      extents,
       padding: zPadding,
       nice: zNice,
       reverse: zReverse,
@@ -960,6 +956,7 @@
       range: zRangeProp,
       height,
       width,
+      extents: filteredExtents,
     })
   );
   const zGet = $derived(createGetter(z, zScale));
@@ -968,7 +965,6 @@
     createLayerCakeScale('r', {
       scale: rScaleProp,
       domain: rDomain,
-      extents,
       padding: rPadding,
       nice: rNice,
       reverse: rReverse,
@@ -976,6 +972,7 @@
       range: rRangeProp,
       height,
       width,
+      extents: filteredExtents,
     })
   );
 
@@ -1253,7 +1250,7 @@
     isMounted = true;
   });
 
-  $effect(() => {
+  onMount(() => {
     if (box && debug === true && (ssr === true || typeof window !== 'undefined')) {
       logDebug({
         data,

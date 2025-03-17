@@ -80,7 +80,6 @@ export function partialDomain(domain: number[] = [], directive?: Array<number | 
 
 type CreateLayerCakeScaleOpts = {
   domain: number[];
-  extents: Extents;
   scale: AnyScale & {
     interpolator?: () => { name: string };
     nice?: (nice?: number) => void;
@@ -92,13 +91,13 @@ type CreateLayerCakeScaleOpts = {
   height: number;
   range: BaseRange | undefined;
   percentRange: boolean;
+  extents: Extents;
 };
 
 export function createLayerCakeScale(
   axis: AxisKey,
   {
     domain,
-    extents,
     scale,
     padding,
     nice,
