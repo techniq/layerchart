@@ -62,24 +62,13 @@ export function createDimensionGetter<TData>(
   getOptions?: () => DimensionGetterOptions,
   debug = false
 ) {
-  function log(...args: any[]) {
-    if (debug) {
-      console.log(...args);
-    }
-  }
-
-  const xScale = $derived(ctx.xScale);
-  const yScale = $derived(ctx.yScale);
-
   const options = $derived(getOptions?.());
 
   return (item: TData) => {
     const insets = resolveInsets(options?.insets);
     // Use `xscale.domain()` instead of `$xDomain` to include `nice()` being applied
-    const xDomainMinMax = xScale.domain();
-    const yDomainMinMax = yScale.domain();
-
-    log({ xDomainMinMax, yDomainMinMax });
+    const xDomainMinMax = ctx.xScale.domain();
+    const yDomainMinMax = ctx.yScale.domain();
 
     const _x = accessor(options?.x ?? ctx.x);
     const _y = accessor(options?.y ?? ctx.y);
@@ -167,18 +156,10 @@ export function createDimensionGetter<TData>(
       const y = ctx.yScale(top) + insets.top;
       const height = ctx.yScale(bottom) - ctx.yScale(top) - insets.bottom - insets.top;
 
-      log({ height });
-
       return { x, y, width, height };
     }
   };
 }
-
-//   return derived(
-//     [xScale, x1Scale, yScale, y1Scale, xAccessor, yAccessor, x1Accessor, y1Accessor],
-//     ([$xScale, $x1Scale, $yScale, $y1Scale, $xAccessor, $yAccessor, $x1Accessor, $y1Accessor]) => {
-
-//   );
 
 /**
  * If value is an array, returns first item, else returns original value

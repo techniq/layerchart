@@ -733,7 +733,7 @@
     yScale: yScaleProp = scaleLinear(),
     zScale: zScaleProp = scaleLinear(),
     rScale: rScaleProp = scaleSqrt(),
-    flatData: flatDataProp = data,
+    flatData: flatDataProp,
     padding: paddingProp = {},
     verbose = true,
     debug = false,
@@ -922,7 +922,7 @@
       range: xRangeProp,
       height,
       width,
-      extents: filteredExtents,
+      extents,
     })
   );
 

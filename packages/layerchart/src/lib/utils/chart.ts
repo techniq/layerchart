@@ -113,6 +113,7 @@ export function createLayerCakeScale(
   }: CreateLayerCakeScaleOpts
 ): AnyScale {
   const defaultRange = getDefaultRange(axis, width, height, reverse, range, percentRange);
+
   const trueScale = scale.copy();
 
   /* --------------------------------------------
@@ -135,7 +136,7 @@ export function createLayerCakeScale(
   }
 
   if (padding) {
-    trueScale.domain(padScale(scale, padding));
+    trueScale.domain(padScale(trueScale, padding));
   }
 
   if (nice === true || typeof nice === 'number') {
@@ -171,7 +172,6 @@ export function padScale(scale: AnyScale, padding: PaddingArray | undefined) {
   const { lift, ground } = getPadFunctions(scale);
 
   const d0 = scale.domain()[0];
-
   const isTime = Object.prototype.toString.call(d0) === '[object Date]';
 
   const [d1, d2] = scale.domain().map((d) => {
@@ -188,7 +188,6 @@ export function padScale(scale: AnyScale, padding: PaddingArray | undefined) {
     return isTime ? ground(new Date(d).getTime()) : ground(d);
   });
 }
-
 function f(name: string, modifier = '') {
   return `scale${toTitleCase(modifier)}${toTitleCase(name)}`;
 }
@@ -534,10 +533,10 @@ type ScaleWithProps = AnyScale & {
 };
 
 export function findScaleType(scale: ScaleWithProps): ScaleType {
-  if (typeof scale.constant === 'number') {
+  if (scale.constant) {
     return 'symlog';
   }
-  if (typeof scale.base === 'function') {
+  if (scale.base) {
     return 'log';
   }
   if (typeof scale.exponent === 'function') {
@@ -557,7 +556,6 @@ interface TransformFunctions {
   scaleType: ScaleType;
 }
 
-// Helper functions with explicit types
 function log(sign: number): (x: number) => number {
   return (x: number): number => Math.log(sign * x);
 }
@@ -580,18 +578,17 @@ function pow(exponent: number): (x: number) => number {
   };
 }
 
-// Main function with proper typing
 export function getPadFunctions(scale: ScaleWithProps): TransformFunctions {
   const scaleType = findScaleType(scale);
 
   switch (scaleType) {
     case 'log': {
       const domain = scale.domain();
-      const sign = Math.sign(domain[0] || 1); // Default to 1 if domain[0] is 0
+      const sign = Math.sign(domain[0]);
       return { lift: log(sign), ground: exp(sign), scaleType };
     }
     case 'pow': {
-      const exponent = scale.exponent ? scale.exponent() : 1;
+      const exponent = 1;
       return {
         lift: pow(exponent),
         ground: pow(1 / exponent),
@@ -607,7 +604,7 @@ export function getPadFunctions(scale: ScaleWithProps): TransformFunctions {
       };
     }
     case 'symlog': {
-      const constant = typeof scale.constant === 'number' ? scale.constant : 1;
+      const constant = 1;
       return {
         lift: symlog(constant),
         ground: symexp(constant),

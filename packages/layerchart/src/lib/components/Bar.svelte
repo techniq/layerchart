@@ -36,6 +36,14 @@
 
     insets?: Insets;
 
+    initialX?: number;
+
+    initialY?: number;
+
+    initialHeight?: number;
+
+    initialWidth?: number;
+
     /**
      * Control which corners are rounded with radius. Uses <path> instead of <rect> when not set
      * to `all`
@@ -89,25 +97,23 @@
     spring,
     tweened,
     insets,
+    initialX,
+    initialY,
+    initialHeight,
+    initialWidth,
     ...restProps
   }: BarProps = $props();
 
   const stroke = $derived(strokeProp === null || strokeProp === undefined ? 'black' : strokeProp);
 
-  const debug = bar.fruit === 'grapes' && bar.year === 2019;
-
   const getDimensions = $derived(
-    createDimensionGetter(
-      ctx,
-      () => ({
-        x,
-        y,
-        x1,
-        y1,
-        insets,
-      }),
-      debug
-    )
+    createDimensionGetter(ctx, () => ({
+      x,
+      y,
+      x1,
+      y1,
+      insets,
+    }))
   );
 
   const dimensions = $derived(getDimensions(bar) ?? { x: 0, y: 0, width: 0, height: 0 });
@@ -162,6 +168,10 @@
     rx={rounded === 'none' ? 0 : radius}
     {spring}
     {tweened}
+    {initialX}
+    {initialY}
+    {initialHeight}
+    {initialWidth}
     {...restProps}
     {...dimensions}
   />

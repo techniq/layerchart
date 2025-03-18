@@ -64,7 +64,7 @@
     'var(--color-danger)',
   ];
 
-  let transitionChartMode = $state('stack');
+  let transitionChartMode = $state('group');
   const transitionChart = $derived(
     transitionChartMode === 'group'
       ? ({
@@ -109,7 +109,7 @@
 </Blockquote>
 
 <h2>Basic</h2>
-<!--
+
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
@@ -971,7 +971,6 @@
 
             <Tooltip.Separator />
 
-
             <Tooltip.Item
               label="total"
               value={sum([...tooltipContext.data.data], (d) => d.value)}
@@ -1232,7 +1231,7 @@
     </Chart>
   </div>
 </Preview>
-<!--
+
 <h2>Tooltip and click handlers for individual stack/grouped bar</h2>
 
 <div class="grid grid-cols-[1fr_1fr] gap-2 mb-2">
@@ -1341,4 +1340,4 @@
       </Svg>
     </Chart>
   </div>
-</Preview> -->
+</Preview>

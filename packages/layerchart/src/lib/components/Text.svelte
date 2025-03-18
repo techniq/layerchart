@@ -279,8 +279,8 @@
     );
   }
 
-  const tweenedX = $derived(motionState(initialX, { spring, tweened }));
-  const tweenedY = $derived(motionState(initialY, { spring, tweened }));
+  const tweenedX = motionState(initialX, { spring, tweened });
+  const tweenedY = motionState(initialY, { spring, tweened });
 
   $effect(() => {
     [x, y];
