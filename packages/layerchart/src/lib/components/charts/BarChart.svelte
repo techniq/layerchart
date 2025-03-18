@@ -72,6 +72,21 @@
      * The y scale to use for the chart.
      */
     yScale?: AnyScale;
+
+    /**
+     * The yNice to use for the chart
+     */
+    yNice?: Nice;
+
+    /**
+     * Padding to apply to the chart
+     */
+    padding?: { top?: number; right?: number; bottom?: number; left?: number };
+
+    /**
+     * The y domain
+     */
+    yDomain?: DomainType;
   };
 </script>
 
@@ -101,10 +116,10 @@
     defaultChartPadding,
     findRelatedData,
   } from '../../utils/common.js';
-  import { asAny } from '../../utils/types.js';
-  import type { Insets } from '../../utils/rect.js';
+  import { asAny, type Nice } from '../../utils/types.js';
+  import type { Insets } from '../../utils/rect.svelte.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
-  import type { AnyScale } from 'layerchart/utils/scales.svelte.js';
+  import type { AnyScale, DomainType } from 'layerchart/utils/scales.svelte.js';
   import { createHighlightKey } from './utils.svelte.js';
   import { createSelectionState } from 'layerchart/stores/selectionState.svelte.js';
 

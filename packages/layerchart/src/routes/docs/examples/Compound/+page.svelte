@@ -30,21 +30,23 @@
         bars: { y: 'baseline' },
       }}
     >
-      <svelte:fragment slot="aboveMarks">
+      {#snippet aboveMarks()}
         <Area y1="value" class="fill-secondary/20" line={{ class: 'stroke-secondary' }} />
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="tooltip">
-        <Tooltip.Root let:data>
-          <Tooltip.Header>
-            {formatDate(data.date, PeriodType.Day)}
-          </Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="baseline" value={data.baseline} color="var(--color-primary)" />
-            <Tooltip.Item label="value" value={data.value} color="var(--color-secondary)" />
-          </Tooltip.List>
+      {#snippet tooltip()}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>
+              {formatDate(data.date, PeriodType.Day)}
+            </Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="baseline" value={data.baseline} color="var(--color-primary)" />
+              <Tooltip.Item label="value" value={data.value} color="var(--color-secondary)" />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -75,30 +77,32 @@
       yNice={4}
       yDomain={null}
       padding={{ left: 16, bottom: 16 }}
-      tooltip={{ mode: 'band' }}
       props={{
         xAxis: { ticks: 10, rule: true },
+        tooltip: { context: { mode: 'band' } },
       }}
     >
-      <svelte:fragment slot="marks">
+      {#snippet marks()}
         <Spline y="open" class="stroke-primary" />
         <Spline y="close" class="stroke-secondary" />
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="tooltip">
-        <Tooltip.Root let:data>
-          <Tooltip.Header>
-            {formatDate(data.date, PeriodType.Day)}
-          </Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="open" value={data.open} format="currency" />
-            <Tooltip.Item label="close" value={data.close} format="currency" />
-            <Tooltip.Item label="high" value={data.high} format="currency" />
-            <Tooltip.Item label="low" value={data.low} format="currency" />
-            <Tooltip.Item label="volume" value={data.volume} format="integer" />
-          </Tooltip.List>
+      {#snippet tooltip()}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>
+              {formatDate(data.date, PeriodType.Day)}
+            </Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="open" value={data.open} format="currency" />
+              <Tooltip.Item label="close" value={data.close} format="currency" />
+              <Tooltip.Item label="high" value={data.high} format="currency" />
+              <Tooltip.Item label="low" value={data.low} format="currency" />
+              <Tooltip.Item label="volume" value={data.volume} format="integer" />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>

@@ -36,14 +36,16 @@
         <Bars y={(d) => [d.open, d.close]} radius={2} />
         <Highlight area />
       </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{formatDate(data.date, PeriodType.Day)}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="Open" value={data.open} format="decimal" />
-          <Tooltip.Item label="Close" value={data.close} format="decimal" />
-          <Tooltip.Item label="High" value={data.high} format="decimal" />
-          <Tooltip.Item label="Low" value={data.low} format="decimal" />
-        </Tooltip.List>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header>{formatDate(data.date, PeriodType.Day)}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="Open" value={data.open} format="decimal" />
+            <Tooltip.Item label="Close" value={data.close} format="decimal" />
+            <Tooltip.Item label="High" value={data.high} format="decimal" />
+            <Tooltip.Item label="Low" value={data.low} format="decimal" />
+          </Tooltip.List>
+        {/snippet}
       </Tooltip.Root>
     </Chart>
   </div>

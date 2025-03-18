@@ -242,6 +242,7 @@ export type SimplifiedChartProps<
    * The tooltip context to be used for the chart.
    */
   tooltipContext?: TooltipContextValue;
+
   /**
    * The event to be dispatched when the tooltip is clicked.
    *

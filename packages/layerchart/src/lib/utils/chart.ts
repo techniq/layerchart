@@ -12,6 +12,7 @@ import type { AnyScale } from './scales.svelte.js';
 import { arraysEqual } from './array.js';
 import { toTitleCase } from './string.js';
 import { InternSet } from 'd3-array';
+import type { Accessor } from './common.js';
 
 type DomainFunction = (extent: number[]) => Array<number | null>;
 type DomainArray = Array<number | null>;

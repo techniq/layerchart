@@ -783,7 +783,7 @@
   const logDebug = useDebounce(printDebug, 200);
 
   const _xDomain: DomainType = $derived.by(() => {
-    if (xDomainProp) return xDomainProp;
+    if (xDomainProp !== undefined) return xDomainProp;
     if (xBaseline != null && Array.isArray(data)) {
       const xValues = data.flatMap(accessor(xProp));
       return [min([xBaseline, ...xValues]), max([xBaseline, ...xValues])];
@@ -792,7 +792,7 @@
   });
 
   const _yDomain: DomainType | undefined = $derived.by(() => {
-    if (yDomainProp) return yDomainProp;
+    if (yDomainProp !== undefined) return yDomainProp;
     if (yBaseline != null && Array.isArray(data)) {
       const yValues = data.flatMap(accessor(yProp));
       return [min([yBaseline, ...yValues]), max([yBaseline, ...yValues])];
