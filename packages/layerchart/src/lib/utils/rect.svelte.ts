@@ -59,27 +59,40 @@ function resolveInsets(insets?: Insets): ResolvedInsets {
 
 export function createDimensionGetter<TData>(
   ctx: ChartContext<TData>,
-  getOptions?: () => DimensionGetterOptions
+  getOptions?: () => DimensionGetterOptions,
+  debug = false
 ) {
+  function log(...args: any[]) {
+    if (debug) {
+      console.log(...args);
+    }
+  }
+
+  const xScale = $derived(ctx.xScale);
+  const yScale = $derived(ctx.yScale);
+
   const options = $derived(getOptions?.());
 
-  const insets = resolveInsets(options?.insets);
-  // Use `xscale.domain()` instead of `$xDomain` to include `nice()` being applied
-  const xDomainMinMax = $derived(ctx.xScale.domain());
-  const yDomainMinMax = $derived(ctx.yScale.domain());
-
-  const _x = $derived(accessor(options?.x ?? ctx.x));
-  const _y = $derived(accessor(options?.y ?? ctx.y));
-  const _x1 = $derived(accessor(options?.x1 ?? ctx.x1));
-  const _y1 = $derived(accessor(options?.y1 ?? ctx.y1));
-
   return (item: TData) => {
+    const insets = resolveInsets(options?.insets);
+    // Use `xscale.domain()` instead of `$xDomain` to include `nice()` being applied
+    const xDomainMinMax = xScale.domain();
+    const yDomainMinMax = yScale.domain();
+
+    log({ xDomainMinMax, yDomainMinMax });
+
+    const _x = accessor(options?.x ?? ctx.x);
+    const _y = accessor(options?.y ?? ctx.y);
+    const _x1 = accessor(options?.x1 ?? ctx.x1);
+    const _y1 = accessor(options?.y1 ?? ctx.y1);
+
     if (isScaleBand(ctx.yScale)) {
       // Horizontal band
       const y =
         firstValue(ctx.yScale(_y(item)) ?? 0) +
         (ctx.y1Scale ? ctx.y1Scale(_y1(item)) : 0) +
         insets.top;
+
       const height = Math.max(
         0,
         ctx.yScale.bandwidth
@@ -119,6 +132,7 @@ export function createDimensionGetter<TData>(
       // Vertical band or linear
       const x =
         firstValue(ctx.xScale(_x(item))) + (ctx.x1Scale ? ctx.x1Scale(_x1(item)) : 0) + insets.left;
+
       const width = Math.max(
         0,
         ctx.xScale.bandwidth
@@ -152,6 +166,8 @@ export function createDimensionGetter<TData>(
 
       const y = ctx.yScale(top) + insets.top;
       const height = ctx.yScale(bottom) - ctx.yScale(top) - insets.bottom - insets.top;
+
+      log({ height });
 
       return { x, y, width, height };
     }

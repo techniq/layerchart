@@ -80,16 +80,6 @@
   const renderCtx = getRenderContext();
   const canvasCtx = getCanvasContext();
 
-  $effect(() => {
-    [x, y, width, height];
-    afterTick(() => {
-      tweenedX.target = x;
-      tweenedY.target = y;
-      tweenedWidth.target = width;
-      tweenedHeight.target = height;
-    });
-  });
-
   function render(
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
@@ -145,6 +135,16 @@
         pointerover: onpointerover,
         pointerout: onpointerout,
       },
+    });
+  });
+
+  $effect(() => {
+    [x, y, width, height];
+    afterTick(() => {
+      tweenedX.target = x;
+      tweenedY.target = y;
+      tweenedWidth.target = width;
+      tweenedHeight.target = height;
     });
   });
 </script>

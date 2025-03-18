@@ -19,6 +19,8 @@
     onBarClick?: (e: MouseEvent, detail: { data: any }) => void;
 
     children?: Snippet;
+    // TODO: investigate
+    [key: string]: any;
   } & Omit<BarPropsWithoutHTML, 'bar' | 'children'>;
 
   export type BarsProps = BarsPropsWithoutHTML & Omit<BarProps, 'bar'>;
@@ -36,6 +38,9 @@
     data: dataProp,
     onBarClick = () => {},
     children,
+    radius = 0,
+    strokeWidth = 0,
+    stroke = 'black',
     ...restProps
   }: BarsProps = $props();
 
@@ -49,6 +54,9 @@
   {:else}
     {#each data as d, i (key(d, i))}
       <Bar
+        {radius}
+        {strokeWidth}
+        {stroke}
         bar={d}
         fill={fill ?? (ctx.config.c ? ctx.cGet(d) : null)}
         onclick={(e) => onBarClick(e, { data: d })}

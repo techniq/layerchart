@@ -56,7 +56,7 @@
     CommonStyleProps;
 
   export type BarProps = BarPropsWithoutHTML &
-    Without<Omit<SVGAttributes<Element>, 'width' | 'height' | 'x' | 'y'>, BarPropsWithoutHTML>;
+    Without<Omit<SVGAttributes<SVGElement>, 'width' | 'height' | 'x' | 'y'>, BarPropsWithoutHTML>;
 </script>
 
 <script lang="ts">
@@ -75,10 +75,10 @@
 
   let {
     bar,
-    x = ctx.x,
-    y = ctx.y,
-    x1 = ctx.x1,
-    y1 = ctx.y1,
+    x,
+    y,
+    x1,
+    y1,
     fill,
     fillOpacity,
     stroke: strokeProp = 'black',
@@ -92,17 +92,26 @@
     ...restProps
   }: BarProps = $props();
 
-  const stroke = $derived(strokeProp ? strokeProp : 'black');
+  const stroke = $derived(strokeProp === null || strokeProp === undefined ? 'black' : strokeProp);
 
-  const getDimension = createDimensionGetter(ctx, () => ({
-    x,
-    y,
-    x1,
-    y1,
-    insets,
-  }));
+  const debug = bar.fruit === 'grapes' && bar.year === 2019;
 
-  const dimensions = $derived(getDimension(bar) ?? { x: 0, y: 0, width: 0, height: 0 });
+  const getDimensions = $derived(
+    createDimensionGetter(
+      ctx,
+      () => ({
+        x,
+        y,
+        x1,
+        y1,
+        insets,
+      }),
+      debug
+    )
+  );
+
+  const dimensions = $derived(getDimensions(bar) ?? { x: 0, y: 0, width: 0, height: 0 });
+
   const isVertical = $derived(isScaleBand(ctx.xScale));
   const valueAccessor = $derived(accessor(isVertical ? y : x));
   const value = $derived(valueAccessor(bar));
@@ -153,8 +162,8 @@
     rx={rounded === 'none' ? 0 : radius}
     {spring}
     {tweened}
-    {...dimensions}
     {...restProps}
+    {...dimensions}
   />
 {:else}
   <Spline
