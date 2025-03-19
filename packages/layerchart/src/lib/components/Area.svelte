@@ -149,7 +149,7 @@
       : d3Area()
           .x((d) => {
             const v = xAccessor(d);
-            return ctx.xScale(v);
+            return ctx.xScale(v) + xOffset;
           })
           .y0((d) => {
             let value = max<number>(ctx.yRange)!;
