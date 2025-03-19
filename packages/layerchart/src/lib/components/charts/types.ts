@@ -1,7 +1,7 @@
 import type { Accessor } from '$lib/utils/common.js';
 import type { Component, ComponentProps, Snippet } from 'svelte';
 import type BrushContext from '../BrushContext.svelte';
-import type { AnyScale } from '$lib/utils/scales.svelte.js';
+import type { AnyScale, DomainType } from '$lib/utils/scales.svelte.js';
 import type { Area, Axis, Group, Labels, Legend, Points, Rule, Spline } from '../index.js';
 import type TooltipContext from '../tooltip/TooltipContext.svelte';
 import type { TooltipContextValue } from '../tooltip/TooltipContext.svelte';
@@ -275,4 +275,9 @@ export type SimplifiedChartProps<
   aboveMarks?: ChartSnippet;
   marks?: ChartSnippet;
   highlight?: ChartSnippet;
+
+  /**
+   * The y domain
+   */
+  yDomain?: DomainType;
 };
