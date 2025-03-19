@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  export type TreemapProps = {
+  export type TreemapProps<T> = {
     /**
      * The tile function to use for the treemap layout.
      *
@@ -64,13 +64,15 @@
      *
      * @default null
      */
-    selected?: HierarchyRectangularNode<any> | null;
+    selected?: HierarchyRectangularNode<T> | null;
 
-    children?: Snippet<[{ nodes: HierarchyRectangularNode<unknown>[] }]>;
+    hierarchy?: HierarchyNode<T>;
+
+    children?: Snippet<[{ nodes: HierarchyRectangularNode<T>[] }]>;
   };
 </script>
 
-<script lang="ts">
+<script lang="ts" generics="T">
   import {
     treemap as d3treemap,
     treemapBinary,
@@ -88,6 +90,7 @@
   import type { Snippet } from 'svelte';
 
   let {
+    hierarchy,
     tile = treemapSquarify,
     padding = 0,
     paddingInner = 0,
@@ -96,9 +99,9 @@
     paddingBottom = 0,
     paddingLeft,
     paddingRight,
-    selected = null,
+    selected = $bindable(null),
     children,
-  }: TreemapProps = $props();
+  }: TreemapProps<T> = $props();
 
   const ctx = getChartContext();
 
@@ -119,7 +122,7 @@
   );
 
   const treemap = $derived.by(() => {
-    const _treemap = d3treemap()
+    const _treemap = d3treemap<T>()
       .size([ctx.width, ctx.height])
       .tile(aspectTile(tileFunc, ctx.width, ctx.height));
 
@@ -152,11 +155,11 @@
     return _treemap;
   });
 
-  const treemapData = $derived(treemap(ctx.data as HierarchyNode<any>));
+  const treemapData = $derived(hierarchy ? treemap(hierarchy) : null);
 
-  $effect(() => {
+  $effect.pre(() => {
     selected = treemapData;
   });
 </script>
 
-{@render children?.({ nodes: treemapData.descendants() })}
+{@render children?.({ nodes: treemapData ? treemapData.descendants() : [] })}
