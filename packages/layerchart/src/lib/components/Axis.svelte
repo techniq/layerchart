@@ -129,15 +129,21 @@
     tickLabelProps,
     spring,
     tweened,
-    // @ts-expect-error - shut it typescript we know what we're doing
-    transitionIn = tweened ? fade : () => ({}),
-    transitionInParams = { easing: cubicIn },
+    transitionIn: transitionInProp,
+    transitionInParams: transitionInParamsProp,
     scale: scaleProp,
     classes = {},
     class: className,
     tickLabel,
     ...restProps
   }: AxisProps<T> = $props();
+
+  const transitionIn = $derived(
+    transitionInProp ? transitionInProp : tweened ? fade : () => {}
+  ) as T;
+  const transitionInParams = $derived(
+    transitionInParamsProp ? transitionInParamsProp : { easing: cubicIn }
+  );
 
   const ctx = getChartContext();
 

@@ -49,23 +49,8 @@ export function calcDomain<K extends AxisKey>(
   extents: Extents,
   domain: DomainType | undefined
 ): number[] {
-  let resolvedDomain: Array<number | null> | undefined;
-
-  if (typeof domain === 'function') {
-    const extentNumbers = normalizeExtent(extents?.[s as K]);
-    resolvedDomain = (domain as DomainFunction)(extentNumbers);
-  } else {
-    resolvedDomain = domain as DomainArray | undefined;
-  }
-
-  if (extents?.[s as K]) {
-    return partialDomain(
-      normalizeExtent(extents[s as K]) as NormalizeArray<Extents[K]>,
-      resolvedDomain
-    );
-  }
-
-  return (resolvedDomain?.map((d): number => d ?? 0) ?? [0, 0]) as number[];
+  // @ts-expect-error - TODO: fix these types
+  return extents ? partialDomain(extents[s], domain) : domain;
 }
 
 /**
@@ -76,9 +61,17 @@ export function calcDomain<K extends AxisKey>(
  * @param directive A two-value array of numbers or nulls that will have any nulls filled in from the `domain` array
  * @returns A two-value array of numbers representing the filled-in domain
  */
-export function partialDomain(domain: number[] = [], directive?: Array<number | null>): number[] {
-  if (Array.isArray(directive) && directive.length === 2) {
-    return directive.map((d, i) => (d === null ? domain[i] : d));
+export function partialDomain(
+  domain: number[] | undefined = [],
+  directive?: Array<number | null>
+): number[] {
+  if (Array.isArray(directive) === true) {
+    return directive.map((d, i) => {
+      if (d === null) {
+        return domain[i];
+      }
+      return d;
+    });
   }
   return domain;
 }
@@ -362,7 +355,7 @@ export function calcScaleExtents<T>(
   // group scales by domain type (ordinal vs other)
   const scaleGroups = Object.entries(activeScales).reduce<ScaleGroups<T>>(
     (groups, [key, scaleInfo]) => {
-      const domainType = isOrdinalDomain(scaleInfo.scale) ? 'ordinal' : 'other';
+      const domainType = isOrdinalDomain(scaleInfo.scale) === true ? 'ordinal' : 'other';
 
       if (!groups[domainType]) {
         groups[domainType] = {};
@@ -508,15 +501,11 @@ export function getDefaultRange(
   range?: BaseRange,
   percentRange: boolean = false
 ): number[] | string[] {
-  if (!range) {
-    return calcBaseRange(s, width, height, reverse, percentRange);
-  }
-
-  if (typeof range === 'function') {
-    return range({ width, height });
-  }
-
-  return range;
+  return !range
+    ? calcBaseRange(s, width, height, reverse, percentRange)
+    : typeof range === 'function'
+      ? range({ width, height })
+      : range;
 }
 
 // Define possible scale types

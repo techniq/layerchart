@@ -7,6 +7,7 @@ import {
   type TweenedOptions,
 } from 'layerchart/stores/motionState.svelte.js';
 import { Spring, Tween } from 'svelte/motion';
+import type { Accessor } from './common.js';
 
 export type AnyScale<
   TInput extends SingleDomainType = any,
@@ -251,4 +252,24 @@ export function motionScale<Domain, Range>(scale: AnyScale, options: MotionProps
     domain: (values: Domain) => domainState.set(values),
     range: (values: Range) => rangeState.set(values),
   };
+}
+
+function canBeZero(val: unknown) {
+  if (val === 0) return true;
+  return val;
+}
+
+export function makeAccessor<TData>(acc: Accessor<TData>): (d: TData) => any {
+  if (!canBeZero(acc)) return null as unknown as (d: TData) => any;
+  if (Array.isArray(acc)) {
+    return (d: TData) =>
+      acc.map((k) => {
+        // @ts-expect-error - TODO: Fix these types
+        return typeof k !== 'function' ? d[k] : k(d);
+      });
+  } else if (typeof acc !== 'function') {
+    // @ts-expect-error - TODO: Fix these types
+    return (d: TData) => d[acc];
+  }
+  return acc;
 }

@@ -5,7 +5,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
 
-  export let data;
+  let { data } = $props();
 
   const dateSeries = createDateSeries({
     count: 30,
@@ -55,7 +55,7 @@
 
 <Preview {data}>
   <div class="h-[300px] grid grid-stack p-4 border rounded-sm">
-    <!-- First cahrt (bar), with different domain scale for volume -->
+    <!-- First chart (bar), with different domain scale for volume -->
     <BarChart
       data={data.appleTicker}
       x="date"

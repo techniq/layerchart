@@ -60,7 +60,7 @@ export type FieldAccessors<T> = {
   r?: (d: T) => number | string | (number | string)[];
 };
 
-export type PaddingArray = [number, number] | undefined;
+export type PaddingArray = [number, number] | number[] | undefined;
 
 export type DataType<T> = T[] | HierarchyNode<T> | SankeyGraph<any, any>;
 

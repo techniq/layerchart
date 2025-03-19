@@ -6,7 +6,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 </script>
 
 <h1>Examples</h1>

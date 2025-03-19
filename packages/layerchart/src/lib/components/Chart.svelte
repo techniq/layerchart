@@ -3,11 +3,12 @@
   import { scaleLinear, scaleOrdinal, scaleSqrt } from 'd3-scale';
   import { type Accessor, accessor, chartDataArray } from '$lib/utils/common.js';
   import { printDebug } from '$lib/utils/debug.js';
-  import { filterObject } from 'layerchart/utils/filterObject.js';
+  import { filterObject } from '$lib/utils/filterObject.js';
   import {
     createScale,
     getRange,
     isScaleBand,
+    makeAccessor,
     type AnyScale,
     type DomainType,
   } from '$lib/utils/scales.svelte.js';
@@ -22,13 +23,13 @@
     PaddingArray,
     XRangeWithScale,
     YRangeWithScale,
-  } from 'layerchart/utils/types.js';
+  } from '$lib/utils/types.js';
   import {
     calcDomain,
     calcScaleExtents,
     createGetter,
     createLayerCakeScale,
-  } from 'layerchart/utils/chart.js';
+  } from '$lib/utils/chart.js';
   import { onMount, type ComponentProps, type Snippet } from 'svelte';
   import GeoContext, { type GeoContextValue } from './GeoContext.svelte';
   import TooltipContext, { type TooltipContextValue } from './tooltip/TooltipContext.svelte';
@@ -36,7 +37,7 @@
   import type { HierarchyNode } from 'd3-hierarchy';
   import type { SankeyGraph } from 'd3-sankey';
   import { unique } from '@layerstack/utils';
-  import { geoFitObjectTransform } from 'layerchart/utils/geo.js';
+  import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
   import BrushContext, { type BrushContextValue } from './BrushContext.svelte';
 
@@ -709,8 +710,8 @@
     percentRange = false,
     width: widthProp,
     height: heightProp,
-    containerWidth = widthProp || 100,
-    containerHeight = heightProp || 100,
+    containerWidth: containerWidthProp,
+    containerHeight: containerHeightProp,
     ref = $bindable(null),
     x: xProp,
     y: yProp,
@@ -753,7 +754,7 @@
     custom = {},
     children: _children,
     radial = false,
-    xRange: xRangeProp = radial ? [0, 2 * Math.PI] : undefined,
+    xRange: _xRangeProp,
     x1: x1Prop,
     x1Domain: x1DomainProp,
     x1Range: x1RangeProp,
@@ -780,15 +781,24 @@
     brush,
   }: ChartPropsWithoutHTML<TData> = $props();
 
+  const xRangeProp = $derived((_xRangeProp ?? radial) ? [0, 2 * Math.PI] : undefined);
+
+  const containerWidth = $derived(
+    containerWidthProp !== undefined ? containerWidthProp : widthProp || 100
+  );
+
+  const containerHeight = $derived(
+    containerHeightProp !== undefined ? containerHeightProp : heightProp || 100
+  );
+
   const logDebug = useDebounce(printDebug, 200);
 
-  const _xDomain: DomainType = $derived.by(() => {
+  const _xDomain: DomainType | undefined = $derived.by(() => {
     if (xDomainProp !== undefined) return xDomainProp;
     if (xBaseline != null && Array.isArray(data)) {
       const xValues = data.flatMap(accessor(xProp));
       return [min([xBaseline, ...xValues]), max([xBaseline, ...xValues])];
     }
-    return [];
   });
 
   const _yDomain: DomainType | undefined = $derived.by(() => {
@@ -805,31 +815,23 @@
 
   const yReverse = $derived(yScaleProp ? !isScaleBand(yScaleProp) : true);
 
-  const x = $derived(accessor(xProp));
-  const y = $derived(accessor(yProp));
-  const z = $derived(accessor(zProp));
-  const r = $derived(accessor(rProp));
+  const x = $derived(makeAccessor(xProp));
+  const y = $derived(makeAccessor(yProp));
+  const z = $derived(makeAccessor(zProp));
+  const r = $derived(makeAccessor(rProp));
   const c = $derived(accessor(cProp));
   const x1 = $derived(accessor(x1Prop));
   const y1 = $derived(accessor(y1Prop));
 
   const flatData = $derived(flatDataProp || data) as TData[];
-  const filteredExtents = $derived(filterObject(extentsProp));
+  const filteredExtents = $derived(filterObject($state.snapshot(extentsProp)));
 
-  const activeGetters = {
-    get x() {
-      return x;
-    },
-    get y() {
-      return y;
-    },
-    get z() {
-      return z;
-    },
-    get r() {
-      return r;
-    },
-  };
+  const activeGetters = $derived({
+    x,
+    y,
+    z,
+    r,
+  });
 
   const padding = $derived({
     ...defaultPadding,
@@ -907,6 +909,7 @@
   const yDomain = $derived(calcDomain('y', extents, _yDomain));
   const zDomain = $derived(calcDomain('z', extents, zDomainProp));
   const rDomain = $derived(calcDomain('r', extents, rDomainProp));
+
   const x1Domain = $derived(x1DomainProp ?? extent(chartDataArray(data), x1));
   const y1Domain = $derived(y1DomainProp ?? extent(chartDataArray(data), y1));
   const cDomain = $derived(cDomainProp ?? unique(chartDataArray(data).map(c)));
@@ -915,14 +918,14 @@
     createLayerCakeScale('x', {
       scale: xScaleProp,
       domain: xDomain,
-      padding: xPadding,
+      padding: $state.snapshot(xPadding),
       nice: xNice,
       reverse: xReverse,
       percentRange,
-      range: xRangeProp,
+      range: $state.snapshot(xRangeProp),
       height,
       width,
-      extents,
+      extents: $state.snapshot(extents),
     })
   );
 
@@ -1318,8 +1321,8 @@
     style:bottom={position === 'absolute' ? '0' : null}
     style:left={position === 'absolute' ? '0' : null}
     style:pointer-events={pointerEvents === false ? 'none' : null}
-    bind:clientWidth={containerWidth}
-    bind:clientHeight={containerHeight}
+    bind:clientWidth={containerWidthProp}
+    bind:clientHeight={containerHeightProp}
   >
     {#key isMounted}
       <TransformContext
