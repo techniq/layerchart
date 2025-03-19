@@ -31,7 +31,7 @@
      */
     round?: boolean;
 
-    hierarchy?: HierarchyRectangularNode<T>;
+    hierarchy?: HierarchyNode<T>;
 
     children?: Snippet<[{ nodes: HierarchyRectangularNode<T>[] }]>;
   };

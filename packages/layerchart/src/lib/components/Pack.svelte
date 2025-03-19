@@ -23,7 +23,7 @@
     /**
      * The hierarchy data to be packed.
      */
-    hierarchy: HierarchyNode<T>;
+    hierarchy?: HierarchyNode<T>;
 
     children?: Snippet<[{ nodes: HierarchyCircularNode<T>[] }]>;
   };
@@ -44,7 +44,7 @@
     return _pack;
   });
 
-  const packData = $derived(pack(hierarchy));
+  const packData = $derived(hierarchy ? pack(hierarchy) : []);
 </script>
 
-{@render children?.({ nodes: packData.descendants() })}
+{@render children?.({ nodes: 'descendants' in packData ? packData.descendants() : [] })}

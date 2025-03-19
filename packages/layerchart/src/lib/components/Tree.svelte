@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  export type TreeProps = {
+  export type TreeProps<T> = {
     /**
      * Sets this tree layout’s node size to the specified two-element array of numbers `[width, height]`.
      * If unset, layout size is used instead.  When a node size is specified, the root node is always
@@ -14,6 +14,8 @@
      */
     separation?: (a: HierarchyPointNode<any>, b: HierarchyPointNode<any>) => number;
 
+    hierarchy?: HierarchyNode<T>;
+
     /**
      * Orientation of the tree layout.
      *
@@ -25,17 +27,28 @@
   };
 </script>
 
-<script lang="ts">
-  import { type HierarchyPointNode, tree as d3Tree, type HierarchyPointLink } from 'd3-hierarchy';
+<script lang="ts" generics="T">
+  import {
+    type HierarchyPointNode,
+    tree as d3Tree,
+    type HierarchyPointLink,
+    type HierarchyNode,
+  } from 'd3-hierarchy';
   import type { Snippet } from 'svelte';
   import { getChartContext } from './Chart.svelte';
 
-  let { nodeSize, separation, orientation = 'horizontal', children }: TreeProps = $props();
+  let {
+    nodeSize,
+    separation,
+    orientation = 'horizontal',
+    children,
+    hierarchy,
+  }: TreeProps<T> = $props();
 
   const ctx = getChartContext();
 
   const tree = $derived.by(() => {
-    const _tree = d3Tree().size(
+    const _tree = d3Tree<T>().size(
       orientation === 'horizontal' ? [ctx.height, ctx.width] : [ctx.width, ctx.height]
     );
 
@@ -49,8 +62,10 @@
     return _tree;
   });
 
-  // @ts-expect-error
-  const treeData = $derived(tree(ctx.data));
+  const treeData = $derived(hierarchy ? tree(hierarchy) : []);
 </script>
 
-{@render children?.({ nodes: treeData.descendants(), links: treeData.links() })}
+{@render children?.({
+  nodes: 'descendants' in treeData ? treeData.descendants() : [],
+  links: 'links' in treeData ? treeData.links() : [],
+})}
