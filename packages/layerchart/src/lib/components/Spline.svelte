@@ -194,7 +194,7 @@
       return '';
     } else if (pathData) {
       // Flatten all `y` coordinates of pre-defined `pathData`
-      return flattenPathData(pathData, Math.min(ctx.yScale(0), ctx.yRange[0]));
+      return flattenPathData(pathData, Math.min(ctx.yScale(0) ?? ctx.yRange[0], ctx.yRange[0]));
     } else if (ctx.config.x) {
       // Only use default line if `x` accessor is defined (cartesian chart)
       const path = ctx.radial
@@ -220,44 +220,16 @@
   const d = $derived.by(() => {
     const path = ctx.radial
       ? lineRadial()
-          .angle((d) => {
-            const value = getScaleValue(d, ctx.xScale, xAccessor);
-            console.log('angle', d, value);
-            return value;
-          })
-          .radius((d) => {
-            const value = getScaleValue(d, ctx.yScale, yAccessor);
-            console.log('radius', d, value);
-            return value;
-          })
+          .angle((d) => getScaleValue(d, ctx.xScale, xAccessor))
+          .radius((d) => getScaleValue(d, ctx.yScale, yAccessor))
       : d3Line()
-          .x((d) => {
-            const value = getScaleValue(d, ctx.xScale, xAccessor) + xOffset;
-            console.log('x', d, value);
-            return value;
-          })
-          .y((d) => {
-            const value = getScaleValue(d, ctx.yScale, yAccessor) + yOffset;
-            console.log('y', d, value);
-            return value;
-          });
+          .x((d) => getScaleValue(d, ctx.xScale, xAccessor) + xOffset)
+          .y((d) => getScaleValue(d, ctx.yScale, yAccessor) + yOffset);
 
-    path.defined(
-      defined ??
-        ((d) => {
-          const valid =
-            xAccessor(d) != null &&
-            yAccessor(d) != null &&
-            !isNaN(xAccessor(d)) &&
-            !isNaN(yAccessor(d));
-          if (!valid) console.log('invalid data point', d);
-          return valid;
-        })
-    );
+    path.defined(defined ?? ((d) => xAccessor(d) != null && yAccessor(d) != null));
     if (curve) path.curve(curve);
 
     const result = pathData ?? path(data ?? ctx.data) ?? '';
-    console.log('generated path', result);
     return result;
   });
 
