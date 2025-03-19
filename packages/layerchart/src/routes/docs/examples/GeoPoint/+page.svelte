@@ -6,12 +6,12 @@
   import { Canvas, Chart, Circle, GeoPath, GeoPoint, Svg, Text, Tooltip } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
   const states = feature(data.us.geojson, data.us.geojson.objects.states);
   const countries = feature(data.world.geojson, data.world.geojson.objects.countries);
 
-  let debugTooltip = false;
+  let debugTooltip = $state(false);
 </script>
 
 <h1>Examples</h1>
@@ -36,7 +36,7 @@
           {/each}
         </g>
         <g class="points pointer-events-none">
-          {#each data.us.captitals as capital}
+          {#each data.us.capitals as capital}
             <GeoPoint lat={capital.latitude} long={capital.longitude}>
               <circle r="2" class="fill-white stroke-danger" />
               <Text
@@ -68,7 +68,7 @@
 <Preview data={states}>
   <div class="h-[600px]">
     <Chart
-      data={data.world.captitals}
+      data={data.world.capitals}
       x="longitude"
       y="latitude"
       geo={{
@@ -76,49 +76,54 @@
         fitGeojson: countries,
       }}
       tooltip={{ mode: 'voronoi', debug: debugTooltip }}
-      let:tooltip
     >
-      <Svg>
-        <g class="states">
-          {#each countries.features as feature}
-            <GeoPath
-              geojson={feature}
-              class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
-              {tooltip}
-            />
-          {/each}
-        </g>
-        <g class="points pointer-events-none">
-          {#each data.world.captitals as capital}
-            <GeoPoint
-              lat={capital.latitude}
-              long={capital.longitude}
-              r="2"
-              class="fill-white stroke-danger"
-            />
+      {#snippet children({ tooltipContext })}
+        <Svg>
+          <g class="states">
+            {#each countries.features as feature}
+              <GeoPath
+                geojson={feature}
+                class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
+                {tooltipContext}
+              />
+            {/each}
+          </g>
+          <g class="points pointer-events-none">
+            {#each data.world.capitals as capital}
+              <GeoPoint
+                lat={capital.latitude}
+                long={capital.longitude}
+                r={2}
+                class="fill-white stroke-danger"
+              />
 
-            {#if tooltip.data}
-              <GeoPoint lat={tooltip.data.latitude} long={tooltip.data.longitude} spring>
-                <circle r="4" class="stroke-primary/50 fill-none" />
-                <Text
-                  y="-6"
-                  value={tooltip.data.label}
-                  textAnchor="middle"
-                  class="text-[8px] stroke-surface-100 [stroke-width:2px]"
-                />
-              </GeoPoint>
-            {/if}
-          {/each}
-        </g>
-      </Svg>
+              {#if tooltipContext.data}
+                <GeoPoint
+                  lat={tooltipContext.data.latitude}
+                  long={tooltipContext.data.longitude}
+                  spring
+                >
+                  <circle r="4" class="stroke-primary/50 fill-none" />
+                  <Text
+                    y="-6"
+                    value={tooltipContext.data.label}
+                    textAnchor="middle"
+                    class="text-[8px] stroke-surface-100 [stroke-width:2px]"
+                  />
+                </GeoPoint>
+              {/if}
+            {/each}
+          </g>
+        </Svg>
 
-      <!-- <Tooltip.Root let:data>
+        <!-- <Tooltip.Root let:data>
         <Tooltip.Header>{data.name}</Tooltip.Header>
         <Tooltip.List>
           <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
           <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
         </Tooltip.List>
       </Tooltip.Root> -->
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -146,42 +151,50 @@
         fitGeojson: states,
       }}
       tooltip={{ mode: 'voronoi', debug: debugTooltip }}
-      let:tooltip
     >
-      <Svg>
-        <g class="states">
-          {#each states.features as feature}
-            <GeoPath
-              geojson={feature}
-              class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
-            />
-          {/each}
-        </g>
+      {#snippet children({ tooltipContext })}
+        <Svg>
+          <g class="states">
+            {#each states.features as feature}
+              <GeoPath
+                geojson={feature}
+                class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
+              />
+            {/each}
+          </g>
 
-        <g class="points pointer-events-none">
-          {#each data.us.airports as airport}
-            <GeoPoint lat={airport.latitude} long={airport.longitude} r={1} class="fill-primary" />
-          {/each}
+          <g class="points pointer-events-none">
+            {#each data.us.airports as airport}
+              <GeoPoint
+                lat={airport.latitude}
+                long={airport.longitude}
+                r={1}
+                class="fill-primary"
+              />
+            {/each}
 
-          {#if tooltip.data}
-            <GeoPoint
-              lat={tooltip.data.latitude}
-              long={tooltip.data.longitude}
-              r={4}
-              class="stroke-primary/50 fill-none"
-              spring
-            />
-          {/if}
-        </g>
-      </Svg>
+            {#if tooltipContext.data}
+              <GeoPoint
+                lat={tooltipContext.data.latitude}
+                long={tooltipContext.data.longitude}
+                r={4}
+                class="stroke-primary/50 fill-none"
+                spring
+              />
+            {/if}
+          </g>
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.name}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
-          <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.name}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
+              <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -209,38 +222,46 @@
         fitGeojson: countries,
       }}
       tooltip={{ mode: 'voronoi', debug: debugTooltip }}
-      let:tooltip
     >
-      <Svg>
-        <g class="countries">
-          {#each countries.features as feature}
-            <GeoPath geojson={feature} class="fill-surface-content/10 stroke-surface-100" />
-          {/each}
-        </g>
-        <g class="points pointer-events-none">
-          {#each data.world.airports as airport}
-            <GeoPoint lat={airport.latitude} long={airport.longitude} r={1} class="fill-primary" />
-          {/each}
+      {#snippet children({ tooltipContext })}
+        <Svg>
+          <g class="countries">
+            {#each countries.features as feature}
+              <GeoPath geojson={feature} class="fill-surface-content/10 stroke-surface-100" />
+            {/each}
+          </g>
+          <g class="points pointer-events-none">
+            {#each data.world.airports as airport}
+              <GeoPoint
+                lat={airport.latitude}
+                long={airport.longitude}
+                r={1}
+                class="fill-primary"
+              />
+            {/each}
 
-          {#if tooltip.data}
-            <GeoPoint
-              lat={tooltip.data.latitude}
-              long={tooltip.data.longitude}
-              r={4}
-              class="stroke-primary/50 fill-none"
-              spring
-            />
-          {/if}
-        </g>
-      </Svg>
+            {#if tooltipContext.data}
+              <GeoPoint
+                lat={tooltipContext.data.latitude}
+                long={tooltipContext.data.longitude}
+                r={4}
+                class="stroke-primary/50 fill-none"
+                spring
+              />
+            {/if}
+          </g>
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.name}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
-          <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.name}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
+              <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -259,16 +280,18 @@
         {#each states.features as feature}
           <GeoPath geojson={feature} class="fill-surface-content/10 stroke-surface-100" />
         {/each}
-        {#each data.us.captitals as capital}
-          <GeoPoint lat={capital.latitude} long={capital.longitude} let:x let:y>
-            <Circle cx={x} cy={y} r={2} class="fill-white stroke-danger" />
-            <Text
-              {x}
-              y={y - 6}
-              value={capital.description}
-              textAnchor="middle"
-              class="text-[8px] stroke-surface-100 [stroke-width:2px]"
-            />
+        {#each data.us.capitals as capital}
+          <GeoPoint lat={capital.latitude} long={capital.longitude}>
+            {#snippet children({ x, y })}
+              <Circle cx={x} cy={y} r={2} class="fill-white stroke-danger" />
+              <Text
+                {x}
+                y={y - 6}
+                value={capital.description}
+                textAnchor="middle"
+                class="text-[8px] stroke-surface-100 [stroke-width:2px]"
+              />
+            {/snippet}
           </GeoPoint>
         {/each}
       </Canvas>

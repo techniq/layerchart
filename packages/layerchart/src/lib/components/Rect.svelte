@@ -127,13 +127,13 @@
       name: 'Rect',
       render,
       events: {
-        click: onclick,
-        dblclick: ondblclick,
-        pointerenter: onpointerenter,
-        pointermove: onpointermove,
-        pointerleave: onpointerleave,
-        pointerover: onpointerover,
-        pointerout: onpointerout,
+        click: restProps.onclick,
+        dblclick: restProps.ondblclick,
+        pointerenter: restProps.onpointerenter,
+        pointermove: restProps.onpointermove,
+        pointerleave: restProps.onpointerleave,
+        pointerover: restProps.onpointerover,
+        pointerout: restProps.onpointerout,
       },
     });
   });

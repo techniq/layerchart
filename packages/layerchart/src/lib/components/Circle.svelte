@@ -54,7 +54,7 @@
     CommonStyleProps;
 
   export type CircleProps = CirclePropsWithoutHTML &
-    Without<SVGAttributes<SVGCircleElement>, CirclePropsWithoutHTML>;
+    Without<SVGAttributes<Element>, CirclePropsWithoutHTML>;
 </script>
 
 <script lang="ts">

@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
-  import Circle, { type CirclePropsWithoutHTML } from './Circle.svelte';
+  import Circle, { type CircleProps, type CirclePropsWithoutHTML } from './Circle.svelte';
   import type { Without } from 'layerchart/utils/types.js';
 
   export type GeoPointPropsWithoutHTML = {
@@ -25,8 +25,7 @@
   };
 
   export type GeoPointProps = Omit<
-    GeoPointPropsWithoutHTML &
-      Without<SVGAttributes<Element>, GeoPointPropsWithoutHTML & CirclePropsWithoutHTML>,
+    GeoPointPropsWithoutHTML & Without<CircleProps, GeoPointPropsWithoutHTML>,
     'x' | 'y'
   >;
 </script>

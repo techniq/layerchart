@@ -5,7 +5,8 @@
   import { Canvas, Chart, GeoPath, Svg, Tooltip } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
+
   const states = feature(data.geojson, data.geojson.objects.states);
   const counties = feature(data.geojson, data.geojson.objects.counties);
 </script>
@@ -21,32 +22,35 @@
         projection: geoAlbersUsa,
         fitGeojson: states,
       }}
-      let:projection
-      let:tooltip
     >
-      <Svg>
-        {#each states.features as feature}
+      {#snippet children({ tooltipContext, geoContext })}
+        <Svg>
+          {#each states.features as feature}
+            <GeoPath
+              geojson={feature}
+              class="stroke-surface-content fill-surface-100 hover:fill-surface-content/20"
+              {tooltipContext}
+            />
+          {/each}
+
           <GeoPath
-            geojson={feature}
-            class="stroke-surface-content fill-surface-100 hover:fill-surface-content/20"
-            {tooltip}
+            geojson={counties}
+            class="fill-none stroke-surface-content/10 pointer-events-none"
           />
-        {/each}
+        </Svg>
 
-        <GeoPath
-          geojson={counties}
-          class="fill-none stroke-surface-content/10 pointer-events-none"
-        />
-      </Svg>
-
-      <Tooltip.Root let:data>
-        {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
-        <Tooltip.Header>{data.properties.name}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="longitude" value={longitude} format="decimal" />
-          <Tooltip.Item label="latitude" value={latitude} format="decimal" />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {@const [longitude, latitude] =
+              geoContext.projection?.invert?.([tooltipContext.x, tooltipContext.y]) ?? []}
+            <Tooltip.Header>{data.properties.name}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="longitude" value={longitude} format="decimal" />
+              <Tooltip.Item label="latitude" value={latitude} format="decimal" />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -60,34 +64,40 @@
         projection: geoAlbersUsa,
         fitGeojson: states,
       }}
-      let:projection
-      let:tooltip
     >
-      <Canvas>
-        {#each states.features as feature}
-          <GeoPath geojson={feature} class="stroke-surface-content" {tooltip} />
-        {/each}
-      </Canvas>
+      {#snippet children({ geoContext, tooltipContext })}
+        <Canvas>
+          {#each states.features as feature}
+            <GeoPath geojson={feature} class="stroke-surface-content" {tooltipContext} />
+          {/each}
+        </Canvas>
 
-      <Canvas pointerEvents={false}>
-        <GeoPath geojson={counties} class="stroke-surface-content/10" />
-      </Canvas>
+        <Canvas pointerEvents={false}>
+          <GeoPath geojson={counties} class="stroke-surface-content/10" />
+        </Canvas>
 
-      <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
-      <Canvas pointerEvents={false}>
-        {#if tooltip.data}
-          <GeoPath geojson={tooltip.data} class="stroke-surface-content fill-surface-content/20" />
-        {/if}
-      </Canvas>
+        <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
+        <Canvas pointerEvents={false}>
+          {#if tooltipContext.data}
+            <GeoPath
+              geojson={tooltipContext.data}
+              class="stroke-surface-content fill-surface-content/20"
+            />
+          {/if}
+        </Canvas>
 
-      <Tooltip.Root let:data>
-        {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
-        <Tooltip.Header>{data.properties.name}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="longitude" value={longitude} format="decimal" />
-          <Tooltip.Item label="latitude" value={latitude} format="decimal" />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {@const [longitude, latitude] =
+              geoContext.projection?.invert?.([tooltipContext.x, tooltipContext.y]) ?? []}
+            <Tooltip.Header>{data.properties.name}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="longitude" value={longitude} format="decimal" />
+              <Tooltip.Item label="latitude" value={latitude} format="decimal" />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

@@ -152,8 +152,8 @@
         pointerenter: _onPointerEnter,
         pointermove: _onPointerMove,
         pointerleave: _onPointerLeave,
-        pointerdown: onpointerdown,
-        touchmove: ontouchmove,
+        pointerdown: restProps.onpointerdown,
+        touchmove: restProps.ontouchmove,
       },
     });
   });

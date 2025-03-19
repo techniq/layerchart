@@ -17,7 +17,7 @@ export async function load({ fetch }) {
       airports: (await fetch('/data/examples/geo/us-airports.csv').then(async (r) =>
         csvParse(await r.text(), autoType)
       )) as USAirportsData,
-      captitals: (await fetch('/data/examples/geo/us-state-capitals.csv').then(async (r) =>
+      capitals: (await fetch('/data/examples/geo/us-state-capitals.csv').then(async (r) =>
         csvParse(await r.text(), autoType)
       )) as USStateCapitalsData,
     },
@@ -31,7 +31,7 @@ export async function load({ fetch }) {
       airports: (await fetch('/data/examples/geo/world-airports.csv').then(async (r) =>
         csvParse(await r.text(), autoType)
       )) as WorldAirportsData,
-      captitals: (await fetch('/data/examples/geo/world-capitals.json').then(async (r) =>
+      capitals: (await fetch('/data/examples/geo/world-capitals.json').then(async (r) =>
         r.json()
       )) as WorldCapitalsData,
     },
