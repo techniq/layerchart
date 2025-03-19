@@ -91,9 +91,9 @@
   const renderCtx = getRenderContext();
   const canvasCtx = getCanvasContext();
 
-  const tweenedCx = $derived(motionState(initialCx, { spring, tweened }));
-  const tweenedCy = $derived(motionState(initialCy, { spring, tweened }));
-  const tweenedR = $derived(motionState(initialR, { spring, tweened }));
+  const tweenedCx = motionState(initialCx, { spring, tweened });
+  const tweenedCy = motionState(initialCy, { spring, tweened });
+  const tweenedR = motionState(initialR, { spring, tweened });
 
   $effect(() => {
     [cx, cy, r];

@@ -219,15 +219,13 @@
   {...restProps}
   tooltip={tooltip === false
     ? false
-    : typeof tooltip === 'object'
-      ? {
-          mode: 'bisect-x',
-          onclick: onTooltipClick,
-          debug,
-          ...props.tooltip?.context,
-          ...tooltip,
-        }
-      : false}
+    : {
+        mode: 'bisect-x',
+        onclick: onTooltipClick,
+        debug,
+        ...props.tooltip?.context,
+        ...props.tooltip,
+      }}
   bind:tooltipContext
   brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
     ? {
@@ -254,9 +252,7 @@
       getLabelsProps,
       getPointsProps,
       getSplineProps,
-      get highlightKey() {
-        return highlightKey.current;
-      },
+      highlightKey: highlightKey.current,
       setHighlightKey: highlightKey.set,
     }}
     {#if childrenProp}
@@ -278,7 +274,6 @@
 
         <ChartClipPath disabled={!brush}>
           {@render belowMarks?.(slotProps)}
-
           {#if marks}
             {@render marks(slotProps)}
           {:else}
