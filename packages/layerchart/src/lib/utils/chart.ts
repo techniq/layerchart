@@ -318,6 +318,7 @@ export function findScaleName(scale: any) {
 export function isOrdinalDomain(scale: AnyScale) {
   // scaleBand, scalePoint
   if (typeof scale.bandwidth === 'function') return true;
+
   // scaleOrdinal
   if (arraysEqual(Object.keys(scale), ['domain', 'range', 'unknown', 'copy'])) {
     return true;
@@ -374,10 +375,7 @@ export function calcScaleExtents<T>(
   // ordinal scales
   if (scaleGroups.ordinal) {
     const sortOptions = Object.fromEntries(
-      Object.entries(activeScales).map(([key, scaleInfo]) => [
-        key,
-        scaleInfo.sort ?? false, // default to false if sort is undefined
-      ])
+      Object.entries(activeScales).map(([key, scaleInfo]) => [key, scaleInfo.sort])
     );
     extents = calcUniques(flatData, scaleGroups.ordinal, sortOptions);
   }

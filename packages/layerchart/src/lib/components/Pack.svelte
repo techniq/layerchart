@@ -1,8 +1,13 @@
 <script lang="ts" module>
-  import { pack as d3Pack, type HierarchyCircularNode } from 'd3-hierarchy';
+  import {
+    pack as d3Pack,
+    type HierarchyCircularNode,
+    type HierarchyNode,
+    type PackLayout,
+  } from 'd3-hierarchy';
   import type { Snippet } from 'svelte';
 
-  export type PackProps = {
+  export type PackProps<T> = {
     /**
      * The size of the pack layout.
      */
@@ -15,27 +20,31 @@
      */
     padding?: number;
 
-    children?: Snippet<[{ nodes: HierarchyCircularNode<unknown>[] }]>;
+    /**
+     * The hierarchy data to be packed.
+     */
+    hierarchy: HierarchyNode<T>;
+
+    children?: Snippet<[{ nodes: HierarchyCircularNode<T>[] }]>;
   };
 </script>
 
-<script lang="ts">
+<script lang="ts" generics="T">
   import { getChartContext } from './Chart.svelte';
 
   const ctx = getChartContext();
 
-  let { size, padding, children }: PackProps = $props();
+  let { size, padding, children, hierarchy }: PackProps<T> = $props();
 
   const pack = $derived.by(() => {
-    const _pack = d3Pack().size(size ?? [ctx.width, ctx.height]);
+    const _pack = d3Pack<T>().size(size ?? [ctx.width, ctx.height]);
     if (padding) {
       _pack.padding(padding);
     }
     return _pack;
   });
 
-  // @ts-expect-error - TODO: Can we fix this?
-  const packData = $derived(pack(ctx.data));
+  const packData = $derived(pack(hierarchy));
 </script>
 
 {@render children?.({ nodes: packData.descendants() })}

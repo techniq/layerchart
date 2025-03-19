@@ -781,7 +781,7 @@
     brush,
   }: ChartPropsWithoutHTML<TData> = $props();
 
-  const xRangeProp = $derived((_xRangeProp ?? radial) ? [0, 2 * Math.PI] : undefined);
+  const xRangeProp = $derived(_xRangeProp ? _xRangeProp : radial ? [0, 2 * Math.PI] : undefined);
 
   const containerWidth = $derived(
     containerWidthProp !== undefined ? containerWidthProp : widthProp || 100
@@ -823,7 +823,8 @@
   const x1 = $derived(accessor(x1Prop));
   const y1 = $derived(accessor(y1Prop));
 
-  const flatData = $derived(flatDataProp || data) as TData[];
+  const flatData = $derived(flatDataProp ?? data) as TData[];
+
   const filteredExtents = $derived(filterObject($state.snapshot(extentsProp)));
 
   const activeGetters = $derived({
@@ -922,7 +923,7 @@
       nice: xNice,
       reverse: xReverse,
       percentRange,
-      range: $state.snapshot(xRangeProp),
+      range: xRangeProp,
       height,
       width,
       extents: $state.snapshot(extents),

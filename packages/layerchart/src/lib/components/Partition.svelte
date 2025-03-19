@@ -6,7 +6,7 @@
   } from 'd3-hierarchy';
   import type { Snippet } from 'svelte';
 
-  export type PartitionProps = {
+  export type PartitionProps<T> = {
     /**
      * The orientation of the partition layout.
      *
@@ -31,19 +31,28 @@
      */
     round?: boolean;
 
-    children?: Snippet<[{ nodes: HierarchyRectangularNode<any>[] }]>;
+    hierarchy?: HierarchyRectangularNode<T>;
+
+    children?: Snippet<[{ nodes: HierarchyRectangularNode<T>[] }]>;
   };
 </script>
 
-<script lang="ts">
+<script lang="ts" generics="T">
   import { getChartContext } from './Chart.svelte';
 
-  let { size, padding, round, orientation = 'horizontal', children }: PartitionProps = $props();
+  let {
+    size,
+    padding,
+    round,
+    orientation = 'horizontal',
+    hierarchy,
+    children,
+  }: PartitionProps<T> = $props();
 
   const ctx = getChartContext();
 
   const partition = $derived.by(() => {
-    const _partition = d3Partition().size(
+    const _partition = d3Partition<T>().size(
       size ?? (orientation === 'horizontal' ? [ctx.height, ctx.width] : [ctx.width, ctx.height])
     );
 
@@ -56,7 +65,7 @@
     }
     return _partition;
   });
-  const partitionData = $derived(partition(ctx.data as HierarchyNode<any>));
+  const partitionData = $derived(hierarchy ? partition(hierarchy) : []);
 </script>
 
-{@render children?.({ nodes: partitionData.descendants() })}
+{@render children?.({ nodes: 'descendants' in partitionData ? partitionData.descendants() : [] })}

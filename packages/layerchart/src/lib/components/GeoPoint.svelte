@@ -19,14 +19,14 @@
      * A bindable reference to the underlying element, which
      * can be a `<circle>` or `<g>` element.
      */
-    ref?: SVGElement;
+    ref?: Element;
 
     children?: Snippet<[{ x: number; y: number }]>;
   };
 
   export type GeoPointProps = Omit<
     GeoPointPropsWithoutHTML &
-      Without<SVGAttributes<SVGElement>, GeoPointPropsWithoutHTML & CirclePropsWithoutHTML>,
+      Without<SVGAttributes<Element>, GeoPointPropsWithoutHTML & CirclePropsWithoutHTML>,
     'x' | 'y'
   >;
 </script>

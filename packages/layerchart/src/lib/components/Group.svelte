@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
-  import type { HTMLAttributes } from 'svelte/elements';
+  import type { HTMLAttributes, TouchEventHandler } from 'svelte/elements';
   import type { Without } from 'layerchart/utils/types.js';
   import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
 
@@ -54,9 +54,6 @@
      * @bindable
      */
     ref?: Element;
-
-    // this feels dirty, perhaps we could discriminate union it but we'd need to force a prop
-    [key: string]: any;
   } & MotionProps;
 
   export type GroupProps = GroupPropsWithoutHTML &
@@ -135,13 +132,13 @@
     canvasContext.invalidate();
   });
 
-  function handleTouchMove(e: TouchEvent) {
+  const handleTouchMove: TouchEventHandler<Element> = (e) => {
     if (preventTouchMove) {
       // Prevent touch to not interfere with pointer
       e.preventDefault();
     }
     restProps.ontouchmove?.(e);
-  }
+  };
 </script>
 
 {#if renderContext === 'canvas'}

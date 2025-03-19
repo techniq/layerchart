@@ -57,9 +57,16 @@ export type DomainType =
   | null;
 
 // this may need to become a getter for options so we can reactively update after mount
-export function motionScaleState<Domain, Range>(scale: AnyScale, options: MotionProps) {
-  const domain = motionState<Domain>(undefined as Domain, options);
-  const range = motionState<Range>(undefined as Range, options);
+export function motionScaleState<Domain, Range>(
+  scale: AnyScale,
+  options: MotionProps & {
+    defaultDomain?: Domain;
+    defaultRange?: Range;
+  }
+) {
+  const { defaultDomain, defaultRange, ...motionOptions } = options;
+  const domain = motionState<Domain>(defaultDomain as Domain, motionOptions);
+  const range = motionState<Range>(defaultRange as Range, motionOptions);
 
   const tweenedScale = $derived.by(() => {
     // @ts-expect-error

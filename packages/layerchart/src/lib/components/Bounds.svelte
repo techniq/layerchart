@@ -11,7 +11,7 @@
   export type BoundsProps = {
     domain?: BoundsExtents | BoundsExtentsAccessor | null;
     range?: BoundsExtents | BoundsExtentsAccessor | null;
-    children?: Snippet<[{ xScale: any; yScale: any }]>;
+    children?: Snippet<[{ xScale: AnyScale; yScale: AnyScale }]>;
   } & MotionProps;
 </script>
 
@@ -19,7 +19,7 @@
   import { scaleLinear } from 'd3-scale';
 
   import { getChartContext } from './Chart.svelte';
-  import { motionScaleState } from 'layerchart/utils/scales.svelte.js';
+  import { motionScaleState, type AnyScale } from 'layerchart/utils/scales.svelte.js';
 
   let { domain, range, spring, tweened, children }: BoundsProps = $props();
 
@@ -41,7 +41,12 @@
     ];
   }
 
-  const xScale = $derived(motionScaleState(scaleLinear as any, { spring, tweened }));
+  const xScale = motionScaleState(scaleLinear as any, {
+    spring,
+    tweened,
+    defaultDomain: getExtents(domain, 'x', ctx.width),
+    defaultRange: getExtents(range, 'x', ctx.width),
+  });
 
   $effect(() => {
     xScale.domain(getExtents(domain, 'x', ctx.width));
@@ -51,7 +56,12 @@
     xScale.range(getExtents(range, 'x', ctx.width));
   });
 
-  const yScale = $derived(motionScaleState(scaleLinear as any, { spring, tweened }));
+  const yScale = motionScaleState(scaleLinear as any, {
+    spring,
+    tweened,
+    defaultDomain: getExtents(domain, 'y', ctx.height),
+    defaultRange: getExtents(range, 'y', ctx.height),
+  });
 
   $effect(() => {
     yScale.domain(getExtents(domain, 'y', ctx.height));
