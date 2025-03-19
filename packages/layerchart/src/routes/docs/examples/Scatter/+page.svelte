@@ -69,11 +69,13 @@
         <Highlight points lines />
       </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
-        </Tooltip.List>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} />
+          </Tooltip.List>
+        {/snippet}
       </Tooltip.Root>
     </Chart>
   </div>
