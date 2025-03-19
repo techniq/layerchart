@@ -73,12 +73,20 @@
      */
     onEnd?: () => void;
 
-    children?: Snippet<[{ nodes: any[]; simulation: Simulation<SimulationNodeDatum, undefined> }]>;
+    children?: Snippet<
+      [
+        {
+          nodes: any[];
+          simulation: Simulation<SimulationNodeDatum, undefined>;
+        },
+      ]
+    >;
   };
 </script>
 
 <script lang="ts">
   import { getChartContext } from './Chart.svelte';
+  import { watch } from 'runed';
 
   let {
     forces,
@@ -116,56 +124,71 @@
 
   // MARK: Reactivity Effects
 
-  $effect(() => {
-    // Any time the `stopped` prop gets toggled we
-    // update the running state of the simulation:
-    if (stopped) {
-      pauseDynamicSimulation();
-    } else {
+  watch(
+    () => stopped,
+    () => {
+      // Any time the `stopped` prop gets toggled we
+      // update the running state of the simulation:
+      if (stopped) {
+        pauseDynamicSimulation();
+      } else {
+        runOrResumeSimulation();
+      }
+    }
+  );
+
+  watch(
+    () => staticProp,
+    () => {
+      // Any time the `static` prop gets toggled we
+      // either attach or detach our internal event listeners:
+      if (staticProp) {
+        simulation.on('tick', null).on('end', null);
+      } else {
+        simulation.on('tick', onTick).on('end', onEnd);
+      }
+
       runOrResumeSimulation();
     }
-  });
+  );
 
-  $effect(() => {
-    // Any time the `static` prop gets toggled we
-    // either attach or detach our internal event listeners:
-    if (staticProp) {
-      simulation.on('tick', null).on('end', null);
-    } else {
-      simulation.on('tick', onTick).on('end', onEnd);
-    }
-
-    runOrResumeSimulation();
-  });
-
-  $effect(() => {
-    // Any time the `data` store gets changed we
-    // pass them to the internal d3 simulation object:
-    pushNodesToSimulation(ctx.data as any[]);
-    runOrResumeSimulation();
-  });
-
-  $effect(() => {
-    // Any time the `forces` prop gets changed we
-    // pass them to the internal d3 simulation object:
-    pushForcesToSimulation(forces);
-    runOrResumeSimulation();
-  });
-
-  $effect(() => {
-    // Any time the `alpha` prop gets changed we
-    // pass it to the internal d3 simulation object:
-    pushAlphaToSimulation(alpha);
-
-    // Only resume the simulation as long as `alpha`
-    // is above the cut-off threshold of `alphaMin`,
-    // otherwise our simulation will never terminate:
-    if (simulation.alpha() >= simulation.alphaMin()) {
+  watch(
+    () => ctx.data,
+    () => {
+      // Any time the `data` store gets changed we
+      // pass them to the internal d3 simulation object:
+      pushNodesToSimulation(ctx.data as any[]);
       runOrResumeSimulation();
     }
-  });
+  );
 
-  $effect(() => {
+  watch(
+    () => forces,
+    () => {
+      // Any time the `forces` prop gets changed we
+      // pass them to the internal d3 simulation object:
+      pushForcesToSimulation(forces);
+      runOrResumeSimulation();
+    }
+  );
+
+  watch(
+    () => alpha,
+    () => {
+      // Any time the `alpha` prop gets changed we
+      // pass it to the internal d3 simulation object:
+      pushAlphaToSimulation(alpha);
+
+      // Only resume the simulation as long as `alpha`
+      // is above the cut-off threshold of `alphaMin`,
+      // otherwise our simulation will never terminate:
+      if (simulation.alpha() >= simulation.alphaMin()) {
+        runOrResumeSimulation();
+      }
+    }
+  );
+
+  watch([() => alphaTarget, () => alphaMin, () => alphaDecay, () => velocityDecay], () => {
     // Any time any of the the alpha props get changed we
     // pass them all to the internal d3 simulation object
     // (they are cheap, so passing them as a batch is fine!):

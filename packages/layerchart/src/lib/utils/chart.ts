@@ -13,6 +13,7 @@ import { arraysEqual } from './array.js';
 import { toTitleCase } from './string.js';
 import { InternSet } from 'd3-array';
 import type { Accessor } from './common.js';
+import type { SimulationNodeDatum } from 'd3-force';
 
 type DomainFunction = (extent: number[]) => Array<number | null>;
 type DomainArray = Array<number | null>;
