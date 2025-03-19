@@ -130,12 +130,7 @@
     xDomain,
     radial = false,
     orientation = 'vertical',
-    series = [
-      {
-        key: 'default',
-        value: orientation === 'vertical' ? yProp : xProp,
-      },
-    ],
+    series: seriesProp,
     seriesLayout = 'overlap',
     axis = true,
     brush = false,
@@ -167,18 +162,31 @@
     ...restProps
   }: BarChartProps<TData> = $props();
 
+  const series = $derived(
+    seriesProp === undefined
+      ? [
+          {
+            key: 'default',
+            value: orientation === 'vertical' ? yProp : xProp,
+          },
+        ]
+      : seriesProp
+  );
+
   const isVertical = $derived(orientation === 'vertical');
   const isDefaultSeries = $derived(series.length === 1 && series[0].key === 'default');
   const stackSeries = $derived(seriesLayout.startsWith('stack'));
   const groupSeries = $derived(seriesLayout === 'group');
+
   const xScale = $derived(
     xScaleProp ?? (isVertical ? scaleBand().padding(bandPadding) : scaleLinear())
   );
-  const xBaseline = $derived(isVertical ? 0 : undefined);
+  const xBaseline = $derived(isVertical ? undefined : 0);
+
   const yScale = $derived(
     yScaleProp ?? (isVertical ? scaleLinear() : scaleBand().padding(bandPadding))
   );
-  const yBaseline = $derived(isVertical ? undefined : 0);
+  const yBaseline = $derived(isVertical ? 0 : undefined);
 
   const selectedSeries = createSelectionState();
 

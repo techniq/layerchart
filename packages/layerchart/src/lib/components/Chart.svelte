@@ -1008,7 +1008,7 @@
       : null
   );
 
-  const cGet = $derived(createGetter(c, cScale));
+  const cGet = $derived((d: any) => cScale?.(c(d)));
 
   const xDomainPossiblyNice = $derived(xScale.domain());
   const yDomainPossiblyNice = $derived(yScale.domain());

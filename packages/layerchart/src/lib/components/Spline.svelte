@@ -139,15 +139,19 @@
     fillOpacity,
     class: className,
     marker,
-    markerStart = marker,
-    markerMid = marker,
-    markerEnd = marker,
+    markerStart: markerStartProp,
+    markerMid: markerMidProp,
+    markerEnd: markerEndProp,
     startContent,
     endContent,
     opacity,
     ref = $bindable(),
     ...restProps
   }: SplineProps = $props();
+
+  const markerStart = $derived(markerStartProp ?? marker);
+  const markerMid = $derived(markerMidProp ?? marker);
+  const markerEnd = $derived(markerEndProp ?? marker);
 
   const markerStartId = $derived(markerStart ? uniqueId('marker-') : '');
   const markerMidId = $derived(markerMid ? uniqueId('marker-') : '');
@@ -176,8 +180,8 @@
   const xAccessor = $derived(x ? accessor(x) : ctx.x);
   const yAccessor = $derived(y ? accessor(y) : ctx.y);
 
-  const yOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
-  const xOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
+  const xOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
+  const yOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
 
   const tweenedOptions = tweened
     ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
@@ -228,10 +232,6 @@
     return pathData ?? path(data ?? ctx.data) ?? '';
   });
 
-  $effect(() => {
-    tweenedState.target = d;
-  });
-
   const drawTransition = $derived(draw ? _drawTransition : () => ({}));
 
   let key = $state(Symbol());
@@ -241,6 +241,10 @@
     [tweenedState.current];
     // Anytime the path data changes, redraw
     key = Symbol();
+  });
+
+  $effect(() => {
+    tweenedState.target = d;
   });
 
   const renderCtx = getRenderContext();
@@ -347,7 +351,6 @@
       marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
       marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
       in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
-      {...restProps}
       bind:this={ref}
     />
     <MarkerWrapper id={markerStartId} marker={markerStart} />
