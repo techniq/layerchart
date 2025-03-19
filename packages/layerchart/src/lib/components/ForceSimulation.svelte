@@ -90,7 +90,7 @@
 
   let {
     forces,
-    alpha = 1,
+    alpha = $bindable(1),
     alphaTarget = 0,
     alphaDecay = 1 - Math.pow(0.001, 1 / 300),
     alphaMin = 0.001,
