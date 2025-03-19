@@ -14,7 +14,7 @@ import type TooltipList from '../tooltip/TooltipList.svelte';
 import type TooltipItem from '../tooltip/TooltipItem.svelte';
 import type TooltipSeparator from '../tooltip/TooltipSeparator.svelte';
 import type { BrushContextValue } from '../BrushContext.svelte';
-import type { ChartContext } from '../Chart.svelte';
+import type { ChartContext, ChartPropsWithoutHTML } from '../Chart.svelte';
 import type { GeoContextValue } from '../GeoContext.svelte';
 import type { TransformContextValue } from '../TransformContext.svelte';
 import type Grid from '../Grid.svelte';
@@ -22,6 +22,7 @@ import type Bars from '../Bars.svelte';
 import type Pie from '../Pie.svelte';
 import type Arc from '../Arc.svelte';
 import type Canvas from '../layout/Canvas.svelte';
+import type { Without } from 'layerchart/utils/types.js';
 
 export type SeriesData<TData, TComponent extends Component> = {
   key: string;
@@ -117,7 +118,7 @@ export type SimplifiedChartPropsObject = {
   yAxis?: Partial<ComponentProps<typeof Axis>>;
 };
 
-export type SimplifiedChartProps<
+export type BaseChartProps<
   TData,
   TComponent extends Component,
   TSnippetProps = {},
@@ -275,9 +276,15 @@ export type SimplifiedChartProps<
   aboveMarks?: ChartSnippet;
   marks?: ChartSnippet;
   highlight?: ChartSnippet;
-
-  /**
-   * The y domain
-   */
-  yDomain?: DomainType;
 };
+
+export type SimplifiedChartProps<
+  TData,
+  TComponent extends Component,
+  TSnippetProps = {},
+  ChartSnippet = SimplifiedChartSnippet<TData, TComponent, TSnippetProps>,
+> = BaseChartProps<TData, TComponent, TSnippetProps, ChartSnippet> &
+  Without<
+    ChartPropsWithoutHTML<TData>,
+    BaseChartProps<TData, TComponent, TSnippetProps, ChartSnippet>
+  >;
