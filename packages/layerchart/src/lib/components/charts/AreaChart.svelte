@@ -276,15 +276,13 @@
   {...restProps}
   tooltip={tooltip === false
     ? false
-    : typeof tooltip === 'object'
-      ? {
-          mode: 'bisect-x',
-          onclick: onTooltipClick,
-          debug,
-          ...props.tooltip?.context,
-          ...tooltip,
-        }
-      : {}}
+    : {
+        mode: 'bisect-x',
+        onclick: onTooltipClick,
+        debug,
+        ...props.tooltip?.context,
+        ...props.tooltip,
+      }}
   bind:tooltipContext
   brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
     ? {
