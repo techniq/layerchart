@@ -5,9 +5,9 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
-  const chartData = data.newPassengerCars;
+  const chartData = $derived(data.newPassengerCars);
 </script>
 
 <h1>Examples</h1>
@@ -28,41 +28,46 @@
       y1Range={({ yScale }) => yScale.domain()}
       padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
       tooltip={{ mode: 'bisect-x' }}
-      let:height
-      let:y1Scale
     >
-      <Svg>
-        <Axis
-          placement="left"
-          rule
-          format="metric"
-          label="↑ sales (M)"
-          labelPlacement="start"
-          labelProps={{ class: 'fill-primary' }}
-        />
-        <Axis
-          placement="right"
-          scale={scaleLinear(y1Scale?.domain() ?? [], [height, 0])}
-          ticks={y1Scale?.ticks?.()}
-          rule
-          label="efficiency (mpg) ↑"
-          labelPlacement="start"
-          labelProps={{ class: 'fill-secondary' }}
-        />
-        <Axis placement="bottom" format="none" rule />
-        <Spline class="stroke-2 stroke-primary" />
-        <Spline y={(d) => y1Scale?.(d.efficiency)} class="stroke-2 stroke-secondary" />
-        <Highlight lines points />
-        <Highlight points={{ class: 'fill-secondary' }} y={(d) => y1Scale?.(d.efficiency)} />
-      </Svg>
+      {#snippet children({ context })}
+        <Svg>
+          <Axis
+            placement="left"
+            rule
+            format="metric"
+            label="↑ sales (M)"
+            labelPlacement="start"
+            labelProps={{ class: 'fill-primary' }}
+          />
+          <Axis
+            placement="right"
+            scale={scaleLinear(context.y1Scale?.domain() ?? [], [context.height, 0])}
+            ticks={context.y1Scale?.ticks?.()}
+            rule
+            label="efficiency (mpg) ↑"
+            labelPlacement="start"
+            labelProps={{ class: 'fill-secondary' }}
+          />
+          <Axis placement="bottom" format="none" rule />
+          <Spline class="stroke-2 stroke-primary" />
+          <Spline y={(d) => context.y1Scale?.(d.efficiency)} class="stroke-2 stroke-secondary" />
+          <Highlight lines points />
+          <Highlight
+            points={{ class: 'fill-secondary' }}
+            y={(d) => context.y1Scale?.(d.efficiency)}
+          />
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.year}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="sales" value={data.sales} format="currencyRound" />
-          <Tooltip.Item label="efficiency" value={data.efficiency} />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.year}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="sales" value={data.sales} format="currencyRound" />
+              <Tooltip.Item label="efficiency" value={data.efficiency} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -116,12 +121,14 @@
         <Highlight lines />
       </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.year}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="sales" value={data.sales} format="currencyRound" />
-          <Tooltip.Item label="efficiency" value={data.efficiency} />
-        </Tooltip.List>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header>{data.year}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="sales" value={data.sales} format="currencyRound" />
+            <Tooltip.Item label="efficiency" value={data.efficiency} />
+          </Tooltip.List>
+        {/snippet}
       </Tooltip.Root>
     </Chart>
   </div>

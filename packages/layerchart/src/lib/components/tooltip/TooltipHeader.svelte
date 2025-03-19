@@ -2,7 +2,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Snippet } from 'svelte';
 
-  type TooltipHeaderProps = {
+  export type TooltipHeaderPropsWithoutHTML = {
     /**
      * The value to display in the tooltip header when the `children`
      * snippet is not provided.
@@ -47,11 +47,15 @@
 
     children?: Snippet;
   };
+
+  export type TooltipHeaderProps = TooltipHeaderPropsWithoutHTML &
+    Without<HTMLAttributes<HTMLElement>, TooltipHeaderPropsWithoutHTML>;
 </script>
 
 <script lang="ts">
   import { format as formatUtil, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
+  import type { Without } from 'layerchart/utils/types.js';
 
   let {
     ref = $bindable(),
@@ -67,6 +71,7 @@
       root: {},
       color: {},
     },
+    class: className,
     children,
   }: TooltipHeaderProps = $props();
 </script>
@@ -76,7 +81,8 @@
     'TooltipHeader',
     'font-semibold whitespace-nowrap border-b mb-1 pb-1 flex items-center gap-2',
     classes.root,
-    props.root?.class
+    props.root?.class,
+    className
   )}
   bind:this={ref}
 >

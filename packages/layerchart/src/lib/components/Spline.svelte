@@ -220,16 +220,45 @@
   const d = $derived.by(() => {
     const path = ctx.radial
       ? lineRadial()
-          .angle((d) => getScaleValue(d, ctx.xScale, xAccessor))
-          .radius((d) => getScaleValue(d, ctx.yScale, yAccessor))
+          .angle((d) => {
+            const value = getScaleValue(d, ctx.xScale, xAccessor);
+            console.log('angle', d, value);
+            return value;
+          })
+          .radius((d) => {
+            const value = getScaleValue(d, ctx.yScale, yAccessor);
+            console.log('radius', d, value);
+            return value;
+          })
       : d3Line()
-          .x((d) => getScaleValue(d, ctx.xScale, xAccessor) + xOffset)
-          .y((d) => getScaleValue(d, ctx.yScale, yAccessor) + yOffset);
+          .x((d) => {
+            const value = getScaleValue(d, ctx.xScale, xAccessor) + xOffset;
+            console.log('x', d, value);
+            return value;
+          })
+          .y((d) => {
+            const value = getScaleValue(d, ctx.yScale, yAccessor) + yOffset;
+            console.log('y', d, value);
+            return value;
+          });
 
-    path.defined(defined ?? ((d) => xAccessor(d) != null && yAccessor(d) != null));
+    path.defined(
+      defined ??
+        ((d) => {
+          const valid =
+            xAccessor(d) != null &&
+            yAccessor(d) != null &&
+            !isNaN(xAccessor(d)) &&
+            !isNaN(yAccessor(d));
+          if (!valid) console.log('invalid data point', d);
+          return valid;
+        })
+    );
     if (curve) path.curve(curve);
 
-    return pathData ?? path(data ?? ctx.data) ?? '';
+    const result = pathData ?? path(data ?? ctx.data) ?? '';
+    console.log('generated path', result);
+    return result;
   });
 
   const drawTransition = $derived(draw ? _drawTransition : () => ({}));
