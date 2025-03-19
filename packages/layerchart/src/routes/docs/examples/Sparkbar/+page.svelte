@@ -85,23 +85,22 @@
       bandPadding={0.1}
       props={{ bars: { radius: 1, strokeWidth: 0 } }}
     >
-      <svelet:fragment slot="tooltip" let:width>
+      {#snippet tooltip({ context, tooltipContext })}
         <Tooltip.Root
           class="text-xs"
           contained={false}
           variant="none"
           y={-10}
-          x={width + 8}
-          let:data
+          x={context.width + 8}
         >
           <div class="whitespace-nowrap">
-            {format(data.date, 'eee, MMM do')}
+            {format(tooltipContext.data.date, 'eee, MMM do')}
           </div>
           <div class="font-semibold">
-            {data.value}
+            {tooltipContext.data.value}
           </div>
         </Tooltip.Root>
-      </svelet:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -122,14 +121,14 @@
           bandPadding={0.1}
           props={{ bars: { radius: 1, strokeWidth: 0 } }}
         >
-          <svelte:fragment slot="tooltip" let:height>
-            <Tooltip.Root class="text-xs" contained={false} y={height + 4} xOffset={0} let:data>
-              <Tooltip.Header>{format(data.date, 'eee, MMM do')}</Tooltip.Header>
+          {#snippet tooltip({ context, tooltipContext })}
+            <Tooltip.Root class="text-xs" contained={false} y={context.height + 4} xOffset={0}>
+              <Tooltip.Header>{format(tooltipContext.data.date, 'eee, MMM do')}</Tooltip.Header>
               <Tooltip.List>
-                <Tooltip.Item label="value" value={data.value} />
+                <Tooltip.Item label="value" value={tooltipContext.data.value} />
               </Tooltip.List>
             </Tooltip.Root>
-          </svelte:fragment>
+          {/snippet}
         </BarChart>
       </span> Sed ipsum justo, facilisis id tempor hendrerit, suscipit eu ipsum. Mauris ut sapien quis
       nibh volutpat venenatis. Ut viverra justo varius sapien convallis venenatis vel faucibus urna.
