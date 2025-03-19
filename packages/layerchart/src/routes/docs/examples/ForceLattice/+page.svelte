@@ -31,17 +31,18 @@
             charge: chargeForce,
             link: linkForce,
           }}
-          let:nodes
         >
-          {#key nodes}
-            {#each links as link}
-              <Link data={link} class="stroke-surface-content/20" curve={curveLinear} />
-            {/each}
-          {/key}
+          {#snippet children({ nodes })}
+            {#key nodes}
+              {#each links as link}
+                <Link data={link} class="stroke-surface-content/20" curve={curveLinear} />
+              {/each}
+            {/key}
 
-          {#each nodes as node}
-            <Circle cx={node.x} cy={node.y} r={3} class="fill-surface-content" />
-          {/each}
+            {#each nodes as node}
+              <Circle cx={node.x} cy={node.y} r={3} class="fill-surface-content" />
+            {/each}
+          {/snippet}
         </ForceSimulation>
       </Svg>
     </Chart>

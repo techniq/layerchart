@@ -7,7 +7,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
   const root = hierarchy(data.flare);
   const nodes = root.descendants();
@@ -23,49 +23,54 @@
 
 <Preview data={nodes}>
   <div class="h-[600px] p-4 border rounded-sm">
-    <Chart data={nodes} let:tooltip>
-      <Svg center>
-        <ForceSimulation
-          forces={{
-            link: linkForce,
-            charge: chargeForce,
-            x: xForce,
-            y: yForce,
-          }}
-          let:nodes
-        >
-          {#key nodes}
-            {#each links as link}
-              <Link data={link} class="stroke-surface-content/20" />
-            {/each}
-          {/key}
+    <Chart data={nodes}>
+      {#snippet children({ tooltipContext })}
+        <Svg center>
+          <ForceSimulation
+            forces={{
+              link: linkForce,
+              charge: chargeForce,
+              x: xForce,
+              y: yForce,
+            }}
+          >
+            {#snippet children({ nodes })}
+              {#key nodes}
+                {#each links as link}
+                  <Link data={link} class="stroke-surface-content/20" />
+                {/each}
+              {/key}
 
-          {#each nodes as node}
-            <Circle
-              cx={node.x}
-              cy={node.y}
-              r={3}
-              class={cls(
-                node.children ? 'fill-surface-100 stroke-surface-content' : 'fill-surface-content'
-              )}
-              onpointermove={(e) => tooltip.show(e, node)}
-              onpointerleave={tooltip.hide}
-            />
-          {/each}
-        </ForceSimulation>
-      </Svg>
+              {#each nodes as node}
+                <Circle
+                  cx={node.x}
+                  cy={node.y}
+                  r={3}
+                  class={cls(
+                    node.children
+                      ? 'fill-surface-100 stroke-surface-content'
+                      : 'fill-surface-content'
+                  )}
+                  onpointermove={(e) => tooltipContext.show(e, node)}
+                  onpointerleave={tooltipContext.hide}
+                />
+              {/each}
+            {/snippet}
+          </ForceSimulation>
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.data.name}</Tooltip.Header>
-        <Tooltip.List>
-          {#if data.data.children}
-            <Tooltip.Item label="children" value={data.data.children.length} />
-          {/if}
-          {#if data.data.value}
-            <Tooltip.Item label="value" value={data.data.value} format="integer" />
-          {/if}
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          <Tooltip.Header>{tooltipContext.data.name}</Tooltip.Header>
+          <Tooltip.List>
+            {#if tooltipContext.data.children}
+              <Tooltip.Item label="children" value={tooltipContext.data.children.length} />
+            {/if}
+            {#if tooltipContext.data.value}
+              <Tooltip.Item label="value" value={tooltipContext.data.value} format="integer" />
+            {/if}
+          </Tooltip.List>
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

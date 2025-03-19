@@ -6,54 +6,66 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import type { ChartResizeDetail } from '$lib/components/ChartContext.svelte';
   import { rasterizeText, type RasterizeTextOptions } from '$lib/utils/string.js';
+  import type { ChartResizeDetail } from 'layerchart/components/Chart.svelte';
 
-  let width = 960;
-  let height = 500;
-  let radius = 2;
-  const collisionStrength = 0.01;
-
-  let hasCollideForce = false; // TODO: Determine why unable to remove if enabled true by default
-  let hasChargeForce = false;
-  let transition = false;
+  let config = $state({
+    width: 960,
+    height: 500,
+    radius: 2,
+    collisionStrength: 0.01,
+    hasCollideForce: false,
+    hasChargeForce: false,
+    transition: false,
+    text: 'LayerChart',
+    fontSize: 150,
+    spacing: 10,
+  });
 
   function onResize(e: ChartResizeDetail) {
-    width = e.width;
-    height = e.height;
+    config.width = e.width;
+    config.height = e.height;
   }
 
-  let mouseNode = {
+  let mouseNode = $state({
     x: 0,
-    y: height / 2,
-    xTarget: width,
-    yTarget: height / 2,
+    y: config.height / 2,
+    xTarget: config.width,
+    yTarget: config.height / 2,
     rTarget: 100,
-  };
+  });
 
   let text = 'LayerChart';
   let fontSize = 150;
   let spacing = 10;
-  $: textOptions = {
-    fontSize: fontSize + 'px',
-    spacing,
-    width,
-    height,
-  } satisfies RasterizeTextOptions;
+  const textOptions = $derived({
+    fontSize: config.fontSize + 'px',
+    spacing: config.spacing,
+    width: config.width,
+    height: config.height,
+  } satisfies RasterizeTextOptions);
 
-  $: pixels = rasterizeText(text, textOptions).map(function (d) {
-    return {
-      x: transition ? d[0] : Math.random() * width,
-      y: transition ? d[1] : Math.random() * height,
-      xTarget: d[0],
-      yTarget: d[1],
-      rTarget: radius,
-    };
-  });
-  $: data = [mouseNode, ...pixels];
+  const pixels = $derived(
+    rasterizeText(text, textOptions).map((d) => {
+      return {
+        x: config.transition ? d[0] : Math.random() * config.width,
+        y: config.transition ? d[1] : Math.random() * config.height,
+        xTarget: d[0],
+        yTarget: d[1],
+        rTarget: config.radius,
+      };
+    })
+  );
 
-  const xForce = forceX<(typeof pixels)[number]>((d) => d.xTarget).strength(collisionStrength);
-  const yForce = forceY<(typeof pixels)[number]>((d) => d.yTarget).strength(collisionStrength);
+  const data = $derived([mouseNode, ...pixels]);
+
+  const xForce = $derived(
+    forceX<(typeof pixels)[number]>((d) => d.xTarget).strength(config.collisionStrength)
+  );
+  const yForce = $derived(
+    forceY<(typeof pixels)[number]>((d) => d.yTarget).strength(config.collisionStrength)
+  );
+
   const collideForce = forceCollide<(typeof pixels)[number]>()
     .radius((d) => d.rTarget)
     .iterations(3);
@@ -63,17 +75,17 @@
 <h1>Examples</h1>
 
 <div class="grid grid-flow-col gap-2 mb-1">
-  <TextField label="Text" bind:value={text} />
-  <RangeField label="Font size (px)" bind:value={fontSize} max={600} />
-  <RangeField label="Spacing" bind:value={spacing} />
-  <RangeField label="Radius" bind:value={radius} min={1} max={spacing * 2} />
+  <TextField label="Text" bind:value={config.text} />
+  <RangeField label="Font size (px)" bind:value={config.fontSize} max={600} />
+  <RangeField label="Spacing" bind:value={config.spacing} />
+  <RangeField label="Radius" bind:value={config.radius} min={1} max={spacing * 2} />
 </div>
 <div class="flex gap-2 mb-2">
   <Field label="Collide Force" let:id>
-    <Switch bind:checked={hasCollideForce} {id} size="md" />
+    <Switch bind:checked={config.hasCollideForce} {id} size="md" />
   </Field>
   <Field label="Charge Force" let:id>
-    <Switch bind:checked={hasChargeForce} {id} size="md" />
+    <Switch bind:checked={config.hasChargeForce} {id} size="md" />
   </Field>
   <!-- <Field label="Transition" let:id>
     <Switch bind:checked={transition} {id} size="md" />
@@ -90,31 +102,30 @@
       yDomain={[0, 1]}
       yRange={[0, 1]}
       {data}
-      let:width
-      let:height
-      onresize={onResize}
+      {onResize}
     >
-      <ForceSimulation
-        forces={{
-          x: xForce,
-          y: yForce,
-          ...(hasCollideForce && {
-            collide: collideForce,
-          }),
-          ...(hasChargeForce && {
-            charge: manyBodyForce.strength((d, i) => (i ? 0 : (-width * 2) / 10)),
-          }),
-        }}
-        alphaTarget={1}
-        velocityDecay={0.2}
-        let:nodes
-      >
-        <Canvas>
-          <Points data={nodes.slice(1)} r={radius} class="fill-primary" />
-        </Canvas>
+      {#snippet children({ context })}
+        <ForceSimulation
+          forces={{
+            x: xForce,
+            y: yForce,
+            ...(config.hasCollideForce && {
+              collide: collideForce,
+            }),
+            ...(config.hasChargeForce && {
+              charge: manyBodyForce.strength((d, i) => (i ? 0 : (-context.width * 2) / 10)),
+            }),
+          }}
+          alphaTarget={1}
+          velocityDecay={0.2}
+        >
+          {#snippet children({ nodes })}
+            <Canvas>
+              <Points data={nodes.slice(1)} r={config.radius} class="fill-primary" />
+            </Canvas>
 
-        <Svg>
-          <!-- {#each nodes.slice(1) as node, i (i)}
+            <Svg>
+              <!-- {#each nodes.slice(1) as node, i (i)}
             <Circle
               cx={node.x}
               cy={node.y}
@@ -124,17 +135,19 @@
             />
           {/each} -->
 
-          <rect
-            {width}
-            {height}
-            on:pointermove={(e) => {
-              mouseNode.xTarget = e.offsetX;
-              mouseNode.yTarget = e.offsetY;
-            }}
-            class="fill-transparent"
-          />
-        </Svg>
-      </ForceSimulation>
+              <rect
+                width={context.width}
+                height={context.height}
+                onpointermove={(e) => {
+                  mouseNode.xTarget = e.offsetX;
+                  mouseNode.yTarget = e.offsetY;
+                }}
+                class="fill-transparent"
+              />
+            </Svg>
+          {/snippet}
+        </ForceSimulation>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
