@@ -4,33 +4,36 @@
   import { flatGroup } from 'd3-array';
   import { randomNormal } from 'd3-random';
   import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import Blockquote from '$lib/docs/Blockquote.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { getSpiral } from '$lib/utils/genData.js';
 
-  export let data;
+  let { data } = $props();
 
   const spiralData = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
 
-  const penguinDataBySpecies = flatGroup(
-    data.penguins.filter((d) => d.flipper_length_mm !== 'NA' && d.bill_length_mm !== 'NA'),
-    (d) => d.species
+  const penguinDataBySpecies = $derived(
+    flatGroup(
+      data.penguins.filter((d) => d.flipper_length_mm !== 'NA' && d.bill_length_mm !== 'NA'),
+      (d) => d.species
+    )
   );
 
   const random = randomNormal();
   const randomNormalData = Array.from({ length: 100 }, () => ({ value: random() }));
 
-  const pengiunSeries = penguinDataBySpecies.map(([species, data], i) => {
-    return {
-      key: species,
-      data,
-      color: ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-success)'][i],
-    };
-  });
+  const pengiunSeries = $derived(
+    penguinDataBySpecies.map(([species, data], i) => {
+      return {
+        key: species,
+        data,
+        color: ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-success)'][i],
+      };
+    })
+  );
 
-  let renderContext: 'svg' | 'canvas' = 'svg';
-  let debug = false;
+  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
@@ -251,11 +254,13 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="tooltip" let:data let:x>
-        <Tooltip.Root let:data>
-          {format(x(data))}
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {format(context.x(data))}
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </ScatterChart>
   </div>
 </Preview>
@@ -268,7 +273,7 @@
       data={spiralData}
       x="x"
       y="y"
-      ontooltipclick={(e, detail) => {
+      onTooltipClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
@@ -283,29 +288,31 @@
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart data={spiralData} x="x" y="y" {renderContext} {debug}>
-      <svelte:fragment slot="tooltip" let:x let:y let:padding let:height>
+      {#snippet tooltip({ context })}
         <Tooltip.Root
-          x={padding.left}
+          x={context.padding.left}
           y="data"
           anchor="right"
           contained={false}
           class="text-[10px] font-semibold text-primary bg-surface-100 mr-[2px] px-1 py-[2px] border border-primary rounded-sm whitespace-nowrap"
-          let:data
         >
-          {format(y(data), 'integer')}
+          {#snippet children({ data })}
+            {format(context.y(data), 'integer')}
+          {/snippet}
         </Tooltip.Root>
 
         <Tooltip.Root
           x="data"
-          y={height}
+          y={context.height}
           anchor="top"
           class="text-[10px] font-semibold text-primary bg-surface-100 mt-[1px] px-2 py-[1px] border border-primary rounded-sm whitespace-nowrap"
           contained={false}
-          let:data
         >
-          {format(x(data), 'integer')}
+          {#snippet children({ data })}
+            {format(context.x(data), 'integer')}
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </ScatterChart>
   </div>
 </Preview>
@@ -334,20 +341,25 @@
 
 <Preview data={spiralData}>
   <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart data={spiralData} x="x" y="y" let:x let:y {renderContext} {debug}>
-      <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" grid rule />
-        <Points class="fill-primary/10 stroke-primary" />
-        <Highlight points lines axis="both" />
-      </svelte:component>
+    <ScatterChart data={spiralData} x="x" y="y" {renderContext} {debug}>
+      {#snippet children({ context })}
+        {@const Component = renderContext === 'canvas' ? Canvas : Svg}
+        <Component>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" grid rule />
+          <Points class="fill-primary/10 stroke-primary" />
+          <Highlight points lines axis="both" />
+        </Component>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(x(data), 'integer')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={format(y(data), 'integer')} />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.x(data), 'integer')}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={format(context.y(data), 'integer')} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </ScatterChart>
   </div>
 </Preview>
