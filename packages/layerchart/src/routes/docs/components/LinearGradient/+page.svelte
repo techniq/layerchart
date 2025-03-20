@@ -66,16 +66,20 @@
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
       <Svg>
-        <LinearGradient class="from-green-500 to-blue-500" units="objectBoundingBox" let:gradient>
-          {#each { length: 6 } as _, i}
-            <rect x={0 + i * 120} y={0} width={100} height={140} rx={8} fill={gradient} />
-          {/each}
+        <LinearGradient class="from-green-500 to-blue-500" units="objectBoundingBox">
+          {#snippet children({ gradient })}
+            {#each { length: 6 } as _, i}
+              <rect x={0 + i * 120} y={0} width={100} height={140} rx={8} fill={gradient} />
+            {/each}
+          {/snippet}
         </LinearGradient>
 
-        <LinearGradient class="from-green-500 to-blue-500" units="userSpaceOnUse" let:gradient>
-          {#each { length: 6 } as _, i}
-            <rect x={0 + i * 120} y={160} width={100} height={140} rx={8} fill={gradient} />
-          {/each}
+        <LinearGradient class="from-green-500 to-blue-500" units="userSpaceOnUse">
+          {#snippet children({ gradient })}
+            {#each { length: 6 } as _, i}
+              <rect x={0 + i * 120} y={160} width={100} height={140} rx={8} fill={gradient} />
+            {/each}
+          {/snippet}
         </LinearGradient>
       </Svg>
     </Chart>

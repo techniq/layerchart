@@ -70,13 +70,7 @@
      */
     units?: 'objectBoundingBox' | 'userSpaceOnUse';
 
-    children?: Snippet<[{ id: string; gradient: CanvasGradient | undefined | string }]>;
-
-    /**
-     * A bindable reference to the underlying `<radialGradient>` element
-     * @bindable
-     */
-    ref?: SVGRadialGradientElement;
+    children?: Snippet<[{ id: string; gradient: string }]>;
 
     /**
      * Render as a child of the gradient and will opt out of the default stops
@@ -109,9 +103,9 @@
     spreadMethod = 'pad',
     transform = undefined,
     units = 'objectBoundingBox',
-    ref = $bindable(),
     children,
     stopsContent,
+    class: className,
     ...restProps
   }: RadialGradientProps = $props();
 
@@ -135,13 +129,13 @@
       if (Array.isArray(stop)) {
         const { fill } = getComputedStyles(_ctx.canvas, {
           styles: { fill: stop[1] },
-          classes: restProps.class,
+          classes: className,
         });
         gradient.addColorStop(parsePercent(stop[0]), fill);
       } else {
         const { fill } = getComputedStyles(_ctx.canvas, {
           styles: { fill: stop },
-          classes: restProps.class,
+          classes: className,
         });
         gradient.addColorStop(i / (stops.length - 1), fill);
       }
@@ -161,13 +155,13 @@
   $effect(() => {
     if (renderCtx !== 'canvas') return;
     // Redraw when props changes (TODO: styles, class, etc)
-    [stops, cx, cy, fx, fy, ctx.width, ctx.height, restProps.class, restProps.style];
+    [stops, cx, cy, fx, fy, ctx.width, ctx.height];
     canvasCtx.invalidate();
   });
 </script>
 
 {#if renderCtx === 'canvas'}
-  {@render children?.({ id, gradient: canvasGradient })}
+  {@render children?.({ id, gradient: canvasGradient as any })}
 {:else if renderCtx === 'svg'}
   <defs>
     <radialGradient
@@ -181,16 +175,16 @@
       gradientTransform={transform}
       gradientUnits={units}
       {...restProps}
-      bind:this={ref}
+      class={className}
     >
       {#if stopsContent}
         {@render stopsContent()}
       {:else if stops}
         {#each stops as stop, i}
           {#if Array.isArray(stop)}
-            <stop offset={stop[0]} stop-color={stop[1]} />
+            <stop offset={stop[0]} stop-color={stop[1]} class={className} />
           {:else}
-            <stop offset="{i * (100 / (stops.length - 1))}%" stop-color={stop} />
+            <stop offset="{i * (100 / (stops.length - 1))}%" stop-color={stop} class={className} />
           {/if}
         {/each}
       {/if}
