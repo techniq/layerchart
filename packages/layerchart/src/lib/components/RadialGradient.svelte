@@ -6,7 +6,6 @@
   export type RadialGradientPropsWithoutHTML = {
     /**
      * Unique id for radialGradient
-     * @default `uniqueId('radialGradient-')`
      */
     id?: string;
 
@@ -84,16 +83,17 @@
 </script>
 
 <script lang="ts">
-  import { uniqueId } from '@layerstack/utils';
-
   import { getRenderContext } from './Chart.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';
   import { getChartContext } from './Chart.svelte';
+  import { createId } from 'layerchart/utils/createId.js';
+
+  const uid = $props.id();
 
   let {
-    id = uniqueId('radialGradient-'),
+    id = createId('radialGradient-', uid),
     stops = ['var(--tw-gradient-from)', 'var(--tw-gradient-to)'],
     cx = '50%',
     cy = '50%',

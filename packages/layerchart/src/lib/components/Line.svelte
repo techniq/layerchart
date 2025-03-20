@@ -90,7 +90,6 @@
 
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { uniqueId } from '@layerstack/utils';
   import { merge } from 'lodash-es';
 
   import { getCanvasContext } from './layout/Canvas.svelte';
@@ -98,6 +97,9 @@
 
   import { createKey } from 'layerchart/utils/key.svelte.js';
   import { afterTick } from 'layerchart/utils/afterTick.js';
+  import { createId } from 'layerchart/utils/createId.js';
+
+  const uid = $props.id();
 
   let {
     x1,
@@ -123,9 +125,9 @@
     ...restProps
   }: LineProps = $props();
 
-  const markerStartId = $derived(markerStart || marker ? uniqueId('marker-') : '');
-  const markerMidId = $derived(markerMid || marker ? uniqueId('marker-') : '');
-  const markerEndId = $derived(markerEnd || marker ? uniqueId('marker-') : '');
+  const markerStartId = $derived(markerStart || marker ? createId('marker-start', uid) : '');
+  const markerMidId = $derived(markerMid || marker ? createId('marker-mid', uid) : '');
+  const markerEndId = $derived(markerEnd || marker ? createId('marker-end', uid) : '');
 
   const tweenedX1 = motionState(initialX1, { spring, tweened });
   const tweenedY1 = motionState(initialY1, { spring, tweened });

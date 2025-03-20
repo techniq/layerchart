@@ -8,8 +8,6 @@
   export type BaseRectClipPathPropsWithoutHTML = {
     /**
      * A unique id for the clipPath.
-     *
-     * @default `uniqueId('clipPath-')`
      */
     id?: string;
 
@@ -63,12 +61,13 @@
 </script>
 
 <script lang="ts">
-  import { uniqueId } from '@layerstack/utils';
-
   import ClipPath from './ClipPath.svelte';
+  import { createId } from 'layerchart/utils/createId.js';
+
+  const uid = $props.id();
 
   let {
-    id = uniqueId('clipPath-'),
+    id = createId('clipPath-', uid),
     x = 0,
     y = 0,
     disabled = false,

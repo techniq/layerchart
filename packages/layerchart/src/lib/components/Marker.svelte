@@ -12,7 +12,6 @@
 
     /**
      * Unique identifier for the marker
-     * @default uniqueId('marker-')
      */
     id?: string;
 
@@ -73,11 +72,13 @@
 
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { uniqueId } from '@layerstack/utils';
+  import { createId } from 'layerchart/utils/createId.js';
+
+  const uid = $props.id();
 
   let {
     type,
-    id = uniqueId('marker-'),
+    id = createId('marker-', uid),
     size = 10,
     markerWidth = size,
     markerHeight = size,

@@ -78,9 +78,11 @@
     - [ ] Use for annotations - https://github.com/techniq/layerchart/issues/11
 	*/
   import { interpolatePath } from 'd3-interpolate-path';
-  import { uniqueId } from '@layerstack/utils';
 
   import MarkerWrapper from './MarkerWrapper.svelte';
+  import { createId } from 'layerchart/utils/createId.js';
+
+  const uid = $props.id();
 
   let {
     data,
@@ -100,9 +102,9 @@
     ...restProps
   }: LinkProps = $props();
 
-  const markerStartId = $derived(markerStart || marker ? uniqueId('marker-') : '');
-  const markerMidId = $derived(markerMid || marker ? uniqueId('marker-') : '');
-  const markerEndId = $derived(markerEnd || marker ? uniqueId('marker-') : '');
+  const markerStartId = $derived(markerStart || marker ? createId('marker-start', uid) : '');
+  const markerMidId = $derived(markerMid || marker ? createId('marker-mid', uid) : '');
+  const markerEndId = $derived(markerEnd || marker ? createId('marker-end', uid) : '');
 
   const tweenedOptions = tweened
     ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }

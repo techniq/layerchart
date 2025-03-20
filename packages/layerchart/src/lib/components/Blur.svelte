@@ -2,8 +2,6 @@
   export type BlurProps = {
     /**
      * A unique id for the filter.
-     *
-     * @default `uniqueId('blur-')`
      */
     id?: string;
 
@@ -23,10 +21,11 @@
 </script>
 
 <script lang="ts">
-  import { uniqueId } from '@layerstack/utils';
+  import { createId } from 'layerchart/utils/createId.js';
   import type { Snippet } from 'svelte';
+  const uid = $props.id();
 
-  let { id = uniqueId('blur-'), stdDeviation = 5, children }: BlurProps = $props();
+  let { id = createId('blur-', uid), stdDeviation = 5, children }: BlurProps = $props();
 </script>
 
 <defs>

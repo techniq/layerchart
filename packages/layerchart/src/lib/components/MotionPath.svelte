@@ -4,14 +4,11 @@
   export type MotionPathPropsWithoutHTML = {
     /**
      * Id of path to move object along
-     *
-     * @default uniqueId('motionPathId-')
      */
     pathId?: string;
 
     /**
      * Id of object to move along path
-     * @default uniqueId('motionObjectId-')
      */
     objectId?: string;
 
@@ -57,13 +54,15 @@
 </script>
 
 <script lang="ts">
-  import { uniqueId } from '@layerstack/utils';
   import type { Without } from 'layerchart/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
+  import { createId } from 'layerchart/utils/createId.js';
+
+  const uid = $props.id();
 
   let {
-    pathId = uniqueId('motionPathId-'),
-    objectId = uniqueId('motionObjectId-'),
+    pathId = createId('motionPathId-', uid),
+    objectId = createId('motionObjectId-', uid),
     duration,
     repeatCount,
     fill = 'freeze',

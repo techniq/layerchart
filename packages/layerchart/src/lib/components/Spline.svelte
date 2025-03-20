@@ -109,7 +109,6 @@
   import { interpolatePath } from 'd3-interpolate-path';
   import { max } from 'd3-array';
   import { cls } from '@layerstack/tailwind';
-  import { uniqueId } from '@layerstack/utils';
 
   import Group from './Group.svelte';
   import { isScaleBand } from '../utils/scales.svelte.js';
@@ -121,8 +120,11 @@
   import { getChartContext } from './Chart.svelte';
   import { createKey } from 'layerchart/utils/key.svelte.js';
   import { afterTick } from 'layerchart/utils/afterTick.js';
+  import { createId } from 'layerchart/utils/createId.js';
 
   const ctx = getChartContext();
+
+  const uid = $props.id();
 
   let {
     data,
@@ -153,9 +155,9 @@
   const markerMid = $derived(markerMidProp ?? marker);
   const markerEnd = $derived(markerEndProp ?? marker);
 
-  const markerStartId = $derived(markerStart ? uniqueId('marker-') : '');
-  const markerMidId = $derived(markerMid ? uniqueId('marker-') : '');
-  const markerEndId = $derived(markerEnd ? uniqueId('marker-') : '');
+  const markerStartId = $derived(markerStart ? createId('marker-start', uid) : '');
+  const markerMidId = $derived(markerMid ? createId('marker-mid', uid) : '');
+  const markerEndId = $derived(markerEnd ? createId('marker-end', uid) : '');
 
   function getScaleValue(
     data: any,

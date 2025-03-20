@@ -6,8 +6,6 @@
   export type LinearGradientPropsWithoutHTML = {
     /**
      * Unique id for linearGradient
-     *
-     * @default `uniqueId('linearGradient-')`
      */
     id?: string;
 
@@ -78,16 +76,17 @@
 </script>
 
 <script lang="ts">
-  import { uniqueId } from '@layerstack/utils';
-
   import { getRenderContext } from './Chart.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { createLinearGradient, getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';
   import { getChartContext } from './Chart.svelte';
+  import { createId } from 'layerchart/utils/createId.js';
+
+  const uid = $props.id();
 
   let {
-    id = uniqueId('linearGradient-'),
+    id = createId('linearGradient-', uid),
     stops = ['var(--tw-gradient-from)', 'var(--tw-gradient-to)'],
     vertical = false,
     x1 = '0%',

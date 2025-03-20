@@ -1,4 +1,5 @@
 <script lang="ts" module>
+  import { createId } from 'layerchart/utils/createId.js';
   import type { Without } from 'layerchart/utils/types.js';
   import type { Snippet } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
@@ -7,7 +8,6 @@
     /**
      * A unique id for the clipPath.
      *
-     * @default `uniqueId('clipPath-')`
      */
     id?: string;
 
@@ -42,10 +42,10 @@
 </script>
 
 <script lang="ts">
-  import { uniqueId } from '@layerstack/utils';
+  const uid = $props.id();
 
   let {
-    id = uniqueId('clipPath-'),
+    id = createId('clipPath-', uid),
     useId,
     disabled = false,
     children,
