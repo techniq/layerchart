@@ -125,13 +125,6 @@
      */
     brush?: BrushContextValue;
 
-    /**
-     * A reference to the root brush element.
-     *
-     * @bindable
-     */
-    ref?: HTMLElement;
-
     children?: Snippet<[{ brushContext: BrushContextValue }]>;
   };
 </script>
@@ -146,14 +139,12 @@
   import { add } from '../utils/math.js';
   import type { HTMLAttributes } from 'svelte/elements';
   import { getChartContext } from './Chart.svelte';
-  import { on } from 'svelte/events';
-  import type { Snippet } from 'svelte';
+  import { untrack, type Snippet } from 'svelte';
 
   const ctx = getChartContext();
 
   let {
     brush = $bindable(),
-    ref = $bindable(),
     axis = 'x',
     handleSize = 5,
     resetOnEnd = false,
@@ -171,6 +162,8 @@
     children,
   }: BrushContextPropsWithoutHTML = $props();
 
+  let rootEl = $state<HTMLElement>();
+
   if (xDomain === undefined) {
     xDomain = ctx.xScale.domain();
   }
@@ -180,13 +173,35 @@
 
   $effect.pre(() => {
     if (xDomain !== undefined) return;
-    xDomain = ctx.xScale.domain();
+    xDomain = untrack(() => ctx.xScale.domain());
   });
 
   $effect.pre(() => {
     if (yDomain !== undefined) return;
-    yDomain = ctx.yScale.domain();
+    yDomain = untrack(() => ctx.yScale.domain());
   });
+
+  brush = {
+    get xDomain() {
+      return xDomain!;
+    },
+    set xDomain(v: DomainType) {
+      xDomain = v;
+    },
+    get yDomain() {
+      return yDomain!;
+    },
+    set yDomain(v: DomainType) {
+      yDomain = v;
+    },
+    isActive: false,
+    get range() {
+      return _range;
+    },
+    get handleSize() {
+      return handleSize;
+    },
+  };
 
   //   const xDomain = $derived(xDomainProp ?? ctx.xScale.domain());
   //   const yDomain = $derived(yDomainProp ?? ctx.yScale.domain());
@@ -208,16 +223,6 @@
     width: axis === 'both' || axis === 'x' ? right - left : ctx.width,
     height: axis === 'both' || axis === 'y' ? bottom - top : ctx.height,
   });
-
-  brush = {
-    xDomain: null,
-    yDomain: null,
-    isActive: false,
-    get range() {
-      return _range;
-    },
-    handleSize: 0,
-  };
 
   const brushContext = {
     get xDomain() {
@@ -267,13 +272,11 @@
       value: { x: number; y: number }
     ) => void
   ) {
-    const cleanups: (() => void)[] = [];
-
     return (e: PointerEvent) => {
       logger.debug('drag start');
       e.stopPropagation();
 
-      const startPoint = localPoint(e, ref);
+      const startPoint = localPoint(e, rootEl);
 
       if (
         startPoint &&
@@ -308,7 +311,7 @@
       onBrushStart({ xDomain, yDomain });
 
       const onPointerMove = (e: PointerEvent) => {
-        const currentPoint = localPoint(e, ref);
+        const currentPoint = localPoint(e, rootEl);
         fn(start, {
           x: ctx.xScale.invert?.(currentPoint?.x ?? 0),
           y: ctx.yScale.invert?.(currentPoint?.y ?? 0),
@@ -318,7 +321,7 @@
       };
 
       const onPointerUp = (e: PointerEvent) => {
-        const currentPoint = localPoint(e, ref);
+        const currentPoint = localPoint(e, rootEl);
         const xPointDelta = Math.abs((startPoint?.x ?? 0) - (currentPoint?.x ?? 0));
         const yPointDelta = Math.abs((startPoint?.y ?? 0) - (currentPoint?.y ?? 0));
 
@@ -352,12 +355,12 @@
           reset();
         }
 
-        for (const cleanup of cleanups) {
-          cleanup();
-        }
+        window.removeEventListener('pointermove', onPointerMove);
+        window.removeEventListener('pointerup', onPointerUp);
       };
 
-      cleanups.push(on(window, 'pointermove', onPointerMove), on(window, 'pointerup', onPointerUp));
+      window.addEventListener('pointermove', onPointerMove);
+      window.addEventListener('pointerup', onPointerUp);
     };
   }
 
@@ -494,6 +497,10 @@
       brush.isActive = result;
     }
   });
+
+  $effect(() => {
+    console.log(rootEl);
+  });
 </script>
 
 {#if disabled}
@@ -501,6 +508,7 @@
 {:else}
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
+    bind:this={rootEl}
     style:top="{ctx.padding.top}px"
     style:left="{ctx.padding.left}px"
     style:width="{ctx.width}px"
@@ -508,7 +516,6 @@
     class={cls('BrushContext absolute touch-none')}
     onpointerdown={createRange}
     ondblclick={() => selectAll()}
-    bind:this={ref}
   >
     <div
       class="absolute"
