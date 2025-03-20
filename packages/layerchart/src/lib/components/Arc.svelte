@@ -171,11 +171,11 @@
     ...restProps
   }: ArcProps = $props();
 
-  const tweenedState = $derived(motionState(initialValue, { spring, tweened }));
+  const tweenedState = motionState(initialValue, { spring, tweened });
 
   $effect(() => {
     value;
-    afterTick(() => (tweenedState.target = value));
+    afterTick(() => tweenedState.set(value));
   });
 
   const ctx = getChartContext();

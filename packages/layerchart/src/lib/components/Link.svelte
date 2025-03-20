@@ -46,6 +46,17 @@
      * Marker to attach to the end point of the line
      */
     markerEnd?: MarkerOptions;
+
+    /**
+     * Apply explicit coordinates to the line. Useful when dealing with
+     * force simulation links.
+     */
+    explicitCoords?: {
+      x1: number;
+      y1: number;
+      x2: number;
+      y2: number;
+    };
   } & Pick<MotionProps, 'tweened'>;
 
   export type LinkProps = LinkPropsWithoutHTML & Without<SplineProps, LinkPropsWithoutHTML>;
@@ -85,6 +96,7 @@
     markerEnd = marker,
     markerMid = marker,
     tweened,
+    explicitCoords,
     ...restProps
   }: LinkProps = $props();
 
@@ -92,18 +104,32 @@
   const markerMidId = $derived(markerMid || marker ? uniqueId('marker-') : '');
   const markerEndId = $derived(markerEnd || marker ? uniqueId('marker-') : '');
 
-  const tweenedOptions = $derived(
-    tweened
-      ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
-      : false
-  );
+  const tweenedOptions = tweened
+    ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
+    : false;
 
-  const tweenedState = $derived(motionState('', { tweened: tweenedOptions }));
+  const tweenedState = motionState('', { tweened: tweenedOptions });
 
-  $effect(() => {
-    orientation;
+  $effect.pre(() => {
     const link = d3Link(curve).source(source).target(target).x(x).y(y);
-    const d = link(data) ?? '';
+    let d: string;
+
+    if (explicitCoords !== undefined) {
+      // Use explicit coordinates with the same accessors
+      const fauxData = {
+        source: { x: explicitCoords.x1, y: explicitCoords.y1 },
+        target: { x: explicitCoords.x2, y: explicitCoords.y2 },
+      } as any;
+      d = link(fauxData) ?? '';
+    } else {
+      d = link(data) ?? '';
+    }
+
+    if (!d || d.includes('NaN')) {
+      // Safe default to avoid rendering errors
+      d = 'M0,0L0,0';
+    }
+
     tweenedState.target = d;
   });
 </script>

@@ -4,11 +4,23 @@
 
   type Forces = Record<string, Force<any, any>>;
 
+  export type LinkPosition = {
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
+  };
+
   export type ForceSimulationProps = {
     /**
      * Force simulation parameters
      */
     forces: Forces;
+
+    /**
+     * An array of links to be used for position calculation.
+     */
+    links?: any[];
 
     /**
      * Current alpha value of the simulation
@@ -30,7 +42,7 @@
 
     /**
      * Minimum alpha value at which simulation stops
-     * @default 0.001
+     * @default 0.01
      */
     alphaMin?: number;
 
@@ -78,6 +90,7 @@
         {
           nodes: any[];
           simulation: Simulation<SimulationNodeDatum, undefined>;
+          linkPositions: LinkPosition[];
         },
       ]
     >;
@@ -90,6 +103,7 @@
 
   let {
     forces,
+    links = [],
     alpha = $bindable(1),
     alphaTarget = 0,
     alphaDecay = 1 - Math.pow(0.001, 1 / 300),
@@ -113,6 +127,7 @@
   // MARK: Private Props
 
   let nodes: SimulationNodeDatum[] = $state([]);
+  let linkPositions: LinkPosition[] = $state([]);
 
   const simulation = forceSimulation().stop();
 
@@ -124,7 +139,7 @@
 
   // MARK: Reactivity Effects
 
-  watch(
+  watch.pre(
     () => stopped,
     () => {
       // Any time the `stopped` prop gets toggled we
@@ -137,7 +152,7 @@
     }
   );
 
-  watch(
+  watch.pre(
     () => staticProp,
     () => {
       // Any time the `static` prop gets toggled we
@@ -152,7 +167,7 @@
     }
   );
 
-  watch(
+  watch.pre(
     () => ctx.data,
     () => {
       // Any time the `data` store gets changed we
@@ -162,7 +177,7 @@
     }
   );
 
-  watch(
+  watch.pre(
     () => forces,
     () => {
       // Any time the `forces` prop gets changed we
@@ -172,7 +187,7 @@
     }
   );
 
-  watch(
+  watch.pre(
     () => alpha,
     () => {
       // Any time the `alpha` prop gets changed we
@@ -188,7 +203,7 @@
     }
   );
 
-  watch([() => alphaTarget, () => alphaMin, () => alphaDecay, () => velocityDecay], () => {
+  watch.pre([() => alphaTarget, () => alphaMin, () => alphaDecay, () => velocityDecay], () => {
     // Any time any of the the alpha props get changed we
     // pass them all to the internal d3 simulation object
     // (they are cheap, so passing them as a batch is fine!):
@@ -238,6 +253,22 @@
     });
 
     previousForces = forces;
+  }
+
+  $effect(() => {
+    console.log(links);
+  });
+
+  function updateLinkPositions() {
+    // Keeping the link positions in sync with the simulation
+    // so we don't need to recalculate _all_ link positions on each tick
+    // which bogs down the simulation
+    linkPositions = links.map((link: any) => ({
+      x1: link.source.x ?? 0,
+      y1: link.source.y ?? 0,
+      x2: link.target.x ?? 0,
+      y2: link.target.y ?? 0,
+    }));
   }
 
   // MARK: Pull State
@@ -343,6 +374,7 @@
   function onTick() {
     pullNodesFromSimulation();
     pullAlphaFromSimulation();
+    updateLinkPositions();
 
     onTickProp({ alpha, alphaTarget });
   }
@@ -358,4 +390,4 @@
   }
 </script>
 
-{@render children?.({ nodes, simulation })}
+{@render children?.({ nodes, simulation, linkPositions })}

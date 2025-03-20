@@ -10,10 +10,25 @@
     'pie' | 'group' | 'arc' | 'legend' | 'canvas' | 'svg' | 'tooltip'
   >;
 
-  export type PieChartProps<TData> = SimplifiedChartProps<
-    TData,
-    typeof Arc,
-    PieChartExtraSnippetProps<TData>
+  export type PieChartProps<TData> = Pick<
+    SimplifiedChartProps<TData, typeof Arc, PieChartExtraSnippetProps<TData>>,
+    | 'aboveContext'
+    | 'aboveMarks'
+    | 'belowContext'
+    | 'belowMarks'
+    | 'children'
+    | 'data'
+    | 'debug'
+    | 'legend'
+    | 'marks'
+    | 'onTooltipClick'
+    | 'profile'
+    | 'renderContext'
+    | 'series'
+    | 'tooltip'
+    | 'tooltipContext'
+    | 'cRange'
+    | 'padding'
   > & {
     /**
      * Key accessor

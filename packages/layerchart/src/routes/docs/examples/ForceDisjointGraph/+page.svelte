@@ -17,12 +17,16 @@
 
   // @ts-expect-error - TODO: can we fix these types
   const linkForce = $derived(forceLink(links).id((d) => d.id));
-  const chargeForce = forceManyBody();
+  const chargeForce = forceManyBody().strength(-30).theta(0.9);
   const xForce = forceX();
   const yForce = forceY();
 </script>
 
 <h1>Examples</h1>
+
+<!-- <pre>
+	{JSON.stringify(links, null, 2)}
+</pre> -->
 
 <Preview data={data.miserables}>
   <div class="h-[680px] p-4 border rounded-sm">
@@ -35,13 +39,17 @@
             x: xForce,
             y: yForce,
           }}
+          {links}
         >
-          {#snippet children({ nodes })}
-            {#key nodes}
-              {#each links as link}
-                <Link data={link} class="stroke-surface-content/50" curve={curveLinear} />
-              {/each}
-            {/key}
+          {#snippet children({ nodes, linkPositions })}
+            {#each links as link, i (link.value + link.index)}
+              <Link
+                data={link}
+                explicitCoords={linkPositions[i]}
+                class="stroke-surface-content/50"
+                curve={curveLinear}
+              />
+            {/each}
 
             {#each nodes as node}
               <Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group)} />

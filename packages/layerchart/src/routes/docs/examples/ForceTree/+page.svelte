@@ -27,6 +27,7 @@
       {#snippet children({ tooltipContext })}
         <Svg center>
           <ForceSimulation
+            {links}
             forces={{
               link: linkForce,
               charge: chargeForce,
@@ -34,12 +35,14 @@
               y: yForce,
             }}
           >
-            {#snippet children({ nodes })}
-              {#key nodes}
-                {#each links as link}
-                  <Link data={link} class="stroke-surface-content/20" />
-                {/each}
-              {/key}
+            {#snippet children({ nodes, linkPositions })}
+              {#each links as link, i}
+                <Link
+                  data={link}
+                  explicitCoords={linkPositions[i]}
+                  class="stroke-surface-content/20"
+                />
+              {/each}
 
               {#each nodes as node}
                 <Circle

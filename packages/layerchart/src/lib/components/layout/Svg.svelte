@@ -131,12 +131,10 @@
   role="figure"
   {...restProps}
 >
-  {#if title}
-    {#if typeof title === 'function'}
-      {@render title()}
-    {:else}
-      <title class="layerchart-title">{title}</title>
-    {/if}
+  {#if typeof title === 'function'}
+    {@render title()}
+  {:else if title}
+    <title class="layerchart-title">{title}</title>
   {/if}
 
   <defs>
