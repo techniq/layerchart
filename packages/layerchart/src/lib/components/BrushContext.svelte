@@ -147,7 +147,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import { getChartContext } from './Chart.svelte';
   import { on } from 'svelte/events';
-  import { untrack, type Snippet } from 'svelte';
+  import type { Snippet } from 'svelte';
 
   const ctx = getChartContext();
 
@@ -157,8 +157,8 @@
     axis = 'x',
     handleSize = 5,
     resetOnEnd = false,
-    xDomain = ctx.xScale.domain(),
-    yDomain = ctx.yScale.domain(),
+    xDomain: xDomain,
+    yDomain: yDomain,
     mode = 'integrated',
     disabled = false,
     range = {},
@@ -170,6 +170,26 @@
     onReset = () => {},
     children,
   }: BrushContextPropsWithoutHTML = $props();
+
+  if (xDomain === undefined) {
+    xDomain = ctx.xScale.domain();
+  }
+  if (yDomain === undefined) {
+    yDomain = ctx.yScale.domain();
+  }
+
+  $effect.pre(() => {
+    if (xDomain !== undefined) return;
+    xDomain = ctx.xScale.domain();
+  });
+
+  $effect.pre(() => {
+    if (yDomain !== undefined) return;
+    yDomain = ctx.yScale.domain();
+  });
+
+  //   const xDomain = $derived(xDomainProp ?? ctx.xScale.domain());
+  //   const yDomain = $derived(yDomainProp ?? ctx.yScale.domain());
 
   const originalXDomain = ctx.config.xDomain;
   const originalYDomain = ctx.config.yDomain;
@@ -189,24 +209,14 @@
     height: axis === 'both' || axis === 'y' ? bottom - top : ctx.height,
   });
 
-  let isActive = $state(false);
-
   brush = {
-    get xDomain() {
-      return xDomain;
-    },
-    get yDomain() {
-      return yDomain;
-    },
-    get isActive() {
-      return isActive;
-    },
+    xDomain: null,
+    yDomain: null,
+    isActive: false,
     get range() {
       return _range;
     },
-    get handleSize() {
-      return handleSize;
-    },
+    handleSize: 0,
   };
 
   const brushContext = {
@@ -229,7 +239,7 @@
       brush.isActive = v;
     },
     get range() {
-      return brush.range;
+      return _range;
     },
     set range(v: BrushRange) {
       brush.range = v;
@@ -353,21 +363,21 @@
 
   const createRange = handler((start, value) => {
     logger.debug('createRange');
-    isActive = true;
+    brush.isActive = true;
 
     xDomain = [
       // @ts-expect-error
-      clamp(min([start.value.x, value.x]), xDomainMin, xDomainMax),
+      clamp(min([start.value.x, value.x]), xDomainMinMax[0], xDomainMinMax[1]),
       // @ts-expect-error
-      clamp(max([start.value.x, value.x]), xDomainMin, xDomainMax),
+      clamp(max([start.value.x, value.x]), xDomainMinMax[0], xDomainMinMax[1]),
     ];
     // xDomain = [start.value.x, value.x];
 
     yDomain = [
       // @ts-expect-error
-      clamp(min([start.value.y, value.y]), yDomainMin, yDomainMax),
+      clamp(min([start.value.y, value.y]), yDomainMinMax[0], yDomainMinMax[1]),
       // @ts-expect-error
-      clamp(max([start.value.y, value.y]), yDomainMin, yDomainMax),
+      clamp(max([start.value.y, value.y]), yDomainMinMax[0], yDomainMinMax[1]),
     ];
   });
 
@@ -454,10 +464,10 @@
 
   function reset() {
     logger.debug('reset');
-    isActive = false;
+    brush!.isActive = false;
 
-    xDomain = originalXDomain;
-    yDomain = originalYDomain;
+    xDomain = originalXDomain ?? [];
+    yDomain = originalYDomain ?? [];
 
     onReset({ xDomain, yDomain });
   }
@@ -468,7 +478,7 @@
     yDomain = [yDomainMinMax[0], yDomainMinMax[1]];
   }
 
-  const _isActive: boolean = $derived.by(() => {
+  $effect(() => {
     if (mode === 'separated') {
       // Set reactively to handle cases where xDomain/yDomain are set externally (ex. `bind:xDomain`)
       const isXAxisActive =
@@ -481,12 +491,8 @@
 
       const result =
         axis === 'x' ? isXAxisActive : axis == 'y' ? isYAxisActive : isXAxisActive || isYAxisActive;
-      untrack(() => (isActive = result));
-
-      return result;
+      brush.isActive = result;
     }
-    untrack(() => (isActive = false));
-    return false;
   });
 </script>
 
@@ -514,7 +520,7 @@
       {@render children?.({ brushContext })}
     </div>
 
-    {#if isActive}
+    {#if brush.isActive}
       <div
         {...range}
         style:left="{_range.x}px"
@@ -626,7 +632,7 @@
             e.stopPropagation();
             if (xDomain) {
               xDomain[1] = xDomainMinMax[1];
-              onChange({ xDomain, yDomain });
+              onChange({ xDomain: xDomain, yDomain: yDomain });
             }
           }}
         ></div>

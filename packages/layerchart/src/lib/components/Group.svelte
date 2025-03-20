@@ -144,7 +144,7 @@
 {#if renderContext === 'canvas'}
   {@render children?.()}
 {:else if renderContext === 'svg'}
-  <g style:transform {...restProps} ontouchmove={handleTouchMove} bind:this={ref}>
+  <g style:transform class={className} {...restProps} ontouchmove={handleTouchMove} bind:this={ref}>
     {@render children?.()}
   </g>
 {:else}

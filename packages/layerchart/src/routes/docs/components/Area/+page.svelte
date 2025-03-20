@@ -8,22 +8,24 @@
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
-  let pointCount = 10;
-  let showPoints = false;
-  let showLine = true;
-  let show = true;
-  let tweened = true;
-  let Context: Component = Svg;
+  let pointCount = $state(10);
+  let showPoints = $state(false);
+  let showLine = $state(true);
+  let show = $state(true);
+  let tweened = $state(true);
+  let Context: Component = $state(Svg);
 
-  let pathGenerator = (x: number) => x;
-  let curve: ComponentProps<CurveMenuField>['value'] = undefined;
+  let pathGenerator = $state((x: number) => x);
+  let curve: ComponentProps<CurveMenuField>['value'] = $state(undefined);
 
-  $: data = Array.from({ length: pointCount }).map((_, i) => {
-    return {
-      x: i + 1,
-      y: pathGenerator?.(i / pointCount) ?? i,
-    };
-  });
+  const data = $derived(
+    Array.from({ length: pointCount }).map((_, i) => {
+      return {
+        x: i + 1,
+        y: pathGenerator?.(i / pointCount) ?? i,
+      };
+    })
+  );
 </script>
 
 <h1>Playground</h1>
@@ -67,7 +69,7 @@
         <Axis placement="bottom" rule />
       </Svg>
 
-      <svelte:component this={Context}>
+      <Context>
         {#if show}
           <Area
             {curve}
@@ -80,7 +82,7 @@
             <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
           {/if}
         {/if}
-      </svelte:component>
+      </Context>
     </Chart>
   </div>
 </Preview>

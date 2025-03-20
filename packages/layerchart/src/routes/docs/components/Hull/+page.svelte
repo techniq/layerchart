@@ -10,9 +10,9 @@
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
-  export let data;
+  let { data } = $props();
 
-  export let curve = curveLinearClosed;
+  let curve = $state(curveLinearClosed);
 
   const states = feature(data.us.geojson, data.us.geojson.objects.states);
 
