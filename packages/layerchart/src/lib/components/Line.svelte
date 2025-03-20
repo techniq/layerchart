@@ -73,6 +73,11 @@
     markerStart?: MarkerOptions;
 
     /**
+     * Marker to attach to the mid point of the line
+     */
+    markerMid?: MarkerOptions;
+
+    /**
      * Marker to attach to the end point of the line
      */
     markerEnd?: MarkerOptions;
@@ -111,6 +116,7 @@
     marker,
     markerEnd,
     markerStart,
+    markerMid,
     spring,
     tweened,
     fillOpacity,
@@ -118,6 +124,7 @@
   }: LineProps = $props();
 
   const markerStartId = $derived(markerStart || marker ? uniqueId('marker-') : '');
+  const markerMidId = $derived(markerMid || marker ? uniqueId('marker-') : '');
   const markerEndId = $derived(markerEnd || marker ? uniqueId('marker-') : '');
 
   const tweenedX1 = motionState(initialX1, { spring, tweened });
@@ -192,10 +199,12 @@
     stroke-width={strokeWidth}
     {opacity}
     marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
+    marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
     marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
     class={cls(stroke === undefined && 'stroke-surface-content', className)}
     {...restProps}
   />
   <MarkerWrapper id={markerStartId} marker={markerStart ?? marker} />
+  <MarkerWrapper id={markerMidId} marker={markerMid ?? marker} />
   <MarkerWrapper id={markerEndId} marker={markerEnd ?? marker} />
 {/if}
