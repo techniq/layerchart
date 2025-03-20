@@ -160,6 +160,7 @@
       container: {},
       content: {},
     },
+    class: className,
   }: TooltipProps = $props();
 
   const ctx = getChartContext();
@@ -350,7 +351,8 @@
           none: '',
         }[variant],
         classes.container,
-        props.container?.class
+        props.container?.class,
+        className
       )}
       bind:this={containerRef}
     >

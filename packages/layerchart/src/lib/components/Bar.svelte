@@ -172,8 +172,8 @@
     {initialY}
     {initialHeight}
     {initialWidth}
-    {...restProps}
     {...dimensions}
+    {...restProps}
   />
 {:else}
   <Spline
