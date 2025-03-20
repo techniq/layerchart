@@ -245,11 +245,11 @@
         ]}
   padding={{ bottom: legend === true ? 32 : 0 }}
   {...restProps}
-  tooltip={props.tooltip?.context}
+  tooltip={tooltip === false ? false : props.tooltip?.context}
   bind:tooltipContext
 >
   {#snippet children({ brushContext, context, geoContext, tooltipContext, transformContext })}
-    {@const slotProps = {
+    {@const snippetProps = {
       label,
       key,
       value,
@@ -265,9 +265,9 @@
       setHighlightKey: highlightKey.set,
     }}
     {#if childrenProp}
-      {@render childrenProp(slotProps)}
+      {@render childrenProp(snippetProps)}
     {:else}
-      {@render belowContext?.(slotProps)}
+      {@render belowContext?.(snippetProps)}
       {@const Component = renderContext === 'canvas' ? Canvas : Svg}
 
       <Component
@@ -276,10 +276,10 @@
         {center}
         {debug}
       >
-        {@render belowMarks?.(slotProps)}
+        {@render belowMarks?.(snippetProps)}
 
         {#if typeof marks === 'function'}
-          {@render marks(slotProps)}
+          {@render marks(snippetProps)}
         {:else}
           <Group
             x={placement === 'left'
@@ -364,13 +364,13 @@
           </Group>
         {/if}
 
-        {@render aboveMarks?.(slotProps)}
+        {@render aboveMarks?.(snippetProps)}
       </Component>
 
-      {@render aboveContext?.(slotProps)}
+      {@render aboveContext?.(snippetProps)}
 
       {#if typeof legend === 'function'}
-        {@render legend(slotProps)}
+        {@render legend(snippetProps)}
       {:else if legend}
         <Legend
           tickFormat={(tick) => {
@@ -399,7 +399,7 @@
       {/if}
 
       {#if typeof tooltip === 'function'}
-        {@render tooltip(slotProps)}
+        {@render tooltip(snippetProps)}
       {:else if tooltip}
         <Tooltip.Root {...props.tooltip?.root}>
           {#snippet children({ data })}

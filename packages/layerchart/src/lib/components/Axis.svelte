@@ -8,10 +8,12 @@
     placement: 'top' | 'bottom' | 'left' | 'right' | 'angle' | 'radius';
 
     /**
-     * Axis label
-     * @default ''
+     * The label for the axis.
+     *
+     * Can either be a string or a snippet to render custom content.
+     * The snippet receives spreadable props to apply to the label.
      */
-    label?: string;
+    label?: string | Snippet<[{ props: ComponentProps<typeof Text> }]>;
 
     /**
      * Location of axis label
@@ -115,6 +117,7 @@
   import { isScaleBand, type AnyScale } from '$lib/utils/scales.svelte.js';
   import type { MotionProps } from 'layerchart/stores/motionState.svelte.js';
   import { getChartContext } from './Chart.svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     placement,
@@ -324,23 +327,29 @@
   });
 
   const resolvedLabelProps = $derived({
-    value: label,
+    value: typeof label === 'function' ? '' : undefined,
     x: resolvedLabelX,
     y: resolvedLabelY,
     textAnchor: resolvedLabelTextAnchor,
     verticalAnchor: resolvedLabelVerticalAnchor,
     rotate: orientation === 'vertical' && labelPlacement === 'middle' ? -90 : 0,
     capHeight: '.5rem', // text-[10px]
+    ...createDataAttr('axis-label'),
     ...labelProps,
     class: cls(
-      'label text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
+      'text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
       classes.label,
       labelProps?.class
     ),
   }) satisfies ComponentProps<typeof Text>;
 </script>
 
-<g {...restProps} class={cls(`Axis placement-${placement}`, classes.root, className)}>
+<g
+  {...restProps}
+  {...createDataAttr('axis')}
+  data-placement={placement}
+  class={cls(`placement-${placement}`, classes.root, className)}
+>
   {#if rule !== false}
     {@const ruleProps = typeof rule === 'object' ? rule : null}
     <Rule
@@ -349,16 +358,20 @@
       {tweened}
       {spring}
       {...ruleProps}
-      class={cls('rule stroke-surface-content/50', classes.rule, ruleProps?.class)}
+      {...createDataAttr('axis-rule')}
+      class={cls('stroke-surface-content/50', classes.rule, ruleProps?.class)}
     />
   {/if}
 
-  {#if label}
+  {#if typeof label === 'function'}
+    {@render label({ props: resolvedLabelProps })}
+  {:else if label}
     <Text {...resolvedLabelProps} />
   {/if}
 
   {#each tickVals as tick, index (tick)}
     {@const tickCoords = getCoords(tick)}
+    {@const tickAttr = createDataAttr('axis-tick')}
     {@const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y)}
     {@const [radialTickMarkCoordsX, radialTickMarkCoordsY] = pointRadial(
       tickCoords.x,
@@ -372,14 +385,15 @@
       tweened,
       spring,
       ...tickLabelProps,
+      ...createDataAttr('axis-tick-label'),
       class: cls(
-        'tickLabel text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
+        'text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
         classes.tickLabel,
         tickLabelProps?.class
       ),
     }}
 
-    <g in:transitionIn={transitionInParams}>
+    <g in:transitionIn={transitionInParams} {...createDataAttr('axis-tick-group')}>
       {#if grid !== false}
         {@const ruleProps = typeof grid === 'object' ? grid : null}
         <Rule
@@ -388,7 +402,8 @@
           {tweened}
           {spring}
           {...ruleProps}
-          class={cls('grid stroke-surface-content/10', classes.rule, ruleProps?.class)}
+          {...createDataAttr('axis-grid')}
+          class={cls('stroke-surface-content/10', classes.rule, ruleProps?.class)}
         />
       {/if}
 
@@ -401,7 +416,8 @@
           y2={tickCoords.y + (placement === 'top' ? -tickLength : tickLength)}
           {tweened}
           {spring}
-          class={cls('tick stroke-surface-content/50', classes.tick)}
+          {...tickAttr}
+          class={cls('stroke-surface-content/50', classes.tick)}
         />
       {:else if orientation === 'vertical'}
         <Line
@@ -411,7 +427,8 @@
           y2={tickCoords.y}
           {tweened}
           {spring}
-          class={cls('tick stroke-surface-content/50', classes.tick)}
+          {...tickAttr}
+          class={cls('stroke-surface-content/50', classes.tick)}
         />
       {:else if orientation === 'angle'}
         <Line
@@ -421,7 +438,8 @@
           y2={radialTickMarkCoordsY}
           {tweened}
           {spring}
-          class={cls('tick stroke-surface-content/50', classes.tick)}
+          {...tickAttr}
+          class={cls('stroke-surface-content/50', classes.tick)}
         />
       {/if}
       <!-- TODO: Add tick marks for radial (angle)? -->

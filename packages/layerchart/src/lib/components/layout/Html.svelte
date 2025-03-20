@@ -26,22 +26,6 @@
     role?: string;
 
     /**
-     * A string passed to the `aria-label` property on the `<div>` tag.
-     */
-
-    label?: string;
-
-    /**
-     * A string passed to the `aria-labelledby property` on the `<div>` tag.
-     */
-    labelledBy?: string;
-
-    /**
-     * A string passed to the `aria-describedby` property on the `<div>` tag.
-     */
-    describedBy?: string;
-
-    /**
      * Translate children to center (useful for radial layouts)
      */
     center?: boolean | 'x' | 'y';
@@ -64,15 +48,16 @@
   import type { Without } from 'layerchart/utils/types.js';
   import { getChartContext, setRenderContext } from '../Chart.svelte';
   import type { Snippet } from 'svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     ref = $bindable(),
     zIndex = 0,
     pointerEvents = true,
     role,
-    label,
-    labelledBy,
-    describedBy,
+    'aria-label': label,
+    'aria-labelledby': labelledBy,
+    'aria-describedby': describedBy,
     center = false,
     ignoreTransform = false,
     class: className,
@@ -98,12 +83,8 @@
 
 <div
   bind:this={ref}
-  class={cls(
-    'layerchart-layout-html',
-    'absolute top-0 left-0',
-    pointerEvents === false && 'pointer-events-none',
-    className
-  )}
+  {...createDataAttr('layout-html')}
+  class={cls('absolute top-0 left-0', pointerEvents === false && 'pointer-events-none', className)}
   style:transform
   style:transform-origin="top left"
   style:z-index={zIndex}

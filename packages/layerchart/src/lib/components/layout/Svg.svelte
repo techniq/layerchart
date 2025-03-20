@@ -30,21 +30,6 @@
     viewBox?: string;
 
     /**
-     * A string passed to the `aria-label` property on the `<svg>` tag.
-     */
-    label?: string;
-
-    /**
-     * A string passed to the `aria-labelledby` property on the `<svg>` tag.
-     */
-    labelledBy?: string;
-
-    /**
-     * A string passed to the `aria-describedby` property on the `<svg>` tag.
-     */
-    describedBy?: string;
-
-    /**
      * Shorthand to set the contents of `<title></title>` for accessibility.
      * You can also set arbitrary HTML via the title snippet but this is a convenient shorthand.
      */
@@ -80,6 +65,7 @@
   import type { Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { getChartContext, setRenderContext } from '../Chart.svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     ref = $bindable(),
@@ -90,9 +76,6 @@
     ignoreTransform = false,
     center = false,
     class: className,
-    label,
-    labelledBy,
-    describedBy,
     title,
     defs,
     children,
@@ -120,21 +103,18 @@
   height={ctx.containerHeight}
   style:z-index={zIndex}
   class={cls(
-    'layerchart-layout-svg',
     'absolute top-0 left-0 overflow-visible',
     pointerEvents === false && 'pointer-events-none',
     className
   )}
-  aria-label={label}
-  aria-labelledby={labelledBy}
-  aria-describedby={describedBy}
   role="figure"
+  {...createDataAttr('layout-svg')}
   {...restProps}
 >
   {#if typeof title === 'function'}
     {@render title()}
   {:else if title}
-    <title class="layerchart-title">{title}</title>
+    <title {...createDataAttr('layout-svg-title')}>{title}</title>
   {/if}
 
   <defs>
@@ -143,11 +123,11 @@
 
   <g
     bind:this={innerRef}
-    class="layerchart-layout-svg_g"
+    {...createDataAttr('layout-svg-g')}
     transform="translate({ctx.padding.left}, {ctx.padding.top})"
   >
     {#if transform}
-      <g {transform}>
+      <g {transform} {...createDataAttr('layout-svg-g-transform')}>
         {@render children?.({ ref })}
       </g>
     {:else}

@@ -138,6 +138,7 @@
   import { degreesToRadians } from '$lib/utils/math.js';
   import { getChartContext } from './Chart.svelte';
   import { afterTick } from 'layerchart/utils/afterTick.js';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     ref = $bindable(),
@@ -278,7 +279,7 @@
 {#if track}
   <Spline
     pathData={trackArc()}
-    class="track"
+    {...createDataAttr('arc-track')}
     stroke="none"
     bind:ref={trackRef}
     {...typeof track === 'object' ? track : {}}
@@ -287,6 +288,7 @@
 
 <Spline
   bind:ref
+  {...createDataAttr('arc-line')}
   pathData={arc()}
   transform="translate({xOffset}, {yOffset})"
   {fill}

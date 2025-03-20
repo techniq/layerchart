@@ -49,6 +49,7 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { afterTick } from 'layerchart/utils/afterTick.js';
   import { createKey } from 'layerchart/utils/key.svelte.js';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     height,
@@ -161,6 +162,7 @@
     stroke-width={strokeWidth}
     {opacity}
     class={cls(fill == null && 'fill-surface-content', className)}
+    {...createDataAttr('rect')}
     {...restProps}
     bind:this={ref}
   />

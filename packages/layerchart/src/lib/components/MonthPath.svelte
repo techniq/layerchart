@@ -30,6 +30,7 @@
 <script lang="ts">
   import { timeWeek, timeYear } from 'd3-time';
   import { endOfMonth } from 'date-fns';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let { date, cellSize: cellSizeProp, ref = $bindable(), ...restProps }: MonthPathProps = $props();
 
@@ -55,4 +56,11 @@
   `);
 </script>
 
-<path bind:this={ref} d={pathData} fill="none" class="stroke-surface-content/20" {...restProps} />
+<path
+  bind:this={ref}
+  d={pathData}
+  fill="none"
+  class="stroke-surface-content/20"
+  {...restProps}
+  {...createDataAttr('month-path')}
+/>

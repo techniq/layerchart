@@ -15,6 +15,7 @@
 
 <script lang="ts">
   import { geoGraticule } from 'd3-geo';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let { lines, outline, step = [10, 10], ...restProps }: GraticuleProps = $props();
 
@@ -23,21 +24,27 @@
   $effect(() => {
     graticule.step(step);
   });
+
+  const pathAttr = createDataAttr('graticule-path');
 </script>
 
-<g class="graticule">
+<g {...createDataAttr('graticule-root')}>
   <!-- TODO: Any reason to still render the single `MultiLineString` path if using `lines` and/or `outline` -->
   {#if !lines && !outline}
-    <GeoPath geojson={graticule()} {...restProps} />
+    <GeoPath {...pathAttr} geojson={graticule()} {...restProps} />
   {/if}
 
   {#if lines}
     {#each graticule.lines() as line}
-      <GeoPath geojson={line} {...typeof lines === 'object' ? lines : null} />
+      <GeoPath {...pathAttr} geojson={line} {...typeof lines === 'object' ? lines : null} />
     {/each}
   {/if}
 
   {#if outline}
-    <GeoPath geojson={graticule.outline()} {...typeof outline === 'object' ? outline : null} />
+    <GeoPath
+      {...pathAttr}
+      geojson={graticule.outline()}
+      {...typeof outline === 'object' ? outline : null}
+    />
   {/if}
 </g>

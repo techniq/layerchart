@@ -56,6 +56,7 @@
   import { format as formatUtil, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import type { Without } from 'layerchart/utils/types.js';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     ref = $bindable(),
@@ -73,10 +74,12 @@
     },
     class: className,
     children,
+    ...restProps
   }: TooltipHeaderProps = $props();
 </script>
 
 <div
+  {...createDataAttr('tooltip-header')}
   class={cls(
     'TooltipHeader',
     'font-semibold whitespace-nowrap border-b mb-1 pb-1 flex items-center gap-2',
@@ -84,6 +87,7 @@
     props.root?.class,
     className
   )}
+  {...restProps}
   bind:this={ref}
 >
   {#if color}
@@ -91,6 +95,7 @@
       bind:this={colorRef}
       class={cls('color', 'inline-block size-2 rounded-full bg-[var(--color)]', classes.color)}
       style:--color={color}
+      {...createDataAttr('tooltip-header-color')}
     ></div>
   {/if}
   {#if children}

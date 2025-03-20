@@ -1,10 +1,17 @@
 <script lang="ts" module>
+  /**
+   * The additional snippet props passed to the various snippets belonging
+   * to the `AreaChart` component.
+   */
   export type AreaChartExtraSnippetProps<TData> = {
     getAreaProps: (s: SeriesData<TData, typeof Area>, i: number) => ComponentProps<typeof Area>;
     getLabelsProps: (s: SeriesData<TData, typeof Area>, i: number) => ComponentProps<typeof Labels>;
     getPointsProps: (s: SeriesData<TData, typeof Area>, i: number) => ComponentProps<typeof Points>;
   };
 
+  /**
+   * The accepted props via the `props` prop of the `AreaChart` component.
+   */
   export type AreaChartPropsObjProp = Pick<
     SimplifiedChartPropsObject,
     | 'area'
@@ -29,13 +36,21 @@
     AreaChartExtraSnippetProps<TData>
   > & {
     /**
-     * The event to be dispatched when the point is clicked.
+     * A callback function called when a point in the chart is clicked.
+     *
+     * @param e - the original event that triggered the `onPointClick`
+     * @param details - an object containing the highlighted point data and series data
      */
     onPointClick?: (
       e: MouseEvent,
       details: { data: HighlightPointData; series: SeriesData<TData, typeof Area> }
     ) => void;
 
+    /**
+     * Additional props to be passed to the components rendered internally by the
+     * `AreaChart` component. This is useful for customizing the behavior of the individual
+     * components, without having to fully override them via a snippet.
+     */
     props?: AreaChartPropsObjProp;
   };
 </script>
@@ -281,7 +296,6 @@
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
-        ...props.tooltip,
       }}
   bind:tooltipContext
   brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
@@ -298,7 +312,7 @@
     : false}
 >
   {#snippet children({ tooltipContext, brushContext, context, geoContext, transformContext })}
-    {@const slotProps = {
+    {@const snippetProps = {
       context,
       tooltipContext,
       brushContext,
@@ -314,9 +328,9 @@
     }}
 
     {#if childrenProp}
-      {@render childrenProp(slotProps)}
+      {@render childrenProp(snippetProps)}
     {:else}
-      {@render belowContext?.(slotProps)}
+      {@render belowContext?.(snippetProps)}
       {@const Component = renderContext === 'canvas' ? Canvas : Svg}
 
       <Component
@@ -326,16 +340,16 @@
         {debug}
       >
         {#if typeof grid === 'function'}
-          {@render grid(slotProps)}
+          {@render grid(snippetProps)}
         {:else if grid}
           <Grid x={radial} y {...typeof grid === 'object' ? grid : null} {...props.grid} />
         {/if}
 
         <ChartClipPath disabled={!brush}>
-          {@render belowMarks?.(slotProps)}
+          {@render belowMarks?.(snippetProps)}
 
           {#if marks}
-            {@render marks(slotProps)}
+            {@render marks(snippetProps)}
           {:else}
             {#each visibleSeries as s, i (s.key)}
               <Area {...getAreaProps(s, i)} />
@@ -343,9 +357,9 @@
           {/if}
         </ChartClipPath>
 
-        {@render aboveMarks?.(slotProps)}
+        {@render aboveMarks?.(snippetProps)}
         {#if typeof axis === 'function'}
-          {@render axis(slotProps)}
+          {@render axis(snippetProps)}
         {:else if axis}
           {#if axis !== 'x'}
             <Axis
@@ -372,7 +386,7 @@
           {/if}
 
           {#if typeof rule === 'function'}
-            {@render rule(slotProps)}
+            {@render rule(snippetProps)}
           {:else if rule}
             <Rule x={0} y={0} {...typeof rule === 'object' ? rule : null} {...props.rule} />
           {/if}
@@ -387,7 +401,7 @@
           {/if}
 
           {#if typeof highlight === 'function'}
-            {@render highlight(slotProps)}
+            {@render highlight(snippetProps)}
           {:else}
             {#each visibleSeries as s, i (s.key)}
               {@const seriesTooltipData =
@@ -432,10 +446,10 @@
         </ChartClipPath>
       </Component>
 
-      {@render aboveContext?.(slotProps)}
+      {@render aboveContext?.(snippetProps)}
 
       {#if typeof legend === 'function'}
-        {@render legend(slotProps)}
+        {@render legend(snippetProps)}
       {:else if legend}
         {#if legend}
           <Legend
@@ -466,7 +480,7 @@
       {/if}
 
       {#if typeof tooltip === 'function'}
-        {@render tooltip(slotProps)}
+        {@render tooltip(snippetProps)}
       {:else}
         <Tooltip.Root {...props.tooltip?.root}>
           {#snippet children({ data })}

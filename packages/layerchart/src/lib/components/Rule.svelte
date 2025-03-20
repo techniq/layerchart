@@ -54,6 +54,7 @@
   import Circle from './Circle.svelte';
   import Line, { type LinePropsWithoutHTML } from './Line.svelte';
   import { getChartContext } from './Chart.svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     x = false,
@@ -86,7 +87,7 @@
   }
 </script>
 
-<g class="rule">
+<g {...createDataAttr('rule-g')}>
   {#if showRule(x, 'x')}
     {@const xCoord =
       x === true || x === 'left'

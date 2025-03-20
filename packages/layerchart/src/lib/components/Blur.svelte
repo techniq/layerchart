@@ -21,6 +21,8 @@
 </script>
 
 <script lang="ts">
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
+
   import { createId } from 'layerchart/utils/createId.js';
   import type { Snippet } from 'svelte';
   const uid = $props.id();
@@ -29,13 +31,13 @@
 </script>
 
 <defs>
-  <filter {id}>
+  <filter {id} {...createDataAttr('blur-filter')}>
     <feGaussianBlur in="SourceGraphic" {stdDeviation} />
   </filter>
 </defs>
 
 {#if children}
-  <g filter="url(#{id})">
+  <g filter="url(#{id})" {...createDataAttr('blur-g')}>
     {@render children({ id, url: `url(#${id})` })}
   </g>
 {/if}

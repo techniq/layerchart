@@ -73,6 +73,7 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { createId } from 'layerchart/utils/createId.js';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   const uid = $props.id();
 
@@ -104,6 +105,7 @@
     {refY}
     {viewBox}
     {...restProps}
+    {...createDataAttr('marker')}
     class={cls(
       'overflow-visible',
       // stroke
@@ -128,13 +130,13 @@
     {#if children}
       {@render children()}
     {:else if type === 'triangle'}
-      <path d="M 0 0 L 10 5 L 0 10 z" />
+      <path d="M 0 0 L 10 5 L 0 10 z" {...createDataAttr('marker-triangle')} />
     {:else if type === 'arrow'}
-      <polyline points="0 0, 10 5, 0 10" />
+      <polyline points="0 0, 10 5, 0 10" {...createDataAttr('marker-arrow')} />
     {:else if type === 'circle' || type === 'circle-stroke' || type === 'dot'}
-      <circle cx={5} cy={5} r={5} />
+      <circle cx={5} cy={5} r={5} {...createDataAttr('marker-circle')} />
     {:else if type === 'line'}
-      <polyline points="5 0, 5 10" />
+      <polyline points="5 0, 5 10" {...createDataAttr('marker-line')} />
     {/if}
   </marker>
 </defs>

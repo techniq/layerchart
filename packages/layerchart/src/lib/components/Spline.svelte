@@ -36,7 +36,13 @@
      */
     tweened?: TweenedProp;
 
-    /** Draw path over time.  Works best without `tweened` enabled */
+    /**
+     * Whether to animate the drawing of the path over time.
+     * Pass either `true` or an object with transition options to
+     * enable the transition.
+     *
+     * Works best with `tweened` disabled.
+     */
     draw?: boolean | Parameters<typeof _drawTransition>[1];
 
     /**
@@ -79,12 +85,16 @@
     markerEnd?: MarkerOptions;
 
     /**
-     * Insert content inside the start group
+     * Add additional content at the start of the line.
+     *
+     * Receives `{ point: DOMPoint }` as a snippet prop.
      */
     startContent?: Snippet<[{ point: DOMPoint }]>;
 
     /**
-     * Insert content inside the end group
+     * Add additional content at the end of the line.
+     *
+     * Receives `{ point: DOMPoint }` as a snippet prop.
      */
     endContent?: Snippet<[{ point: DOMPoint }]>;
 
@@ -121,6 +131,7 @@
   import { createKey } from 'layerchart/utils/key.svelte.js';
   import { afterTick } from 'layerchart/utils/afterTick.js';
   import { createId } from 'layerchart/utils/createId.js';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -344,7 +355,8 @@
     <path
       d={tweenedState.current}
       {...restProps}
-      class={cls('path-line', !fill && 'fill-none', !stroke && 'stroke-surface-content', className)}
+      {...createDataAttr('path-line')}
+      class={cls(!fill && 'fill-none', !stroke && 'stroke-surface-content', className)}
       {fill}
       fill-opacity={fillOpacity}
       {stroke}
@@ -361,13 +373,13 @@
     <MarkerWrapper id={markerEndId} marker={markerEnd} />
 
     {#if startContent && startPoint}
-      <Group x={startPoint.x} y={startPoint.y}>
+      <Group x={startPoint.x} y={startPoint.y} {...createDataAttr('spline-g-start')}>
         {@render startContent({ point: startPoint })}
       </Group>
     {/if}
 
     {#if endContent && endPoint.current}
-      <Group x={endPoint.current.x} y={endPoint.current.y}>
+      <Group x={endPoint.current.x} y={endPoint.current.y} {...createDataAttr('spline-g-end')}>
         {@render endContent({ point: endPoint.current })}
       </Group>
     {/if}

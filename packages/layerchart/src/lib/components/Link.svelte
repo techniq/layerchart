@@ -81,6 +81,7 @@
 
   import MarkerWrapper from './MarkerWrapper.svelte';
   import { createId } from 'layerchart/utils/createId.js';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   const uid = $props.id();
 
@@ -137,7 +138,7 @@
 </script>
 
 <Spline
-  class="path-link"
+  {...createDataAttr('path-link')}
   pathData={tweenedState.current}
   fill="none"
   marker-start={markerStartId ? `url(#${markerStartId})` : undefined}

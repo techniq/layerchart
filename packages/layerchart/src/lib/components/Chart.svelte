@@ -40,6 +40,7 @@
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
   import BrushContext, { type BrushContextValue } from './BrushContext.svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -227,7 +228,7 @@
     containerHeight?: number;
 
     /**
-     * The .layerchart-container `<div>` tag. Useful for bindings.
+     * A bindable reference to the root container element.
      */
     ref?: HTMLElement | null;
 
@@ -662,7 +663,7 @@
     geoContext?: GeoContextValue;
 
     /**
-     * Props passed to TooltipContext
+     * Props passed to the `TooltipContext` component.
      */
     tooltip?: Partial<ComponentProps<typeof TooltipContext>> | boolean;
 
@@ -1321,7 +1322,6 @@
 {#if ssr === true || typeof window !== 'undefined'}
   <div
     bind:this={ref}
-    class="layerchart-container"
     style:position
     style:top={position === 'absolute' ? '0' : null}
     style:right={position === 'absolute' ? '0' : null}
@@ -1330,6 +1330,7 @@
     style:pointer-events={pointerEvents === false ? 'none' : null}
     bind:clientWidth={containerWidthProp}
     bind:clientHeight={containerHeightProp}
+    {...createDataAttr('root-container')}
   >
     {#key isMounted}
       <TransformContext
@@ -1371,11 +1372,11 @@
 {/if}
 
 <style>
-  .layerchart-container,
-  .layerchart-container :global(*) {
+  [data-lc-root-container],
+  [data-lc-root-container] :global(*) {
     box-sizing: border-box;
   }
-  .layerchart-container {
+  [data-lc-root-container] {
     width: 100%;
     height: 100%;
   }

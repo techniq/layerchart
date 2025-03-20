@@ -69,6 +69,7 @@
   import { getChartContext } from './Chart.svelte';
   import { motionState, type TweenedOptions } from 'layerchart/stores/motionState.svelte.js';
   import { createKey } from 'layerchart/utils/key.svelte.js';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext();
   const renderCtx = getRenderContext();
@@ -262,7 +263,8 @@
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
+    {...createDataAttr('area-path')}
     {...restProps}
-    class={cls('path-area', className)}
+    class={className}
   />
 {/if}

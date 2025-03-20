@@ -39,21 +39,6 @@
      */
     fallback?: string | Snippet;
 
-    /**
-     * A string passed to the `aria-label` property on the `<canvas>` tag.
-     */
-    label?: string;
-
-    /**
-     * A string passed to the `aria-labelledby` property on the `<canvas>` tag.
-     */
-    labelledBy?: string;
-
-    /**
-     * A string passed to the `aria-describedby` property on the `<canvas>` tag.
-     */
-    describedBy?: string;
-
     children?: Snippet<
       [{ ref: HTMLCanvasElement; webGLContext: WebGLRenderingContext | undefined }]
     >;
@@ -79,18 +64,17 @@
   import { onMount, type Snippet } from 'svelte';
   import { getChartContext } from '../Chart.svelte';
   import { Context } from 'runed';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     context = $bindable(),
     ref = $bindable(),
     contextAttributes,
-    describedBy,
     fallback = '',
-    label,
-    labelledBy,
     pointerEvents = true,
     zIndex = 0,
     children,
+    ...restProps
   }: WebGLProps = $props();
 
   let testGl;
@@ -127,7 +111,7 @@
 
 <canvas
   bind:this={ref}
-  class="layerchart-layout-webgl"
+  {...createDataAttr('layout-webgl')}
   style:z-index={zIndex}
   style:pointer-events={pointerEvents === false ? 'none' : null}
   style:top={ctx.padding.top + 'px'}
@@ -135,9 +119,7 @@
   style:bottom={ctx.padding.bottom + 'px'}
   style:left={ctx.padding.left + 'px'}
   style="width:100%;height:100%;position:absolute;"
-  aria-label={label}
-  aria-labelledby={labelledBy}
-  aria-describedby={describedBy}
+  {...restProps}
 >
   {#if typeof fallback === 'function'}
     {@render fallback()}

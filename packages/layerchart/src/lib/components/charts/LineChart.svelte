@@ -224,7 +224,6 @@
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
-        ...props.tooltip,
       }}
   bind:tooltipContext
   brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
@@ -241,7 +240,7 @@
     : false}
 >
   {#snippet children({ context, geoContext, brushContext, tooltipContext, transformContext })}
-    {@const slotProps = {
+    {@const snippetProps = {
       context,
       tooltipContext,
       brushContext,
@@ -256,9 +255,9 @@
       setHighlightKey: highlightKey.set,
     }}
     {#if childrenProp}
-      {@render childrenProp(slotProps)}
+      {@render childrenProp(snippetProps)}
     {:else}
-      {@render belowContext?.(slotProps)}
+      {@render belowContext?.(snippetProps)}
       {@const Component = renderContext === 'canvas' ? Canvas : Svg}
       <Component
         this={renderContext === 'canvas' ? Canvas : Svg}
@@ -267,26 +266,26 @@
         {debug}
       >
         {#if typeof grid === 'function'}
-          {@render grid(slotProps)}
+          {@render grid(snippetProps)}
         {:else if grid}
           <Grid x={radial} y {...typeof grid === 'object' ? grid : null} {...props.grid} />
         {/if}
 
         <ChartClipPath disabled={!brush}>
-          {@render belowMarks?.(slotProps)}
+          {@render belowMarks?.(snippetProps)}
           {#if marks}
-            {@render marks(slotProps)}
+            {@render marks(snippetProps)}
           {:else}
             {#each visibleSeries as s, i (s.key)}
               <Spline {...getSplineProps(s, i)} />
             {/each}
           {/if}
 
-          {@render aboveMarks?.(slotProps)}
+          {@render aboveMarks?.(snippetProps)}
         </ChartClipPath>
 
         {#if typeof axis === 'function'}
-          {@render axis(slotProps)}
+          {@render axis(snippetProps)}
         {:else if axis}
           {#if axis !== 'x'}
             <Axis
@@ -307,7 +306,7 @@
           {/if}
 
           {#if typeof rule === 'function'}
-            {@render rule(slotProps)}
+            {@render rule(snippetProps)}
           {:else if rule}
             <Rule x={0} y={0} {...typeof rule === 'object' ? rule : null} {...props.rule} />
           {/if}
@@ -328,7 +327,7 @@
           {/if}
 
           {#if highlight}
-            {@render highlight(slotProps)}
+            {@render highlight(snippetProps)}
           {:else}
             {#each visibleSeries as s, i (s.key)}
               {@const seriesTooltipData =
@@ -365,10 +364,10 @@
         </ChartClipPath>
       </Component>
 
-      {@render aboveContext?.(slotProps)}
+      {@render aboveContext?.(snippetProps)}
 
       {#if typeof legend === 'function'}
-        {@render legend(slotProps)}
+        {@render legend(snippetProps)}
       {:else if legend}
         <Legend
           scale={isDefaultSeries
@@ -397,7 +396,7 @@
       {/if}
 
       {#if typeof tooltip === 'function'}
-        {@render tooltip(slotProps)}
+        {@render tooltip(snippetProps)}
       {:else}
         <Tooltip.Root {...props.tooltip?.root}>
           {#snippet children({ data })}

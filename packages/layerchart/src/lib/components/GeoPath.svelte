@@ -73,6 +73,7 @@
   import { geoCurvePath } from '$lib/utils/geo.js';
   import { getGeoContext } from './GeoContext.svelte';
   import { createKey } from 'layerchart/utils/key.svelte.js';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     fill,
@@ -184,6 +185,7 @@
 {:else if renderCtx === 'svg'}
   <path
     bind:this={ref}
+    {...createDataAttr('geo-path')}
     {...restProps}
     d={geojson ? geoPath?.(geojson) : ''}
     {fill}

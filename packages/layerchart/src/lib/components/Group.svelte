@@ -68,6 +68,7 @@
 
   import { getChartContext } from './Chart.svelte';
   import { afterTick } from 'layerchart/utils/afterTick.js';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -103,15 +104,15 @@
     }
   });
 
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
+  const renderCtx = getRenderContext();
+  const canvasCtx = getCanvasContext();
 
   function render(ctx: CanvasRenderingContext2D) {
     ctx.translate(tweenedX.current ?? 0, tweenedY.current ?? 0);
   }
   $effect(() => {
-    if (renderContext !== 'canvas') return;
-    return canvasContext.register({
+    if (renderCtx !== 'canvas') return;
+    return canvasCtx.register({
       name: 'Group',
       render,
       retainState: true,
@@ -127,9 +128,9 @@
   });
 
   $effect(() => {
-    if (renderContext !== 'canvas') return;
+    if (renderCtx !== 'canvas') return;
     [tweenedX.current, tweenedY.current];
-    canvasContext.invalidate();
+    canvasCtx.invalidate();
   });
 
   const handleTouchMove: TouchEventHandler<Element> = (e) => {
@@ -141,10 +142,17 @@
   };
 </script>
 
-{#if renderContext === 'canvas'}
+{#if renderCtx === 'canvas'}
   {@render children?.()}
-{:else if renderContext === 'svg'}
-  <g style:transform class={className} {...restProps} ontouchmove={handleTouchMove} bind:this={ref}>
+{:else if renderCtx === 'svg'}
+  <g
+    style:transform
+    class={className}
+    {...restProps}
+    ontouchmove={handleTouchMove}
+    bind:this={ref}
+    {...createDataAttr('group-g')}
+  >
     {@render children?.()}
   </g>
 {:else}

@@ -23,6 +23,7 @@
   import { geoDistance } from 'd3-geo';
 
   import { getGeoContext } from './GeoContext.svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     link,
@@ -48,6 +49,6 @@
   const opacity = $derived(opacityProp ?? clamper(fade(distance)));
 </script>
 
-<g {opacity} bind:this={ref} {...restProps}>
+<g {opacity} bind:this={ref} {...createDataAttr('geo-edge-fade')} {...restProps}>
   {@render children?.()}
 </g>

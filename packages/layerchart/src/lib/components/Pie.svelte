@@ -80,6 +80,7 @@
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   /*
     TODO:
@@ -143,6 +144,7 @@
 {:else}
   {#each arcs as arc}
     <Arc
+      {...createDataAttr('pie-arc')}
       startAngle={arc.startAngle}
       endAngle={arc.endAngle}
       padAngle={arc.padAngle}

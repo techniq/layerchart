@@ -52,10 +52,12 @@
     props?: BarChartPropsObjProp;
 
     /**
-     * A function called when a bar is clicked
+     * A callback function that is called when a bar is clicked.
+     * @param e - The original event that triggered the callback
+     * @param detail - An object containing the bar's data and series information
      */
     onBarClick?: (
-      e: MouseEvent,
+      event: MouseEvent,
       detail: { data: any; series: SeriesData<TData, typeof Bars> }
     ) => void;
 
@@ -376,7 +378,6 @@
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
-        ...props.tooltip,
       }}
   bind:tooltipContext
 >

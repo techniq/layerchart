@@ -139,6 +139,7 @@
   import { untrack, type Snippet } from 'svelte';
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Without } from 'layerchart/utils/types.js';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     anchor = 'top-left',
@@ -321,6 +322,7 @@
 
 {#if tooltip.data}
   <div
+    {...createDataAttr('tooltip-root')}
     {...props.root}
     class={cls(
       'absolute z-50 select-none',
@@ -336,6 +338,7 @@
     bind:this={rootRef}
   >
     <div
+      {...createDataAttr('tooltip-container')}
       {...props.container}
       class={cls(
         variant !== 'none' && ['text-sm py-1 px-2 h-full rounded-sm elevation-1'],
@@ -357,7 +360,12 @@
       bind:this={containerRef}
     >
       {#if children}
-        <div {...props.content} class={cls(classes.content)} bind:this={contentRef}>
+        <div
+          {...createDataAttr('tooltip-content')}
+          {...props.content}
+          class={cls(classes.content)}
+          bind:this={contentRef}
+        >
           {@render children({ data: tooltip.data })}
         </div>
       {/if}

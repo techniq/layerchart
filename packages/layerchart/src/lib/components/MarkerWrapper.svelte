@@ -1,6 +1,19 @@
 <script lang="ts" module>
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
   import Marker from './Marker.svelte';
   import type { ComponentProps, Snippet } from 'svelte';
+
+  export type MarkerProps = {
+    /**
+     * A unique identifier for the marker.
+     */
+    id: string;
+
+    /**
+     * The marker or marker options to render
+     */
+    marker?: MarkerOptions;
+  };
 
   export type MarkerOptions =
     | ComponentProps<typeof Marker>['type']
@@ -9,13 +22,7 @@
 </script>
 
 <script lang="ts">
-  let {
-    id,
-    marker,
-  }: {
-    id: string;
-    marker?: MarkerOptions;
-  } = $props();
+  let { id, marker }: MarkerProps = $props();
 </script>
 
 {#if typeof marker === 'function'}

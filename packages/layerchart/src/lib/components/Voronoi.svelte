@@ -66,6 +66,7 @@
   import Spline from './Spline.svelte';
   import { getChartContext } from './Chart.svelte';
   import { getGeoContext } from './GeoContext.svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     data,
@@ -109,11 +110,12 @@
   const boundHeight = $derived(Math.max(ctx.height, 0));
 </script>
 
-<g {...restProps} class={cls(classes.root, className)}>
+<g {...restProps} class={cls(classes.root, className)} {...createDataAttr('voronoi-g')}>
   {#if geo.projection}
     {@const polygons = geoVoronoi().polygons(points)}
     {#each polygons.features as feature}
       <GeoPath
+        {...createDataAttr('voronoi-geo-path')}
         geojson={feature}
         class={cls('fill-transparent stroke-transparent', classes.path)}
         onclick={(e) => onclick?.(e, { data: feature.properties.site.data, feature })}
@@ -134,6 +136,7 @@
       <!-- Wait to render Spline until pathData is available to fix path artifacts from injected tweened points in Spline  -->
       {#if pathData}
         <Spline
+          {...createDataAttr('voronoi-path')}
           {pathData}
           class={cls('fill-transparent stroke-transparent', classes.path)}
           onclick={(e) => onclick?.(e, { data: point.data, point })}

@@ -65,6 +65,7 @@
   import Spline from './Spline.svelte';
   import { getChartContext } from './Chart.svelte';
   import { getGeoContext } from './GeoContext.svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     data,
@@ -95,12 +96,20 @@
       return point;
     })
   );
+
+  const pathAttr = createDataAttr('hull-path');
 </script>
 
-<g {...restProps} class={cls(classes.root, className)} bind:this={ref}>
+<g
+  {...createDataAttr('hull-root')}
+  {...restProps}
+  class={cls(classes.root, className)}
+  bind:this={ref}
+>
   {#if geoCtx.projection}
     {@const polygon = geoVoronoi().hull(points)}
     <GeoPath
+      {...pathAttr}
       geojson={polygon}
       {curve}
       class={cls('fill-transparent', classes.path)}
@@ -112,6 +121,7 @@
     {@const delaunay = Delaunay.from(points)}
     {@const polygon = delaunay.hullPolygon()}
     <Spline
+      {...pathAttr}
       data={polygon}
       x={(d) => d[0]}
       y={(d) => d[1]}

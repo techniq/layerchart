@@ -120,6 +120,7 @@
   import { getChartContext } from './Chart.svelte';
   import type { Without } from 'layerchart/utils/types.js';
   import type { Snippet } from 'svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     scale: scaleProp,
@@ -291,6 +292,7 @@
 
 <div
   bind:this={ref}
+  {...createDataAttr('legend-container')}
   {...restProps}
   class={cls(
     'inline-block',
@@ -313,29 +315,38 @@
     classes.root
   )}
 >
-  <div class={cls('text-[10px] font-semibold', classes.title)}>{title}</div>
+  <div class={cls('text-[10px] font-semibold', classes.title)} {...createDataAttr('legend-title')}>
+    {title}
+  </div>
   {#if children}
     {@render children({ values: tickValuesProp ?? [], scale })}
   {:else if variant === 'ramp'}
     <svg
+      {...createDataAttr('legend-svg')}
       {width}
       height={height + tickLengthProp + tickFontSize}
       viewBox="0 0 {width} {height + tickLengthProp + tickFontSize}"
       class="overflow-visible"
     >
-      <g>
+      <g {...createDataAttr('legend-color-group')}>
         {#if scaleConfig.interpolator}
-          <ColorRamp {width} {height} interpolator={scaleConfig.interpolator} />
+          <ColorRamp
+            {width}
+            {height}
+            interpolator={scaleConfig.interpolator}
+            {...createDataAttr('legend-color-ramp')}
+          />
         {:else if scaleConfig.swatches}
           {#each scaleConfig.swatches as swatch, i}
-            <rect {...swatch} />
+            <rect {...swatch} {...createDataAttr('legend-swatch')} />
           {/each}
         {/if}
       </g>
 
-      <g>
+      <g {...createDataAttr('legend-tick-group')}>
         {#each tickValuesProp ?? scaleConfig.xScale?.ticks?.(ticks) ?? [] as tick, i}
           <text
+            {...createDataAttr('legend-tick-text')}
             text-anchor="middle"
             x={scaleConfig.xScale?.(tick) + scaleConfig.tickLabelOffset}
             y={height + tickLengthProp + tickFontSize}
@@ -347,6 +358,7 @@
 
           {#if scaleConfig.tickLine}
             <line
+              {...createDataAttr('legend-tick-line')}
               x1={scaleConfig.xScale?.(tick)}
               y1={0}
               x2={scaleConfig.xScale?.(tick)}
@@ -359,6 +371,7 @@
     </svg>
   {:else if variant === 'swatches'}
     <div
+      {...createDataAttr('legend-swatch-group')}
       class={cls(
         'flex gap-x-4 gap-y-1',
         orientation === 'vertical' && 'flex-col',
@@ -369,16 +382,21 @@
         {@const color = scale?.(tick)}
         {@const item = { value: tick, color }}
         <button
+          {...createDataAttr('legend-swatch-button')}
           class={cls('flex gap-1', !onclick && 'cursor-auto', classes.item?.(item))}
           onclick={(e) => onclick?.(e, item)}
           onpointerenter={(e) => onpointerenter?.(e, item)}
           onpointerleave={(e) => onpointerleave?.(e, item)}
         >
           <div
+            {...createDataAttr('legend-swatch')}
             class={cls('h-4 w-4 rounded-full', classes.swatch)}
             style:background-color={color}
           ></div>
-          <div class={cls('text-xs text-surface-content whitespace-nowrap', classes.label)}>
+          <div
+            {...createDataAttr('legend-swatch-label')}
+            class={cls('text-xs text-surface-content whitespace-nowrap', classes.label)}
+          >
             {tickFormatProp ? format(tick, tickFormatProp) : tick}
           </div>
         </button>

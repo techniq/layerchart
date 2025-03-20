@@ -140,6 +140,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import { getChartContext } from './Chart.svelte';
   import { untrack, type Snippet } from 'svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -506,6 +507,7 @@
 {#if disabled}
   {@render children?.({ brushContext })}
 {:else}
+  {@const handleAttr = createDataAttr('brush-handle')}
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     bind:this={rootEl}
@@ -513,7 +515,8 @@
     style:left="{ctx.padding.left}px"
     style:width="{ctx.width}px"
     style:height="{ctx.height}px"
-    class={cls('BrushContext absolute touch-none')}
+    class={cls('absolute touch-none')}
+    {...createDataAttr('brush-context')}
     onpointerdown={createRange}
     ondblclick={() => selectAll()}
   >
@@ -523,6 +526,7 @@
       style:left="-{ctx.padding.left ?? 0}px"
       style:width="{ctx.containerWidth}px"
       style:height="{ctx.containerHeight}px"
+      {...createDataAttr('brush-container')}
     >
       {@render children?.({ brushContext })}
     </div>
@@ -534,8 +538,8 @@
         style:top="{_range.y}px"
         style:width="{_range.width}px"
         style:height="{_range.height}px"
+        {...createDataAttr('brush-range')}
         class={cls(
-          'range',
           'absolute bg-surface-content/10 cursor-move select-none',
           'z-10',
           classes.range,
@@ -552,8 +556,9 @@
           style:top="{_range.y}px"
           style:width="{_range.width}px"
           style:height="{handleSize}px"
+          {...handleAttr}
+          data-position="top"
           class={cls(
-            'handle top',
             'cursor-ns-resize select-none',
             'range absolute',
             'z-10',
@@ -576,6 +581,8 @@
           style:top="{bottom - handleSize}px"
           style:width="{_range.width}px"
           style:height="{handleSize}px"
+          {...handleAttr}
+          data-position="bottom"
           class={cls(
             'handle bottom',
             'cursor-ns-resize select-none',
@@ -602,8 +609,9 @@
           style:top="{_range.y}px"
           style:width="{handleSize}px"
           style:height="{_range.height}px"
+          {...handleAttr}
+          data-position="left"
           class={cls(
-            'handle left',
             'cursor-ew-resize select-none',
             'range absolute',
             'z-10',
@@ -626,8 +634,9 @@
           style:top="{_range.y}px"
           style:width="{handleSize}px"
           style:height="{_range.height}px"
+          {...handleAttr}
+          data-position="right"
           class={cls(
-            'handle right',
             'cursor-ew-resize select-none',
             'range absolute',
             'z-10',

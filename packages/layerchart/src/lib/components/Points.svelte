@@ -60,6 +60,7 @@
   import { accessor, type Accessor } from '../utils/common.js';
   import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
   import { getChartContext } from './Chart.svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -205,6 +206,7 @@
       <Link
         data={link}
         stroke={fill ?? (ctx.config.c ? ctx.cGet(link.data) : null)}
+        {...createDataAttr('link')}
         {...typeof links === 'object' ? links : null}
       />
     {/each}
@@ -213,6 +215,7 @@
   {#each points as point}
     {@const radialPoint = pointRadial(point.x, point.y)}
     <Circle
+      {...createDataAttr('point')}
       cx={ctx.radial ? radialPoint[0] : point.x}
       cy={ctx.radial ? radialPoint[1] : point.y}
       r={point.r}

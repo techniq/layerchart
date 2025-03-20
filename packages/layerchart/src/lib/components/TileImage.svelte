@@ -54,6 +54,8 @@
 </script>
 
 <script lang="ts">
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
+
   import Text from './Text.svelte';
 
   let {
@@ -119,13 +121,21 @@
 
 <!-- To avoid aliasing artifacts (thin white lines) between tiles, two layers of tiles are drawn, with the lower layer’s tiles enlarged by one pixel -->
 <image
+  {...createDataAttr('tile-image')}
   xlink:href={href}
   x={(x + tx) * scale - 0.5}
   y={(y + ty) * scale - 0.5}
   width={scale + 1}
   height={scale + 1}
 />
-<image xlink:href={href} x={(x + tx) * scale} y={(y + ty) * scale} width={scale} height={scale} />
+<image
+  {...createDataAttr('tile-image')}
+  xlink:href={href}
+  x={(x + tx) * scale}
+  y={(y + ty) * scale}
+  width={scale}
+  height={scale}
+/>
 {#if debug}
   <rect
     x={(x + tx) * scale}

@@ -44,6 +44,7 @@
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
   import { getGeoContext } from './GeoContext.svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     url,
@@ -105,7 +106,7 @@
   {#if children}
     {@render children({ tiles })}
   {:else}
-    <Group x={-ctx.padding.left} y={-ctx.padding.top}>
+    <Group x={-ctx.padding.left} y={-ctx.padding.top} {...createDataAttr('geo-tile-group')}>
       {#each tiles as [x, y, z] (url(x, y, z))}
         <TileImage
           {url}

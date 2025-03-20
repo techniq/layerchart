@@ -262,7 +262,7 @@
       return;
     }
 
-    const containerNode = (e.target as Element).closest('.layerchart-container')!;
+    const containerNode = (e.target as Element).closest('[data-lc-root-container]')!;
     const point = localPoint(e, containerNode);
 
     if (

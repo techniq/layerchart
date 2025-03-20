@@ -27,10 +27,11 @@
 
 <script lang="ts">
   import { geoCircle } from 'd3-geo';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let { radius = 90, center = [0, 0], precision = 6, ...restProps }: GeoCircleProps = $props();
 
   const geojson = $derived(geoCircle().radius(radius).center(center).precision(precision)());
 </script>
 
-<GeoPath {geojson} {...restProps} />
+<GeoPath {geojson} {...createDataAttr('geo-circle')} {...restProps} />

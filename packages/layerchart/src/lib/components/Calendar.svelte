@@ -62,6 +62,7 @@
   import { getChartContext } from './Chart.svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import type { Without } from 'layerchart/utils/types.js';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     end,
@@ -122,6 +123,7 @@
       onpointermove={(e) => tooltip?.show(e, cell.data)}
       onpointerleave={(e) => tooltip?.hide()}
       class="stroke-surface-content/5"
+      {...createDataAttr('calendar-cell')}
       {...restProps}
     />
   {/each}
@@ -136,6 +138,7 @@
       y={-4}
       value={format(date, 'MMM')}
       class="text-xs"
+      {...createDataAttr('calendar-month-label')}
     />
   {/each}
 {/if}

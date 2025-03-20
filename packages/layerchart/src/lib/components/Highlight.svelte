@@ -120,6 +120,7 @@
   import { asAny } from '$lib/utils/types.js';
   import { getChartContext } from './Chart.svelte';
   import { getTooltipContext } from './tooltip/TooltipContext.svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext();
   const tooltipCtx = getTooltipContext();
@@ -439,6 +440,7 @@
         spring={motion}
         {..._area}
         {...typeof area === 'object' ? area : null}
+        {...createDataAttr('highlight-rect')}
         class={cls(
           // @ts-expect-error
           !area.fill && 'fill-surface-content/5',
@@ -457,6 +459,7 @@
         spring={motion}
         bar={highlightData}
         {...typeof bar === 'object' ? bar : null}
+        {...createDataAttr('highlight-bar')}
         class={cls(
           // @ts-expect-error
           !bar.fill && 'fill-primary',
@@ -479,6 +482,7 @@
           x2={line.x2}
           y2={line.y2}
           {...typeof linesProp === 'object' ? linesProp : null}
+          {...createDataAttr('highlight-line')}
           class={cls(
             'stroke-surface-content/20 stroke-2 [stroke-dasharray:2,2] pointer-events-none',
             typeof linesProp === 'object' ? linesProp.class : null
@@ -501,6 +505,7 @@
           r={4}
           strokeWidth={6}
           {...typeof points === 'object' ? points : null}
+          {...createDataAttr('highlight-point')}
           class={cls(
             'stroke-white [paint-order:stroke] drop-shadow-sm',
             !point.fill && (typeof points === 'boolean' || !points.fill) && 'fill-primary',

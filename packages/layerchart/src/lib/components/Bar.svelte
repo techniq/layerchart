@@ -78,6 +78,7 @@
   import { getChartContext } from './Chart.svelte';
   import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -173,6 +174,7 @@
     {initialHeight}
     {initialWidth}
     {...dimensions}
+    {...createDataAttr('bar')}
     {...restProps}
   />
 {:else}
@@ -184,6 +186,7 @@
     {strokeWidth}
     {opacity}
     {tweened}
+    {...createDataAttr('bar')}
     {...restProps}
   />
 {/if}

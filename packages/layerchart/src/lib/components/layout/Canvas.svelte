@@ -5,18 +5,18 @@
      *
      * @bindable
      */
-    element?: HTMLCanvasElement | null;
+    ref?: HTMLCanvasElement;
 
     /**
      * The `<canvas>`'s 2d context. Useful for bindings.
      *
      * @bindable
      */
-    context?: CanvasRenderingContext2D;
+    canvasContext?: CanvasRenderingContext2D;
 
     /**
-     * Force the use of a software (instead of hardware accelerated) 2D canvas and can save memory
-     * when calling getImageData() frequently.
+     * Force the use of a software (instead of hardware accelerated) 2D canvas, which can
+     * save memory when calling getImageData() frequently.
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext#willreadfrequently
      *
@@ -25,59 +25,54 @@
     willReadFrequently?: boolean;
 
     /**
-     * The layer's z-index.
+     * The `z-index` style to apply to the layer.
+     *
+     * @default 0
      */
     zIndex?: number;
 
     /**
-     * Set this to `false` to set `pointer-events: none;` on the entire layer.
+     *
+     * Whether pointer events should be enabled on the canvas.
+     *
+     * - `false`: `pointer-events: none;` will be set on the entire layer.
+     * - `true`: pointer events will operate normally.
+     *
+     * @default true
      */
     pointerEvents?: boolean;
 
     /**
-     * Text to display if the browser won't render a canvas tag.
-     * You can also set arbitrary HTML via this prop as a snippet.
+     * The content to display if canvas is not supported or cannot be rendered.
+     * This can either be a string or a snippet with custom markup.
      */
     fallback?: string | Snippet;
 
     /**
-     * A string passed to the `aria-label` on the `<canvas>` tag.
-     */
-    label?: string;
-
-    /**
-     * A string passed to the `aria-labelledby` on the `<canvas>` tag.
-     */
-    labelledBy?: string;
-
-    /**
-     * A string passed to `aria-describedby` property on the `<canvas>` tag.
-     */
-    describedBy?: string;
-
-    /**
-     * Translate children to center (useful for radial layouts)
+     * Translate children to center of the canvas (useful for radial layouts).
      *
      * @default false
      */
     center?: boolean | 'x' | 'y';
 
     /**
-     * Ignore TransformContext. Useful to add static elements such as legends.
+     * Ignore TransformContext.
+     *
+     * Useful to add static elements such as legends.
      *
      * @default false
      */
     ignoreTransform?: boolean;
 
     /**
-     * Show hit canvas for debugging
+     * Show the hit canvas for debugging purposes.
      *
      * @default false
      */
     debug?: boolean;
 
     children?: Snippet<
-      [{ element: HTMLCanvasElement; canvasContext: CanvasRenderingContext2D | undefined }]
+      [{ ref: HTMLCanvasElement; canvasContext: CanvasRenderingContext2D | undefined }]
     >;
   };
 
@@ -150,18 +145,16 @@
   } from 'svelte/elements';
   import type { Without } from 'layerchart/utils/types.js';
   import { getChartContext } from '../Chart.svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
-    element = $bindable(null),
-    context = $bindable(),
+    ref = $bindable(),
+    canvasContext: context = $bindable(),
     willReadFrequently = false,
     debug = false,
     zIndex = 0,
     pointerEvents = true,
     fallback,
-    label,
-    labelledBy,
-    describedBy,
     center = false,
     ignoreTransform = false,
     class: className,
@@ -188,11 +181,11 @@
   /**
    * HitCanvas
    */
-  let hitCanvasElement: HTMLCanvasElement | undefined = $state();
-  let hitCanvasContext: CanvasRenderingContext2D | undefined = $state();
+  let hitCanvasElement = $state<HTMLCanvasElement>();
+  let hitCanvasContext = $state<CanvasRenderingContext2D>();
   let colorGenerator = rgbColorGenerator();
   let activeCanvas = $state(false);
-  let lastActiveComponent: ComponentRender | undefined | null = $state();
+  let lastActiveComponent = $state<ComponentRender | null | undefined>();
 
   const componentByColor = new Map<string, ComponentRender>();
 
@@ -239,7 +232,7 @@
    */
 
   onMount(() => {
-    context = element?.getContext('2d', { willReadFrequently }) as CanvasRenderingContext2D;
+    context = ref?.getContext('2d', { willReadFrequently }) as CanvasRenderingContext2D;
 
     hitCanvasContext = hitCanvasElement?.getContext('2d', {
       willReadFrequently: false, // Explicitly set to `false` to resolve pixel artifacts between fill and stroke with the same color (issue #372)
@@ -364,17 +357,14 @@
 </script>
 
 <canvas
-  bind:this={element}
+  bind:this={ref}
+  {...createDataAttr('layout-canvas')}
   style:z-index={zIndex}
   class={cls(
-    'layerchart-layout-canvas',
     'absolute top-0 left-0 w-full h-full',
     pointerEvents === false && 'pointer-events-none',
     className
   )}
-  aria-label={label}
-  aria-labelledby={labelledBy}
-  aria-describedby={describedBy}
   onclick={(e) => {
     const component = getPointerComponent(e);
     component?.events?.click?.(e);
@@ -436,4 +426,4 @@
   )}
 ></canvas>
 
-{@render children?.({ element, canvasContext: context })}
+{@render children?.({ ref, canvasContext: context })}

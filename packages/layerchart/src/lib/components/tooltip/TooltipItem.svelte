@@ -78,6 +78,7 @@
   import { format as formatUtil, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import type { Snippet } from 'svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     ref: ref = $bindable(),
@@ -108,12 +109,14 @@
 </script>
 
 <div
+  {...createDataAttr('tooltip-item-root')}
   {...props.root}
   class={cls('contents', classes.root, className, props.root?.class)}
   {...restProps}
   bind:this={ref}
 >
   <div
+    {...createDataAttr('tooltip-item-label')}
     {...props.label}
     class={cls(
       'label',
@@ -125,6 +128,7 @@
   >
     {#if color}
       <div
+        {...createDataAttr('tooltip-item-color')}
         {...props.color}
         class={cls(
           'color',
@@ -144,6 +148,7 @@
   </div>
 
   <div
+    {...createDataAttr('tooltip-item-value')}
     bind:this={valueRef}
     {...props.value}
     class={cls(

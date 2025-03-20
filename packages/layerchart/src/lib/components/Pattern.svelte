@@ -1,4 +1,5 @@
 <script lang="ts" module>
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
   import type { Without } from 'layerchart/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
 
@@ -32,7 +33,14 @@
 </script>
 
 <defs>
-  <pattern {id} {width} {height} patternUnits="userSpaceOnUse" {...restProps}>
+  <pattern
+    {id}
+    {width}
+    {height}
+    patternUnits="userSpaceOnUse"
+    {...createDataAttr('pattern')}
+    {...restProps}
+  >
     {@render children?.()}
   </pattern>
 </defs>

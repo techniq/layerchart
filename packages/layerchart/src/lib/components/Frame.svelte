@@ -19,6 +19,7 @@
 
 <script lang="ts">
   import { getChartContext } from './Chart.svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let { ref = $bindable(), full = false, ...restProps }: FrameProps = $props();
 
@@ -26,6 +27,7 @@
 </script>
 
 <Rect
+  {...createDataAttr('frame')}
   x={full && ctx.padding?.left ? -ctx.padding.left : 0}
   y={full && ctx.padding?.top ? -ctx.padding.top : 0}
   width={ctx.width + (full ? (ctx.padding?.left ?? 0) + (ctx.padding?.right ?? 0) : 0)}

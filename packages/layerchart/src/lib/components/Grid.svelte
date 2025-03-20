@@ -96,6 +96,7 @@
   import Spline from './Spline.svelte';
   import Circle from './Circle.svelte';
   import { getChartContext } from './Chart.svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -150,12 +151,19 @@
         : ctx.yScale.step() / 2 - (ctx.yScale.padding() * ctx.yScale.step()) / 2 // center
       : 0
   );
+
+  const lineAttr = createDataAttr('grid-line');
 </script>
 
-<g bind:this={ref} class={cls('Grid', classes.root, className)} {...restProps}>
+<g
+  {...createDataAttr('grid-root')}
+  bind:this={ref}
+  class={cls(classes.root, className)}
+  {...restProps}
+>
   {#if x}
-    {@const splineProps = typeof x === 'object' ? x : null}
-    <g in:transitionIn={transitionInParams}>
+    {@const splineProps = typeof x === 'object' ? { ...lineAttr, ...x } : null}
+    <g in:transitionIn={transitionInParams} {...createDataAttr('grid-g')}>
       {#each xTickVals as x (x)}
         {#if ctx.radial}
           <!--
@@ -198,7 +206,7 @@
   {/if}
 
   {#if y}
-    {@const splineProps = typeof y === 'object' ? y : null}
+    {@const splineProps = typeof y === 'object' ? { ...lineAttr, ...y } : null}
     <g in:transitionIn={transitionInParams}>
       {#each yTickVals as y (y)}
         {#if ctx.radial}

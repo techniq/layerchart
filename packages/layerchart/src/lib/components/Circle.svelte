@@ -68,6 +68,7 @@
   import type { SVGAttributes } from 'svelte/elements';
   import { afterTick } from 'layerchart/utils/afterTick.js';
   import { createKey } from 'layerchart/utils/key.svelte.js';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   let {
     cx = 0,
@@ -169,6 +170,7 @@
     stroke-width={strokeWidth}
     {opacity}
     class={cls(fill == null && 'fill-surface-content', className)}
+    {...createDataAttr('circle')}
     {...restProps}
   />
 {/if}
