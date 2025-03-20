@@ -173,7 +173,7 @@
 
   const tweenedState = motionState(initialValue, { spring, tweened });
 
-  $effect(() => {
+  $effect.pre(() => {
     value;
     afterTick(() => tweenedState.set(value));
   });
@@ -250,9 +250,7 @@
   // @ts-expect-error - todo - fix type
   const trackArcCentroid = $derived(trackArc.centroid()) as [number, number];
 
-  let trackArcEl: SVGPathElement = $state(null!);
-
-  const boundingBox = $derived(trackArcEl ? trackArcEl.getBBox() : ({} as DOMRect));
+  const boundingBox = $derived(trackRef ? trackRef.getBBox() : ({} as DOMRect));
 
   const angle = $derived(((startAngle ?? 0) + (endAngle ?? 0)) / 2);
   const xOffset = $derived(Math.sin(angle) * offset);

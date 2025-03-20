@@ -51,23 +51,29 @@
   };
 
   export type PreservedChartConfig<T> = Pick<
-    ChartContext<T>,
-    | 'xDomain'
-    | 'yDomain'
-    | 'zDomain'
-    | 'rDomain'
-    | 'cDomain'
-    | 'x1Domain'
-    | 'y1Domain'
+    ChartPropsWithoutHTML<T>,
+    | 'x'
+    | 'y'
+    | 'z'
+    | 'r'
+    | 'c'
+    | 'x1'
+    | 'y1'
     | 'xRange'
     | 'yRange'
+    | 'cDomain'
+    | 'zDomain'
+    | 'xDomain'
+    | 'yDomain'
+    | 'rDomain'
+    | 'x1Domain'
+    | 'y1Domain'
     | 'zRange'
     | 'rRange'
     | 'cRange'
     | 'x1Range'
     | 'y1Range'
-  > &
-    Pick<ChartPropsWithoutHTML<T>, 'x' | 'y' | 'z' | 'r' | 'c' | 'x1' | 'y1'>;
+  >;
 
   export type ChartContext<T> = {
     activeGetters: Record<AxisKey, (d: T) => any>;
@@ -1026,7 +1032,7 @@
 
   const aspectRatio = $derived(width / height);
 
-  const config = $derived({
+  const config: PreservedChartConfig<TData> = $derived({
     x: xProp,
     y: yProp,
     z: zProp,
@@ -1036,15 +1042,15 @@
     y1: y1Prop,
     xDomain,
     yDomain,
-    zDomain: zDomainProp ?? [],
-    rDomain: rDomainProp ?? [],
-    x1Domain: x1DomainProp ?? [],
-    y1Domain: y1DomainProp ?? [],
-    cDomain: cDomainProp ?? [],
-    xRange: xRange,
-    yRange: yRange,
-    zRange: zRange,
-    rRange: rRange,
+    zDomain: zDomainProp,
+    rDomain: rDomainProp,
+    x1Domain: x1DomainProp,
+    y1Domain: y1DomainProp,
+    cDomain: cDomainProp,
+    xRange: _xRangeProp,
+    yRange: _yRangeProp,
+    zRange: zRangeProp,
+    rRange: rRangeProp,
     cRange: cRangeProp,
     x1Range: x1RangeProp,
     y1Range: y1RangeProp,

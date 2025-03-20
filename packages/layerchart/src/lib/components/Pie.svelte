@@ -109,10 +109,14 @@
   const ctx = getChartContext();
 
   const endAngle = $derived(
-    endAngleProp ?? degreesToRadians(ctx.xRange ? max(ctx.xRange) : max(range))
+    endAngleProp ?? degreesToRadians(ctx.config.xRange ? max(ctx.xRange) : max(range))
   );
 
-  const tweenedEndAngle = $derived(motionState(endAngle, { spring, tweened }));
+  const tweenedEndAngle = motionState(endAngle, { spring, tweened });
+
+  $effect.pre(() => {
+    tweenedEndAngle.set(endAngle);
+  });
 
   const pie = $derived.by(() => {
     let _pie = d3pie<any>()
