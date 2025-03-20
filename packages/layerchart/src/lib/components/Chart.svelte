@@ -146,7 +146,7 @@
   const _ChartContext = new Context<ChartContext<any>>('ChartContext');
 
   export function getChartContext<T>(): ChartContext<T> {
-    return _ChartContext.get();
+    return _ChartContext.getOr({} as ChartContext<T>);
   }
 
   export function setChartContext<T>(context: ChartContext<T>): ChartContext<T> {

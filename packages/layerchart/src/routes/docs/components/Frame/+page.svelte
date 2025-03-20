@@ -85,8 +85,10 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <LinearGradient class="from-primary/10 to-secondary/10" vertical let:gradient>
-          <Frame class="stroke-primary/10" fill={gradient} />
+        <LinearGradient class="from-primary/10 to-secondary/10" vertical>
+          {#snippet children({ gradient })}
+            <Frame class="stroke-primary/10" fill={gradient} />
+          {/snippet}
         </LinearGradient>
         <Axis placement="bottom" />
         <Axis placement="left" />
@@ -131,8 +133,10 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Canvas>
-        <LinearGradient class="from-primary/10 to-secondary/10" vertical let:gradient>
-          <Frame class="stroke-primary/10" fill={gradient} />
+        <LinearGradient class="from-primary/10 to-secondary/10" vertical>
+          {#snippet children({ gradient })}
+            <Frame class="stroke-primary/10" fill={gradient} />
+          {/snippet}
         </LinearGradient>
         <Axis placement="bottom" />
         <Axis placement="left" />

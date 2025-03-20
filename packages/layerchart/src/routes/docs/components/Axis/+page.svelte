@@ -18,7 +18,7 @@
   // Added to make svelte-check happy
   const isNotZero = (v: any) => v !== 0;
 
-  let debug = false;
+  let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
@@ -338,9 +338,9 @@
           ticks={(scale) => scale.domain()}
           format={(d) => format(d, PeriodType.Day, { variant: 'long' })}
         >
-          <svelte:fragment slot="tickLabel" let:labelProps let:index>
-            <Text {...labelProps} textAnchor={index === 0 ? 'start' : 'end'} />
-          </svelte:fragment>
+          {#snippet tickLabel({ props, index })}
+            <Text {...props} textAnchor={index === 0 ? 'start' : 'end'} />
+          {/snippet}
         </Axis>
         <Axis placement="left" rule ticks={(scale) => scale.domain()} />
       </Svg>
@@ -410,7 +410,7 @@
     >
       <Svg>
         <Axis placement="bottom" rule />
-        <Axis placement="left" rule ticks={(scale) => [45, ...scale.ticks?.()]} />
+        <Axis placement="left" rule ticks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />
       </Svg>
     </Chart>
   </div>
@@ -693,31 +693,32 @@
       yDomain={[0, 100]}
       yNice
       padding={{ right: 90 }}
-      let:height
     >
-      <Svg>
-        {#if debug}
-          <Frame class="fill-danger/5" />
-          <Frame class="fill-danger/5" full />
-        {/if}
+      {#snippet children({ context })}
+        <Svg>
+          {#if debug}
+            <Frame class="fill-danger/5" />
+            <Frame class="fill-danger/5" full />
+          {/if}
 
-        <Axis
-          label="Celsius"
-          scale={scaleLinear([0, 100], [height, 0])}
-          placement="right"
-          rule
-          labelProps={{ dx: -60 }}
-        />
-        <Axis
-          label="Fahrenheit"
-          scale={scaleLinear([32, 212], [height, 0])}
-          ticks={range(0, 100 + 1, 10).map((x) => x * (9 / 5) + 32)}
-          placement="right"
-          rule
-          class="translate-x-[50px]"
-          labelProps={{ dx: -50 }}
-        />
-      </Svg>
+          <Axis
+            label="Celsius"
+            scale={scaleLinear([0, 100], [context.height, 0])}
+            placement="right"
+            rule
+            labelProps={{ dx: -60 }}
+          />
+          <Axis
+            label="Fahrenheit"
+            scale={scaleLinear([32, 212], [context.height, 0])}
+            ticks={range(0, 100 + 1, 10).map((x) => x * (9 / 5) + 32)}
+            placement="right"
+            rule
+            class="translate-x-[50px]"
+            labelProps={{ dx: -50 }}
+          />
+        </Svg>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

@@ -219,8 +219,8 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Grid y yTicks={(scale) => [45, ...scale.ticks?.()]} />
-        <Axis placement="left" rule ticks={(scale) => [45, ...scale.ticks?.()]} />
+        <Grid y yTicks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />
+        <Axis placement="left" rule ticks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />
       </Svg>
     </Chart>
   </div>

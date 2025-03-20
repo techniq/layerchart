@@ -365,7 +365,7 @@
         classes.swatches
       )}
     >
-      {#each tickValuesProp ?? scaleConfig.xScale?.ticks?.(ticks) ?? [] as tick}
+      {#each scaleConfig.tickValues ?? scaleConfig.xScale?.ticks?.(ticks) ?? [] as tick}
         {@const color = scale?.(tick)}
         {@const item = { value: tick, color }}
         <button
