@@ -11,7 +11,7 @@
 
   const dataByYear = group(longData, (d) => d.year);
   const data = dataByYear.get(2019) ?? [];
-  $: dataWithColor =
+  const dataWithColor =
     data?.map((d, i) => {
       return {
         ...d,
@@ -30,8 +30,8 @@
     { key: 'stand', value: 10, maxValue: 12, color: '#22d3ee' },
   ];
 
-  let renderContext: 'svg' | 'canvas' = 'svg';
-  let debug = false;
+  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
@@ -57,7 +57,7 @@
   </div>
 </Preview>
 
-<h2>ontooltipclick</h2>
+<h2>onTooltipClick</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
@@ -65,7 +65,7 @@
       {data}
       key="fruit"
       value="value"
-      ontooltipclick={(e, detail) => {
+      onTooltipClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
@@ -122,7 +122,7 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="aboveMarks">
+      {#snippet aboveMarks()}
         <Text
           value={format(sum(data, (d) => d.value))}
           textAnchor="middle"
@@ -137,7 +137,7 @@
           class="text-sm fill-surface-content/50"
           dy={26}
         />
-      </svelte:fragment>
+      {/snippet}
     </PieChart>
   </div>
 </Preview>
@@ -155,7 +155,7 @@
       innerRadius={-20}
       cornerRadius={10}
       padAngle={0.02}
-      props={{ group: { y: 80 } }}
+      props={{ group: { y: 90 } }}
       {renderContext}
       {debug}
     />
@@ -185,31 +185,34 @@
 <Preview {data}>
   <div class="h-[160px] p-4 border rounded-sm resize overflow-auto">
     <PieChart {renderContext} {debug}>
-      <svelte:fragment slot="marks">
-        <LinearGradient class="from-secondary to-primary" let:gradient>
-          <Group y={20}>
-            <Arc
-              value={70}
-              domain={[0, 100]}
-              outerRadius={80}
-              innerRadius={-15}
-              cornerRadius={10}
-              padAngle={0.02}
-              range={[-120, 120]}
-              fill={gradient}
-              track={{ class: 'fill-none stroke-surface-content/10' }}
-              let:value
-            >
-              <Text
-                value={Math.round(value) + '%'}
-                textAnchor="middle"
-                verticalAnchor="middle"
-                class="text-4xl tabular-nums"
-              />
-            </Arc>
-          </Group>
+      {#snippet marks()}
+        <LinearGradient class="from-secondary to-primary">
+          {#snippet children({ gradient })}
+            <Group y={20}>
+              <Arc
+                value={70}
+                domain={[0, 100]}
+                outerRadius={80}
+                innerRadius={-15}
+                cornerRadius={10}
+                padAngle={0.02}
+                range={[-120, 120]}
+                fill={gradient}
+                track={{ class: 'fill-none stroke-surface-content/10' }}
+              >
+                {#snippet children({ value })}
+                  <Text
+                    value={Math.round(value) + '%'}
+                    textAnchor="middle"
+                    verticalAnchor="middle"
+                    class="text-4xl tabular-nums"
+                  />
+                {/snippet}
+              </Arc>
+            </Group>
+          {/snippet}
         </LinearGradient>
-      </svelte:fragment>
+      {/snippet}
     </PieChart>
   </div>
 </Preview>
@@ -244,7 +247,7 @@
     <PieChart
       key="fruit"
       value="value"
-      series={Array.from(dataByYear, ([key, data]) => ({ key, data }))}
+      series={Array.from(dataByYear, ([key, data]) => ({ key: key.toString(), data }))}
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={5}
@@ -345,8 +348,8 @@
       key="fruit"
       value="value"
       series={[
-        { key: 2019, data: dataByYear.get(2019), props: { innerRadius: -20 } },
-        { key: 2018, data: dataByYear.get(2018), props: { outerRadius: -30 } },
+        { key: '2019', data: dataByYear.get(2019), props: { innerRadius: -20 } },
+        { key: '2018', data: dataByYear.get(2018), props: { outerRadius: -30 } },
       ]}
       {renderContext}
       {debug}
@@ -361,12 +364,12 @@
     <PieChart
       key="fruit"
       value="value"
-      series={Array.from(dataByYear, ([key, data]) => ({ key, data }))}
+      series={Array.from(dataByYear, ([key, data]) => ({ key: key.toString(), data }))}
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={5}
       padAngle={0.01}
-      onarcclick={(e, detail) => {
+      onArcClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}

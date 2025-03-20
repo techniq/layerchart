@@ -28,15 +28,17 @@
   import type { ComponentProps } from 'svelte';
   import { cls } from '@layerstack/tailwind';
 
-  export let data;
+  let { data } = $props();
 
   const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
-  $: dateSeriesDataWithNulls = dateSeriesData.map((d) => {
-    return {
-      ...d,
-      value: Math.random() < 0.2 ? null : d.value,
-    };
-  });
+  const dateSeriesDataWithNulls = $derived(
+    dateSeriesData.map((d) => {
+      return {
+        ...d,
+        value: Math.random() < 0.2 ? null : d.value,
+      };
+    })
+  );
 
   const now = new Date();
   const denseDateSeriesData = randomWalk({ count: 1000 }).map((value, i) => ({
@@ -100,22 +102,22 @@
     });
   }
 
-  let renderContext: 'svg' | 'canvas' = 'svg';
-  let lockedTooltip = false;
-  let xDomain: DomainType | undefined = null;
-  let debug = false;
+  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let lockedTooltip = $state(false);
+  let xDomain: DomainType | undefined = $state();
+  let debug = $state(false);
 
-  let markerPoints: { date: Date; value: number }[] = [];
-  let tooltipContext: ComponentProps<AreaChart<any>>['tooltipContext'];
+  let markerPoints: { date: Date; value: number }[] = $state([]);
+  let tooltipContext: ComponentProps<typeof AreaChart<any>>['tooltipContext'] = $state();
 </script>
 
 <svelte:window
-  on:keydown={(e) => {
+  onkeydown={(e) => {
     if (e.metaKey) {
       lockedTooltip = true;
     }
   }}
-  on:keyup={(e) => {
+  onkeyup={(e) => {
     if (!e.metaKey) {
       lockedTooltip = false;
     }
@@ -149,11 +151,13 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
-      <svelte:fragment slot="marks">
-        <LinearGradient class="from-primary/50 to-primary/1" vertical let:gradient>
-          <Area line={{ class: 'stroke-primary' }} fill={gradient} />
+      {#snippet marks()}
+        <LinearGradient class="from-primary/50 to-primary/1" vertical>
+          {#snippet children({ gradient })}
+            <Area line={{ class: 'stroke-primary' }} fill={gradient} />
+          {/snippet}
         </LinearGradient>
-      </svelte:fragment>
+      {/snippet}
     </AreaChart>
   </div>
 </Preview>
@@ -167,9 +171,10 @@
 
   <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={negativeDateSeriesData} x="date" y="value" {renderContext} {debug}>
-      <svelte:fragment slot="marks" let:yScale let:height let:padding>
+      {#snippet marks({ context })}
         {@const thresholdValue = 0}
-        {@const thresholdOffset = yScale(thresholdValue) / (height + padding.bottom)}
+        {@const thresholdOffset =
+          context.yScale(thresholdValue) / (context.height + context.padding.bottom)}
         <LinearGradient
           stops={[
             [thresholdOffset, colors.positive],
@@ -177,35 +182,35 @@
           ]}
           units="userSpaceOnUse"
           vertical
-          let:gradient
         >
-          <Area
-            y0={(d) => thresholdValue}
-            line={{ stroke: gradient }}
-            fill={gradient}
-            fillOpacity={0.2}
-          />
+          {#snippet children({ gradient })}
+            <Area
+              y0={(d) => thresholdValue}
+              line={{ stroke: gradient }}
+              fill={gradient}
+              fillOpacity={0.2}
+            />
+          {/snippet}
         </LinearGradient>
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="highlight" let:tooltip let:y>
-        {@const value = tooltip.data && y(tooltip.data)}
+      {#snippet highlight({ context, tooltipContext })}
+        {@const value = tooltipContext.data && context.y(tooltipContext.data)}
         <Highlight lines points={{ fill: value < 0 ? colors.negative : colors.positive }} />
-      </svelte:fragment>
-
-      <svelte:fragment slot="tooltip" let:x let:y>
-        <Tooltip.Root let:data>
-          {@const value = y(data)}
-          <Tooltip.Header>{format(x(data), PeriodType.Day)}</Tooltip.Header>
+      {/snippet}
+      {#snippet tooltip({ context, tooltipContext })}
+        <Tooltip.Root>
+          {@const value = context.y(tooltipContext.data)}
+          <Tooltip.Header>{format(context.x(tooltipContext.data), PeriodType.Day)}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item
               label="value"
-              value={y(data)}
+              value={context.y(tooltipContext.data)}
               color={value < 0 ? colors.negative : colors.positive}
             />
           </Tooltip.List>
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </AreaChart>
   </div>
 </Preview>
@@ -291,7 +296,7 @@
         { key: 'bananas', color: 'var(--color-success)' },
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      onpointclick={(e, detail) => {
+      onPointClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
@@ -325,36 +330,41 @@
           color: 'var(--color-warning)',
         },
       ]}
-      tooltip={{ mode: 'voronoi' }}
+      props={{ tooltip: { context: { mode: 'voronoi' } } }}
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="marks" let:series let:tooltip>
+      {#snippet marks({ series, tooltipContext })}
         {#each series as s}
-          {@const activeSeries = tooltip.data == null || tooltip.data.fruit === s.key}
+          {@const activeSeries =
+            tooltipContext.data == null || tooltipContext.data?.fruit === s.key}
 
           <g class={cls(!activeSeries && 'opacity-20 saturate-0')}>
             <Area data={s.data} line={{ stroke: s.color }} fill={s.color} fillOpacity={0.3} />
           </g>
         {/each}
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="highlight" let:series let:tooltip>
+      {#snippet highlight({ series, tooltipContext })}
         <!-- TODO: Remove hack to make typescript happy -->
-        {@const activeSeries = [...series].find((s) => s.key === tooltip.data?.fruit)}
+        {@const activeSeries = [...series].find((s) => s.key === tooltipContext.data?.fruit)}
         <Highlight lines points={{ fill: activeSeries?.color }} />
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="tooltip" let:x let:series let:tooltip>
+      {#snippet tooltip({ tooltipContext, series, context })}
         <!-- TODO: Remove hack to make typescript happy -->
-        {@const activeSeries = [...series].find((s) => s.key === tooltip.data?.fruit)}
-        <Tooltip.Root let:data>
-          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
+        {@const activeSeries = [...series].find((s) => s.key === tooltipContext.data?.fruit)}
+        <Tooltip.Root>
+          <Tooltip.Header>{format(context.x(tooltipContext.data))}</Tooltip.Header>
           <Tooltip.List>
-            <Tooltip.Item label={data.fruit} value={data.value} color={activeSeries?.color} />
+            <Tooltip.Item
+              label={tooltipContext.data?.fruit}
+              value={tooltipContext.data?.value}
+              color={activeSeries?.color}
+            />
           </Tooltip.List>
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </AreaChart>
   </div>
 </Preview>
@@ -456,18 +466,20 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="marks" let:series let:getAreaProps>
+      {#snippet marks({ series, getAreaProps })}
         {#each series as s, i (s.key)}
           <!-- Can also use basic 'transparent' for second stop for better browser compatibility -->
+          <!-- TODO - can we type this-->
           <LinearGradient
             stops={[s.color, 'color-mix(in lch, ' + s.color + ' 10%, transparent)']}
             vertical
-            let:gradient
           >
-            <Area {...getAreaProps(s, i)} fill={gradient} />
+            {#snippet children({ gradient })}
+              <Area {...getAreaProps(s, i)} fill={gradient} />
+            {/snippet}
           </LinearGradient>
         {/each}
-      </svelte:fragment>
+      {/snippet}
     </AreaChart>
   </div>
 </Preview>
@@ -524,9 +536,9 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="belowMarks">
+      {#snippet belowMarks()}
         <Spline y="avg" curve={curveCatmullRom} class="stroke-primary" />
-      </svelte:fragment>
+      {/snippet}
     </AreaChart>
   </div>
 </Preview>
@@ -552,37 +564,39 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="marks" let:x let:xScale let:width let:height>
-        {@const segmentWidth = width / (funnelSegments.length - 1)}
+      {#snippet marks({ context })}
+        {@const segmentWidth = context.width / (funnelSegments.length - 1)}
         {@const areas = [
           { padding: 0, opacity: 1 },
           { padding: 10, opacity: 0.2 },
           { padding: 20, opacity: 0.1 },
         ]}
 
-        <LinearGradient class="from-primary/50 to-secondary/10" let:gradient>
-          {#each areas as a}
-            <Area
-              y0={(d) => d.value + a.padding}
-              y1={(d) => -(d.value + a.padding)}
-              fill={gradient}
-              curve={curveBasis}
-            />
-          {/each}
+        <LinearGradient class="from-primary/50 to-secondary/10">
+          {#snippet children({ gradient })}
+            {#each areas as a}
+              <Area
+                y0={(d) => d.value + a.padding}
+                y1={(d) => -(d.value + a.padding)}
+                fill={gradient}
+                curve={curveBasis}
+              />
+            {/each}
+          {/snippet}
         </LinearGradient>
 
         {#each funnelSegments.slice(0, -1) as s}
           <Text
             value={s.value + '%'}
-            x={xScale(x(s)) + segmentWidth / 2}
-            y={height / 2}
+            x={context.xScale(context.x(s)) + segmentWidth / 2}
+            y={context.height / 2}
             textAnchor="middle"
             verticalAnchor="middle"
             class="text-2xl fill-current opacity-70"
             dy={3}
           />
         {/each}
-      </svelte:fragment>
+      {/snippet}
     </AreaChart>
   </div>
 </Preview>
@@ -718,7 +732,7 @@
       data={dateSeriesData}
       x="date"
       y="value"
-      ontooltipclick={(e, detail) => {
+      onTooltipClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
@@ -736,7 +750,7 @@
       data={dateSeriesData}
       x="date"
       y="value"
-      ontooltipclick={(e, detail) => {
+      onTooltipClick={(e, detail) => {
         if (markerPoints.includes(detail.data)) {
           markerPoints = markerPoints.filter((d) => d !== detail.data);
         } else {
@@ -746,30 +760,30 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="aboveMarks" let:xScale let:yScale let:height>
+      {#snippet aboveMarks({ context })}
         {#each markerPoints as p}
           <Line
-            x1={xScale(p.date)}
-            y1={height}
-            x2={xScale(p.date)}
-            y2={yScale(p.value)}
+            x1={context.xScale(p.date)}
+            y1={context.height}
+            x2={context.xScale(p.date)}
+            y2={context.yScale(p.value)}
             class="stroke-surface-content/50 stroke-2 [stroke-dasharray:4,4]"
           />
           <Circle
-            cx={xScale(p.date)}
-            cy={yScale(p.value)}
+            cx={context.xScale(p.date)}
+            cy={context.yScale(p.value)}
             r={4}
             class="fill-primary stroke-4 stroke-primary/50"
           />
         {/each}
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="aboveContext" let:xScale let:height>
+      {#snippet aboveContext({ context })}
         <Html>
           {#each markerPoints as p}
             <Button
               class="absolute translate-x-[-50%] text-[10px] bg-surface-100 border border-primary"
-              style="top: {height + 2}px; left: {xScale(p.date)}px"
+              style="top: {context.height + 2}px; left: {context.xScale(p.date)}px"
               size="sm"
               on:click={(e) => {
                 e.stopPropagation();
@@ -780,7 +794,7 @@
             </Button>
           {/each}
         </Html>
-      </svelte:fragment>
+      {/snippet}
     </AreaChart>
   </div>
 </Preview>
@@ -792,29 +806,31 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
-      <svelte:fragment slot="tooltip" let:x let:y let:height let:padding>
+      {#snippet tooltip({ context })}
         <Tooltip.Root
-          x={padding.left}
+          x={context.padding.left}
           y="data"
           anchor="right"
           contained={false}
           class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-1 py-[2px] border border-primary rounded-sm whitespace-nowrap"
-          let:data
         >
-          {y(data)}
+          {#snippet children({ data })}
+            {context.y(data)}
+          {/snippet}
         </Tooltip.Root>
 
         <Tooltip.Root
           x="data"
-          y={height}
+          y={context.height}
           anchor="top"
           class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-2 py-[2px] border border-primary rounded-sm whitespace-nowrap"
           contained={false}
-          let:data
         >
-          {format(x(data), PeriodType.Day)}
+          {#snippet children({ data })}
+            {format(context.x(data), PeriodType.Day)}
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </AreaChart>
   </div>
 </Preview>
@@ -839,47 +855,49 @@
       ]}
       {renderContext}
       {debug}
-      tooltip={{ locked: lockedTooltip }}
+      props={{ tooltip: { context: { locked: lockedTooltip } } }}
     >
-      <svelte:fragment slot="tooltip" let:x let:y let:series let:setHighlightSeriesKey>
-        <Tooltip.Root pointerEvents let:data>
-          <Tooltip.Header>
-            {format(x(data), PeriodType.Day)}
-          </Tooltip.Header>
+      {#snippet tooltip({ context, setHighlightKey, series })}
+        <Tooltip.Root pointerEvents>
+          {#snippet children({ data })}
+            <Tooltip.Header>
+              {format(context.x(data), PeriodType.Day)}
+            </Tooltip.Header>
 
-          <Tooltip.List>
-            {#each series as s}
-              {@const valueAccessor = accessor(s.value ?? s.key)}
-              {@const value = Math.abs(valueAccessor(data))}
-              <Tooltip.Item
-                label={s.key}
-                color={s.color}
-                onpointerenter={() => setHighlightSeriesKey(s.key)}
-                onpointerleave={() => setHighlightSeriesKey(null)}
-              >
-                {format(value)}
-
-                <Button
-                  variant="fill-light"
-                  size="sm"
-                  class="ml-2"
-                  on:click={() => {
-                    console.log(
-                      'You clicked on the "' + s.key + '" series with value:"' + value + '"'
-                    );
-                  }}
+            <Tooltip.List>
+              {#each series as s}
+                {@const valueAccessor = accessor(s.value ?? s.key)}
+                {@const value = Math.abs(valueAccessor(data))}
+                <Tooltip.Item
+                  label={s.key}
+                  color={s.color}
+                  onpointerenter={() => setHighlightKey(s.key)}
+                  onpointerleave={() => setHighlightKey(null)}
                 >
-                  Click me
-                </Button>
-              </Tooltip.Item>
-            {/each}
-          </Tooltip.List>
+                  {format(value)}
 
-          <Tooltip.Separator />
+                  <Button
+                    variant="fill-light"
+                    size="sm"
+                    class="ml-2"
+                    on:click={() => {
+                      console.log(
+                        'You clicked on the "' + s.key + '" series with value:"' + value + '"'
+                      );
+                    }}
+                  >
+                    Click me
+                  </Button>
+                </Tooltip.Item>
+              {/each}
+            </Tooltip.List>
 
-          <div class="text-xs">Lock position with <Kbd command /> and view console</div>
+            <Tooltip.Separator />
+
+            <div class="text-xs">Lock position with <Kbd command /> and view console</div>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </AreaChart>
   </div>
 </Preview>
@@ -898,30 +916,32 @@
       ]}
       {renderContext}
       {debug}
-      tooltip={{ hideDelay: 500 }}
+      props={{ tooltip: { context: { hideDelay: 500 } } }}
     >
-      <svelte:fragment slot="tooltip" let:x let:y let:series let:height let:setHighlightSeriesKey>
-        <Tooltip.Root x="data" y={height + 24} pointerEvents let:data>
-          <Tooltip.Header>
-            {format(x(data), PeriodType.Day)}
-          </Tooltip.Header>
+      {#snippet tooltip({ context, setHighlightKey, series })}
+        <Tooltip.Root x="data" y={context.height + 24} pointerEvents>
+          {#snippet children({ data })}
+            <Tooltip.Header>
+              {format(context.x(data), PeriodType.Day)}
+            </Tooltip.Header>
 
-          <Tooltip.List>
-            {#each series as s}
-              {@const valueAccessor = accessor(s.value ?? s.key)}
-              {@const value = valueAccessor(data)}
-              <Tooltip.Item
-                label={s.key}
-                color={s.color}
-                onpointerenter={() => setHighlightSeriesKey(s.key)}
-                onpointerleave={() => setHighlightSeriesKey(null)}
-              >
-                {format(value)}
-              </Tooltip.Item>
-            {/each}
-          </Tooltip.List>
+            <Tooltip.List>
+              {#each series as s}
+                {@const valueAccessor = accessor(s.value ?? s.key)}
+                {@const value = valueAccessor(data)}
+                <Tooltip.Item
+                  label={s.key}
+                  color={s.color}
+                  onpointerenter={() => setHighlightKey(s.key)}
+                  onpointerleave={() => setHighlightKey(null)}
+                >
+                  {format(value)}
+                </Tooltip.Item>
+              {/each}
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </AreaChart>
   </div>
 </Preview>
@@ -930,9 +950,9 @@
 
 <Preview data={{ denseDateSeriesData, denseDateSeriesData2 }}>
   <div class="text-sm">
-    {#if $tooltipContext?.data}
-      date: {format($tooltipContext?.data?.date, PeriodType.Day, { variant: 'short' })}
-      value: {$tooltipContext?.data?.value}
+    {#if tooltipContext?.data}
+      date: {format(tooltipContext?.data?.date, PeriodType.Day, { variant: 'short' })}
+      value: {tooltipContext?.data?.value}
     {:else}
       [hover chart]
     {/if}
@@ -1030,7 +1050,7 @@
         x="date"
         y="value"
         {xDomain}
-        brush={{ onbrushend: (e) => (xDomain = e.xDomain) }}
+        brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
         props={{
           area: { tweened: { duration: 200 } },
           xAxis: { format: undefined, tweened: { duration: 200 } },
@@ -1046,7 +1066,7 @@
         x="date"
         y="value"
         {xDomain}
-        brush={{ onbrushend: (e) => (xDomain = e.xDomain) }}
+        brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
         props={{
           area: { tweened: { duration: 200 } },
           xAxis: { format: undefined, tweened: { duration: 200 } },
@@ -1062,24 +1082,28 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <AreaChart data={dateSeriesData} x="date" y="value" let:x let:y {renderContext} {debug}>
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <Area line={{ class: 'stroke-primary' }} class="fill-primary/30" />
-        <Highlight points lines />
-      </Svg>
+    <AreaChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+      {#snippet children({ context })}
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis
+            placement="bottom"
+            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
+          <Area line={{ class: 'stroke-primary' }} class="fill-primary/30" />
+          <Highlight points lines />
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(x(data), PeriodType.DayTime)}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={y(data)} />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={context.y(data)} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </AreaChart>
   </div>
 </Preview>

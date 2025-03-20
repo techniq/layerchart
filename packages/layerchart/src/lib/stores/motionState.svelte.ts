@@ -54,6 +54,7 @@ export function motionState<T = any>(
   } else {
     let current: T = $state(value);
     return {
+      // @ts-expect-error - TODO: fix this later
       set(newValue: T, _options?: MotionProps<T>) {
         current = newValue;
       },
@@ -79,11 +80,13 @@ export class MotionFinishState {
     }
     let currIndex = this.#latestIndex;
     this.#current = true;
-    promise.then(() => {
-      if (currIndex === this.#latestIndex) {
-        this.#current = false;
-      }
-    });
+    promise
+      .then(() => {
+        if (currIndex === this.#latestIndex) {
+          this.#current = false;
+        }
+      })
+      .catch(() => {});
   };
 
   get current() {

@@ -76,10 +76,13 @@
     const key = url;
 
     if (tileCache.has(key)) {
-      tileCache.get(key)?.then((dataUri) => {
-        // console.log('from cache', { x, y, z });
-        href = dataUri;
-      });
+      tileCache
+        .get(key)
+        ?.then((dataUri) => {
+          // console.log('from cache', { x, y, z });
+          href = dataUri;
+        })
+        .catch(() => {});
     } else {
       const promise = new Promise<string>((resolve, reject) => {
         const img = new Image();

@@ -105,7 +105,7 @@
     fixedAspectRatio ? [100, 100 / fixedAspectRatio] : [ctx.width, ctx.height]
   ) as [number, number];
 
-  $effect(() => {
+  $effect.pre(() => {
     if (!projection) return;
     const _projection = projection();
 

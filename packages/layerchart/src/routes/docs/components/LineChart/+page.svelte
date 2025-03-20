@@ -24,15 +24,17 @@
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { cls } from '@layerstack/tailwind';
 
-  export let data;
+  let { data } = $props();
 
   const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
-  $: dateSeriesDataWithNulls = dateSeriesData.map((d) => {
-    return {
-      ...d,
-      value: Math.random() < 0.2 ? null : d.value,
-    };
-  });
+  const dateSeriesDataWithNulls = $derived(
+    dateSeriesData.map((d) => {
+      return {
+        ...d,
+        value: Math.random() < 0.2 ? null : d.value,
+      };
+    })
+  );
 
   const keys = ['apples', 'bananas', 'oranges'];
   const multiSeriesData = createDateSeries({
@@ -67,21 +69,23 @@
     interpolateTurbo
   );
 
-  let dynamicData = ticks(-2, 2, 200).map(Math.sin);
+  let dynamicData = $state(ticks(-2, 2, 200).map(Math.sin));
 
-  let renderContext: 'svg' | 'canvas' = 'svg';
-  let debug = false;
+  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let debug = $state(false);
 
   // Get a few random points to use for annotations
-  $: annotations = [...dateSeriesData]
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 5)
-    .sort(sortFunc('date'))
-    .map((d, i) => ({
-      date: d.date,
-      label: String.fromCharCode(65 + i),
-      description: `This is an annotation for ${format(d.date)}`,
-    }));
+  const annotations = $derived(
+    [...dateSeriesData]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 5)
+      .sort(sortFunc('date'))
+      .map((d, i) => ({
+        date: d.date,
+        label: String.fromCharCode(65 + i),
+        description: `This is an annotation for ${format(d.date)}`,
+      }))
+  );
 </script>
 
 <h1>Examples</h1>
@@ -197,14 +201,14 @@
         { key: 'bananas', color: 'var(--color-success)' },
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      tooltip={{ mode: 'voronoi' }}
+      props={{ tooltip: { context: { mode: 'voronoi' } } }}
       {renderContext}
       {debug}
       brush
     >
-      <svelte:fragment slot="marks" let:series let:tooltip>
+      {#snippet marks({ series, tooltipContext })}
         {#each series as s}
-          {@const active = tooltip.data == null || tooltip.data.fruit === s.key}
+          {@const active = tooltipContext.data == null || tooltipContext.data?.fruit === s.key}
           <Spline
             data={multiSeriesData}
             y={s.key}
@@ -212,24 +216,30 @@
             class={cls(!active && 'opacity-20 saturate-0')}
           />
         {/each}
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="highlight" let:series let:tooltip>
+      {#snippet highlight({ series, tooltipContext })}
         <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-        {@const activeSeriesColor = [...series].find((s) => s.key === tooltip.data?.fruit)?.color}
+        {@const activeSeriesColor = [...series].find(
+          (s) => s.key === tooltipContext.data?.fruit
+        )?.color}
         <Highlight lines points={{ fill: activeSeriesColor }} />
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="tooltip" let:series let:tooltip let:x>
+      {#snippet tooltip({ context, tooltipContext, series })}
         <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-        {@const activeSeriesColor = [...series].find((s) => s.key === tooltip.data?.fruit)?.color}
-        <Tooltip.Root let:data>
-          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label={data.fruit} value={data.value} color={activeSeriesColor} />
-          </Tooltip.List>
+        {@const activeSeriesColor = [...series].find(
+          (s) => s.key === tooltipContext.data?.fruit
+        )?.color}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.x(data))}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label={data.fruit} value={data.value} color={activeSeriesColor} />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
@@ -246,7 +256,7 @@
         { key: 'bananas', color: 'var(--color-success)' },
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      onpointclick={(e, detail) => {
+      onPointClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
@@ -290,13 +300,13 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="aboveMarks" let:getLabelsProps let:series let:highlightSeriesKey>
-        {#if highlightSeriesKey}
+      {#snippet aboveMarks({ getLabelsProps, series, highlightKey })}
+        {#if highlightKey}
           <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-          {@const activeSeriesIndex = [...series].findIndex((s) => s.key === highlightSeriesKey)}
+          {@const activeSeriesIndex = [...series].findIndex((s) => s.key === highlightKey)}
           <Labels {...getLabelsProps(series[activeSeriesIndex], activeSeriesIndex)} offset={10} />
         {/if}
-      </svelte:fragment>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
@@ -393,8 +403,12 @@
         highlight: {
           lines: false,
         },
+        tooltip: {
+          context: {
+            mode: 'voronoi',
+          },
+        },
       }}
-      tooltip={{ mode: 'voronoi' }}
       {renderContext}
       {debug}
     />
@@ -431,8 +445,12 @@
         highlight: {
           lines: false,
         },
+        tooltip: {
+          context: {
+            mode: 'voronoi',
+          },
+        },
       }}
-      tooltip={{ mode: 'voronoi' }}
       {renderContext}
       {debug}
     />
@@ -478,8 +496,12 @@
         highlight: {
           lines: false,
         },
+        tooltip: {
+          context: {
+            mode: 'voronoi',
+          },
+        },
       }}
-      tooltip={{ mode: 'voronoi' }}
       {renderContext}
       {debug}
     />
@@ -498,31 +520,31 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="marks">
-        <LinearGradient
-          stops={ticks(1, 0, 10).map(temperatureColor.interpolator())}
-          vertical
-          let:gradient
-        >
-          <Spline stroke={gradient} />
+      {#snippet marks()}
+        <LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>
+          {#snippet children({ gradient })}
+            <Spline stroke={gradient} />
+          {/snippet}
         </LinearGradient>
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="highlight" let:tooltip let:y>
-        {#if tooltip.data}
-          <Highlight lines points={{ fill: temperatureColor(y(tooltip.data)) }} />
+      {#snippet highlight({ tooltipContext, context })}
+        {#if tooltipContext.data}
+          <Highlight lines points={{ fill: temperatureColor(context.y(tooltipContext.data)) }} />
         {/if}
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="tooltip" let:x let:y>
-        <Tooltip.Root let:data>
-          {@const value = y(data)}
-          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="value" {value} color={temperatureColor(value)} />
-          </Tooltip.List>
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {@const value = context.y(data)}
+            <Tooltip.Header>{format(context.x(data))}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" {value} color={temperatureColor(value)} />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
@@ -539,8 +561,8 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="marks" let:yScale let:height let:padding>
-        {@const thresholdOffset = yScale(50) / (height + padding.bottom)}
+      {#snippet marks({ context })}
+        {@const thresholdOffset = context.yScale(50) / (context.height + context.padding.bottom)}
         <LinearGradient
           stops={[
             [thresholdOffset, 'var(--color-danger)'],
@@ -548,34 +570,40 @@
           ]}
           units="userSpaceOnUse"
           vertical
-          let:gradient
         >
-          <Spline stroke={gradient} />
+          {#snippet children({ gradient })}
+            <Spline stroke={gradient} />
+          {/snippet}
         </LinearGradient>
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="highlight" let:tooltip let:y>
-        {#if tooltip.data}
+      {#snippet highlight({ tooltipContext, context })}
+        {#if tooltipContext.data}
           <Highlight
             lines
-            points={{ fill: y(tooltip.data) > 50 ? 'var(--color-danger)' : 'var(--color-info)' }}
+            points={{
+              fill:
+                context.y(tooltipContext.data) > 50 ? 'var(--color-danger)' : 'var(--color-info)',
+            }}
           />
         {/if}
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="tooltip" let:x let:y>
-        <Tooltip.Root let:data>
-          {@const value = y(data)}
-          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item
-              label="value"
-              {value}
-              color={value > 50 ? 'var(--color-danger)' : 'var(--color-info)'}
-            />
-          </Tooltip.List>
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {@const value = context.y(data)}
+            <Tooltip.Header>{format(context.x(data))}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item
+                label="value"
+                {value}
+                color={value > 50 ? 'var(--color-danger)' : 'var(--color-info)'}
+              />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
@@ -593,16 +621,20 @@
         xAxis: { format: PeriodType.Month },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
+        tooltip: {
+          context: {
+            mode: 'manual',
+          },
+        },
       }}
       series={flatGroup(data.dailyTemperatures, (d) => d.year).map(([year, data]) => {
         return {
-          key: year,
+          key: year.toString(),
           data,
           color: year >= 2023 ? 'var(--color-primary)' : 'var(--color-surface-content)',
           props: { opacity: year === 2024 ? 1 : year === 2023 ? 0.5 : 0.1 },
         };
       })}
-      tooltip={{ mode: 'manual' }}
       {renderContext}
       {debug}
     />
@@ -627,16 +659,20 @@
         xAxis: { format: PeriodType.Month, tickLength: 0 },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
+        tooltip: {
+          context: {
+            mode: 'manual',
+          },
+        },
       }}
       series={flatGroup(data.dailyTemperatures, (d) => d.year).map(([year, data]) => {
         return {
-          key: year,
+          key: year.toString(),
           data,
           color: year >= 2023 ? 'var(--color-primary)' : 'var(--color-surface-content)',
           props: { opacity: year === 2024 ? 1 : year === 2023 ? 0.5 : 0.1 },
         };
       })}
-      tooltip={{ mode: 'manual' }}
       {renderContext}
       {debug}
     />
@@ -645,11 +681,11 @@
 
 <h2>Dynamic data (move over chart)</h2>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <Preview data={dynamicData}>
   <div
     class="h-[300px] p-4 border rounded-sm"
-    on:mousemove={(e) => {
+    onmousemove={(e) => {
       const x = e.clientX;
       const y = e.clientY;
       dynamicData = dynamicData.slice(-200).concat(Math.atan2(x, y));
@@ -696,7 +732,7 @@
 <Preview data={dateSeriesDataWithNulls}>
   <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesDataWithNulls} x="date" y="value" {renderContext} {debug}>
-      <svelte:fragment slot="belowMarks" let:series>
+      {#snippet belowMarks({ series })}
         {#each series as s}
           <Spline
             data={dateSeriesDataWithNulls.filter((d) => d.value !== null)}
@@ -705,7 +741,7 @@
             stroke={s.color}
           />
         {/each}
-      </svelte:fragment>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
@@ -770,7 +806,7 @@
       data={dateSeriesData}
       x="date"
       y="value"
-      ontooltipclick={(e, detail) => {
+      onTooltipClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
@@ -785,29 +821,31 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
-      <svelte:fragment slot="tooltip" let:x let:y let:height let:padding>
+      {#snippet tooltip({ context })}
         <Tooltip.Root
-          x={padding.left}
+          x={context.padding.left}
           y="data"
           anchor="right"
           contained={false}
           class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-1 py-[2px] border border-primary rounded-sm whitespace-nowrap"
-          let:data
         >
-          {y(data)}
+          {#snippet children({ data })}
+            {context.y(data)}
+          {/snippet}
         </Tooltip.Root>
 
         <Tooltip.Root
           x="data"
-          y={height}
+          y={context.height}
           anchor="top"
           class="text-[10px] font-semibold text-primary bg-surface-100 mt-[2px] px-2 py-[2px] border border-primary rounded-sm whitespace-nowrap"
           contained={false}
-          let:data
         >
-          {format(x(data), PeriodType.Day)}
+          {#snippet children({ data })}
+            {format(context.x(data), PeriodType.Day)}
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
@@ -817,25 +855,25 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
-      <svelte:fragment slot="aboveContext" let:xScale let:height let:tooltip>
+      {#snippet aboveContext({ context, tooltipContext })}
         <Svg>
           {#each annotations as annotation}
             <Circle
-              cx={xScale(annotation.date)}
-              cy={height}
+              cx={context.xScale(annotation.date)}
+              cy={context.height}
               r={6}
               class="fill-secondary"
               onpointermove={(e) => {
                 e.stopPropagation();
-                tooltip.show(e, { annotation });
+                tooltipContext.show(e, { annotation });
               }}
               onpointerleave={() => {
-                tooltip.hide();
+                tooltipContext.hide();
               }}
             />
             <Text
-              x={xScale(annotation.date)}
-              y={height}
+              x={context.xScale(annotation.date)}
+              y={context.height}
               textAnchor="middle"
               verticalAnchor="middle"
               dy={-2}
@@ -844,24 +882,26 @@
             />
           {/each}
         </Svg>
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="tooltip" let:x let:y>
-        <Tooltip.Root let:data>
-          {#if data.annotation}
-            <!-- Annotation -->
-            <div class="whitespace-nowrap">
-              {data.annotation.description}
-            </div>
-          {:else}
-            <!-- Normal tooltip -->
-            <Tooltip.Header>{format(x(data), PeriodType.DayTime)}</Tooltip.Header>
-            <Tooltip.List>
-              <Tooltip.Item label="value" value={y(data)} />
-            </Tooltip.List>
-          {/if}
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {#if data.annotation}
+              <!-- Annotation -->
+              <div class="whitespace-nowrap">
+                {data.annotation.description}
+              </div>
+            {:else}
+              <!-- Normal tooltip -->
+              <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+              <Tooltip.List>
+                <Tooltip.Item label="value" value={context.y(data)} />
+              </Tooltip.List>
+            {/if}
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
@@ -896,7 +936,7 @@
       { key: 'bananas', color: 'var(--color-success)' },
       { key: 'oranges', color: 'var(--color-warning)' },
     ]}
-    onpointclick={(e, detail) => {
+    onPointClick={(e, detail) => {
       console.log(e, detail);
       alert(JSON.stringify(detail));
     }}
@@ -910,24 +950,29 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" let:x let:y {renderContext} {debug}>
-      <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <Spline class="stroke-2 stroke-primary" />
-        <Highlight points lines />
-      </svelte:component>
+    <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+      {#snippet children({ context })}
+        {@const Component = renderContext === 'canvas' ? Canvas : Svg}
+        <Component>
+          <Axis placement="left" grid rule />
+          <Axis
+            placement="bottom"
+            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
+          <Spline class="stroke-2 stroke-primary" />
+          <Highlight points lines />
+        </Component>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(x(data), PeriodType.DayTime)}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={y(data)} />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={context.y(data)} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>

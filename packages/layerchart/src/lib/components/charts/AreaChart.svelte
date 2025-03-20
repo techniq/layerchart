@@ -89,7 +89,7 @@
     legend = false,
     points = false,
     rule = true,
-    tooltipContext,
+    tooltipContext = $bindable(),
     onTooltipClick = () => {},
     onPointClick,
     props = {},

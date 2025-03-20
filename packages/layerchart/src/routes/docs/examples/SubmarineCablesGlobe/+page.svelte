@@ -18,29 +18,36 @@
   } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
   // https://vizhub.com/curran/submarine-cables-globe
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let transformContext: TransformContext;
+  let transformContext = $state<TransformContext>();
 
-  let velocity = 3;
-  let isSpinning = false;
+  let velocity = $state(3);
+  let isSpinning = $state(false);
   const timer = timerStore({
     delay: 1,
     onTick() {
-      transformContext.translate.update((value) => {
-        return {
-          x: (value.x += velocity),
-          y: value.y,
-        };
+      if (!transformContext) return;
+      const value = transformContext.translate.current;
+      transformContext.translate.set({
+        x: (value.x += velocity),
+        y: value.y,
       });
     },
     disabled: !isSpinning,
   });
-  $: isSpinning ? timer.start() : timer.stop();
+
+  $effect(() => {
+    if (isSpinning) {
+      timer.start();
+    } else {
+      timer.stop();
+    }
+  });
   $timer;
 </script>
 
@@ -94,29 +101,33 @@
         }
       }}
       bind:transformContext
-      let:tooltip
     >
-      <Svg>
-        <GeoPath geojson={{ type: 'Sphere' }} class="fill-surface-200 stroke-surface-content/20" />
-        <Graticule class="stroke-surface-content/20" />
-        <GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
-
-        {#each data.cables.features as feature}
-          {@const hasColor = tooltip.data == null || tooltip.data.id === feature.properties.id}
+      {#snippet children({ tooltipContext })}
+        <Svg>
           <GeoPath
-            geojson={feature}
-            stroke={hasColor ? feature.properties.color : undefined}
-            class={cls(
-              'stroke-2 fill-none transition-colors',
-              !hasColor && 'stroke-surface-content/10'
-            )}
-            onpointermove={(e) => tooltip?.show(e, feature.properties)}
-            onpointerleave={(e) => tooltip?.hide()}
+            geojson={{ type: 'Sphere' }}
+            class="fill-surface-200 stroke-surface-content/20"
           />
-        {/each}
+          <Graticule class="stroke-surface-content/20" />
+          <GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
 
-        <!-- Switch to Canvas for better performance -->
-        <!-- {#each data.landingPoints.features as feature}
+          {#each data.cables.features as feature}
+            {@const hasColor =
+              tooltipContext.data == null || tooltipContext.data.id === feature.properties.id}
+            <GeoPath
+              geojson={feature}
+              stroke={hasColor ? feature.properties.color : undefined}
+              class={cls(
+                'stroke-2 fill-none transition-colors',
+                !hasColor && 'stroke-surface-content/10'
+              )}
+              onpointermove={(e) => tooltipContext.show(e, feature.properties)}
+              onpointerleave={(e) => tooltipContext.hide()}
+            />
+          {/each}
+
+          <!-- Switch to Canvas for better performance -->
+          <!-- {#each data.landingPoints.features as feature}
             {@const [long, lat] = feature.geometry.coordinates}
             <GeoCircle
               center={[long, lat]}
@@ -127,28 +138,31 @@
             />
           {/each} -->
 
-        {#each data.landingPoints.features as feature}
-          {@const [long, lat] = feature.geometry.coordinates}
-          <GeoVisible {lat} {long}>
-            <GeoPoint {lat} {long}>
-              <circle
-                r={2}
-                class="fill-surface-content stroke-surface-100 stroke"
-                on:pointermove={(e) => tooltip?.show(e, feature.properties)}
-                on:pointerleave={(e) => tooltip?.hide()}
-              />
-            </GeoPoint>
-          </GeoVisible>
-        {/each}
-      </Svg>
+          {#each data.landingPoints.features as feature}
+            {@const [long, lat] = feature.geometry.coordinates}
+            <GeoVisible {lat} {long}>
+              <GeoPoint {lat} {long}>
+                <circle
+                  r={2}
+                  class="fill-surface-content stroke-surface-100 stroke"
+                  onpointermove={(e) => tooltipContext.show(e, feature.properties)}
+                  onpointerleave={(e) => tooltipContext.hide()}
+                />
+              </GeoPoint>
+            </GeoVisible>
+          {/each}
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.name}</Tooltip.Header>
-        <!-- <Tooltip.List>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.name}</Tooltip.Header>
+            <!-- <Tooltip.List>
           <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
           <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
         </Tooltip.List> -->
-      </Tooltip.Root>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

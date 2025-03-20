@@ -20,7 +20,7 @@
   import { createDateSeries, wideData, longData } from '$lib/utils/genData.js';
   import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
-  export let data;
+  let { data } = $props();
 
   const dataByFruit = group(longData, (d) => d.fruit);
 
@@ -50,8 +50,8 @@
     keys: ['value', 'baseline'],
   });
 
-  let renderContext: 'svg' | 'canvas' = 'svg';
-  let debug = false;
+  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
@@ -169,18 +169,15 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
-      <svelte:fragment slot="marks" let:series let:getBarsProps>
+      {#snippet marks({ series, getBarsProps })}
         {#each series as s, i (s.key)}
-          <LinearGradient
-            class="from-blue-500 to-green-400"
-            vertical
-            units="userSpaceOnUse"
-            let:gradient
-          >
-            <Bars {...getBarsProps(s, i)} fill={gradient} />
+          <LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse">
+            {#snippet children({ gradient })}
+              <Bars {...getBarsProps(s, i)} fill={gradient} />
+            {/snippet}
           </LinearGradient>
         {/each}
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -212,9 +209,9 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="belowMarks">
+      {#snippet belowMarks()}
         <Highlight area={{ class: 'fill-surface-content/10' }} />
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -337,23 +334,25 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="tooltip" let:y let:series>
-        <Tooltip.Root let:data>
-          <Tooltip.Header>Age: {format(y(data))}</Tooltip.Header>
-          <Tooltip.List>
-            {#each series as s}
-              {@const valueAccessor = accessor(s.value ?? s.key)}
-              {@const value = Math.abs(valueAccessor(data))}
-              <Tooltip.Item label={s.key} color={s.color}>
-                {format(value)}
-                <span class="text-xs text-surface-content/50"
-                  >({format(value / totalPopulation, 'percent')})</span
-                >
-              </Tooltip.Item>
-            {/each}
-          </Tooltip.List>
+      {#snippet tooltip({ context, series })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>Age: {format(context.y(data))}</Tooltip.Header>
+            <Tooltip.List>
+              {#each series as s}
+                {@const valueAccessor = accessor(s.value ?? s.key)}
+                {@const value = Math.abs(valueAccessor(data))}
+                <Tooltip.Item label={s.key} color={s.color}>
+                  {format(value)}
+                  <span class="text-xs text-surface-content/50"
+                    >({format(value / totalPopulation, 'percent')})</span
+                  >
+                </Tooltip.Item>
+              {/each}
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -393,21 +392,23 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="tooltip" let:y let:series>
-        <Tooltip.Root let:data>
-          <Tooltip.Header>Age: {format(y(data))}</Tooltip.Header>
-          <Tooltip.List>
-            {#each series as s}
-              {@const valueAccessor = accessor(s.value ?? s.key)}
-              {@const value = Math.abs(valueAccessor(data))}
-              <Tooltip.Item label={s.key} color={s.color}>
-                {format(value * totalPopulation)}
-                <span class="text-xs text-surface-content/50">({format(value, 'percent')})</span>
-              </Tooltip.Item>
-            {/each}
-          </Tooltip.List>
+      {#snippet tooltip({ series, context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>Age: {format(context.y(data))}</Tooltip.Header>
+            <Tooltip.List>
+              {#each series as s}
+                {@const valueAccessor = accessor(s.value ?? s.key)}
+                {@const value = Math.abs(valueAccessor(data))}
+                <Tooltip.Item label={s.key} color={s.color}>
+                  {format(value * totalPopulation)}
+                  <span class="text-xs text-surface-content/50">({format(value, 'percent')})</span>
+                </Tooltip.Item>
+              {/each}
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -522,7 +523,7 @@
         },
       }}
       tooltip={false}
-      onbarclick={(e, detail) => {
+      onBarClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
@@ -1017,9 +1018,9 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="aboveMarks">
+      {#snippet aboveMarks()}
         <Labels x={8} value={(d) => d.date} class="text-sm fill-surface-300 stroke-none" />
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -1065,14 +1066,20 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="tooltip" let:x let:y let:c let:cScale>
-        <Tooltip.Root let:data>
-          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="Status" value={c(data)} color={cScale(c(data))} />
-          </Tooltip.List>
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.x(data))}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item
+                label="Status"
+                value={context.c(data)}
+                color={context.cScale?.(context.c(data))}
+              />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -1157,7 +1164,7 @@
       data={dateSeriesData}
       x="date"
       y="value"
-      ontooltipclick={(e, detail) => {
+      onTooltipClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
@@ -1172,14 +1179,16 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
-      <svelte:fragment slot="tooltip" let:x let:y>
-        <Tooltip.Root let:data>
-          <Tooltip.Header>{format(x(data), PeriodType.DayTime)}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="value" value={y(data)} />
-          </Tooltip.List>
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={context.y(data)} />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -1188,29 +1197,34 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" let:x let:y>
-      <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
-        <Axis
-          placement="left"
-          grid
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-        />
-        <Axis
-          placement="bottom"
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-        />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
-        <Highlight area />
-      </svelte:component>
+    <BarChart data={dateSeriesData} x="date" y="value">
+      {#snippet children({ context })}
+        {@const Component = renderContext === 'canvas' ? Canvas : Svg}
+        <Component>
+          <Axis
+            placement="left"
+            grid
+            rule
+            format={(value) => format(value, undefined, { variant: 'short' })}
+          />
+          <Axis
+            placement="bottom"
+            rule
+            format={(value) => format(value, undefined, { variant: 'short' })}
+          />
+          <Bars radius={4} strokeWidth={1} class="fill-primary" />
+          <Highlight area />
+        </Component>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(x(data))}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={y(data)} />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.x(data))}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={context.y(data)} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>

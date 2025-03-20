@@ -19,22 +19,25 @@
   import { timings } from './timings.js';
   import type { Component } from 'svelte';
 
-  export let data;
+  let { data } = $props();
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let Context: Component = Svg;
-  let transformContext: TransformContext;
+  let Context: Component = $state(Svg);
+  let transformContext = $state<TransformContext>();
 
-  let selectedFeature: (typeof countries.features)[0] | null;
-  $: if (selectedFeature) {
-    const centroid = geoCentroid(selectedFeature);
+  let selectedFeature: (typeof countries.features)[0] | null = $state(null);
 
-    transformContext.setTranslate({
-      x: -centroid[0],
-      y: -centroid[1],
-    });
-  }
+  $effect.pre(() => {
+    if (selectedFeature && transformContext) {
+      const centroid = geoCentroid(selectedFeature);
+
+      transformContext.setTranslate({
+        x: -centroid[0],
+        y: -centroid[1],
+      });
+    }
+  });
 
   // Animate to Yakko's song
   // https://animaniacs.fandom.com/wiki/Yakko%27s_World_(song)#New_Updated_Verse
@@ -53,14 +56,16 @@
   });
 
   // Set to jump to a country
-  let currentIndex = -1;
-  let isPlaying = false;
+  let currentIndex = $state(-1);
+  let isPlaying = $state(false);
 
-  $: if (isPlaying && ($audioCurrentTime ?? 0) >= countryTimings[currentIndex + 1]?.audioTime) {
-    const countryName = countryTimings[currentIndex + 1].country;
-    selectedFeature = countryFeaturesByName.get(countryName) ?? null;
-    currentIndex += 1;
-  }
+  $effect(() => {
+    if (isPlaying && ($audioCurrentTime ?? 0) >= countryTimings[currentIndex + 1]?.audioTime) {
+      const countryName = countryTimings[currentIndex + 1].country;
+      selectedFeature = countryFeaturesByName.get(countryName) ?? null;
+      currentIndex += 1;
+    }
+  });
 
   const audioFile = new Audio('/audio/yakko_world.mp3');
   audioFile.addEventListener('ended', () => stop());
@@ -85,7 +90,7 @@
     selectedFeature = null;
   }
 
-  let debug = false;
+  let debug = $state(false);
 </script>
 
 <div class="grid grid-cols-[1fr_auto] gap-2 mb-3">
@@ -141,46 +146,47 @@
         spring: { stiffness: 0.04 },
       }}
       bind:transformContext
-      let:tooltip
     >
-      {#if debug}
-        <div class="absolute bottom-0 right-0 z-10 grid gap-1">
-          <GeoDebug />
-          <TransformDebug />
-        </div>
-      {/if}
+      {#snippet children({ tooltipContext })}
+        {#if debug}
+          <div class="absolute bottom-0 right-0 z-10 grid gap-1">
+            <GeoDebug />
+            <TransformDebug />
+          </div>
+        {/if}
 
-      <svelte:component this={Context} {debug}>
-        <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
-        <Graticule class="stroke-surface-content/20" />
+        <Context {debug}>
+          <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
+          <Graticule class="stroke-surface-content/20" />
 
-        {#each countries.features as country}
-          <GeoPath
-            geojson={country}
-            class={cls(
-              'stroke-surface-content/50 fill-white cursor-pointer',
-              selectedFeature === country
-                ? 'stroke-primary-900 fill-primary'
-                : 'hover:fill-gray-200' // Canvas highlight handled below
-            )}
-            onclick={() => (selectedFeature = country)}
-            {tooltip}
-          />
-        {/each}
-      </svelte:component>
+          {#each countries.features as country}
+            <GeoPath
+              geojson={country}
+              class={cls(
+                'stroke-surface-content/50 fill-white cursor-pointer',
+                selectedFeature === country
+                  ? 'stroke-primary-900 fill-primary'
+                  : 'hover:fill-gray-200' // Canvas highlight handled below
+              )}
+              onclick={() => (selectedFeature = country)}
+              {tooltipContext}
+            />
+          {/each}
+        </Context>
 
-      {#if Context === Canvas}
-        <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
-        <Canvas pointerEvents={false}>
-          {#if tooltip.data}
-            <GeoPath geojson={tooltip.data} class="fill-surface-content/20" />
-          {/if}
-        </Canvas>
-      {/if}
+        {#if Context === Canvas}
+          <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
+          <Canvas pointerEvents={false}>
+            {#if tooltipContext.data}
+              <GeoPath geojson={tooltipContext.data} class="fill-surface-content/20" />
+            {/if}
+          </Canvas>
+        {/if}
 
-      <Tooltip.Root let:data>
-        {data.properties.name}
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {tooltipContext.data.properties.name}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

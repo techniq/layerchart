@@ -10,23 +10,10 @@
     'pie' | 'group' | 'arc' | 'legend' | 'canvas' | 'svg' | 'tooltip'
   >;
 
-  export type PieChartProps<TData> = Pick<
-    SimplifiedChartProps<TData, typeof Arc, PieChartExtraSnippetProps<TData>>,
-    | 'aboveContext'
-    | 'aboveMarks'
-    | 'belowContext'
-    | 'belowMarks'
-    | 'children'
-    | 'data'
-    | 'debug'
-    | 'legend'
-    | 'marks'
-    | 'onTooltipClick'
-    | 'profile'
-    | 'renderContext'
-    | 'series'
-    | 'tooltip'
-    | 'tooltipContext'
+  export type PieChartProps<TData> = SimplifiedChartProps<
+    TData,
+    typeof Arc,
+    PieChartExtraSnippetProps<TData>
   > & {
     /**
      * Key accessor
@@ -130,7 +117,6 @@
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { selectionStore } from '@layerstack/svelte-stores';
 
   import Arc from '../Arc.svelte';
   import Canvas from '../layout/Canvas.svelte';

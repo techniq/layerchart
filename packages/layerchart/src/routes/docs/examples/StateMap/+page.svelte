@@ -7,8 +7,7 @@
   import { sort } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
-
-  export let data;
+  let { data } = $props();
 
   const counties = feature(data.geojson, data.geojson.objects.counties);
   const states = feature(data.geojson, data.geojson.objects.states);
@@ -19,13 +18,13 @@
       .map((x) => ({ label: x.properties.name, value: x.id })),
     (d) => d.value
   );
-  let selectedStateId = '54'; // 'West Virginia';
-  $: selectedStateFeature = states.features.find((f) => f.id === selectedStateId);
-  $: selectedCountiesFeatures = counties.features.filter(
-    (f) => String(f.id).slice(0, 2) === selectedStateId
+  let selectedStateId = $state('54'); // 'West Virginia';
+  const selectedStateFeature = $derived(states.features.find((f) => f.id === selectedStateId));
+  const selectedCountiesFeatures = $derived(
+    counties.features.filter((f) => String(f.id).slice(0, 2) === selectedStateId)
   );
 
-  let projection = geoAlbersUsa;
+  let projection = $state(geoAlbersUsa);
   const projections = [
     { label: 'Albers', value: geoAlbers },
     { label: 'Albers USA', value: geoAlbersUsa },
@@ -80,25 +79,26 @@
         projection,
         fitGeojson: selectedStateFeature,
       }}
-      let:tooltip
     >
-      <Svg>
-        {#each selectedCountiesFeatures as feature}
+      {#snippet children({ tooltipContext })}
+        <Svg>
+          {#each selectedCountiesFeatures as feature}
+            <GeoPath
+              geojson={feature}
+              class="fill-surface-100 stroke-surface-content/10 hover:fill-surface-content/20"
+              {tooltipContext}
+            />
+          {/each}
           <GeoPath
-            geojson={feature}
-            class="fill-surface-100 stroke-surface-content/10 hover:fill-surface-content/20"
-            {tooltip}
+            geojson={selectedStateFeature}
+            class="fill-none stroke-surface-content pointer-events-none"
           />
-        {/each}
-        <GeoPath
-          geojson={selectedStateFeature}
-          class="fill-none stroke-surface-content pointer-events-none"
-        />
-      </Svg>
+        </Svg>
 
-      <Tooltip.Root let:data>
-        {data.properties.name}
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {tooltipContext.data.properties.name}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -112,33 +112,34 @@
         projection,
         fitGeojson: selectedStateFeature,
       }}
-      let:tooltip
     >
-      <Svg>
-        <ChartClipPath>
-          {#each counties.features as feature}
+      {#snippet children({ tooltipContext })}
+        <Svg>
+          <ChartClipPath>
+            {#each counties.features as feature}
+              <GeoPath
+                geojson={feature}
+                class="fill-surface-100 stroke-surface-content/10 hover:fill-surface-content/20"
+                {tooltipContext}
+              />
+            {/each}
+            {#each states.features as feature}
+              <GeoPath
+                geojson={feature}
+                class="fill-none pointer-events-none stroke-surface-content/10"
+              />
+            {/each}
             <GeoPath
-              geojson={feature}
-              class="fill-surface-100 stroke-surface-content/10 hover:fill-surface-content/20"
-              {tooltip}
+              geojson={selectedStateFeature}
+              class="fill-none stroke-surface-content pointer-events-none"
             />
-          {/each}
-          {#each states.features as feature}
-            <GeoPath
-              geojson={feature}
-              class="fill-none pointer-events-none stroke-surface-content/10"
-            />
-          {/each}
-          <GeoPath
-            geojson={selectedStateFeature}
-            class="fill-none stroke-surface-content pointer-events-none"
-          />
-        </ChartClipPath>
-      </Svg>
+          </ChartClipPath>
+        </Svg>
 
-      <Tooltip.Root let:data>
-        {data.properties.name}
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {tooltipContext.data.properties.name}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
