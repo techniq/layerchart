@@ -236,7 +236,7 @@
                 fill={color}
                 class="hover:scale-90 origin-center [transform-box:fill-box] transition-transform"
                 onpointermove={(e) => tooltipContext.show(e, color)}
-                onpointerleave={(e) => tooltipContext.hide()}
+                onpointerleave={() => tooltipContext.hide()}
               />
             {/each}
           {/each}

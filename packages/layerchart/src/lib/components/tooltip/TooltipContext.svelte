@@ -127,6 +127,7 @@
   import { raise } from '$lib/utils/chart.js';
   import { getChartContext } from '../Chart.svelte';
   import type { Snippet } from 'svelte';
+  import { createDataAttr } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext<any>();
 
@@ -147,7 +148,7 @@
   tooltipContextProp = {
     x: 0,
     y: 0,
-    data: null as any,
+    data: null,
     show: showTooltip,
     hide: hideTooltip,
     mode,
@@ -243,7 +244,13 @@
       return;
     }
 
-    const containerNode = (e.target as Element).closest('[data-lc-root-container]')!;
+    const containerNode = (e.target as Element).closest('[data-lc-root-container]');
+    if (!containerNode) {
+      // ignore if not in container
+      // `localPoint` will throw an error if the container is not found
+      return;
+    }
+
     const point = localPoint(e, containerNode);
 
     if (
@@ -332,12 +339,9 @@
         raise(e.target as Element);
       }
 
-      tooltipContextProp = {
-        ...tooltipContext,
-        x: point.x,
-        y: point.y,
-        data: tooltipData,
-      };
+      tooltipContextProp.x = point.x;
+      tooltipContextProp.y = point.y;
+      tooltipContextProp.data = tooltipData;
     } else {
       // Hide tooltip if unable to locate
       hideTooltip();
@@ -355,7 +359,7 @@
     // Additional hideDelay can be configured to extend this delay further
     hideTimeoutId = setTimeout(() => {
       if (!isHoveringTooltip) {
-        tooltipContextProp = { ...tooltipContext, data: null };
+        tooltipContextProp.data = null;
       }
     }, hideDelay);
   }
@@ -490,6 +494,7 @@
     }
   }}
   onkeydown={() => {}}
+  {...createDataAttr('tooltip-context')}
   bind:this={ref}
 >
   <!-- Rendering slot within TooltipContext to allow pointer events to bubble up (ex. Brush) -->
@@ -499,6 +504,7 @@
     style:left="-{ctx.padding.left ?? 0}px"
     style:width="{ctx.containerWidth}px"
     style:height="{ctx.containerHeight}px"
+    {...createDataAttr('tooltip-context-container')}
   >
     {@render children?.({ tooltipContext: tooltipContext })}
 
