@@ -58,9 +58,9 @@
   import Link from './Link.svelte';
   import { isScaleBand, type AnyScale } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
-  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import { getChartContext } from './Chart.svelte';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 

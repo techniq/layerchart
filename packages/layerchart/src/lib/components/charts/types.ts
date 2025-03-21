@@ -22,7 +22,7 @@ import type Bars from '../Bars.svelte';
 import type Pie from '../Pie.svelte';
 import type Arc from '../Arc.svelte';
 import type Canvas from '../layout/Canvas.svelte';
-import type { Without } from 'layerchart/utils/types.js';
+import type { Without } from '$lib/utils/types.js';
 
 export type SeriesData<TData, TComponent extends Component> = {
   key: string;

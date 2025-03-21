@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
   import Marker from './Marker.svelte';
   import type { ComponentProps, Snippet } from 'svelte';
 

@@ -116,11 +116,11 @@
 
   import ColorRamp from './ColorRamp.svelte';
   import { cls } from '@layerstack/tailwind';
-  import type { AnyScale } from 'layerchart/utils/scales.svelte.js';
+  import type { AnyScale } from '$lib/utils/scales.svelte.js';
   import { getChartContext } from './Chart.svelte';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   import type { Snippet } from 'svelte';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let {
     scale: scaleProp,

@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { Snippet } from 'svelte';
   import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
@@ -72,8 +72,8 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { geoCurvePath } from '$lib/utils/geo.js';
   import { getGeoContext } from './GeoContext.svelte';
-  import { createKey } from 'layerchart/utils/key.svelte.js';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createKey } from '$lib/utils/key.svelte.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let {
     fill,

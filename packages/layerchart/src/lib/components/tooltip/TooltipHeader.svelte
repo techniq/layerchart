@@ -55,8 +55,8 @@
 <script lang="ts">
   import { format as formatUtil, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import type { Without } from 'layerchart/utils/types.js';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import type { Without } from '$lib/utils/types.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let {
     ref = $bindable(),

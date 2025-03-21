@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import { Context } from 'runed';
 
-  const BrushContext = new Context<BrushContextValue>('BrushContext');
+  const _BrushContext = new Context<BrushContextValue>('BrushContext');
 
   export type BrushRange = {
     x: number;
@@ -32,11 +32,11 @@
   };
   export function getBrushContext() {
     const defaults = $state(defaultContext);
-    return BrushContext.getOr(defaults);
+    return _BrushContext.getOr(defaults);
   }
 
   export function setBrushContext(brush: BrushContextValue) {
-    return BrushContext.set(brush);
+    return _BrushContext.set(brush);
   }
 
   type BrushEventPayload = {
@@ -140,7 +140,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import { getChartContext } from './Chart.svelte';
   import { untrack, type Snippet } from 'svelte';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 

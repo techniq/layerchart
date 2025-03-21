@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { MotionProps } from 'layerchart/stores/motionState.svelte.js';
+  import type { MotionProps } from '$lib/stores/motionState.svelte.js';
   import ClipPath, { type ClipPathPropsWithoutHTML } from './ClipPath.svelte';
 
   export type CircleClipPathPropsWithoutHTML = {
@@ -52,7 +52,7 @@
 
 <script lang="ts">
   import Circle from './Circle.svelte';
-  import { createId } from 'layerchart/utils/createId.js';
+  import { createId } from '$lib/utils/createId.js';
 
   const uid = $props.id();
 

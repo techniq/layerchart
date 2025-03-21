@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { Transition, TransitionParams, Without } from 'layerchart/utils/types.js';
+  import type { Transition, TransitionParams, Without } from '$lib/utils/types.js';
 
   export type AxisPropsWithoutHTML<In extends Transition = Transition> = {
     /**
@@ -115,9 +115,9 @@
   import Rule from './Rule.svelte';
   import Text from './Text.svelte';
   import { isScaleBand, type AnyScale } from '$lib/utils/scales.svelte.js';
-  import type { MotionProps } from 'layerchart/stores/motionState.svelte.js';
+  import type { MotionProps } from '$lib/stores/motionState.svelte.js';
   import { getChartContext } from './Chart.svelte';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let {
     placement,

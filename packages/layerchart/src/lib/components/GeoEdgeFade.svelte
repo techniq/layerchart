@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
 
   export type GeoEdgeFadePropsWithoutHTML = {
@@ -23,7 +23,7 @@
   import { geoDistance } from 'd3-geo';
 
   import { getGeoContext } from './GeoContext.svelte';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let {
     link,

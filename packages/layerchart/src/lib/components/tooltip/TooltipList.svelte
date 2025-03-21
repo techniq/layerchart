@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
   import type { HTMLAttributes } from 'svelte/elements';
 
   let {

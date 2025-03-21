@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import Spline, { type SplineProps } from './Spline.svelte';
   import { curveNatural, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
 
   export type GeoSplinePropsWithoutHTML = {
     /**
@@ -36,7 +36,7 @@
   import { geoOrthographic, geoInterpolate } from 'd3-geo';
 
   import { getGeoContext } from './GeoContext.svelte';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let {
     link,

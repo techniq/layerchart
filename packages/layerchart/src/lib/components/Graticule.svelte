@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   import type { ComponentProps } from 'svelte';
   import GeoPath, { type GeoPathProps } from './GeoPath.svelte';
 
@@ -15,7 +15,7 @@
 
 <script lang="ts">
   import { geoGraticule } from 'd3-geo';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let { lines, outline, step = [10, 10], ...restProps }: GraticuleProps = $props();
 

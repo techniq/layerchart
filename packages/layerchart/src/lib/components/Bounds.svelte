@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { MotionProps } from 'layerchart/stores/motionState.svelte.js';
+  import type { MotionProps } from '$lib/stores/motionState.svelte.js';
   import type { Snippet } from 'svelte';
 
   export type BoundsExtents = Partial<{ x0: number; y0: number; x1: number; y1: number }>;
@@ -19,7 +19,7 @@
   import { scaleLinear } from 'd3-scale';
 
   import { getChartContext } from './Chart.svelte';
-  import { motionScaleState, type AnyScale } from 'layerchart/utils/scales.svelte.js';
+  import { motionScaleState, type AnyScale } from '$lib/utils/scales.svelte.js';
 
   let { domain, range, spring, tweened, children }: BoundsProps = $props();
 

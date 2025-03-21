@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { MarkerOptions } from './MarkerWrapper.svelte';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   import Spline, { type SplineProps } from './Spline.svelte';
   import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
   import { link as d3Link, curveBumpX, curveBumpY, type CurveFactory } from 'd3-shape';
@@ -80,8 +80,8 @@
   import { interpolatePath } from 'd3-interpolate-path';
 
   import MarkerWrapper from './MarkerWrapper.svelte';
-  import { createId } from 'layerchart/utils/createId.js';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createId } from '$lib/utils/createId.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   const uid = $props.id();
 

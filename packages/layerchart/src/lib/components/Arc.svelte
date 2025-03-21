@@ -137,8 +137,8 @@
 
   import { degreesToRadians } from '$lib/utils/math.js';
   import { getChartContext } from './Chart.svelte';
-  import { afterTick } from 'layerchart/utils/afterTick.js';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { afterTick } from '$lib/utils/afterTick.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let {
     ref = $bindable(),

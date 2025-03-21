@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 
   export type CirclePropsWithoutHTML = {
     /**
@@ -66,9 +66,9 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import type { SVGAttributes } from 'svelte/elements';
-  import { afterTick } from 'layerchart/utils/afterTick.js';
-  import { createKey } from 'layerchart/utils/key.svelte.js';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { afterTick } from '$lib/utils/afterTick.js';
+  import { createKey } from '$lib/utils/key.svelte.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let {
     cx = 0,

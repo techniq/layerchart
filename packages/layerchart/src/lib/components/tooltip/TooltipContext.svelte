@@ -3,7 +3,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
 
-  const TooltipContext = new Context<TooltipContextValue>('TooltipContext');
+  const _TooltipContext = new Context<TooltipContextValue>('TooltipContext');
 
   type TooltipMode =
     | 'bisect-x'
@@ -34,11 +34,11 @@
   } as TooltipContextValue;
 
   export function getTooltipContext() {
-    return TooltipContext.getOr(defaultContext);
+    return _TooltipContext.getOr(defaultContext);
   }
 
   function setTooltipContext(tooltip: TooltipContextValue) {
-    return TooltipContext.set(tooltip);
+    return _TooltipContext.set(tooltip);
   }
 
   type TooltipContextPropsWithoutHTML = {
@@ -139,7 +139,7 @@
   import { isScaleBand, scaleInvert } from '$lib/utils/scales.svelte.js';
   import { cartesianToPolar } from '$lib/utils/math.js';
   import { quadtreeRects } from '$lib/utils/quadtree.js';
-  import { raise } from 'layerchart/utils/chart.js';
+  import { raise } from '$lib/utils/chart.js';
   import { getChartContext } from '../Chart.svelte';
   import type { Snippet } from 'svelte';
 

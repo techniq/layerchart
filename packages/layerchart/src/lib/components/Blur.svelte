@@ -21,9 +21,9 @@
 </script>
 
 <script lang="ts">
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
-  import { createId } from 'layerchart/utils/createId.js';
+  import { createId } from '$lib/utils/createId.js';
   import type { Snippet } from 'svelte';
   const uid = $props.id();
 

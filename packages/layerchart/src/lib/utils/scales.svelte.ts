@@ -5,7 +5,7 @@ import {
   type MotionProps,
   type SpringOptions,
   type TweenedOptions,
-} from 'layerchart/stores/motionState.svelte.js';
+} from '$lib/stores/motionState.svelte.js';
 import { Spring, Tween } from 'svelte/motion';
 import type { Accessor } from './common.js';
 

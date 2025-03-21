@@ -1,7 +1,7 @@
 <script lang="ts" module>
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
-  import { createId } from 'layerchart/utils/createId.js';
-  import type { Without } from 'layerchart/utils/types.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { createId } from '$lib/utils/createId.js';
+  import type { Without } from '$lib/utils/types.js';
   import type { Snippet } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
 

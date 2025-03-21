@@ -87,7 +87,7 @@
   import Spline from '../Spline.svelte';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { createHighlightKey } from './utils.svelte.js';
-  import { createSelectionState } from 'layerchart/stores/selectionState.svelte.js';
+  import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
 
   let {
     data = [],

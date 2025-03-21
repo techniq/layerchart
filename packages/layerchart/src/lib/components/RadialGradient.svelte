@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
 
   export type RadialGradientPropsWithoutHTML = {
@@ -88,8 +88,8 @@
   import { getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';
   import { getChartContext } from './Chart.svelte';
-  import { createId } from 'layerchart/utils/createId.js';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createId } from '$lib/utils/createId.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   const uid = $props.id();
 

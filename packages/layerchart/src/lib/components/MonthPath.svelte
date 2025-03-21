@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
 
   export type MonthPathPropsWithoutHTML = {
@@ -30,7 +30,7 @@
 <script lang="ts">
   import { timeWeek, timeYear } from 'd3-time';
   import { endOfMonth } from 'date-fns';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let { date, cellSize: cellSizeProp, ref = $bindable(), ...restProps }: MonthPathProps = $props();
 

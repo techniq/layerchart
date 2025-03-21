@@ -205,7 +205,7 @@
   } from '$lib/stores/motionState.svelte.js';
   import { localPoint } from '@layerstack/utils';
   import { Context, watch } from 'runed';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
   import { cls } from '@layerstack/tailwind';

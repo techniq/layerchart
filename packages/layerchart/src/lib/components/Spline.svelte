@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import { tick, type Snippet } from 'svelte';
   import type { MarkerOptions } from './MarkerWrapper.svelte';
-  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
 
@@ -128,10 +128,10 @@
   import { getRenderContext } from './Chart.svelte';
   import MarkerWrapper from './MarkerWrapper.svelte';
   import { getChartContext } from './Chart.svelte';
-  import { createKey } from 'layerchart/utils/key.svelte.js';
-  import { afterTick } from 'layerchart/utils/afterTick.js';
-  import { createId } from 'layerchart/utils/createId.js';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createKey } from '$lib/utils/key.svelte.js';
+  import { afterTick } from '$lib/utils/afterTick.js';
+  import { createId } from '$lib/utils/createId.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 

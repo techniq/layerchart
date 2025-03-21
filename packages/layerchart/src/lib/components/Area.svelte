@@ -1,7 +1,7 @@
 <script lang="ts" module>
-  import { type Area, area as d3Area, areaRadial } from 'd3-shape';
+  import { type Area as D3Area, area as d3Area, areaRadial } from 'd3-shape';
   import type { SVGAttributes } from 'svelte/elements';
-  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { ComponentProps } from 'svelte';
   import { accessor, type Accessor } from '../utils/common.js';
 
@@ -38,7 +38,7 @@
 
     curve?: CurveFactory;
 
-    defined?: Parameters<Area<any>['defined']>[0];
+    defined?: Parameters<D3Area<any>['defined']>[0];
 
     /**
      * Enable showing line
@@ -67,9 +67,9 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getChartContext } from './Chart.svelte';
-  import { motionState, type TweenedOptions } from 'layerchart/stores/motionState.svelte.js';
-  import { createKey } from 'layerchart/utils/key.svelte.js';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { motionState, type TweenedOptions } from '$lib/stores/motionState.svelte.js';
+  import { createKey } from '$lib/utils/key.svelte.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
   const renderCtx = getRenderContext();

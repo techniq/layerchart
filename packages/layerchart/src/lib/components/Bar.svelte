@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import { createDimensionGetter, type Insets } from 'layerchart/utils/rect.svelte.js';
+  import { createDimensionGetter, type Insets } from '$lib/utils/rect.svelte.js';
 
   export type BarPropsWithoutHTML = {
     bar: Object;
@@ -74,11 +74,11 @@
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { greatestAbs } from '@layerstack/utils';
-  import type { MotionProps } from 'layerchart/stores/motionState.svelte.js';
+  import type { MotionProps } from '$lib/stores/motionState.svelte.js';
   import { getChartContext } from './Chart.svelte';
-  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 

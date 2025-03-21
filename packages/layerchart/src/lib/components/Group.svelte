@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
   import type { HTMLAttributes, TouchEventHandler } from 'svelte/elements';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
 
   export type GroupPropsWithoutHTML = {
@@ -67,8 +67,8 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
 
   import { getChartContext } from './Chart.svelte';
-  import { afterTick } from 'layerchart/utils/afterTick.js';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { afterTick } from '$lib/utils/afterTick.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 

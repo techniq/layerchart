@@ -27,8 +27,8 @@
   import { getChartContext } from './Chart.svelte';
 
   import RectClipPath, { type RectClipPathProps } from './RectClipPath.svelte';
-  import type { Without } from 'layerchart/utils/types.js';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import type { Without } from '$lib/utils/types.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let { full = false, disabled = false, ...restProps }: ChartClipPathProps = $props();
 

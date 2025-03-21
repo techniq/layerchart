@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
-  import type { AnyScale } from 'layerchart/utils/scales.svelte.js';
+  import type { AnyScale } from '$lib/utils/scales.svelte.js';
   import { onMount, type ComponentProps } from 'svelte';
 
   export type ScatterChartExtraSnippetProps<TData> = {
@@ -62,7 +62,7 @@
   import { accessor, chartDataArray, defaultChartPadding } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
   import { createHighlightKey } from './utils.svelte.js';
-  import { createSelectionState } from 'layerchart/stores/selectionState.svelte.js';
+  import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
 
   let {
     data = [],

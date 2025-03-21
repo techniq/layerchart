@@ -44,7 +44,7 @@
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
   import { getGeoContext } from './GeoContext.svelte';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let {
     url,

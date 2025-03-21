@@ -54,10 +54,10 @@
 </script>
 
 <script lang="ts">
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
-  import { createId } from 'layerchart/utils/createId.js';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createId } from '$lib/utils/createId.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   const uid = $props.id();
 

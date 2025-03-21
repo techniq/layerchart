@@ -3,7 +3,7 @@
   import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import MarkerWrapper, { type MarkerOptions } from './MarkerWrapper.svelte';
-  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 
   export type LinePropsWithoutHTML = {
     /**
@@ -95,10 +95,10 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { getRenderContext } from './Chart.svelte';
 
-  import { createKey } from 'layerchart/utils/key.svelte.js';
-  import { afterTick } from 'layerchart/utils/afterTick.js';
-  import { createId } from 'layerchart/utils/createId.js';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createKey } from '$lib/utils/key.svelte.js';
+  import { afterTick } from '$lib/utils/afterTick.js';
+  import { createId } from '$lib/utils/createId.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   const uid = $props.id();
 

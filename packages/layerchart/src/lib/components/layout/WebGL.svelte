@@ -64,7 +64,7 @@
   import { onMount, type Snippet } from 'svelte';
   import { getChartContext } from '../Chart.svelte';
   import { Context } from 'runed';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let {
     context = $bindable(),

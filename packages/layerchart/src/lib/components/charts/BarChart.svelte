@@ -121,9 +121,9 @@
   import { asAny, type Nice } from '../../utils/types.js';
   import type { Insets } from '../../utils/rect.svelte.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
-  import type { AnyScale, DomainType } from 'layerchart/utils/scales.svelte.js';
+  import type { AnyScale, DomainType } from '$lib/utils/scales.svelte.js';
   import { createHighlightKey } from './utils.svelte.js';
-  import { createSelectionState } from 'layerchart/stores/selectionState.svelte.js';
+  import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
 
   let {
     data = [],

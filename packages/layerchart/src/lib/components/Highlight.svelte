@@ -120,7 +120,7 @@
   import { asAny } from '$lib/utils/types.js';
   import { getChartContext } from './Chart.svelte';
   import { getTooltipContext } from './tooltip/TooltipContext.svelte';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
   const tooltipCtx = getTooltipContext();

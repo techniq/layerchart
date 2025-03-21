@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import GeoPath, { type GeoPathProps } from './GeoPath.svelte';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   export type GeoCirclePropsWithoutHTML = {
     /**
      * The radius of the circle in degrees.
@@ -27,7 +27,7 @@
 
 <script lang="ts">
   import { geoCircle } from 'd3-geo';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let { radius = 90, center = [0, 0], precision = 6, ...restProps }: GeoCircleProps = $props();
 

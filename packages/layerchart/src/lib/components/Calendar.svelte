@@ -61,8 +61,8 @@
   import { chartDataArray } from '../utils/common.js';
   import { getChartContext } from './Chart.svelte';
   import type { SVGAttributes } from 'svelte/elements';
-  import type { Without } from 'layerchart/utils/types.js';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import type { Without } from '$lib/utils/types.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let {
     end,

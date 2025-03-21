@@ -9,3 +9,4 @@ export * from './pivot.js';
 export * from './stack.js';
 export * from './ticks.js';
 export * from './threshold.js';
+export * from './types.js';

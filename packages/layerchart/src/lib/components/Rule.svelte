@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
 
   export type BaseRulePropsWithoutHTML = {
@@ -54,7 +54,7 @@
   import Circle from './Circle.svelte';
   import Line, { type LinePropsWithoutHTML } from './Line.svelte';
   import { getChartContext } from './Chart.svelte';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let {
     x = false,

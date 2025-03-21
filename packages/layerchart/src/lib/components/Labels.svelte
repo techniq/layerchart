@@ -2,7 +2,7 @@
   import Text, { type TextProps } from './Text.svelte';
   import { type ComponentProps, type Snippet } from 'svelte';
   import { format as formatValue, type FormatType } from '@layerstack/utils';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   import Points, { type Point } from './Points.svelte';
   import { accessor, type Accessor } from '../utils/common.js';
 
@@ -64,7 +64,7 @@
 
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { getChartContext } from './Chart.svelte';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 

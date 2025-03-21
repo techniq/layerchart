@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   import Rect, { type RectProps, type RectPropsWithoutHTML } from './Rect.svelte';
 
   export type FramePropsWithoutHTML = RectPropsWithoutHTML & {
@@ -19,7 +19,7 @@
 
 <script lang="ts">
   import { getChartContext } from './Chart.svelte';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let { ref = $bindable(), full = false, ...restProps }: FrameProps = $props();
 

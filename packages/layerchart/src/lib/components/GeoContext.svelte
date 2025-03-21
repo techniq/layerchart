@@ -12,14 +12,14 @@
   /**
    * Access or set the current GeoContext.
    */
-  const GeoContext = new Context<GeoContextValue>('GeoContext');
+  const _GeoContext = new Context<GeoContextValue>('GeoContext');
 
   export function getGeoContext() {
-    return GeoContext.getOr({ projection: undefined } as GeoContextValue);
+    return _GeoContext.getOr({ projection: undefined } as GeoContextValue);
   }
 
   export function setGeoContext(geo: GeoContextValue) {
-    return GeoContext.set(geo);
+    return _GeoContext.set(geo);
   }
 
   export type GeoContextProps = {

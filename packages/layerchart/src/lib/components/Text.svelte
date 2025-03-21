@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { CommonStyleProps, Without } from 'layerchart/utils/types.js';
+  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
 
@@ -130,9 +130,9 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { getStringWidth } from '$lib/utils/string.js';
   import { renderText, type ComputedStylesOptions } from '../utils/canvas.js';
-  import { afterTick } from 'layerchart/utils/afterTick.js';
+  import { afterTick } from '$lib/utils/afterTick.js';
 
-  import { createKey } from 'layerchart/utils/key.svelte.js';
+  import { createKey } from '$lib/utils/key.svelte.js';
 
   /*
     TODO:

@@ -57,7 +57,7 @@
   } from '@mdi/js';
 
   import { getTransformContext } from './TransformContext.svelte';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   import type { HTMLAttributes } from 'svelte/elements';
 
   let {

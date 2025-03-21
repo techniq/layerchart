@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
-  import type { MotionProps } from 'layerchart/stores/motionState.svelte.js';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { MotionProps } from '$lib/stores/motionState.svelte.js';
+  import type { Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import type { Snippet } from 'svelte';
 
@@ -62,7 +62,7 @@
 
 <script lang="ts">
   import ClipPath from './ClipPath.svelte';
-  import { createId } from 'layerchart/utils/createId.js';
+  import { createId } from '$lib/utils/createId.js';
 
   const uid = $props.id();
 

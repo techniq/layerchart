@@ -45,10 +45,10 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { getTransformContext } from '../TransformContext.svelte';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
   import { getChartContext, setRenderContext } from '../Chart.svelte';
   import type { Snippet } from 'svelte';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   let {
     ref = $bindable(),

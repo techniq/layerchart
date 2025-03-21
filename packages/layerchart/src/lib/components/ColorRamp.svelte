@@ -1,6 +1,6 @@
 <script lang="ts" module>
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
-  import type { Without } from 'layerchart/utils/types.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
+  import type { Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
 
   export type ColorRampPropsWithoutHTML = {

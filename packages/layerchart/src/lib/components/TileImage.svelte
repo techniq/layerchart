@@ -54,7 +54,7 @@
 </script>
 
 <script lang="ts">
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
 
   import Text from './Text.svelte';
 
