@@ -29,12 +29,14 @@
      * @default 0.4
      */
     bandPadding?: number;
+
     /**
      * Padding between group/series items when using 'seriesLayout="group"', applied to scaleBand().padding()
      *
      * @default 0
      */
     groupPadding?: number;
+
     /**
      * Padding between series items within bars when using 'seriesLayout="stack"'
      *
@@ -69,26 +71,6 @@
     seriesLayout?:
       | SimplifiedChartProps<TData, typeof Bars, BarChartExtraSnippetProps<TData>>['seriesLayout']
       | 'group';
-
-    /**
-     * The y scale to use for the chart.
-     */
-    yScale?: AnyScale;
-
-    /**
-     * The yNice to use for the chart
-     */
-    yNice?: Nice;
-
-    /**
-     * Padding to apply to the chart
-     */
-    padding?: { top?: number; right?: number; bottom?: number; left?: number };
-
-    /**
-     * The y domain
-     */
-    yDomain?: DomainType;
   };
 </script>
 
@@ -118,10 +100,10 @@
     defaultChartPadding,
     findRelatedData,
   } from '../../utils/common.js';
-  import { asAny, type Nice } from '../../utils/types.js';
+  import { asAny } from '../../utils/types.js';
   import type { Insets } from '../../utils/rect.svelte.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
-  import type { AnyScale, DomainType } from '$lib/utils/scales.svelte.js';
+  import type { AnyScale } from '$lib/utils/scales.svelte.js';
   import { createHighlightKey } from './utils.svelte.js';
   import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
 

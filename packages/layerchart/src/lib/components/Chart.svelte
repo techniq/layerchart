@@ -571,11 +571,13 @@
     rDomainSort?: boolean;
 
     /**
-     * The amount of padding to put around your chart. It operates like CSS box-sizing: border-box;
-     *  where values are subtracted from the parent container's width and height, the same as a
-     * [D3 margin convention](https://bl.ocks.org/mbostock/3019563).
+     * The amount of padding to put around your chart. It operates like CSS
+     * box-sizing: border-box; where values are subtracted from the parent container's width
+     * and height, the same as a [D3 margin convention](https://bl.ocks.org/mbostock/3019563).
+     *
+     * If a number is passed, it will be applied to all sides.
      */
-    padding?: { top?: number; right?: number; bottom?: number; left?: number };
+    padding?: { top?: number; right?: number; bottom?: number; left?: number } | number;
 
     /**
      * Manually set the extents of the x, y or r scale as a two-dimensional array of the min and
@@ -841,9 +843,17 @@
     r,
   });
 
-  const padding = $derived({
-    ...defaultPadding,
-    ...paddingProp,
+  const padding = $derived.by(() => {
+    if (typeof paddingProp === 'number') {
+      return {
+        ...defaultPadding,
+        top: paddingProp,
+        right: paddingProp,
+        bottom: paddingProp,
+        left: paddingProp,
+      };
+    }
+    return { ...defaultPadding, ...paddingProp };
   });
 
   let isMounted = $state(false);
