@@ -165,13 +165,13 @@
   }: TooltipProps = $props();
 
   const ctx = getChartContext();
-  const tooltip = getTooltipContext();
+  const tooltipCtx = getTooltipContext();
 
   let tooltipWidth = $state(0);
   let tooltipHeight = $state(0);
 
-  const xPos = motionState(tooltip.x, { spring: motion });
-  const yPos = motionState(tooltip.y, { spring: motion });
+  const xPos = motionState(tooltipCtx.x, { spring: motion });
+  const yPos = motionState(tooltipCtx.y, { spring: motion });
 
   function alignValue(value: number, align: Align, additionalOffset: number, tooltipSize: number) {
     const alignOffset = align === 'center' ? tooltipSize / 2 : align === 'end' ? tooltipSize : 0;
@@ -179,7 +179,7 @@
   }
 
   $effect(() => {
-    if (!tooltip.data) return;
+    if (!tooltipCtx.data) return;
     const xBandOffset = isScaleBand(ctx.xScale)
       ? ctx.xScale.step() / 2 - (ctx.xScale.padding() * ctx.xScale.step()) / 2
       : 0;
@@ -188,8 +188,8 @@
       typeof x === 'number'
         ? x
         : x === 'data'
-          ? ctx.xGet(tooltip.data) + ctx.padding.left + xBandOffset
-          : tooltip.x;
+          ? ctx.xGet(tooltipCtx.data) + ctx.padding.left + xBandOffset
+          : tooltipCtx.x;
 
     let xAlign: Align = 'start';
     switch (anchor) {
@@ -219,8 +219,8 @@
       typeof y === 'number'
         ? y
         : y === 'data'
-          ? ctx.yGet(tooltip.data) + ctx.padding.top + yBandOffset
-          : tooltip.y;
+          ? ctx.yGet(tooltipCtx.data) + ctx.padding.top + yBandOffset
+          : tooltipCtx.y;
 
     let yAlign: Align = 'start';
     switch (anchor) {
@@ -320,7 +320,7 @@
   });
 </script>
 
-{#if tooltip.data}
+{#if tooltipCtx.data}
   <div
     {...createDataAttr('tooltip-root')}
     {...props.root}
@@ -366,7 +366,7 @@
           class={cls(classes.content)}
           bind:this={contentRef}
         >
-          {@render children({ data: tooltip.data })}
+          {@render children({ data: tooltipCtx.data })}
         </div>
       {/if}
     </div>

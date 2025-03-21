@@ -89,22 +89,7 @@
      * Exposed to allow binding in Chart
      * @default { x: 0, y: 0, data: null, show: showTooltip, hide: hideTooltip, mode }
      */
-    tooltip?: {
-      x: number;
-      y: number;
-      data: any;
-      show(e: PointerEvent, tooltipData?: any): void;
-      hide(e?: PointerEvent): void;
-      mode:
-        | 'bisect-x'
-        | 'bisect-y'
-        | 'band'
-        | 'bisect-band'
-        | 'bounds'
-        | 'voronoi'
-        | 'quadtree'
-        | 'manual';
-    };
+    tooltipContext?: TooltipContextValue;
 
     /**
      * Delay in ms before hiding tooltip
@@ -155,11 +140,11 @@
     onclick = () => {},
     radius = Infinity,
     raiseTarget = false,
-    tooltip = $bindable() as TooltipContextValue,
+    tooltipContext: tooltipContextProp = $bindable() as TooltipContextValue,
     children,
   }: TooltipContextProps = $props();
 
-  tooltip = {
+  tooltipContextProp = {
     x: 0,
     y: 0,
     data: null as any,
@@ -170,18 +155,18 @@
 
   const tooltipContext = {
     get x() {
-      return tooltip!.x;
+      return tooltipContextProp!.x;
     },
     get y() {
-      return tooltip!.y;
+      return tooltipContextProp!.y;
     },
     get data() {
-      return tooltip!.data;
+      return tooltipContextProp!.data;
     },
     show: showTooltip,
     hide: hideTooltip,
     get mode() {
-      return tooltip!.mode;
+      return tooltipContextProp!.mode;
     },
   };
 
@@ -200,35 +185,31 @@
   let isHoveringTooltip = false;
   let hideTimeoutId: ReturnType<typeof setTimeout>;
 
-  const bisectX = $derived(
-    bisector((d: any) => {
-      const value = ctx.x(d);
-      if (Array.isArray(value)) {
-        // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
-        // Using first value.  Consider using average, max, etc
-        // const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
-        // return midpoint;
-        return value[0];
-      } else {
-        return value;
-      }
-    }).left
-  );
+  const bisectX = bisector((d: any) => {
+    const value = ctx.x(d);
+    if (Array.isArray(value)) {
+      // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
+      // Using first value.  Consider using average, max, etc
+      // const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
+      // return midpoint;
+      return value[0];
+    } else {
+      return value;
+    }
+  }).left;
 
-  const bisectY = $derived(
-    bisector((d: any) => {
-      const value = ctx.y(d);
-      if (Array.isArray(value)) {
-        // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
-        // Using first value.  Consider using average, max, etc
-        // const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
-        // return midpoint;
-        return value[0];
-      } else {
-        return value;
-      }
-    }).left
-  );
+  const bisectY = bisector((d: any) => {
+    const value = ctx.y(d);
+    if (Array.isArray(value)) {
+      // `x` accessor with multiple properties (ex. `x={['start', 'end']})`)
+      // Using first value.  Consider using average, max, etc
+      // const midpoint = new Date((value[1].valueOf() + value[0].getTime()) / 2);
+      // return midpoint;
+      return value[0];
+    } else {
+      return value;
+    }
+  }).left;
 
   function findData(previousValue: any, currentValue: any, valueAtPoint: any, accessor: Function) {
     switch (findTooltipData) {
@@ -351,8 +332,8 @@
         raise(e.target as Element);
       }
 
-      tooltip = {
-        ...tooltip,
+      tooltipContextProp = {
+        ...tooltipContext,
         x: point.x,
         y: point.y,
         data: tooltipData,
@@ -374,7 +355,7 @@
     // Additional hideDelay can be configured to extend this delay further
     hideTimeoutId = setTimeout(() => {
       if (!isHoveringTooltip) {
-        tooltip = { ...tooltip, data: null };
+        tooltipContextProp = { ...tooltipContext, data: null };
       }
     }, hideDelay);
   }
@@ -504,8 +485,8 @@
   }}
   onclick={(e) => {
     // Ignore clicks without data (triggered from Legend clicks, for example)
-    if (triggerPointerEvents && tooltip.data != null) {
-      onclick(e, { data: tooltip.data });
+    if (triggerPointerEvents && tooltipContext.data != null) {
+      onclick(e, { data: tooltipContext.data });
     }
   }}
   onkeydown={() => {}}
@@ -519,7 +500,7 @@
     style:width="{ctx.containerWidth}px"
     style:height="{ctx.containerHeight}px"
   >
-    {@render children?.({ tooltipContext })}
+    {@render children?.({ tooltipContext: tooltipContext })}
 
     {#if mode === 'voronoi'}
       <Svg>

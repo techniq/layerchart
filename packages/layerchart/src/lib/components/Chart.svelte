@@ -673,7 +673,7 @@
      *
      * @bindable
      */
-    tooltipContext?: ComponentProps<typeof TooltipContext>['tooltip'];
+    tooltipContext?: TooltipContextValue;
 
     /**
      * Props passed to TransformContext
@@ -686,7 +686,7 @@
      *
      * @bindable
      */
-    transformContext?: TransformContext;
+    transformContext?: TransformContextValue;
 
     /** Props passed to BrushContext */
     brush?: Partial<ComponentProps<typeof BrushContext>> | boolean;
@@ -1334,7 +1334,7 @@
   >
     {#key isMounted}
       <TransformContext
-        bind:this={transformContext}
+        bind:transformContext
         mode={(transform?.mode ?? geo?.applyTransform?.length) ? 'manual' : 'none'}
         initialTranslate={initialTransform?.translate}
         initialScale={initialTransform?.scale}
@@ -1350,7 +1350,7 @@
             {#snippet children({ geoContext })}
               <BrushContext {...brushProps} bind:brush={brushContext}>
                 {#snippet children({ brushContext })}
-                  <TooltipContext {...tooltipProps} bind:tooltip={tooltipContext}>
+                  <TooltipContext {...tooltipProps} bind:tooltipContext>
                     {#snippet children({ tooltipContext })}
                       {@render _children?.({
                         context,

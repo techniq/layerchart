@@ -102,7 +102,7 @@
 
   const _TransformContext = new Context<TransformContextValue>('TransformContext');
 
-  export function getTransformContext() {
+  function createDefaultTransformContext() {
     let defaultTranslate = $state(DEFAULT_TRANSLATE);
     let defaultScale = $state(DEFAULT_SCALE);
 
@@ -130,7 +130,11 @@
       translateCenter: () => {},
       zoomTo: () => {},
     };
-    return _TransformContext.getOr(defaultContext);
+    return defaultContext;
+  }
+
+  export function getTransformContext() {
+    return _TransformContext.getOr(createDefaultTransformContext());
   }
 
   export function setTransformContext(transform: TransformContextValue) {
@@ -155,6 +159,13 @@
      * @default false
      */
     disablePointer?: boolean;
+
+    /**
+     * A bindable reference to the transform context value.
+     *
+     * @bindable
+     */
+    transformContext?: TransformContextValue;
 
     /**
      * Initial scroll mode.
@@ -236,8 +247,38 @@
     ref = $bindable(),
     children,
     class: className,
+    transformContext = $bindable(),
     ...restProps
   }: TransformContextProps = $props();
+
+  transformContext = {
+    get mode() {
+      return mode;
+    },
+    get scale() {
+      return scale.current;
+    },
+    setScale,
+    get translate() {
+      return translate.current;
+    },
+    setTranslate,
+    get dragging() {
+      return dragging;
+    },
+    get moving() {
+      return moving;
+    },
+    reset,
+    zoomIn,
+    zoomOut,
+    translateCenter,
+    zoomTo,
+    get scrollMode() {
+      return scrollMode;
+    },
+    setScrollMode,
+  };
 
   const ctx = getChartContext();
 
@@ -441,35 +482,6 @@
       translate: translate.current,
     });
   });
-
-  const transformContext = {
-    get mode() {
-      return mode;
-    },
-    get scale() {
-      return scale.current;
-    },
-    setScale,
-    get translate() {
-      return translate.current;
-    },
-    setTranslate,
-    get dragging() {
-      return dragging;
-    },
-    get moving() {
-      return moving;
-    },
-    reset,
-    zoomIn,
-    zoomOut,
-    translateCenter,
-    zoomTo,
-    get scrollMode() {
-      return scrollMode;
-    },
-    setScrollMode,
-  };
 
   setTransformContext(transformContext);
 </script>
