@@ -111,6 +111,7 @@ export * from './Threshold.svelte';
 export { default as TileImage } from './TileImage.svelte';
 export * from './TileImage.svelte';
 export * as Tooltip from './tooltip/index.js';
+export * from './tooltip/TooltipContext.svelte';
 
 export { default as TransformContext } from './TransformContext.svelte';
 export * from './TransformContext.svelte';
