@@ -236,12 +236,12 @@
      * If `data` is not a flat array of objects and you want to use any of the scales, set a flat
      * version of the data via the `flatData` prop.
      */
-    data?: T[] | HierarchyNode<T> | SankeyGraph<any, any>;
+    data?: T[] | readonly T[] | HierarchyNode<T> | SankeyGraph<any, any>;
 
     /**
      * A flat version of data.
      */
-    flatData?: T[] | HierarchyNode<T> | SankeyGraph<any, any>;
+    flatData?: T[] | readonly T[] | HierarchyNode<T> | SankeyGraph<any, any>;
 
     /**
      * The x accessor. The key in each row of data that corresponds to the x-field. This can be a

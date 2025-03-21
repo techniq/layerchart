@@ -62,7 +62,7 @@ export type FieldAccessors<T> = {
 
 export type PaddingArray = [number, number] | number[] | undefined;
 
-export type DataType<T> = T[] | HierarchyNode<T> | SankeyGraph<any, any>;
+export type DataType<T> = T[] | HierarchyNode<T> | SankeyGraph<any, any> | readonly T[];
 
 export type Transition = (node: Element, params?: any) => TransitionConfig;
 export type TransitionParams<T extends Transition> = Parameters<T>[1];

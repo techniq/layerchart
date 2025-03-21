@@ -1145,7 +1145,7 @@
       {/snippet}
     </Chart>
   </div>
-</Preview> -->
+</Preview>
 
 <h2>Grouped, Stacked, or Both (transition)</h2>
 
