@@ -19,7 +19,8 @@
     x: number;
     y: number;
     data: any;
-    show(e: PointerEvent, tooltipData?: any): void;
+    payload: any;
+    show(e: PointerEvent, tooltipData?: any, payload?: any): void;
     hide(e?: PointerEvent): void;
     mode: TooltipMode;
   };
@@ -28,6 +29,7 @@
     x: 0,
     y: 0,
     data: null as any,
+    payload: [],
     show: () => {},
     hide: () => {},
     mode: 'manual',
@@ -149,6 +151,7 @@
     x: 0,
     y: 0,
     data: null,
+    payload: [],
     show: showTooltip,
     hide: hideTooltip,
     mode,
@@ -163,6 +166,9 @@
     },
     get data() {
       return tooltipContextProp!.data;
+    },
+    get payload() {
+      return tooltipContextProp!.payload;
     },
     show: showTooltip,
     hide: hideTooltip,
@@ -244,13 +250,7 @@
       return;
     }
 
-    const containerNode = (e.target as Element).closest('[data-lc-root-container]');
-    if (!containerNode) {
-      // ignore if not in container
-      // `localPoint` will throw an error if the container is not found
-      return;
-    }
-
+    const containerNode = (e.target as Element).closest('[data-lc-root-container]')!;
     const point = localPoint(e, containerNode);
 
     if (
@@ -339,9 +339,12 @@
         raise(e.target as Element);
       }
 
-      tooltipContextProp.x = point.x;
-      tooltipContextProp.y = point.y;
-      tooltipContextProp.data = tooltipData;
+      tooltipContextProp = {
+        ...tooltipContextProp,
+        x: point.x,
+        y: point.y,
+        data: tooltipData,
+      };
     } else {
       // Hide tooltip if unable to locate
       hideTooltip();
@@ -359,7 +362,10 @@
     // Additional hideDelay can be configured to extend this delay further
     hideTimeoutId = setTimeout(() => {
       if (!isHoveringTooltip) {
-        tooltipContextProp.data = null;
+        tooltipContextProp = {
+          ...tooltipContextProp,
+          data: null,
+        };
       }
     }, hideDelay);
   }

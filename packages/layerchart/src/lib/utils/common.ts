@@ -2,7 +2,6 @@ import type { Component, ComponentProps } from 'svelte';
 import { get } from 'lodash-es';
 
 import type Chart from '../components/Chart.svelte';
-import type LineChart from '../components/charts/LineChart.svelte';
 import type { SimplifiedChartProps } from 'layerchart/components/charts/types.js';
 
 export type Accessor<TData = any> =
@@ -37,6 +36,7 @@ export function chartDataArray<TData = any>(data: ComponentProps<Chart<TData>>['
   } else if ('nodes' in data) {
     return data.nodes;
   } else {
+    // @ts-expect-error - TODO can we refine this?
     return data.descendants();
   }
 }
@@ -65,4 +65,12 @@ export function findRelatedData(data: any[], original: any, accessor: Function) 
   return data.find((d) => {
     return accessor(d)?.valueOf() === accessor(original)?.valueOf();
   });
+}
+
+export function getTooltipName(
+  name: string | number | undefined | unknown,
+  accessor: Accessor<any>
+): string | undefined {
+  if (name) return `${name}`;
+  if (typeof accessor === 'string') return accessor;
 }
