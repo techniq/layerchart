@@ -21,7 +21,6 @@
 
     /**
      * Control the number of x-axis ticks
-     *
      */
     xTicks?: TicksConfig;
 

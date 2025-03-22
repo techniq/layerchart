@@ -147,6 +147,7 @@
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { createHighlightKey } from './utils.svelte.js';
   import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
+  import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
 
   let {
     data = [],
@@ -173,7 +174,7 @@
     renderContext = 'svg',
     profile = false,
     debug = false,
-    tooltip,
+    tooltip = true,
     children: childrenProp,
     aboveContext,
     belowContext,
@@ -223,6 +224,25 @@
       console.timeEnd('PieChart render');
     });
   }
+
+  setTooltipMetaContext({
+    type: 'pie',
+    get color() {
+      return c;
+    },
+    get value() {
+      return value;
+    },
+    get label() {
+      return label;
+    },
+    get key() {
+      return key;
+    },
+    get visibleSeries() {
+      return visibleSeries;
+    },
+  });
 </script>
 
 <Chart

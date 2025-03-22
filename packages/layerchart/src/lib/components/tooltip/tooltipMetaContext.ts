@@ -31,9 +31,10 @@ export type LineTooltipMetaContextValue = {
 export type PieTooltipMetaContextValue = {
   type: 'pie';
   visibleSeries: SeriesData<any, any>[];
-  labelAccessor: Accessor<any>;
-  keyAccessor: Accessor<any>;
-  valueAccessor: Accessor<any>;
+  key: Accessor<any>;
+  label: Accessor<any>;
+  value: Accessor<any>;
+  color: Accessor<any>;
 };
 
 export type ScatterTooltipMetaContextValue = {
@@ -57,6 +58,7 @@ export type TooltipPayload = {
   keyAccessor?: Accessor<any>;
   valueAccessor?: Accessor<any>;
   labelAccessor?: Accessor<any>;
+  colorAccessor?: Accessor<any>;
   chartType?: SimplifiedChartType;
   payload: any;
   rawSeriesData?: SeriesData<any, any>;
@@ -88,6 +90,7 @@ export function handleBarTooltipPayload({
 
     return {
       ...s.data,
+      chartType: 'bar',
       color,
       label,
       name,
@@ -122,6 +125,7 @@ export function handleAreaTooltipPayload({
     const color = s.color ?? ctx.cScale?.(ctx.c(data));
     return {
       ...s.data,
+      chartType: 'area',
       color,
       label,
       name,
@@ -153,6 +157,7 @@ export function handleLineTooltipPayload({
 
     return {
       ...s.data,
+      chartType: 'line',
       color,
       label,
       name,
@@ -173,8 +178,24 @@ export function handlePieTooltipPayload({
 }: BasePayloadHandlerProps & {
   metaCtx: PieTooltipMetaContextValue;
 }): TooltipPayload[] {
-  // TODO: Implement pie tooltip payload handling
-  return [{ payload: data, key: '' }];
+  const keyAccessor = accessor(metaCtx.key);
+  const labelAccessor = accessor(metaCtx.label);
+  const valueAccessor = accessor(metaCtx.value);
+  const colorAccessor = accessor(metaCtx.color);
+  return [
+    {
+      key: keyAccessor(data),
+      label: labelAccessor(data) || keyAccessor(data),
+      value: valueAccessor(data),
+      color: colorAccessor(data) ?? ctx.cScale?.(ctx.c(data)),
+      payload: data,
+      chartType: 'pie',
+      labelAccessor,
+      keyAccessor,
+      valueAccessor,
+      colorAccessor,
+    },
+  ];
 }
 
 export function handleScatterTooltipPayload({
