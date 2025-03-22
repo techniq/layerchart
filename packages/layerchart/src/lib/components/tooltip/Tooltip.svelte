@@ -79,18 +79,48 @@
     variant?: 'default' | 'invert' | 'none';
 
     /**
-     * Classes to apply to the tooltip
+     * Classes to apply to the various elements of the tooltip.
      *
      * @default {}
      */
     classes?: {
+      /**
+       * Classes to apply to the root tooltip element
+       */
       root?: string;
+      /**
+       * Classes to apply to the tooltip container element
+       */
       container?: string;
-      header?: string;
+      /**
+       * Classes to apply to the tooltip content element
+       */
       content?: string;
+      /**
+       * Classes to apply to the tooltip header element
+       */
+      header?: string;
     };
 
-    children?: Snippet<[{ data: any; payload: TooltipPayload[] }]>;
+    children?: Snippet<
+      [
+        {
+          /**
+           * The chart data that triggered the tooltip.
+           */
+          data: any;
+
+          /**
+           * An array of tooltip payloads, each containing data for a specific series,
+           * along with their own `payload` property that contains the same data as `data`.
+           *
+           * This is useful when working with the simplified charts, such as `AreaChart`, `BarChart`,
+           * `PieChart`, etc., where series construction is handled internally.
+           */
+          payload: TooltipPayload[];
+        },
+      ]
+    >;
 
     /**
      * A reference to the tooltip's outermost `<div>` tag.
@@ -104,8 +134,17 @@
      * by the Tooltip component
      */
     props?: {
+      /**
+       * Props to pass to the root tooltip element
+       */
       root?: HTMLAttributes<HTMLElement>;
+      /**
+       * Props to pass to the tooltip container element
+       */
       container?: HTMLAttributes<HTMLElement>;
+      /**
+       * Props to pass to the tooltip content element
+       */
       content?: HTMLAttributes<HTMLElement>;
     };
   };
