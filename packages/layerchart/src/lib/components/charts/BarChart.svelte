@@ -106,6 +106,7 @@
   import type { AnyScale } from '$lib/utils/scales.svelte.js';
   import { createHighlightKey } from './utils.svelte.js';
   import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
+  import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
 
   let {
     data = [],
@@ -217,8 +218,10 @@
       .filter((d) => d) as Array<TData & { stackData?: any }>
   );
 
-  const chartData = $derived.by(() => {
-    let _chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<TData>;
+  const chartData: Array<TData & { stackData?: any }> = $derived.by(() => {
+    let _chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<
+      TData & { stackData?: any }
+    >;
     if (stackSeries) {
       const seriesKeys = visibleSeries.map((s) => s.key);
 
@@ -323,6 +326,19 @@
       console.timeEnd('BarChart render');
     });
   }
+
+  setTooltipMetaContext({
+    type: 'bar',
+    get orientation() {
+      return orientation;
+    },
+    get stackSeries() {
+      return stackSeries;
+    },
+    get visibleSeries() {
+      return visibleSeries;
+    },
+  });
 </script>
 
 <Chart
@@ -340,8 +356,7 @@
   {x1Range}
   y={yProp ??
     (stackSeries
-      ? // @ts-expect-error - TODO: lets fix this somehow
-        (d) => visibleSeries.flatMap((s, i) => d.stackData[i])
+      ? (d) => visibleSeries.flatMap((s, i) => d.stackData[i])
       : visibleSeries.map((s) => s.value ?? s.key))}
   {yScale}
   {yBaseline}
@@ -364,7 +379,7 @@
   bind:tooltipContext
 >
   {#snippet children({ context, brushContext, geoContext, tooltipContext, transformContext })}
-    {@const slotProps = {
+    {@const snippetProps = {
       context,
       tooltipContext,
       brushContext,
@@ -378,14 +393,14 @@
       setHighlightKey: highlightKey.set,
     }}
     {#if childrenProp}
-      {@render childrenProp(slotProps)}
+      {@render childrenProp(snippetProps)}
     {:else}
       {@const Component = renderContext === 'canvas' ? Canvas : Svg}
-      {@render belowContext?.(slotProps)}
+      {@render belowContext?.(snippetProps)}
 
       <Component {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)} {debug}>
         {#if typeof grid === 'function'}
-          {@render grid(slotProps)}
+          {@render grid(snippetProps)}
         {:else if grid}
           <Grid
             x={!isVertical}
@@ -394,20 +409,20 @@
             {...props.grid}
           />
         {/if}
-        {@render belowMarks?.(slotProps)}
+        {@render belowMarks?.(snippetProps)}
 
         {#if typeof marks === 'function'}
-          {@render marks(slotProps)}
+          {@render marks(snippetProps)}
         {:else}
           {#each visibleSeries as s, i (s.key)}
             <Bars {...getBarsProps(s, i)} />
           {/each}
         {/if}
 
-        {@render aboveMarks?.(slotProps)}
+        {@render aboveMarks?.(snippetProps)}
 
         {#if typeof axis === 'function'}
-          {@render axis(slotProps)}
+          {@render axis(snippetProps)}
         {:else if axis}
           {#if axis !== 'x'}
             <Axis
@@ -450,7 +465,7 @@
         {/if}
 
         {#if typeof highlight === 'function'}
-          {@render highlight(slotProps)}
+          {@render highlight(snippetProps)}
         {:else}
           <Highlight area {...props.highlight} />
         {/if}
@@ -462,10 +477,10 @@
         {/if}
       </Component>
 
-      {@render aboveContext?.(slotProps)}
+      {@render aboveContext?.(snippetProps)}
 
       {#if typeof legend === 'function'}
-        {@render legend(slotProps)}
+        {@render legend(snippetProps)}
       {:else if legend}
         <Legend
           scale={isDefaultSeries
@@ -494,37 +509,28 @@
       {/if}
 
       {#if typeof tooltip === 'function'}
-        {@render tooltip(slotProps)}
+        {@render tooltip(snippetProps)}
       {:else}
         <Tooltip.Root {...props.tooltip?.root}>
-          {#snippet children({ data })}
-            <Tooltip.Header
-              value={isVertical ? context.x(data) : context.y(data)}
-              {format}
-              {...props.tooltip?.header}
-            />
+          {#snippet children({ data, payload })}
+            <Tooltip.Header value={payload[0].label} {format} {...props.tooltip?.header} />
 
             <Tooltip.List {...props.tooltip?.list}>
               <!-- Reverse series order so tooltip items match stacks -->
-              {@const seriesItems = stackSeries ? [...visibleSeries].reverse() : visibleSeries}
-              {#each seriesItems as s}
-                {@const seriesTooltipData = s.data
-                  ? findRelatedData(s.data, data, context.x)
-                  : data}
-                {@const valueAccessor = accessor(s.value ?? (s.data ? context.y : s.key))}
+              {#each payload as p, i (p.key ?? i)}
                 <Tooltip.Item
-                  label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
-                  value={seriesTooltipData ? valueAccessor(seriesTooltipData) : null}
-                  color={s.color ?? context.cScale?.(context.c(data))}
+                  label={p.name}
+                  value={p.value}
+                  color={p.color}
                   {format}
                   valueAlign="right"
-                  onpointerenter={() => (highlightKey.current = s.key)}
+                  onpointerenter={() => (highlightKey.current = p.key)}
                   onpointerleave={() => (highlightKey.current = null)}
                   {...props.tooltip?.item}
                 />
               {/each}
 
-              {#if (stackSeries || groupSeries) && visibleSeries.length > 1 && !props.tooltip?.hideTotal}
+              {#if (stackSeries || groupSeries) && payload.length > 1 && !props.tooltip?.hideTotal}
                 <Tooltip.Separator {...props.tooltip?.separator} />
 
                 <Tooltip.Item

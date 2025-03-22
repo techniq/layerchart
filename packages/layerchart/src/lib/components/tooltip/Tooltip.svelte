@@ -90,7 +90,7 @@
       content?: string;
     };
 
-    children?: Snippet<[{ data: any }]>;
+    children?: Snippet<[{ data: any; payload: TooltipPayload[] }]>;
 
     /**
      * A reference to the tooltip's outermost `<div>` tag.
@@ -98,20 +98,6 @@
      * @bindable
      */
     rootRef?: HTMLElement;
-
-    /**
-     * A reference to the tooltip's container `<div>` tag.
-     *
-     * @bindable
-     */
-    containerRef?: HTMLElement;
-
-    /**
-     * A reference to the tooltip's content `<div>` tag.
-     *
-     * @bindable
-     */
-    contentRef?: HTMLElement;
 
     /**
      * Props to pass to the underlying elements rendered
@@ -140,6 +126,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
   import { createDataAttr } from '$lib/utils/attributes.js';
+  import type { TooltipPayload } from './tooltipMetaContext.js';
 
   let {
     anchor = 'top-left',
@@ -153,8 +140,6 @@
     y = 'pointer',
     yOffset = y === 'pointer' ? 10 : 0,
     children,
-    containerRef = $bindable(),
-    contentRef = $bindable(),
     rootRef = $bindable(),
     props = {
       root: {},
@@ -357,16 +342,10 @@
         props.container?.class,
         className
       )}
-      bind:this={containerRef}
     >
       {#if children}
-        <div
-          {...createDataAttr('tooltip-content')}
-          {...props.content}
-          class={cls(classes.content)}
-          bind:this={contentRef}
-        >
-          {@render children({ data: tooltipCtx.data })}
+        <div {...createDataAttr('tooltip-content')} {...props.content} class={cls(classes.content)}>
+          {@render children({ data: tooltipCtx.data, payload: tooltipCtx.payload })}
         </div>
       {/if}
     </div>

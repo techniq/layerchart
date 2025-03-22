@@ -19,7 +19,7 @@
     x: number;
     y: number;
     data: any;
-    payload: any;
+    payload: any[];
     show(e: PointerEvent, tooltipData?: any, payload?: any): void;
     hide(e?: PointerEvent): void;
     mode: TooltipMode;
@@ -130,6 +130,7 @@
   import { getChartContext } from '../Chart.svelte';
   import type { Snippet } from 'svelte';
   import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { getTooltipMetaContext, getTooltipPayload } from './tooltipMetaContext.js';
 
   const ctx = getChartContext<any>();
 
@@ -156,6 +157,8 @@
     hide: hideTooltip,
     mode,
   };
+
+  const metaCtx = getTooltipMetaContext();
 
   const tooltipContext = {
     get x() {
@@ -339,11 +342,14 @@
         raise(e.target as Element);
       }
 
+      const payload = getTooltipPayload({ ctx, tooltipData, metaCtx });
+
       tooltipContextProp = {
         ...tooltipContextProp,
         x: point.x,
         y: point.y,
         data: tooltipData,
+        payload,
       };
     } else {
       // Hide tooltip if unable to locate
@@ -365,6 +371,7 @@
         tooltipContextProp = {
           ...tooltipContextProp,
           data: null,
+          payload: [],
         };
       }
     }, hideDelay);

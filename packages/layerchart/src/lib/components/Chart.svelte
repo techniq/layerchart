@@ -76,7 +76,7 @@
     | 'y1Range'
   >;
 
-  export type ChartContext<T> = {
+  export type ChartContextValue<T = any> = {
     activeGetters: Record<AxisKey, (d: T) => any>;
     width: number;
     height: number;
@@ -126,7 +126,7 @@
     cRange: readonly string[] | string[] | undefined;
     x1Range: XRangeWithScale | undefined;
     y1Range: YRangeWithScale | undefined;
-    custom: Record<string, any>;
+    meta: Record<string, any>;
     xScale: AnyScale;
     yScale: AnyScale;
     zScale: AnyScale;
@@ -144,13 +144,28 @@
     radial: boolean;
   };
 
-  const _ChartContext = new Context<ChartContext<any>>('ChartContext');
+  export type LayerChartInternalMeta = {
+    /**
+     * The current chart type.
+     * The default is `'default'` which is any chart being composed
+     * that isn't a "simplified chart".
+     */
+    type:
+      | 'default'
+      | 'simplified-area'
+      | 'simplified-bar'
+      | 'simplified-line'
+      | 'simplified-pie'
+      | 'simplified-scatter';
+  };
 
-  export function getChartContext<T>(): ChartContext<T> {
-    return _ChartContext.getOr({} as ChartContext<T>);
+  const _ChartContext = new Context<ChartContextValue<any>>('ChartContext');
+
+  export function getChartContext<T>(): ChartContextValue<T> {
+    return _ChartContext.getOr({} as ChartContextValue<T>);
   }
 
-  export function setChartContext<T>(context: ChartContext<T>): ChartContext<T> {
+  export function setChartContext<T>(context: ChartContextValue<T>): ChartContextValue<T> {
     return _ChartContext.set(context);
   }
 
@@ -595,7 +610,7 @@
      * Any extra configuration values you want available on the Chart context.
      * This could be useful for color lookups or additional constants.
      */
-    custom?: Record<string, any>;
+    meta?: Record<string, any>;
 
     /**
      * Enable debug printing to the console.
@@ -642,7 +657,7 @@
     children?: Snippet<
       [
         {
-          context: ChartContext<T>;
+          context: ChartContextValue<T>;
           transformContext: TransformContextValue;
           geoContext: GeoContextValue;
           tooltipContext: TooltipContextValue;
@@ -708,6 +723,8 @@
     ondragstart?: ComponentProps<typeof TransformContext>['ondragstart'];
     ondragend?: ComponentProps<typeof TransformContext>['ondragend'];
     onTransform?: ComponentProps<typeof TransformContext>['onTransform'];
+
+    _internal?: LayerChartInternalMeta;
   };
 </script>
 
@@ -760,7 +777,8 @@
     rRange: rRangeProp,
     xBaseline = null,
     yBaseline = null,
-    custom = {},
+    meta = {},
+    _internal = { type: 'default' },
     children: _children,
     radial = false,
     xRange: _xRangeProp,
@@ -1067,7 +1085,7 @@
     y1Range: y1RangeProp,
   });
 
-  const context: ChartContext<TData> = {
+  const context: ChartContextValue<TData> = {
     get activeGetters() {
       return activeGetters;
     },
@@ -1215,8 +1233,11 @@
     get y1Range() {
       return y1RangeProp;
     },
-    get custom() {
-      return custom;
+    get meta() {
+      return meta;
+    },
+    set meta(v: Record<string, any>) {
+      meta = v;
     },
     get xScale() {
       return xScale;
@@ -1356,9 +1377,9 @@
       >
         {#snippet children({ transformContext })}
           <!-- svelte-ignore ownership_invalid_binding -->
-          <GeoContext {...geo} bind:geo={geoContext}>
+          <GeoContext {...geo} bind:geoContext>
             {#snippet children({ geoContext })}
-              <BrushContext {...brushProps} bind:brush={brushContext}>
+              <BrushContext {...brushProps} bind:brushContext>
                 {#snippet children({ brushContext })}
                   <TooltipContext {...tooltipProps} bind:tooltipContext>
                     {#snippet children({ tooltipContext })}

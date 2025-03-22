@@ -123,7 +123,7 @@
      *
      * @bindable
      */
-    brush?: BrushContextValue;
+    brushContext?: BrushContextValue;
 
     children?: Snippet<[{ brushContext: BrushContextValue }]>;
   };
@@ -145,7 +145,7 @@
   const ctx = getChartContext();
 
   let {
-    brush = $bindable(),
+    brushContext: brushContextProp = $bindable(),
     axis = 'x',
     handleSize = 5,
     resetOnEnd = false,
@@ -182,28 +182,6 @@
     yDomain = untrack(() => ctx.yScale.domain());
   });
 
-  brush = {
-    get xDomain() {
-      return xDomain!;
-    },
-    set xDomain(v: DomainType) {
-      xDomain = v;
-    },
-    get yDomain() {
-      return yDomain!;
-    },
-    set yDomain(v: DomainType) {
-      yDomain = v;
-    },
-    isActive: false,
-    get range() {
-      return _range;
-    },
-    get handleSize() {
-      return handleSize;
-    },
-  };
-
   //   const xDomain = $derived(xDomainProp ?? ctx.xScale.domain());
   //   const yDomain = $derived(yDomainProp ?? ctx.yScale.domain());
 
@@ -225,38 +203,36 @@
     height: axis === 'both' || axis === 'y' ? bottom - top : ctx.height,
   });
 
+  let isActive = $state(false);
+
   const brushContext = {
     get xDomain() {
-      return brush.xDomain;
+      return xDomain!;
     },
     set xDomain(v: DomainType) {
-      brush.xDomain = v;
+      xDomain = v;
     },
     get yDomain() {
-      return brush.yDomain;
+      return yDomain!;
     },
     set yDomain(v: DomainType) {
-      brush.yDomain = v;
+      yDomain = v;
     },
     get isActive() {
-      return brush.isActive;
+      return isActive;
     },
     set isActive(v: boolean) {
-      brush.isActive = v;
+      isActive = v;
     },
     get range() {
       return _range;
     },
-    set range(v: BrushRange) {
-      brush.range = v;
-    },
     get handleSize() {
-      return brush.handleSize;
-    },
-    set handleSize(v: number) {
-      brush.handleSize = v;
+      return handleSize;
     },
   };
+
+  brushContextProp = brushContext;
 
   setBrushContext(brushContext);
 
@@ -367,7 +343,7 @@
 
   const createRange = handler((start, value) => {
     logger.debug('createRange');
-    brush.isActive = true;
+    brushContext.isActive = true;
 
     xDomain = [
       // @ts-expect-error
@@ -468,7 +444,7 @@
 
   function reset() {
     logger.debug('reset');
-    brush!.isActive = false;
+    brushContext.isActive = false;
 
     xDomain = originalXDomain ?? [];
     yDomain = originalYDomain ?? [];
@@ -495,7 +471,7 @@
 
       const result =
         axis === 'x' ? isXAxisActive : axis == 'y' ? isYAxisActive : isXAxisActive || isYAxisActive;
-      brush.isActive = result;
+      brushContext.isActive = result;
     }
   });
 
@@ -531,7 +507,7 @@
       {@render children?.({ brushContext })}
     </div>
 
-    {#if brush.isActive}
+    {#if brushContext.isActive}
       <div
         {...range}
         style:left="{_range.x}px"

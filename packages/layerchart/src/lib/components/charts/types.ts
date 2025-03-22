@@ -14,7 +14,7 @@ import type TooltipList from '../tooltip/TooltipList.svelte';
 import type TooltipItem from '../tooltip/TooltipItem.svelte';
 import type TooltipSeparator from '../tooltip/TooltipSeparator.svelte';
 import type { BrushContextValue } from '../BrushContext.svelte';
-import type { ChartContext, ChartPropsWithoutHTML } from '../Chart.svelte';
+import type { ChartContextValue, ChartPropsWithoutHTML } from '../Chart.svelte';
 import type { GeoContextValue } from '../GeoContext.svelte';
 import type { TransformContextValue } from '../TransformContext.svelte';
 import type Grid from '../Grid.svelte';
@@ -51,7 +51,7 @@ export type SimplifiedChartSnippetProps<TData, TComponent extends Component, TSn
   /**
    * The chart context
    */
-  context: ChartContext<TData>;
+  context: ChartContextValue<TData>;
 
   /**
    * The geo context associated with the chart.

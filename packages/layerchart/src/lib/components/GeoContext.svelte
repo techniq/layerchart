@@ -59,7 +59,7 @@
      *
      * @bindable
      */
-    geo?: GeoContextValue;
+    geoContext?: GeoContextValue;
 
     children: Snippet<[{ geoContext: GeoContextValue }]>;
   };
@@ -67,7 +67,7 @@
 
 <script lang="ts">
   let {
-    projection,
+    projection: projectionProp,
     fitGeojson,
     fixedAspectRatio,
     clipAngle,
@@ -79,35 +79,35 @@
     applyTransform = [],
     reflectX,
     reflectY,
-    geo = $bindable() as GeoContextValue,
+    geoContext: geoContextProp = $bindable() as GeoContextValue,
     children,
   }: GeoContextProps = $props();
 
   const ctx = getChartContext();
   const transformCtx = getTransformContext();
 
-  if (geo === undefined) {
-    geo = {
-      projection: undefined,
-    };
-  }
+  let projection = $state<GeoProjection>();
 
-  const geoContext = setGeoContext({
+  const geoContext = {
     get projection() {
-      return geo.projection;
+      return projection;
     },
     set projection(v: GeoProjection | undefined) {
-      geo.projection = v;
+      projection = v;
     },
-  });
+  };
+
+  geoContextProp = geoContext;
+
+  setGeoContext(geoContext);
 
   const fitSizeRange = $derived(
     fixedAspectRatio ? [100, 100 / fixedAspectRatio] : [ctx.width, ctx.height]
   ) as [number, number];
 
   $effect.pre(() => {
-    if (!projection) return;
-    const _projection = projection();
+    if (!projectionProp) return;
+    const _projection = projectionProp();
 
     if (fitGeojson && 'fitSize' in _projection) {
       _projection.fitSize(fitSizeRange, fitGeojson);

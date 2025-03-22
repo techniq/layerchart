@@ -128,7 +128,7 @@
 </script>
 
 <script lang="ts" generics="TData">
-  import { onMount, type ComponentProps } from 'svelte';
+  import { onMount } from 'svelte';
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
@@ -250,9 +250,10 @@
 >
   {#snippet children({ brushContext, context, geoContext, tooltipContext, transformContext })}
     {@const snippetProps = {
-      label,
-      key,
-      value,
+      label: labelAccessor,
+      key: keyAccessor,
+      value: valueAccessor,
+      color: cAccessor,
       context,
       tooltipContext,
       brushContext,
