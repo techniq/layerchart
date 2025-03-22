@@ -184,15 +184,24 @@ export function handleScatterTooltipPayload({
 }: BasePayloadHandlerProps & {
   metaCtx: ScatterTooltipMetaContextValue;
 }): TooltipPayload[] {
+  // TODO: implement scatter tooltip payload handling
   return [{ payload: data, key: '' }];
 }
 
 const _TooltipMetaContext = new Context<TooltipMetaContextValue | null>('TooltipMetaContext');
 
+/**
+ * Retrieves the current tooltip meta context value, or null if not set.
+ */
 export function getTooltipMetaContext() {
   return _TooltipMetaContext.getOr(null);
 }
 
+/**
+ * Sets the tooltip meta context value, used to provide additional payload data to the tooltip.
+ * This is typically set by the various simplified chart components, such as BarChart, AreaChart,
+ * etc.
+ */
 export function setTooltipMetaContext(v: TooltipMetaContextValue | null) {
   return _TooltipMetaContext.set(v);
 }
