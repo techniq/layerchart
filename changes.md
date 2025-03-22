@@ -104,3 +104,53 @@ const tooltipCtx = getTooltipContext(); // tooltipCtx.data
 const brushCtx = getBrushContext(); // brushCtx.range
 const geoCtx = getGeoContext(); // geoCtx.projection
 ```
+
+## Tooltip Payloads for Simplified Charts
+
+### The Problem
+
+While the existing tooltip data exposed via `data` from the `<Tooltip.Root>` children snippet is great because
+it gives you the minimal information you need (just the data for the hovered item), it can be a bit cumbersome when you want
+to display series data in the tooltip.
+
+This is handled out of the box with the various simplified charts, such as `<BarChart>`, `<AreaChart>`, etc. However, if you opt-out
+of the tooltips provided by the simplified charts, you're now stuck reinventing the wheel.
+
+### The Solution
+
+Both the simplified chart implementation as well as users' custom tooltip implementations can reap the same benefits from the simplified chart.
+
+A new `TooltipPayload` type has been added to the project that provides a more complete payload for tooltips when using the simplified charts.
+
+This is subject to adjustment as feedback is received, but the current payload looks like this:
+
+```ts
+export type TooltipPayload = {
+  color?: string;
+  name?: string;
+  key: string;
+  label?: string;
+  value?: any;
+  keyAccessor?: Accessor<any>;
+  valueAccessor?: Accessor<any>;
+  labelAccessor?: Accessor<any>;
+  chartType?: SimplifiedChartType;
+  // the original data point that was hovered over
+  // exactly the same as the data prop passed to the tooltip
+  payload: any;
+  rawSeriesData?: SeriesData<any, any>;
+  formatter?: FormatType;
+};
+```
+
+This payload is passed to the `<Tooltip.Root>` `children` snippet via the `payload` prop alongside the existing `data` prop.
+
+This is accomplished by a context provided by the various simplified charts and then the `<Tooltip.Context>` handles building the payload based on that context.
+
+When not used with a simplified chart, the `payload` prop will be an array with a single object that contains the `data` via the object's `payload` property:
+
+```ts
+console.log(payload); // [{ payload: { ...data }}]
+```
+
+When used with one of the simplified charts, it will have more information populated.

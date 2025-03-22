@@ -19,7 +19,7 @@
     x: number;
     y: number;
     data: any;
-    payload: any[];
+    payload: TooltipPayload[];
     show(e: PointerEvent, tooltipData?: any, payload?: any): void;
     hide(e?: PointerEvent): void;
     mode: TooltipMode;
@@ -130,7 +130,11 @@
   import { getChartContext } from '../Chart.svelte';
   import type { Snippet } from 'svelte';
   import { createDataAttr } from '$lib/utils/attributes.js';
-  import { getTooltipMetaContext, getTooltipPayload } from './tooltipMetaContext.js';
+  import {
+    getTooltipMetaContext,
+    getTooltipPayload,
+    type TooltipPayload,
+  } from './tooltipMetaContext.js';
 
   const ctx = getChartContext<any>();
 
