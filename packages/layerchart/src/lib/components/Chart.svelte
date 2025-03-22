@@ -82,6 +82,7 @@
     height: number;
     percentRange: boolean;
     aspectRatio: number;
+    containerRef: HTMLElement | undefined;
     containerWidth: number;
     containerHeight: number;
     config: PreservedChartConfig<T>;
@@ -245,7 +246,7 @@
     /**
      * A bindable reference to the root container element.
      */
-    ref?: HTMLElement | null;
+    ref?: HTMLElement;
 
     /**
      * If `data` is not a flat array of objects and you want to use any of the scales, set a flat
@@ -738,7 +739,7 @@
     height: heightProp,
     containerWidth: containerWidthProp,
     containerHeight: containerHeightProp,
-    ref = $bindable(null),
+    ref = $bindable(),
     x: xProp,
     y: yProp,
     z: zProp,
@@ -1283,6 +1284,9 @@
     },
     get radial() {
       return radial;
+    },
+    get containerRef() {
+      return ref;
     },
   };
 

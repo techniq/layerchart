@@ -73,7 +73,14 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} />
+    <BarChart
+      props={{ tooltip: { root: { contained: 'window' } } }}
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      {renderContext}
+      {debug}
+    />
   </div>
 </Preview>
 
