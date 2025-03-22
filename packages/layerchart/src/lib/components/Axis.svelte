@@ -50,6 +50,13 @@
     tickLength?: number;
 
     /**
+     * Whether to render tick marks.
+     *
+     * @default true
+     */
+    tickMarks?: boolean;
+
+    /**
      * Format tick labels
      */
     format?: FormatType;
@@ -128,6 +135,7 @@
     grid = false,
     ticks,
     tickLength = 4,
+    tickMarks = true,
     format,
     tickLabelProps,
     spring,
@@ -407,40 +415,42 @@
         />
       {/if}
 
-      <!-- Tick marks -->
-      {#if orientation === 'horizontal'}
-        <Line
-          x1={tickCoords.x}
-          y1={tickCoords.y}
-          x2={tickCoords.x}
-          y2={tickCoords.y + (placement === 'top' ? -tickLength : tickLength)}
-          {tweened}
-          {spring}
-          {...tickAttr}
-          class={cls('stroke-surface-content/50', classes.tick)}
-        />
-      {:else if orientation === 'vertical'}
-        <Line
-          x1={tickCoords.x}
-          y1={tickCoords.y}
-          x2={tickCoords.x + (placement === 'left' ? -tickLength : tickLength)}
-          y2={tickCoords.y}
-          {tweened}
-          {spring}
-          {...tickAttr}
-          class={cls('stroke-surface-content/50', classes.tick)}
-        />
-      {:else if orientation === 'angle'}
-        <Line
-          x1={radialTickCoordsX}
-          y1={radialTickCoordsY}
-          x2={radialTickMarkCoordsX}
-          y2={radialTickMarkCoordsY}
-          {tweened}
-          {spring}
-          {...tickAttr}
-          class={cls('stroke-surface-content/50', classes.tick)}
-        />
+      {#if tickMarks}
+        <!-- Tick marks -->
+        {#if orientation === 'horizontal'}
+          <Line
+            x1={tickCoords.x}
+            y1={tickCoords.y}
+            x2={tickCoords.x}
+            y2={tickCoords.y + (placement === 'top' ? -tickLength : tickLength)}
+            {tweened}
+            {spring}
+            {...tickAttr}
+            class={cls('stroke-surface-content/50', classes.tick)}
+          />
+        {:else if orientation === 'vertical'}
+          <Line
+            x1={tickCoords.x}
+            y1={tickCoords.y}
+            x2={tickCoords.x + (placement === 'left' ? -tickLength : tickLength)}
+            y2={tickCoords.y}
+            {tweened}
+            {spring}
+            {...tickAttr}
+            class={cls('stroke-surface-content/50', classes.tick)}
+          />
+        {:else if orientation === 'angle'}
+          <Line
+            x1={radialTickCoordsX}
+            y1={radialTickCoordsY}
+            x2={radialTickMarkCoordsX}
+            y2={radialTickMarkCoordsY}
+            {tweened}
+            {spring}
+            {...tickAttr}
+            class={cls('stroke-surface-content/50', classes.tick)}
+          />
+        {/if}
       {/if}
       <!-- TODO: Add tick marks for radial (angle)? -->
 

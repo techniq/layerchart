@@ -58,8 +58,6 @@
   import { interpolatePath } from 'd3-interpolate-path';
   import { merge } from 'lodash-es';
 
-  import { cls } from '@layerstack/tailwind';
-
   import { getRenderContext } from './Chart.svelte';
   import Spline from './Spline.svelte';
   import { isScaleBand } from '../utils/scales.svelte.js';
