@@ -1,10 +1,10 @@
 // Additional meta data that can be set by the various simplified chart components
 // to provide additional payload data to the tooltip for ease of composition.
 
-import { accessor, findRelatedData, type Accessor } from 'layerchart/utils/common.js';
+import { accessor, findRelatedData, type Accessor } from '$lib/utils/common.js';
 import type { SeriesData } from '../charts/index.js';
 import type { ChartContextValue } from '../Chart.svelte';
-import { asAny } from 'layerchart/utils/types.js';
+import { asAny } from '$lib/utils/types.js';
 import { format, type FormatType } from '@layerstack/utils';
 import { Context } from 'runed';
 

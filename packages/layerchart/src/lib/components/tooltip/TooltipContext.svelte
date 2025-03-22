@@ -129,7 +129,7 @@
   import { raise } from '$lib/utils/chart.js';
   import { getChartContext } from '../Chart.svelte';
   import type { Snippet } from 'svelte';
-  import { createDataAttr } from 'layerchart/utils/attributes.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
   import { getTooltipMetaContext, getTooltipPayload } from './tooltipMetaContext.js';
 
   const ctx = getChartContext<any>();
