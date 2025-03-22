@@ -146,7 +146,7 @@ export function handleLineTooltipPayload({
   return metaCtx.visibleSeries.map((s) => {
     const seriesTooltipData = s.data ? findRelatedData(s.data, data, ctx.x) : data;
     const label = ctx.x(data);
-    const valueAccessor = accessor(s.value) ?? (s.data ? asAny(ctx.y) : s.key);
+    const valueAccessor = accessor(s.value ?? (s.data ? asAny(ctx.y) : s.key));
     const name = s.label ?? (s.key !== 'default' ? s.key : 'value');
     const value = seriesTooltipData ? valueAccessor(seriesTooltipData) : undefined;
     const color = s.color ?? ctx.cScale?.(ctx.c(data));

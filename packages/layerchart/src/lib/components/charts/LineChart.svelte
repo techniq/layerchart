@@ -78,6 +78,7 @@
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { createHighlightKey } from './utils.svelte.js';
   import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
+  import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
 
   let {
     data = [],
@@ -204,6 +205,13 @@
       console.timeEnd('LineChart render');
     });
   }
+
+  setTooltipMetaContext({
+    type: 'line',
+    get visibleSeries() {
+      return visibleSeries;
+    },
+  });
 </script>
 
 <Chart
@@ -399,21 +407,16 @@
         {@render tooltip(snippetProps)}
       {:else}
         <Tooltip.Root {...props.tooltip?.root}>
-          {#snippet children({ data })}
-            <Tooltip.Header value={context.x(data)} {format} {...props.tooltip?.header} />
+          {#snippet children({ payload })}
+            <Tooltip.Header value={payload[0].label} {format} {...props.tooltip?.header} />
             <Tooltip.List {...props.tooltip?.list}>
-              {#each visibleSeries as s}
-                {@const seriesTooltipData = s.data
-                  ? findRelatedData(s.data, data, context.x)
-                  : data}
-                {@const valueAccessor = accessor(s.value ?? (s.data ? asAny(context.y) : s.key))}
-
+              {#each payload as p, i (i)}
                 <Tooltip.Item
-                  label={s.label ?? (s.key !== 'default' ? s.key : 'value')}
-                  value={seriesTooltipData ? valueAccessor(seriesTooltipData) : null}
-                  color={s.color}
+                  label={p.name}
+                  value={p.value}
+                  color={p.color}
                   {format}
-                  onpointerenter={() => (highlightKey.current = s.key)}
+                  onpointerenter={() => (highlightKey.current = p.key)}
                   onpointerleave={() => (highlightKey.current = null)}
                   {...props.tooltip?.item}
                 />

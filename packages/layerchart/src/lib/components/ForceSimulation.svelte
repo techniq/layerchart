@@ -255,10 +255,6 @@
     previousForces = forces;
   }
 
-  $effect(() => {
-    console.log(links);
-  });
-
   function updateLinkPositions() {
     // Keeping the link positions in sync with the simulation
     // so we don't need to recalculate _all_ link positions on each tick

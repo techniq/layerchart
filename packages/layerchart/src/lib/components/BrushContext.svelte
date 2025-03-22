@@ -474,10 +474,6 @@
       brushContext.isActive = result;
     }
   });
-
-  $effect(() => {
-    console.log(rootEl);
-  });
 </script>
 
 {#if disabled}
