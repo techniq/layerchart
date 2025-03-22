@@ -1,32 +1,50 @@
-<script lang="ts">
-  import { geoGraticule } from 'd3-geo';
+<script lang="ts" module>
+  import type { Without } from '$lib/utils/types.js';
   import type { ComponentProps } from 'svelte';
+  import GeoPath, { type GeoPathProps } from './GeoPath.svelte';
 
-  import GeoPath from './GeoPath.svelte';
+  export type GraticulePropsWithoutHTML = {
+    lines?: Partial<ComponentProps<typeof GeoPath>> | boolean | undefined;
+    outline?: Partial<ComponentProps<typeof GeoPath>> | boolean | undefined;
+    step?: [number, number];
+  };
 
-  // TODO: Support full api (stepMinor/Major, extent[Minor/Major], etc
-  export let lines: Partial<ComponentProps<GeoPath>> | boolean | undefined = undefined;
-  export let outline: Partial<ComponentProps<GeoPath>> | boolean | undefined = undefined;
-  export let step: [number, number] = [10, 10];
-
-  $: graticule = geoGraticule();
-
-  $: graticule.step(step);
+  export type GraticuleProps = GraticulePropsWithoutHTML &
+    Without<GeoPathProps, Omit<GraticulePropsWithoutHTML, 'ref'>>;
 </script>
 
-<g class="graticule">
+<script lang="ts">
+  import { geoGraticule } from 'd3-geo';
+  import { createDataAttr } from '$lib/utils/attributes.js';
+
+  let { lines, outline, step = [10, 10], ...restProps }: GraticuleProps = $props();
+
+  const graticule = geoGraticule();
+
+  $effect(() => {
+    graticule.step(step);
+  });
+
+  const pathAttr = createDataAttr('graticule-path');
+</script>
+
+<g {...createDataAttr('graticule-root')}>
   <!-- TODO: Any reason to still render the single `MultiLineString` path if using `lines` and/or `outline` -->
   {#if !lines && !outline}
-    <GeoPath geojson={graticule()} {...$$restProps} />
+    <GeoPath {...pathAttr} geojson={graticule()} {...restProps} />
   {/if}
 
   {#if lines}
     {#each graticule.lines() as line}
-      <GeoPath geojson={line} {...typeof lines === 'object' ? lines : null} />
+      <GeoPath {...pathAttr} geojson={line} {...typeof lines === 'object' ? lines : null} />
     {/each}
   {/if}
 
   {#if outline}
-    <GeoPath geojson={graticule.outline()} {...typeof outline === 'object' ? outline : null} />
+    <GeoPath
+      {...pathAttr}
+      geojson={graticule.outline()}
+      {...typeof outline === 'object' ? outline : null}
+    />
   {/if}
 </g>

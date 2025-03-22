@@ -9,73 +9,78 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
-  const { nodes, links } = data.miserables;
+  const nodes = $derived(data.miserables.nodes);
+  const links = $derived(data.miserables.links);
 
   const colorScale = scaleOrdinal(schemeCategory10);
 
-  let isStopped: boolean = false;
-  let isStatic: boolean = false;
+  let isStopped = $state(false);
+  let isStatic = $state(false);
 
-  let alpha = 1;
+  let alpha = $state(1);
 
-  let alphaTarget = 0;
-  let running = false;
+  let alphaTarget = $state(0);
+  let running = $state(false);
 
-  let nodeRadius = 3;
-  let nodeStrokeWidth = 0;
-  let linkWidth = 1;
-  let linkOpacity = 0.5;
+  let nodeRadius = $state(3);
+  let nodeStrokeWidth = $state(0);
+  let linkWidth = $state(1);
+  let linkOpacity = $state(0.5);
 
-  let hasLinkForce = true;
-  let hasChargeForce = true;
-  let hasCollideForce = true;
-  let hasCenterForce = true;
-  $: {
+  let hasLinkForce = $state(true);
+  let hasChargeForce = $state(true);
+  let hasCollideForce = $state(true);
+  let hasCenterForce = $state(true);
+
+  $effect(() => {
     reheatSimulation({
       hasLinkForce,
       hasChargeForce,
       hasCollideForce,
       hasCenterForce,
     });
-  }
+  });
 
   // @ts-expect-error
-  const linkForce = forceLink(links).id((d) => d.id);
+  const linkForce = $derived(forceLink(links).id((d) => d.id));
   const chargeForce = forceManyBody();
   const collideForce = forceCollide();
   const centerForce = forceCenter(0, 0);
 
-  let linkDistance = 30;
-  $: {
+  let linkDistance = $state(30);
+
+  $effect(() => {
     reheatSimulation();
     linkForce.distance(linkDistance);
-  }
+  });
 
-  let chargeDistanceMin = 1;
-  let chargeDistanceMax = 1000;
-  let chargeStrength = -30;
-  $: {
+  let chargeDistanceMin = $state(1);
+  let chargeDistanceMax = $state(1000);
+  let chargeStrength = $state(-30);
+  $effect(() => {
     reheatSimulation();
     chargeForce
       .distanceMin(chargeDistanceMin)
       .distanceMax(chargeDistanceMax)
       .strength(chargeStrength);
-  }
+  });
 
-  let collideRadius = 3;
-  let collideStrength = 1;
-  $: {
+  let collideRadius = $state(3);
+  let collideStrength = $state(1);
+
+  $effect(() => {
     reheatSimulation();
     collideForce.radius(collideRadius).strength(collideStrength);
-  }
+  });
 
-  let centerStrength = 1.0;
-  $: {
+  let centerStrength = $state(1.0);
+
+  $effect(() => {
     reheatSimulation();
     centerForce.strength(centerStrength);
-  }
+  });
 
   function handleStart() {
     running = true;
@@ -245,54 +250,59 @@
 </div>
 <Preview data={data.miserables}>
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
-    <Chart data={nodes} let:width let:height let:tooltip>
-      <Svg>
-        <ForceSimulation
-          forces={{
-            ...(hasLinkForce && { link: linkForce }),
-            ...(hasChargeForce && { charge: chargeForce }),
-            ...(hasCollideForce && { collide: collideForce }),
-            ...(hasCenterForce && { center: centerForce.x(width / 2).y(height / 2) }),
-          }}
-          bind:alpha
-          bind:alphaTarget
-          bind:stopped={isStopped}
-          bind:static={isStatic}
-          onstart={handleStart}
-          ontick={handleTick}
-          onend={handleEnd}
-          let:nodes
-        >
-          {#key nodes}
-            {#each links as link}
-              <Link
-                data={link}
-                class="stroke-surface-content"
-                curve={curveLinear}
-                stroke-width={linkWidth}
-                opacity={linkOpacity}
-              />
-            {/each}
-          {/key}
+    <Chart data={nodes}>
+      {#snippet children({ context, tooltipContext })}
+        <Svg>
+          <ForceSimulation
+            forces={{
+              ...(hasLinkForce && { link: linkForce }),
+              ...(hasChargeForce && { charge: chargeForce }),
+              ...(hasCollideForce && { collide: collideForce }),
+              ...(hasCenterForce && {
+                center: centerForce.x(context.width / 2).y(context.height / 2),
+              }),
+            }}
+            bind:alpha
+            {alphaTarget}
+            stopped={isStopped}
+            static={isStatic}
+            onStart={handleStart}
+            onTick={handleTick}
+            onEnd={handleEnd}
+          >
+            {#snippet children({ nodes })}
+              {#key nodes}
+                {#each links as link}
+                  <Link
+                    data={link}
+                    class="stroke-surface-content"
+                    curve={curveLinear}
+                    stroke-width={linkWidth}
+                    opacity={linkOpacity}
+                  />
+                {/each}
+              {/key}
 
-          {#each nodes as node}
-            <Circle
-              cx={node.x}
-              cy={node.y}
-              r={nodeRadius}
-              fill={colorScale(node.group)}
-              stroke-width={nodeStrokeWidth}
-              class="stroke-surface-content"
-              onpointermove={(e) => tooltip.show(e, node)}
-              onpointerleave={tooltip.hide}
-            />
-          {/each}
-        </ForceSimulation>
-      </Svg>
+              {#each nodes as node}
+                <Circle
+                  cx={node.x}
+                  cy={node.y}
+                  r={nodeRadius}
+                  fill={colorScale(node.group)}
+                  stroke-width={nodeStrokeWidth}
+                  class="stroke-surface-content"
+                  onpointermove={(e) => tooltipContext.show(e, node)}
+                  onpointerleave={tooltipContext.hide}
+                />
+              {/each}
+            {/snippet}
+          </ForceSimulation>
+        </Svg>
 
-      <Tooltip.Root let:data>
-        {data.id}
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {tooltipContext.data.id}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

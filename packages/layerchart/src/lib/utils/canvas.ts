@@ -14,7 +14,7 @@ export type ComputedStylesOptions = {
       opacity?: number | string;
     }
   >;
-  classes?: ClassValue;
+  classes?: ClassValue | null;
 };
 
 /**

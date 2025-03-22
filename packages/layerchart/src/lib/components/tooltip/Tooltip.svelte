@@ -1,25 +1,5 @@
-<script lang="ts">
-  import { fade } from 'svelte/transition';
-  import { cls } from '@layerstack/tailwind';
-
-  import { chartContext } from './../ChartContext.svelte';
-  import { tooltipContext } from './TooltipContext.svelte';
-  import { motionStore } from '../../stores/motionStore.js';
-  import { isScaleBand } from '../../utils/scales.js';
-
-  /** `x` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
-  export let x: 'pointer' | 'data' | number = 'pointer';
-  /** `y` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an explicit fixed position. */
-  export let y: 'pointer' | 'data' | number = 'pointer';
-
-  /** Offset added to `x` position */
-  export let xOffset = x === 'pointer' ? 10 : 0;
-
-  /** Offset added to `y` position */
-  export let yOffset = y === 'pointer' ? 10 : 0;
-
-  /** Align based on edge of tooltip */
-  type Placement =
+<script lang="ts" module>
+  export type Placement =
     | 'top-left'
     | 'top'
     | 'top-right'
@@ -29,51 +9,211 @@
     | 'bottom-left'
     | 'bottom'
     | 'bottom-right';
-  export let anchor: Placement = 'top-left';
 
-  export let contained: 'container' | 'window' | false = 'container';
-  export let variant: 'default' | 'invert' | 'none' = 'default';
+  export type Align = 'start' | 'center' | 'end';
 
-  /** Set to `false` to disable spring transitions */
-  export let motion = true;
+  export type TooltipPropsWithoutHTML = {
+    /**
+     * `x` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an
+     * explicit fixed position.
+     *
+     * @default 'pointer'
+     */
+    x?: 'pointer' | 'data' | number;
+    /**
+     * `y` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an
+     * explicit fixed position.
+     *
+     * @default 'pointer'
+     */
+    y?: 'pointer' | 'data' | number;
 
-  /** Allow pointer events.  Disabled by default to reduce accidental selection, but useful to enable to allow interactdive tooltips (using `locked`) */
-  export let pointerEvents = false;
+    /**
+     * Offset added to `x` position
+     *
+     * @default x === 'pointer' ? 10 : 0
+     */
+    xOffset?: number;
 
-  export let classes: {
-    root?: string;
-    container?: string;
-    header?: string;
-    content?: string;
-  } = {};
+    /**
+     * Offset added to `y` position
+     *
+     * @default y === 'pointer' ? 10 : 0
+     */
+    yOffset?: number;
 
-  const { padding, xScale, xGet, yScale, yGet, containerWidth, containerHeight } = chartContext();
-  const tooltip = tooltipContext();
+    /**
+     * Align based on edge of tooltip
+     *
+     * @default 'top-left'
+     */
+    anchor?: Placement;
 
-  let tooltipWidth = 0;
-  let tooltipHeight = 0;
+    /**
+     * Set to `false` to disable spring transitions
+     *
+     * @default true
+     */
+    motion?: boolean;
 
-  const xPos = motionStore($tooltip.x, { spring: motion });
-  const yPos = motionStore($tooltip.y, { spring: motion });
+    /**
+     * Allow pointer events.  Disabled by default to reduce accidental selection, but useful to
+     * enable to allow interactive tooltips (using `locked`)
+     *
+     * @default false
+     */
+    pointerEvents?: boolean;
 
-  type Align = 'start' | 'center' | 'end';
+    /**
+     * Include padding area (ex. axis)
+     *
+     * @default 'container'
+     */
+    contained?: 'container' | 'window' | false;
 
-  function alignValue(value: number, align: Align, addlOffset: number, tooltipSize: number) {
+    /**
+     * Tooltip variant
+     *
+     * @default 'default'
+     */
+    variant?: 'default' | 'invert' | 'none';
+
+    /**
+     * Classes to apply to the various elements of the tooltip.
+     *
+     * @default {}
+     */
+    classes?: {
+      /**
+       * Classes to apply to the root tooltip element
+       */
+      root?: string;
+      /**
+       * Classes to apply to the tooltip container element
+       */
+      container?: string;
+      /**
+       * Classes to apply to the tooltip content element
+       */
+      content?: string;
+      /**
+       * Classes to apply to the tooltip header element
+       */
+      header?: string;
+    };
+
+    children?: Snippet<
+      [
+        {
+          /**
+           * The chart data that triggered the tooltip.
+           */
+          data: any;
+
+          /**
+           * An array of tooltip payloads, each containing data for a specific series,
+           * along with their own `payload` property that contains the same data as `data`.
+           *
+           * This is useful when working with the simplified charts, such as `AreaChart`, `BarChart`,
+           * `PieChart`, etc., where series construction is handled internally.
+           */
+          payload: TooltipPayload[];
+        },
+      ]
+    >;
+
+    /**
+     * A reference to the tooltip's outermost `<div>` tag.
+     *
+     * @bindable
+     */
+    rootRef?: HTMLElement;
+
+    /**
+     * Props to pass to the underlying elements rendered
+     * by the Tooltip component
+     */
+    props?: {
+      /**
+       * Props to pass to the root tooltip element
+       */
+      root?: HTMLAttributes<HTMLElement>;
+      /**
+       * Props to pass to the tooltip container element
+       */
+      container?: HTMLAttributes<HTMLElement>;
+      /**
+       * Props to pass to the tooltip content element
+       */
+      content?: HTMLAttributes<HTMLElement>;
+    };
+  };
+
+  export type TooltipProps = TooltipPropsWithoutHTML &
+    Without<HTMLAttributes<HTMLElement>, TooltipPropsWithoutHTML>;
+</script>
+
+<script lang="ts">
+  import { fade } from 'svelte/transition';
+  import { cls } from '@layerstack/tailwind';
+
+  import { isScaleBand } from '../../utils/scales.svelte.js';
+  import { getChartContext } from '../Chart.svelte';
+  import { getTooltipContext } from './TooltipContext.svelte';
+  import { motionState } from '$lib/stores/motionState.svelte.js';
+  import { untrack, type Snippet } from 'svelte';
+  import type { HTMLAttributes } from 'svelte/elements';
+  import type { Without } from '$lib/utils/types.js';
+  import { createDataAttr } from '$lib/utils/attributes.js';
+  import type { TooltipPayload } from './tooltipMetaContext.js';
+
+  let {
+    anchor = 'top-left',
+    classes = {},
+    contained = 'container',
+    motion = true,
+    pointerEvents = false,
+    variant = 'default',
+    x = 'pointer',
+    xOffset = x === 'pointer' ? 10 : 0,
+    y = 'pointer',
+    yOffset = y === 'pointer' ? 10 : 0,
+    children,
+    rootRef = $bindable(),
+    props = {
+      root: {},
+      container: {},
+      content: {},
+    },
+    class: className,
+  }: TooltipProps = $props();
+
+  const ctx = getChartContext();
+  const tooltipCtx = getTooltipContext();
+
+  let tooltipWidth = $state(0);
+  let tooltipHeight = $state(0);
+
+  const xPos = motionState(tooltipCtx.x, { spring: motion });
+  const yPos = motionState(tooltipCtx.y, { spring: motion });
+
+  function alignValue(value: number, align: Align, additionalOffset: number, tooltipSize: number) {
     const alignOffset = align === 'center' ? tooltipSize / 2 : align === 'end' ? tooltipSize : 0;
-    return value + (align === 'end' ? -addlOffset : addlOffset) - alignOffset;
+    return value + (align === 'end' ? -additionalOffset : additionalOffset) - alignOffset;
   }
 
-  $: if ($tooltip?.data) {
-    const xBandOffset = isScaleBand($xScale)
-      ? $xScale.step() / 2 - ($xScale.padding() * $xScale.step()) / 2
+  $effect(() => {
+    if (!tooltipCtx.data) return;
+    const xBandOffset = isScaleBand(ctx.xScale)
+      ? ctx.xScale.step() / 2 - (ctx.xScale.padding() * ctx.xScale.step()) / 2
       : 0;
 
     const xValue: number =
       typeof x === 'number'
         ? x
         : x === 'data'
-          ? $xGet($tooltip.data) + $padding.left + xBandOffset
-          : $tooltip.x;
+          ? ctx.xGet(tooltipCtx.data) + ctx.padding.left + xBandOffset
+          : tooltipCtx.x;
 
     let xAlign: Align = 'start';
     switch (anchor) {
@@ -96,15 +236,15 @@
         break;
     }
 
-    const yBandOffset = isScaleBand($yScale)
-      ? $yScale.step() / 2 - ($yScale.padding() * $yScale.step()) / 2
+    const yBandOffset = isScaleBand(ctx.yScale)
+      ? ctx.yScale.step() / 2 - (ctx.yScale.padding() * ctx.yScale.step()) / 2
       : 0;
     const yValue: number =
       typeof y === 'number'
         ? y
         : y === 'data'
-          ? $yGet($tooltip.data) + $padding.top + yBandOffset
-          : $tooltip.y;
+          ? ctx.yGet(tooltipCtx.data) + ctx.padding.top + yBandOffset
+          : tooltipCtx.y;
 
     let yAlign: Align = 'start';
     switch (anchor) {
@@ -138,23 +278,23 @@
     rect.right = rect.left + tooltipWidth;
 
     if (contained === 'container') {
-      // Only attempt repositiong if not fixed (ie. `pointer`/`data`)
+      // Only attempt repositioning if not fixed (ie. `pointer`/`data`)
       if (typeof x !== 'number') {
         // Check if outside of container and swap align side accordingly
-        if ((xAlign === 'start' || xAlign === 'center') && rect.right > $containerWidth) {
+        if ((xAlign === 'start' || xAlign === 'center') && rect.right > ctx.containerWidth) {
           rect.left = alignValue(xValue, 'end', xOffset, tooltipWidth);
         }
-        if ((xAlign === 'end' || xAlign === 'center') && rect.left < $padding.left) {
+        if ((xAlign === 'end' || xAlign === 'center') && rect.left < ctx.padding.left) {
           rect.left = alignValue(xValue, 'start', xOffset, tooltipWidth);
         }
       }
       rect.right = rect.left + tooltipWidth;
 
       if (typeof y !== 'number') {
-        if ((yAlign === 'start' || yAlign === 'center') && rect.bottom > $containerHeight) {
+        if ((yAlign === 'start' || yAlign === 'center') && rect.bottom > ctx.containerHeight) {
           rect.top = alignValue(yValue, 'end', yOffset, tooltipHeight);
         }
-        if ((yAlign === 'end' || yAlign === 'center') && rect.top < $padding.top) {
+        if ((yAlign === 'end' || yAlign === 'center') && rect.top < ctx.padding.top) {
           rect.top = alignValue(yValue, 'start', yOffset, tooltipHeight);
         }
       }
@@ -162,10 +302,10 @@
     } else if (contained === 'window') {
       // Check if outside of window / viewport and swap align side accordingly
       // Root <div> won't be available on initial mount
-      if (rootEl?.parentElement) {
-        const parentViewportRect = rootEl.parentElement.getBoundingClientRect();
+      if (rootRef?.parentElement) {
+        const parentViewportRect = rootRef.parentElement.getBoundingClientRect();
 
-        // Only attempt repositiong if not fixed (ie. `pointer`/`data`)
+        // Only attempt repositioning if not fixed (ie. `pointer`/`data`)
         if (typeof x !== 'number') {
           if (
             (xAlign === 'start' || xAlign === 'center') &&
@@ -197,24 +337,33 @@
       }
     }
 
-    $yPos = rect.top;
-    $xPos = rect.left;
-  }
-
-  let rootEl: HTMLDivElement;
+    untrack(() => {
+      yPos.target = rect.top;
+      xPos.target = rect.left;
+    });
+  });
 </script>
 
-{#if $tooltip.data}
+{#if tooltipCtx.data}
   <div
-    class={cls('absolute z-50 select-none', !pointerEvents && 'pointer-events-none', classes.root)}
-    style:top="{$yPos}px"
-    style:left="{$xPos}px"
+    {...createDataAttr('tooltip-root')}
+    {...props.root}
+    class={cls(
+      'absolute z-50 select-none',
+      !pointerEvents && 'pointer-events-none',
+      classes.root,
+      props.root?.class
+    )}
+    style:top="{yPos.current}px"
+    style:left="{xPos.current}px"
     transition:fade={{ duration: 100 }}
     bind:clientWidth={tooltipWidth}
     bind:clientHeight={tooltipHeight}
-    bind:this={rootEl}
+    bind:this={rootRef}
   >
     <div
+      {...createDataAttr('tooltip-container')}
+      {...props.container}
       class={cls(
         variant !== 'none' && ['text-sm py-1 px-2 h-full rounded-sm elevation-1'],
         {
@@ -229,12 +378,13 @@
           none: '',
         }[variant],
         classes.container,
-        $$props.class
+        props.container?.class,
+        className
       )}
     >
-      {#if $$slots.default}
-        <div class={cls(classes.content)}>
-          <slot data={$tooltip.data} />
+      {#if children}
+        <div {...createDataAttr('tooltip-content')} {...props.content} class={cls(classes.content)}>
+          {@render children({ data: tooltipCtx.data, payload: tooltipCtx.payload })}
         </div>
       {/if}
     </div>

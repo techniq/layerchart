@@ -6,7 +6,7 @@ import source from '$lib/components/Hull.svelte?raw';
 import type { GeometryCollection, Topology } from 'topojson-specification';
 import type { USStateCapitalsData } from '$static/data/examples/geo/us-state-capitals.js';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     groupData: (await fetch('/data/examples/group-data.json').then((r) => r.json())) as {
       x: number;

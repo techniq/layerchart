@@ -4,8 +4,18 @@
   import { MenuField } from 'svelte-ux';
   import { entries } from '@layerstack/utils';
 
-  export let value: any | undefined = d3shapes['curveLinear'];
-  export let showOpenClosed = false;
+  let {
+    value = $bindable(),
+    showOpenClosed = false,
+    ...restProps
+  }: {
+    value?: any;
+    showOpenClosed?: boolean;
+  } = $props();
+
+  if (value === undefined) {
+    value = d3shapes['curveLinear'];
+  }
 
   const options = entries(d3shapes)
     .filter(([key]) => {
@@ -29,5 +39,5 @@
   bind:value
   stepper
   classes={{ menuIcon: 'hidden' }}
-  {...$$restProps}
+  {...restProps}
 />

@@ -1,51 +1,108 @@
-<script lang="ts">
-  import { type ComponentProps } from 'svelte';
+<script lang="ts" module>
+  import Text, { type TextProps } from './Text.svelte';
+  import { type ComponentProps, type Snippet } from 'svelte';
   import { format as formatValue, type FormatType } from '@layerstack/utils';
-  import { cls } from '@layerstack/tailwind';
-
-  import Text from './Text.svelte';
-  import { isScaleBand } from '$lib/utils/scales.js';
-  import { chartContext } from './ChartContext.svelte';
+  import type { Without } from '$lib/utils/types.js';
   import Points, { type Point } from './Points.svelte';
   import { accessor, type Accessor } from '../utils/common.js';
 
-  const { xScale, yScale } = chartContext();
+  export type LabelsPropsWithoutHTML = {
+    /**
+     * Override data instead of using context
+     */
+    data?: any;
 
-  /** Override data instead of using context */
-  export let data: any = undefined;
+    /**
+     * Override display value accessor.  By default, uses `y` unless yScale is band scale
+     */
+    value?: Accessor;
 
-  /** Override display value accessor.  By default, uses `y` unless yScale is band scale   */
-  export let value: Accessor = undefined;
+    /**
+     * Override `x` accessor from Chart context
+     */
+    x?: Accessor;
 
-  /** Override `x` accessor from Chart context */
-  export let x: Accessor = undefined;
-  /** Override `y` accessor from Chart context */
-  export let y: Accessor = undefined;
+    /**
+     * Override `y` accessor from Chart context
+     */
+    y?: Accessor;
 
-  export let placement: 'inside' | 'outside' | 'center' = 'outside';
-  export let offset = placement === 'center' ? 0 : 4;
-  export let format: FormatType | undefined = undefined;
+    /**
+     * The placement of the label relative to the point
+     * @default 'outside'
+     */
+    placement?: 'inside' | 'outside' | 'center';
 
-  /** Define unique value for {#each} `(key)` expressions to improve transitions.  `index` position used by default */
-  export let key: (d: any, index: number) => any = (d, i) => i;
+    /**
+     * The offset of the label from the point
+     *
+     * @default placement === 'center' ? 0 : 4
+     */
+    offset?: number;
 
-  $: getTextProps = (point: Point): ComponentProps<Text> => {
+    /**
+     * The format of the label
+     */
+    format?: FormatType;
+
+    /**
+     * Define unique value for {#each} `(key)` expressions to improve transitions.
+     * `index` position used by default
+     *
+     * @default (d, index) => index
+     */
+    key?: (d: any, index: number) => any;
+
+    children?: Snippet<[{ data: Point; textProps: ComponentProps<typeof Text> }]>;
+  };
+
+  export type LabelsProps = LabelsPropsWithoutHTML & Without<TextProps, LabelsPropsWithoutHTML>;
+</script>
+
+<script lang="ts">
+  import { cls } from '@layerstack/tailwind';
+
+  import { isScaleBand } from '$lib/utils/scales.svelte.js';
+  import { getChartContext } from './Chart.svelte';
+  import { createDataAttr } from '$lib/utils/attributes.js';
+
+  const ctx = getChartContext();
+
+  let {
+    data,
+    value,
+    x,
+    y,
+    placement = 'outside',
+    offset = placement === 'center' ? 0 : 4,
+    format,
+    key = (_: any, i: number) => i,
+    children: childrenProp,
+    class: className,
+    ...restProps
+  }: LabelsProps = $props();
+
+  function getTextProps(point: Point): ComponentProps<typeof Text> {
     // Used for positioning
-    const pointValue = isScaleBand($yScale) ? point.xValue : point.yValue;
+    const pointValue = isScaleBand(ctx.yScale) ? point.xValue : point.yValue;
 
     const displayValue = value
       ? accessor(value)(point.data)
-      : isScaleBand($yScale)
+      : isScaleBand(ctx.yScale)
         ? point.xValue
         : point.yValue;
 
     const formattedValue = formatValue(
       displayValue,
       format ??
-        (value ? undefined : isScaleBand($yScale) ? $xScale.tickFormat?.() : $yScale.tickFormat?.())
+        (value
+          ? undefined
+          : isScaleBand(ctx.yScale)
+            ? ctx.xScale.tickFormat?.()
+            : ctx.yScale.tickFormat?.())
     );
 
-    if (isScaleBand($yScale)) {
+    if (isScaleBand(ctx.yScale)) {
       // Position label left/right on horizontal bars
       if (pointValue < 0) {
         // left
@@ -94,27 +151,31 @@
         };
       }
     }
-  };
+  }
 </script>
 
-<g class="Labels">
-  <Points {data} {x} {y} let:points>
-    {#each points as point, i (key(point.data, i))}
-      {@const textProps = getTextProps(point)}
-      <slot data={point} {textProps}>
-        <Text
-          {...textProps}
-          {...$$restProps}
-          class={cls(
-            'text-xs',
-            placement === 'inside'
-              ? 'fill-surface-300 stroke-surface-content'
-              : 'fill-surface-content stroke-surface-100',
-            textProps.class,
-            $$props.class
-          )}
-        />
-      </slot>
-    {/each}
+<g {...createDataAttr('labels-g')}>
+  <Points {data} {x} {y}>
+    {#snippet children({ points })}
+      {#each points as point, i (key(point.data, i))}
+        {@const textProps = { ...getTextProps(point), ...createDataAttr('labels-text') }}
+        {#if childrenProp}
+          {@render childrenProp({ data: point, textProps })}
+        {:else}
+          <Text
+            {...textProps}
+            {...restProps}
+            class={cls(
+              'text-xs',
+              placement === 'inside'
+                ? 'fill-surface-300 stroke-surface-content'
+                : 'fill-surface-content stroke-surface-100',
+              textProps.class,
+              className
+            )}
+          />
+        {/if}
+      {/each}
+    {/snippet}
   </Points>
 </g>

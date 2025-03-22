@@ -27,13 +27,13 @@
 
   import { goto } from '$app/navigation';
 
-  export let data;
+  let { data } = $props();
 
-  $: geojson = data.geojson;
+  const geojson = $derived(data.geojson);
 
-  let file = data.file;
+  let file = $state(data.file);
 
-  let projection = geoIdentity as unknown as () => GeoProjection;
+  let projection = $state(geoIdentity as unknown as () => GeoProjection);
   const projections = [
     { label: 'Identity', value: geoIdentity as () => GeoProjection },
     { label: 'Albers', value: geoAlbers },

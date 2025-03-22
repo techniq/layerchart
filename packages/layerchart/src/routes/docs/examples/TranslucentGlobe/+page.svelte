@@ -16,27 +16,35 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let transformContext: TransformContext;
+  let transformContext = $state<TransformContext>();
 
-  let velocity = 3;
-  let isSpinning = false;
+  let isSpinning = $state(false);
+  let velocity = $state(3);
   const timer = timerStore({
     delay: 1,
     onTick() {
-      transformContext.translate.update((value) => {
-        return {
-          x: (value.x += velocity),
-          y: value.y,
-        };
-      });
+      if (!transformContext) return;
+      const curr = transformContext.translate.current;
+      transformContext.translate.target = {
+        x: (curr.x += velocity),
+        y: curr.y,
+      };
     },
     disabled: !isSpinning,
   });
-  $: isSpinning ? timer.start() : timer.stop();
+
+  $effect(() => {
+    if (isSpinning) {
+      timer.start();
+    } else {
+      timer.stop();
+    }
+  });
+
   $timer;
 </script>
 
@@ -90,44 +98,42 @@
         }
       }}
       bind:transformContext
-      let:tooltip
-      let:projection
     >
-      {@const [yaw, pitch, roll] = projection.rotate()}
-      <Svg>
-        <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/20" />
+      {#snippet children({ tooltipContext, geoContext })}
+        {@const [yaw, pitch, roll] = geoContext.projection?.rotate() ?? [0, 0, 0]}
+        <Svg>
+          <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/20" />
 
-        <!-- Back -->
-        <GeoContext
-          projection={geoOrthographic}
-          fitGeojson={countries}
-          rotate={{ yaw: yaw + 180, pitch: -pitch, roll: -roll }}
-          reflectX
-        >
-          <Graticule class="stroke-surface-content/5" />
+          <!-- Back -->
+          <GeoContext
+            projection={geoOrthographic}
+            fitGeojson={countries}
+            rotate={{ yaw: yaw + 180, pitch: -pitch, roll: -roll }}
+            reflectX
+          >
+            <Graticule class="stroke-surface-content/5" />
+            {#each countries.features as country}
+              <GeoPath geojson={country} class="stroke-surface-content/5 fill-surface-content/10" />
+            {/each}
+          </GeoContext>
+
+          <!-- Front -->
+          <Graticule class="stroke-surface-content/20" />
           {#each countries.features as country}
             <GeoPath
               geojson={country}
-              class="stroke-surface-content/5 fill-surface-content/10"
-              reflectX
+              class="stroke-surface-100/30 fill-surface-content/70 cursor-pointer hover:fill-primary/70"
+              {tooltipContext}
             />
           {/each}
-        </GeoContext>
+        </Svg>
 
-        <!-- Front -->
-        <Graticule class="stroke-surface-content/20" />
-        {#each countries.features as country}
-          <GeoPath
-            geojson={country}
-            class="stroke-surface-100/30 fill-surface-content/70 cursor-pointer hover:fill-primary/70"
-            {tooltip}
-          />
-        {/each}
-      </Svg>
-
-      <Tooltip.Root let:data>
-        {data.properties.name}
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {data.properties.name}
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

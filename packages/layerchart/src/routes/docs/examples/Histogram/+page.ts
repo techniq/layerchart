@@ -1,7 +1,7 @@
 import pageSource from './+page.svelte?raw';
 import type { OlympiansData } from '$static/data/examples/olympians.js';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     olympians: (await fetch('/data/examples/olympians.json').then((r) =>
       r.json()

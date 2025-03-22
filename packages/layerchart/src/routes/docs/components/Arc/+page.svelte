@@ -54,30 +54,31 @@
     <Chart>
       <Svg center>
         {#key spring}
-          <LinearGradient class="from-secondary to-primary" vertical let:gradient>
-            <Arc
-              {value}
-              {domain}
-              {range}
-              {innerRadius}
-              {outerRadius}
-              {cornerRadius}
-              {padAngle}
-              {label}
-              {spring}
-              let:value
-              let:boundingBox
-              fill={gradient}
-              track={{ class: 'fill-surface-content/5' }}
-            >
-              <Text
-                value={Math.round(value)}
-                textAnchor="middle"
-                verticalAnchor="middle"
-                class="text-4xl"
-                dy={8}
-              />
-            </Arc>
+          <LinearGradient class="from-secondary to-primary" vertical>
+            {#snippet children({ gradient })}
+              <Arc
+                {value}
+                {domain}
+                {range}
+                {innerRadius}
+                {outerRadius}
+                {cornerRadius}
+                {padAngle}
+                {spring}
+                fill={gradient}
+                track={{ class: 'fill-surface-content/5' }}
+              >
+                {#snippet children({ value })}
+                  <Text
+                    value={Math.round(value)}
+                    textAnchor="middle"
+                    verticalAnchor="middle"
+                    class="text-4xl"
+                    dy={8}
+                  />
+                {/snippet}
+              </Arc>
+            {/snippet}
           </LinearGradient>
         {/key}
       </Svg>
@@ -116,44 +117,42 @@
     <div class="h-[200px] p-4 border rounded-sm">
       <Chart>
         <Svg center>
-          <LinearGradient
-            stops={['hsl(80, 100%, 50%)', 'hsl(200, 100%, 50%)']}
-            vertical
-            let:gradient
-          >
-            <Arc
-              {value}
-              {domain}
-              {range}
-              {innerRadius}
-              {outerRadius}
-              {cornerRadius}
-              {padAngle}
-              {label}
-              let:boundingBox
-              fill={gradient}
-            >
-              <!-- svg center -->
-              <!-- <Text
+          <LinearGradient stops={['hsl(80, 100%, 50%)', 'hsl(200, 100%, 50%)']} vertical>
+            {#snippet children({ gradient })}
+              <Arc
+                {value}
+                {domain}
+                {range}
+                {innerRadius}
+                {outerRadius}
+                {cornerRadius}
+                {padAngle}
+                fill={gradient}
+              >
+                {#snippet children({ boundingBox })}
+                  <!-- svg center -->
+                  <!-- <Text
 							value={Math.round(value)}
 							textAnchor="middle"
 							verticalAnchor="middle"
               class="text-4xl"
 							dy={8}
 						/> -->
-              <!-- arc center -->
-              <Text
-                value={Math.round(value)}
-                textAnchor="middle"
-                verticalAnchor="middle"
-                class="text-4xl"
-                x={outerRadius - boundingBox.width / 2}
-                y={(outerRadius - boundingBox.height / 2) * -1}
-                dy={8}
-              />
-              <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-4xl" capHeight="1.5rem" /> -->
-              <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-7xl" capHeight="3.1em" /> -->
-            </Arc>
+                  <!-- arc center -->
+                  <Text
+                    value={Math.round(value)}
+                    textAnchor="middle"
+                    verticalAnchor="middle"
+                    class="text-4xl"
+                    x={outerRadius - boundingBox.width / 2}
+                    y={(outerRadius - boundingBox.height / 2) * -1}
+                    dy={8}
+                  />
+                  <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-4xl" capHeight="1.5rem" /> -->
+                  <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-7xl" capHeight="3.1em" /> -->
+                {/snippet}
+              </Arc>
+            {/snippet}
           </LinearGradient>
         </Svg>
       </Chart>

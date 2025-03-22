@@ -8,20 +8,25 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
-  const { nodes, links } = data.miserables;
+  const nodes = $derived(data.miserables.nodes);
+  const links = $derived(data.miserables.links);
 
   const colorScale = scaleOrdinal(schemeCategory10);
 
-  // @ts-expect-error
-  const linkForce = forceLink(links).id((d) => d.id);
-  const chargeForce = forceManyBody();
+  // @ts-expect-error - TODO: can we fix these types
+  const linkForce = $derived(forceLink(links).id((d) => d.id));
+  const chargeForce = forceManyBody().strength(-30).theta(0.9);
   const xForce = forceX();
   const yForce = forceY();
 </script>
 
 <h1>Examples</h1>
+
+<!-- <pre>
+	{JSON.stringify(links, null, 2)}
+</pre> -->
 
 <Preview data={data.miserables}>
   <div class="h-[680px] p-4 border rounded-sm">
@@ -34,17 +39,22 @@
             x: xForce,
             y: yForce,
           }}
-          let:nodes
+          {links}
         >
-          {#key nodes}
-            {#each links as link}
-              <Link data={link} class="stroke-surface-content/50" curve={curveLinear} />
+          {#snippet children({ nodes, linkPositions })}
+            {#each links as link, i (link.value + link.index)}
+              <Link
+                data={link}
+                explicitCoords={linkPositions[i]}
+                class="stroke-surface-content/50"
+                curve={curveLinear}
+              />
             {/each}
-          {/key}
 
-          {#each nodes as node}
-            <Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group)} />
-          {/each}
+            {#each nodes as node}
+              <Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group)} />
+            {/each}
+          {/snippet}
         </ForceSimulation>
       </Svg>
     </Chart>

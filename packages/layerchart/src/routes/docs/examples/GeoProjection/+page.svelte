@@ -15,9 +15,19 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
-  let projection = geoOrthographic;
+  let config = $state({
+    projection: geoOrthographic,
+    detailed: false,
+    rotate: {
+      yaw: 0,
+      pitch: 0,
+      roll: 0,
+    },
+    scale: 0,
+  });
+
   const projections = [
     { label: 'Albers', value: geoAlbers },
     { label: 'Albers USA', value: geoAlbersUsa },
@@ -28,39 +38,34 @@
     { label: 'Orthographic', value: geoOrthographic },
   ];
 
-  let detailed = false;
+  const dataGeoJson = $derived(config.detailed ? data.geojsonDetail : data.geojson);
 
-  $: dataGeoJson = detailed ? data.geojsonDetail : data.geojson;
-  $: geojson = feature(dataGeoJson, dataGeoJson.objects.countries);
-  $: features =
-    projection === geoAlbersUsa
+  const geojson = $derived(feature(dataGeoJson, dataGeoJson.objects.countries));
+  const features = $derived(
+    config.projection === geoAlbersUsa
       ? geojson.features.filter((f) => f.properties.name === 'United States of America')
-      : geojson.features;
-
-  let scale = 0;
-  let yaw = 0;
-  let pitch = 0;
-  let roll = 0;
+      : geojson.features
+  );
 </script>
 
 <div class="grid grid-cols-[1fr_1fr_auto] gap-2 my-2">
   <SelectField
     label="Projections"
     options={projections}
-    bind:value={projection}
+    bind:value={config.projection}
     clearable={false}
     toggleIcon={null}
     stepper
   />
-  <RangeField label="Scale" bind:value={scale} min={-100} max={3000} />
+  <RangeField label="Scale" bind:value={config.scale} min={-100} max={3000} />
   <Field label="Detail" let:id>
-    <Switch bind:checked={detailed} {id} />
+    <Switch bind:checked={config.detailed} {id} />
   </Field>
 </div>
 <div class="grid grid-cols-[1fr_1fr_1fr] gap-2 my-2">
-  <RangeField label="Yaw" bind:value={yaw} min={-360} max={360} />
-  <RangeField label="Pitch" bind:value={pitch} min={-90} max={90} />
-  <RangeField label="Roll" bind:value={roll} min={-180} max={180} />
+  <RangeField label="Yaw" bind:value={config.rotate.yaw} min={-360} max={360} />
+  <RangeField label="Pitch" bind:value={config.rotate.pitch} min={-90} max={90} />
+  <RangeField label="Roll" bind:value={config.rotate.roll} min={-180} max={180} />
 </div>
 
 <h1>Examples</h1>
@@ -71,34 +76,31 @@
   <div class="h-[600px] overflow-hidden">
     <Chart
       geo={{
-        projection,
+        projection: config.projection,
         fitGeojson: geojson,
-        rotate: {
-          yaw,
-          pitch,
-          roll,
-        },
-        scale,
+        rotate: config.rotate,
+        scale: config.scale,
         // applyTransform: ['rotate'],
       }}
       padding={{ left: 100, right: 100 }}
-      let:tooltip
     >
-      <Svg>
-        <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content fill-blue-400/50" />
-        <Graticule class="stroke-surface-content/20 pointer-events-none" />
-        {#each features as feature}
-          <GeoPath
-            geojson={feature}
-            {tooltip}
-            class="stroke-surface-content/50 fill-white hover:fill-gray-300"
-          />
-        {/each}
-      </Svg>
+      {#snippet children({ tooltipContext })}
+        <Svg>
+          <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content fill-blue-400/50" />
+          <Graticule class="stroke-surface-content/20 pointer-events-none" />
+          {#each features as feature}
+            <GeoPath
+              geojson={feature}
+              {tooltipContext}
+              class="stroke-surface-content/50 fill-white hover:fill-gray-300"
+            />
+          {/each}
+        </Svg>
 
-      <Tooltip.Root let:data>
-        {data.properties.name}
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {tooltipContext.data.properties.name}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -109,14 +111,10 @@
   <div class="h-[600px]">
     <Chart
       geo={{
-        projection,
+        projection: config.projection,
         fitGeojson: geojson,
-        rotate: {
-          yaw,
-          pitch,
-          roll,
-        },
-        scale,
+        rotate: config.rotate,
+        scale: config.scale,
         // applyTransform: ['rotate'],
       }}
     >

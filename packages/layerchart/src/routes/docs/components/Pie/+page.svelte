@@ -14,7 +14,7 @@
   const data = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
   const data2 = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
 
-  $: dataSum = sum(data, (d) => d.value);
+  const dataSum = $derived(sum(data, (d) => d.value));
 
   const colorKeys = [...new Set(data.map((d) => d.date))];
   const keyColors = [
@@ -208,16 +208,18 @@
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       <Svg center>
-        <Pie let:arcs>
-          {#each arcs as arc, index}
-            <Arc
-              startAngle={arc.startAngle}
-              endAngle={arc.endAngle}
-              padAngle={arc.padAngle}
-              fill={keyColors[index]}
-              offset={index === 0 ? 16 : 0}
-            />
-          {/each}
+        <Pie>
+          {#snippet children({ arcs })}
+            {#each arcs as arc, index}
+              <Arc
+                startAngle={arc.startAngle}
+                endAngle={arc.endAngle}
+                padAngle={arc.padAngle}
+                fill={keyColors[index]}
+                offset={index === 0 ? 16 : 0}
+              />
+            {/each}
+          {/snippet}
         </Pie>
       </Svg>
     </Chart>
@@ -230,36 +232,39 @@
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date">
       <Svg center>
-        <Pie let:arcs>
-          {#each arcs as arc, index}
-            {@const colors = keyClasses[index]}
-            <Arc
-              startAngle={arc.startAngle}
-              endAngle={arc.endAngle}
-              padAngle={arc.padAngle}
-              class={colors.shape}
-              let:centroid
-            >
-              <Text
-                value={formatUtil(arc.data.value / dataSum, 'percent')}
-                x={centroid[0]}
-                y={centroid[1]}
-                dy={-8}
-                textAnchor="middle"
-                verticalAnchoc="middle"
-                class={cls('text-base', colors.content)}
-              />
-              <Text
-                value={arc.data.value}
-                x={centroid[0]}
-                y={centroid[1]}
-                dy={8}
-                textAnchor="middle"
-                verticalAnchoc="middle"
-                class={cls('text-sm opacity-50', colors.content)}
-              />
-            </Arc>
-          {/each}
+        <Pie>
+          {#snippet children({ arcs })}
+            {#each arcs as arc, index}
+              {@const colors = keyClasses[index]}
+              <Arc
+                startAngle={arc.startAngle}
+                endAngle={arc.endAngle}
+                padAngle={arc.padAngle}
+                class={colors.shape}
+              >
+                {#snippet children({ centroid })}
+                  <Text
+                    value={formatUtil(arc.data.value / dataSum, 'percent')}
+                    x={centroid[0]}
+                    y={centroid[1]}
+                    dy={-8}
+                    textAnchor="middle"
+                    verticalAnchor="middle"
+                    class={cls('text-base', colors.content)}
+                  />
+                  <Text
+                    value={arc.data.value}
+                    x={centroid[0]}
+                    y={centroid[1]}
+                    dy={8}
+                    textAnchor="middle"
+                    verticalAnchor="middle"
+                    class={cls('text-sm opacity-50', colors.content)}
+                  />
+                {/snippet}
+              </Arc>
+            {/each}
+          {/snippet}
         </Pie>
       </Svg>
     </Chart>
@@ -270,22 +275,26 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <Chart {data} x="value" c="date" cRange={keyColors} let:tooltip>
-      <Svg center>
-        <Pie {tooltip} />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
-          <Tooltip.Item
-            label="percent"
-            value={data.value / dataSum}
-            format="percent"
-            valueAlign="right"
-          />
-        </Tooltip.List>
-      </Tooltip.Root>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
+      {#snippet children({ tooltipContext })}
+        <Svg center>
+          <Pie {tooltipContext} />
+        </Svg>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+              <Tooltip.Item
+                label="percent"
+                value={data.value / dataSum}
+                format="percent"
+                valueAlign="right"
+              />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -294,57 +303,65 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <Chart {data} x="value" c="date" cRange={keyColors} let:tooltip>
-      <Svg center>
-        <Pie let:arcs>
-          {#each arcs as arc, index}
-            {@const colors = keyClasses[index]}
-            {@const isHighlighted = tooltip.data?.date === arc.data.date}
-            {@const isFaded = tooltip.data != null && tooltip.data.date !== arc.data.date}
-            <Group
-              onpointerenter={(e) => tooltip?.show(e, arc.data)}
-              onpointermove={(e) => tooltip?.show(e, arc.data)}
-              onpointerleave={(e) => tooltip?.hide()}
-              preventTouchMove
-              class={cls(
-                // isHighlighted && 'stroke-surface-content stroke-2',
-                isFaded && 'opacity-50'
-              )}
-            >
-              <Arc
-                startAngle={arc.startAngle}
-                endAngle={arc.endAngle}
-                padAngle={arc.padAngle}
-                class={colors.shape}
-                _offset={isHighlighted ? 16 : 0}
-                let:centroid
-              >
-                <Text
-                  value={formatUtil(arc.data.value / dataSum, 'percent')}
-                  x={centroid[0]}
-                  y={centroid[1]}
-                  textAnchor="middle"
-                  verticalAnchoc="middle"
-                  class={cls('text-base', colors.content)}
-                />
-              </Arc>
-            </Group>
-          {/each}
-        </Pie>
-      </Svg>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
+      {#snippet children({ tooltipContext })}
+        <Svg center>
+          <Pie>
+            {#snippet children({ arcs })}
+              {#each arcs as arc, index}
+                {@const colors = keyClasses[index]}
+                {@const isHighlighted = tooltipContext.data?.date === arc.data.date}
+                {@const isFaded =
+                  tooltipContext.data != null && tooltipContext.data.date !== arc.data.date}
+                <Group
+                  onpointerenter={(e) => tooltipContext.show(e, arc.data)}
+                  onpointermove={(e) => tooltipContext.show(e, arc.data)}
+                  onpointerleave={(e) => tooltipContext.hide()}
+                  preventTouchMove
+                  class={cls(
+                    // isHighlighted && 'stroke-surface-content stroke-2',
+                    isFaded && 'opacity-50'
+                  )}
+                >
+                  <Arc
+                    startAngle={arc.startAngle}
+                    endAngle={arc.endAngle}
+                    padAngle={arc.padAngle}
+                    class={colors.shape}
+                    _offset={isHighlighted ? 16 : 0}
+                  >
+                    {#snippet children({ centroid })}
+                      <Text
+                        value={formatUtil(arc.data.value / dataSum, 'percent')}
+                        x={centroid[0]}
+                        y={centroid[1]}
+                        textAnchor="middle"
+                        verticalAnchor="middle"
+                        class={cls('text-base', colors.content)}
+                      />
+                    {/snippet}
+                  </Arc>
+                </Group>
+              {/each}
+            {/snippet}
+          </Pie>
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
-          <Tooltip.Item
-            label="percent"
-            value={data.value / dataSum}
-            format="percent"
-            valueAlign="right"
-          />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
+              <Tooltip.Item
+                label="percent"
+                value={data.value / dataSum}
+                format="percent"
+                valueAlign="right"
+              />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -355,12 +372,14 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <Chart {data} x="value" c="date" cRange={keyColors} let:height>
-      <Svg>
-        <Group x={height / 2} center="y">
-          <Pie />
-        </Group>
-      </Svg>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
+      {#snippet children({ context })}
+        <Svg>
+          <Group x={context.height / 2} center="y">
+            <Pie />
+          </Group>
+        </Svg>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -381,12 +400,14 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <Chart {data} x="value" c="date" cRange={keyColors} let:width let:height>
-      <Svg>
-        <Group x={width - height / 2} center="y">
-          <Pie />
-        </Group>
-      </Svg>
+    <Chart {data} x="value" c="date" cRange={keyColors}>
+      {#snippet children({ context })}
+        <Svg>
+          <Group x={context.width - context.height / 2} center="y">
+            <Pie />
+          </Group>
+        </Svg>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

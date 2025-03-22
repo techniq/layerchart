@@ -13,25 +13,29 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
-  const complexHierarchy = hierarchy(data.flare)
-    .sum((d) => d.value)
-    .sort(sortFunc('value', 'desc')) as HierarchyCircularNode<any>;
+  const complexHierarchy = $derived(
+    hierarchy(data.flare)
+      .sum((d) => d.value)
+      .sort(sortFunc('value', 'desc'))
+  ) as HierarchyCircularNode<any>;
 
-  let colorBy = 'parent';
+  let colorBy = $state('parent');
 
-  let padding = 3;
-  let selected: HierarchyCircularNode<any>;
-  let transformContext: TransformContext;
+  let padding = $state(3);
+  let selected = $state<HierarchyCircularNode<any>>();
+  let transformContext = $state<TransformContext>();
 
-  $: if (transformContext && selected) {
-    const diameter = selected.r * 2;
-    transformContext.zoomTo(
-      { x: selected.x, y: selected.y },
-      { width: diameter, height: diameter }
-    );
-  }
+  $effect(() => {
+    if (transformContext && selected) {
+      const diameter = selected.r * 2;
+      transformContext.zoomTo(
+        { x: selected.x, y: selected.y },
+        { width: diameter, height: diameter }
+      );
+    }
+  });
 
   const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
   // filter out hard to see yellow and green
@@ -79,7 +83,7 @@
 
 <h2>General</h2>
 
-<Preview data={complexHierarchy}>
+<Preview data={complexHierarchy.data}>
   <Breadcrumb items={selected?.ancestors().reverse() ?? []}>
     <Button
       slot="item"
@@ -96,56 +100,58 @@
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
     <Chart
-      data={complexHierarchy}
       transform={{
         mode: 'canvas',
         disablePointer: true,
         tweened: { duration: 800, easing: cubicOut },
       }}
       bind:transformContext
-      let:transform
     >
-      <Svg on:click={() => (selected = complexHierarchy)}>
-        <Pack {padding} let:nodes>
-          {#each nodes as node}
-            <Group
-              x={node.x}
-              y={node.y}
-              onclick={(e) => {
-                e.stopPropagation();
-                selected = node;
-              }}
-              class="cursor-pointer hover:contrast-[1.2]"
-            >
-              {@const nodeColor = getNodeColor(node, colorBy)}
-              <Circle
-                r={node.r}
-                stroke={hsl(nodeColor)
-                  .darker(colorBy === 'children' ? 0.5 : 1)
-                  .toString()}
-                strokeWidth={1 / transform.scale}
-                fill={nodeColor}
-              />
-            </Group>
-          {/each}
-          <!-- Show text on top of all circles -->
-          {#each selected ? (selected.children ?? [selected]) : [] as node (node.data.name + node.depth)}
-            {@const fontSize = 1 / transform.scale}
-            <g in:fade|local>
-              <text
-                x={node.x}
-                y={node.y}
-                dy={fontSize * 8}
-                class="stroke-white/70 pointer-events-none [text-anchor:middle] [paint-order:stroke]"
-                style:font-size="{fontSize}rem"
-                style:stroke-width="{fontSize * 2}px"
-              >
-                {node.data.name}
-              </text>
-            </g>
-          {/each}
-        </Pack>
-      </Svg>
+      {#snippet children({ context, transformContext })}
+        <Svg onclick={() => (selected = complexHierarchy)}>
+          <Pack {padding} hierarchy={complexHierarchy}>
+            {#snippet children({ nodes })}
+              {#each nodes as node}
+                <Group
+                  x={node.x}
+                  y={node.y}
+                  onclick={(e) => {
+                    e.stopPropagation();
+                    selected = node;
+                  }}
+                  class="cursor-pointer hover:contrast-[1.2]"
+                >
+                  {@const nodeColor = getNodeColor(node, colorBy)}
+                  <Circle
+                    r={node.r}
+                    stroke={hsl(nodeColor)
+                      .darker(colorBy === 'children' ? 0.5 : 1)
+                      .toString()}
+                    strokeWidth={1 / transformContext.scale}
+                    fill={nodeColor}
+                  />
+                </Group>
+              {/each}
+              <!-- Show text on top of all circles -->
+              {#each selected ? (selected.children ?? [selected]) : [] as node (node.data.name + node.depth)}
+                {@const fontSize = 1 / transformContext.scale}
+                <g in:fade|local>
+                  <text
+                    x={node.x}
+                    y={node.y}
+                    dy={fontSize * 8}
+                    class="stroke-white/70 pointer-events-none [text-anchor:middle] [paint-order:stroke]"
+                    style:font-size="{fontSize}rem"
+                    style:stroke-width="{fontSize * 2}px"
+                  >
+                    {node.data.name}
+                  </text>
+                </g>
+              {/each}
+            {/snippet}
+          </Pack>
+        </Svg>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

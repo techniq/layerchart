@@ -14,11 +14,13 @@
     'var(--color-warning)',
     'var(--color-danger)',
   ]);
+  let alpha = $state(1);
 
-  let groupBy = true;
-  $: reheatSimulation({ groupBy });
+  let groupBy = $state(true);
 
-  let alpha = 1;
+  $effect.pre(() => {
+    reheatSimulation({ groupBy });
+  });
 
   const xForce = forceX().strength(0.1);
   const chargeForce = forceManyBody().strength(3);
@@ -45,44 +47,38 @@
 
 <Preview data={dots}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      data={dots}
-      x="category"
-      xScale={scaleBand()}
-      r="value"
-      rRange={[3, 12]}
-      let:xGet
-      let:xScale
-      let:rGet
-      let:width
-      let:height
-    >
-      {@const nodeStrokeWidth = 1}
-      <Svg>
-        <ForceSimulation
-          forces={{
-            x: xForce.x((d) => (groupBy ? xGet(d) + xScale.bandwidth() / 2 : width / 2)),
-            charge: chargeForce,
-            collide: collideForce.radius(
-              (d) => rGet(d) + nodeStrokeWidth / 2 // Divide this by two because an svg stroke is drawn halfway out
-            ),
-            center: centerForce.x(width / 2).y(height / 2),
-          }}
-          cloneData
-          bind:alpha
-          let:nodes
-        >
-          {#each nodes as node}
-            <Circle
-              cx={node.x}
-              cy={node.y}
-              r={rGet(node)}
-              fill={categoryColor(node.category)}
-              class="stroke-surface-100"
-            />
-          {/each}
-        </ForceSimulation>
-      </Svg>
+    <Chart data={dots} x="category" xScale={scaleBand()} r="value" rRange={[3, 12]}>
+      {#snippet children({ context })}
+        {@const nodeStrokeWidth = 1}
+        <Svg>
+          <ForceSimulation
+            forces={{
+              x: xForce.x((d) =>
+                groupBy ? context.xGet(d) + context.xScale.bandwidth() / 2 : context.width / 2
+              ),
+              charge: chargeForce,
+              collide: collideForce.radius(
+                (d) => context.rGet(d) + nodeStrokeWidth / 2 // Divide this by two because an svg stroke is drawn halfway out
+              ),
+              center: centerForce.x(context.width / 2).y(context.height / 2),
+            }}
+            cloneData
+            bind:alpha
+          >
+            {#snippet children({ nodes })}
+              {#each nodes as node}
+                <Circle
+                  cx={node.x}
+                  cy={node.y}
+                  r={context.rGet(node)}
+                  fill={categoryColor(node.category)}
+                  class="stroke-surface-100"
+                />
+              {/each}
+            {/snippet}
+          </ForceSimulation>
+        </Svg>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

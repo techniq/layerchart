@@ -11,31 +11,38 @@
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
-  export let data;
+  let { data } = $props();
 
-  let curve = curveCatmullRomClosed;
-  let minArea = 2;
+  let curve = $state(curveCatmullRomClosed);
+  let minArea = $state(2);
 
-  $: geojson = simplify(presimplify(data.geojson), Math.pow(10, 2 - minArea));
-  $: land = feature(geojson, data.geojson.objects.land);
+  const geojson = $derived(simplify(presimplify(data.geojson), Math.pow(10, 2 - minArea)));
+  const land = $derived(feature(geojson, data.geojson.objects.land));
 
-  let transformContext: TransformContext;
+  let transformContext = $state<TransformContext>();
 
-  let velocity = 3;
-  let isSpinning = false;
+  let velocity = $state(3);
+  let isSpinning = $state(false);
   const timer = timerStore({
     delay: 1,
     onTick() {
-      transformContext.translate.update((value) => {
-        return {
-          x: (value.x += velocity),
-          y: value.y,
-        };
+      if (!transformContext) return;
+      const curr = transformContext.translate.current;
+
+      transformContext.translate.set({
+        x: (curr.x += velocity),
+        y: curr.y,
       });
     },
     disabled: !isSpinning,
   });
-  $: isSpinning ? timer.start() : timer.stop();
+  $effect(() => {
+    if (isSpinning) {
+      timer.start();
+    } else {
+      timer.stop();
+    }
+  });
   $timer;
 </script>
 

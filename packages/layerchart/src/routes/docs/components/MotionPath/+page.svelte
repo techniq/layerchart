@@ -10,21 +10,23 @@
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
 
-  let pointCount = 100;
+  let pointCount = $state(100);
 
-  let pathGenerator = (x: number) => x;
-  let curve: ComponentProps<CurveMenuField>['value'] = undefined;
+  let pathGenerator = $state((x: number) => x);
+  let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
 
-  let amplitude = 1;
-  let frequency = 10;
-  let phase = 0;
+  let amplitude = $state(1);
+  let frequency = $state(10);
+  let phase = $state(0);
 
-  $: data = Array.from({ length: pointCount }).map((_, i) => {
-    return {
-      x: i + 1,
-      y: pathGenerator(i / pointCount) ?? i,
-    };
-  });
+  const data = $derived(
+    Array.from({ length: pointCount }).map((_, i) => {
+      return {
+        x: i + 1,
+        y: pathGenerator(i / pointCount) ?? i,
+      };
+    })
+  );
 </script>
 
 <h1>Examples</h1>
@@ -48,9 +50,11 @@
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
-            <MotionPath duration="3s" repeatCount="indefinite" let:pathId let:objectId>
-              <Spline id={pathId} {curve} />
-              <circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
+            <MotionPath duration="3s" repeatCount="indefinite">
+              {#snippet children({ pathId, objectId })}
+                <Spline id={pathId} {curve} />
+                <circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
+              {/snippet}
             </MotionPath>
           {/if}
         </Svg>
@@ -78,22 +82,18 @@
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
-            <MotionPath
-              duration="5s"
-              repeatCount="indefinite"
-              rotate="auto"
-              let:pathId
-              let:objectId
-            >
-              <Spline id={pathId} {curve} />
-              <rect
-                id={objectId}
-                x={-10}
-                y={-10}
-                width={20}
-                height={20}
-                class="fill-surface-100 stroke-surface-content"
-              />
+            <MotionPath duration="5s" repeatCount="indefinite" rotate="auto">
+              {#snippet children({ pathId, objectId })}
+                <Spline id={pathId} {curve} />
+                <rect
+                  id={objectId}
+                  x={-10}
+                  y={-10}
+                  width={20}
+                  height={20}
+                  class="fill-surface-100 stroke-surface-content"
+                />
+              {/snippet}
             </MotionPath>
           {/if}
         </Svg>
@@ -122,9 +122,11 @@
           <Axis placement="bottom" rule />
           {#if show}
             {#key data}
-              <MotionPath duration="3s" let:pathId let:objectId>
-                <Spline id={pathId} {curve} draw={{ duration: 3000, easing: linear }} />
-                <circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
+              <MotionPath duration="3s">
+                {#snippet children({ pathId, objectId })}
+                  <Spline id={pathId} {curve} draw={{ duration: 3000, easing: linear }} />
+                  <circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
+                {/snippet}
               </MotionPath>
             {/key}
           {/if}

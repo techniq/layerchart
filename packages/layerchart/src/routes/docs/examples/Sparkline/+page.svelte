@@ -55,23 +55,16 @@
         highlight: { points: { r: 3, class: 'stroke-none' } },
       }}
     >
-      <svelte:fragment slot="tooltip" let:width>
-        <Tooltip.Root
-          class="text-xs"
-          contained={false}
-          y={-3}
-          x={width + 8}
-          variant="none"
-          let:data
-        >
+      {#snippet tooltip({ context, tooltipContext })}
+        <Tooltip.Root class="text-xs" contained={false} y={-3} x={context.width + 8} variant="none">
           <div class="whitespace-nowrap">
-            {format(data.date, 'eee, MMM do')}
+            {format(tooltipContext.data.date, 'eee, MMM do')}
           </div>
           <div class="font-semibold">
-            {data.value}
+            {tooltipContext.data.value}
           </div>
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </LineChart>
   </div>
 </Preview>
@@ -94,16 +87,16 @@
             highlight: { points: { r: 3, class: 'stroke-none' } },
           }}
         >
-          <svelte:fragment slot="tooltip" let:height>
-            <Tooltip.Root class="text-xs" contained={false} y={height + 4} xOffset={0} let:data>
+          {#snippet tooltip({ context, tooltipContext })}
+            <Tooltip.Root class="text-xs" contained={false} y={context.height + 4} xOffset={0}>
               <div class="whitespace-nowrap">
-                {format(data.date, 'eee, MMM do')}
+                {format(tooltipContext.data.date, 'eee, MMM do')}
               </div>
               <div class="font-semibold">
-                {data.value}
+                {tooltipContext.data.value}
               </div>
             </Tooltip.Root>
-          </svelte:fragment>
+          {/snippet}
         </LineChart>
       </span> Sed ipsum justo, facilisis id tempor hendrerit, suscipit eu ipsum. Mauris ut sapien quis
       nibh volutpat venenatis. Ut viverra justo varius sapien convallis venenatis vel faucibus urna.
