@@ -1376,6 +1376,7 @@
     class={layerClass('root-container')}
   >
     {#key isMounted}
+      <!-- svelte-ignore ownership_invalid_binding -->
       <TransformContext
         bind:transformContext
         mode={(transform?.mode ?? geo?.applyTransform?.length) ? 'manual' : 'none'}
@@ -1391,8 +1392,10 @@
           <!-- svelte-ignore ownership_invalid_binding -->
           <GeoContext {...geo} bind:geoContext>
             {#snippet children({ geoContext })}
+              <!-- svelte-ignore ownership_invalid_binding -->
               <BrushContext {...brushProps} bind:brushContext>
                 {#snippet children({ brushContext })}
+                  <!-- svelte-ignore ownership_invalid_binding -->
                   <TooltipContext {...tooltipProps} bind:tooltipContext>
                     {#snippet children({ tooltipContext })}
                       {@render _children?.({

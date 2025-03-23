@@ -342,7 +342,10 @@
   });
 </script>
 
+<!-- svelte-ignore ownership_invalid_binding -->
 <Chart
+  bind:tooltipContext
+  bind:context
   data={chartData}
   x={xProp ??
     (stackSeries
@@ -377,8 +380,6 @@
         debug,
         ...props.tooltip?.context,
       }}
-  bind:tooltipContext
-  bind:context
 >
   {#snippet children({ context, brushContext, geoContext, tooltipContext, transformContext })}
     {@const snippetProps = {

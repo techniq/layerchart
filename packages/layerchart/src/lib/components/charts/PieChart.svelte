@@ -247,8 +247,10 @@
   });
 </script>
 
+<!-- svelte-ignore ownership_invalid_binding -->
 <Chart
   bind:context
+  bind:tooltipContext
   data={visibleData}
   x={value}
   y={key}
@@ -269,7 +271,6 @@
   padding={{ bottom: legend === true ? 32 : 0 }}
   {...restProps}
   tooltip={tooltip === false ? false : props.tooltip?.context}
-  bind:tooltipContext
 >
   {#snippet children({ brushContext, context, geoContext, tooltipContext, transformContext })}
     {@const snippetProps = {

@@ -286,8 +286,10 @@
   });
 </script>
 
+<!-- svelte-ignore ownership_invalid_binding -->
 <Chart
   bind:context
+  bind:tooltipContext
   data={chartData}
   {x}
   {xDomain}
@@ -310,7 +312,6 @@
         debug,
         ...props.tooltip?.context,
       }}
-  bind:tooltipContext
   brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
     ? {
         axis: 'x',
