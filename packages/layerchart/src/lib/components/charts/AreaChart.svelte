@@ -85,8 +85,9 @@
     chartDataArray,
     defaultChartPadding,
     findRelatedData,
-  } from '../../utils/common.js';
-  import { asAny } from '../../utils/types.js';
+    type Accessor,
+  } from '$lib/utils/common.js';
+  import { asAny } from '$lib/utils/types.js';
   import Spline from '../Spline.svelte';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import { createHighlightKey } from './utils.svelte.js';
@@ -108,7 +109,6 @@
     legend = false,
     points = false,
     rule = true,
-    tooltipContext = $bindable(),
     onTooltipClick = () => {},
     onPointClick,
     props = {},
@@ -125,6 +125,9 @@
     marks,
     highlight,
     context = $bindable(),
+    brushContext = $bindable(),
+    transformContext = $bindable(),
+    tooltipContext = $bindable(),
     ...restProps
   }: AreaChartProps<TData> = $props();
 
@@ -248,15 +251,15 @@
     return pointsProps;
   }
 
+  function isStackData(d: TData): d is TData & { stackData: any[] } {
+    return d && typeof d === 'object' && 'stackData' in d;
+  }
+
   function getLabelsProps(s: (typeof series)[number], i: number) {
     const labelsProps: ComponentProps<typeof Labels<TData>> = {
       data: s.data,
       y: stackSeries
-        ? (d) => {
-            if (d && typeof d === 'object' && 'stackData' in d) {
-              return (d as TData & { stackData?: any }).stackData[i][1];
-            }
-          }
+        ? (d) => (isStackData(d) ? d.stackData[i][1] : undefined)
         : Array.isArray(s.value)
           ? s.value[1]
           : (s.value ?? (s.data ? undefined : s.key)),
@@ -291,21 +294,28 @@
       return visibleSeries;
     },
   });
+
+  function resolveAccessor(acc: Accessor<TData> | undefined) {
+    if (acc) return acc;
+    if (stackSeries) {
+      return (d: TData) =>
+        isStackData(d) ? visibleSeries.flatMap((s, i) => d.stackData[i]) : undefined;
+    }
+    return visibleSeries.map((s) => s.value ?? s.key);
+  }
 </script>
 
 <!-- svelte-ignore ownership_invalid_binding -->
 <Chart
   bind:context
   bind:tooltipContext
+  bind:brushContext
+  bind:transformContext
   data={chartData}
   {x}
   {xDomain}
   {xScale}
-  y={y ??
-    (stackSeries
-      ? // @ts-expect-error TODO - investigate
-        (d) => visibleSeries.flatMap((s, i) => d.stackData[i])
-      : visibleSeries.map((s) => s.value ?? s.key))}
+  y={resolveAccessor(y)}
   yBaseline={0}
   yNice
   {radial}

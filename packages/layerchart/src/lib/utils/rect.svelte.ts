@@ -59,8 +59,7 @@ function resolveInsets(insets?: Insets): ResolvedInsets {
 
 export function createDimensionGetter<TData>(
   ctx: ChartContextValue<TData>,
-  getOptions?: () => DimensionGetterOptions,
-  debug = false
+  getOptions?: () => DimensionGetterOptions
 ) {
   const options = $derived(getOptions?.());
 

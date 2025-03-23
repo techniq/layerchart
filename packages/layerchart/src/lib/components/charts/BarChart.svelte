@@ -102,9 +102,10 @@
     chartDataArray,
     defaultChartPadding,
     findRelatedData,
-  } from '../../utils/common.js';
-  import { asAny } from '../../utils/types.js';
-  import type { Insets } from '../../utils/rect.svelte.js';
+    type Accessor,
+  } from '$lib/utils/common.js';
+  import { asAny } from '$lib/utils/types.js';
+  import type { Insets } from '$lib/utils/rect.svelte.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import type { AnyScale } from '$lib/utils/scales.svelte.js';
   import { createHighlightKey } from './utils.svelte.js';
@@ -212,6 +213,10 @@
       : undefined
   );
 
+  function isStackData(d: TData): d is TData & { stackData: any[] } {
+    return d && typeof d === 'object' && 'stackData' in d;
+  }
+
   const allSeriesData = $derived(
     visibleSeries
       .flatMap((s) =>
@@ -281,6 +286,7 @@
     const valueAccessor = stackSeries
       ? (d: any) => d.stackData[i]
       : (s.value ?? (s.data ? undefined : s.key));
+
     const barsProps: ComponentProps<typeof Bars> = {
       data: s.data,
       x: !isVertical ? valueAccessor : undefined,
@@ -343,6 +349,15 @@
       return visibleSeries;
     },
   });
+
+  function resolveAccessor(acc: Accessor<TData> | undefined) {
+    if (acc) return acc;
+    if (stackSeries) {
+      return (d: TData) =>
+        isStackData(d) ? visibleSeries.flatMap((s, i) => d.stackData[i]) : undefined;
+    }
+    return visibleSeries.map((s) => s.value ?? s.key);
+  }
 </script>
 
 <!-- svelte-ignore ownership_invalid_binding -->
@@ -350,21 +365,14 @@
   bind:tooltipContext
   bind:context
   data={chartData}
-  x={xProp ??
-    (stackSeries
-      ? // @ts-expect-error - TODO: lets fix this somehow
-        (d) => visibleSeries.flatMap((s, i) => d.stackData[i])
-      : visibleSeries.map((s) => s.value ?? s.key))}
+  x={resolveAccessor(xProp)}
   {xScale}
   {xBaseline}
   xNice={orientation === 'horizontal'}
   {x1Scale}
   {x1Domain}
   {x1Range}
-  y={yProp ??
-    (stackSeries
-      ? (d) => visibleSeries.flatMap((s, i) => d.stackData[i])
-      : visibleSeries.map((s) => s.value ?? s.key))}
+  y={resolveAccessor(yProp)}
   {yScale}
   {yBaseline}
   yNice={orientation === 'vertical'}
