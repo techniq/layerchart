@@ -186,6 +186,5 @@
     {opacity}
     {tweened}
     {...extractLayerProps(restProps, 'bar')}
-    {...restProps}
   />
 {/if}
