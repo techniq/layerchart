@@ -269,6 +269,11 @@ export type BaseChartProps<
    */
   debug?: boolean;
 
+  /**
+   * A bindable reference to the chart context.
+   */
+  context?: ChartContextValue<TData>;
+
   children?: ChartSnippet;
   aboveContext?: ChartSnippet;
   belowContext?: ChartSnippet;

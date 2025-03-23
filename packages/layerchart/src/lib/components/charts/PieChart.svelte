@@ -29,6 +29,7 @@
     | 'tooltipContext'
     | 'cRange'
     | 'padding'
+    | 'context'
   > & {
     /**
      * Key accessor
@@ -181,6 +182,7 @@
     belowMarks,
     aboveMarks,
     marks,
+    context = $bindable(),
     ...restProps
   }: PieChartProps<TData> = $props();
 
@@ -246,6 +248,7 @@
 </script>
 
 <Chart
+  bind:context
   data={visibleData}
   x={value}
   y={key}

@@ -144,6 +144,7 @@
     aboveMarks,
     marks,
     highlight,
+    context = $bindable(),
     ...restProps
   }: BarChartProps<TData> = $props();
 
@@ -377,6 +378,7 @@
         ...props.tooltip?.context,
       }}
   bind:tooltipContext
+  bind:context
 >
   {#snippet children({ context, brushContext, geoContext, tooltipContext, transformContext })}
     {@const snippetProps = {

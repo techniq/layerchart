@@ -121,6 +121,7 @@
     aboveMarks,
     marks,
     highlight,
+    context = $bindable(),
     ...restProps
   }: AreaChartProps<TData> = $props();
 
@@ -286,6 +287,7 @@
 </script>
 
 <Chart
+  bind:context
   data={chartData}
   {x}
   {xDomain}

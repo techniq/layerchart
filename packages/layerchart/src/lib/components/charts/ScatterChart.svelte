@@ -95,6 +95,7 @@
     aboveMarks,
     marks,
     highlight,
+    context = $bindable(),
     ...restProps
   }: ScatterChartProps<TData> = $props();
 
@@ -172,6 +173,7 @@
 </script>
 
 <Chart
+  bind:context
   data={chartData}
   x={xProp}
   {xDomain}

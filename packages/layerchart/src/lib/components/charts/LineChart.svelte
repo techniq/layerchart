@@ -111,6 +111,7 @@
     aboveMarks,
     marks,
     highlight,
+    context = $bindable(),
     ...restProps
   }: LineChartProps<TData & { stackData?: any }> = $props();
 
@@ -215,6 +216,7 @@
 </script>
 
 <Chart
+  bind:context
   data={chartData}
   x={xProp}
   {xDomain}

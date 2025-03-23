@@ -668,6 +668,11 @@
     >;
 
     /**
+     * A bindable reference to the chart context.
+     */
+    context?: ChartContextValue<T>;
+
+    /**
      * Props passed to GeoContext
      */
     geo?: Partial<ComponentProps<typeof GeoContext>>;
@@ -801,6 +806,7 @@
     geoContext = $bindable(),
     brushContext = $bindable(),
     tooltipContext = $bindable(),
+    context: contextProp = $bindable(),
     tooltip,
     transform,
     onTransform,
@@ -1289,6 +1295,8 @@
       return ref;
     },
   };
+
+  contextProp = context;
 
   setChartContext(context);
 
