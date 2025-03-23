@@ -729,8 +729,6 @@
     ondragstart?: ComponentProps<typeof TransformContext>['ondragstart'];
     ondragend?: ComponentProps<typeof TransformContext>['ondragend'];
     onTransform?: ComponentProps<typeof TransformContext>['onTransform'];
-
-    _internal?: LayerChartInternalMeta;
   };
 </script>
 
@@ -784,7 +782,6 @@
     xBaseline = null,
     yBaseline = null,
     meta = {},
-    _internal = { type: 'default' },
     children: _children,
     radial = false,
     xRange: _xRangeProp,
