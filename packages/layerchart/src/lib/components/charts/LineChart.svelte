@@ -79,6 +79,7 @@
   import { createHighlightKey } from './utils.svelte.js';
   import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
+  import { layerClass } from 'layerchart/utils/attributes.js';
 
   let {
     data = [],
@@ -142,6 +143,7 @@
       ...props.spline,
       ...s.props,
       class: cls(
+        layerClass('line-chart-line'),
         'transition-opacity',
         // Checking `visibleSeries.length > 1` fixes re-animated tweened areas on hover
         visibleSeries.length > 1 &&
