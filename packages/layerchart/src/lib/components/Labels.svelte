@@ -6,26 +6,34 @@
   import Points, { type Point } from './Points.svelte';
   import { accessor, type Accessor } from '../utils/common.js';
 
-  export type LabelsPropsWithoutHTML = {
+  export type LabelsPropsWithoutHTML<T = any> = {
     /**
      * Override data instead of using context
      */
-    data?: any;
+    data?: T;
 
     /**
      * Override display value accessor.  By default, uses `y` unless yScale is band scale
      */
-    value?: Accessor;
+    value?: Accessor<T>;
+
+    /**
+     * The fill color of the label, which can either be a string or an accessor function
+     * that returns a valid `fill` color value.
+     *
+     * The accessor is useful for dynamic fill colors based on the data the label represents.
+     */
+    fill?: string | Accessor<T>;
 
     /**
      * Override `x` accessor from Chart context
      */
-    x?: Accessor;
+    x?: Accessor<T>;
 
     /**
      * Override `y` accessor from Chart context
      */
-    y?: Accessor;
+    y?: Accessor<T>;
 
     /**
      * The placement of the label relative to the point
@@ -51,15 +59,16 @@
      *
      * @default (d, index) => index
      */
-    key?: (d: any, index: number) => any;
+    key?: (d: T, index: number) => any;
 
     children?: Snippet<[{ data: Point; textProps: ComponentProps<typeof Text> }]>;
   };
 
-  export type LabelsProps = LabelsPropsWithoutHTML & Without<TextProps, LabelsPropsWithoutHTML>;
+  export type LabelsProps<T = any> = LabelsPropsWithoutHTML<T> &
+    Without<TextProps, LabelsPropsWithoutHTML<T>>;
 </script>
 
-<script lang="ts">
+<script lang="ts" generics="TData = any">
   import { cls } from '@layerstack/tailwind';
 
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
@@ -79,12 +88,17 @@
     key = (_: any, i: number) => i,
     children: childrenProp,
     class: className,
+    fill,
     ...restProps
-  }: LabelsProps = $props();
+  }: LabelsProps<TData> = $props();
 
   function getTextProps(point: Point): ComponentProps<typeof Text> {
     // Used for positioning
     const pointValue = isScaleBand(ctx.yScale) ? point.xValue : point.yValue;
+
+    // extract the true fill value from `fill` which could be an
+    // accessor function or string/undefined
+    const fillValue = typeof fill === 'function' ? accessor(fill)(point.data) : fill;
 
     const displayValue = value
       ? accessor(value)(point.data)
@@ -108,6 +122,7 @@
         // left
         return {
           value: formattedValue,
+          fill: fillValue,
           x: point.x + (placement === 'outside' ? -offset : offset),
           y: point.y,
           textAnchor: placement === 'outside' ? 'end' : 'start',
@@ -118,6 +133,7 @@
         // right
         return {
           value: formattedValue,
+          fill: fillValue,
           x: point.x + (placement === 'outside' ? offset : -offset),
           y: point.y,
           textAnchor: placement === 'outside' ? 'start' : 'end',
@@ -131,6 +147,7 @@
         // bottom
         return {
           value: formattedValue,
+          fill: fillValue,
           x: point.x,
           y: point.y + (placement === 'outside' ? offset : -offset),
           capHeight: '.6rem',
@@ -142,6 +159,7 @@
         // top
         return {
           value: formattedValue,
+          fill: fillValue,
           x: point.x,
           y: point.y + (placement === 'outside' ? -offset : offset),
           capHeight: '.6rem',

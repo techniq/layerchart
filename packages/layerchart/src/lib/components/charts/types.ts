@@ -201,7 +201,7 @@ export type BaseChartProps<
    *
    * @default false
    */
-  labels?: ComponentProps<typeof Labels> | boolean;
+  labels?: ComponentProps<typeof Labels<TData>> | boolean;
   /**
    * The legend to be used for the chart.
    *

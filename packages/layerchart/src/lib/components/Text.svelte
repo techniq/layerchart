@@ -11,6 +11,11 @@
     value?: string | number;
 
     /**
+     * The fill color of the text
+     */
+    fill?: string;
+
+    /**
      * Maximum width to occupy (approximate as words are not split)
      */
     width?: number;
