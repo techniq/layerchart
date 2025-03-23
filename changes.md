@@ -160,3 +160,24 @@ When used with one of the simplified charts, it will have more information popul
 All underlying elements rendered by LayerChart _should_ now have an identifiable classname, prefixed with `lc-` to prevent conflicts with other libraries and your own styles (e.g. `lc-bar`, `lc-arc`, `lc-tooltip-context`, etc.) Perhaps we should document these somehow in the API reference, we'd need a source of truth and checks to ensure they do in fact exist though.
 
 This should make it easier to style the various elements included within the chart components.
+
+## Chart Context via Simplified Charts
+
+You can now get a reference to the `<Chart>` context via the simplified charts by using `bind:context` on the simplified chart.
+This is useful for getting the height, width, and other properties of the chart for motion, etc.
+
+```svelte
+<script lang="ts">
+  import { BarChart, AreaChart } from 'layerchart';
+
+  let barContext = $state<ChartContext<any>>();
+  let areaContext = $state<ChartContext<any>>();
+</script>
+
+<BarChart bind:context={barContext}>
+  <!-- ... -->
+</BarChart>
+<AreaChart bind:context={areaContext}>
+  <!-- ... -->
+</AreaChart>
+```
