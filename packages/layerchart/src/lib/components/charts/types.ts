@@ -88,7 +88,7 @@ export type SimplifiedChartSnippet<TData, TComponent extends Component, TSnippet
   [SimplifiedChartSnippetProps<TData, TComponent, TSnippetProps>]
 >;
 
-export type SimplifiedChartPropsObject = {
+export type SimplifiedChartPropsObject<TData = any> = {
   area?: Partial<ComponentProps<typeof Area>>;
   arc?: Partial<ComponentProps<typeof Arc>>;
   bars?: Partial<ComponentProps<typeof Bars>>;
@@ -97,7 +97,7 @@ export type SimplifiedChartPropsObject = {
   grid?: Partial<ComponentProps<typeof Grid>>;
   group?: Partial<ComponentProps<typeof Group>>;
   highlight?: Partial<ComponentProps<typeof Highlight>>;
-  labels?: Partial<ComponentProps<typeof Labels>>;
+  labels?: Partial<ComponentProps<typeof Labels<TData>>>;
   legend?: Partial<ComponentProps<typeof Legend>>;
   line?: Partial<ComponentProps<typeof Line>>;
   pie?: Partial<ComponentProps<typeof Pie>>;

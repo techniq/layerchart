@@ -1,11 +1,14 @@
 <script lang="ts" module>
   export type BarChartExtraSnippetProps<TData> = {
     getBarsProps: (s: SeriesData<TData, typeof Bars>, i: number) => ComponentProps<typeof Bars>;
-    getLabelsProps: (s: SeriesData<TData, typeof Bars>, i: number) => ComponentProps<typeof Labels>;
+    getLabelsProps: (
+      s: SeriesData<TData, typeof Bars>,
+      i: number
+    ) => ComponentProps<typeof Labels<TData>>;
   };
 
-  export type BarChartPropsObjProp = Pick<
-    SimplifiedChartPropsObject,
+  export type BarChartPropsObjProp<TData> = Pick<
+    SimplifiedChartPropsObject<TData>,
     | 'xAxis'
     | 'yAxis'
     | 'canvas'
@@ -51,7 +54,7 @@
      */
     orientation?: 'vertical' | 'horizontal';
 
-    props?: BarChartPropsObjProp;
+    props?: BarChartPropsObjProp<TData>;
 
     /**
      * A callback function that is called when a bar is clicked.
@@ -304,7 +307,7 @@
   }
 
   function getLabelsProps(s: SeriesData<TData, typeof Bars>, i: number) {
-    const labelsProps: ComponentProps<typeof Labels> = {
+    const labelsProps: ComponentProps<typeof Labels<TData>> = {
       // TODO: Improve placement when using `seriesLayout="group"`
       // data: s.data,
       // y: s.value ?? (s.data ? undefined : s.key),

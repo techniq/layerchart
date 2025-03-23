@@ -7,7 +7,7 @@
     getLabelsProps: (
       s: SeriesData<TData, typeof Spline>,
       i: number
-    ) => ComponentProps<typeof Labels>;
+    ) => ComponentProps<typeof Labels<TData>>;
     getPointsProps: (
       s: SeriesData<TData, typeof Spline>,
       i: number
@@ -113,20 +113,18 @@
     highlight,
     context = $bindable(),
     ...restProps
-  }: LineChartProps<TData & { stackData?: any }> = $props();
+  }: LineChartProps<TData> = $props();
 
   const isDefaultSeries = $derived(series.length === 1 && series[0].key === 'default');
 
   const allSeriesData = $derived(
     series
       .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
-      .filter((d) => d) as Array<TData & { stackData?: any }>
+      .filter((d) => d) as Array<TData>
   );
 
   const chartData = $derived(
-    (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<
-      TData & { stackData?: any }
-    >
+    (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<TData>
   );
 
   // Default xScale based on first data's `x` value
@@ -136,7 +134,7 @@
 
   const highlightKey = createHighlightKey<TData, typeof Spline>();
 
-  function getSplineProps(s: SeriesData<TData & { stackData?: any }, typeof Spline>, i: number) {
+  function getSplineProps(s: SeriesData<TData, typeof Spline>, i: number) {
     const splineProps: ComponentProps<typeof Spline> = {
       data: s.data,
       y: s.value ?? (s.data ? undefined : s.key),
@@ -158,7 +156,7 @@
     return splineProps;
   }
 
-  function getPointsProps(s: SeriesData<TData & { stackData?: any }, typeof Spline>, i: number) {
+  function getPointsProps(s: SeriesData<TData, typeof Spline>, i: number) {
     const pointsProps: ComponentProps<typeof Points> = {
       data: s.data,
       y: s.value ?? (s.data ? undefined : s.key),
@@ -176,8 +174,8 @@
     return pointsProps;
   }
 
-  function getLabelsProps(s: SeriesData<TData & { stackData?: any }, typeof Spline>, i: number) {
-    const labelsProps: ComponentProps<typeof Labels> = {
+  function getLabelsProps(s: SeriesData<TData, typeof Spline>, i: number) {
+    const labelsProps: ComponentProps<typeof Labels<TData>> = {
       data: s.data,
       y: s.value ?? (s.data ? undefined : s.key),
       ...props.labels,

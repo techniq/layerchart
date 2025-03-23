@@ -7,7 +7,7 @@
     getLabelsProps: (
       s: SeriesData<TData, typeof Points>,
       i: number
-    ) => ComponentProps<typeof Labels>;
+    ) => ComponentProps<typeof Labels<TData>>;
     getPointsProps: (
       s: SeriesData<TData, typeof Points>,
       i: number
@@ -147,7 +147,7 @@
   }
 
   function getLabelsProps(s: SeriesData<TData, typeof Points>, i: number) {
-    const labelsProps: ComponentProps<typeof Labels> = {
+    const labelsProps: ComponentProps<typeof Labels<TData>> = {
       data: s.data,
       ...props.labels,
       ...(typeof labels === 'object' ? labels : null),

@@ -5,7 +5,10 @@
    */
   export type AreaChartExtraSnippetProps<TData> = {
     getAreaProps: (s: SeriesData<TData, typeof Area>, i: number) => ComponentProps<typeof Area>;
-    getLabelsProps: (s: SeriesData<TData, typeof Area>, i: number) => ComponentProps<typeof Labels>;
+    getLabelsProps: (
+      s: SeriesData<TData, typeof Area>,
+      i: number
+    ) => ComponentProps<typeof Labels<TData>>;
     getPointsProps: (s: SeriesData<TData, typeof Area>, i: number) => ComponentProps<typeof Points>;
   };
 
@@ -246,10 +249,14 @@
   }
 
   function getLabelsProps(s: (typeof series)[number], i: number) {
-    const labelsProps: ComponentProps<typeof Labels> = {
+    const labelsProps: ComponentProps<typeof Labels<TData>> = {
       data: s.data,
       y: stackSeries
-        ? (d) => d.stackData[i][1]
+        ? (d) => {
+            if (d && typeof d === 'object' && 'stackData' in d) {
+              return (d as TData & { stackData?: any }).stackData[i][1];
+            }
+          }
         : Array.isArray(s.value)
           ? s.value[1]
           : (s.value ?? (s.data ? undefined : s.key)),
