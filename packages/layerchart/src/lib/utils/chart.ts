@@ -12,33 +12,6 @@ import type { AnyScale } from './scales.svelte.js';
 import { arraysEqual } from './array.js';
 import { toTitleCase } from './string.js';
 import { InternSet } from 'd3-array';
-import type { Accessor } from './common.js';
-import type { SimulationNodeDatum } from 'd3-force';
-
-type DomainFunction = (extent: number[]) => Array<number | null>;
-type DomainArray = Array<number | null>;
-
-type NormalizeArray<T> =
-  T extends Array<infer U> ? (U extends string | number ? number[] : never) : never;
-
-function normalizeExtent(values: Array<number | string | Date> | undefined): number[] {
-  if (!values) return [0, 0];
-
-  return values.map((value): number => {
-    if (typeof value === 'number') {
-      return Number.isFinite(value) ? value : 0;
-    }
-    if (typeof value === 'string') {
-      const num = Number(value);
-      return Number.isNaN(num) ? 0 : num;
-    }
-    if (value instanceof Date) {
-      const timestamp = value.getTime();
-      return Number.isNaN(timestamp) ? 0 : timestamp;
-    }
-    return 0;
-  });
-}
 
 /**
  * Creates a function to calculate a domain based on extents and a domain directive.
@@ -150,7 +123,7 @@ export function createLayerCakeScale(
 // These scales have a discrete range so they can't be padded
 const unpaddable = ['scaleThreshold', 'scaleQuantile', 'scaleQuantize', 'scaleSequentialQuantile'];
 
-export function padScale(scale: AnyScale, padding: PaddingArray | undefined) {
+function padScale(scale: AnyScale, padding: PaddingArray | undefined) {
   if (typeof scale.range !== 'function') {
     throw new Error('Scale method `range` must be a function');
   }
@@ -316,7 +289,7 @@ export function findScaleName(scale: any) {
  * @param  scale A D3 scale
  * @returns Whether the scale is an ordinal scale
  */
-export function isOrdinalDomain(scale: AnyScale) {
+function isOrdinalDomain(scale: AnyScale) {
   // scaleBand, scalePoint
   if (typeof scale.bandwidth === 'function') return true;
 
@@ -418,7 +391,7 @@ export interface UniqueResults {
  * @returns  An object with unique values for each specified field
  * @throws {TypeError} If data is not an array or fields is not a valid object
  */
-export function calcUniques<T>(
+function calcUniques<T>(
   data: DataType<T>,
   fields: FieldAccessors<T>,
   sortOptions: SortOptions = {}
@@ -492,7 +465,7 @@ function calcBaseRange(
   return reverse === true ? [max, min] : [min, max];
 }
 
-export function getDefaultRange(
+function getDefaultRange(
   s: AxisKey,
   width: number,
   height: number,
@@ -521,7 +494,7 @@ type ScaleWithProps = AnyScale & {
   domain: () => number[];
 };
 
-export function findScaleType(scale: ScaleWithProps): ScaleType {
+function findScaleType(scale: ScaleWithProps): ScaleType {
   if (scale.constant) {
     return 'symlog';
   }
@@ -567,7 +540,7 @@ function pow(exponent: number): (x: number) => number {
   };
 }
 
-export function getPadFunctions(scale: ScaleWithProps): TransformFunctions {
+function getPadFunctions(scale: ScaleWithProps): TransformFunctions {
   const scaleType = findScaleType(scale);
 
   switch (scaleType) {
@@ -632,7 +605,7 @@ export function createGetter<TData>(accessor: (d: TData) => any, scale: AnyScale
  * @param fields An object containing `x`, `y`, `r` or `z` keys that equal an accessor function.
  * @returns An object with the same structure as `fields` but with min/max arrays.
  */
-export function calcExtents<T>(data: DataType<T>, fields: FieldAccessors<T>): UniqueResults {
+function calcExtents<T>(data: DataType<T>, fields: FieldAccessors<T>): UniqueResults {
   if (!Array.isArray(data)) {
     throw new TypeError(
       `The first argument of calcExtents() must be an array. You passed in a ${typeof data}. If you got this error using the <LayerCake> component, consider passing a flat array to the \`flatData\` prop. More info: https://layercake.graphics/guide/#flatdata`
