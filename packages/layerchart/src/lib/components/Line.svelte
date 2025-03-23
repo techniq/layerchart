@@ -98,7 +98,7 @@
   import { createKey } from '$lib/utils/key.svelte.js';
   import { afterTick } from '$lib/utils/afterTick.js';
   import { createId } from '$lib/utils/createId.js';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { layerClass } from 'layerchart/utils/attributes.js';
 
   const uid = $props.id();
 
@@ -204,8 +204,7 @@
     marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
     marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
     marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-    class={cls(stroke === undefined && 'stroke-surface-content', className)}
-    {...createDataAttr('line')}
+    class={cls(layerClass('line'), stroke === undefined && 'stroke-surface-content', className)}
     {...restProps}
   />
   <MarkerWrapper id={markerStartId} marker={markerStart ?? marker} />

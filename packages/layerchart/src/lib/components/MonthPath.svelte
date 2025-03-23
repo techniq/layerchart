@@ -30,9 +30,16 @@
 <script lang="ts">
   import { timeWeek, timeYear } from 'd3-time';
   import { endOfMonth } from 'date-fns';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { cls } from '@layerstack/tailwind';
+  import { layerClass } from 'layerchart/utils/attributes.js';
 
-  let { date, cellSize: cellSizeProp, ref = $bindable(), ...restProps }: MonthPathProps = $props();
+  let {
+    date,
+    cellSize: cellSizeProp,
+    ref = $bindable(),
+    class: className,
+    ...restProps
+  }: MonthPathProps = $props();
 
   const cellSize = $derived(
     Array.isArray(cellSizeProp) ? cellSizeProp : [cellSizeProp, cellSizeProp]
@@ -60,7 +67,6 @@
   bind:this={ref}
   d={pathData}
   fill="none"
-  class="stroke-surface-content/20"
+  class={cls(layerClass('month-path'), 'stroke-surface-content/20', className)}
   {...restProps}
-  {...createDataAttr('month-path')}
 />

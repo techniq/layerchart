@@ -145,7 +145,7 @@
   } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
   import { getChartContext } from '../Chart.svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { layerClass } from 'layerchart/utils/attributes.js';
 
   let {
     ref = $bindable(),
@@ -358,9 +358,9 @@
 
 <canvas
   bind:this={ref}
-  {...createDataAttr('layout-canvas')}
   style:z-index={zIndex}
   class={cls(
+    layerClass('layout-canvas'),
     'absolute top-0 left-0 w-full h-full',
     pointerEvents === false && 'pointer-events-none',
     className
@@ -417,6 +417,7 @@
 <canvas
   bind:this={hitCanvasElement}
   class={cls(
+    layerClass('hit-canvas'),
     'layerchart-hitcanvas',
     'absolute top-0 left-0 w-full h-full',
     'pointer-events-none', // events all handled by main canvas

@@ -40,7 +40,7 @@
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
   import BrushContext, { type BrushContextValue } from './BrushContext.svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -1365,7 +1365,7 @@
     style:pointer-events={pointerEvents === false ? 'none' : null}
     bind:clientWidth={containerWidthProp}
     bind:clientHeight={containerHeightProp}
-    {...createDataAttr('root-container')}
+    class={layerClass('root-container')}
   >
     {#key isMounted}
       <TransformContext
@@ -1407,11 +1407,11 @@
 {/if}
 
 <style>
-  [data-lc-root-container],
-  [data-lc-root-container] :global(*) {
+  .lc-root-container,
+  .lc-root-container :global(*) {
     box-sizing: border-box;
   }
-  [data-lc-root-container] {
+  .lc-root-container {
     width: 100%;
     height: 100%;
   }

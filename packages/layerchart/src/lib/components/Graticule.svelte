@@ -15,7 +15,7 @@
 
 <script lang="ts">
   import { geoGraticule } from 'd3-geo';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
 
   let { lines, outline, step = [10, 10], ...restProps }: GraticuleProps = $props();
 
@@ -24,27 +24,24 @@
   $effect(() => {
     graticule.step(step);
   });
-
-  const pathAttr = createDataAttr('graticule-path');
 </script>
 
-<g {...createDataAttr('graticule-root')}>
+<g class={layerClass('graticule-g')}>
   <!-- TODO: Any reason to still render the single `MultiLineString` path if using `lines` and/or `outline` -->
   {#if !lines && !outline}
-    <GeoPath {...pathAttr} geojson={graticule()} {...restProps} />
+    <GeoPath geojson={graticule()} {...extractLayerProps(restProps, 'graticule-geo-path')} />
   {/if}
 
   {#if lines}
     {#each graticule.lines() as line}
-      <GeoPath {...pathAttr} geojson={line} {...typeof lines === 'object' ? lines : null} />
+      <GeoPath geojson={line} {...extractLayerProps(lines, 'graticule-geo-line')} />
     {/each}
   {/if}
 
   {#if outline}
     <GeoPath
-      {...pathAttr}
       geojson={graticule.outline()}
-      {...typeof outline === 'object' ? outline : null}
+      {...extractLayerProps(outline, 'graticule-geo-outline')}
     />
   {/if}
 </g>

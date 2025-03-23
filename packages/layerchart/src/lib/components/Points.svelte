@@ -1,4 +1,7 @@
 <script lang="ts" module>
+  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+  import type { ComponentProps, Snippet } from 'svelte';
+
   export type Point = { x: number; y: number; r: number; xValue: any; yValue: any; data: any };
   type Offset = number | ((value: number, context: any) => number) | undefined;
 
@@ -49,7 +52,6 @@
 </script>
 
 <script lang="ts">
-  import { type ComponentProps, type Snippet } from 'svelte';
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
   import { notNull } from '@layerstack/utils';
@@ -58,9 +60,8 @@
   import Link from './Link.svelte';
   import { isScaleBand, type AnyScale } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
-  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import { getChartContext } from './Chart.svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -77,7 +78,6 @@
     stroke,
     strokeWidth,
     opacity,
-    class: className,
     children,
     ...restProps
   }: PointsProps = $props();
@@ -206,8 +206,7 @@
       <Link
         data={link}
         stroke={fill ?? (ctx.config.c ? ctx.cGet(link.data) : null)}
-        {...createDataAttr('link')}
-        {...typeof links === 'object' ? links : null}
+        {...extractLayerProps(links, 'points-link')}
       />
     {/each}
   {/if}
@@ -215,7 +214,6 @@
   {#each points as point}
     {@const radialPoint = pointRadial(point.x, point.y)}
     <Circle
-      {...createDataAttr('point')}
       cx={ctx.radial ? radialPoint[0] : point.x}
       cy={ctx.radial ? radialPoint[1] : point.y}
       r={point.r}
@@ -224,8 +222,7 @@
       {stroke}
       {strokeWidth}
       {opacity}
-      class={className}
-      {...restProps}
+      {...extractLayerProps(restProps, 'point')}
     />
   {/each}
 {/if}

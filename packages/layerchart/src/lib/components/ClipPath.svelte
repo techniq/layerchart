@@ -1,7 +1,7 @@
 <script lang="ts" module>
-  import { createDataAttr } from '$lib/utils/attributes.js';
   import { createId } from '$lib/utils/createId.js';
   import type { Without } from '$lib/utils/types.js';
+  import { layerClass } from 'layerchart/utils/attributes.js';
   import type { Snippet } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
 
@@ -58,7 +58,7 @@
 </script>
 
 <defs>
-  <clipPath {id} {...restProps} {...createDataAttr('clip-path')}>
+  <clipPath {id} {...restProps}>
     {@render clip?.({ id })}
 
     {#if useId}
@@ -71,7 +71,7 @@
   {#if disabled}
     {@render children({ id, url, useId })}
   {:else}
-    <g style:clip-path={url} {...createDataAttr('clip-path-g')}>
+    <g style:clip-path={url} class={layerClass('clip-path-g')}>
       {@render children({ id, url, useId })}
     </g>
   {/if}

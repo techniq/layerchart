@@ -1,6 +1,7 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Snippet } from 'svelte';
+  import type { Without } from '$lib/utils/types.js';
 
   export type TooltipHeaderPropsWithoutHTML = {
     /**
@@ -55,8 +56,7 @@
 <script lang="ts">
   import { format as formatUtil, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import type { Without } from '$lib/utils/types.js';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { layerClass } from 'layerchart/utils/attributes.js';
 
   let {
     ref = $bindable(),
@@ -79,9 +79,8 @@
 </script>
 
 <div
-  {...createDataAttr('tooltip-header')}
   class={cls(
-    'TooltipHeader',
+    layerClass('tooltip-header'),
     'font-semibold whitespace-nowrap border-b mb-1 pb-1 flex items-center gap-2',
     classes.root,
     props.root?.class,
@@ -93,9 +92,13 @@
   {#if color}
     <div
       bind:this={colorRef}
-      class={cls('color', 'inline-block size-2 rounded-full bg-[var(--color)]', classes.color)}
+      class={cls(
+        layerClass('tooltip-header-color'),
+        'color',
+        'inline-block size-2 rounded-full bg-[var(--color)]',
+        classes.color
+      )}
       style:--color={color}
-      {...createDataAttr('tooltip-header-color')}
     ></div>
   {/if}
   {#if children}

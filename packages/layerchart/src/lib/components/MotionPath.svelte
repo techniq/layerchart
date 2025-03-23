@@ -57,7 +57,7 @@
   import type { Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createId } from '$lib/utils/createId.js';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from 'layerchart/utils/attributes.js';
 
   const uid = $props.id();
 
@@ -95,8 +95,7 @@
     {fill}
     {rotate}
     bind:this={ref}
-    {...createDataAttr('motion-path')}
-    {...restProps}
+    {...extractLayerProps(restProps, 'motion-path')}
   >
     <mpath href="#{pathId}" />
   </animateMotion>

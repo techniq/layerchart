@@ -95,7 +95,7 @@
   import Spline from './Spline.svelte';
   import Circle from './Circle.svelte';
   import { getChartContext } from './Chart.svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps, layerClass } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -150,19 +150,13 @@
         : ctx.yScale.step() / 2 - (ctx.yScale.padding() * ctx.yScale.step()) / 2 // center
       : 0
   );
-
-  const lineAttr = createDataAttr('grid-line');
 </script>
 
-<g
-  {...createDataAttr('grid-root')}
-  bind:this={ref}
-  class={cls(classes.root, className)}
-  {...restProps}
->
+<g bind:this={ref} class={cls(layerClass('grid'), classes.root, className)} {...restProps}>
   {#if x}
-    {@const splineProps = typeof x === 'object' ? { ...lineAttr, ...x } : null}
-    <g in:transitionIn={transitionInParams} {...createDataAttr('grid-g')}>
+    {@const splineProps = extractLayerProps(x, 'grid-x-line')}
+
+    <g in:transitionIn={transitionInParams} class={layerClass('grid-x')}>
       {#each xTickVals as x (x)}
         {#if ctx.radial}
           <!--
@@ -176,7 +170,12 @@
             curve={curveLinearClosed}
             {tweened}
             {...splineProps}
-            class={cls('stroke-surface-content/10', classes.line, splineProps?.class)}
+            class={cls(
+              layerClass('grid-x-line'),
+              'stroke-surface-content/10',
+              classes.line,
+              splineProps?.class
+            )}
           />
         {:else}
           <Rule
@@ -185,7 +184,12 @@
             {tweened}
             {spring}
             {...splineProps}
-            class={cls('stroke-surface-content/10', classes.line, splineProps?.class)}
+            class={cls(
+              layerClass('grid-x-rule'),
+              'stroke-surface-content/10',
+              classes.line,
+              splineProps?.class
+            )}
           />
         {/if}
       {/each}
@@ -198,15 +202,20 @@
           {tweened}
           {spring}
           {...splineProps}
-          class={cls('stroke-surface-content/10', classes.line, splineProps?.class)}
+          class={cls(
+            layerClass('grid-x-end-rule'),
+            'stroke-surface-content/10',
+            classes.line,
+            splineProps?.class
+          )}
         />
       {/if}
     </g>
   {/if}
 
   {#if y}
-    {@const splineProps = typeof y === 'object' ? { ...lineAttr, ...y } : null}
-    <g in:transitionIn={transitionInParams}>
+    {@const splineProps = extractLayerProps(y, 'grid-y-line')}
+    <g in:transitionIn={transitionInParams} class={layerClass('grid-y')}>
       {#each yTickVals as y (y)}
         {#if ctx.radial}
           {#if radialY === 'circle'}
@@ -215,7 +224,12 @@
               {tweened}
               {spring}
               {...splineProps}
-              class={cls('fill-none stroke-surface-content/10', classes.line, splineProps?.class)}
+              class={cls(
+                layerClass('grid-y-circle'),
+                'fill-none stroke-surface-content/10',
+                classes.line,
+                splineProps?.class
+              )}
             />
           {:else}
             <!--
@@ -229,7 +243,12 @@
               {tweened}
               curve={curveLinearClosed}
               {...splineProps}
-              class={cls('stroke-surface-content/10', classes.line, splineProps?.class)}
+              class={cls(
+                layerClass('grid-y-line'),
+                'stroke-surface-content/10',
+                classes.line,
+                splineProps?.class
+              )}
             />
           {/if}
         {:else}
@@ -239,7 +258,12 @@
             {tweened}
             {spring}
             {...splineProps}
-            class={cls('stroke-surface-content/10', classes.line, splineProps?.class)}
+            class={cls(
+              layerClass('grid-y-rule'),
+              'stroke-surface-content/10',
+              classes.line,
+              splineProps?.class
+            )}
           />
         {/if}
       {/each}
@@ -252,7 +276,12 @@
           {tweened}
           {spring}
           {...splineProps}
-          class={cls('stroke-surface-content/10', classes.line, splineProps?.class)}
+          class={cls(
+            layerClass('grid-y-end-rule'),
+            'stroke-surface-content/10',
+            classes.line,
+            splineProps?.class
+          )}
         />
       {/if}
     </g>

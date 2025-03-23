@@ -54,7 +54,7 @@
   import Circle from './Circle.svelte';
   import Line, { type LinePropsWithoutHTML } from './Line.svelte';
   import { getChartContext } from './Chart.svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { layerClass } from 'layerchart/utils/attributes.js';
 
   let {
     x = false,
@@ -87,7 +87,7 @@
   }
 </script>
 
-<g {...createDataAttr('rule-g')}>
+<g class={layerClass('rule-g')}>
   {#if showRule(x, 'x')}
     {@const xCoord =
       x === true || x === 'left'
@@ -106,7 +106,7 @@
         {y1}
         {x2}
         {y2}
-        class={cls('stroke-surface-content/10', className)}
+        class={cls(layerClass('rule-x-radial-line'), 'stroke-surface-content/10', className)}
       />
     {:else}
       <Line
@@ -115,7 +115,7 @@
         x2={xCoord}
         y1={ctx.yRange[0] || 0}
         y2={ctx.yRange[1] || 0}
-        class={cls('stroke-surface-content/50', className)}
+        class={cls(layerClass('rule-x-line'), 'stroke-surface-content/50', className)}
       />
     {/if}
   {/if}
@@ -128,7 +128,11 @@
           : y === 'top'
             ? yRangeMinMax[0]
             : ctx.yScale(y) + yOffset}
-        class={cls('fill-none stroke-surface-content/50', className)}
+        class={cls(
+          layerClass('rule-y-radial-circle'),
+          'fill-none stroke-surface-content/50',
+          className
+        )}
       />
     {:else}
       <Line
@@ -145,7 +149,7 @@
           : y === 'top'
             ? yRangeMinMax[0]
             : ctx.yScale(y) + yOffset}
-        class={cls('stroke-surface-content/50', className)}
+        class={cls(layerClass('rule-y-line'), 'stroke-surface-content/50', className)}
       />
     {/if}
   {/if}

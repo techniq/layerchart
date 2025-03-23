@@ -36,7 +36,7 @@
   import { geoOrthographic, geoInterpolate } from 'd3-geo';
 
   import { getGeoContext } from './GeoContext.svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
     link,
@@ -72,10 +72,9 @@
 
 <Spline
   bind:ref
-  {...createDataAttr('geo-spline')}
   data={[source, middle, target]}
   x={(d) => d[0]}
   y={(d) => d[1]}
   {curve}
-  {...restProps}
+  {...extractLayerProps(restProps, 'geo-spline')}
 />

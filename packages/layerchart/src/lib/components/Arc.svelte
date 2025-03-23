@@ -138,7 +138,8 @@
   import { degreesToRadians } from '$lib/utils/math.js';
   import { getChartContext } from './Chart.svelte';
   import { afterTick } from '$lib/utils/afterTick.js';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import { cls } from '@layerstack/tailwind';
 
   let {
     ref = $bindable(),
@@ -169,6 +170,7 @@
     tooltipContext,
     track = false,
     children,
+    class: className,
     ...restProps
   }: ArcProps = $props();
 
@@ -279,16 +281,14 @@
 {#if track}
   <Spline
     pathData={trackArc()}
-    {...createDataAttr('arc-track')}
     stroke="none"
     bind:ref={trackRef}
-    {...typeof track === 'object' ? track : {}}
+    {...extractLayerProps(track, 'arc-track')}
   />
 {/if}
 
 <Spline
   bind:ref
-  {...createDataAttr('arc-line')}
   pathData={arc()}
   transform="translate({xOffset}, {yOffset})"
   {fill}
@@ -297,6 +297,7 @@
   stroke-width={strokeWidth}
   {opacity}
   {...restProps}
+  class={cls(layerClass('arc-line'), className)}
   onpointerenter={onPointerEnter}
   onpointermove={onPointerMove}
   onpointerleave={onPointerLeave}

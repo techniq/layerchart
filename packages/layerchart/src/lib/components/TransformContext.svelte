@@ -220,6 +220,7 @@
   import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
   import { cls } from '@layerstack/tailwind';
+  import { layerClass } from 'layerchart/utils/attributes.js';
 
   let {
     mode = 'none',
@@ -503,7 +504,7 @@
   onpointerup={onPointerUp}
   ondblclick={onDoubleClick}
   onclickcapture={onClick}
-  class={cls('h-full', className)}
+  class={cls(layerClass('transform-context'), 'h-full', className)}
   bind:this={ref}
   {...restProps}
 >

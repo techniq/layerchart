@@ -68,7 +68,7 @@
 
   import { getChartContext } from './Chart.svelte';
   import { afterTick } from '$lib/utils/afterTick.js';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -147,11 +147,10 @@
 {:else if renderCtx === 'svg'}
   <g
     style:transform
-    class={className}
+    class={cls(layerClass('group-g'), className)}
     {...restProps}
     ontouchmove={handleTouchMove}
     bind:this={ref}
-    {...createDataAttr('group-g')}
   >
     {@render children?.()}
   </g>
@@ -160,7 +159,7 @@
     bind:this={ref}
     style:transform
     {...restProps}
-    class={cls('absolute', className)}
+    class={cls(layerClass('group-div'), 'absolute', className)}
     ontouchmove={handleTouchMove}
   >
     {@render children?.()}

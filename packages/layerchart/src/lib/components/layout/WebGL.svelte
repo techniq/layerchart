@@ -64,7 +64,7 @@
   import { onMount, type Snippet } from 'svelte';
   import { getChartContext } from '../Chart.svelte';
   import { Context } from 'runed';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
     context = $bindable(),
@@ -111,7 +111,6 @@
 
 <canvas
   bind:this={ref}
-  {...createDataAttr('layout-webgl')}
   style:z-index={zIndex}
   style:pointer-events={pointerEvents === false ? 'none' : null}
   style:top={ctx.padding.top + 'px'}
@@ -119,7 +118,7 @@
   style:bottom={ctx.padding.bottom + 'px'}
   style:left={ctx.padding.left + 'px'}
   style="width:100%;height:100%;position:absolute;"
-  {...restProps}
+  {...extractLayerProps(restProps, 'layout-webgl')}
 >
   {#if typeof fallback === 'function'}
     {@render fallback()}

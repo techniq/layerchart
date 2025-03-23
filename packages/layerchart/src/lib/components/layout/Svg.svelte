@@ -1,4 +1,8 @@
 <script lang="ts" module>
+  import type { Snippet } from 'svelte';
+  import type { Without } from '$lib/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
+
   type SVGPropsWithoutHTML = {
     /**
      * A reference to the layer's `<svg>` tag.
@@ -61,11 +65,9 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { getTransformContext } from '../TransformContext.svelte';
-  import type { Snippet } from 'svelte';
-  import type { Without } from '$lib/utils/types.js';
-  import type { SVGAttributes } from 'svelte/elements';
+
   import { getChartContext, setRenderContext } from '../Chart.svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { layerClass } from 'layerchart/utils/attributes.js';
 
   let {
     ref = $bindable(),
@@ -103,18 +105,18 @@
   height={ctx.containerHeight}
   style:z-index={zIndex}
   class={cls(
+    layerClass('layout-svg'),
     'absolute top-0 left-0 overflow-visible',
     pointerEvents === false && 'pointer-events-none',
     className
   )}
   role="figure"
-  {...createDataAttr('layout-svg')}
   {...restProps}
 >
   {#if typeof title === 'function'}
     {@render title()}
   {:else if title}
-    <title {...createDataAttr('layout-svg-title')}>{title}</title>
+    <title class={layerClass('layout-svg-title')}>{title}</title>
   {/if}
 
   <defs>
@@ -123,11 +125,11 @@
 
   <g
     bind:this={innerRef}
-    {...createDataAttr('layout-svg-g')}
+    class={layerClass('layout-svg-g')}
     transform="translate({ctx.padding.left}, {ctx.padding.top})"
   >
     {#if transform}
-      <g {transform} {...createDataAttr('layout-svg-g-transform')}>
+      <g {transform} class={layerClass('layout-svg-g-transform')}>
         {@render children?.({ ref })}
       </g>
     {:else}

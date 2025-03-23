@@ -120,7 +120,7 @@
   import { asAny } from '$lib/utils/types.js';
   import { getChartContext } from './Chart.svelte';
   import { getTooltipContext } from './tooltip/TooltipContext.svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext();
   const tooltipCtx = getTooltipContext();
@@ -429,6 +429,11 @@
       return tmpPoints;
     }
   );
+
+  const areaProps = $derived(extractLayerProps(area, 'highlight-area'));
+  const barProps = $derived(extractLayerProps(bar, 'highlight-bar'));
+  const linesProps = $derived(extractLayerProps(linesProp, 'highlight-line'));
+  const pointsProps = $derived(extractLayerProps(points, 'highlight-point'));
 </script>
 
 {#if highlightData}
@@ -439,13 +444,8 @@
       <Rect
         spring={motion}
         {..._area}
-        {...typeof area === 'object' ? area : null}
-        {...createDataAttr('highlight-rect')}
-        class={cls(
-          // @ts-expect-error
-          !area.fill && 'fill-surface-content/5',
-          typeof area === 'object' ? area.class : null
-        )}
+        {...areaProps}
+        class={cls(!areaProps.fill && 'fill-surface-content/5', areaProps.class)}
         onclick={onAreaClick && ((e) => onAreaClick(e, { data: highlightData }))}
       />
     {/if}
@@ -458,13 +458,8 @@
       <Bar
         spring={motion}
         bar={highlightData}
-        {...typeof bar === 'object' ? bar : null}
-        {...createDataAttr('highlight-bar')}
-        class={cls(
-          // @ts-expect-error
-          !bar.fill && 'fill-primary',
-          typeof bar === 'object' ? bar.class : null
-        )}
+        {...barProps}
+        class={cls(!barProps.fill && 'fill-primary', barProps.class)}
         onclick={onBarClick && ((e) => onBarClick(e, { data: highlightData }))}
       />
     {/if}
@@ -481,11 +476,10 @@
           y1={line.y1}
           x2={line.x2}
           y2={line.y2}
-          {...typeof linesProp === 'object' ? linesProp : null}
-          {...createDataAttr('highlight-line')}
+          {...linesProps}
           class={cls(
             'stroke-surface-content/20 stroke-2 [stroke-dasharray:2,2] pointer-events-none',
-            typeof linesProp === 'object' ? linesProp.class : null
+            linesProps.class
           )}
         />
       {/each}
@@ -504,12 +498,11 @@
           fill={point.fill}
           r={4}
           strokeWidth={6}
-          {...typeof points === 'object' ? points : null}
-          {...createDataAttr('highlight-point')}
+          {...pointsProps}
           class={cls(
             'stroke-white [paint-order:stroke] drop-shadow-sm',
             !point.fill && (typeof points === 'boolean' || !points.fill) && 'fill-primary',
-            typeof points === 'object' ? points.class : null
+            pointsProps.class
           )}
           onpointerdown={onPointClick &&
             ((e) => {

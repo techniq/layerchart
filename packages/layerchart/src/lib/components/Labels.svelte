@@ -64,7 +64,7 @@
 
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { getChartContext } from './Chart.svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps, layerClass } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -154,11 +154,11 @@
   }
 </script>
 
-<g {...createDataAttr('labels-g')}>
+<g class={layerClass('labels-g')}>
   <Points {data} {x} {y}>
     {#snippet children({ points })}
       {#each points as point, i (key(point.data, i))}
-        {@const textProps = { ...getTextProps(point), ...createDataAttr('labels-text') }}
+        {@const textProps = extractLayerProps(getTextProps(point), 'labels-text')}
         {#if childrenProp}
           {@render childrenProp({ data: point, textProps })}
         {:else}

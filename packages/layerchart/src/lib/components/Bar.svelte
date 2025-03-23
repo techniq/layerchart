@@ -78,7 +78,7 @@
   import { getChartContext } from './Chart.svelte';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -174,8 +174,7 @@
     {initialHeight}
     {initialWidth}
     {...dimensions}
-    {...createDataAttr('bar')}
-    {...restProps}
+    {...extractLayerProps(restProps, 'bar')}
   />
 {:else}
   <Spline
@@ -186,7 +185,7 @@
     {strokeWidth}
     {opacity}
     {tweened}
-    {...createDataAttr('bar')}
+    {...extractLayerProps(restProps, 'bar')}
     {...restProps}
   />
 {/if}

@@ -129,12 +129,12 @@
   import { raise } from '$lib/utils/chart.js';
   import { getChartContext } from '../Chart.svelte';
   import type { Snippet } from 'svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
   import {
     getTooltipMetaContext,
     getTooltipPayload,
     type TooltipPayload,
   } from './tooltipMetaContext.js';
+  import { layerClass } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext<any>();
 
@@ -257,7 +257,7 @@
       return;
     }
 
-    const containerNode = (e.target as Element).closest('[data-lc-root-container]')!;
+    const containerNode = (e.target as Element).closest('.lc-root-container')!;
     const point = localPoint(e, containerNode);
 
     if (
@@ -486,7 +486,8 @@
   style:width="{ctx.width}px"
   style:height="{ctx.height}px"
   class={cls(
-    'TooltipContext absolute touch-none',
+    layerClass('tooltip-context'),
+    'absolute touch-none',
     debug && triggerPointerEvents && 'bg-danger/10 outline outline-danger'
   )}
   onpointerenter={(e) => {
@@ -511,17 +512,15 @@
     }
   }}
   onkeydown={() => {}}
-  {...createDataAttr('tooltip-context')}
   bind:this={ref}
 >
   <!-- Rendering slot within TooltipContext to allow pointer events to bubble up (ex. Brush) -->
   <div
-    class="absolute"
+    class={cls(layerClass('tooltip-context-container'), 'absolute')}
     style:top="-{ctx.padding.top ?? 0}px"
     style:left="-{ctx.padding.left ?? 0}px"
     style:width="{ctx.containerWidth}px"
     style:height="{ctx.containerHeight}px"
-    {...createDataAttr('tooltip-context-container')}
   >
     {@render children?.({ tooltipContext: tooltipContext })}
 
@@ -550,7 +549,7 @@
       </Svg>
     {:else if mode === 'bounds' || mode === 'band'}
       <Svg>
-        <g class="tooltip-rects">
+        <g class={layerClass('tooltip-rects-g')}>
           {#each rects as rect}
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             <rect
@@ -558,7 +557,10 @@
               y={rect?.y}
               width={rect?.width}
               height={rect?.height}
-              class={cls(debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent')}
+              class={cls(
+                layerClass('tooltip-rect'),
+                debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent'
+              )}
               onpointerenter={(e) => showTooltip(e, rect?.data)}
               onpointermove={(e) => showTooltip(e, rect?.data)}
               onpointerleave={hideTooltip}
@@ -578,7 +580,7 @@
     {:else if mode === 'quadtree' && debug}
       <Svg pointerEvents={false}>
         <ChartClipPath>
-          <g class="tooltip-quadtree">
+          <g class={layerClass('tooltip-quadtree-g')}>
             {#if quadtree}
               {#each quadtreeRects(quadtree, false) as rect}
                 <rect
@@ -586,7 +588,10 @@
                   y={rect.y}
                   width={rect.width}
                   height={rect.height}
-                  class={cls(debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent')}
+                  class={cls(
+                    layerClass('tooltip-quadtree-rect'),
+                    debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent'
+                  )}
                 />
               {/each}
             {/if}

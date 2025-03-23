@@ -1,4 +1,8 @@
 <script lang="ts" module>
+  import type { HTMLAttributes } from 'svelte/elements';
+  import type { Without } from '$lib/utils/types.js';
+  import type { TooltipPayload } from './tooltipMetaContext.js';
+
   export type Placement =
     | 'top-left'
     | 'top'
@@ -162,10 +166,7 @@
   import { getTooltipContext } from './TooltipContext.svelte';
   import { motionState } from '$lib/stores/motionState.svelte.js';
   import { untrack, type Snippet } from 'svelte';
-  import type { HTMLAttributes } from 'svelte/elements';
-  import type { Without } from '$lib/utils/types.js';
-  import { createDataAttr } from '$lib/utils/attributes.js';
-  import type { TooltipPayload } from './tooltipMetaContext.js';
+  import { layerClass } from 'layerchart/utils/attributes.js';
 
   let {
     anchor = 'top-left',
@@ -346,9 +347,9 @@
 
 {#if tooltipCtx.data}
   <div
-    {...createDataAttr('tooltip-root')}
     {...props.root}
     class={cls(
+      layerClass('tooltip-root'),
       'absolute z-50 select-none',
       !pointerEvents && 'pointer-events-none',
       classes.root,
@@ -362,9 +363,9 @@
     bind:this={rootRef}
   >
     <div
-      {...createDataAttr('tooltip-container')}
       {...props.container}
       class={cls(
+        layerClass('tooltip-container'),
         variant !== 'none' && ['text-sm py-1 px-2 h-full rounded-sm elevation-1'],
         {
           default: [
@@ -383,7 +384,7 @@
       )}
     >
       {#if children}
-        <div {...createDataAttr('tooltip-content')} {...props.content} class={cls(classes.content)}>
+        <div {...props.content} class={cls(layerClass('tooltip-content'), classes.content)}>
           {@render children({ data: tooltipCtx.data, payload: tooltipCtx.payload })}
         </div>
       {/if}

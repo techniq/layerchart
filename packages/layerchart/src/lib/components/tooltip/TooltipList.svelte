@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { layerClass } from 'layerchart/utils/attributes.js';
   import type { HTMLAttributes } from 'svelte/elements';
 
   let {
@@ -14,9 +14,12 @@
 </script>
 
 <div
-  {...createDataAttr('tooltip-list')}
   bind:this={ref}
-  class={cls('grid grid-cols-[1fr_auto] gap-x-2 gap-y-1 items-center', className)}
+  class={cls(
+    layerClass('tooltip-list'),
+    'grid grid-cols-[1fr_auto] gap-x-2 gap-y-1 items-center',
+    className
+  )}
   {...restProps}
 >
   {@render children?.()}

@@ -1,7 +1,9 @@
 <script lang="ts" module>
+  import type { Without } from 'layerchart/utils/types.js';
+
   let tileCache = new Map<string, Promise<string>>();
 
-  export type TileImageProps = {
+  export type TileImagePropsWithoutHTML = {
     /**
      * x position of the tile
      */
@@ -51,12 +53,16 @@
      */
     url: (x: number, y: number, z: number) => string;
   };
+
+  export type TileImageProps = TileImagePropsWithoutHTML &
+    Omit<Without<SVGAttributes<SVGImageElement>, TileImagePropsWithoutHTML>, 'href'>;
 </script>
 
 <script lang="ts">
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   import Text from './Text.svelte';
+  import type { SVGAttributes } from 'svelte/elements';
 
   let {
     x,
@@ -68,6 +74,7 @@
     disableCache = false,
     debug = false,
     url,
+    ...restProps
   }: TileImageProps = $props();
 
   // if disable cache, set href immediately, otherwise set from cache / dataUri
@@ -121,20 +128,20 @@
 
 <!-- To avoid aliasing artifacts (thin white lines) between tiles, two layers of tiles are drawn, with the lower layer’s tiles enlarged by one pixel -->
 <image
-  {...createDataAttr('tile-image')}
   xlink:href={href}
   x={(x + tx) * scale - 0.5}
   y={(y + ty) * scale - 0.5}
   width={scale + 1}
   height={scale + 1}
+  {...extractLayerProps(restProps, 'tile-image-lower')}
 />
 <image
-  {...createDataAttr('tile-image')}
   xlink:href={href}
   x={(x + tx) * scale}
   y={(y + ty) * scale}
   width={scale}
   height={scale}
+  {...extractLayerProps(restProps, 'tile-image')}
 />
 {#if debug}
   <rect

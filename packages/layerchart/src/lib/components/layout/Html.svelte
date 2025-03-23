@@ -1,5 +1,8 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
+  import type { Without } from '$lib/utils/types.js';
+  import type { Snippet } from 'svelte';
+
   type HTMLPropsWithoutHTML = {
     /**
      * A reference to the layer's outermost `<div>` tag.
@@ -45,10 +48,9 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { getTransformContext } from '../TransformContext.svelte';
-  import type { Without } from '$lib/utils/types.js';
+
   import { getChartContext, setRenderContext } from '../Chart.svelte';
-  import type { Snippet } from 'svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from 'layerchart/utils/attributes.js';
 
   let {
     ref = $bindable(),
@@ -83,7 +85,6 @@
 
 <div
   bind:this={ref}
-  {...createDataAttr('layout-html')}
   class={cls('absolute top-0 left-0', pointerEvents === false && 'pointer-events-none', className)}
   style:transform
   style:transform-origin="top left"
@@ -97,7 +98,7 @@
   aria-label={label}
   aria-labelledby={labelledBy}
   aria-describedby={describedBy}
-  {...restProps}
+  {...extractLayerProps(restProps, 'layout-html')}
 >
   {@render children?.({ ref })}
 </div>

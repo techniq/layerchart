@@ -81,7 +81,7 @@
 
   import MarkerWrapper from './MarkerWrapper.svelte';
   import { createId } from '$lib/utils/createId.js';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const uid = $props.id();
 
@@ -138,13 +138,12 @@
 </script>
 
 <Spline
-  {...createDataAttr('path-link')}
   pathData={tweenedState.current}
   fill="none"
   marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
   marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
   marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-  {...restProps}
+  {...extractLayerProps(restProps, 'link')}
 />
 <MarkerWrapper id={markerStartId} marker={markerStart} />
 <MarkerWrapper id={markerMidId} marker={markerMid} />

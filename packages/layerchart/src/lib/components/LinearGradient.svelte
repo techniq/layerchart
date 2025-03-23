@@ -82,7 +82,8 @@
   import { parsePercent } from '../utils/math.js';
   import { getChartContext } from './Chart.svelte';
   import { createId } from '$lib/utils/createId.js';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps, layerClass } from 'layerchart/utils/attributes.js';
+  import { cls } from '@layerstack/tailwind';
 
   const uid = $props.id();
 
@@ -172,8 +173,7 @@
       {y2}
       gradientTransform={rotate ? `rotate(${rotate})` : ''}
       gradientUnits={units}
-      {...createDataAttr('linear-gradient')}
-      {...restProps}
+      {...extractLayerProps(restProps, 'linear-gradient')}
     >
       {#if stopsContent}
         {@render stopsContent?.()}
@@ -181,17 +181,15 @@
         {#each stops as stop, i}
           {#if Array.isArray(stop)}
             <stop
-              {...createDataAttr('linear-gradient-stop')}
               offset={stop[0]}
               stop-color={stop[1]}
-              class={className}
+              class={cls(layerClass('linear-gradient-stop'), className)}
             />
           {:else}
             <stop
-              {...createDataAttr('linear-gradient-stop')}
               offset="{i * (100 / (stops.length - 1))}%"
               stop-color={stop}
-              class={className}
+              class={cls(layerClass('linear-gradient-stop'), className)}
             />
           {/if}
         {/each}

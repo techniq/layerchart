@@ -133,6 +133,7 @@
   import { afterTick } from '$lib/utils/afterTick.js';
 
   import { createKey } from '$lib/utils/key.svelte.js';
+  import { layerClass } from 'layerchart/utils/attributes.js';
 
   /*
     TODO:
@@ -355,7 +356,7 @@
     x={dx}
     y={dy}
     {...svgProps}
-    class={cls('overflow-visible [paint-order:stroke]', svgProps?.class)}
+    class={cls(layerClass('text-svg'), 'overflow-visible [paint-order:stroke]', svgProps?.class)}
     bind:this={svgRef}
   >
     {#if isValidXOrY(x) && isValidXOrY(y)}
@@ -370,10 +371,14 @@
         {stroke}
         stroke-width={strokeWidth}
         {opacity}
-        class={cls(fill === undefined && 'fill-surface-content', className)}
+        class={cls(layerClass('text'), fill === undefined && 'fill-surface-content', className)}
       >
         {#each wordsByLines as line, index}
-          <tspan x={tweenedX.current} dy={index === 0 ? startDy : lineHeight}>
+          <tspan
+            x={tweenedX.current}
+            dy={index === 0 ? startDy : lineHeight}
+            class={layerClass('text-tspan')}
+          >
             {line.words.join(' ')}
           </tspan>
         {/each}

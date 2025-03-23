@@ -131,7 +131,7 @@
   import { createKey } from '$lib/utils/key.svelte.js';
   import { afterTick } from '$lib/utils/afterTick.js';
   import { createId } from '$lib/utils/createId.js';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { layerClass } from 'layerchart/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -355,8 +355,12 @@
     <path
       d={tweenedState.current}
       {...restProps}
-      {...createDataAttr('path-line')}
-      class={cls(!fill && 'fill-none', !stroke && 'stroke-surface-content', className)}
+      class={cls(
+        layerClass('spline-path'),
+        !fill && 'fill-none',
+        !stroke && 'stroke-surface-content',
+        className
+      )}
       {fill}
       fill-opacity={fillOpacity}
       {stroke}
@@ -373,13 +377,13 @@
     <MarkerWrapper id={markerEndId} marker={markerEnd} />
 
     {#if startContent && startPoint}
-      <Group x={startPoint.x} y={startPoint.y} {...createDataAttr('spline-g-start')}>
+      <Group x={startPoint.x} y={startPoint.y} class={layerClass('spline-g-start')}>
         {@render startContent({ point: startPoint })}
       </Group>
     {/if}
 
     {#if endContent && endPoint.current}
-      <Group x={endPoint.current.x} y={endPoint.current.y} {...createDataAttr('spline-g-end')}>
+      <Group x={endPoint.current.x} y={endPoint.current.y} class={layerClass('spline-g-end')}>
         {@render endContent({ point: endPoint.current })}
       </Group>
     {/if}

@@ -34,6 +34,11 @@
     monthPath?: boolean | Partial<ComponentProps<typeof MonthPath>>;
 
     /**
+     * Props to pass to the `<text>` element for month labels.
+     */
+    monthLabel?: Partial<ComponentProps<typeof Text>>;
+
+    /**
      * Tooltip context to setup mouse events to show tooltip for related data
      */
     tooltipContext?: TooltipContextValue;
@@ -62,7 +67,7 @@
   import { getChartContext } from './Chart.svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
     end,
@@ -71,6 +76,7 @@
     monthPath = false,
     tooltipContext: tooltip,
     children,
+    monthLabel,
     ...restProps
   }: CalendarPropsWithoutHTML = $props();
 
@@ -123,22 +129,20 @@
       onpointermove={(e) => tooltip?.show(e, cell.data)}
       onpointerleave={(e) => tooltip?.hide()}
       class="stroke-surface-content/5"
-      {...createDataAttr('calendar-cell')}
-      {...restProps}
+      {...extractLayerProps(restProps, 'calendar-cell')}
     />
   {/each}
 {/if}
 
 {#if monthPath}
   {#each yearMonths as date}
-    <MonthPath {date} {cellSize} {...typeof monthPath === 'object' ? monthPath : null} />
+    <MonthPath {date} {cellSize} {...extractLayerProps(monthPath, 'calendar-month-path')} />
 
     <Text
       x={timeWeek.count(timeYear.floor(date), timeWeek.ceil(date)) * cellSize[0]}
       y={-4}
       value={format(date, 'MMM')}
-      class="text-xs"
-      {...createDataAttr('calendar-month-label')}
+      {...extractLayerProps(monthLabel, 'calendar-month-label', 'text-xs')}
     />
   {/each}
 {/if}

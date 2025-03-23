@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
   import type { Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
 
@@ -77,6 +77,5 @@
   preserveAspectRatio="none"
   {height}
   {width}
-  {...createDataAttr('color-ramp')}
-  {...restProps}
+  {...extractLayerProps(restProps, 'color-ramp')}
 />

@@ -67,7 +67,7 @@
   import { getChartContext } from './Chart.svelte';
   import { motionState, type TweenedOptions } from '$lib/stores/motionState.svelte.js';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
   const renderCtx = getRenderContext();
@@ -89,7 +89,6 @@
     x,
     y0,
     y1,
-    class: className,
     ...restProps
   }: AreaProps = $props();
 
@@ -99,7 +98,6 @@
 
   const xOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
   const yOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
-  $effect(() => {});
 
   const tweenedOptions = tweened
     ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
@@ -202,7 +200,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: className ?? '',
+            classes: restProps.class ?? '',
           }
     );
   }
@@ -219,7 +217,7 @@
       strokeKey.current,
       strokeWidth,
       opacity,
-      className,
+      restProps.class,
       tweenedState.current,
     ];
     canvasCtx.invalidate();
@@ -241,15 +239,7 @@
 </script>
 
 {#if line}
-  <Spline
-    {data}
-    {x}
-    y={y1}
-    {curve}
-    {defined}
-    {tweened}
-    {...typeof line === 'object' ? line : null}
-  />
+  <Spline {data} {x} y={y1} {curve} {defined} {tweened} {...extractLayerProps(line, 'area-line')} />
 {/if}
 
 {#if renderCtx === 'svg'}
@@ -261,8 +251,6 @@
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
-    {...createDataAttr('area-path')}
-    {...restProps}
-    class={className}
+    {...extractLayerProps(restProps, 'area-path')}
   />
 {/if}

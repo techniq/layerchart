@@ -89,7 +89,8 @@
   import { parsePercent } from '../utils/math.js';
   import { getChartContext } from './Chart.svelte';
   import { createId } from '$lib/utils/createId.js';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps, layerClass } from 'layerchart/utils/attributes.js';
+  import { cls } from '@layerstack/tailwind';
 
   const uid = $props.id();
 
@@ -175,28 +176,17 @@
       {spreadMethod}
       gradientTransform={transform}
       gradientUnits={units}
-      {...createDataAttr('radial-gradient')}
-      {...restProps}
-      class={className}
+      {...extractLayerProps({ ...restProps, class: className }, 'radial-gradient')}
     >
       {#if stopsContent}
         {@render stopsContent()}
       {:else if stops}
+        {@const stopClass = cls(layerClass('radial-gradient-stop'), className)}
         {#each stops as stop, i}
           {#if Array.isArray(stop)}
-            <stop
-              offset={stop[0]}
-              stop-color={stop[1]}
-              class={className}
-              {...createDataAttr('radial-gradient-stop')}
-            />
+            <stop offset={stop[0]} stop-color={stop[1]} class={stopClass} />
           {:else}
-            <stop
-              offset="{i * (100 / (stops.length - 1))}%"
-              stop-color={stop}
-              class={className}
-              {...createDataAttr('radial-gradient-stop')}
-            />
+            <stop offset="{i * (100 / (stops.length - 1))}%" stop-color={stop} class={stopClass} />
           {/if}
         {/each}
       {/if}

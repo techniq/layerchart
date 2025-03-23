@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { layerClass } from 'layerchart/utils/attributes.js';
   import type { HTMLAttributes } from 'svelte/elements';
 
   let {
@@ -14,9 +14,12 @@
 </script>
 
 <div
-  {...createDataAttr('tooltip-separator')}
   bind:this={ref}
-  class={cls('rounded-sm bg-surface-content/20 my-1 col-span-full h-px', className)}
+  class={cls(
+    layerClass('tooltip-separator'),
+    'rounded-sm bg-surface-content/20 my-1 col-span-full h-px',
+    className
+  )}
   {...restProps}
 >
   {@render children?.()}

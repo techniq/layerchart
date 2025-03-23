@@ -1,6 +1,6 @@
 <script lang="ts" module>
-  import { createDataAttr } from '$lib/utils/attributes.js';
   import type { Without } from '$lib/utils/types.js';
+  import { extractLayerProps } from 'layerchart/utils/attributes.js';
   import type { SVGAttributes } from 'svelte/elements';
 
   export type PatternPropsWithoutHTML = {
@@ -38,8 +38,7 @@
     {width}
     {height}
     patternUnits="userSpaceOnUse"
-    {...createDataAttr('pattern')}
-    {...restProps}
+    {...extractLayerProps(restProps, 'pattern')}
   >
     {@render children?.()}
   </pattern>

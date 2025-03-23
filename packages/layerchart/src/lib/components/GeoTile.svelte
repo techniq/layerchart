@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { Snippet } from 'svelte';
+  import type { ComponentProps, Snippet } from 'svelte';
 
   export type GeoTilePropsWithoutHTML = {
     url: (x: number, y: number, z: number) => string;
@@ -25,6 +25,11 @@
     disableCache?: boolean;
 
     /**
+     * Additional props to apply to the `Group` component.
+     */
+    group?: Partial<ComponentProps<typeof Group>>;
+
+    /**
      * Whether to enable debug mode for the tile.
      *
      * @default false
@@ -44,7 +49,7 @@
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
   import { getGeoContext } from './GeoContext.svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
     url,
@@ -52,6 +57,7 @@
     tileSize = 256,
     disableCache = false,
     debug = false,
+    group,
     children,
   }: GeoTilePropsWithoutHTML = $props();
 
@@ -106,7 +112,11 @@
   {#if children}
     {@render children({ tiles })}
   {:else}
-    <Group x={-ctx.padding.left} y={-ctx.padding.top} {...createDataAttr('geo-tile-group')}>
+    <Group
+      x={-ctx.padding.left}
+      y={-ctx.padding.top}
+      {...extractLayerProps(group, 'geo-tile-group')}
+    >
       {#each tiles as [x, y, z] (url(x, y, z))}
         <TileImage
           {url}

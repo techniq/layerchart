@@ -53,6 +53,7 @@
 <script lang="ts">
   import Circle from './Circle.svelte';
   import { createId } from '$lib/utils/createId.js';
+  import { extractLayerProps } from 'layerchart/utils/attributes.js';
 
   const uid = $props.id();
 
@@ -72,6 +73,14 @@
 
 <ClipPath {id} {disabled} {children}>
   {#snippet clip()}
-    <Circle {cx} {cy} {r} {spring} {tweened} {...restProps} bind:ref />
+    <Circle
+      {cx}
+      {cy}
+      {r}
+      {spring}
+      {tweened}
+      {...extractLayerProps(restProps, 'clip-path-circle')}
+      bind:ref
+    />
   {/snippet}
 </ClipPath>

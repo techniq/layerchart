@@ -34,7 +34,7 @@
   import Group from './Group.svelte';
   import { getRenderContext } from './Chart.svelte';
   import { getGeoContext } from './GeoContext.svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let { lat, long, ref = $bindable(), children, ...restProps }: GeoPointProps = $props();
 
@@ -49,11 +49,11 @@
 
 {#if renderContext === 'svg'}
   {#if children}
-    <Group {x} {y} {...restProps} {...createDataAttr('geo-point-group')}>
+    <Group {x} {y} {...extractLayerProps(restProps, 'geo-point-group')}>
       {@render children({ x, y })}
     </Group>
   {:else}
-    <Circle cx={x} cy={y} {...createDataAttr('geo-point')} {...restProps} />
+    <Circle cx={x} cy={y} {...extractLayerProps(restProps, 'geo-point')} />
   {/if}
 {/if}
 
@@ -64,6 +64,6 @@
     {@render children({ x, y })}
     <!-- </Group> -->
   {:else}
-    <Circle cx={x} cy={y} {...createDataAttr('geo-point')} {...restProps} />
+    <Circle cx={x} cy={y} {...extractLayerProps(restProps, 'geo-point')} />
   {/if}
 {/if}

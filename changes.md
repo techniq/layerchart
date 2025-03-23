@@ -154,3 +154,9 @@ console.log(payload); // [{ payload: { ...data }}]
 ```
 
 When used with one of the simplified charts, it will have more information populated.
+
+## Classnames for all
+
+All underlying elements rendered by LayerChart _should_ now have an identifiable classname, prefixed with `lc-` to prevent conflicts with other libraries and your own styles (e.g. `lc-bar`, `lc-arc`, `lc-tooltip-context`, etc.) Perhaps we should document these somehow in the API reference, we'd need a source of truth and checks to ensure they do in fact exist though.
+
+This should make it easier to style the various elements included within the chart components.

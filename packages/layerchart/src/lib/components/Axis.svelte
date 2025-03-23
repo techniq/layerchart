@@ -124,7 +124,7 @@
   import { isScaleBand, type AnyScale } from '$lib/utils/scales.svelte.js';
   import type { MotionProps } from '$lib/stores/motionState.svelte.js';
   import { getChartContext } from './Chart.svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
 
   let {
     placement,
@@ -342,9 +342,9 @@
     verticalAnchor: resolvedLabelVerticalAnchor,
     rotate: orientation === 'vertical' && labelPlacement === 'middle' ? -90 : 0,
     capHeight: '.5rem', // text-[10px]
-    ...createDataAttr('axis-label'),
     ...labelProps,
     class: cls(
+      layerClass('axis-label'),
       'text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
       classes.label,
       labelProps?.class
@@ -354,19 +354,17 @@
 
 <g
   {...restProps}
-  {...createDataAttr('axis')}
   data-placement={placement}
-  class={cls(`placement-${placement}`, classes.root, className)}
+  class={cls(layerClass('axis'), `placement-${placement}`, classes.root, className)}
 >
   {#if rule !== false}
-    {@const ruleProps = typeof rule === 'object' ? rule : null}
+    {@const ruleProps = extractLayerProps(rule, 'axis-rule')}
     <Rule
       x={placement === 'left' || placement === 'right' ? placement : placement === 'angle'}
       y={placement === 'top' || placement === 'bottom' ? placement : placement === 'radius'}
       {tweened}
       {spring}
       {...ruleProps}
-      {...createDataAttr('axis-rule')}
       class={cls('stroke-surface-content/50', classes.rule, ruleProps?.class)}
     />
   {/if}
@@ -379,7 +377,6 @@
 
   {#each tickVals as tick, index (tick)}
     {@const tickCoords = getCoords(tick)}
-    {@const tickAttr = createDataAttr('axis-tick')}
     {@const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y)}
     {@const [radialTickMarkCoordsX, radialTickMarkCoordsY] = pointRadial(
       tickCoords.x,
@@ -393,29 +390,33 @@
       tweened,
       spring,
       ...tickLabelProps,
-      ...createDataAttr('axis-tick-label'),
       class: cls(
+        layerClass('axis-tick-label'),
         'text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
         classes.tickLabel,
         tickLabelProps?.class
       ),
     }}
 
-    <g in:transitionIn={transitionInParams} {...createDataAttr('axis-tick-group')}>
+    <g in:transitionIn={transitionInParams} class={layerClass('axis-tick-group')}>
       {#if grid !== false}
-        {@const ruleProps = typeof grid === 'object' ? grid : null}
+        {@const ruleProps = extractLayerProps(grid, 'axis-grid')}
         <Rule
           x={orientation === 'horizontal' || orientation === 'angle' ? tick : false}
           y={orientation === 'vertical' || orientation === 'radius' ? tick : false}
           {tweened}
           {spring}
           {...ruleProps}
-          {...createDataAttr('axis-grid')}
           class={cls('stroke-surface-content/10', classes.rule, ruleProps?.class)}
         />
       {/if}
 
       {#if tickMarks}
+        {@const tickClasses = cls(
+          layerClass('axis-tick'),
+          'stroke-surface-content/50',
+          classes.tick
+        )}
         <!-- Tick marks -->
         {#if orientation === 'horizontal'}
           <Line
@@ -425,8 +426,7 @@
             y2={tickCoords.y + (placement === 'top' ? -tickLength : tickLength)}
             {tweened}
             {spring}
-            {...tickAttr}
-            class={cls('stroke-surface-content/50', classes.tick)}
+            class={tickClasses}
           />
         {:else if orientation === 'vertical'}
           <Line
@@ -436,8 +436,7 @@
             y2={tickCoords.y}
             {tweened}
             {spring}
-            {...tickAttr}
-            class={cls('stroke-surface-content/50', classes.tick)}
+            class={tickClasses}
           />
         {:else if orientation === 'angle'}
           <Line
@@ -447,8 +446,7 @@
             y2={radialTickMarkCoordsY}
             {tweened}
             {spring}
-            {...tickAttr}
-            class={cls('stroke-surface-content/50', classes.tick)}
+            class={tickClasses}
           />
         {/if}
       {/if}

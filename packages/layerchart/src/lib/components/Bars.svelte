@@ -31,7 +31,7 @@
   import { chartDataArray } from '../utils/common.js';
   import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
 
   let {
     fill,
@@ -49,7 +49,7 @@
   const data = $derived(chartDataArray(dataProp ?? ctx.data));
 </script>
 
-<g {...createDataAttr('bars')}>
+<g class={layerClass('bars')}>
   {#if children}
     {@render children()}
   {:else}
@@ -61,8 +61,7 @@
         bar={d}
         fill={fill ?? (ctx.config.c ? ctx.cGet(d) : null)}
         onclick={(e) => onBarClick(e, { data: d })}
-        {...createDataAttr('bars-bar')}
-        {...restProps}
+        {...extractLayerProps(restProps, 'bars-bar')}
       />
     {/each}
   {/if}

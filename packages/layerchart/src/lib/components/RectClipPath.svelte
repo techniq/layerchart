@@ -63,6 +63,7 @@
 <script lang="ts">
   import ClipPath from './ClipPath.svelte';
   import { createId } from '$lib/utils/createId.js';
+  import { extractLayerProps } from 'layerchart/utils/attributes.js';
 
   const uid = $props.id();
 
@@ -78,7 +79,7 @@
 
 <ClipPath {id} {disabled}>
   {#snippet clip()}
-    <Rect {x} {y} {...restProps} />
+    <Rect {x} {y} {...extractLayerProps(restProps, 'clip-path-rect')} />
   {/snippet}
   {#snippet children({ url })}
     {@render childrenProp?.({ id, url })}

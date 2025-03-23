@@ -27,11 +27,11 @@
 
 <script lang="ts">
   import { geoCircle } from 'd3-geo';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let { radius = 90, center = [0, 0], precision = 6, ...restProps }: GeoCircleProps = $props();
 
   const geojson = $derived(geoCircle().radius(radius).center(center).precision(precision)());
 </script>
 
-<GeoPath {geojson} {...createDataAttr('geo-circle')} {...restProps} />
+<GeoPath {geojson} {...extractLayerProps(restProps, 'geo-circle')} />

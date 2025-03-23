@@ -78,10 +78,10 @@
   import { format as formatUtil, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import type { Snippet } from 'svelte';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { layerClass } from 'layerchart/utils/attributes.js';
 
   let {
-    ref: ref = $bindable(),
+    ref = $bindable(),
     labelRef = $bindable(),
     valueRef = $bindable(),
     colorRef = $bindable(),
@@ -109,16 +109,21 @@
 </script>
 
 <div
-  {...createDataAttr('tooltip-item-root')}
   {...props.root}
-  class={cls('contents', classes.root, className, props.root?.class)}
+  class={cls(
+    layerClass('tooltip-item-root'),
+    'contents',
+    classes.root,
+    className,
+    props.root?.class
+  )}
   {...restProps}
   bind:this={ref}
 >
   <div
-    {...createDataAttr('tooltip-item-label')}
     {...props.label}
     class={cls(
+      layerClass('tooltip-item-label'),
       'label',
       'flex items-center gap-2 whitespace-nowrap',
       classes.label,
@@ -128,9 +133,9 @@
   >
     {#if color}
       <div
-        {...createDataAttr('tooltip-item-color')}
         {...props.color}
         class={cls(
+          layerClass('tooltip-item-color'),
           'color',
           'inline-block size-2 rounded-full bg-[var(--color)]',
           classes.color,
@@ -148,10 +153,10 @@
   </div>
 
   <div
-    {...createDataAttr('tooltip-item-value')}
     bind:this={valueRef}
     {...props.value}
     class={cls(
+      layerClass('tooltip-item-value'),
       'value',
       'tabular-nums',
       {

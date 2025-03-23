@@ -28,7 +28,7 @@
 
   import RectClipPath, { type RectClipPathProps } from './RectClipPath.svelte';
   import type { Without } from '$lib/utils/types.js';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let { full = false, disabled = false, ...restProps }: ChartClipPathProps = $props();
 
@@ -36,11 +36,10 @@
 </script>
 
 <RectClipPath
-  {...createDataAttr('chart-clip-path')}
   x={full && ctx.padding.left ? -ctx.padding.left : 0}
   y={full && ctx.padding.top ? -ctx.padding.top : 0}
   {disabled}
   height={ctx.height + (full ? (ctx.padding?.top ?? 0) + (ctx.padding?.bottom ?? 0) : 0)}
   width={ctx.width + (full ? (ctx.padding?.left ?? 0) + (ctx.padding?.right ?? 0) : 0)}
-  {...restProps}
+  {...extractLayerProps(restProps, 'chart-clip-path')}
 />

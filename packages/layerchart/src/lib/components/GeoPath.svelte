@@ -73,7 +73,7 @@
   import { geoCurvePath } from '$lib/utils/geo.js';
   import { getGeoContext } from './GeoContext.svelte';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { createDataAttr } from '$lib/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     fill,
@@ -185,7 +185,6 @@
 {:else if renderCtx === 'svg'}
   <path
     bind:this={ref}
-    {...createDataAttr('geo-path')}
     {...restProps}
     d={geojson ? geoPath?.(geojson) : ''}
     {fill}
@@ -196,6 +195,6 @@
     onpointerenter={_onPointerEnter}
     onpointermove={_onPointerMove}
     onpointerleave={_onPointerLeave}
-    class={cls(fill == null && 'fill-transparent', className)}
+    class={cls(layerClass('geo-path'), fill == null && 'fill-transparent', className)}
   />
 {/if}
