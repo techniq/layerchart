@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
 
   let tileCache = new Map<string, Promise<string>>();
 

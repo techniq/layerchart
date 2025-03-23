@@ -22,7 +22,7 @@
 
 <script lang="ts">
   import { createId } from '$lib/utils/createId.js';
-  import { layerClass } from 'layerchart/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
   import type { Snippet } from 'svelte';
   const uid = $props.id();
 

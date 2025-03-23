@@ -78,7 +78,7 @@
   import { format as formatUtil, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import type { Snippet } from 'svelte';
-  import { layerClass } from 'layerchart/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     ref = $bindable(),

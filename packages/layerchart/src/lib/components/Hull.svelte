@@ -65,7 +65,7 @@
   import Spline from './Spline.svelte';
   import { getChartContext } from './Chart.svelte';
   import { getGeoContext } from './GeoContext.svelte';
-  import { layerClass } from 'layerchart/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     data,

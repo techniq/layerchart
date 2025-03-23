@@ -80,7 +80,7 @@
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
-  import { layerClass } from 'layerchart/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
   /*
     TODO:

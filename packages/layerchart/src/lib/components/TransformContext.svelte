@@ -220,7 +220,7 @@
   import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
   import { cls } from '@layerstack/tailwind';
-  import { layerClass } from 'layerchart/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     mode = 'none',

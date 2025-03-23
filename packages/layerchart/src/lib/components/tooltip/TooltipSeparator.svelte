@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { layerClass } from 'layerchart/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
   import type { HTMLAttributes } from 'svelte/elements';
 
   let {

@@ -89,7 +89,7 @@
   import { parsePercent } from '../utils/math.js';
   import { getChartContext } from './Chart.svelte';
   import { createId } from '$lib/utils/createId.js';
-  import { extractLayerProps, layerClass } from 'layerchart/utils/attributes.js';
+  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
 
   const uid = $props.id();

@@ -57,7 +57,7 @@
   import type { Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createId } from '$lib/utils/createId.js';
-  import { extractLayerProps } from 'layerchart/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const uid = $props.id();
 

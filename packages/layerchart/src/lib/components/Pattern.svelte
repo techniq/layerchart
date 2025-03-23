@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { Without } from '$lib/utils/types.js';
-  import { extractLayerProps } from 'layerchart/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
   import type { SVGAttributes } from 'svelte/elements';
 
   export type PatternPropsWithoutHTML = {

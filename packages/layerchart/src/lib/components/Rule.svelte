@@ -54,7 +54,7 @@
   import Circle from './Circle.svelte';
   import Line, { type LinePropsWithoutHTML } from './Line.svelte';
   import { getChartContext } from './Chart.svelte';
-  import { layerClass } from 'layerchart/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     x = false,

@@ -140,7 +140,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import { getChartContext } from './Chart.svelte';
   import { untrack, type Snippet } from 'svelte';
-  import { layerClass } from 'layerchart/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 

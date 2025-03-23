@@ -64,7 +64,7 @@
 
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { getChartContext } from './Chart.svelte';
-  import { extractLayerProps, layerClass } from 'layerchart/utils/attributes.js';
+  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 

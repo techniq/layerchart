@@ -166,7 +166,7 @@
   import { getTooltipContext } from './TooltipContext.svelte';
   import { motionState } from '$lib/stores/motionState.svelte.js';
   import { untrack, type Snippet } from 'svelte';
-  import { layerClass } from 'layerchart/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     anchor = 'top-left',

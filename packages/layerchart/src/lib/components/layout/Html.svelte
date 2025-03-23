@@ -50,7 +50,7 @@
   import { getTransformContext } from '../TransformContext.svelte';
 
   import { getChartContext, setRenderContext } from '../Chart.svelte';
-  import { extractLayerProps } from 'layerchart/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
     ref = $bindable(),

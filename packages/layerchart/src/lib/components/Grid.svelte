@@ -95,7 +95,7 @@
   import Spline from './Spline.svelte';
   import Circle from './Circle.svelte';
   import { getChartContext } from './Chart.svelte';
-  import { extractLayerProps, layerClass } from 'layerchart/utils/attributes.js';
+  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 

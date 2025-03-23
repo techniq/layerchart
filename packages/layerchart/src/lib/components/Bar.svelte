@@ -78,7 +78,7 @@
   import { getChartContext } from './Chart.svelte';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
-  import { extractLayerProps } from 'layerchart/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 

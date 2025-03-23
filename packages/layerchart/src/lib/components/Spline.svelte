@@ -131,7 +131,7 @@
   import { createKey } from '$lib/utils/key.svelte.js';
   import { afterTick } from '$lib/utils/afterTick.js';
   import { createId } from '$lib/utils/createId.js';
-  import { layerClass } from 'layerchart/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 

@@ -145,7 +145,7 @@
   } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
   import { getChartContext } from '../Chart.svelte';
-  import { layerClass } from 'layerchart/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     ref = $bindable(),

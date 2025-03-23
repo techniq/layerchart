@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import { createId } from '$lib/utils/createId.js';
   import type { Without } from '$lib/utils/types.js';
-  import { layerClass } from 'layerchart/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
   import type { Snippet } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
 

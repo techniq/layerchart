@@ -49,7 +49,7 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { afterTick } from '$lib/utils/afterTick.js';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { layerClass } from 'layerchart/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     height,

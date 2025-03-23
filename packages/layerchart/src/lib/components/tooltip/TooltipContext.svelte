@@ -134,7 +134,7 @@
     getTooltipPayload,
     type TooltipPayload,
   } from './tooltipMetaContext.js';
-  import { layerClass } from 'layerchart/utils/attributes.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext<any>();
 
