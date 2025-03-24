@@ -67,7 +67,7 @@
   };
 
   const components: LinkCollection = {
-    Charts: ['Chart', 'AreaChart', 'BarChart', 'LineChart', 'PieChart', 'ScatterChart'],
+    Charts: ['Chart', 'ArcChart', 'AreaChart', 'BarChart', 'LineChart', 'PieChart', 'ScatterChart'],
     Common: ['Axis', 'Frame', 'Grid', 'Legend', 'Rule'],
     Primitives: ['Arc', 'Bar', 'Circle', 'Group', 'Line', 'Marker', 'Point', 'Rect', 'Text'],
     Marks: [

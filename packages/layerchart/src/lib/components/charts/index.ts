@@ -1,3 +1,5 @@
+export { default as ArcChart } from './ArcChart.svelte';
+export * from './ArcChart.svelte';
 export { default as AreaChart } from './AreaChart.svelte';
 export * from './AreaChart.svelte';
 export { default as BarChart } from './BarChart.svelte';
