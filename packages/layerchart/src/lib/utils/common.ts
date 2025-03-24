@@ -2,7 +2,7 @@ import type { Component, ComponentProps } from 'svelte';
 import { get } from 'lodash-es';
 
 import type Chart from '../components/Chart.svelte';
-import type { SimplifiedChartProps } from 'layerchart/components/charts/types.js';
+import type { SimplifiedChartProps } from '$lib/components/charts/types.js';
 
 export type Accessor<TData = any> =
   | number

@@ -82,6 +82,11 @@ export type SimplifiedChartSnippetProps<TData, TComponent extends Component, TSn
    * A function to set the highlight series key for the chart.
    */
   setHighlightKey: (seriesKey: SeriesData<TData, TComponent>['key'] | null) => void;
+
+  /**
+   * Get the default props for the legend component.
+   */
+  getLegendProps: () => ComponentProps<typeof Legend>;
 } & TSnippetProps;
 
 export type SimplifiedChartSnippet<TData, TComponent extends Component, TSnippetProps> = Snippet<
@@ -196,12 +201,16 @@ export type BaseChartProps<
     | ComponentProps<typeof Grid>
     | boolean
     | SimplifiedChartSnippet<TData, TComponent, TSnippetProps>;
+
   /**
    * The labels to be used for the chart.
    *
    * @default false
    */
-  labels?: ComponentProps<typeof Labels<TData>> | boolean;
+  labels?:
+    | ComponentProps<typeof Labels<TData>>
+    | boolean
+    | SimplifiedChartSnippet<TData, TComponent, TSnippetProps>;
   /**
    * The legend to be used for the chart.
    *
@@ -211,6 +220,7 @@ export type BaseChartProps<
     | ComponentProps<typeof Legend>
     | boolean
     | SimplifiedChartSnippet<TData, TComponent, TSnippetProps>;
+
   /**
    * The points to be used for the chart.
    *
@@ -280,7 +290,7 @@ export type BaseChartProps<
   belowMarks?: ChartSnippet;
   aboveMarks?: ChartSnippet;
   marks?: ChartSnippet;
-  highlight?: ChartSnippet;
+  highlight?: ChartSnippet | boolean;
 };
 
 export type SimplifiedChartProps<

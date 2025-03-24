@@ -1,4 +1,4 @@
-import type { ChartContextValue } from 'layerchart/components/Chart.svelte';
+import type { ChartContextValue } from '$lib/components/Chart.svelte';
 import { accessor, type Accessor } from './common.js';
 import { isScaleBand } from './scales.svelte.js';
 import { max, min } from 'd3-array';

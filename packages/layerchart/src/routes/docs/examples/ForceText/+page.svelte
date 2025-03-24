@@ -1,13 +1,13 @@
 <script lang="ts">
   import { forceX, forceY, forceManyBody, forceCollide } from 'd3-force';
 
-  import { Canvas, Chart, Circle, ForceSimulation, Points, Svg } from 'layerchart';
+  import { Canvas, Chart, ForceSimulation, Points, Svg } from 'layerchart';
   import { Field, RangeField, Switch, TextField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
 
   import { rasterizeText, type RasterizeTextOptions } from '$lib/utils/string.js';
-  import type { ChartResizeDetail } from 'layerchart/components/Chart.svelte';
+  import type { ChartResizeDetail } from '$lib/components/Chart.svelte';
 
   let config = $state({
     width: 960,

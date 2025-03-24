@@ -129,7 +129,7 @@
 </script>
 
 <script lang="ts" generics="TData">
-  import { onMount } from 'svelte';
+  import { onMount, type ComponentProps } from 'svelte';
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
@@ -220,6 +220,33 @@
     series.filter((s) => selectedSeries.isEmpty() || selectedSeries.isSelected(s.key))
   );
 
+  function getLegendProps(): ComponentProps<typeof Legend> {
+    return {
+      tickFormat: (tick) => {
+        const item = chartData.find((d) => keyAccessor(d) === tick);
+        return item ? (labelAccessor(item) ?? tick) : tick;
+      },
+      placement: 'bottom',
+      variant: 'swatches',
+      onclick: (e, item) => {
+        selectedKeys.toggleSelected(item.value);
+        selectedSeries.toggleSelected(item.value);
+      },
+      onpointerenter: (e, item) => (highlightKey.current = item.value),
+      onpointerleave: (e) => (highlightKey.current = null),
+      ...props.legend,
+      ...(typeof legend === 'object' ? legend : null),
+      classes: {
+        item: (item) =>
+          visibleData.length && !visibleData.some((d) => keyAccessor(d) === item.value)
+            ? 'opacity-50'
+            : '',
+        ...props.legend?.classes,
+        ...(typeof legend === 'object' ? legend.classes : null),
+      },
+    };
+  }
+
   if (profile) {
     console.time('PieChart render');
     onMount(() => {
@@ -288,6 +315,7 @@
       visibleData,
       highlightKey: highlightKey.current,
       setHighlightKey: highlightKey.set,
+      getLegendProps,
     }}
     {#if childrenProp}
       {@render childrenProp(snippetProps)}
@@ -397,30 +425,7 @@
       {#if typeof legend === 'function'}
         {@render legend(snippetProps)}
       {:else if legend}
-        <Legend
-          tickFormat={(tick) => {
-            const item = chartData.find((d) => keyAccessor(d) === tick);
-            return item ? (labelAccessor(item) ?? tick) : tick;
-          }}
-          placement="bottom"
-          variant="swatches"
-          onclick={(e, item) => {
-            selectedKeys.toggleSelected(item.value);
-            selectedSeries.toggleSelected(item.value);
-          }}
-          onpointerenter={(e, item) => (highlightKey.current = item.value)}
-          onpointerleave={(e) => (highlightKey.current = null)}
-          {...props.legend}
-          {...typeof legend === 'object' ? legend : null}
-          classes={{
-            item: (item) =>
-              visibleData.length && !visibleData.some((d) => keyAccessor(d) === item.value)
-                ? 'opacity-50'
-                : '',
-            ...props.legend?.classes,
-            ...(typeof legend === 'object' ? legend.classes : null),
-          }}
-        />
+        <Legend {...getLegendProps()} />
       {/if}
 
       {#if typeof tooltip === 'function'}

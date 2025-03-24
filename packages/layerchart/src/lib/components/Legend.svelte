@@ -13,6 +13,11 @@
     | 'bottom'
     | 'bottom-right';
 
+  export type LegendItem = {
+    value: any;
+    color: string;
+  };
+
   export type LegendPropsWithoutHTML = {
     scale?: AnyScale;
 
@@ -70,9 +75,9 @@
      */
     orientation?: 'horizontal' | 'vertical';
 
-    onclick?: (e: MouseEvent, detail: any) => any;
-    onpointerenter?: (e: MouseEvent, detail: any) => any;
-    onpointerleave?: (e: MouseEvent, detail: any) => any;
+    onclick?: (e: MouseEvent, detail: LegendItem) => any;
+    onpointerenter?: (e: MouseEvent, detail: LegendItem) => any;
+    onpointerleave?: (e: MouseEvent, detail: LegendItem) => any;
 
     /**
      * Determine display ramp (individual color swatches or continuous ramp)
@@ -93,7 +98,7 @@
       tick?: string;
       swatches?: string;
       swatch?: string;
-      item?: (item: any) => string;
+      item?: (item: LegendItem) => string;
     };
 
     /**
@@ -382,7 +387,7 @@
       )}
     >
       {#each scaleConfig.tickValues ?? scaleConfig.xScale?.ticks?.(ticks) ?? [] as tick}
-        {@const color = scale?.(tick)}
+        {@const color = scale?.(tick) ?? ''}
         {@const item = { value: tick, color }}
         <button
           class={cls(

@@ -12,6 +12,11 @@
       s: SeriesData<TData, typeof Spline>,
       i: number
     ) => ComponentProps<typeof Points>;
+    getHighlightProps: (
+      s: SeriesData<TData, typeof Spline>,
+      i: number
+    ) => ComponentProps<typeof Highlight>;
+    getGridProps: () => ComponentProps<typeof Grid>;
   };
 
   export type LineChartPropsObjProp = Pick<
@@ -104,14 +109,14 @@
     profile = false,
     debug = false,
     xScale: xScaleProp,
-    tooltip,
+    tooltip = true,
     children: childrenProp,
     aboveContext,
     belowContext,
     belowMarks,
     aboveMarks,
     marks,
-    highlight,
+    highlight = true,
     context = $bindable(),
     ...restProps
   }: LineChartProps<TData> = $props();
@@ -193,6 +198,81 @@
     return labelsProps;
   }
 
+  const highlightPointsProps = $derived(
+    typeof props.highlight?.points === 'object' ? props.highlight.points : null
+  );
+
+  function getHighlightProps(
+    s: SeriesData<TData, typeof Spline>,
+    i: number
+  ): ComponentProps<typeof Highlight> {
+    if (!tooltipContext || !context) return {};
+    const seriesTooltipData =
+      s.data && tooltipContext.data
+        ? findRelatedData(s.data, tooltipContext.data, context.x)
+        : null;
+
+    return {
+      data: seriesTooltipData,
+      y: s.value ?? (s.data ? undefined : s.key),
+      lines: i === 0,
+      onPointClick: onPointClick
+        ? (e, detail) => onPointClick(e, { ...detail, series: s })
+        : undefined,
+      onPointEnter: () => (highlightKey.current = s.key),
+      onPointLeave: () => (highlightKey.current = null),
+      ...props.highlight,
+      points:
+        props.highlight?.points == false
+          ? false
+          : {
+              ...highlightPointsProps,
+              fill: s.color,
+              class: cls(
+                'transition-opacity',
+                highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
+                highlightPointsProps?.class
+              ),
+            },
+    };
+  }
+
+  function getLegendProps(): ComponentProps<typeof Legend> {
+    return {
+      scale: isDefaultSeries
+        ? undefined
+        : scaleOrdinal(
+            series.map((s) => s.key),
+            series.map((s) => s.color)
+          ),
+      tickFormat: (key) => series.find((s) => s.key === key)?.label ?? key,
+      placement: 'bottom',
+      variant: 'swatches',
+      onclick: (_, item) => selectedSeries.toggleSelected(item.value),
+      onpointerenter: (_, item) => (highlightKey.current = item.value),
+      onpointerleave: (_) => (highlightKey.current = null),
+      ...props.legend,
+      ...(typeof legend === 'object' ? legend : null),
+      classes: {
+        item: (item) =>
+          visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
+            ? 'opacity-50'
+            : '',
+        ...props.legend?.classes,
+        ...(typeof legend === 'object' ? legend.classes : null),
+      },
+    };
+  }
+
+  function getGridProps(): ComponentProps<typeof Grid> {
+    return {
+      x: radial,
+      y: true,
+      ...(typeof grid === 'object' ? grid : null),
+      ...props.grid,
+    };
+  }
+
   const selectedSeries = createSelectionState();
   const visibleSeries = $derived(
     series.filter((s) => selectedSeries.isEmpty() || selectedSeries.isSelected(s.key))
@@ -262,6 +342,9 @@
       getLabelsProps,
       getPointsProps,
       getSplineProps,
+      getHighlightProps,
+      getLegendProps,
+      getGridProps,
       highlightKey: highlightKey.current,
       setHighlightKey: highlightKey.set,
     }}
@@ -279,7 +362,7 @@
         {#if typeof grid === 'function'}
           {@render grid(snippetProps)}
         {:else if grid}
-          <Grid x={radial} y {...typeof grid === 'object' ? grid : null} {...props.grid} />
+          <Grid {...getGridProps()} />
         {/if}
 
         <ChartClipPath disabled={!brush}>
@@ -325,51 +408,27 @@
 
         <!-- Use `full` to allow labels on edge to not be cropped (bleed into padding) -->
         <ChartClipPath disabled={!brush} full>
-          {#if points}
+          {#if typeof points === 'function'}
+            {@render points(snippetProps)}
+          {:else if points}
             {#each visibleSeries as s, i (s.key)}
               <Points {...getPointsProps(s, i)} />
             {/each}
           {/if}
 
-          {#if labels}
+          {#if typeof labels === 'function'}
+            {@render labels(snippetProps)}
+          {:else if labels}
             {#each visibleSeries as s, i (s.key)}
               <Labels {...getLabelsProps(s, i)} />
             {/each}
           {/if}
 
-          {#if highlight}
+          {#if typeof highlight === 'function'}
             {@render highlight(snippetProps)}
-          {:else}
+          {:else if highlight}
             {#each visibleSeries as s, i (s.key)}
-              {@const seriesTooltipData =
-                s.data && tooltipContext.data
-                  ? findRelatedData(s.data, tooltipContext.data, context.x)
-                  : null}
-              {@const highlightPointsProps =
-                typeof props.highlight?.points === 'object' ? props.highlight.points : null}
-
-              <Highlight
-                data={seriesTooltipData}
-                y={s.value ?? (s.data ? undefined : s.key)}
-                lines={i === 0}
-                onPointClick={onPointClick
-                  ? (e, detail) => onPointClick(e, { ...detail, series: s })
-                  : undefined}
-                onPointEnter={() => (highlightKey.current = s.key)}
-                onPointLeave={() => (highlightKey.current = null)}
-                {...props.highlight}
-                points={props.highlight?.points == false
-                  ? false
-                  : {
-                      ...highlightPointsProps,
-                      fill: s.color,
-                      class: cls(
-                        'transition-opacity',
-                        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
-                        highlightPointsProps?.class
-                      ),
-                    }}
-              />
+              <Highlight {...getHighlightProps(s, i)} />
             {/each}
           {/if}
         </ChartClipPath>
@@ -380,35 +439,12 @@
       {#if typeof legend === 'function'}
         {@render legend(snippetProps)}
       {:else if legend}
-        <Legend
-          scale={isDefaultSeries
-            ? undefined
-            : scaleOrdinal(
-                series.map((s) => s.key),
-                series.map((s) => s.color)
-              )}
-          tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
-          placement="bottom"
-          variant="swatches"
-          onclick={(_, item) => selectedSeries.toggleSelected(item.value)}
-          onpointerenter={(_, item) => (highlightKey.current = item.value)}
-          onpointerleave={(_) => (highlightKey.current = null)}
-          {...props.legend}
-          {...typeof legend === 'object' ? legend : null}
-          classes={{
-            item: (item) =>
-              visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
-                ? 'opacity-50'
-                : '',
-            ...props.legend?.classes,
-            ...(typeof legend === 'object' ? legend.classes : null),
-          }}
-        />
+        <Legend {...getLegendProps()} />
       {/if}
 
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
-      {:else}
+      {:else if tooltip}
         <Tooltip.Root {...props.tooltip?.root}>
           {#snippet children({ payload })}
             <Tooltip.Header value={payload[0].label} {format} {...props.tooltip?.header} />

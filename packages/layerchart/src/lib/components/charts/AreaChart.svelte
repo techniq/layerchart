@@ -10,6 +10,11 @@
       i: number
     ) => ComponentProps<typeof Labels<TData>>;
     getPointsProps: (s: SeriesData<TData, typeof Area>, i: number) => ComponentProps<typeof Points>;
+    getHighlightProps: (
+      s: SeriesData<TData, typeof Area>,
+      i: number
+    ) => ComponentProps<typeof Highlight>;
+    getGridProps: () => ComponentProps<typeof Grid>;
   };
 
   /**
@@ -108,6 +113,8 @@
     labels = false,
     legend = false,
     points = false,
+    tooltip = true,
+    highlight = true,
     rule = true,
     onTooltipClick = () => {},
     onPointClick,
@@ -116,14 +123,12 @@
     profile = false,
     debug = false,
     xScale: xScaleProp,
-    tooltip,
     children: childrenProp,
     aboveContext,
     belowContext,
     belowMarks,
     aboveMarks,
     marks,
-    highlight,
     context = $bindable(),
     brushContext = $bindable(),
     transformContext = $bindable(),
@@ -183,14 +188,14 @@
 
   const highlightKey = createHighlightKey<TData, typeof Area>();
 
-  function getAreaProps(s: SeriesData<TData, typeof Area>, i: number) {
+  function getAreaProps(s: SeriesData<TData, typeof Area>, i: number): ComponentProps<typeof Area> {
     const lineProps: ComponentProps<typeof Spline> = {
       ...props.line,
       ...(typeof props.area?.line === 'object' ? props.area.line : null),
       ...(typeof s.props?.line === 'object' ? s.props.line : null),
     };
 
-    const areaProps: ComponentProps<typeof Area> = {
+    return {
       data: s.data,
       y0: stackSeries ? (d) => d.stackData[i][0] : Array.isArray(s.value) ? s.value[0] : undefined,
       y1: stackSeries
@@ -225,12 +230,13 @@
         ),
       },
     };
-
-    return areaProps;
   }
 
-  function getPointsProps(s: (typeof series)[number], i: number) {
-    const pointsProps: ComponentProps<typeof Points> = {
+  function getPointsProps(
+    s: SeriesData<TData, typeof Area>,
+    i: number
+  ): ComponentProps<typeof Points> {
+    return {
       data: s.data,
       y: stackSeries
         ? (d) => d.stackData[i][1]
@@ -247,16 +253,17 @@
         typeof points === 'object' && points.class
       ),
     };
-
-    return pointsProps;
   }
 
   function isStackData(d: TData): d is TData & { stackData: any[] } {
     return d && typeof d === 'object' && 'stackData' in d;
   }
 
-  function getLabelsProps(s: (typeof series)[number], i: number) {
-    const labelsProps: ComponentProps<typeof Labels<TData>> = {
+  function getLabelsProps(
+    s: SeriesData<TData, typeof Area>,
+    i: number
+  ): ComponentProps<typeof Labels<TData>> {
+    return {
       data: s.data,
       y: stackSeries
         ? (d) => (isStackData(d) ? d.stackData[i][1] : undefined)
@@ -272,11 +279,82 @@
         typeof labels === 'object' && labels.class
       ),
     };
-
-    return labelsProps;
   }
 
   const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
+
+  function getHighlightProps(
+    s: SeriesData<TData, typeof Area>,
+    i: number
+  ): ComponentProps<typeof Highlight> {
+    if (!tooltipContext || !context) return {};
+    const seriesTooltipData =
+      s.data && tooltipContext.data
+        ? findRelatedData(s.data, tooltipContext.data, context.x)
+        : null;
+    const highlightPointsProps =
+      typeof props.highlight?.points === 'object' ? props.highlight.points : null;
+
+    return {
+      data: seriesTooltipData,
+      y: stackSeries ? (d) => d.stackData[i][1] : (s.value ?? (s.data ? undefined : s.key)),
+      lines: i == 0,
+      onPointClick: onPointClick
+        ? (e, detail) => onPointClick(e, { ...detail, series: s })
+        : undefined,
+      onPointEnter: () => (highlightKey.current = s.key),
+      onPointLeave: () => (highlightKey.current = null),
+      ...props.highlight,
+      points:
+        props.highlight?.points == false
+          ? false
+          : {
+              ...highlightPointsProps,
+              fill: s.color,
+              class: cls(
+                'transition-opacity',
+                highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
+                highlightPointsProps?.class
+              ),
+            },
+    };
+  }
+
+  function getLegendProps(): ComponentProps<typeof Legend> {
+    return {
+      scale: isDefaultSeries
+        ? undefined
+        : scaleOrdinal(
+            series.map((s) => s.key),
+            series.map((s) => s.color)
+          ),
+      tickFormat: (key) => series.find((s) => s.key === key)?.label ?? key,
+      placement: 'bottom',
+      variant: 'swatches',
+      onclick: (e, item) => selectedSeries.toggleSelected(item.value),
+      onpointerenter: (e, item) => (highlightKey.current = item.value),
+      onpointerleave: (e) => (highlightKey.current = null),
+      ...props.legend,
+      ...(typeof legend === 'object' ? legend : null),
+      classes: {
+        item: (item) =>
+          visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
+            ? 'opacity-50'
+            : '',
+        ...props.legend?.classes,
+        ...(typeof legend === 'object' ? legend.classes : null),
+      },
+    };
+  }
+
+  function getGridProps(): ComponentProps<typeof Grid> {
+    return {
+      x: radial,
+      y: true,
+      ...(typeof grid === 'object' ? grid : null),
+      ...props.grid,
+    };
+  }
 
   if (profile) {
     console.time('AreaChart render');
@@ -354,6 +432,9 @@
       getAreaProps,
       getLabelsProps,
       getPointsProps,
+      getHighlightProps,
+      getLegendProps,
+      getGridProps,
       highlightKey: highlightKey.current,
       setHighlightKey: highlightKey.set,
     }}
@@ -373,7 +454,7 @@
         {#if typeof grid === 'function'}
           {@render grid(snippetProps)}
         {:else if grid}
-          <Grid x={radial} y {...typeof grid === 'object' ? grid : null} {...props.grid} />
+          <Grid {...getGridProps()} />
         {/if}
 
         <ChartClipPath disabled={!brush}>
@@ -425,7 +506,9 @@
 
         <!-- Use `full` to allow labels on edge to not be cropped (bleed into padding) -->
         <ChartClipPath disabled={!brush} full>
-          {#if points}
+          {#if typeof points === 'function'}
+            {@render points(snippetProps)}
+          {:else if points}
             {#each visibleSeries as s, i (s.key)}
               <Points {...getPointsProps(s, i)} />
             {/each}
@@ -433,43 +516,15 @@
 
           {#if typeof highlight === 'function'}
             {@render highlight(snippetProps)}
-          {:else}
+          {:else if highlight}
             {#each visibleSeries as s, i (s.key)}
-              {@const seriesTooltipData =
-                s.data && tooltipContext.data
-                  ? findRelatedData(s.data, tooltipContext.data, context.x)
-                  : null}
-              {@const highlightPointsProps =
-                typeof props.highlight?.points === 'object' ? props.highlight.points : null}
-
-              <Highlight
-                data={seriesTooltipData}
-                y={stackSeries
-                  ? (d) => d.stackData[i][1]
-                  : (s.value ?? (s.data ? undefined : s.key))}
-                lines={i == 0}
-                onPointClick={onPointClick
-                  ? (e, detail) => onPointClick(e, { ...detail, series: s })
-                  : undefined}
-                onPointEnter={() => (highlightKey.current = s.key)}
-                onPointLeave={() => (highlightKey.current = null)}
-                {...props.highlight}
-                points={props.highlight?.points == false
-                  ? false
-                  : {
-                      ...highlightPointsProps,
-                      fill: s.color,
-                      class: cls(
-                        'transition-opacity',
-                        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
-                        highlightPointsProps?.class
-                      ),
-                    }}
-              />
+              <Highlight {...getHighlightProps(s, i)} />
             {/each}
           {/if}
 
-          {#if labels}
+          {#if typeof labels === 'function'}
+            {@render labels(snippetProps)}
+          {:else if labels}
             {#each visibleSeries as s, i (s.key)}
               <Labels {...getLabelsProps(s, i)} />
             {/each}
@@ -482,37 +537,12 @@
       {#if typeof legend === 'function'}
         {@render legend(snippetProps)}
       {:else if legend}
-        {#if legend}
-          <Legend
-            scale={isDefaultSeries
-              ? undefined
-              : scaleOrdinal(
-                  series.map((s) => s.key),
-                  series.map((s) => s.color)
-                )}
-            tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
-            placement="bottom"
-            variant="swatches"
-            onclick={(e, item) => selectedSeries.toggleSelected(item.value)}
-            onpointerenter={(e, item) => (highlightKey.current = item.value)}
-            onpointerleave={(e) => (highlightKey.current = null)}
-            {...props.legend}
-            {...typeof legend === 'object' ? legend : null}
-            classes={{
-              item: (item) =>
-                visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
-                  ? 'opacity-50'
-                  : '',
-              ...props.legend?.classes,
-              ...(typeof legend === 'object' ? legend.classes : null),
-            }}
-          />
-        {/if}
+        <Legend {...getLegendProps()} />
       {/if}
 
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
-      {:else}
+      {:else if tooltip}
         <Tooltip.Root {...props.tooltip?.root}>
           {#snippet children({ data, payload })}
             <Tooltip.Header value={payload[0]?.label} {format} {...props.tooltip?.header} />

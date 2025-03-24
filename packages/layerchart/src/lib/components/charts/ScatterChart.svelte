@@ -12,6 +12,7 @@
       s: SeriesData<TData, typeof Points>,
       i: number
     ) => ComponentProps<typeof Points>;
+    getHighlightProps: () => ComponentProps<typeof Highlight>;
   };
 
   export type ScatterChartPropsObjProp = Pick<
@@ -79,7 +80,9 @@
     legend = false,
     points = false,
     rule = true,
-    tooltipContext,
+    tooltip = true,
+    context = $bindable(),
+    tooltipContext = $bindable(),
     onTooltipClick = () => {},
     props = {},
     renderContext = 'svg',
@@ -87,7 +90,6 @@
     debug = false,
     xScale: xScaleProp,
     yScale: yScaleProp,
-    tooltip,
     children: childrenProp,
     aboveContext,
     belowContext,
@@ -95,7 +97,6 @@
     aboveMarks,
     marks,
     highlight,
-    context = $bindable(),
     ...restProps
   }: ScatterChartProps<TData> = $props();
 
@@ -127,8 +128,11 @@
 
   const highlightKey = createHighlightKey<TData, typeof Points>();
 
-  function getPointsProps(s: SeriesData<TData, typeof Points>, i: number) {
-    const pointsProps: ComponentProps<typeof Points> = {
+  function getPointsProps(
+    s: SeriesData<TData, typeof Points>,
+    i: number
+  ): ComponentProps<typeof Points> {
+    return {
       data: s.data,
       stroke: s.color,
       fill: s.color,
@@ -142,12 +146,13 @@
         s.props?.class
       ),
     };
-
-    return pointsProps;
   }
 
-  function getLabelsProps(s: SeriesData<TData, typeof Points>, i: number) {
-    const labelsProps: ComponentProps<typeof Labels<TData>> = {
+  function getLabelsProps(
+    s: SeriesData<TData, typeof Points>,
+    i: number
+  ): ComponentProps<typeof Labels<TData>> {
+    return {
       data: s.data,
       ...props.labels,
       ...(typeof labels === 'object' ? labels : null),
@@ -158,8 +163,59 @@
         typeof labels === 'object' && labels.class
       ),
     };
+  }
 
-    return labelsProps;
+  function getLegendProps(): ComponentProps<typeof Legend> {
+    return {
+      scale: isDefaultSeries
+        ? undefined
+        : scaleOrdinal(
+            series.map((s) => s.key),
+            series.map((s) => s.color)
+          ),
+      tickFormat: (key) => series.find((s) => s.key === key)?.label ?? key,
+      placement: 'bottom',
+      variant: 'swatches',
+      onclick: (e, item) => selectedSeries.toggleSelected(item.value),
+      onpointerenter: (e, item) => (highlightKey.current = item.value),
+      onpointerleave: (e) => (highlightKey.current = null),
+      ...props.legend,
+      ...(typeof legend === 'object' ? legend : null),
+      classes: {
+        item: (item) =>
+          visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
+            ? 'opacity-50'
+            : '',
+        ...props.legend?.classes,
+        ...(typeof legend === 'object' ? legend.classes : null),
+      },
+    };
+  }
+
+  function getGridProps(): ComponentProps<typeof Grid> {
+    return {
+      x: true,
+      y: true,
+      ...(typeof grid === 'object' ? grid : null),
+      ...props.grid,
+    };
+  }
+
+  const activeSeries = $derived.by(() => {
+    if (!tooltipContext?.data) return null;
+    return series.find((s) => s.key === tooltipContext!.data.seriesKey) ?? series[0];
+  });
+
+  function getHighlightProps(): ComponentProps<typeof Highlight> {
+    return {
+      lines: true,
+      axis: 'both',
+      ...props.highlight,
+      points: {
+        fill: activeSeries?.color,
+        ...(typeof props.highlight?.points === 'object' ? props.highlight.points : null),
+      },
+    };
   }
 
   const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
@@ -220,12 +276,11 @@
       visibleSeries,
       getLabelsProps,
       getPointsProps,
+      getLegendProps,
+      getHighlightProps,
       highlightKey: highlightKey.current,
       setHighlightKey: highlightKey.set,
     }}
-    {@const activeSeries = tooltipContext.data
-      ? (series.find((s) => s.key === tooltipContext.data.seriesKey) ?? series[0])
-      : null}
 
     {#if childrenProp}
       {@render childrenProp(snippetProps)}
@@ -240,7 +295,7 @@
         {#if typeof grid === 'function'}
           {@render grid(snippetProps)}
         {:else if grid}
-          <Grid x y {...typeof grid === 'object' ? grid : null} {...props.grid} />
+          <Grid {...getGridProps()} />
         {/if}
 
         <ChartClipPath disabled={!brush}>
@@ -289,19 +344,13 @@
         <ChartClipPath disabled={!brush} full>
           {#if typeof highlight === 'function'}
             {@render highlight(snippetProps)}
-          {:else}
-            <Highlight
-              lines
-              axis="both"
-              {...props.highlight}
-              points={{
-                fill: activeSeries?.color,
-                ...(typeof props.highlight?.points === 'object' ? props.highlight.points : null),
-              }}
-            />
+          {:else if highlight}
+            <Highlight {...getHighlightProps()} />
           {/if}
 
-          {#if labels}
+          {#if typeof labels === 'function'}
+            {@render labels(snippetProps)}
+          {:else if labels}
             {#each visibleSeries as s, i (s.key)}
               <Labels {...getLabelsProps(s, i)} />
             {/each}
@@ -314,30 +363,7 @@
       {#if typeof legend === 'function'}
         {@render legend(snippetProps)}
       {:else if legend}
-        <Legend
-          scale={isDefaultSeries
-            ? undefined
-            : scaleOrdinal(
-                series.map((s) => s.key),
-                series.map((s) => s.color)
-              )}
-          tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
-          placement="bottom"
-          variant="swatches"
-          onclick={(e, item) => selectedSeries.toggleSelected(item.value)}
-          onpointerenter={(e, item) => (highlightKey.current = item.value)}
-          onpointerleave={(e) => (highlightKey.current = null)}
-          {...props.legend}
-          {...typeof legend === 'object' ? legend : null}
-          classes={{
-            item: (item) =>
-              visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
-                ? 'opacity-50'
-                : '',
-            ...props.legend?.classes,
-            ...(typeof legend === 'object' ? legend.classes : null),
-          }}
-        />
+        <Legend {...getLegendProps()} />
       {/if}
 
       {#if typeof tooltip === 'function'}

@@ -5,6 +5,8 @@
       s: SeriesData<TData, typeof Bars>,
       i: number
     ) => ComponentProps<typeof Labels<TData>>;
+    getGridProps: () => ComponentProps<typeof Grid>;
+    getHighlightProps: () => ComponentProps<typeof Highlight>;
   };
 
   export type BarChartPropsObjProp<TData> = Pick<
@@ -140,7 +142,7 @@
     bandPadding = 0.4,
     groupPadding = 0,
     stackPadding = 0,
-    tooltip,
+    tooltip = true,
     children: childrenProp,
     aboveContext,
     belowContext,
@@ -260,7 +262,7 @@
 
   const highlightKey = createHighlightKey();
 
-  function getBarsProps(s: SeriesData<TData, typeof Bars>, i: number) {
+  function getBarsProps(s: SeriesData<TData, typeof Bars>, i: number): ComponentProps<typeof Bars> {
     const isFirst = i == 0;
     const isLast = i == visibleSeries.length - 1;
 
@@ -287,7 +289,7 @@
       ? (d: any) => d.stackData[i]
       : (s.value ?? (s.data ? undefined : s.key));
 
-    const barsProps: ComponentProps<typeof Bars> = {
+    return {
       data: s.data,
       x: !isVertical ? valueAccessor : undefined,
       y: isVertical ? valueAccessor : undefined,
@@ -308,12 +310,13 @@
         s.props?.class
       ),
     };
-
-    return barsProps;
   }
 
-  function getLabelsProps(s: SeriesData<TData, typeof Bars>, i: number) {
-    const labelsProps: ComponentProps<typeof Labels<TData>> = {
+  function getLabelsProps(
+    s: SeriesData<TData, typeof Bars>,
+    i: number
+  ): ComponentProps<typeof Labels<TData>> {
+    return {
       // TODO: Improve placement when using `seriesLayout="group"`
       // data: s.data,
       // y: s.value ?? (s.data ? undefined : s.key),
@@ -326,8 +329,48 @@
         typeof labels === 'object' && labels.class
       ),
     };
+  }
 
-    return labelsProps;
+  function getLegendProps(): ComponentProps<typeof Legend> {
+    return {
+      scale: isDefaultSeries
+        ? undefined
+        : scaleOrdinal(
+            series.map((s) => s.key),
+            series.map((s) => s.color)
+          ),
+      tickFormat: (key) => series.find((s) => s.key === key)?.label ?? key,
+      placement: 'bottom',
+      variant: 'swatches',
+      onclick: (e, item) => selectedSeries.toggleSelected(item.value),
+      onpointerenter: (e, item) => (highlightKey.current = item.value),
+      onpointerleave: (e) => (highlightKey.current = null),
+      ...props.legend,
+      ...(typeof legend === 'object' ? legend : null),
+      classes: {
+        item: (item) =>
+          visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
+            ? 'opacity-50'
+            : '',
+        ...props.legend?.classes,
+        ...(typeof legend === 'object' ? legend.classes : null),
+      },
+    };
+  }
+  function getGridProps(): ComponentProps<typeof Grid> {
+    return {
+      x: !isVertical,
+      y: isVertical,
+      ...(typeof grid === 'object' ? grid : null),
+      ...props.grid,
+    };
+  }
+
+  function getHighlightProps(): ComponentProps<typeof Highlight> {
+    return {
+      area: true,
+      ...props.highlight,
+    };
   }
 
   if (profile) {
@@ -403,6 +446,9 @@
       visibleSeries,
       getBarsProps,
       getLabelsProps,
+      getLegendProps,
+      getGridProps,
+      getHighlightProps,
       highlightKey: highlightKey.current,
       setHighlightKey: highlightKey.set,
     }}
@@ -416,12 +462,7 @@
         {#if typeof grid === 'function'}
           {@render grid(snippetProps)}
         {:else if grid}
-          <Grid
-            x={!isVertical}
-            y={isVertical}
-            {...typeof grid === 'object' ? grid : null}
-            {...props.grid}
-          />
+          <Grid {...getGridProps()} />
         {/if}
         {@render belowMarks?.(snippetProps)}
 
@@ -468,7 +509,9 @@
             />
           {/if}
 
-          {#if rule}
+          {#if typeof rule === 'function'}
+            {@render rule(snippetProps)}
+          {:else if rule}
             <Rule
               x={isVertical ? false : 0}
               y={isVertical ? 0 : false}
@@ -480,11 +523,13 @@
 
         {#if typeof highlight === 'function'}
           {@render highlight(snippetProps)}
-        {:else}
-          <Highlight area {...props.highlight} />
+        {:else if highlight}
+          <Highlight {...getHighlightProps()} />
         {/if}
 
-        {#if labels}
+        {#if typeof labels === 'function'}
+          {@render labels(snippetProps)}
+        {:else if labels}
           {#each visibleSeries as s, i (s.key)}
             <Labels {...getLabelsProps(s, i)} />
           {/each}
@@ -496,35 +541,12 @@
       {#if typeof legend === 'function'}
         {@render legend(snippetProps)}
       {:else if legend}
-        <Legend
-          scale={isDefaultSeries
-            ? undefined
-            : scaleOrdinal(
-                series.map((s) => s.key),
-                series.map((s) => s.color)
-              )}
-          tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
-          placement="bottom"
-          variant="swatches"
-          onclick={(e, item) => selectedSeries.toggleSelected(item.value)}
-          onpointerenter={(e, item) => (highlightKey.current = item.value)}
-          onpointerleave={(e) => (highlightKey.current = null)}
-          {...props.legend}
-          {...typeof legend === 'object' ? legend : null}
-          classes={{
-            item: (item) =>
-              visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
-                ? 'opacity-50'
-                : '',
-            ...props.legend?.classes,
-            ...(typeof legend === 'object' ? legend.classes : null),
-          }}
-        />
+        <Legend {...getLegendProps()} />
       {/if}
 
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
-      {:else}
+      {:else if tooltip}
         <Tooltip.Root {...props.tooltip?.root}>
           {#snippet children({ data, payload })}
             <Tooltip.Header value={payload[0].label} {format} {...props.tooltip?.header} />
