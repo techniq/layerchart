@@ -197,57 +197,41 @@ export type BaseChartProps<
    *
    * @default true
    */
-  grid?:
-    | ComponentProps<typeof Grid>
-    | boolean
-    | SimplifiedChartSnippet<TData, TComponent, TSnippetProps>;
+  grid?: ComponentProps<typeof Grid> | boolean | ChartSnippet;
 
   /**
    * The labels to be used for the chart.
    *
    * @default false
    */
-  labels?:
-    | ComponentProps<typeof Labels<TData>>
-    | boolean
-    | SimplifiedChartSnippet<TData, TComponent, TSnippetProps>;
+  labels?: ComponentProps<typeof Labels<TData>> | boolean | ChartSnippet;
   /**
    * The legend to be used for the chart.
    *
    * @default false
    */
-  legend?:
-    | ComponentProps<typeof Legend>
-    | boolean
-    | SimplifiedChartSnippet<TData, TComponent, TSnippetProps>;
+  legend?: ComponentProps<typeof Legend> | boolean | ChartSnippet;
 
   /**
    * The points to be used for the chart.
    *
    * @default false
    */
-  points?:
-    | ComponentProps<typeof Points>
-    | boolean
-    | SimplifiedChartSnippet<TData, TComponent, TSnippetProps>;
+  points?: ComponentProps<typeof Points> | boolean | ChartSnippet;
 
   /**
    * The rule to be used for the chart.
    *
    * @default true
    */
-  rule?:
-    | ComponentProps<typeof Rule>
-    | boolean
-    | SimplifiedChartSnippet<TData, TComponent, TSnippetProps>;
+  rule?: ComponentProps<typeof Rule> | boolean | ChartSnippet;
 
   /**
    * The tooltip to be used for the chart.
    */
-  tooltip?:
-    | ComponentProps<typeof TooltipContext>
-    | boolean
-    | SimplifiedChartSnippet<TData, TComponent, TSnippetProps>;
+  tooltip?: ComponentProps<typeof TooltipContext> | boolean | ChartSnippet;
+
+  highlight?: boolean | ChartSnippet;
 
   /**
    * The tooltip context to be used for the chart.
@@ -290,7 +274,6 @@ export type BaseChartProps<
   belowMarks?: ChartSnippet;
   aboveMarks?: ChartSnippet;
   marks?: ChartSnippet;
-  highlight?: ChartSnippet | boolean;
 };
 
 export type SimplifiedChartProps<

@@ -113,10 +113,10 @@
     endAngleProp ?? degreesToRadians(ctx.config.xRange ? max(ctx.xRange) : max(range))
   );
 
-  const tweenedEndAngle = motionState(endAngle, { spring, tweened });
+  const tweenedEndAngle = motionState(0, { spring, tweened });
 
-  $effect.pre(() => {
-    tweenedEndAngle.set(endAngle);
+  $effect(() => {
+    tweenedEndAngle.target = endAngle;
   });
 
   const pie = $derived.by(() => {
