@@ -147,7 +147,7 @@
   import { createHighlightKey } from './utils.svelte.js';
   import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
-  import { getColorIfDefined } from 'layerchart/utils/color.js';
+  import { getColorIfDefined } from '$lib/utils/color.js';
 
   let {
     data = [],

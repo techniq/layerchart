@@ -8,7 +8,7 @@
   import { longData } from '$lib/utils/genData.js';
   import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format } from '@layerstack/utils';
-  import Arc from 'layerchart/components/Arc.svelte';
+  import Arc from '$lib/components/Arc.svelte';
 
   const dataByYear = group(longData, (d) => d.year);
   const data = dataByYear.get(2019) ?? [];
