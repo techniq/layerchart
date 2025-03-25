@@ -5,7 +5,16 @@
 
   import { mdiPlay, mdiStop } from '@mdi/js';
 
-  import { Canvas, Chart, GeoPath, Graticule, Tooltip, TransformContext, Svg } from 'layerchart';
+  import {
+    Canvas,
+    Chart,
+    GeoPath,
+    Graticule,
+    Tooltip,
+    TransformContext,
+    Svg,
+    type ChartContextValue,
+  } from 'layerchart';
   import { Button, ButtonGroup, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { sortFunc } from '@layerstack/utils';
   import { scrollIntoView } from '@layerstack/svelte-actions';
@@ -24,15 +33,15 @@
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
   let Context: Component = $state(Svg);
-  let transformContext = $state<TransformContext>();
+  let context = $state<ChartContextValue>(null!);
 
   let selectedFeature: (typeof countries.features)[0] | null = $state(null);
 
   $effect.pre(() => {
-    if (selectedFeature && transformContext) {
+    if (selectedFeature && context?.transform) {
       const centroid = geoCentroid(selectedFeature);
 
-      transformContext.setTranslate({
+      context.transform.setTranslate({
         x: -centroid[0],
         y: -centroid[1],
       });
@@ -145,9 +154,9 @@
       transform={{
         spring: { stiffness: 0.04 },
       }}
-      bind:transformContext
+      bind:context
     >
-      {#snippet children({ tooltipContext })}
+      {#snippet children()}
         {#if debug}
           <div class="absolute bottom-0 right-0 z-10 grid gap-1">
             <GeoDebug />
@@ -169,7 +178,7 @@
                   : 'hover:fill-gray-200' // Canvas highlight handled below
               )}
               onclick={() => (selectedFeature = country)}
-              {tooltipContext}
+              tooltipContext={context.tooltip}
             />
           {/each}
         </Context>
@@ -177,14 +186,14 @@
         {#if Context === Canvas}
           <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
           <Canvas pointerEvents={false}>
-            {#if tooltipContext.data}
-              <GeoPath geojson={tooltipContext.data} class="fill-surface-content/20" />
+            {#if context.tooltip.data}
+              <GeoPath geojson={context.tooltip.data} class="fill-surface-content/20" />
             {/if}
           </Canvas>
         {/if}
 
         <Tooltip.Root>
-          {tooltipContext.data.properties.name}
+          {context.tooltip.data.properties.name}
         </Tooltip.Root>
       {/snippet}
     </Chart>

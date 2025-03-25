@@ -87,8 +87,8 @@
         <Spline y="close" class="stroke-secondary" />
       {/snippet}
 
-      {#snippet tooltip()}
-        <Tooltip.Root>
+      {#snippet tooltip({ context })}
+        <Tooltip.Root {context}>
           {#snippet children({ data })}
             <Tooltip.Header>
               {formatDate(data.date, PeriodType.Day)}

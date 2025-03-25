@@ -4,18 +4,18 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  let value = 50;
+  let value = $state(50);
   // let value = 100;
-  let domain = [0, 100];
+  let domain = $state<[number, number]>([0, 100]);
   // let range = [-120, 120];
-  let range = [0, 360];
-  let innerRadius = 50;
-  let outerRadius = 60;
-  let cornerRadius = 5;
-  let padAngle = 0;
-  let padRadius = 0;
+  let range = $state<[number, number]>([0, 360]);
+  let innerRadius = $state(50);
+  let outerRadius = $state(60);
+  let cornerRadius = $state(5);
+  let padAngle = $state(0);
+  let padRadius = $state(0);
 
-  let spring = true;
+  let spring = $state(true);
 
   const labelOptions = [
     { name: 'None', value: undefined },

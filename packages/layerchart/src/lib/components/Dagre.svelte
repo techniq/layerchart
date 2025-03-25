@@ -157,7 +157,13 @@
     graph?: dagre.graphlib.Graph;
 
     children?: Snippet<
-      [{ nodes: Array<dagre.Node>; edges: Array<dagre.Edge>; graph: dagre.graphlib.Graph }]
+      [
+        {
+          nodes: Array<dagre.Node>;
+          edges: Array<Edge & EdgeConfig & GraphEdge>;
+          graph: dagre.graphlib.Graph;
+        },
+      ]
     >;
   };
 </script>
@@ -246,12 +252,16 @@
     graph = g;
   });
 
-  const graphNodes = $derived(graph!.nodes().map((id) => graph!.node(id)));
-  const graphEdges = $derived(
-    graph!.edges().map((edge) => ({ ...edge, ...graph!.edge(edge) })) as Array<
+  const graphNodes = $derived.by(() => {
+    if (typeof document === 'undefined' || !graph) return [];
+    return graph!.nodes().map((id) => graph!.node(id));
+  });
+  const graphEdges = $derived.by(() => {
+    if (typeof document === 'undefined' || !graph) return [];
+    return graph!.edges().map((edge) => ({ ...edge, ...graph!.edge(edge) })) as Array<
       Edge & EdgeConfig & GraphEdge // `EdgeConfig` is excluded when inferred from usage
-    >
-  );
+    >;
+  });
 </script>
 
 <!-- TODO: are we sure we want to force these types? -->

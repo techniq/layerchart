@@ -15,6 +15,7 @@
     Svg,
     Tooltip,
     TransformContext,
+    type ChartContextValue,
   } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -24,19 +25,20 @@
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let transformContext = $state<TransformContext>();
+  let context = $state<ChartContextValue>();
 
   let velocity = $state(3);
   let isSpinning = $state(false);
   const timer = timerStore({
     delay: 1,
     onTick() {
-      if (!transformContext) return;
-      const value = transformContext.translate.current;
-      transformContext.translate.set({
+      if (!context) return;
+      const value = context.transform.translate;
+
+      context.transform.translate = {
         x: (value.x += velocity),
         y: value.y,
-      });
+      };
     },
     disabled: !isSpinning,
   });
@@ -100,9 +102,9 @@
           timer.start();
         }
       }}
-      bind:transformContext
+      bind:context
     >
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <GeoPath
             geojson={{ type: 'Sphere' }}
@@ -113,7 +115,7 @@
 
           {#each data.cables.features as feature}
             {@const hasColor =
-              tooltipContext.data == null || tooltipContext.data.id === feature.properties.id}
+              context.tooltip.data == null || context.tooltip.data.id === feature.properties.id}
             <GeoPath
               geojson={feature}
               stroke={hasColor ? feature.properties.color : undefined}
@@ -121,8 +123,8 @@
                 'stroke-2 fill-none transition-colors',
                 !hasColor && 'stroke-surface-content/10'
               )}
-              onpointermove={(e) => tooltipContext.show(e, feature.properties)}
-              onpointerleave={(e) => tooltipContext.hide()}
+              onpointermove={(e) => context.tooltip.show(e, feature.properties)}
+              onpointerleave={(e) => context.tooltip.hide()}
             />
           {/each}
 
@@ -145,8 +147,8 @@
                 <circle
                   r={2}
                   class="fill-surface-content stroke-surface-100 stroke"
-                  onpointermove={(e) => tooltipContext.show(e, feature.properties)}
-                  onpointerleave={(e) => tooltipContext.hide()}
+                  onpointermove={(e) => context.tooltip.show(e, feature.properties)}
+                  onpointerleave={(e) => context.tooltip.hide()}
                 />
               </GeoPoint>
             </GeoVisible>

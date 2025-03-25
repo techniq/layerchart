@@ -10,6 +10,7 @@
     Svg,
     Tooltip,
     TransformContext,
+    type ChartContextValue,
   } from 'layerchart';
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
   import { timerStore } from '@layerstack/svelte-stores';
@@ -20,16 +21,17 @@
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let transformContext = $state<TransformContext>();
+  let context = $state<ChartContextValue>();
 
   let isSpinning = $state(false);
   let velocity = $state(3);
   const timer = timerStore({
     delay: 1,
     onTick() {
-      if (!transformContext) return;
-      const curr = transformContext.translate.current;
-      transformContext.translate.target = {
+      if (!context) return;
+      const curr = context.transform.translate;
+
+      context.transform.translate = {
         x: (curr.x += velocity),
         y: curr.y,
       };
@@ -97,10 +99,10 @@
           timer.start();
         }
       }}
-      bind:transformContext
+      bind:context
     >
-      {#snippet children({ tooltipContext, geoContext })}
-        {@const [yaw, pitch, roll] = geoContext.projection?.rotate() ?? [0, 0, 0]}
+      {#snippet children({ context })}
+        {@const [yaw, pitch, roll] = context.geo.projection?.rotate() ?? [0, 0, 0]}
         <Svg>
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/20" />
 
@@ -123,7 +125,7 @@
             <GeoPath
               geojson={country}
               class="stroke-surface-100/30 fill-surface-content/70 cursor-pointer hover:fill-primary/70"
-              {tooltipContext}
+              tooltipContext={context.tooltip}
             />
           {/each}
         </Svg>

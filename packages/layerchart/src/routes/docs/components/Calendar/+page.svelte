@@ -42,9 +42,14 @@
         'var(--color-primary-700)',
       ]}
     >
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
-          <Calendar start={firstDayOfYear} end={lastDayOfYear} {tooltipContext} monthPath />
+          <Calendar
+            start={firstDayOfYear}
+            end={lastDayOfYear}
+            tooltipContext={context.tooltip}
+            monthPath
+          />
         </Svg>
 
         <Tooltip.Root>
@@ -85,12 +90,12 @@
         'var(--color-primary-700)',
       ]}
     >
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <Calendar
             start={firstDayOfYear}
             end={lastDayOfYear}
-            {tooltipContext}
+            tooltipContext={context.tooltip}
             cellSize={16}
             monthPath
           />
@@ -135,7 +140,7 @@
       ]}
       padding={{ left: 20 }}
     >
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           {#each range(2019, 2024) as year, i}
             {@const start = new Date(year, 0, 1)}
@@ -150,7 +155,7 @@
                 textAnchor="middle"
                 verticalAnchor="start"
               />
-              <Calendar {start} {end} {tooltipContext} cellSize={16} monthPath />
+              <Calendar {start} {end} tooltipContext={context.tooltip} cellSize={16} monthPath />
             </Group>
           {/each}
         </Svg>

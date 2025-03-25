@@ -172,7 +172,7 @@
   </Breadcrumb>
   <div class="h-[800px] p-4 border rounded-sm">
     <Chart>
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <Bounds domain={selectedNested} tweened={{ duration: 800, easing: cubicOut }}>
             {#snippet children({ xScale, yScale })}
@@ -194,8 +194,8 @@
                         x={xScale(node.x0)}
                         y={yScale(node.y0)}
                         onclick={() => (node.children ? (selectedNested = node) : null)}
-                        onpointermove={(e) => tooltipContext.show(e, node)}
-                        onpointerleave={tooltipContext.hide}
+                        onpointermove={(e) => context.tooltip.show(e, node)}
+                        onpointerleave={context.tooltip.hide}
                       >
                         {@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
                         {@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
@@ -252,10 +252,12 @@
         </Svg>
 
         <Tooltip.Root>
-          <Tooltip.Header>{tooltipContext.data.name}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="value" value={tooltipContext.data.value} format="integer" />
-          </Tooltip.List>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.name}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} format="integer" />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>

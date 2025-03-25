@@ -4,7 +4,14 @@
   import { feature } from 'topojson-client';
   import { presimplify, simplify } from 'topojson-simplify';
 
-  import { Chart, GeoPath, Graticule, Svg, TransformContext } from 'layerchart';
+  import {
+    Chart,
+    GeoPath,
+    Graticule,
+    Svg,
+    TransformContext,
+    type ChartContextValue,
+  } from 'layerchart';
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
   import { timerStore } from '@layerstack/svelte-stores';
 
@@ -19,20 +26,20 @@
   const geojson = $derived(simplify(presimplify(data.geojson), Math.pow(10, 2 - minArea)));
   const land = $derived(feature(geojson, data.geojson.objects.land));
 
-  let transformContext = $state<TransformContext>();
+  let context = $state<ChartContextValue>(null!);
 
   let velocity = $state(3);
   let isSpinning = $state(false);
   const timer = timerStore({
     delay: 1,
     onTick() {
-      if (!transformContext) return;
-      const curr = transformContext.translate.current;
+      if (!context) return;
+      const curr = context.transform.translate;
 
-      transformContext.translate.set({
+      context.transform.translate = {
         x: (curr.x += velocity),
         y: curr.y,
-      });
+      };
     },
     disabled: !isSpinning,
   });
@@ -100,7 +107,7 @@
           timer.start();
         }
       }}
-      bind:transformContext
+      bind:context
     >
       <Svg>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />

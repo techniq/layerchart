@@ -51,8 +51,12 @@
     containerHeight: number;
   };
 
-  export type PreservedChartConfig<T> = Pick<
-    ChartPropsWithoutHTML<T>,
+  export type PreservedChartConfig<
+    T,
+    XScale extends AnyScale = AnyScale,
+    YScale extends AnyScale = AnyScale,
+  > = Pick<
+    ChartPropsWithoutHTML<T, XScale, YScale>,
     | 'x'
     | 'y'
     | 'z'
@@ -76,7 +80,11 @@
     | 'y1Range'
   >;
 
-  export type ChartContextValue<T = any> = {
+  export type ChartContextValue<
+    T = any,
+    XScale extends AnyScale = AnyScale,
+    YScale extends AnyScale = AnyScale,
+  > = {
     activeGetters: Record<AxisKey, (d: T) => any>;
     width: number;
     height: number;
@@ -85,7 +93,7 @@
     containerRef: HTMLElement | undefined;
     containerWidth: number;
     containerHeight: number;
-    config: PreservedChartConfig<T>;
+    config: PreservedChartConfig<T, XScale, YScale>;
     x: (d: T) => any;
     y: (d: T) => any;
     z: (d: T) => any;
@@ -125,8 +133,8 @@
     zRange: any[];
     rRange: any[];
     cRange: readonly string[] | string[] | undefined;
-    x1Range: XRangeWithScale | undefined;
-    y1Range: YRangeWithScale | undefined;
+    x1Range: XRangeWithScale<XScale> | undefined;
+    y1Range: YRangeWithScale<YScale> | undefined;
     meta: Record<string, any>;
     xScale: AnyScale;
     yScale: AnyScale;
@@ -143,6 +151,10 @@
     x1Get: (d: T) => any;
     y1Get: (d: T) => any;
     radial: boolean;
+    tooltip: TooltipContextValue<T>;
+    geo: GeoContextValue;
+    brush: BrushContextValue;
+    transform: TransformContextValue;
   };
 
   export type LayerChartInternalMeta = {
@@ -160,13 +172,22 @@
       | 'simplified-scatter';
   };
 
-  const _ChartContext = new Context<ChartContextValue<any>>('ChartContext');
+  const _ChartContext = new Context<ChartContextValue<any, AnyScale, AnyScale>>('ChartContext');
 
-  export function getChartContext<T>(): ChartContextValue<T> {
-    return _ChartContext.getOr({} as ChartContextValue<T>);
+  export function getChartContext<
+    T,
+    XScale extends AnyScale = AnyScale,
+    YScale extends AnyScale = AnyScale,
+  >(): ChartContextValue<T, XScale, YScale> {
+    return _ChartContext.getOr({} as ChartContextValue<T, XScale, YScale>);
   }
 
-  export function setChartContext<T>(context: ChartContextValue<T>): ChartContextValue<T> {
+  export function setChartContext<
+    T,
+    XScale extends AnyScale = AnyScale,
+    YScale extends AnyScale = AnyScale,
+  >(context: ChartContextValue<T, XScale, YScale>): ChartContextValue<T, XScale, YScale> {
+    // @ts-expect-error - shh
     return _ChartContext.set(context);
   }
 
@@ -182,7 +203,11 @@
     return _RenderContext.set(context);
   }
 
-  export type ChartPropsWithoutHTML<T> = {
+  export type ChartPropsWithoutHTML<
+    T,
+    XScale extends AnyScale = AnyScale,
+    YScale extends AnyScale = AnyScale,
+  > = {
     /**
      * Whether this chart should be rendered server side
      *
@@ -423,14 +448,14 @@
      * you want to override the default or you want to extra options.
      * @default scaleLinear
      */
-    xScale?: AnyScale;
+    xScale?: XScale;
 
     /**
      * The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if
      * you want to override the default or you want to extra options.
      * @default scaleLinear
      */
-    yScale?: AnyScale;
+    yScale?: YScale;
 
     /**
      * The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if
@@ -506,7 +531,7 @@
      * discrete ranges like [scaleThreshold](https://github.com/d3/d3-scale#threshold-scales) or
      * [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales).
      */
-    x1Range?: XRangeWithScale;
+    x1Range?: XRangeWithScale<XScale>;
 
     /**
      * Set the y1 range by setting an array or function with argument `({ yScale, width, height})`
@@ -514,7 +539,7 @@
      * discrete ranges like [scaleThreshold](https://github.com/d3/d3-scale#threshold-scales) or
      * [scaleQuantize](https://github.com/d3/d3-scale#quantize-scales).
      */
-    y1Range?: YRangeWithScale;
+    y1Range?: YRangeWithScale<YScale>;
 
     /**
      * Override the default y1 range of `[0, width]` by setting an array or function with argument
@@ -655,22 +680,12 @@
      */
     radial?: boolean;
 
-    children?: Snippet<
-      [
-        {
-          context: ChartContextValue<T>;
-          transformContext: TransformContextValue;
-          geoContext: GeoContextValue;
-          tooltipContext: TooltipContextValue;
-          brushContext: BrushContextValue;
-        },
-      ]
-    >;
+    children?: Snippet<[{ context: ChartContextValue<T, XScale, YScale> }]>;
 
     /**
      * A bindable reference to the chart context.
      */
-    context?: ChartContextValue<T>;
+    context?: ChartContextValue<T, XScale, YScale>;
 
     /**
      * Props passed to GeoContext
@@ -678,47 +693,17 @@
     geo?: Partial<ComponentProps<typeof GeoContext>>;
 
     /**
-     * Exposed via `bind:` to support `bind:geoProjection`
-     * for external access.
-     *
-     * @bindable
-     */
-    geoContext?: GeoContextValue;
-
-    /**
      * Props passed to the `TooltipContext` component.
      */
     tooltip?: Partial<ComponentProps<typeof TooltipContext>> | boolean;
-
-    /**
-     * Exposed via `bind:` to support `bind:tooltipContext`
-     * for external access.
-     *
-     * @bindable
-     */
-    tooltipContext?: TooltipContextValue;
 
     /**
      * Props passed to TransformContext
      */
     transform?: Partial<ComponentProps<typeof TransformContext>>;
 
-    /**
-     * Expose to support `bind:transformContext` for
-     * imperative control (`transformContext.translate(...)`)
-     *
-     * @bindable
-     */
-    transformContext?: TransformContextValue;
-
     /** Props passed to BrushContext */
     brush?: Partial<ComponentProps<typeof BrushContext>> | boolean;
-
-    /**
-     * Exposed via bind: to support `bind:brushContext` for
-     * external access (ex. `brushContext.xDomain)
-     */
-    brushContext?: BrushContextValue;
 
     /**
      * A callback function that is called when the chart is resized.
@@ -732,7 +717,10 @@
   };
 </script>
 
-<script lang="ts" generics="TData">
+<script
+  lang="ts"
+  generics="TData = any, XScale extends AnyScale = AnyScale, YScale extends AnyScale = AnyScale"
+>
   let {
     ssr = false,
     pointerEvents = true,
@@ -760,7 +748,9 @@
     yPadding,
     zPadding,
     rPadding,
+    // @ts-expect-error shh
     xScale: xScaleProp = scaleLinear(),
+    // @ts-expect-error shh
     yScale: yScaleProp = scaleLinear(),
     zScale: zScaleProp = scaleLinear(),
     rScale: rScaleProp = scaleSqrt(),
@@ -799,10 +789,6 @@
     cRange: cRangeProp,
     onResize,
     geo,
-    transformContext = $bindable(),
-    geoContext = $bindable(),
-    brushContext = $bindable(),
-    tooltipContext = $bindable(),
     context: contextProp = $bindable(),
     tooltip,
     transform,
@@ -810,7 +796,7 @@
     ondragend,
     ondragstart,
     brush,
-  }: ChartPropsWithoutHTML<TData> = $props();
+  }: ChartPropsWithoutHTML<TData, XScale, YScale> = $props();
 
   const xRangeProp = $derived(_xRangeProp ? _xRangeProp : radial ? [0, 2 * Math.PI] : undefined);
 
@@ -1065,7 +1051,7 @@
 
   const aspectRatio = $derived(width / height);
 
-  const config: PreservedChartConfig<TData> = $derived({
+  const config: PreservedChartConfig<TData, XScale, YScale> = $derived({
     x: xProp,
     y: yProp,
     z: zProp,
@@ -1089,7 +1075,12 @@
     y1Range: y1RangeProp,
   });
 
-  const context: ChartContextValue<TData> = {
+  let geoContext = $state<GeoContextValue>(null!);
+  let transformContext = $state<TransformContextValue>(null!);
+  let tooltipContext = $state<TooltipContextValue>(null!);
+  let brushContext = $state<BrushContextValue>(null!);
+
+  const context: ChartContextValue<TData, XScale, YScale> = {
     get activeGetters() {
       return activeGetters;
     },
@@ -1291,6 +1282,18 @@
     get containerRef() {
       return ref;
     },
+    get geo() {
+      return geoContext;
+    },
+    get transform() {
+      return transformContext;
+    },
+    get tooltip() {
+      return tooltipContext;
+    },
+    get brush() {
+      return brushContext;
+    },
   };
 
   contextProp = context;
@@ -1385,30 +1388,18 @@
         {onTransform}
         {ondragend}
       >
-        {#snippet children({ transformContext })}
+        <!-- svelte-ignore ownership_invalid_binding -->
+        <GeoContext {...geo} bind:geoContext>
           <!-- svelte-ignore ownership_invalid_binding -->
-          <GeoContext {...geo} bind:geoContext>
-            {#snippet children({ geoContext })}
-              <!-- svelte-ignore ownership_invalid_binding -->
-              <BrushContext {...brushProps} bind:brushContext>
-                {#snippet children({ brushContext })}
-                  <!-- svelte-ignore ownership_invalid_binding -->
-                  <TooltipContext {...tooltipProps} bind:tooltipContext>
-                    {#snippet children({ tooltipContext })}
-                      {@render _children?.({
-                        context,
-                        transformContext,
-                        geoContext,
-                        tooltipContext,
-                        brushContext,
-                      })}
-                    {/snippet}
-                  </TooltipContext>
-                {/snippet}
-              </BrushContext>
-            {/snippet}
-          </GeoContext>
-        {/snippet}
+          <BrushContext {...brushProps} bind:brushContext>
+            <!-- svelte-ignore ownership_invalid_binding -->
+            <TooltipContext {...tooltipProps} bind:tooltipContext>
+              {@render _children?.({
+                context,
+              })}
+            </TooltipContext>
+          </BrushContext>
+        </GeoContext>
       </TransformContext>
     {/key}
   </div>

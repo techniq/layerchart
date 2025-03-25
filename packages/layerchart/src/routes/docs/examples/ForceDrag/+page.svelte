@@ -52,7 +52,7 @@
 <Preview data={nodes}>
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
     <Chart data={nodes}>
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <ForceSimulation
             forces={{
@@ -76,7 +76,7 @@
                   r={12}
                   use:movable={{
                     onMoveStart: () => {
-                      tooltipContext.hide();
+                      context.tooltip.hide();
                       dragging = true;
                     },
                     onMove: (e) => {
@@ -102,8 +102,8 @@
                       }
                     },
                   }}
-                  onpointermove={(e) => !dragging && tooltipContext.show(e, node)}
-                  onpointerleave={tooltipContext.hide}
+                  onpointermove={(e) => !dragging && context.tooltip.show(e, node)}
+                  onpointerleave={context.tooltip.hide}
                   class={cls(
                     'cursor-all-scroll',
                     node.fx ? 'fill-primary' : 'fill-surface-content'
@@ -115,7 +115,7 @@
         </Svg>
 
         <Tooltip.Root>
-          {tooltipContext.data.id}
+          {context.tooltip.data?.id}
         </Tooltip.Root>
       {/snippet}
     </Chart>

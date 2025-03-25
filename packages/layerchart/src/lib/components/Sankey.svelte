@@ -106,33 +106,39 @@
 
   const ctx = getChartContext();
 
-  const sankey = $derived(
-    d3Sankey()
-      .size([ctx.width, ctx.height])
-      .nodes(nodesProp)
-      .nodeId(nodeId)
-      .nodeAlign(
-        nodeAlign === 'left'
-          ? sankeyLeft
-          : nodeAlign === 'center'
-            ? sankeyCenter
-            : nodeAlign === 'right'
-              ? sankeyRight
-              : nodeAlign === 'justify'
-                ? sankeyJustify
-                : nodeAlign
-      )
-      .nodeWidth(nodeWidth)
-      .nodePadding(nodePadding)
-      // @ts-expect-error
-      .nodeSort(nodeSort)
-      .links(linksProp)
-      // @ts-expect-error
-      .linkSort(linkSort)
-  );
+  const sankey = $derived.by(() => {
+    if (typeof document === 'undefined') null;
+    return (
+      d3Sankey()
+        .size([ctx.width, ctx.height])
+        .nodes(nodesProp)
+        .nodeId(nodeId)
+        .nodeAlign(
+          nodeAlign === 'left'
+            ? sankeyLeft
+            : nodeAlign === 'center'
+              ? sankeyCenter
+              : nodeAlign === 'right'
+                ? sankeyRight
+                : nodeAlign === 'justify'
+                  ? sankeyJustify
+                  : nodeAlign
+        )
+        .nodeWidth(nodeWidth)
+        .nodePadding(nodePadding)
+        // @ts-expect-error
+        .nodeSort(nodeSort)
+        .links(linksProp)
+        // @ts-expect-error
+        .linkSort(linkSort)
+    );
+  });
 
-  // @ts-expect-error
-  const sankeyData = $derived(sankey(ctx.data));
+  const sankeyData = $derived.by(() => {
+    if (typeof document === 'undefined' || !sankey) return { nodes: [], links: [] };
+    // @ts-expect-error -shh
+    return sankey(ctx.data);
+  });
 
   const nodes = $derived(sankeyData.nodes as SankeyNode<NodeExtraProperties, any>[]);
   const links = $derived(sankeyData.links as SankeyLink<NodeExtraProperties, any>[]);

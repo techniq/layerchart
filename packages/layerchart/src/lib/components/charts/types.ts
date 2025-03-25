@@ -13,10 +13,7 @@ import type TooltipHeader from '../tooltip/TooltipHeader.svelte';
 import type TooltipList from '../tooltip/TooltipList.svelte';
 import type TooltipItem from '../tooltip/TooltipItem.svelte';
 import type TooltipSeparator from '../tooltip/TooltipSeparator.svelte';
-import type { BrushContextValue } from '../BrushContext.svelte';
 import type { ChartContextValue, ChartPropsWithoutHTML } from '../Chart.svelte';
-import type { GeoContextValue } from '../GeoContext.svelte';
-import type { TransformContextValue } from '../TransformContext.svelte';
 import type Grid from '../Grid.svelte';
 import type Bars from '../Bars.svelte';
 import type Pie from '../Pie.svelte';
@@ -39,29 +36,9 @@ export type SeriesData<TData, TComponent extends Component> = {
 
 export type SimplifiedChartSnippetProps<TData, TComponent extends Component, TSnippetProps> = {
   /**
-   * The tooltip context associated with the chart.
-   */
-  tooltipContext: TooltipContextValue;
-
-  /**
-   * The brush context associated with the chart.
-   */
-  brushContext: BrushContextValue;
-
-  /**
    * The chart context
    */
   context: ChartContextValue<TData>;
-
-  /**
-   * The geo context associated with the chart.
-   */
-  geoContext: GeoContextValue;
-
-  /**
-   * The transform context associated with the chart.
-   */
-  transformContext: TransformContextValue;
 
   /**
    * The series of data for the chart.
@@ -112,7 +89,7 @@ export type SimplifiedChartPropsObject<TData = any> = {
   svg?: Partial<ComponentProps<typeof Svg>>;
   tooltip?: {
     context?: Partial<ComponentProps<typeof TooltipContext>>;
-    root?: Partial<ComponentProps<typeof Tooltip>>;
+    root?: Omit<Partial<ComponentProps<typeof Tooltip>>, 'context'>;
     header?: Partial<ComponentProps<typeof TooltipHeader>>;
     list?: Partial<ComponentProps<typeof TooltipList>>;
     item?: Partial<ComponentProps<typeof TooltipItem>>;

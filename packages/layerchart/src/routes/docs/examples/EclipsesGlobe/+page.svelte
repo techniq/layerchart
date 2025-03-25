@@ -5,7 +5,16 @@
   import { interpolateGreens, interpolatePurples } from 'd3-scale-chromatic';
   import { feature } from 'topojson-client';
 
-  import { Chart, GeoPath, Graticule, Legend, Svg, Tooltip, TransformContext } from 'layerchart';
+  import {
+    Chart,
+    GeoPath,
+    Graticule,
+    Legend,
+    Svg,
+    Tooltip,
+    TransformContext,
+    type ChartContextValue,
+  } from 'layerchart';
 
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
@@ -19,19 +28,19 @@
   const countries = feature(data.geojson, data.geojson.objects.countries);
   const eclipses = feature(data.eclipses, data.eclipses.objects.eclipses);
 
-  let transformContext = $state<TransformContext>();
+  let context = $state<ChartContextValue>(null!);
 
   let velocity = $state(3);
   let isSpinning = $state(false);
   const timer = timerStore({
     delay: 1,
     onTick() {
-      if (!transformContext) return;
-      const value = transformContext.translate.current;
-      transformContext.translate.set({
+      const value = context.transform.translate;
+
+      context.transform.translate = {
         x: (value.x += velocity),
         y: value.y,
-      });
+      };
     },
     disabled: !isSpinning,
   });
@@ -102,10 +111,10 @@
           timer.start();
         }
       }}
-      bind:transformContext
+      bind:context
       padding={{ top: 60 }}
     >
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Legend
           scale={colorScale}
           title="Eclipse date"
@@ -122,14 +131,14 @@
 
           {#each eclipses.features as feature}
             {@const hasColor =
-              tooltipContext.data == null || tooltipContext.data.ID === feature.properties.ID}
+              context.tooltip.data == null || context.tooltip.data.ID === feature.properties.ID}
 
             <GeoPath
               geojson={feature}
               fill={hasColor ? colorScale(feature.properties.Date) : undefined}
               class={cls('transition-colors', !hasColor && 'fill-surface-content/10')}
-              onpointermove={(e) => tooltipContext.show(e, feature.properties)}
-              onpointerleave={(e) => tooltipContext.hide()}
+              onpointermove={(e) => context.tooltip.show(e, feature.properties)}
+              onpointerleave={(e) => context.tooltip.hide()}
             />
           {/each}
         </Svg>

@@ -6,7 +6,15 @@
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
   import { timerStore } from '@layerstack/svelte-stores';
 
-  import { Chart, GeoCircle, GeoPath, Graticule, Svg, Tooltip, TransformContext } from 'layerchart';
+  import {
+    Chart,
+    GeoCircle,
+    GeoPath,
+    Graticule,
+    Svg,
+    Tooltip,
+    type ChartContextValue,
+  } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   let { data } = $props();
@@ -16,20 +24,20 @@
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let transformContext = $state<TransformContext>();
+  let context = $state<ChartContextValue<(typeof data.earthquakes)[number]>>();
 
   let velocity = $state(3);
   let isSpinning = $state(false);
   const timer = timerStore({
     delay: 1,
     onTick() {
-      if (!transformContext) return;
-      const curr = transformContext.translate.current;
+      if (!context) return;
+      const curr = context.transform.translate;
 
-      transformContext.translate.set({
+      context.transform.translate = {
         x: (curr.x += velocity),
         y: curr.y,
-      });
+      };
     },
     disabled: !isSpinning,
   });
@@ -82,6 +90,7 @@
 <Preview data={countries}>
   <div class="h-[600px]">
     <Chart
+      bind:context
       data={data.earthquakes}
       x="longitude"
       y="latitude"
@@ -101,9 +110,8 @@
           timer.start();
         }
       }}
-      bind:transformContext
     >
-      {#snippet children({ tooltipContext, context })}
+      {#snippet children({ context })}
         <Svg>
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
 
@@ -117,13 +125,13 @@
               center={[eq.longitude, eq.latitude]}
               radius={context.rScale(Math.exp(eq.magnitude))}
               class="stroke-danger fill-danger/20"
-              onpointermove={(e) => tooltipContext.show(e, eq)}
-              onpointerleave={() => tooltipContext.hide()}
+              onpointermove={(e) => context.tooltip.show(e, eq)}
+              onpointerleave={() => context.tooltip.hide()}
             />
           {/each}
         </Svg>
 
-        <Tooltip.Root>
+        <Tooltip.Root {context}>
           {#snippet children({ data })}
             <Tooltip.Header>{data.place}</Tooltip.Header>
             <Tooltip.List>

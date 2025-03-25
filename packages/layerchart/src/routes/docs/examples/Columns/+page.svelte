@@ -948,7 +948,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
@@ -957,27 +957,29 @@
         </Svg>
 
         <Tooltip.Root>
-          <Tooltip.Header>{tooltipContext.data.year}</Tooltip.Header>
-          <Tooltip.List>
-            {#each tooltipContext.data.data as d}
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.year}</Tooltip.Header>
+            <Tooltip.List>
+              {#each data.data as d}
+                <Tooltip.Item
+                  label={d.fruit}
+                  value={d.value}
+                  color={context.cScale?.(d.fruit)}
+                  format="integer"
+                  valueAlign="right"
+                />
+              {/each}
+
+              <Tooltip.Separator />
+
               <Tooltip.Item
-                label={d.fruit}
-                value={d.value}
-                color={context.cScale?.(d.fruit)}
+                label="total"
+                value={sum([...data.data], (d) => d.value)}
                 format="integer"
                 valueAlign="right"
               />
-            {/each}
-
-            <Tooltip.Separator />
-
-            <Tooltip.Item
-              label="total"
-              value={sum([...tooltipContext.data.data], (d) => d.value)}
-              format="integer"
-              valueAlign="right"
-            />
-          </Tooltip.List>
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>
@@ -1001,7 +1003,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
@@ -1010,27 +1012,29 @@
         </Svg>
 
         <Tooltip.Root>
-          <Tooltip.Header>{tooltipContext.data.year}</Tooltip.Header>
-          <Tooltip.List>
-            {#each tooltipContext.data.data as d}
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.year}</Tooltip.Header>
+            <Tooltip.List>
+              {#each data.data as d}
+                <Tooltip.Item
+                  label={d.fruit}
+                  value={d.value}
+                  color={context.cScale?.(d.fruit)}
+                  format="integer"
+                  valueAlign="right"
+                />
+              {/each}
+
+              <Tooltip.Separator />
+
               <Tooltip.Item
-                label={d.fruit}
-                value={d.value}
-                color={context.cScale?.(d.fruit)}
+                label="total"
+                value={sum([...data.data], (d) => d.value)}
                 format="integer"
                 valueAlign="right"
               />
-            {/each}
-
-            <Tooltip.Separator />
-
-            <Tooltip.Item
-              label="total"
-              value={sum([...tooltipContext.data.data], (d) => d.value)}
-              format="integer"
-              valueAlign="right"
-            />
-          </Tooltip.List>
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>
@@ -1054,7 +1058,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule format="percentRound" />
           <Axis placement="bottom" rule />
@@ -1063,27 +1067,29 @@
         </Svg>
 
         <Tooltip.Root>
-          <Tooltip.Header>{tooltipContext.data.year}</Tooltip.Header>
-          <Tooltip.List>
-            {#each tooltipContext.data.data as d}
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.year}</Tooltip.Header>
+            <Tooltip.List>
+              {#each data.data as d}
+                <Tooltip.Item
+                  label={d.fruit}
+                  value={d.value}
+                  color={context.cScale?.(d.fruit)}
+                  format="integer"
+                  valueAlign="right"
+                />
+              {/each}
+
+              <Tooltip.Separator />
+
               <Tooltip.Item
-                label={d.fruit}
-                value={d.value}
-                color={context.cScale?.(d.fruit)}
+                label="total"
+                value={sum([...data.data], (d) => d.value)}
                 format="integer"
                 valueAlign="right"
               />
-            {/each}
-
-            <Tooltip.Separator />
-
-            <Tooltip.Item
-              label="total"
-              value={sum([...tooltipContext.data.data], (d) => d.value)}
-              format="integer"
-              valueAlign="right"
-            />
-          </Tooltip.List>
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>
@@ -1111,7 +1117,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
@@ -1120,27 +1126,29 @@
         </Svg>
 
         <Tooltip.Root>
-          <Tooltip.Header>{tooltipContext.data.year}</Tooltip.Header>
-          <Tooltip.List>
-            {#each tooltipContext.data.data as d}
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.year}</Tooltip.Header>
+            <Tooltip.List>
+              {#each data.data as d}
+                <Tooltip.Item
+                  label={d.fruit}
+                  value={d.value}
+                  color={context.cScale?.(d.fruit)}
+                  format="integer"
+                  valueAlign="right"
+                />
+              {/each}
+
+              <Tooltip.Separator />
+
               <Tooltip.Item
-                label={d.fruit}
-                value={d.value}
-                color={context.cScale?.(d.fruit)}
+                label="total"
+                value={sum([...data.data], (d) => d.value)}
                 format="integer"
                 valueAlign="right"
               />
-            {/each}
-
-            <Tooltip.Separator />
-
-            <Tooltip.Item
-              label="total"
-              value={sum([...tooltipContext.data.data], (d) => d.value)}
-              format="integer"
-              valueAlign="right"
-            />
-          </Tooltip.List>
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>
@@ -1180,7 +1188,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
@@ -1204,28 +1212,30 @@
         </Svg>
 
         <Tooltip.Root>
-          <Tooltip.Header>{tooltipContext.data.year}</Tooltip.Header>
-          <Tooltip.List>
-            {#each tooltipContext.data.data as d}
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.year}</Tooltip.Header>
+            <Tooltip.List>
+              {#each data.data as d}
+                <Tooltip.Item
+                  label={d.fruit}
+                  value={d.value}
+                  color={context.cScale?.(d.fruit)}
+                  format="integer"
+                  valueAlign="right"
+                />
+              {/each}
+
+              <Tooltip.Separator />
+
+              <!-- TODO: Remove [...] type hack to make svelte-check happy -->
               <Tooltip.Item
-                label={d.fruit}
-                value={d.value}
-                color={context.cScale?.(d.fruit)}
+                label="total"
+                value={sum([...data.data], (d) => d.value)}
                 format="integer"
                 valueAlign="right"
               />
-            {/each}
-
-            <Tooltip.Separator />
-
-            <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-            <Tooltip.Item
-              label="total"
-              value={sum([...tooltipContext.data.data], (d) => d.value)}
-              format="integer"
-              valueAlign="right"
-            />
-          </Tooltip.List>
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>
@@ -1264,7 +1274,7 @@
       x1Range={({ xScale }) => [0, xScale.bandwidth()]}
       padding={{ left: 16, bottom: 24 }}
     >
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
@@ -1284,25 +1294,27 @@
                 onclick={(e) => {
                   alert('You clicked on:\n' + JSON.stringify(bar, null, 2));
                 }}
-                onpointerenter={(e) => tooltipContext.show(e, bar)}
-                onpointermove={(e) => tooltipContext.show(e, bar)}
-                onpointerleave={(e) => tooltipContext.hide()}
+                onpointerenter={(e) => context.tooltip.show(e, bar)}
+                onpointermove={(e) => context.tooltip.show(e, bar)}
+                onpointerleave={(e) => context.tooltip.hide()}
               />
             {/each}
           </g>
         </Svg>
 
         <Tooltip.Root>
-          <Tooltip.Header>{tooltipContext.data.year}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item
-              label={tooltipContext.data.fruit}
-              value={tooltipContext.data.value}
-              color={context.cScale?.(tooltipContext.data.fruit)}
-              format="integer"
-              valueAlign="right"
-            />
-          </Tooltip.List>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.year}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item
+                label={data.fruit}
+                value={data.value}
+                color={context.cScale?.(data.fruit)}
+                format="integer"
+                valueAlign="right"
+              />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>

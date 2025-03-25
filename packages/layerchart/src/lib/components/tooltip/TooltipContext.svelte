@@ -15,35 +15,35 @@
     | 'quadtree'
     | 'manual';
 
-  export type TooltipContextValue = {
+  export type TooltipContextValue<T = any> = {
     x: number;
     y: number;
-    data: any;
+    data: T | null;
     payload: TooltipPayload[];
-    show(e: PointerEvent, tooltipData?: any, payload?: any): void;
+    show(e: PointerEvent, tooltipData?: any, payload?: TooltipPayload): void;
     hide(e?: PointerEvent): void;
     mode: TooltipMode;
   };
 
-  const defaultContext = {
-    x: 0,
-    y: 0,
-    data: null as any,
-    payload: [],
-    show: () => {},
-    hide: () => {},
-    mode: 'manual',
-  } as TooltipContextValue;
+  //   const defaultContext = {
+  //     x: 0,
+  //     y: 0,
+  //     data: null as any,
+  //     payload: [],
+  //     show: () => {},
+  //     hide: () => {},
+  //     mode: 'manual',
+  //   } as TooltipContextValue;
 
-  export function getTooltipContext() {
-    return _TooltipContext.getOr(defaultContext);
+  export function getTooltipContext<T = any>() {
+    return _TooltipContext.get() as TooltipContextValue<T>;
   }
 
-  function setTooltipContext(tooltip: TooltipContextValue) {
-    return _TooltipContext.set(tooltip);
+  function setTooltipContext<T = any>(tooltip: TooltipContextValue<T>) {
+    return _TooltipContext.set(tooltip) as TooltipContextValue<T>;
   }
 
-  type TooltipContextPropsWithoutHTML = {
+  type TooltipContextPropsWithoutHTML<T = any> = {
     /**
      * The tooltip interaction mode
      * @default 'manual'
@@ -91,7 +91,7 @@
      * Exposed to allow binding in Chart
      * @default { x: 0, y: 0, data: null, show: showTooltip, hide: hideTooltip, mode }
      */
-    tooltipContext?: TooltipContextValue;
+    tooltipContext?: TooltipContextValue<T>;
 
     /**
      * Delay in ms before hiding tooltip
@@ -106,14 +106,14 @@
      */
     ref?: HTMLElement;
 
-    children?: Snippet<[{ tooltipContext: TooltipContextValue }]>;
+    children?: Snippet<[{ tooltipContext: TooltipContextValue<T> }]>;
   };
 
-  export type TooltipContextProps = TooltipContextPropsWithoutHTML &
-    Without<HTMLAttributes<HTMLElement>, TooltipContextPropsWithoutHTML>;
+  export type TooltipContextProps<T = any> = TooltipContextPropsWithoutHTML<T> &
+    Without<HTMLAttributes<HTMLElement>, TooltipContextPropsWithoutHTML<T>>;
 </script>
 
-<script lang="ts">
+<script lang="ts" generics="TData = any">
   import { bisector, max, min } from 'd3-array';
   import { quadtree as d3Quadtree, type Quadtree } from 'd3-quadtree';
   import { sortFunc, localPoint } from '@layerstack/utils';
@@ -148,9 +148,9 @@
     onclick = () => {},
     radius = Infinity,
     raiseTarget = false,
-    tooltipContext: tooltipContextProp = $bindable() as TooltipContextValue,
+    tooltipContext: tooltipContextProp = $bindable() as TooltipContextValue<TData>,
     children,
-  }: TooltipContextProps = $props();
+  }: TooltipContextProps<TData> = $props();
 
   tooltipContextProp = {
     x: 0,

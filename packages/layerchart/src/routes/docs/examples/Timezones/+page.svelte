@@ -119,7 +119,7 @@
       }}
       padding={{ left: 100, right: 100 }}
     >
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" id="globe" />
           <Graticule class="stroke-surface-content/20" />
@@ -129,7 +129,7 @@
             {#each timezoneGeojson.features as feature}
               <GeoPath
                 geojson={feature}
-                {tooltipContext}
+                tooltipContext={context.tooltip}
                 fill={colorScale(feature.properties.zone)}
                 class="stroke-gray-900/50 hover:brightness-110"
               />

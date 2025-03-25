@@ -4,7 +4,17 @@
   import { stack } from 'd3-shape';
   import { format } from 'date-fns';
 
-  import { Area, Axis, Bars, Chart, Highlight, Points, Svg, Tooltip } from 'layerchart';
+  import {
+    Area,
+    Axis,
+    Bars,
+    Chart,
+    Highlight,
+    Points,
+    Svg,
+    Tooltip,
+    type ChartContextValue,
+  } from 'layerchart';
   import { Button, Duration, Field, Menu, MenuField, Toggle } from 'svelte-ux';
   import { flatten, formatDate, PeriodType } from '@layerstack/utils';
 
@@ -126,7 +136,7 @@
   let snap: 'pointer' | 'data' = $state('pointer');
   let contained: ComponentProps<typeof Tooltip.Root>['contained'] = $state(false);
 
-  let tooltipContext: ComponentProps<typeof Chart<any>>['tooltipContext'] = $state();
+  let context: ChartContextValue<(typeof dateSeries)[number]> = $state(null!);
 </script>
 
 <h1>Examples</h1>
@@ -577,9 +587,9 @@
 
 <Preview data={dateSeries}>
   <div class="text-sm">
-    {#if tooltipContext?.data}
-      date: {formatDate(tooltipContext?.data?.date, PeriodType.Day, { variant: 'short' })}
-      value: {tooltipContext?.data?.value}
+    {#if context.tooltip.data}
+      date: {formatDate(context.tooltip.data.date, PeriodType.Day, { variant: 'short' })}
+      value: {context.tooltip.data.value}
     {:else}
       [hover chart]
     {/if}
@@ -595,7 +605,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
-      bind:tooltipContext
+      bind:context
     >
       <Svg>
         <Axis placement="left" grid rule />

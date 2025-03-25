@@ -58,7 +58,7 @@
           />
         </Svg>
 
-        <Tooltip.Root>
+        <Tooltip.Root {context}>
           {#snippet children({ data })}
             <Tooltip.Header>{data.year}</Tooltip.Header>
             <Tooltip.List>

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { scaleOrdinal } from 'd3-scale';
   import { format } from 'date-fns';
   import { sum } from 'd3-array';
   import { cls } from '@layerstack/tailwind';
@@ -16,7 +15,6 @@
 
   const dataSum = $derived(sum(data, (d) => d.value));
 
-  const colorKeys = [...new Set(data.map((d) => d.date))];
   const keyColors = [
     'var(--color-info)',
     'var(--color-success)',

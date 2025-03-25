@@ -16,7 +16,7 @@
   let Context: Component = $state(Svg);
 
   let pathGenerator = $state((x: number) => x);
-  let curve: ComponentProps<CurveMenuField>['value'] = $state(undefined);
+  let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
 
   const data = $derived(
     Array.from({ length: pointCount }).map((_, i) => {

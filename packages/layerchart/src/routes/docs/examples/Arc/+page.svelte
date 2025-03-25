@@ -217,7 +217,7 @@
 <Preview>
   <div class="h-[300px] p-4 border resize overflow-auto">
     <Chart>
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg center>
           {#each { length: layerCount } as _, layerIndex}
             {@const layer = layerIndex + 1}
@@ -235,8 +235,8 @@
                 padAngle={0.02}
                 fill={color}
                 class="hover:scale-90 origin-center [transform-box:fill-box] transition-transform"
-                onpointermove={(e) => tooltipContext.show(e, color)}
-                onpointerleave={() => tooltipContext.hide()}
+                onpointermove={(e) => context.tooltip.show(e, color)}
+                onpointerleave={() => context.tooltip.hide()}
               />
             {/each}
           {/each}

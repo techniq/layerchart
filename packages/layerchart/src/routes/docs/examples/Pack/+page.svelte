@@ -7,7 +7,16 @@
   import * as chromatic from 'd3-scale-chromatic';
   import { hsl } from 'd3-color';
 
-  import { Chart, Circle, Group, Pack, Svg, TransformContext, findAncestor } from 'layerchart';
+  import {
+    Chart,
+    Circle,
+    Group,
+    Pack,
+    Svg,
+    TransformContext,
+    findAncestor,
+    type ChartContextValue,
+  } from 'layerchart';
   import { Breadcrumb, Button, Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format, sortFunc } from '@layerstack/utils';
 
@@ -25,12 +34,12 @@
 
   let padding = $state(3);
   let selected = $state<HierarchyCircularNode<any>>();
-  let transformContext = $state<TransformContext>();
+  let context = $state<ChartContextValue>(null!);
 
   $effect(() => {
-    if (transformContext && selected) {
+    if (context?.transform && selected) {
       const diameter = selected.r * 2;
-      transformContext.zoomTo(
+      context.transform.zoomTo(
         { x: selected.x, y: selected.y },
         { width: diameter, height: diameter }
       );
@@ -105,9 +114,9 @@
         disablePointer: true,
         tweened: { duration: 800, easing: cubicOut },
       }}
-      bind:transformContext
+      bind:context
     >
-      {#snippet children({ context, transformContext })}
+      {#snippet children({ context })}
         <Svg onclick={() => (selected = complexHierarchy)}>
           <Pack {padding} hierarchy={complexHierarchy}>
             {#snippet children({ nodes })}
@@ -127,14 +136,14 @@
                     stroke={hsl(nodeColor)
                       .darker(colorBy === 'children' ? 0.5 : 1)
                       .toString()}
-                    strokeWidth={1 / transformContext.scale}
+                    strokeWidth={1 / context.transform.scale}
                     fill={nodeColor}
                   />
                 </Group>
               {/each}
               <!-- Show text on top of all circles -->
               {#each selected ? (selected.children ?? [selected]) : [] as node (node.data.name + node.depth)}
-                {@const fontSize = 1 / transformContext.scale}
+                {@const fontSize = 1 / context.transform.scale}
                 <g in:fade|local>
                   <text
                     x={node.x}

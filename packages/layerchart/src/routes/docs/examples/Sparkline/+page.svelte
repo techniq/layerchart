@@ -55,14 +55,23 @@
         highlight: { points: { r: 3, class: 'stroke-none' } },
       }}
     >
-      {#snippet tooltip({ context, tooltipContext })}
-        <Tooltip.Root class="text-xs" contained={false} y={-3} x={context.width + 8} variant="none">
-          <div class="whitespace-nowrap">
-            {format(tooltipContext.data.date, 'eee, MMM do')}
-          </div>
-          <div class="font-semibold">
-            {tooltipContext.data.value}
-          </div>
+      {#snippet tooltip({ context })}
+        <Tooltip.Root
+          {context}
+          class="text-xs"
+          contained={false}
+          y={-3}
+          x={context.width + 8}
+          variant="none"
+        >
+          {#snippet children({ data })}
+            <div class="whitespace-nowrap">
+              {format(data.date, 'eee, MMM do')}
+            </div>
+            <div class="font-semibold">
+              {data.value}
+            </div>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </LineChart>
@@ -87,14 +96,22 @@
             highlight: { points: { r: 3, class: 'stroke-none' } },
           }}
         >
-          {#snippet tooltip({ context, tooltipContext })}
-            <Tooltip.Root class="text-xs" contained={false} y={context.height + 4} xOffset={0}>
-              <div class="whitespace-nowrap">
-                {format(tooltipContext.data.date, 'eee, MMM do')}
-              </div>
-              <div class="font-semibold">
-                {tooltipContext.data.value}
-              </div>
+          {#snippet tooltip({ context })}
+            <Tooltip.Root
+              {context}
+              class="text-xs"
+              contained={false}
+              y={context.height + 4}
+              xOffset={0}
+            >
+              {#snippet children({ data })}
+                <div class="whitespace-nowrap">
+                  {format(data.date, 'eee, MMM do')}
+                </div>
+                <div class="font-semibold">
+                  {data.value}
+                </div>
+              {/snippet}
             </Tooltip.Root>
           {/snippet}
         </LineChart>

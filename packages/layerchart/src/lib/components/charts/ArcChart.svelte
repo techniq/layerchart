@@ -26,7 +26,6 @@
     | 'renderContext'
     | 'series'
     | 'tooltip'
-    | 'tooltipContext'
     | 'cRange'
     | 'padding'
     | 'context'
@@ -166,7 +165,6 @@
     center = placement === 'center',
     series: seriesProp,
     legend = false,
-    tooltipContext,
     onArcClick = () => {},
     // TODO: Not usable with manual tooltip / arc path.  Use `onArcClick`?
     /** Event dispatched with current tooltip data */
@@ -311,7 +309,6 @@
 <!-- svelte-ignore ownership_invalid_binding -->
 <Chart
   bind:context
-  bind:tooltipContext
   data={visibleData}
   x={value}
   y={key}
@@ -333,17 +330,14 @@
   {...restProps}
   tooltip={tooltip === false ? false : props.tooltip?.context}
 >
-  {#snippet children({ brushContext, context, geoContext, tooltipContext, transformContext })}
+  {#snippet children({ context })}
     {@const snippetProps = {
       label: labelAccessor,
       key: keyAccessor,
       value: valueAccessor,
       color: cAccessor,
       context,
-      tooltipContext,
-      brushContext,
-      geoContext,
-      transformContext,
+
       series,
       visibleSeries,
       visibleData,
@@ -389,7 +383,7 @@
                 {padAngle}
                 fill={s.color ?? context.cScale?.(context.c(d))}
                 track={{ fill: s.color ?? context.cScale?.(context.c(d)), fillOpacity: 0.1 }}
-                {tooltipContext}
+                tooltipContext={context.tooltip}
                 data={d}
                 onclick={(e) => {
                   onArcClick(e, { data: d, series: s });
@@ -423,7 +417,7 @@
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
       {:else if tooltip}
-        <Tooltip.Root {...props.tooltip?.root}>
+        <Tooltip.Root {context} {...props.tooltip?.root}>
           {#snippet children({ data })}
             <Tooltip.List {...props.tooltip?.list}>
               <Tooltip.Item

@@ -77,14 +77,14 @@
       }}
       tooltip={{ mode: 'voronoi', debug: debugTooltip }}
     >
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <g class="states">
             {#each countries.features as feature}
               <GeoPath
                 geojson={feature}
                 class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
-                {tooltipContext}
+                tooltipContext={context.tooltip}
               />
             {/each}
           </g>
@@ -97,16 +97,16 @@
                 class="fill-white stroke-danger"
               />
 
-              {#if tooltipContext.data}
+              {#if context.tooltip.data}
                 <GeoPoint
-                  lat={tooltipContext.data.latitude}
-                  long={tooltipContext.data.longitude}
+                  lat={context.tooltip.data.latitude}
+                  long={context.tooltip.data.longitude}
                   spring
                 >
                   <circle r="4" class="stroke-primary/50 fill-none" />
                   <Text
                     y="-6"
-                    value={tooltipContext.data.label}
+                    value={context.tooltip.data.label}
                     textAnchor="middle"
                     class="text-[8px] stroke-surface-100 [stroke-width:2px]"
                   />
@@ -152,7 +152,7 @@
       }}
       tooltip={{ mode: 'voronoi', debug: debugTooltip }}
     >
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <g class="states">
             {#each states.features as feature}
@@ -173,10 +173,10 @@
               />
             {/each}
 
-            {#if tooltipContext.data}
+            {#if context.tooltip.data}
               <GeoPoint
-                lat={tooltipContext.data.latitude}
-                long={tooltipContext.data.longitude}
+                lat={context.tooltip.data.latitude}
+                long={context.tooltip.data.longitude}
                 r={4}
                 class="stroke-primary/50 fill-none"
                 spring
@@ -185,7 +185,7 @@
           </g>
         </Svg>
 
-        <Tooltip.Root>
+        <Tooltip.Root {context}>
           {#snippet children({ data })}
             <Tooltip.Header>{data.name}</Tooltip.Header>
             <Tooltip.List>
@@ -223,7 +223,7 @@
       }}
       tooltip={{ mode: 'voronoi', debug: debugTooltip }}
     >
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <g class="countries">
             {#each countries.features as feature}
@@ -240,10 +240,10 @@
               />
             {/each}
 
-            {#if tooltipContext.data}
+            {#if context.tooltip.data}
               <GeoPoint
-                lat={tooltipContext.data.latitude}
-                long={tooltipContext.data.longitude}
+                lat={context.tooltip.data.latitude}
+                long={context.tooltip.data.longitude}
                 r={4}
                 class="stroke-primary/50 fill-none"
                 spring
@@ -252,7 +252,7 @@
           </g>
         </Svg>
 
-        <Tooltip.Root>
+        <Tooltip.Root {context}>
           {#snippet children({ data })}
             <Tooltip.Header>{data.name}</Tooltip.Header>
             <Tooltip.List>

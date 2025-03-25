@@ -14,6 +14,7 @@
     accessor,
     Line,
     Circle,
+    type ChartContextValue,
   } from 'layerchart';
   import { curveBasis, curveCatmullRom } from 'd3-shape';
   import { group } from 'd3-array';
@@ -27,6 +28,7 @@
   import Blockquote from 'layerchart/docs/Blockquote.svelte';
   import type { ComponentProps } from 'svelte';
   import { cls } from '@layerstack/tailwind';
+  import { Context } from 'runed';
 
   let { data } = $props();
 
@@ -108,7 +110,7 @@
   let debug = $state(false);
 
   let markerPoints: { date: Date; value: number }[] = $state([]);
-  let tooltipContext: ComponentProps<typeof AreaChart<any>>['tooltipContext'] = $state();
+  let context = $state<ChartContextValue<(typeof denseDateSeriesData)[number]>>(null!);
 </script>
 
 <svelte:window
@@ -194,21 +196,23 @@
         </LinearGradient>
       {/snippet}
 
-      {#snippet highlight({ context, tooltipContext })}
-        {@const value = tooltipContext.data && context.y(tooltipContext.data)}
+      {#snippet highlight({ context })}
+        {@const value = context.tooltip.data && context.y(context.tooltip.data)}
         <Highlight lines points={{ fill: value < 0 ? colors.negative : colors.positive }} />
       {/snippet}
-      {#snippet tooltip({ context, tooltipContext })}
+      {#snippet tooltip({ context })}
         <Tooltip.Root>
-          {@const value = context.y(tooltipContext.data)}
-          <Tooltip.Header>{format(context.x(tooltipContext.data), PeriodType.Day)}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item
-              label="value"
-              value={context.y(tooltipContext.data)}
-              color={value < 0 ? colors.negative : colors.positive}
-            />
-          </Tooltip.List>
+          {#snippet children({ data })}
+            {@const value = context.y(data)}
+            <Tooltip.Header>{format(context.x(data), PeriodType.Day)}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item
+                label="value"
+                value={context.y(data)}
+                color={value < 0 ? colors.negative : colors.positive}
+              />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </AreaChart>
@@ -334,10 +338,10 @@
       {renderContext}
       {debug}
     >
-      {#snippet marks({ series, tooltipContext })}
+      {#snippet marks({ series, context })}
         {#each series as s}
           {@const activeSeries =
-            tooltipContext.data == null || tooltipContext.data?.fruit === s.key}
+            context.tooltip.data == null || context.tooltip.data?.fruit === s.key}
 
           <g class={cls(!activeSeries && 'opacity-20 saturate-0')}>
             <Area data={s.data} line={{ stroke: s.color }} fill={s.color} fillOpacity={0.3} />
@@ -345,24 +349,26 @@
         {/each}
       {/snippet}
 
-      {#snippet highlight({ series, tooltipContext })}
+      {#snippet highlight({ series, context })}
         <!-- TODO: Remove hack to make typescript happy -->
-        {@const activeSeries = [...series].find((s) => s.key === tooltipContext.data?.fruit)}
+        {@const activeSeries = [...series].find((s) => s.key === context.tooltip.data?.fruit)}
         <Highlight lines points={{ fill: activeSeries?.color }} />
       {/snippet}
 
-      {#snippet tooltip({ tooltipContext, series, context })}
+      {#snippet tooltip({ series, context })}
         <!-- TODO: Remove hack to make typescript happy -->
-        {@const activeSeries = [...series].find((s) => s.key === tooltipContext.data?.fruit)}
+        {@const activeSeries = [...series].find((s) => s.key === context.tooltip.data?.fruit)}
         <Tooltip.Root>
-          <Tooltip.Header>{format(context.x(tooltipContext.data))}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item
-              label={tooltipContext.data?.fruit}
-              value={tooltipContext.data?.value}
-              color={activeSeries?.color}
-            />
-          </Tooltip.List>
+          {#if context.tooltip.data}
+            <Tooltip.Header>{format(context.x(context.tooltip.data))}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item
+                label={context.tooltip.data?.fruit}
+                value={context.tooltip.data?.value}
+                color={activeSeries?.color}
+              />
+            </Tooltip.List>
+          {/if}
         </Tooltip.Root>
       {/snippet}
     </AreaChart>
@@ -469,9 +475,10 @@
       {#snippet marks({ series, getAreaProps })}
         {#each series as s, i (s.key)}
           <!-- Can also use basic 'transparent' for second stop for better browser compatibility -->
-          <!-- TODO - can we type this-->
           <LinearGradient
-            stops={[s.color, 'color-mix(in lch, ' + s.color + ' 10%, transparent)']}
+            stops={s.color
+              ? [s.color, 'color-mix(in lch, ' + s.color + ' 10%, transparent)']
+              : undefined}
             vertical
           >
             {#snippet children({ gradient })}
@@ -950,20 +957,20 @@
 
 <Preview data={{ denseDateSeriesData, denseDateSeriesData2 }}>
   <div class="text-sm">
-    {#if tooltipContext?.data}
-      date: {format(tooltipContext?.data?.date, PeriodType.Day, { variant: 'short' })}
-      value: {tooltipContext?.data?.value}
+    {#if context.tooltip.data}
+      date: {format(context.tooltip.data.date, PeriodType.Day, { variant: 'short' })}
+      value: {context.tooltip.data.value}
     {:else}
       [hover chart]
     {/if}
   </div>
   <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart
+      bind:context
       data={denseDateSeriesData}
       x="date"
       y="value"
       {xDomain}
-      bind:tooltipContext
       props={{
         area: { tweened: { duration: 200 } },
         xAxis: { format: undefined, tweened: { duration: 200 } },

@@ -105,20 +105,20 @@
       y="value"
       brush={{ classes: { range: 'bg-secondary/10' }, handleSize: 8 }}
     >
-      {#snippet children({ brushContext })}
+      {#snippet children({ context })}
         <Svg>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
 
-          {#if brushContext.isActive}
+          {#if context.brush.isActive}
             <rect
-              x={brushContext.range.x}
-              width={brushContext.handleSize}
-              height={brushContext.range.height}
+              x={context.brush.range.x}
+              width={context.brush.handleSize}
+              height={context.brush.range.height}
               class={cls('fill-secondary cursor-ew-resize select-none')}
             />
             <svg
-              x={brushContext.range.x - 6}
-              y={brushContext.range.height / 2 - 10}
+              x={context.brush.range.x - 6}
+              y={context.brush.range.height / 2 - 10}
               width="20px"
               height="20px"
               viewBox="0 0 24 24"
@@ -128,14 +128,14 @@
             </svg>
 
             <rect
-              x={brushContext.range.x + brushContext.range.width - brushContext.handleSize}
-              width={brushContext.handleSize}
-              height={brushContext.range.height}
+              x={context.brush.range.x + context.brush.range.width - context.brush.handleSize}
+              width={context.brush.handleSize}
+              height={context.brush.range.height}
               class={cls('fill-secondary cursor-ew-resize select-none')}
             />
             <svg
-              x={brushContext.range.x + brushContext.range.width - brushContext.handleSize - 6}
-              y={brushContext.range.height / 2 - 10}
+              x={context.brush.range.x + context.brush.range.width - context.brush.handleSize - 6}
+              y={context.brush.range.height / 2 - 10}
               width="20px"
               height="20px"
               viewBox="0 0 24 24"
@@ -155,22 +155,22 @@
 <Preview data={data.appleStock}>
   <div class="h-[40px]">
     <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" brush>
-      {#snippet children({ brushContext: brush })}
+      {#snippet children({ context })}
         <Svg>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-          {#if brush.isActive}
+          {#if context.brush.isActive}
             <Text
-              x={brush.range.x - 4}
-              y={brush.range.height / 2}
-              value={format(asAny(brush.xDomain?.[0]))}
+              x={context.brush.range.x - 4}
+              y={context.brush.range.height / 2}
+              value={format(asAny(context.brush.xDomain?.[0]))}
               textAnchor="end"
               verticalAnchor="middle"
               class="text-xs"
             />
             <Text
-              x={brush.range.x + brush.range.width + 4}
-              y={brush.range.height / 2}
-              value={format(asAny(brush.xDomain?.[1]))}
+              x={context.brush.range.x + context.brush.range.width + 4}
+              y={context.brush.range.height / 2}
+              value={format(asAny(context.brush.xDomain?.[1]))}
               verticalAnchor="middle"
               class="text-xs"
             />
@@ -194,15 +194,15 @@
         padding={{ left: 80, right: 80 }}
         brush
       >
-        {#snippet children({ brushContext: brush, context })}
+        {#snippet children({ context })}
           <Svg>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
 
-            {#if brush.isActive}
+            {#if context.brush.isActive}
               <Text
                 x={-4}
                 y={context.height / 2}
-                value={format(asAny(brush.xDomain?.[0]))}
+                value={format(asAny(context.brush.xDomain?.[0]))}
                 textAnchor="end"
                 verticalAnchor="middle"
                 class="text-xs"
@@ -210,7 +210,7 @@
               <Text
                 x={context.width + 4}
                 y={context.height / 2}
-                value={format(asAny(brush.xDomain?.[1]))}
+                value={format(asAny(context.brush.xDomain?.[1]))}
                 verticalAnchor="middle"
                 class="text-xs"
               />

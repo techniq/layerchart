@@ -372,7 +372,7 @@
       padding={{ left: 16, bottom: 24, right: 48 }}
       tooltip={{ mode: 'voronoi' }}
     >
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
           <Axis
@@ -381,7 +381,7 @@
             rule
           />
           {#each dataByFruit as [fruit, data]}
-            {@const active = tooltipContext.data == null || tooltipContext.data.fruit === fruit}
+            {@const active = context.tooltip.data == null || context.tooltip.data.fruit === fruit}
             {@const color = context.cScale?.(fruit)}
             <g class={cls(!active && 'opacity-20 saturate-0')}>
               <Spline {data} class="stroke-2" stroke={color}>
@@ -402,9 +402,9 @@
           <Highlight points lines />
         </Svg>
         <Tooltip.Root>
-          <Tooltip.Header>{format(tooltipContext.data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header>{format(context.tooltip.data.date, 'eee, MMMM do')}</Tooltip.Header>
           <Tooltip.List>
-            <Tooltip.Item label={tooltipContext.data.fruit} value={tooltipContext.data.value} />
+            <Tooltip.Item label={context.tooltip.data.fruit} value={context.tooltip.data.value} />
           </Tooltip.List>
         </Tooltip.Root>
       {/snippet}

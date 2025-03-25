@@ -53,7 +53,7 @@
           initialScrollMode: 'scale',
         }}
       >
-        {#snippet children({ tooltipContext, transformContext, geoContext, context })}
+        {#snippet children({ context })}
           {#if debug}
             <div class="absolute top-0 left-0 z-10 grid gap-1">
               <GeoDebug />
@@ -69,16 +69,16 @@
               <GeoPath
                 geojson={feature}
                 class="stroke-none"
-                {tooltipContext}
+                tooltipContext={context.tooltip}
                 onclick={() => {
-                  if (!geoContext.projection) return;
+                  if (!context.geo.projection) return;
                   const featureTransform = geoFitObjectTransform(
-                    geoContext.projection,
+                    context.geo.projection,
                     [context.width, context.height],
                     feature
                   );
-                  transformContext.setTranslate(featureTransform.translate);
-                  transformContext.setScale(featureTransform.scale);
+                  context.transform.setTranslate(featureTransform.translate);
+                  context.transform.setScale(featureTransform.scale);
                 }}
               />
             {/each}
@@ -87,7 +87,7 @@
           <Tooltip.Root>
             {#snippet children({ data })}
               {@const [longitude, latitude] =
-                geoContext.projection?.invert?.([tooltipContext.x, tooltipContext.y]) ?? []}
+                context.geo.projection?.invert?.([context.tooltip.x, context.tooltip.y]) ?? []}
               <Tooltip.Header>{data.properties.name}</Tooltip.Header>
               <Tooltip.List>
                 <Tooltip.Item label="longitude" value={longitude} format="decimal" />
@@ -120,7 +120,7 @@
           right: 100,
         }}
       >
-        {#snippet children({ tooltipContext, geoContext, transformContext, context })}
+        {#snippet children({ context })}
           {#if debug}
             <div class="absolute top-0 left-0 z-10 grid gap-1">
               <GeoDebug />
@@ -136,16 +136,16 @@
               <GeoPath
                 geojson={feature}
                 class="stroke-none"
-                {tooltipContext}
+                tooltipContext={context.tooltip}
                 onclick={() => {
-                  if (!geoContext.projection) return;
+                  if (!context.geo.projection) return;
                   const featureTransform = geoFitObjectTransform(
-                    geoContext.projection,
+                    context.geo.projection,
                     [context.width, context.height],
                     feature
                   );
-                  transformContext.setTranslate(featureTransform.translate);
-                  transformContext.setScale(featureTransform.scale);
+                  context.transform.setTranslate(featureTransform.translate);
+                  context.transform.setScale(featureTransform.scale);
                 }}
               />
             {/each}
@@ -154,9 +154,9 @@
           <Tooltip.Root>
             {#snippet children({ data })}
               {@const [longitude, latitude] =
-                geoContext.projection?.invert?.([
-                  tooltipContext.x - context.padding.left,
-                  tooltipContext.y - context.padding.top,
+                context.geo.projection?.invert?.([
+                  context.tooltip.x - context.padding.left,
+                  context.tooltip.y - context.padding.top,
                 ]) ?? []}
               <Tooltip.Header>{data.properties.name}</Tooltip.Header>
               <Tooltip.List>
@@ -184,7 +184,7 @@
           initialScrollMode: 'scale',
         }}
       >
-        {#snippet children({ context, geoContext, tooltipContext, transformContext })}
+        {#snippet children({ context })}
           {#if debug}
             <div class="absolute top-0 left-0 z-10 grid gap-1">
               <GeoDebug />
@@ -204,16 +204,16 @@
               <GeoPath
                 geojson={feature}
                 class="stroke-none"
-                {tooltipContext}
+                tooltipContext={context.tooltip}
                 onclick={() => {
-                  if (!geoContext.projection) return;
+                  if (!context.geo.projection) return;
                   const featureTransform = geoFitObjectTransform(
-                    geoContext.projection,
+                    context.geo.projection,
                     [context.width, context.height],
                     feature
                   );
-                  transformContext.setTranslate(featureTransform.translate);
-                  transformContext.setScale(featureTransform.scale);
+                  context.transform.setTranslate(featureTransform.translate);
+                  context.transform.setScale(featureTransform.scale);
                 }}
               />
             {/each}
@@ -222,7 +222,7 @@
           <Tooltip.Root>
             {#snippet children({ data })}
               {@const [longitude, latitude] =
-                geoContext.projection?.invert?.([tooltipContext.x, tooltipContext.y]) ?? []}
+                context.geo.projection?.invert?.([context.tooltip.x, context.tooltip.y]) ?? []}
               <Tooltip.Header>{data.properties.name}</Tooltip.Header>
               <Tooltip.List>
                 <Tooltip.Item label="longitude" value={longitude} format="decimal" />

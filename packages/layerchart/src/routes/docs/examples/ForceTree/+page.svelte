@@ -24,7 +24,7 @@
 <Preview data={nodes}>
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart data={nodes}>
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg center>
           <ForceSimulation
             {links}
@@ -54,8 +54,8 @@
                       ? 'fill-surface-100 stroke-surface-content'
                       : 'fill-surface-content'
                   )}
-                  onpointermove={(e) => tooltipContext.show(e, node)}
-                  onpointerleave={tooltipContext.hide}
+                  onpointermove={(e) => context.tooltip.show(e, node)}
+                  onpointerleave={context.tooltip.hide}
                 />
               {/each}
             {/snippet}
@@ -63,15 +63,17 @@
         </Svg>
 
         <Tooltip.Root>
-          <Tooltip.Header>{tooltipContext.data.name}</Tooltip.Header>
-          <Tooltip.List>
-            {#if tooltipContext.data.children}
-              <Tooltip.Item label="children" value={tooltipContext.data.children.length} />
-            {/if}
-            {#if tooltipContext.data.value}
-              <Tooltip.Item label="value" value={tooltipContext.data.value} format="integer" />
-            {/if}
-          </Tooltip.List>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.name}</Tooltip.Header>
+            <Tooltip.List>
+              {#if data.children}
+                <Tooltip.Item label="children" value={data.children.length} />
+              {/if}
+              {#if data.value}
+                <Tooltip.Item label="value" value={data.value} format="integer" />
+              {/if}
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>

@@ -251,7 +251,7 @@
 <Preview data={data.miserables}>
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
     <Chart data={nodes}>
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <ForceSimulation
             forces={{
@@ -291,8 +291,8 @@
                   fill={colorScale(node.group)}
                   stroke-width={nodeStrokeWidth}
                   class="stroke-surface-content"
-                  onpointermove={(e) => tooltipContext.show(e, node)}
-                  onpointerleave={tooltipContext.hide}
+                  onpointermove={(e) => context.tooltip.show(e, node)}
+                  onpointerleave={context.tooltip.hide}
                 />
               {/each}
             {/snippet}
@@ -300,7 +300,7 @@
         </Svg>
 
         <Tooltip.Root>
-          {tooltipContext.data.id}
+          {context.tooltip.data?.id}
         </Tooltip.Root>
       {/snippet}
     </Chart>

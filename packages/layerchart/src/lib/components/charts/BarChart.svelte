@@ -405,7 +405,6 @@
 
 <!-- svelte-ignore ownership_invalid_binding -->
 <Chart
-  bind:tooltipContext
   bind:context
   data={chartData}
   x={resolveAccessor(xProp)}
@@ -435,13 +434,10 @@
         ...props.tooltip?.context,
       }}
 >
-  {#snippet children({ context, brushContext, geoContext, tooltipContext, transformContext })}
+  {#snippet children({ context })}
     {@const snippetProps = {
       context,
       tooltipContext,
-      brushContext,
-      geoContext,
-      transformContext,
       series,
       visibleSeries,
       getBarsProps,
@@ -547,7 +543,7 @@
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
       {:else if tooltip}
-        <Tooltip.Root {...props.tooltip?.root}>
+        <Tooltip.Root {context} {...props.tooltip?.root}>
           {#snippet children({ data, payload })}
             <Tooltip.Header value={payload[0].label} {format} {...props.tooltip?.header} />
 

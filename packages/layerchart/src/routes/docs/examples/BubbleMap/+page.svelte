@@ -81,8 +81,8 @@
       }}
       padding={{ top: 60 }}
     >
-      {#snippet children({ tooltipContext, transformContext })}
-        {@const strokeWidth = 1 / transformContext.scale}
+      {#snippet children({ context })}
+        {@const strokeWidth = 1 / context.transform.scale}
         <TransformControls />
 
         <Svg>
@@ -114,7 +114,7 @@
           {#each enrichedCountiesFeatures as feature}
             <GeoPath
               geojson={feature}
-              {tooltipContext}
+              tooltipContext={context.tooltip}
               class="stroke-none hover:fill-surface-content/10"
               {strokeWidth}
             />
@@ -176,8 +176,8 @@
       }}
       padding={{ top: 60 }}
     >
-      {#snippet children({ tooltipContext, transformContext })}
-        {@const strokeWidth = 1 / transformContext.scale}
+      {#snippet children({ context })}
+        {@const strokeWidth = 1 / context.transform.scale}
         <TransformControls />
 
         <Canvas>
@@ -188,7 +188,7 @@
           />
 
           {#each enrichedCountiesFeatures as feature}
-            <GeoPath geojson={feature} {strokeWidth} {tooltipContext}>
+            <GeoPath geojson={feature} {strokeWidth} tooltipContext={context.tooltip}>
               {#snippet children({ geoPath })}
                 {@const [cx, cy] = geoPath?.centroid(feature) ?? []}
                 {@const d = feature.properties.data}
@@ -207,9 +207,9 @@
         </Canvas>
 
         <Canvas pointerEvents={false}>
-          {#if tooltipContext.data}
+          {#if context.tooltip.data}
             <GeoPath
-              geojson={tooltipContext.data}
+              geojson={context.tooltip.data}
               class="stroke-none fill-surface-content/10"
               {strokeWidth}
             />

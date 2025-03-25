@@ -48,13 +48,13 @@
         fitGeojson: selectedFeature,
       }}
     >
-      {#snippet children({ tooltipContext, geoContext })}
+      {#snippet children({ context })}
         <Svg>
           <GeoTile url={serviceUrl} {zoomDelta} {debug} />
           {#each filteredStates.features as feature}
             <GeoPath
               geojson={feature}
-              {tooltipContext}
+              tooltipContext={context.tooltip}
               class="stroke-black/20 hover:fill-white/30"
               onclick={() =>
                 (selectedFeature = selectedFeature === feature ? filteredStates : feature)}
@@ -65,7 +65,7 @@
         <Tooltip.Root>
           {#snippet children({ data })}
             {@const [longitude, latitude] =
-              geoContext.projection?.invert?.([tooltipContext.x, tooltipContext.y]) ?? []}
+              context.geo.projection?.invert?.([context.tooltip.x, context.tooltip.y]) ?? []}
             <Tooltip.Header>{data.properties.name}</Tooltip.Header>
             <Tooltip.List>
               <Tooltip.Item label="longitude" value={longitude} format="decimal" />
@@ -88,7 +88,7 @@
         fitGeojson: selectedFeature,
       }}
     >
-      {#snippet children({ tooltipContext, geoContext })}
+      {#snippet children({ context })}
         <Svg>
           <ClipPath useId="clip">
             <GeoTile url={serviceUrl} {zoomDelta} />
@@ -97,7 +97,7 @@
           {#each filteredStates.features as feature}
             <GeoPath
               geojson={feature}
-              {tooltipContext}
+              tooltipContext={context.tooltip}
               class="stroke-black/20 hover:fill-white/30"
               onclick={() =>
                 (selectedFeature = selectedFeature === feature ? filteredStates : feature)}
@@ -108,7 +108,7 @@
         <Tooltip.Root>
           {#snippet children({ data })}
             {@const [longitude, latitude] =
-              geoContext.projection?.invert?.([tooltipContext.x, tooltipContext.y]) ?? []}
+              context.geo.projection?.invert?.([context.tooltip.x, context.tooltip.y]) ?? []}
             <Tooltip.Header>{data.properties.name}</Tooltip.Header>
             <Tooltip.List>
               <Tooltip.Item label="longitude" value={longitude} format="decimal" />

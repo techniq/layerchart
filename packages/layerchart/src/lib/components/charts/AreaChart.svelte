@@ -130,9 +130,6 @@
     aboveMarks,
     marks,
     context = $bindable(),
-    brushContext = $bindable(),
-    transformContext = $bindable(),
-    tooltipContext = $bindable(),
     ...restProps
   }: AreaChartProps<TData> = $props();
 
@@ -287,10 +284,10 @@
     s: SeriesData<TData, typeof Area>,
     i: number
   ): ComponentProps<typeof Highlight> {
-    if (!tooltipContext || !context) return {};
+    if (!context) return {};
     const seriesTooltipData =
-      s.data && tooltipContext.data
-        ? findRelatedData(s.data, tooltipContext.data, context.x)
+      s.data && context.tooltip.data
+        ? findRelatedData(s.data, context.tooltip.data, context.x)
         : null;
     const highlightPointsProps =
       typeof props.highlight?.points === 'object' ? props.highlight.points : null;
@@ -386,9 +383,6 @@
 <!-- svelte-ignore ownership_invalid_binding -->
 <Chart
   bind:context
-  bind:tooltipContext
-  bind:brushContext
-  bind:transformContext
   data={chartData}
   {x}
   {xDomain}
@@ -420,14 +414,10 @@
       }
     : false}
 >
-  {#snippet children({ tooltipContext, brushContext, context, geoContext, transformContext })}
+  {#snippet children({ context })}
     {@const snippetProps = {
       context,
-      tooltipContext,
-      brushContext,
-      geoContext,
       series,
-      transformContext,
       visibleSeries,
       getAreaProps,
       getLabelsProps,
@@ -543,7 +533,7 @@
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
       {:else if tooltip}
-        <Tooltip.Root {...props.tooltip?.root}>
+        <Tooltip.Root {context} {...props.tooltip?.root}>
           {#snippet children({ data, payload })}
             <Tooltip.Header value={payload[0]?.label} {format} {...props.tooltip?.header} />
 

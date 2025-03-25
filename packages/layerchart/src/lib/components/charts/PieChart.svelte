@@ -4,6 +4,7 @@
     label: Accessor<TData>;
     value: Accessor<TData>;
     visibleData: TData[];
+    getGroupProps: () => ComponentProps<typeof Group>;
   };
   export type PieChartPropsObjProp = Pick<
     SimplifiedChartPropsObject,
@@ -119,6 +120,48 @@
     center?: boolean;
 
     /**
+     * Replace the default rendering of the `<Pie>` component internally with your own.
+     *
+     * Use the `props` snippet prop to access the default props.
+     */
+    pie?: SimplifiedChartSnippet<
+      TData,
+      typeof Arc,
+      PieChartExtraSnippetProps<TData> & {
+        /**
+         * Default props to apply to the Pie component.
+         */
+        props: ComponentProps<typeof Pie>;
+        /**
+         * The index of the pie series currently being iterated over.
+         */
+        index: number;
+      }
+    >;
+
+    /**
+     * Replace the default rendering of the `<Arc>` component internally with your own.
+     *
+     * Use the `props` snippet prop to access the default props.
+     */
+    arc?: SimplifiedChartSnippet<
+      TData,
+      typeof Arc,
+      PieChartExtraSnippetProps<TData> & {
+        props: ComponentProps<typeof Arc>;
+        /**
+         * The index of the arc currently being iterated over
+         */
+        index: number;
+
+        /**
+         * The index of the series currently being iterated over.
+         */
+        seriesIndex: number;
+      }
+    >;
+
+    /**
      * A callback function triggered when the arc is clicked.
      */
     onArcClick?: (
@@ -129,8 +172,7 @@
 </script>
 
 <script lang="ts" generics="TData">
-  import { onMount, type ComponentProps } from 'svelte';
-  import { sum } from 'd3-array';
+  import { onMount, type ComponentProps, type Snippet } from 'svelte';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
@@ -145,10 +187,16 @@
 
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
-  import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
+  import type {
+    SeriesData,
+    SimplifiedChartProps,
+    SimplifiedChartPropsObject,
+    SimplifiedChartSnippet,
+  } from './types.js';
   import { createHighlightKey } from './utils.svelte.js';
   import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
+  import type { PieArcDatum } from 'd3-shape';
 
   let {
     data = [],
@@ -182,6 +230,8 @@
     belowMarks,
     aboveMarks,
     marks,
+    pie,
+    arc,
     context = $bindable(),
     ...restProps
   }: PieChartProps<TData> = $props();
@@ -247,6 +297,63 @@
     };
   }
 
+  function getGroupProps(): ComponentProps<typeof Group> {
+    if (!context) return {};
+    return {
+      x:
+        placement === 'left'
+          ? context.height / 2
+          : placement === 'right'
+            ? context.width - context.height / 2
+            : undefined,
+      center: ['left', 'right'].includes(placement) ? 'y' : undefined,
+      ...props.group,
+    };
+  }
+
+  function getPieProps(s: SeriesData<TData, typeof Arc>, i: number): ComponentProps<typeof Pie> {
+    return {
+      data: s.data,
+      range,
+      innerRadius,
+      outerRadius,
+      cornerRadius,
+      padAngle,
+      ...props.pie,
+    };
+  }
+
+  function getArcProps(
+    s: SeriesData<TData, typeof Arc>,
+    seriesIndex: number,
+    arc: PieArcDatum<any>,
+    arcIndex: number
+  ): ComponentProps<typeof Arc> {
+    if (!context) return {};
+    return {
+      startAngle: arc.startAngle,
+      endAngle: arc.endAngle,
+      outerRadius: visibleSeries.length > 1 ? seriesIndex * (outerRadius ?? 0) : outerRadius,
+      innerRadius,
+      cornerRadius,
+      padAngle,
+      fill: context.cScale?.(context.c(arc.data)),
+      data: arc.data,
+      tooltipContext,
+      onclick: (e) => {
+        onArcClick(e, { data: arc.data, series: s });
+        // Workaround for `tooltip={{ mode: 'manual' }}
+        onTooltipClick(e, { data: arc.data });
+      },
+      class: cls(
+        'transition-opacity',
+        highlightKey.current && highlightKey.current !== keyAccessor(arc.data) && 'opacity-50'
+      ),
+      ...props.arc,
+      ...s.props,
+    };
+  }
+
   if (profile) {
     console.time('PieChart render');
     onMount(() => {
@@ -277,7 +384,6 @@
 <!-- svelte-ignore ownership_invalid_binding -->
 <Chart
   bind:context
-  bind:tooltipContext
   data={visibleData}
   x={value}
   y={key}
@@ -299,23 +405,20 @@
   {...restProps}
   tooltip={tooltip === false ? false : props.tooltip?.context}
 >
-  {#snippet children({ brushContext, context, geoContext, tooltipContext, transformContext })}
+  {#snippet children({ context })}
     {@const snippetProps = {
       label: labelAccessor,
       key: keyAccessor,
       value: valueAccessor,
       color: cAccessor,
       context,
-      tooltipContext,
-      brushContext,
-      geoContext,
-      transformContext,
       series,
       visibleSeries,
       visibleData,
       highlightKey: highlightKey.current,
       setHighlightKey: highlightKey.set,
       getLegendProps,
+      getGroupProps,
     }}
     {#if childrenProp}
       {@render childrenProp(snippetProps)}
@@ -334,81 +437,29 @@
         {#if typeof marks === 'function'}
           {@render marks(snippetProps)}
         {:else}
-          <Group
-            x={placement === 'left'
-              ? context.height / 2
-              : placement === 'right'
-                ? context.width - context.height / 2
-                : undefined}
-            center={['left', 'right'].includes(placement) ? 'y' : undefined}
-            {...props.group}
-          >
-            {#each series as s, i (s.key)}
-              {@const singleArc = s.data?.length === 1 || chartData.length === 1}
-              {#if singleArc}
-                {@const d = s.data?.[0] || chartData[0]}
-                <Arc
-                  value={valueAccessor(d)}
-                  domain={[0, s.maxValue ?? maxValue ?? sum(chartData, valueAccessor)]}
-                  {range}
-                  {innerRadius}
-                  outerRadius={(outerRadius ?? 0) < 0 ? i * (outerRadius ?? 0) : outerRadius}
-                  {cornerRadius}
-                  {padAngle}
-                  fill={s.color ?? context.cScale?.(context.c(d))}
-                  track={{ fill: s.color ?? context.cScale?.(context.c(d)), fillOpacity: 0.1 }}
-                  {tooltipContext}
-                  data={d}
-                  onclick={(e) => {
-                    onArcClick(e, { data: d, series: s });
-                    // Workaround for `tooltip={{ mode: 'manual' }}
-                    onTooltipClick(e, { data: d });
-                  }}
-                  {...props.arc}
-                  {...s.props}
-                  class={cls(
-                    'transition-opacity',
-                    highlightKey.current && highlightKey.current !== keyAccessor(d) && 'opacity-50',
-                    props.arc?.class,
-                    s.props?.class
-                  )}
-                />
+          <Group {...getGroupProps()}>
+            {#each visibleSeries as s, seriesIdx (s.key)}
+              {#if typeof pie === 'function'}
+                {@render pie({
+                  ...snippetProps,
+                  props: getPieProps(s, seriesIdx),
+                  index: seriesIdx,
+                })}
               {:else}
-                <Pie
-                  data={s.data}
-                  {range}
-                  {innerRadius}
-                  {outerRadius}
-                  {cornerRadius}
-                  {padAngle}
-                  {...props.pie}
-                >
+                <Pie {...getPieProps(s, seriesIdx)}>
                   {#snippet children({ arcs })}
-                    {#each arcs as arc}
-                      <Arc
-                        startAngle={arc.startAngle}
-                        endAngle={arc.endAngle}
-                        outerRadius={series.length > 1 ? i * (outerRadius ?? 0) : outerRadius}
-                        {innerRadius}
-                        {cornerRadius}
-                        {padAngle}
-                        fill={context.cScale?.(context.c(arc.data))}
-                        data={arc.data}
-                        {tooltipContext}
-                        onclick={(e) => {
-                          onArcClick(e, { data: arc.data, series: s });
-                          // Workaround for `tooltip={{ mode: 'manual' }}
-                          onTooltipClick(e, { data: arc.data });
-                        }}
-                        class={cls(
-                          'transition-opacity',
-                          highlightKey.current &&
-                            highlightKey.current !== keyAccessor(arc.data) &&
-                            'opacity-50'
-                        )}
-                        {...props.arc}
-                        {...s.props}
-                      />
+                    {#each arcs as arcData, arcIdx (`${seriesIdx}-${arcIdx}`)}
+                      {@const arcProps = getArcProps(s, seriesIdx, arcData, arcIdx)}
+                      {#if typeof arc === 'function'}
+                        {@render arc({
+                          ...snippetProps,
+                          props: arcProps,
+                          index: arcIdx,
+                          seriesIndex: seriesIdx,
+                        })}
+                      {:else}
+                        <Arc {...arcProps} />
+                      {/if}
                     {/each}
                   {/snippet}
                 </Pie>
@@ -431,7 +482,7 @@
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
       {:else if tooltip}
-        <Tooltip.Root {...props.tooltip?.root}>
+        <Tooltip.Root {context} {...props.tooltip?.root}>
           {#snippet children({ data })}
             <Tooltip.List {...props.tooltip?.list}>
               <Tooltip.Item

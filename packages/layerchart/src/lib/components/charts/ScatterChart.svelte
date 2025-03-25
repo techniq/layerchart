@@ -82,7 +82,6 @@
     rule = true,
     tooltip = true,
     context = $bindable(),
-    tooltipContext = $bindable(),
     onTooltipClick = () => {},
     props = {},
     renderContext = 'svg',
@@ -202,8 +201,9 @@
   }
 
   const activeSeries = $derived.by(() => {
-    if (!tooltipContext?.data) return null;
-    return series.find((s) => s.key === tooltipContext!.data.seriesKey) ?? series[0];
+    if (!context?.tooltip?.data) return null;
+    // @ts-expect-error - shh
+    return series.find((s) => s.key === context?.tooltip.data?.seriesKey) ?? series[0];
   });
 
   function getHighlightProps(): ComponentProps<typeof Highlight> {
@@ -231,7 +231,6 @@
 <!-- svelte-ignore ownership_invalid_binding -->
 <Chart
   bind:context
-  bind:tooltipContext
   data={chartData}
   x={xProp}
   {xDomain}
@@ -265,13 +264,9 @@
       }
     : false}
 >
-  {#snippet children({ tooltipContext, context, brushContext, geoContext, transformContext })}
+  {#snippet children({ context })}
     {@const snippetProps = {
       context,
-      tooltipContext,
-      brushContext,
-      geoContext,
-      transformContext,
       series,
       visibleSeries,
       getLabelsProps,
@@ -369,7 +364,7 @@
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
       {:else if tooltip}
-        <Tooltip.Root {...props.tooltip?.root}>
+        <Tooltip.Root {context} {...props.tooltip?.root}>
           {#snippet children({ data })}
             {#if activeSeries?.key !== 'default'}
               <Tooltip.Header

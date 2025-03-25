@@ -84,21 +84,21 @@
       }}
       padding={{ left: 100, right: 100 }}
     >
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content fill-blue-400/50" />
           <Graticule class="stroke-surface-content/20 pointer-events-none" />
           {#each features as feature}
             <GeoPath
               geojson={feature}
-              {tooltipContext}
+              tooltipContext={context.tooltip}
               class="stroke-surface-content/50 fill-white hover:fill-gray-300"
             />
           {/each}
         </Svg>
 
         <Tooltip.Root>
-          {tooltipContext.data.properties.name}
+          {context.tooltip.data?.properties.name}
         </Tooltip.Root>
       {/snippet}
     </Chart>

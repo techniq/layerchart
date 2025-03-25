@@ -64,11 +64,10 @@
     string
   >[];
 
-  type c = B[number][number]['data']['date'];
-
   const stackData = stack().keys(keys)(multiSeriesData) as B;
 
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
+
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 
   const fruitColors = {
@@ -414,7 +413,7 @@
       padding={{ left: 16, bottom: 24, right: 48 }}
       tooltip={{ mode: 'voronoi' }}
     >
-      {#snippet children({ tooltipContext, context })}
+      {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
           <Axis
@@ -423,7 +422,7 @@
             rule
           />
           {#each dataByFruit as [fruit, data]}
-            {@const active = tooltipContext.data == null || tooltipContext.data.fruit === fruit}
+            {@const active = context.tooltip.data == null || context.tooltip.data.fruit === fruit}
             {@const color = context.cScale?.(fruit)}
             <g class={cls(!active && 'opacity-20 saturate-0')}>
               <Area
@@ -451,11 +450,13 @@
           {/each}
           <Highlight points lines />
         </Svg>
-        <Tooltip.Root>
-          <Tooltip.Header>{formatDate(tooltipContext.data.date, 'eee, MMMM do')}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label={tooltipContext.data.fruit} value={tooltipContext.data.value} />
-          </Tooltip.List>
+        <Tooltip.Root {context}>
+          {#snippet children({ data })}
+            <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label={data.fruit} value={data.value} />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>
@@ -480,7 +481,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'voronoi' }}
     >
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
           <Axis
@@ -501,10 +502,12 @@
           <Highlight points lines />
         </Svg>
         <Tooltip.Root>
-          <Tooltip.Header>{formatDate(tooltipContext.data.date, 'eee, MMMM do')}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label={tooltipContext.data.fruit} value={tooltipContext.data.value} />
-          </Tooltip.List>
+          {#snippet children({ data })}
+            <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label={data.fruit} value={data.value} />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>
@@ -529,7 +532,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
           <Axis
@@ -552,18 +555,14 @@
         </Svg>
 
         <Tooltip.Root>
-          <Tooltip.Header
-            >{formatDate(tooltipContext.data.data.date, 'eee, MMMM do')}</Tooltip.Header
-          >
-          <Tooltip.List>
-            {#each keys as key}
-              <Tooltip.Item
-                label={key}
-                value={tooltipContext.data.data[key]}
-                color={context.cScale?.(key)}
-              />
-            {/each}
-          </Tooltip.List>
+          {#snippet children({ data })}
+            <Tooltip.Header>{formatDate(data.data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.List>
+              {#each keys as key}
+                <Tooltip.Item label={key} value={data.data[key]} color={context.cScale?.(key)} />
+              {/each}
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>
@@ -838,7 +837,7 @@
       cDomain={['over', 'under']}
       cRange={['var(--color-success)', 'var(--color-danger)']}
     >
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
           <Axis
@@ -865,10 +864,12 @@
         </Svg>
 
         <Tooltip.Root>
-          <Tooltip.Header>{formatDate(tooltipContext.data.date, 'eee, MMMM do')}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="value" value={tooltipContext.data.value} />
-          </Tooltip.List>
+          {#snippet children({ data })}
+            <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>
@@ -888,7 +889,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
           <Axis
@@ -913,19 +914,21 @@
           </RectClipPath>
           <Highlight
             lines={{
-              class: tooltipContext.data?.value < 0 ? 'stroke-danger' : 'stroke-success',
+              class: (context.tooltip.data?.value ?? 0 < 0) ? 'stroke-danger' : 'stroke-success',
             }}
             points={{
-              class: tooltipContext.data?.value < 0 ? 'fill-danger' : 'fill-success',
+              class: (context.tooltip.data?.value ?? 0 < 0) ? 'fill-danger' : 'fill-success',
             }}
           />
         </Svg>
 
         <Tooltip.Root>
-          <Tooltip.Header>{formatDate(tooltipContext.data.date, 'eee, MMMM do')}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="value" value={tooltipContext.data.value} />
-          </Tooltip.List>
+          {#snippet children({ data })}
+            <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>
@@ -1039,7 +1042,7 @@
       padding={{ top: 48, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <LinearGradient class="from-primary/50 to-primary/1" vertical>
             {#snippet children({ gradient })}
@@ -1047,7 +1050,7 @@
               <RectClipPath
                 x={0}
                 y={0}
-                width={tooltipContext.data ? tooltipContext.x : context.width}
+                width={context.tooltip.data ? context.tooltip.x : context.width}
                 height={context.height}
                 spring
               >
@@ -1065,11 +1068,15 @@
           variant="none"
           class="text-sm font-semibold text-primary leading-3"
         >
-          {format(tooltipContext.data.value, 'currency')}
+          {#snippet children({ data })}
+            {format(data.value, 'currency')}
+          {/snippet}
         </Tooltip.Root>
 
         <Tooltip.Root x={4} y={4} variant="none" class="text-sm font-semibold leading-3">
-          {format(tooltipContext.data.date, PeriodType.Day)}
+          {#snippet children({ data })}
+            {format(data.date, PeriodType.Day)}
+          {/snippet}
         </Tooltip.Root>
 
         <Tooltip.Root
@@ -1079,7 +1086,9 @@
           variant="none"
           class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded-sm whitespace-nowrap"
         >
-          {format(tooltipContext.data.date, PeriodType.Day)}
+          {#snippet children({ data })}
+            {format(data.date, PeriodType.Day)}
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>

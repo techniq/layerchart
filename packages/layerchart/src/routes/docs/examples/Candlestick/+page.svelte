@@ -29,24 +29,26 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
-        <Axis placement="left" grid rule ticks={10} />
-        <Axis placement="bottom" rule format={(d) => ''} />
-        <Points links r={0} />
-        <Bars y={(d) => [d.open, d.close]} radius={2} />
-        <Highlight area />
-      </Svg>
-      <Tooltip.Root>
-        {#snippet children({ data })}
-          <Tooltip.Header>{formatDate(data.date, PeriodType.Day)}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="Open" value={data.open} format="decimal" />
-            <Tooltip.Item label="Close" value={data.close} format="decimal" />
-            <Tooltip.Item label="High" value={data.high} format="decimal" />
-            <Tooltip.Item label="Low" value={data.low} format="decimal" />
-          </Tooltip.List>
-        {/snippet}
-      </Tooltip.Root>
+      {#snippet children({ context })}
+        <Svg>
+          <Axis placement="left" grid rule ticks={10} />
+          <Axis placement="bottom" rule format={(d) => ''} />
+          <Points links r={0} />
+          <Bars y={(d) => [d.open, d.close]} radius={2} />
+          <Highlight area />
+        </Svg>
+        <Tooltip.Root {context}>
+          {#snippet children({ data })}
+            <Tooltip.Header>{formatDate(data.date, PeriodType.Day)}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="Open" value={data.open} format="decimal" />
+              <Tooltip.Item label="Close" value={data.close} format="decimal" />
+              <Tooltip.Item label="High" value={data.high} format="decimal" />
+              <Tooltip.Item label="Low" value={data.low} format="decimal" />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

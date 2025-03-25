@@ -80,13 +80,13 @@
         fitGeojson: selectedStateFeature,
       }}
     >
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           {#each selectedCountiesFeatures as feature}
             <GeoPath
               geojson={feature}
               class="fill-surface-100 stroke-surface-content/10 hover:fill-surface-content/20"
-              {tooltipContext}
+              tooltipContext={context.tooltip}
             />
           {/each}
           <GeoPath
@@ -96,7 +96,7 @@
         </Svg>
 
         <Tooltip.Root>
-          {tooltipContext.data.properties.name}
+          {context.tooltip.data?.properties.name}
         </Tooltip.Root>
       {/snippet}
     </Chart>
@@ -113,14 +113,14 @@
         fitGeojson: selectedStateFeature,
       }}
     >
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg>
           <ChartClipPath>
             {#each counties.features as feature}
               <GeoPath
                 geojson={feature}
                 class="fill-surface-100 stroke-surface-content/10 hover:fill-surface-content/20"
-                {tooltipContext}
+                tooltipContext={context.tooltip}
               />
             {/each}
             {#each states.features as feature}
@@ -137,7 +137,7 @@
         </Svg>
 
         <Tooltip.Root>
-          {tooltipContext.data.properties.name}
+          {context.tooltip.data?.properties.name}
         </Tooltip.Root>
       {/snippet}
     </Chart>

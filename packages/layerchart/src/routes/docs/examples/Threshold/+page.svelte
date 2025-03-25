@@ -89,18 +89,17 @@
         </Threshold>
       {/snippet}
 
-      {#snippet tooltip({ tooltipContext })}
-        <Tooltip.Root>
-          <Tooltip.Header>{format(tooltipContext.data.date, 'eee, MMMM do')}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="value" value={tooltipContext.data.value} />
-            <Tooltip.Item label="baseline" value={tooltipContext.data.baseline} />
-            <Tooltip.Separator />
-            <Tooltip.Item
-              label="variance"
-              value={tooltipContext.data.value - tooltipContext.data.baseline}
-            />
-          </Tooltip.List>
+      {#snippet tooltip({ context })}
+        <Tooltip.Root {context}>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} />
+              <Tooltip.Item label="baseline" value={data.baseline} />
+              <Tooltip.Separator />
+              <Tooltip.Item label="variance" value={data.value - data.baseline} />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </AreaChart>

@@ -15,7 +15,7 @@
 
   const interpolators: [string, (value: number) => string][] = entries<any, any>(
     d3chromatic
-  ).filter(([key, value]) => key.startsWith('interpolate'));
+  ).filter(([key]) => key.startsWith('interpolate'));
   interpolators.push([`interpolateRgb('red', 'blue')`, interpolateRgb('red', 'blue')]);
   interpolators.push([`interpolateLab('red', 'blue')`, interpolateLab('red', 'blue')]);
   interpolators.push([`interpolateHclLong('red', 'blue')`, interpolateHclLong('red', 'blue')]);

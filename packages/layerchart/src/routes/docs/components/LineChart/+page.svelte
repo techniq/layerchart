@@ -206,9 +206,9 @@
       {debug}
       brush
     >
-      {#snippet marks({ series, tooltipContext })}
+      {#snippet marks({ series, context })}
         {#each series as s}
-          {@const active = tooltipContext.data == null || tooltipContext.data?.fruit === s.key}
+          {@const active = context.tooltip.data == null || context.tooltip.data?.fruit === s.key}
           <Spline
             data={multiSeriesData}
             y={s.key}
@@ -218,18 +218,18 @@
         {/each}
       {/snippet}
 
-      {#snippet highlight({ series, tooltipContext })}
+      {#snippet highlight({ series, context })}
         <!-- TODO: Remove [...] type hack to make svelte-check happy -->
         {@const activeSeriesColor = [...series].find(
-          (s) => s.key === tooltipContext.data?.fruit
+          (s) => s.key === context.tooltip.data?.fruit
         )?.color}
         <Highlight lines points={{ fill: activeSeriesColor }} />
       {/snippet}
 
-      {#snippet tooltip({ context, tooltipContext, series })}
+      {#snippet tooltip({ context, series })}
         <!-- TODO: Remove [...] type hack to make svelte-check happy -->
         {@const activeSeriesColor = [...series].find(
-          (s) => s.key === tooltipContext.data?.fruit
+          (s) => s.key === context.tooltip.data?.fruit
         )?.color}
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -528,9 +528,9 @@
         </LinearGradient>
       {/snippet}
 
-      {#snippet highlight({ tooltipContext, context })}
-        {#if tooltipContext.data}
-          <Highlight lines points={{ fill: temperatureColor(context.y(tooltipContext.data)) }} />
+      {#snippet highlight({ context })}
+        {#if context.tooltip.data}
+          <Highlight lines points={{ fill: temperatureColor(context.y(context.tooltip.data)) }} />
         {/if}
       {/snippet}
 
@@ -577,13 +577,13 @@
         </LinearGradient>
       {/snippet}
 
-      {#snippet highlight({ tooltipContext, context })}
-        {#if tooltipContext.data}
+      {#snippet highlight({ context })}
+        {#if context.tooltip.data}
           <Highlight
             lines
             points={{
               fill:
-                context.y(tooltipContext.data) > 50 ? 'var(--color-danger)' : 'var(--color-info)',
+                context.y(context.tooltip.data) > 50 ? 'var(--color-danger)' : 'var(--color-info)',
             }}
           />
         {/if}
@@ -855,7 +855,7 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
-      {#snippet aboveContext({ context, tooltipContext })}
+      {#snippet aboveContext({ context })}
         <Svg>
           {#each annotations as annotation}
             <Circle
@@ -865,10 +865,10 @@
               class="fill-secondary"
               onpointermove={(e) => {
                 e.stopPropagation();
-                tooltipContext.show(e, { annotation });
+                context.tooltip.show(e, { annotation });
               }}
               onpointerleave={() => {
-                tooltipContext.hide();
+                context.tooltip.hide();
               }}
             />
             <Text

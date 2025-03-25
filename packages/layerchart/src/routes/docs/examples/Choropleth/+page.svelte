@@ -68,8 +68,8 @@
       padding={{ top: 60 }}
       tooltip={{ raiseTarget: true }}
     >
-      {#snippet children({ tooltipContext, transformContext })}
-        {@const strokeWidth = 1 / transformContext.scale}
+      {#snippet children({ context })}
+        {@const strokeWidth = 1 / context.transform.scale}
         <TransformControls />
 
         <Svg>
@@ -80,7 +80,7 @@
                 fill={colorScale(feature.properties.data?.population ?? 0)}
                 class="stroke-none hover:stroke-white"
                 {strokeWidth}
-                {tooltipContext}
+                tooltipContext={context.tooltip}
               />
             {/each}
           </g>
@@ -146,8 +146,8 @@
       }}
       padding={{ top: 60 }}
     >
-      {#snippet children({ tooltipContext, transformContext })}
-        {@const strokeWidth = 1 / transformContext.scale}
+      {#snippet children({ context })}
+        {@const strokeWidth = 1 / context.transform.scale}
         <TransformControls />
 
         <Canvas>
@@ -157,7 +157,7 @@
               fill={colorScale(feature.properties.data?.population ?? 0)}
               {strokeWidth}
               class="stroke-none"
-              {tooltipContext}
+              tooltipContext={context.tooltip}
             />
           {/each}
         </Canvas>
@@ -167,8 +167,8 @@
         </Canvas>
 
         <Canvas pointerEvents={false}>
-          {#if tooltipContext.data}
-            <GeoPath geojson={tooltipContext.data} class="stroke-white" {strokeWidth} />
+          {#if context.tooltip.data}
+            <GeoPath geojson={context.tooltip.data} class="stroke-white" {strokeWidth} />
           {/if}
         </Canvas>
 

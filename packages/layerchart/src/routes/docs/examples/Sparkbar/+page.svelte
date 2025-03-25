@@ -85,20 +85,23 @@
       bandPadding={0.1}
       props={{ bars: { radius: 1, strokeWidth: 0 } }}
     >
-      {#snippet tooltip({ context, tooltipContext })}
+      {#snippet tooltip({ context })}
         <Tooltip.Root
+          {context}
           class="text-xs"
           contained={false}
           variant="none"
           y={-10}
           x={context.width + 8}
         >
-          <div class="whitespace-nowrap">
-            {format(tooltipContext.data.date, 'eee, MMM do')}
-          </div>
-          <div class="font-semibold">
-            {tooltipContext.data.value}
-          </div>
+          {#snippet children({ data })}
+            <div class="whitespace-nowrap">
+              {format(data.date, 'eee, MMM do')}
+            </div>
+            <div class="font-semibold">
+              {data.value}
+            </div>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </BarChart>
@@ -121,12 +124,20 @@
           bandPadding={0.1}
           props={{ bars: { radius: 1, strokeWidth: 0 } }}
         >
-          {#snippet tooltip({ context, tooltipContext })}
-            <Tooltip.Root class="text-xs" contained={false} y={context.height + 4} xOffset={0}>
-              <Tooltip.Header>{format(tooltipContext.data.date, 'eee, MMM do')}</Tooltip.Header>
-              <Tooltip.List>
-                <Tooltip.Item label="value" value={tooltipContext.data.value} />
-              </Tooltip.List>
+          {#snippet tooltip({ context })}
+            <Tooltip.Root
+              {context}
+              class="text-xs"
+              contained={false}
+              y={context.height + 4}
+              xOffset={0}
+            >
+              {#snippet children({ data })}
+                <Tooltip.Header>{format(data.date, 'eee, MMM do')}</Tooltip.Header>
+                <Tooltip.List>
+                  <Tooltip.Item label="value" value={data.value} />
+                </Tooltip.List>
+              {/snippet}
             </Tooltip.Root>
           {/snippet}
         </BarChart>

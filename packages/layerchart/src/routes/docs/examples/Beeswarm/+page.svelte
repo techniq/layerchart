@@ -26,7 +26,7 @@
       xNice
       padding={{ bottom: 12, left: 8, right: 8 }}
     >
-      {#snippet children({ context, tooltipContext })}
+      {#snippet children({ context })}
         {@const r = 6}
         <Svg>
           <Axis placement="bottom" format="none" rule grid />
@@ -47,26 +47,24 @@
                   {r}
                   fill={genderColor(node.gender)}
                   class="stroke-surface-100"
-                  onpointermove={(e) => tooltipContext.show(e, node)}
-                  onpointerleave={tooltipContext.hide}
+                  onpointermove={(e) => context.tooltip.show(e, node)}
+                  onpointerleave={context.tooltip.hide}
                 />
               {/each}
             {/snippet}
           </ForceSimulation>
         </Svg>
 
-        <Tooltip.Root>
-          <Tooltip.Header>{tooltipContext.data.name}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item
-              label="Birth date"
-              value={tooltipContext.data.date_of_birth}
-              format={PeriodType.Day}
-            />
-            <Tooltip.Item label="State" value={tooltipContext.data.state_name} />
-            <Tooltip.Item label="Party" value={tooltipContext.data.party} />
-            <Tooltip.Item label="Gender" value={tooltipContext.data.gender} />
-          </Tooltip.List>
+        <Tooltip.Root {context}>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.name}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="Birth date" value={data.date_of_birth} format={PeriodType.Day} />
+              <Tooltip.Item label="State" value={data.state_name} />
+              <Tooltip.Item label="Party" value={data.party} />
+              <Tooltip.Item label="Gender" value={data.gender} />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>

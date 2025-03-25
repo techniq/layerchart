@@ -67,7 +67,7 @@
         tweened: { duration: 800, easing: cubicOut },
       }}
     >
-      {#snippet children({ context, transformContext, geoContext, tooltipContext })}
+      {#snippet children({ context })}
         <TransformControls />
 
         <Svg>
@@ -75,21 +75,21 @@
             <GeoPath
               geojson={feature}
               class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
-              {tooltipContext}
+              tooltipContext={context.tooltip}
               onclick={() => {
                 if (selectedStateId === feature.id) {
                   selectedStateId = null;
-                  transformContext.reset();
+                  context.transform.reset();
                 } else {
                   selectedStateId = feature.id;
-                  if (geoContext.projection) {
+                  if (context.geo.projection) {
                     const featureTransform = geoFitObjectTransform(
-                      geoContext.projection,
+                      context.geo.projection,
                       [context.width, context.height],
                       feature
                     );
-                    transformContext.setTranslate(featureTransform.translate);
-                    transformContext.setScale(featureTransform.scale);
+                    context.transform.setTranslate(featureTransform.translate);
+                    context.transform.setScale(featureTransform.scale);
                   }
                 }
               }}
@@ -100,11 +100,11 @@
             <g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}>
               <GeoPath
                 geojson={feature}
-                {tooltipContext}
+                tooltipContext={context.tooltip}
                 class="stroke-surface-content/10 hover:stroke-surface-content/50 hover:fill-surface-content/10"
                 onclick={() => {
                   selectedStateId = null;
-                  transformContext.reset();
+                  context.transform.reset();
                 }}
               />
             </g>
@@ -114,7 +114,7 @@
         <Tooltip.Root>
           {#snippet children({ data })}
             {@const [longitude, latitude] =
-              geoContext.projection?.invert?.([tooltipContext.x, tooltipContext.y]) ?? []}
+              context.geo.projection?.invert?.([context.tooltip.x, context.tooltip.y]) ?? []}
             <Tooltip.Header>{data.properties.name}</Tooltip.Header>
             <Tooltip.List>
               <Tooltip.Item label="longitude" value={longitude} format="decimal" />
@@ -142,7 +142,7 @@
         tweened: { duration: 800, easing: cubicOut },
       }}
     >
-      {#snippet children({ geoContext, tooltipContext, transformContext })}
+      {#snippet children({ context })}
         <TransformControls />
 
         <Svg>
@@ -150,12 +150,12 @@
             <GeoPath
               geojson={feature}
               class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
-              strokeWidth={1 / transformContext.scale}
-              {tooltipContext}
+              strokeWidth={1 / context.transform.scale}
+              tooltipContext={context.tooltip}
               onclick={(e, geoPath) => {
                 if (selectedStateId === feature.id) {
                   selectedStateId = null;
-                  transformContext.reset();
+                  context.transform.reset();
                 } else {
                   selectedStateId = feature.id;
                   if (!geoPath) return;
@@ -165,7 +165,7 @@
                   const x = (left + right) / 2;
                   const y = (top + bottom) / 2;
                   const padding = 20;
-                  transformContext.zoomTo(
+                  context.transform.zoomTo(
                     { x, y },
                     { width: width + padding, height: height + padding }
                   );
@@ -178,12 +178,12 @@
             <g in:fade={{ duration: 300, delay: 600 }} out:fade={{ duration: 300 }}>
               <GeoPath
                 geojson={feature}
-                {tooltipContext}
-                strokeWidth={1 / transformContext.scale}
+                tooltipContext={context.tooltip}
+                strokeWidth={1 / context.transform.scale}
                 class="stroke-surface-content/10 hover:stroke-surface-content/50 hover:fill-surface-content/10"
                 onclick={() => {
                   selectedStateId = null;
-                  transformContext.reset();
+                  context.transform.reset();
                 }}
               />
             </g>
@@ -212,7 +212,6 @@
 <Preview data={states}>
   <div class="h-[600px] relative overflow-hidden">
     <Chart
-      data={[{ hello: 1 }]}
       geo={{
         projection,
         fitGeojson: projection === geoMercator ? contiguousStates : states,
@@ -223,7 +222,7 @@
         tweened: { duration: 800, easing: cubicOut },
       }}
     >
-      {#snippet children({ context, geoContext, tooltipContext, transformContext })}
+      {#snippet children({ context })}
         <TransformControls />
 
         <Canvas>
@@ -231,25 +230,25 @@
             <GeoPath
               geojson={feature}
               class="stroke-surface-content fill-surface-100"
-              {tooltipContext}
+              tooltipContext={context.tooltip}
               onclick={(e, geoPath) => {
                 if (
                   selectedStateId === feature.id ||
                   !states.features.some((f) => f.id == feature.id) // County selected
                 ) {
                   selectedStateId = null;
-                  transformContext.reset();
+                  context.transform.reset();
                 } else {
                   selectedStateId = feature.id;
-                  tooltipContext.hide();
-                  if (!geoContext.projection) return;
+                  context.tooltip.hide();
+                  if (!context.geo.projection) return;
                   const featureTransform = geoFitObjectTransform(
-                    geoContext.projection,
+                    context.geo.projection,
                     [context.width, context.height],
                     feature
                   );
-                  transformContext.setTranslate(featureTransform.translate);
-                  transformContext.setScale(featureTransform.scale);
+                  context.transform.setTranslate(featureTransform.translate);
+                  context.transform.setScale(featureTransform.scale);
                 }
               }}
             />
@@ -258,21 +257,21 @@
           {#each selectedCountiesFeatures as feature (feature.id)}
             <GeoPath
               geojson={feature}
-              {tooltipContext}
+              tooltipContext={context.tooltip}
               class="stroke-surface-content/10 hover:fill-surface-content/10"
               onclick={() => {
                 selectedStateId = null;
-                transformContext.reset();
+                context.transform.reset();
               }}
             />
           {/each}
         </Canvas>
 
         <Canvas pointerEvents={false}>
-          {#if tooltipContext.data}
+          {#if context.tooltip.data}
             <GeoPath
-              geojson={tooltipContext.data}
-              strokeWidth={1 / transformContext.scale}
+              geojson={context.tooltip.data}
+              strokeWidth={1 / context.transform.scale}
               class="stroke-surface-content/50 fill-surface-content/20"
             />
           {/if}
@@ -281,7 +280,7 @@
         <Tooltip.Root>
           {#snippet children({ data })}
             {@const [longitude, latitude] =
-              geoContext.projection?.invert?.([tooltipContext.x, tooltipContext.y]) ?? []}
+              context.geo.projection?.invert?.([context.tooltip.x, context.tooltip.y]) ?? []}
             <Tooltip.Header>{data.properties.name}</Tooltip.Header>
             <Tooltip.List>
               <Tooltip.Item label="longitude" value={longitude} format="decimal" />
@@ -311,7 +310,7 @@
         tweened: { duration: 800, easing: cubicOut },
       }}
     >
-      {#snippet children({ geoContext, transformContext, tooltipContext })}
+      {#snippet children({ context })}
         <TransformControls />
 
         <Canvas>
@@ -319,21 +318,21 @@
             <GeoPath
               geojson={feature}
               class="stroke-surface-content fill-surface-100 hover:fill-surface-content/10"
-              strokeWidth={1 / transformContext.scale}
-              {tooltipContext}
+              strokeWidth={1 / context.transform.scale}
+              tooltipContext={context.tooltip}
               onclick={(e) => {
-                if (!geoContext.projection) return;
-                const geoPath = d3geoPath(geoContext.projection);
+                if (!context.geo.projection) return;
+                const geoPath = d3geoPath(context.geo.projection);
 
                 if (
                   selectedStateId === feature.id ||
                   !states.features.some((f) => f.id == feature.id) // County selected
                 ) {
                   selectedStateId = null;
-                  transformContext.reset();
+                  context.transform.reset();
                 } else {
                   selectedStateId = feature.id;
-                  tooltipContext.hide();
+                  context.tooltip.hide();
                   let [[left, top], [right, bottom]] = geoPath.bounds(feature);
                   let width = right - left;
                   let height = bottom - top;
@@ -341,7 +340,7 @@
                   let y = (top + bottom) / 2;
                   const padding = 20;
 
-                  transformContext.zoomTo(
+                  context.transform.zoomTo(
                     { x, y },
                     { width: width + padding, height: height + padding }
                   );
@@ -353,12 +352,12 @@
           {#each selectedCountiesFeatures as feature (feature.id)}
             <GeoPath
               geojson={feature}
-              {tooltipContext}
-              strokeWidth={1 / transformContext.scale}
+              tooltipContext={context.tooltip}
+              strokeWidth={1 / context.transform.scale}
               class="stroke-surface-content/10 hover:fill-surface-content/10"
               onclick={() => {
                 selectedStateId = null;
-                transformContext.reset();
+                context.transform.reset();
               }}
             />
           {/each}
@@ -366,17 +365,17 @@
 
         <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
         <Canvas pointerEvents={false}>
-          {#if tooltipContext.data}
+          {#if context.tooltip.data}
             <GeoPath
-              geojson={tooltipContext.data}
-              strokeWidth={1 / transformContext.scale}
+              geojson={context.tooltip.data}
+              strokeWidth={1 / context.transform.scale}
               class="stroke-surface-content/50 fill-surface-content/20"
             />
           {/if}
         </Canvas>
 
         <Tooltip.Root>
-          {tooltipContext.data.properties.name}
+          {context.tooltip.data?.properties.name}
           <!-- TODO: How to handle scale (when using canvas and not projection transforms) -->
           <!-- {@const [longitude, latitude] = projection.invert?.([tooltip.x, tooltip.y]) ?? []}
         <Tooltip.Header>{data.properties.name}</Tooltip.Header>

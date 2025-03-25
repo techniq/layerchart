@@ -43,15 +43,15 @@ export type BaseRange =
   | string[]
   | ((args: { width: number; height: number }) => number[] | string[]);
 
-export type YRangeWithScale =
+export type YRangeWithScale<Scale extends AnyScale = AnyScale> =
   | number[]
   | string[]
-  | ((args: { yScale: AnyScale; width: number; height: number }) => number[] | string[]);
+  | ((args: { yScale: Scale; width: number; height: number }) => number[] | string[]);
 
-export type XRangeWithScale =
+export type XRangeWithScale<Scale extends AnyScale = AnyScale> =
   | number[]
   | string[]
-  | ((args: { xScale: AnyScale; width: number; height: number }) => number[] | string[]);
+  | ((args: { xScale: Scale; width: number; height: number }) => number[] | string[]);
 
 export type FieldAccessors<T> = {
   x?: (d: T) => number | string | (number | string)[];

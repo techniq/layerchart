@@ -97,7 +97,7 @@
         tweened: { duration: 800, easing: cubicOut },
       }}
     >
-      {#snippet children({ transformContext })}
+      {#snippet children()}
         <TransformControls orientation="horizontal" class="-m-2" />
 
         <Tree
@@ -183,7 +183,7 @@
         tweened: { duration: 800, easing: cubicOut },
       }}
     >
-      {#snippet children({ transformContext })}
+      {#snippet children()}
         <TransformControls orientation="horizontal" class="-m-2" />
 
         <Tree

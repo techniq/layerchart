@@ -16,7 +16,7 @@
 
   export type Align = 'start' | 'center' | 'end';
 
-  export type TooltipPropsWithoutHTML = {
+  export type TooltipPropsWithoutHTML<T = any> = {
     /**
      * `x` position of tooltip.  By default uses the pointer/mouse, can also snap to data or an
      * explicit fixed position.
@@ -112,7 +112,7 @@
           /**
            * The chart data that triggered the tooltip.
            */
-          data: any;
+          data: T;
 
           /**
            * An array of tooltip payloads, each containing data for a specific series,
@@ -151,18 +151,24 @@
        */
       content?: HTMLAttributes<HTMLElement>;
     };
+
+    /**
+     * Optionally pass the chart's context to the tooltip to get
+     * type inference for the data.
+     */
+    context?: ChartContextValue<T, any, any>;
   };
 
-  export type TooltipProps = TooltipPropsWithoutHTML &
-    Without<HTMLAttributes<HTMLElement>, TooltipPropsWithoutHTML>;
+  export type TooltipProps<T = any> = TooltipPropsWithoutHTML<T> &
+    Without<HTMLAttributes<HTMLElement>, TooltipPropsWithoutHTML<T>>;
 </script>
 
-<script lang="ts">
+<script lang="ts" generics="T = any">
   import { fade } from 'svelte/transition';
   import { cls } from '@layerstack/tailwind';
 
-  import { isScaleBand } from '../../utils/scales.svelte.js';
-  import { getChartContext } from '../Chart.svelte';
+  import { isScaleBand, type AnyScale } from '../../utils/scales.svelte.js';
+  import { getChartContext, type ChartContextValue } from '../Chart.svelte';
   import { getTooltipContext } from './TooltipContext.svelte';
   import { motionState } from '$lib/stores/motionState.svelte.js';
   import { untrack, type Snippet } from 'svelte';
@@ -187,7 +193,7 @@
       content: {},
     },
     class: className,
-  }: TooltipProps = $props();
+  }: TooltipProps<T> = $props();
 
   const ctx = getChartContext();
   const tooltipCtx = getTooltipContext();

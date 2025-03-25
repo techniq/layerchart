@@ -83,7 +83,7 @@
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg center>
           <Bounds
             domain={{ x0: selected?.x0 ?? 0, x1: selected?.x1 ?? 1, y0: selected?.y0 ?? 0, y1: 1 }}
@@ -113,8 +113,8 @@
                       onclick={() => {
                         selected = node;
                       }}
-                      onpointermove={(e) => tooltipContext.show(e, node)}
-                      onpointerleave={tooltipContext.hide}
+                      onpointermove={(e) => context.tooltip.show(e, node)}
+                      onpointerleave={context.tooltip.hide}
                     ></Arc>
                   {/each}
                 {/snippet}
@@ -124,10 +124,12 @@
         </Svg>
 
         <Tooltip.Root>
-          <Tooltip.Header>{tooltipContext.data.data.name}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="value" value={tooltipContext.data.value} format="integer" />
-          </Tooltip.List>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.data.name}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} format="integer" />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </Chart>

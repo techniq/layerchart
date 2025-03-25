@@ -101,7 +101,6 @@
     legend = false,
     points = false,
     rule = true,
-    tooltipContext,
     onTooltipClick = () => {},
     onPointClick,
     props = {},
@@ -206,10 +205,10 @@
     s: SeriesData<TData, typeof Spline>,
     i: number
   ): ComponentProps<typeof Highlight> {
-    if (!tooltipContext || !context) return {};
+    if (!context || !context.tooltip.data) return {};
     const seriesTooltipData =
-      s.data && tooltipContext.data
-        ? findRelatedData(s.data, tooltipContext.data, context.x)
+      s.data && context.tooltip.data
+        ? findRelatedData(s.data, context.tooltip.data, context.x)
         : null;
 
     return {
@@ -297,7 +296,6 @@
 
 <!-- svelte-ignore ownership_invalid_binding -->
 <Chart
-  bind:tooltipContext
   bind:context
   data={chartData}
   x={xProp}
@@ -330,13 +328,10 @@
       }
     : false}
 >
-  {#snippet children({ context, geoContext, brushContext, tooltipContext, transformContext })}
+  {#snippet children({ context })}
     {@const snippetProps = {
       context,
-      tooltipContext,
-      brushContext,
-      geoContext,
-      transformContext,
+
       series,
       visibleSeries,
       getLabelsProps,
@@ -445,7 +440,7 @@
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
       {:else if tooltip}
-        <Tooltip.Root {...props.tooltip?.root}>
+        <Tooltip.Root {context} {...props.tooltip?.root}>
           {#snippet children({ payload })}
             <Tooltip.Header value={payload[0].label} {format} {...props.tooltip?.header} />
             <Tooltip.List {...props.tooltip?.list}>

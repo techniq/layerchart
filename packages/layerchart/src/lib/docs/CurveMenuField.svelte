@@ -3,6 +3,7 @@
 
   import { MenuField } from 'svelte-ux';
   import { entries } from '@layerstack/utils';
+  import type { ComponentProps } from 'svelte';
 
   let {
     value = $bindable(),
@@ -11,7 +12,7 @@
   }: {
     value?: any;
     showOpenClosed?: boolean;
-  } = $props();
+  } & ComponentProps<MenuField> = $props();
 
   if (value === undefined) {
     value = d3shapes['curveLinear'];

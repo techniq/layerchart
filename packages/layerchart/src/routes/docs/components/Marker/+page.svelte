@@ -9,7 +9,7 @@
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
 
   let pathGenerator = $state((x: number) => x);
-  let curve: ComponentProps<CurveMenuField>['value'] = $state(undefined);
+  let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
 
   let pointCount = $state(10);
   let amplitude = $state(1);
