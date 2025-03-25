@@ -50,6 +50,18 @@
     ) => void;
 
     props?: LineChartPropsObjProp;
+
+    spline?: SimplifiedChartSnippet<
+      TData,
+      typeof Spline,
+      LineChartExtraSnippetProps<TData> & {
+        props: ComponentProps<typeof Spline>;
+        /**
+         * The index of the series currently being iterated over.
+         */
+        seriesIndex: number;
+      }
+    >;
   };
 </script>
 
@@ -80,7 +92,12 @@
     findRelatedData,
   } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
-  import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
+  import type {
+    SeriesData,
+    SimplifiedChartProps,
+    SimplifiedChartPropsObject,
+    SimplifiedChartSnippet,
+  } from './types.js';
   import { createHighlightKey } from './utils.svelte.js';
   import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
@@ -115,6 +132,7 @@
     belowMarks,
     aboveMarks,
     marks,
+    spline,
     highlight = true,
     context = $bindable(),
     ...restProps
@@ -366,7 +384,11 @@
             {@render marks(snippetProps)}
           {:else}
             {#each visibleSeries as s, i (s.key)}
-              <Spline {...getSplineProps(s, i)} />
+              {#if typeof spline === 'function'}
+                {@render spline({ ...snippetProps, props: getSplineProps(s, i), seriesIndex: i })}
+              {:else}
+                <Spline {...getSplineProps(s, i)} />
+              {/if}
             {/each}
           {/if}
 
