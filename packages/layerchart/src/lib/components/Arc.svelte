@@ -176,9 +176,9 @@
 
   const tweenedState = motionState(initialValue, { spring, tweened });
 
-  $effect.pre(() => {
+  $effect(() => {
     value;
-    afterTick(() => tweenedState.set(value));
+    afterTick(() => (tweenedState.target = value));
   });
 
   const ctx = getChartContext();

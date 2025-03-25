@@ -139,7 +139,6 @@
   import Chart from '../Chart.svelte';
   import Group from '../Group.svelte';
   import Legend from '../Legend.svelte';
-  import Pie from '../Pie.svelte';
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
@@ -150,8 +149,6 @@
   import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import { getColorIfDefined } from 'layerchart/utils/color.js';
-  import { degreesToRadians } from 'layerchart/utils/math.js';
-  import { random } from 'lodash-es';
 
   let {
     data = [],
@@ -408,46 +405,6 @@
                   s.props?.class
                 )}
               />
-              <!-- {:else}
-                <Pie
-                  data={s.data}
-                  {range}
-                  {innerRadius}
-                  {outerRadius}
-                  {cornerRadius}
-                  {padAngle}
-                  {...props.pie}
-                >
-                  {#snippet children({ arcs })}
-                    {#each arcs as arc}
-                      <Arc
-                        startAngle={arc.startAngle}
-                        endAngle={arc.endAngle}
-                        outerRadius={series.length > 1 ? i * (outerRadius ?? 0) : outerRadius}
-                        {innerRadius}
-                        {cornerRadius}
-                        {padAngle}
-                        fill={context.cScale?.(context.c(arc.data))}
-                        data={arc.data}
-                        {tooltipContext}
-                        onclick={(e) => {
-                          onArcClick(e, { data: arc.data, series: s });
-                          // Workaround for `tooltip={{ mode: 'manual' }}
-                          onTooltipClick(e, { data: arc.data });
-                        }}
-                        class={cls(
-                          'transition-opacity',
-                          highlightKey.current &&
-                            highlightKey.current !== keyAccessor(arc.data) &&
-                            'opacity-50'
-                        )}
-                        {...props.arc}
-                        {...s.props}
-                      />
-                    {/each}
-                  {/snippet}
-                </Pie>
-              {/if} -->
             {/each}
           </Group>
         {/if}

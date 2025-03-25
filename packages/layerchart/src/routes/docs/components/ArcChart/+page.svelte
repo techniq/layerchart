@@ -4,7 +4,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { longData } from '$lib/utils/genData.js';
-  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, Switch, Toggle, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   const dataByYear = group(longData, (d) => d.year);
   const data = dataByYear.get(2019) ?? [];
@@ -204,6 +204,39 @@
     />
   </div>
 </Preview>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[1fr_auto] gap-2">
+    <h2>Tweened</h2>
+    <Field label="Show" labelPlacement="left" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+  </div>
+  <Preview data={exerciseData}>
+    <div class="h-[200px] p-4 border rounded-sm resize overflow-auto">
+      {#if show}
+        <ArcChart
+          key="key"
+          value="value"
+          series={exerciseData.map((d) => {
+            return {
+              key: d.key,
+              data: [d],
+              maxValue: d.maxValue,
+              color: d.color,
+            };
+          })}
+          props={{ arc: { tweened: true } }}
+          outerRadius={-25}
+          innerRadius={-20}
+          cornerRadius={10}
+          {renderContext}
+          {debug}
+        />
+      {/if}
+    </div>
+  </Preview>
+</Toggle>
 
 <!-- <h2>Centroid labels</h2>
 
