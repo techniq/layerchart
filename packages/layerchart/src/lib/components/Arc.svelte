@@ -140,6 +140,7 @@
   import { afterTick } from '$lib/utils/afterTick.js';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
+  import { max } from 'd3-array';
 
   let {
     ref = $bindable(),
@@ -147,7 +148,7 @@
     spring,
     tweened,
     value = 0,
-    initialValue = value,
+    initialValue: initialValueProp,
     domain = [0, 100],
     range = [0, 360], // degrees
     startAngle: startAngleProp,
@@ -174,14 +175,19 @@
     ...restProps
   }: ArcProps = $props();
 
-  const tweenedState = motionState(initialValue, { spring, tweened });
-
-  $effect(() => {
-    value;
-    afterTick(() => (tweenedState.target = value));
-  });
+  const initialValue = initialValueProp ?? 0;
 
   const ctx = getChartContext();
+
+  const endAngle = $derived(
+    endAngleProp ?? degreesToRadians(ctx.config.xRange ? max(ctx.xRange) : max(range))
+  );
+
+  const tweenedEndAngle = motionState(initialValue, { spring, tweened });
+
+  $effect(() => {
+    tweenedEndAngle.target = value;
+  });
 
   const scale = $derived(scaleLinear().domain(domain).range(range));
 
@@ -228,14 +234,13 @@
   const innerRadius = $derived(getInnerRadius(innerRadiusProp, outerRadius));
 
   const startAngle = $derived(startAngleProp ?? degreesToRadians(range[0]));
-  const endAngle = $derived(endAngleProp ?? degreesToRadians(range[1]));
 
   const arc = $derived(
     d3arc()
       .innerRadius(innerRadius)
       .outerRadius(outerRadius)
       .startAngle(startAngle)
-      .endAngle(endAngleProp ?? degreesToRadians(scale(tweenedState.current)))
+      .endAngle(endAngleProp ?? degreesToRadians(scale(tweenedEndAngle.current)))
       .cornerRadius(cornerRadius)
       .padAngle(padAngle)
   ) as Function;
@@ -309,4 +314,4 @@
   }}
 />
 
-{@render children?.({ centroid: trackArcCentroid, boundingBox, value: tweenedState.current })}
+{@render children?.({ centroid: trackArcCentroid, boundingBox, value: tweenedEndAngle.current })}
