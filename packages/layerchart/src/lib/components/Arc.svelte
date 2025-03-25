@@ -15,14 +15,14 @@
      *
      * @default [0, 100];
      */
-    domain?: [number, number] | number[];
+    domain?: [number, number];
 
     /**
      * Range [min,max] in degrees. See also startAngle/endAngle
      *
      * @default [0, 360]
      */
-    range?: [number, number] | number[];
+    range?: [number, number];
 
     /**
      * Start angle in radians

@@ -71,7 +71,7 @@
      *
      * @default [0, 360]
      */
-    range?: [number, number] | number[];
+    range?: [number, number];
 
     props?: ArcChartPropsObjProp;
 
