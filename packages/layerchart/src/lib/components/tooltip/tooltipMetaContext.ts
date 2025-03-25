@@ -37,6 +37,15 @@ export type PieTooltipMetaContextValue = {
   color: Accessor<any>;
 };
 
+export type ArcTooltipMetaContextValue = {
+  type: 'arc';
+  visibleSeries: SeriesData<any, any>[];
+  key: Accessor<any>;
+  label: Accessor<any>;
+  value: Accessor<any>;
+  color: Accessor<any>;
+};
+
 export type ScatterTooltipMetaContextValue = {
   type: 'scatter';
   visibleSeries: SeriesData<any, any>[];
@@ -47,7 +56,8 @@ export type TooltipMetaContextValue =
   | AreaTooltipMetaContextValue
   | LineTooltipMetaContextValue
   | PieTooltipMetaContextValue
-  | ScatterTooltipMetaContextValue;
+  | ScatterTooltipMetaContextValue
+  | ArcTooltipMetaContextValue;
 
 export type TooltipPayload = {
   color?: string;
@@ -70,7 +80,7 @@ type BasePayloadHandlerProps = {
   data: any;
 };
 
-export function handleBarTooltipPayload({
+function handleBarTooltipPayload({
   ctx,
   data,
   metaCtx,
@@ -105,7 +115,7 @@ export function handleBarTooltipPayload({
   return payload;
 }
 
-export function handleAreaTooltipPayload({
+function handleAreaTooltipPayload({
   ctx,
   data,
   metaCtx,
@@ -140,7 +150,7 @@ export function handleAreaTooltipPayload({
   return payload;
 }
 
-export function handleLineTooltipPayload({
+function handleLineTooltipPayload({
   ctx,
   data,
   metaCtx,
@@ -171,12 +181,12 @@ export function handleLineTooltipPayload({
   });
 }
 
-export function handlePieTooltipPayload({
+function handlePieOrArcTooltipPayload({
   ctx,
   data,
   metaCtx,
 }: BasePayloadHandlerProps & {
-  metaCtx: PieTooltipMetaContextValue;
+  metaCtx: PieTooltipMetaContextValue | ArcTooltipMetaContextValue;
 }): TooltipPayload[] {
   const keyAccessor = accessor(metaCtx.key);
   const labelAccessor = accessor(metaCtx.label);
@@ -245,7 +255,8 @@ export function getTooltipPayload({
     case 'line':
       return handleLineTooltipPayload({ ctx, data: tooltipData, metaCtx });
     case 'pie':
-      return handlePieTooltipPayload({ ctx, data: tooltipData, metaCtx });
+    case 'arc':
+      return handlePieOrArcTooltipPayload({ ctx, data: tooltipData, metaCtx });
     case 'scatter':
       return handleScatterTooltipPayload({ ctx, data: tooltipData, metaCtx });
   }

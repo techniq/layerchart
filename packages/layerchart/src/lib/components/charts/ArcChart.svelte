@@ -287,7 +287,7 @@
   }
 
   setTooltipMetaContext({
-    type: 'pie',
+    type: 'arc',
     get color() {
       return c;
     },
