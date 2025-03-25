@@ -137,7 +137,6 @@
 
   import { degreesToRadians } from '$lib/utils/math.js';
   import { getChartContext } from './Chart.svelte';
-  import { afterTick } from '$lib/utils/afterTick.js';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
   import { max } from 'd3-array';
