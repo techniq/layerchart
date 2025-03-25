@@ -4,6 +4,8 @@
     label: Accessor<TData>;
     value: Accessor<TData>;
     visibleData: TData[];
+    getGroupProps: () => ComponentProps<typeof Group>;
+    getArcProps: (s: SeriesData<TData, typeof Arc>, i: number) => ComponentProps<typeof Arc>;
   };
   export type ArcChartPropsObjProp = Pick<
     SimplifiedChartPropsObject,
@@ -124,6 +126,18 @@
       e: MouseEvent,
       detail: { data: any; series: SeriesData<TData, typeof Arc> }
     ) => void;
+
+    arc?: SimplifiedChartSnippet<
+      TData,
+      typeof Arc,
+      ArcChartExtraSnippetProps<TData> & {
+        props: ComponentProps<typeof Arc>;
+        /**
+         * The index of the series currently being iterated over.
+         */
+        seriesIndex: number;
+      }
+    >;
   };
 </script>
 
@@ -143,7 +157,12 @@
 
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
-  import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
+  import type {
+    SeriesData,
+    SimplifiedChartProps,
+    SimplifiedChartPropsObject,
+    SimplifiedChartSnippet,
+  } from './types.js';
   import { createHighlightKey } from './utils.svelte.js';
   import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
@@ -180,6 +199,7 @@
     belowMarks,
     aboveMarks,
     marks,
+    arc,
     context = $bindable(),
     ...restProps
   }: ArcChartProps<TData> = $props();
@@ -277,6 +297,51 @@
     };
   }
 
+  function getGroupProps(): ComponentProps<typeof Group> {
+    if (!context) return {};
+    return {
+      x:
+        placement === 'left'
+          ? context.height / 2
+          : placement === 'right'
+            ? context.width - context.height / 2
+            : undefined,
+      center: ['left', 'right'].includes(placement) ? 'y' : undefined,
+      ...props.group,
+    };
+  }
+
+  function getArcProps(s: SeriesData<TData, typeof Arc>, i: number): ComponentProps<typeof Arc> {
+    if (!context) return {};
+    const d = s.data?.[0] || chartData[0];
+    return {
+      value: valueAccessor(d),
+      domain: [0, s.maxValue ?? maxValue ?? sum(chartData, valueAccessor)],
+      range,
+      innerRadius,
+      outerRadius: (outerRadius ?? 0) < 0 ? i * (outerRadius ?? 0) : outerRadius,
+      cornerRadius,
+      padAngle,
+      fill: s.color ?? context.cScale?.(context.c(d)),
+      track: { fill: s.color ?? context.cScale?.(context.c(d)), fillOpacity: 0.1 },
+      tooltipContext: context.tooltip,
+      data: d,
+      onclick: (e) => {
+        onArcClick(e, { data: d, series: s });
+        // Workaround for `tooltip={{ mode: 'manual' }}
+        onTooltipClick(e, { data: d });
+      },
+      ...props.arc,
+      ...s.props,
+      class: cls(
+        'transition-opacity',
+        highlightKey.current && highlightKey.current !== keyAccessor(d) && 'opacity-50',
+        props.arc?.class,
+        s.props?.class
+      ),
+    };
+  }
+
   if (profile) {
     console.time('ArcChart render');
     onMount(() => {
@@ -337,13 +402,14 @@
       value: valueAccessor,
       color: cAccessor,
       context,
-
       series,
       visibleSeries,
       visibleData,
       highlightKey: highlightKey.current,
       setHighlightKey: highlightKey.set,
       getLegendProps,
+      getGroupProps,
+      getArcProps,
     }}
     {#if childrenProp}
       {@render childrenProp(snippetProps)}
@@ -362,43 +428,13 @@
         {#if typeof marks === 'function'}
           {@render marks(snippetProps)}
         {:else}
-          <Group
-            x={placement === 'left'
-              ? context.height / 2
-              : placement === 'right'
-                ? context.width - context.height / 2
-                : undefined}
-            center={['left', 'right'].includes(placement) ? 'y' : undefined}
-            {...props.group}
-          >
+          <Group {...getGroupProps()}>
             {#each series as s, i (s.key)}
-              {@const d = s.data?.[0] || chartData[0]}
-              <Arc
-                value={valueAccessor(d)}
-                domain={[0, s.maxValue ?? maxValue ?? sum(chartData, valueAccessor)]}
-                {range}
-                {innerRadius}
-                outerRadius={(outerRadius ?? 0) < 0 ? i * (outerRadius ?? 0) : outerRadius}
-                {cornerRadius}
-                {padAngle}
-                fill={s.color ?? context.cScale?.(context.c(d))}
-                track={{ fill: s.color ?? context.cScale?.(context.c(d)), fillOpacity: 0.1 }}
-                tooltipContext={context.tooltip}
-                data={d}
-                onclick={(e) => {
-                  onArcClick(e, { data: d, series: s });
-                  // Workaround for `tooltip={{ mode: 'manual' }}
-                  onTooltipClick(e, { data: d });
-                }}
-                {...props.arc}
-                {...s.props}
-                class={cls(
-                  'transition-opacity',
-                  highlightKey.current && highlightKey.current !== keyAccessor(d) && 'opacity-50',
-                  props.arc?.class,
-                  s.props?.class
-                )}
-              />
+              {#if typeof arc === 'function'}
+                {@render arc({ ...snippetProps, seriesIndex: i, props: getArcProps(s, i) })}
+              {:else}
+                <Arc {...getArcProps(s, i)} />
+              {/if}
             {/each}
           </Group>
         {/if}

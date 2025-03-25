@@ -130,7 +130,6 @@
     legend = false,
     points = false,
     rule = true,
-    tooltipContext,
     onTooltipClick = () => {},
     onBarClick = () => {},
     props = {},
@@ -437,7 +436,6 @@
   {#snippet children({ context })}
     {@const snippetProps = {
       context,
-      tooltipContext,
       series,
       visibleSeries,
       getBarsProps,

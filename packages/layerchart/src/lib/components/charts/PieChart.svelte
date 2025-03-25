@@ -214,7 +214,6 @@
     center = placement === 'center',
     series = [{ key: 'default', value: value }],
     legend = false,
-    tooltipContext,
     onArcClick = () => {},
     // TODO: Not usable with manual tooltip / arc path.  Use `onArcClick`?
     /** Event dispatched with current tooltip data */
@@ -339,7 +338,7 @@
       padAngle,
       fill: context.cScale?.(context.c(arc.data)),
       data: arc.data,
-      tooltipContext,
+      tooltipContext: context.tooltip,
       onclick: (e) => {
         onArcClick(e, { data: arc.data, series: s });
         // Workaround for `tooltip={{ mode: 'manual' }}
