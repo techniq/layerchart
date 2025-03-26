@@ -46,10 +46,12 @@
 
   let isFiltered = $state(false);
 
-  let selectedCarNode = $state<HierarchyRectangularNode<any>>();
+  let selectedCarNode = $state<HierarchyRectangularNode<any>>(
+    hierarchy(getGrouped()).count() as any
+  );
 
-  const groupedCars = $derived(
-    rollup(
+  function getGrouped(selected?: HierarchyRectangularNode<any>) {
+    return rollup(
       data.cars
         // Limit dataset
         .filter((d) =>
@@ -59,8 +61,8 @@
         .filter((d) => (isFiltered ? d.year > 2010 : true))
         // Apply `make` selection
         .filter((d) => {
-          if (selectedCarNode?.depth === 1) {
-            return d.make === selectedCarNode.data[0];
+          if (selected && selected?.depth === 1) {
+            return d.make === selected.data[0];
           } else {
             return true;
           }
@@ -69,19 +71,10 @@
       (d) => d.make,
       (d) => d.model
       // d => d.year,
-    )
-  );
-  let groupedHierarchy = $state<HierarchyRectangularNode<any>>();
+    );
+  }
 
-  $effect.pre(() => {
-    untrack(() => {
-      selectedCarNode = groupedHierarchy;
-    });
-  });
-
-  $effect.pre(() => {
-    groupedHierarchy = hierarchy(groupedCars).count() as HierarchyRectangularNode<any>;
-  });
+  let groupedHierarchy = $derived(hierarchy(getGrouped(selectedCarNode)).count());
 
   let colorBy = $state('children');
 

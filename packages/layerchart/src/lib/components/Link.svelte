@@ -88,12 +88,12 @@
   let {
     data,
     sankey = false,
-    source = sankey ? (d: any) => [d.source.x1, d.y0] : (d: any) => d.source,
-    target = sankey ? (d: any) => [d.target.x0, d.y1] : (d: any) => d.target,
-    orientation = sankey ? 'horizontal' : 'vertical',
-    x = (d: any) => (sankey ? d[0] : orientation === 'horizontal' ? d.y : d.x),
-    y = (d: any) => (sankey ? d[1] : orientation === 'horizontal' ? d.x : d.y),
-    curve = orientation === 'horizontal' ? curveBumpX : curveBumpY,
+    source: sourceProp,
+    target: targetProp,
+    orientation: orientationProp,
+    x: xProp,
+    y: yProp,
+    curve: curveProp,
     marker,
     markerStart = marker,
     markerEnd = marker,
@@ -102,6 +102,23 @@
     explicitCoords,
     ...restProps
   }: LinkProps = $props();
+
+  const source = $derived(
+    sourceProp ?? (sankey ? (d: any) => [d.source.x1, d.y0] : (d: any) => d.source)
+  );
+  const target = $derived(
+    targetProp ?? (sankey ? (d: any) => [d.target.x0, d.y1] : (d: any) => d.target)
+  );
+  const orientation = $derived(orientationProp ?? (sankey ? 'horizontal' : 'vertical'));
+  const curve = $derived((curveProp ?? orientation === 'horizontal') ? curveBumpX : curveBumpY);
+
+  const x = $derived(
+    xProp ?? ((d: any) => (sankey ? d[0] : orientation === 'horizontal' ? d.y : d.x))
+  );
+
+  const y = $derived(
+    yProp ?? ((d: any) => (sankey ? d[1] : orientation === 'horizontal' ? d.x : d.y))
+  );
 
   const markerStartId = $derived(markerStart || marker ? createId('marker-start', uid) : '');
   const markerMidId = $derived(markerMid || marker ? createId('marker-mid', uid) : '');
@@ -113,7 +130,7 @@
 
   const tweenedState = motionState('', { tweened: tweenedOptions });
 
-  $effect.pre(() => {
+  $effect(() => {
     const link = d3Link(curve).source(source).target(target).x(x).y(y);
     let d: string;
 
@@ -132,6 +149,8 @@
       // Safe default to avoid rendering errors
       d = 'M0,0L0,0';
     }
+
+    console.log('d', d);
 
     tweenedState.target = d;
   });

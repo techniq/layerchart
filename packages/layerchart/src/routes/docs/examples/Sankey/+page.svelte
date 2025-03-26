@@ -59,7 +59,7 @@
 
   const hierarchyGraph = $derived(graphFromHierarchy(complexDataHierarchy));
 
-  let selectedNode: SankeyNode<{}, {}> | null = $state(null);
+  let selectedNode: SankeyNode<{}, {}> | null = $state.raw(null);
 
   type HierarchySankeyNodeProperties = {
     data: { name: string };
@@ -202,7 +202,7 @@
       <Svg>
         <Sankey nodeId={(d) => d.name} nodeWidth={8}>
           {#snippet children({ links, nodes })}
-            {#each links as link ([link.source.name, link.target.name].join('_'))}
+            {#each links as link, i ([link.target.name, link.source.name, i, link.index].join('_'))}
               <Link
                 sankey
                 data={link}
@@ -212,32 +212,34 @@
               />
             {/each}
 
-            {#each nodes as node (node.name)}
-              {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
-              {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
-              <Group
-                x={node.x0}
-                y={node.y0}
-                tweened
-                onclick={() => {
-                  selectedNode =
-                    node === selectedNode || node.sourceLinks?.length === 0 ? null : node;
-                }}
-              >
-                <Rect
-                  width={nodeWidth}
-                  height={nodeHeight}
-                  class="fill-primary hover:fill-primary/90 hover:cursor-pointer"
+            {#each nodes as node, i ([node.id, node.value, node.index, i].join('_'))}
+              {#key selectedNode}
+                {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
+                {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
+                <Group
+                  x={node.x0}
+                  y={node.y0}
                   tweened
-                />
-                <Text
-                  value={node.name}
-                  x={node.height === 0 ? -4 : nodeWidth + 4}
-                  y={nodeHeight / 2}
-                  textAnchor={node.height === 0 ? 'end' : 'start'}
-                  verticalAnchor="middle"
-                />
-              </Group>
+                  onclick={() => {
+                    selectedNode =
+                      node === selectedNode || node.sourceLinks?.length === 0 ? null : node;
+                  }}
+                >
+                  <Rect
+                    width={nodeWidth}
+                    height={nodeHeight}
+                    class="fill-primary hover:fill-primary/90 hover:cursor-pointer"
+                    tweened
+                  />
+                  <Text
+                    value={node.name}
+                    x={node.height === 0 ? -4 : nodeWidth + 4}
+                    y={nodeHeight / 2}
+                    textAnchor={node.height === 0 ? 'end' : 'start'}
+                    verticalAnchor="middle"
+                  />
+                </Group>
+              {/key}
             {/each}
           {/snippet}
         </Sankey>
@@ -269,7 +271,7 @@
             }}
           >
             {#snippet children({ links, nodes })}
-              {#each links as link ([link.source.name, link.target.name].join('_'))}
+              {#each links as link}
                 <Link
                   sankey
                   data={link}

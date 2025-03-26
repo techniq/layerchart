@@ -17,7 +17,7 @@
   let selectedGraphValue: keyof typeof data = $state('simple');
   const selectedGraph = $derived(data[selectedGraphValue]);
 
-  let settings = {
+  let settings = $state({
     playground: {
       ranker: 'network-simplex',
       direction: 'left-right',
@@ -78,7 +78,7 @@
       curve: curveLinear,
       arrow: 'arrow',
     },
-  } satisfies Record<string, ComponentProps<typeof DagreControls>['settings']>;
+  }) satisfies Record<string, ComponentProps<typeof DagreControls>['settings']>;
 </script>
 
 <h1>Examples</h1>

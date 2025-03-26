@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { Snippet } from 'svelte';
+  import { untrack, type Snippet } from 'svelte';
 
   export type NodeExtraProperties = Record<string, any>;
 
@@ -108,34 +108,47 @@
 
   const sankey = $derived.by(() => {
     if (typeof document === 'undefined') null;
-    return (
+    const width = ctx.width;
+    const height = ctx.height;
+    const np = nodesProp;
+    const lp = linksProp;
+    const ls = linkSort;
+    const ns = nodeSort;
+    const align = nodeAlign;
+    const nWidth = nodeWidth;
+    const nPadding = nodePadding;
+
+    const res = untrack(() =>
       d3Sankey()
-        .size([ctx.width, ctx.height])
-        .nodes(nodesProp)
+        .size([width, height])
+        .nodes(np)
         .nodeId(nodeId)
         .nodeAlign(
-          nodeAlign === 'left'
+          align === 'left'
             ? sankeyLeft
-            : nodeAlign === 'center'
+            : align === 'center'
               ? sankeyCenter
-              : nodeAlign === 'right'
+              : align === 'right'
                 ? sankeyRight
-                : nodeAlign === 'justify'
+                : align === 'justify'
                   ? sankeyJustify
-                  : nodeAlign
+                  : align
         )
-        .nodeWidth(nodeWidth)
-        .nodePadding(nodePadding)
+        .nodeWidth(nWidth)
+        .nodePadding(nPadding)
         // @ts-expect-error
-        .nodeSort(nodeSort)
-        .links(linksProp)
+        .nodeSort(ns)
+        .links(lp)
         // @ts-expect-error
-        .linkSort(linkSort)
+        .linkSort(ls)
     );
+
+    return res;
   });
 
   const sankeyData = $derived.by(() => {
     if (typeof document === 'undefined' || !sankey) return { nodes: [], links: [] };
+    ctx.data;
     // @ts-expect-error -shh
     return sankey(ctx.data);
   });
