@@ -50,7 +50,7 @@
   import { getTransformContext } from '../TransformContext.svelte';
 
   import { getChartContext, setRenderContext } from '../Chart.svelte';
-  import { extractLayerProps } from '$lib/utils/attributes.js';
+  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
 
   let {
     ref = $bindable(),
@@ -85,7 +85,12 @@
 
 <div
   bind:this={ref}
-  class={cls('absolute top-0 left-0', pointerEvents === false && 'pointer-events-none', className)}
+  class={cls(
+    layerClass('layout-html'),
+    'absolute top-0 left-0',
+    pointerEvents === false && 'pointer-events-none',
+    className
+  )}
   style:transform
   style:transform-origin="top left"
   style:z-index={zIndex}
@@ -98,7 +103,7 @@
   aria-label={label}
   aria-labelledby={labelledBy}
   aria-describedby={describedBy}
-  {...extractLayerProps(restProps, 'layout-html')}
+  {...restProps}
 >
   {@render children?.({ ref })}
 </div>

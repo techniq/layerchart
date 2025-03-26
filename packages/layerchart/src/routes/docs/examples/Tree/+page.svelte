@@ -205,7 +205,7 @@
             </Context>
 
             <Html>
-              {#each nodes as node (getNodeKey(node))}
+              {#each nodes as node}
                 {@const x = (orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
                 {@const y = (orientation === 'horizontal' ? node.x : node.y) - nodeHeight / 2}
                 <Group
