@@ -69,6 +69,13 @@
     spring,
     tweened,
     class: className,
+    onclick,
+    ondblclick,
+    onpointerenter,
+    onpointermove,
+    onpointerleave,
+    onpointerover,
+    onpointerout,
     ...restProps
   }: RectProps = $props();
 
@@ -128,13 +135,13 @@
       name: 'Rect',
       render,
       events: {
-        click: restProps.onclick,
-        dblclick: restProps.ondblclick,
-        pointerenter: restProps.onpointerenter,
-        pointermove: restProps.onpointermove,
-        pointerleave: restProps.onpointerleave,
-        pointerover: restProps.onpointerover,
-        pointerout: restProps.onpointerout,
+        click: onclick,
+        dblclick: ondblclick,
+        pointerenter: onpointerenter,
+        pointermove: onpointermove,
+        pointerleave: onpointerleave,
+        pointerover: onpointerover,
+        pointerout: onpointerout,
       },
     });
   });
@@ -163,6 +170,13 @@
     {opacity}
     class={cls(layerClass('rect'), fill == null && 'fill-surface-content', className)}
     {...restProps}
+    {onclick}
+    {ondblclick}
+    {onpointerenter}
+    {onpointermove}
+    {onpointerleave}
+    {onpointerover}
+    {onpointerout}
     bind:this={ref}
   />
 {/if}

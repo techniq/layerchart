@@ -247,6 +247,7 @@
   }
 
   function showTooltip(e: PointerEvent, tooltipData?: any) {
+    console.log('showing tooltip');
     // Cancel hiding tooltip if from previous event loop
     if (hideTimeoutId) {
       clearTimeout(hideTimeoutId);
@@ -367,10 +368,13 @@
       return;
     }
 
+    isHoveringTooltip = false;
+
     // Wait an event loop tick in case `showTooltip` is called immediately on another element,
     // to allow tweening (ex. moving between bands/bars)
     // Additional hideDelay can be configured to extend this delay further
     hideTimeoutId = setTimeout(() => {
+      console.log('isHoveringTooltip', isHoveringTooltip);
       if (!isHoveringTooltip) {
         tooltipContextProp = {
           ...tooltipContextProp,
@@ -502,6 +506,7 @@
     }
   }}
   onpointerleave={(e) => {
+    console.log('onpointerleave in context');
     isHoveringTooltip = false;
     hideTooltip();
   }}
@@ -533,7 +538,7 @@
           onpointermove={(e, { data }) => {
             showTooltip(e, data);
           }}
-          onpointerleave={hideTooltip}
+          onpointerleave={() => hideTooltip()}
           onpointerdown={(e) => {
             // @ts-expect-error
             if (e.target?.hasPointerCapture(e.pointerId)) {
@@ -563,7 +568,7 @@
               )}
               onpointerenter={(e) => showTooltip(e, rect?.data)}
               onpointermove={(e) => showTooltip(e, rect?.data)}
-              onpointerleave={hideTooltip}
+              onpointerleave={() => hideTooltip()}
               onpointerdown={(e) => {
                 const target = e.target as Element;
                 if (target?.hasPointerCapture(e.pointerId)) {

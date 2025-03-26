@@ -265,19 +265,16 @@
 
   const onPointerEnter: PointerEventHandler<SVGPathElement> = (e) => {
     onpointerenter?.(e);
-    if (e.defaultPrevented) return;
     tooltipContext?.show(e, data);
   };
 
   const onPointerMove: PointerEventHandler<SVGPathElement> = (e) => {
     onpointermove?.(e);
-    if (e.defaultPrevented) return;
     tooltipContext?.show(e, data);
   };
 
   const onPointerLeave: PointerEventHandler<SVGPathElement> = (e) => {
     onpointerleave?.(e);
-    if (e.defaultPrevented) return;
     tooltipContext?.hide();
   };
 </script>

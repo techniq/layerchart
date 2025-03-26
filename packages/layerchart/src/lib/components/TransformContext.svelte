@@ -339,7 +339,6 @@
 
   function onPointerDown(e: PointerEvent & { currentTarget: HTMLElement }) {
     onpointerdown?.(e);
-    if (e.defaultPrevented) return;
     if (mode === 'none' || disablePointer) return;
 
     e.preventDefault();
@@ -354,7 +353,6 @@
 
   function onPointerMove(e: PointerEvent & { currentTarget: HTMLElement }) {
     onpointermove?.(e);
-    if (e.defaultPrevented) return;
     if (!pointerDown) return;
 
     e.preventDefault(); // Stop text selection
@@ -382,7 +380,6 @@
 
   function onPointerUp(e: PointerEvent & { currentTarget: HTMLElement }) {
     onpointerup?.(e);
-    if (e.defaultPrevented) return;
     pointerDown = false;
     dragging = false;
     ondragend?.();
@@ -390,7 +387,6 @@
 
   function onClick(e: MouseEvent & { currentTarget: HTMLElement }) {
     onclickcapture?.(e);
-    if (e.defaultPrevented) return;
     if (dragging) {
       // Do not propagate click event to children if drag/moved.  Registered in capture phase (top-down)
       e.stopPropagation();
@@ -399,7 +395,6 @@
 
   function onDoubleClick(e: MouseEvent & { currentTarget: HTMLElement }) {
     ondblclick?.(e);
-    if (e.defaultPrevented) return;
     if (mode === 'none' || disablePointer) return;
     const point = localPoint(e);
     scaleTo(e.shiftKey ? 0.5 : 2, point);
@@ -407,7 +402,6 @@
 
   function onWheel(e: WheelEvent & { currentTarget: HTMLElement }) {
     onwheel?.(e);
-    if (e.defaultPrevented) return;
     if (mode === 'none' || disablePointer || scrollMode === 'none') return;
 
     e.preventDefault();
@@ -493,7 +487,6 @@
   onpointermove={onPointerMove}
   ontouchmove={(e) => {
     ontouchmove?.(e);
-    if (e.defaultPrevented) return;
     // Touch events cause pointer events to be interrupted.
     // Typically `touch-action: none` works, but doesn't appear to with SVG, but `preventDefault()` works here
     // https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#touch-action_css_property
