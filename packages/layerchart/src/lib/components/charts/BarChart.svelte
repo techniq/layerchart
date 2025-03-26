@@ -148,7 +148,7 @@
     belowMarks,
     aboveMarks,
     marks,
-    highlight,
+    highlight = true,
     context = $bindable(),
     ...restProps
   }: BarChartProps<TData> = $props();
