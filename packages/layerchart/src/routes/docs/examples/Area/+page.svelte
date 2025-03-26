@@ -914,10 +914,18 @@
           </RectClipPath>
           <Highlight
             lines={{
-              class: (context.tooltip.data?.value ?? 0 < 0) ? 'stroke-danger' : 'stroke-success',
+              class: context.tooltip.data
+                ? context.tooltip.data?.value < 0
+                  ? 'stroke-danger'
+                  : 'stroke-success'
+                : undefined,
             }}
             points={{
-              class: (context.tooltip.data?.value ?? 0 < 0) ? 'fill-danger' : 'fill-success',
+              class: context.tooltip.data
+                ? context.tooltip.data?.value < 0
+                  ? 'fill-danger'
+                  : 'fill-success'
+                : undefined,
             }}
           />
         </Svg>
