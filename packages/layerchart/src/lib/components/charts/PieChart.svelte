@@ -329,6 +329,8 @@
     arcIndex: number
   ): ComponentProps<typeof Arc> {
     if (!context) return {};
+    const arcDataProps =
+      'props' in arc.data && typeof arc.data.props === 'object' ? arc.data.props : {};
     return {
       startAngle: arc.startAngle,
       endAngle: arc.endAngle,
@@ -336,7 +338,7 @@
       innerRadius,
       cornerRadius,
       padAngle,
-      fill: context.cScale?.(context.c(arc.data)) ?? cAccessor(arc.data),
+      fill: context.cScale?.(context.c(arc.data)),
       data: arc.data,
       tooltipContext: context.tooltip,
       onclick: (e) => {
@@ -350,6 +352,7 @@
       ),
       ...props.arc,
       ...s.props,
+      ...arcDataProps,
     };
   }
 
