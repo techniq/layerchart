@@ -336,7 +336,7 @@
       innerRadius,
       cornerRadius,
       padAngle,
-      fill: context.cScale?.(context.c(arc.data)),
+      fill: context.cScale?.(context.c(arc.data)) ?? cAccessor(arc.data),
       data: arc.data,
       tooltipContext: context.tooltip,
       onclick: (e) => {
