@@ -137,12 +137,10 @@
 
   $effect(() => {
     [x1, y1, x2, y1];
-    afterTick(() => {
-      tweenedX1.target = x1;
-      tweenedY1.target = y1;
-      tweenedX2.target = x2;
-      tweenedY2.target = y2;
-    });
+    tweenedX1.target = x1;
+    tweenedY1.target = y1;
+    tweenedX2.target = x2;
+    tweenedY2.target = y2;
   });
 
   const renderCtx = getRenderContext();

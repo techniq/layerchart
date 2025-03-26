@@ -247,7 +247,6 @@
   }
 
   function showTooltip(e: PointerEvent, tooltipData?: any) {
-    console.log('showing tooltip');
     // Cancel hiding tooltip if from previous event loop
     if (hideTimeoutId) {
       clearTimeout(hideTimeoutId);
@@ -374,7 +373,6 @@
     // to allow tweening (ex. moving between bands/bars)
     // Additional hideDelay can be configured to extend this delay further
     hideTimeoutId = setTimeout(() => {
-      console.log('isHoveringTooltip', isHoveringTooltip);
       if (!isHoveringTooltip) {
         tooltipContextProp = {
           ...tooltipContextProp,
@@ -506,7 +504,6 @@
     }
   }}
   onpointerleave={(e) => {
-    console.log('onpointerleave in context');
     isHoveringTooltip = false;
     hideTooltip();
   }}
