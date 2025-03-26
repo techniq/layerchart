@@ -1294,18 +1294,9 @@
                 onclick={(e) => {
                   alert('You clicked on:\n' + JSON.stringify(bar, null, 2));
                 }}
-                onpointerenter={(e) => {
-                  console.log('onpointerenter');
-                  context.tooltip.show(e, bar);
-                }}
-                onpointermove={(e) => {
-                  console.log('onpointermove');
-                  context.tooltip.show(e, bar);
-                }}
-                onpointerleave={(e) => {
-                  console.log('onpointerleave');
-                  context.tooltip.hide();
-                }}
+                onpointerenter={(e) => context.tooltip.show(e, bar)}
+                onpointermove={(e) => context.tooltip.show(e, bar)}
+                onpointerleave={(e) => context.tooltip.hide()}
               />
             {/each}
           </g>
