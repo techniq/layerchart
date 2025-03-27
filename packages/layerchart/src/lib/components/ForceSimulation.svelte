@@ -115,14 +115,12 @@
     onTick: onTickProp = () => {},
     onEnd: onEndProp = () => {},
     children,
+    cloneData = false,
   }: ForceSimulationProps = $props();
 
   const ctx = getChartContext();
 
   // MARK: Public Props
-
-  /** Clone data since simulation mutates original */
-  export const cloneData: boolean = false;
 
   // MARK: Private Props
 
@@ -384,6 +382,13 @@
     paused = true;
     onEndProp();
   }
+
+  $effect(() => {
+    return () => {
+      simulation.stop();
+      simulation.on('tick', null).on('end', null);
+    };
+  });
 </script>
 
 {@render children?.({ nodes, simulation, linkPositions })}
