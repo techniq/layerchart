@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { Without } from '$lib/utils/types.js';
+  import { asAny, type Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import type { Snippet } from 'svelte';
 
@@ -161,7 +161,7 @@
 	TODO: we can probably pass the context to coerce this type so we don't need a bunch
 	of predicates to check if the gradient is a CanvasGradient or not...
 	-->
-  {@render children?.({ id, gradient: '' })}
+  {@render children?.({ id, gradient: asAny(canvasGradient) })}
 {:else if renderCtx === 'svg'}
   <defs>
     <linearGradient
