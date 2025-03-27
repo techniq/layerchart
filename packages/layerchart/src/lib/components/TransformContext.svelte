@@ -372,8 +372,7 @@
 
       setTranslate(
         processTranslate(startTranslate.x, startTranslate.y, deltaX, deltaY),
-        // @ts-expect-error
-        spring ? { hard: true } : tweened ? { duration: 0 } : undefined
+        spring ? { instant: true } : tweened ? { instant: true } : undefined
       );
     }
   }

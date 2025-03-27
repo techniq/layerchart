@@ -168,7 +168,7 @@
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
           <Graticule class="stroke-surface-content/20" />
 
-          {#each countries.features as country}
+          {#each countries.features as country (country)}
             <GeoPath
               geojson={country}
               class={cls(
