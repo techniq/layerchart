@@ -27,13 +27,13 @@
       {#snippet children({ context })}
         <Svg center>
           <ForceSimulation
-            {links}
             forces={{
               link: linkForce,
               charge: chargeForce,
               x: xForce,
               y: yForce,
             }}
+            {links}
           >
             {#snippet children({ nodes, linkPositions })}
               {#each links as link, i}
