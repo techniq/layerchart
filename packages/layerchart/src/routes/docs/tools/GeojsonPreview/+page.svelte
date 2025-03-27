@@ -97,7 +97,7 @@
         }}
         padding={{ top: 8, bottom: 8, left: 8, right: 8 }}
       >
-        {#snippet children({ tooltipContext })}
+        {#snippet children({ context })}
           {#if projection === geoMercator && serviceUrl}
             <Svg>
               <!-- technique: https://observablehq.com/@d3/seamless-zoomable-map-tiles -->
@@ -117,7 +117,7 @@
                   geojson={feature}
                   fill={colorScale(String(feature.id))}
                   class="stroke-black"
-                  {tooltipContext}
+                  tooltipContext={context.tooltip}
                 />
               {/each}
             {/if}
