@@ -34,7 +34,7 @@
   let hasCollideForce = $state(true);
   let hasCenterForce = $state(true);
 
-  $effect(() => {
+  $effect.pre(() => {
     reheatSimulation({
       hasLinkForce,
       hasChargeForce,
@@ -269,19 +269,19 @@
             onStart={handleStart}
             onTick={handleTick}
             onEnd={handleEnd}
+            {links}
           >
-            {#snippet children({ nodes })}
-              {#key nodes}
-                {#each links as link}
-                  <Link
-                    data={link}
-                    class="stroke-surface-content"
-                    curve={curveLinear}
-                    stroke-width={linkWidth}
-                    opacity={linkOpacity}
-                  />
-                {/each}
-              {/key}
+            {#snippet children({ nodes, linkPositions })}
+              {#each links as link, i}
+                <Link
+                  data={link}
+                  explicitCoords={linkPositions[i]}
+                  class="stroke-surface-content"
+                  curve={curveLinear}
+                  stroke-width={linkWidth}
+                  opacity={linkOpacity}
+                />
+              {/each}
 
               {#each nodes as node}
                 <Circle
