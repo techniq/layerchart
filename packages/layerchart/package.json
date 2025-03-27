@@ -6,7 +6,7 @@
   "repository": "techniq/layerchart",
   "version": "2.0.0-next.1",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "vite dev --port 3002",
     "build": "vite build",
     "preview": "vite preview",
     "package": "svelte-package",

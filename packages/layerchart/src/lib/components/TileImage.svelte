@@ -121,30 +121,35 @@
     }
   }
 
-  onMount(() => {
-    if (!disableCache) {
-      loadImage(url(x, y, z));
-    }
+  $effect(() => {
+    console.log('href', href);
+  });
+
+  $effect(() => {
+    if (disableCache) return;
+    loadImage(url(x, y, z));
   });
 </script>
 
 <!-- To avoid aliasing artifacts (thin white lines) between tiles, two layers of tiles are drawn, with the lower layer’s tiles enlarged by one pixel -->
-<image
-  xlink:href={href}
-  x={(x + tx) * scale - 0.5}
-  y={(y + ty) * scale - 0.5}
-  width={scale + 1}
-  height={scale + 1}
-  {...extractLayerProps(restProps, 'tile-image-lower')}
-/>
-<image
-  xlink:href={href}
-  x={(x + tx) * scale}
-  y={(y + ty) * scale}
-  width={scale}
-  height={scale}
-  {...extractLayerProps(restProps, 'tile-image')}
-/>
+{#key href}
+  <image
+    {href}
+    x={(x + tx) * scale - 0.5}
+    y={(y + ty) * scale - 0.5}
+    width={scale + 1}
+    height={scale + 1}
+    {...extractLayerProps(restProps, 'tile-image-lower')}
+  />
+  <image
+    {href}
+    x={(x + tx) * scale}
+    y={(y + ty) * scale}
+    width={scale}
+    height={scale}
+    {...extractLayerProps(restProps, 'tile-image')}
+  />
+{/key}
 {#if debug}
   <rect
     x={(x + tx) * scale}
