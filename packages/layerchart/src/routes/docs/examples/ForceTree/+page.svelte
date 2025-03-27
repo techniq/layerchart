@@ -44,13 +44,13 @@
                 />
               {/each}
 
-              {#each nodes as node}
+              {#each nodes as node, i}
                 <Circle
                   cx={node.x}
                   cy={node.y}
                   r={3}
                   class={cls(
-                    node.children
+                    node?.children
                       ? 'fill-surface-100 stroke-surface-content'
                       : 'fill-surface-content'
                   )}

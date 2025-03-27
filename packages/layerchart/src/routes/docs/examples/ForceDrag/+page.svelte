@@ -60,16 +60,21 @@
               charge: chargeForce,
               center: centerForce.x(context.width / 2).y(context.height / 2),
             }}
+            {links}
           >
-            {#snippet children({ nodes, simulation })}
-              {#key nodes}
-                {#each links as link}
-                  <Link data={link} curve={curveLinear} class="stroke-surface-content/20" />
-                {/each}
-              {/key}
+            {#snippet children({ nodes, simulation, linkPositions })}
+              {#each links as link, i}
+                <Link
+                  data={link}
+                  explicitCoords={linkPositions[i]}
+                  curve={curveLinear}
+                  class="stroke-surface-content/20"
+                />
+              {/each}
 
               {#each nodes as node, i}
                 {@const thisNode = simulation.nodes()[i]}
+                <!-- svelte-ignore a11y_no_static_element_interactions, a11y_click_events_have_key_events -->
                 <circle
                   cx={node.x}
                   cy={node.y}
@@ -101,6 +106,13 @@
                         simulation.alpha(1).restart();
                       }
                     },
+                  }}
+                  onclick={() => {
+                    if (thisNode.fx) {
+                      delete thisNode.fx;
+                      delete thisNode.fy;
+                      simulation.alpha(1).restart();
+                    }
                   }}
                   onpointermove={(e) => !dragging && context.tooltip.show(e, node)}
                   onpointerleave={context.tooltip.hide}
