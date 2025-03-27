@@ -326,7 +326,10 @@
     {title}
   </div>
   {#if children}
-    {@render children({ values: tickValuesProp ?? [], scale })}
+    {@render children({
+      values: scaleConfig.tickValues ?? scaleConfig.xScale?.ticks?.(ticks) ?? [],
+      scale,
+    })}
   {:else if variant === 'ramp'}
     <svg
       {width}
