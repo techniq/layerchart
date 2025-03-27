@@ -95,7 +95,7 @@
     belowMarks,
     aboveMarks,
     marks,
-    highlight,
+    highlight = true,
     ...restProps
   }: ScatterChartProps<TData> = $props();
 
