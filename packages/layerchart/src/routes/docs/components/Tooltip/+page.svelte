@@ -136,7 +136,7 @@
   let snap: 'pointer' | 'data' = $state('pointer');
   let contained: ComponentProps<typeof Tooltip.Root>['contained'] = $state(false);
 
-  let context: ChartContextValue<(typeof dateSeries)[number]> = $state(null!);
+  let context: ChartContextValue<(typeof dateSeries)[number]> | undefined = $state();
 </script>
 
 <h1>Examples</h1>
@@ -587,11 +587,13 @@
 
 <Preview data={dateSeries}>
   <div class="text-sm">
-    {#if context.tooltip.data}
-      date: {formatDate(context.tooltip.data.date, PeriodType.Day, { variant: 'short' })}
-      value: {context.tooltip.data.value}
-    {:else}
-      [hover chart]
+    {#if context}
+      {#if context.tooltip.data}
+        date: {formatDate(context.tooltip.data.date, PeriodType.Day, { variant: 'short' })}
+        value: {context.tooltip.data.value}
+      {:else}
+        [hover chart]
+      {/if}
     {/if}
   </div>
 

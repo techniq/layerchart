@@ -274,9 +274,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg center>
-          <Pie {tooltipContext} />
+          <Pie tooltipContext={context.tooltip} />
         </Svg>
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -302,19 +302,19 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      {#snippet children({ tooltipContext })}
+      {#snippet children({ context })}
         <Svg center>
           <Pie>
             {#snippet children({ arcs })}
               {#each arcs as arc, index}
                 {@const colors = keyClasses[index]}
-                {@const isHighlighted = tooltipContext.data?.date === arc.data.date}
+                {@const isHighlighted = context.tooltip.data?.date === arc.data.date}
                 {@const isFaded =
-                  tooltipContext.data != null && tooltipContext.data.date !== arc.data.date}
+                  context.tooltip.data != null && context.tooltip.data.date !== arc.data.date}
                 <Group
-                  onpointerenter={(e) => tooltipContext.show(e, arc.data)}
-                  onpointermove={(e) => tooltipContext.show(e, arc.data)}
-                  onpointerleave={(e) => tooltipContext.hide()}
+                  onpointerenter={(e) => context.tooltip.show(e, arc.data)}
+                  onpointermove={(e) => context.tooltip.show(e, arc.data)}
+                  onpointerleave={(e) => context.tooltip.hide()}
                   preventTouchMove
                   class={cls(
                     // isHighlighted && 'stroke-surface-content stroke-2',

@@ -150,8 +150,6 @@
       d = 'M0,0L0,0';
     }
 
-    console.log('d', d);
-
     tweenedState.target = d;
   });
 </script>
