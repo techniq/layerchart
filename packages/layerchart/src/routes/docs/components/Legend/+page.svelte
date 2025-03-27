@@ -328,7 +328,7 @@
   </div>
 </Preview>
 
-<h2>slot override</h2>
+<h2>children override</h2>
 
 <Preview>
   <Legend
