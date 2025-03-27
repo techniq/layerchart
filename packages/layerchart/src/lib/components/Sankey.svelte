@@ -106,59 +106,43 @@
 
   const ctx = getChartContext();
 
-  const sankey = $derived.by(() => {
-    if (typeof document === 'undefined') null;
-    const width = ctx.width;
-    const height = ctx.height;
-    const np = nodesProp;
-    const lp = linksProp;
-    const ls = linkSort;
-    const ns = nodeSort;
-    const align = nodeAlign;
-    const nWidth = nodeWidth;
-    const nPadding = nodePadding;
-
-    const res = untrack(() =>
+  const sankeyData = $derived.by(() => {
+    if (typeof document === 'undefined') return { nodes: [], links: [] };
+    ctx.data;
+    ctx.width;
+    ctx.height;
+    nodeWidth;
+    nodePadding;
+    nodeAlign;
+    return (
       d3Sankey()
-        .size([width, height])
-        .nodes(np)
+        .size([ctx.width, ctx.height])
+        .nodes(nodesProp)
         .nodeId(nodeId)
         .nodeAlign(
-          align === 'left'
+          nodeAlign === 'left'
             ? sankeyLeft
-            : align === 'center'
+            : nodeAlign === 'center'
               ? sankeyCenter
-              : align === 'right'
+              : nodeAlign === 'right'
                 ? sankeyRight
-                : align === 'justify'
+                : nodeAlign === 'justify'
                   ? sankeyJustify
-                  : align
+                  : nodeAlign
         )
-        .nodeWidth(nWidth)
-        .nodePadding(nPadding)
+        .nodeWidth(nodeWidth)
+        .nodePadding(nodePadding)
         // @ts-expect-error
-        .nodeSort(ns)
-        .links(lp)
+        .nodeSort(nodeSort)
+        .links(linksProp)
         // @ts-expect-error
-        .linkSort(ls)
+        .linkSort(linkSort)(ctx.data)
     );
-
-    return res;
   });
-
-  const sankeyData = $derived.by(() => {
-    if (typeof document === 'undefined' || !sankey) return { nodes: [], links: [] };
-    ctx.data;
-    // @ts-expect-error -shh
-    return sankey(ctx.data);
-  });
-
-  const nodes = $derived(sankeyData.nodes as SankeyNode<NodeExtraProperties, any>[]);
-  const links = $derived(sankeyData.links as SankeyLink<NodeExtraProperties, any>[]);
 
   $effect(() => {
     onUpdate?.(sankeyData);
   });
 </script>
 
-{@render children?.({ nodes, links })}
+{@render children?.({ nodes: sankeyData.nodes, links: sankeyData.links })}

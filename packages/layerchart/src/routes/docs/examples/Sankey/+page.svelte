@@ -271,7 +271,7 @@
             }}
           >
             {#snippet children({ links, nodes })}
-              {#each links as link}
+              {#each links as link, i (i)}
                 <Link
                   sankey
                   data={link}
@@ -297,7 +297,7 @@
                 />
               {/each}
 
-              {#each nodes as node (node.name)}
+              {#each nodes as node, i (i)}
                 {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
                 {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
                 <Group x={node.x0} y={node.y0} tweened>
