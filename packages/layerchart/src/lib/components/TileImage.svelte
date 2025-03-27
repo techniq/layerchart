@@ -63,6 +63,7 @@
 
   import Text from './Text.svelte';
   import type { SVGAttributes } from 'svelte/elements';
+  import { onMount } from 'svelte';
 
   let {
     x,
@@ -120,9 +121,10 @@
     }
   }
 
-  $effect(() => {
-    if (disableCache) return;
-    loadImage(url(x, y, z));
+  onMount(() => {
+    if (!disableCache) {
+      loadImage(url(x, y, z));
+    }
   });
 </script>
 

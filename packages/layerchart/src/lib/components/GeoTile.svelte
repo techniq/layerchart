@@ -68,34 +68,32 @@
 
   const center = $derived(geoCtx.projection?.([0, 0]) ?? [0, 0]);
 
-  const tile = $derived(
+  const tiles = $derived(
     d3Tile()
       .size([ctx.containerWidth, ctx.containerHeight])
       .translate([center[0] + ctx.padding.left, center[1] + ctx.padding.top])
       // TODO: is this fine to add the 0 as a default?
-      .scale(geoCtx.projection?.scale() ?? 0 * 2 * Math.PI)
+      .scale(geoCtx.projection?.scale() * 2 * Math.PI)
       .tileSize(tileSize)
-      .zoomDelta(zoomDelta)
+      .zoomDelta(zoomDelta)()
   );
-
-  const tiles = $derived(tile());
 
   const translate = $derived(tiles.translate);
   const scale = $derived(tiles.scale);
 
   function render(ctx: CanvasRenderingContext2D) {
-    tiles.forEach(([x, y, z]: number[]) => {
+    for (const [x, y, z] of tiles) {
       const image = new Image();
       image.onload = () => {
         ctx.drawImage(image, (x + translate[0]) * scale, (y + translate[1]) * scale, scale, scale);
       };
       image.src = url(x, y, z);
-    });
+    }
   }
 
   $effect(() => {
     if (renderCtx !== 'canvas') return;
-    tile;
+    tiles;
     canvasCtx.invalidate();
   });
 
