@@ -75,9 +75,9 @@
 
   let {
     x,
-    initialX = x,
+    initialX: initialXProp,
     y,
-    initialY = y,
+    initialY: initialYProp,
     center = false,
     preventTouchMove = false,
     motion,
@@ -86,6 +86,9 @@
     ref = $bindable(),
     ...restProps
   }: GroupProps = $props();
+
+  const initialX = initialXProp ?? x;
+  const initialY = initialYProp ?? y;
 
   const trueX = $derived(x ?? (center === 'x' || center === true ? ctx.width / 2 : 0));
   const trueY = $derived(y ?? (center === 'y' || center === true ? ctx.height / 2 : 0));

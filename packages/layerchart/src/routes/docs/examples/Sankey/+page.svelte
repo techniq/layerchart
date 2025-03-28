@@ -8,7 +8,7 @@
   import { Icon } from 'svelte-ux';
   import { sortFunc } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { mdiArrowRightBold } from '@mdi/js';
+  import { mdiArrowRightBold, mdiNewBox } from '@mdi/js';
 
   import {
     Chart,
@@ -68,13 +68,24 @@
   // TODO: Fix type
   type HierarchySankeyNode = SankeyNode<HierarchySankeyNodeProperties & any, {}>;
 
+  console.log(data.greenhouse);
+
+  $effect(() => {
+    if (!selectedNode) return;
+    console.log('selected', graphFromNode(selectedNode));
+  });
+
   function getHierarchyNodeKey(node: HierarchySankeyNode) {
     return [node.data.name, node.parent?.data.name].join('_');
+  }
+
+  function getHierarchyLinkKey(link: HierarchySankeyNode) {
+    return [link.index, link.source.name, link.target.name].join('_');
   }
 </script>
 
 <h1>Examples</h1>
-
+<!--
 <h2>Simple</h2>
 
 <Preview data={data.simple}>
@@ -192,7 +203,7 @@
       {/snippet}
     </Chart>
   </div>
-</Preview>
+</Preview> -->
 
 <h2>Node select</h2>
 
@@ -212,34 +223,35 @@
               />
             {/each}
 
-            {#each nodes as node, i ([node.id, node.value, node.index, i].join('_'))}
-              {#key selectedNode}
-                {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
-                {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
-                <Group
-                  x={node.x0}
-                  y={node.y0}
+            {#each nodes as node ([node.name, node.index].join('_'))}
+              {@const x0 = node.x0}
+              {@const y0 = node.y0}
+              {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
+              {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
+
+              <Group
+                x={x0}
+                y={y0}
+                motion="tween"
+                onclick={() => {
+                  selectedNode =
+                    node === selectedNode || node.sourceLinks?.length === 0 ? null : node;
+                }}
+              >
+                <Rect
+                  width={nodeWidth}
+                  height={nodeHeight}
+                  class="fill-primary hover:fill-primary/90 hover:cursor-pointer"
                   motion="tween"
-                  onclick={() => {
-                    selectedNode =
-                      node === selectedNode || node.sourceLinks?.length === 0 ? null : node;
-                  }}
-                >
-                  <Rect
-                    width={nodeWidth}
-                    height={nodeHeight}
-                    class="fill-primary hover:fill-primary/90 hover:cursor-pointer"
-                    motion="tween"
-                  />
-                  <Text
-                    value={node.name}
-                    x={node.height === 0 ? -4 : nodeWidth + 4}
-                    y={nodeHeight / 2}
-                    textAnchor={node.height === 0 ? 'end' : 'start'}
-                    verticalAnchor="middle"
-                  />
-                </Group>
-              {/key}
+                />
+                <Text
+                  value="{node.name} x: {node.x0} y: {node.y0}"
+                  x={node.height === 0 ? -4 : nodeWidth + 4}
+                  y={nodeHeight / 2}
+                  textAnchor={node.height === 0 ? 'end' : 'start'}
+                  verticalAnchor="middle"
+                />
+              </Group>
             {/each}
           {/snippet}
         </Sankey>
@@ -247,7 +259,7 @@
     </Chart>
   </div>
 </Preview>
-
+<!--
 <h2>Complex</h2>
 
 <SankeyControls bind:nodeAlign bind:nodeColorBy bind:linkColorBy bind:nodePadding bind:nodeWidth />
@@ -452,4 +464,4 @@
       </Svg>
     </Chart>
   </div>
-</Preview>
+</Preview> -->

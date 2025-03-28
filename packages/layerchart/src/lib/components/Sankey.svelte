@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import { untrack, type Snippet } from 'svelte';
+  import type { Snippet } from 'svelte';
 
   export type NodeExtraProperties = Record<string, any>;
 
@@ -142,6 +142,10 @@
 
   $effect(() => {
     onUpdate?.(sankeyData);
+  });
+
+  $effect(() => {
+    console.log('sankeyData.nodes', sankeyData.nodes);
   });
 </script>
 
