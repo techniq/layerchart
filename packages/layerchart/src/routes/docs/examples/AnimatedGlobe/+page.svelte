@@ -152,7 +152,7 @@
         applyTransform: ['rotate'],
       }}
       transform={{
-        spring: { stiffness: 0.04 },
+        motion: { type: 'spring', stiffness: 0.04 },
       }}
       bind:context
     >

@@ -30,9 +30,9 @@
     y1?: Accessor;
 
     /**
-     * Interpolate path data using d3-interpolate-path
+     * Whether to tween the interpolated path data using d3-interpolate-path
      */
-    tweened?: boolean | TweenedOptions;
+    motion?: MotionTweenOption;
 
     clipPath?: string;
 
@@ -65,7 +65,7 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getChartContext } from './Chart.svelte';
-  import { motionState, type TweenedOptions } from '$lib/stores/motionState.svelte.js';
+  import { createMotion, type MotionTweenOption } from '$lib/utils/motion.svelte.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
@@ -85,7 +85,7 @@
     pathData,
     stroke,
     strokeWidth,
-    tweened,
+    motion,
     x,
     y0,
     y1,
@@ -99,16 +99,20 @@
   const xOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
   const yOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
 
-  const tweenedOptions = tweened
-    ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
-    : false;
+  const tweenOptions = motion
+    ? {
+        type: 'tween' as const,
+        interpolate: interpolatePath,
+        ...(typeof motion === 'object' ? motion : null),
+      }
+    : undefined;
 
   /**
    * Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not
    * reactive (only set on initial mount)
    */
   function defaultPathData() {
-    if (!tweenedOptions) {
+    if (!tweenOptions) {
       // If not tweened, return empty string (faster initial render)
       return '';
     } else if (pathData) {
@@ -135,9 +139,7 @@
     }
   }
 
-  const tweenedState = motionState(defaultPathData(), { tweened: tweenedOptions });
-
-  const path = $derived.by(() => {
+  const d = $derived.by(() => {
     const _path = ctx.radial
       ? areaRadial()
           .angle((d) => ctx.xScale(xAccessor(d)))
@@ -180,14 +182,10 @@
 
     if (curve) _path.curve(curve);
 
-    return _path;
+    return pathData ?? _path(data ?? ctx.data) ?? defaultPathData();
   });
 
-  const d = $derived(pathData ?? path(data ?? ctx.data));
-
-  $effect(() => {
-    tweenedState.target = d;
-  });
+  const tweenState = createMotion(defaultPathData(), () => d, tweenOptions);
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -195,7 +193,7 @@
   ) {
     renderPathData(
       ctx,
-      tweenedState.current,
+      tweenState.current,
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
@@ -218,7 +216,7 @@
       strokeWidth,
       opacity,
       restProps.class,
-      tweenedState.current,
+      tweenState.current,
     ];
     canvasCtx.invalidate();
   });
@@ -239,12 +237,12 @@
 </script>
 
 {#if line}
-  <Spline {data} {x} y={y1} {curve} {defined} {tweened} {...extractLayerProps(line, 'area-line')} />
+  <Spline {data} {x} y={y1} {curve} {defined} {motion} {...extractLayerProps(line, 'area-line')} />
 {/if}
 
 {#if renderCtx === 'svg'}
   <path
-    d={tweenedState.current}
+    d={tweenState.current}
     clip-path={clipPath}
     {fill}
     fill-opacity={fillOpacity}

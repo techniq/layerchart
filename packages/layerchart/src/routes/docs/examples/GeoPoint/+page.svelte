@@ -101,7 +101,7 @@
                 <GeoPoint
                   lat={context.tooltip.data.latitude}
                   long={context.tooltip.data.longitude}
-                  spring
+                  motion="spring"
                 >
                   <circle r="4" class="stroke-primary/50 fill-none" />
                   <Text
@@ -179,7 +179,7 @@
                 long={context.tooltip.data.longitude}
                 r={4}
                 class="stroke-primary/50 fill-none"
-                spring
+                motion="spring"
               />
             {/if}
           </g>
@@ -246,7 +246,7 @@
                 long={context.tooltip.data.longitude}
                 r={4}
                 class="stroke-primary/50 fill-none"
-                spring
+                motion="spring"
               />
             {/if}
           </g>

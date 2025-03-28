@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
-  import { motionState, resolveOptions, type MotionProps } from '$lib/stores/motionState.svelte.js';
+  import { createMotion, parseMotionProp, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   export type RectPropsWithoutHTML = {
@@ -34,8 +34,9 @@
      * @bindable
      */
     ref?: SVGRectElement;
-  } & MotionProps &
-    CommonStyleProps;
+
+    motion?: MotionProp<'x' | 'y' | 'width' | 'height'>;
+  } & CommonStyleProps;
 
   export type RectProps = RectPropsWithoutHTML &
     Without<SVGAttributes<SVGRectElement>, RectPropsWithoutHTML>;
@@ -47,7 +48,6 @@
 
   import { getRenderContext } from './Chart.svelte';
   import { getCanvasContext } from './layout/Canvas.svelte';
-  import { afterTick } from '$lib/utils/afterTick.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { layerClass } from '$lib/utils/attributes.js';
 
@@ -66,8 +66,7 @@
     strokeWidth,
     opacity,
     ref = $bindable(),
-    spring,
-    tweened,
+    motion,
     class: className,
     onclick,
     ondblclick,
@@ -79,11 +78,10 @@
     ...restProps
   }: RectProps = $props();
 
-  const tweenedX = motionState(initialX, resolveOptions('x', { spring, tweened }));
-  const tweenedY = motionState(initialY, resolveOptions('y', { spring, tweened }));
-  const tweenedWidth = motionState(initialWidth, resolveOptions('width', { spring, tweened }));
-
-  const tweenedHeight = motionState(initialHeight, resolveOptions('height', { spring, tweened }));
+  const motionX = createMotion(initialX, () => x, parseMotionProp(motion, 'x'));
+  const motionY = createMotion(initialY, () => y, parseMotionProp(motion, 'y'));
+  const motionWidth = createMotion(initialWidth, () => width, parseMotionProp(motion, 'width'));
+  const motionHeight = createMotion(initialHeight, () => height, parseMotionProp(motion, 'height'));
 
   const renderCtx = getRenderContext();
   const canvasCtx = getCanvasContext();
@@ -95,10 +93,10 @@
     renderRect(
       ctx,
       {
-        x: tweenedX.current,
-        y: tweenedY.current,
-        width: tweenedWidth.current,
-        height: tweenedHeight.current,
+        x: motionX.current,
+        y: motionY.current,
+        width: motionWidth.current,
+        height: motionHeight.current,
       },
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
@@ -116,10 +114,10 @@
   $effect(() => {
     if (renderCtx !== 'canvas') return;
     [
-      tweenedX.current,
-      tweenedY.current,
-      tweenedWidth.current,
-      tweenedHeight.current,
+      motionX.current,
+      motionY.current,
+      motionWidth.current,
+      motionHeight.current,
       fillKey.current,
       strokeKey.current,
       strokeWidth,
@@ -145,24 +143,14 @@
       },
     });
   });
-
-  $effect(() => {
-    [x, y, width, height];
-    afterTick(() => {
-      tweenedX.target = x;
-      tweenedY.target = y;
-      tweenedWidth.target = width;
-      tweenedHeight.target = height;
-    });
-  });
 </script>
 
 {#if renderCtx === 'svg'}
   <rect
-    x={tweenedX.current}
-    y={tweenedY.current}
-    width={tweenedWidth.current}
-    height={tweenedHeight.current}
+    x={motionX.current}
+    y={motionY.current}
+    width={motionWidth.current}
+    height={motionHeight.current}
     {fill}
     fill-opacity={fillOpacity}
     {stroke}

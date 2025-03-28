@@ -972,8 +972,8 @@
       y="value"
       {xDomain}
       props={{
-        area: { tweened: { duration: 200 } },
-        xAxis: { format: undefined, tweened: { duration: 200 } },
+        area: { motion: { type: 'tween', duration: 200 } },
+        xAxis: { format: undefined, motion: { type: 'tween', duration: 200 } },
       }}
       {renderContext}
       {debug}
@@ -1032,8 +1032,8 @@
       y="value"
       brush
       props={{
-        area: { tweened: { duration: 200 } },
-        xAxis: { format: undefined, tweened: { duration: 200 } },
+        area: { motion: { type: 'tween', duration: 200 } },
+        xAxis: { format: undefined, motion: { type: 'tween', duration: 200 } },
         canvas: {
           class: 'cursor-crosshair',
         },
@@ -1059,8 +1059,8 @@
         {xDomain}
         brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
         props={{
-          area: { tweened: { duration: 200 } },
-          xAxis: { format: undefined, tweened: { duration: 200 } },
+          area: { motion: { type: 'tween', duration: 200 } },
+          xAxis: { format: undefined, motion: { type: 'tween', duration: 200 } },
         }}
         {renderContext}
         {debug}
@@ -1075,8 +1075,8 @@
         {xDomain}
         brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
         props={{
-          area: { tweened: { duration: 200 } },
-          xAxis: { format: undefined, tweened: { duration: 200 } },
+          area: { motion: { type: 'tween', duration: 200 } },
+          xAxis: { format: undefined, motion: { type: 'tween', duration: 200 } },
         }}
         {renderContext}
         {debug}

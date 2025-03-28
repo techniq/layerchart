@@ -68,7 +68,7 @@
                 outerRadius={60}
                 innerRadius={50}
                 cornerRadius={5}
-                spring
+                motion="spring"
                 fill={gradient}
                 track={{ class: 'fill-none stroke-surface-content/10' }}
               >
@@ -193,7 +193,7 @@
             <Arc
               value={value ?? 0}
               innerRadius={-20}
-              spring
+              motion="spring"
               class="fill-success-300"
               track={{ class: 'fill-surface-content/10' }}
             />
@@ -272,7 +272,7 @@
               cornerRadius={10}
               class="fill-red-500"
               track={{ class: 'fill-red-500/10' }}
-              tweened={{ duration: 1000, easing: cubicInOut }}
+              motion={{ type: 'tween', duration: 1000, easing: cubicInOut }}
             />
             <Arc
               initialValue={0}
@@ -282,7 +282,7 @@
               cornerRadius={10}
               class="fill-lime-400"
               track={{ class: 'fill-lime-400/10' }}
-              tweened={{ duration: 1000, easing: cubicInOut }}
+              motion={{ type: 'tween', duration: 1000, easing: cubicInOut }}
             />
             <Arc
               initialValue={0}
@@ -292,7 +292,7 @@
               cornerRadius={10}
               class="fill-cyan-400"
               track={{ class: 'fill-cyan-500/10' }}
-              tweened={{ duration: 1000, easing: cubicInOut }}
+              motion={{ type: 'tween', duration: 1000, easing: cubicInOut }}
             />
           {/if}
         </Svg>

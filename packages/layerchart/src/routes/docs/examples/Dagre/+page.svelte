@@ -116,7 +116,7 @@
           transform={{
             mode: 'canvas',
             initialScrollMode: 'scale',
-            tweened: { duration: 800, easing: cubicOut },
+            motion: { type: 'tween', duration: 800, easing: cubicOut },
           }}
         >
           <TransformControls />
@@ -131,7 +131,7 @@
                       x="x"
                       y="y"
                       class="stroke-surface-content opacity-30"
-                      tweened
+                      motion="tween"
                       curve={settings.playground.curve}
                       markerEnd={settings.playground.arrow}
                     />
@@ -140,7 +140,7 @@
 
                 <g class="nodes">
                   {#each nodes as node (node.label)}
-                    <Group x={node.x - node.width / 2} y={node.y - node.height / 2} tweened>
+                    <Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion="tween">
                       <Rect
                         width={node.width}
                         height={node.height}
@@ -191,7 +191,7 @@
           transform={{
             mode: 'canvas',
             initialScrollMode: 'scale',
-            tweened: { duration: 800, easing: cubicOut },
+            motion: { type: 'tween', duration: 800, easing: cubicOut },
           }}
         >
           <TransformControls />
@@ -206,7 +206,7 @@
                       x="x"
                       y="y"
                       class="stroke-surface-content opacity-30"
-                      tweened
+                      motion="tween"
                       curve={settings.simple.curve}
                       markerEnd={settings.simple.arrow}
                     />
@@ -215,7 +215,7 @@
 
                 <g class="nodes">
                   {#each nodes as node (node.label)}
-                    <Group x={node.x - node.width / 2} y={node.y - node.height / 2} tweened>
+                    <Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion="tween">
                       <Rect
                         width={node.width}
                         height={node.height}
@@ -270,7 +270,7 @@
             initialScale: 0.75,
             initialTranslate: { x: 0, y: -110 },
             initialScrollMode: 'scale',
-            tweened: { duration: 800, easing: cubicOut },
+            motion: { type: 'tween', duration: 800, easing: cubicOut },
           }}
         >
           <TransformControls />
@@ -285,7 +285,7 @@
                       x="x"
                       y="y"
                       class="stroke-surface-content opacity-30"
-                      tweened
+                      motion="tween"
                       curve={settings.tcpState?.curve}
                       markerEnd={settings.tcpState.arrow}
                     />
@@ -306,14 +306,14 @@
                       verticalAnchor="middle"
                       class="stroke-2 stroke-surface-100"
                       {...settings.simple}
-                      tweened
+                      motion="tween"
                     />
                   {/each}
                 </g>
 
                 <g class="nodes">
                   {#each nodes as node (node.label)}
-                    <Group x={node.x - node.width / 2} y={node.y - node.height / 2} tweened>
+                    <Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion="tween">
                       <Rect
                         width={node.width}
                         height={node.height}
@@ -372,7 +372,7 @@
             initialScale: 0.75,
             initialTranslate: { x: 0, y: -110 },
             initialScrollMode: 'scale',
-            tweened: { duration: 800, easing: cubicOut },
+            motion: { type: 'tween', duration: 800, easing: cubicOut },
           }}
         >
           <TransformControls />
@@ -391,7 +391,7 @@
                       x="x"
                       y="y"
                       class="stroke-surface-content opacity-30"
-                      tweened
+                      motion="tween"
                       curve={settings.softwareUserFlow?.curve}
                       markerEnd={settings.softwareUserFlow.arrow}
                     />
@@ -412,14 +412,14 @@
                       verticalAnchor="middle"
                       class="stroke-2 stroke-surface-100"
                       {...settings.simple}
-                      tweened
+                      motion="tween"
                     />
                   {/each}
                 </g>
 
                 <g class="nodes">
                   {#each nodes as node (node.label)}
-                    <Group x={node.x - node.width / 2} y={node.y - node.height / 2} tweened>
+                    <Group x={node.x - node.width / 2} y={node.y - node.height / 2} motion="tween">
                       <Rect
                         width={node.width}
                         height={node.height}

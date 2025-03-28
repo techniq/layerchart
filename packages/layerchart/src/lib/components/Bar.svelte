@@ -60,8 +60,9 @@
       | 'top-right'
       | 'bottom-left'
       | 'bottom-right';
-  } & MotionProps &
-    CommonStyleProps;
+
+    motion?: MotionProp<'x' | 'y' | 'width' | 'height'>;
+  } & CommonStyleProps;
 
   export type BarProps = BarPropsWithoutHTML &
     Without<Omit<SVGAttributes<SVGElement>, 'width' | 'height' | 'x' | 'y'>, BarPropsWithoutHTML>;
@@ -74,11 +75,11 @@
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { greatestAbs } from '@layerstack/utils';
-  import type { MotionProps } from '$lib/stores/motionState.svelte.js';
   import { getChartContext } from './Chart.svelte';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { extractLayerProps } from '$lib/utils/attributes.js';
+  import { extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
 
   const ctx = getChartContext();
 
@@ -95,8 +96,7 @@
     opacity,
     radius = 0,
     rounded: roundedProp = 'all',
-    spring,
-    tweened,
+    motion,
     insets,
     initialX,
     initialY,
@@ -167,8 +167,7 @@
     {strokeWidth}
     {opacity}
     rx={rounded === 'none' ? 0 : radius}
-    {spring}
-    {tweened}
+    {motion}
     {initialX}
     {initialY}
     {initialHeight}
@@ -177,6 +176,7 @@
     {...extractLayerProps(restProps, 'bar')}
   />
 {:else}
+  {@const tweenMotion = extractTweenConfig(motion)}
   <Spline
     {pathData}
     {fill}
@@ -184,7 +184,7 @@
     {stroke}
     {strokeWidth}
     {opacity}
-    {tweened}
+    motion={tweenMotion}
     {...extractLayerProps(restProps, 'bar')}
   />
 {/if}

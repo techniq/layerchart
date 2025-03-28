@@ -163,7 +163,7 @@
               y0: selectedHorizontal?.x0,
               y1: selectedHorizontal?.x1,
             }}
-            tweened={{ duration: 800, easing: cubicOut }}
+            motion={{ type: 'tween', duration: 800, easing: cubicOut }}
           >
             {#snippet children({ xScale, yScale })}
               <ChartClipPath>
@@ -253,7 +253,7 @@
               y0: selectedVertical?.y0,
               x1: selectedVertical?.x1,
             }}
-            tweened={{ duration: 800, easing: cubicOut }}
+            motion={{ type: 'tween', duration: 800, easing: cubicOut }}
           >
             {#snippet children({ xScale, yScale })}
               <ChartClipPath>
@@ -361,7 +361,7 @@
                       x={xScale(node.y0)}
                       y={yScale(node.x0)}
                       onclick={() => (selectedCarNode = node)}
-                      tweened={{ delay: 600 }}
+                      motion={{ type: 'tween', delay: 600 }}
                     >
                       {@const nodeWidth = xScale(node.y1) - xScale(node.y0)}
                       {@const nodeHeight = yScale(node.x1) - yScale(node.x0)}
@@ -376,12 +376,12 @@
                           stroke-opacity={colorBy === 'children' ? 0.2 : 1}
                           fill={nodeColor}
                           rx={5}
-                          tweened={{ delay: 600 }}
+                          motion={{ type: 'tween', delay: 600 }}
                         />
                         <RectClipPath
                           width={nodeWidth}
                           height={nodeHeight}
-                          tweened={{ delay: 600 }}
+                          motion={{ type: 'tween', delay: 600 }}
                         >
                           <text
                             x={4}

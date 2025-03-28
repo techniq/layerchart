@@ -207,7 +207,7 @@
                 sankey
                 data={link}
                 strokeWidth={link.width}
-                tweened
+                motion="tween"
                 class="stroke-surface-content/10"
               />
             {/each}
@@ -219,7 +219,7 @@
                 <Group
                   x={node.x0}
                   y={node.y0}
-                  tweened
+                  motion="tween"
                   onclick={() => {
                     selectedNode =
                       node === selectedNode || node.sourceLinks?.length === 0 ? null : node;
@@ -229,7 +229,7 @@
                     width={nodeWidth}
                     height={nodeHeight}
                     class="fill-primary hover:fill-primary/90 hover:cursor-pointer"
-                    tweened
+                    motion="tween"
                   />
                   <Text
                     value={node.name}
@@ -293,14 +293,14 @@
                     highlightLinkIndexes = [];
                     context.tooltip.hide();
                   }}
-                  tweened
+                  motion="tween"
                 />
               {/each}
 
               {#each nodes as node, i (i)}
                 {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
                 {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
-                <Group x={node.x0} y={node.y0} tweened>
+                <Group x={node.x0} y={node.y0} motion="tween">
                   <Rect
                     width={nodeWidth}
                     height={nodeHeight}
@@ -317,7 +317,7 @@
                       highlightLinkIndexes = [];
                       context.tooltip.hide();
                     }}
-                    tweened
+                    motion="tween"
                   />
                   <Text
                     value={node.name}
@@ -415,14 +415,14 @@
                 )}
                 onpointerenter={() => (highlightLinkIndexes = [link.index])}
                 onpointerleave={() => (highlightLinkIndexes = [])}
-                tweened
+                motion="tween"
               />
             {/each}
 
             {#each nodes as node (getHierarchyNodeKey(node))}
               {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
               {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
-              <Group x={node.x0} y={node.y0} tweened>
+              <Group x={node.x0} y={node.y0} motion="tween">
                 <Rect
                   width={nodeWidth}
                   height={nodeHeight}
@@ -435,7 +435,7 @@
                     ];
                   }}
                   onpointerleave={() => (highlightLinkIndexes = [])}
-                  tweened
+                  motion="tween"
                 />
                 <Text
                   value={node.data.name}

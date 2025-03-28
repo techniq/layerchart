@@ -54,11 +54,11 @@
     anchor?: Placement;
 
     /**
-     * Set to `false` to disable spring transitions
+     * The default motion state of the tooltip.
      *
-     * @default true
+     * @default "spring"
      */
-    motion?: boolean;
+    motion?: MotionProp;
 
     /**
      * Allow pointer events.  Disabled by default to reduce accidental selection, but useful to
@@ -167,10 +167,10 @@
   import { fade } from 'svelte/transition';
   import { cls } from '@layerstack/tailwind';
 
-  import { isScaleBand, type AnyScale } from '../../utils/scales.svelte.js';
+  import { isScaleBand } from '../../utils/scales.svelte.js';
   import { getChartContext, type ChartContextValue } from '../Chart.svelte';
   import { getTooltipContext } from './TooltipContext.svelte';
-  import { motionState } from '$lib/stores/motionState.svelte.js';
+  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { untrack, type Snippet } from 'svelte';
   import { layerClass } from '$lib/utils/attributes.js';
 
@@ -178,7 +178,7 @@
     anchor = 'top-left',
     classes = {},
     contained = 'container',
-    motion = true,
+    motion = 'spring',
     pointerEvents = false,
     variant = 'default',
     x = 'pointer',
@@ -201,16 +201,18 @@
   let tooltipWidth = $state(0);
   let tooltipHeight = $state(0);
 
-  const xPos = motionState(tooltipCtx.x, { spring: motion });
-  const yPos = motionState(tooltipCtx.y, { spring: motion });
-
   function alignValue(value: number, align: Align, additionalOffset: number, tooltipSize: number) {
     const alignOffset = align === 'center' ? tooltipSize / 2 : align === 'end' ? tooltipSize : 0;
     return value + (align === 'end' ? -additionalOffset : additionalOffset) - alignOffset;
   }
 
-  $effect(() => {
-    if (!tooltipCtx.data) return;
+  const positions = $derived.by(() => {
+    if (!tooltipCtx.data) {
+      // if no data, fallback?
+      const tooltipX = untrack(() => tooltipCtx.x);
+      const tooltipY = untrack(() => tooltipCtx.y);
+      return { x: tooltipX, y: tooltipY };
+    }
     const xBandOffset = isScaleBand(ctx.xScale)
       ? ctx.xScale.step() / 2 - (ctx.xScale.padding() * ctx.xScale.step()) / 2
       : 0;
@@ -343,12 +345,14 @@
         rect.bottom = rect.top + tooltipHeight;
       }
     }
-
-    untrack(() => {
-      yPos.target = rect.top;
-      xPos.target = rect.left;
-    });
+    return {
+      x: rect.left,
+      y: rect.top,
+    };
   });
+
+  const motionX = createMotion(tooltipCtx.x, () => positions.x, motion);
+  const motionY = createMotion(tooltipCtx.y, () => positions.y, motion);
 </script>
 
 {#if tooltipCtx.data}
@@ -361,8 +365,8 @@
       classes.root,
       props.root?.class
     )}
-    style:top="{yPos.current}px"
-    style:left="{xPos.current}px"
+    style:top="{motionY.current}px"
+    style:left="{motionX.current}px"
     transition:fade={{ duration: 100 }}
     bind:clientWidth={tooltipWidth}
     bind:clientHeight={tooltipHeight}

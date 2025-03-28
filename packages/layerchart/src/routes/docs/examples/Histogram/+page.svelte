@@ -63,9 +63,9 @@
       y="length"
       bandPadding={0.2}
       props={{
-        xAxis: { tweened: true },
-        yAxis: { format: 'metric', tweened: true },
-        bars: { tweened: true },
+        xAxis: { motion: 'tween' },
+        yAxis: { format: 'metric', motion: 'tween' },
+        bars: { motion: 'tween' },
       }}
     >
       {#snippet tooltip()}
@@ -99,9 +99,9 @@
       y="x0"
       bandPadding={0.2}
       props={{
-        xAxis: { tweened: true },
-        yAxis: { tweened: true },
-        bars: { tweened: true },
+        xAxis: { motion: 'tween' },
+        yAxis: { motion: 'tween' },
+        bars: { motion: 'tween' },
       }}
       orientation="horizontal"
     >
@@ -194,9 +194,9 @@
       y="length"
       bandPadding={0.2}
       props={{
-        xAxis: { tweened: true },
-        yAxis: { format: 'metric', tweened: true },
-        bars: { tweened: true },
+        xAxis: { motion: 'tween' },
+        yAxis: { format: 'metric', motion: 'tween' },
+        bars: { motion: 'tween' },
       }}
     >
       {#snippet tooltip()}
@@ -246,9 +246,9 @@
         y="length"
         bandPadding={0.2}
         props={{
-          xAxis: { tweened: true },
-          yAxis: { format: 'metric', tweened: true },
-          bars: { tweened: true },
+          xAxis: { motion: 'tween' },
+          yAxis: { format: 'metric', motion: 'tween' },
+          bars: { motion: 'tween' },
         }}
       >
         {#snippet tooltip()}
@@ -322,10 +322,10 @@
             format: PeriodType.Day,
             ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks(),
             tickLabelProps: { rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 },
-            tweened: true,
+            motion: 'tween',
           },
-          yAxis: { format: 'metric', tweened: true },
-          bars: { tweened: true },
+          yAxis: { format: 'metric', motion: 'tween' },
+          bars: { motion: 'tween' },
         }}
       >
         {#snippet tooltip()}

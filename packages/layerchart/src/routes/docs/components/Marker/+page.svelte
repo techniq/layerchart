@@ -21,6 +21,7 @@
   let markerEnd = $state(true);
 
   let tweened = $state(true);
+  const motion = $derived(tweened ? 'tween' : undefined);
 
   const data = $derived(
     Array.from({ length: pointCount }).map((_, i) => {
@@ -69,7 +70,7 @@
               markerStart={markerStart ? marker : undefined}
               markerMid={markerMid ? marker : undefined}
               markerEnd={markerEnd ? marker : undefined}
-              {tweened}
+              {motion}
             />
           </Svg>
         </Chart>
@@ -111,7 +112,7 @@
               markerStart={markerStart ? { type: marker, 'stroke-width': 2 } : undefined}
               markerMid={markerMid ? { type: marker, 'stroke-width': 2 } : undefined}
               markerEnd={markerEnd ? { type: marker, 'stroke-width': 2 } : undefined}
-              {tweened}
+              {motion}
             />
           </Svg>
         </Chart>

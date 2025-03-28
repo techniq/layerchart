@@ -50,8 +50,9 @@
      * @bindable
      */
     ref?: SVGCircleElement;
-  } & MotionProps &
-    CommonStyleProps;
+
+    motion?: MotionProp;
+  } & CommonStyleProps;
 
   export type CircleProps = CirclePropsWithoutHTML &
     Without<SVGAttributes<Element>, CirclePropsWithoutHTML>;
@@ -62,11 +63,10 @@
   import { merge } from 'lodash-es';
 
   import { getRenderContext } from './Chart.svelte';
-  import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
+  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import type { SVGAttributes } from 'svelte/elements';
-  import { afterTick } from '$lib/utils/afterTick.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { layerClass } from '$lib/utils/attributes.js';
 
@@ -77,8 +77,7 @@
     initialCy = cy,
     r = 1,
     initialR = r,
-    spring,
-    tweened,
+    motion,
     fill,
     fillOpacity,
     stroke,
@@ -92,18 +91,9 @@
   const renderCtx = getRenderContext();
   const canvasCtx = getCanvasContext();
 
-  const tweenedCx = motionState(initialCx, { spring, tweened });
-  const tweenedCy = motionState(initialCy, { spring, tweened });
-  const tweenedR = motionState(initialR, { spring, tweened });
-
-  $effect(() => {
-    [cx, cy, r];
-    afterTick(() => {
-      tweenedCx.target = cx;
-      tweenedCy.target = cy;
-      tweenedR.target = r;
-    });
-  });
+  const motionCx = createMotion(initialCx, () => cx, motion);
+  const motionCy = createMotion(initialCy, () => cy, motion);
+  const motionR = createMotion(initialR, () => r, motion);
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -111,7 +101,7 @@
   ) {
     renderCircle(
       ctx,
-      { cx: tweenedCx.current, cy: tweenedCy.current, r: tweenedR.current },
+      { cx: motionCx.current, cy: motionCy.current, r: motionR.current },
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
@@ -128,9 +118,9 @@
   $effect(() => {
     if (renderCtx !== 'canvas') return;
     [
-      tweenedCx.current,
-      tweenedCy.current,
-      tweenedR.current,
+      motionCx.current,
+      motionCy.current,
+      motionR.current,
       fillKey.current,
       fillOpacity,
       strokeKey.current,
@@ -161,9 +151,9 @@
 {#if renderCtx === 'svg'}
   <circle
     bind:this={ref}
-    cx={tweenedCx.current}
-    cy={tweenedCy.current}
-    r={tweenedR.current}
+    cx={motionCx.current}
+    cy={motionCy.current}
+    r={motionR.current}
     {fill}
     fill-opacity={fillOpacity}
     {stroke}

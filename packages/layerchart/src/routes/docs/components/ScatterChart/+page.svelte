@@ -190,10 +190,10 @@
       series={pengiunSeries}
       padding={{ left: 16, bottom: 48 }}
       props={{
-        xAxis: { tweened: { duration: 200 } },
-        yAxis: { tweened: { duration: 200 } },
-        grid: { tweened: { duration: 200 } },
-        points: { tweened: { duration: 200 } },
+        xAxis: { motion: { type: 'tween', duration: 200 } },
+        yAxis: { motion: { type: 'tween', duration: 200 } },
+        grid: { motion: { type: 'tween', duration: 200 } },
+        points: { motion: { type: 'tween', duration: 200 } },
       }}
       legend
       {renderContext}
@@ -326,9 +326,9 @@
       x="x"
       y="y"
       props={{
-        points: { tweened: { duration: 200 } },
-        xAxis: { tweened: { duration: 200 } },
-        yAxis: { tweened: { duration: 200 } },
+        points: { motion: { type: 'tween', duration: 200 } },
+        xAxis: { motion: { type: 'tween', duration: 200 } },
+        yAxis: { motion: { type: 'tween', duration: 200 } },
       }}
       brush
       {renderContext}

@@ -73,7 +73,7 @@
 
     /**
      * Transition function for entering elements
-     * @default tweened ? fade : () => ({})
+     * @default defaults to fade if the motion prop is set to tweened
      */
     transitionIn?: In;
 
@@ -99,7 +99,9 @@
       tick?: string;
       tickLabel?: string;
     };
-  } & MotionProps;
+
+    motion?: MotionProp;
+  };
 
   export type AxisProps<In extends Transition = Transition> = AxisPropsWithoutHTML<In> &
     Without<SVGAttributes<SVGGElement>, AxisPropsWithoutHTML<In>>;
@@ -122,9 +124,10 @@
   import Rule from './Rule.svelte';
   import Text from './Text.svelte';
   import { isScaleBand, type AnyScale } from '$lib/utils/scales.svelte.js';
-  import type { MotionProps } from '$lib/stores/motionState.svelte.js';
+
   import { getChartContext } from './Chart.svelte';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import { extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
 
   let {
     placement,
@@ -138,8 +141,7 @@
     tickMarks = true,
     format,
     tickLabelProps,
-    spring,
-    tweened,
+    motion,
     transitionIn: transitionInProp,
     transitionInParams: transitionInParamsProp,
     scale: scaleProp,
@@ -150,7 +152,7 @@
   }: AxisProps<T> = $props();
 
   const transitionIn = $derived(
-    transitionInProp ? transitionInProp : tweened ? fade : () => {}
+    transitionInProp ? transitionInProp : extractTweenConfig(motion) ? fade : () => {}
   ) as T;
   const transitionInParams = $derived(
     transitionInParamsProp ? transitionInParamsProp : { easing: cubicIn }
@@ -362,8 +364,7 @@
     <Rule
       x={placement === 'left' || placement === 'right' ? placement : placement === 'angle'}
       y={placement === 'top' || placement === 'bottom' ? placement : placement === 'radius'}
-      {tweened}
-      {spring}
+      {motion}
       {...ruleProps}
       class={cls('stroke-surface-content/50', classes.rule, ruleProps?.class)}
     />
@@ -387,8 +388,7 @@
       y: orientation === 'angle' ? radialTickCoordsY : tickCoords.y,
       value: formatValue(tick, format ?? scale.tickFormat?.() ?? ((v) => v)),
       ...getDefaultTickLabelProps(tick),
-      tweened,
-      spring,
+      motion,
       ...tickLabelProps,
       class: cls(
         layerClass('axis-tick-label'),
@@ -404,8 +404,7 @@
         <Rule
           x={orientation === 'horizontal' || orientation === 'angle' ? tick : false}
           y={orientation === 'vertical' || orientation === 'radius' ? tick : false}
-          {tweened}
-          {spring}
+          {motion}
           {...ruleProps}
           class={cls('stroke-surface-content/10', classes.rule, ruleProps?.class)}
         />
@@ -424,8 +423,7 @@
             y1={tickCoords.y}
             x2={tickCoords.x}
             y2={tickCoords.y + (placement === 'top' ? -tickLength : tickLength)}
-            {tweened}
-            {spring}
+            {motion}
             class={tickClasses}
           />
         {:else if orientation === 'vertical'}
@@ -434,8 +432,7 @@
             y1={tickCoords.y}
             x2={tickCoords.x + (placement === 'left' ? -tickLength : tickLength)}
             y2={tickCoords.y}
-            {tweened}
-            {spring}
+            {motion}
             class={tickClasses}
           />
         {:else if orientation === 'angle'}
@@ -444,8 +441,7 @@
             y1={radialTickCoordsY}
             x2={radialTickMarkCoordsX}
             y2={radialTickMarkCoordsY}
-            {tweened}
-            {spring}
+            {motion}
             class={tickClasses}
           />
         {/if}

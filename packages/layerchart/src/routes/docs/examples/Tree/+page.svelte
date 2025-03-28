@@ -94,7 +94,7 @@
       padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}
       transform={{
         mode: 'canvas',
-        tweened: { duration: 800, easing: cubicOut },
+        motion: { type: 'tween', duration: 800, easing: cubicOut },
       }}
     >
       {#snippet children()}
@@ -112,7 +112,7 @@
                   data={link}
                   {orientation}
                   {curve}
-                  tweened
+                  motion="tween"
                   class="stroke-surface-content opacity-20"
                 />
               {/each}
@@ -121,7 +121,7 @@
                 <Group
                   x={(orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
                   y={(orientation === 'horizontal' ? node.x : node.y) - nodeHeight / 2}
-                  tweened
+                  motion="tween"
                   onclick={() => {
                     if (expandedNodeNames.includes(node.data.name)) {
                       expandedNodeNames = expandedNodeNames.filter(
@@ -180,7 +180,7 @@
       padding={{ top: 24, left: nodeWidth / 2, right: nodeWidth / 2 }}
       transform={{
         mode: 'canvas',
-        tweened: { duration: 800, easing: cubicOut },
+        motion: { type: 'tween', duration: 800, easing: cubicOut },
       }}
     >
       {#snippet children()}
@@ -198,7 +198,7 @@
                   data={link}
                   {orientation}
                   {curve}
-                  tweened
+                  motion="tween"
                   class="stroke-surface-content opacity-20"
                 />
               {/each}
@@ -211,7 +211,7 @@
                 <Group
                   {x}
                   {y}
-                  tweened
+                  motion="tween"
                   style="width: {nodeWidth}px; height: {nodeHeight}px;"
                   class={cls(
                     'bg-surface-100 rounded-full outline',

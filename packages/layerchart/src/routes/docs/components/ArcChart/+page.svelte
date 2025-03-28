@@ -226,7 +226,7 @@
               color: d.color,
             };
           })}
-          props={{ arc: { tweened: true } }}
+          props={{ arc: { motion: 'tween' } }}
           outerRadius={-25}
           innerRadius={-20}
           cornerRadius={10}

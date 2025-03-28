@@ -1,6 +1,6 @@
 <script lang="ts" module>
-  import type { MotionProps } from '$lib/stores/motionState.svelte.js';
   import type { Snippet } from 'svelte';
+  import type { MotionProp } from '$lib/utils/motion.svelte.js';
 
   export type BoundsExtents = Partial<{ x0: number; y0: number; x1: number; y1: number }>;
   export type BoundsExtentsAccessor = (dimensions: {
@@ -12,16 +12,17 @@
     domain?: BoundsExtents | BoundsExtentsAccessor | null;
     range?: BoundsExtents | BoundsExtentsAccessor | null;
     children?: Snippet<[{ xScale: AnyScale; yScale: AnyScale }]>;
-  } & MotionProps;
+    motion?: MotionProp;
+  };
 </script>
 
 <script lang="ts">
   import { scaleLinear } from 'd3-scale';
 
   import { getChartContext } from './Chart.svelte';
-  import { motionScaleState, type AnyScale } from '$lib/utils/scales.svelte.js';
+  import { createMotionScale, type AnyScale } from '$lib/utils/scales.svelte.js';
 
-  let { domain, range, spring, tweened, children }: BoundsProps = $props();
+  let { domain, range, motion, children }: BoundsProps = $props();
 
   const ctx = getChartContext();
 
@@ -41,9 +42,7 @@
     ];
   }
 
-  const xScale = motionScaleState(scaleLinear as any, {
-    spring,
-    tweened,
+  const xScale = createMotionScale(scaleLinear as any, motion, {
     defaultDomain: getExtents(domain, 'x', ctx.width),
     defaultRange: getExtents(range, 'x', ctx.width),
   });
@@ -56,9 +55,7 @@
     xScale.range(getExtents(range, 'x', ctx.width));
   });
 
-  const yScale = motionScaleState(scaleLinear as any, {
-    spring,
-    tweened,
+  const yScale = createMotionScale(scaleLinear as any, motion, {
     defaultDomain: getExtents(domain, 'y', ctx.height),
     defaultRange: getExtents(range, 'y', ctx.height),
   });

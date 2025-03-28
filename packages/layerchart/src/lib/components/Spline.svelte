@@ -5,7 +5,13 @@
   import type { SVGAttributes } from 'svelte/elements';
   import type { CurveFactory, CurveFactoryLineOnly, Line } from 'd3-shape';
 
-  import { motionState, type TweenedProp } from '$lib/stores/motionState.svelte.js';
+  import {
+    createMotion,
+    extractTweenConfig,
+    type MotionNoneOption,
+    type MotionProp,
+    type MotionTweenOption,
+  } from '$lib/utils/motion.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
 
   export type SplinePropsWithoutHTML = {
@@ -34,7 +40,7 @@
      * Interpolate path data using d3-interpolate-path.
      * Works best without `draw` enabled
      */
-    tweened?: TweenedProp;
+    motion?: MotionProp;
 
     /**
      * Whether to animate the drawing of the path over time.
@@ -142,7 +148,6 @@
     pathData,
     x,
     y,
-    tweened,
     draw,
     curve,
     defined,
@@ -158,6 +163,7 @@
     startContent,
     endContent,
     opacity,
+    motion,
     ref = $bindable(),
     ...restProps
   }: SplineProps = $props();
@@ -196,13 +202,17 @@
   const xOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
   const yOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
 
-  const tweenedOptions = tweened
-    ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
-    : false;
+  const extractedTweenConfig = extractTweenConfig(motion);
+  const tweenOptions = extractedTweenConfig
+    ? {
+        interpolate: interpolatePath,
+        ...extractedTweenConfig,
+      }
+    : undefined;
 
   /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */
   function defaultPathData() {
-    if (!tweenedOptions) {
+    if (!tweenOptions) {
       // If not tweened, return empty string (faster initial render)
       return '';
     } else if (pathData) {
@@ -226,10 +236,6 @@
     }
   }
 
-  const tweenedState = motionState(defaultPathData(), {
-    tweened: tweenedOptions,
-  });
-
   const d = $derived.by(() => {
     const path = ctx.radial
       ? lineRadial()
@@ -250,15 +256,13 @@
 
   let key = $state(Symbol());
 
-  $effect(() => {
-    if (!draw) return;
-    [tweenedState.current];
-    // Anytime the path data changes, redraw
-    key = Symbol();
-  });
+  const motionPath = createMotion(defaultPathData(), () => d, tweenOptions);
 
   $effect(() => {
-    tweenedState.target = d;
+    if (!draw) return;
+    [motionPath.current];
+    // Anytime the path data changes, redraw
+    key = Symbol();
   });
 
   const renderCtx = getRenderContext();
@@ -270,7 +274,7 @@
   ) {
     renderPathData(
       ctx,
-      tweenedState.current,
+      motionPath.current,
       styleOverrides
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
@@ -322,21 +326,27 @@
     return 800;
   });
 
-  const endPoint = motionState<DOMPoint | undefined>(undefined, {
-    tweened: draw
-      ? {
-          duration: () => endPointDuration,
-          easing: typeof draw === 'object' && draw.easing ? draw.easing : cubicInOut,
-          interpolate() {
-            return (t: number) => {
-              const totalLength = ref?.getTotalLength() ?? 0;
-              const point = ref?.getPointAtLength(totalLength * t);
-              return point;
-            };
-          },
-        }
-      : false,
-  });
+  const endPointTweenOptions = draw
+    ? {
+        type: 'tween' as const,
+        duration: () => endPointDuration,
+        easing: typeof draw === 'object' && draw.easing ? draw.easing : cubicInOut,
+        interpolate() {
+          return (t: number) => {
+            const totalLength = ref?.getTotalLength() ?? 0;
+            const point = ref?.getPointAtLength(totalLength * t);
+            return point;
+          };
+        },
+      }
+    : undefined;
+
+  let endPointTarget = $state.raw<DOMPoint | undefined>();
+  const endPoint = createMotion<DOMPoint | undefined>(
+    undefined,
+    () => endPointTarget,
+    endPointTweenOptions
+  );
 
   $effect(() => {
     if (!startContent && !endContent) return;
@@ -345,7 +355,7 @@
       if (!ref) return;
       startPoint = ref.getPointAtLength(0);
       const totalLength = ref.getTotalLength();
-      endPoint.target = ref.getPointAtLength(totalLength);
+      endPointTarget = ref.getPointAtLength(totalLength);
     });
   });
 </script>
@@ -353,7 +363,7 @@
 {#if renderCtx === 'svg'}
   {#key key}
     <path
-      d={tweenedState.current}
+      d={motionPath.current}
       {...restProps}
       class={cls(
         layerClass('spline-path'),

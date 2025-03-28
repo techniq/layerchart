@@ -76,13 +76,17 @@
         {#if show}
           <Spline
             {curve}
-            tweened={motion === 'tweened'}
+            motion={motion === 'tweened' ? 'tween' : 'none'}
             draw={motion === 'draw'}
             class="stroke-primary stroke-2"
           />
 
           {#if showPoints}
-            <Points tweened={motion === 'tweened'} r={3} class="fill-surface-100 stroke-primary" />
+            <Points
+              motion={motion === 'tweened' ? 'tween' : 'none'}
+              r={3}
+              class="fill-surface-100 stroke-primary"
+            />
           {/if}
         {/if}
       </Context>
@@ -138,7 +142,7 @@
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
-            <Spline {curve} tweened class="stroke-primary stroke-2" />
+            <Spline {curve} motion="tween" class="stroke-primary stroke-2" />
           {/if}
         </Svg>
       </Chart>
@@ -301,7 +305,7 @@
         </Svg>
         <Canvas>
           {#if show}
-            <Spline {curve} tweened class="stroke-primary stroke-2" />
+            <Spline {curve} motion="tween" class="stroke-primary stroke-2" />
           {/if}
         </Canvas>
       </Chart>

@@ -1,7 +1,7 @@
 <script lang="ts" module>
   export type TicksConfig = number | any[] | ((scale: AnyScale) => any) | null | undefined;
   import type { Transition, TransitionParams, Without } from '$lib/utils/types.js';
-  import type { MotionProps } from '$lib/stores/motionState.svelte.js';
+  import { extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { SVGAttributes } from 'svelte/elements';
 
   export type GridPropsWithoutHTML<In extends Transition = Transition> = {
@@ -57,7 +57,7 @@
 
     /**
      * Transition function for entering elements
-     * @default tweened ? fade : () => ({})
+     * @default  defaults to fade if motion is tweened
      */
     transitionIn?: In;
 
@@ -73,7 +73,9 @@
      * @bindable
      */
     ref?: SVGGElement;
-  } & MotionProps;
+
+    motion?: MotionProp;
+  };
 
   export type GridProps<In extends Transition = Transition> = Omit<
     GridPropsWithoutHTML<In> & Without<SVGAttributes<SVGGElement>, GridPropsWithoutHTML<In>>,
@@ -106,19 +108,18 @@
     yTicks = !isScaleBand(ctx.yScale) ? 4 : undefined,
     bandAlign = 'center',
     radialY = 'circle',
-    spring,
-    tweened,
-    transitionIn = tweened
-      ? fade
-      : () => {
-          return {};
-        },
+    motion,
+    transitionIn: transitionInProp,
     transitionInParams = { easing: cubicIn },
     classes = {},
     class: className,
     ref = $bindable(),
     ...restProps
   }: GridProps = $props();
+
+  const tweenConfig = $derived(extractTweenConfig(motion));
+
+  const transitionIn = $derived((transitionInProp ?? tweenConfig) ? fade : () => ({}));
 
   function getTickVals(scale: AnyScale, ticks: TicksConfig): any[] {
     return Array.isArray(ticks)
@@ -168,7 +169,7 @@
             x="x"
             y="y"
             curve={curveLinearClosed}
-            {tweened}
+            motion={tweenConfig}
             {...splineProps}
             class={cls(
               layerClass('grid-x-line'),
@@ -181,8 +182,7 @@
           <Rule
             {x}
             xOffset={xBandOffset}
-            {tweened}
-            {spring}
+            {motion}
             {...splineProps}
             class={cls(
               layerClass('grid-x-rule'),
@@ -199,8 +199,7 @@
         <Rule
           x={xTickVals[xTickVals.length - 1]}
           xOffset={xBandOffset + ctx.xScale.step()}
-          {tweened}
-          {spring}
+          {motion}
           {...splineProps}
           class={cls(
             layerClass('grid-x-end-rule'),
@@ -221,8 +220,7 @@
           {#if radialY === 'circle'}
             <Circle
               r={ctx.yScale(y)}
-              {tweened}
-              {spring}
+              {motion}
               {...splineProps}
               class={cls(
                 layerClass('grid-y-circle'),
@@ -240,7 +238,7 @@
               data={xTickVals.map((x) => ({ x, y }))}
               x="x"
               y="y"
-              {tweened}
+              motion={tweenConfig}
               curve={curveLinearClosed}
               {...splineProps}
               class={cls(
@@ -255,8 +253,7 @@
           <Rule
             {y}
             yOffset={yBandOffset}
-            {tweened}
-            {spring}
+            {motion}
             {...splineProps}
             class={cls(
               layerClass('grid-y-rule'),
@@ -273,8 +270,7 @@
         <Rule
           y={yTickVals[yTickVals.length - 1]}
           yOffset={yBandOffset + ctx.yScale.step()}
-          {tweened}
-          {spring}
+          {motion}
           {...splineProps}
           class={cls(
             layerClass('grid-y-end-rule'),

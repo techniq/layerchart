@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { MotionProps } from '$lib/stores/motionState.svelte.js';
+  import type { MotionProp } from '$lib/utils/motion.svelte.js';
   import ClipPath, { type ClipPathPropsWithoutHTML } from './ClipPath.svelte';
 
   export type CircleClipPathPropsWithoutHTML = {
@@ -47,7 +47,9 @@
      * The children snippet to render content inside the clipPath.
      */
     children?: ClipPathPropsWithoutHTML['children'];
-  } & MotionProps;
+
+    motion?: MotionProp;
+  };
 </script>
 
 <script lang="ts">
@@ -62,8 +64,7 @@
     cx = 0,
     cy = 0,
     r,
-    spring,
-    tweened,
+    motion,
     disabled = false,
     ref = $bindable(),
     children,
@@ -73,14 +74,6 @@
 
 <ClipPath {id} {disabled} {children}>
   {#snippet clip()}
-    <Circle
-      {cx}
-      {cy}
-      {r}
-      {spring}
-      {tweened}
-      {...extractLayerProps(restProps, 'clip-path-circle')}
-      bind:ref
-    />
+    <Circle {cx} {cy} {r} {motion} {...extractLayerProps(restProps, 'clip-path-circle')} bind:ref />
   {/snippet}
 </ClipPath>

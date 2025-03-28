@@ -64,7 +64,7 @@
       }}
       transform={{
         initialScrollMode: 'none',
-        tweened: { duration: 800, easing: cubicOut },
+        motion: { type: 'tween', duration: 800, easing: cubicOut },
       }}
     >
       {#snippet children({ context })}
@@ -139,7 +139,7 @@
       transform={{
         mode: 'canvas',
         initialScrollMode: 'none',
-        tweened: { duration: 800, easing: cubicOut },
+        motion: { type: 'tween', duration: 800, easing: cubicOut },
       }}
     >
       {#snippet children({ context })}
@@ -219,7 +219,7 @@
       }}
       transform={{
         initialScrollMode: 'none',
-        tweened: { duration: 800, easing: cubicOut },
+        motion: { type: 'tween', duration: 800, easing: cubicOut },
       }}
     >
       {#snippet children({ context })}
@@ -307,7 +307,7 @@
       transform={{
         mode: 'canvas',
         initialScrollMode: 'none',
-        tweened: { duration: 800, easing: cubicOut },
+        motion: { type: 'tween', duration: 800, easing: cubicOut },
       }}
     >
       {#snippet children({ context })}

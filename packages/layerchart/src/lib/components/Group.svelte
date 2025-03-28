@@ -2,7 +2,7 @@
   import type { Snippet } from 'svelte';
   import type { HTMLAttributes, TouchEventHandler } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
-  import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
+  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
 
   export type GroupPropsWithoutHTML = {
     /**
@@ -54,7 +54,9 @@
      * @bindable
      */
     ref?: Element;
-  } & MotionProps;
+
+    motion?: MotionProp;
+  };
 
   export type GroupProps = GroupPropsWithoutHTML &
     Without<HTMLAttributes<Element>, GroupPropsWithoutHTML>;
@@ -79,28 +81,21 @@
     initialY = y,
     center = false,
     preventTouchMove = false,
-    spring,
-    tweened,
+    motion,
     class: className,
     children,
     ref = $bindable(),
     ...restProps
   }: GroupProps = $props();
 
-  const tweenedX = motionState(initialX, { spring, tweened });
-  const tweenedY = motionState(initialY, { spring, tweened });
-
-  $effect(() => {
-    [x, y, center, ctx.width, ctx.height];
-    afterTick(() => {
-      tweenedX.target = x ?? (center === 'x' || center === true ? ctx.width / 2 : 0);
-      tweenedY.target = y ?? (center === 'y' || center === true ? ctx.height / 2 : 0);
-    });
-  });
+  const trueX = $derived(x ?? (center === 'x' || center === true ? ctx.width / 2 : 0));
+  const trueY = $derived(y ?? (center === 'y' || center === true ? ctx.height / 2 : 0));
+  const motionX = createMotion(initialX, () => trueX, motion);
+  const motionY = createMotion(initialY, () => trueY, motion);
 
   const transform = $derived.by(() => {
     if (center || x != null || y != null) {
-      return `translate(${tweenedX.current}px, ${tweenedY.current}px)`;
+      return `translate(${motionX.current}px, ${motionY.current}px)`;
     }
   });
 
@@ -108,7 +103,7 @@
   const canvasCtx = getCanvasContext();
 
   function render(ctx: CanvasRenderingContext2D) {
-    ctx.translate(tweenedX.current ?? 0, tweenedY.current ?? 0);
+    ctx.translate(motionX.current ?? 0, motionY.current ?? 0);
   }
   $effect(() => {
     if (renderCtx !== 'canvas') return;
@@ -129,7 +124,7 @@
 
   $effect(() => {
     if (renderCtx !== 'canvas') return;
-    [tweenedX.current, tweenedY.current];
+    [motionX.current, motionY.current];
     canvasCtx.invalidate();
   });
 

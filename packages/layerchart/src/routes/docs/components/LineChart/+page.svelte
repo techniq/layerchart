@@ -698,8 +698,8 @@
       yBaseline={undefined}
       tooltip={false}
       props={{
-        yAxis: { tweened: true },
-        grid: { tweened: true },
+        yAxis: { motion: 'tween' },
+        grid: { motion: 'tween' },
         // spline: {
         //   draw: {
         //     // easing function to only draw the last data point
@@ -916,8 +916,8 @@
       y="value"
       brush
       props={{
-        spline: { tweened: { duration: 200 } },
-        xAxis: { format: undefined, tweened: { duration: 200 } },
+        spline: { motion: { type: 'tween', duration: 200 } },
+        xAxis: { format: undefined, motion: { type: 'tween', duration: 200 } },
       }}
       {renderContext}
       {debug}

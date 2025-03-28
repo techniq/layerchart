@@ -68,15 +68,16 @@
     sort?: ((a: any, b: any) => number) | null;
 
     children?: Snippet<[{ arcs: PieArcDatum<any>[] }]>;
-  } & MotionProps;
+
+    motion?: MotionProp;
+  };
 </script>
 
 <script lang="ts">
   import { min, max } from 'd3-array';
-
   import Arc from './Arc.svelte';
   import { degreesToRadians } from '$lib/utils/math.js';
-  import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
+  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
@@ -99,8 +100,7 @@
     outerRadius,
     cornerRadius = 0,
     padAngle = 0,
-    spring,
-    tweened,
+    motion,
     offset = 0,
     tooltipContext,
     sort,
@@ -113,18 +113,14 @@
     endAngleProp ?? degreesToRadians(ctx.config.xRange ? max(ctx.xRange) : max(range))
   );
 
-  const tweenedEndAngle = motionState(0, { spring, tweened });
-
-  $effect(() => {
-    tweenedEndAngle.target = endAngle;
-  });
+  const motionEndAngle = createMotion(0, () => endAngle, motion);
 
   const pie = $derived.by(() => {
     let _pie = d3pie<any>()
       .startAngle(
         startAngleProp ?? degreesToRadians(ctx.config.xRange ? min(ctx.xRange) : min(range))
       )
-      .endAngle(tweenedEndAngle.current)
+      .endAngle(motionEndAngle.current)
       .padAngle(padAngle)
       .value(ctx.x);
 

@@ -1,13 +1,15 @@
 import { unique } from '@layerstack/utils';
 import { scaleBand, type ScaleBand } from 'd3-scale';
 import {
-  motionState,
-  type MotionProps,
+  createControlledMotion,
+  type MotionProp,
+  type MotionOptions,
   type SpringOptions,
-  type TweenedOptions,
-} from '$lib/stores/motionState.svelte.js';
+  type TweenOptions,
+} from '$lib/utils/motion.svelte.js';
 import { Spring, Tween } from 'svelte/motion';
 import type { Accessor } from './common.js';
+import type { OnlyObjects } from './types.js';
 
 export type AnyScale<
   TInput extends SingleDomainType = any,
@@ -57,18 +59,18 @@ export type DomainType =
   | null;
 
 // this may need to become a getter for options so we can reactively update after mount
-export function motionScaleState<Domain, Range>(
+export function createMotionScale<Domain, Range>(
   scale: AnyScale,
-  options: MotionProps & {
+  motion: MotionProp | undefined,
+  options: {
     defaultDomain?: Domain;
     defaultRange?: Range;
   }
 ) {
-  const { defaultDomain, defaultRange, ...motionOptions } = options;
-  const domain = motionState<Domain>(defaultDomain as Domain, motionOptions);
-  const range = motionState<Range>(defaultRange as Range, motionOptions);
+  const domain = createControlledMotion<Domain>(options.defaultDomain as Domain, motion);
+  const range = createControlledMotion<Range>(options.defaultRange as Range, motion);
 
-  const tweenedScale = $derived.by(() => {
+  const motionScale = $derived.by(() => {
     // @ts-expect-error
     const scaleInstance = scale.domain ? scale : scale(); // support `scaleLinear` or `scaleLinear()` (which could have `.interpolate()` and others set)
 
@@ -84,7 +86,7 @@ export function motionScaleState<Domain, Range>(
 
   return {
     get current() {
-      return tweenedScale;
+      return motionScale;
     },
     domain: (values: Domain) => domain.set(values),
     range: (values: Range) => range.set(values),
@@ -178,7 +180,7 @@ export function groupScaleBand<Domain extends { toString(): string }>(
 /**
  * Animate d3-scale as domain and/or range are updated using tweened store
  */
-export function tweenedScale<Domain, Range>(scale: any, tweenedOptions: TweenedOptions = {}) {
+export function tweenedScale<Domain, Range>(scale: any, tweenedOptions: TweenOptions = {}) {
   const tweenedDomain = new Tween<Domain>(undefined as Domain, tweenedOptions);
   const tweenedRange = new Tween<Range>(undefined as Range, tweenedOptions);
 
@@ -235,9 +237,9 @@ export function springScale<Domain, Range>(scale: AnyScale, springOptions: Sprin
 /**
  * Create a store wrapper around a d3-scale which interpolates the domain and/or range using `tweened()` or `spring()` stores.  Fallbacks to `writable()` store if not interpolating
  */
-export function motionScale<Domain, Range>(scale: AnyScale, options: MotionProps) {
-  const domainState = motionState<Domain>(undefined as Domain, options);
-  const rangeState = motionState<Range>(undefined as Range, options);
+export function motionScale<Domain, Range>(scale: AnyScale, options: OnlyObjects<MotionOptions>) {
+  const domainState = createControlledMotion<Domain>(undefined as Domain, options);
+  const rangeState = createControlledMotion<Range>(undefined as Range, options);
 
   const tweenedScale = $derived.by(() => {
     // @ts-expect-error

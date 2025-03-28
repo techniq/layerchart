@@ -180,7 +180,7 @@
       <Chart {data} x="value" c="date" cRange={keyColors}>
         <Svg center>
           {#if show}
-            <Pie tweened />
+            <Pie motion="tween" />
           {/if}
         </Svg>
       </Chart>

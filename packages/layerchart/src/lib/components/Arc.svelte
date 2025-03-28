@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';
   import type { ComponentProps, Snippet } from 'svelte';
-  import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
+  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
@@ -104,8 +104,9 @@
     ref?: SVGPathElement;
 
     children?: Snippet<[{ centroid: [number, number]; boundingBox: DOMRect; value: number }]>;
-  } & MotionProps &
-    CommonStyleProps;
+
+    motion?: MotionProp;
+  } & CommonStyleProps;
 
   export type ArcProps = ArcPropsWithoutHTML &
     // we omit the spline props to avoid conflicts with attribute names since we are
@@ -144,10 +145,9 @@
   let {
     ref = $bindable(),
     trackRef = $bindable(),
-    spring,
-    tweened,
+    motion,
     value = 0,
-    initialValue: initialValueProp,
+    initialValue = 0,
     domain = [0, 100],
     range = [0, 360], // degrees
     startAngle: startAngleProp,
@@ -174,19 +174,13 @@
     ...restProps
   }: ArcProps = $props();
 
-  const initialValue = initialValueProp ?? 0;
-
   const ctx = getChartContext();
 
   const endAngle = $derived(
     endAngleProp ?? degreesToRadians(ctx.config.xRange ? max(ctx.xRange) : max(range))
   );
 
-  const tweenedEndAngle = motionState(initialValue, { spring, tweened });
-
-  $effect(() => {
-    tweenedEndAngle.target = value;
-  });
+  const motionEndAngle = createMotion(initialValue, () => value, motion);
 
   const scale = $derived(scaleLinear().domain(domain).range(range));
 
@@ -239,7 +233,7 @@
       .innerRadius(innerRadius)
       .outerRadius(outerRadius)
       .startAngle(startAngle)
-      .endAngle(endAngleProp ?? degreesToRadians(scale(tweenedEndAngle.current)))
+      .endAngle(endAngleProp ?? degreesToRadians(scale(motionEndAngle.current)))
       .cornerRadius(cornerRadius)
       .padAngle(padAngle)
   ) as Function;
@@ -310,4 +304,4 @@
   }}
 />
 
-{@render children?.({ centroid: trackArcCentroid, boundingBox, value: tweenedEndAngle.current })}
+{@render children?.({ centroid: trackArcCentroid, boundingBox, value: motionEndAngle.current })}

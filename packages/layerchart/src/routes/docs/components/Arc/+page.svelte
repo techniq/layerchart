@@ -64,7 +64,7 @@
                 {outerRadius}
                 {cornerRadius}
                 {padAngle}
-                {spring}
+                motion={spring ? 'spring' : undefined}
                 fill={gradient}
                 track={{ class: 'fill-surface-content/5' }}
               >

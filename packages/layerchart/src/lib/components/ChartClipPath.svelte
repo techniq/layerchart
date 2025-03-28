@@ -29,6 +29,7 @@
   import RectClipPath, { type RectClipPathProps } from './RectClipPath.svelte';
   import type { Without } from '$lib/utils/types.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
+  import type { MotionProp } from '$lib/utils/motion.svelte.js';
 
   let { full = false, disabled = false, ...restProps }: ChartClipPathProps = $props();
 

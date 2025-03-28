@@ -2,7 +2,7 @@
   import type { MarkerOptions } from './MarkerWrapper.svelte';
   import type { Without } from '$lib/utils/types.js';
   import Spline, { type SplineProps } from './Spline.svelte';
-  import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
+  import { createMotion, type MotionTweenOption } from '$lib/utils/motion.svelte.js';
   import { link as d3Link, curveBumpX, curveBumpY, type CurveFactory } from 'd3-shape';
 
   export type LinkPropsWithoutHTML = {
@@ -57,7 +57,9 @@
       x2: number;
       y2: number;
     };
-  } & Pick<MotionProps, 'tweened'>;
+
+    motion?: MotionTweenOption;
+  };
 
   export type LinkProps = LinkPropsWithoutHTML & Without<SplineProps, LinkPropsWithoutHTML>;
 </script>
@@ -98,7 +100,7 @@
     markerStart = marker,
     markerEnd = marker,
     markerMid = marker,
-    tweened,
+    motion,
     explicitCoords,
     ...restProps
   }: LinkProps = $props();
@@ -124,12 +126,20 @@
   const markerMidId = $derived(markerMid || marker ? createId('marker-mid', uid) : '');
   const markerEndId = $derived(markerEnd || marker ? createId('marker-end', uid) : '');
 
-  const tweenedOptions = tweened
-    ? { interpolate: interpolatePath, ...(typeof tweened === 'object' ? tweened : null) }
-    : false;
+  const tweenOptions = motion
+    ? {
+        type: 'tween' as const,
+        interpolate: interpolatePath,
+        ...(typeof motion === 'object' ? motion : null),
+      }
+    : undefined;
 
-  const tweenedState = motionState('', { tweened: tweenedOptions });
+  // TODO: can we just make that effect a derived instead
+  let trueD = $state('');
 
+  const motionPath = createMotion('', () => trueD, tweenOptions);
+
+  // TODO: can we use derived here?
   $effect(() => {
     const link = d3Link(curve).source(source).target(target).x(x).y(y);
     let d: string;
@@ -150,12 +160,12 @@
       d = 'M0,0L0,0';
     }
 
-    tweenedState.target = d;
+    trueD = d;
   });
 </script>
 
 <Spline
-  pathData={tweenedState.current}
+  pathData={motionPath.current}
   fill="none"
   marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
   marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}

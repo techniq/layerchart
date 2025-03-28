@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { SVGAttributes } from 'svelte/elements';
-  import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
+  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import MarkerWrapper, { type MarkerOptions } from './MarkerWrapper.svelte';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
@@ -81,8 +81,9 @@
      * Marker to attach to the end point of the line
      */
     markerEnd?: MarkerOptions;
-  } & MotionProps &
-    CommonStyleProps;
+
+    motion?: MotionProp;
+  } & CommonStyleProps;
 
   export type LineProps = LinePropsWithoutHTML &
     Without<SVGAttributes<SVGPathElement>, LinePropsWithoutHTML>;
@@ -96,7 +97,6 @@
   import { getRenderContext } from './Chart.svelte';
 
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { afterTick } from '$lib/utils/afterTick.js';
   import { createId } from '$lib/utils/createId.js';
   import { layerClass } from '$lib/utils/attributes.js';
 
@@ -120,8 +120,7 @@
     markerEnd,
     markerStart,
     markerMid,
-    spring,
-    tweened,
+    motion,
     fillOpacity,
     ...restProps
   }: LineProps = $props();
@@ -130,18 +129,10 @@
   const markerMidId = $derived(markerMid || marker ? createId('marker-mid', uid) : '');
   const markerEndId = $derived(markerEnd || marker ? createId('marker-end', uid) : '');
 
-  const tweenedX1 = motionState(initialX1, { spring, tweened });
-  const tweenedY1 = motionState(initialY1, { spring, tweened });
-  const tweenedX2 = motionState(initialX2, { spring, tweened });
-  const tweenedY2 = motionState(initialY2, { spring, tweened });
-
-  $effect(() => {
-    [x1, y1, x2, y1];
-    tweenedX1.target = x1;
-    tweenedY1.target = y1;
-    tweenedX2.target = x2;
-    tweenedY2.target = y2;
-  });
+  const motionX1 = createMotion(initialX1, () => x1, motion);
+  const motionY1 = createMotion(initialY1, () => y1, motion);
+  const motionX2 = createMotion(initialX2, () => x2, motion);
+  const motionY2 = createMotion(initialY2, () => y2, motion);
 
   const renderCtx = getRenderContext();
   const canvasCtx = getCanvasContext();
@@ -150,7 +141,7 @@
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
   ) {
-    const pathData = `M ${tweenedX1.current},${tweenedY1.current} L ${tweenedX2.current},${tweenedY2.current}`;
+    const pathData = `M ${motionX1.current},${motionY1.current} L ${motionX2.current},${motionY2.current}`;
     renderPathData(
       ctx,
       pathData,
@@ -168,7 +159,7 @@
 
   $effect(() => {
     if (renderCtx !== 'canvas') return;
-    [tweenedX1.current, tweenedY1.current, tweenedX2.current, tweenedY2.current];
+    [motionX1.current, motionY1.current, motionX2.current, motionY2.current];
     [fillKey.current, strokeKey.current, strokeWidth, opacity, className];
     canvasCtx.invalidate();
   });
@@ -190,10 +181,10 @@
 
 {#if renderCtx === 'svg'}
   <line
-    x1={tweenedX1.current}
-    y1={tweenedY1.current}
-    x2={tweenedX2.current}
-    y2={tweenedY2.current}
+    x1={motionX1.current}
+    y1={motionY1.current}
+    x2={motionX2.current}
+    y2={motionY2.current}
     {fill}
     {stroke}
     fill-opacity={fillOpacity}

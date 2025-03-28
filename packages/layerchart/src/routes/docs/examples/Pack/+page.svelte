@@ -112,7 +112,7 @@
       transform={{
         mode: 'canvas',
         disablePointer: true,
-        tweened: { duration: 800, easing: cubicOut },
+        motion: { type: 'tween', duration: 800, easing: cubicOut },
       }}
       bind:context
     >

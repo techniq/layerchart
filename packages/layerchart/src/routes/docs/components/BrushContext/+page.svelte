@@ -469,14 +469,17 @@
           padding={{ left: 16, bottom: 24 }}
         >
           <Svg>
-            <Axis placement="left" grid rule tweened={{ duration: 200 }} />
+            <Axis placement="left" grid rule motion={{ type: 'tween', duration: 200 }} />
             <Axis placement="bottom" rule />
             <LinearGradient class="from-primary/50 to-primary/1" vertical>
               {#snippet children({ gradient })}
                 <Area
                   line={{ class: 'stroke-2 stroke-primary' }}
                   fill={gradient}
-                  tweened={{ duration: 200 }}
+                  motion={{
+                    type: 'tween',
+                    duration: 200,
+                  }}
                 />
               {/snippet}
             </LinearGradient>
@@ -692,7 +695,7 @@
                   class={cls(
                     isSelected ? 'fill-primary/30 stroke-primary' : 'fill-neutral/10 stroke-neutral'
                   )}
-                  spring
+                  motion="spring"
                 />
               {/each}
             {/snippet}
@@ -782,7 +785,7 @@
                         ? 'fill-primary/30 stroke-primary'
                         : 'fill-surface-content/10 stroke-neutral'
                     )}
-                    spring
+                    motion="spring"
                   />
                 {/each}
               {/snippet}

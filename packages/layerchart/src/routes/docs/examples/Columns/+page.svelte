@@ -260,7 +260,13 @@
         <Bars strokeWidth={1} class="fill-primary group-hover:fill-gray-300 transition-colors" />
         <Highlight>
           {#snippet area({ area })}
-            <RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} spring>
+            <RectClipPath
+              x={area.x}
+              y={area.y}
+              width={area.width}
+              height={area.height}
+              motion="spring"
+            >
               <Bars strokeWidth={1} class="fill-primary" />
             </RectClipPath>
           {/snippet}
@@ -771,9 +777,9 @@
             <Bars
               initialY={300 - 16 * 2 - 2 - 24}
               initialHeight={0}
-              tweened={{
-                y: { duration: 500, easing: cubicInOut },
-                height: { duration: 500, easing: cubicInOut },
+              motion={{
+                y: { type: 'tween', duration: 500, easing: cubicInOut },
+                height: { type: 'tween', duration: 500, easing: cubicInOut },
               }}
               strokeWidth={1}
               class="fill-primary"
@@ -814,7 +820,8 @@
           />
           {#if show}
             <Bars
-              tweened={{
+              motion={{
+                type: 'tween',
                 duration: 500,
                 easing: cubicInOut,
               }}
@@ -863,9 +870,9 @@
                 {bar}
                 initialY={300 - 16 * 2 - 2 - 24}
                 initialHeight={0}
-                tweened={{
-                  y: { duration: 500, easing: cubicInOut, delay: i * 30 },
-                  height: { duration: 500, easing: cubicInOut, delay: i * 30 },
+                motion={{
+                  y: { type: 'tween', duration: 500, easing: cubicInOut, delay: i * 30 },
+                  height: { type: 'tween', duration: 500, easing: cubicInOut, delay: i * 30 },
                 }}
                 strokeWidth={1}
                 class="fill-primary"
@@ -909,7 +916,8 @@
             {#each data as bar, i}
               <Bar
                 {bar}
-                tweened={{
+                motion={{
+                  type: 'tween',
                   duration: 500,
                   easing: cubicInOut,
                   delay: i * 30,
@@ -1199,11 +1207,27 @@
                 {bar}
                 fill={context.cScale?.(bar.fruit)}
                 strokeWidth={1}
-                tweened={{
-                  x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-                  y: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
-                  width: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-                  height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
+                motion={{
+                  x: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 0 : 300,
+                  },
+                  y: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 300 : 0,
+                  },
+                  width: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 0 : 300,
+                  },
+                  height: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 300 : 0,
+                  },
                 }}
               />
             {/each}
@@ -1284,11 +1308,27 @@
                 {bar}
                 fill={context.cScale?.(bar.fruit)}
                 strokeWidth={1}
-                tweened={{
-                  x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-                  y: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
-                  width: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-                  height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
+                motion={{
+                  x: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 0 : 300,
+                  },
+                  y: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 300 : 0,
+                  },
+                  width: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 0 : 300,
+                  },
+                  height: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 300 : 0,
+                  },
                 }}
                 class="cursor-pointer"
                 onclick={(e) => {

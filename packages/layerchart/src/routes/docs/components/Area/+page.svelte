@@ -14,6 +14,7 @@
   let show = $state(true);
   let tweened = $state(true);
   let Context: Component = $state(Svg);
+  const motion = $derived(tweened ? 'tween' : undefined);
 
   let pathGenerator = $state((x: number) => x);
   let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
@@ -74,12 +75,12 @@
           <Area
             {curve}
             line={showLine && { class: 'stroke-primary stroke-2' }}
-            {tweened}
+            {motion}
             class="fill-primary/10"
           />
 
           {#if showPoints}
-            <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
+            <Points {motion} r={3} class="fill-surface-100 stroke-primary" />
           {/if}
         {/if}
       </Context>
@@ -123,14 +124,14 @@
 
       <Canvas>
         {#if show}
-          <Area {curve} {tweened} class="fill-primary/10" />
+          <Area {curve} {motion} class="fill-primary/10" />
 
           {#if showLine}
-            <Spline {curve} {tweened} class="stroke-primary stroke-2" />
+            <Spline {curve} {motion} class="stroke-primary stroke-2" />
           {/if}
 
           {#if showPoints}
-            <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
+            <Points {motion} r={3} class="fill-surface-100 stroke-primary" />
           {/if}
         {/if}
       </Canvas>

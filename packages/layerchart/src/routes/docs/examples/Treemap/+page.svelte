@@ -174,7 +174,10 @@
     <Chart>
       {#snippet children({ context })}
         <Svg>
-          <Bounds domain={selectedNested} tweened={{ duration: 800, easing: cubicOut }}>
+          <Bounds
+            domain={selectedNested}
+            motion={{ type: 'tween', duration: 800, easing: cubicOut }}
+          >
             {#snippet children({ xScale, yScale })}
               <ChartClipPath>
                 <Treemap
@@ -347,7 +350,7 @@
                   console.log('click');
                   node.children ? (selectedCarNode = node) : null;
                 }}
-                tweened={{ delay: 600 }}
+                motion={{ type: 'tween', delay: 600 }}
               >
                 {@const nodeWidth = node.x1 - node.x0}
                 {@const nodeHeight = node.y1 - node.y0}
@@ -363,9 +366,13 @@
                     fill={nodeColor}
                     fillOpacity={node.children ? 0.5 : 1}
                     rx={5}
-                    tweened={{ delay: 600 }}
+                    motion={{ type: 'tween', delay: 600 }}
                   />
-                  <RectClipPath width={nodeWidth} height={nodeHeight} tweened={{ delay: 600 }}>
+                  <RectClipPath
+                    width={nodeWidth}
+                    height={nodeHeight}
+                    motion={{ type: 'tween', delay: 600 }}
+                  >
                     <text
                       x={4}
                       y={16 * 0.6 + 4}
@@ -445,7 +452,10 @@
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
       <Svg>
-        <Bounds domain={selectedZoomable} tweened={{ duration: 800, easing: cubicOut }}>
+        <Bounds
+          domain={selectedZoomable}
+          motion={{ type: 'tween', duration: 800, easing: cubicOut }}
+        >
           {#snippet children({ xScale, yScale })}
             <ChartClipPath>
               <Treemap

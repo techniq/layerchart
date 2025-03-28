@@ -93,7 +93,7 @@
               y0: selected?.y0 ? 20 : 0,
               y1: height / 2,
             })}
-            tweened={{ duration: 800, easing: cubicOut }}
+            motion={{ type: 'tween', duration: 800, easing: cubicOut }}
           >
             {#snippet children({ xScale, yScale })}
               <Partition hierarchy={complexHierarchy} size={[1, 1]}>

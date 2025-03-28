@@ -27,7 +27,7 @@
      * @param value - the scale value to set
      * @param options - motion options to apply to the transform (defaults to the motion options passed to the component)
      */
-    setScale(value: number, options?: MotionProps): void;
+    setScale(value: number, options?: MotionProp): void;
 
     /**
      * The current translate of the transform.
@@ -39,7 +39,7 @@
      * @param point - the point to translate to
      * @param options - motion options to apply to the transform (defaults to the motion options passed to the component)
      */
-    setTranslate(point: { x: number; y: number }, options?: MotionProps): void;
+    setTranslate(point: { x: number; y: number }, options?: MotionProp): void;
 
     /**
      * Whether the transform is currently being moved
@@ -202,18 +202,15 @@
     ondragend?: () => void;
     ref?: HTMLElement | null;
     children?: Snippet<[{ transformContext: TransformContextValue }]>;
-  } & MotionProps;
+
+    motion?: MotionProp;
+  };
 
   type TransformContextProps = TransformContextPropsWithoutHTML &
     Without<HTMLAttributes<HTMLElement>, TransformContextPropsWithoutHTML>;
 </script>
 
 <script lang="ts">
-  import {
-    type MotionProps,
-    motionState,
-    MotionFinishState,
-  } from '$lib/stores/motionState.svelte.js';
   import { localPoint } from '@layerstack/utils';
   import { Context, watch } from 'runed';
   import type { Without } from '$lib/utils/types.js';
@@ -221,11 +218,16 @@
   import type { Snippet } from 'svelte';
   import { cls } from '@layerstack/tailwind';
   import { layerClass } from '$lib/utils/attributes.js';
+  import {
+    createControlledMotion,
+    createMotionTracker,
+    parseMotionProp,
+    type MotionProp,
+  } from '$lib/utils/motion.svelte.js';
 
   let {
     mode = 'none',
-    spring,
-    tweened,
+    motion,
     processTranslate = (x: number, y: number, deltaX: number, deltaY: number) => ({
       x: x + deltaX,
       y: y + deltaY,
@@ -287,8 +289,10 @@
   let dragging = $state(false);
   let scrollMode = $state<TransformScrollMode>(initialScrollMode);
 
-  export const translate = motionState(initialTranslate ?? DEFAULT_TRANSLATE, { spring, tweened });
-  export const scale = motionState(initialScale ?? DEFAULT_SCALE, { spring, tweened });
+  const resolvedMotion = parseMotionProp(motion);
+
+  const translate = createControlledMotion(initialTranslate ?? DEFAULT_TRANSLATE, resolvedMotion);
+  const scale = createControlledMotion(initialScale ?? DEFAULT_SCALE, resolvedMotion);
 
   let startPoint: { x: number; y: number } = { x: 0, y: 0 };
   let startTranslate: { x: number; y: number } = { x: 0, y: 0 };
@@ -372,7 +376,11 @@
 
       setTranslate(
         processTranslate(startTranslate.x, startTranslate.y, deltaX, deltaY),
-        spring ? { instant: true } : tweened ? { instant: true } : undefined
+        translate.type === 'spring'
+          ? { instant: true }
+          : translate.type === 'tween'
+            ? { duration: 0 }
+            : undefined
       );
     }
   }
@@ -418,15 +426,22 @@
       scaleTo(
         Math.pow(2, scaleBy),
         point,
-        // @ts-expect-error - TODO: idk
-        spring ? { hard: true } : tweened ? { duration: 0 } : undefined
+        scale.type === 'spring'
+          ? { instant: true }
+          : scale.type === 'tween'
+            ? { duration: 0 }
+            : undefined
       );
     } else if (scrollMode === 'translate') {
       const startTranslate = translate.current;
       translate
         .set(
           processTranslate(startTranslate.x, startTranslate.y, -e.deltaX, -e.deltaY),
-          spring ? { hard: true } : tweened ? { duration: 0 } : undefined
+          translate.type === 'spring'
+            ? { instant: true }
+            : translate.type === 'tween'
+              ? { duration: 0 }
+              : undefined
         )
         .then(() => {})
         .catch(() => {});
@@ -439,7 +454,7 @@
   function scaleTo(
     value: number,
     point: { x: number; y: number },
-    options: Parameters<typeof motionState>[1] | undefined = undefined
+    options: Parameters<(typeof scale)['set']>[1] | undefined = undefined
   ) {
     const currentScale = scale.current;
     const newScale = scale.current * value;
@@ -457,16 +472,19 @@
     setTranslate(newTranslate, options);
   }
 
-  const translating = new MotionFinishState();
-  const scaling = new MotionFinishState();
+  const translating = createMotionTracker();
+  const scaling = createMotionTracker();
 
   const moving = $derived(dragging || translating.current || scaling.current);
 
-  export function setTranslate(point: { x: number; y: number }, options?: MotionProps) {
+  export function setTranslate(
+    point: { x: number; y: number },
+    options?: Parameters<(typeof translate)['set']>[1]
+  ) {
     translating.handle(translate.set(point, options));
   }
 
-  export function setScale(value: number, options?: MotionProps) {
+  export function setScale(value: number, options?: MotionProp) {
     scaling.handle(scale.set(value, options));
   }
 

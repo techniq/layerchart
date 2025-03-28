@@ -1,6 +1,5 @@
 <script lang="ts" module>
   import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
-  import type { MotionProps } from '$lib/stores/motionState.svelte.js';
   import type { Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import type { Snippet } from 'svelte';
@@ -51,7 +50,9 @@
      * the id and url for the clipPath.
      */
     children?: Snippet<[{ id: string; url: string }]>;
-  } & MotionProps;
+
+    motion?: MotionProp<'x' | 'y' | 'width' | 'height'>;
+  };
 
   export type RectClipPathPropsWithoutHTML = BaseRectClipPathPropsWithoutHTML &
     Without<RectPropsWithoutHTML, BaseRectClipPathPropsWithoutHTML>;
@@ -64,6 +65,7 @@
   import ClipPath from './ClipPath.svelte';
   import { createId } from '$lib/utils/createId.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
+  import type { MotionProp } from '$lib/utils/motion.svelte.js';
 
   const uid = $props.id();
 

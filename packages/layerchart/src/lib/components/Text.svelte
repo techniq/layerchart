@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
-  import { motionState, type MotionProps } from '$lib/stores/motionState.svelte.js';
+  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
 
   export type TextPropsWithoutHTML = {
     /**
@@ -120,8 +120,8 @@
      * @bindable
      */
     ref?: SVGTextElement;
-  } & MotionProps &
-    CommonStyleProps;
+    motion?: MotionProp;
+  } & CommonStyleProps;
 
   export type TextProps = TextPropsWithoutHTML &
     Without<SVGAttributes<SVGTextElement>, TextPropsWithoutHTML>;
@@ -135,7 +135,6 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { getStringWidth } from '$lib/utils/string.js';
   import { renderText, type ComputedStylesOptions } from '../utils/canvas.js';
-  import { afterTick } from '$lib/utils/afterTick.js';
 
   import { createKey } from '$lib/utils/key.svelte.js';
   import { layerClass } from '$lib/utils/attributes.js';
@@ -174,8 +173,7 @@
     stroke,
     fill,
     fillOpacity,
-    spring,
-    tweened,
+    motion,
     svgRef = $bindable(),
     ref = $bindable(),
     class: className,
@@ -285,16 +283,8 @@
     );
   }
 
-  const tweenedX = motionState(initialX, { spring, tweened });
-  const tweenedY = motionState(initialY, { spring, tweened });
-
-  $effect(() => {
-    [x, y];
-    afterTick(() => {
-      tweenedX.target = x;
-      tweenedY.target = y;
-    });
-  });
+  const motionX = createMotion(initialX, () => x, motion);
+  const motionY = createMotion(initialY, () => y, motion);
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -305,9 +295,9 @@
         ctx,
         line.words.join(' '),
         {
-          x: getPixelValue(tweenedX.current) + getPixelValue(dx),
+          x: getPixelValue(motionX.current) + getPixelValue(dx),
           y:
-            getPixelValue(tweenedY.current) +
+            getPixelValue(motionY.current) +
             getPixelValue(dy) +
             (index === 0 ? startDy : getPixelValue(lineHeight)),
         },
@@ -337,8 +327,8 @@
     if (renderCtx !== 'canvas') return;
     [
       value,
-      tweenedX.current,
-      tweenedY.current,
+      motionX.current,
+      motionY.current,
       fillKey.current,
       strokeKey.current,
       strokeWidth,
@@ -366,8 +356,8 @@
   >
     {#if isValidXOrY(x) && isValidXOrY(y)}
       <text
-        x={tweenedX.current}
-        y={tweenedY.current}
+        x={motionX.current}
+        y={motionY.current}
         {transform}
         text-anchor={textAnchor}
         {...restProps}
@@ -380,7 +370,7 @@
       >
         {#each wordsByLines as line, index}
           <tspan
-            x={tweenedX.current}
+            x={motionX.current}
             dy={index === 0 ? startDy : lineHeight}
             class={layerClass('text-tspan')}
           >

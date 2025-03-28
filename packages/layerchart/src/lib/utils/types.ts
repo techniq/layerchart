@@ -97,3 +97,5 @@ export type CommonStyleProps = {
    */
   opacity?: number;
 };
+
+export type OnlyObjects<T> = T extends object ? T : never;

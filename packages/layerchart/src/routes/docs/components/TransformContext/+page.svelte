@@ -51,14 +51,14 @@
       y="y"
       transform={{
         mode: 'canvas',
-        tweened: { duration: 800, easing: cubicOut },
+        motion: tweened ? { type: 'tween', duration: 800, easing: cubicOut } : undefined,
         initialScrollMode: 'scale',
       }}
     >
       <TransformControls />
       <Svg>
         {#if showPath}
-          <Spline {curve} {tweened} />
+          <Spline {curve} motion="tween" />
         {/if}
         {#if showPoints}
           <Points>
@@ -69,7 +69,7 @@
                   cy={point.y}
                   r={2}
                   class={index % 2 ? 'fill-primary' : 'fill-secondary'}
-                  {tweened}
+                  motion={tweened ? 'tween' : 'none'}
                 />
               {/each}
             {/snippet}
@@ -87,7 +87,7 @@
     <Chart
       transform={{
         mode: 'canvas',
-        tweened: { duration: 800, easing: cubicOut },
+        motion: { type: 'tween', duration: 800, easing: cubicOut },
         initialScrollMode: 'scale',
       }}
     >
@@ -110,7 +110,7 @@
     <Chart
       transform={{
         mode: 'canvas',
-        tweened: { duration: 800, easing: cubicOut },
+        motion: { type: 'tween', duration: 800, easing: cubicOut },
         initialScrollMode: 'scale',
       }}
     >

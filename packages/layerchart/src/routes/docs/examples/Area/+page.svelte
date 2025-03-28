@@ -650,7 +650,7 @@
           {#if show}
             <ChartClipPath
               initialWidth={0}
-              tweened={{ width: { duration: 1000, easing: cubicInOut } }}
+              motion={{ width: { type: 'tween', duration: 1000, easing: cubicInOut } }}
             >
               <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
             </ChartClipPath>
@@ -690,7 +690,7 @@
             <Spline draw={{ easing: cubicInOut, delay: 700 }} class="stroke-2 stroke-primary" />
             <ChartClipPath
               initialWidth={0}
-              tweened={{ width: { duration: 1000, easing: cubicInOut } }}
+              motion={{ width: { type: 'tween', duration: 1000, easing: cubicInOut } }}
             >
               <Area class="fill-primary/30" />
             </ChartClipPath>
@@ -731,9 +731,9 @@
             <ChartClipPath
               initialY={300}
               initialHeight={0}
-              tweened={{
-                y: { duration: 1000, easing: cubicInOut, delay: 500 },
-                height: { duration: 1000, easing: cubicInOut, delay: 500 },
+              motion={{
+                y: { type: 'tween', duration: 1000, easing: cubicInOut, delay: 500 },
+                height: { type: 'tween', duration: 1000, easing: cubicInOut, delay: 500 },
               }}
             >
               <Area class="fill-primary/30" />
@@ -1060,7 +1060,7 @@
                 y={0}
                 width={context.tooltip.data ? context.tooltip.x : context.width}
                 height={context.height}
-                spring
+                motion="spring"
               >
                 <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
               </RectClipPath>
