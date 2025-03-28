@@ -53,12 +53,12 @@ export type MotionNoneOption =
  */
 export type MotionOptions = MotionSpringOption | MotionTweenOption | MotionNoneOption;
 
+type IsDefault<K> = K extends string ? (string extends K ? true : false) : never;
+
 /**
  * Motion config that can be either a direct motion config or
  * a map of property names to motion configs
  */
-type IsDefault<K> = K extends string ? (string extends K ? true : false) : never;
-
 export type MotionProp<K extends string = string> =
   IsDefault<K> extends true ? MotionOptions : MotionOptions | { [prop in K]?: MotionOptions };
 
@@ -142,12 +142,6 @@ type InternalMotionOptions = {
    * rather than automatically tracking changes to the source value
    */
   controlled?: boolean;
-
-  /**
-   * When true, the tracked motion state will wait a tick before updating
-   * to allow for any other state changes to occur first.
-   */
-  afterTick?: boolean;
 };
 
 /**
@@ -156,8 +150,9 @@ type InternalMotionOptions = {
 type MotionState<T> = MotionSpring<T> | MotionTween<T> | MotionNone<T>;
 
 /**
- * Sets up automatic tracking between a source value and a motion state
- * when the motion is in controlled mode
+ * Sets up automatic tracking between a source value and a motion state.
+ * When the `controlled` option is `true`, the motion state will not update
+ * automatically and will only update when explicitly set.
  */
 function setupTracking<T>(
   motion: MotionState<T>,
@@ -165,17 +160,10 @@ function setupTracking<T>(
   options: InternalMotionOptions
 ) {
   if (options.controlled) return;
-  if (options.afterTick) {
-    $effect(() => {
-      afterTick(() => {
-        motion.set(getValue());
-      });
-    });
-  } else {
-    $effect(() => {
-      motion.set(getValue());
-    });
-  }
+
+  $effect(() => {
+    motion.set(getValue());
+  });
 }
 
 export function createMotion<T = any>(
@@ -185,20 +173,14 @@ export function createMotion<T = any>(
   options: InternalMotionOptions = {}
 ) {
   const motion = parseMotionProp(motionProp);
-  if (motion.type === 'none') {
-    const fallback = new MotionNone<T>(initialValue);
-    setupTracking(fallback, getValue, options);
-    return fallback;
-  }
-
-  if (motion.type === 'spring') {
-    const spring = new MotionSpring(initialValue, motion.options);
-    setupTracking(spring, getValue, options);
-    return spring;
-  }
-  const tween = new MotionTween(initialValue, motion.options);
-  setupTracking(tween, getValue, options);
-  return tween;
+  const motionState =
+    motion.type === 'spring'
+      ? new MotionSpring(initialValue, motion.options)
+      : motion.type === 'tween'
+        ? new MotionTween(initialValue, motion.options)
+        : new MotionNone<T>(initialValue);
+  setupTracking(motionState, getValue, options);
+  return motionState;
 }
 
 /**
