@@ -181,3 +181,17 @@ This is useful for getting the height, width, and other properties of the chart 
   <!-- ... -->
 </AreaChart>
 ```
+
+## New `motion` prop
+
+Previously, a lot of components exposed `tweened` or `spring` which gave the perception that you could have both tweened and spring animations. This was not the case, and the props were a bit misleading/confusing.
+
+The new `motion` prop is a single prop that accepts one of the following:
+
+```ts
+export type SpringMotion = 'spring' | ({ type: 'spring' } & SpringOptions);
+export type TweenMotion = 'tween' | ({ type: 'tween' } & TweenOptions);
+export type NoneMotion = 'none' | { type: 'none' };
+```
+
+This provides type safety for the various options should you need to customize them, while providing a shortcut to accept the defaults via `"spring"`, `"tween"`, or `"none"`.

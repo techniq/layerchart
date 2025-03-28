@@ -9,7 +9,7 @@
 
   let { data } = $props();
 
-  const root = hierarchy(data.flare);
+  const root = hierarchy(structuredClone(data.flare));
   const nodes = root.descendants();
   const links = root.links();
 
@@ -17,6 +17,8 @@
   const chargeForce = forceManyBody().strength(-50);
   const xForce = forceX();
   const yForce = forceY();
+
+  console.log(nodes);
 </script>
 
 <h1>Examples</h1>
@@ -44,7 +46,7 @@
                 />
               {/each}
 
-              {#each nodes as node, i}
+              {#each nodes as node ([node.data.name, node.parent?.data?.name].join('-'))}
                 <Circle
                   cx={node.x}
                   cy={node.y}

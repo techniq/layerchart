@@ -940,18 +940,21 @@
   const y1Domain = $derived(y1DomainProp ?? extent(chartDataArray(data), y1));
   const cDomain = $derived(cDomainProp ?? unique(chartDataArray(data).map(c)));
 
+  const snappedPadding = $derived($state.snapshot(xPadding));
+  const snappedExtents = $derived($state.snapshot(extents));
+
   const xScale = $derived(
     createLayerCakeScale('x', {
       scale: xScaleProp,
       domain: xDomain,
-      padding: $state.snapshot(xPadding),
+      padding: snappedPadding,
       nice: xNice,
       reverse: xReverse,
       percentRange,
       range: xRangeProp,
       height,
       width,
-      extents: $state.snapshot(extents),
+      extents: snappedExtents,
     })
   );
 
