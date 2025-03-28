@@ -232,8 +232,9 @@
                   class="fill-primary hover:fill-primary/90 hover:cursor-pointer"
                   motion="tween"
                 />
+                <span>{node.x0} {node.y0}</span>
                 <Text
-                  value={node.name}
+                  value="{node.name} x: {node.x0} y: {node.y0}"
                   x={node.height === 0 ? -4 : nodeWidth + 4}
                   y={nodeHeight / 2}
                   textAnchor={node.height === 0 ? 'end' : 'start'}

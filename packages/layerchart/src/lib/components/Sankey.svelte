@@ -131,16 +131,21 @@
         .nodeSort(nodeSort)
         .links(linksProp)
         // @ts-expect-error
-        .linkSort(linkSort)(ctx.data)
+        .linkSort(linkSort)(structuredClone(ctx.data))
     );
   });
 
   $effect(() => {
     onUpdate?.(sankeyData);
   });
+
+  $effect(() => {
+    console.log(sankeyData.nodes[0].x0);
+    console.log(sankeyData.nodes[0].y0);
+  });
 </script>
 
 {@render children?.({
-  nodes: $state.snapshot(sankeyData.nodes),
-  links: $state.snapshot(sankeyData.links),
+  nodes: sankeyData.nodes,
+  links: sankeyData.links,
 })}
