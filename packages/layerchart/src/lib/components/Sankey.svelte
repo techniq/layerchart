@@ -143,10 +143,9 @@
   $effect(() => {
     onUpdate?.(sankeyData);
   });
-
-  $effect(() => {
-    console.log('sankeyData.nodes', sankeyData.nodes);
-  });
 </script>
 
-{@render children?.({ nodes: sankeyData.nodes, links: sankeyData.links })}
+{@render children?.({
+  nodes: $state.snapshot(sankeyData.nodes),
+  links: $state.snapshot(sankeyData.links),
+})}

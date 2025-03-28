@@ -59,7 +59,7 @@
 
   const hierarchyGraph = $derived(graphFromHierarchy(complexDataHierarchy));
 
-  let selectedNode: SankeyNode<{}, {}> | null = $state.raw(null);
+  let selectedNode: HierarchySankeyNode | null = $state.raw(null);
 
   type HierarchySankeyNodeProperties = {
     data: { name: string };
@@ -67,25 +67,10 @@
   };
   // TODO: Fix type
   type HierarchySankeyNode = SankeyNode<HierarchySankeyNodeProperties & any, {}>;
-
-  console.log(data.greenhouse);
-
-  $effect(() => {
-    if (!selectedNode) return;
-    console.log('selected', graphFromNode(selectedNode));
-  });
-
-  function getHierarchyNodeKey(node: HierarchySankeyNode) {
-    return [node.data.name, node.parent?.data.name].join('_');
-  }
-
-  function getHierarchyLinkKey(link: HierarchySankeyNode) {
-    return [link.index, link.source.name, link.target.name].join('_');
-  }
 </script>
 
 <h1>Examples</h1>
-<!--
+
 <h2>Simple</h2>
 
 <Preview data={data.simple}>
@@ -94,7 +79,7 @@
       <Svg>
         <Sankey nodeId={(d) => d.id}>
           {#snippet children({ links, nodes })}
-            {#each links as link ([link.source.id, link.target.id].join('_'))}
+            {#each links as link ([link.value, link.source.id, link.target.id].join('-'))}
               <Link sankey data={link} strokeWidth={link.width} class="stroke-surface-content/10" />
             {/each}
             {#each nodes as node (node.id)}
@@ -120,14 +105,14 @@
 
 <h2>Tooltip</h2>
 
-<Preview data={structuredClone(data.greenhouse)}>
+<Preview data={data.greenhouse}>
   <div class="h-[800px] p-4 border rounded-sm">
-    <Chart data={structuredClone(data.greenhouse)} flatData={[]}>
+    <Chart data={data.greenhouse} flatData={[]}>
       {#snippet children({ context })}
         <Svg>
           <Sankey nodeId={(d) => d.name} nodeWidth={8}>
             {#snippet children({ links, nodes })}
-              {#each links as link ([link.source.name, link.target.name].join('_'))}
+              {#each links as link ([link.value, link.source.name, link.target.name].join('-'))}
                 <Link
                   sankey
                   data={link}
@@ -203,8 +188,7 @@
       {/snippet}
     </Chart>
   </div>
-</Preview> -->
-
+</Preview>
 <h2>Node select</h2>
 
 <Preview data={selectedNode ? graphFromNode(selectedNode) : data.greenhouse}>
@@ -213,7 +197,7 @@
       <Svg>
         <Sankey nodeId={(d) => d.name} nodeWidth={8}>
           {#snippet children({ links, nodes })}
-            {#each links as link, i ([link.target.name, link.source.name, i, link.index].join('_'))}
+            {#each links as link ([link.value, link.source.name, link.target.name].join('-'))}
               <Link
                 sankey
                 data={link}
@@ -223,19 +207,23 @@
               />
             {/each}
 
-            {#each nodes as node ([node.name, node.index].join('_'))}
-              {@const x0 = node.x0}
-              {@const y0 = node.y0}
+            {#each nodes as node (node.name)}
               {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
               {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
 
               <Group
-                x={x0}
-                y={y0}
+                x={node.x0}
+                y={node.y0}
                 motion="tween"
                 onclick={() => {
-                  selectedNode =
-                    node === selectedNode || node.sourceLinks?.length === 0 ? null : node;
+                  if (selectedNode) {
+                    selectedNode =
+                      node.name === selectedNode.name || node.sourceLinks?.length === 0
+                        ? null
+                        : node;
+                  } else {
+                    selectedNode = node;
+                  }
                 }}
               >
                 <Rect
@@ -245,7 +233,7 @@
                   motion="tween"
                 />
                 <Text
-                  value="{node.name} x: {node.x0} y: {node.y0}"
+                  value={node.name}
                   x={node.height === 0 ? -4 : nodeWidth + 4}
                   y={nodeHeight / 2}
                   textAnchor={node.height === 0 ? 'end' : 'start'}
@@ -259,7 +247,7 @@
     </Chart>
   </div>
 </Preview>
-<!--
+
 <h2>Complex</h2>
 
 <SankeyControls bind:nodeAlign bind:nodeColorBy bind:linkColorBy bind:nodePadding bind:nodeWidth />
@@ -283,7 +271,7 @@
             }}
           >
             {#snippet children({ links, nodes })}
-              {#each links as link, i (i)}
+              {#each links as link ([link.source.name, link.target.name, link.value].join('-'))}
                 <Link
                   sankey
                   data={link}
@@ -309,7 +297,7 @@
                 />
               {/each}
 
-              {#each nodes as node, i (i)}
+              {#each nodes as node (node.name)}
                 {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
                 {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
                 <Group x={node.x0} y={node.y0} motion="tween">
@@ -409,7 +397,7 @@
           }}
         >
           {#snippet children({ links, nodes })}
-            {#each links as link ([getHierarchyNodeKey(link.source), getHierarchyNodeKey(link.target)].join('_'))}
+            {#each links as link ([link.source.data.name, link.target.data.name, link.value].join('-'))}
               <Link
                 sankey
                 data={link}
@@ -431,7 +419,7 @@
               />
             {/each}
 
-            {#each nodes as node (getHierarchyNodeKey(node))}
+            {#each nodes as node ([node.data.name, node.value].join('-'))}
               {@const nodeWidth = (node.x1 ?? 0) - (node.x0 ?? 0)}
               {@const nodeHeight = (node.y1 ?? 0) - (node.y0 ?? 0)}
               <Group x={node.x0} y={node.y0} motion="tween">
@@ -464,4 +452,4 @@
       </Svg>
     </Chart>
   </div>
-</Preview> -->
+</Preview>
