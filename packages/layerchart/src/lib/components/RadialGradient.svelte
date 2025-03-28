@@ -127,7 +127,8 @@
     const gradient = _ctx.createRadialGradient(0, 0, 0, 0, 0, 0);
 
     // Use `getComputedStyles()` to convert each stop (if using CSS variables and/or classes) to color values
-    stops.forEach((stop, i) => {
+    for (let i = 0; i < stops.length; i++) {
+      const stop = stops[i];
       if (Array.isArray(stop)) {
         const { fill } = getComputedStyles(_ctx.canvas, {
           styles: { fill: stop[1] },
@@ -141,7 +142,7 @@
         });
         gradient.addColorStop(i / (stops.length - 1), fill);
       }
-    });
+    }
 
     canvasGradient = gradient;
   }

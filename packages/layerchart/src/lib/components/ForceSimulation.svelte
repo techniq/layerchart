@@ -237,18 +237,20 @@
 
   function pushForcesToSimulation(forces: Forces) {
     // Evict obsolete forces:
-    Object.keys(previousForces).forEach((name) => {
+    const names = Object.keys(forces);
+    for (const name of names) {
       if (!(name in forces)) {
         simulation.force(name, null);
       }
-    });
+    }
 
-    // Add new or overwrite existing forces:
-    Object.entries(forces).forEach(([name, force]) => {
+    const entries = Object.entries(forces);
+
+    for (const [name, force] of entries) {
       if (!(name in previousForces) || force !== previousForces[name]) {
         simulation.force(name, force);
       }
-    });
+    }
 
     previousForces = forces;
   }

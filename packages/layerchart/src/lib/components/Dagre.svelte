@@ -206,11 +206,11 @@
       edgesep: edgeSeparation,
     });
 
-    g.setDefaultEdgeLabel(() => {
-      return {};
-    });
+    g.setDefaultEdgeLabel(() => ({}));
 
-    nodes(data).forEach((n: any) => {
+    const dataNodes = nodes(data);
+
+    for (const n of dataNodes) {
       const id = nodeId(n);
 
       g.setNode(nodeId(n), {
@@ -224,9 +224,11 @@
       if (n.parent) {
         g.setParent(id, n.parent);
       }
-    });
+    }
 
-    edges(data).forEach((e: any) => {
+    const nodeEdges = edges(data);
+
+    for (const e of nodeEdges) {
       const { source, target, label, ...rest } = e;
       g.setEdge(
         e.source,
@@ -242,7 +244,8 @@
             }
           : {}
       );
-    });
+    }
+
     const _graph = untrack(() => graph!);
 
     g = filterNodes ? g.filterNodes((nodeId) => filterNodes(nodeId, _graph)) : _graph;
@@ -256,6 +259,7 @@
     if (typeof document === 'undefined' || !graph) return [];
     return graph!.nodes().map((id) => graph!.node(id));
   });
+
   const graphEdges = $derived.by(() => {
     if (typeof document === 'undefined' || !graph) return [];
     return graph!.edges().map((edge) => ({ ...edge, ...graph!.edge(edge) })) as Array<

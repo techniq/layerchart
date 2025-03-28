@@ -114,7 +114,7 @@ function render(
     ctx.setLineDash(dashArray);
   }
 
-  paintOrder.forEach((attr) => {
+  for (const attr of paintOrder) {
     if (attr === 'fill') {
       const fill =
         styleOptions.styles?.fill &&
@@ -154,7 +154,7 @@ function render(
         render.stroke(ctx);
       }
     }
-  });
+  }
 }
 
 /** Render SVG path data onto canvas context.  Supports CSS variables and classes by tranferring to hidden `<svg>` element before retrieval) */

@@ -14,7 +14,6 @@
     Graticule,
     Svg,
     Tooltip,
-    TransformContext,
     type ChartContextValue,
   } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';

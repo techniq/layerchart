@@ -421,7 +421,9 @@ function calcUniques<T>(
       const value = accessor(item);
 
       if (Array.isArray(value)) {
-        value.forEach((val) => set.add(val));
+        for (const val of value) {
+          set.add(val);
+        }
       } else {
         set.add(value);
       }

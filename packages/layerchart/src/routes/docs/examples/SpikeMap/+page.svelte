@@ -31,25 +31,21 @@
 
   const width = 7;
   const maxHeight = 200;
-  const heightScale = $derived(
-    scaleLinear()
-      .domain([0, max(population, (d) => d.population) ?? 0])
-      .range([0, maxHeight])
-  );
+  const heightScale = scaleLinear()
+    .domain([0, max(population, (d) => d.population) ?? 0])
+    .range([0, maxHeight]);
 
-  const enrichedCountiesFeatures = $derived(
-    counties.features
-      .map((feature) => {
-        return {
-          ...feature,
-          properties: {
-            ...feature.properties,
-            data: populationByFips.get(feature.id as string),
-          },
-        };
-      })
-      .sort((a, b) => descending(a.properties.data?.population, b.properties.data?.population))
-  );
+  const enrichedCountiesFeatures = counties.features
+    .map((feature) => {
+      return {
+        ...feature,
+        properties: {
+          ...feature.properties,
+          data: populationByFips.get(feature.id as string),
+        },
+      };
+    })
+    .sort((a, b) => descending(a.properties.data?.population, b.properties.data?.population));
 </script>
 
 <h1>Examples</h1>
