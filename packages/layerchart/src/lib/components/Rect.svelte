@@ -2,7 +2,7 @@
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createMotion, parseMotionProp, type MotionProp } from '$lib/utils/motion.svelte.js';
-  import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import { renderRect, type ComputedStylesOptions } from 'layerchart/utils/canvas.js';
 
   export type RectPropsWithoutHTML = {
     /**
@@ -47,7 +47,7 @@
   import { merge } from 'lodash-es';
 
   import { getRenderContext } from './Chart.svelte';
-  import { getCanvasContext } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { layerClass } from '$lib/utils/attributes.js';
 
@@ -84,7 +84,6 @@
   const motionHeight = createMotion(initialHeight, () => height, parseMotionProp(motion, 'height'));
 
   const renderCtx = getRenderContext();
-  const canvasCtx = getCanvasContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -111,25 +110,8 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    [
-      motionX.current,
-      motionY.current,
-      motionWidth.current,
-      motionHeight.current,
-      fillKey.current,
-      strokeKey.current,
-      strokeWidth,
-      opacity,
-      className,
-    ];
-    canvasCtx.invalidate();
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    return canvasCtx.register({
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
       name: 'Rect',
       render,
       events: {
@@ -141,8 +123,19 @@
         pointerover: onpointerover,
         pointerout: onpointerout,
       },
+      deps: () => [
+        motionX.current,
+        motionY.current,
+        motionWidth.current,
+        motionHeight.current,
+        fillKey.current,
+        strokeKey.current,
+        strokeWidth,
+        opacity,
+        className,
+      ],
     });
-  });
+  }
 </script>
 
 {#if renderCtx === 'svg'}

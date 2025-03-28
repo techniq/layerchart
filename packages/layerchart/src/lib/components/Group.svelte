@@ -66,7 +66,7 @@
   import { cls } from '@layerstack/tailwind';
 
   import { getRenderContext } from './Chart.svelte';
-  import { getCanvasContext } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
 
   import { getChartContext } from './Chart.svelte';
   import { layerClass } from '$lib/utils/attributes.js';
@@ -102,14 +102,13 @@
   });
 
   const renderCtx = getRenderContext();
-  const canvasCtx = getCanvasContext();
 
   function render(ctx: CanvasRenderingContext2D) {
     ctx.translate(motionX.current ?? 0, motionY.current ?? 0);
   }
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    return canvasCtx.register({
+
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
       name: 'Group',
       render,
       retainState: true,
@@ -121,14 +120,9 @@
         pointerleave: restProps.onpointerleave,
         pointerdown: restProps.onpointerdown,
       },
+      deps: () => [motionX.current, motionY.current],
     });
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    [motionX.current, motionY.current];
-    canvasCtx.invalidate();
-  });
+  }
 
   const handleTouchMove: TouchEventHandler<Element> = (e) => {
     if (preventTouchMove) {

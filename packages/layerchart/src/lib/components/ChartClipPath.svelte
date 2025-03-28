@@ -1,5 +1,6 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
+  import type { Without } from '$lib/utils/types.js';
 
   export type ChartClipPathPropsWithoutHTML = {
     /**
@@ -27,9 +28,7 @@
   import { getChartContext } from './Chart.svelte';
 
   import RectClipPath, { type RectClipPathProps } from './RectClipPath.svelte';
-  import type { Without } from '$lib/utils/types.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
-  import type { MotionProp } from '$lib/utils/motion.svelte.js';
 
   let { full = false, disabled = false, ...restProps }: ChartClipPathProps = $props();
 

@@ -79,9 +79,6 @@
   export type CanvasProps = CanvasPropsWithoutHTML &
     Without<HTMLCanvasAttributes, CanvasPropsWithoutHTML>;
 
-  // TODO: consider adding a dependency array option here, which would trigger
-  // invalidate when any of those values change, rather than needing to do it in every
-  // component
   type ComponentRender<T extends Element = Element> = {
     name: string;
     render: (ctx: CanvasRenderingContext2D, styleOverrides?: ComputedStylesOptions) => any;
@@ -97,6 +94,10 @@
       pointerdown?: PointerEventHandler<T> | null;
       touchmove?: TouchEventHandler<T> | null;
     };
+    /**
+     * Optional dependencies to track and invalidate the canvas context when they change.
+     */
+    deps?: () => any[];
   };
 
   export type CanvasContextValue = {
@@ -124,10 +125,22 @@
   function setCanvasContext(context: CanvasContextValue) {
     return CanvasContext.set(context);
   }
+
+  /**
+   * Handles the automatic registration of the component to the canvas context,
+   * with dependency tracking and cleanup on destroy.
+   */
+  export function registerCanvasComponent<T extends Element>(component: ComponentRender<T>) {
+    const canvasContext = getCanvasContext();
+
+    $effect.pre(() => {
+      return untrack(() => canvasContext.register(component));
+    });
+  }
 </script>
 
 <script lang="ts">
-  import { onMount, type Snippet } from 'svelte';
+  import { onMount, untrack, type Snippet } from 'svelte';
   import { cls } from '@layerstack/tailwind';
   import { Logger, localPoint } from '@layerstack/utils';
   import { darkColorScheme } from '@layerstack/svelte-stores';
@@ -136,7 +149,7 @@
   import { getTransformContext } from '../TransformContext.svelte';
   import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
-  import { Context, watch } from 'runed';
+  import { Context } from 'runed';
   import type {
     HTMLCanvasAttributes,
     MouseEventHandler,
@@ -185,7 +198,7 @@
   let hitCanvasContext = $state<CanvasRenderingContext2D>();
   let colorGenerator = rgbColorGenerator();
   let activeCanvas = $state(false);
-  let lastActiveComponent = $state<ComponentRender | null | undefined>();
+  let lastActiveComponent: ComponentRender | null | undefined = null;
 
   const componentByColor = new Map<string, ComponentRender>();
 
@@ -326,31 +339,51 @@
     pendingInvalidation = false;
   }
 
-  const canvasContext: CanvasContextValue = {
-    register(component) {
+  function createCanvasContext(): CanvasContextValue {
+    function register<T extends Element>(component: ComponentRender<T>) {
       const key = Symbol();
       components.set(key, component as ComponentRender<Element>);
-      this.invalidate();
+      invalidate();
 
-      // Unregister
+      const cleanupRoot = $effect.root(() => {
+        if (component.deps) {
+          $effect.pre(() => {
+            component.deps?.(); // track deps
+            invalidate(); // invalidate when deps change.
+          });
+        }
+      });
+
+      $effect.pre(() => {
+        return cleanupRoot;
+      });
+
+      /**
+       * Removes the component from the registry and cleans up the invalidation
+       * effect
+       */
       return () => {
         components.delete(key);
-        this.invalidate();
+        cleanupRoot();
+        invalidate();
       };
-    },
-    invalidate() {
+    }
+
+    function invalidate() {
       if (pendingInvalidation) return;
       pendingInvalidation = true;
       frameId = requestAnimationFrame(update);
-    },
-  };
-
-  watch.pre(
-    [() => ctx.containerHeight, () => ctx.containerWidth, () => transformCtx.dragging],
-    () => {
-      canvasContext.invalidate();
     }
-  );
+
+    return { register, invalidate };
+  }
+
+  const canvasContext = createCanvasContext();
+
+  $effect(() => {
+    [ctx.height, ctx.width, ctx.containerHeight, ctx.containerWidth, transformCtx.dragging];
+    canvasContext.invalidate();
+  });
 
   setCanvasContext(canvasContext);
   setRenderContext('canvas');
@@ -393,7 +426,6 @@
     onPointerLeave(e);
   }}
   ontouchmove={(e) => {
-    ontouchmove?.(e);
     // Prevent touch from interfering with pointer if over data
     if (lastActiveComponent) {
       e.preventDefault();

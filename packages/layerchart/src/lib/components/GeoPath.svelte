@@ -11,7 +11,7 @@
     type GeoProjection,
     type GeoTransformPrototype,
   } from 'd3-geo';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import { renderPathData, type ComputedStylesOptions } from 'layerchart/utils/canvas.js';
 
   export type GeoPathPropsWithoutHTML = {
     /**
@@ -69,7 +69,7 @@
   import { merge } from 'lodash-es';
 
   import { getRenderContext } from './Chart.svelte';
-  import { getCanvasContext } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { geoCurvePath } from '$lib/utils/geo.js';
   import { getGeoContext } from './GeoContext.svelte';
   import { createKey } from '$lib/utils/key.svelte.js';
@@ -104,7 +104,6 @@
   });
 
   const renderCtx = getRenderContext();
-  const canvasCtx = getCanvasContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -128,37 +127,6 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    // Redraw when geojson, projection, or class change
-    [
-      geojson &&
-        projection &&
-        fillKey.current &&
-        strokeKey.current &&
-        strokeWidth &&
-        opacity &&
-        className,
-    ];
-    canvasCtx.invalidate();
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    return canvasCtx.register({
-      name: 'GeoPath',
-      render,
-      events: {
-        click: _onClick,
-        pointerenter: _onPointerEnter,
-        pointermove: _onPointerMove,
-        pointerleave: _onPointerLeave,
-        pointerdown: restProps.onpointerdown,
-        touchmove: restProps.ontouchmove,
-      },
-    });
-  });
-
   // Hide `geoPath` and `tooltip` reactivity
   function _onClick(e: MouseEvent) {
     onclick?.(e, geoPath);
@@ -178,6 +146,30 @@
     restProps.onpointerleave?.(e);
     tooltipContext?.hide();
   };
+
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
+      name: 'GeoPath',
+      render,
+      events: {
+        click: _onClick,
+        pointerenter: _onPointerEnter,
+        pointermove: _onPointerMove,
+        pointerleave: _onPointerLeave,
+        pointerdown: restProps.onpointerdown,
+        touchmove: restProps.ontouchmove,
+      },
+      deps: () => [
+        geojson,
+        projection,
+        fillKey.current,
+        strokeKey.current,
+        strokeWidth,
+        opacity,
+        className,
+      ],
+    });
+  }
 </script>
 
 {#if children}

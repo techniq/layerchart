@@ -63,9 +63,9 @@
     if (round) {
       _partition.round(round);
     }
-    return _partition;
+
+    return hierarchy ? _partition(hierarchy) : [];
   });
-  const partitionData = $derived(hierarchy ? partition(hierarchy) : []);
 </script>
 
-{@render children?.({ nodes: 'descendants' in partitionData ? partitionData.descendants() : [] })}
+{@render children?.({ nodes: 'descendants' in partition ? partition.descendants() : [] })}

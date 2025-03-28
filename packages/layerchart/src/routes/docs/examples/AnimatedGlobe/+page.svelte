@@ -32,7 +32,7 @@
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let Context: Component = $state(Svg);
+  let renderContext: 'svg' | 'canvas' = $state('svg');
   let context = $state<ChartContextValue>(null!);
 
   let selectedFeature: (typeof countries.features)[0] | null = $state(null);
@@ -104,9 +104,9 @@
 
 <div class="grid grid-cols-[1fr_auto] gap-2 mb-3">
   <Field label="Render context">
-    <ToggleGroup bind:value={Context} variant="outline">
-      <ToggleOption value={Svg}>Svg</ToggleOption>
-      <ToggleOption value={Canvas}>Canvas</ToggleOption>
+    <ToggleGroup bind:value={renderContext} variant="outline">
+      <ToggleOption value="svg">Svg</ToggleOption>
+      <ToggleOption value="canvas">Canvas</ToggleOption>
     </ToggleGroup>
   </Field>
 
@@ -130,7 +130,7 @@
     </div>
 
     <div class="overflow-auto scrollbar-none">
-      {#each countries.features.sort(sortFunc('properties.name')) as country}
+      {#each countries.features.sort(sortFunc('properties.name')) as country (country)}
         {@const isSelected = selectedFeature === country}
         <div use:scrollIntoView={{ condition: isSelected }}>
           <Button
@@ -164,7 +164,8 @@
           </div>
         {/if}
 
-        <Context {debug}>
+        {@const Component = renderContext === 'svg' ? Svg : Canvas}
+        <Component {debug}>
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
           <Graticule class="stroke-surface-content/20" />
 
@@ -181,9 +182,9 @@
               tooltipContext={context.tooltip}
             />
           {/each}
-        </Context>
+        </Component>
 
-        {#if Context === Canvas}
+        {#if renderContext === 'canvas'}
           <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
           <Canvas pointerEvents={false}>
             {#if context.tooltip.data}

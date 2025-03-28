@@ -62,8 +62,8 @@
   import Spline from './Spline.svelte';
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { flattenPathData } from '../utils/path.js';
-  import { getCanvasContext } from './layout/Canvas.svelte';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { renderPathData, type ComputedStylesOptions } from 'layerchart/utils/canvas.js';
   import { getChartContext } from './Chart.svelte';
   import { createMotion, extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { createKey } from '$lib/utils/key.svelte.js';
@@ -71,7 +71,6 @@
 
   const ctx = getChartContext();
   const renderCtx = getRenderContext();
-  const canvasCtx = getCanvasContext();
 
   let {
     clipPath,
@@ -208,23 +207,8 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    [
-      fillKey.current,
-      fillOpacity,
-      strokeKey.current,
-      strokeWidth,
-      opacity,
-      restProps.class,
-      tweenState.current,
-    ];
-    canvasCtx.invalidate();
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    return canvasCtx.register({
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
       name: 'Area',
       render,
       events: {
@@ -233,8 +217,17 @@
         pointermove: restProps.onpointermove,
         pointerleave: restProps.onpointerleave,
       },
+      deps: () => [
+        fillKey.current,
+        fillOpacity,
+        strokeKey.current,
+        strokeWidth,
+        opacity,
+        restProps.class,
+        tweenState.current,
+      ],
     });
-  });
+  }
 </script>
 
 {#if line}

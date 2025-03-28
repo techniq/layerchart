@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import { tick, type Snippet } from 'svelte';
+  import type { Snippet } from 'svelte';
   import type { MarkerOptions } from './MarkerWrapper.svelte';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
@@ -124,8 +124,8 @@
   import Group from './Group.svelte';
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { flattenPathData } from '../utils/path.js';
-  import { getCanvasContext } from './layout/Canvas.svelte';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { renderPathData, type ComputedStylesOptions } from 'layerchart/utils/canvas.js';
   import { getRenderContext } from './Chart.svelte';
   import MarkerWrapper from './MarkerWrapper.svelte';
   import { getChartContext } from './Chart.svelte';
@@ -251,7 +251,6 @@
   let key = $state(Symbol());
 
   const renderCtx = getRenderContext();
-  const canvasCtx = getCanvasContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -273,9 +272,8 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    return canvasCtx.register({
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
       name: 'Spline',
       render,
       events: {
@@ -288,15 +286,16 @@
         pointerout: restProps.onpointerout,
         touchmove: restProps.ontouchmove,
       },
+      deps: () => [
+        fillKey.current,
+        fillOpacity,
+        strokeKey.current,
+        strokeWidth,
+        opacity,
+        className,
+      ],
     });
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    // Redraw when props change
-    [fillKey.current, fillOpacity, strokeKey.current, strokeWidth, opacity, className];
-    canvasCtx.invalidate();
-  });
+  }
 
   let startPoint = $state<DOMPoint | undefined>();
 

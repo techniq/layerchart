@@ -45,7 +45,7 @@
   import { tile as d3Tile } from 'd3-tile';
 
   import { getRenderContext, getChartContext } from './Chart.svelte';
-  import { getCanvasContext } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
   import { getGeoContext } from './GeoContext.svelte';
@@ -64,7 +64,6 @@
   const ctx = getChartContext();
   const geoCtx = getGeoContext();
   const renderCtx = getRenderContext();
-  const canvasCtx = getCanvasContext();
 
   const center = $derived(geoCtx.projection?.([0, 0]) ?? [0, 0]);
 
@@ -73,7 +72,7 @@
       .size([ctx.containerWidth, ctx.containerHeight])
       .translate([center[0] + ctx.padding.left, center[1] + ctx.padding.top])
       // TODO: is this fine to add the 0 as a default?
-      .scale(geoCtx.projection?.scale() * 2 * Math.PI)
+      .scale(geoCtx.projection ? geoCtx.projection.scale() * 2 * Math.PI : undefined)
       .tileSize(tileSize)
       .zoomDelta(zoomDelta)()
   );
@@ -91,19 +90,13 @@
     }
   }
 
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    tiles;
-    canvasCtx.invalidate();
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    return canvasCtx.register({
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
       name: 'GeoTile',
       render,
+      deps: () => [tiles],
     });
-  });
+  }
 </script>
 
 {#if renderCtx === 'svg' && url}

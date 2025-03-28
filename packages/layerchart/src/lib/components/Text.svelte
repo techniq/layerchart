@@ -132,7 +132,7 @@
   import { merge } from 'lodash-es';
 
   import { getRenderContext } from './Chart.svelte';
-  import { getCanvasContext } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { getStringWidth } from '$lib/utils/string.js';
   import { renderText, type ComputedStylesOptions } from '../utils/canvas.js';
 
@@ -184,7 +184,6 @@
   let style: CSSStyleDeclaration | undefined = undefined; // TODO: read from DOM?
 
   const renderCtx = getRenderContext();
-  const canvasCtx = getCanvasContext();
 
   const words = $derived(value != null ? value.toString().split(/(?:(?!\u00A0+)\s+)/) : []);
 
@@ -323,25 +322,22 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    [
-      value,
-      motionX.current,
-      motionY.current,
-      fillKey.current,
-      strokeKey.current,
-      strokeWidth,
-      opacity,
-      className,
-    ];
-    canvasCtx.invalidate();
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    return canvasCtx.register({ name: 'Text', render });
-  });
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
+      name: 'Text',
+      render,
+      deps: () => [
+        value,
+        motionX.current,
+        motionY.current,
+        fillKey.current,
+        strokeKey.current,
+        strokeWidth,
+        opacity,
+        className,
+      ],
+    });
+  }
 </script>
 
 {#if renderCtx === 'svg'}

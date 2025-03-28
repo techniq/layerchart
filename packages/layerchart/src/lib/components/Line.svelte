@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import type { SVGAttributes } from 'svelte/elements';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import { renderPathData, type ComputedStylesOptions } from 'layerchart/utils/canvas.js';
   import MarkerWrapper, { type MarkerOptions } from './MarkerWrapper.svelte';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 
@@ -93,7 +93,7 @@
   import { cls } from '@layerstack/tailwind';
   import { merge } from 'lodash-es';
 
-  import { getCanvasContext } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { getRenderContext } from './Chart.svelte';
 
   import { createKey } from '$lib/utils/key.svelte.js';
@@ -135,7 +135,6 @@
   const motionY2 = createMotion(initialY2, () => y2, motion);
 
   const renderCtx = getRenderContext();
-  const canvasCtx = getCanvasContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
@@ -157,16 +156,8 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    [motionX1.current, motionY1.current, motionX2.current, motionY2.current];
-    [fillKey.current, strokeKey.current, strokeWidth, opacity, className];
-    canvasCtx.invalidate();
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    return canvasCtx.register({
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
       name: 'Line',
       render,
       events: {
@@ -175,8 +166,19 @@
         pointermove: restProps.onpointermove,
         pointerleave: restProps.onpointerleave,
       },
+      deps: () => [
+        motionX1.current,
+        motionY1.current,
+        motionX2.current,
+        motionY2.current,
+        fillKey.current,
+        strokeKey.current,
+        strokeWidth,
+        opacity,
+        className,
+      ],
     });
-  });
+  }
 </script>
 
 {#if renderCtx === 'svg'}

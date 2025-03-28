@@ -181,7 +181,7 @@
     padAngle = 0,
     placement = 'center',
     maxValue,
-    center = placement === 'center',
+    center: centerProp,
     series: seriesProp,
     legend = false,
     onArcClick = () => {},
@@ -203,6 +203,8 @@
     context = $bindable(),
     ...restProps
   }: ArcChartProps<TData> = $props();
+
+  const center = $derived(centerProp ?? placement === 'center');
 
   const c = $derived(cProp ?? key);
 

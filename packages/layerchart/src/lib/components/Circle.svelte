@@ -64,8 +64,8 @@
 
   import { getRenderContext } from './Chart.svelte';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
-  import { getCanvasContext } from './layout/Canvas.svelte';
-  import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { renderCircle, type ComputedStylesOptions } from 'layerchart/utils/canvas.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { layerClass } from '$lib/utils/attributes.js';
@@ -93,7 +93,6 @@
   const initialR = initialRProp ?? r;
 
   const renderCtx = getRenderContext();
-  const canvasCtx = getCanvasContext();
 
   const motionCx = createMotion(initialCx, () => cx, motion);
   const motionCy = createMotion(initialCy, () => cy, motion);
@@ -119,26 +118,8 @@
   const fillKey = createKey(() => fill);
   const strokeKey = createKey(() => stroke);
 
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    [
-      motionCx.current,
-      motionCy.current,
-      motionR.current,
-      fillKey.current,
-      fillOpacity,
-      strokeKey.current,
-      strokeWidth,
-      opacity,
-      className,
-    ];
-
-    canvasCtx.invalidate();
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    return canvasCtx.register({
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
       name: 'Circle',
       render,
       events: {
@@ -148,8 +129,19 @@
         pointermove: restProps.onpointermove,
         pointerleave: restProps.onpointerleave,
       },
+      deps: () => [
+        motionCx.current,
+        motionCy.current,
+        motionR.current,
+        fillKey.current,
+        fillOpacity,
+        strokeKey.current,
+        strokeWidth,
+        opacity,
+        className,
+      ],
     });
-  });
+  }
 </script>
 
 {#if renderCtx === 'svg'}

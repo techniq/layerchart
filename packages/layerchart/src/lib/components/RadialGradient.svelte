@@ -84,7 +84,7 @@
 
 <script lang="ts">
   import { getRenderContext } from './Chart.svelte';
-  import { getCanvasContext } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';
   import { getChartContext } from './Chart.svelte';
@@ -117,7 +117,6 @@
   const ctx = getChartContext();
 
   const renderCtx = getRenderContext();
-  const canvasCtx = getCanvasContext();
 
   let canvasGradient = $state<CanvasGradient>();
 
@@ -147,20 +146,13 @@
     canvasGradient = gradient;
   }
 
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    return canvasCtx.register({
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
       name: 'Gradient',
       render,
+      deps: () => [stops, cx, cy, fx, fy, ctx.width, ctx.height],
     });
-  });
-
-  $effect(() => {
-    if (renderCtx !== 'canvas') return;
-    // Redraw when props changes (TODO: styles, class, etc)
-    [stops, cx, cy, fx, fy, ctx.width, ctx.height];
-    canvasCtx.invalidate();
-  });
+  }
 </script>
 
 {#if renderCtx === 'canvas'}
