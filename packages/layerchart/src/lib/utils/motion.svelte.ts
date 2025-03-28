@@ -1,4 +1,5 @@
 import { Spring, Tween } from 'svelte/motion';
+import { afterTick } from './afterTick.js';
 
 /**
  * Spring motion configuration options
@@ -141,6 +142,12 @@ type InternalMotionOptions = {
    * rather than automatically tracking changes to the source value
    */
   controlled?: boolean;
+
+  /**
+   * When true, the tracked motion state will wait a tick before updating
+   * to allow for any other state changes to occur first.
+   */
+  afterTick?: boolean;
 };
 
 /**
@@ -152,10 +159,23 @@ type MotionState<T> = MotionSpring<T> | MotionTween<T> | MotionNone<T>;
  * Sets up automatic tracking between a source value and a motion state
  * when the motion is in controlled mode
  */
-function setupControlledTracking<T>(motion: MotionState<T>, getValue: () => T) {
-  $effect(() => {
-    motion.target = getValue();
-  });
+function setupTracking<T>(
+  motion: MotionState<T>,
+  getValue: () => T,
+  options: InternalMotionOptions
+) {
+  if (options.controlled) return;
+  if (options.afterTick) {
+    $effect(() => {
+      afterTick(() => {
+        motion.set(getValue());
+      });
+    });
+  } else {
+    $effect(() => {
+      motion.set(getValue());
+    });
+  }
 }
 
 export function createMotion<T = any>(
@@ -165,26 +185,19 @@ export function createMotion<T = any>(
   options: InternalMotionOptions = {}
 ) {
   const motion = parseMotionProp(motionProp);
-  const { controlled = false } = options;
   if (motion === undefined) {
     const fallback = new MotionNone<T>(initialValue);
-    if (controlled) setupControlledTracking(fallback, getValue);
+    setupTracking(fallback, getValue, options);
     return fallback;
   }
 
   if (motion.type === 'spring') {
     const spring = new MotionSpring(initialValue, motion.options);
-    if (controlled) setupControlledTracking(spring, getValue);
-
-    if (!controlled) {
-      $effect(() => {
-        spring.target = getValue();
-      });
-    }
+    setupTracking(spring, getValue, options);
     return spring;
   }
   const tween = new MotionTween(initialValue, motion.options);
-  if (controlled) setupControlledTracking(tween, getValue);
+  setupTracking(tween, getValue, options);
   return tween;
 }
 

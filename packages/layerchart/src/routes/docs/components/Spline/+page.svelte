@@ -12,7 +12,7 @@
   let pointCount = $state(100);
   let showPoints = $state(false);
   let show = $state(true);
-  let motion: 'draw' | 'tweened' | 'none' = $state('tweened');
+  let motion: 'draw' | 'tween' | 'none' = $state('tween');
   let Context: Component = $state(Svg);
 
   let pathGenerator = $state((x: number) => x);
@@ -76,14 +76,14 @@
         {#if show}
           <Spline
             {curve}
-            motion={motion === 'tweened' ? 'tween' : 'none'}
+            motion={motion === 'tween' ? 'tween' : 'none'}
             draw={motion === 'draw'}
             class="stroke-primary stroke-2"
           />
 
           {#if showPoints}
             <Points
-              motion={motion === 'tweened' ? 'tween' : 'none'}
+              motion={motion === 'tween' ? 'tween' : 'none'}
               r={3}
               class="fill-surface-100 stroke-primary"
             />

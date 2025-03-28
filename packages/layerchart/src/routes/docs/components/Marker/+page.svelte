@@ -21,7 +21,7 @@
   let markerEnd = $state(true);
 
   let tweened = $state(true);
-  const motion = $derived(tweened ? 'tween' : undefined);
+  const motion = $derived(tweened ? 'tween' : 'none');
 
   const data = $derived(
     Array.from({ length: pointCount }).map((_, i) => {

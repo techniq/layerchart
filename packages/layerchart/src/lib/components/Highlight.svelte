@@ -99,7 +99,7 @@
      *
      * @default true
      */
-    motion?: boolean;
+    motion?: MotionProp;
 
     onAreaClick?: (e: MouseEvent, detail: { data: any }) => void;
     onBarClick?: (e: MouseEvent, detail: { data: any }) => void;
@@ -121,6 +121,7 @@
   import { getChartContext } from './Chart.svelte';
   import { getTooltipContext } from './tooltip/TooltipContext.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
+  import type { MotionProp } from 'layerchart/utils/motion.svelte.js';
 
   const ctx = getChartContext();
   const tooltipCtx = getTooltipContext();
@@ -134,7 +135,7 @@
     lines: linesProp = false,
     area = false,
     bar = false,
-    motion = true,
+    motion = 'spring',
     onAreaClick,
     onBarClick,
     onPointClick,
@@ -442,7 +443,7 @@
       {@render area({ area: _area })}
     {:else}
       <Rect
-        spring={motion}
+        motion={motion === 'spring' ? 'spring' : undefined}
         {..._area}
         {...areaProps}
         class={cls(!areaProps.fill && 'fill-surface-content/5', areaProps.class)}
@@ -456,7 +457,7 @@
       {@render bar()}
     {:else}
       <Bar
-        spring={motion}
+        motion={motion === 'spring' ? 'spring' : undefined}
         bar={highlightData}
         {...barProps}
         class={cls(!barProps.fill && 'fill-primary', barProps.class)}
@@ -471,7 +472,7 @@
     {:else}
       {#each _lines as line}
         <Line
-          spring={motion}
+          motion={motion === 'spring' ? 'spring' : undefined}
           x1={line.x1}
           y1={line.y1}
           x2={line.x2}
@@ -492,7 +493,7 @@
     {:else}
       {#each _points as point}
         <Circle
-          spring={motion}
+          motion={motion === 'spring' ? 'spring' : undefined}
           cx={point.x}
           cy={point.y}
           fill={point.fill}

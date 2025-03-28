@@ -232,7 +232,7 @@
     d3arc()
       .innerRadius(innerRadius)
       .outerRadius(outerRadius)
-      .startAngle(startAngle)
+      .startAngle(startAngleProp ?? degreesToRadians(range[0]))
       .endAngle(endAngleProp ?? degreesToRadians(scale(motionEndAngle.current)))
       .cornerRadius(cornerRadius)
       .padAngle(padAngle)
@@ -242,7 +242,7 @@
     d3arc()
       .innerRadius(innerRadius)
       .outerRadius(outerRadius)
-      .startAngle(startAngle)
+      .startAngle(startAngleProp ?? degreesToRadians(range[0]))
       .endAngle(endAngle)
       .cornerRadius(cornerRadius)
       .padAngle(padAngle)
@@ -277,13 +277,13 @@
   <Spline
     pathData={trackArc()}
     stroke="none"
-    bind:ref={trackRef}
+    bind:splineRef={trackRef}
     {...extractLayerProps(track, 'arc-track')}
   />
 {/if}
 
 <Spline
-  bind:ref
+  bind:splineRef={ref}
   pathData={arc()}
   transform="translate({xOffset}, {yOffset})"
   {fill}

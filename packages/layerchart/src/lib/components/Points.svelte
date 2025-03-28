@@ -98,58 +98,39 @@
   const yAccessor = $derived(y ? accessor(y) : ctx.y);
   const pointsData = $derived(data ?? ctx.data);
 
-  const points = $derived(
-    pointsData
-      .flatMap((d: any) => {
-        const xValue = xAccessor(d);
-        const yValue = yAccessor(d);
+  // Pre-calculate common values to avoid redundant calculations
+  const getPointObject = (xVal: number, yVal: number, d: any): Point => {
+    // Only calculate these scaled values once per point
+    const scaledX: number = ctx.xScale(xVal);
+    const scaledY: number = ctx.yScale(yVal);
 
-        if (Array.isArray(xValue)) {
-          /*
-				x={["prop1" ,"prop2"]}
-				y="prop3"
-			*/
-          return xValue.filter(notNull).map((xValue: number) => {
-            return {
-              x: ctx.xScale(xValue) + getOffset(ctx.xScale(xValue), offsetX, ctx.xScale),
-              y: ctx.yScale(yValue) + getOffset(ctx.yScale(yValue), offsetY, ctx.yScale),
-              r: ctx.config.r ? ctx.rGet(d) : r,
-              xValue,
-              yValue,
-              data: d,
-            };
-          });
-        } else if (Array.isArray(yValue)) {
-          /*
-				x="prop1"
-				y={["prop2" ,"prop3"]}
-			*/
-          return yValue.filter(notNull).map((yValue: number) => {
-            return {
-              x: ctx.xScale(xValue) + getOffset(ctx.xScale(xValue), offsetX, ctx.xScale),
-              y: ctx.yScale(yValue) + getOffset(ctx.yScale(yValue), offsetY, ctx.yScale),
-              r: ctx.config.r ? ctx.rGet(d) : r,
-              xValue,
-              yValue,
-              data: d,
-            };
-          });
-        } else if (xValue != null && yValue != null) {
-          /*
-				x="prop1"
-				y="prop2"
-			*/
-          return {
-            x: ctx.xScale(xValue) + getOffset(ctx.xScale(xValue), offsetX, ctx.xScale),
-            y: ctx.yScale(yValue) + getOffset(ctx.yScale(yValue), offsetY, ctx.yScale),
-            r: ctx.config.r ? ctx.rGet(d) : r,
-            xValue,
-            yValue,
-            data: d,
-          };
-        }
-      })
-      .filter((p: Point) => p) as Point[]
+    return {
+      x: scaledX + getOffset(scaledX, offsetX, ctx.xScale),
+      y: scaledY + getOffset(scaledY, offsetY, ctx.yScale),
+      r: ctx.config.r ? ctx.rGet(d) : r,
+      xValue: xVal,
+      yValue: yVal,
+      data: d,
+    };
+  };
+
+  const points = $derived(
+    pointsData.flatMap((d: any) => {
+      const xValue: number | number[] = xAccessor(d);
+      const yValue: number | number[] = yAccessor(d);
+
+      if (Array.isArray(xValue)) {
+        return xValue
+          .filter(Boolean)
+          .map((xVal: number) => getPointObject(xVal, yValue as number, d));
+      } else if (Array.isArray(yValue)) {
+        return yValue.filter(Boolean).map((yVal: number) => getPointObject(xValue, yVal, d));
+      } else if (xValue != null && yValue != null) {
+        return getPointObject(xValue as number, yValue as number, d);
+      }
+
+      return [];
+    }) as Point[]
   );
 
   const _links = $derived(

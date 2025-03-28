@@ -72,11 +72,11 @@
 
   let {
     cx = 0,
-    initialCx = cx,
+    initialCx: initialCxProp,
     cy = 0,
-    initialCy = cy,
+    initialCy: initialCyProp,
     r = 1,
-    initialR = r,
+    initialR: initialRProp,
     motion,
     fill,
     fillOpacity,
@@ -87,6 +87,10 @@
     ref = $bindable(),
     ...restProps
   }: CircleProps = $props();
+
+  const initialCx = initialCxProp ?? cx;
+  const initialCy = initialCyProp ?? cy;
+  const initialR = initialRProp ?? r;
 
   const renderCtx = getRenderContext();
   const canvasCtx = getCanvasContext();

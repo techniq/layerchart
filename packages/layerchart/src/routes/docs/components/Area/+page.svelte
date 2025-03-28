@@ -14,7 +14,7 @@
   let show = $state(true);
   let tweened = $state(true);
   let Context: Component = $state(Svg);
-  const motion = $derived(tweened ? 'tween' : undefined);
+  const motion = $derived(tweened ? 'tween' : 'none');
 
   let pathGenerator = $state((x: number) => x);
   let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);

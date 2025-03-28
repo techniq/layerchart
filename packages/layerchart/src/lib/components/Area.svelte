@@ -32,7 +32,7 @@
     /**
      * Whether to tween the interpolated path data using d3-interpolate-path
      */
-    motion?: MotionTweenOption;
+    motion?: MotionProp;
 
     clipPath?: string;
 
@@ -65,7 +65,7 @@
   import { getCanvasContext } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getChartContext } from './Chart.svelte';
-  import { createMotion, type MotionTweenOption } from '$lib/utils/motion.svelte.js';
+  import { createMotion, extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
@@ -99,11 +99,12 @@
   const xOffset = $derived(isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0);
   const yOffset = $derived(isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0);
 
-  const tweenOptions = motion
+  const extractedTween = extractTweenConfig(motion);
+
+  const tweenOptions = extractedTween
     ? {
-        type: 'tween' as const,
         interpolate: interpolatePath,
-        ...(typeof motion === 'object' ? motion : null),
+        ...extractedTween,
       }
     : undefined;
 

@@ -122,10 +122,6 @@
   }
 
   $effect(() => {
-    console.log('href', href);
-  });
-
-  $effect(() => {
     if (disableCache) return;
     loadImage(url(x, y, z));
   });

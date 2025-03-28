@@ -69,7 +69,7 @@
                   cy={point.y}
                   r={2}
                   class={index % 2 ? 'fill-primary' : 'fill-secondary'}
-                  motion={tweened ? 'tween' : 'none'}
+                  motion={tweened ? 'tween' : undefined}
                 />
               {/each}
             {/snippet}

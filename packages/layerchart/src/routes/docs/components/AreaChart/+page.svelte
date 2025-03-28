@@ -197,7 +197,7 @@
       {/snippet}
 
       {#snippet highlight({ context })}
-        {@const value = context.tooltip.data && context.y(context.tooltip.data)}
+        {@const value = context.tooltip?.data && context.y(context.tooltip?.data)}
         <Highlight lines points={{ fill: value < 0 ? colors.negative : colors.positive }} />
       {/snippet}
       {#snippet tooltip({ context })}
@@ -341,7 +341,7 @@
       {#snippet marks({ series, context })}
         {#each series as s}
           {@const activeSeries =
-            context.tooltip.data == null || context.tooltip.data?.fruit === s.key}
+            context.tooltip?.data == null || context.tooltip?.data?.fruit === s.key}
 
           <g class={cls(!activeSeries && 'opacity-20 saturate-0')}>
             <Area data={s.data} line={{ stroke: s.color }} fill={s.color} fillOpacity={0.3} />
@@ -351,24 +351,20 @@
 
       {#snippet highlight({ series, context })}
         <!-- TODO: Remove hack to make typescript happy -->
-        {@const activeSeries = [...series].find((s) => s.key === context.tooltip.data?.fruit)}
+        {@const activeSeries = [...series].find((s) => s.key === context.tooltip?.data?.fruit)}
         <Highlight lines points={{ fill: activeSeries?.color }} />
       {/snippet}
 
       {#snippet tooltip({ series, context })}
         <!-- TODO: Remove hack to make typescript happy -->
-        {@const activeSeries = [...series].find((s) => s.key === context.tooltip.data?.fruit)}
+        {@const activeSeries = [...series].find((s) => s.key === context.tooltip?.data?.fruit)}
         <Tooltip.Root>
-          {#if context.tooltip.data}
-            <Tooltip.Header>{format(context.x(context.tooltip.data))}</Tooltip.Header>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.x(data))}</Tooltip.Header>
             <Tooltip.List>
-              <Tooltip.Item
-                label={context.tooltip.data?.fruit}
-                value={context.tooltip.data?.value}
-                color={activeSeries?.color}
-              />
+              <Tooltip.Item label={data?.fruit} value={data?.value} color={activeSeries?.color} />
             </Tooltip.List>
-          {/if}
+          {/snippet}
         </Tooltip.Root>
       {/snippet}
     </AreaChart>
@@ -957,7 +953,7 @@
 
 <Preview data={{ denseDateSeriesData, denseDateSeriesData2 }}>
   <div class="text-sm">
-    {#if context.tooltip.data}
+    {#if context && context.tooltip.data}
       date: {format(context.tooltip.data.date, PeriodType.Day, { variant: 'short' })}
       value: {context.tooltip.data.value}
     {:else}

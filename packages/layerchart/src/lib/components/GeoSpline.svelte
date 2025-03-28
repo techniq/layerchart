@@ -42,7 +42,7 @@
     link,
     loft = 1.0,
     curve = curveNatural,
-    ref = $bindable(),
+    splineRef: ref = $bindable(),
     ...restProps
   }: GeoSplineProps = $props();
 
@@ -71,7 +71,7 @@
 </script>
 
 <Spline
-  bind:ref
+  bind:splineRef={ref}
   data={[source, middle, target]}
   x={(d) => d[0]}
   y={(d) => d[1]}
