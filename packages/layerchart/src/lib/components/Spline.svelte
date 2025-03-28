@@ -9,9 +9,7 @@
     createControlledMotion,
     createMotion,
     extractTweenConfig,
-    type MotionNoneOption,
     type MotionProp,
-    type MotionTweenOption,
   } from '$lib/utils/motion.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
 
