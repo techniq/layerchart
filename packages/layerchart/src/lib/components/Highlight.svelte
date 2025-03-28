@@ -121,7 +121,7 @@
   import { getChartContext } from './Chart.svelte';
   import { getTooltipContext } from './tooltip/TooltipContext.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
-  import type { MotionProp } from 'layerchart/utils/motion.svelte.js';
+  import type { MotionProp } from '$lib/utils/motion.svelte.js';
 
   const ctx = getChartContext();
   const tooltipCtx = getTooltipContext();

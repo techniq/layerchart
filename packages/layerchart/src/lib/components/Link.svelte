@@ -2,7 +2,12 @@
   import type { MarkerOptions } from './MarkerWrapper.svelte';
   import type { Without } from '$lib/utils/types.js';
   import Spline, { type SplineProps } from './Spline.svelte';
-  import { createMotion, type MotionTweenOption } from '$lib/utils/motion.svelte.js';
+  import {
+    createMotion,
+    extractTweenConfig,
+    type MotionNoneOption,
+    type MotionTweenOption,
+  } from '$lib/utils/motion.svelte.js';
   import { link as d3Link, curveBumpX, curveBumpY, type CurveFactory } from 'd3-shape';
 
   export type LinkPropsWithoutHTML = {
@@ -58,7 +63,7 @@
       y2: number;
     };
 
-    motion?: MotionTweenOption;
+    motion?: MotionTweenOption | MotionNoneOption;
   };
 
   export type LinkProps = LinkPropsWithoutHTML & Without<SplineProps, LinkPropsWithoutHTML>;
@@ -126,11 +131,12 @@
   const markerMidId = $derived(markerMid || marker ? createId('marker-mid', uid) : '');
   const markerEndId = $derived(markerEnd || marker ? createId('marker-end', uid) : '');
 
-  const tweenOptions = motion
+  const extractedTween = extractTweenConfig(motion);
+
+  const tweenOptions = extractedTween
     ? {
-        type: 'tween' as const,
         interpolate: interpolatePath,
-        ...(typeof motion === 'object' ? motion : null),
+        ...extractedTween,
       }
     : undefined;
 
@@ -157,7 +163,7 @@
     return d;
   });
 
-  const motionPath = createMotion('', () => d, tweenOptions);
+  const motionPath = createMotion('', () => d, tweenOptions ? tweenOptions : { type: 'none' });
 </script>
 
 <Spline

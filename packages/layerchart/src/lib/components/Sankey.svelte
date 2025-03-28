@@ -108,12 +108,7 @@
 
   const sankeyData = $derived.by(() => {
     if (typeof document === 'undefined') return { nodes: [], links: [] };
-    ctx.data;
-    ctx.width;
-    ctx.height;
-    nodeWidth;
-    nodePadding;
-    nodeAlign;
+
     return (
       d3Sankey()
         .size([ctx.width, ctx.height])
