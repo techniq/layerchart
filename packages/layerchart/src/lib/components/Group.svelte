@@ -2,7 +2,11 @@
   import type { Snippet } from 'svelte';
   import type { HTMLAttributes, TouchEventHandler } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
-  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
+  import {
+    createControlledMotion,
+    createMotion,
+    type MotionProp,
+  } from '$lib/utils/motion.svelte.js';
 
   export type GroupPropsWithoutHTML = {
     /**
@@ -70,7 +74,6 @@
 
   import { getChartContext } from './Chart.svelte';
   import { layerClass } from '$lib/utils/attributes.js';
-  import { afterTick } from '$lib/utils/afterTick.js';
 
   const ctx = getChartContext();
 
@@ -90,8 +93,13 @@
 
   const trueX = $derived(x ?? (center === 'x' || center === true ? ctx.width / 2 : 0));
   const trueY = $derived(y ?? (center === 'y' || center === true ? ctx.height / 2 : 0));
-  const motionX = createMotion(initialX, () => trueX, motion);
-  const motionY = createMotion(initialY, () => trueY, motion);
+  const motionX = createControlledMotion(initialX, motion);
+  const motionY = createControlledMotion(initialY, motion);
+
+  $effect(() => {
+    motionX.set(trueX);
+    motionY.set(trueY);
+  });
 
   const transform = $derived.by(() => {
     if (center || x != null || y != null) {

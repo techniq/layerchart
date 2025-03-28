@@ -135,12 +135,7 @@
     : undefined;
 
   // TODO: can we just make that effect a derived instead
-  let trueD = $state('');
-
-  const motionPath = createMotion('', () => trueD, tweenOptions);
-
-  // TODO: can we use derived here?
-  $effect(() => {
+  const d = $derived.by(() => {
     const link = d3Link(curve).source(source).target(target).x(x).y(y);
     let d: string;
 
@@ -159,9 +154,10 @@
       // Safe default to avoid rendering errors
       d = 'M0,0L0,0';
     }
-
-    trueD = d;
+    return d;
   });
+
+  const motionPath = createMotion('', () => d, tweenOptions);
 </script>
 
 <Spline

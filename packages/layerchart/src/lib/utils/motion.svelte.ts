@@ -185,7 +185,7 @@ export function createMotion<T = any>(
   options: InternalMotionOptions = {}
 ) {
   const motion = parseMotionProp(motionProp);
-  if (motion === undefined) {
+  if (motion.type === 'none') {
     const fallback = new MotionNone<T>(initialValue);
     setupTracking(fallback, getValue, options);
     return fallback;

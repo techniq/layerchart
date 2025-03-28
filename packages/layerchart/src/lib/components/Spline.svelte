@@ -132,7 +132,6 @@
   import MarkerWrapper from './MarkerWrapper.svelte';
   import { getChartContext } from './Chart.svelte';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { afterTick } from '$lib/utils/afterTick.js';
   import { createId } from '$lib/utils/createId.js';
   import { layerClass } from '$lib/utils/attributes.js';
 
@@ -335,12 +334,10 @@
   $effect(() => {
     if (!startContent && !endContent) return;
     d;
-    afterTick(() => {
-      if (!splineRef || !splineRef.pathLength) return;
-      startPoint = splineRef.getPointAtLength(0);
-      const totalLength = splineRef.getTotalLength();
-      endPoint.target = splineRef.getPointAtLength(totalLength);
-    });
+    if (!splineRef || !splineRef.pathLength) return;
+    startPoint = splineRef.getPointAtLength(0);
+    const totalLength = splineRef.getTotalLength();
+    endPoint.target = splineRef.getPointAtLength(totalLength);
   });
 
   $effect(() => {
