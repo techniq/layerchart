@@ -139,7 +139,7 @@
   import { add } from '../utils/math.js';
   import type { HTMLAttributes } from 'svelte/elements';
   import { getChartContext } from './Chart.svelte';
-  import { untrack, type Snippet } from 'svelte';
+  import type { Snippet } from 'svelte';
   import { layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
@@ -174,22 +174,24 @@
 
   $effect.pre(() => {
     if (xDomain !== undefined) return;
-    xDomain = untrack(() => ctx.xScale.domain());
+    xDomain = ctx.xScale.domain();
   });
 
   $effect.pre(() => {
     if (yDomain !== undefined) return;
-    yDomain = untrack(() => ctx.yScale.domain());
+    yDomain = ctx.yScale.domain();
   });
 
-  //   const xDomain = $derived(xDomainProp ?? ctx.xScale.domain());
-  //   const yDomain = $derived(yDomainProp ?? ctx.yScale.domain());
-
-  const originalXDomain = ctx.config.xDomain;
-  const originalYDomain = ctx.config.yDomain;
+  const originalXDomain = ctx.xDomain;
+  const originalYDomain = ctx.yDomain;
 
   const xDomainMinMax = $derived(extent<number>(ctx.xScale.domain()) as [number, number]);
+  const xDomainMin = $derived(xDomainMinMax[0]);
+  const xDomainMax = $derived(xDomainMinMax[1]);
+
   const yDomainMinMax = $derived(extent<number>(ctx.yScale.domain()) as [number, number]);
+  const yDomainMin = $derived(yDomainMinMax[0]);
+  const yDomainMax = $derived(yDomainMinMax[1]);
 
   const top = $derived(ctx.yScale(yDomain?.[1]));
   const bottom = $derived(ctx.yScale(yDomain?.[0]));
@@ -271,14 +273,8 @@
       }
 
       const start = {
-        xDomain: [xDomain?.[0] ?? xDomainMinMax[0], xDomain?.[1] ?? xDomainMinMax[1]] as [
-          number,
-          number,
-        ],
-        yDomain: [yDomain?.[0] ?? yDomainMinMax[0], yDomain?.[1] ?? yDomainMinMax[1]] as [
-          number,
-          number,
-        ],
+        xDomain: [xDomain?.[0] ?? xDomainMin, xDomain?.[1] ?? xDomainMax] as [number, number],
+        yDomain: [yDomain?.[0] ?? yDomainMin, yDomain?.[1] ?? yDomainMax] as [number, number],
         value: {
           x: ctx.xScale.invert?.(startPoint?.x ?? 0),
           y: ctx.yScale.invert?.(startPoint?.y ?? 0),
@@ -347,17 +343,17 @@
 
     xDomain = [
       // @ts-expect-error
-      clamp(min([start.value.x, value.x]), xDomainMinMax[0], xDomainMinMax[1]),
+      clamp(min([start.value.x, value.x]), xDomainMin, xDomainMax),
       // @ts-expect-error
-      clamp(max([start.value.x, value.x]), xDomainMinMax[0], xDomainMinMax[1]),
+      clamp(max([start.value.x, value.x]), xDomainMin, xDomainMax),
     ];
     // xDomain = [start.value.x, value.x];
 
     yDomain = [
       // @ts-expect-error
-      clamp(min([start.value.y, value.y]), yDomainMinMax[0], yDomainMinMax[1]),
+      clamp(min([start.value.y, value.y]), yDomainMin, yDomainMax),
       // @ts-expect-error
-      clamp(max([start.value.y, value.y]), yDomainMinMax[0], yDomainMinMax[1]),
+      clamp(max([start.value.y, value.y]), yDomainMin, yDomainMax),
     ];
   });
 
@@ -365,15 +361,15 @@
     logger.debug('adjustRange');
     const dx = clamp(
       value.x - start.value.x,
-      xDomainMinMax[0] - start.xDomain[0],
-      xDomainMinMax[1] - start.xDomain[1]
+      xDomainMin - start.xDomain[0],
+      xDomainMax - start.xDomain[1]
     );
     xDomain = [add(start.xDomain[0], dx), add(start.xDomain[1], dx)];
 
     const dy = clamp(
       value.y - start.value.y,
-      yDomainMinMax[0] - start.yDomain[0],
-      yDomainMinMax[1] - start.yDomain[1]
+      yDomainMin - start.yDomain[0],
+      yDomainMax - start.yDomain[1]
     );
     yDomain = [add(start.yDomain[0], dy), add(start.yDomain[1], dy)];
   });
@@ -381,64 +377,32 @@
   const adjustTop = handler((start, value) => {
     logger.debug('adjustTop');
     yDomain = [
-      clamp(
-        value.y < start.yDomain[0] ? value.y : start.yDomain[0],
-        yDomainMinMax[0],
-        yDomainMinMax[1]
-      ),
-      clamp(
-        value.y < start.yDomain[0] ? start.yDomain[0] : value.y,
-        yDomainMinMax[0],
-        yDomainMinMax[1]
-      ),
+      clamp(value.y < start.yDomain[0] ? value.y : start.yDomain[0], yDomainMin, yDomainMax),
+      clamp(value.y < start.yDomain[0] ? start.yDomain[0] : value.y, yDomainMin, yDomainMax),
     ];
   });
 
   const adjustBottom = handler((start, value) => {
     logger.debug('adjustBottom');
     yDomain = [
-      clamp(
-        value.y > start.yDomain[1] ? start.yDomain[1] : value.y,
-        yDomainMinMax[0],
-        yDomainMinMax[1]
-      ),
-      clamp(
-        value.y > start.yDomain[1] ? value.y : start.yDomain[1],
-        yDomainMinMax[0],
-        yDomainMinMax[1]
-      ),
+      clamp(value.y > start.yDomain[1] ? start.yDomain[1] : value.y, yDomainMin, yDomainMax),
+      clamp(value.y > start.yDomain[1] ? value.y : start.yDomain[1], yDomainMin, yDomainMax),
     ];
   });
 
   const adjustLeft = handler((start, value) => {
     logger.debug('adjustLeft');
     xDomain = [
-      clamp(
-        value.x > start.xDomain[1] ? start.xDomain[1] : value.x,
-        xDomainMinMax[0],
-        xDomainMinMax[1]
-      ),
-      clamp(
-        value.x > start.xDomain[1] ? value.x : start.xDomain[1],
-        xDomainMinMax[0],
-        xDomainMinMax[1]
-      ),
+      clamp(value.x > start.xDomain[1] ? start.xDomain[1] : value.x, xDomainMin, xDomainMax),
+      clamp(value.x > start.xDomain[1] ? value.x : start.xDomain[1], xDomainMin, xDomainMax),
     ];
   });
 
   const adjustRight = handler((start, value) => {
     logger.debug('adjustRight');
     xDomain = [
-      clamp(
-        value.x < start.xDomain[0] ? value.x : start.xDomain[0],
-        xDomainMinMax[0],
-        xDomainMinMax[1]
-      ),
-      clamp(
-        value.x < start.xDomain[0] ? start.xDomain[0] : value.x,
-        xDomainMinMax[0],
-        xDomainMinMax[1]
-      ),
+      clamp(value.x < start.xDomain[0] ? value.x : start.xDomain[0], xDomainMin, xDomainMax),
+      clamp(value.x < start.xDomain[0] ? start.xDomain[0] : value.x, xDomainMin, xDomainMax),
     ];
   });
 
@@ -454,11 +418,11 @@
 
   function selectAll() {
     logger.debug('selectedAll');
-    xDomain = [xDomainMinMax[0], xDomainMinMax[1]];
-    yDomain = [yDomainMinMax[0], yDomainMinMax[1]];
+    xDomain = [xDomainMin, xDomainMax];
+    yDomain = [yDomainMin, yDomainMax];
   }
 
-  $effect(() => {
+  $effect.pre(() => {
     if (mode === 'separated') {
       // Set reactively to handle cases where xDomain/yDomain are set externally (ex. `bind:xDomain`)
       const isXAxisActive =
@@ -539,7 +503,7 @@
           ondblclick={(e) => {
             e.stopPropagation();
             if (yDomain) {
-              yDomain[0] = yDomainMinMax[0];
+              yDomain[0] = yDomainMin;
               onChange({ xDomain, yDomain });
             }
           }}
@@ -565,7 +529,7 @@
           ondblclick={(e) => {
             e.stopPropagation();
             if (yDomain) {
-              yDomain[1] = yDomainMinMax[1];
+              yDomain[1] = yDomainMax;
               onChange({ xDomain, yDomain });
             }
           }}
@@ -592,7 +556,7 @@
           ondblclick={(e) => {
             e.stopPropagation();
             if (xDomain) {
-              xDomain[0] = xDomainMinMax[0];
+              xDomain[0] = xDomainMin;
               onChange({ xDomain, yDomain });
             }
           }}
@@ -617,7 +581,7 @@
           ondblclick={(e) => {
             e.stopPropagation();
             if (xDomain) {
-              xDomain[1] = xDomainMinMax[1];
+              xDomain[1] = xDomainMax;
               onChange({ xDomain: xDomain, yDomain: yDomain });
             }
           }}
