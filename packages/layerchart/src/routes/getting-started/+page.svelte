@@ -46,7 +46,7 @@
           You can also create a new Tailwind project following their
           <a href="https://tailwindcss.com/docs/guides/sveltekit" target="_blank">guide</a>
           or use
-          <a href="https://github.com/svelte-add/tailwindcss" target="_blank">svelte-add</a>.
+          <a href="https://svelte.dev/docs/cli/sv-add" target="_blank">svelte CLI</a>.
         </p>
 
         <Blockquote>
