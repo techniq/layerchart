@@ -321,6 +321,19 @@
   ) {
     const effectiveLineHeight = getPixelValue(lineHeight);
     const baseY = getPixelValue(motionY.current) + getPixelValue(dy) + getPixelValue(startDy);
+    const baseX = getPixelValue(motionX.current) + getPixelValue(dx);
+
+    ctx.save();
+
+    if (rotate !== undefined) {
+      const centerX = getPixelValue(x);
+      const centerY = getPixelValue(y);
+      const radians = (rotate * Math.PI) / 180;
+
+      ctx.translate(centerX, centerY);
+      ctx.rotate(radians);
+      ctx.translate(-centerX, -centerY);
+    }
 
     for (let index = 0; index < wordsByLines.length; index++) {
       const line = wordsByLines[index];
@@ -328,7 +341,7 @@
         ctx,
         line.words.join(' '),
         {
-          x: getPixelValue(motionX.current) + getPixelValue(dx),
+          x: baseX,
           y: baseY + index * effectiveLineHeight,
         },
         styleOverrides
@@ -347,6 +360,8 @@
             }
       );
     }
+
+    ctx.restore();
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
@@ -367,6 +382,8 @@
         opacity,
         className,
         truncateConfig,
+        rotate,
+        lineHeight,
       ],
     });
   }
