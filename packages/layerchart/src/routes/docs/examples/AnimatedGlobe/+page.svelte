@@ -39,13 +39,10 @@
     if (selectedFeature && context?.transform) {
       const centroid = geoCentroid(selectedFeature);
 
-      context.transform.setTranslate(
-        {
-          x: -centroid[0],
-          y: -centroid[1],
-        },
-        { type: 'spring', stiffness: 1, damping: 0.45 }
-      );
+      context.transform.setTranslate({
+        x: -centroid[0],
+        y: -centroid[1],
+      });
     }
   });
 
