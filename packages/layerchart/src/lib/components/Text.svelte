@@ -139,10 +139,11 @@
   import { getRenderContext } from './Chart.svelte';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { getStringWidth, truncateText, type TruncateTextOptions } from '$lib/utils/string.js';
-  import { renderText, type ComputedStylesOptions } from '../utils/canvas.js';
+  import { getComputedStyles, renderText, type ComputedStylesOptions } from '../utils/canvas.js';
 
   import { createKey } from '$lib/utils/key.svelte.js';
   import { layerClass } from '$lib/utils/attributes.js';
+  import { degreesToRadians } from 'layerchart/utils/math.js';
 
   /*
     TODO:
@@ -328,36 +329,51 @@
     if (rotate !== undefined) {
       const centerX = getPixelValue(x);
       const centerY = getPixelValue(y);
-      const radians = (rotate * Math.PI) / 180;
+      const radians = degreesToRadians(rotate);
 
       ctx.translate(centerX, centerY);
       ctx.rotate(radians);
       ctx.translate(-centerX, -centerY);
     }
 
+    const styles = styleOverrides
+      ? merge({ styles: { strokeWidth } }, styleOverrides)
+      : {
+          styles: {
+            fill,
+            fillOpacity,
+            stroke,
+            strokeWidth,
+            opacity,
+            paintOrder: 'stroke',
+            textAnchor,
+          },
+          classes: cls(fill === undefined && 'fill-surface-content', className),
+        };
+
+    const computedStyles = getComputedStyles(ctx.canvas, styles);
+
+    ctx.font = `${computedStyles.fontSize} ${computedStyles.fontFamily}`;
+
+    const textAlign = textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'end' : 'start';
+    ctx.textAlign = textAlign;
+
     for (let index = 0; index < wordsByLines.length; index++) {
       const line = wordsByLines[index];
+      const text = line.words.join(' ');
+
+      // no need to manually adjust x for textAnchor since ctx.textAlign handles it
+      const xPos = baseX;
+      const yPos = baseY + index * effectiveLineHeight;
+
       renderText(
         ctx,
-        line.words.join(' '),
+        text,
         {
-          x: baseX,
-          y: baseY + index * effectiveLineHeight,
+          x: xPos,
+          y: yPos,
         },
-        styleOverrides
-          ? merge({ styles: { strokeWidth } }, styleOverrides)
-          : {
-              styles: {
-                fill,
-                fillOpacity,
-                stroke,
-                strokeWidth,
-                opacity,
-                paintOrder: 'stroke',
-                textAnchor,
-              },
-              classes: cls(fill === undefined && 'fill-surface-content', className),
-            }
+        styles
       );
     }
 
@@ -384,6 +400,8 @@
         truncateConfig,
         rotate,
         lineHeight,
+        textAnchor,
+        verticalAnchor,
       ],
     });
   }
