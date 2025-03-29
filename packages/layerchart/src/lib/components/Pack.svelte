@@ -18,7 +18,7 @@
     /**
      * The hierarchy data to be packed.
      */
-    hierarchy?: HierarchyNode<T>;
+    hierarchy: HierarchyNode<T>;
 
     /**
      * A bindable reference to the computed packed nodes.
@@ -45,8 +45,7 @@
   }: PackProps<T> = $props();
 
   const packedData = $derived.by(() => {
-    const h = hierarchyProp?.copy();
-    if (!h) return [];
+    const h = hierarchyProp.copy();
     const _pack = d3Pack<T>().size(size ?? [ctx.width, ctx.height]);
     if (padding) {
       _pack.padding(padding);
