@@ -25,22 +25,21 @@
 </script>
 
 <script lang="ts" generics="T">
-  import { Versioned } from '$lib/utils/versioned.svelte.js';
   import { getChartContext } from './Chart.svelte';
 
   const ctx = getChartContext();
 
   let { size, padding, children, hierarchy: hierarchyProp }: PackProps<T> = $props();
 
-  const hierarchy = new Versioned(hierarchyProp);
-
   const packedData = $derived.by(() => {
-    console.log('running derived');
-    const h = hierarchy.current;
+    const h = hierarchyProp?.copy();
     if (!h) return [];
     const _pack = d3Pack<T>().size(size ?? [ctx.width, ctx.height]);
     if (padding) {
       _pack.padding(padding);
+    }
+    if (hierarchyProp) {
+      hierarchyProp = _pack(hierarchyProp);
     }
     return _pack(h).descendants();
   });
@@ -51,5 +50,5 @@
 </script>
 
 {@render children?.({
-  nodes: structuredClone(packedData),
+  nodes: packedData,
 })}

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { cubicOut } from 'svelte/easing';
   import { fade } from 'svelte/transition';
   import { hierarchy, type HierarchyCircularNode, type HierarchyNode } from 'd3-hierarchy';
@@ -65,6 +64,18 @@
           : '#ddd';
     }
     return '';
+  }
+
+  function findSelectedNodeInHierarchy(
+    selectedNode: HierarchyNode<any>,
+    hierarchy: HierarchyNode<any>[]
+  ): HierarchyNode<any> {
+    for (const node of hierarchy) {
+      if (node.data.name === selectedNode.data.name) {
+        return node;
+      }
+    }
+    return selectedNode;
   }
 </script>
 
@@ -133,22 +144,21 @@
                   />
                 </Group>
               {/each}
-              {@const selectedNodes = selected
-                ? (structuredClone(selected.children) ?? [structuredClone(selected)])
-                : []}
+              {@const selectedNodes = selected ? (selected.children ?? [selected]) : []}
 
               {#each selectedNodes as node ([node.data.name, node.parent?.data.name].join('-'))}
+                {@const trueNode = findSelectedNodeInHierarchy(node, nodes)}
                 {@const fontSize = 1 / context.transform.scale}
                 <g in:fade|local>
                   <text
-                    x={node.x}
-                    y={node.y}
+                    x={trueNode.x}
+                    y={trueNode.y}
                     dy={fontSize * 8}
                     class="stroke-white/70 pointer-events-none [text-anchor:middle] [paint-order:stroke]"
                     style:font-size="{fontSize}rem"
                     style:stroke-width="{fontSize * 2}px"
                   >
-                    {node.data.name}
+                    {trueNode.data.name}
                   </text>
                 </g>
               {/each}
