@@ -8,7 +8,7 @@
   import { Icon } from 'svelte-ux';
   import { sortFunc } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { mdiArrowRightBold, mdiNewBox } from '@mdi/js';
+  import { mdiArrowRightBold } from '@mdi/js';
 
   import {
     Chart,
@@ -189,6 +189,7 @@
     </Chart>
   </div>
 </Preview>
+
 <h2>Node select</h2>
 
 <Preview data={selectedNode ? graphFromNode(selectedNode) : data.greenhouse}>
@@ -232,13 +233,13 @@
                   class="fill-primary hover:fill-primary/90 hover:cursor-pointer"
                   motion="tween"
                 />
-                <span>{node.x0} {node.y0}</span>
                 <Text
-                  value="{node.name} x: {node.x0} y: {node.y0}"
+                  value={node.name}
                   x={node.height === 0 ? -4 : nodeWidth + 4}
                   y={nodeHeight / 2}
                   textAnchor={node.height === 0 ? 'end' : 'start'}
                   verticalAnchor="middle"
+                  class="select-none"
                 />
               </Group>
             {/each}
