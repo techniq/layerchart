@@ -281,9 +281,9 @@ export function _createLinearGradient(
 ) {
   const gradient = ctx.createLinearGradient(x0, y0, x1, y1);
 
-  stops.forEach(({ offset, color }) => {
+  for (const { offset, color } of stops) {
     gradient.addColorStop(offset, color);
-  });
+  }
 
   return gradient;
 }

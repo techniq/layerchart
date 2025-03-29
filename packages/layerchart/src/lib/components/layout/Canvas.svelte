@@ -113,8 +113,9 @@
   const CanvasContext = new Context<CanvasContextValue>('CanvasContext');
 
   const defaultCanvasContext: CanvasContextValue = {
-    // @ts-expect-error - shh
-    register: () => {},
+    register: <T extends Element>(_: ComponentRender<T>) => {
+      return () => {};
+    },
     invalidate: () => {},
   };
 
@@ -275,16 +276,19 @@
 
   function update() {
     if (!context) return;
-    // TODO: only `scaleCanvas()` when containerWidth/Height change (not all invalidations)
-    // scaleCanvas in `update()` to fix `requestAnimationFrame()` timing causing flash of blank canvas
-    scaleCanvas(context, ctx.containerWidth, ctx.containerHeight);
 
+    // scale main canvas
+    scaleCanvas(context, ctx.containerWidth, ctx.containerHeight);
     context.clearRect(0, 0, ctx.containerWidth, ctx.containerHeight);
 
+    // apply padding translation
     context.translate(ctx.padding.left ?? 0, ctx.padding.top ?? 0);
 
+    let newTranslate: undefined | { x: number; y: number };
+
+    // apply centering or transform
     if (center) {
-      const newTranslate = {
+      newTranslate = {
         x: center === 'x' || center === true ? ctx.width / 2 : 0,
         y: center === 'y' || center === true ? ctx.height / 2 : 0,
       };
@@ -294,45 +298,73 @@
       context.scale(transformCtx.scale, transformCtx.scale);
     }
 
-    // Sync hit canvas transform with main canvas
-    if (hitCanvasContext) {
-      scaleCanvas(hitCanvasContext, ctx.containerWidth, ctx.containerHeight);
-      hitCanvasContext.clearRect(0, 0, ctx.containerWidth, ctx.containerHeight);
-      hitCanvasContext.setTransform(context.getTransform());
-
-      // Reset color generator whenever updated so always reusing same colors (and not exhausting)
-      colorGenerator = rgbColorGenerator();
-    }
+    // separate components into those that retain state and those that don't
+    const retainStateComponents: ComponentRender[] = [];
+    const nonRetainStateComponents: ComponentRender[] = [];
 
     for (const [_, c] of components) {
       if (c.retainState) {
-        // Do not call save/restore canvas draw state (https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/save) (ex. Group ctx.translate() affecting children)
-        c.render(context);
+        retainStateComponents.push(c);
       } else {
-        context.save();
-        c.render(context);
-        context.restore();
+        nonRetainStateComponents.push(c);
       }
+    }
 
-      // Delayed rendering using `activeCanvas` can cause a delay for tooltip interactivity for complex canvases (ex. country choropleth) so only ignore while moving/animating programmatically (ex. clicking on countries on Animated Globe)
+    // render retainState components on main canvas first
+    for (const c of retainStateComponents) {
+      c.render(context);
+    }
+
+    // store the main canvas transform after retainState components
+    const mainTransformAfterRetain = context.getTransform();
+
+    // render non-retainState components on main canvas
+    for (const c of nonRetainStateComponents) {
+      context.save();
+      c.render(context);
+      context.restore();
+    }
+
+    // sync hit canvas with main canvas
+    if (hitCanvasContext) {
+      // scale hit canvas to match main canvas
+      scaleCanvas(hitCanvasContext, ctx.containerWidth, ctx.containerHeight);
+      hitCanvasContext.clearRect(0, 0, ctx.containerWidth, ctx.containerHeight);
+
+      // reset and sync transform to the state after retainState components
+      hitCanvasContext.resetTransform();
+      hitCanvasContext.setTransform(mainTransformAfterRetain);
+
+      // reset color generator
+      colorGenerator = rgbColorGenerator();
+
       const inactiveMoving = !activeCanvas && transformCtx.moving;
 
-      const componentHasEvents = c.events && Object.values(c.events).filter((d) => d).length > 0;
+      // render retainState components on hit canvas (e.g., Group)
+      for (const c of retainStateComponents) {
+        const componentHasEvents = c.events && Object.values(c.events).filter((d) => d).length > 0;
 
-      if (hitCanvasContext && componentHasEvents && !inactiveMoving && !transformCtx.dragging) {
-        const color = getColorStr(colorGenerator.next().value);
-        // Stroking shape seems to help with dark border, but there is still antialising and thus gaps
-        const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
+        if (componentHasEvents && !inactiveMoving && !transformCtx.dragging) {
+          // since the transform was already applied via setTransform, skip rendering
+          // the retainState component's transform again; proceed to its children
+          continue;
+        }
+      }
 
-        if (c.retainState) {
-          c.render(hitCanvasContext, styleOverrides);
-        } else {
+      // render non-retainState components on hit canvas
+      for (const c of nonRetainStateComponents) {
+        const componentHasEvents = c.events && Object.values(c.events).filter((d) => d).length > 0;
+
+        if (componentHasEvents && !inactiveMoving && !transformCtx.dragging) {
+          const color = getColorStr(colorGenerator.next().value);
+          const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
+
           hitCanvasContext.save();
           c.render(hitCanvasContext, styleOverrides);
           hitCanvasContext.restore();
-        }
 
-        componentByColor.set(color, c);
+          componentByColor.set(color, c);
+        }
       }
     }
 
@@ -380,7 +412,7 @@
 
   const canvasContext = createCanvasContext();
 
-  $effect(() => {
+  $effect.pre(() => {
     [ctx.height, ctx.width, ctx.containerHeight, ctx.containerWidth, transformCtx.dragging];
     canvasContext.invalidate();
   });

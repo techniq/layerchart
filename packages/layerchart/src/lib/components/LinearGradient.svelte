@@ -138,6 +138,7 @@
     );
 
     canvasGradient = gradient;
+    console.log(canvasGradient);
   }
 
   if (renderCtx === 'canvas') {

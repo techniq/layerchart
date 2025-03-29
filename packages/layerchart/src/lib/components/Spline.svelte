@@ -293,6 +293,7 @@
         strokeWidth,
         opacity,
         className,
+        tweenedState.current,
       ],
     });
   }

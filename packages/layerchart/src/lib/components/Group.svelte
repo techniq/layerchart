@@ -103,14 +103,12 @@
 
   const renderCtx = getRenderContext();
 
-  function render(ctx: CanvasRenderingContext2D) {
-    ctx.translate(motionX.current ?? 0, motionY.current ?? 0);
-  }
-
   if (renderCtx === 'canvas') {
     registerCanvasComponent({
       name: 'Group',
-      render,
+      render: (ctx) => {
+        ctx.translate(motionX.current ?? 0, motionY.current ?? 0);
+      },
       retainState: true,
       events: {
         click: restProps.onclick,
