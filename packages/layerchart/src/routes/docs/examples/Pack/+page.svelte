@@ -19,6 +19,7 @@
   import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { watchOnce } from 'runed';
 
   let { data } = $props();
 
@@ -29,16 +30,23 @@
   let colorBy = $state('parent');
 
   let padding = $state(3);
-  let selected = $state.raw<HierarchyCircularNode<any>>(complexHierarchy);
+  let nodes = $state.raw<HierarchyCircularNode<any>[]>([]);
+  let selected = $state.raw<HierarchyCircularNode<any>>();
   let context = $state<ChartContextValue>(null!);
+
+  // meh just experimenting but this works
+  watchOnce(
+    () => nodes,
+    () => {
+      selected = nodes[0];
+    }
+  );
 
   $effect(() => {
     if (context?.transform && selected) {
-      const diameter = selected.r * 2;
-      context.transform.zoomTo(
-        { x: selected.x, y: selected.y },
-        { width: diameter, height: diameter }
-      );
+      const node = findSelectedNodeInHierarchy(selected, nodes);
+      const diameter = node.r * 2;
+      context.transform.zoomTo({ x: node.x, y: node.y }, { width: diameter, height: diameter });
     }
   });
 
@@ -67,9 +75,9 @@
   }
 
   function findSelectedNodeInHierarchy(
-    selectedNode: HierarchyNode<any>,
-    hierarchy: HierarchyNode<any>[]
-  ): HierarchyNode<any> {
+    selectedNode: HierarchyCircularNode<any>,
+    hierarchy: HierarchyCircularNode<any>[]
+  ): HierarchyCircularNode<any> {
     for (const node of hierarchy) {
       if (node.data.name === selectedNode.data.name) {
         return node;
@@ -119,53 +127,49 @@
       }}
       bind:context
     >
-      {#snippet children({ context })}
-        <Svg onclick={() => (selected = complexHierarchy)}>
-          <Pack {padding} hierarchy={complexHierarchy}>
-            {#snippet children({ nodes })}
-              {#each nodes as node ([node.data.name, node.parent?.data.name].join('-'))}
-                <Group
-                  x={node.x}
-                  y={node.y}
-                  onclick={(e) => {
-                    e.stopPropagation();
-                    selected = node;
-                  }}
-                  class="cursor-pointer hover:contrast-[1.2]"
-                >
-                  {@const nodeColor = getNodeColor(node, colorBy)}
-                  <Circle
-                    r={node.r}
-                    stroke={hsl(nodeColor)
-                      .darker(colorBy === 'children' ? 0.5 : 1)
-                      .toString()}
-                    strokeWidth={1 / context.transform.scale}
-                    fill={nodeColor}
-                  />
-                </Group>
-              {/each}
-              {@const selectedNodes = selected ? (selected.children ?? [selected]) : []}
+      <Svg onclick={() => (selected = complexHierarchy)}>
+        <Pack {padding} hierarchy={complexHierarchy} bind:nodes>
+          {#each nodes as node ([node.data.name, node.parent?.data.name].join('-'))}
+            <Group
+              x={node.x}
+              y={node.y}
+              onclick={(e) => {
+                e.stopPropagation();
+                selected = node;
+              }}
+              class="cursor-pointer hover:contrast-[1.2]"
+            >
+              {@const nodeColor = getNodeColor(node, colorBy)}
+              <Circle
+                r={node.r}
+                stroke={hsl(nodeColor)
+                  .darker(colorBy === 'children' ? 0.5 : 1)
+                  .toString()}
+                strokeWidth={1 / context.transform.scale}
+                fill={nodeColor}
+              />
+            </Group>
+          {/each}
+          {@const selectedNodes = selected ? (selected.children ?? [selected]) : []}
 
-              {#each selectedNodes as node ([node.data.name, node.parent?.data.name].join('-'))}
-                {@const trueNode = findSelectedNodeInHierarchy(node, nodes)}
-                {@const fontSize = 1 / context.transform.scale}
-                <g in:fade|local>
-                  <text
-                    x={trueNode.x}
-                    y={trueNode.y}
-                    dy={fontSize * 8}
-                    class="stroke-white/70 pointer-events-none [text-anchor:middle] [paint-order:stroke]"
-                    style:font-size="{fontSize}rem"
-                    style:stroke-width="{fontSize * 2}px"
-                  >
-                    {trueNode.data.name}
-                  </text>
-                </g>
-              {/each}
-            {/snippet}
-          </Pack>
-        </Svg>
-      {/snippet}
+          {#each selectedNodes as node ([node.data.name, node.parent?.data.name].join('-'))}
+            {@const trueNode = findSelectedNodeInHierarchy(node, nodes)}
+            {@const fontSize = 1 / context.transform.scale}
+            <g in:fade|local>
+              <text
+                x={trueNode.x}
+                y={trueNode.y}
+                dy={fontSize * 8}
+                class="stroke-white/70 pointer-events-none [text-anchor:middle] [paint-order:stroke]"
+                style:font-size="{fontSize}rem"
+                style:stroke-width="{fontSize * 2}px"
+              >
+                {trueNode.data.name}
+              </text>
+            </g>
+          {/each}
+        </Pack>
+      </Svg>
     </Chart>
   </div>
 </Preview>

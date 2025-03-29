@@ -20,6 +20,13 @@
      */
     hierarchy?: HierarchyNode<T>;
 
+    /**
+     * A bindable reference to the computed packed nodes.
+     *
+     * @bindable
+     */
+    nodes?: HierarchyCircularNode<T>[];
+
     children?: Snippet<[{ nodes: HierarchyCircularNode<T>[] }]>;
   };
 </script>
@@ -29,7 +36,13 @@
 
   const ctx = getChartContext();
 
-  let { size, padding, children, hierarchy: hierarchyProp }: PackProps<T> = $props();
+  let {
+    size,
+    padding,
+    children,
+    hierarchy: hierarchyProp,
+    nodes = $bindable(),
+  }: PackProps<T> = $props();
 
   const packedData = $derived.by(() => {
     const h = hierarchyProp?.copy();
@@ -38,14 +51,11 @@
     if (padding) {
       _pack.padding(padding);
     }
-    if (hierarchyProp) {
-      hierarchyProp = _pack(hierarchyProp);
-    }
     return _pack(h).descendants();
   });
 
-  $effect(() => {
-    console.log('packedData', packedData);
+  $effect.pre(() => {
+    nodes = packedData;
   });
 </script>
 
