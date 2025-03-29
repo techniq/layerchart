@@ -11,7 +11,6 @@
     GeoPath,
     Graticule,
     Tooltip,
-    TransformContext,
     Svg,
     type ChartContextValue,
   } from 'layerchart';
@@ -26,7 +25,6 @@
   import TransformDebug from '$lib/docs/TransformDebug.svelte';
 
   import { timings } from './timings.js';
-  import type { Component } from 'svelte';
 
   let { data } = $props();
 
@@ -131,7 +129,7 @@
 
     <div class="overflow-auto scrollbar-none">
       {#each countries.features.sort(sortFunc('properties.name')) as country (country)}
-        {@const isSelected = selectedFeature === country}
+        {@const isSelected = selectedFeature?.properties.name === country.properties.name}
         <div use:scrollIntoView={{ condition: isSelected }}>
           <Button
             variant={isSelected ? 'fill-light' : 'default'}
@@ -174,7 +172,7 @@
               geojson={country}
               class={cls(
                 'stroke-surface-content/50 fill-white cursor-pointer',
-                selectedFeature === country
+                selectedFeature?.properties.name === country.properties.name
                   ? 'stroke-primary-900 fill-primary'
                   : 'hover:fill-gray-200' // Canvas highlight handled below
               )}
