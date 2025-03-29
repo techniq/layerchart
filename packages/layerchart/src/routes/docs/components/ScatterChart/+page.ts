@@ -6,7 +6,7 @@ import pageSource from './+page.svelte?raw';
 
 import type { PenguinsData } from '$static/data/examples/penguins.js';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     penguins: (await fetch('/data/examples/penguins.csv').then(async (r) =>
       csvParse(await r.text(), autoType)

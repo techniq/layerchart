@@ -18,33 +18,35 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
-  let thresholds = 10;
+  let thresholds = $state(10);
 
-  $: binByWeight = bin<(typeof data.olympians)[0], number>()
-    .value((d) => d.weight)
-    .thresholds(thresholds);
-  $: olympiansBins = binByWeight(data.olympians);
+  const binByWeight = $derived(
+    bin<(typeof data.olympians)[0], number>()
+      .value((d) => d.weight)
+      .thresholds(thresholds)
+  );
+  const olympiansBins = $derived(binByWeight(data.olympians));
 
-  let selectedGenerator = 'normal';
-  let randomCount = 1000;
-  $: random = randomNormal();
-  $: randomData = Array.from({ length: randomCount }, () => random());
-  $: binByValues = bin(); //.domain([0, 1]);
-  $: randomBins = binByValues(randomData);
+  let selectedGenerator = $state('normal');
+  let randomCount = $state(1000);
+  let random = $state(randomNormal());
+  const randomData = $derived(Array.from({ length: randomCount }, () => random()));
+  const binByValues = $derived(bin()); //.domain([0, 1]);
+  const randomBins = $derived(binByValues(randomData));
 
-  $: getRandomDate = (from: Date, to: Date) => {
+  function getRandomDate(from: Date, to: Date) {
     const fromTime = from.getTime();
     const toTime = to.getTime();
     return new Date(fromTime + random() * (toTime - fromTime));
-  };
+  }
 
   const now = new Date();
-  let dateRange = 10;
-  $: randomDateData = Array.from({ length: randomCount }, () =>
-    getRandomDate(subDays(now, dateRange), now)
-  ) as any[]; // TODO: Make typescript happy
+  let dateRange = $state(10);
+  const randomDateData = $derived(
+    Array.from({ length: randomCount }, () => getRandomDate(subDays(now, dateRange), now)) as any[]
+  ); // TODO: Make typescript happy
 </script>
 
 <h1>Examples</h1>
@@ -61,31 +63,32 @@
       y="length"
       bandPadding={0.2}
       props={{
-        xAxis: { tweened: true },
-        yAxis: { format: 'metric', tweened: true },
-        bars: { tweened: true },
+        xAxis: { motion: 'tween' },
+        yAxis: { format: 'metric', motion: 'tween' },
+        bars: { motion: 'tween' },
       }}
     >
-      <svelte:fragment slot="tooltip">
-        <Tooltip.Root let:data>
-          <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="count" value={data.length} format="integer" />
-            <Tooltip.Separator />
-            {#each data.slice(0, 5) as d}
-              <Tooltip.Item label={d.name} value={d.weight} />
-            {/each}
-            {#if data.length > 5}
-              <span></span>
-              <span>...</span>
-            {/if}
-          </Tooltip.List>
+      {#snippet tooltip()}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="count" value={data.length} format="integer" />
+              <Tooltip.Separator />
+              {#each data.slice(0, 5) as d}
+                <Tooltip.Item label={d.name} value={d.weight} />
+              {/each}
+              {#if data.length > 5}
+                <span></span>
+                <span>...</span>
+              {/if}
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
-
 <h2>Horizontal</h2>
 
 <Preview data={olympiansBins}>
@@ -96,28 +99,30 @@
       y="x0"
       bandPadding={0.2}
       props={{
-        xAxis: { tweened: true },
-        yAxis: { tweened: true },
-        bars: { tweened: true },
+        xAxis: { motion: 'tween' },
+        yAxis: { motion: 'tween' },
+        bars: { motion: 'tween' },
       }}
       orientation="horizontal"
     >
-      <svelte:fragment slot="tooltip">
-        <Tooltip.Root let:data>
-          <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="count" value={data.length} format="integer" />
-            <Tooltip.Separator />
-            {#each data.slice(0, 5) as d}
-              <Tooltip.Item label={d.name} value={d.weight} />
-            {/each}
-            {#if data.length > 5}
-              <span></span>
-              <span>...</span>
-            {/if}
-          </Tooltip.List>
+      {#snippet tooltip()}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 1)}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="count" value={data.length} format="integer" />
+              <Tooltip.Separator />
+              {#each data.slice(0, 5) as d}
+                <Tooltip.Item label={d.name} value={d.weight} />
+              {/each}
+              {#if data.length > 5}
+                <span></span>
+                <span>...</span>
+              {/if}
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -189,27 +194,30 @@
       y="length"
       bandPadding={0.2}
       props={{
-        xAxis: { tweened: true },
-        yAxis: { format: 'metric', tweened: true },
-        bars: { tweened: true },
+        xAxis: { motion: 'tween' },
+        yAxis: { format: 'metric', motion: 'tween' },
+        bars: { motion: 'tween' },
       }}
     >
-      <svelte:fragment slot="tooltip">
-        <Tooltip.Root let:data>
-          <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 0.01)}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="count" value={data.length} format="integer" />
-            <Tooltip.Separator />
-            {#each data.slice(0, 5) as d}
-              <Tooltip.Item label="value" value={d} />
-            {/each}
-            {#if data.length > 5}
-              <span></span>
-              <span>...</span>
-            {/if}
-          </Tooltip.List>
+      {#snippet tooltip()}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header class="text-center">{data.x0 + ' - ' + (data.x1 - 0.01)}</Tooltip.Header
+            >
+            <Tooltip.List>
+              <Tooltip.Item label="count" value={data.length} format="integer" />
+              <Tooltip.Separator />
+              {#each data.slice(0, 5) as d}
+                <Tooltip.Item label="value" value={d} />
+              {/each}
+              {#if data.length > 5}
+                <span></span>
+                <span>...</span>
+              {/if}
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -238,43 +246,43 @@
         y="length"
         bandPadding={0.2}
         props={{
-          xAxis: { tweened: true },
-          yAxis: { format: 'metric', tweened: true },
-          bars: { tweened: true },
+          xAxis: { motion: 'tween' },
+          yAxis: { format: 'metric', motion: 'tween' },
+          bars: { motion: 'tween' },
         }}
       >
-        <svelte:fragment slot="tooltip">
-          <Tooltip.Root let:data>
-            <Tooltip.Header class="text-center">
-              {format(data.x0, PeriodType.Day) +
-                ' - ' +
-                format(data.x1, PeriodType.Day)}</Tooltip.Header
-            >
-            <Tooltip.List>
-              <Tooltip.Item label="count" value={data.length} format="integer" />
-              <Tooltip.Separator />
-              {#each data.slice(0, 5) as d}
-                <Tooltip.Item
-                  label="value"
-                  value={d}
-                  format={(value) => format(value, PeriodType.DayTime)}
-                />
-              {/each}
-              {#if data.length > 5}
-                <span></span>
-                <span>...</span>
-              {/if}
-            </Tooltip.List>
+        {#snippet tooltip()}
+          <Tooltip.Root>
+            {#snippet children({ data })}
+              <Tooltip.Header class="text-center">
+                {format(data.x0, PeriodType.Day) +
+                  ' - ' +
+                  format(data.x1, PeriodType.Day)}</Tooltip.Header
+              >
+              <Tooltip.List>
+                <Tooltip.Item label="count" value={data.length} format="integer" />
+                <Tooltip.Separator />
+                {#each data.slice(0, 5) as d}
+                  <Tooltip.Item
+                    label="value"
+                    value={d}
+                    format={(value) => format(value, PeriodType.DayTime)}
+                  />
+                {/each}
+                {#if data.length > 5}
+                  <span></span>
+                  <span>...</span>
+                {/if}
+              </Tooltip.List>
+            {/snippet}
           </Tooltip.Root>
-        </svelte:fragment>
+        {/snippet}
       </BarChart>
     </div>
   </Preview>
 </State>
 
 <State initial={{ intervalValue: 'weeks', intervalFunc: timeWeeks }} let:value let:set>
-  <!-- TODO: Remove all the workarounds to make typescript happy -->
-  <!-- {@const binByTime = bin().thresholds((_data, min, max) => value?.intervalFunc(min, max))} -->
   {@const binByTime = bin().thresholds(
     (_data, min, max) =>
       value?.intervalFunc(new Date(min), new Date(max)).map((d) => d.valueOf()) ?? []
@@ -314,36 +322,38 @@
             format: PeriodType.Day,
             ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks(),
             tickLabelProps: { rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 },
-            tweened: true,
+            motion: 'tween',
           },
-          yAxis: { format: 'metric', tweened: true },
-          bars: { tweened: true },
+          yAxis: { format: 'metric', motion: 'tween' },
+          bars: { motion: 'tween' },
         }}
       >
-        <svelte:fragment slot="tooltip">
-          <Tooltip.Root let:data>
-            <Tooltip.Header class="text-center">
-              {format(data.x0, PeriodType.Day) +
-                ' - ' +
-                format(data.x1, PeriodType.Day)}</Tooltip.Header
-            >
-            <Tooltip.List>
-              <Tooltip.Item label="count" value={data.length} format="integer" />
-              <Tooltip.Separator />
-              {#each data.slice(0, 5) as d}
-                <Tooltip.Item
-                  label="value"
-                  value={d}
-                  format={(value) => format(value, PeriodType.DayTime)}
-                />
-              {/each}
-              {#if data.length > 5}
-                <span></span>
-                <span>...</span>
-              {/if}
-            </Tooltip.List>
+        {#snippet tooltip()}
+          <Tooltip.Root>
+            {#snippet children({ data })}
+              <Tooltip.Header class="text-center">
+                {format(data.x0, PeriodType.Day) +
+                  ' - ' +
+                  format(data.x1, PeriodType.Day)}</Tooltip.Header
+              >
+              <Tooltip.List>
+                <Tooltip.Item label="count" value={data.length} format="integer" />
+                <Tooltip.Separator />
+                {#each data.slice(0, 5) as d}
+                  <Tooltip.Item
+                    label="value"
+                    value={d}
+                    format={(value) => format(value, PeriodType.DayTime)}
+                  />
+                {/each}
+                {#if data.length > 5}
+                  <span></span>
+                  <span>...</span>
+                {/if}
+              </Tooltip.List>
+            {/snippet}
           </Tooltip.Root>
-        </svelte:fragment>
+        {/snippet}
       </BarChart>
     </div>
   </Preview>

@@ -45,7 +45,7 @@ export function graphFromNode(node: SankeyNodeMinimal<any, any>) {
   const nodes: SankeyNode<any, any>[] = [node];
   const links: SankeyLink<any, any>[] = [];
 
-  node.sourceLinks?.forEach((link) => {
+  for (const link of node.sourceLinks ?? []) {
     nodes.push(link.target);
     links.push(link);
 
@@ -53,19 +53,19 @@ export function graphFromNode(node: SankeyNodeMinimal<any, any>) {
       const targetData = graphFromNode(link.target);
 
       // Only add new nodes
-      targetData.nodes.forEach((node) => {
+      for (const node of targetData.nodes) {
         if (!nodes.includes(node)) {
           nodes.push(node);
         }
-      });
-
-      targetData.links.forEach((link) => {
+      }
+      // Only add new links
+      for (const link of targetData.links) {
         if (!links.includes(link)) {
           links.push(link);
         }
-      });
+      }
     }
-  });
+  }
 
   return { nodes, links };
 }

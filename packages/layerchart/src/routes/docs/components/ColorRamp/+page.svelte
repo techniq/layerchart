@@ -9,13 +9,13 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  let width = '100%';
-  let height = 20;
-  let steps = 5;
+  let width = $state('100%');
+  let height = $state(20);
+  let steps = $state(5);
 
   const interpolators: [string, (value: number) => string][] = entries<any, any>(
     d3chromatic
-  ).filter(([key, value]) => key.startsWith('interpolate'));
+  ).filter(([key]) => key.startsWith('interpolate'));
   interpolators.push([`interpolateRgb('red', 'blue')`, interpolateRgb('red', 'blue')]);
   interpolators.push([`interpolateLab('red', 'blue')`, interpolateLab('red', 'blue')]);
   interpolators.push([`interpolateHclLong('red', 'blue')`, interpolateHclLong('red', 'blue')]);

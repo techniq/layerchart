@@ -1,9 +1,50 @@
-<script lang="ts" generics="TData">
+<script lang="ts" module>
+  import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
+  import type { AnyScale } from '$lib/utils/scales.svelte.js';
   import { onMount, type ComponentProps } from 'svelte';
+
+  export type ScatterChartExtraSnippetProps<TData> = {
+    getLabelsProps: (
+      s: SeriesData<TData, typeof Points>,
+      i: number
+    ) => ComponentProps<typeof Labels<TData>>;
+    getPointsProps: (
+      s: SeriesData<TData, typeof Points>,
+      i: number
+    ) => ComponentProps<typeof Points>;
+    getHighlightProps: () => ComponentProps<typeof Highlight>;
+  };
+
+  export type ScatterChartPropsObjProp = Pick<
+    SimplifiedChartPropsObject,
+    | 'brush'
+    | 'canvas'
+    | 'grid'
+    | 'highlight'
+    | 'labels'
+    | 'legend'
+    | 'points'
+    | 'rule'
+    | 'svg'
+    | 'tooltip'
+    | 'xAxis'
+    | 'yAxis'
+  >;
+
+  export type ScatterChartProps<TData> = Omit<
+    SimplifiedChartProps<TData, typeof Points, ScatterChartExtraSnippetProps<TData>>,
+    'radial'
+  > & {
+    props?: ScatterChartPropsObjProp;
+    yDomain?: ComponentProps<typeof BrushContext>['yDomain'];
+    yScale?: AnyScale;
+  };
+</script>
+
+<script lang="ts" generics="TData">
   import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { selectionStore } from '@layerstack/svelte-stores';
 
   import Axis from '../Axis.svelte';
   import BrushContext from '../BrushContext.svelte';
@@ -19,112 +60,78 @@
   import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
-  import {
-    accessor,
-    chartDataArray,
-    defaultChartPadding,
-    type Accessor,
-  } from '../../utils/common.js';
+  import { accessor, chartDataArray, defaultChartPadding } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
+  import { createHighlightKey } from './utils.svelte.js';
+  import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
 
-  interface $$Props extends ComponentProps<Chart<TData>> {
-    axis?: typeof axis;
-    brush?: typeof brush;
-    grid?: typeof grid;
-    labels?: typeof labels;
-    legend?: typeof legend;
-    profile?: typeof profile;
-    props?: typeof props;
-    series?: typeof series;
-    renderContext?: typeof renderContext;
-    ontooltipclick?: typeof ontooltipclick;
-  }
+  let {
+    data = [],
+    x: xProp,
+    y: yProp,
+    xDomain,
+    yDomain,
+    series = [{ key: 'default', data: chartDataArray(data), color: 'var(--color-primary)' }],
+    seriesLayout = 'overlap',
+    axis = true,
+    brush = false,
+    grid = true,
+    labels = false,
+    legend = false,
+    points = false,
+    rule = true,
+    tooltip = true,
+    context = $bindable(),
+    onTooltipClick = () => {},
+    props = {},
+    renderContext = 'svg',
+    profile = false,
+    debug = false,
+    xScale: xScaleProp,
+    yScale: yScaleProp,
+    children: childrenProp,
+    aboveContext,
+    belowContext,
+    belowMarks,
+    aboveMarks,
+    marks,
+    highlight = true,
+    ...restProps
+  }: ScatterChartProps<TData> = $props();
 
-  export let data: $$Props['data'] = [];
-  export let x: Accessor<TData> = undefined;
-  export let y: Accessor<TData> = undefined;
-
-  /** Set xDomain.  Useful for external brush control */
-  export let xDomain: ComponentProps<typeof BrushContext>['xDomain'] = undefined;
-  /** Set yDomain.  Useful for external brush control */
-  export let yDomain: ComponentProps<typeof BrushContext>['yDomain'] = undefined;
-
-  export let series: {
-    key: string;
-    label?: string;
-    data: TData[];
-    color?: string;
-    props?: Partial<ComponentProps<Points>>;
-  }[] = [{ key: 'default', data: chartDataArray(data), color: 'var(--color-primary)' }];
-  $: isDefaultSeries = series.length === 1 && series[0].key === 'default';
-
-  export let axis: ComponentProps<Axis> | 'x' | 'y' | boolean = true;
-  export let brush: ComponentProps<BrushContext> | boolean = false;
-  export let grid: ComponentProps<Grid> | boolean = true;
-  export let labels: ComponentProps<Labels> | boolean = false;
-  export let legend: ComponentProps<Legend> | boolean = false;
-  export let rule: ComponentProps<Rule> | boolean = true;
-
-  /** Expose tooltip context for external access */
-  export let tooltipContext: ComponentProps<Tooltip.Context>['tooltip'] = undefined;
-
-  /** Event dispatched with current tooltip data */
-  export let ontooltipclick: (e: MouseEvent, detail: { data: any }) => void = () => {};
-
-  export let props: {
-    brush?: Partial<ComponentProps<BrushContext>>;
-    canvas?: Partial<ComponentProps<Canvas>>;
-    debug?: typeof debug;
-    grid?: Partial<ComponentProps<Grid>>;
-    highlight?: Partial<ComponentProps<Highlight>>;
-    labels?: Partial<ComponentProps<Labels>>;
-    legend?: Partial<ComponentProps<Legend>>;
-    points?: Partial<ComponentProps<Points>>;
-    profile?: typeof profile;
-    rule?: Partial<ComponentProps<Rule>>;
-    svg?: Partial<ComponentProps<Svg>>;
-    tooltip?: {
-      context?: Partial<ComponentProps<Tooltip.Context>>;
-      root?: Partial<ComponentProps<Tooltip.Root>>;
-      header?: Partial<ComponentProps<Tooltip.Header>>;
-      list?: Partial<ComponentProps<Tooltip.List>>;
-      item?: Partial<ComponentProps<Tooltip.Item>>;
-      separator?: Partial<ComponentProps<Tooltip.Separator>>;
-    };
-    xAxis?: Partial<ComponentProps<Axis>>;
-    yAxis?: Partial<ComponentProps<Axis>>;
-  } = {};
-
-  export let renderContext: 'svg' | 'canvas' = 'svg';
-
-  /** Log initial render performance using `console.time` */
-  export let profile = false;
-
-  /** Enable debug mode */
-  export let debug = false;
+  const isDefaultSeries = $derived(series.length === 1 && series[0].key === 'default');
 
   // Default xScale based on first data's `x` value
-  $: xScale =
-    $$props.xScale ??
-    (accessor(x)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear());
+  const xScale = $derived(
+    xScaleProp ??
+      (accessor(xProp)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear())
+  );
 
   // Default yScale based on first data's `y` value
-  $: yScale =
-    $$props.yScale ??
-    (accessor(y)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear());
+  const yScale = $derived(
+    yScaleProp ??
+      (accessor(yProp)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear())
+  );
 
-  $: chartData = visibleSeries
-    .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
-    .filter((d) => d) as Array<TData>;
+  const selectedSeries = createSelectionState();
 
-  let highlightSeriesKey: (typeof series)[number]['key'] | null = null;
+  const visibleSeries = $derived(
+    series.filter((s) => selectedSeries.isEmpty() || selectedSeries.isSelected(s.key))
+  );
 
-  function setHighlightSeriesKey(seriesKey: typeof highlightSeriesKey) {
-    highlightSeriesKey = seriesKey ?? null;
-  }
+  const chartData = $derived(
+    visibleSeries
+      .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
+      .filter((d) => d) as Array<TData>
+  );
 
-  $: getPointsProps = (s: (typeof series)[number], i: number) => {
-    const pointsProps: ComponentProps<Points> = {
+  const highlightKey = createHighlightKey<TData, typeof Points>();
+
+  function getPointsProps(
+    s: SeriesData<TData, typeof Points>,
+    i: number
+  ): ComponentProps<typeof Points> {
+    return {
       data: s.data,
       stroke: s.color,
       fill: s.color,
@@ -133,41 +140,85 @@
       ...s.props,
       class: cls(
         'transition-opacity',
-        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
         props.points?.class,
         s.props?.class
       ),
     };
+  }
 
-    return pointsProps;
-  };
-
-  function getLabelsProps(s: (typeof series)[number], i: number) {
-    const labelsProps: ComponentProps<Labels> = {
+  function getLabelsProps(
+    s: SeriesData<TData, typeof Points>,
+    i: number
+  ): ComponentProps<typeof Labels<TData>> {
+    return {
       data: s.data,
       ...props.labels,
       ...(typeof labels === 'object' ? labels : null),
       class: cls(
         'stroke-surface-200 transition-opacity',
-        highlightSeriesKey && highlightSeriesKey !== s.key && 'opacity-10',
+        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
         props.labels?.class,
         typeof labels === 'object' && labels.class
       ),
     };
-
-    return labelsProps;
   }
 
-  const selectedSeries = selectionStore();
-  $: visibleSeries = series.filter((s) => {
-    return (
-      // @ts-expect-error
-      $selectedSeries.selected.length === 0 || $selectedSeries.isSelected(s.key)
-      // || highlightSeriesKey == s.key
-    );
+  function getLegendProps(): ComponentProps<typeof Legend> {
+    return {
+      scale: isDefaultSeries
+        ? undefined
+        : scaleOrdinal(
+            series.map((s) => s.key),
+            series.map((s) => s.color)
+          ),
+      tickFormat: (key) => series.find((s) => s.key === key)?.label ?? key,
+      placement: 'bottom',
+      variant: 'swatches',
+      onclick: (e, item) => selectedSeries.toggleSelected(item.value),
+      onpointerenter: (e, item) => (highlightKey.current = item.value),
+      onpointerleave: (e) => (highlightKey.current = null),
+      ...props.legend,
+      ...(typeof legend === 'object' ? legend : null),
+      classes: {
+        item: (item) =>
+          visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
+            ? 'opacity-50'
+            : '',
+        ...props.legend?.classes,
+        ...(typeof legend === 'object' ? legend.classes : null),
+      },
+    };
+  }
+
+  function getGridProps(): ComponentProps<typeof Grid> {
+    return {
+      x: true,
+      y: true,
+      ...(typeof grid === 'object' ? grid : null),
+      ...props.grid,
+    };
+  }
+
+  const activeSeries = $derived.by(() => {
+    if (!context?.tooltip?.data) return null;
+    // @ts-expect-error - shh
+    return series.find((s) => s.key === context?.tooltip.data?.seriesKey) ?? series[0];
   });
 
-  $: brushProps = { ...(typeof brush === 'object' ? brush : null), ...props.brush };
+  function getHighlightProps(): ComponentProps<typeof Highlight> {
+    return {
+      lines: true,
+      axis: 'both',
+      ...props.highlight,
+      points: {
+        fill: activeSeries?.color,
+        ...(typeof props.highlight?.points === 'object' ? props.highlight.points : null),
+      },
+    };
+  }
+
+  const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
 
   if (profile) {
     console.time('ScatterChart render');
@@ -177,27 +228,27 @@
   }
 </script>
 
+<!-- svelte-ignore ownership_invalid_binding -->
 <Chart
+  bind:context
   data={chartData}
-  {x}
+  x={xProp}
   {xDomain}
   {xScale}
-  {y}
+  y={yProp}
   {yDomain}
   {yScale}
   yNice
   padding={defaultChartPadding(axis, legend)}
-  {...$$restProps}
-  tooltip={$$props.tooltip === false
+  {...restProps}
+  tooltip={tooltip === false
     ? false
     : {
         mode: 'voronoi',
-        onclick: ontooltipclick,
+        onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
-        ...$$props.tooltip,
       }}
-  bind:tooltipContext
   brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
     ? {
         axis: 'both',
@@ -205,76 +256,60 @@
         xDomain,
         yDomain,
         ...brushProps,
-        onbrushend: (e) => {
+        onBrushEnd: (e) => {
           xDomain = e.xDomain;
           yDomain = e.yDomain;
-          brushProps.onbrushend?.(e);
+          brushProps.onBrushEnd?.(e);
         },
       }
     : false}
-  let:x
-  let:xScale
-  let:y
-  let:yScale
-  let:c
-  let:cScale
-  let:r
-  let:width
-  let:height
-  let:padding
-  let:tooltip
-  let:config
 >
-  {@const slotProps = {
-    x,
-    xScale,
-    y,
-    yScale,
-    c,
-    cScale,
-    width,
-    height,
-    padding,
-    tooltip,
-    series,
-    visibleSeries,
-    getLabelsProps,
-    getPointsProps,
-    highlightSeriesKey,
-    setHighlightSeriesKey,
-  }}
-  {@const activeSeries = tooltip.data
-    ? (series.find((s) => s.key === tooltip.data.seriesKey) ?? series[0])
-    : null}
+  {#snippet children({ context })}
+    {@const snippetProps = {
+      context,
+      series,
+      visibleSeries,
+      getLabelsProps,
+      getPointsProps,
+      getLegendProps,
+      getHighlightProps,
+      highlightKey: highlightKey.current,
+      setHighlightKey: highlightKey.set,
+    }}
 
-  <slot {...slotProps}>
-    <slot name="belowContext" {...slotProps} />
-
-    <svelte:component
-      this={renderContext === 'canvas' ? Canvas : Svg}
-      {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
-      {debug}
-    >
-      <slot name="grid" {...slotProps}>
-        {#if grid}
-          <Grid x y {...typeof grid === 'object' ? grid : null} {...props.grid} />
+    {#if childrenProp}
+      {@render childrenProp(snippetProps)}
+    {:else}
+      {@render belowContext?.(snippetProps)}
+      {@const Component = renderContext === 'canvas' ? Canvas : Svg}
+      <Component
+        this={renderContext === 'canvas' ? Canvas : Svg}
+        {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
+        {debug}
+      >
+        {#if typeof grid === 'function'}
+          {@render grid(snippetProps)}
+        {:else if grid}
+          <Grid {...getGridProps()} />
         {/if}
-      </slot>
 
-      <ChartClipPath disabled={!brush}>
-        <slot name="belowMarks" {...slotProps} />
+        <ChartClipPath disabled={!brush}>
+          {@render belowMarks?.(snippetProps)}
 
-        <slot name="marks" {...slotProps}>
-          {#each visibleSeries as s, i (s.key)}
-            <Points {...getPointsProps(s, i)} />
-          {/each}
-        </slot>
+          {#if typeof marks === 'function'}
+            {@render marks(snippetProps)}
+          {:else}
+            {#each visibleSeries as s, i (s.key)}
+              <Points {...getPointsProps(s, i)} />
+            {/each}
+          {/if}
 
-        <slot name="aboveMarks" {...slotProps} />
-      </ChartClipPath>
+          {@render aboveMarks?.(snippetProps)}
+        </ChartClipPath>
 
-      <slot name="axis" {...slotProps}>
-        {#if axis}
+        {#if typeof axis === 'function'}
+          {@render axis(snippetProps)}
+        {:else if axis}
           {#if axis !== 'x'}
             <Axis
               placement="left"
@@ -293,103 +328,82 @@
             />
           {/if}
 
-          {#if rule}
+          {#if typeof rule === 'function'}
+            {@render rule(snippetProps)}
+          {:else if rule}
             <Rule x={0} y={0} {...typeof rule === 'object' ? rule : null} {...props.rule} />
           {/if}
         {/if}
-      </slot>
 
-      <!-- Use `full` to allow labels on edge to not be cropped (bleed into padding) -->
-      <ChartClipPath disabled={!brush} full>
-        <slot name="highlight" {...slotProps}>
-          <Highlight
-            lines
-            axis="both"
-            {...props.highlight}
-            points={{
-              fill: activeSeries?.color,
-              ...(typeof props.highlight?.points === 'object' ? props.highlight.points : null),
-            }}
-          />
-        </slot>
-
-        {#if labels}
-          {#each visibleSeries as s, i (s.key)}
-            <Labels {...getLabelsProps(s, i)} />
-          {/each}
-        {/if}
-      </ChartClipPath>
-    </svelte:component>
-
-    <slot name="aboveContext" {...slotProps} />
-
-    <slot name="legend" {...slotProps}>
-      {#if legend}
-        <Legend
-          scale={isDefaultSeries
-            ? undefined
-            : scaleOrdinal(
-                series.map((s) => s.key),
-                series.map((s) => s.color)
-              )}
-          tickFormat={(key) => series.find((s) => s.key === key)?.label ?? key}
-          placement="bottom"
-          variant="swatches"
-          onclick={(e, item) => $selectedSeries.toggleSelected(item.value)}
-          onpointerenter={(e, item) => (highlightSeriesKey = item.value)}
-          onpointerleave={(e) => (highlightSeriesKey = null)}
-          {...props.legend}
-          {...typeof legend === 'object' ? legend : null}
-          classes={{
-            item: (item) =>
-              visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
-                ? 'opacity-50'
-                : '',
-            ...props.legend?.classes,
-            ...(typeof legend === 'object' ? legend.classes : null),
-          }}
-        />
-      {/if}
-    </slot>
-
-    <slot name="tooltip" {...slotProps}>
-      <Tooltip.Root {...props.tooltip?.root} let:data>
-        {#if activeSeries?.key !== 'default'}
-          <Tooltip.Header
-            value={activeSeries?.label ?? activeSeries?.key}
-            color={activeSeries?.color}
-            {...props.tooltip?.header}
-          />
-        {/if}
-        <Tooltip.List {...props.tooltip?.list}>
-          <Tooltip.Item
-            label={typeof config.x === 'string' ? config.x : 'x'}
-            value={x(data)}
-            {format}
-            onpointerenter={() => (highlightSeriesKey = activeSeries?.key ?? null)}
-            onpointerleave={() => (highlightSeriesKey = null)}
-            {...props.tooltip?.item}
-          />
-          <Tooltip.Item
-            label={typeof config.y === 'string' ? config.y : 'y'}
-            value={y(data)}
-            {format}
-            onpointerenter={() => (highlightSeriesKey = activeSeries?.key ?? null)}
-            onpointerleave={() => (highlightSeriesKey = null)}
-            {...props.tooltip?.item}
-          />
-          {#if config.r}
-            <Tooltip.Item
-              label={typeof config.r === 'string' ? config.r : 'r'}
-              value={r(data)}
-              {format}
-              onpointerenter={() => (highlightSeriesKey = activeSeries?.key ?? null)}
-              onpointerleave={() => (highlightSeriesKey = null)}
-              {...props.tooltip?.item}
-            />
+        <!-- Use `full` to allow labels on edge to not be cropped (bleed into padding) -->
+        <ChartClipPath disabled={!brush} full>
+          {#if typeof highlight === 'function'}
+            {@render highlight(snippetProps)}
+          {:else if highlight}
+            <Highlight {...getHighlightProps()} />
           {/if}
-        </Tooltip.List>
-      </Tooltip.Root>
-    </slot>
-  </slot>
+
+          {#if typeof labels === 'function'}
+            {@render labels(snippetProps)}
+          {:else if labels}
+            {#each visibleSeries as s, i (s.key)}
+              <Labels {...getLabelsProps(s, i)} />
+            {/each}
+          {/if}
+        </ChartClipPath>
+      </Component>
+
+      {@render aboveContext?.(snippetProps)}
+
+      {#if typeof legend === 'function'}
+        {@render legend(snippetProps)}
+      {:else if legend}
+        <Legend {...getLegendProps()} />
+      {/if}
+
+      {#if typeof tooltip === 'function'}
+        {@render tooltip(snippetProps)}
+      {:else if tooltip}
+        <Tooltip.Root {context} {...props.tooltip?.root}>
+          {#snippet children({ data })}
+            {#if activeSeries?.key !== 'default'}
+              <Tooltip.Header
+                value={activeSeries?.label ?? activeSeries?.key}
+                color={activeSeries?.color}
+                {...props.tooltip?.header}
+              />
+            {/if}
+            <Tooltip.List {...props.tooltip?.list}>
+              <Tooltip.Item
+                label={typeof context.config.x === 'string' ? context.config.x : 'x'}
+                value={context.x(data)}
+                {format}
+                onpointerenter={() => (highlightKey.current = activeSeries?.key ?? null)}
+                onpointerleave={() => (highlightKey.current = null)}
+                {...props.tooltip?.item}
+              />
+              <Tooltip.Item
+                label={typeof context.config.y === 'string' ? context.config.y : 'y'}
+                value={context.y(data)}
+                {format}
+                onpointerenter={() => (highlightKey.current = activeSeries?.key ?? null)}
+                onpointerleave={() => (highlightKey.current = null)}
+                {...props.tooltip?.item}
+              />
+              {#if context.config.r}
+                <Tooltip.Item
+                  label={typeof context.config.r === 'string' ? context.config.r : 'r'}
+                  value={context.r(data)}
+                  {format}
+                  onpointerenter={() => (highlightKey.current = activeSeries?.key ?? null)}
+                  onpointerleave={() => (highlightKey.current = null)}
+                  {...props.tooltip?.item}
+                />
+              {/if}
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/if}
+    {/if}
+  {/snippet}
 </Chart>

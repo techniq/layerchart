@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Arc, Group, LinearGradient, PieChart, Text } from 'layerchart';
+  import { PieChart, Text } from 'layerchart';
   import { group, sum } from 'd3-array';
   import { quantize } from 'd3-interpolate';
   import { schemeTableau10, interpolateRainbow } from 'd3-scale-chromatic';
@@ -8,10 +8,11 @@
   import { longData } from '$lib/utils/genData.js';
   import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format } from '@layerstack/utils';
+  import Arc from '$lib/components/Arc.svelte';
 
   const dataByYear = group(longData, (d) => d.year);
   const data = dataByYear.get(2019) ?? [];
-  $: dataWithColor =
+  const dataWithColor =
     data?.map((d, i) => {
       return {
         ...d,
@@ -24,14 +25,8 @@
       };
     }) ?? [];
 
-  const exerciseData = [
-    { key: 'move', value: 400, maxValue: 1000, color: '#ef4444' },
-    { key: 'exercise', value: 20, maxValue: 30, color: '#a3e635' },
-    { key: 'stand', value: 10, maxValue: 12, color: '#22d3ee' },
-  ];
-
-  let renderContext: 'svg' | 'canvas' = 'svg';
-  let debug = false;
+  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
@@ -57,7 +52,7 @@
   </div>
 </Preview>
 
-<h2>ontooltipclick</h2>
+<h2>onTooltipClick</h2>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
@@ -65,7 +60,7 @@
       {data}
       key="fruit"
       value="value"
-      ontooltipclick={(e, detail) => {
+      onTooltipClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
@@ -122,7 +117,7 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="aboveMarks">
+      {#snippet aboveMarks()}
         <Text
           value={format(sum(data, (d) => d.value))}
           textAnchor="middle"
@@ -137,7 +132,7 @@
           class="text-sm fill-surface-content/50"
           dy={26}
         />
-      </svelte:fragment>
+      {/snippet}
     </PieChart>
   </div>
 </Preview>
@@ -155,82 +150,7 @@
       innerRadius={-20}
       cornerRadius={10}
       padAngle={0.02}
-      props={{ group: { y: 80 } }}
-      {renderContext}
-      {debug}
-    />
-  </div>
-</Preview>
-
-<h2>Single value</h2>
-
-<Preview data={[{ key: 'Example', value: 70 }]}>
-  <div class="h-[200px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart
-      data={[{ key: 'Example', value: 70 }]}
-      key="key"
-      value="value"
-      maxValue={100}
-      outerRadius={-25}
-      innerRadius={-20}
-      cornerRadius={10}
-      {renderContext}
-      {debug}
-    />
-  </div>
-</Preview>
-
-<h2>Single value gradient with text</h2>
-
-<Preview {data}>
-  <div class="h-[160px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart {renderContext} {debug}>
-      <svelte:fragment slot="marks">
-        <LinearGradient class="from-secondary to-primary" let:gradient>
-          <Group y={20}>
-            <Arc
-              value={70}
-              domain={[0, 100]}
-              outerRadius={80}
-              innerRadius={-15}
-              cornerRadius={10}
-              padAngle={0.02}
-              range={[-120, 120]}
-              fill={gradient}
-              track={{ class: 'fill-none stroke-surface-content/10' }}
-              let:value
-            >
-              <Text
-                value={Math.round(value) + '%'}
-                textAnchor="middle"
-                verticalAnchor="middle"
-                class="text-4xl tabular-nums"
-              />
-            </Arc>
-          </Group>
-        </LinearGradient>
-      </svelte:fragment>
-    </PieChart>
-  </div>
-</Preview>
-
-<h2>Single value (arc) with custom color</h2>
-
-<Preview data={[{ key: 'Example', value: 70 }]}>
-  <div class="h-[120px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart
-      data={[{ key: 'Example', value: 70 }]}
-      key="key"
-      value="value"
-      maxValue={100}
-      range={[-90, 90]}
-      outerRadius={80}
-      innerRadius={-20}
-      cornerRadius={10}
-      cRange={['var(--color-success)']}
-      props={{
-        group: { y: 45 },
-      }}
+      props={{ group: { y: 90 } }}
       {renderContext}
       {debug}
     />
@@ -244,93 +164,11 @@
     <PieChart
       key="fruit"
       value="value"
-      series={Array.from(dataByYear, ([key, data]) => ({ key, data }))}
+      series={Array.from(dataByYear, ([key, data]) => ({ key: key.toString(), data }))}
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={5}
       padAngle={0.01}
-      {renderContext}
-      {debug}
-    />
-  </div>
-</Preview>
-
-<h2>Series data (individual tracks)</h2>
-
-<Preview {data}>
-  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart
-      key="fruit"
-      value="value"
-      series={data?.map((d) => ({ key: d.fruit, data: [d] }))}
-      outerRadius={-25}
-      innerRadius={-20}
-      cornerRadius={10}
-      {renderContext}
-      {debug}
-    />
-  </div>
-</Preview>
-
-<h2>Series data (arc)</h2>
-
-<Preview {data}>
-  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart
-      key="fruit"
-      value="value"
-      series={data?.map((d) => ({ key: d.fruit, data: [d] }))}
-      range={[-90, 90]}
-      outerRadius={-25}
-      innerRadius={-20}
-      cornerRadius={10}
-      props={{ group: { y: 70 } }}
-      {renderContext}
-      {debug}
-    />
-  </div>
-</Preview>
-
-<h2>Series data (track color)</h2>
-
-<Preview {data}>
-  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart
-      key="fruit"
-      value="value"
-      series={data?.map((d) => ({ key: d.fruit, data: [d] }))}
-      props={{
-        arc: {
-          track: { fill: 'var(--color-surface-content)', fillOpacity: 0.1 },
-        },
-      }}
-      outerRadius={-25}
-      innerRadius={-20}
-      cornerRadius={10}
-      {renderContext}
-      {debug}
-    />
-  </div>
-</Preview>
-
-<h2>Series data (individual tracks, max value, and color)</h2>
-
-<Preview data={exerciseData}>
-  <div class="h-[200px] p-4 border rounded-sm resize overflow-auto">
-    <PieChart
-      key="key"
-      value="value"
-      series={exerciseData.map((d) => {
-        return {
-          key: d.key,
-          data: [d],
-          maxValue: d.maxValue,
-          color: d.color,
-        };
-      })}
-      outerRadius={-25}
-      innerRadius={-20}
-      cornerRadius={10}
       {renderContext}
       {debug}
     />
@@ -345,8 +183,8 @@
       key="fruit"
       value="value"
       series={[
-        { key: 2019, data: dataByYear.get(2019), props: { innerRadius: -20 } },
-        { key: 2018, data: dataByYear.get(2018), props: { outerRadius: -30 } },
+        { key: '2019', data: dataByYear.get(2019), props: { innerRadius: -20 } },
+        { key: '2018', data: dataByYear.get(2018), props: { outerRadius: -30 } },
       ]}
       {renderContext}
       {debug}
@@ -361,12 +199,12 @@
     <PieChart
       key="fruit"
       value="value"
-      series={Array.from(dataByYear, ([key, data]) => ({ key, data }))}
+      series={Array.from(dataByYear, ([key, data]) => ({ key: key.toString(), data }))}
       outerRadius={-25}
       innerRadius={-20}
       cornerRadius={5}
       padAngle={0.01}
-      onarcclick={(e, detail) => {
+      onArcClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
@@ -554,6 +392,18 @@
       {renderContext}
       {debug}
     />
+  </div>
+</Preview>
+
+<h2>Offset Slice</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <PieChart {data} key="fruit" value="value" {renderContext} {debug}>
+      {#snippet arc({ index, props })}
+        <Arc {...props} offset={index === 0 ? 16 : undefined} />
+      {/snippet}
+    </PieChart>
   </div>
 </Preview>
 

@@ -8,22 +8,25 @@
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
-  let pointCount = 10;
-  let showPoints = false;
-  let showLine = true;
-  let show = true;
-  let tweened = true;
-  let Context: Component = Svg;
+  let pointCount = $state(10);
+  let showPoints = $state(false);
+  let showLine = $state(true);
+  let show = $state(true);
+  let tweened = $state(true);
+  let Context: Component = $state(Svg);
+  const motion = $derived(tweened ? 'tween' : 'none');
 
-  let pathGenerator = (x: number) => x;
-  let curve: ComponentProps<CurveMenuField>['value'] = undefined;
+  let pathGenerator = $state((x: number) => x);
+  let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
 
-  $: data = Array.from({ length: pointCount }).map((_, i) => {
-    return {
-      x: i + 1,
-      y: pathGenerator?.(i / pointCount) ?? i,
-    };
-  });
+  const data = $derived(
+    Array.from({ length: pointCount }).map((_, i) => {
+      return {
+        x: i + 1,
+        y: pathGenerator?.(i / pointCount) ?? i,
+      };
+    })
+  );
 </script>
 
 <h1>Playground</h1>
@@ -67,20 +70,20 @@
         <Axis placement="bottom" rule />
       </Svg>
 
-      <svelte:component this={Context}>
+      <Context>
         {#if show}
           <Area
             {curve}
             line={showLine && { class: 'stroke-primary stroke-2' }}
-            {tweened}
+            {motion}
             class="fill-primary/10"
           />
 
           {#if showPoints}
-            <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
+            <Points {motion} r={3} class="fill-surface-100 stroke-primary" />
           {/if}
         {/if}
-      </svelte:component>
+      </Context>
     </Chart>
   </div>
 </Preview>
@@ -121,14 +124,14 @@
 
       <Canvas>
         {#if show}
-          <Area {curve} {tweened} class="fill-primary/10" />
+          <Area {curve} {motion} class="fill-primary/10" />
 
           {#if showLine}
-            <Spline {curve} {tweened} class="stroke-primary stroke-2" />
+            <Spline {curve} {motion} class="stroke-primary stroke-2" />
           {/if}
 
           {#if showPoints}
-            <Points {tweened} r={3} class="fill-surface-100 stroke-primary" />
+            <Points {motion} r={3} class="fill-surface-100 stroke-primary" />
           {/if}
         {/if}
       </Canvas>

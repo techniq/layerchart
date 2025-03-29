@@ -1,59 +1,65 @@
 <script lang="ts">
   import { forceX, forceY, forceManyBody, forceCollide } from 'd3-force';
 
-  import { Canvas, Chart, Circle, ForceSimulation, Points, Svg } from 'layerchart';
+  import { Canvas, Chart, ForceSimulation, Points, Svg } from 'layerchart';
   import { Field, RangeField, Switch, TextField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  import type { ChartResizeDetail } from '$lib/components/ChartContext.svelte';
   import { rasterizeText, type RasterizeTextOptions } from '$lib/utils/string.js';
-
-  let width = 960;
-  let height = 500;
-  let radius = 2;
+  import type { ChartResizeDetail } from '$lib/components/Chart.svelte';
   const collisionStrength = 0.01;
 
-  let hasCollideForce = false; // TODO: Determine why unable to remove if enabled true by default
-  let hasChargeForce = false;
-  let transition = false;
+  let width = $state(960);
+  let height = $state(500);
+  let radius = $state(2);
+
+  let hasCollideForce = $state(false); // TODO: Determine why unable to remove if enabled true by default
+  let hasChargeForce = $state(false);
+  let transition = $state(false);
 
   function onResize(e: ChartResizeDetail) {
     width = e.width;
     height = e.height;
   }
 
-  let mouseNode = {
+  let mouseNode = $state({
     x: 0,
     y: height / 2,
     xTarget: width,
     yTarget: height / 2,
     rTarget: 100,
-  };
-
-  let text = 'LayerChart';
-  let fontSize = 150;
-  let spacing = 10;
-  $: textOptions = {
-    fontSize: fontSize + 'px',
-    spacing,
-    width,
-    height,
-  } satisfies RasterizeTextOptions;
-
-  $: pixels = rasterizeText(text, textOptions).map(function (d) {
-    return {
-      x: transition ? d[0] : Math.random() * width,
-      y: transition ? d[1] : Math.random() * height,
-      xTarget: d[0],
-      yTarget: d[1],
-      rTarget: radius,
-    };
   });
-  $: data = [mouseNode, ...pixels];
+
+  let text = $state('LayerChart');
+  let fontSize = $state(150);
+  let spacing = $state(10);
+
+  const textOptions = $derived({
+    fontSize: fontSize + 'px',
+    spacing: spacing,
+    width: width,
+    height: height,
+  } satisfies RasterizeTextOptions);
+
+  const pixels = $derived(
+    rasterizeText(text, textOptions).map((d) => {
+      return {
+        x: transition ? d[0] : Math.random() * width,
+        y: transition ? d[1] : Math.random() * height,
+        xTarget: d[0],
+        yTarget: d[1],
+        rTarget: radius,
+      };
+    })
+  );
+
+  const data = $derived([mouseNode, ...pixels]);
 
   const xForce = forceX<(typeof pixels)[number]>((d) => d.xTarget).strength(collisionStrength);
+
   const yForce = forceY<(typeof pixels)[number]>((d) => d.yTarget).strength(collisionStrength);
+
   const collideForce = forceCollide<(typeof pixels)[number]>()
     .radius((d) => d.rTarget)
     .iterations(3);
@@ -90,31 +96,30 @@
       yDomain={[0, 1]}
       yRange={[0, 1]}
       {data}
-      let:width
-      let:height
-      onresize={onResize}
+      {onResize}
     >
-      <ForceSimulation
-        forces={{
-          x: xForce,
-          y: yForce,
-          ...(hasCollideForce && {
-            collide: collideForce,
-          }),
-          ...(hasChargeForce && {
-            charge: manyBodyForce.strength((d, i) => (i ? 0 : (-width * 2) / 10)),
-          }),
-        }}
-        alphaTarget={1}
-        velocityDecay={0.2}
-        let:nodes
-      >
-        <Canvas>
-          <Points data={nodes.slice(1)} r={radius} class="fill-primary" />
-        </Canvas>
+      {#snippet children({ context })}
+        <ForceSimulation
+          forces={{
+            x: xForce,
+            y: yForce,
+            ...(hasCollideForce && {
+              collide: collideForce,
+            }),
+            ...(hasChargeForce && {
+              charge: manyBodyForce.strength((d, i) => (i ? 0 : (-context.width * 2) / 10)),
+            }),
+          }}
+          alphaTarget={1}
+          velocityDecay={0.2}
+        >
+          {#snippet children({ nodes })}
+            <Canvas>
+              <Points data={nodes.slice(1)} r={radius} class="fill-primary" />
+            </Canvas>
 
-        <Svg>
-          <!-- {#each nodes.slice(1) as node, i (i)}
+            <Svg>
+              <!-- {#each nodes.slice(1) as node, i (i)}
             <Circle
               cx={node.x}
               cy={node.y}
@@ -124,17 +129,19 @@
             />
           {/each} -->
 
-          <rect
-            {width}
-            {height}
-            on:pointermove={(e) => {
-              mouseNode.xTarget = e.offsetX;
-              mouseNode.yTarget = e.offsetY;
-            }}
-            class="fill-transparent"
-          />
-        </Svg>
-      </ForceSimulation>
+              <rect
+                width={context.width}
+                height={context.height}
+                onpointermove={(e) => {
+                  mouseNode.xTarget = e.offsetX;
+                  mouseNode.yTarget = e.offsetY;
+                }}
+                class="fill-transparent"
+              />
+            </Svg>
+          {/snippet}
+        </ForceSimulation>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

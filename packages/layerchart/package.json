@@ -6,7 +6,7 @@
   "repository": "techniq/layerchart",
   "version": "2.0.0-next.1",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "vite dev --port 3002",
     "build": "vite build",
     "preview": "vite preview",
     "package": "svelte-package",
@@ -63,7 +63,7 @@
     "rehype-slug": "^6.0.0",
     "shapefile": "^0.6.6",
     "solar-calculator": "^0.3.0",
-    "svelte": "5.23.0",
+    "svelte": "5.25.3",
     "svelte-check": "^4.1.5",
     "svelte-json-tree": "^2.2.0",
     "svelte-ux": "2.0.0-next.2",
@@ -106,10 +106,11 @@
     "d3-time": "^3.1.0",
     "date-fns": "^4.1.0",
     "layercake": "^8.4.2",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.21",
+    "runed": "^0.24.0"
   },
   "peerDependencies": {
-    "svelte": "^3.56.0 || ^4.0.0 || ^5.0.0"
+    "svelte": "^5.0.0"
   },
   "main": "./dist/index.js",
   "exports": {

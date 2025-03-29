@@ -15,8 +15,11 @@
   let chartProps = $derived<ComponentProps<typeof LineChart>['props']>({
     xAxis: { format: (v) => format(new Date(v * 60 * 1000)) },
     yAxis: { format: 'metric' },
-    tooltip: { root: { motion }, header: { format: (v) => format(new Date(v * 60 * 1000)) } },
-    highlight: { motion },
+    tooltip: {
+      root: { motion: motion ? 'spring' : 'none' },
+      header: { format: (v) => format(new Date(v * 60 * 1000)) },
+    },
+    highlight: { motion: motion ? 'spring' : 'none' },
   });
 </script>
 

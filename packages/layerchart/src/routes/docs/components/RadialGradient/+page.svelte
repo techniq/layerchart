@@ -13,21 +13,22 @@
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
       <Svg>
-        <RadialGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']} let:gradient>
-          <circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />
+        <RadialGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
+          {#snippet children({ gradient })}
+            <circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />
+          {/snippet}
         </RadialGradient>
 
-        <RadialGradient
-          stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']}
-          fx="20%"
-          fy="20%"
-          let:gradient
-        >
-          <circle cx={radius + 1 * 120} cy={radius} r={radius} fill={gradient} />
+        <RadialGradient stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']} fx="20%" fy="20%">
+          {#snippet children({ gradient })}
+            <circle cx={radius + 1 * 120} cy={radius} r={radius} fill={gradient} />
+          {/snippet}
         </RadialGradient>
 
-        <RadialGradient stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']} r="30%" let:gradient>
-          <circle cx={radius + 2 * 120} cy={radius} r={radius} fill={gradient} />
+        <RadialGradient stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']} r="30%">
+          {#snippet children({ gradient })}
+            <circle cx={radius + 2 * 120} cy={radius} r={radius} fill={gradient} />
+          {/snippet}
         </RadialGradient>
       </Svg>
     </Chart>
@@ -63,26 +64,22 @@
   <div class="h-[252px] p-4 border rounded-sm">
     <Chart>
       <Svg>
-        <RadialGradient class="from-green-500 to-blue-500" r="30%" spreadMethod="pad" let:gradient>
-          <circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />
+        <RadialGradient class="from-green-500 to-blue-500" r="30%" spreadMethod="pad">
+          {#snippet children({ gradient })}
+            <circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />
+          {/snippet}
         </RadialGradient>
 
-        <RadialGradient
-          class="from-green-500 to-blue-500"
-          r="30%"
-          spreadMethod="reflect"
-          let:gradient
-        >
-          <circle cx={radius + 1 * 120} cy={radius} r={radius} fill={gradient} />
+        <RadialGradient class="from-green-500 to-blue-500" r="30%" spreadMethod="reflect">
+          {#snippet children({ gradient })}
+            <circle cx={radius + 1 * 120} cy={radius} r={radius} fill={gradient} />
+          {/snippet}
         </RadialGradient>
 
-        <RadialGradient
-          class="from-green-500 to-blue-500"
-          r="30%"
-          spreadMethod="repeat"
-          let:gradient
-        >
-          <circle cx={radius + 2 * 120} cy={radius} r={radius} fill={gradient} />
+        <RadialGradient class="from-green-500 to-blue-500" r="30%" spreadMethod="repeat">
+          {#snippet children({ gradient })}
+            <circle cx={radius + 2 * 120} cy={radius} r={radius} fill={gradient} />
+          {/snippet}
         </RadialGradient>
       </Svg>
     </Chart>
@@ -95,16 +92,20 @@
   <div class="h-[252px] p-4 border rounded-sm">
     <Chart>
       <Svg>
-        <RadialGradient class="from-green-500 to-blue-500" units="objectBoundingBox" let:gradient>
-          {#each { length: 6 } as _, i}
-            <circle cx={radius + i * 120} cy={radius} r={radius} fill={gradient} />
-          {/each}
+        <RadialGradient class="from-green-500 to-blue-500" units="objectBoundingBox">
+          {#snippet children({ gradient })}
+            {#each { length: 6 } as _, i}
+              <circle cx={radius + i * 120} cy={radius} r={radius} fill={gradient} />
+            {/each}
+          {/snippet}
         </RadialGradient>
 
-        <RadialGradient class="from-green-500 to-blue-500" units="userSpaceOnUse" let:gradient>
-          {#each { length: 6 } as _, i}
-            <circle cx={radius + i * 120} cy={120 + radius} r={radius} fill={gradient} />
-          {/each}
+        <RadialGradient class="from-green-500 to-blue-500" units="userSpaceOnUse">
+          {#snippet children({ gradient })}
+            {#each { length: 6 } as _, i}
+              <circle cx={radius + i * 120} cy={120 + radius} r={radius} fill={gradient} />
+            {/each}
+          {/snippet}
         </RadialGradient>
       </Svg>
     </Chart>

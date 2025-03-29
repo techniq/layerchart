@@ -15,8 +15,8 @@
   let chartProps = $derived<ComponentProps<typeof LineChart>['props']>({
     xAxis: { format: PeriodType.Day },
     yAxis: { format: 'metric' },
-    tooltip: { root: { motion } },
-    highlight: { motion },
+    tooltip: { root: { motion: motion ? 'spring' : 'none' } },
+    highlight: { motion: motion ? 'spring' : 'none' },
   });
 
   let chartData = $derived(

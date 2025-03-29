@@ -64,8 +64,8 @@
     'var(--color-danger)',
   ];
 
-  let transitionChartMode = 'group';
-  $: transitionChart =
+  let transitionChartMode = $state('group');
+  const transitionChart = $derived(
     transitionChartMode === 'group'
       ? ({
           groupBy: 'fruit',
@@ -84,19 +84,22 @@
           : ({
               groupBy: undefined,
               stackBy: undefined,
-            } as const);
-  $: transitionData = groupStackData(longData, {
-    xKey: 'year',
-    groupBy: transitionChart.groupBy,
-    stackBy: transitionChart.stackBy,
-  }) as {
-    year: string;
-    fruit: string;
-    basket: number;
-    keys: string[];
-    value: number;
-    values: number[];
-  }[];
+            } as const)
+  );
+  const transitionData = $derived(
+    groupStackData(longData, {
+      xKey: 'year',
+      groupBy: transitionChart.groupBy,
+      stackBy: transitionChart.stackBy,
+    }) as {
+      year: string;
+      fruit: string;
+      basket: number;
+      keys: string[];
+      value: number;
+      values: number[];
+    }[]
+  );
 </script>
 
 <h1>Examples</h1>
@@ -181,13 +184,15 @@
         <Bars strokeWidth={1} class="fill-primary" />
         <Highlight area />
       </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header
-          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-        >
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
-        </Tooltip.List>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header
+            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+          >
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} />
+          </Tooltip.List>
+        {/snippet}
       </Tooltip.Root>
     </Chart>
   </div>
@@ -217,13 +222,15 @@
         <Bars strokeWidth={1} class="fill-primary group-hover:fill-gray-300 transition-colors" />
         <Highlight area bar={{ class: 'fill-primary', strokeWidth: 1 }} />
       </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header
-          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-        >
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
-        </Tooltip.List>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header
+            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+          >
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} />
+          </Tooltip.List>
+        {/snippet}
       </Tooltip.Root>
     </Chart>
   </div>
@@ -251,21 +258,29 @@
           rule
         />
         <Bars strokeWidth={1} class="fill-primary group-hover:fill-gray-300 transition-colors" />
-        <Highlight area>
-          <svelte:fragment slot="area" let:area>
-            <RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} spring>
+        <Highlight>
+          {#snippet area({ area })}
+            <RectClipPath
+              x={area.x}
+              y={area.y}
+              width={area.width}
+              height={area.height}
+              motion="spring"
+            >
               <Bars strokeWidth={1} class="fill-primary" />
             </RectClipPath>
-          </svelte:fragment>
+          {/snippet}
         </Highlight>
       </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header
-          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-        >
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
-        </Tooltip.List>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header
+            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+          >
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} />
+          </Tooltip.List>
+        {/snippet}
       </Tooltip.Root>
     </Chart>
   </div>
@@ -452,13 +467,10 @@
           format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <LinearGradient
-          class="from-blue-500 to-green-400"
-          vertical
-          units="userSpaceOnUse"
-          let:gradient
-        >
-          <Bars strokeWidth={1} fill={gradient} class="stroke-blue-900" />
+        <LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse">
+          {#snippet children({ gradient })}
+            <Bars strokeWidth={1} fill={gradient} class="stroke-blue-900" />
+          {/snippet}
         </LinearGradient>
       </Svg>
     </Chart>
@@ -576,29 +588,32 @@
       yDomain={[0, null]}
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
-      let:width
-      let:yScale
     >
-      {@const avg = mean(data, (d) => d.value)}
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <Bars strokeWidth={1} class="fill-primary" />
-        <Rule y={avg} class="stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] " />
-        <Text
-          x={width}
-          y={yScale(avg)}
-          dy={-4}
-          value="Avg"
-          textAnchor="end"
-          verticalAnchor="end"
-          class="text-sm fill-danger stroke-surface-100 stroke-2"
-        />
-      </Svg>
+      {#snippet children({ context })}
+        {@const avg = mean(data, (d) => d.value)}
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis
+            placement="bottom"
+            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
+          <Bars strokeWidth={1} class="fill-primary" />
+          <Rule
+            y={avg}
+            class="stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] "
+          />
+          <Text
+            x={context.width}
+            y={context.yScale(avg)}
+            dy={-4}
+            value="Avg"
+            textAnchor="end"
+            verticalAnchor="end"
+            class="text-sm fill-danger stroke-surface-100 stroke-2"
+          />
+        </Svg>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -680,14 +695,16 @@
         <Bars y="value" strokeWidth={1} insets={{ x: 4 }} class="fill-primary" />
         <Highlight area />
       </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header
-          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-        >
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
-          <Tooltip.Item label="baseline" value={data.baseline} />
-        </Tooltip.List>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header
+            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+          >
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} />
+            <Tooltip.Item label="baseline" value={data.baseline} />
+          </Tooltip.List>
+        {/snippet}
       </Tooltip.Root>
     </Chart>
   </div>
@@ -714,14 +731,16 @@
         <Rule y={0} />
         <Highlight area />
       </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header
-          >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-        >
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
-          <Tooltip.Item label="baseline" value={data.baseline} />
-        </Tooltip.List>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header
+            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
+          >
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} />
+            <Tooltip.Item label="baseline" value={data.baseline} />
+          </Tooltip.List>
+        {/snippet}
       </Tooltip.Root>
     </Chart>
   </div>
@@ -758,9 +777,9 @@
             <Bars
               initialY={300 - 16 * 2 - 2 - 24}
               initialHeight={0}
-              tweened={{
-                y: { duration: 500, easing: cubicInOut },
-                height: { duration: 500, easing: cubicInOut },
+              motion={{
+                y: { type: 'tween', duration: 500, easing: cubicInOut },
+                height: { type: 'tween', duration: 500, easing: cubicInOut },
               }}
               strokeWidth={1}
               class="fill-primary"
@@ -801,7 +820,8 @@
           />
           {#if show}
             <Bars
-              tweened={{
+              motion={{
+                type: 'tween',
                 duration: 500,
                 easing: cubicInOut,
               }}
@@ -850,9 +870,9 @@
                 {bar}
                 initialY={300 - 16 * 2 - 2 - 24}
                 initialHeight={0}
-                tweened={{
-                  y: { duration: 500, easing: cubicInOut, delay: i * 30 },
-                  height: { duration: 500, easing: cubicInOut, delay: i * 30 },
+                motion={{
+                  y: { type: 'tween', duration: 500, easing: cubicInOut, delay: i * 30 },
+                  height: { type: 'tween', duration: 500, easing: cubicInOut, delay: i * 30 },
                 }}
                 strokeWidth={1}
                 class="fill-primary"
@@ -896,7 +916,8 @@
             {#each data as bar, i}
               <Bar
                 {bar}
-                tweened={{
+                motion={{
+                  type: 'tween',
                   duration: 500,
                   easing: cubicInOut,
                   delay: i * 30,
@@ -931,42 +952,44 @@
       x1="fruit"
       x1Scale={scaleBand()}
       x1Domain={colorKeys}
-      x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
+      x1Range={({ xScale }) => [0, xScale.bandwidth()]}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
-      let:cScale
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" rule />
-        <Bars strokeWidth={1} />
-        <Highlight area />
-      </Svg>
+      {#snippet children({ context })}
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          <Bars strokeWidth={1} />
+          <Highlight area />
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.year}</Tooltip.Header>
-        <Tooltip.List>
-          {#each data.data as d}
-            <Tooltip.Item
-              label={d.fruit}
-              value={d.value}
-              color={cScale?.(d.fruit)}
-              format="integer"
-              valueAlign="right"
-            />
-          {/each}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.year}</Tooltip.Header>
+            <Tooltip.List>
+              {#each data.data as d}
+                <Tooltip.Item
+                  label={d.fruit}
+                  value={d.value}
+                  color={context.cScale?.(d.fruit)}
+                  format="integer"
+                  valueAlign="right"
+                />
+              {/each}
 
-          <Tooltip.Separator />
+              <Tooltip.Separator />
 
-          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-          <Tooltip.Item
-            label="total"
-            value={sum([...data.data], (d) => d.value)}
-            format="integer"
-            valueAlign="right"
-          />
-        </Tooltip.List>
-      </Tooltip.Root>
+              <Tooltip.Item
+                label="total"
+                value={sum([...data.data], (d) => d.value)}
+                format="integer"
+                valueAlign="right"
+              />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -987,39 +1010,41 @@
       cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
-      let:cScale
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" rule />
-        <Bars strokeWidth={1} />
-        <Highlight area />
-      </Svg>
+      {#snippet children({ context })}
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          <Bars strokeWidth={1} />
+          <Highlight area />
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.year}</Tooltip.Header>
-        <Tooltip.List>
-          {#each data.data as d}
-            <Tooltip.Item
-              label={d.fruit}
-              value={d.value}
-              color={cScale?.(d.fruit)}
-              format="integer"
-              valueAlign="right"
-            />
-          {/each}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.year}</Tooltip.Header>
+            <Tooltip.List>
+              {#each data.data as d}
+                <Tooltip.Item
+                  label={d.fruit}
+                  value={d.value}
+                  color={context.cScale?.(d.fruit)}
+                  format="integer"
+                  valueAlign="right"
+                />
+              {/each}
 
-          <Tooltip.Separator />
+              <Tooltip.Separator />
 
-          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-          <Tooltip.Item
-            label="total"
-            value={sum([...data.data], (d) => d.value)}
-            format="integer"
-            valueAlign="right"
-          />
-        </Tooltip.List>
-      </Tooltip.Root>
+              <Tooltip.Item
+                label="total"
+                value={sum([...data.data], (d) => d.value)}
+                format="integer"
+                valueAlign="right"
+              />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -1040,39 +1065,41 @@
       cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
-      let:cScale
     >
-      <Svg>
-        <Axis placement="left" grid rule format="percentRound" />
-        <Axis placement="bottom" rule />
-        <Bars strokeWidth={1} />
-        <Highlight area />
-      </Svg>
+      {#snippet children({ context })}
+        <Svg>
+          <Axis placement="left" grid rule format="percentRound" />
+          <Axis placement="bottom" rule />
+          <Bars strokeWidth={1} />
+          <Highlight area />
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.year}</Tooltip.Header>
-        <Tooltip.List>
-          {#each data.data as d}
-            <Tooltip.Item
-              label={d.fruit}
-              value={d.value}
-              color={cScale?.(d.fruit)}
-              format="integer"
-              valueAlign="right"
-            />
-          {/each}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.year}</Tooltip.Header>
+            <Tooltip.List>
+              {#each data.data as d}
+                <Tooltip.Item
+                  label={d.fruit}
+                  value={d.value}
+                  color={context.cScale?.(d.fruit)}
+                  format="integer"
+                  valueAlign="right"
+                />
+              {/each}
 
-          <Tooltip.Separator />
+              <Tooltip.Separator />
 
-          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-          <Tooltip.Item
-            label="total"
-            value={sum([...data.data], (d) => d.value)}
-            format="integer"
-            valueAlign="right"
-          />
-        </Tooltip.List>
-      </Tooltip.Root>
+              <Tooltip.Item
+                label="total"
+                value={sum([...data.data], (d) => d.value)}
+                format="integer"
+                valueAlign="right"
+              />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -1094,42 +1121,44 @@
       x1="basket"
       x1Scale={scaleBand().padding(0.1)}
       x1Domain={[1, 2]}
-      x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
+      x1Range={({ xScale }) => [0, xScale.bandwidth()]}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
-      let:cScale
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" rule />
-        <Bars strokeWidth={1} />
-        <Highlight area />
-      </Svg>
+      {#snippet children({ context })}
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          <Bars strokeWidth={1} />
+          <Highlight area />
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.year}</Tooltip.Header>
-        <Tooltip.List>
-          {#each data.data as d}
-            <Tooltip.Item
-              label={d.fruit}
-              value={d.value}
-              color={cScale?.(d.fruit)}
-              format="integer"
-              valueAlign="right"
-            />
-          {/each}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.year}</Tooltip.Header>
+            <Tooltip.List>
+              {#each data.data as d}
+                <Tooltip.Item
+                  label={d.fruit}
+                  value={d.value}
+                  color={context.cScale?.(d.fruit)}
+                  format="integer"
+                  valueAlign="right"
+                />
+              {/each}
 
-          <Tooltip.Separator />
+              <Tooltip.Separator />
 
-          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-          <Tooltip.Item
-            label="total"
-            value={sum([...data.data], (d) => d.value)}
-            format="integer"
-            valueAlign="right"
-          />
-        </Tooltip.List>
-      </Tooltip.Root>
+              <Tooltip.Item
+                label="total"
+                value={sum([...data.data], (d) => d.value)}
+                format="integer"
+                valueAlign="right"
+              />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -1163,58 +1192,76 @@
       x1Domain={transitionChart.groupBy
         ? unique(transitionData.map((d) => d[transitionChart.groupBy]))
         : undefined}
-      x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
+      x1Range={({ xScale }) => [0, xScale.bandwidth()]}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
-      let:data
-      let:cScale
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" rule />
-        <g>
-          <!-- TODO: 'data' can be used once type issue is resolved -->
-          {#each transitionData as bar (bar.year + '-' + bar.fruit)}
-            <Bar
-              {bar}
-              fill={cScale?.(bar.fruit)}
-              strokeWidth={1}
-              tweened={{
-                x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-                y: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
-                width: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-                height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
-              }}
-            />
-          {/each}
-        </g>
-        <Highlight area />
-      </Svg>
+      {#snippet children({ context })}
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          <g>
+            <!-- TODO: 'data' can be used once type issue is resolved -->
+            {#each transitionData as bar (bar.year + '-' + bar.fruit)}
+              <Bar
+                {bar}
+                fill={context.cScale?.(bar.fruit)}
+                strokeWidth={1}
+                motion={{
+                  x: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 0 : 300,
+                  },
+                  y: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 300 : 0,
+                  },
+                  width: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 0 : 300,
+                  },
+                  height: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 300 : 0,
+                  },
+                }}
+              />
+            {/each}
+          </g>
+          <Highlight area />
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.year}</Tooltip.Header>
-        <Tooltip.List>
-          {#each data.data as d}
-            <Tooltip.Item
-              label={d.fruit}
-              value={d.value}
-              color={cScale?.(d.fruit)}
-              format="integer"
-              valueAlign="right"
-            />
-          {/each}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.year}</Tooltip.Header>
+            <Tooltip.List>
+              {#each data.data as d}
+                <Tooltip.Item
+                  label={d.fruit}
+                  value={d.value}
+                  color={context.cScale?.(d.fruit)}
+                  format="integer"
+                  valueAlign="right"
+                />
+              {/each}
 
-          <Tooltip.Separator />
+              <Tooltip.Separator />
 
-          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-          <Tooltip.Item
-            label="total"
-            value={sum([...data.data], (d) => d.value)}
-            format="integer"
-            valueAlign="right"
-          />
-        </Tooltip.List>
-      </Tooltip.Root>
+              <!-- TODO: Remove [...] type hack to make svelte-check happy -->
+              <Tooltip.Item
+                label="total"
+                value={sum([...data.data], (d) => d.value)}
+                format="integer"
+                valueAlign="right"
+              />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -1248,52 +1295,68 @@
       x1Domain={transitionChart.groupBy
         ? unique(transitionData.map((d) => d[transitionChart.groupBy]))
         : undefined}
-      x1Range={({ xScale }) => [0, xScale.bandwidth?.()]}
+      x1Range={({ xScale }) => [0, xScale.bandwidth()]}
       padding={{ left: 16, bottom: 24 }}
-      let:data
-      let:cScale
-      let:tooltip
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" rule />
-        <g>
-          <!-- TODO: 'data' can be used once type issue is resolved -->
-          {#each transitionData as bar (bar.year + '-' + bar.fruit)}
-            <Bar
-              {bar}
-              fill={cScale?.(bar.fruit)}
-              strokeWidth={1}
-              tweened={{
-                x: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-                y: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
-                width: { easing: cubicInOut, delay: transitionChart.groupBy ? 0 : 300 },
-                height: { easing: cubicInOut, delay: transitionChart.groupBy ? 300 : 0 },
-              }}
-              class="cursor-pointer"
-              onclick={(e) => {
-                alert('You clicked on:\n' + JSON.stringify(bar, null, 2));
-              }}
-              onpointerenter={(e) => tooltip?.show(e, bar)}
-              onpointermove={(e) => tooltip?.show(e, bar)}
-              onpointerleave={(e) => tooltip?.hide()}
-            />
-          {/each}
-        </g>
-      </Svg>
+      {#snippet children({ context })}
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          <g>
+            {#each transitionData as bar (bar.year + '-' + bar.fruit)}
+              <Bar
+                {bar}
+                fill={context.cScale?.(bar.fruit)}
+                strokeWidth={1}
+                motion={{
+                  x: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 0 : 300,
+                  },
+                  y: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 300 : 0,
+                  },
+                  width: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 0 : 300,
+                  },
+                  height: {
+                    type: 'tween',
+                    easing: cubicInOut,
+                    delay: transitionChart.groupBy ? 300 : 0,
+                  },
+                }}
+                class="cursor-pointer"
+                onclick={(e) => {
+                  alert('You clicked on:\n' + JSON.stringify(bar, null, 2));
+                }}
+                onpointerenter={(e) => context.tooltip.show(e, bar)}
+                onpointermove={(e) => context.tooltip.show(e, bar)}
+                onpointerleave={(e) => context.tooltip.hide()}
+              />
+            {/each}
+          </g>
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.year}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item
-            label={data.fruit}
-            value={data.value}
-            color={cScale?.(data.fruit)}
-            format="integer"
-            valueAlign="right"
-          />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.year}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item
+                label={data.fruit}
+                value={data.value}
+                color={context.cScale?.(data.fruit)}
+                format="integer"
+                valueAlign="right"
+              />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

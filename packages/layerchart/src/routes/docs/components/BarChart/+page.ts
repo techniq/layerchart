@@ -6,7 +6,7 @@ import pageSource from './+page.svelte?raw';
 
 import type { WorldPopulationDemographicsData } from '$static/data/examples/world-population-demographics.js';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     worldPopulationDemographics: (await fetch(
       '/data/examples/world-population-demographics.csv'

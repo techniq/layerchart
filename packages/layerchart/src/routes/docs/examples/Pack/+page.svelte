@@ -7,31 +7,41 @@
   import * as chromatic from 'd3-scale-chromatic';
   import { hsl } from 'd3-color';
 
-  import { Chart, Circle, Group, Pack, Svg, TransformContext, findAncestor } from 'layerchart';
+  import {
+    Chart,
+    Circle,
+    Group,
+    Pack,
+    Svg,
+    findAncestor,
+    type ChartContextValue,
+  } from 'layerchart';
   import { Breadcrumb, Button, Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
   const complexHierarchy = hierarchy(data.flare)
     .sum((d) => d.value)
     .sort(sortFunc('value', 'desc')) as HierarchyCircularNode<any>;
 
-  let colorBy = 'parent';
+  let colorBy = $state('parent');
 
-  let padding = 3;
-  let selected: HierarchyCircularNode<any>;
-  let transformContext: TransformContext;
+  let padding = $state(3);
+  let selected = $state.raw<HierarchyCircularNode<any>>(complexHierarchy);
+  let context = $state<ChartContextValue>(null!);
 
-  $: if (transformContext && selected) {
-    const diameter = selected.r * 2;
-    transformContext.zoomTo(
-      { x: selected.x, y: selected.y },
-      { width: diameter, height: diameter }
-    );
-  }
+  $effect(() => {
+    if (context?.transform && selected) {
+      const diameter = selected.r * 2;
+      context.transform.zoomTo(
+        { x: selected.x, y: selected.y },
+        { width: diameter, height: diameter }
+      );
+    }
+  });
 
   const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
   // filter out hard to see yellow and green
@@ -56,11 +66,6 @@
     }
     return '';
   }
-
-  onMount(() => {
-    // Set root initially.  Wait for Tree to mount so layout is set
-    selected = complexHierarchy as HierarchyCircularNode<any>; // select root initially
-  });
 </script>
 
 <div class="grid grid-flow-col gap-4 mb-4">
@@ -79,7 +84,7 @@
 
 <h2>General</h2>
 
-<Preview data={complexHierarchy}>
+<Preview data={complexHierarchy.data}>
   <Breadcrumb items={selected?.ancestors().reverse() ?? []}>
     <Button
       slot="item"
@@ -96,56 +101,61 @@
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
     <Chart
-      data={complexHierarchy}
       transform={{
         mode: 'canvas',
         disablePointer: true,
-        tweened: { duration: 800, easing: cubicOut },
+        motion: { type: 'tween', duration: 800, easing: cubicOut },
       }}
-      bind:transformContext
-      let:transform
+      bind:context
     >
-      <Svg on:click={() => (selected = complexHierarchy)}>
-        <Pack {padding} let:nodes>
-          {#each nodes as node}
-            <Group
-              x={node.x}
-              y={node.y}
-              onclick={(e) => {
-                e.stopPropagation();
-                selected = node;
-              }}
-              class="cursor-pointer hover:contrast-[1.2]"
-            >
-              {@const nodeColor = getNodeColor(node, colorBy)}
-              <Circle
-                r={node.r}
-                stroke={hsl(nodeColor)
-                  .darker(colorBy === 'children' ? 0.5 : 1)
-                  .toString()}
-                strokeWidth={1 / transform.scale}
-                fill={nodeColor}
-              />
-            </Group>
-          {/each}
-          <!-- Show text on top of all circles -->
-          {#each selected ? (selected.children ?? [selected]) : [] as node (node.data.name + node.depth)}
-            {@const fontSize = 1 / transform.scale}
-            <g in:fade|local>
-              <text
-                x={node.x}
-                y={node.y}
-                dy={fontSize * 8}
-                class="stroke-white/70 pointer-events-none [text-anchor:middle] [paint-order:stroke]"
-                style:font-size="{fontSize}rem"
-                style:stroke-width="{fontSize * 2}px"
-              >
-                {node.data.name}
-              </text>
-            </g>
-          {/each}
-        </Pack>
-      </Svg>
+      {#snippet children({ context })}
+        <Svg onclick={() => (selected = complexHierarchy)}>
+          <Pack {padding} hierarchy={complexHierarchy}>
+            {#snippet children({ nodes })}
+              {#each nodes as node ([node.data.name, node.parent?.data.name].join('-'))}
+                <Group
+                  x={node.x}
+                  y={node.y}
+                  onclick={(e) => {
+                    e.stopPropagation();
+                    selected = node;
+                  }}
+                  class="cursor-pointer hover:contrast-[1.2]"
+                >
+                  {@const nodeColor = getNodeColor(node, colorBy)}
+                  <Circle
+                    r={node.r}
+                    stroke={hsl(nodeColor)
+                      .darker(colorBy === 'children' ? 0.5 : 1)
+                      .toString()}
+                    strokeWidth={1 / context.transform.scale}
+                    fill={nodeColor}
+                  />
+                </Group>
+              {/each}
+              {@const selectedNodes = selected
+                ? (structuredClone(selected.children) ?? [structuredClone(selected)])
+                : []}
+
+              {#each selectedNodes as node ([node.data.name, node.parent?.data.name].join('-'))}
+                {@const fontSize = 1 / context.transform.scale}
+                <g in:fade|local>
+                  <text
+                    x={node.x}
+                    y={node.y}
+                    dy={fontSize * 8}
+                    class="stroke-white/70 pointer-events-none [text-anchor:middle] [paint-order:stroke]"
+                    style:font-size="{fontSize}rem"
+                    style:stroke-width="{fontSize * 2}px"
+                  >
+                    {node.data.name}
+                  </text>
+                </g>
+              {/each}
+            {/snippet}
+          </Pack>
+        </Svg>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

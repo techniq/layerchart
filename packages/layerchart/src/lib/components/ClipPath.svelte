@@ -1,19 +1,65 @@
+<script lang="ts" module>
+  import { createId } from '$lib/utils/createId.js';
+  import type { Without } from '$lib/utils/types.js';
+  import { layerClass } from '$lib/utils/attributes.js';
+  import type { Snippet } from 'svelte';
+  import type { SVGAttributes } from 'svelte/elements';
+
+  export type ClipPathPropsWithoutHTML = {
+    /**
+     * A unique id for the clipPath.
+     *
+     */
+    id?: string;
+
+    /**
+     * Use existing path or shape (by id) for clipPath
+     *
+     */
+    useId?: string;
+
+    /**
+     * Whether to disable clipping (show all).
+     *
+     * @default false
+     */
+    disabled?: boolean;
+
+    /**
+     * A snippet to insert content into the clipPath.
+     * Provides the id for the clipPath as a snippet prop.
+     */
+    clip?: Snippet<[{ id: string }]>;
+
+    /**
+     * Children to render in the `<g>` element that links to the clipPath (if not disabled).
+     * Provides the id, url, and useId for the clipPath as snippet props.
+     */
+    children?: Snippet<[{ id: string; url: string; useId?: string }]>;
+  };
+
+  export type ClipPathProps = ClipPathPropsWithoutHTML &
+    Without<SVGAttributes<SVGClipPathElement>, ClipPathPropsWithoutHTML>;
+</script>
+
 <script lang="ts">
-  import { uniqueId } from '@layerstack/utils';
+  const uid = $props.id();
 
-  /** Unique id for clipPath */
-  export let id: string = uniqueId('clipPath-');
+  let {
+    id = createId('clipPath-', uid),
+    useId,
+    disabled = false,
+    children,
+    clip,
+    ...restProps
+  }: ClipPathPropsWithoutHTML = $props();
 
-  /** Use existing path or shape (by id) for clipPath */
-  export let useId: string | undefined = undefined;
-
-  /** Disable clipping (show all) */
-  export let disabled: boolean = false;
+  const url = $derived(`url(#${id})`);
 </script>
 
 <defs>
-  <clipPath {id} {...$$restProps}>
-    <slot name="clip" {id} />
+  <clipPath {id} {...restProps}>
+    {@render clip?.({ id })}
 
     {#if useId}
       <use href="#{useId}" />
@@ -21,13 +67,12 @@
   </clipPath>
 </defs>
 
-{#if $$slots.default}
+{#if children}
   {#if disabled}
-    <slot />
+    {@render children({ id, url, useId })}
   {:else}
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <g style:clip-path="url(#{id})">
-      <slot {id} url="url(#{id})" {useId} />
+    <g style:clip-path={url} class={layerClass('clip-path-g')}>
+      {@render children({ id, url, useId })}
     </g>
   {/if}
 {/if}

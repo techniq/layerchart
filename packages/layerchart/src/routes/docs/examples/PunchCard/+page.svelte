@@ -30,27 +30,29 @@
       r="value"
       rRange={[0, 16]}
       padding={{ left: 48, bottom: 16 }}
-      tooltip={{ mode: 'band' }}
       props={{
         xAxis: { format: (d) => 'Week ' + d },
         yAxis: { format: (d) => daysOfWeek[d] },
         rule: { x: true, y: false },
         grid: { x: false, y: true, bandAlign: 'between' },
+        tooltip: { context: { mode: 'band' } },
       }}
     >
-      <svelte:fragment slot="highlight">
+      {#snippet highlight()}
         <Highlight area axis="x" />
         <Highlight area axis="y" />
-      </svelte:fragment>
+      {/snippet}
 
-      <svelte:fragment slot="tooltip">
-        <Tooltip.Root let:data>
-          <Tooltip.Header>{formatDate(data.date, PeriodType.Day)}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="value" value={data.value} valueAlign="right" />
-          </Tooltip.List>
+      {#snippet tooltip()}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{formatDate(data.date, PeriodType.Day)}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} valueAlign="right" />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </ScatterChart>
   </div>
 </Preview>

@@ -10,21 +10,23 @@
 
   // Inspired by: https://observablehq.com/@visnup/microphone-oscilloscope and https://codepen.io/agalliat/pen/PoZLBxP
 
-  let timeData: { key: number; value: number }[] = [];
-  let frequencyData: { key: number; value: number }[] = [];
+  let timeData: { key: number; value: number }[] = $state([]);
+  let frequencyData: { key: number; value: number }[] = $state([]);
 
-  let ctx: AudioContext;
-  let analyser: AnalyserNode;
+  let ctx = $state<AudioContext>(null!);
+  let analyser = $state<AnalyserNode>(null!);
 
-  $: frequency = scaleLinear()
-    .domain([0, analyser?.frequencyBinCount - 1])
-    .range([0, analyser?.context.sampleRate / 2 / 1000]);
+  const frequency = $derived(
+    scaleLinear()
+      .domain([0, analyser?.frequencyBinCount - 1])
+      .range([0, analyser?.context.sampleRate / 2 / 1000])
+  );
 
-  $: decibels = scaleLinear()
-    .domain([0, 255])
-    .range([analyser?.minDecibels, analyser?.maxDecibels]);
+  const decibels = $derived(
+    scaleLinear().domain([0, 255]).range([analyser?.minDecibels, analyser?.maxDecibels])
+  );
 
-  let active = true;
+  let active = $state(true);
   onMount(async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     // @ts-expect-error
@@ -57,11 +59,12 @@
     requestAnimationFrame(step);
   });
 
-  onDestroy(() => {
-    active = false;
-    ctx?.close();
+  $effect(() => {
+    return () => {
+      active = false;
+      ctx?.close();
+    };
   });
-
   const colorScale = scaleSequential([0, 256], interpolateTurbo);
 </script>
 
@@ -102,16 +105,17 @@
         yAxis: { format: (d) => decibels(d)?.toFixed(1) },
       }}
     >
-      <svelte:fragment slot="marks">
+      {#snippet marks()}
         <LinearGradient
           stops={ticks(1, 0, 10).map(colorScale.interpolator())}
           vertical
           units="userSpaceOnUse"
-          let:gradient
         >
-          <Bars radius={1} fill={gradient} />
+          {#snippet children({ gradient })}
+            <Bars radius={1} fill={gradient} />
+          {/snippet}
         </LinearGradient>
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>

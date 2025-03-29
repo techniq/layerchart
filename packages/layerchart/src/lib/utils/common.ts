@@ -1,8 +1,8 @@
-import type { ComponentProps } from 'svelte';
+import type { Component, ComponentProps } from 'svelte';
 import { get } from 'lodash-es';
 
 import type Chart from '../components/Chart.svelte';
-import type LineChart from '../components/charts/LineChart.svelte';
+import type { SimplifiedChartProps } from '$lib/components/charts/types.js';
 
 export type Accessor<TData = any> =
   | number
@@ -36,16 +36,14 @@ export function chartDataArray<TData = any>(data: ComponentProps<Chart<TData>>['
   } else if ('nodes' in data) {
     return data.nodes;
   } else {
+    // @ts-expect-error - TODO can we refine this?
     return data.descendants();
   }
 }
 
-// Using LineChart but could any simplified chart
-type SimplifiedChartProps = ComponentProps<LineChart<any>>;
-
-export function defaultChartPadding(
-  axis: SimplifiedChartProps['axis'],
-  legend: SimplifiedChartProps['legend']
+export function defaultChartPadding<TData, SeriesComponent extends Component, TSnippetProps>(
+  axis: SimplifiedChartProps<TData, SeriesComponent, TSnippetProps>['axis'],
+  legend: SimplifiedChartProps<TData, SeriesComponent, TSnippetProps>['legend']
 ) {
   if (axis === false) {
     return undefined;
@@ -67,4 +65,12 @@ export function findRelatedData(data: any[], original: any, accessor: Function) 
   return data.find((d) => {
     return accessor(d)?.valueOf() === accessor(original)?.valueOf();
   });
+}
+
+export function getTooltipName(
+  name: string | number | undefined | unknown,
+  accessor: Accessor<any>
+): string | undefined {
+  if (name) return `${name}`;
+  if (typeof accessor === 'string') return accessor;
 }
