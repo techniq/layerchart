@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Chart, Svg, Text } from 'layerchart';
+  import type { TruncateTextOptions } from 'layerchart/utils/string.js';
   import type { ComponentProps } from 'svelte';
   import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
@@ -15,6 +16,14 @@
     scaleToFit: false,
     showAnchor: true,
     resizeSvg: true,
+  });
+
+  let truncate = $state(false);
+
+  const truncateOptions: TruncateTextOptions = $state({
+    maxChars: 22,
+    ellipsis: '...',
+    position: 'end',
   });
 </script>
 
@@ -66,6 +75,31 @@
     <Field label="resize svg (container)" let:id>
       <Switch bind:checked={config.resizeSvg} {id} />
     </Field>
+    <Field label="truncate text" let:id>
+      <Switch bind:checked={truncate} {id} />
+    </Field>
+    {#if truncate}
+      <RangeField
+        label="maxChars"
+        bind:value={truncateOptions.maxChars}
+        min={0}
+        max={config.value.length}
+      />
+      <TextField label="ellipsis" bind:value={truncateOptions.ellipsis} />
+      <Field label="position" classes={{ input: 'mt-[6px] mb-1' }}>
+        <ToggleGroup
+          bind:value={truncateOptions.position}
+          variant="outline"
+          size="sm"
+          inset
+          class="w-full"
+        >
+          <ToggleOption value="start">start</ToggleOption>
+          <ToggleOption value="middle">middle</ToggleOption>
+          <ToggleOption value="end">end</ToggleOption>
+        </ToggleGroup>
+      </Field>
+    {/if}
   </div>
 </div>
 
@@ -76,7 +110,7 @@
   >
     <Chart>
       <Svg>
-        <Text {...config} />
+        <Text {...config} truncate={truncate ? truncateOptions : false} />
 
         {#if config.showAnchor}
           <circle cx={config.x} cy={config.y} r="2" fill="red" />

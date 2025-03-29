@@ -121,6 +121,11 @@
      */
     ref?: SVGTextElement;
     motion?: MotionProp;
+
+    /**
+     * Whether to enable text truncation
+     */
+    truncate?: boolean | TruncateTextOptions;
   } & CommonStyleProps;
 
   export type TextProps = TextPropsWithoutHTML &
@@ -133,7 +138,7 @@
 
   import { getRenderContext } from './Chart.svelte';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
-  import { getStringWidth } from '$lib/utils/string.js';
+  import { getStringWidth, truncateText, type TruncateTextOptions } from '$lib/utils/string.js';
   import { renderText, type ComputedStylesOptions } from '../utils/canvas.js';
 
   import { createKey } from '$lib/utils/key.svelte.js';
@@ -178,14 +183,43 @@
     ref = $bindable(),
     class: className,
     svgProps = {},
+    truncate = false,
     ...restProps
   }: TextProps = $props();
 
   let style: CSSStyleDeclaration | undefined = undefined; // TODO: read from DOM?
+  const truncateConfig: TruncateTextOptions | boolean = $derived.by(() => {
+    if (typeof truncate === 'boolean') {
+      if (truncate === true) {
+        return {
+          maxChars: undefined,
+          position: 'end',
+          style,
+          maxWidth: width,
+        };
+      } else {
+        return false;
+      }
+    }
+    return {
+      position: 'end',
+      maxWidth: width,
+      style,
+      maxChars: undefined,
+      ...truncate,
+    };
+  });
+
+  const rawText = $derived(value != null ? value.toString() : '');
+
+  const truncatedText = $derived.by(() => {
+    if (!truncateConfig) return rawText;
+    return truncateText(rawText, truncateConfig);
+  });
 
   const renderCtx = getRenderContext();
 
-  const words = $derived(value != null ? value.toString().split(/(?:(?!\u00A0+)\s+)/) : []);
+  const words = $derived(truncatedText ? truncatedText.split(/(?:(?!\u00A0+)\s+)/) : []);
 
   const wordsWithWidth = $derived(
     words.map((word) => ({
