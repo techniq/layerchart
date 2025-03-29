@@ -19,7 +19,6 @@
   import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { watchOnce } from 'runed';
 
   let { data } = $props();
 
