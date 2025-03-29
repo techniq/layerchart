@@ -248,9 +248,13 @@ export function extractTweenConfig<T extends string = never>(
  * @returns A standardized motion configuration object
  */
 export function parseMotionProp<T extends string = never>(
-  config: MotionProp<T> | undefined,
+  config: MotionProp<T> | undefined | ResolvedMotion,
   accessor?: string
 ): ResolvedMotion {
+  if (typeof config === 'object' && 'type' in config && 'options' in config) {
+    if (typeof config.options === 'object') return config;
+    return { type: config.type, options: {} };
+  }
   // Default to no animation if no configuration provided
   if (config === undefined) return { type: 'none', options: {} };
 

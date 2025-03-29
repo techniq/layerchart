@@ -5,12 +5,25 @@ import type {
   MotionSpringOption,
   MotionTweenOption,
   MotionNoneOption,
+  ResolvedMotion,
 } from './motion.svelte.js';
 
 describe('parseMotionProp', () => {
   it('should return "none" type when config is undefined', () => {
     const result = parseMotionProp(undefined);
     expect(result).toEqual({ type: 'none', options: {} });
+  });
+
+  it('should return an already resolved motion object that may have been parsed earlier in the chain', () => {
+    const resolvedMotion: ResolvedMotion = {
+      type: 'spring',
+      options: {
+        stiffness: 0.5,
+        damping: 0.8,
+      },
+    };
+    const result = parseMotionProp(resolvedMotion);
+    expect(result).toEqual(resolvedMotion);
   });
 
   describe('string input handling', () => {

@@ -138,11 +138,6 @@
   $effect(() => {
     onUpdate?.(sankeyData);
   });
-
-  $effect(() => {
-    console.log(sankeyData.nodes[0].x0);
-    console.log(sankeyData.nodes[0].y0);
-  });
 </script>
 
 {@render children?.({
