@@ -1,10 +1,5 @@
 <script lang="ts" module>
-  import {
-    pack as d3Pack,
-    type HierarchyCircularNode,
-    type HierarchyNode,
-    type PackLayout,
-  } from 'd3-hierarchy';
+  import { pack as d3Pack, type HierarchyCircularNode, type HierarchyNode } from 'd3-hierarchy';
   import type { Snippet } from 'svelte';
 
   export type PackProps<T> = {
@@ -30,21 +25,31 @@
 </script>
 
 <script lang="ts" generics="T">
+  import { Versioned } from '$lib/utils/versioned.svelte.js';
   import { getChartContext } from './Chart.svelte';
 
   const ctx = getChartContext();
 
-  let { size, padding, children, hierarchy }: PackProps<T> = $props();
+  let { size, padding, children, hierarchy: hierarchyProp }: PackProps<T> = $props();
 
-  const pack = $derived.by(() => {
+  const hierarchy = new Versioned(hierarchyProp);
+
+  const packedData = $derived.by(() => {
+    console.log('running derived');
+    const h = hierarchy.current;
+    if (!h) return [];
     const _pack = d3Pack<T>().size(size ?? [ctx.width, ctx.height]);
     if (padding) {
       _pack.padding(padding);
     }
-    return _pack;
+    return _pack(h).descendants();
   });
 
-  const packData = $derived(hierarchy ? pack(hierarchy) : []);
+  $effect(() => {
+    console.log('packedData', packedData);
+  });
 </script>
 
-{@render children?.({ nodes: 'descendants' in packData ? packData.descendants() : [] })}
+{@render children?.({
+  nodes: structuredClone(packedData),
+})}

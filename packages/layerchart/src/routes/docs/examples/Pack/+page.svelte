@@ -13,7 +13,6 @@
     Group,
     Pack,
     Svg,
-    TransformContext,
     findAncestor,
     type ChartContextValue,
   } from 'layerchart';
@@ -24,16 +23,14 @@
 
   let { data } = $props();
 
-  const complexHierarchy = $derived(
-    hierarchy(data.flare)
-      .sum((d) => d.value)
-      .sort(sortFunc('value', 'desc'))
-  ) as HierarchyCircularNode<any>;
+  const complexHierarchy = hierarchy(data.flare)
+    .sum((d) => d.value)
+    .sort(sortFunc('value', 'desc')) as HierarchyCircularNode<any>;
 
   let colorBy = $state('parent');
 
   let padding = $state(3);
-  let selected = $state<HierarchyCircularNode<any>>();
+  let selected = $state.raw<HierarchyCircularNode<any>>(complexHierarchy);
   let context = $state<ChartContextValue>(null!);
 
   $effect(() => {
@@ -69,11 +66,6 @@
     }
     return '';
   }
-
-  onMount(() => {
-    // Set root initially.  Wait for Tree to mount so layout is set
-    selected = complexHierarchy as HierarchyCircularNode<any>; // select root initially
-  });
 </script>
 
 <div class="grid grid-flow-col gap-4 mb-4">
@@ -120,7 +112,7 @@
         <Svg onclick={() => (selected = complexHierarchy)}>
           <Pack {padding} hierarchy={complexHierarchy}>
             {#snippet children({ nodes })}
-              {#each nodes as node}
+              {#each nodes as node ([node.data.name, node.parent?.data.name].join('-'))}
                 <Group
                   x={node.x}
                   y={node.y}
@@ -141,8 +133,11 @@
                   />
                 </Group>
               {/each}
-              <!-- Show text on top of all circles -->
-              {#each selected ? (selected.children ?? [selected]) : [] as node (node.data.name + node.depth)}
+              {@const selectedNodes = selected
+                ? (structuredClone(selected.children) ?? [structuredClone(selected)])
+                : []}
+
+              {#each selectedNodes as node ([node.data.name, node.parent?.data.name].join('-'))}
                 {@const fontSize = 1 / context.transform.scale}
                 <g in:fade|local>
                   <text
