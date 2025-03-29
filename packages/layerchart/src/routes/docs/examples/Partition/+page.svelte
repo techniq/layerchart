@@ -33,7 +33,6 @@
   import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { untrack } from 'svelte';
 
   let { data } = $props();
 
@@ -46,9 +45,7 @@
 
   let isFiltered = $state(false);
 
-  let selectedCarNode = $state<HierarchyRectangularNode<any>>(
-    hierarchy(getGrouped()).count() as any
-  );
+  let selectedCarNode = $state<HierarchyRectangularNode<any>>();
 
   function getGrouped(selected?: HierarchyRectangularNode<any>) {
     return rollup(
@@ -74,15 +71,17 @@
     );
   }
 
-  let groupedHierarchy = $derived(hierarchy(getGrouped(selectedCarNode)).count());
-
   let colorBy = $state('children');
+  let horizontalNodes = $state<HierarchyRectangularNode<any>[]>([]);
+  let verticalNodes = $state<HierarchyRectangularNode<any>[]>([]);
+  let carNodes = $state<HierarchyRectangularNode<any>[]>([]);
+  let groupedHierarchy = $derived(hierarchy(getGrouped()).count());
 
   let padding = $state(0);
   let round = $state(false);
   let fullSizeLeafNodes = $state(false);
-  let selectedHorizontal = $state(horizontalHierarchy); // select root initially
-  let selectedVertical = $state(verticalHierarchy); // select root initially
+  let selectedHorizontal = $state<HierarchyRectangularNode<any>>(); // select root initially
+  let selectedVertical = $state<HierarchyRectangularNode<any>>(); // select root initially
 
   const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
   // filter out hard to see yellow and green
@@ -107,6 +106,23 @@
     }
     return '';
   }
+
+  const horizontalBreadcrumbItems = $derived(
+    selectedHorizontal
+      ? selectedHorizontal?.ancestors().reverse()
+      : (horizontalNodes[0]?.ancestors().reverse() ?? [])
+  );
+  const verticalBreadcrumbItems = $derived(
+    selectedVertical
+      ? selectedVertical?.ancestors().reverse()
+      : (verticalNodes[0]?.ancestors().reverse() ?? [])
+  );
+
+  const carNodeBreadcrumbItems = $derived(
+    selectedCarNode
+      ? selectedCarNode?.ancestors().reverse()
+      : (carNodes[0]?.ancestors().reverse() ?? [])
+  );
 </script>
 
 <div class="grid grid-flow-col gap-4 mb-4">
@@ -139,7 +155,7 @@
 <h2>Horizontal</h2>
 
 <Preview data={horizontalHierarchy}>
-  <Breadcrumb items={selectedHorizontal?.ancestors().reverse() ?? []}>
+  <Breadcrumb items={horizontalBreadcrumbItems}>
     <Button
       slot="item"
       let:item
@@ -167,7 +183,12 @@
           >
             {#snippet children({ xScale, yScale })}
               <ChartClipPath>
-                <Partition {padding} {round} hierarchy={horizontalHierarchy}>
+                <Partition
+                  {padding}
+                  {round}
+                  hierarchy={horizontalHierarchy}
+                  bind:nodes={horizontalNodes}
+                >
                   {#snippet children({ nodes })}
                     {#each nodes as node}
                       {@const nodeWidth =
@@ -229,7 +250,7 @@
 <h2>Vertical</h2>
 
 <Preview data={verticalHierarchy}>
-  <Breadcrumb items={selectedVertical?.ancestors().reverse() ?? []}>
+  <Breadcrumb items={verticalBreadcrumbItems}>
     <Button
       slot="item"
       let:item
@@ -257,7 +278,13 @@
           >
             {#snippet children({ xScale, yScale })}
               <ChartClipPath>
-                <Partition hierarchy={verticalHierarchy} orientation="vertical" {padding} {round}>
+                <Partition
+                  hierarchy={verticalHierarchy}
+                  bind:nodes={verticalNodes}
+                  orientation="vertical"
+                  {padding}
+                  {round}
+                >
                   {#snippet children({ nodes })}
                     {#each nodes as node}
                       {@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
@@ -329,7 +356,7 @@
 </div>
 
 <Preview data={groupedHierarchy}>
-  <Breadcrumb items={selectedCarNode?.ancestors().reverse() ?? []}>
+  <Breadcrumb items={carNodeBreadcrumbItems}>
     <Button
       slot="item"
       let:item
@@ -351,7 +378,7 @@
         >
           {#snippet children({ xScale, yScale })}
             <ChartClipPath>
-              <Partition hierarchy={groupedHierarchy} {padding} {round}>
+              <Partition bind:nodes={carNodes} hierarchy={groupedHierarchy} {padding} {round}>
                 {#snippet children({ nodes })}
                   {#each nodes as node (node
                     .ancestors()

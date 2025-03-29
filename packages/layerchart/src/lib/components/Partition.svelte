@@ -31,7 +31,14 @@
      */
     round?: boolean;
 
-    hierarchy?: HierarchyNode<T>;
+    hierarchy: HierarchyNode<T>;
+
+    /**
+     * A bindable reference to the descendants of the partition layout.
+     *
+     * @bindable
+     */
+    nodes?: HierarchyRectangularNode<T>[];
 
     children?: Snippet<[{ nodes: HierarchyRectangularNode<T>[] }]>;
   };
@@ -47,11 +54,13 @@
     orientation = 'horizontal',
     hierarchy,
     children,
+    nodes = $bindable(),
   }: PartitionProps<T> = $props();
 
   const ctx = getChartContext();
 
-  const partition = $derived.by(() => {
+  const partitionData = $derived.by(() => {
+    const h = hierarchy.copy();
     const _partition = d3Partition<T>().size(
       size ?? (orientation === 'horizontal' ? [ctx.height, ctx.width] : [ctx.width, ctx.height])
     );
@@ -64,8 +73,12 @@
       _partition.round(round);
     }
 
-    return hierarchy ? _partition(hierarchy) : [];
+    return _partition(h).descendants();
+  });
+
+  $effect.pre(() => {
+    nodes = partitionData;
   });
 </script>
 
-{@render children?.({ nodes: 'descendants' in partition ? partition.descendants() : [] })}
+{@render children?.({ nodes: partitionData })}
