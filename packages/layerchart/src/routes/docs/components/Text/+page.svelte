@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Chart, Svg, Text } from 'layerchart';
+  import Canvas from 'layerchart/components/layout/Canvas.svelte';
   import type { TruncateTextOptions } from 'layerchart/utils/string.js';
   import type { ComponentProps } from 'svelte';
   import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
@@ -8,7 +9,7 @@
     x: 0,
     y: 0,
     value: 'This is really long text',
-    width: 300,
+    width: 118,
     textAnchor: 'start' as ComponentProps<typeof Text>['textAnchor'],
     verticalAnchor: 'start' as ComponentProps<typeof Text>['verticalAnchor'],
     lineHeight: '1em',
@@ -22,6 +23,7 @@
 
   const truncateOptions: TruncateTextOptions = $state({
     maxChars: 22,
+    minChars: 0,
     ellipsis: '...',
     position: 'end',
   });
@@ -85,6 +87,7 @@
         min={0}
         max={config.value.length}
       />
+
       <TextField label="ellipsis" bind:value={truncateOptions.ellipsis} />
       <Field label="position" classes={{ input: 'mt-[6px] mb-1' }}>
         <ToggleGroup
@@ -103,19 +106,42 @@
   </div>
 </div>
 
-<div class="flex items-center justify-center bg-surface-100 p-4">
-  <div
-    class="h-56 border border-surface-content/10"
-    style:width="{config.resizeSvg ? config.width : 300}px"
-  >
-    <Chart>
-      <Svg>
-        <Text {...config} truncate={truncate ? truncateOptions : false} />
+<div class="grid grid-cols-2">
+  <div>
+    <h2 class="text-center">SVG</h2>
+    <div class="flex items-center justify-center bg-surface-100 p-4">
+      <div
+        class="h-56 border border-surface-content/10"
+        style:width="{config.resizeSvg ? config.width : 300}px"
+      >
+        <Chart>
+          <Svg>
+            <Text {...config} truncate={truncate ? truncateOptions : false} />
+            {#if config.showAnchor}
+              <circle cx={config.x} cy={config.y} r="2" fill="red" />
+            {/if}
+          </Svg>
+        </Chart>
+      </div>
+    </div>
+  </div>
 
-        {#if config.showAnchor}
-          <circle cx={config.x} cy={config.y} r="2" fill="red" />
-        {/if}
-      </Svg>
-    </Chart>
+  <div>
+    <h2 class="text-center">Canvas</h2>
+    <div class="flex items-center justify-center bg-surface-100 p-4">
+      <div
+        class="h-56 border border-surface-content/10"
+        style:width="{config.resizeSvg ? config.width : 300}px"
+      >
+        <Chart>
+          <Canvas>
+            <Text {...config} truncate={truncate ? truncateOptions : false} />
+            {#if config.showAnchor}
+              <circle cx={config.x} cy={config.y} r="2" fill="red" />
+            {/if}
+          </Canvas>
+        </Chart>
+      </div>
+    </div>
   </div>
 </div>

@@ -187,39 +187,35 @@
     ...restProps
   }: TextProps = $props();
 
-  let style: CSSStyleDeclaration | undefined = undefined; // TODO: read from DOM?
+  let style = $state<CSSStyleDeclaration>(); // TODO: read from DOM?
+
+  const defaultTruncateOptions: TruncateTextOptions = $derived({
+    maxChars: undefined,
+    position: 'end',
+    maxWidth: width,
+  });
+
   const truncateConfig: TruncateTextOptions | boolean = $derived.by(() => {
     if (typeof truncate === 'boolean') {
-      if (truncate === true) {
-        return {
-          maxChars: undefined,
-          position: 'end',
-          style,
-          maxWidth: width,
-        };
-      } else {
-        return false;
-      }
+      if (truncate) return defaultTruncateOptions;
+      return false;
     }
     return {
-      position: 'end',
-      maxWidth: width,
-      style,
-      maxChars: undefined,
+      ...defaultTruncateOptions,
       ...truncate,
     };
   });
 
   const rawText = $derived(value != null ? value.toString() : '');
 
-  const truncatedText = $derived.by(() => {
+  const textValue = $derived.by(() => {
     if (!truncateConfig) return rawText;
     return truncateText(rawText, truncateConfig);
   });
 
   const renderCtx = getRenderContext();
 
-  const words = $derived(truncatedText ? truncatedText.split(/(?:(?!\u00A0+)\s+)/) : []);
+  const words = $derived(textValue ? textValue.split(/(?:(?!\u00A0+)\s+)/) : []);
 
   const wordsWithWidth = $derived(
     words.map((word) => ({
@@ -323,16 +319,17 @@
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
   ) {
-    wordsByLines.forEach((line, index) => {
+    const effectiveLineHeight = getPixelValue(lineHeight);
+    const baseY = getPixelValue(motionY.current) + getPixelValue(dy) + getPixelValue(startDy);
+
+    for (let index = 0; index < wordsByLines.length; index++) {
+      const line = wordsByLines[index];
       renderText(
         ctx,
         line.words.join(' '),
         {
           x: getPixelValue(motionX.current) + getPixelValue(dx),
-          y:
-            getPixelValue(motionY.current) +
-            getPixelValue(dy) +
-            (index === 0 ? startDy : getPixelValue(lineHeight)),
+          y: baseY + index * effectiveLineHeight,
         },
         styleOverrides
           ? merge({ styles: { strokeWidth } }, styleOverrides)
@@ -349,7 +346,7 @@
               classes: cls(fill === undefined && 'fill-surface-content', className),
             }
       );
-    });
+    }
   }
 
   // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
@@ -369,6 +366,7 @@
         strokeWidth,
         opacity,
         className,
+        truncateConfig,
       ],
     });
   }
@@ -386,6 +384,7 @@
   >
     {#if isValidXOrY(x) && isValidXOrY(y)}
       <text
+        bind:this={ref}
         x={motionX.current}
         y={motionY.current}
         {transform}

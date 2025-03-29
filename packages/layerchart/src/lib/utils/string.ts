@@ -134,13 +134,15 @@ export type TruncateTextOptions = {
 };
 
 /**
- * Truncates a string to fit within a maximum pixel width or character count, adding an ellipsis.
- * returns the truncated string with an ellipsis if needed, or the original text if measurement
- * fails.
+ * Truncates a string to fit within a specified pixel width or character count.
+ * If the string's width exceeds the maxWidth, it will be truncated. If the character
+ * count exceeds maxChars, it will also be truncated.
+ *
+ * The ellipsis can be placed at the start, middle, or end of the string.
  */
 export function truncateText(
   text: string,
-  { position = 'end', ellipsis = '…', maxWidth, style, maxChars }: TruncateTextOptions = {}
+  { position = 'end', ellipsis = DEFAULT_ELLIPSIS, maxWidth, style, maxChars }: TruncateTextOptions
 ): string {
   if (!text) return '';
 
@@ -181,6 +183,9 @@ export function truncateText(
       const halfWidth = availableWidth / 2;
       let left = '';
       let right = '';
+      let bestLeft = '';
+      let bestRight = '';
+
       for (let i = 0, j = workingText.length - 1; i < workingText.length && j >= 0; i++, j--) {
         const leftTest = workingText.slice(0, i + 1);
         const rightTest = workingText.slice(j);
@@ -190,12 +195,18 @@ export function truncateText(
         if (leftWidth !== null && leftWidth <= halfWidth) left = leftTest;
         if (rightWidth !== null && rightWidth <= halfWidth) right = rightTest;
 
-        const combinedWidth = getStringWidth(left + right, style);
-        if (combinedWidth !== null && combinedWidth + ellipsisWidth <= maxWidth) break;
+        const combinedWidth = getStringWidth(left + ellipsis + right, style);
+        if (combinedWidth !== null && combinedWidth <= maxWidth) {
+          bestLeft = left; // longest valid left
+          bestRight = right; // longest valid right
+        } else {
+          // we've exceed maxWidth, so break out
+          break;
+        }
       }
-      return left + ellipsis + right;
+      return bestLeft + ellipsis + bestRight;
     } else {
-      let truncated = workingText.slice(0, -ellipsis.length); // remove trailing ellipsis if present
+      let truncated = workingText.slice(0, -ellipsis.length);
       let truncatedWidth = getStringWidth(truncated + ellipsis, style);
       while (truncatedWidth !== null && truncatedWidth > maxWidth && truncated.length > 0) {
         truncated = truncated.slice(0, -1);
