@@ -34,14 +34,6 @@
   let selected = $state.raw<HierarchyCircularNode<any>>();
   let context = $state<ChartContextValue>(null!);
 
-  // meh just experimenting but this works
-  watchOnce(
-    () => nodes,
-    () => {
-      selected = nodes[0];
-    }
-  );
-
   $effect(() => {
     if (context?.transform && selected) {
       const node = findSelectedNodeInHierarchy(selected, nodes);
@@ -104,7 +96,9 @@
 <h2>General</h2>
 
 <Preview data={complexHierarchy.data}>
-  <Breadcrumb items={selected?.ancestors().reverse() ?? []}>
+  <Breadcrumb
+    items={selected ? selected?.ancestors().reverse() : (nodes[0]?.ancestors().reverse() ?? [])}
+  >
     <Button
       slot="item"
       let:item
@@ -150,7 +144,11 @@
               />
             </Group>
           {/each}
-          {@const selectedNodes = selected ? (selected.children ?? [selected]) : []}
+          {@const selectedNodes = selected
+            ? (selected.children ?? [selected])
+            : nodes[0]
+              ? (nodes[0].children ?? [nodes[0]])
+              : []}
 
           {#each selectedNodes as node ([node.data.name, node.parent?.data.name].join('-'))}
             {@const trueNode = findSelectedNodeInHierarchy(node, nodes)}
