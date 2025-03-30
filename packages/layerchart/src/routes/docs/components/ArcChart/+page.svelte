@@ -27,8 +27,8 @@
     { key: 'stand', value: 10, maxValue: 12, color: '#22d3ee' },
   ];
 
-  let renderContext: 'svg' | 'canvas' = $state('canvas');
-  let debug = $state(true);
+  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
