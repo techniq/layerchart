@@ -1,7 +1,7 @@
 <script lang="ts">
   import { forceX, forceY, forceManyBody, forceCollide } from 'd3-force';
 
-  import { Canvas, Chart, ForceSimulation, Points, Svg } from 'layerchart';
+  import { Canvas, Chart, Circle, ForceSimulation, Points, Svg } from 'layerchart';
   import { Field, RangeField, Switch, TextField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -113,28 +113,24 @@
           alphaTarget={1}
           velocityDecay={0.2}
         >
-          {#snippet children({ nodes })}
+          {#snippet children({ nodes, simulation })}
             <Canvas>
+              <!-- <Circle
+                cx={nodes?.[0]?.x}
+                cy={nodes?.[0]?.y}
+                r={nodes?.[0]?.rTarget}
+                class="fill-primary/10"
+              /> -->
               <Points data={nodes.slice(1)} r={radius} class="fill-primary" />
             </Canvas>
 
             <Svg>
-              <!-- {#each nodes.slice(1) as node, i (i)}
-            <Circle
-              cx={node.x}
-              cy={node.y}
-              r={node.rTarget}
-              class="fill-primary"
-              spring={transition}
-            />
-          {/each} -->
-
               <rect
                 width={context.width}
                 height={context.height}
                 onpointermove={(e) => {
-                  mouseNode.xTarget = e.offsetX;
-                  mouseNode.yTarget = e.offsetY;
+                  simulation.nodes()[0].fx = e.offsetX;
+                  simulation.nodes()[0].fy = e.offsetY;
                 }}
                 class="fill-transparent"
               />
