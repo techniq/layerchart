@@ -9,7 +9,7 @@
     x: 0,
     y: 0,
     value: 'This is really long text',
-    width: 118,
+    width: 300,
     textAnchor: 'start' as ComponentProps<typeof Text>['textAnchor'],
     verticalAnchor: 'start' as ComponentProps<typeof Text>['verticalAnchor'],
     lineHeight: '1em',
