@@ -236,7 +236,7 @@
       .endAngle(endAngleProp ?? degreesToRadians(scale(motionEndAngle.current)))
       .cornerRadius(cornerRadius)
       .padAngle(padAngle)
-  ) as Function;
+  );
 
   const trackArc = $derived(
     d3arc()
@@ -246,7 +246,7 @@
       .endAngle(endAngle)
       .cornerRadius(cornerRadius)
       .padAngle(padAngle)
-  ) as Function;
+  );
 
   // @ts-expect-error - todo - fix type
   const trackArcCentroid = $derived(trackArc.centroid()) as [number, number];
