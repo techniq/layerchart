@@ -37,7 +37,6 @@
               collide: collideForce.radius(r),
             }}
             static
-            cloneData
           >
             {#snippet children({ nodes })}
               {#each nodes as node}

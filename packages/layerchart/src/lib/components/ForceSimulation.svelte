@@ -65,10 +65,10 @@
     static?: boolean;
 
     /**
-     * Clone data since simulation mutates original
+     * Clone nodes since simulation mutates original
      * @default false
      */
-    cloneData?: boolean;
+    cloneNodes?: boolean;
 
     /**
      * Callback function triggered when simulation starts
@@ -115,7 +115,7 @@
     onTick: onTickProp = () => {},
     onEnd: onEndProp = () => {},
     children,
-    cloneData = false,
+    cloneNodes = false,
   }: ForceSimulationProps = $props();
 
   const ctx = getChartContext();
@@ -232,7 +232,7 @@
   }
 
   function pushNodesToSimulation(nodes: any[]) {
-    simulation.nodes(cloneData ? structuredClone(nodes) : nodes);
+    simulation.nodes(nodes);
   }
 
   function pushForcesToSimulation(forces: Forces) {
@@ -270,7 +270,7 @@
   // MARK: Pull State
 
   function pullNodesFromSimulation() {
-    nodes = structuredClone(simulation.nodes());
+    nodes = cloneNodes ? structuredClone(simulation.nodes()) : simulation.nodes();
   }
 
   function pullAlphaFromSimulation() {

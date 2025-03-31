@@ -34,6 +34,7 @@
               y: yForce,
             }}
             {links}
+            cloneNodes
           >
             {#snippet children({ nodes, linkPositions })}
               {#each links as link, i}
