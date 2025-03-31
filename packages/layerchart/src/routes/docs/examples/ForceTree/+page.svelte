@@ -17,8 +17,6 @@
   const chargeForce = forceManyBody().strength(-50);
   const xForce = forceX();
   const yForce = forceY();
-
-  console.log(nodes);
 </script>
 
 <h1>Examples</h1>

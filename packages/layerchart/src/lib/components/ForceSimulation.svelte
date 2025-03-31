@@ -393,4 +393,4 @@
   });
 </script>
 
-{@render children?.({ nodes, simulation, linkPositions })}
+{@render children?.({ nodes: $state.snapshot(nodes), simulation, linkPositions })}
