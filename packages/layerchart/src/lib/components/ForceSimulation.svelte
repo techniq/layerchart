@@ -237,7 +237,7 @@
 
   function pushForcesToSimulation(forces: Forces) {
     // Evict obsolete forces:
-    const names = Object.keys(forces);
+    const names = Object.keys(previousForces);
     for (const name of names) {
       if (!(name in forces)) {
         simulation.force(name, null);

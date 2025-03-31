@@ -8,13 +8,14 @@
 
   import { rasterizeText, type RasterizeTextOptions } from '$lib/utils/string.js';
   import type { ChartResizeDetail } from '$lib/components/Chart.svelte';
+
   const collisionStrength = 0.01;
 
   let width = $state(960);
   let height = $state(500);
   let radius = $state(2);
 
-  let hasCollideForce = $state(false); // TODO: Determine why unable to remove if enabled true by default
+  let hasCollideForce = $state(true);
   let hasChargeForce = $state(false);
   let transition = $state(false);
 
