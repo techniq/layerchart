@@ -15,6 +15,8 @@
       i: number
     ) => ComponentProps<typeof Highlight>;
     getGridProps: () => ComponentProps<typeof Grid>;
+    getAxisProps: (axisDirection?: 'x' | 'y') => ComponentProps<typeof Axis>;
+    getRuleProps: () => ComponentProps<typeof Rule>;
   };
 
   /**
@@ -95,8 +97,7 @@
   import { asAny } from '$lib/utils/types.js';
   import Spline from '../Spline.svelte';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
-  import { createHighlightKey } from './utils.svelte.js';
-  import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
+  import { createSeriesManager } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
 
   let {
@@ -105,7 +106,7 @@
     y,
     xDomain,
     radial = false,
-    series = [{ key: 'default', value: y, color: 'var(--color-primary)' }],
+    series: seriesProp,
     seriesLayout = 'overlap',
     axis = true,
     brush = false,
@@ -133,25 +134,22 @@
     ...restProps
   }: AreaChartProps<TData> = $props();
 
-  const isDefaultSeries = $derived(series.length === 1 && series[0].key === 'default');
+  const series = $derived(
+    seriesProp === undefined
+      ? [{ key: 'default', value: y, color: 'var(--color-primary)' }]
+      : seriesProp
+  );
+
+  const seriesState = createSeriesManager(() => series);
+
   const stackSeries = $derived(seriesLayout.startsWith('stack'));
 
-  const selectedSeries = createSelectionState();
-
-  const visibleSeries = $derived(
-    series.filter((s) => selectedSeries.isEmpty() || selectedSeries.isSelected(s.key))
-  );
-
-  const allSeriesData = $derived(
-    visibleSeries
-      .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
-      .filter((d) => d) as Array<TData & { stackData?: any }>
-  );
-
   const chartData = $derived.by(() => {
-    let _chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<TData>;
+    let _chartData = (
+      seriesState.allSeriesData.length ? seriesState.allSeriesData : chartDataArray(data)
+    ) as Array<TData>;
     if (stackSeries) {
-      const seriesKeys = visibleSeries.map((s) => s.key);
+      const seriesKeys = seriesState.visibleSeries.map((s) => s.key);
       const offset =
         seriesLayout === 'stackExpand'
           ? stackOffsetExpand
@@ -183,14 +181,19 @@
     xScaleProp ?? (accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear())
   );
 
-  const highlightKey = createHighlightKey<TData, typeof Area>();
-
   function getAreaProps(s: SeriesData<TData, typeof Area>, i: number): ComponentProps<typeof Area> {
     const lineProps: ComponentProps<typeof Spline> = {
       ...props.line,
       ...(typeof props.area?.line === 'object' ? props.area.line : null),
       ...(typeof s.props?.line === 'object' ? s.props.line : null),
     };
+
+    const highlightClass =
+      seriesState.visibleSeries.length > 1 &&
+      seriesState.highlightKey.current &&
+      seriesState.highlightKey.current !== s.key
+        ? 'opacity-10'
+        : '';
 
     return {
       data: s.data,
@@ -207,24 +210,14 @@
       class: cls(
         'transition-opacity',
         // Checking `visibleSeries.length > 1` fixes re-animated tweened areas on hover
-        visibleSeries.length > 1 &&
-          highlightKey.current &&
-          highlightKey.current !== s.key &&
-          'opacity-10',
+        highlightClass,
         props.area?.class,
         s.props?.class
       ),
       line: {
         stroke: s.color,
         ...lineProps,
-        class: cls(
-          'transition-opacity',
-          visibleSeries.length > 1 &&
-            highlightKey.current &&
-            highlightKey.current !== s.key &&
-            'opacity-10',
-          lineProps.class
-        ),
+        class: cls('transition-opacity', highlightClass, lineProps.class),
       },
     };
   }
@@ -245,7 +238,9 @@
       ...(typeof points === 'object' ? points : null),
       class: cls(
         'stroke-surface-200 transition-opacity',
-        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
+        seriesState.highlightKey.current &&
+          seriesState.highlightKey.current !== s.key &&
+          'opacity-10',
         props.points?.class,
         typeof points === 'object' && points.class
       ),
@@ -271,7 +266,9 @@
       ...(typeof labels === 'object' ? labels : null),
       class: cls(
         'stroke-surface-200 transition-opacity',
-        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
+        seriesState.highlightKey.current &&
+          seriesState.highlightKey.current !== s.key &&
+          'opacity-10',
         props.labels?.class,
         typeof labels === 'object' && labels.class
       ),
@@ -299,8 +296,8 @@
       onPointClick: onPointClick
         ? (e, detail) => onPointClick(e, { ...detail, series: s })
         : undefined,
-      onPointEnter: () => (highlightKey.current = s.key),
-      onPointLeave: () => (highlightKey.current = null),
+      onPointEnter: () => (seriesState.highlightKey.current = s.key),
+      onPointLeave: () => (seriesState.highlightKey.current = null),
       ...props.highlight,
       points:
         props.highlight?.points == false
@@ -310,7 +307,9 @@
               fill: s.color,
               class: cls(
                 'transition-opacity',
-                highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
+                seriesState.highlightKey.current &&
+                  seriesState.highlightKey.current !== s.key &&
+                  'opacity-10',
                 highlightPointsProps?.class
               ),
             },
@@ -319,7 +318,7 @@
 
   function getLegendProps(): ComponentProps<typeof Legend> {
     return {
-      scale: isDefaultSeries
+      scale: seriesState.isDefaultSeries
         ? undefined
         : scaleOrdinal(
             series.map((s) => s.key),
@@ -328,14 +327,15 @@
       tickFormat: (key) => series.find((s) => s.key === key)?.label ?? key,
       placement: 'bottom',
       variant: 'swatches',
-      onclick: (e, item) => selectedSeries.toggleSelected(item.value),
-      onpointerenter: (e, item) => (highlightKey.current = item.value),
-      onpointerleave: (e) => (highlightKey.current = null),
+      onclick: (e, item) => seriesState.selectedSeries.toggleSelected(item.value),
+      onpointerenter: (e, item) => (seriesState.highlightKey.current = item.value),
+      onpointerleave: (e) => (seriesState.highlightKey.current = null),
       ...props.legend,
       ...(typeof legend === 'object' ? legend : null),
       classes: {
         item: (item) =>
-          visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
+          seriesState.visibleSeries.length &&
+          !seriesState.visibleSeries.some((s) => s.key === item.value)
             ? 'opacity-50'
             : '',
         ...props.legend?.classes,
@@ -366,7 +366,7 @@
       return stackSeries;
     },
     get visibleSeries() {
-      return visibleSeries;
+      return seriesState.visibleSeries;
     },
   });
 
@@ -374,9 +374,42 @@
     if (acc) return acc;
     if (stackSeries) {
       return (d: TData) =>
-        isStackData(d) ? visibleSeries.flatMap((s, i) => d.stackData[i]) : undefined;
+        isStackData(d) ? seriesState.visibleSeries.flatMap((s, i) => d.stackData[i]) : undefined;
     }
-    return visibleSeries.map((s) => s.value ?? s.key);
+    return seriesState.visibleSeries.map((s) => s.value ?? s.key);
+  }
+
+  function getAxisProps(axisDirection?: 'x' | 'y'): ComponentProps<typeof Axis> {
+    if (axisDirection === 'y') {
+      return {
+        placement: radial ? 'radius' : 'left',
+        format: (value) => {
+          if (seriesLayout === 'stackExpand') {
+            return format(value, 'percentRound');
+          } else {
+            return format(value, undefined, { variant: 'short' });
+          }
+        },
+        ...(typeof axis === 'object' ? axis : null),
+        ...props.yAxis,
+      };
+    }
+
+    return {
+      placement: radial ? 'angle' : 'bottom',
+      format: (value) => format(value, undefined, { variant: 'short' }),
+      ...(typeof axis === 'object' ? axis : null),
+      ...props.xAxis,
+    };
+  }
+
+  function getRuleProps(): ComponentProps<typeof Rule> {
+    return {
+      x: 0,
+      y: 0,
+      ...(typeof rule === 'object' ? rule : null),
+      ...props.rule,
+    };
   }
 </script>
 
@@ -418,15 +451,17 @@
     {@const snippetProps = {
       context,
       series,
-      visibleSeries,
+      visibleSeries: seriesState.visibleSeries,
       getAreaProps,
       getLabelsProps,
       getPointsProps,
       getHighlightProps,
       getLegendProps,
       getGridProps,
-      highlightKey: highlightKey.current,
-      setHighlightKey: highlightKey.set,
+      getAxisProps,
+      getRuleProps,
+      highlightKey: seriesState.highlightKey.current,
+      setHighlightKey: seriesState.highlightKey.set,
     }}
 
     {#if childrenProp}
@@ -453,7 +488,7 @@
           {#if marks}
             {@render marks(snippetProps)}
           {:else}
-            {#each visibleSeries as s, i (s.key)}
+            {#each seriesState.visibleSeries as s, i (s.key)}
               <Area {...getAreaProps(s, i)} />
             {/each}
           {/if}
@@ -462,35 +497,24 @@
         {@render aboveMarks?.(snippetProps)}
         {#if typeof axis === 'function'}
           {@render axis(snippetProps)}
+          {#if typeof rule === 'function'}
+            {@render rule(snippetProps)}
+          {:else if rule}
+            <Rule {...getRuleProps()} />
+          {/if}
         {:else if axis}
           {#if axis !== 'x'}
-            <Axis
-              placement={radial ? 'radius' : 'left'}
-              format={(value) => {
-                if (seriesLayout === 'stackExpand') {
-                  return format(value, 'percentRound');
-                } else {
-                  return format(value, undefined, { variant: 'short' });
-                }
-              }}
-              {...typeof axis === 'object' ? axis : null}
-              {...props.yAxis}
-            />
+            <Axis {...getAxisProps('y')} />
           {/if}
 
           {#if axis !== 'y'}
-            <Axis
-              placement={radial ? 'angle' : 'bottom'}
-              format={(value) => format(value, undefined, { variant: 'short' })}
-              {...typeof axis === 'object' ? axis : null}
-              {...props.xAxis}
-            />
+            <Axis {...getAxisProps('x')} />
           {/if}
 
           {#if typeof rule === 'function'}
             {@render rule(snippetProps)}
           {:else if rule}
-            <Rule x={0} y={0} {...typeof rule === 'object' ? rule : null} {...props.rule} />
+            <Rule {...getRuleProps()} />
           {/if}
         {/if}
 
@@ -499,7 +523,7 @@
           {#if typeof points === 'function'}
             {@render points(snippetProps)}
           {:else if points}
-            {#each visibleSeries as s, i (s.key)}
+            {#each seriesState.visibleSeries as s, i (s.key)}
               <Points {...getPointsProps(s, i)} />
             {/each}
           {/if}
@@ -507,7 +531,7 @@
           {#if typeof highlight === 'function'}
             {@render highlight(snippetProps)}
           {:else if highlight}
-            {#each visibleSeries as s, i (s.key)}
+            {#each seriesState.visibleSeries as s, i (s.key)}
               <Highlight {...getHighlightProps(s, i)} />
             {/each}
           {/if}
@@ -515,7 +539,7 @@
           {#if typeof labels === 'function'}
             {@render labels(snippetProps)}
           {:else if labels}
-            {#each visibleSeries as s, i (s.key)}
+            {#each seriesState.visibleSeries as s, i (s.key)}
               <Labels {...getLabelsProps(s, i)} />
             {/each}
           {/if}
@@ -546,18 +570,18 @@
                   color={p.color}
                   {format}
                   valueAlign="right"
-                  onpointerenter={() => (highlightKey.current = p.key)}
-                  onpointerleave={() => (highlightKey.current = null)}
+                  onpointerenter={() => (seriesState.highlightKey.current = p.key)}
+                  onpointerleave={() => (seriesState.highlightKey.current = null)}
                   {...props.tooltip?.item}
                 />
               {/each}
 
-              {#if stackSeries && visibleSeries.length > 1}
+              {#if stackSeries && seriesState.visibleSeries.length > 1}
                 <Tooltip.Separator {...props.tooltip?.separator} />
 
                 <Tooltip.Item
                   label="total"
-                  value={sum(visibleSeries, (s) => {
+                  value={sum(seriesState.visibleSeries, (s) => {
                     const seriesTooltipData = s.data
                       ? s.data.find((d) => context.x(d) === context.x(data))
                       : data;

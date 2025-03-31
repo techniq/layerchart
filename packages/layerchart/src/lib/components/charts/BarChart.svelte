@@ -7,6 +7,8 @@
     ) => ComponentProps<typeof Labels<TData>>;
     getGridProps: () => ComponentProps<typeof Grid>;
     getHighlightProps: () => ComponentProps<typeof Highlight>;
+    getAxisProps: (axisDirection: 'x' | 'y') => ComponentProps<typeof Axis>;
+    getRuleProps: () => ComponentProps<typeof Rule>;
   };
 
   export type BarChartPropsObjProp<TData> = Pick<
@@ -110,8 +112,7 @@
   import type { Insets } from '$lib/utils/rect.svelte.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import type { AnyScale } from '$lib/utils/scales.svelte.js';
-  import { createHighlightKey } from './utils.svelte.js';
-  import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
+  import { createSeriesManager } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
 
   let {
@@ -164,8 +165,8 @@
       : seriesProp
   );
 
+  const seriesState = createSeriesManager(() => series);
   const isVertical = $derived(orientation === 'vertical');
-  const isDefaultSeries = $derived(series.length === 1 && series[0].key === 'default');
   const stackSeries = $derived(seriesLayout.startsWith('stack'));
   const groupSeries = $derived(seriesLayout === 'group');
 
@@ -179,17 +180,11 @@
   );
   const yBaseline = $derived(isVertical ? 0 : undefined);
 
-  const selectedSeries = createSelectionState();
-
-  const visibleSeries = $derived(
-    series.filter((s) => selectedSeries.isEmpty() || selectedSeries.isSelected(s.key))
-  );
-
   const x1Scale = $derived(
     groupSeries && isVertical ? scaleBand().padding(groupPadding) : undefined
   );
   const x1Domain = $derived(
-    groupSeries && isVertical ? visibleSeries.map((s) => s.key) : undefined
+    groupSeries && isVertical ? seriesState.visibleSeries.map((s) => s.key) : undefined
   );
 
   const x1Range = $derived(
@@ -204,7 +199,7 @@
     groupSeries && !isVertical ? scaleBand().padding(groupPadding) : undefined
   );
   const y1Domain = $derived(
-    groupSeries && !isVertical ? visibleSeries.map((s) => s.key) : undefined
+    groupSeries && !isVertical ? seriesState.visibleSeries.map((s) => s.key) : undefined
   );
   const y1Range = $derived(
     groupSeries && !isVertical
@@ -218,22 +213,12 @@
     return d && typeof d === 'object' && 'stackData' in d;
   }
 
-  const allSeriesData = $derived(
-    visibleSeries
-      .flatMap((s) =>
-        s.data?.map((d) => {
-          return { seriesKey: s.key, ...d };
-        })
-      )
-      .filter((d) => d) as Array<TData & { stackData?: any }>
-  );
-
   const chartData: Array<TData & { stackData?: any }> = $derived.by(() => {
-    let _chartData = (allSeriesData.length ? allSeriesData : chartDataArray(data)) as Array<
-      TData & { stackData?: any }
-    >;
+    let _chartData = (
+      seriesState.allSeriesData.length ? seriesState.allSeriesData : chartDataArray(data)
+    ) as Array<TData & { stackData?: any }>;
     if (stackSeries) {
-      const seriesKeys = visibleSeries.map((s) => s.key);
+      const seriesKeys = seriesState.visibleSeries.map((s) => s.key);
 
       const offset =
         seriesLayout === 'stackExpand'
@@ -259,11 +244,9 @@
     return _chartData;
   });
 
-  const highlightKey = createHighlightKey();
-
   function getBarsProps(s: SeriesData<TData, typeof Bars>, i: number): ComponentProps<typeof Bars> {
     const isFirst = i == 0;
-    const isLast = i == visibleSeries.length - 1;
+    const isLast = i == seriesState.visibleSeries.length - 1;
 
     const isStackLayout = seriesLayout.startsWith('stack');
 
@@ -294,7 +277,7 @@
       y: isVertical ? valueAccessor : undefined,
       x1: isVertical && groupSeries ? (d) => s.value ?? s.key : undefined,
       y1: !isVertical && groupSeries ? (d) => s.value ?? s.key : undefined,
-      rounded: isStackLayout && i !== visibleSeries.length - 1 ? 'none' : 'edge',
+      rounded: isStackLayout && i !== seriesState.visibleSeries.length - 1 ? 'none' : 'edge',
       radius: 4,
       strokeWidth: 1,
       insets: stackInsets,
@@ -304,7 +287,9 @@
       ...s.props,
       class: cls(
         'transition-opacity',
-        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
+        seriesState.highlightKey.current &&
+          seriesState.highlightKey.current !== s.key &&
+          'opacity-10',
         props.bars?.class,
         s.props?.class
       ),
@@ -323,7 +308,9 @@
       ...(typeof labels === 'object' ? labels : null),
       class: cls(
         'stroke-surface-200 transition-opacity',
-        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
+        seriesState.highlightKey.current &&
+          seriesState.highlightKey.current !== s.key &&
+          'opacity-10',
         props.labels?.class,
         typeof labels === 'object' && labels.class
       ),
@@ -332,7 +319,7 @@
 
   function getLegendProps(): ComponentProps<typeof Legend> {
     return {
-      scale: isDefaultSeries
+      scale: seriesState.isDefaultSeries
         ? undefined
         : scaleOrdinal(
             series.map((s) => s.key),
@@ -341,14 +328,15 @@
       tickFormat: (key) => series.find((s) => s.key === key)?.label ?? key,
       placement: 'bottom',
       variant: 'swatches',
-      onclick: (e, item) => selectedSeries.toggleSelected(item.value),
-      onpointerenter: (e, item) => (highlightKey.current = item.value),
-      onpointerleave: (e) => (highlightKey.current = null),
+      onclick: (e, item) => seriesState.selectedSeries.toggleSelected(item.value),
+      onpointerenter: (e, item) => (seriesState.highlightKey.current = item.value),
+      onpointerleave: (e) => (seriesState.highlightKey.current = null),
       ...props.legend,
       ...(typeof legend === 'object' ? legend : null),
       classes: {
         item: (item) =>
-          visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
+          seriesState.visibleSeries.length &&
+          !seriesState.visibleSeries.some((s) => s.key === item.value)
             ? 'opacity-50'
             : '',
         ...props.legend?.classes,
@@ -372,6 +360,45 @@
     };
   }
 
+  function getAxisProps(axisDirection: 'x' | 'y'): ComponentProps<typeof Axis> {
+    if (axisDirection === 'y') {
+      return {
+        placement: 'left',
+
+        format: (value) => {
+          if (isVertical && seriesLayout === 'stackExpand') {
+            return format(value, 'percentRound');
+          } else {
+            return format(value, undefined, { variant: 'short' });
+          }
+        },
+        ...(typeof axis === 'object' ? axis : null),
+        ...props.yAxis,
+      };
+    }
+    return {
+      placement: 'bottom',
+      format: (value) => {
+        if (!isVertical && seriesLayout === 'stackExpand') {
+          return format(value, 'percentRound');
+        } else {
+          return format(value, undefined, { variant: 'short' });
+        }
+      },
+      ...(typeof axis === 'object' ? axis : null),
+      ...props.xAxis,
+    };
+  }
+
+  function getRuleProps(): ComponentProps<typeof Rule> {
+    return {
+      x: isVertical ? false : 0,
+      y: isVertical ? 0 : false,
+      ...(typeof rule === 'object' ? rule : null),
+      ...props.rule,
+    };
+  }
+
   if (profile) {
     console.time('BarChart render');
     onMount(() => {
@@ -388,7 +415,7 @@
       return stackSeries;
     },
     get visibleSeries() {
-      return visibleSeries;
+      return seriesState.visibleSeries;
     },
   });
 
@@ -396,9 +423,9 @@
     if (acc) return acc;
     if (stackSeries) {
       return (d: TData) =>
-        isStackData(d) ? visibleSeries.flatMap((s, i) => d.stackData[i]) : undefined;
+        isStackData(d) ? seriesState.visibleSeries.flatMap((s, i) => d.stackData[i]) : undefined;
     }
-    return visibleSeries.map((s) => s.value ?? s.key);
+    return seriesState.visibleSeries.map((s) => s.value ?? s.key);
   }
 </script>
 
@@ -437,14 +464,16 @@
     {@const snippetProps = {
       context,
       series,
-      visibleSeries,
+      visibleSeries: seriesState.visibleSeries,
       getBarsProps,
       getLabelsProps,
       getLegendProps,
       getGridProps,
       getHighlightProps,
-      highlightKey: highlightKey.current,
-      setHighlightKey: highlightKey.set,
+      getAxisProps,
+      getRuleProps,
+      highlightKey: seriesState.highlightKey.current,
+      setHighlightKey: seriesState.highlightKey.set,
     }}
     {#if childrenProp}
       {@render childrenProp(snippetProps)}
@@ -463,7 +492,7 @@
         {#if typeof marks === 'function'}
           {@render marks(snippetProps)}
         {:else}
-          {#each visibleSeries as s, i (s.key)}
+          {#each seriesState.visibleSeries as s, i (s.key)}
             <Bars {...getBarsProps(s, i)} />
           {/each}
         {/if}
@@ -472,46 +501,24 @@
 
         {#if typeof axis === 'function'}
           {@render axis(snippetProps)}
+          {#if typeof rule === 'function'}
+            {@render rule(snippetProps)}
+          {:else if rule}
+            <Rule {...getRuleProps()} />
+          {/if}
         {:else if axis}
           {#if axis !== 'x'}
-            <Axis
-              placement="left"
-              format={(value) => {
-                if (isVertical && seriesLayout === 'stackExpand') {
-                  return format(value, 'percentRound');
-                } else {
-                  return format(value, undefined, { variant: 'short' });
-                }
-              }}
-              {...typeof axis === 'object' ? axis : null}
-              {...props.yAxis}
-            />
+            <Axis {...getAxisProps('y')} />
           {/if}
 
           {#if axis !== 'y'}
-            <Axis
-              placement="bottom"
-              format={(value) => {
-                if (!isVertical && seriesLayout === 'stackExpand') {
-                  return format(value, 'percentRound');
-                } else {
-                  return format(value, undefined, { variant: 'short' });
-                }
-              }}
-              {...typeof axis === 'object' ? axis : null}
-              {...props.xAxis}
-            />
+            <Axis {...getAxisProps('x')} />
           {/if}
 
           {#if typeof rule === 'function'}
             {@render rule(snippetProps)}
           {:else if rule}
-            <Rule
-              x={isVertical ? false : 0}
-              y={isVertical ? 0 : false}
-              {...typeof rule === 'object' ? rule : null}
-              {...props.rule}
-            />
+            <Rule {...getRuleProps()} />
           {/if}
         {/if}
 
@@ -524,7 +531,7 @@
         {#if typeof labels === 'function'}
           {@render labels(snippetProps)}
         {:else if labels}
-          {#each visibleSeries as s, i (s.key)}
+          {#each seriesState.visibleSeries as s, i (s.key)}
             <Labels {...getLabelsProps(s, i)} />
           {/each}
         {/if}
@@ -554,8 +561,8 @@
                   color={p.color}
                   {format}
                   valueAlign="right"
-                  onpointerenter={() => (highlightKey.current = p.key)}
-                  onpointerleave={() => (highlightKey.current = null)}
+                  onpointerenter={() => (seriesState.highlightKey.current = p.key)}
+                  onpointerleave={() => (seriesState.highlightKey.current = null)}
                   {...props.tooltip?.item}
                 />
               {/each}
@@ -565,7 +572,7 @@
 
                 <Tooltip.Item
                   label="total"
-                  value={sum(visibleSeries, (s) => {
+                  value={sum(seriesState.visibleSeries, (s) => {
                     const seriesTooltipData = s.data
                       ? findRelatedData(s.data, data, context.x)
                       : data;

@@ -13,6 +13,8 @@
       i: number
     ) => ComponentProps<typeof Points>;
     getHighlightProps: () => ComponentProps<typeof Highlight>;
+    getAxisProps: (axisDirection: 'x' | 'y') => ComponentProps<typeof Axis>;
+    getRuleProps: () => ComponentProps<typeof Rule>;
   };
 
   export type ScatterChartPropsObjProp = Pick<
@@ -62,8 +64,7 @@
 
   import { accessor, chartDataArray, defaultChartPadding } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
-  import { createHighlightKey } from './utils.svelte.js';
-  import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
+  import { createSeriesManager } from './utils.svelte.js';
 
   let {
     data = [],
@@ -71,7 +72,7 @@
     y: yProp,
     xDomain,
     yDomain,
-    series = [{ key: 'default', data: chartDataArray(data), color: 'var(--color-primary)' }],
+    series: seriesProp,
     seriesLayout = 'overlap',
     axis = true,
     brush = false,
@@ -99,7 +100,13 @@
     ...restProps
   }: ScatterChartProps<TData> = $props();
 
-  const isDefaultSeries = $derived(series.length === 1 && series[0].key === 'default');
+  const series: SeriesData<TData, typeof Points>[] = $derived(
+    seriesProp === undefined
+      ? [{ key: 'default', data: chartDataArray(data), color: 'var(--color-primary)' }]
+      : seriesProp
+  );
+
+  const seriesState = createSeriesManager(() => series);
 
   // Default xScale based on first data's `x` value
   const xScale = $derived(
@@ -113,19 +120,11 @@
       (accessor(yProp)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear())
   );
 
-  const selectedSeries = createSelectionState();
-
-  const visibleSeries = $derived(
-    series.filter((s) => selectedSeries.isEmpty() || selectedSeries.isSelected(s.key))
-  );
-
   const chartData = $derived(
-    visibleSeries
+    seriesState.visibleSeries
       .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
       .filter((d) => d) as Array<TData>
   );
-
-  const highlightKey = createHighlightKey<TData, typeof Points>();
 
   function getPointsProps(
     s: SeriesData<TData, typeof Points>,
@@ -140,7 +139,9 @@
       ...s.props,
       class: cls(
         'transition-opacity',
-        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
+        seriesState.highlightKey.current &&
+          seriesState.highlightKey.current !== s.key &&
+          'opacity-10',
         props.points?.class,
         s.props?.class
       ),
@@ -157,7 +158,9 @@
       ...(typeof labels === 'object' ? labels : null),
       class: cls(
         'stroke-surface-200 transition-opacity',
-        highlightKey.current && highlightKey.current !== s.key && 'opacity-10',
+        seriesState.highlightKey.current &&
+          seriesState.highlightKey.current !== s.key &&
+          'opacity-10',
         props.labels?.class,
         typeof labels === 'object' && labels.class
       ),
@@ -166,7 +169,7 @@
 
   function getLegendProps(): ComponentProps<typeof Legend> {
     return {
-      scale: isDefaultSeries
+      scale: seriesState.isDefaultSeries
         ? undefined
         : scaleOrdinal(
             series.map((s) => s.key),
@@ -175,14 +178,15 @@
       tickFormat: (key) => series.find((s) => s.key === key)?.label ?? key,
       placement: 'bottom',
       variant: 'swatches',
-      onclick: (e, item) => selectedSeries.toggleSelected(item.value),
-      onpointerenter: (e, item) => (highlightKey.current = item.value),
-      onpointerleave: (e) => (highlightKey.current = null),
+      onclick: (e, item) => seriesState.selectedSeries.toggleSelected(item.value),
+      onpointerenter: (e, item) => (seriesState.highlightKey.current = item.value),
+      onpointerleave: (e) => (seriesState.highlightKey.current = null),
       ...props.legend,
       ...(typeof legend === 'object' ? legend : null),
       classes: {
         item: (item) =>
-          visibleSeries.length && !visibleSeries.some((s) => s.key === item.value)
+          seriesState.visibleSeries.length &&
+          !seriesState.visibleSeries.some((s) => s.key === item.value)
             ? 'opacity-50'
             : '',
         ...props.legend?.classes,
@@ -215,6 +219,32 @@
         fill: activeSeries?.color,
         ...(typeof props.highlight?.points === 'object' ? props.highlight.points : null),
       },
+    };
+  }
+
+  function getAxisProps(axisDirection: 'x' | 'y'): ComponentProps<typeof Axis> {
+    if (axisDirection === 'y') {
+      return {
+        placement: 'left',
+        format: (value) => format(value, undefined, { variant: 'short' }),
+        ...(typeof axis === 'object' ? axis : null),
+        ...props.yAxis,
+      };
+    }
+    return {
+      placement: 'bottom',
+      format: (value) => format(value, undefined, { variant: 'short' }),
+      ...(typeof axis === 'object' ? axis : null),
+      ...props.xAxis,
+    };
+  }
+
+  function getRuleProps(): ComponentProps<typeof Rule> {
+    return {
+      x: 0,
+      y: 0,
+      ...(typeof rule === 'object' ? rule : null),
+      ...props.rule,
     };
   }
 
@@ -268,13 +298,15 @@
     {@const snippetProps = {
       context,
       series,
-      visibleSeries,
+      visibleSeries: seriesState.visibleSeries,
       getLabelsProps,
       getPointsProps,
       getLegendProps,
       getHighlightProps,
-      highlightKey: highlightKey.current,
-      setHighlightKey: highlightKey.set,
+      getAxisProps,
+      getRuleProps,
+      highlightKey: seriesState.highlightKey.current,
+      setHighlightKey: seriesState.highlightKey.set,
     }}
 
     {#if childrenProp}
@@ -299,7 +331,7 @@
           {#if typeof marks === 'function'}
             {@render marks(snippetProps)}
           {:else}
-            {#each visibleSeries as s, i (s.key)}
+            {#each seriesState.visibleSeries as s, i (s.key)}
               <Points {...getPointsProps(s, i)} />
             {/each}
           {/if}
@@ -309,29 +341,24 @@
 
         {#if typeof axis === 'function'}
           {@render axis(snippetProps)}
+          {#if typeof rule === 'function'}
+            {@render rule(snippetProps)}
+          {:else if rule}
+            <Rule {...getRuleProps()} />
+          {/if}
         {:else if axis}
           {#if axis !== 'x'}
-            <Axis
-              placement="left"
-              format={(value) => format(value, undefined, { variant: 'short' })}
-              {...typeof axis === 'object' ? axis : null}
-              {...props.yAxis}
-            />
+            <Axis {...getAxisProps('y')} />
           {/if}
 
           {#if axis !== 'y'}
-            <Axis
-              placement="bottom"
-              format={(value) => format(value, undefined, { variant: 'short' })}
-              {...typeof axis === 'object' ? axis : null}
-              {...props.xAxis}
-            />
+            <Axis {...getAxisProps('x')} />
           {/if}
 
           {#if typeof rule === 'function'}
             {@render rule(snippetProps)}
           {:else if rule}
-            <Rule x={0} y={0} {...typeof rule === 'object' ? rule : null} {...props.rule} />
+            <Rule {...getRuleProps()} />
           {/if}
         {/if}
 
@@ -346,7 +373,7 @@
           {#if typeof labels === 'function'}
             {@render labels(snippetProps)}
           {:else if labels}
-            {#each visibleSeries as s, i (s.key)}
+            {#each seriesState.visibleSeries as s, i (s.key)}
               <Labels {...getLabelsProps(s, i)} />
             {/each}
           {/if}
@@ -378,16 +405,18 @@
                 label={typeof context.config.x === 'string' ? context.config.x : 'x'}
                 value={context.x(data)}
                 {format}
-                onpointerenter={() => (highlightKey.current = activeSeries?.key ?? null)}
-                onpointerleave={() => (highlightKey.current = null)}
+                onpointerenter={() =>
+                  (seriesState.highlightKey.current = activeSeries?.key ?? null)}
+                onpointerleave={() => (seriesState.highlightKey.current = null)}
                 {...props.tooltip?.item}
               />
               <Tooltip.Item
                 label={typeof context.config.y === 'string' ? context.config.y : 'y'}
                 value={context.y(data)}
                 {format}
-                onpointerenter={() => (highlightKey.current = activeSeries?.key ?? null)}
-                onpointerleave={() => (highlightKey.current = null)}
+                onpointerenter={() =>
+                  (seriesState.highlightKey.current = activeSeries?.key ?? null)}
+                onpointerleave={() => (seriesState.highlightKey.current = null)}
                 {...props.tooltip?.item}
               />
               {#if context.config.r}
@@ -395,8 +424,9 @@
                   label={typeof context.config.r === 'string' ? context.config.r : 'r'}
                   value={context.r(data)}
                   {format}
-                  onpointerenter={() => (highlightKey.current = activeSeries?.key ?? null)}
-                  onpointerleave={() => (highlightKey.current = null)}
+                  onpointerenter={() =>
+                    (seriesState.highlightKey.current = activeSeries?.key ?? null)}
+                  onpointerleave={() => (seriesState.highlightKey.current = null)}
                   {...props.tooltip?.item}
                 />
               {/if}

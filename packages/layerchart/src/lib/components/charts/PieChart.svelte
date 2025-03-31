@@ -212,7 +212,7 @@
     placement = 'center',
     maxValue,
     center = placement === 'center',
-    series = [{ key: 'default', value: value }],
+    series: seriesProp,
     legend = false,
     onArcClick = () => {},
     // TODO: Not usable with manual tooltip / arc path.  Use `onArcClick`?
@@ -234,6 +234,10 @@
     context = $bindable(),
     ...restProps
   }: PieChartProps<TData> = $props();
+
+  const series = $derived(
+    seriesProp === undefined ? [{ key: 'default', value: value }] : seriesProp
+  );
 
   const keyAccessor = $derived(accessor(key));
   const labelAccessor = $derived(accessor(label));
