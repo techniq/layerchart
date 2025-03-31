@@ -270,7 +270,7 @@
   // MARK: Pull State
 
   function pullNodesFromSimulation() {
-    nodes = simulation.nodes();
+    nodes = structuredClone(simulation.nodes());
   }
 
   function pullAlphaFromSimulation() {
@@ -393,4 +393,4 @@
   });
 </script>
 
-{@render children?.({ nodes: $state.snapshot(nodes), simulation, linkPositions })}
+{@render children?.({ nodes: nodes, simulation, linkPositions })}
