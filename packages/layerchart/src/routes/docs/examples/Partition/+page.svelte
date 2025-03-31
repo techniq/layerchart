@@ -384,16 +384,16 @@
                     .ancestors()
                     .map((n) => n.data[0])
                     .join('_'))}
-                    <Group
-                      x={xScale(node.y0)}
-                      y={yScale(node.x0)}
-                      onclick={() => (selectedCarNode = node)}
-                      motion={{ type: 'tween', delay: 600 }}
-                    >
-                      {@const nodeWidth = xScale(node.y1) - xScale(node.y0)}
-                      {@const nodeHeight = yScale(node.x1) - yScale(node.x0)}
-                      {@const nodeColor = getNodeColor(node, colorBy)}
-                      <g in:fade={{ duration: 600, delay: 1200 }} out:fade={{ duration: 600 }}>
+                    <g in:fade={{ duration: 600, delay: 1200 }} out:fade={{ duration: 600 }}>
+                      <Group
+                        x={xScale(node.y0)}
+                        y={yScale(node.x0)}
+                        onclick={() => (selectedCarNode = node)}
+                        motion={{ type: 'tween', delay: 600 }}
+                      >
+                        {@const nodeWidth = xScale(node.y1) - xScale(node.y0)}
+                        {@const nodeHeight = yScale(node.x1) - yScale(node.x0)}
+                        {@const nodeColor = getNodeColor(node, colorBy)}
                         <Rect
                           width={nodeWidth}
                           height={nodeHeight}
@@ -431,8 +431,8 @@
                             {/if}
                           </text>
                         </RectClipPath>
-                      </g>
-                    </Group>
+                      </Group>
+                    </g>
                   {/each}
                 {/snippet}
               </Partition>
