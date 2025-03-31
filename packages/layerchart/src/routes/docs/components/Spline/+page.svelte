@@ -58,7 +58,7 @@
 
     <Field label="Motion" classes={{ input: 'mt-1 mb-[6px]' }}>
       <ToggleGroup bind:value={motion} variant="outline" size="sm">
-        <ToggleOption value="tweened">tweened</ToggleOption>
+        <ToggleOption value="tween">tween</ToggleOption>
         <ToggleOption value="draw">draw</ToggleOption>
         <ToggleOption value="none">none</ToggleOption>
       </ToggleGroup>
