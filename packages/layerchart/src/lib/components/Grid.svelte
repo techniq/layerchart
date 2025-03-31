@@ -105,7 +105,7 @@
     x = false,
     y = false,
     xTicks,
-    yTicks = !isScaleBand(ctx.yScale) ? 4 : undefined,
+    yTicks: yTicksProp,
     bandAlign = 'center',
     radialY = 'circle',
     motion,
@@ -116,6 +116,8 @@
     ref = $bindable(),
     ...restProps
   }: GridProps = $props();
+
+  const yTicks = $derived((yTicksProp ?? !isScaleBand(ctx.yScale)) ? 4 : undefined);
 
   const tweenConfig = $derived(extractTweenConfig(motion));
 
@@ -160,10 +162,6 @@
     <g in:transitionIn={transitionInParams} class={layerClass('grid-x')}>
       {#each xTickVals as x (x)}
         {#if ctx.radial}
-          <!--
-			NOTE: this has xOffset and spring being passed, but this component/the underlying
-		   elements don't accept that prop?
-		   -->
           <Spline
             data={yTickVals.map((y) => ({ x, y }))}
             x="x"
@@ -172,7 +170,7 @@
             motion={tweenConfig}
             {...splineProps}
             class={cls(
-              layerClass('grid-x-line'),
+              layerClass('grid-x-radial-line'),
               'stroke-surface-content/10',
               classes.line,
               splineProps?.class
@@ -223,17 +221,13 @@
               {motion}
               {...splineProps}
               class={cls(
-                layerClass('grid-y-circle'),
+                layerClass('grid-y-radial-circle'),
                 'fill-none stroke-surface-content/10',
                 classes.line,
                 splineProps?.class
               )}
             />
           {:else}
-            <!--
-		 	NOTE: this has yOffset and spring being passed, but this component/the underlying
-		   elements don't accept that prop?
-		   -->
             <Spline
               data={xTickVals.map((x) => ({ x, y }))}
               x="x"
@@ -242,7 +236,7 @@
               curve={curveLinearClosed}
               {...splineProps}
               class={cls(
-                layerClass('grid-y-line'),
+                layerClass('grid-y-radial-line'),
                 'stroke-surface-content/10',
                 classes.line,
                 splineProps?.class
