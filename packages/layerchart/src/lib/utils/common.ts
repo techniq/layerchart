@@ -35,10 +35,10 @@ export function chartDataArray<TData = any>(data: ComponentProps<Chart<TData>>['
     return data;
   } else if ('nodes' in data) {
     return data.nodes;
-  } else {
-    // @ts-expect-error - TODO can we refine this?
+  } else if ('descendants' in data) {
     return data.descendants();
   }
+  return [];
 }
 
 export function defaultChartPadding<TData, SeriesComponent extends Component, TSnippetProps>(
@@ -65,12 +65,4 @@ export function findRelatedData(data: any[], original: any, accessor: Function) 
   return data.find((d) => {
     return accessor(d)?.valueOf() === accessor(original)?.valueOf();
   });
-}
-
-export function getTooltipName(
-  name: string | number | undefined | unknown,
-  accessor: Accessor<any>
-): string | undefined {
-  if (name) return `${name}`;
-  if (typeof accessor === 'string') return accessor;
 }

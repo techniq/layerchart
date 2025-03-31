@@ -91,13 +91,13 @@
   const chartCellSize = $derived(Math.min(chartCellWidth, chartCellHeight));
 
   // [width, height]
-  const cellSize = $derived(
+  const cellSize: [number, number] = $derived(
     Array.isArray(cellSizeProp)
       ? cellSizeProp
       : typeof cellSizeProp === 'number'
         ? [cellSizeProp, cellSizeProp]
         : [chartCellSize, chartCellSize]
-  ) as [number, number];
+  );
 
   const dataByDate = $derived(
     ctx.data && ctx.config.x ? index(chartDataArray(ctx.data), (d) => ctx.x(d)) : new Map()
