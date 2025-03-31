@@ -200,7 +200,10 @@
   const extractedTween = extractTweenConfig(motion);
 
   const tweenedOptions: ResolvedMotion | undefined = extractedTween
-    ? { ...extractedTween, options: { interpolate: interpolatePath, ...extractedTween.options } }
+    ? {
+        type: extractedTween.type,
+        options: { interpolate: interpolatePath, ...extractedTween.options },
+      }
     : undefined;
 
   /** Provide initial `0` horizontal baseline and initially hide/untrack scale changes so not reactive (only set on initial mount) */

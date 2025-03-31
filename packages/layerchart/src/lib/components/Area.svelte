@@ -107,7 +107,7 @@
 
   const tweenOptions: ResolvedMotion | undefined = extractedTween
     ? {
-        ...extractedTween,
+        type: extractedTween.type,
         options: {
           interpolate: interpolatePath,
           ...extractedTween.options,
