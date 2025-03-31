@@ -85,8 +85,8 @@
 
   let {
     bar,
-    x,
-    y,
+    x = ctx.x,
+    y = ctx.y,
     x1,
     y1,
     fill,
