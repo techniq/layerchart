@@ -117,7 +117,7 @@
     targetProp ?? (sankey ? (d: any) => [d.target.x0, d.y1] : (d: any) => d.target)
   );
   const orientation = $derived(orientationProp ?? (sankey ? 'horizontal' : 'vertical'));
-  const curve = $derived((curveProp ?? orientation === 'horizontal') ? curveBumpX : curveBumpY);
+  const curve = $derived(curveProp ?? (orientation === 'horizontal' ? curveBumpX : curveBumpY));
 
   const x = $derived(
     xProp ?? ((d: any) => (sankey ? d[0] : orientation === 'horizontal' ? d.y : d.x))
