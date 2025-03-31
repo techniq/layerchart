@@ -100,7 +100,7 @@
     SimplifiedChartPropsObject,
     SimplifiedChartSnippet,
   } from './types.js';
-  import { createSeriesManager } from './utils.svelte.js';
+  import { createLegendProps, createSeriesState } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import { layerClass } from '$lib/utils/attributes.js';
 
@@ -144,7 +144,7 @@
       ? [{ key: 'default', value: yProp, color: 'var(--color-primary)' }]
       : seriesProp
   );
-  const seriesState = createSeriesManager(() => series);
+  const seriesState = createSeriesState(() => series);
 
   const chartData = $derived(
     (seriesState.allSeriesData.length
@@ -261,31 +261,13 @@
   }
 
   function getLegendProps(): ComponentProps<typeof Legend> {
-    return {
-      scale: seriesState.isDefaultSeries
-        ? undefined
-        : scaleOrdinal(
-            series.map((s) => s.key),
-            series.map((s) => s.color)
-          ),
-      tickFormat: (key) => series.find((s) => s.key === key)?.label ?? key,
-      placement: 'bottom',
-      variant: 'swatches',
-      onclick: (_, item) => seriesState.selectedSeries.toggleSelected(item.value),
-      onpointerenter: (_, item) => (seriesState.highlightKey.current = item.value),
-      onpointerleave: (_) => (seriesState.highlightKey.current = null),
-      ...props.legend,
-      ...(typeof legend === 'object' ? legend : null),
-      classes: {
-        item: (item) =>
-          seriesState.visibleSeries.length &&
-          !seriesState.visibleSeries.some((s) => s.key === item.value)
-            ? 'opacity-50'
-            : '',
-        ...props.legend?.classes,
-        ...(typeof legend === 'object' ? legend.classes : null),
+    return createLegendProps({
+      seriesState,
+      props: {
+        ...props.legend,
+        ...(typeof legend === 'object' ? legend : null),
       },
-    };
+    });
   }
 
   function getGridProps(): ComponentProps<typeof Grid> {

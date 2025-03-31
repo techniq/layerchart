@@ -64,7 +64,7 @@
 
   import { accessor, chartDataArray, defaultChartPadding } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
-  import { createSeriesManager } from './utils.svelte.js';
+  import { createLegendProps, createSeriesState } from './utils.svelte.js';
 
   let {
     data = [],
@@ -106,7 +106,7 @@
       : seriesProp
   );
 
-  const seriesState = createSeriesManager(() => series);
+  const seriesState = createSeriesState(() => series);
 
   // Default xScale based on first data's `x` value
   const xScale = $derived(
@@ -168,31 +168,13 @@
   }
 
   function getLegendProps(): ComponentProps<typeof Legend> {
-    return {
-      scale: seriesState.isDefaultSeries
-        ? undefined
-        : scaleOrdinal(
-            series.map((s) => s.key),
-            series.map((s) => s.color)
-          ),
-      tickFormat: (key) => series.find((s) => s.key === key)?.label ?? key,
-      placement: 'bottom',
-      variant: 'swatches',
-      onclick: (e, item) => seriesState.selectedSeries.toggleSelected(item.value),
-      onpointerenter: (e, item) => (seriesState.highlightKey.current = item.value),
-      onpointerleave: (e) => (seriesState.highlightKey.current = null),
-      ...props.legend,
-      ...(typeof legend === 'object' ? legend : null),
-      classes: {
-        item: (item) =>
-          seriesState.visibleSeries.length &&
-          !seriesState.visibleSeries.some((s) => s.key === item.value)
-            ? 'opacity-50'
-            : '',
-        ...props.legend?.classes,
-        ...(typeof legend === 'object' ? legend.classes : null),
+    return createLegendProps({
+      seriesState,
+      props: {
+        ...props.legend,
+        ...(typeof legend === 'object' ? legend : null),
       },
-    };
+    });
   }
 
   function getGridProps(): ComponentProps<typeof Grid> {
