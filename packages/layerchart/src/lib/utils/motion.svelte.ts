@@ -124,9 +124,9 @@ class MotionNone<T = any> {
   }
 }
 
-type ResolvedTween = { type: 'tween'; options: TweenOptions };
-type ResolvedSpring = { type: 'spring'; options: SpringOptions };
-type ResolvedNone = { type: 'none'; options: {} };
+export type ResolvedTween = { type: 'tween'; options: TweenOptions };
+export type ResolvedSpring = { type: 'spring'; options: SpringOptions };
+export type ResolvedNone = { type: 'none'; options: {} };
 
 /**
  * Union type of all possible resolved motion configurations

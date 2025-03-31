@@ -10,6 +10,7 @@
     createMotion,
     extractTweenConfig,
     type MotionProp,
+    type ResolvedMotion,
   } from '$lib/utils/motion.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
 
@@ -198,7 +199,7 @@
 
   const extractedTween = extractTweenConfig(motion);
 
-  const tweenedOptions = extractedTween
+  const tweenedOptions: ResolvedMotion | undefined = extractedTween
     ? { ...extractedTween, options: { interpolate: interpolatePath, ...extractedTween.options } }
     : undefined;
 
