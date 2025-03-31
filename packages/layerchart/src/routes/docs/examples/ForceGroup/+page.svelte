@@ -62,7 +62,6 @@
               ),
               center: centerForce.x(context.width / 2).y(context.height / 2),
             }}
-            cloneData
             bind:alpha
           >
             {#snippet children({ nodes })}
