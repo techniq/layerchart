@@ -63,7 +63,7 @@
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { flattenPathData } from '../utils/path.js';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
-  import { renderPathData, type ComputedStylesOptions } from 'layerchart/utils/canvas.js';
+  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { getChartContext } from './Chart.svelte';
   import {
     createMotion,

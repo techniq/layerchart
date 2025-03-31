@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Chart, Svg, Text } from 'layerchart';
   import Canvas from 'layerchart/components/layout/Canvas.svelte';
-  import type { TruncateTextOptions } from 'layerchart/utils/string.js';
+  import type { TruncateTextOptions } from '$lib/utils/string.js';
   import type { ComponentProps } from 'svelte';
   import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
 

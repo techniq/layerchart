@@ -65,7 +65,7 @@
   import { getRenderContext } from './Chart.svelte';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
-  import { renderCircle, type ComputedStylesOptions } from 'layerchart/utils/canvas.js';
+  import { renderCircle, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { layerClass } from '$lib/utils/attributes.js';

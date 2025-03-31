@@ -11,7 +11,7 @@
     type GeoProjection,
     type GeoTransformPrototype,
   } from 'd3-geo';
-  import { renderPathData, type ComputedStylesOptions } from 'layerchart/utils/canvas.js';
+  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   export type GeoPathPropsWithoutHTML = {
     /**

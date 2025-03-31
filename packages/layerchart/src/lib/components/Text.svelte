@@ -143,7 +143,7 @@
 
   import { createKey } from '$lib/utils/key.svelte.js';
   import { layerClass } from '$lib/utils/attributes.js';
-  import { degreesToRadians } from 'layerchart/utils/math.js';
+  import { degreesToRadians } from '$lib/utils/math.js';
 
   /*
     TODO:

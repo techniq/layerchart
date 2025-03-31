@@ -2,7 +2,7 @@
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createMotion, parseMotionProp, type MotionProp } from '$lib/utils/motion.svelte.js';
-  import { renderRect, type ComputedStylesOptions } from 'layerchart/utils/canvas.js';
+  import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
 
   export type RectPropsWithoutHTML = {
     /**
