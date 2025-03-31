@@ -65,7 +65,12 @@
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from 'layerchart/utils/canvas.js';
   import { getChartContext } from './Chart.svelte';
-  import { createMotion, extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
+  import {
+    createMotion,
+    extractTweenConfig,
+    type MotionProp,
+    type ResolvedMotion,
+  } from '$lib/utils/motion.svelte.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
@@ -100,10 +105,13 @@
 
   const extractedTween = extractTweenConfig(motion);
 
-  const tweenOptions = extractedTween
+  const tweenOptions: ResolvedMotion | undefined = extractedTween
     ? {
-        interpolate: interpolatePath,
         ...extractedTween,
+        options: {
+          interpolate: interpolatePath,
+          ...extractedTween.options,
+        },
       }
     : undefined;
 

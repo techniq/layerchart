@@ -152,7 +152,7 @@
   }: AxisProps<T> = $props();
 
   const transitionIn = $derived(
-    transitionInProp ? transitionInProp : extractTweenConfig(motion) ? fade : () => {}
+    transitionInProp ? transitionInProp : extractTweenConfig(motion)?.options ? fade : () => {}
   ) as T;
   const transitionInParams = $derived(
     transitionInParamsProp ? transitionInParamsProp : { easing: cubicIn }

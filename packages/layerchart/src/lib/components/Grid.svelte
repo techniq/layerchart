@@ -119,7 +119,7 @@
 
   const tweenConfig = $derived(extractTweenConfig(motion));
 
-  const transitionIn = $derived((transitionInProp ?? tweenConfig) ? fade : () => ({}));
+  const transitionIn = $derived((transitionInProp ?? tweenConfig?.options) ? fade : () => ({}));
 
   function getTickVals(scale: AnyScale, ticks: TicksConfig): any[] {
     return Array.isArray(ticks)

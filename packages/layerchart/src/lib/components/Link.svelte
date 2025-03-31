@@ -7,6 +7,7 @@
     extractTweenConfig,
     type MotionNoneOption,
     type MotionTweenOption,
+    type ResolvedMotion,
   } from '$lib/utils/motion.svelte.js';
   import { link as d3Link, curveBumpX, curveBumpY, type CurveFactory } from 'd3-shape';
 
@@ -133,10 +134,13 @@
 
   const extractedTween = extractTweenConfig(motion);
 
-  const tweenOptions = extractedTween
+  const tweenOptions: ResolvedMotion | undefined = extractedTween
     ? {
-        interpolate: interpolatePath,
         ...extractedTween,
+        options: {
+          interpolate: interpolatePath,
+          ...extractedTween.options,
+        },
       }
     : undefined;
 
