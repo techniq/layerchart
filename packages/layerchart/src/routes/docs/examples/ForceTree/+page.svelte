@@ -9,7 +9,7 @@
 
   let { data } = $props();
 
-  const root = hierarchy(structuredClone(data.flare));
+  const root = hierarchy(data.flare);
   const nodes = root.descendants();
   const links = root.links();
 
