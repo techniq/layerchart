@@ -343,19 +343,19 @@
               .ancestors()
               .map((n) => n.data[0])
               .join('_'))}
-              <Group
-                x={node.x0}
-                y={node.y0}
-                onclick={() => {
-                  console.log('click');
-                  node.children ? (selectedCarNode = node) : null;
-                }}
-                motion={{ type: 'tween', delay: 600 }}
-              >
-                {@const nodeWidth = node.x1 - node.x0}
-                {@const nodeHeight = node.y1 - node.y0}
-                {@const nodeColor = getNodeColor(node, colorBy)}
-                <g in:fade={{ duration: 600, delay: 1200 }} out:fade={{ duration: 600 }}>
+              <g in:fade={{ duration: 600, delay: 1200 }} out:fade={{ duration: 600 }}>
+                <Group
+                  x={node.x0}
+                  y={node.y0}
+                  onclick={() => {
+                    console.log('click');
+                    node.children ? (selectedCarNode = node) : null;
+                  }}
+                  motion={{ type: 'tween', delay: 600 }}
+                >
+                  {@const nodeWidth = node.x1 - node.x0}
+                  {@const nodeHeight = node.y1 - node.y0}
+                  {@const nodeColor = getNodeColor(node, colorBy)}
                   <Rect
                     width={nodeWidth}
                     height={nodeHeight}
@@ -398,8 +398,8 @@
 											/> -->
                     {/if}
                   </RectClipPath>
-                </g>
-              </Group>
+                </Group>
+              </g>
             {/each}
           {/snippet}
         </Treemap>
