@@ -83,9 +83,8 @@
 
 <script lang="ts" generics="TData">
   import { onMount, type ComponentProps } from 'svelte';
-  import { scaleBand, scaleOrdinal, scaleLinear } from 'd3-scale';
+  import { scaleBand, scaleLinear } from 'd3-scale';
   import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
-  import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
@@ -99,13 +98,11 @@
   import Legend from '../Legend.svelte';
   import Rule from '../Rule.svelte';
   import Svg from '../layout/Svg.svelte';
-  import * as Tooltip from '../tooltip/index.js';
 
   import {
     accessor,
     chartDataArray,
     defaultChartPadding,
-    findRelatedData,
     type Accessor,
   } from '$lib/utils/common.js';
   import { asAny } from '$lib/utils/types.js';
@@ -114,6 +111,7 @@
   import type { AnyScale } from '$lib/utils/scales.svelte.js';
   import { createLegendProps, createSeriesState } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
+  import DefaultTooltip from './DefaultTooltip.svelte';
 
   let {
     data = [],
@@ -530,45 +528,11 @@
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
       {:else if tooltip}
-        <Tooltip.Root {context} {...props.tooltip?.root}>
-          {#snippet children({ data, payload })}
-            <Tooltip.Header value={payload[0].label} {format} {...props.tooltip?.header} />
-
-            <Tooltip.List {...props.tooltip?.list}>
-              <!-- Reverse series order so tooltip items match stacks -->
-              {#each payload as p, i (p.key ?? i)}
-                <Tooltip.Item
-                  label={p.name}
-                  value={p.value}
-                  color={p.color}
-                  {format}
-                  valueAlign="right"
-                  onpointerenter={() => (seriesState.highlightKey.current = p.key)}
-                  onpointerleave={() => (seriesState.highlightKey.current = null)}
-                  {...props.tooltip?.item}
-                />
-              {/each}
-
-              {#if (stackSeries || groupSeries) && payload.length > 1 && !props.tooltip?.hideTotal}
-                <Tooltip.Separator {...props.tooltip?.separator} />
-
-                <Tooltip.Item
-                  label="total"
-                  value={sum(seriesState.visibleSeries, (s) => {
-                    const seriesTooltipData = s.data
-                      ? findRelatedData(s.data, data, context.x)
-                      : data;
-                    const valueAccessor = accessor(s.value ?? (s.data ? context.y : s.key));
-                    return valueAccessor(seriesTooltipData);
-                  })}
-                  format="integer"
-                  valueAlign="right"
-                  {...props.tooltip?.item}
-                />
-              {/if}
-            </Tooltip.List>
-          {/snippet}
-        </Tooltip.Root>
+        <DefaultTooltip
+          tooltipProps={props.tooltip}
+          canHaveTotal={stackSeries || groupSeries}
+          {seriesState}
+        />
       {/if}
     {/if}
   {/snippet}

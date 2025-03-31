@@ -69,7 +69,7 @@
 
 <script lang="ts" generics="TData">
   import { onMount, type ComponentProps } from 'svelte';
-  import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
+  import { scaleLinear, scaleTime } from 'd3-scale';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
@@ -85,7 +85,6 @@
   import Rule from '../Rule.svelte';
   import Spline from '../Spline.svelte';
   import Svg from '../layout/Svg.svelte';
-  import * as Tooltip from '../tooltip/index.js';
 
   import {
     accessor,
@@ -103,6 +102,7 @@
   import { createLegendProps, createSeriesState } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import { layerClass } from '$lib/utils/attributes.js';
+  import DefaultTooltip from './DefaultTooltip.svelte';
 
   let {
     data = [],
@@ -469,24 +469,7 @@
       {#if typeof tooltip === 'function'}
         {@render tooltip(snippetProps)}
       {:else if tooltip}
-        <Tooltip.Root {context} {...props.tooltip?.root}>
-          {#snippet children({ payload })}
-            <Tooltip.Header value={payload[0].label} {format} {...props.tooltip?.header} />
-            <Tooltip.List {...props.tooltip?.list}>
-              {#each payload as p, i (i)}
-                <Tooltip.Item
-                  label={p.name}
-                  value={p.value}
-                  color={p.color}
-                  {format}
-                  onpointerenter={() => (seriesState.highlightKey.current = p.key)}
-                  onpointerleave={() => (seriesState.highlightKey.current = null)}
-                  {...props.tooltip?.item}
-                />
-              {/each}
-            </Tooltip.List>
-          {/snippet}
-        </Tooltip.Root>
+        <DefaultTooltip tooltipProps={props.tooltip} {seriesState} canHaveTotal />
       {/if}
     {/if}
   {/snippet}

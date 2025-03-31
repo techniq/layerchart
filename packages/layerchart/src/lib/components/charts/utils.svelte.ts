@@ -22,6 +22,10 @@ export function createHighlightKey<TData, SeriesComponent extends Component>() {
   };
 }
 
+export type SeriesState<TData = any, TComponent extends Component = Component> = ReturnType<
+  typeof createSeriesState<TData, TComponent>
+>;
+
 export function createSeriesState<TData, TComponent extends Component>(
   getSeries: () => SeriesData<TData, TComponent>[]
 ) {
