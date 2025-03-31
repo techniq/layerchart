@@ -3,7 +3,7 @@ import posthog from 'posthog-js';
 import { browser, dev } from '$app/environment';
 
 // Disable server-side rendering until AppLayout shift is fixed (issue #22)
-export const ssr = false;
+// export const ssr = false;
 
 export const load = async () => {
   // Setup Posthog
