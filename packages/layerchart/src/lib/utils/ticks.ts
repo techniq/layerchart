@@ -194,13 +194,10 @@ export function resolveTickVals(
 ): any[] {
   if (Array.isArray(ticks)) return ticks;
   if (typeof ticks === 'function') return ticks(scale);
-  if (
-    isLiteralObject(ticks) &&
-    'interval' in ticks &&
-    'ticks' in scale &&
-    typeof scale.ticks === 'function' &&
-    ticks.interval !== null
-  ) {
+  if (isLiteralObject(ticks) && 'interval' in ticks) {
+    if (ticks.interval === null || !('ticks' in scale) || typeof scale.ticks !== 'function') {
+      return []; // Explicitly return empty array for null interval or invalid scale
+    }
     return scale.ticks(ticks.interval as any);
   }
   if (isScaleBand(scale)) {
