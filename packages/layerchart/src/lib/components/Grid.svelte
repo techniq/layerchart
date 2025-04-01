@@ -1,5 +1,4 @@
 <script lang="ts" module>
-  export type TicksConfig = number | any[] | ((scale: AnyScale) => any) | null | undefined;
   import type { Transition, TransitionParams, Without } from '$lib/utils/types.js';
   import { extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { SVGAttributes } from 'svelte/elements';
@@ -98,6 +97,7 @@
   import Circle from './Circle.svelte';
   import { getChartContext } from './Chart.svelte';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import { resolveTickVals, type TicksConfig } from '$lib/utils/ticks.js';
 
   const ctx = getChartContext();
 
@@ -117,26 +117,14 @@
     ...restProps
   }: GridProps = $props();
 
-  const yTicks = $derived((yTicksProp ?? !isScaleBand(ctx.yScale)) ? 4 : undefined);
+  const yTicks = $derived(yTicksProp ?? (!isScaleBand(ctx.yScale) ? 4 : undefined));
 
   const tweenConfig = $derived(extractTweenConfig(motion));
 
   const transitionIn = $derived((transitionInProp ?? tweenConfig?.options) ? fade : () => ({}));
 
-  function getTickVals(scale: AnyScale, ticks: TicksConfig): any[] {
-    return Array.isArray(ticks)
-      ? ticks
-      : typeof ticks === 'function'
-        ? ticks(scale)
-        : isScaleBand(scale)
-          ? ticks
-            ? scale.domain().filter((v: any, i: number) => i % ticks === 0)
-            : scale.domain()
-          : (scale.ticks?.(ticks ?? undefined) ?? []);
-  }
-
-  const xTickVals = $derived(getTickVals(ctx.xScale, xTicks));
-  const yTickVals = $derived(getTickVals(ctx.yScale, yTicks));
+  const xTickVals = $derived(resolveTickVals(ctx.xScale, xTicks));
+  const yTickVals = $derived(resolveTickVals(ctx.yScale, yTicks));
 
   const xBandOffset = $derived(
     isScaleBand(ctx.xScale)

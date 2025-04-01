@@ -41,7 +41,7 @@
     /**
      * Control the number of ticks
      */
-    ticks?: number | any[] | ((scale: AnyScale) => any) | { interval: TimeInterval | null } | null;
+    ticks?: TicksConfig;
 
     /**
      * Length of the tick line
@@ -112,22 +112,22 @@
   import { fade } from 'svelte/transition';
   import { cubicIn } from 'svelte/easing';
   import type { SVGAttributes } from 'svelte/elements';
-  import type { TimeInterval } from 'd3-time';
 
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
 
-  import { format as formatValue, isLiteralObject, type FormatType } from '@layerstack/utils';
+  import { format as formatValue, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Line from './Line.svelte';
   import Rule from './Rule.svelte';
   import Text from './Text.svelte';
-  import { isScaleBand, type AnyScale } from '$lib/utils/scales.svelte.js';
+  import { isScaleBand } from '$lib/utils/scales.svelte.js';
 
   import { getChartContext } from './Chart.svelte';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
+  import { resolveTickVals, type TicksConfig } from '$lib/utils/ticks.js';
 
   let {
     placement,
@@ -177,19 +177,7 @@
   const xRangeMinMax = $derived(extent<number>(ctx.xRange)) as [number, number];
   const yRangeMinMax = $derived(extent<number>(ctx.yRange)) as [number, number];
 
-  const tickVals = $derived(
-    Array.isArray(ticks)
-      ? ticks
-      : typeof ticks === 'function'
-        ? ticks(scale)
-        : isLiteralObject(ticks)
-          ? scale.ticks(ticks.interval) // d3-time interval such as `timeDay.every(1)`
-          : isScaleBand(scale)
-            ? ticks
-              ? scale.domain().filter((v: any, i: number) => i % ticks === 0)
-              : scale.domain()
-            : scale.ticks(ticks ?? (placement === 'left' || placement === 'right' ? 4 : undefined))
-  );
+  const tickVals = $derived(resolveTickVals(scale, ticks, placement));
 
   function getCoords(tick: any) {
     switch (placement) {

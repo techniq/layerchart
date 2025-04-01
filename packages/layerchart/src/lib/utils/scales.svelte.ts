@@ -10,6 +10,7 @@ import {
 import { Spring, Tween } from 'svelte/motion';
 import type { Accessor } from './common.js';
 import type { OnlyObjects } from './types.js';
+import type { TimeInterval } from 'd3-time';
 
 export type AnyScale<
   TInput extends SingleDomainType = any,
