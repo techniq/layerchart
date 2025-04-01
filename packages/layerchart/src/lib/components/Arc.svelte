@@ -243,7 +243,7 @@
       .innerRadius(innerRadius)
       .outerRadius(outerRadius)
       .startAngle(startAngleProp ?? degreesToRadians(range[0]))
-      .endAngle(endAngle)
+      .endAngle(endAngleProp ?? degreesToRadians(range[1]))
       .cornerRadius(cornerRadius)
       .padAngle(padAngle)
   );

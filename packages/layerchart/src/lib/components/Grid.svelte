@@ -90,7 +90,7 @@
 
   import { cls } from '@layerstack/tailwind';
 
-  import { isScaleBand, type AnyScale } from '$lib/utils/scales.svelte.js';
+  import { isScaleBand } from '$lib/utils/scales.svelte.js';
 
   import Rule from './Rule.svelte';
   import Spline from './Spline.svelte';

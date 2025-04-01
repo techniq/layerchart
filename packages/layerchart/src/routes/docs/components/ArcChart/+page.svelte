@@ -133,6 +133,7 @@
       value="value"
       outerRadius={-25}
       innerRadius={-20}
+      range={[90, -270]}
       cornerRadius={10}
       {renderContext}
       {debug}
