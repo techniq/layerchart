@@ -31,154 +31,92 @@
     | 'cRange'
     | 'padding'
     | 'context'
-  > & {
-    /**
-     * Key accessor
-     *
-     * @default 'key'
-     */
-    key?: Accessor<TData>;
+  > &
+    Pick<
+      ArcPropsWithoutHTML,
+      | 'cornerRadius'
+      | 'trackCornerRadius'
+      | 'padAngle'
+      | 'trackPadAngle'
+      | 'trackStartAngle'
+      | 'trackEndAngle'
+      | 'trackInnerRadius'
+      | 'trackOuterRadius'
+      | 'innerRadius'
+      | 'outerRadius'
+      | 'range'
+    > & {
+      /**
+       * Key accessor
+       *
+       * @default 'key'
+       */
+      key?: Accessor<TData>;
 
-    /**
-     * Label accessor
-     *
-     * @default 'label'
-     */
-    label?: Accessor<TData>;
+      /**
+       * Label accessor
+       *
+       * @default 'label'
+       */
+      label?: Accessor<TData>;
 
-    /**
-     * Value accessor
-     *
-     * @default 'value'
-     */
-    value?: Accessor<TData>;
+      /**
+       * Value accessor
+       *
+       * @default 'value'
+       */
+      value?: Accessor<TData>;
 
-    /**
-     * Color accessor
-     *
-     * @default key
-     */
-    c?: Accessor<TData>;
+      /**
+       * Color accessor
+       *
+       * @default key
+       */
+      c?: Accessor<TData>;
 
-    /**
-     * Maximum possible value, useful when `data` is single item
-     */
-    maxValue?: number;
+      /**
+       * Maximum possible value, useful when `data` is single item
+       */
+      maxValue?: number;
 
-    /**
-     * Range [min, max] in degrees.
-     *
-     * See also `startAngle`/`endAngle`
-     *
-     * @default [0, 360]
-     */
-    range?: [number, number];
+      props?: ArcChartPropsObjProp;
 
-    props?: ArcChartPropsObjProp;
+      /**
+       * Placement of the ArcChart
+       *
+       * @default 'center'
+       */
+      placement?: 'left' | 'center' | 'right';
 
-    /**
-     * Inner radius of the arc.
-     *   value >= 1: discrete value
-     *   value >  0: percent of `outerRadius`
-     *   value <  0: offset of `outerRadius`
-     */
-    innerRadius?: number;
+      /**
+       * Center the chart.
+       *
+       * Override and use `props.group` for more control.
+       *
+       * @default placement === 'center'
+       */
+      center?: boolean;
 
-    /**
-     * Outer radius of the arc.
-     */
-    outerRadius?: number;
+      /**
+       * A callback function triggered when the arc is clicked.
+       */
+      onArcClick?: (
+        e: MouseEvent,
+        detail: { data: any; series: SeriesData<TData, typeof Arc> }
+      ) => void;
 
-    /**
-     * Corner radius of the arc
-     *
-     * @default 0
-     */
-    cornerRadius?: number;
-
-    /**
-     * Angle between the arcs
-     *
-     * @default 0
-     */
-    padAngle?: number;
-
-    /**
-     * Start angle in radians
-     */
-    trackStartAngle?: number;
-
-    /**
-     * End angle in radians
-     */
-    trackEndAngle?: number;
-
-    /**
-     * Define innerRadius. Defaults to yRange min
-     *   • value >= 1: discrete value
-     *   • value < 1: percent of `outerRadius`
-     *   • value < 0: offset of `outerRadius`
-     */
-    trackInnerRadius?: number;
-
-    /**
-     * Define outerRadius. Defaults to smallest width (xRange) or height (yRange) dimension (/2)
-     *   • value >= 1: discrete value
-     *   • value < 1: percent of chart width or height (smallest) / 2
-     *   • value < 0: offset of chart width or height (smallest) / 2
-     */
-    trackOuterRadius?: number;
-
-    /**
-     * Corner radius of the arc
-     *
-     * @default 0
-     */
-    trackCornerRadius?: number;
-
-    /**
-     * Angle between the arcs
-     *
-     * @default 0
-     */
-    trackPadAngle?: number;
-
-    /**
-     * Placement of the ArcChart
-     *
-     * @default 'center'
-     */
-    placement?: 'left' | 'center' | 'right';
-
-    /**
-     * Center the chart.
-     *
-     * Override and use `props.group` for more control.
-     *
-     * @default placement === 'center'
-     */
-    center?: boolean;
-
-    /**
-     * A callback function triggered when the arc is clicked.
-     */
-    onArcClick?: (
-      e: MouseEvent,
-      detail: { data: any; series: SeriesData<TData, typeof Arc> }
-    ) => void;
-
-    arc?: SimplifiedChartSnippet<
-      TData,
-      typeof Arc,
-      ArcChartExtraSnippetProps<TData> & {
-        props: ComponentProps<typeof Arc>;
-        /**
-         * The index of the series currently being iterated over.
-         */
-        seriesIndex: number;
-      }
-    >;
-  };
+      arc?: SimplifiedChartSnippet<
+        TData,
+        typeof Arc,
+        ArcChartExtraSnippetProps<TData> & {
+          props: ComponentProps<typeof Arc>;
+          /**
+           * The index of the series currently being iterated over.
+           */
+          seriesIndex: number;
+        }
+      >;
+    };
 </script>
 
 <script lang="ts" generics="TData">
@@ -187,7 +125,7 @@
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
-  import Arc from '../Arc.svelte';
+  import Arc, { type ArcPropsWithoutHTML } from '../Arc.svelte';
   import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import Group from '../Group.svelte';
