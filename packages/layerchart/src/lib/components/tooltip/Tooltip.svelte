@@ -358,6 +358,12 @@
 
   const motionX = createMotion(tooltipCtx.x, () => positions.x, motion);
   const motionY = createMotion(tooltipCtx.y, () => positions.y, motion);
+
+  $effect(() => {
+    if (!tooltipCtx.data) {
+      tooltipCtx.isHoveringTooltipContent = false;
+    }
+  });
 </script>
 
 {#if tooltipCtx.data}
@@ -376,6 +382,12 @@
     bind:clientWidth={tooltipWidth}
     bind:clientHeight={tooltipHeight}
     bind:this={rootRef}
+    onpointerenter={() => {
+      tooltipCtx.isHoveringTooltipContent = true;
+    }}
+    onpointerleave={() => {
+      tooltipCtx.isHoveringTooltipContent = false;
+    }}
   >
     <div
       {...props.container}

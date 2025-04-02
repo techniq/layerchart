@@ -23,6 +23,8 @@
     show(e: PointerEvent, tooltipData?: any, payload?: TooltipPayload): void;
     hide(e?: PointerEvent): void;
     mode: TooltipMode;
+    isHoveringTooltipArea: boolean;
+    isHoveringTooltipContent: boolean;
   };
 
   //   const defaultContext = {
@@ -157,37 +159,52 @@
     refProp = ref;
   });
 
-  tooltipContextProp = {
-    x: 0,
-    y: 0,
-    data: null,
-    payload: [],
-    show: showTooltip,
-    hide: hideTooltip,
-    mode,
-  };
+  let x = $state(0);
+  let y = $state(0);
+  let data = $state(null);
+  let payload = $state<TooltipPayload[]>([]);
+
+  /**
+   * If we're hovering the tooltip area on the chart
+   */
+  let isHoveringTooltipArea = $state(false);
+
+  /**
+   * If we're hovering the tooltip content container
+   */
+  let isHoveringTooltipContent = $state(false);
 
   const metaCtx = getTooltipMetaContext();
 
-  const tooltipContext = {
+  const tooltipContext: TooltipContextValue = {
     get x() {
-      return tooltipContextProp!.x;
+      return x;
     },
     get y() {
-      return tooltipContextProp!.y;
+      return y;
     },
     get data() {
-      return tooltipContextProp!.data;
+      return data;
     },
     get payload() {
-      return tooltipContextProp!.payload;
+      return payload;
     },
     show: showTooltip,
     hide: hideTooltip,
     get mode() {
-      return tooltipContextProp!.mode;
+      return mode;
+    },
+    get isHoveringTooltipArea() {
+      return isHoveringTooltipArea;
+    },
+    get isHoveringTooltipContent() {
+      return isHoveringTooltipContent;
+    },
+    set isHoveringTooltipContent(value) {
+      isHoveringTooltipContent = value;
     },
   };
+  tooltipContextProp = tooltipContext;
 
   /*
 		TODO: Defaults to consider (if possible to detect scale type, which might not be possible)
@@ -201,7 +218,6 @@
 	*/
   setTooltipContext(tooltipContext);
 
-  let isHoveringTooltip = false;
   let hideTimeoutId: ReturnType<typeof setTimeout>;
 
   const bisectX = bisector((d: any) => {
@@ -351,15 +367,12 @@
         raise(e.target as Element);
       }
 
-      const payload = getTooltipPayload({ ctx, tooltipData, metaCtx });
+      const payloadData = getTooltipPayload({ ctx, tooltipData, metaCtx });
 
-      tooltipContextProp = {
-        ...tooltipContextProp,
-        x: point.x,
-        y: point.y,
-        data: tooltipData,
-        payload,
-      };
+      x = point.x;
+      y = point.y;
+      data = tooltipData;
+      payload = payloadData;
     } else {
       // Hide tooltip if unable to locate
       hideTooltip();
@@ -372,18 +385,15 @@
       return;
     }
 
-    isHoveringTooltip = false;
+    isHoveringTooltipArea = false;
 
     // Wait an event loop tick in case `showTooltip` is called immediately on another element,
     // to allow tweening (ex. moving between bands/bars)
     // Additional hideDelay can be configured to extend this delay further
     hideTimeoutId = setTimeout(() => {
-      if (!isHoveringTooltip) {
-        tooltipContextProp = {
-          ...tooltipContextProp,
-          data: null,
-          payload: [],
-        };
+      if (!isHoveringTooltipArea && !isHoveringTooltipContent) {
+        data = null;
+        payload = [];
       }
     }, hideDelay);
   }
@@ -498,7 +508,7 @@
     debug && triggerPointerEvents && 'bg-danger/10 outline outline-danger'
   )}
   onpointerenter={(e) => {
-    isHoveringTooltip = true;
+    isHoveringTooltipArea = true;
     if (triggerPointerEvents) {
       showTooltip(e);
     }
@@ -509,7 +519,8 @@
     }
   }}
   onpointerleave={(e) => {
-    isHoveringTooltip = false;
+    isHoveringTooltipArea = false;
+
     hideTooltip();
   }}
   onclick={(e) => {
