@@ -145,11 +145,16 @@
     onpointerleave,
     variant = 'ramp',
     classes = {},
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     class: className,
     children,
     ...restProps
   }: LegendProps = $props();
+
+  let ref = $state<HTMLElement>();
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   const ctx = getChartContext();
 

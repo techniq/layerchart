@@ -698,7 +698,7 @@
     pointerEvents = true,
     position = 'relative',
     percentRange = false,
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     x: xProp,
     y: yProp,
     z: zProp,
@@ -765,6 +765,12 @@
     ondragstart,
     brush,
   }: ChartPropsWithoutHTML<TData, XScale, YScale> = $props();
+
+  let ref = $state<HTMLElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   const xRangeProp = $derived(_xRangeProp ? _xRangeProp : radial ? [0, 2 * Math.PI] : undefined);
 

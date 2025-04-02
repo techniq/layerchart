@@ -65,7 +65,7 @@
     initialWidth = width,
     strokeWidth,
     opacity,
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     motion,
     class: className,
     onclick,
@@ -77,6 +77,12 @@
     onpointerout,
     ...restProps
   }: RectProps = $props();
+
+  let ref = $state<SVGRectElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   const motionX = createMotion(initialX, () => x, parseMotionProp(motion, 'x'));
   const motionY = createMotion(initialY, () => y, parseMotionProp(motion, 'y'));

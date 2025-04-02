@@ -36,10 +36,15 @@
   let {
     date,
     cellSize: cellSizeProp,
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     class: className,
     ...restProps
   }: MonthPathProps = $props();
+
+  let ref = $state<SVGPathElement>();
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   const cellSize = $derived(
     Array.isArray(cellSizeProp) ? cellSizeProp : [cellSizeProp, cellSizeProp]

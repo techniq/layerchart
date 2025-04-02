@@ -68,10 +68,15 @@
     repeatCount,
     fill = 'freeze',
     rotate,
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     children,
     ...restProps
   }: MotionPathPropsWithoutHTML = $props();
+
+  let ref = $state<SVGAnimateMotionElement>();
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   // TODO: Investigate `calcMode:spline`, `keyTimes`, and `keySplines` to work with `svelte/easing`
   // https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/calcMode

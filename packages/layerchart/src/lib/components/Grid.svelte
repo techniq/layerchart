@@ -113,9 +113,15 @@
     transitionInParams = { easing: cubicIn },
     classes = {},
     class: className,
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     ...restProps
   }: GridProps = $props();
+
+  let ref = $state<SVGGElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   const yTicks = $derived(yTicksProp ?? (!isScaleBand(ctx.yScale) ? 4 : undefined));
 

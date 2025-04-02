@@ -200,7 +200,7 @@
 
     ondragstart?: () => void;
     ondragend?: () => void;
-    ref?: HTMLElement | null;
+    ref?: HTMLElement;
     children?: Snippet<[{ transformContext: TransformContextValue }]>;
 
     motion?: MotionProp;
@@ -247,12 +247,17 @@
     onpointerup = () => {},
     ondblclick = () => {},
     onclickcapture = () => {},
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     children,
     class: className,
     transformContext = $bindable(),
     ...restProps
   }: TransformContextProps = $props();
+
+  let ref = $state<HTMLElement>();
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   transformContext = {
     get mode() {

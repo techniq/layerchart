@@ -139,7 +139,7 @@
   const ctx = getChartContext<any>();
 
   let {
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     debug = false,
     findTooltipData = 'closest',
     hideDelay = 0,
@@ -151,6 +151,11 @@
     tooltipContext: tooltipContextProp = $bindable() as TooltipContextValue<TData>,
     children,
   }: TooltipContextProps<TData> = $props();
+
+  let ref = $state<HTMLElement>();
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   tooltipContextProp = {
     x: 0,

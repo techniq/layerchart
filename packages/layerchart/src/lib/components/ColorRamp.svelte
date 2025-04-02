@@ -50,9 +50,15 @@
     steps = 10,
     height = '20px',
     width = '100%',
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     ...restProps
   }: ColorRampProps = $props();
+
+  let ref = $state<SVGImageElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   let href = $state('');
 

@@ -83,9 +83,15 @@
     motion,
     class: className,
     children,
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     ...restProps
   }: GroupProps = $props();
+
+  let ref = $state<Element>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   const initialX = initialXProp ?? x;
   const initialY = initialYProp ?? y;

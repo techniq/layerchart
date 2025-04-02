@@ -70,8 +70,8 @@
   import { layerClass } from '$lib/utils/attributes.js';
 
   let {
-    ref = $bindable(),
-    innerRef = $bindable(),
+    ref: refProp = $bindable(),
+    innerRef: innerRefProp = $bindable(),
     zIndex = 0,
     pointerEvents,
     viewBox,
@@ -83,6 +83,16 @@
     children,
     ...restProps
   }: SVGProps = $props();
+
+  let ref = $state<SVGElement>();
+  let innerRef = $state<SVGGElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
+  $effect.pre(() => {
+    innerRefProp = innerRef;
+  });
 
   const ctx = getChartContext();
   const transformCtx = getTransformContext();

@@ -53,7 +53,7 @@
   import { layerClass } from '$lib/utils/attributes.js';
 
   let {
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     zIndex = 0,
     pointerEvents = true,
     role,
@@ -66,6 +66,11 @@
     children,
     ...restProps
   }: HTMLProps = $props();
+
+  let ref = $state<HTMLElement>();
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   const roleVal = $derived(role || (label || labelledBy || describedBy ? 'figure' : undefined));
 

@@ -84,9 +84,15 @@
     strokeWidth,
     opacity,
     class: className,
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     ...restProps
   }: CircleProps = $props();
+
+  let ref = $state<SVGCircleElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   const initialCx = initialCxProp ?? cx;
   const initialCy = initialCyProp ?? cy;

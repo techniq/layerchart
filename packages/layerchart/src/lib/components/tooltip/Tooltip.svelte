@@ -186,7 +186,7 @@
     y = 'pointer',
     yOffset = y === 'pointer' ? 10 : 0,
     children,
-    rootRef = $bindable(),
+    rootRef: rootRefProp = $bindable(),
     props = {
       root: {},
       container: {},
@@ -194,6 +194,11 @@
     },
     class: className,
   }: TooltipProps<T> = $props();
+
+  let rootRef = $state<HTMLElement>();
+  $effect.pre(() => {
+    rootRefProp = rootRef;
+  });
 
   const ctx = getChartContext();
   const tooltipCtx = getTooltipContext();

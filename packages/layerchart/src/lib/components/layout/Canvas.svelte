@@ -162,7 +162,7 @@
   import { layerClass } from '$lib/utils/attributes.js';
 
   let {
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     canvasContext: canvasContextProp = $bindable(),
     willReadFrequently = false,
     debug = false,
@@ -183,7 +183,12 @@
     ...restProps
   }: CanvasProps = $props();
 
+  let ref = $state<HTMLCanvasElement>();
   let context = $state<CanvasRenderingContext2D>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   $effect.pre(() => {
     canvasContextProp = context;

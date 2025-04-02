@@ -27,11 +27,17 @@
 
   let {
     link,
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     children,
     opacity: opacityProp,
     ...restProps
   }: GeoEdgeFadeProps = $props();
+
+  let ref = $state<SVGGElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   const geoCtx = getGeoContext();
 

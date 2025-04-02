@@ -159,9 +159,15 @@
     startContent,
     endContent,
     opacity,
-    splineRef = $bindable(),
+    splineRef: splineRefProp = $bindable(),
     ...restProps
   }: SplineProps = $props();
+
+  let splineRef = $state<SVGPathElement>();
+
+  $effect.pre(() => {
+    splineRefProp = splineRef;
+  });
 
   const markerStart = $derived(markerStartProp ?? marker);
   const markerMid = $derived(markerMidProp ?? marker);

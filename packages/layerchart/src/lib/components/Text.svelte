@@ -180,13 +180,24 @@
     fill,
     fillOpacity,
     motion,
-    svgRef = $bindable(),
-    ref = $bindable(),
+    svgRef: svgRefProp = $bindable(),
+    ref: refProp = $bindable(),
     class: className,
     svgProps = {},
     truncate = false,
     ...restProps
   }: TextProps = $props();
+
+  let ref = $state<SVGTextElement>();
+  let svgRef = $state<SVGElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
+
+  $effect.pre(() => {
+    svgRefProp = svgRef;
+  });
 
   let style = $state<CSSStyleDeclaration>(); // TODO: read from DOM?
 

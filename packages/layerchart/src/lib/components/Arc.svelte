@@ -143,8 +143,8 @@
   import { max } from 'd3-array';
 
   let {
-    ref = $bindable(),
-    trackRef = $bindable(),
+    ref: refProp = $bindable(),
+    trackRef: trackRefProp = $bindable(),
     motion,
     value = 0,
     initialValue = 0,
@@ -173,6 +173,17 @@
     class: className,
     ...restProps
   }: ArcProps = $props();
+
+  let ref = $state<SVGPathElement>();
+  let trackRef = $state<SVGPathElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
+
+  $effect.pre(() => {
+    trackRefProp = trackRef;
+  });
 
   const ctx = getChartContext();
 

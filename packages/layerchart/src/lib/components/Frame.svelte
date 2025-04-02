@@ -21,7 +21,12 @@
   import { getChartContext } from './Chart.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
-  let { ref = $bindable(), full = false, ...restProps }: FrameProps = $props();
+  let { ref: refProp = $bindable(), full = false, ...restProps }: FrameProps = $props();
+
+  let ref = $state<SVGRectElement>();
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   const ctx = getChartContext();
 </script>

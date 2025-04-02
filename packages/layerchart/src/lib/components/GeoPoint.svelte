@@ -36,7 +36,12 @@
   import { getGeoContext } from './GeoContext.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
-  let { lat, long, ref = $bindable(), children, ...restProps }: GeoPointProps = $props();
+  let { lat, long, ref: refProp = $bindable(), children, ...restProps }: GeoPointProps = $props();
+
+  let ref = $state<Element>();
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   const geoCtx = getGeoContext();
 

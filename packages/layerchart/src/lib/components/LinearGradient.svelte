@@ -97,12 +97,17 @@
     y2 = vertical ? '100%' : '0%',
     rotate,
     units = 'objectBoundingBox',
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     class: className,
     stopsContent,
     children,
     ...restProps
   }: LinearGradientProps = $props();
+
+  let ref = $state<SVGLinearGradientElement>();
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   const ctx = getChartContext();
   const renderCtx = getRenderContext();

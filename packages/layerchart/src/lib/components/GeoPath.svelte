@@ -86,10 +86,15 @@
     curve = curveLinearClosed,
     onclick,
     class: className,
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     children,
     ...restProps
   }: GeoPathProps = $props();
+
+  let ref = $state<SVGPathElement>();
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   const geo = getGeoContext();
 

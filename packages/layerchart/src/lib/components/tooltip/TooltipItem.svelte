@@ -81,10 +81,10 @@
   import { layerClass } from '$lib/utils/attributes.js';
 
   let {
-    ref = $bindable(),
-    labelRef = $bindable(),
-    valueRef = $bindable(),
-    colorRef = $bindable(),
+    ref: refProp = $bindable(),
+    labelRef: labelRefProp = $bindable(),
+    valueRef: valueRefProp = $bindable(),
+    colorRef: colorRefProp = $bindable(),
     label,
     value,
     format,
@@ -106,6 +106,25 @@
     children,
     ...restProps
   }: TooltipItemProps = $props();
+
+  let ref = $state<HTMLElement>();
+  let labelRef = $state<HTMLElement>();
+  let valueRef = $state<HTMLElement>();
+  let colorRef = $state<HTMLElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
+
+  $effect.pre(() => {
+    labelRefProp = labelRef;
+  });
+  $effect.pre(() => {
+    valueRefProp = valueRef;
+  });
+  $effect.pre(() => {
+    colorRefProp = colorRef;
+  });
 </script>
 
 <div

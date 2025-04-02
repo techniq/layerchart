@@ -4,13 +4,19 @@
   import type { HTMLAttributes } from 'svelte/elements';
 
   let {
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     class: className,
     children,
     ...restProps
   }: HTMLAttributes<HTMLElement> & {
     ref?: HTMLElement;
   } = $props();
+
+  let ref = $state<HTMLElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
 </script>
 
 <div

@@ -75,9 +75,15 @@
     onclick,
     onpointerleave,
     class: className,
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     ...restProps
   }: HullProps = $props();
+
+  let ref = $state<SVGGElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   const ctx = getChartContext();
   const geoCtx = getGeoContext();

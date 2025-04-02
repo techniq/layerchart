@@ -66,10 +66,16 @@
     r,
     motion,
     disabled = false,
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     children,
     ...restProps
   }: CircleClipPathPropsWithoutHTML = $props();
+
+  let ref = $state<SVGCircleElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
 </script>
 
 <ClipPath {id} {disabled} {children}>

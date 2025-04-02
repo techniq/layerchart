@@ -68,7 +68,7 @@
 
   let {
     context = $bindable(),
-    ref = $bindable(),
+    ref: refProp = $bindable(),
     contextAttributes,
     fallback = '',
     pointerEvents = true,
@@ -76,6 +76,11 @@
     children,
     ...restProps
   }: WebGLProps = $props();
+
+  let ref = $state<HTMLCanvasElement>();
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
   let testGl;
 
