@@ -342,7 +342,7 @@
   $effect(() => {
     if (!startContent && !endContent) return;
     d;
-    if (!splineRef || !splineRef.pathLength) return;
+    if (!splineRef || !splineRef.getTotalLength()) return;
     startPoint = splineRef.getPointAtLength(0);
     const totalLength = splineRef.getTotalLength();
     endPoint.target = splineRef.getPointAtLength(totalLength);
