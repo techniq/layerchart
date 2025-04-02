@@ -133,7 +133,6 @@
       value="value"
       outerRadius={-25}
       innerRadius={-20}
-      range={[90, -270]}
       cornerRadius={10}
       {renderContext}
       {debug}
@@ -154,6 +153,42 @@
       innerRadius={-20}
       cornerRadius={10}
       props={{ group: { y: 70 } }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Series data (90° starting angle)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <ArcChart
+      {data}
+      key="fruit"
+      value="value"
+      outerRadius={-25}
+      innerRadius={-20}
+      range={[90, -270]}
+      cornerRadius={10}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Series data (180° starting angle)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <ArcChart
+      {data}
+      key="fruit"
+      value="value"
+      outerRadius={-25}
+      innerRadius={-20}
+      range={[180, -180]}
+      cornerRadius={10}
       {renderContext}
       {debug}
     />
