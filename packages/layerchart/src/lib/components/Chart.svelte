@@ -241,34 +241,6 @@
     percentRange?: boolean;
 
     /**
-     * Override the automated width.
-     *
-     * @default containerWidth
-     */
-    width?: number;
-
-    /**
-     * Override the automated height.
-     *
-     * @default containerHeight
-     */
-    height?: number;
-
-    /**
-     * The bound container width.
-     *
-     * @default width || 100
-     */
-    containerWidth?: number;
-
-    /**
-     * The bound container height.
-     *
-     * @default height || 100
-     */
-    containerHeight?: number;
-
-    /**
      * A bindable reference to the root container element.
      */
     ref?: HTMLElement;
@@ -726,10 +698,6 @@
     pointerEvents = true,
     position = 'relative',
     percentRange = false,
-    width: widthProp,
-    height: heightProp,
-    containerWidth: containerWidthProp,
-    containerHeight: containerHeightProp,
     ref = $bindable(),
     x: xProp,
     y: yProp,
@@ -800,13 +768,8 @@
 
   const xRangeProp = $derived(_xRangeProp ? _xRangeProp : radial ? [0, 2 * Math.PI] : undefined);
 
-  const containerWidth = $derived(
-    containerWidthProp !== undefined ? containerWidthProp : widthProp || 100
-  );
-
-  const containerHeight = $derived(
-    containerHeightProp !== undefined ? containerHeightProp : heightProp || 100
-  );
+  let containerWidth = $state(100);
+  let containerHeight = $state(100);
 
   const logDebug = useDebounce(printDebug, 200);
 
@@ -1374,8 +1337,8 @@
     style:bottom={position === 'absolute' ? '0' : null}
     style:left={position === 'absolute' ? '0' : null}
     style:pointer-events={pointerEvents === false ? 'none' : null}
-    bind:clientWidth={containerWidthProp}
-    bind:clientHeight={containerHeightProp}
+    bind:clientWidth={containerWidth}
+    bind:clientHeight={containerHeight}
     class={layerClass('root-container')}
   >
     {#key isMounted}
