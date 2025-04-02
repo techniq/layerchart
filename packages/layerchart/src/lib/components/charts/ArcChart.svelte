@@ -104,6 +104,46 @@
     padAngle?: number;
 
     /**
+     * Start angle in radians
+     */
+    trackStartAngle?: number;
+
+    /**
+     * End angle in radians
+     */
+    trackEndAngle?: number;
+
+    /**
+     * Define innerRadius. Defaults to yRange min
+     *   • value >= 1: discrete value
+     *   • value < 1: percent of `outerRadius`
+     *   • value < 0: offset of `outerRadius`
+     */
+    trackInnerRadius?: number;
+
+    /**
+     * Define outerRadius. Defaults to smallest width (xRange) or height (yRange) dimension (/2)
+     *   • value >= 1: discrete value
+     *   • value < 1: percent of chart width or height (smallest) / 2
+     *   • value < 0: offset of chart width or height (smallest) / 2
+     */
+    trackOuterRadius?: number;
+
+    /**
+     * Corner radius of the arc
+     *
+     * @default 0
+     */
+    trackCornerRadius?: number;
+
+    /**
+     * Angle between the arcs
+     *
+     * @default 0
+     */
+    trackPadAngle?: number;
+
+    /**
      * Placement of the ArcChart
      *
      * @default 'center'
@@ -201,6 +241,12 @@
     marks,
     arc,
     context = $bindable(),
+    trackCornerRadius,
+    trackPadAngle,
+    trackStartAngle,
+    trackEndAngle,
+    trackInnerRadius,
+    trackOuterRadius,
     ...restProps
   }: ArcChartProps<TData> = $props();
 
@@ -324,6 +370,13 @@
       outerRadius: (outerRadius ?? 0) < 0 ? i * (outerRadius ?? 0) : outerRadius,
       cornerRadius,
       padAngle,
+      trackCornerRadius,
+      trackPadAngle,
+      trackStartAngle,
+      trackEndAngle,
+      trackInnerRadius,
+      trackOuterRadius:
+        (trackOuterRadius ?? 0) < 0 ? i * (trackOuterRadius ?? 0) : trackOuterRadius,
       fill: s.color ?? context.cScale?.(context.c(d)),
       track: { fill: s.color ?? context.cScale?.(context.c(d)), fillOpacity: 0.1 },
       tooltipContext: context.tooltip,

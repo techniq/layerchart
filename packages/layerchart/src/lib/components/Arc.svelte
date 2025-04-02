@@ -65,6 +65,46 @@
     padAngle?: number;
 
     /**
+     * Start angle in radians
+     */
+    trackStartAngle?: number;
+
+    /**
+     * End angle in radians
+     */
+    trackEndAngle?: number;
+
+    /**
+     * Define innerRadius. Defaults to yRange min
+     *   • value >= 1: discrete value
+     *   • value < 1: percent of `outerRadius`
+     *   • value < 0: offset of `outerRadius`
+     */
+    trackInnerRadius?: number;
+
+    /**
+     * Define outerRadius. Defaults to smallest width (xRange) or height (yRange) dimension (/2)
+     *   • value >= 1: discrete value
+     *   • value < 1: percent of chart width or height (smallest) / 2
+     *   • value < 0: offset of chart width or height (smallest) / 2
+     */
+    trackOuterRadius?: number;
+
+    /**
+     * Corner radius of the arc
+     *
+     * @default 0
+     */
+    trackCornerRadius?: number;
+
+    /**
+     * Angle between the arcs
+     *
+     * @default 0
+     */
+    trackPadAngle?: number;
+
+    /**
      * Offset arc from center
      *
      * @default 0
@@ -156,6 +196,12 @@
     outerRadius: outerRadiusProp,
     cornerRadius = 0,
     padAngle = 0,
+    trackStartAngle: trackStartAngleProp,
+    trackEndAngle: trackEndAngleProp,
+    trackInnerRadius: trackInnerRadiusProp,
+    trackOuterRadius: trackOuterRadiusProp,
+    trackCornerRadius: trackCornerRadiusProp,
+    trackPadAngle: trackPadAngleProp,
     fill,
     fillOpacity,
     stroke = 'none',
@@ -216,6 +262,11 @@
   const outerRadius = $derived(
     getOuterRadius(outerRadiusProp, (Math.min(ctx.xRange[1], ctx.yRange[0]) ?? 0) / 2)
   );
+  const trackOuterRadius = $derived(
+    trackOuterRadiusProp
+      ? getOuterRadius(trackOuterRadiusProp, (Math.min(ctx.xRange[1], ctx.yRange[0]) ?? 0) / 2)
+      : outerRadius
+  );
 
   function getInnerRadius(innerRadius: number | undefined, outerRadius: number) {
     if (innerRadius == null) {
@@ -236,14 +287,23 @@
   }
 
   const innerRadius = $derived(getInnerRadius(innerRadiusProp, outerRadius));
+  const trackInnerRadius = $derived(
+    trackInnerRadiusProp ? getInnerRadius(trackInnerRadiusProp, trackOuterRadius) : innerRadius
+  );
 
   const startAngle = $derived(startAngleProp ?? degreesToRadians(range[0]));
+  const trackStartAngle = $derived(
+    trackStartAngleProp ?? startAngleProp ?? degreesToRadians(range[0])
+  );
+  const trackEndAngle = $derived(trackEndAngleProp ?? endAngleProp ?? degreesToRadians(range[1]));
+  const trackCornerRadius = $derived(trackCornerRadiusProp ?? cornerRadius);
+  const trackPadAngle = $derived(trackPadAngleProp ?? padAngle);
 
   const arc = $derived(
     d3arc()
       .innerRadius(innerRadius)
       .outerRadius(outerRadius)
-      .startAngle(startAngleProp ?? degreesToRadians(range[0]))
+      .startAngle(startAngle)
       .endAngle(endAngleProp ?? degreesToRadians(scale(motionEndAngle.current)))
       .cornerRadius(cornerRadius)
       .padAngle(padAngle)
@@ -251,12 +311,12 @@
 
   const trackArc = $derived(
     d3arc()
-      .innerRadius(innerRadius)
-      .outerRadius(outerRadius)
-      .startAngle(startAngleProp ?? degreesToRadians(range[0]))
-      .endAngle(endAngleProp ?? degreesToRadians(range[1]))
-      .cornerRadius(cornerRadius)
-      .padAngle(padAngle)
+      .innerRadius(trackInnerRadius)
+      .outerRadius(trackOuterRadius)
+      .startAngle(trackStartAngle)
+      .endAngle(trackEndAngle)
+      .cornerRadius(trackCornerRadius)
+      .padAngle(trackPadAngle)
   );
 
   // @ts-expect-error - todo - fix type
