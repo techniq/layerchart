@@ -40,8 +40,8 @@
   }
 
   type BrushEventPayload = {
-    xDomain?: DomainType;
-    yDomain?: DomainType;
+    xDomain: DomainType | null;
+    yDomain: DomainType | null;
   };
 
   type BrushContextPropsWithoutHTML = {
@@ -182,8 +182,10 @@
     yDomain = ctx.yScale.domain();
   });
 
-  const originalXDomain = ctx.xDomain;
-  const originalYDomain = ctx.yDomain;
+  const ogXDomain = xDomain;
+  const ogYDomain = yDomain;
+  const originalXDomain = ctx.config.xDomain;
+  const originalYDomain = ctx.config.yDomain;
 
   const xDomainMinMax = $derived(extent<number>(ctx.xScale.domain()) as [number, number]);
   const xDomainMin = $derived(xDomainMinMax[0]);
@@ -410,10 +412,10 @@
     logger.debug('reset');
     brushContext.isActive = false;
 
-    xDomain = originalXDomain ?? [];
-    yDomain = originalYDomain ?? [];
-
     onReset({ xDomain, yDomain });
+
+    xDomain = ogXDomain;
+    yDomain = ogYDomain;
   }
 
   function selectAll() {
@@ -426,12 +428,12 @@
     if (mode === 'separated') {
       // Set reactively to handle cases where xDomain/yDomain are set externally (ex. `bind:xDomain`)
       const isXAxisActive =
-        xDomain?.[0]?.valueOf() !== originalXDomain?.[0]?.valueOf() ||
-        xDomain?.[1]?.valueOf() !== originalXDomain?.[1]?.valueOf();
+        xDomain?.[0]?.valueOf() !== ctx.xDomain?.[0]?.valueOf() ||
+        xDomain?.[1]?.valueOf() !== ctx.xDomain?.[1]?.valueOf();
 
       const isYAxisActive =
-        yDomain?.[0]?.valueOf() !== originalYDomain?.[0]?.valueOf() ||
-        yDomain?.[1]?.valueOf() !== originalYDomain?.[1]?.valueOf();
+        yDomain?.[0]?.valueOf() !== ctx.yDomain?.[0]?.valueOf() ||
+        yDomain?.[1]?.valueOf() !== ctx.xDomain?.[1]?.valueOf();
 
       const result =
         axis === 'x' ? isXAxisActive : axis == 'y' ? isYAxisActive : isXAxisActive || isYAxisActive;
