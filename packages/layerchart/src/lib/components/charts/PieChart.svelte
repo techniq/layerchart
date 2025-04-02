@@ -283,7 +283,8 @@
       variant: 'swatches',
       onclick: (e, item) => {
         selectedKeys.toggleSelected(item.value);
-        selectedSeries.toggleSelected(item.value);
+        // TODO: investigate
+        // selectedSeries.toggleSelected(item.value);
       },
       onpointerenter: (e, item) => (highlightKey.current = item.value),
       onpointerleave: (e) => (highlightKey.current = null),
