@@ -144,7 +144,15 @@
     ref?: SVGPathElement;
 
     children?: Snippet<
-      [{ centroid: [number, number]; boundingBox: DOMRect; value: number; textPaths: ArcTextPaths }]
+      [
+        {
+          centroid: [number, number];
+          boundingBox: DOMRect;
+          value: number;
+          trackTextPaths: ArcTextPaths;
+          arcTextPaths: ArcTextPaths;
+        },
+      ]
     >;
 
     motion?: MotionProp;
@@ -302,12 +310,14 @@
   const trackCornerRadius = $derived(trackCornerRadiusProp ?? cornerRadius);
   const trackPadAngle = $derived(trackPadAngleProp ?? padAngle);
 
+  const arcEndAngle = $derived(endAngleProp ?? degreesToRadians(scale(motionEndAngle.current)));
+
   const arc = $derived(
     d3arc()
       .innerRadius(innerRadius)
       .outerRadius(outerRadius)
       .startAngle(startAngle)
-      .endAngle(endAngleProp ?? degreesToRadians(scale(motionEndAngle.current)))
+      .endAngle(arcEndAngle)
       .cornerRadius(cornerRadius)
       .padAngle(padAngle)
   );
@@ -346,12 +356,20 @@
     tooltipContext?.hide();
   };
 
-  const textPaths = getArcTextPaths({
+  const trackTextPaths = getArcTextPaths({
     startAngle: () => trackStartAngle,
     endAngle: () => trackEndAngle,
     outerRadius: () => trackOuterRadius,
     innerRadius: () => trackInnerRadius,
     cornerRadius: () => trackCornerRadius,
+  });
+
+  const arcTextPaths = getArcTextPaths({
+    startAngle: () => startAngle,
+    endAngle: () => arcEndAngle,
+    outerRadius: () => outerRadius,
+    innerRadius: () => innerRadius,
+    cornerRadius: () => cornerRadius,
   });
 </script>
 
@@ -390,5 +408,6 @@
   centroid: trackArcCentroid,
   boundingBox,
   value: motionEndAngle.current,
-  textPaths,
+  trackTextPaths,
+  arcTextPaths,
 })}

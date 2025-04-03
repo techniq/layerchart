@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Field, RangeField, Switch, TextField } from 'svelte-ux';
+  import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { Arc, Chart, Svg, LinearGradient, Text } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -29,6 +29,8 @@
   let outerText = $state('outer text');
   let innerText = $state('inner text');
   let centroidText = $state('centroid text');
+  let textPath = $state<'arc' | 'track'>('arc');
+  let textSize = $state(16);
 </script>
 
 <h1>Playground</h1>
@@ -54,6 +56,13 @@
   <TextField label="Outer Arc Text" bind:value={outerText} />
   <TextField label="Inner Arc Text" bind:value={innerText} />
   <TextField label="Centroid Arc Text" bind:value={centroidText} />
+  <Field label="textAnchor" classes={{ input: 'mt-[6px] mb-1' }}>
+    <ToggleGroup bind:value={textPath} variant="outline" size="sm" inset class="w-full">
+      <ToggleOption value="arc">arc</ToggleOption>
+      <ToggleOption value="track">track</ToggleOption>
+    </ToggleGroup>
+  </Field>
+  <RangeField label="Font size (px)" bind:value={textSize} min={domain[0]} max={domain[1]} />
 </div>
 
 <Preview>
@@ -75,7 +84,8 @@
                 fill={gradient}
                 track={{ class: 'fill-surface-content/5' }}
               >
-                {#snippet children({ value, textPaths })}
+                {#snippet children({ value, arcTextPaths, trackTextPaths })}
+                  {@const paths = textPath === 'arc' ? arcTextPaths : trackTextPaths}
                   <Text
                     value={Math.round(value)}
                     textAnchor="middle"
@@ -83,9 +93,14 @@
                     class="text-4xl"
                     dy={8}
                   />
-                  <Text value={innerText} path={textPaths.inner} truncate />
-                  <Text value={outerText} path={textPaths.outer} truncate />
-                  <Text value={centroidText} path={textPaths.centroid} truncate />
+                  <Text value={innerText} path={paths.inner} font-size="{textSize}px" truncate />
+                  <Text value={outerText} path={paths.outer} font-size="{textSize}px" truncate />
+                  <Text
+                    value={centroidText}
+                    path={paths.centroid}
+                    font-size="{textSize}px"
+                    truncate
+                  />
                 {/snippet}
               </Arc>
             {/snippet}

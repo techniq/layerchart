@@ -461,7 +461,9 @@
   >
     {#if path}
       <defs>
-        <path bind:this={pathRef} id={pathId} d={path} />
+        {#key path}
+          <path bind:this={pathRef} id={pathId} d={path} />
+        {/key}
       </defs>
       <text
         bind:this={ref}
