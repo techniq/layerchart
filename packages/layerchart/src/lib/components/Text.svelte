@@ -229,7 +229,8 @@
 
   let style = $state<CSSStyleDeclaration>(); // TODO: read from DOM?
 
-  const resolvedWidth = $derived(path ? getPathLength(pathRef) : width);
+  // this random 3 here should probably be calculated based on the font size or something?
+  const resolvedWidth = $derived(path ? getPathLength(pathRef) / 2 - 3 : width);
 
   const defaultTruncateOptions: TruncateTextOptions = $derived({
     maxChars: undefined,

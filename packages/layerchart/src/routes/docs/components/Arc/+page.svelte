@@ -83,9 +83,9 @@
                     class="text-4xl"
                     dy={8}
                   />
-                  <Text value={innerText} path={textPaths.inner} />
-                  <Text value={outerText} path={textPaths.outer} />
-                  <Text value={centroidText} path={textPaths.centroid} />
+                  <Text value={innerText} path={textPaths.inner} truncate />
+                  <Text value={outerText} path={textPaths.outer} truncate />
+                  <Text value={centroidText} path={textPaths.centroid} truncate />
                 {/snippet}
               </Arc>
             {/snippet}
