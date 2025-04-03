@@ -360,8 +360,6 @@
       return visibleSeries;
     },
   });
-
-  //   const isSingleArc = $derived(series.length === 1);
 </script>
 
 <!-- svelte-ignore ownership_invalid_binding -->
