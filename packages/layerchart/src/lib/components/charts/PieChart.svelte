@@ -394,7 +394,7 @@
   data={visibleData}
   x={value}
   y={key}
-  {c}
+  c={key}
   cDomain={chartData.map(keyAccessor)}
   cRange={seriesColors.length
     ? seriesColors
