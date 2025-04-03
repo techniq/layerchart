@@ -37,18 +37,16 @@
       {#snippet marks()}
         <Threshold curve={selectedCurve}>
           {#snippet above({ curve })}
-            <g>
-              <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
-            </g>
+            <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
           {/snippet}
+
           {#snippet children({ curve })}
             <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
             <Spline y="value" {curve} class="stroke-[1.5]" />
           {/snippet}
+
           {#snippet below({ curve })}
-            <g>
-              <Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
-            </g>
+            <Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
           {/snippet}
         </Threshold>
       {/snippet}
@@ -73,15 +71,13 @@
       {#snippet marks()}
         <Threshold curve={selectedCurve}>
           {#snippet above({ curve })}
-            <g>
-              <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
-            </g>
+            <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
           {/snippet}
+
           {#snippet below({ curve })}
-            <g>
-              <Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
-            </g>
+            <Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
           {/snippet}
+
           {#snippet children({ curve })}
             <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
             <Spline y="value" {curve} class="stroke-[1.5]" />
@@ -121,15 +117,13 @@
       {#snippet marks()}
         <Threshold>
           {#snippet above({ curve })}
-            <g>
-              <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
-            </g>
+            <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
           {/snippet}
+
           {#snippet below({ curve })}
-            <g>
-              <Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
-            </g>
+            <Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
           {/snippet}
+
           {#snippet children({ curve })}
             <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
             <Spline y="value" {curve} class="stroke-[1.5]" />
