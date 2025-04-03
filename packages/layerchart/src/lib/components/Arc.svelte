@@ -143,7 +143,9 @@
      */
     ref?: SVGPathElement;
 
-    children?: Snippet<[{ centroid: [number, number]; boundingBox: DOMRect; value: number }]>;
+    children?: Snippet<
+      [{ centroid: [number, number]; boundingBox: DOMRect; value: number; textPaths: ArcTextPaths }]
+    >;
 
     motion?: MotionProp;
   } & CommonStyleProps;
@@ -181,6 +183,7 @@
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
   import { max } from 'd3-array';
+  import { getArcTextPaths, type ArcTextPaths } from '$lib/utils/textPath.svelte.js';
 
   let {
     ref: refProp = $bindable(),
@@ -342,6 +345,14 @@
     onpointerleave?.(e);
     tooltipContext?.hide();
   };
+
+  const textPaths = getArcTextPaths({
+    startAngle: () => trackStartAngle,
+    endAngle: () => trackEndAngle,
+    outerRadius: () => trackOuterRadius,
+    innerRadius: () => trackInnerRadius,
+    cornerRadius: () => trackCornerRadius,
+  });
 </script>
 
 {#if track}
@@ -375,4 +386,9 @@
   }}
 />
 
-{@render children?.({ centroid: trackArcCentroid, boundingBox, value: motionEndAngle.current })}
+{@render children?.({
+  centroid: trackArcCentroid,
+  boundingBox,
+  value: motionEndAngle.current,
+  textPaths,
+})}

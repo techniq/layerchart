@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Field, RangeField, Switch } from 'svelte-ux';
+  import { Field, RangeField, Switch, TextField } from 'svelte-ux';
   import { Arc, Chart, Svg, LinearGradient, Text } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -9,9 +9,9 @@
   let domain = $state<[number, number]>([0, 100]);
   // let range = [-120, 120];
   let range = $state<[number, number]>([0, 360]);
-  let innerRadius = $state(50);
-  let outerRadius = $state(60);
-  let cornerRadius = $state(5);
+  let innerRadius = $state(70);
+  let outerRadius = $state(140);
+  let cornerRadius = $state(8);
   let padAngle = $state(0);
   let padRadius = $state(0);
 
@@ -25,6 +25,10 @@
     { name: 'Arc Centroid', value: 'arc-centroid' },
   ];
   let label = 'svg-center';
+
+  let outerText = $state('outer text');
+  let innerText = $state('inner text');
+  let centroidText = $state('centroid text');
 </script>
 
 <h1>Playground</h1>
@@ -47,10 +51,13 @@
   />
   <RangeField label="Pad angle" bind:value={padAngle} max={2} step={0.1} />
   <!-- <RangeField label="Pad radius" bind:value={padRadius} max={2} step={0.1} /> -->
+  <TextField label="Outer Arc Text" bind:value={outerText} />
+  <TextField label="Inner Arc Text" bind:value={innerText} />
+  <TextField label="Centroid Arc Text" bind:value={centroidText} />
 </div>
 
 <Preview>
-  <div class="h-[200px] p-4 border rounded-sm">
+  <div class="h-[400px] p-4 border rounded-sm">
     <Chart>
       <Svg center>
         {#key spring}
@@ -68,7 +75,7 @@
                 fill={gradient}
                 track={{ class: 'fill-surface-content/5' }}
               >
-                {#snippet children({ value })}
+                {#snippet children({ value, textPaths })}
                   <Text
                     value={Math.round(value)}
                     textAnchor="middle"
@@ -76,6 +83,9 @@
                     class="text-4xl"
                     dy={8}
                   />
+                  <Text value={innerText} path={textPaths.inner} />
+                  <Text value={outerText} path={textPaths.outer} />
+                  <Text value={centroidText} path={textPaths.centroid} />
                 {/snippet}
               </Arc>
             {/snippet}

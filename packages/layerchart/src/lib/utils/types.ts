@@ -99,3 +99,9 @@ export type CommonStyleProps = {
 };
 
 export type OnlyObjects<T> = T extends object ? T : never;
+
+export type Getter<T> = () => T;
+
+export type GetterValues<T> = {
+  [K in keyof T]: Getter<T[K]>;
+};
