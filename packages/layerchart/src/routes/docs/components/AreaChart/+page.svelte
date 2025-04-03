@@ -3,30 +3,32 @@
     AreaChart,
     Area,
     Axis,
+    Circle,
     Highlight,
     Html,
+    Line,
     LinearGradient,
     Svg,
     Spline,
     Text,
     Tooltip,
+    Threshold,
     pivotLonger,
     accessor,
-    Line,
-    Circle,
     type ChartContextValue,
   } from 'layerchart';
-  import { curveBasis, curveCatmullRom } from 'd3-shape';
+  import { curveBasis, curveCatmullRom, curveStepAfter } from 'd3-shape';
   import { group } from 'd3-array';
   import { Button, Field, ToggleGroup, ToggleOption, Kbd, Switch } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
   import { addDays } from 'date-fns';
+  import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
   import type { DomainType } from '$lib/utils/scales.svelte.js';
-  import Blockquote from 'layerchart/docs/Blockquote.svelte';
-  import { cls } from '@layerstack/tailwind';
+  import Blockquote from '$lib/docs/Blockquote.svelte';
+  import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
   let { data } = $props();
 
@@ -67,6 +69,14 @@
   });
   const multiSeriesFlatData = pivotLonger(multiSeriesData, keys, 'fruit', 'value');
   const multiSeriesDataByFruit = group(multiSeriesFlatData, (d) => d.fruit);
+
+  const thresholdData = createDateSeries({
+    count: 30,
+    min: 50,
+    max: 100,
+    value: 'integer',
+    keys: ['value', 'baseline'],
+  });
 
   const funnelSegments = [
     { index: 0, value: 100 },
@@ -109,6 +119,8 @@
 
   let markerPoints: { date: Date; value: number }[] = $state([]);
   let context = $state<ChartContextValue<(typeof denseDateSeriesData)[number]>>(null!);
+
+  let selectedCurve = $state(curveStepAfter);
 </script>
 
 <svelte:window
@@ -480,6 +492,59 @@
             {/snippet}
           </LinearGradient>
         {/each}
+      {/snippet}
+    </AreaChart>
+  </div>
+</Preview>
+
+<div class="grid grid-cols-[1fr_200px] gap-2 items-end">
+  <h2>Threshold</h2>
+  <CurveMenuField bind:value={selectedCurve} dense class="mb-2" />
+</div>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <AreaChart
+      data={thresholdData}
+      x="date"
+      y={['value', 'baseline']}
+      padding={{ left: 16, bottom: 24 }}
+      props={{
+        highlight: { area: true, lines: false, points: false },
+        tooltip: { context: { mode: 'bisect-x', findTooltipData: 'left' } },
+      }}
+      {renderContext}
+      {debug}
+    >
+      {#snippet marks()}
+        <Threshold curve={selectedCurve}>
+          {#snippet above({ curve })}
+            <Area y0="value" y1="baseline" {curve} class="fill-success/30" />
+          {/snippet}
+
+          {#snippet below({ curve })}
+            <Area y0="value" y1="baseline" {curve} class="fill-danger/30" />
+          {/snippet}
+
+          {#snippet children({ curve })}
+            <Spline y="baseline" {curve} class="[stroke-dasharray:4]" />
+            <Spline y="value" {curve} class="stroke-[1.5]" />
+          {/snippet}
+        </Threshold>
+      {/snippet}
+
+      {#snippet tooltip({ context })}
+        <Tooltip.Root {context}>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(data.date)}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} />
+              <Tooltip.Item label="baseline" value={data.baseline} />
+              <Tooltip.Separator />
+              <Tooltip.Item label="variance" value={data.value - data.baseline} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
       {/snippet}
     </AreaChart>
   </div>

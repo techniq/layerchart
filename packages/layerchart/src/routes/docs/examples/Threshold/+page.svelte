@@ -7,6 +7,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import Blockquote from '$lib/docs/Blockquote.svelte';
 
   let selectedCurve = $state(curveStepAfter);
 
@@ -22,6 +23,10 @@
 <CurveMenuField bind:value={selectedCurve} />
 
 <h1>Examples</h1>
+
+<Blockquote>
+  See also: <a href="/docs/components/AreaChart">AreaChart</a> for simplified examples
+</Blockquote>
 
 <h2>Basic</h2>
 
