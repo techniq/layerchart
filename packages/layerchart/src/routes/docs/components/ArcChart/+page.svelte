@@ -142,7 +142,45 @@
   </div>
 </Preview>
 
-<h2>Fixed width</h2>
+<h2>Radius (offset)</h2>
+
+<Preview data={[{ key: 'Example', value: 70 }]}>
+  <div class="h-[200px] p-4 border rounded-sm resize overflow-auto">
+    <ArcChart
+      data={[{ key: 'Example', value: 70 }]}
+      key="key"
+      value="value"
+      maxValue={100}
+      innerRadius={-20}
+      trackOuterRadius={-5}
+      trackInnerRadius={-10}
+      cornerRadius={10}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Radius (percentage)</h2>
+
+<Preview data={[{ key: 'Example', value: 70 }]}>
+  <div class="h-[200px] p-4 border rounded-sm resize overflow-auto">
+    <ArcChart
+      data={[{ key: 'Example', value: 70 }]}
+      key="key"
+      value="value"
+      maxValue={100}
+      innerRadius={0.8}
+      trackOuterRadius={0.95}
+      trackInnerRadius={0.9}
+      cornerRadius={10}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Radius (fixed)</h2>
 
 <Preview data={[{ key: 'Example', value: 70 }]}>
   <div class="h-[200px] p-4 border rounded-sm resize overflow-auto">
