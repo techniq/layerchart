@@ -1,12 +1,13 @@
 <script lang="ts">
+  import { Spring } from 'svelte/motion';
   import { PieChart, Text } from 'layerchart';
   import { group, sum } from 'd3-array';
   import { quantize } from 'd3-interpolate';
   import { schemeTableau10, interpolateRainbow } from 'd3-scale-chromatic';
+  import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { longData } from '$lib/utils/genData.js';
-  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format } from '@layerstack/utils';
   import Arc from '$lib/components/Arc.svelte';
 
@@ -24,6 +25,21 @@
         ][i],
       };
     }) ?? [];
+
+  let segmentCount = $state(60);
+  let segmentValue = new Spring(75);
+  let segmentData = $derived(
+    Array.from({ length: segmentCount }, (_, i) => {
+      return {
+        key: i + 1,
+        value: 1,
+        color:
+          (i / segmentCount) * 100 < (segmentValue.current ?? 0)
+            ? 'var(--color-success)'
+            : 'color-mix(in lch, var(--color-surface-content) 10%, transparent)',
+      };
+    })
+  );
 
   let renderContext: 'svg' | 'canvas' = $state('svg');
   let debug = $state(false);
@@ -154,6 +170,38 @@
       {renderContext}
       {debug}
     />
+  </div>
+</Preview>
+
+<div class="flex items-end gap-2">
+  <h2 class="grow">Segments</h2>
+  <RangeField label="Segments" bind:value={segmentCount} min={2} class="mb-2" />
+  <RangeField label="Value" bind:value={segmentValue.target} class="mb-2" />
+</div>
+
+<Preview data={segmentData}>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <PieChart
+      data={segmentData}
+      key="key"
+      value="value"
+      c="color"
+      innerRadius={-20}
+      cornerRadius={4}
+      padAngle={0.02}
+      {renderContext}
+      {debug}
+    >
+      {#snippet aboveMarks()}
+        <Text
+          value={Math.round(segmentValue.current ?? 0)}
+          textAnchor="middle"
+          verticalAnchor="middle"
+          dy={16}
+          class="text-6xl tabular-nums"
+        />
+      {/snippet}
+    </PieChart>
   </div>
 </Preview>
 

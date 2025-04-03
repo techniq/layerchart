@@ -47,7 +47,8 @@
 <h1>Examples</h1>
 
 <Blockquote>
-  See also: <a href="/docs/components/PieChart">PieChart</a> for simplified examples
+  See also: <a href="/docs/components/ArcChart">ArcChart</a> and
+  <a href="/docs/components/PieChart">PieChart</a> for simplified examples
 </Blockquote>
 
 <h2>Partial Arc</h2>
