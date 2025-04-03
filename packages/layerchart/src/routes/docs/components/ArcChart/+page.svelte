@@ -132,10 +132,29 @@
       key="key"
       value="value"
       maxValue={100}
-      outerRadius={-25}
       innerRadius={-20}
-      trackInnerRadius={70}
-      trackOuterRadius={78}
+      trackOuterRadius={-5}
+      trackInnerRadius={-10}
+      cornerRadius={10}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Fixed width</h2>
+
+<Preview data={[{ key: 'Example', value: 70 }]}>
+  <div class="h-[200px] p-4 border rounded-sm resize overflow-auto">
+    <ArcChart
+      data={[{ key: 'Example', value: 70 }]}
+      key="key"
+      value="value"
+      maxValue={100}
+      outerRadius={80}
+      innerRadius={60}
+      trackOuterRadius={75}
+      trackInnerRadius={65}
       cornerRadius={10}
       {renderContext}
       {debug}

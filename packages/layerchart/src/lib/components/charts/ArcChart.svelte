@@ -300,12 +300,13 @@
   function getArcProps(s: SeriesData<TData, typeof Arc>, i: number): ComponentProps<typeof Arc> {
     if (!context) return {};
     const d = s.data?.[0] || chartData[0];
+    const multiSeries = data.length > 1 || series.length > 1;
     return {
       value: valueAccessor(d),
       domain: [0, s.maxValue ?? maxValue ?? sum(chartData, valueAccessor)],
       range,
       innerRadius,
-      outerRadius: (outerRadius ?? 0) < 0 ? i * (outerRadius ?? 0) : outerRadius,
+      outerRadius: multiSeries && (outerRadius ?? 0) < 0 ? i * (outerRadius ?? 0) : outerRadius,
       cornerRadius,
       padAngle,
       trackCornerRadius,
@@ -314,7 +315,7 @@
       trackEndAngle,
       trackInnerRadius,
       trackOuterRadius:
-        (trackOuterRadius ?? 0) < 0 ? i * (trackOuterRadius ?? 0) : trackOuterRadius,
+        multiSeries && (trackOuterRadius ?? 0) < 0 ? i * (trackOuterRadius ?? 0) : trackOuterRadius,
       fill: s.color ?? context.cScale?.(context.c(d)),
       track: { fill: s.color ?? context.cScale?.(context.c(d)), fillOpacity: 0.1 },
       tooltipContext: context.tooltip,
