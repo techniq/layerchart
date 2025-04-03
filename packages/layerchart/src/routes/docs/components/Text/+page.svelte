@@ -24,7 +24,7 @@
   const truncateOptions: TruncateTextOptions = $state({
     maxChars: 22,
     minChars: 0,
-    ellipsis: '...',
+    ellipsis: '…',
     position: 'end',
   });
 </script>
