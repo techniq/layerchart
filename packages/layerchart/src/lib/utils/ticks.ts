@@ -183,7 +183,7 @@ export function getMinorTicks(start: Date, end: Date) {
 export type TicksConfig =
   | number
   | any[]
-  | ((scale: AnyScale) => any[])
+  | ((scale: AnyScale) => any[] | undefined)
   | { interval: TimeInterval | null }
   | null;
 
@@ -193,7 +193,7 @@ export function resolveTickVals(
   placement?: 'radius' | 'top' | 'bottom' | 'left' | 'right' | 'angle'
 ): any[] {
   if (Array.isArray(ticks)) return ticks;
-  if (typeof ticks === 'function') return ticks(scale);
+  if (typeof ticks === 'function') return ticks(scale) ?? [];
   if (isLiteralObject(ticks) && 'interval' in ticks) {
     if (ticks.interval === null || !('ticks' in scale) || typeof scale.ticks !== 'function') {
       return []; // Explicitly return empty array for null interval or invalid scale

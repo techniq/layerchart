@@ -56,8 +56,9 @@ export type SingleDomainType = number | string | Date | null | undefined;
 
 export type DomainType =
   | (number | string | Date | null | undefined)[]
-  // 'null' useful for Brush component
-  | null;
+  // 'null' and `undefined` useful for Brush component
+  | null
+  | undefined;
 
 // this may need to become a getter for options so we can reactively update after mount
 export function createMotionScale<Domain, Range>(

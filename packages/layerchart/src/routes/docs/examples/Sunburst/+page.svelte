@@ -107,9 +107,7 @@
                       innerRadius={Math.max(0, yScale(node.y0))}
                       outerRadius={Math.max(0, yScale(node.y1))}
                       fill={nodeColor}
-                      _stroke={hsl(nodeColor).darker(colorBy === 'children' ? 0.5 : 2)}
-                      stroke="hsl(0 0% 20%)"
-                      class="cursor-pointer"
+                      class="stroke-black/50 cursor-pointer"
                       onclick={() => {
                         selected = node;
                       }}
