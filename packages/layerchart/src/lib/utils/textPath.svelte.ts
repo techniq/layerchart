@@ -128,11 +128,10 @@ export type ArcTextPaths = {
 };
 
 export function getArcTextPaths(props: TextPathProps): ArcTextPaths {
-  const needsFlip = $derived(props.endAngle() < props.startAngle());
-  const start = $derived(needsFlip ? props.endAngle() : props.startAngle());
-  const end = $derived(needsFlip ? props.startAngle() : props.endAngle());
+  const shouldSwapEnds = $derived(props.endAngle() < props.startAngle());
+  const start = $derived(shouldSwapEnds ? props.endAngle() : props.startAngle());
+  const end = $derived(shouldSwapEnds ? props.startAngle() : props.endAngle());
 
-  // 2. Create reactive props for path generation, swapping angles if needed
   const pathGenProps = {
     ...props,
     startAngle: () => start,
@@ -143,8 +142,12 @@ export function getArcTextPaths(props: TextPathProps): ArcTextPaths {
   const centroid = getArcCentroidPath(pathGenProps);
   const outer = getArcOuterPath(pathGenProps);
 
-  const startOffset: ArcTextPaths['textProps']['startOffset'] = $derived(needsFlip ? '100%' : '0%');
-  const textAnchor: ArcTextPaths['textProps']['textAnchor'] = $derived(needsFlip ? 'end' : 'start');
+  const startOffset: ArcTextPaths['textProps']['startOffset'] = $derived(
+    shouldSwapEnds ? '100%' : '0%'
+  );
+  const textAnchor: ArcTextPaths['textProps']['textAnchor'] = $derived(
+    shouldSwapEnds ? 'end' : 'start'
+  );
 
   return {
     get inner() {
