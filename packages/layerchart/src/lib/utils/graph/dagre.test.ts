@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import dagre from '@dagrejs/dagre';
-import { ancestors, descendants } from './graph.js';
+import { dagreAncestors, dagreDescendants } from './dagre.js';
 
 const exampleGraph = {
   nodes: [
@@ -45,54 +45,54 @@ function buildGraph(data: typeof exampleGraph) {
   return g;
 }
 
-describe('accessors', () => {
+describe('dagreAncestors', () => {
   it('start of graph ', () => {
     const graph = buildGraph(exampleGraph);
-    const actual = ancestors(graph, 'A');
+    const actual = dagreAncestors(graph, 'L');
     expect(actual).length(0);
   });
 
   it('middle of graph ', () => {
     const graph = buildGraph(exampleGraph);
-    const actual = ancestors(graph, 'E');
+    const actual = dagreAncestors(graph, 'E');
     expect(actual).to.have.members(['A', 'B', 'C', 'D']);
   });
 
   it('end of graph ', () => {
     const graph = buildGraph(exampleGraph);
-    const actual = ancestors(graph, 'I');
+    const actual = dagreAncestors(graph, 'I');
     expect(actual).to.have.members(['A', 'B', 'C', 'D', 'E', 'G', 'H']);
   });
 
   it('max depth', () => {
     const graph = buildGraph(exampleGraph);
-    const actual = ancestors(graph, 'H', 2);
+    const actual = dagreAncestors(graph, 'H', 2);
     expect(actual).to.have.members(['B', 'D', 'E', 'G']);
   });
 });
 
-describe('descendants', () => {
+describe('dagreDescendants', () => {
   it('start of graph ', () => {
     const graph = buildGraph(exampleGraph);
-    const actual = descendants(graph, 'A');
+    const actual = dagreDescendants(graph, 'A');
     expect(actual).to.have.members(['B', 'E', 'F', 'H', 'I']);
   });
 
   it('middle of graph ', () => {
     const graph = buildGraph(exampleGraph);
-    const actual = descendants(graph, 'E');
+    const actual = dagreDescendants(graph, 'E');
     expect(actual).to.have.members(['H', 'I']);
   });
 
   it('end of graph ', () => {
     const graph = buildGraph(exampleGraph);
-    const actual = descendants(graph, 'I');
+    const actual = dagreDescendants(graph, 'I');
     expect(actual).length(0);
   });
 
   it('max depth', () => {
     const graph = buildGraph(exampleGraph);
-    const actual = descendants(graph, 'B', 2);
+    const actual = dagreDescendants(graph, 'B', 2);
     expect(actual).to.have.members(['E', 'F', 'H']);
   });
 });

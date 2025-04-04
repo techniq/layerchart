@@ -19,8 +19,8 @@
     Svg,
     Text,
     Tooltip,
-    graphFromHierarchy,
-    graphFromNode,
+    sankeyGraphFromHierarchy,
+    sankeyGraphFromNode,
   } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -57,7 +57,7 @@
       .sort(sortFunc('value', 'desc'))
   );
 
-  const hierarchyGraph = $derived(graphFromHierarchy(complexDataHierarchy));
+  const hierarchyGraph = $derived(sankeyGraphFromHierarchy(complexDataHierarchy));
 
   let selectedNode: HierarchySankeyNode | null = $state.raw(null);
 
@@ -192,9 +192,9 @@
 
 <h2>Node select</h2>
 
-<Preview data={selectedNode ? graphFromNode(selectedNode) : data.greenhouse}>
+<Preview data={selectedNode ? sankeyGraphFromNode(selectedNode) : data.greenhouse}>
   <div class="h-[600px] p-4 border rounded-sm">
-    <Chart data={selectedNode ? graphFromNode(selectedNode) : data.greenhouse} flatData={[]}>
+    <Chart data={selectedNode ? sankeyGraphFromNode(selectedNode) : data.greenhouse} flatData={[]}>
       <Svg>
         <Sankey nodeId={(d) => d.name} nodeWidth={8}>
           {#snippet children({ links, nodes })}
