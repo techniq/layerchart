@@ -1,6 +1,8 @@
 <script lang="ts" module>
+  import { type Snippet } from 'svelte';
   import dagre, { type Edge, type EdgeConfig, type GraphEdge } from '@dagrejs/dagre';
-  import { untrack, type Snippet } from 'svelte';
+
+  import { dagreGraph } from '$lib/utils/graph/dagre.js';
 
   export type DagreGraphData = {
     nodes: Array<{ id: string; parent?: string; label?: string | dagre.Label }>;
@@ -195,64 +197,27 @@
   }: DagreProps = $props();
 
   $effect(() => {
-    let g = new dagre.graphlib.Graph({ directed, multigraph, compound });
-
-    g.setGraph({
-      ranker: ranker,
-      rankdir: RankDir[direction],
-      align: align ? Align[align] : undefined,
-      ranksep: rankSeparation,
-      nodesep: nodeSeparation,
-      edgesep: edgeSeparation,
+    graph = dagreGraph(data, {
+      nodes,
+      nodeId,
+      edges,
+      directed,
+      multigraph,
+      compound,
+      ranker,
+      direction,
+      align,
+      rankSeparation,
+      nodeSeparation,
+      edgeSeparation,
+      nodeWidth,
+      nodeHeight,
+      edgeLabelWidth,
+      edgeLabelHeight,
+      edgeLabelPosition,
+      edgeLabelOffset,
+      filterNodes,
     });
-
-    g.setDefaultEdgeLabel(() => ({}));
-
-    const dataNodes = nodes(data);
-
-    for (const n of dataNodes) {
-      const id = nodeId(n);
-
-      g.setNode(nodeId(n), {
-        id,
-        label: typeof n.label === 'string' ? n.label : id,
-        width: nodeWidth,
-        height: nodeHeight,
-        ...(typeof n.label === 'object' ? n.label : null),
-      });
-
-      if (n.parent) {
-        g.setParent(id, n.parent);
-      }
-    }
-
-    const nodeEdges = edges(data);
-
-    for (const e of nodeEdges) {
-      const { source, target, label, ...rest } = e;
-      g.setEdge(
-        e.source,
-        e.target,
-        label
-          ? {
-              label: label,
-              labelpos: EdgeLabelPosition[edgeLabelPosition],
-              labeloffset: edgeLabelOffset,
-              width: edgeLabelWidth,
-              height: edgeLabelHeight,
-              ...rest,
-            }
-          : {}
-      );
-    }
-
-    const _graph = untrack(() => graph!);
-
-    g = filterNodes ? g.filterNodes((nodeId) => filterNodes(nodeId, _graph)) : _graph;
-
-    dagre.layout(g);
-
-    graph = g;
   });
 
   const graphNodes = $derived.by(() => {
