@@ -24,11 +24,13 @@ function getArcCentroidPath(props: TextPathProps) {
   const centerlineEndAngle = $derived(props.endAngle() - cornerAngleOffset);
 
   const centerlinePath = $derived(
-    d3arc()
-      .outerRadius(centerRadius)
-      .innerRadius(centerRadius - 0.5)
-      .startAngle(centerlineStartAngle)
-      .endAngle(centerlineEndAngle)() ?? ''
+    extractOutsideArc(
+      d3arc()
+        .outerRadius(centerRadius)
+        .innerRadius(centerRadius - 0.5)
+        .startAngle(centerlineStartAngle)
+        .endAngle(centerlineEndAngle)() ?? ''
+    )
   );
 
   return {
@@ -36,6 +38,13 @@ function getArcCentroidPath(props: TextPathProps) {
       return centerlinePath;
     },
   };
+}
+
+function extractOutsideArc(arcPath: string) {
+  // Extract first arc until straight line to innerRadius (L) or close path (Z)
+  const matches = arcPath.match(/(^.+?)(L|Z)/);
+  if (!matches || !matches[1]) return arcPath;
+  return matches[1];
 }
 
 function getArcInnerPath(props: TextPathProps) {
@@ -53,11 +62,13 @@ function getArcInnerPath(props: TextPathProps) {
   // ensure adjust end angle doesn't cross over the start angle
 
   const innerlinePath = $derived(
-    d3arc()
-      .innerRadius(props.innerRadius())
-      .outerRadius(props.innerRadius() + 0.5)
-      .startAngle(innerlineStartAngle)
-      .endAngle(innerlineEndAngle)() ?? ''
+    extractOutsideArc(
+      d3arc()
+        .innerRadius(props.innerRadius())
+        .outerRadius(props.innerRadius() + 0.5)
+        .startAngle(innerlineStartAngle)
+        .endAngle(innerlineEndAngle)() ?? ''
+    )
   );
 
   return {
@@ -82,11 +93,13 @@ function getArcOuterPath(props: TextPathProps) {
   // ensure the adjusted end angle doesn't cross over the start angle
 
   const outerlinePath = $derived(
-    d3arc()
-      .innerRadius(props.outerRadius() - 0.5)
-      .outerRadius(props.outerRadius())
-      .startAngle(outerlineStartAngle)
-      .endAngle(outerlineEndAngle)() ?? ''
+    extractOutsideArc(
+      d3arc()
+        .innerRadius(props.outerRadius() - 0.5)
+        .outerRadius(props.outerRadius())
+        .startAngle(outerlineStartAngle)
+        .endAngle(outerlineEndAngle)() ?? ''
+    )
   );
 
   return {
@@ -130,7 +143,7 @@ export function getArcTextPaths(props: TextPathProps): ArcTextPaths {
   const centroid = getArcCentroidPath(pathGenProps);
   const outer = getArcOuterPath(pathGenProps);
 
-  const startOffset: ArcTextPaths['textProps']['startOffset'] = $derived(needsFlip ? '50%' : '0%');
+  const startOffset: ArcTextPaths['textProps']['startOffset'] = $derived(needsFlip ? '100%' : '0%');
   const textAnchor: ArcTextPaths['textProps']['textAnchor'] = $derived(needsFlip ? 'end' : 'start');
 
   return {
@@ -145,8 +158,8 @@ export function getArcTextPaths(props: TextPathProps): ArcTextPaths {
     },
     get textProps() {
       return {
-        startOffset: startOffset,
-        textAnchor: textAnchor,
+        startOffset,
+        textAnchor,
       };
     },
   };

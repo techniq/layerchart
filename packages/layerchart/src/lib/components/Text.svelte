@@ -229,8 +229,7 @@
 
   let style = $state<CSSStyleDeclaration>(); // TODO: read from DOM?
 
-  // this random 3 here should probably be calculated based on the font size or something?
-  const resolvedWidth = $derived(path ? getPathLength(pathRef) / 2 - 3 : width);
+  const resolvedWidth = $derived(path ? getPathLength(pathRef) : width);
 
   const defaultTruncateOptions: TruncateTextOptions = $derived({
     maxChars: undefined,
@@ -321,6 +320,16 @@
       return ((lines - 1) / 2) * -getPixelValue(lineHeight) + getPixelValue(capHeight) / 2;
     } else {
       return (lines - 1) * -getPixelValue(lineHeight);
+    }
+  });
+
+  const pathStartDy = $derived.by(() => {
+    if (verticalAnchor === 'start') {
+      return getPixelValue(capHeight);
+    } else if (verticalAnchor === 'middle') {
+      return (0 / 2) * -getPixelValue(lineHeight) + getPixelValue(capHeight) / 2;
+    } else {
+      return 0 * -getPixelValue(lineHeight);
     }
   });
 

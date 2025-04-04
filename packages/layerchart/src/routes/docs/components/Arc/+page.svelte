@@ -93,23 +93,23 @@
                     class="text-4xl"
                     dy={8}
                   />
-                  <!-- <Text
+                  <Text
                     {...paths.textProps}
                     value={innerText}
                     path={paths.inner}
                     font-size="{textSize}px"
                     truncate
-                  /> -->
-                  <!-- <Text
+                  />
+                  <Text
                     {...paths.textProps}
                     value={outerText}
                     path={paths.outer}
                     font-size="{textSize}px"
                     truncate
-                  /> -->
+                  />
                   <Text
-                    startOffset="50%"
-                    textAnchor="middle"
+                    {...paths.textProps}
+                    dominant-baseline="middle"
                     value={centroidText}
                     path={paths.centroid}
                     font-size="{textSize}px"
