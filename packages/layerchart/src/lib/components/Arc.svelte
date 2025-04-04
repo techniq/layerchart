@@ -404,6 +404,11 @@
   }}
 />
 
+<!-- a red path -->
+<path d={arcTextPaths.outer} fill="red" />
+<path d={arcTextPaths.inner} fill="red" />
+<path d={arcTextPaths.centroid} fill="red" />
+
 {@render children?.({
   centroid: trackArcCentroid,
   boundingBox,

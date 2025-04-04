@@ -8,7 +8,7 @@
   // let value = 100;
   let domain = $state<[number, number]>([0, 100]);
   // let range = [-120, 120];
-  let range = $state<[number, number]>([0, 360]);
+  let range = $state<[number, number]>([90, -90]);
   let innerRadius = $state(70);
   let outerRadius = $state(140);
   let cornerRadius = $state(8);
@@ -93,9 +93,23 @@
                     class="text-4xl"
                     dy={8}
                   />
-                  <Text value={innerText} path={paths.inner} font-size="{textSize}px" truncate />
-                  <Text value={outerText} path={paths.outer} font-size="{textSize}px" truncate />
+                  <!-- <Text
+                    {...paths.textProps}
+                    value={innerText}
+                    path={paths.inner}
+                    font-size="{textSize}px"
+                    truncate
+                  /> -->
+                  <!-- <Text
+                    {...paths.textProps}
+                    value={outerText}
+                    path={paths.outer}
+                    font-size="{textSize}px"
+                    truncate
+                  /> -->
                   <Text
+                    startOffset="50%"
+                    textAnchor="middle"
                     value={centroidText}
                     path={paths.centroid}
                     font-size="{textSize}px"

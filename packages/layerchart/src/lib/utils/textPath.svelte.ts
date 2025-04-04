@@ -1,5 +1,7 @@
+import type { ComponentProps } from 'svelte';
 import type { GetterValues } from './types.js';
 import { arc as d3arc } from 'd3-shape';
+import type Text from '$lib/components/Text.svelte';
 
 type TextPathProps = GetterValues<{
   innerRadius: number;
@@ -20,14 +22,13 @@ function getArcCentroidPath(props: TextPathProps) {
 
   const centerlineStartAngle = $derived(props.startAngle() + cornerAngleOffset);
   const centerlineEndAngle = $derived(props.endAngle() - cornerAngleOffset);
-  const safeCenterlineEndAngle = $derived(Math.max(centerlineStartAngle, centerlineEndAngle));
 
   const centerlinePath = $derived(
     d3arc()
       .outerRadius(centerRadius)
       .innerRadius(centerRadius - 0.5)
       .startAngle(centerlineStartAngle)
-      .endAngle(safeCenterlineEndAngle)() ?? ''
+      .endAngle(centerlineEndAngle)() ?? ''
   );
 
   return {
@@ -50,14 +51,13 @@ function getArcInnerPath(props: TextPathProps) {
   const innerlineEndAngle = $derived(props.endAngle() - innerCornerAngleOffset);
 
   // ensure adjust end angle doesn't cross over the start angle
-  const safeInnerlineEndAngle = $derived(Math.max(innerlineStartAngle, innerlineEndAngle));
 
   const innerlinePath = $derived(
     d3arc()
       .innerRadius(props.innerRadius())
       .outerRadius(props.innerRadius() + 0.5)
       .startAngle(innerlineStartAngle)
-      .endAngle(safeInnerlineEndAngle)() ?? ''
+      .endAngle(innerlineEndAngle)() ?? ''
   );
 
   return {
@@ -80,14 +80,13 @@ function getArcOuterPath(props: TextPathProps) {
   const outerlineEndAngle = $derived(props.endAngle() - outerCornerAngleOffset);
 
   // ensure the adjusted end angle doesn't cross over the start angle
-  const safeOuterlineEndAngle = $derived(Math.max(outerlineStartAngle, outerlineEndAngle));
 
   const outerlinePath = $derived(
     d3arc()
       .innerRadius(props.outerRadius() - 0.5)
       .outerRadius(props.outerRadius())
       .startAngle(outerlineStartAngle)
-      .endAngle(safeOuterlineEndAngle)() ?? ''
+      .endAngle(outerlineEndAngle)() ?? ''
   );
 
   return {
@@ -101,12 +100,38 @@ export type ArcTextPaths = {
   readonly inner: string;
   readonly centroid: string;
   readonly outer: string;
+  /**
+   * Props to apply to the `<Text>` component for the text path
+   * that handle the start offset and text anchor based on the
+   * arc direction.
+   *
+   * At the moment, only `startOffset` is used, but more properties may be added
+   * in the future as use cases arise.
+   *
+   * - `startOffset` is set to "0%" for clockwise arcs and "50%" for counter-clockwise arcs
+   * - `text-anchor` is set to "start" for clockwise arcs and "end" for counter-clockwise arcs
+   */
+  readonly textProps: Pick<ComponentProps<typeof Text>, 'startOffset' | 'textAnchor'>;
 };
 
 export function getArcTextPaths(props: TextPathProps): ArcTextPaths {
-  const inner = getArcInnerPath(props);
-  const centroid = getArcCentroidPath(props);
-  const outer = getArcOuterPath(props);
+  const needsFlip = $derived(props.endAngle() < props.startAngle());
+  const start = $derived(needsFlip ? props.endAngle() : props.startAngle());
+  const end = $derived(needsFlip ? props.startAngle() : props.endAngle());
+
+  // 2. Create reactive props for path generation, swapping angles if needed
+  const pathGenProps = {
+    ...props,
+    startAngle: () => start,
+    endAngle: () => end,
+  };
+
+  const inner = getArcInnerPath(pathGenProps);
+  const centroid = getArcCentroidPath(pathGenProps);
+  const outer = getArcOuterPath(pathGenProps);
+
+  const startOffset: ArcTextPaths['textProps']['startOffset'] = $derived(needsFlip ? '50%' : '0%');
+  const textAnchor: ArcTextPaths['textProps']['textAnchor'] = $derived(needsFlip ? 'end' : 'start');
 
   return {
     get inner() {
@@ -117,6 +142,12 @@ export function getArcTextPaths(props: TextPathProps): ArcTextPaths {
     },
     get outer() {
       return outer.current;
+    },
+    get textProps() {
+      return {
+        startOffset: startOffset,
+        textAnchor: textAnchor,
+      };
     },
   };
 }

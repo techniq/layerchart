@@ -475,12 +475,11 @@
         stroke-width={strokeWidth}
         {opacity}
         class={cls(layerClass('text'), fill === undefined && 'fill-surface-content', className)}
-        text-anchor={textAnchor}
       >
         <textPath
+          style="text-anchor: {textAnchor};"
           href="#{pathId}"
           {startOffset}
-          text-anchor={textAnchor}
           class={cls(layerClass('text-path'))}
         >
           {wordsByLines.map((line) => line.words.join(' ')).join()}
