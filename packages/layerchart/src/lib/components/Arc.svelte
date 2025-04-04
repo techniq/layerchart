@@ -404,6 +404,11 @@
   }}
 />
 
+<!-- dummy paths to visualize the lines TODO: remove later -->
+<!-- <path d={arcTextPaths.outer} stroke="red" fill="transparent" />
+<path d={arcTextPaths.inner} stroke="red" fill="transparent" />
+<path d={arcTextPaths.centroid} stroke="red" fill="transparent" /> -->
+
 {@render children?.({
   centroid: trackArcCentroid,
   boundingBox,

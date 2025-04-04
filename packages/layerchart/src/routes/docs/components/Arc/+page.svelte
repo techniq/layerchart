@@ -98,6 +98,7 @@
                     value={innerText}
                     path={paths.inner}
                     font-size="{textSize}px"
+                    dominant-baseline="hanging"
                     truncate
                   />
                   <Text
