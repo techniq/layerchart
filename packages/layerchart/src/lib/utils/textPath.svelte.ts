@@ -131,11 +131,12 @@ export function getArcTextPaths(props: TextPathProps): ArcTextPaths {
   const shouldSwapEnds = $derived(props.endAngle() < props.startAngle());
   const start = $derived(shouldSwapEnds ? props.endAngle() : props.startAngle());
   const end = $derived(shouldSwapEnds ? props.startAngle() : props.endAngle());
+  const shouldFlip = $derived(end > (90 * Math.PI) / 180);
 
   const pathGenProps = {
     ...props,
-    startAngle: () => start,
-    endAngle: () => end,
+    startAngle: () => (shouldFlip ? end : start),
+    endAngle: () => (shouldFlip ? start : end),
   };
 
   const inner = getArcInnerPath(pathGenProps);
@@ -143,10 +144,10 @@ export function getArcTextPaths(props: TextPathProps): ArcTextPaths {
   const outer = getArcOuterPath(pathGenProps);
 
   const startOffset: ArcTextPaths['textProps']['startOffset'] = $derived(
-    shouldSwapEnds ? '100%' : '0%'
+    shouldSwapEnds && !shouldFlip ? '100%' : '0%'
   );
   const textAnchor: ArcTextPaths['textProps']['textAnchor'] = $derived(
-    shouldSwapEnds ? 'end' : 'start'
+    shouldSwapEnds && !shouldFlip ? 'end' : 'start'
   );
 
   return {
