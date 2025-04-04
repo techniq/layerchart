@@ -212,6 +212,7 @@
     path,
     pathId = createId('text-path', uid),
     startOffset = '0%',
+    transform: pathTransform,
     ...restProps
   }: TextProps = $props();
 
@@ -483,6 +484,7 @@
         {stroke}
         stroke-width={strokeWidth}
         {opacity}
+        transform={pathTransform}
         class={cls(layerClass('text'), fill === undefined && 'fill-surface-content', className)}
       >
         <textPath

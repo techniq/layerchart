@@ -2,6 +2,7 @@ import type { ComponentProps } from 'svelte';
 import type { GetterValues } from './types.js';
 import { arc as d3arc } from 'd3-shape';
 import type Text from '$lib/components/Text.svelte';
+import { radiansToDegrees } from './math.js';
 
 type TextPathProps = GetterValues<{
   innerRadius: number;
@@ -122,48 +123,63 @@ export type ArcTextPaths = {
    * in the future as use cases arise.
    *
    * - `startOffset` is set to "0%" for clockwise arcs and "50%" for counter-clockwise arcs
-   * - `text-anchor` is set to "start" for clockwise arcs and "end" for counter-clockwise arcs
+   * - `textAnchor` is set to "start" for clockwise arcs and "end" for counter-clockwise arcs
    */
   readonly textProps: Pick<ComponentProps<typeof Text>, 'startOffset' | 'textAnchor'>;
 };
 
 export function getArcTextPaths(props: TextPathProps): ArcTextPaths {
-  const shouldSwapEnds = $derived(props.endAngle() < props.startAngle());
-  const start = $derived(shouldSwapEnds ? props.endAngle() : props.startAngle());
-  const end = $derived(shouldSwapEnds ? props.startAngle() : props.endAngle());
+  // first we determine if the arc is going clockwise or counterclockwise,
+  // this will determine where we position the text
+  const isCounterClockwise = $derived(props.startAngle() > props.endAngle());
+
+  const startDegrees = $derived(radiansToDegrees(props.startAngle()));
+  const endDegrees = $derived(radiansToDegrees(props.endAngle()));
+
+  const startNormalized = $derived(normalizeAngle(startDegrees));
+  const endNormalized = $derived(normalizeAngle(endDegrees));
+
+  // if the arc is going counterclockwise, we flip the angles
+  // but we also need to consider the text direction based on whether it is in the bottom half
+
+  // is in bottom half
+  const isInBottomHalf = $derived.by(() => {
+    const normalized = startNormalized;
+    console.log('start Degrees', startDegrees);
+    console.log('startNormalized', normalized);
+    return normalized >= 90 && normalized < 270;
+  });
 
   const pathGenProps = {
     ...props,
-    startAngle: () => start,
-    endAngle: () => end,
+    startAngle: () => (isCounterClockwise ? props.endAngle() : props.startAngle()),
+    endAngle: () => (isCounterClockwise ? props.startAngle() : props.endAngle()),
   };
 
-  const inner = getArcInnerPath(pathGenProps);
-  const centroid = getArcCentroidPath(pathGenProps);
-  const outer = getArcOuterPath(pathGenProps);
+  const needsTextReversal = $derived(
+    (isInBottomHalf && isCounterClockwise) || (!isInBottomHalf && !isCounterClockwise)
+  );
 
-  const startOffset: ArcTextPaths['textProps']['startOffset'] = $derived(
-    shouldSwapEnds ? '100%' : '0%'
-  );
-  const textAnchor: ArcTextPaths['textProps']['textAnchor'] = $derived(
-    shouldSwapEnds ? 'end' : 'start'
-  );
+  const innerPath = getArcInnerPath(pathGenProps);
+  const centroidPath = getArcCentroidPath(pathGenProps);
+  const outerPath = getArcOuterPath(pathGenProps);
+
+  // DO WE ALSO NEED TO CONSIDER THE FACT THAT WE ARE CCW SO WE NEED TO FLIP THE TEXT? IDK
+  const startOffset = $derived(isInBottomHalf ? '100%' : '0%');
+  const textAnchor = $derived(isInBottomHalf ? 'end' : 'start');
 
   return {
     get inner() {
-      return inner.current;
+      return innerPath.current;
     },
     get centroid() {
-      return centroid.current;
+      return centroidPath.current;
     },
     get outer() {
-      return outer.current;
+      return outerPath.current;
     },
     get textProps() {
-      return {
-        startOffset,
-        textAnchor,
-      };
+      return { startOffset, textAnchor };
     },
   };
 }
@@ -178,4 +194,85 @@ export function getPathLength(pathRef: SVGPathElement | undefined) {
     }
   }
   return 0;
+}
+
+type CircleHalf = 'top' | 'bottom' | 'both';
+
+// Normalize angles to [0, 360) range
+function normalizeAngle(angle: number): number {
+  return ((angle % 360) + 360) % 360;
+}
+
+/**
+ * Determines if angles fall on the top half, bottom half, or both halves of a circle
+ * @param startAngleDegrees - The starting angle in degrees
+ * @param endAngleDegrees - The ending angle in degrees
+ * @returns Which half of the circle the angles fall on
+ */
+function getCircleHalf(startAngleDegrees: number, endAngleDegrees: number): CircleHalf {
+  const start = normalizeAngle(startAngleDegrees);
+  let end = normalizeAngle(endAngleDegrees);
+
+  // Handle case where end is before start in the normalized range
+  if (end < start && end !== 0) {
+    end += 360;
+  }
+
+  // When angles are equal or span full circle
+  if (start === end || end - start >= 360) return 'both';
+
+  // Check which half points are in
+  const startInTop = start < 180;
+  const endInTop = end % 360 < 180;
+  const startInBottom = start >= 180 || start === 0;
+  const endInBottom = end % 360 >= 180 || end === 0;
+
+  // Check if arc spans across 180°
+  const spansAcross180 = start < 180 && end > 180;
+
+  if ((startInTop && endInBottom) || (startInBottom && endInTop) || spansAcross180) {
+    return 'both';
+  } else if (startInTop && endInTop) {
+    return 'top';
+  } else {
+    // All remaining cases must be bottom half
+    return 'bottom';
+  }
+}
+
+type Direction = 'cw' | 'ccw';
+
+/**
+ * Determines the direction (clockwise or counterclockwise) of angle change
+ * @param startAngleDegrees - The starting angle in degrees
+ * @param endAngleDegrees - The ending angle in degrees
+ * @returns Direction of angle change
+ */
+function getDirection(startAngleDegrees: number, endAngleDegrees: number): Direction {
+  if (startAngleDegrees === endAngleDegrees) return 'cw';
+  if (endAngleDegrees < startAngleDegrees) return 'ccw';
+  return 'cw';
+}
+
+/**
+ * Determines if text needs to be flipped based on starting position and direction
+ * @param startAngle - The starting angle in degrees
+ * @param endAngle - The ending angle in degrees
+ * @returns true if text needs to be flipped, false otherwise
+ */
+function shouldFlipText(startAngle: number, endAngle: number): boolean {
+  const normalizeAngle = (angle: number): number => {
+    return ((angle % 360) + 360) % 360;
+  };
+
+  const start = normalizeAngle(startAngle);
+  const isClockwise = getDirection(startAngle, endAngle) === 'cw';
+
+  // Check if starting at bottom half (180-360 degrees)
+  const startsAtBottom = start >= 180;
+
+  // Flip text when:
+  // 1. Going clockwise and starting at bottom, or
+  // 2. Going counterclockwise and starting at top
+  return (isClockwise && startsAtBottom) || (!isClockwise && !startsAtBottom);
 }
