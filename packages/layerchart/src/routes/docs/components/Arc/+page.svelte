@@ -8,7 +8,7 @@
   // let value = 100;
   let domain = $state<[number, number]>([0, 100]);
   // let range = [-120, 120];
-  let range = $state<[number, number]>([90, -90]);
+  let range = $state<[number, number]>([-90, -270]);
   let innerRadius = $state(70);
   let outerRadius = $state(140);
   let cornerRadius = $state(8);
