@@ -166,7 +166,7 @@
 
 <div class="grid grid-cols-[1fr_1fr_1fr_1fr] gap-2 mb-2">
   {#each labelExamples as example}
-    <div class="h-[400px] p-4 border rounded-sm">
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart>
         <Svg center>
           <LinearGradient class="from-secondary to-primary" vertical>
