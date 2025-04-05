@@ -117,7 +117,6 @@
     data = [],
     x: xProp,
     y: yProp,
-    xDomain,
     radial = false,
     orientation = 'vertical',
     series: seriesProp,
