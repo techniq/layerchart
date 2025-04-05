@@ -20,7 +20,6 @@
   let outerText = $state('outer text');
   let innerText = $state('inner text');
   let centroidText = $state('centroid text');
-  let textPath = $state<'arc' | 'track'>('arc');
   let textSize = $state(16);
 
   const labelExamples: Array<{ label: string; range: [number, number] }> = [
@@ -92,12 +91,6 @@
   <TextField label="Outer Arc Text" bind:value={outerText} />
   <TextField label="Inner Arc Text" bind:value={innerText} />
   <TextField label="Centroid Arc Text" bind:value={centroidText} />
-  <Field label="textAnchor" classes={{ input: 'mt-[6px] mb-1' }}>
-    <ToggleGroup bind:value={textPath} variant="outline" size="sm" inset class="w-full">
-      <ToggleOption value="arc">arc</ToggleOption>
-      <ToggleOption value="track">track</ToggleOption>
-    </ToggleGroup>
-  </Field>
   <RangeField label="Font size (px)" bind:value={textSize} min={domain[0]} max={domain[1]} />
 </div>
 
@@ -120,9 +113,7 @@
                 fill={gradient}
                 track={{ class: 'fill-surface-content/5' }}
               >
-                {#snippet children({ value, getArcTextPathProps, getTrackTextPathProps })}
-                  {@const getTextPathProps =
-                    textPath === 'arc' ? getArcTextPathProps : getTrackTextPathProps}
+                {#snippet children({ value, getArcTextProps })}
                   <Text
                     value={Math.round(value)}
                     textAnchor="middle"
@@ -132,19 +123,19 @@
                   />
                   <!-- Arc labels -->
                   <Text
-                    {...getTextPathProps('inner')}
+                    {...getArcTextProps('inner')}
                     value={innerText}
                     font-size="{textSize}px"
                     truncate
                   />
                   <Text
-                    {...getTextPathProps('outer')}
+                    {...getArcTextProps('outer')}
                     value={outerText}
                     font-size="{textSize}px"
                     truncate
                   />
                   <Text
-                    {...getTextPathProps('middle')}
+                    {...getArcTextProps('middle')}
                     value={centroidText}
                     font-size="{textSize}px"
                     truncate
@@ -177,9 +168,7 @@
                 fill={gradient}
                 track={{ class: 'fill-surface-content/5' }}
               >
-                {#snippet children({ getArcTextPathProps, getTrackTextPathProps })}
-                  {@const getTextPathProps =
-                    textPath === 'arc' ? getArcTextPathProps : getTrackTextPathProps}
+                {#snippet children({ getArcTextProps, getTrackTextProps })}
                   <Text
                     value={example.label}
                     textAnchor="middle"
@@ -196,20 +185,10 @@
                   />
 
                   <!-- Arc Text -->
+                  <Text {...getArcTextProps('inner')} value={innerText} font-size="12px" truncate />
+                  <Text {...getArcTextProps('outer')} value={outerText} font-size="12px" truncate />
                   <Text
-                    {...getTextPathProps('inner')}
-                    value={innerText}
-                    font-size="12px"
-                    truncate
-                  />
-                  <Text
-                    {...getTextPathProps('outer')}
-                    value={outerText}
-                    font-size="12px"
-                    truncate
-                  />
-                  <Text
-                    {...getTextPathProps('middle')}
+                    {...getArcTextProps('middle')}
                     value={centroidText}
                     font-size="12px"
                     truncate

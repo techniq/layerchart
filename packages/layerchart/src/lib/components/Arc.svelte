@@ -149,8 +149,8 @@
           centroid: [number, number];
           boundingBox: DOMRect;
           value: number;
-          getTrackTextPathProps: GetTextPathProps;
-          getArcTextPathProps: GetTextPathProps;
+          getTrackTextProps: GetArcTextProps;
+          getArcTextProps: GetArcTextProps;
         },
       ]
     >;
@@ -191,12 +191,8 @@
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
   import { max } from 'd3-array';
-  import {
-    getArcTextPaths,
-    type GetTextPathProps,
-    type TextPathOptions,
-    type TextPathPosition,
-  } from '$lib/utils/textPath.svelte.js';
+  import { type TextPathOptions, type TextPathPosition } from '$lib/utils/textPath.svelte.js';
+  import { createGetArcTextProps, type GetArcTextProps } from 'layerchart/utils/arcText.svelte.js';
 
   let {
     ref: refProp = $bindable(),
@@ -361,30 +357,34 @@
     tooltipContext?.hide();
   };
 
-  function getTrackTextPathProps(position: TextPathPosition, opts?: TextPathOptions) {
-    return getArcTextPaths(
+  function getTrackTextProps(position: TextPathPosition, opts?: TextPathOptions) {
+    return createGetArcTextProps(
       {
         startAngle: () => trackStartAngle,
         endAngle: () => trackEndAngle,
         outerRadius: () => trackOuterRadius,
         innerRadius: () => trackInnerRadius,
         cornerRadius: () => trackCornerRadius,
+        centroid: () => trackArcCentroid,
       },
-      opts
-    )(position);
+      opts,
+      position
+    ).current;
   }
 
-  function getArcTextPathProps(position: TextPathPosition, opts?: TextPathOptions) {
-    return getArcTextPaths(
+  function getArcTextProps(position: TextPathPosition, opts?: TextPathOptions) {
+    return createGetArcTextProps(
       {
         startAngle: () => startAngle,
         endAngle: () => arcEndAngle,
         outerRadius: () => outerRadius,
         innerRadius: () => innerRadius,
         cornerRadius: () => cornerRadius,
+        centroid: () => trackArcCentroid,
       },
-      opts
-    )(position);
+      opts,
+      position
+    ).current;
   }
 </script>
 
@@ -419,15 +419,10 @@
   }}
 />
 
-<!-- dummy paths to visualize the lines TODO: remove later -->
-<!-- <path d={arcTextPaths.outer} stroke="red" fill="transparent" />
-<path d={arcTextPaths.inner} stroke="red" fill="transparent" />
-<path d={arcTextPaths.centroid} stroke="red" fill="transparent" /> -->
-
 {@render children?.({
   centroid: trackArcCentroid,
   boundingBox,
   value: motionEndAngle.current,
-  getTrackTextPathProps,
-  getArcTextPathProps,
+  getTrackTextProps: getTrackTextProps,
+  getArcTextProps: getArcTextProps,
 })}

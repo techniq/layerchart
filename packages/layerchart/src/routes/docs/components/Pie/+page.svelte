@@ -224,7 +224,9 @@
   </div>
 </Preview>
 
-<h2>Centroid labels</h2>
+<h2>Labels</h2>
+
+<h3>Centroid</h3>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
@@ -240,23 +242,50 @@
                 padAngle={arc.padAngle}
                 class={colors.shape}
               >
-                {#snippet children({ centroid })}
+                {#snippet children({ getArcTextProps })}
+                  <Text
+                    value={arc.data.value}
+                    {...getArcTextProps('centroid')}
+                    class={cls('text-sm ', colors.content)}
+                  />
+                {/snippet}
+              </Arc>
+            {/each}
+          {/snippet}
+        </Pie>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h3>Centroid (multiple)</h3>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <Chart {data} x="value" c="date">
+      <Svg center>
+        <Pie>
+          {#snippet children({ arcs })}
+            {#each arcs as arc, index}
+              {@const colors = keyClasses[index]}
+              <Arc
+                startAngle={arc.startAngle}
+                endAngle={arc.endAngle}
+                padAngle={arc.padAngle}
+                class={colors.shape}
+              >
+                {#snippet children({ getArcTextProps })}
+                  {@const textProps = getArcTextProps('centroid')}
                   <Text
                     value={formatUtil(arc.data.value / dataSum, 'percent')}
-                    x={centroid[0]}
-                    y={centroid[1]}
+                    {...textProps}
                     dy={-8}
-                    textAnchor="middle"
-                    verticalAnchor="middle"
                     class={cls('text-base', colors.content)}
                   />
                   <Text
                     value={arc.data.value}
-                    x={centroid[0]}
-                    y={centroid[1]}
+                    {...textProps}
                     dy={8}
-                    textAnchor="middle"
-                    verticalAnchor="middle"
                     class={cls('text-sm opacity-50', colors.content)}
                   />
                 {/snippet}
@@ -269,7 +298,7 @@
   </div>
 </Preview>
 
-<h2>Outer labels</h2>
+<h3>Outer</h3>
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
@@ -285,10 +314,10 @@
                 padAngle={arc.padAngle}
                 class={colors.shape}
               >
-                {#snippet children({ getArcTextPathProps })}
+                {#snippet children({ getArcTextProps })}
                   <Text
                     value={arc.data.value}
-                    {...getArcTextPathProps('outer', { startOffset: '50%' })}
+                    {...getArcTextProps('outer', { startOffset: '50%' })}
                     class={cls('text-sm ')}
                   />
                 {/snippet}
@@ -360,13 +389,10 @@
                     class={colors.shape}
                     _offset={isHighlighted ? 16 : 0}
                   >
-                    {#snippet children({ centroid })}
+                    {#snippet children({ getArcTextProps })}
                       <Text
                         value={formatUtil(arc.data.value / dataSum, 'percent')}
-                        x={centroid[0]}
-                        y={centroid[1]}
-                        textAnchor="middle"
-                        verticalAnchor="middle"
+                        {...getArcTextProps('centroid')}
                         class={cls('text-base', colors.content)}
                       />
                     {/snippet}

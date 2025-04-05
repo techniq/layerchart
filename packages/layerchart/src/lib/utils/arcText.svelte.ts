@@ -1,60 +1,12 @@
-import type { ComponentProps } from 'svelte';
-import type { GetterValues } from './types.js';
+/**
+ * Reactive utilities to create and position text for Arc-based labels/annotations.
+ */
+
 import { arc as d3arc } from 'd3-shape';
-import type Text from '$lib/components/Text.svelte';
+import type { Getter, GetterValues } from './types.js';
 import { radiansToDegrees } from './math.js';
-
-type TextPathProps = GetterValues<{
-  innerRadius: number;
-  outerRadius: number;
-  cornerRadius: number;
-  startAngle: number;
-  endAngle: number;
-}>;
-
-type InternalTextPathProps = TextPathProps & {
-  invertCorner: () => boolean;
-};
-
-function getArcMiddlePath(props: InternalTextPathProps) {
-  const centerRadius = $derived((props.innerRadius() + props.outerRadius()) / 2);
-  const cornerAngleOffset = $derived.by(() => {
-    if (props.cornerRadius() <= 0 || centerRadius <= 0) return 0;
-
-    const effectiveCornerRadius = Math.min(props.cornerRadius(), centerRadius);
-    return (effectiveCornerRadius * 0.5) / centerRadius;
-  });
-
-  const middlelineStartAngle = $derived.by(() => {
-    if (props.invertCorner()) {
-      return props.startAngle() - cornerAngleOffset;
-    }
-    return props.startAngle() + cornerAngleOffset;
-  });
-
-  const middlelineEndAngle = $derived.by(() => {
-    if (props.invertCorner()) {
-      return props.endAngle() + cornerAngleOffset;
-    }
-    return props.endAngle() - cornerAngleOffset;
-  });
-
-  const middlelinePath = $derived(
-    extractOutsideArc(
-      d3arc()
-        .outerRadius(centerRadius)
-        .innerRadius(centerRadius - 0.5)
-        .startAngle(middlelineStartAngle)
-        .endAngle(middlelineEndAngle)() ?? ''
-    )
-  );
-
-  return {
-    get current() {
-      return middlelinePath;
-    },
-  };
-}
+import type { ComponentProps } from 'svelte';
+import type { Text } from '$lib/components/index.js';
 
 function extractOutsideArc(arcPath: string) {
   // Extract first arc until straight line to innerRadius (L) or close path (Z)
@@ -63,111 +15,179 @@ function extractOutsideArc(arcPath: string) {
   return matches[1];
 }
 
-function getArcInnerPath(props: InternalTextPathProps) {
-  const innerCornerAngleOffset = $derived.by(() => {
+// Normalize angles to [0, 360) range
+function normalizeAngle(angle: number): number {
+  return ((angle % 360) + 360) % 360;
+}
+
+export type ArcTextProps = GetterValues<{
+  innerRadius: number;
+  outerRadius: number;
+  cornerRadius: number;
+  startAngle: number;
+  endAngle: number;
+  centroid: [number, number];
+}>;
+
+export type InternalArcTextProps = ArcTextProps & {
+  /**
+   * Whether the corner radius should be inverted or not.
+   * This changes when text is rotated/flipped to ensure
+   * the corner offset is applied correctly.
+   */
+  invertCorner: Getter<boolean>;
+};
+
+export type ArcPathResult = { current: string };
+
+/**
+ * Calculates and generates a path in the middle/medial line of an arc.
+ */
+function getArcPathMiddle(props: InternalArcTextProps): ArcPathResult {
+  const centerRadius = $derived((props.innerRadius() + props.outerRadius()) / 2);
+  const cornerAngleOffset = $derived.by(() => {
+    if (props.cornerRadius() <= 0 || centerRadius <= 0) return 0;
+
+    const effectiveCornerRadius = Math.min(props.cornerRadius(), centerRadius);
+    return (effectiveCornerRadius * 0.5) / centerRadius;
+  });
+
+  const effectiveStartAngle = $derived.by(() => {
+    if (props.invertCorner()) {
+      return props.startAngle() - cornerAngleOffset;
+    }
+    return props.startAngle() + cornerAngleOffset;
+  });
+
+  const effectiveEndAngle = $derived.by(() => {
+    if (props.invertCorner()) {
+      return props.endAngle() + cornerAngleOffset;
+    }
+    return props.endAngle() - cornerAngleOffset;
+  });
+
+  const path = $derived(
+    extractOutsideArc(
+      d3arc()
+        .outerRadius(centerRadius)
+        .innerRadius(centerRadius - 0.5)
+        .startAngle(effectiveStartAngle)
+        .endAngle(effectiveEndAngle)() ?? ''
+    )
+  );
+
+  return {
+    get current() {
+      return path;
+    },
+  };
+}
+
+function getArcPathInner(props: InternalArcTextProps): ArcPathResult {
+  const cornerAngleOffset = $derived.by(() => {
     if (props.cornerRadius() <= 0 || props.innerRadius() <= 0) return 0;
 
     if (props.cornerRadius() >= props.innerRadius()) return Math.PI / 4;
     return (props.cornerRadius() * 0.5) / props.innerRadius();
   });
 
-  const innerlineStartAngle = $derived.by(() => {
+  const effectiveStartAngle = $derived.by(() => {
     if (props.invertCorner()) {
-      return props.startAngle() - innerCornerAngleOffset;
+      return props.startAngle() - cornerAngleOffset;
     }
-    return props.startAngle() + innerCornerAngleOffset;
+    return props.startAngle() + cornerAngleOffset;
   });
 
-  const innerlineEndAngle = $derived.by(() => {
+  const effectiveEndAngle = $derived.by(() => {
     if (props.invertCorner()) {
-      return props.endAngle() + innerCornerAngleOffset;
+      return props.endAngle() + cornerAngleOffset;
     }
-    return props.endAngle() - innerCornerAngleOffset;
+    return props.endAngle() - cornerAngleOffset;
   });
 
-  const innerlinePath = $derived(
+  const path = $derived(
     extractOutsideArc(
       d3arc()
         .innerRadius(props.innerRadius())
         .outerRadius(props.innerRadius() + 0.5)
-        .startAngle(innerlineStartAngle)
-        .endAngle(innerlineEndAngle)() ?? ''
+        .startAngle(effectiveStartAngle)
+        .endAngle(effectiveEndAngle)() ?? ''
     )
   );
 
   return {
     get current() {
-      return innerlinePath;
+      return path;
     },
   };
 }
 
-function getArcOuterPath(props: InternalTextPathProps) {
-  const outerCornerAngleOffset = $derived.by(() => {
+function getArcPathOuter(props: InternalArcTextProps): ArcPathResult {
+  const cornerAngleOffset = $derived.by(() => {
     if (props.cornerRadius() <= 0 || props.outerRadius() <= 0) return 0;
     return (props.cornerRadius() * 0.5) / props.outerRadius();
   });
 
-  const outerlineStartAngle = $derived.by(() => {
+  const effectiveStartAngle = $derived.by(() => {
     if (props.invertCorner()) {
-      return props.startAngle() - outerCornerAngleOffset;
+      return props.startAngle() - cornerAngleOffset;
     }
-    return props.startAngle() + outerCornerAngleOffset;
+    return props.startAngle() + cornerAngleOffset;
   });
 
-  const outerlineEndAngle = $derived.by(() => {
+  const effectiveEndAngle = $derived.by(() => {
     if (props.invertCorner()) {
-      return props.endAngle() + outerCornerAngleOffset;
+      return props.endAngle() + cornerAngleOffset;
     }
-    return props.endAngle() - outerCornerAngleOffset;
+    return props.endAngle() - cornerAngleOffset;
   });
 
-  const outerlinePath = $derived(
+  const path = $derived(
     extractOutsideArc(
       d3arc()
         .innerRadius(props.outerRadius() - 0.5)
         .outerRadius(props.outerRadius())
-        .startAngle(outerlineStartAngle)
-        .endAngle(outerlineEndAngle)() ?? ''
+        .startAngle(effectiveStartAngle)
+        .endAngle(effectiveEndAngle)() ?? ''
     )
   );
 
   return {
     get current() {
-      return outerlinePath;
+      return path;
     },
   };
 }
 
-export type TextPathPosition = 'inner' | 'middle' | 'outer';
-export type TextPathOptions = {
+export type ArcTextPosition = 'inner' | 'outer' | 'middle' | 'centroid';
+
+export type ArcTextOptions = {
   /**
    * A percentage string (e.g., '50%') to offset the start angle of the text path.
+   * If a specific offset is needed, you should use option rather than passing it
+   * directly to the `<Text>` component to ensure it is taken into account when
+   * calculating the path the text should follow.
+   *
+   * This has no effect if the position is `'centroid'`.
    */
   startOffset?: string;
 };
 
-export type GetTextPathProps = (
-  position: TextPathPosition,
-  opts?: TextPathOptions
-) => ComponentProps<typeof Text>;
-
-export function getArcTextPaths(
-  props: TextPathProps,
-  options: TextPathOptions = {}
-): GetTextPathProps {
+export function createGetArcTextProps(
+  props: ArcTextProps,
+  opts: ArcTextOptions = {},
+  position: ArcTextPosition
+) {
   const effectiveStartAngleRadians = $derived.by(() => {
     const start = props.startAngle();
     const end = props.endAngle();
-    const offset = options.startOffset;
+    const offset = opts.startOffset;
 
     if (offset) {
       try {
-        // Parse percentage (e.g., '50%' -> 0.5)
         const percentage = parseFloat(offset.slice(0, -1)) / 100;
         if (!isNaN(percentage) && percentage >= 0 && percentage <= 1) {
-          const span = end - start; // Angular span in radians
-          // Calculate the angle at the offset point
+          const span = end - start;
           return start + span * percentage;
         } else {
           console.warn('Invalid percentage for startOffset:', offset);
@@ -213,68 +233,71 @@ export function getArcTextPaths(
     invertCorner: () => isBottomCw || isBottomCcw,
   };
 
-  const innerPath = getArcInnerPath(pathGenProps);
-  const middlePath = getArcMiddlePath(pathGenProps);
-  const outerPath = getArcOuterPath(pathGenProps);
+  const innerPath = getArcPathInner(pathGenProps);
+  const middlePath = getArcPathMiddle(pathGenProps);
+  const outerPath = getArcPathOuter(pathGenProps);
 
-  function getInnerDominantBaseline() {
+  const innerDominantBaseline = $derived.by(() => {
     if (isBottomCw || isBottomCcw) return 'auto';
     if (isTopCw || isTopCcw) return 'hanging';
     return 'auto';
-  }
+  });
 
-  console.log('startOffset', options.startOffset);
+  const outerDominantBaseline = $derived.by(() => {
+    if (isBottomCw || isBottomCcw) return 'hanging';
+    return undefined;
+  });
 
   const sharedProps = $derived.by(() => {
     if (reverseText) {
       return {
-        startOffset: options.startOffset ?? '100%',
+        startOffset: opts.startOffset ?? '100%',
         textAnchor: 'end' as const,
       };
     }
     return {
-      startOffset: options.startOffset ?? undefined,
+      startOffset: opts.startOffset ?? undefined,
     };
   });
 
-  function getTextPathProps(position: TextPathPosition) {
+  const current = $derived.by(() => {
     if (position === 'inner') {
       return {
         path: innerPath.current,
         ...sharedProps,
-        'dominant-baseline': getInnerDominantBaseline(),
+        'dominant-baseline': innerDominantBaseline,
       };
     } else if (position === 'outer') {
       return {
         path: outerPath.current,
         ...sharedProps,
-        ...((isBottomCw || isBottomCcw) && { 'dominant-baseline': 'hanging' }),
+        'dominant-baseline': outerDominantBaseline,
       };
-    } else {
+    } else if (position === 'middle') {
       return {
         path: middlePath.current,
         ...sharedProps,
-        'dominant-baseline': 'middle',
+        'dominant-baseline': 'middle' as const,
+      };
+    } else {
+      const centroid = props.centroid();
+      return {
+        x: centroid[0],
+        y: centroid[1],
+        textAnchor: 'middle' as const,
+        verticalAnchor: 'middle' as const,
       };
     }
-  }
+  });
 
-  return getTextPathProps;
+  return {
+    get current() {
+      return current;
+    },
+  };
 }
 
-export function getPathLength(pathRef: SVGPathElement | undefined) {
-  if (pathRef && typeof pathRef.getTotalLength === 'function') {
-    try {
-      return pathRef.getTotalLength();
-    } catch (e) {
-      console.error('Error getting path length:', e);
-      return 0;
-    }
-  }
-  return 0;
-}
-
-// Normalize angles to [0, 360) range
-function normalizeAngle(angle: number): number {
-  return ((angle % 360) + 360) % 360;
-}
+export type GetArcTextProps = (
+  position: ArcTextPosition,
+  opts?: ArcTextOptions
+) => ComponentProps<typeof Text>;

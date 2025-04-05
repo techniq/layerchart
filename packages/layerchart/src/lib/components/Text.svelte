@@ -150,6 +150,18 @@
 
   export type TextProps = TextPropsWithoutHTML &
     Without<SVGAttributes<SVGTextElement>, TextPropsWithoutHTML>;
+
+  function getPathLength(pathRef: SVGPathElement | undefined) {
+    if (pathRef && typeof pathRef.getTotalLength === 'function') {
+      try {
+        return pathRef.getTotalLength();
+      } catch (e) {
+        console.error('Error getting path length:', e);
+        return 0;
+      }
+    }
+    return 0;
+  }
 </script>
 
 <script lang="ts">
@@ -165,7 +177,6 @@
   import { layerClass } from '$lib/utils/attributes.js';
   import { degreesToRadians } from '$lib/utils/math.js';
   import { createId } from '$lib/utils/createId.js';
-  import { getPathLength } from '$lib/utils/textPath.svelte.js';
 
   /*
     TODO:
