@@ -4,7 +4,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  let value = $state(50);
+  let value = $state(60);
   // let value = 100;
   let domain = $state<[number, number]>([0, 100]);
   // let range = [-120, 120];
@@ -31,6 +31,42 @@
   let centroidText = $state('centroid text');
   let textPath = $state<'arc' | 'track'>('arc');
   let textSize = $state(16);
+
+  const labelExamples = [
+    {
+      label: 'top cw',
+      range: [-90, 90],
+    },
+    {
+      label: 'top ccw',
+      range: [90, -90],
+    },
+    {
+      label: 'bottom cw',
+      range: [-270, -90],
+    },
+    {
+      label: 'bottom ccw',
+      range: [-90, -270],
+    },
+
+    {
+      label: 'left cw',
+      range: [-180, 0],
+    },
+    {
+      label: 'left ccw',
+      range: [0, -180],
+    },
+    {
+      label: 'right cw',
+      range: [0, 180],
+    },
+    {
+      label: 'right ccw',
+      range: [180, 0],
+    },
+  ];
 </script>
 
 <h1>Playground</h1>
@@ -126,6 +162,77 @@
   </div>
 </Preview>
 
+<h2>Label direction</h2>
+
+<div class="grid grid-cols-[1fr_1fr_1fr_1fr] gap-2 mb-2">
+  {#each labelExamples as example}
+    <div class="h-[400px] p-4 border rounded-sm">
+      <Chart>
+        <Svg center>
+          <LinearGradient class="from-secondary to-primary" vertical>
+            {#snippet children({ gradient })}
+              <Arc
+                {value}
+                {domain}
+                range={example.range}
+                innerRadius={0.5}
+                {cornerRadius}
+                {padAngle}
+                motion={spring ? 'spring' : undefined}
+                fill={gradient}
+                track={{ class: 'fill-surface-content/5' }}
+              >
+                {#snippet children({ arcTextPaths, trackTextPaths })}
+                  {@const paths = textPath === 'arc' ? arcTextPaths : trackTextPaths}
+                  <Text
+                    value={example.label}
+                    textAnchor="middle"
+                    verticalAnchor="middle"
+                    class="text-xs"
+                    dy={-8}
+                  />
+                  <Text
+                    value={example.range.join(',')}
+                    textAnchor="middle"
+                    verticalAnchor="middle"
+                    class="text-xs"
+                    dy={8}
+                  />
+
+                  <!-- Arc Text -->
+                  <Text
+                    {...paths.textProps}
+                    value={innerText}
+                    path={paths.inner}
+                    font-size="12px"
+                    dominant-baseline="hanging"
+                    truncate
+                  />
+                  <Text
+                    {...paths.textProps}
+                    value={outerText}
+                    path={paths.outer}
+                    font-size="12px"
+                    truncate
+                  />
+                  <Text
+                    {...paths.textProps}
+                    value={centroidText}
+                    path={paths.centroid}
+                    font-size="12px"
+                    dominant-baseline="middle"
+                    truncate
+                  />
+                {/snippet}
+              </Arc>
+            {/snippet}
+          </LinearGradient>
+        </Svg>
+      </Chart>
+    </div>
+  {/each}
+</div>
+
 {#if false}
   <h2>Label location</h2>
 
@@ -154,7 +261,7 @@
 {/if} -->
 
   <Preview>
-    <div class="h-[200px] p-4 border rounded-sm">
+    <div class="h-[400px] p-4 border rounded-sm">
       <Chart>
         <Svg center>
           <LinearGradient stops={['hsl(80, 100%, 50%)', 'hsl(200, 100%, 50%)']} vertical>
