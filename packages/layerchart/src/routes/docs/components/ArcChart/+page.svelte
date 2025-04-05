@@ -318,6 +318,43 @@
   </div>
 </Preview>
 
+<h2>Series data (labels)</h2>
+
+<Preview data={exerciseData}>
+  <div class="h-[200px] p-4 border rounded-sm resize overflow-auto">
+    <ArcChart
+      key="key"
+      value="value"
+      series={exerciseData.map((d) => {
+        return {
+          key: d.key,
+          data: [d],
+          maxValue: d.maxValue,
+          color: d.color,
+        };
+      })}
+      outerRadius={-25}
+      innerRadius={-20}
+      cornerRadius={10}
+      {renderContext}
+      {debug}
+    >
+      {#snippet arc({ props, seriesIndex, visibleSeries })}
+        <Arc {...props}>
+          {#snippet children({ getArcTextProps })}
+            <Text
+              {...getArcTextProps('middle')}
+              value={visibleSeries[seriesIndex].key}
+              class="fill-surface"
+              font-size="12px"
+            />
+          {/snippet}
+        </Arc>
+      {/snippet}
+    </ArcChart>
+  </div>
+</Preview>
+
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[1fr_auto] gap-2">
     <h2>Tweened</h2>
