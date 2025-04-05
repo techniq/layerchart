@@ -129,44 +129,39 @@ export type ArcTextPaths = {
 };
 
 export function getArcTextPaths(props: TextPathProps): ArcTextPaths {
-  // first we determine if the arc is going clockwise or counterclockwise,
-  // this will determine where we position the text
-  const isCounterClockwise = $derived(props.startAngle() > props.endAngle());
-
   const startDegrees = $derived(radiansToDegrees(props.startAngle()));
   const endDegrees = $derived(radiansToDegrees(props.endAngle()));
 
-  const startNormalized = $derived(normalizeAngle(startDegrees));
-  const endNormalized = $derived(normalizeAngle(endDegrees));
+  const isClockwise = $derived(startDegrees < endDegrees);
 
-  // if the arc is going counterclockwise, we flip the angles
-  // but we also need to consider the text direction based on whether it is in the bottom half
+  const normalizedStartDegrees = $derived(normalizeAngle(startDegrees));
+  const normalizedEndDegrees = $derived(normalizeAngle(endDegrees));
 
-  // is in bottom half
-  const isInBottomHalf = $derived.by(() => {
-    const normalized = startNormalized;
-    console.log('start Degrees', startDegrees);
-    console.log('startNormalized', normalized);
-    return normalized >= 90 && normalized < 270;
-  });
+  // Reverse direction of arc when text is on top going counterclockwise or bottom going clockwise
+  const isTopCw = $derived(
+    isClockwise && (normalizedStartDegrees >= 270 || normalizedStartDegrees <= 90)
+  );
+  const isTopCcw = $derived(
+    !isClockwise && (normalizedStartDegrees > 270 || normalizedStartDegrees <= 90)
+  );
+  const isBottomCw = $derived(
+    isClockwise && normalizedStartDegrees < 270 && normalizedStartDegrees >= 90
+  );
+  const isBottomCcw = $derived(
+    !isClockwise && normalizedStartDegrees <= 270 && normalizedStartDegrees > 90
+  );
+
+  const reverseText = $derived(isTopCcw || isBottomCw);
 
   const pathGenProps = {
     ...props,
-    startAngle: () => (isCounterClockwise ? props.endAngle() : props.startAngle()),
-    endAngle: () => (isCounterClockwise ? props.startAngle() : props.endAngle()),
+    startAngle: () => (reverseText ? props.endAngle() : props.startAngle()),
+    endAngle: () => (reverseText ? props.startAngle() : props.endAngle()),
   };
-
-  const needsTextReversal = $derived(
-    (isInBottomHalf && isCounterClockwise) || (!isInBottomHalf && !isCounterClockwise)
-  );
 
   const innerPath = getArcInnerPath(pathGenProps);
   const centroidPath = getArcCentroidPath(pathGenProps);
   const outerPath = getArcOuterPath(pathGenProps);
-
-  // DO WE ALSO NEED TO CONSIDER THE FACT THAT WE ARE CCW SO WE NEED TO FLIP THE TEXT? IDK
-  const startOffset = $derived(isInBottomHalf ? '100%' : '0%');
-  const textAnchor = $derived(isInBottomHalf ? 'end' : 'start');
 
   return {
     get inner() {
@@ -179,7 +174,13 @@ export function getArcTextPaths(props: TextPathProps): ArcTextPaths {
       return outerPath.current;
     },
     get textProps() {
-      return { startOffset, textAnchor };
+      return {
+        ...(reverseText && {
+          startOffset: '100%',
+          textAnchor: 'end',
+        }),
+        ...((isBottomCw || isBottomCcw) && { 'dominant-baseline': 'hanging' }),
+      };
     },
   };
 }

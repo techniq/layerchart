@@ -176,9 +176,6 @@
                 {domain}
                 range={example.range}
                 innerRadius={0.5}
-                {cornerRadius}
-                {padAngle}
-                motion={spring ? 'spring' : undefined}
                 fill={gradient}
                 track={{ class: 'fill-surface-content/5' }}
               >
@@ -200,14 +197,14 @@
                   />
 
                   <!-- Arc Text -->
-                  <Text
+                  <!-- <Text
                     {...paths.textProps}
                     value={innerText}
                     path={paths.inner}
                     font-size="12px"
                     dominant-baseline="hanging"
                     truncate
-                  />
+                  /> -->
                   <Text
                     {...paths.textProps}
                     value={outerText}
@@ -215,14 +212,14 @@
                     font-size="12px"
                     truncate
                   />
-                  <Text
+                  <!-- <Text
                     {...paths.textProps}
                     value={centroidText}
                     path={paths.centroid}
                     font-size="12px"
                     dominant-baseline="middle"
                     truncate
-                  />
+                  /> -->
                 {/snippet}
               </Arc>
             {/snippet}
@@ -232,77 +229,3 @@
     </div>
   {/each}
 </div>
-
-{#if false}
-  <h2>Label location</h2>
-
-  <!-- {#if label === 'svg-center'}
-	<text dy={16}>
-		{Math.round($tweened_value)}
-	</text>
-{/if} -->
-
-  <!-- {#if label === 'arc-center'}
-	<text x={labelArcCenterOffset.x} y={labelArcCenterOffset.y} dy={16}>
-		{Math.round($tweened_value)}
-	</text>
-{/if} -->
-
-  <!-- {#if label === 'arc-bottom'}
-	<text x={labelArcBottomOffset.x} y={labelArcBottomOffset.y} dy={0}>
-		{Math.round($tweened_value)}
-	</text>
-{/if} -->
-
-  <!-- {#if label === 'arc-centroid'}
-	<text x={trackArcCentroid[0]} y={trackArcCentroid[1]} dy={16}>
-		{Math.round($tweened_value)}
-	</text>
-{/if} -->
-
-  <Preview>
-    <div class="h-[400px] p-4 border rounded-sm">
-      <Chart>
-        <Svg center>
-          <LinearGradient stops={['hsl(80, 100%, 50%)', 'hsl(200, 100%, 50%)']} vertical>
-            {#snippet children({ gradient })}
-              <Arc
-                {value}
-                {domain}
-                {range}
-                {innerRadius}
-                {outerRadius}
-                {cornerRadius}
-                {padAngle}
-                fill={gradient}
-              >
-                {#snippet children({ boundingBox })}
-                  <!-- svg center -->
-                  <!-- <Text
-							value={Math.round(value)}
-							textAnchor="middle"
-							verticalAnchor="middle"
-              class="text-4xl"
-							dy={8}
-						/> -->
-                  <!-- arc center -->
-                  <Text
-                    value={Math.round(value)}
-                    textAnchor="middle"
-                    verticalAnchor="middle"
-                    class="text-4xl"
-                    x={outerRadius - boundingBox.width / 2}
-                    y={(outerRadius - boundingBox.height / 2) * -1}
-                    dy={8}
-                  />
-                  <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-4xl" capHeight="1.5rem" /> -->
-                  <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-7xl" capHeight="3.1em" /> -->
-                {/snippet}
-              </Arc>
-            {/snippet}
-          </LinearGradient>
-        </Svg>
-      </Chart>
-    </div>
-  </Preview>
-{/if}
