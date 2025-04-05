@@ -20,9 +20,9 @@ function getArcMiddlePath(props: InternalTextPathProps) {
   const centerRadius = $derived((props.innerRadius() + props.outerRadius()) / 2);
   const cornerAngleOffset = $derived.by(() => {
     if (props.cornerRadius() <= 0 || centerRadius <= 0) return 0;
-    // basic approximation - angle = arcLength / radius
-    // ensure cornerRadius isn't larger than the center radius itself for this
-    return props.cornerRadius() / centerRadius;
+
+    const effectiveCornerRadius = Math.min(props.cornerRadius(), centerRadius);
+    return (effectiveCornerRadius * 0.5) / centerRadius;
   });
 
   const middlelineStartAngle = $derived.by(() => {
@@ -66,10 +66,9 @@ function extractOutsideArc(arcPath: string) {
 function getArcInnerPath(props: InternalTextPathProps) {
   const innerCornerAngleOffset = $derived.by(() => {
     if (props.cornerRadius() <= 0 || props.innerRadius() <= 0) return 0;
-    // ensure corner radius isn't larger than the radius itself for approx.
-    if (props.cornerRadius() >= props.innerRadius()) return Math.PI / 2;
-    // approx: angle = arcLength / radius
-    return props.cornerRadius() / props.innerRadius();
+
+    if (props.cornerRadius() >= props.innerRadius()) return Math.PI / 4;
+    return (props.cornerRadius() * 0.5) / props.innerRadius();
   });
 
   const innerlineStartAngle = $derived.by(() => {
@@ -106,10 +105,7 @@ function getArcInnerPath(props: InternalTextPathProps) {
 function getArcOuterPath(props: InternalTextPathProps) {
   const outerCornerAngleOffset = $derived.by(() => {
     if (props.cornerRadius() <= 0 || props.outerRadius() <= 0) return 0;
-    // basic approximation: angle = arcLength / radius
-    // unlike the inner radius case, we shouldn't need to cap this
-    // as outerRadius is usually larger than cornerRadius.
-    return props.cornerRadius() / props.outerRadius();
+    return (props.cornerRadius() * 0.5) / props.outerRadius();
   });
 
   const outerlineStartAngle = $derived.by(() => {
