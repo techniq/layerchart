@@ -8,7 +8,7 @@
   // let value = 100;
   let domain = $state<[number, number]>([0, 100]);
   // let range = [-120, 120];
-  let range = $state<[number, number]>([-90, -270]);
+  let range = $state<[number, number]>([-90, 90]);
   let innerRadius = $state(70);
   let outerRadius = $state(140);
   let cornerRadius = $state(8);
@@ -16,15 +16,6 @@
   let padRadius = $state(0);
 
   let spring = $state(true);
-
-  const labelOptions = [
-    { name: 'None', value: undefined },
-    { name: 'SVG Center', value: 'svg-center' },
-    { name: 'Arc Center', value: 'arc-center' },
-    { name: 'Arc Bottom', value: 'arc-bottom' },
-    { name: 'Arc Centroid', value: 'arc-centroid' },
-  ];
-  let label = 'svg-center';
 
   let outerText = $state('outer text');
   let innerText = $state('inner text');
@@ -67,6 +58,15 @@
       range: [180, 0],
     },
   ];
+
+  const labelOptions = [
+    { name: 'None', value: undefined },
+    { name: 'SVG Center', value: 'svg-center' },
+    { name: 'Arc Center', value: 'arc-center' },
+    { name: 'Arc Bottom', value: 'arc-bottom' },
+    { name: 'Arc Centroid', value: 'arc-centroid' },
+  ];
+  let label = 'svg-center';
 </script>
 
 <h1>Playground</h1>
@@ -130,6 +130,7 @@
                     class="text-4xl"
                     dy={8}
                   />
+                  <!-- Arc labels -->
                   <Text
                     {...getTextPathProps('inner')}
                     value={innerText}
