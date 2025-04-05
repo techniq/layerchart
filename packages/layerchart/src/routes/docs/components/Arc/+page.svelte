@@ -32,7 +32,7 @@
   let textPath = $state<'arc' | 'track'>('arc');
   let textSize = $state(16);
 
-  const labelExamples = [
+  const labelExamples: Array<{ label: string; range: [number, number] }> = [
     {
       label: 'top cw',
       range: [-90, 90],
