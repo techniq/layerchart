@@ -165,7 +165,7 @@
   import { layerClass } from '$lib/utils/attributes.js';
   import { degreesToRadians } from '$lib/utils/math.js';
   import { createId } from '$lib/utils/createId.js';
-  import { getPathLength } from 'layerchart/utils/textPath.svelte.js';
+  import { getPathLength } from '$lib/utils/textPath.svelte.js';
 
   /*
     TODO:
