@@ -191,7 +191,12 @@
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
   import { max } from 'd3-array';
-  import { getArcTextPaths, type GetTextPathProps } from '$lib/utils/textPath.svelte.js';
+  import {
+    getArcTextPaths,
+    type GetTextPathProps,
+    type TextPathOptions,
+    type TextPathPosition,
+  } from '$lib/utils/textPath.svelte.js';
 
   let {
     ref: refProp = $bindable(),
@@ -356,21 +361,31 @@
     tooltipContext?.hide();
   };
 
-  const getTrackTextPathProps = getArcTextPaths({
-    startAngle: () => trackStartAngle,
-    endAngle: () => trackEndAngle,
-    outerRadius: () => trackOuterRadius,
-    innerRadius: () => trackInnerRadius,
-    cornerRadius: () => trackCornerRadius,
-  });
+  function getTrackTextPathProps(position: TextPathPosition, opts?: TextPathOptions) {
+    return getArcTextPaths(
+      {
+        startAngle: () => trackStartAngle,
+        endAngle: () => trackEndAngle,
+        outerRadius: () => trackOuterRadius,
+        innerRadius: () => trackInnerRadius,
+        cornerRadius: () => trackCornerRadius,
+      },
+      opts
+    )(position);
+  }
 
-  const getArcTextPathProps = getArcTextPaths({
-    startAngle: () => startAngle,
-    endAngle: () => arcEndAngle,
-    outerRadius: () => outerRadius,
-    innerRadius: () => innerRadius,
-    cornerRadius: () => cornerRadius,
-  });
+  function getArcTextPathProps(position: TextPathPosition, opts?: TextPathOptions) {
+    return getArcTextPaths(
+      {
+        startAngle: () => startAngle,
+        endAngle: () => arcEndAngle,
+        outerRadius: () => outerRadius,
+        innerRadius: () => innerRadius,
+        cornerRadius: () => cornerRadius,
+      },
+      opts
+    )(position);
+  }
 </script>
 
 {#if track}

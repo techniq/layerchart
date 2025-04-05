@@ -140,16 +140,55 @@ function getArcOuterPath(props: InternalTextPathProps) {
 }
 
 export type TextPathPosition = 'inner' | 'middle' | 'outer';
+export type TextPathOptions = {
+  /**
+   * A percentage string (e.g., '50%') to offset the start angle of the text path.
+   */
+  startOffset?: string;
+};
 
-export type GetTextPathProps = (position: TextPathPosition) => ComponentProps<typeof Text>;
+export type GetTextPathProps = (
+  position: TextPathPosition,
+  opts?: TextPathOptions
+) => ComponentProps<typeof Text>;
 
-export function getArcTextPaths(props: TextPathProps): GetTextPathProps {
+export function getArcTextPaths(
+  props: TextPathProps,
+  options: TextPathOptions = {}
+): GetTextPathProps {
+  const effectiveStartAngleRadians = $derived.by(() => {
+    const start = props.startAngle();
+    const end = props.endAngle();
+    const offset = options.startOffset;
+
+    if (offset) {
+      try {
+        // Parse percentage (e.g., '50%' -> 0.5)
+        const percentage = parseFloat(offset.slice(0, -1)) / 100;
+        if (!isNaN(percentage) && percentage >= 0 && percentage <= 1) {
+          const span = end - start; // Angular span in radians
+          // Calculate the angle at the offset point
+          return start + span * percentage;
+        } else {
+          console.warn('Invalid percentage for startOffset:', offset);
+        }
+      } catch (e) {
+        console.warn('Could not parse startOffset percentage:', offset, e);
+      }
+    }
+
+    return start;
+  });
+
+  // Convert the effective start angle to degrees for orientation checks
+  const effectiveStartDegrees = $derived(radiansToDegrees(effectiveStartAngleRadians));
+  // Normalize the effective angle to the [0, 360) range
+  const normalizedStartDegrees = $derived(normalizeAngle(effectiveStartDegrees));
+
   const startDegrees = $derived(radiansToDegrees(props.startAngle()));
   const endDegrees = $derived(radiansToDegrees(props.endAngle()));
 
   const isClockwise = $derived(startDegrees < endDegrees);
-
-  const normalizedStartDegrees = $derived(normalizeAngle(startDegrees));
 
   // Reverse direction of arc when text is on top going counterclockwise or bottom going clockwise
   const isTopCw = $derived(
@@ -184,14 +223,18 @@ export function getArcTextPaths(props: TextPathProps): GetTextPathProps {
     return 'auto';
   }
 
+  console.log('startOffset', options.startOffset);
+
   const sharedProps = $derived.by(() => {
     if (reverseText) {
       return {
-        startOffset: '100%',
+        startOffset: options.startOffset ?? '100%',
         textAnchor: 'end' as const,
       };
     }
-    return {};
+    return {
+      startOffset: options.startOffset ?? undefined,
+    };
   });
 
   function getTextPathProps(position: TextPathPosition) {

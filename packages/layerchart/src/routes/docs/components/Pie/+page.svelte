@@ -269,6 +269,38 @@
   </div>
 </Preview>
 
+<h2>Outer labels</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <Chart {data} x="value" c="date">
+      <Svg center>
+        <Pie>
+          {#snippet children({ arcs })}
+            {#each arcs as arc, index}
+              {@const colors = keyClasses[index]}
+              <Arc
+                startAngle={arc.startAngle}
+                endAngle={arc.endAngle}
+                padAngle={arc.padAngle}
+                class={colors.shape}
+              >
+                {#snippet children({ getArcTextPathProps })}
+                  <Text
+                    value={arc.data.value}
+                    {...getArcTextPathProps('outer', { startOffset: '50%' })}
+                    class={cls('text-sm ')}
+                  />
+                {/snippet}
+              </Arc>
+            {/each}
+          {/snippet}
+        </Pie>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Tooltip</h2>
 
 <Preview {data}>
