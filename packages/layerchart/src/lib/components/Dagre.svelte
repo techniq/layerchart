@@ -192,12 +192,12 @@
     edgeLabelPosition = 'center',
     edgeLabelOffset = 10,
     filterNodes = () => true,
-    graph = $bindable(),
+    graph: graphProp = $bindable(),
     children,
   }: DagreProps = $props();
 
-  $effect(() => {
-    graph = dagreGraph(data, {
+  const graph = $derived(
+    dagreGraph(data, {
       nodes,
       nodeId,
       edges,
@@ -217,7 +217,11 @@
       edgeLabelPosition,
       edgeLabelOffset,
       filterNodes,
-    });
+    })
+  );
+
+  $effect.pre(() => {
+    graphProp = graph;
   });
 
   const graphNodes = $derived.by(() => {
