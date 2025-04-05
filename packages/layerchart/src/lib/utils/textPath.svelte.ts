@@ -12,7 +12,11 @@ type TextPathProps = GetterValues<{
   endAngle: number;
 }>;
 
-function getArcMiddlePath(props: TextPathProps) {
+type InternalTextPathProps = TextPathProps & {
+  invertCorner: () => boolean;
+};
+
+function getArcMiddlePath(props: InternalTextPathProps) {
   const centerRadius = $derived((props.innerRadius() + props.outerRadius()) / 2);
   const cornerAngleOffset = $derived.by(() => {
     if (props.cornerRadius() <= 0 || centerRadius <= 0) return 0;
@@ -21,22 +25,33 @@ function getArcMiddlePath(props: TextPathProps) {
     return props.cornerRadius() / centerRadius;
   });
 
-  const centerlineStartAngle = $derived(props.startAngle() + cornerAngleOffset);
-  const centerlineEndAngle = $derived(props.endAngle() - cornerAngleOffset);
+  const middlelineStartAngle = $derived.by(() => {
+    if (props.invertCorner()) {
+      return props.startAngle() - cornerAngleOffset;
+    }
+    return props.startAngle() + cornerAngleOffset;
+  });
 
-  const centerlinePath = $derived(
+  const middlelineEndAngle = $derived.by(() => {
+    if (props.invertCorner()) {
+      return props.endAngle() + cornerAngleOffset;
+    }
+    return props.endAngle() - cornerAngleOffset;
+  });
+
+  const middlelinePath = $derived(
     extractOutsideArc(
       d3arc()
         .outerRadius(centerRadius)
         .innerRadius(centerRadius - 0.5)
-        .startAngle(centerlineStartAngle)
-        .endAngle(centerlineEndAngle)() ?? ''
+        .startAngle(middlelineStartAngle)
+        .endAngle(middlelineEndAngle)() ?? ''
     )
   );
 
   return {
     get current() {
-      return centerlinePath;
+      return middlelinePath;
     },
   };
 }
@@ -48,7 +63,7 @@ function extractOutsideArc(arcPath: string) {
   return matches[1];
 }
 
-function getArcInnerPath(props: TextPathProps) {
+function getArcInnerPath(props: InternalTextPathProps) {
   const innerCornerAngleOffset = $derived.by(() => {
     if (props.cornerRadius() <= 0 || props.innerRadius() <= 0) return 0;
     // ensure corner radius isn't larger than the radius itself for approx.
@@ -57,10 +72,19 @@ function getArcInnerPath(props: TextPathProps) {
     return props.cornerRadius() / props.innerRadius();
   });
 
-  const innerlineStartAngle = $derived(props.startAngle() + innerCornerAngleOffset);
-  const innerlineEndAngle = $derived(props.endAngle() - innerCornerAngleOffset);
+  const innerlineStartAngle = $derived.by(() => {
+    if (props.invertCorner()) {
+      return props.startAngle() - innerCornerAngleOffset;
+    }
+    return props.startAngle() + innerCornerAngleOffset;
+  });
 
-  // ensure adjust end angle doesn't cross over the start angle
+  const innerlineEndAngle = $derived.by(() => {
+    if (props.invertCorner()) {
+      return props.endAngle() + innerCornerAngleOffset;
+    }
+    return props.endAngle() - innerCornerAngleOffset;
+  });
 
   const innerlinePath = $derived(
     extractOutsideArc(
@@ -79,7 +103,7 @@ function getArcInnerPath(props: TextPathProps) {
   };
 }
 
-function getArcOuterPath(props: TextPathProps) {
+function getArcOuterPath(props: InternalTextPathProps) {
   const outerCornerAngleOffset = $derived.by(() => {
     if (props.cornerRadius() <= 0 || props.outerRadius() <= 0) return 0;
     // basic approximation: angle = arcLength / radius
@@ -88,10 +112,19 @@ function getArcOuterPath(props: TextPathProps) {
     return props.cornerRadius() / props.outerRadius();
   });
 
-  const outerlineStartAngle = $derived(props.startAngle() + outerCornerAngleOffset);
-  const outerlineEndAngle = $derived(props.endAngle() - outerCornerAngleOffset);
+  const outerlineStartAngle = $derived.by(() => {
+    if (props.invertCorner()) {
+      return props.startAngle() - outerCornerAngleOffset;
+    }
+    return props.startAngle() + outerCornerAngleOffset;
+  });
 
-  // ensure the adjusted end angle doesn't cross over the start angle
+  const outerlineEndAngle = $derived.by(() => {
+    if (props.invertCorner()) {
+      return props.endAngle() + outerCornerAngleOffset;
+    }
+    return props.endAngle() - outerCornerAngleOffset;
+  });
 
   const outerlinePath = $derived(
     extractOutsideArc(
@@ -121,7 +154,6 @@ export function getArcTextPaths(props: TextPathProps): GetTextPathProps {
   const isClockwise = $derived(startDegrees < endDegrees);
 
   const normalizedStartDegrees = $derived(normalizeAngle(startDegrees));
-  const normalizedEndDegrees = $derived(normalizeAngle(endDegrees));
 
   // Reverse direction of arc when text is on top going counterclockwise or bottom going clockwise
   const isTopCw = $derived(
@@ -143,6 +175,7 @@ export function getArcTextPaths(props: TextPathProps): GetTextPathProps {
     ...props,
     startAngle: () => (reverseText ? props.endAngle() : props.startAngle()),
     endAngle: () => (reverseText ? props.startAngle() : props.endAngle()),
+    invertCorner: () => isBottomCw || isBottomCcw,
   };
 
   const innerPath = getArcInnerPath(pathGenProps);
@@ -182,7 +215,7 @@ export function getArcTextPaths(props: TextPathProps): GetTextPathProps {
       return {
         path: middlePath.current,
         ...sharedProps,
-        ...((isBottomCw || isBottomCcw) && { 'dominant-baseline': 'middle' }),
+        'dominant-baseline': 'middle',
       };
     }
   }

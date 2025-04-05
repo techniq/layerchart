@@ -171,6 +171,7 @@
                 {value}
                 {domain}
                 range={example.range}
+                {cornerRadius}
                 innerRadius={0.5}
                 fill={gradient}
                 track={{ class: 'fill-surface-content/5' }}
