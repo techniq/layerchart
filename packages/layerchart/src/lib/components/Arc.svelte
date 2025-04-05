@@ -191,8 +191,12 @@
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
   import { max } from 'd3-array';
-  import { type TextPathOptions, type TextPathPosition } from '$lib/utils/textPath.svelte.js';
-  import { createGetArcTextProps, type GetArcTextProps } from 'layerchart/utils/arcText.svelte.js';
+  import {
+    createGetArcTextProps,
+    type ArcTextOptions,
+    type ArcTextPosition,
+    type GetArcTextProps,
+  } from '$lib/utils/arcText.svelte.js';
 
   let {
     ref: refProp = $bindable(),
@@ -357,7 +361,7 @@
     tooltipContext?.hide();
   };
 
-  function getTrackTextProps(position: TextPathPosition, opts?: TextPathOptions) {
+  function getTrackTextProps(position: ArcTextPosition, opts?: ArcTextOptions) {
     return createGetArcTextProps(
       {
         startAngle: () => trackStartAngle,
@@ -372,7 +376,7 @@
     ).current;
   }
 
-  function getArcTextProps(position: TextPathPosition, opts?: TextPathOptions) {
+  function getArcTextProps(position: ArcTextPosition, opts?: ArcTextOptions) {
     return createGetArcTextProps(
       {
         startAngle: () => startAngle,
