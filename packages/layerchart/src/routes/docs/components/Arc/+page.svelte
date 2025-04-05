@@ -120,8 +120,9 @@
                 fill={gradient}
                 track={{ class: 'fill-surface-content/5' }}
               >
-                {#snippet children({ value, arcTextPaths, trackTextPaths })}
-                  {@const paths = textPath === 'arc' ? arcTextPaths : trackTextPaths}
+                {#snippet children({ value, getArcTextPathProps, getTrackTextPathProps })}
+                  {@const getTextPathProps =
+                    textPath === 'arc' ? getArcTextPathProps : getTrackTextPathProps}
                   <Text
                     value={Math.round(value)}
                     textAnchor="middle"
@@ -130,25 +131,20 @@
                     dy={8}
                   />
                   <Text
-                    {...paths.textProps}
+                    {...getTextPathProps('inner')}
                     value={innerText}
-                    path={paths.inner}
                     font-size="{textSize}px"
-                    dominant-baseline="hanging"
                     truncate
                   />
                   <Text
-                    {...paths.textProps}
+                    {...getTextPathProps('outer')}
                     value={outerText}
-                    path={paths.outer}
                     font-size="{textSize}px"
                     truncate
                   />
                   <Text
-                    {...paths.textProps}
-                    dominant-baseline="middle"
+                    {...getTextPathProps('middle')}
                     value={centroidText}
-                    path={paths.centroid}
                     font-size="{textSize}px"
                     truncate
                   />
@@ -179,8 +175,9 @@
                 fill={gradient}
                 track={{ class: 'fill-surface-content/5' }}
               >
-                {#snippet children({ arcTextPaths, trackTextPaths })}
-                  {@const paths = textPath === 'arc' ? arcTextPaths : trackTextPaths}
+                {#snippet children({ getArcTextPathProps, getTrackTextPathProps })}
+                  {@const getTextPathProps =
+                    textPath === 'arc' ? getArcTextPathProps : getTrackTextPathProps}
                   <Text
                     value={example.label}
                     textAnchor="middle"
@@ -197,29 +194,24 @@
                   />
 
                   <!-- Arc Text -->
-                  <!-- <Text
-                    {...paths.textProps}
-                    value={innerText}
-                    path={paths.inner}
-                    font-size="12px"
-                    dominant-baseline="hanging"
-                    truncate
-                  /> -->
                   <Text
-                    {...paths.textProps}
-                    value={outerText}
-                    path={paths.outer}
+                    {...getTextPathProps('inner')}
+                    value={innerText}
                     font-size="12px"
                     truncate
                   />
-                  <!-- <Text
-                    {...paths.textProps}
-                    value={centroidText}
-                    path={paths.centroid}
+                  <Text
+                    {...getTextPathProps('outer')}
+                    value={outerText}
                     font-size="12px"
-                    dominant-baseline="middle"
                     truncate
-                  /> -->
+                  />
+                  <Text
+                    {...getTextPathProps('middle')}
+                    value={centroidText}
+                    font-size="12px"
+                    truncate
+                  />
                 {/snippet}
               </Arc>
             {/snippet}

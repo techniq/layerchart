@@ -149,8 +149,8 @@
           centroid: [number, number];
           boundingBox: DOMRect;
           value: number;
-          trackTextPaths: ArcTextPaths;
-          arcTextPaths: ArcTextPaths;
+          getTrackTextPathProps: GetTextPathProps;
+          getArcTextPathProps: GetTextPathProps;
         },
       ]
     >;
@@ -191,7 +191,7 @@
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
   import { max } from 'd3-array';
-  import { getArcTextPaths, type ArcTextPaths } from '$lib/utils/textPath.svelte.js';
+  import { getArcTextPaths, type GetTextPathProps } from '$lib/utils/textPath.svelte.js';
 
   let {
     ref: refProp = $bindable(),
@@ -356,7 +356,7 @@
     tooltipContext?.hide();
   };
 
-  const trackTextPaths = getArcTextPaths({
+  const getTrackTextPathProps = getArcTextPaths({
     startAngle: () => trackStartAngle,
     endAngle: () => trackEndAngle,
     outerRadius: () => trackOuterRadius,
@@ -364,7 +364,7 @@
     cornerRadius: () => trackCornerRadius,
   });
 
-  const arcTextPaths = getArcTextPaths({
+  const getArcTextPathProps = getArcTextPaths({
     startAngle: () => startAngle,
     endAngle: () => arcEndAngle,
     outerRadius: () => outerRadius,
@@ -413,6 +413,6 @@
   centroid: trackArcCentroid,
   boundingBox,
   value: motionEndAngle.current,
-  trackTextPaths,
-  arcTextPaths,
+  getTrackTextPathProps,
+  getArcTextPathProps,
 })}
