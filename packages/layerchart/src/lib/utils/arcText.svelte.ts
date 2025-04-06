@@ -171,9 +171,15 @@ export type ArcTextOptions = {
    * This has no effect if the position is `'centroid'`.
    */
   startOffset?: string;
+
+  /**
+   * An amount of padding to add to the outer radius of the path to add space
+   * between the text and the arc.
+   */
+  outerPadding?: number;
 };
 
-export function createGetArcTextProps(
+export function createArcTextProps(
   props: ArcTextProps,
   opts: ArcTextOptions = {},
   position: ArcTextPosition

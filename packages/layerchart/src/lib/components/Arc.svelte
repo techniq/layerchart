@@ -192,7 +192,7 @@
   import { cls } from '@layerstack/tailwind';
   import { max } from 'd3-array';
   import {
-    createGetArcTextProps,
+    createArcTextProps,
     type ArcTextOptions,
     type ArcTextPosition,
     type GetArcTextProps,
@@ -361,12 +361,12 @@
     tooltipContext?.hide();
   };
 
-  function getTrackTextProps(position: ArcTextPosition, opts?: ArcTextOptions) {
-    return createGetArcTextProps(
+  function getTrackTextProps(position: ArcTextPosition, opts: ArcTextOptions = {}) {
+    return createArcTextProps(
       {
         startAngle: () => trackStartAngle,
         endAngle: () => trackEndAngle,
-        outerRadius: () => trackOuterRadius,
+        outerRadius: () => trackOuterRadius + (opts.outerPadding ? opts.outerPadding : 0),
         innerRadius: () => trackInnerRadius,
         cornerRadius: () => trackCornerRadius,
         centroid: () => trackArcCentroid,
@@ -376,12 +376,12 @@
     ).current;
   }
 
-  function getArcTextProps(position: ArcTextPosition, opts?: ArcTextOptions) {
-    return createGetArcTextProps(
+  function getArcTextProps(position: ArcTextPosition, opts: ArcTextOptions = {}) {
+    return createArcTextProps(
       {
         startAngle: () => startAngle,
         endAngle: () => arcEndAngle,
-        outerRadius: () => outerRadius,
+        outerRadius: () => outerRadius + (opts.outerPadding ? opts.outerPadding : 0),
         innerRadius: () => innerRadius,
         cornerRadius: () => cornerRadius,
         centroid: () => trackArcCentroid,
