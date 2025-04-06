@@ -164,8 +164,8 @@
 
   const seriesState = createSeriesState(() => series);
   const isVertical = $derived(orientation === 'vertical');
-  const stackSeries = $derived(seriesLayout.startsWith('stack'));
-  const groupSeries = $derived(seriesLayout === 'group');
+  const isStackSeries = $derived(seriesLayout.startsWith('stack'));
+  const isGroupSeries = $derived(seriesLayout === 'group');
 
   const xScale = $derived(
     xScaleProp ?? (isVertical ? scaleBand().padding(bandPadding) : scaleLinear())
@@ -178,14 +178,14 @@
   const yBaseline = $derived(isVertical ? 0 : undefined);
 
   const x1Scale = $derived(
-    groupSeries && isVertical ? scaleBand().padding(groupPadding) : undefined
+    isGroupSeries && isVertical ? scaleBand().padding(groupPadding) : undefined
   );
   const x1Domain = $derived(
-    groupSeries && isVertical ? seriesState.visibleSeries.map((s) => s.key) : undefined
+    isGroupSeries && isVertical ? seriesState.visibleSeries.map((s) => s.key) : undefined
   );
 
   const x1Range = $derived(
-    groupSeries && isVertical
+    isGroupSeries && isVertical
       ? // TODO: can we do something better here where we don't need to cast this
         // feels fragile!
         ({ xScale }: { xScale: AnyScale }) => [0, xScale.bandwidth!()]
@@ -193,13 +193,13 @@
   );
 
   const y1Scale = $derived(
-    groupSeries && !isVertical ? scaleBand().padding(groupPadding) : undefined
+    isGroupSeries && !isVertical ? scaleBand().padding(groupPadding) : undefined
   );
   const y1Domain = $derived(
-    groupSeries && !isVertical ? seriesState.visibleSeries.map((s) => s.key) : undefined
+    isGroupSeries && !isVertical ? seriesState.visibleSeries.map((s) => s.key) : undefined
   );
   const y1Range = $derived(
-    groupSeries && !isVertical
+    isGroupSeries && !isVertical
       ? // TODO: can we do something better here where we don't need to cast this
         // feels fragile!
         ({ yScale }: { yScale: AnyScale }) => [0, yScale.bandwidth!()]
@@ -214,7 +214,7 @@
     let _chartData = (
       seriesState.allSeriesData.length ? seriesState.allSeriesData : chartDataArray(data)
     ) as Array<TData & { stackData?: any }>;
-    if (stackSeries) {
+    if (isStackSeries) {
       const seriesKeys = seriesState.visibleSeries.map((s) => s.key);
 
       const offset =
@@ -264,7 +264,7 @@
       }
     }
 
-    const valueAccessor = stackSeries
+    const valueAccessor = isStackSeries
       ? (d: any) => d.stackData[i]
       : (s.value ?? (s.data ? undefined : s.key));
 
@@ -272,8 +272,8 @@
       data: s.data,
       x: !isVertical ? valueAccessor : undefined,
       y: isVertical ? valueAccessor : undefined,
-      x1: isVertical && groupSeries ? (d) => s.value ?? s.key : undefined,
-      y1: !isVertical && groupSeries ? (d) => s.value ?? s.key : undefined,
+      x1: isVertical && isGroupSeries ? (d) => s.value ?? s.key : undefined,
+      y1: !isVertical && isGroupSeries ? (d) => s.value ?? s.key : undefined,
       rounded: isStackLayout && i !== seriesState.visibleSeries.length - 1 ? 'none' : 'edge',
       radius: 4,
       strokeWidth: 1,
@@ -391,7 +391,7 @@
       return orientation;
     },
     get stackSeries() {
-      return stackSeries;
+      return isStackSeries;
     },
     get visibleSeries() {
       return seriesState.visibleSeries;
@@ -400,7 +400,7 @@
 
   function resolveAccessor(acc: Accessor<TData> | undefined) {
     if (acc) return acc;
-    if (stackSeries) {
+    if (isStackSeries) {
       return (d: TData) =>
         isStackData(d) ? seriesState.visibleSeries.flatMap((s, i) => d.stackData[i]) : undefined;
     }
@@ -529,7 +529,7 @@
       {:else if tooltip}
         <DefaultTooltip
           tooltipProps={props.tooltip}
-          canHaveTotal={stackSeries || groupSeries}
+          canHaveTotal={isStackSeries || isGroupSeries}
           {seriesState}
         />
       {/if}
