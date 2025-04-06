@@ -362,6 +362,43 @@
   </div>
 </Preview>
 
+<h3>Outer Radial</h3>
+
+<Preview {data}>
+  <div class="h-[400px] p-4 border rounded-sm resize overflow-auto">
+    <!--
+	This is an example of what I meant when I said that labels aren't taken into account
+	when determining size. Perhaps when a label is added we can check the charts padding to see
+	if it meets the minimum needed to fit the label, and if not, we push it? Idk
+	-->
+    <Chart {data} x="value" c="date" padding={24}>
+      <Svg center>
+        <Pie>
+          {#snippet children({ arcs })}
+            {#each arcs as arc, index}
+              {@const colors = keyClasses[index]}
+              <Arc
+                startAngle={arc.startAngle}
+                endAngle={arc.endAngle}
+                padAngle={arc.padAngle}
+                class={colors.shape}
+              >
+                {#snippet children({ getArcTextProps })}
+                  <Text
+                    value={arc.data.value}
+                    {...getArcTextProps('outer-radial')}
+                    class={cls('text-sm ')}
+                  />
+                {/snippet}
+              </Arc>
+            {/each}
+          {/snippet}
+        </Pie>
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Tooltip</h2>
 
 <Preview {data}>
