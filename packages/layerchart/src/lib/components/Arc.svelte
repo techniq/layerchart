@@ -337,14 +337,18 @@
       .padAngle(trackPadAngle)
   );
 
-  // @ts-expect-error - todo - fix type
-  const trackArcCentroid = $derived(trackArc.centroid()) as [number, number];
-
-  const boundingBox = $derived(trackRef ? trackRef.getBBox() : ({} as DOMRect));
-
   const angle = $derived(((startAngle ?? 0) + (endAngle ?? 0)) / 2);
   const xOffset = $derived(Math.sin(angle) * offset);
   const yOffset = $derived(-Math.cos(angle) * offset);
+
+  const trackArcCentroid = $derived.by(() => {
+    // @ts-expect-error - this is fine.
+    const centroid = trackArc.centroid() as [number, number];
+
+    return [centroid[0] + xOffset, centroid[1] + yOffset];
+  }) as [number, number];
+
+  const boundingBox = $derived(trackRef ? trackRef.getBBox() : ({} as DOMRect));
 
   const onPointerEnter: PointerEventHandler<SVGPathElement> = (e) => {
     onpointerenter?.(e);

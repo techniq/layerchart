@@ -223,7 +223,7 @@
     path,
     pathId = createId('text-path', uid),
     startOffset = '0%',
-    transform: pathTransform,
+    transform: transformProp,
     ...restProps
   }: TextProps = $props();
 
@@ -365,7 +365,7 @@
   });
 
   const rotateTransform = $derived(rotate ? `rotate(${rotate}, ${x}, ${y})` : '');
-  const transform = $derived(`${scaleTransform} ${rotateTransform}`);
+  const transform = $derived(transformProp ?? `${scaleTransform} ${rotateTransform}`);
 
   function isValidXOrY(xOrY: string | number | undefined) {
     return (
@@ -495,7 +495,7 @@
         {stroke}
         stroke-width={strokeWidth}
         {opacity}
-        transform={pathTransform}
+        transform={transformProp}
         class={cls(layerClass('text'), fill === undefined && 'fill-surface-content', className)}
       >
         <textPath
