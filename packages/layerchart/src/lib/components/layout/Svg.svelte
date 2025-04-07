@@ -9,7 +9,7 @@
      *
      * @bindable
      */
-    ref?: SVGElement;
+    ref?: SVGSVGElement;
 
     /**
      * A reference to the layer's `<g>` tag.
