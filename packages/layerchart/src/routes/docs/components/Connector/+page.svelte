@@ -10,13 +10,11 @@
   import ConnectorTypeMenuField from 'layerchart/docs/ConnectorTypeMenuField.svelte';
   import Connector from 'layerchart/components/Connector.svelte';
 
-  let pointCount = $state(10);
   let showLine = $state(true);
   let show = $state(true);
   let tweened = $state(true);
   let Context: Component = $state(Svg);
 
-  let pathGenerator = $state((x: number) => x);
   let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
 
   let forceLinearOnAligned = $state(false);
@@ -27,15 +25,6 @@
   let sweep: ConnectorSweep = $state('horizontal-vertical'); // Sweep direction
   let type: ConnectorType = $state('rounded'); // Connector type: 'straight', 'square', 'beveled', 'rounded', 'd3'
   let radius = $state(60); // Corner radius (for 'beveled', 'rounded')
-
-  const data = $derived(
-    Array.from({ length: pointCount }).map((_, i) => {
-      return {
-        x: i + 1,
-        y: pathGenerator?.(i / pointCount) ?? i,
-      };
-    })
-  );
 
   let svgElement = $state<SVGSVGElement>();
   let draggingPoint: 'source' | 'target' | null = $state(null);
@@ -144,7 +133,7 @@
   </div>
 </div>
 
-<Preview {data}>
+<Preview>
   <div class="h-[400px] p-4 border rounded-sm">
     <Chart padding={{ left: 16, bottom: 24 }}>
       <Svg bind:ref={svgElement}>
