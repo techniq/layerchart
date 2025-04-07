@@ -86,7 +86,7 @@
     splineRef = $bindable(),
     pathData: pathDataProp,
     ...restProps
-  }: ConnectorPropsWithoutHTML = $props();
+  }: ConnectorProps = $props();
 
   const pathData = $derived.by(() => {
     if (pathDataProp) return pathDataProp;

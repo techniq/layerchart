@@ -15,14 +15,15 @@
   let show = $state(true);
   let tweened = $state(true);
   let Context: Component = $state(Svg);
-  const motion = $derived(tweened ? 'tween' : 'none');
 
   let pathGenerator = $state((x: number) => x);
   let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
 
   let forceLinearOnAligned = $state(false);
-  let source = $state({ x: 100, y: 100 }); // Start point
-  let target = $state({ x: 400, y: 300 }); // End point
+  let source = $state({ x: 300, y: 150 });
+  let target = $state({ x: 500, y: 300 });
+  let dragOffset = $state({ x: 0, y: 0 });
+
   let sweep: ConnectorSweep = $state('horizontal-vertical'); // Sweep direction
   let type: ConnectorType = $state('rounded'); // Connector type: 'straight', 'square', 'beveled', 'rounded', 'd3'
   let radius = $state(60); // Corner radius (for 'beveled', 'rounded')
@@ -40,23 +41,41 @@
   let draggingPoint: 'source' | 'target' | null = $state(null);
 
   function handlePointerDown(e: PointerEvent, pointId: 'source' | 'target') {
+    if (e.button !== 0) return;
+
     draggingPoint = pointId;
     e.preventDefault();
+
+    const initialSvgClickPoint = getSVGPoint(e);
+    if (!initialSvgClickPoint) return;
+
+    const initialCircleCenter = pointId === 'source' ? source : target;
+
+    dragOffset.x = initialCircleCenter.x - initialSvgClickPoint.x;
+    dragOffset.y = initialCircleCenter.y - initialSvgClickPoint.y;
   }
 
   function handlePointerMove(e: PointerEvent) {
     if (!draggingPoint) return;
-    const { x, y } = getSVGPoint(e);
+
+    const currentSvgMousePoint = getSVGPoint(e);
+    if (!currentSvgMousePoint) return;
+
+    const newX = currentSvgMousePoint.x + dragOffset.x;
+    const newY = currentSvgMousePoint.y + dragOffset.y;
+
     if (draggingPoint === 'source') {
-      source.x = x;
-      source.y = y;
+      source.x = newX;
+      source.y = newY;
     } else if (draggingPoint === 'target') {
-      target.x = x;
-      target.y = y;
+      target.x = newX;
+      target.y = newY;
     }
   }
 
   function handlePointerUp() {
+    if (!draggingPoint) return;
+
     draggingPoint = null;
   }
 
@@ -75,23 +94,10 @@
   }
 </script>
 
-<!--
-WIP
--->
-
 <svelte:window
-  onpointermove={(e) => {
-    if (!draggingPoint) return;
-    handlePointerMove(e);
-  }}
-  onpointerup={() => {
-    if (!draggingPoint) return;
-    handlePointerUp();
-  }}
-  onpointercancel={() => {
-    if (!draggingPoint) return;
-    handlePointerUp();
-  }}
+  onpointermove={handlePointerMove}
+  onpointerup={handlePointerUp}
+  onpointercancel={handlePointerUp}
 />
 
 <h1>Playground</h1>
@@ -150,18 +156,14 @@ WIP
             {type}
             {radius}
             {curve}
-            stroke="dodgerblue"
-            strokeWidth={4}
+            class="stroke-primary stroke-4"
           />
         {/if}
         <circle
           cx={source.x}
           cy={source.y}
           r="10"
-          fill="crimson"
-          stroke="black"
-          stroke-width="2"
-          style="cursor: grab;"
+          class="cursor-grab fill-info stroke-2 stroke-info"
           onpointerdown={(e) => handlePointerDown(e, 'source')}
         />
 
@@ -169,10 +171,7 @@ WIP
           cx={target.x}
           cy={target.y}
           r="10"
-          fill="limegreen"
-          stroke="black"
-          stroke-width="2"
-          style="cursor: grab;"
+          class="cursor-grab fill-accent stroke-2 stroke-accent"
           onpointerdown={(e) => handlePointerDown(e, 'target')}
         />
       </Svg>
