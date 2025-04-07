@@ -77,6 +77,12 @@
   import { createId } from '$lib/utils/createId.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import MarkerWrapper from './MarkerWrapper.svelte';
+  import {
+    createMotion,
+    extractTweenConfig,
+    type ResolvedMotion,
+  } from '$lib/utils/motion.svelte.js';
+  import { interpolatePath } from 'd3-interpolate-path';
 
   const uid = $props.id();
 
@@ -94,12 +100,25 @@
     markerStart,
     markerMid,
     markerEnd,
+    motion,
     ...restProps
   }: ConnectorProps = $props();
 
   const markerStartId = $derived(markerStart || marker ? createId('marker-start', uid) : '');
   const markerMidId = $derived(markerMid || marker ? createId('marker-mid', uid) : '');
   const markerEndId = $derived(markerEnd || marker ? createId('marker-end', uid) : '');
+
+  const extractedTween = extractTweenConfig(motion);
+
+  const tweenOptions: ResolvedMotion | undefined = extractedTween
+    ? {
+        type: extractedTween.type,
+        options: {
+          interpolate: interpolatePath,
+          ...extractedTween.options,
+        },
+      }
+    : undefined;
 
   const pathData = $derived.by(() => {
     if (pathDataProp) return pathDataProp;
@@ -115,10 +134,16 @@
       return getConnectorPresetPath({ source, target, sweep, type, radius });
     }
   });
+
+  const motionPath = createMotion(
+    '',
+    () => pathData,
+    tweenOptions ? tweenOptions : { type: 'none' }
+  );
 </script>
 
 <Spline
-  {pathData}
+  pathData={motionPath.current}
   bind:splineRef
   marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
   marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
