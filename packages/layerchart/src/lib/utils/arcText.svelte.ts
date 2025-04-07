@@ -200,7 +200,7 @@ export function createArcTextProps(
   props: ArcTextProps,
   opts: ArcTextOptions = {},
   position: ArcTextPosition
-) {
+): { current: ComponentProps<typeof Text> } {
   const effectiveStartAngleRadians = $derived.by(() => {
     const start = props.startAngle();
     const end = props.endAngle();
@@ -284,7 +284,7 @@ export function createArcTextProps(
   });
 
   const radialPositionProps = $derived.by(() => {
-    if (position !== 'outer-radial') return null;
+    if (position !== 'outer-radial') return {};
 
     const midAngle = (props.startAngle() + props.endAngle()) / 2;
     const basePadding = opts.radialOffset ?? opts.outerPadding ?? 23;
