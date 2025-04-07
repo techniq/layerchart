@@ -1,9 +1,10 @@
 <script lang="ts" module>
-  import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';
   import type { ComponentProps, Snippet } from 'svelte';
-  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
+
+  import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
+  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 
   export type ArcPropsWithoutHTML = {

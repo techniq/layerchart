@@ -325,7 +325,7 @@
   }
   function getGridProps(): ComponentProps<typeof Grid> {
     return {
-      x: !isVertical,
+      x: !isVertical || radial,
       y: isVertical,
       ...(typeof grid === 'object' ? grid : null),
       ...props.grid,
@@ -342,7 +342,7 @@
   function getAxisProps(axisDirection: 'x' | 'y'): ComponentProps<typeof Axis> {
     if (axisDirection === 'y') {
       return {
-        placement: 'left',
+        placement: radial ? 'radius' : 'left',
 
         format: (value) => {
           if (isVertical && seriesLayout === 'stackExpand') {
@@ -356,7 +356,7 @@
       };
     }
     return {
-      placement: 'bottom',
+      placement: radial ? 'angle' : 'bottom',
       format: (value) => {
         if (!isVertical && seriesLayout === 'stackExpand') {
           return format(value, 'percentRound');
@@ -428,7 +428,8 @@
   {y1Range}
   c={isVertical ? yProp : xProp}
   cRange={['var(--color-primary)']}
-  padding={defaultChartPadding(axis, legend)}
+  {radial}
+  padding={radial ? undefined : defaultChartPadding(axis, legend)}
   {...restProps}
   tooltip={tooltip === false
     ? false
@@ -460,7 +461,11 @@
       {@const Component = renderContext === 'canvas' ? Canvas : Svg}
       {@render belowContext?.(snippetProps)}
 
-      <Component {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)} {debug}>
+      <Component
+        {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
+        center={radial}
+        {debug}
+      >
         {#if typeof grid === 'function'}
           {@render grid(snippetProps)}
         {:else if grid}

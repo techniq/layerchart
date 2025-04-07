@@ -65,21 +65,26 @@
   } & CommonStyleProps;
 
   export type BarProps = BarPropsWithoutHTML &
-    Without<Omit<SVGAttributes<SVGElement>, 'width' | 'height' | 'x' | 'y'>, BarPropsWithoutHTML>;
+    Without<
+      Omit<SVGAttributes<SVGElement>, 'width' | 'height' | 'x' | 'y' | 'offset'>,
+      BarPropsWithoutHTML
+    >;
 </script>
 
 <script lang="ts">
+  import type { SVGAttributes } from 'svelte/elements';
+  import { greatestAbs } from '@layerstack/utils';
+
   import Rect from './Rect.svelte';
   import Spline from './Spline.svelte';
 
   import { isScaleBand } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
-  import { greatestAbs } from '@layerstack/utils';
   import { getChartContext } from './Chart.svelte';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
-  import type { SVGAttributes } from 'svelte/elements';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
+  import Arc from './Arc.svelte';
 
   const ctx = getChartContext();
 
@@ -159,7 +164,21 @@
   );
 </script>
 
-{#if rounded === 'all' || rounded === 'none' || radius === 0}
+{#if ctx.radial}
+  <Arc
+    innerRadius={0}
+    outerRadius={dimensions.height * -1}
+    startAngle={dimensions.x}
+    endAngle={dimensions.x + dimensions.width}
+    {fill}
+    {fillOpacity}
+    {stroke}
+    {strokeWidth}
+    {opacity}
+    cornerRadius={radius}
+    {...extractLayerProps(restProps, 'bar')}
+  />
+{:else if rounded === 'all' || rounded === 'none' || radius === 0}
   <Rect
     {fill}
     {fillOpacity}
