@@ -73,7 +73,12 @@
     type ConnectorType,
   } from '$lib/utils/connectorUtils.js';
   import Spline, { type SplineProps, type SplinePropsWithoutHTML } from './Spline.svelte';
-  import type { Without } from 'layerchart/utils/types.js';
+  import type { Without } from '$lib/utils/types.js';
+  import { createId } from '$lib/utils/createId.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
+  import MarkerWrapper from './MarkerWrapper.svelte';
+
+  const uid = $props.id();
 
   let {
     source = { x: 0, y: 0 },
@@ -85,8 +90,16 @@
     forceLinearOnAligned = true,
     splineRef = $bindable(),
     pathData: pathDataProp,
+    marker,
+    markerStart,
+    markerMid,
+    markerEnd,
     ...restProps
   }: ConnectorProps = $props();
+
+  const markerStartId = $derived(markerStart || marker ? createId('marker-start', uid) : '');
+  const markerMidId = $derived(markerMid || marker ? createId('marker-mid', uid) : '');
+  const markerEndId = $derived(markerEnd || marker ? createId('marker-end', uid) : '');
 
   const pathData = $derived.by(() => {
     if (pathDataProp) return pathDataProp;
@@ -104,4 +117,15 @@
   });
 </script>
 
-<Spline {pathData} bind:splineRef {...restProps} />
+<Spline
+  {pathData}
+  bind:splineRef
+  marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
+  marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
+  marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
+  {...extractLayerProps(restProps, 'connector')}
+  {...restProps}
+/>
+<MarkerWrapper id={markerStartId} marker={markerStart} />
+<MarkerWrapper id={markerMidId} marker={markerMid} />
+<MarkerWrapper id={markerEndId} marker={markerEnd} />
