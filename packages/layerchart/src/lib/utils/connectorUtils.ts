@@ -9,7 +9,7 @@ export type PresetConnectorType = 'straight' | 'square' | 'beveled' | 'rounded';
 
 export type ConnectorType = PresetConnectorType | 'd3';
 
-export type ConnectorSweep = 'horizontal-vertical' | 'vertical-horizontal';
+export type ConnectorSweep = 'horizontal-vertical' | 'vertical-horizontal' | 'none';
 
 function isSamePoint(p1: ConnectorCoords, p2: ConnectorCoords): boolean {
   return Math.abs(p1.x - p2.x) < 1e-6 && Math.abs(p1.y - p2.y) < 1e-6;
@@ -128,36 +128,31 @@ const FALLBACK_PATH = 'M0,0L0,0';
 
 type GetConnectorD3PathProps = Omit<GetConnectorPresetPathProps, 'radius' | 'type'> & {
   curve: CurveFactory;
-  forceLinearOnAligned: boolean;
 };
 
-export function getConnectorD3Path({
-  source,
-  target,
-  sweep,
-  curve,
-  forceLinearOnAligned,
-}: GetConnectorD3PathProps) {
+export function getConnectorD3Path({ source, target, sweep, curve }: GetConnectorD3PathProps) {
   const dx = target.x - source.x;
   const dy = target.y - source.y;
   const line = d3Line().curve(curve);
   let points: [number, number][] = [];
 
-  if (isNearZero(dx) || isNearZero(dy)) {
+  const isAligned = isNearZero(dx) || isNearZero(dy);
+
+  if (sweep === 'none' || isAligned) {
     points = [
       [source.x, source.y],
       [target.x, target.y],
     ];
-    if (forceLinearOnAligned) {
-      line.curve(curveLinear);
-    }
+    // if (forceLinearOnAligned) {
+    //   line.curve(curveLinear);
+    // }
   } else if (sweep === 'horizontal-vertical') {
     points = [
       [source.x, source.y],
       [target.x, source.y],
       [target.x, target.y],
     ];
-  } else {
+  } else if (sweep === 'vertical-horizontal') {
     points = [
       [source.x, source.y],
       [source.x, target.y],

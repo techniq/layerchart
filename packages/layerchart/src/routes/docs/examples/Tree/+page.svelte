@@ -3,13 +3,16 @@
   import { hierarchy, type HierarchyNode } from 'd3-hierarchy';
   import { curveBumpX, curveBumpY, curveStep, curveStepBefore, curveStepAfter } from 'd3-shape';
 
-  import { Canvas, Chart, Group, Html, Link, Rect, Svg, Text, Tree } from 'layerchart';
+  import { Chart, Group, Html, Link, Rect, Svg, Text, Tree } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
-  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
   import type { Component, ComponentProps } from 'svelte';
+  import type { ConnectorSweep, ConnectorType } from 'layerchart/utils/connectorUtils.js';
+  import ConnectorTypeMenuField from 'layerchart/docs/ConnectorTypeMenuField.svelte';
+  import ConnectorSweepMenuField from 'layerchart/docs/ConnectorSweepMenuField.svelte';
 
   let { data } = $props();
 
@@ -26,6 +29,9 @@
   let layout = $state('chart');
   let Context: Component = $state(Svg);
   let selected = $state();
+  let sweep: ConnectorSweep = $state('none'); // Sweep direction
+  let type: ConnectorType = $state('d3'); // Connector type: 'straight', 'square', 'beveled', 'rounded', 'd3'
+  let radius = $state(60); // Corner radius (for 'beveled', 'rounded')
 
   function getNodeKey(node: HierarchyNode<{ name: string }>) {
     return node.data.name + node.depth;
@@ -52,23 +58,27 @@
         <ToggleOption value="vertical">Vertical</ToggleOption>
       </ToggleGroup>
     </Field>
+    <ConnectorTypeMenuField bind:value={type} />
+    <ConnectorSweepMenuField bind:value={sweep} />
 
-    <Field label="Curve">
-      <ToggleGroup
-        bind:value={curve}
-        variant="outline"
-        size="sm"
-        inset
-        class="w-full"
-        classes={{ options: 'whitespace-nowrap' }}
-      >
-        <ToggleOption value={curveBumpX}>BumpX</ToggleOption>
-        <ToggleOption value={curveBumpY}>BumpY</ToggleOption>
-        <ToggleOption value={curveStep}>Step</ToggleOption>
-        <ToggleOption value={curveStepBefore}>Step Before</ToggleOption>
-        <ToggleOption value={curveStepAfter}>Step After</ToggleOption>
-      </ToggleGroup>
-    </Field>
+    {#if type === 'd3'}
+      <Field label="Curve">
+        <ToggleGroup
+          bind:value={curve}
+          variant="outline"
+          size="sm"
+          inset
+          class="w-full"
+          classes={{ options: 'whitespace-nowrap' }}
+        >
+          <ToggleOption value={curveBumpX}>BumpX</ToggleOption>
+          <ToggleOption value={curveBumpY}>BumpY</ToggleOption>
+          <ToggleOption value={curveStep}>Step</ToggleOption>
+          <ToggleOption value={curveStepBefore}>Step Before</ToggleOption>
+          <ToggleOption value={curveStepAfter}>Step After</ToggleOption>
+        </ToggleGroup>
+      </Field>
+    {/if}
 
     <Field label="Layout">
       <ToggleGroup bind:value={layout} variant="outline" size="sm" inset class="w-full">
@@ -76,6 +86,9 @@
         <ToggleOption value="node">Node</ToggleOption>
       </ToggleGroup>
     </Field>
+    {#if type === 'beveled' || type === 'rounded'}
+      <RangeField label="Radius" bind:value={radius} min={0} />
+    {/if}
 
     <!-- <Field label="Context">
       <ToggleGroup bind:value={Context} variant="outline" size="sm" inset class="w-full">
@@ -112,6 +125,9 @@
                   data={link}
                   {orientation}
                   {curve}
+                  {type}
+                  {sweep}
+                  {radius}
                   motion="tween"
                   class="stroke-surface-content opacity-20"
                 />
@@ -198,6 +214,9 @@
                   data={link}
                   {orientation}
                   {curve}
+                  {type}
+                  {sweep}
+                  {radius}
                   motion="tween"
                   class="stroke-surface-content opacity-20"
                 />

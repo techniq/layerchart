@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import * as easings from 'svelte/easing';
   import { MenuField } from 'svelte-ux';
-  import type { ConnectorType } from 'layerchart/utils/connectorUtils.js';
+  import type { ConnectorType } from '$lib/utils/connectorUtils.js';
 
   let {
     value = $bindable('rounded'),
@@ -16,4 +14,4 @@
   }));
 </script>
 
-<MenuField label="Path data" {options} bind:value stepper classes={{ menuIcon: 'hidden' }} />
+<MenuField label="Connector Type" {options} bind:value stepper classes={{ menuIcon: 'hidden' }} />

@@ -46,17 +46,6 @@
      * @default `d3.curveLinear`
      */
     curve?: CurveFactory;
-
-    /**
-     * *Only used when type is 'd3'*
-     *
-     * Whether to force a linear curve when the source and target are
-     * perfectly aligned. When `false`, the curve you specify will be used,
-     * regardless of the alignment.
-     *
-     * @default true
-     */
-    forceLinearOnAligned?: boolean;
   } & SplinePropsWithoutHTML;
 
   export type ConnectorProps = ConnectorPropsWithoutHTML &
@@ -89,11 +78,10 @@
   let {
     source = { x: 0, y: 0 },
     target = { x: 100, y: 100 },
-    sweep = 'horizontal-vertical',
+    sweep: sweepProp,
     type = 'rounded',
     radius = 20,
     curve = curveLinear,
-    forceLinearOnAligned = true,
     splineRef = $bindable(),
     pathData: pathDataProp,
     marker,
@@ -103,6 +91,12 @@
     motion,
     ...restProps
   }: ConnectorProps = $props();
+
+  const sweep = $derived.by(() => {
+    if (sweepProp) return sweepProp;
+    if (type === 'd3') return 'none';
+    return 'horizontal-vertical';
+  });
 
   const markerStartId = $derived(markerStart || marker ? createId('marker-start', uid) : '');
   const markerMidId = $derived(markerMid || marker ? createId('marker-mid', uid) : '');
@@ -128,7 +122,6 @@
         target,
         sweep,
         curve,
-        forceLinearOnAligned,
       });
     } else {
       return getConnectorPresetPath({ source, target, sweep, type, radius });

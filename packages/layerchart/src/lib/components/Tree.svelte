@@ -47,7 +47,7 @@
 
   const ctx = getChartContext();
 
-  const tree = $derived.by(() => {
+  const treeData = $derived.by(() => {
     const _tree = d3Tree<T>().size(
       orientation === 'horizontal' ? [ctx.height, ctx.width] : [ctx.width, ctx.height]
     );
@@ -59,13 +59,24 @@
     if (separation) {
       _tree.separation(separation);
     }
-    return _tree;
-  });
 
-  const treeData = $derived(hierarchy ? tree(hierarchy) : []);
+    if (hierarchy) {
+      const h = hierarchy.copy();
+      const treeData = _tree(h);
+      return {
+        links: treeData.links(),
+        nodes: treeData.descendants(),
+      };
+    }
+
+    return {
+      links: [],
+      nodes: [],
+    };
+  });
 </script>
 
 {@render children?.({
-  nodes: 'descendants' in treeData ? treeData.descendants() : [],
-  links: 'links' in treeData ? treeData.links() : [],
+  nodes: treeData.nodes,
+  links: treeData.links,
 })}

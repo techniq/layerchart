@@ -9,6 +9,7 @@
   import type { ConnectorSweep, ConnectorType } from 'layerchart/utils/connectorUtils.js';
   import ConnectorTypeMenuField from 'layerchart/docs/ConnectorTypeMenuField.svelte';
   import Connector from 'layerchart/components/Connector.svelte';
+  import ConnectorSweepMenuField from 'layerchart/docs/ConnectorSweepMenuField.svelte';
 
   let showLine = $state(true);
   let show = $state(true);
@@ -97,11 +98,7 @@
     {#if type === 'd3'}
       <CurveMenuField bind:value={curve} />
     {/if}
-    <MenuField
-      label="Sweep"
-      bind:value={sweep}
-      options={['horizontal-vertical', 'vertical-horizontal'].map((v) => ({ label: v, value: v }))}
-    />
+    <ConnectorSweepMenuField bind:value={sweep} />
     {#if type === 'beveled' || type === 'rounded'}
       <RangeField label="Radius" bind:value={radius} min={0} />
     {/if}
