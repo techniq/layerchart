@@ -239,8 +239,6 @@
   }
 
   const d = $derived.by(() => {
-    if (pathData) return pathData;
-
     const path = ctx.radial
       ? lineRadial()
           .angle((d) => getScaleValue(d, ctx.xScale, xAccessor))
@@ -252,7 +250,7 @@
     path.defined(defined ?? ((d) => xAccessor(d) != null && yAccessor(d) != null));
     if (curve) path.curve(curve);
 
-    return path(data ?? ctx.data) ?? '';
+    return pathData ?? path(data ?? ctx.data) ?? '';
   });
 
   const tweenedState = createMotion(defaultPathData(), () => d, tweenedOptions);

@@ -94,6 +94,7 @@ TODO:
     curve: curveProp,
     explicitCoords,
     type = 'd3',
+    sweep = 'none',
     ...restProps
   }: LinkProps = $props();
 
@@ -171,5 +172,6 @@ TODO:
   target={targetCoords}
   {type}
   {curve}
+  {sweep}
   {...extractLayerProps(restProps, 'link')}
 />
