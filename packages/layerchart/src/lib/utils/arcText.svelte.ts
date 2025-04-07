@@ -1,5 +1,8 @@
 /**
  * Reactive utilities to create and position text for Arc-based labels/annotations.
+ *
+ * TODO: we can probably simplify / pull some of these pieces out to not do a bunch
+ * of extra work when we don't need to. But for now while we work on the API, this is fine :)
  */
 
 import { arc as d3arc } from 'd3-shape';
@@ -159,7 +162,7 @@ function getArcPathOuter(props: InternalArcTextProps): ArcPathResult {
   };
 }
 
-export type ArcTextPosition = 'inner' | 'outer' | 'middle' | 'centroid';
+export type ArcTextPosition = 'inner' | 'outer' | 'middle' | 'centroid' | 'outer-radial';
 
 export type ArcTextOptions = {
   /**
@@ -177,7 +180,21 @@ export type ArcTextOptions = {
    * between the text and the arc.
    */
   outerPadding?: number;
+
+  /**
+   * Optional offset specifically for 'outer-radial' position from the outer arc edge.
+   * If not provided, 'outerPadding' will be used.
+   *
+   * // TODO: does 23 even make sense? It looks good but is it too arbitrary? needs sean's attention
+   * Defaults to 23 if neither is set.
+   */
+  radialOffset?: number;
 };
+
+function pointOnCircle(radius: number, angle: number): [number, number] {
+  const adjustedAngle = angle - Math.PI / 2;
+  return [radius * Math.cos(adjustedAngle), radius * Math.sin(adjustedAngle)];
+}
 
 export function createArcTextProps(
   props: ArcTextProps,
@@ -266,6 +283,44 @@ export function createArcTextProps(
     };
   });
 
+  const radialPositionProps = $derived.by(() => {
+    if (position !== 'outer-radial') return null;
+
+    const midAngle = (props.startAngle() + props.endAngle()) / 2;
+    const basePadding = opts.radialOffset ?? opts.outerPadding ?? 23;
+    const midAngleDegrees = normalizeAngle(radiansToDegrees(midAngle));
+
+    let textAnchor: 'start' | 'end' | 'middle' = 'middle';
+    let effectivePadding = basePadding;
+
+    const isBottomZone = midAngleDegrees > 45 && midAngleDegrees < 135;
+    const isTopZone = midAngleDegrees > 225 && midAngleDegrees < 315;
+    const isRightZone = midAngleDegrees <= 45 || midAngleDegrees >= 315;
+    const isLeftZone = midAngleDegrees >= 135 && midAngleDegrees <= 225;
+
+    const positionRadius = props.outerRadius() + effectivePadding;
+    const [x, y] = pointOnCircle(positionRadius, midAngle);
+
+    if (isRightZone) {
+      textAnchor = 'start';
+      if (midAngleDegrees > 350 || midAngleDegrees < 10) textAnchor = 'start';
+    } else if (isLeftZone) {
+      textAnchor = 'end';
+      if (midAngleDegrees > 170 && midAngleDegrees < 190) textAnchor = 'end';
+    } else if (isBottomZone) {
+      textAnchor = 'middle';
+    } else if (isTopZone) {
+      textAnchor = 'middle';
+    }
+
+    return {
+      x: x,
+      y: y,
+      textAnchor,
+      'dominant-baseline': 'middle',
+    };
+  });
+
   const current = $derived.by(() => {
     if (position === 'inner') {
       return {
@@ -285,7 +340,7 @@ export function createArcTextProps(
         ...sharedProps,
         'dominant-baseline': 'middle' as const,
       };
-    } else {
+    } else if (position === 'centroid') {
       const centroid = props.centroid();
       return {
         x: centroid[0],
@@ -293,6 +348,8 @@ export function createArcTextProps(
         textAnchor: 'middle' as const,
         verticalAnchor: 'middle' as const,
       };
+    } else {
+      return radialPositionProps;
     }
   });
 

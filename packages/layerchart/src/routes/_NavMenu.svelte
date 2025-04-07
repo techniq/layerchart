@@ -74,6 +74,7 @@
       'Area',
       'Bars',
       'Calendar',
+      'Connector',
       'Hull',
       'Labels',
       'Link',
