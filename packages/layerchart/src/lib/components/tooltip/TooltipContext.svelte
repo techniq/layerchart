@@ -122,6 +122,7 @@
   import { cls } from '@layerstack/tailwind';
 
   import Svg from './../layout/Svg.svelte';
+  import Arc from '../Arc.svelte';
   import ChartClipPath from './../ChartClipPath.svelte';
   import Voronoi from './../Voronoi.svelte';
 
@@ -435,61 +436,61 @@
     }
   });
 
-  const rects: Array<
-    { x: number; y: number; width: number; height: number; data: any } | undefined
-  > = $derived.by(() => {
-    if (mode === 'bounds' || mode === 'band') {
-      return ctx.flatData
-        .map((d) => {
-          const xValue = ctx.xGet(d);
-          const yValue = ctx.yGet(d);
+  const rects: Array<{ x: number; y: number; width: number; height: number; data: any }> =
+    $derived.by(() => {
+      if (mode === 'bounds' || mode === 'band') {
+        return ctx.flatData
+          .map((d) => {
+            const xValue = ctx.xGet(d);
+            const yValue = ctx.yGet(d);
 
-          const x = Array.isArray(xValue) ? xValue[0] : xValue;
-          const y = Array.isArray(yValue) ? yValue[0] : yValue;
+            const x = Array.isArray(xValue) ? xValue[0] : xValue;
+            const y = Array.isArray(yValue) ? yValue[0] : yValue;
 
-          const xOffset = isScaleBand(ctx.xScale)
-            ? (ctx.xScale.padding() * ctx.xScale.step()) / 2
-            : 0;
-          const yOffset = isScaleBand(ctx.yScale)
-            ? (ctx.yScale.padding() * ctx.yScale.step()) / 2
-            : 0;
+            const xOffset = isScaleBand(ctx.xScale)
+              ? (ctx.xScale.padding() * ctx.xScale.step()) / 2
+              : 0;
+            const yOffset = isScaleBand(ctx.yScale)
+              ? (ctx.yScale.padding() * ctx.yScale.step()) / 2
+              : 0;
 
-          const fullWidth = max(ctx.xRange) - min(ctx.xRange);
-          const fullHeight = max(ctx.yRange) - min(ctx.yRange);
+            const fullWidth = max(ctx.xRange) - min(ctx.xRange);
+            const fullHeight = max(ctx.yRange) - min(ctx.yRange);
 
-          if (mode === 'band') {
-            // full band width/height regardless of value
-            return {
-              x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
-              y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
-              width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
-              height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
-              data: d,
-            };
-          } else if (mode === 'bounds') {
-            return {
-              x: isScaleBand(ctx.xScale) || Array.isArray(xValue) ? x - xOffset : min(ctx.xRange),
-              // y: isScaleBand($yScale) || Array.isArray(yValue) ? y - yOffset : min($yRange),
-              y: y - yOffset,
+            if (mode === 'band') {
+              // full band width/height regardless of value
+              return {
+                x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
+                y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
+                width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
+                height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
+                data: d,
+              };
+            } else if (mode === 'bounds') {
+              return {
+                x: isScaleBand(ctx.xScale) || Array.isArray(xValue) ? x - xOffset : min(ctx.xRange),
+                // y: isScaleBand($yScale) || Array.isArray(yValue) ? y - yOffset : min($yRange),
+                y: y - yOffset,
 
-              width: Array.isArray(xValue)
-                ? xValue[1] - xValue[0]
-                : isScaleBand(ctx.xScale)
-                  ? ctx.xScale.step()
-                  : min(ctx.xRange) + x,
-              height: Array.isArray(yValue)
-                ? yValue[1] - yValue[0]
-                : isScaleBand(ctx.yScale)
-                  ? ctx.yScale.step()
-                  : max(ctx.yRange) - y,
-              data: d,
-            };
-          }
-        })
-        .sort(sortFunc('x'));
-    }
-    return [];
-  });
+                width: Array.isArray(xValue)
+                  ? xValue[1] - xValue[0]
+                  : isScaleBand(ctx.xScale)
+                    ? ctx.xScale.step()
+                    : min(ctx.xRange) + x,
+                height: Array.isArray(yValue)
+                  ? yValue[1] - yValue[0]
+                  : isScaleBand(ctx.yScale)
+                    ? ctx.yScale.step()
+                    : max(ctx.yRange) - y,
+                data: d,
+              };
+            }
+          })
+          .filter((x) => x !== undefined) // make typescript happy
+          .sort(sortFunc('x'));
+      }
+      return [];
+    });
 
   const triggerPointerEvents = $derived(
     ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode)
@@ -566,32 +567,57 @@
         />
       </Svg>
     {:else if mode === 'bounds' || mode === 'band'}
-      <Svg>
+      <Svg center={ctx.radial}>
         <g class={layerClass('tooltip-rects-g')}>
           {#each rects as rect}
             <!-- svelte-ignore a11y_click_events_have_key_events -->
-            <rect
-              x={rect?.x}
-              y={rect?.y}
-              width={rect?.width}
-              height={rect?.height}
-              class={cls(
-                layerClass('tooltip-rect'),
-                debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent'
-              )}
-              onpointerenter={(e) => showTooltip(e, rect?.data)}
-              onpointermove={(e) => showTooltip(e, rect?.data)}
-              onpointerleave={() => hideTooltip()}
-              onpointerdown={(e) => {
-                const target = e.target as Element;
-                if (target?.hasPointerCapture(e.pointerId)) {
-                  target.releasePointerCapture(e.pointerId);
-                }
-              }}
-              onclick={(e) => {
-                onclick(e, { data: rect?.data });
-              }}
-            />
+            {#if ctx.radial}
+              <Arc
+                innerRadius={rect.y}
+                outerRadius={rect.y + rect.height}
+                startAngle={rect.x}
+                endAngle={rect.x + rect.width}
+                class={cls(
+                  layerClass('tooltip-rect'),
+                  debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent'
+                )}
+                onpointerenter={(e) => showTooltip(e, rect?.data)}
+                onpointermove={(e) => showTooltip(e, rect?.data)}
+                onpointerleave={() => hideTooltip()}
+                onpointerdown={(e) => {
+                  const target = e.target as Element;
+                  if (target?.hasPointerCapture(e.pointerId)) {
+                    target.releasePointerCapture(e.pointerId);
+                  }
+                }}
+                onclick={(e) => {
+                  onclick(e, { data: rect?.data });
+                }}
+              />
+            {:else}
+              <rect
+                x={rect?.x}
+                y={rect?.y}
+                width={rect?.width}
+                height={rect?.height}
+                class={cls(
+                  layerClass('tooltip-rect'),
+                  debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent'
+                )}
+                onpointerenter={(e) => showTooltip(e, rect?.data)}
+                onpointermove={(e) => showTooltip(e, rect?.data)}
+                onpointerleave={() => hideTooltip()}
+                onpointerdown={(e) => {
+                  const target = e.target as Element;
+                  if (target?.hasPointerCapture(e.pointerId)) {
+                    target.releasePointerCapture(e.pointerId);
+                  }
+                }}
+                onclick={(e) => {
+                  onclick(e, { data: rect?.data });
+                }}
+              />
+            {/if}
           {/each}
         </g>
       </Svg>
