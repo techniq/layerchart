@@ -122,6 +122,7 @@
   import { getTooltipContext } from './tooltip/TooltipContext.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import type { MotionProp } from '$lib/utils/motion.svelte.js';
+  import Arc from './Arc.svelte';
 
   const ctx = getChartContext();
   const tooltipCtx = getTooltipContext();
@@ -441,6 +442,17 @@
   {#if area}
     {#if typeof area === 'function'}
       {@render area({ area: _area })}
+    {:else if ctx.radial}
+      <!-- TODO: What should we do about areaProps -->
+      <Arc
+        motion={motion === 'spring' ? 'spring' : undefined}
+        startAngle={_area.x}
+        endAngle={_area.x + _area.width}
+        innerRadius={_area.y}
+        outerRadius={_area.y + _area.height}
+        class={cls(!areaProps.fill && 'fill-surface-content/5', areaProps.class)}
+        onclick={onAreaClick && ((e) => onAreaClick(e, { data: highlightData }))}
+      />
     {:else}
       <Rect
         motion={motion === 'spring' ? 'spring' : undefined}
