@@ -136,7 +136,7 @@
     debug = false,
     xScale: xScaleProp,
     yScale: yScaleProp,
-    bandPadding = 0.4,
+    bandPadding = radial ? 0 : 0.4,
     groupPadding = 0,
     stackPadding = 0,
     tooltip = true,

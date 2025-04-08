@@ -166,8 +166,8 @@
 
 {#if ctx.radial}
   <Arc
-    innerRadius={0}
-    outerRadius={dimensions.height * -1}
+    innerRadius={dimensions.y}
+    outerRadius={dimensions.y + dimensions.height}
     startAngle={dimensions.x}
     endAngle={dimensions.x + dimensions.width}
     {fill}

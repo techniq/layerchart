@@ -73,14 +73,7 @@
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart
-      props={{ tooltip: { root: { contained: 'window' } } }}
-      data={dateSeriesData}
-      x="date"
-      y="value"
-      {renderContext}
-      {debug}
-    />
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} />
   </div>
 </Preview>
 
@@ -1157,6 +1150,64 @@
       yScale={scaleLog()}
       yDomain={[1, 100]}
       props={{ yAxis: { ticks: [1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 100] } }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Radial (vertical)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <BarChart data={dateSeriesData} x="date" y="value" radial {renderContext} {debug} />
+  </div>
+</Preview>
+
+<h2>Radial (vertical) - yRange</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      yRange={({ height }) => [height / 5, height / 2]}
+      radial
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Radial (vertical) - arcPadding</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      yRange={({ height }) => [height / 5, height / 2]}
+      radial
+      props={{ bars: { padAngle: 0.1 } }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Radial (horizontal)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="value"
+      y="date"
+      yRange={({ height }) => [height / 5, height / 2]}
+      radial
+      orientation="horizontal"
       {renderContext}
       {debug}
     />
