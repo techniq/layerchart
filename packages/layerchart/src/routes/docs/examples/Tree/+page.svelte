@@ -51,13 +51,23 @@
 <h1>Examples</h1>
 
 <div class="grid gap-1 mb-4">
-  <div class="grid grid-cols-[1fr_2fr_1fr] gap-1">
+  <div class="grid grid-cols-2 gap-1">
     <Field label="Orientation">
       <ToggleGroup bind:value={orientation} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="horizontal">Horizontal</ToggleOption>
         <ToggleOption value="vertical">Vertical</ToggleOption>
       </ToggleGroup>
     </Field>
+
+    <Field label="Layout">
+      <ToggleGroup bind:value={layout} variant="outline" size="sm" inset class="w-full">
+        <ToggleOption value="chart">Chart</ToggleOption>
+        <ToggleOption value="node">Node</ToggleOption>
+      </ToggleGroup>
+    </Field>
+  </div>
+
+  <div class="grid grid-cols-2 gap-1">
     <ConnectorTypeMenuField bind:value={type} />
     <ConnectorSweepMenuField bind:value={sweep} />
 
@@ -80,23 +90,17 @@
       </Field>
     {/if}
 
-    <Field label="Layout">
-      <ToggleGroup bind:value={layout} variant="outline" size="sm" inset class="w-full">
-        <ToggleOption value="chart">Chart</ToggleOption>
-        <ToggleOption value="node">Node</ToggleOption>
-      </ToggleGroup>
-    </Field>
     {#if type === 'beveled' || type === 'rounded'}
       <RangeField label="Radius" bind:value={radius} min={0} />
     {/if}
+  </div>
 
-    <!-- <Field label="Context">
+  <!-- <Field label="Context">
       <ToggleGroup bind:value={Context} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value={Svg}>Svg</ToggleOption>
         <ToggleOption value={Canvas}>Canvas</ToggleOption>
       </ToggleGroup>
     </Field> -->
-  </div>
 </div>
 
 <h2>Basic</h2>
