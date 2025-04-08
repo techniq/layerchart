@@ -326,7 +326,7 @@
   function getGridProps(): ComponentProps<typeof Grid> {
     return {
       x: !isVertical || radial,
-      y: isVertical,
+      y: isVertical || radial,
       ...(typeof grid === 'object' ? grid : null),
       ...props.grid,
     };
