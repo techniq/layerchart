@@ -11,14 +11,17 @@
     Svg,
     Tooltip,
   } from 'layerchart';
-  import { group, sum } from 'd3-array';
-  import { scaleLog, scaleThreshold, scaleTime } from 'd3-scale';
+  import { extent, group, sum } from 'd3-array';
+  import { scaleLinear, scaleLog, scaleThreshold, scaleTime } from 'd3-scale';
   import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, wideData, longData } from '$lib/utils/genData.js';
   import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { timeMonth } from 'd3-time';
+  import { interpolate, quantize } from 'd3-interpolate';
+  import { interpolateSpectral } from 'd3-scale-chromatic';
 
   let { data } = $props();
 
@@ -1208,6 +1211,32 @@
       yRange={({ height }) => [height / 5, height / 2]}
       radial
       orientation="horizontal"
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Radial weather</h2>
+
+<Preview data={data.sfoTemperatures}>
+  <div class="h-[600px] p-4 border rounded-sm">
+    <BarChart
+      data={data.sfoTemperatures}
+      x="date"
+      y={['min', 'max']}
+      yDomain={[null, null]}
+      yRange={({ height }) => [height / 5, height / 2]}
+      c="avg"
+      cScale={scaleLinear()}
+      cDomain={quantize(interpolate(...extent(data.sfoTemperatures, (d) => d.avg)), 7)}
+      cRange={quantize(interpolateSpectral, 7).reverse()}
+      radial
+      props={{
+        xAxis: { ticks: { interval: timeMonth.every(3) }, format: PeriodType.Month },
+        yAxis: { ticks: 4, format: (v) => v + '° F' },
+        grid: { xTicks: 12 },
+      }}
       {renderContext}
       {debug}
     />
