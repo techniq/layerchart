@@ -927,24 +927,26 @@
 
 <h2>Brush with series point events</h2>
 
-<div class="h-[300px] p-4 border rounded-sm">
-  <LineChart
-    data={multiSeriesData}
-    x="date"
-    series={[
-      { key: 'apples', color: 'var(--color-danger)' },
-      { key: 'bananas', color: 'var(--color-success)' },
-      { key: 'oranges', color: 'var(--color-warning)' },
-    ]}
-    onPointClick={(e, detail) => {
-      console.log(e, detail);
-      alert(JSON.stringify(detail));
-    }}
-    brush
-    {renderContext}
-    {debug}
-  />
-</div>
+<Preview data={multiSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={multiSeriesData}
+      x="date"
+      series={[
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
+      ]}
+      onPointClick={(e, detail) => {
+        console.log(e, detail);
+        alert(JSON.stringify(detail));
+      }}
+      brush
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
 
 <h2>Custom chart</h2>
 
