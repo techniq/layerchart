@@ -428,12 +428,12 @@
     if (mode === 'separated') {
       // Set reactively to handle cases where xDomain/yDomain are set externally (ex. `bind:xDomain`)
       const isXAxisActive =
-        xDomain?.[0]?.valueOf() !== ctx.xDomain?.[0]?.valueOf() ||
-        xDomain?.[1]?.valueOf() !== ctx.xDomain?.[1]?.valueOf();
+        xDomain?.[0]?.valueOf() !== originalXDomain?.[0]?.valueOf() ||
+        xDomain?.[1]?.valueOf() !== originalXDomain?.[1]?.valueOf();
 
       const isYAxisActive =
-        yDomain?.[0]?.valueOf() !== ctx.yDomain?.[0]?.valueOf() ||
-        yDomain?.[1]?.valueOf() !== ctx.xDomain?.[1]?.valueOf();
+        yDomain?.[0]?.valueOf() !== originalYDomain?.[0]?.valueOf() ||
+        yDomain?.[1]?.valueOf() !== originalYDomain?.[1]?.valueOf();
 
       const result =
         axis === 'x' ? isXAxisActive : axis == 'y' ? isYAxisActive : isXAxisActive || isYAxisActive;
