@@ -270,7 +270,8 @@
         (isScaleBand(ctx.xScale) ? (ctx.xScale.padding() * ctx.xScale.step()) / 2 : 0);
 
       if (axis === 'x') {
-        tmpArea.height = max(ctx.yRange) as unknown as number;
+        tmpArea.y = min(ctx.yRange) as unknown as number;
+        tmpArea.height = (max(ctx.yRange) - min(ctx.yRange)) as unknown as number;
       }
     }
 
