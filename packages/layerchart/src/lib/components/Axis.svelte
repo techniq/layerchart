@@ -214,7 +214,7 @@
       case 'radius':
         return {
           x: xRangeMinMax[0],
-          y: scale(tick),
+          y: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
         };
     }
   }
