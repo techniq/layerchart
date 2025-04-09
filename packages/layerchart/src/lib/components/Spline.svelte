@@ -224,7 +224,8 @@
       // Only use default line if `x` accessor is defined (cartesian chart)
       const path = ctx.radial
         ? lineRadial()
-            .angle((d) => ctx.xScale(xAccessor(d)))
+            .angle((d) => ctx.xScale(xAccessor(d)) + 0) // Never apply xOffset (LineChart radar, BarChart radial, ...)?
+
             .radius((d) => Math.min(ctx.yScale(0), ctx.yRange[0]))
         : d3Line()
             .x((d) => ctx.xScale(xAccessor(d)) + xOffset)
@@ -241,8 +242,9 @@
   const d = $derived.by(() => {
     const path = ctx.radial
       ? lineRadial()
-          .angle((d) => getScaleValue(d, ctx.xScale, xAccessor))
-          .radius((d) => getScaleValue(d, ctx.yScale, yAccessor))
+          .angle((d) => getScaleValue(d, ctx.xScale, xAccessor) + 0) // Never apply xOffset (LineChart radar, BarChart radial, ...)?
+
+          .radius((d) => getScaleValue(d, ctx.yScale, yAccessor) + yOffset)
       : d3Line()
           .x((d) => getScaleValue(d, ctx.xScale, xAccessor) + xOffset)
           .y((d) => getScaleValue(d, ctx.yScale, yAccessor) + yOffset);

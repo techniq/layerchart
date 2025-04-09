@@ -190,7 +190,7 @@
       {#if isScaleBand(ctx.xScale) && bandAlign === 'between' && !ctx.radial && xTickVals.length}
         <Rule
           x={xTickVals[xTickVals.length - 1]}
-          xOffset={xBandOffset + ctx.xScale.step()}
+          xOffset={ctx.xScale.step() + xBandOffset}
           {motion}
           {...splineProps}
           class={cls(
@@ -211,7 +211,7 @@
         {#if ctx.radial}
           {#if radialY === 'circle'}
             <Circle
-              r={ctx.yScale(y)}
+              r={ctx.yScale(y) + yBandOffset}
               {motion}
               {...splineProps}
               class={cls(
@@ -254,19 +254,33 @@
       {/each}
 
       <!-- Add extra rule after last band -->
-      {#if isScaleBand(ctx.yScale) && bandAlign === 'between' && !ctx.radial && yTickVals.length}
-        <Rule
-          y={yTickVals[yTickVals.length - 1]}
-          yOffset={yBandOffset + ctx.yScale.step()}
-          {motion}
-          {...splineProps}
-          class={cls(
-            layerClass('grid-y-end-rule'),
-            'stroke-surface-content/10',
-            classes.line,
-            splineProps?.class
-          )}
-        />
+      {#if isScaleBand(ctx.yScale) && bandAlign === 'between' && yTickVals.length}
+        {#if ctx.radial}
+          <Circle
+            r={ctx.yScale(yTickVals[yTickVals.length - 1])! + ctx.yScale.step() + yBandOffset}
+            {motion}
+            {...splineProps}
+            class={cls(
+              layerClass('grid-y-radial-circle'),
+              'fill-none stroke-surface-content/10',
+              classes.line,
+              splineProps?.class
+            )}
+          />
+        {:else}
+          <Rule
+            y={yTickVals[yTickVals.length - 1]}
+            yOffset={ctx.yScale.step() + yBandOffset}
+            {motion}
+            {...splineProps}
+            class={cls(
+              layerClass('grid-y-end-rule'),
+              'stroke-surface-content/10',
+              classes.line,
+              splineProps?.class
+            )}
+          />
+        {/if}
       {/if}
     </g>
   {/if}

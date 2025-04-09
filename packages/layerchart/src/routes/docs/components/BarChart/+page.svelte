@@ -1248,6 +1248,38 @@
   </div>
 </Preview>
 
+<h2>Radial (horizontal) - grid between</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <BarChart
+      data={[
+        { browser: 'chrome', visitors: 275 },
+        { browser: 'safari', visitors: 200 },
+        { browser: 'firefox', visitors: 187 },
+        { browser: 'edge', visitors: 173 },
+        { browser: 'other', visitors: 90 },
+      ]}
+      x="visitors"
+      y="browser"
+      yRange={({ height }) => [height / 5, height / 2]}
+      c="browser"
+      cRange={[
+        'var(--color-success)',
+        'var(--color-danger)',
+        'var(--color-warning)',
+        'var(--color-info)',
+        'var(--color-secondary)',
+      ]}
+      radial
+      orientation="horizontal"
+      grid={{ bandAlign: 'between' }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
 <h2>Radial (horizontal) - duration</h2>
 
 <Preview data={dateSeriesData}>
@@ -1320,6 +1352,7 @@
           ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks(),
           format: PeriodType.Month,
         },
+        grid: { bandAlign: 'between' },
         tooltip: {
           // context: { mode: 'bisect-x' },
         },
