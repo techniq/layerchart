@@ -157,7 +157,7 @@
     axis = 'x',
     handleSize = 5,
     resetOnEnd = false,
-    ignoreResetClick = true,
+    ignoreResetClick = false,
     xDomain: xDomain,
     yDomain: yDomain,
     mode = 'integrated',
@@ -320,7 +320,9 @@
           _range.height < RESET_THRESHOLD
         ) {
           // Clicked on frame, or pointer delta was <1
-          if (!ignoreResetClick) {
+          if (ignoreResetClick) {
+            logger.debug('ignoring frame click reset');
+          } else {
             logger.debug('resetting due to frame click');
             reset();
             onChange({ xDomain, yDomain });
@@ -338,7 +340,12 @@
         onBrushEnd({ xDomain, yDomain });
 
         if (resetOnEnd) {
-          reset();
+          if (ignoreResetClick) {
+            // Still hide brush, but do not reset domain
+            brushContext.isActive = false;
+          } else {
+            reset();
+          }
         }
 
         window.removeEventListener('pointermove', onPointerMove);
