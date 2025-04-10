@@ -67,6 +67,14 @@
      */
     resetOnEnd?: boolean;
 
+    /**
+     * Ignore click to reset.
+     * Useful to add click handlers to marks.  Requires external resetting (button, another chart, etc)
+     *
+     * @default false
+     */
+    ignoreResetClick?: boolean;
+
     xDomain?: DomainType;
 
     yDomain?: DomainType;
@@ -149,6 +157,7 @@
     axis = 'x',
     handleSize = 5,
     resetOnEnd = false,
+    ignoreResetClick = true,
     xDomain: xDomain,
     yDomain: yDomain,
     mode = 'integrated',
@@ -311,9 +320,11 @@
           _range.height < RESET_THRESHOLD
         ) {
           // Clicked on frame, or pointer delta was <1
-          logger.debug('resetting due to frame click');
-          reset();
-          onChange({ xDomain, yDomain });
+          if (!ignoreResetClick) {
+            logger.debug('resetting due to frame click');
+            reset();
+            onChange({ xDomain, yDomain });
+          }
         } else {
           logger.debug('drag end', {
             target: e.target,
