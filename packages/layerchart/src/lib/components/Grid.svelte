@@ -86,15 +86,16 @@
   import { fade } from 'svelte/transition';
   import { cubicIn } from 'svelte/easing';
 
-  import { curveLinearClosed } from 'd3-shape';
+  import { curveLinearClosed, pointRadial } from 'd3-shape';
 
   import { cls } from '@layerstack/tailwind';
 
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
 
+  import Circle from './Circle.svelte';
+  import Line from './Line.svelte';
   import Rule from './Rule.svelte';
   import Spline from './Spline.svelte';
-  import Circle from './Circle.svelte';
   import { getChartContext } from './Chart.svelte';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { resolveTickVals, type TicksConfig } from '$lib/utils/ticks.js';
@@ -156,11 +157,13 @@
     <g in:transitionIn={transitionInParams} class={layerClass('grid-x')}>
       {#each xTickVals as x (x)}
         {#if ctx.radial}
-          <Spline
-            data={yTickVals.map((y) => ({ x, y }))}
-            x="x"
-            y="y"
-            curve={curveLinearClosed}
+          {@const [x1, y1] = pointRadial(ctx.xScale(x), ctx.yRange[0])}
+          {@const [x2, y2] = pointRadial(ctx.xScale(x), ctx.yRange[1])}
+          <Line
+            {x1}
+            {y1}
+            {x2}
+            {y2}
             motion={tweenConfig}
             {...splineProps}
             class={cls(
