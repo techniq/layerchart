@@ -13,17 +13,18 @@
 
   export type BarChartPropsObjProp<TData> = Pick<
     SimplifiedChartPropsObject<TData>,
-    | 'xAxis'
-    | 'yAxis'
+    | 'bars'
+    | 'brush'
     | 'canvas'
     | 'grid'
-    | 'rule'
-    | 'bars'
-    | 'legend'
     | 'highlight'
     | 'labels'
+    | 'legend'
+    | 'rule'
     | 'svg'
     | 'tooltip'
+    | 'xAxis'
+    | 'yAxis'
   >;
 
   export type BarChartProps<TData> = Omit<
@@ -92,6 +93,7 @@
   import Bars from '../Bars.svelte';
   import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
+  import ChartClipPath from '../ChartClipPath.svelte';
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
@@ -117,6 +119,7 @@
     data = [],
     x: xProp,
     y: yProp,
+    xDomain,
     radial = false,
     orientation = 'vertical',
     series: seriesProp,
@@ -314,6 +317,8 @@
     };
   }
 
+  const brushProps = $derived({ ...(typeof brush === 'object' ? brush : null), ...props.brush });
+
   function getLegendProps(): ComponentProps<typeof Legend> {
     return createLegendProps({
       seriesState,
@@ -413,6 +418,7 @@
   bind:context
   data={chartData}
   x={resolveAccessor(xProp)}
+  {xDomain}
   {xScale}
   {xBaseline}
   xNice={orientation === 'horizontal'}
@@ -439,6 +445,19 @@
         debug,
         ...props.tooltip?.context,
       }}
+  brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
+    ? {
+        axis: 'x',
+        resetOnEnd: true,
+        xDomain,
+        ...brushProps,
+        onBrushEnd: (e) => {
+          // TOOD: This should set xRange instead of xDomain, and/or xDomain should be all values, not just bounds of brush range
+          xDomain = e.xDomain;
+          brushProps.onBrushEnd?.(e);
+        },
+      }
+    : false}
 >
   {#snippet children({ context })}
     {@const snippetProps = {
@@ -471,15 +490,18 @@
         {:else if grid}
           <Grid {...getGridProps()} />
         {/if}
-        {@render belowMarks?.(snippetProps)}
 
-        {#if typeof marks === 'function'}
-          {@render marks(snippetProps)}
-        {:else}
-          {#each seriesState.visibleSeries as s, i (s.key)}
-            <Bars {...getBarsProps(s, i)} />
-          {/each}
-        {/if}
+        <ChartClipPath disabled={!brush}>
+          {@render belowMarks?.(snippetProps)}
+
+          {#if typeof marks === 'function'}
+            {@render marks(snippetProps)}
+          {:else}
+            {#each seriesState.visibleSeries as s, i (s.key)}
+              <Bars {...getBarsProps(s, i)} />
+            {/each}
+          {/if}
+        </ChartClipPath>
 
         {@render aboveMarks?.(snippetProps)}
 
@@ -506,19 +528,22 @@
           {/if}
         {/if}
 
-        {#if typeof highlight === 'function'}
-          {@render highlight(snippetProps)}
-        {:else if highlight}
-          <Highlight {...getHighlightProps()} />
-        {/if}
+        <!-- Use `full` to allow labels on edge to not be cropped (bleed into padding) -->
+        <ChartClipPath disabled={!brush} full>
+          {#if typeof highlight === 'function'}
+            {@render highlight(snippetProps)}
+          {:else if highlight}
+            <Highlight {...getHighlightProps()} />
+          {/if}
 
-        {#if typeof labels === 'function'}
-          {@render labels(snippetProps)}
-        {:else if labels}
-          {#each seriesState.visibleSeries as s, i (s.key)}
-            <Labels {...getLabelsProps(s, i)} />
-          {/each}
-        {/if}
+          {#if typeof labels === 'function'}
+            {@render labels(snippetProps)}
+          {:else if labels}
+            {#each seriesState.visibleSeries as s, i (s.key)}
+              <Labels {...getLabelsProps(s, i)} />
+            {/each}
+          {/if}
+        </ChartClipPath>
       </Component>
 
       {@render aboveContext?.(snippetProps)}

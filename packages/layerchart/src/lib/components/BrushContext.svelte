@@ -143,7 +143,7 @@
   import { cls } from '@layerstack/tailwind';
   import { Logger } from '@layerstack/utils';
 
-  import type { DomainType } from '../utils/scales.svelte.js';
+  import { scaleInvert, type DomainType } from '../utils/scales.svelte.js';
   import { add } from '../utils/math.js';
   import type { HTMLAttributes } from 'svelte/elements';
   import { getChartContext } from './Chart.svelte';
@@ -287,8 +287,8 @@
         xDomain: [xDomain?.[0] ?? xDomainMin, xDomain?.[1] ?? xDomainMax] as [number, number],
         yDomain: [yDomain?.[0] ?? yDomainMin, yDomain?.[1] ?? yDomainMax] as [number, number],
         value: {
-          x: ctx.xScale.invert?.(startPoint?.x ?? 0),
-          y: ctx.yScale.invert?.(startPoint?.y ?? 0),
+          x: scaleInvert(ctx.xScale, startPoint?.x ?? 0),
+          y: scaleInvert(ctx.yScale, startPoint?.y ?? 0),
         },
       };
 
@@ -297,8 +297,8 @@
       const onPointerMove = (e: PointerEvent) => {
         const currentPoint = localPoint(e, rootEl);
         fn(start, {
-          x: ctx.xScale.invert?.(currentPoint?.x ?? 0),
-          y: ctx.yScale.invert?.(currentPoint?.y ?? 0),
+          x: scaleInvert(ctx.xScale, currentPoint?.x ?? 0),
+          y: scaleInvert(ctx.yScale, currentPoint?.y ?? 0),
         });
 
         onChange({ xDomain, yDomain });

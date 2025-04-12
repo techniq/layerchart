@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { scaleOrdinal, scaleTime } from 'd3-scale';
+  import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { range } from 'd3-array';
   import { State } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
@@ -20,10 +20,11 @@
     Text,
     Tooltip,
     Svg,
+    Bars,
   } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { randomWalk } from '$lib/utils/genData.js';
+  import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
   import { asAny } from '$lib/utils/types.js';
   import type { DomainType } from '$lib/utils/scales.svelte.js';
 
@@ -42,9 +43,29 @@
   const randomData = range(200).map((d) => {
     return { x: d, y: Math.random() };
   });
+
+  const dataSeriesData = createDateSeries({
+    count: 30,
+    min: 20,
+    max: 100,
+    value: 'integer',
+    keys: ['value', 'baseline'],
+  });
 </script>
 
 <h1>Examples</h1>
+
+<h2>Band scale</h2>
+
+<Preview data={dataSeriesData}>
+  <div class="h-[100px]">
+    <Chart data={dataSeriesData} x="date" xScale={scaleBand().padding(0.4)} y="value" brush>
+      <Svg>
+        <Bars strokeWidth={1} class="fill-primary" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
 
 <h2>Basic</h2>
 

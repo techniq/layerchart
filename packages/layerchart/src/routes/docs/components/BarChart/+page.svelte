@@ -1159,6 +1159,14 @@
   </div>
 </Preview>
 
+<h2>Brushing</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart data={dateSeriesData} x="date" y="value" brush {renderContext} {debug} />
+  </div>
+</Preview>
+
 <h2>Radial (vertical)</h2>
 
 <Preview data={dateSeriesData}>
