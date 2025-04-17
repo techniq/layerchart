@@ -11,27 +11,23 @@
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
       <Svg>
-        <LinearGradient id="gradient-1" stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']} />
-        <LinearGradient
-          id="gradient-2"
-          stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']}
-          rotate={45}
-        />
-        <LinearGradient
-          id="gradient-3"
-          stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']}
-          vertical
-        />
-        {#each { length: 3 } as _, i}
-          <rect
-            x={0 + i * 120}
-            y={0}
-            width={100}
-            height={300}
-            rx={8}
-            fill="url(#gradient-{i + 1})"
-          />
-        {/each}
+        <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
+          {#snippet children({ gradient })}
+            <rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
+
+        <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']} rotate={45}>
+          {#snippet children({ gradient })}
+            <rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
+
+        <LinearGradient stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']} vertical>
+          {#snippet children({ gradient })}
+            <rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
       </Svg>
     </Chart>
   </div>
