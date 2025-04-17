@@ -11,37 +11,115 @@
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
       <Svg>
-        <Pattern id="line-pattern-1" width={4} height={4}>
-          <line x2="100%" class="stroke-surface-content" />
+        <Pattern width={4} height={4}>
+          {#snippet patternContent()}
+            <line x2="100%" class="stroke-surface-content" />
+          {/snippet}
+
+          {#snippet children({ pattern })}
+            <rect
+              x={120 * 0}
+              y={0}
+              width={100}
+              height={300}
+              rx={8}
+              fill={pattern}
+              class="stroke-surface-content"
+            />
+          {/snippet}
         </Pattern>
-        <Pattern id="line-pattern-2" width={4} height={4}>
-          <line y2="100%" class="stroke-surface-content" />
+
+        <Pattern width={4} height={4}>
+          {#snippet patternContent()}
+            <line y2="100%" class="stroke-surface-content" />
+          {/snippet}
+
+          {#snippet children({ pattern })}
+            <rect
+              x={120 * 1}
+              y={0}
+              width={100}
+              height={300}
+              rx={8}
+              fill={pattern}
+              class="stroke-surface-content"
+            />
+          {/snippet}
         </Pattern>
-        <Pattern id="line-pattern-3" width={4} height={4}>
-          <line x2="100%" class="stroke-surface-content" />
-          <line y2="100%" class="stroke-surface-content" />
+
+        <Pattern width={4} height={4}>
+          {#snippet patternContent()}
+            <line x2="100%" class="stroke-surface-content" />
+            <line y2="100%" class="stroke-surface-content" />
+          {/snippet}
+
+          {#snippet children({ pattern })}
+            <rect
+              x={120 * 2}
+              y={0}
+              width={100}
+              height={300}
+              rx={8}
+              fill={pattern}
+              class="stroke-surface-content"
+            />
+          {/snippet}
         </Pattern>
-        <Pattern id="line-pattern-4" width={8} height={8}>
-          <line x1={8} y2={8} class="stroke-surface-content" />
+
+        <Pattern width={8} height={8}>
+          {#snippet patternContent()}
+            <line x1={8} y2={8} class="stroke-surface-content" />
+          {/snippet}
+
+          {#snippet children({ pattern })}
+            <rect
+              x={120 * 3}
+              y={0}
+              width={100}
+              height={300}
+              rx={8}
+              fill={pattern}
+              class="stroke-surface-content"
+            />
+          {/snippet}
         </Pattern>
-        <Pattern id="line-pattern-5" width={8} height={8}>
-          <line x2={8} y2={8} class="stroke-surface-content" />
+
+        <Pattern width={8} height={8}>
+          {#snippet patternContent()}
+            <line x2={8} y2={8} class="stroke-surface-content" />
+          {/snippet}
+
+          {#snippet children({ pattern })}
+            <rect
+              x={120 * 4}
+              y={0}
+              width={100}
+              height={300}
+              rx={8}
+              fill={pattern}
+              class="stroke-surface-content"
+            />
+          {/snippet}
         </Pattern>
-        <Pattern id="line-pattern-6" width={8} height={8}>
-          <line x1={8} y2={8} class="stroke-surface-content" />
-          <line x2={8} y2={8} class="stroke-surface-content" />
+
+        <Pattern width={8} height={8}>
+          {#snippet patternContent()}
+            <line x1={8} y2={8} class="stroke-surface-content" />
+            <line x2={8} y2={8} class="stroke-surface-content" />
+          {/snippet}
+
+          {#snippet children({ pattern })}
+            <rect
+              x={120 * 5}
+              y={0}
+              width={100}
+              height={300}
+              rx={8}
+              fill={pattern}
+              class="stroke-surface-content"
+            />
+          {/snippet}
         </Pattern>
-        {#each { length: 6 } as _, i}
-          <rect
-            x={0 + i * 120}
-            y={0}
-            width={100}
-            height={300}
-            rx={8}
-            fill="url(#line-pattern-{i + 1})"
-            class="stroke-surface-content"
-          />
-        {/each}
       </Svg>
     </Chart>
   </div>
@@ -54,31 +132,44 @@
     <Chart>
       <Svg>
         <Pattern id="circle-pattern-1" width={4} height={4}>
-          <circle cx={2} cy={2} r={1} class="fill-surface-content" />
+          {#snippet patternContent()}
+            <circle cx={2} cy={2} r={1} class="fill-surface-content" />
+          {/snippet}
         </Pattern>
         <Pattern id="circle-pattern-2" width={8} height={8}>
-          <circle cx={4} cy={4} r={1} class="fill-surface-content" />
+          {#snippet patternContent()}
+            <circle cx={4} cy={4} r={1} class="fill-surface-content" />
+          {/snippet}
         </Pattern>
         <Pattern id="circle-pattern-3" width={8} height={8}>
-          <circle cx={4} cy={4} r={2} class="fill-surface-content" />
+          {#snippet patternContent()}
+            <circle cx={4} cy={4} r={2} class="fill-surface-content" />
+          {/snippet}
         </Pattern>
         <Pattern id="circle-pattern-4" width={8} height={8}>
-          <circle cx={4} cy={4} r={2} class="fill-surface-content" />
-          <circle cx={0} cy={0} r={2} class="fill-surface-content" />
-          <circle cx={0} cy={8} r={2} class="fill-surface-content" />
-          <circle cx={8} cy={0} r={2} class="fill-surface-content" />
-          <circle cx={8} cy={8} r={2} class="fill-surface-content" />
+          {#snippet patternContent()}
+            <circle cx={4} cy={4} r={2} class="fill-surface-content" />
+            <circle cx={0} cy={0} r={2} class="fill-surface-content" />
+            <circle cx={0} cy={8} r={2} class="fill-surface-content" />
+            <circle cx={8} cy={0} r={2} class="fill-surface-content" />
+            <circle cx={8} cy={8} r={2} class="fill-surface-content" />
+          {/snippet}
         </Pattern>
         <Pattern id="circle-pattern-5" width={8} height={8}>
-          <circle cx={4} cy={4} r={1} class="fill-surface-content" />
-          <circle cx={0} cy={0} r={1} class="fill-surface-content" />
-          <circle cx={0} cy={8} r={1} class="fill-surface-content" />
-          <circle cx={8} cy={0} r={1} class="fill-surface-content" />
-          <circle cx={8} cy={8} r={1} class="fill-surface-content" />
+          {#snippet patternContent()}
+            <circle cx={4} cy={4} r={1} class="fill-surface-content" />
+            <circle cx={0} cy={0} r={1} class="fill-surface-content" />
+            <circle cx={0} cy={8} r={1} class="fill-surface-content" />
+            <circle cx={8} cy={0} r={1} class="fill-surface-content" />
+            <circle cx={8} cy={8} r={1} class="fill-surface-content" />
+          {/snippet}
         </Pattern>
         <Pattern id="circle-pattern-6" width={8} height={8}>
-          <circle cx={4} cy={4} r={2} class="fill-surface-content/30" />
+          {#snippet patternContent()}
+            <circle cx={4} cy={4} r={2} class="fill-surface-content/30" />
+          {/snippet}
         </Pattern>
+
         {#each { length: 6 } as _, i}
           <rect
             x={0 + i * 120}
@@ -102,37 +193,49 @@
     <Chart>
       <Svg>
         <Pattern id="fill-pattern-1" width={4} height={4}>
-          <rect width={4} height={4} fill="hsl(20 100% 50%)" />
-          <circle cx={2} cy={2} r={1} fill="#fff4" />
+          {#snippet patternContent()}
+            <rect width={4} height={4} fill="hsl(20 100% 50%)" />
+            <circle cx={2} cy={2} r={1} fill="#fff4" />
+          {/snippet}
         </Pattern>
         <Pattern id="fill-pattern-2" width={8} height={8}>
-          <rect width={8} height={8} fill="hsl(150 100% 45%)" />
-          <circle cx={4} cy={4} r={1} fill="#fff9" />
+          {#snippet patternContent()}
+            <rect width={8} height={8} fill="hsl(150 100% 45%)" />
+            <circle cx={4} cy={4} r={1} fill="#fff9" />
+          {/snippet}
         </Pattern>
         <Pattern id="fill-pattern-3" width={8} height={8}>
-          <rect width={8} height={8} fill="hsl(210 100% 50%)" />
-          <circle cx={4} cy={4} r={1} fill="#fff9" />
-          <circle cx={0} cy={0} r={1} fill="#fff9" />
-          <circle cx={0} cy={8} r={1} fill="#fff9" />
-          <circle cx={8} cy={0} r={1} fill="#fff9" />
-          <circle cx={8} cy={8} r={1} fill="#fff9" />
+          {#snippet patternContent()}
+            <rect width={8} height={8} fill="hsl(210 100% 50%)" />
+            <circle cx={4} cy={4} r={1} fill="#fff9" />
+            <circle cx={0} cy={0} r={1} fill="#fff9" />
+            <circle cx={0} cy={8} r={1} fill="#fff9" />
+            <circle cx={8} cy={0} r={1} fill="#fff9" />
+            <circle cx={8} cy={8} r={1} fill="#fff9" />
+          {/snippet}
         </Pattern>
         <Pattern id="fill-pattern-4" width={8} height={8}>
-          <rect width={8} height={8} fill="hsl(260 100% 50%)" />
-          <circle cx={4} cy={4} r={2} fill="#fff9" />
-          <circle cx={0} cy={0} r={2} fill="#fff9" />
-          <circle cx={0} cy={8} r={2} fill="#fff9" />
-          <circle cx={8} cy={0} r={2} fill="#fff9" />
-          <circle cx={8} cy={8} r={2} fill="#fff9" />
+          {#snippet patternContent()}
+            <rect width={8} height={8} fill="hsl(260 100% 50%)" />
+            <circle cx={4} cy={4} r={2} fill="#fff9" />
+            <circle cx={0} cy={0} r={2} fill="#fff9" />
+            <circle cx={0} cy={8} r={2} fill="#fff9" />
+            <circle cx={8} cy={0} r={2} fill="#fff9" />
+            <circle cx={8} cy={8} r={2} fill="#fff9" />
+          {/snippet}
         </Pattern>
         <Pattern id="fill-pattern-5" width={4} height={4}>
-          <rect width={4} height={4} fill="hsl(40 100% 50%)" />
-          <line x2="100%" stroke="#fff9" />
+          {#snippet patternContent()}
+            <rect width={4} height={4} fill="hsl(40 100% 50%)" />
+            <line x2="100%" stroke="#fff9" />
+          {/snippet}
         </Pattern>
         <Pattern id="fill-pattern-6" width={4} height={4}>
-          <rect width={4} height={4} fill="hsl(360 100% 40%)" />
-          <line x2="100%" stroke="#0003" />
-          <line y2="100%" stroke="#0003" />
+          {#snippet patternContent()}
+            <rect width={4} height={4} fill="hsl(360 100% 40%)" />
+            <line x2="100%" stroke="#0003" />
+            <line y2="100%" stroke="#0003" />
+          {/snippet}
         </Pattern>
         {#each { length: 6 } as _, i}
           <rect
@@ -178,31 +281,43 @@
           vertical
         />
         <Pattern id="gradient-with-pattern-1" width={4} height={4}>
-          <circle cx={2} cy={2} r={1} fill="#fff9" />
+          {#snippet patternContent()}
+            <circle cx={2} cy={2} r={1} fill="#fff9" />
+          {/snippet}
         </Pattern>
         <Pattern id="gradient-with-pattern-2" width={8} height={8}>
-          <circle cx={4} cy={4} r={1} fill="#fff9" />
+          {#snippet patternContent()}
+            <circle cx={4} cy={4} r={1} fill="#fff9" />
+          {/snippet}
         </Pattern>
         <Pattern id="gradient-with-pattern-3" width={8} height={8}>
-          <circle cx={4} cy={4} r={1} fill="#fff9" />
-          <circle cx={0} cy={0} r={1} fill="#fff9" />
-          <circle cx={0} cy={8} r={1} fill="#fff9" />
-          <circle cx={8} cy={0} r={1} fill="#fff9" />
-          <circle cx={8} cy={8} r={1} fill="#fff9" />
+          {#snippet patternContent()}
+            <circle cx={4} cy={4} r={1} fill="#fff9" />
+            <circle cx={0} cy={0} r={1} fill="#fff9" />
+            <circle cx={0} cy={8} r={1} fill="#fff9" />
+            <circle cx={8} cy={0} r={1} fill="#fff9" />
+            <circle cx={8} cy={8} r={1} fill="#fff9" />
+          {/snippet}
         </Pattern>
         <Pattern id="gradient-with-pattern-4" width={8} height={8}>
-          <circle cx={4} cy={4} r={2} fill="#fff9" />
-          <circle cx={0} cy={0} r={2} fill="#fff9" />
-          <circle cx={0} cy={8} r={2} fill="#fff9" />
-          <circle cx={8} cy={0} r={2} fill="#fff9" />
-          <circle cx={8} cy={8} r={2} fill="#fff9" />
+          {#snippet patternContent()}
+            <circle cx={4} cy={4} r={2} fill="#fff9" />
+            <circle cx={0} cy={0} r={2} fill="#fff9" />
+            <circle cx={0} cy={8} r={2} fill="#fff9" />
+            <circle cx={8} cy={0} r={2} fill="#fff9" />
+            <circle cx={8} cy={8} r={2} fill="#fff9" />
+          {/snippet}
         </Pattern>
         <Pattern id="gradient-with-pattern-5" width={4} height={4}>
-          <line x2="100%" stroke="#fff9" />
+          {#snippet patternContent()}
+            <line x2="100%" stroke="#fff9" />
+          {/snippet}
         </Pattern>
         <Pattern id="gradient-with-pattern-6" width={4} height={4}>
-          <line x2="100%" stroke="#0003" />
-          <line y2="100%" stroke="#0003" />
+          {#snippet patternContent()}
+            <line x2="100%" stroke="#0003" />
+            <line y2="100%" stroke="#0003" />
+          {/snippet}
         </Pattern>
         {#each { length: 6 } as _, i}
           <rect
@@ -245,19 +360,29 @@
           vertical
         />
         <Pattern id="gradient-pattern-1" width={4} height={4}>
-          <rect width={4} height={4} fill="url(#gradient-1)" />
+          {#snippet patternContent()}
+            <rect width={4} height={4} fill="url(#gradient-1)" />
+          {/snippet}
         </Pattern>
         <Pattern id="gradient-pattern-2" width={4} height={4}>
-          <rect width={4} height={4} fill="url(#gradient-2)" />
+          {#snippet patternContent()}
+            <rect width={4} height={4} fill="url(#gradient-2)" />
+          {/snippet}
         </Pattern>
         <Pattern id="gradient-pattern-3" width={4} height={4}>
-          <rect width={4} height={4} fill="url(#gradient-3)" />
+          {#snippet patternContent()}
+            <rect width={4} height={4} fill="url(#gradient-3)" />
+          {/snippet}
         </Pattern>
         <Pattern id="gradient-pattern-4" width={8} height={8}>
-          <rect width={8} height={8} fill="url(#gradient-1)" />
+          {#snippet patternContent()}
+            <rect width={8} height={8} fill="url(#gradient-1)" />
+          {/snippet}
         </Pattern>
         <Pattern id="gradient-pattern-5" width={8} height={8}>
-          <rect width={8} height={8} fill="url(#gradient-2)" />
+          {#snippet patternContent()}
+            <rect width={8} height={8} fill="url(#gradient-2)" />
+          {/snippet}
         </Pattern>
         {#each { length: 5 } as _, i}
           <rect

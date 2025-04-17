@@ -62,13 +62,13 @@
      */
     ref?: SVGLinearGradientElement;
 
-    children?: Snippet<[{ id: string; gradient: string }]>;
-
     /**
      * Render as a child of the gradient and will opt out of the default stops
      * being rendered.
      */
     stopsContent?: Snippet;
+
+    children?: Snippet<[{ id: string; gradient: string }]>;
   };
 
   export type LinearGradientProps = LinearGradientPropsWithoutHTML &
