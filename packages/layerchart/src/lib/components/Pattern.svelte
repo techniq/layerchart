@@ -90,6 +90,11 @@
     circles?: boolean | PatternCircleDef | PatternCircleDef[];
 
     /**
+     * The background color of the pattern
+     */
+    background?: string;
+
+    /**
      * Render as a child of the pattern
      */
     patternContent?: Snippet;
@@ -109,10 +114,11 @@
     size = 4,
     width = size,
     height = size,
-    patternContent,
-    children,
     lines: linesProp,
     circles: circlesProp,
+    background,
+    patternContent,
+    children,
     ...restProps
   }: PatternProps = $props();
 
@@ -220,6 +226,9 @@
     {#if patternContent}
       {@render patternContent?.()}
     {:else}
+      {#if background}
+        <rect {width} {height} fill={background} />
+      {/if}
       {#each lines as line}
         <path
           d={line.path}
