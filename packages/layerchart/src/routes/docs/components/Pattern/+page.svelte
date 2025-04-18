@@ -11,7 +11,7 @@
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
       <Svg>
-        <Pattern lines={[{ spacing: 4 }]}>
+        <Pattern size={4} lines>
           {#snippet children({ pattern })}
             <rect
               x={120 * 0}
@@ -25,7 +25,7 @@
           {/snippet}
         </Pattern>
 
-        <Pattern lines={[{ spacing: 4, rotate: 90 }]}>
+        <Pattern size={4} lines={{ rotate: 90 }}>
           {#snippet children({ pattern })}
             <rect
               x={120 * 1}
@@ -39,7 +39,7 @@
           {/snippet}
         </Pattern>
 
-        <Pattern lines={[{ spacing: 5 }, { spacing: 5, rotate: 90 }]}>
+        <Pattern size={5} lines={[{ rotate: 0 }, { rotate: 90 }]}>
           {#snippet children({ pattern })}
             <rect
               x={120 * 2}
@@ -53,7 +53,7 @@
           {/snippet}
         </Pattern>
 
-        <Pattern lines={[{ spacing: 5, rotate: -45 }]}>
+        <Pattern size={5} lines={{ rotate: -45 }}>
           {#snippet children({ pattern })}
             <rect
               x={120 * 3}
@@ -67,7 +67,7 @@
           {/snippet}
         </Pattern>
 
-        <Pattern lines={[{ spacing: 5, rotate: 45 }]}>
+        <Pattern size={5} lines={{ rotate: 45 }}>
           {#snippet children({ pattern })}
             <rect
               x={120 * 4}
@@ -81,12 +81,7 @@
           {/snippet}
         </Pattern>
 
-        <Pattern
-          lines={[
-            { spacing: 5, rotate: 45 },
-            { spacing: 5, rotate: -45 },
-          ]}
-        >
+        <Pattern size={6} lines={[{ rotate: 45 }, { rotate: -45 }]}>
           {#snippet children({ pattern })}
             <rect
               x={120 * 5}

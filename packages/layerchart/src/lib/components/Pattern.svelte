@@ -5,13 +5,24 @@
   import type { Without } from '$lib/utils/types.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { createId } from '$lib/utils/createId.js';
-  import { degreesToRadians } from '$lib/utils/math.js';
+
+  type PatternLineDef = {
+    rotate?: number;
+    color?: string;
+    background?: string;
+    width?: string;
+  };
 
   export type PatternPropsWithoutHTML = {
     /**
      * The id of the pattern
      */
     id?: string;
+
+    /**
+     * The size of the pattern (sets `width` and `height` as same value).
+     */
+    size?: number;
 
     /**
      * The width of the pattern for custom patterns (set by `lines`, etc)
@@ -31,14 +42,7 @@
     /**
      * The number of lines to render
      */
-    lines?: {
-      spacing: number;
-      rotate?: number;
-      /** Color of line (defaults to `var(--color-surface-content)`) */
-      color?: string;
-      background?: string;
-      lineWidth?: string;
-    }[];
+    lines?: boolean | PatternLineDef | PatternLineDef[];
 
     children?: Snippet<[{ id: string; pattern: string }]>;
   };
@@ -52,29 +56,29 @@
 
   let {
     id = createId('pattern-', uid),
-    width,
-    height,
+    size = 4,
+    width = size,
+    height = size,
     patternContent,
     children,
     lines: linesProp,
     ...restProps
   }: PatternProps = $props();
 
+  // TODO: Handle `width` / `height` with multiple lines
   let lines = $state<{ path: string; stroke: string; strokeWidth: string | number }[]>([]);
   if (linesProp) {
-    for (const line of linesProp) {
-      const spacing = Math.abs(line.spacing);
+    const lineDefs = Array.isArray(linesProp) ? linesProp : linesProp === true ? [{}] : [linesProp];
+    for (const line of lineDefs) {
+      // const spacing = Math.abs(line.spacing);
       const stroke = line.color ?? 'var(--color-surface-content)';
-      const strokeWidth = line.lineWidth ?? 1;
+      const strokeWidth = line.width ?? 1;
 
       let rotate = Math.round(line.rotate ?? 0) % 360;
       if (rotate > 180) rotate = rotate - 360;
       else if (rotate > 90) rotate = rotate - 180;
       else if (rotate < -180) rotate = rotate + 360;
       else if (rotate < -90) rotate = rotate + 180;
-
-      width = spacing;
-      height = spacing;
 
       // Use a <path> instead of a <line> to have corners without gaps (start, main line, end)
       let path = '';
@@ -90,9 +94,6 @@
         M ${width} 0 L ${width} ${height}
     `;
       } else {
-        width = Math.abs(spacing / Math.sin(degreesToRadians(rotate)));
-        height = spacing / Math.sin(degreesToRadians(90 - rotate));
-
         if (rotate > 0) {
           path = `
           M 0 ${-height} L ${width * 2} ${height}
