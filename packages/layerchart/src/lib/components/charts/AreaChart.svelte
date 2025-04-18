@@ -160,10 +160,24 @@
         .keys(seriesKeys)
         .value((d, key) => {
           const s = series.find((d) => d.key === key)!;
-          return accessor(s.value ?? s.key)(d as any);
+          const value = accessor(s.value ?? y ?? s.key)(d as any);
+          return value;
         })
-        .offset(offset)(chartDataArray(data));
+        .offset(offset)(_chartData as any[]);
 
+      // If series has data, add `stackData` to each data point
+      for (let [seriesIndex, s] of series.entries()) {
+        if (s.data) {
+          s.data = s.data.map((d, i) => {
+            return {
+              ...d,
+              stackData: stackData[seriesIndex][i],
+            };
+          });
+        }
+      }
+
+      // Add `stackData` to each data point
       _chartData = _chartData.map((d, i) => {
         return {
           ...d,
@@ -179,6 +193,25 @@
   const xScale = $derived(
     xScaleProp ?? (accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear())
   );
+
+  function isStackData(d: TData): d is TData & { stackData: any[] } {
+    return d && typeof d === 'object' && 'stackData' in d;
+  }
+
+  /**
+   * If series has data, return the stackData from series (enriched when setting up `chartData`)
+   */
+  function getStackData(
+    s: SeriesData<TData, typeof Area>,
+    d: TData & { stackData: any[] },
+    i: number
+  ) {
+    if (s.data) {
+      return d.stackData;
+    }
+    // TODO: Sometimes this returns `undefined` when toggling series visibility when legend overlaps chart container.  Return empty array to be more defensive
+    return d.stackData[i] ?? [];
+  }
 
   function getAreaProps(s: SeriesData<TData, typeof Area>, i: number): ComponentProps<typeof Area> {
     const lineProps: ComponentProps<typeof Spline> = {
@@ -196,9 +229,13 @@
 
     return {
       data: s.data,
-      y0: stackSeries ? (d) => d.stackData[i][0] : Array.isArray(s.value) ? s.value[0] : undefined,
+      y0: stackSeries
+        ? (d) => getStackData(s, d, i)[0]
+        : Array.isArray(s.value)
+          ? s.value[0]
+          : undefined,
       y1: stackSeries
-        ? (d) => d.stackData[i][1]
+        ? (d) => getStackData(s, d, i)[1]
         : Array.isArray(s.value)
           ? s.value[1]
           : (s.value ?? (s.data ? undefined : s.key)),
@@ -228,7 +265,7 @@
     return {
       data: s.data,
       y: stackSeries
-        ? (d) => d.stackData[i][1]
+        ? (d) => getStackData(s, d, i)[1]
         : Array.isArray(s.value)
           ? s.value[1]
           : (s.value ?? (s.data ? undefined : s.key)),
@@ -246,10 +283,6 @@
     };
   }
 
-  function isStackData(d: TData): d is TData & { stackData: any[] } {
-    return d && typeof d === 'object' && 'stackData' in d;
-  }
-
   function getLabelsProps(
     s: SeriesData<TData, typeof Area>,
     i: number
@@ -257,7 +290,7 @@
     return {
       data: s.data,
       y: stackSeries
-        ? (d) => (isStackData(d) ? d.stackData[i][1] : undefined)
+        ? (d) => (isStackData(d) ? getStackData(s, d, i)[1] : undefined)
         : Array.isArray(s.value)
           ? s.value[1]
           : (s.value ?? (s.data ? undefined : s.key)),
@@ -290,7 +323,7 @@
 
     return {
       data: seriesTooltipData,
-      y: stackSeries ? (d) => d.stackData[i][1] : (s.value ?? (s.data ? undefined : s.key)),
+      y: stackSeries ? (d) => getStackData(s, d, i)[1] : (s.value ?? (s.data ? undefined : s.key)),
       lines: i == 0,
       onPointClick: onPointClick
         ? (e, detail) => onPointClick(e, { ...detail, series: s })
@@ -352,11 +385,11 @@
   });
 
   function resolveAccessor(acc: Accessor<TData> | undefined) {
-    if (acc) return acc;
     if (stackSeries) {
       return (d: TData) =>
         isStackData(d) ? seriesState.visibleSeries.flatMap((s, i) => d.stackData[i]) : undefined;
     }
+    if (acc) return acc;
     return seriesState.visibleSeries.map((s) => s.value ?? s.key);
   }
 

@@ -497,6 +497,37 @@
   </div>
 </Preview>
 
+<h2>Stack series (separate data)</h2>
+
+<Preview data={multiSeriesDataByFruit}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <AreaChart
+      x="date"
+      y="value"
+      series={[
+        {
+          key: 'apples',
+          data: multiSeriesDataByFruit.get('apples'),
+          color: 'var(--color-danger)',
+        },
+        {
+          key: 'bananas',
+          data: multiSeriesDataByFruit.get('bananas'),
+          color: 'var(--color-success)',
+        },
+        {
+          key: 'oranges',
+          data: multiSeriesDataByFruit.get('oranges'),
+          color: 'var(--color-warning)',
+        },
+      ]}
+      seriesLayout="stack"
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
 <div class="grid grid-cols-[1fr_200px] gap-2 items-end">
   <h2>Threshold</h2>
   <CurveMenuField bind:value={selectedCurve} dense class="mb-2" />
