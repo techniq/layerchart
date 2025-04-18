@@ -11,11 +11,7 @@
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
       <Svg>
-        <Pattern width={4} height={4}>
-          {#snippet patternContent()}
-            <line x2="100%" class="stroke-surface-content" />
-          {/snippet}
-
+        <Pattern lines={[{ spacing: 4 }]}>
           {#snippet children({ pattern })}
             <rect
               x={120 * 0}
@@ -29,11 +25,7 @@
           {/snippet}
         </Pattern>
 
-        <Pattern width={4} height={4}>
-          {#snippet patternContent()}
-            <line y2="100%" class="stroke-surface-content" />
-          {/snippet}
-
+        <Pattern lines={[{ spacing: 4, rotate: 90 }]}>
           {#snippet children({ pattern })}
             <rect
               x={120 * 1}
@@ -47,12 +39,7 @@
           {/snippet}
         </Pattern>
 
-        <Pattern width={4} height={4}>
-          {#snippet patternContent()}
-            <line x2="100%" class="stroke-surface-content" />
-            <line y2="100%" class="stroke-surface-content" />
-          {/snippet}
-
+        <Pattern lines={[{ spacing: 5 }, { spacing: 5, rotate: 90 }]}>
           {#snippet children({ pattern })}
             <rect
               x={120 * 2}
@@ -66,11 +53,7 @@
           {/snippet}
         </Pattern>
 
-        <Pattern width={8} height={8}>
-          {#snippet patternContent()}
-            <line x1={8} y2={8} class="stroke-surface-content" />
-          {/snippet}
-
+        <Pattern lines={[{ spacing: 5, rotate: -45 }]}>
           {#snippet children({ pattern })}
             <rect
               x={120 * 3}
@@ -84,11 +67,7 @@
           {/snippet}
         </Pattern>
 
-        <Pattern width={8} height={8}>
-          {#snippet patternContent()}
-            <line x2={8} y2={8} class="stroke-surface-content" />
-          {/snippet}
-
+        <Pattern lines={[{ spacing: 5, rotate: 45 }]}>
           {#snippet children({ pattern })}
             <rect
               x={120 * 4}
@@ -102,12 +81,12 @@
           {/snippet}
         </Pattern>
 
-        <Pattern width={8} height={8}>
-          {#snippet patternContent()}
-            <line x1={8} y2={8} class="stroke-surface-content" />
-            <line x2={8} y2={8} class="stroke-surface-content" />
-          {/snippet}
-
+        <Pattern
+          lines={[
+            { spacing: 5, rotate: 45 },
+            { spacing: 5, rotate: -45 },
+          ]}
+        >
           {#snippet children({ pattern })}
             <rect
               x={120 * 5}
@@ -394,6 +373,126 @@
             fill="url(#gradient-pattern-{i + 1})"
           />
         {/each}
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Lines (custom patterns)</h2>
+
+<Preview>
+  <div class="h-[334px] p-4 border rounded-sm">
+    <Chart>
+      <Svg>
+        <Pattern width={4} height={4}>
+          {#snippet patternContent()}
+            <line x2="100%" class="stroke-surface-content" />
+          {/snippet}
+
+          {#snippet children({ pattern })}
+            <rect
+              x={120 * 0}
+              y={0}
+              width={100}
+              height={300}
+              rx={8}
+              fill={pattern}
+              class="stroke-surface-content"
+            />
+          {/snippet}
+        </Pattern>
+
+        <Pattern width={4} height={4}>
+          {#snippet patternContent()}
+            <line y2="100%" class="stroke-surface-content" />
+          {/snippet}
+
+          {#snippet children({ pattern })}
+            <rect
+              x={120 * 1}
+              y={0}
+              width={100}
+              height={300}
+              rx={8}
+              fill={pattern}
+              class="stroke-surface-content"
+            />
+          {/snippet}
+        </Pattern>
+
+        <Pattern width={4} height={4}>
+          {#snippet patternContent()}
+            <line x2="100%" class="stroke-surface-content" />
+            <line y2="100%" class="stroke-surface-content" />
+          {/snippet}
+
+          {#snippet children({ pattern })}
+            <rect
+              x={120 * 2}
+              y={0}
+              width={100}
+              height={300}
+              rx={8}
+              fill={pattern}
+              class="stroke-surface-content"
+            />
+          {/snippet}
+        </Pattern>
+
+        <Pattern width={8} height={8}>
+          {#snippet patternContent()}
+            <line x1={8} y2={8} class="stroke-surface-content" />
+          {/snippet}
+
+          {#snippet children({ pattern })}
+            <rect
+              x={120 * 3}
+              y={0}
+              width={100}
+              height={300}
+              rx={8}
+              fill={pattern}
+              class="stroke-surface-content"
+            />
+          {/snippet}
+        </Pattern>
+
+        <Pattern width={8} height={8}>
+          {#snippet patternContent()}
+            <line x2={8} y2={8} class="stroke-surface-content" />
+          {/snippet}
+
+          {#snippet children({ pattern })}
+            <rect
+              x={120 * 4}
+              y={0}
+              width={100}
+              height={300}
+              rx={8}
+              fill={pattern}
+              class="stroke-surface-content"
+            />
+          {/snippet}
+        </Pattern>
+
+        <Pattern width={8} height={8}>
+          {#snippet patternContent()}
+            <line x1={8} y2={8} class="stroke-surface-content" />
+            <line x2={8} y2={8} class="stroke-surface-content" />
+          {/snippet}
+
+          {#snippet children({ pattern })}
+            <rect
+              x={120 * 5}
+              y={0}
+              width={100}
+              height={300}
+              rx={8}
+              fill={pattern}
+              class="stroke-surface-content"
+            />
+          {/snippet}
+        </Pattern>
       </Svg>
     </Chart>
   </div>

@@ -5,6 +5,7 @@
   import type { Without } from '$lib/utils/types.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { createId } from '$lib/utils/createId.js';
+  import { degreesToRadians } from '$lib/utils/math.js';
 
   export type PatternPropsWithoutHTML = {
     /**
@@ -13,19 +14,31 @@
     id?: string;
 
     /**
-     * The width of the pattern
+     * The width of the pattern for custom patterns (set by `lines`, etc)
      */
-    width: number;
+    width?: number;
 
     /**
-     * The height of the pattern
+     * The height of the pattern for custom patterns (set by `lines`, etc)
      */
-    height: number;
+    height?: number;
 
     /**
      * Render as a child of the pattern
      */
-    patternContent: Snippet;
+    patternContent?: Snippet;
+
+    /**
+     * The number of lines to render
+     */
+    lines?: {
+      spacing: number;
+      rotate?: number;
+      /** Color of line (defaults to `var(--color-surface-content)`) */
+      color?: string;
+      background?: string;
+      lineWidth?: string;
+    }[];
 
     children?: Snippet<[{ id: string; pattern: string }]>;
   };
@@ -35,10 +48,6 @@
 </script>
 
 <script lang="ts">
-  // https://developer.mozilla.org/en-US/docs/Web/SVG/Element/pattern
-  // https://airbnb.io/visx/patterns
-  // https://github.com/airbnb/visx/tree/master/packages/visx-pattern/src/patterns
-
   const uid = $props.id();
 
   let {
@@ -47,8 +56,65 @@
     height,
     patternContent,
     children,
+    lines: linesProp,
     ...restProps
   }: PatternProps = $props();
+
+  let lines = $state<{ path: string; stroke: string; strokeWidth: string | number }[]>([]);
+  if (linesProp) {
+    for (const line of linesProp) {
+      const spacing = Math.abs(line.spacing);
+      const stroke = line.color ?? 'var(--color-surface-content)';
+      const strokeWidth = line.lineWidth ?? 1;
+
+      let rotate = Math.round(line.rotate ?? 0) % 360;
+      if (rotate > 180) rotate = rotate - 360;
+      else if (rotate > 90) rotate = rotate - 180;
+      else if (rotate < -180) rotate = rotate + 360;
+      else if (rotate < -90) rotate = rotate + 180;
+
+      width = spacing;
+      height = spacing;
+
+      // Use a <path> instead of a <line> to have corners without gaps (start, main line, end)
+      let path = '';
+
+      if (rotate === 0) {
+        path = `
+        M 0 0 L ${width} 0
+        M 0 ${height} L ${width} ${height}
+    `;
+      } else if (rotate === 90) {
+        path = `
+        M 0 0 L 0 ${height}
+        M ${width} 0 L ${width} ${height}
+    `;
+      } else {
+        width = Math.abs(spacing / Math.sin(degreesToRadians(rotate)));
+        height = spacing / Math.sin(degreesToRadians(90 - rotate));
+
+        if (rotate > 0) {
+          path = `
+          M 0 ${-height} L ${width * 2} ${height}
+          M ${-width} ${-height} L ${width} ${height}
+          M ${-width} 0 L ${width} ${height * 2}
+      `;
+        } else {
+          path = `
+          M ${-width} ${height} L ${width} ${-height}
+          M ${-width} ${height * 2} L ${width * 2} ${-height}
+          M 0 ${height * 2} L ${width * 2} 0
+      `;
+        }
+      }
+
+      lines.push({
+        path,
+        stroke,
+        strokeWidth,
+      });
+    }
+  }
 </script>
 
 <defs>
@@ -59,7 +125,13 @@
     patternUnits="userSpaceOnUse"
     {...extractLayerProps(restProps, 'pattern')}
   >
-    {@render patternContent?.()}
+    {#if patternContent}
+      {@render patternContent?.()}
+    {:else if linesProp}
+      {#each lines as line}
+        <path d={line.path} fill="none" stroke={line.stroke} stroke-width={line.strokeWidth} />
+      {/each}
+    {/if}
   </pattern>
 </defs>
 
