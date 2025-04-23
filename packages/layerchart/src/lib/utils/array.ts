@@ -1,4 +1,5 @@
-import { extent as d3extent, type Numeric } from 'd3-array';
+import type { Numeric } from 'd3-array';
+import { extent as d3extent } from 'd3-array';
 
 /**
  * Wrapper around d3-array's `extent()` but remove [undefined, undefined] return type
