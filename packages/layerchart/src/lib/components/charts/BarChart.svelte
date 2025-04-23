@@ -329,8 +329,12 @@
   bind:tooltipContext
   let:x
   let:xScale
+  let:x1
+  let:x1Scale
+  let:y1
   let:y
   let:yScale
+  let:y1Scale
   let:c
   let:cScale
   let:width
@@ -341,8 +345,12 @@
   {@const slotProps = {
     x,
     xScale,
+    x1,
+    x1Scale,
     y,
     yScale,
+    y1,
+    y1Scale,
     c,
     cScale,
     width,
