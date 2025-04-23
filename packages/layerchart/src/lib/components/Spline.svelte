@@ -303,19 +303,23 @@
     </slot>
 
     <slot name="markerMid" id={markerMidId}>
-      <Marker
-        id={markerMidId}
-        type={typeof markerMid === 'string' ? markerMid : undefined}
-        {...typeof markerMid === 'object' ? markerMid : null}
-      />
+      {#if markerMid}
+        <Marker
+          id={markerMidId}
+          type={typeof markerMid === 'string' ? markerMid : undefined}
+          {...typeof markerMid === 'object' ? markerMid : null}
+        />
+      {/if}
     </slot>
 
     <slot name="markerEnd" id={markerEndId}>
-      <Marker
-        id={markerEndId}
-        type={typeof markerEnd === 'string' ? markerEnd : undefined}
-        {...typeof markerEnd === 'object' ? markerEnd : null}
-      />
+      {#if markerEnd}
+        <Marker
+          id={markerEndId}
+          type={typeof markerEnd === 'string' ? markerEnd : undefined}
+          {...typeof markerEnd === 'object' ? markerEnd : null}
+        />
+      {/if}
     </slot>
 
     {#if $$slots.start && $startPoint}
