@@ -1,5 +1,11 @@
 # LayerChart
 
+## 1.0.9
+
+### Patch Changes
+
+- fix(Spline): Do not unnecessarily render mid/end markers. Fixes Firefox when used with ClipPath. ([#474](https://github.com/techniq/layerchart/pull/474))
+
 ## 1.0.8
 
 ### Patch Changes
