@@ -3,10 +3,11 @@
   import { format } from '@layerstack/utils';
   import { flatGroup } from 'd3-array';
   import { randomNormal } from 'd3-random';
+  import { scaleThreshold } from 'd3-scale';
   import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { getSpiral } from '$lib/utils/genData.js';
+  import { createDateSeries, getSpiral } from '$lib/utils/genData.js';
 
   let { data } = $props();
 
@@ -31,6 +32,8 @@
       };
     })
   );
+
+  const dateSeriesData = createDateSeries({ count: 30, min: 20, max: 100, value: 'integer' });
 
   let renderContext: 'svg' | 'canvas' = $state('svg');
   let debug = $state(false);
@@ -87,6 +90,12 @@
       rRange={[2, 30]}
       xNice
       yNice
+      props={{
+        points: {
+          stroke: 'var(--color-primary)',
+          'fill-opacity': 0.3,
+        },
+      }}
       {renderContext}
       {debug}
     />
@@ -117,10 +126,15 @@
       x="flipper_length_mm"
       y="bill_length_mm"
       series={penguinDataBySpecies.map(([species, data], i) => {
+        const color = ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-success)'][i];
         return {
           key: species,
           data,
-          color: ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-success)'][i],
+          color,
+          props: {
+            stroke: color,
+            fillOpacity: 0.3,
+          },
         };
       })}
       {renderContext}
@@ -139,10 +153,15 @@
       r="body_mass_g"
       rRange={[2, 20]}
       series={penguinDataBySpecies.map(([species, data], i) => {
+        const color = ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-success)'][i];
         return {
           key: species,
           data,
-          color: ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-success)'][i],
+          color,
+          props: {
+            stroke: color,
+            fillOpacity: 0.3,
+          },
         };
       })}
       {renderContext}
@@ -250,7 +269,10 @@
       y={(d) => 0}
       axis={false}
       grid={false}
-      props={{ highlight: { lines: false } }}
+      props={{
+        points: { opacity: 0.3 },
+        highlight: { lines: false },
+      }}
       {renderContext}
       {debug}
     >
@@ -262,6 +284,25 @@
         </Tooltip.Root>
       {/snippet}
     </ScatterChart>
+  </div>
+</Preview>
+
+<h2>Date series with threshold color scale</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <ScatterChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      yBaseline={0}
+      c="value"
+      cScale={scaleThreshold()}
+      cDomain={[50]}
+      cRange={['var(--color-danger)', 'var(--color-success)']}
+      {renderContext}
+      {debug}
+    />
   </div>
 </Preview>
 

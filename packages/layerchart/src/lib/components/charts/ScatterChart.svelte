@@ -101,9 +101,7 @@
   }: ScatterChartProps<TData> = $props();
 
   const series: SeriesData<TData, typeof Points>[] = $derived(
-    seriesProp === undefined
-      ? [{ key: 'default', data: chartDataArray(data), color: 'var(--color-primary)' }]
-      : seriesProp
+    seriesProp === undefined ? [{ key: 'default', data: chartDataArray(data) }] : seriesProp
   );
 
   const seriesState = createSeriesState(() => series);
@@ -132,9 +130,7 @@
   ): ComponentProps<typeof Points> {
     return {
       data: s.data,
-      stroke: s.color,
       fill: s.color,
-      fillOpacity: 0.3,
       ...props.points,
       ...s.props,
       class: cls(
@@ -198,7 +194,7 @@
       axis: 'both',
       ...props.highlight,
       points: {
-        fill: activeSeries?.color,
+        ...(activeSeries?.color && { fill: activeSeries.color }),
         ...(typeof props.highlight?.points === 'object' ? props.highlight.points : null),
       },
     };
@@ -251,6 +247,8 @@
   {yDomain}
   {yScale}
   yNice
+  c={yProp}
+  cRange={['var(--color-primary)']}
   padding={defaultChartPadding(axis, legend)}
   {...restProps}
   tooltip={tooltip === false
