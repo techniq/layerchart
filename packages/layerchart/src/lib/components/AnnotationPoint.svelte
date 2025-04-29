@@ -7,8 +7,8 @@
     /** Label to display on circle*/
     label?: string;
 
-    /** Description to display in tooltip */
-    description?: string;
+    /** Details (description, etc) useful to display in tooltip */
+    details?: any;
 
     /** x value of the point */
     x?: Date;
@@ -31,7 +31,7 @@
   import { Circle, getChartContext, Text } from 'layerchart';
   import { cls } from '@layerstack/tailwind';
 
-  const { label, description, x, y, props }: AnnotationPointProps = $props();
+  const { label, details, x, y, props }: AnnotationPointProps = $props();
 
   const ctx = getChartContext();
 
@@ -46,13 +46,13 @@
   cy={point.y}
   r={6}
   onpointermove={(e) => {
-    if (description) {
+    if (details) {
       e.stopPropagation();
-      ctx.tooltip.show(e, { annotation: { label, description } });
+      ctx.tooltip.show(e, { annotation: { label, details } });
     }
   }}
   onpointerleave={() => {
-    if (description) {
+    if (details) {
       ctx.tooltip.hide();
     }
   }}

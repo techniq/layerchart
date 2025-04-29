@@ -32,7 +32,7 @@
         x: d.date,
         y: d.value,
         label: String.fromCharCode(65 + i),
-        description: `This is an annotation for ${format(d.date)}`,
+        details: `This is an annotation for ${format(d.date)}`,
       }))
   );
 </script>
@@ -73,7 +73,7 @@
             <AnnotationPoint
               x={annotation.x}
               label={annotation.label}
-              description={annotation.description}
+              details={annotation.details}
               props={{
                 circle: { class: 'fill-secondary' },
               }}
@@ -88,7 +88,7 @@
             {#if data.annotation}
               <!-- Annotation -->
               <div class="whitespace-nowrap">
-                {data.annotation.description}
+                {data.annotation.details}
               </div>
             {:else}
               <!-- Normal tooltip -->
@@ -125,7 +125,7 @@
               x={annotation.x}
               y={annotation.y}
               label={annotation.label}
-              description={annotation.description}
+              details={annotation.details}
               props={{
                 circle: { class: 'fill-secondary' },
               }}
@@ -140,7 +140,7 @@
             {#if data.annotation}
               <!-- Annotation -->
               <div class="whitespace-nowrap">
-                {data.annotation.description}
+                {data.annotation.details}
               </div>
             {:else}
               <!-- Normal tooltip -->
@@ -183,7 +183,7 @@
               x={annotation.x}
               y={annotation.y}
               label={annotation.label}
-              description={annotation.description}
+              details={annotation.details}
               props={{
                 circle: { class: 'fill-secondary' },
               }}
@@ -198,7 +198,7 @@
             {#if data.annotation}
               <!-- Annotation -->
               <div class="whitespace-nowrap">
-                {data.annotation.description}
+                {data.annotation.details}
               </div>
             {:else}
               <!-- Normal tooltip -->
