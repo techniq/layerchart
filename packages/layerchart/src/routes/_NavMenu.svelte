@@ -82,6 +82,7 @@
       'Text',
     ],
     Marks: [
+      'Annotations',
       'Area',
       'Bars',
       'Calendar',

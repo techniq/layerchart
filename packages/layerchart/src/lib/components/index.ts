@@ -1,5 +1,11 @@
 export * from './charts/index.js';
 
+export { default as AnnotationLine } from './AnnotationLine.svelte';
+export * from './AnnotationLine.svelte';
+export { default as AnnotationPoint } from './AnnotationPoint.svelte';
+export * from './AnnotationPoint.svelte';
+export { default as AnnotationRange } from './AnnotationRange.svelte';
+export * from './AnnotationRange.svelte';
 export { default as Arc } from './Arc.svelte';
 export * from './Arc.svelte';
 export { default as Area } from './Area.svelte';
