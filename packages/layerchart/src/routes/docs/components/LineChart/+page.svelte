@@ -908,7 +908,7 @@
 
 <h2>Brushing</h2>
 
-<Preview data={dateSeriesData}>
+<Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
     <LineChart
       data={data.appleStock}
