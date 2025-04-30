@@ -57,37 +57,71 @@
   const labelProps = $derived<ComponentProps<typeof Text>>(
     isVertical
       ? {
-          x: line.x1 + (labelPlacement.includes('left') ? -labelOffset : labelOffset),
-          y: labelPlacement.includes('top')
-            ? line.y2
-            : labelPlacement.includes('bottom')
-              ? line.y1
-              : (line.y1 - line.y2) / 2,
+          x:
+            line.x1 +
+            (['top', 'bottom'].includes(labelPlacement)
+              ? 0 // Offset applies to `y`
+              : labelPlacement.includes('left')
+                ? -labelOffset
+                : labelOffset),
+          y:
+            (labelPlacement.includes('top')
+              ? line.y2
+              : labelPlacement.includes('bottom')
+                ? line.y1
+                : (line.y1 - line.y2) / 2) +
+            (labelPlacement === 'top'
+              ? -labelOffset
+              : labelPlacement === 'bottom'
+                ? labelOffset
+                : 0),
           dy: -2, // adjust for smaler font size
           textAnchor: labelPlacement.includes('left')
             ? 'end'
             : labelPlacement.includes('right')
               ? 'start'
               : 'middle',
-          verticalAnchor: labelPlacement.includes('top')
-            ? 'start'
-            : labelPlacement.includes('bottom')
-              ? 'end'
-              : 'middle',
+          verticalAnchor:
+            labelPlacement === 'top'
+              ? 'end' // place above line
+              : labelPlacement === 'bottom'
+                ? 'start' // place below line
+                : labelPlacement.includes('top')
+                  ? 'start'
+                  : labelPlacement.includes('bottom')
+                    ? 'end'
+                    : 'middle',
         }
       : {
-          x: labelPlacement.includes('left')
-            ? line.x1
-            : labelPlacement.includes('right')
-              ? line.x2
-              : (line.x2 - line.x1) / 2,
-          y: line.y1 + (labelPlacement.includes('top') ? -labelOffset : labelOffset),
+          x:
+            (labelPlacement.includes('left')
+              ? line.x1
+              : labelPlacement.includes('right')
+                ? line.x2
+                : (line.x2 - line.x1) / 2) +
+            (labelPlacement === 'left'
+              ? -labelOffset
+              : labelPlacement === 'right'
+                ? labelOffset
+                : 0),
+          y:
+            line.y1 +
+            (['left', 'right'].includes(labelPlacement)
+              ? 0 // Offset applies to `x`
+              : labelPlacement.includes('top')
+                ? -labelOffset
+                : labelOffset),
           dy: -2, // adjust for smaler font size
-          textAnchor: labelPlacement.includes('left')
-            ? 'start'
-            : labelPlacement.includes('right')
-              ? 'end'
-              : 'middle',
+          textAnchor:
+            labelPlacement === 'left'
+              ? 'end' // place beside line
+              : labelPlacement === 'right'
+                ? 'start' // place beside line
+                : labelPlacement.includes('left')
+                  ? 'start'
+                  : labelPlacement.includes('right')
+                    ? 'end'
+                    : 'middle',
           verticalAnchor: labelPlacement.includes('top')
             ? 'end'
             : labelPlacement.includes('bottom')
