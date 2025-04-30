@@ -2,6 +2,7 @@
   import {
     AnnotationLine,
     AnnotationPoint,
+    AnnotationRange,
     Canvas,
     LineChart,
     Svg,
@@ -272,10 +273,51 @@
               details={annotation.details}
               props={{
                 circle: { class: 'fill-secondary' },
+                label: { class: 'fill-secondary-content font-bold' },
               }}
             />
           {/each}
         </RenderComponent>
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Horizontal with range</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={data.appleStock}
+      x="date"
+      y="value"
+      props={{
+        xAxis: { format: undefined },
+      }}
+      {renderContext}
+      {debug}
+    >
+      {#snippet aboveMarks({ context })}
+        <AnnotationRange
+          y={[500, null]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+        />
+
+        <AnnotationLine
+          y={500}
+          label="Max"
+          labelPlacement="bottom-right"
+          labelOffset={2}
+          props={{
+            line: { class: '[stroke-dasharray:2,2] _stroke-danger' },
+          }}
+        />
       {/snippet}
     </LineChart>
   </div>

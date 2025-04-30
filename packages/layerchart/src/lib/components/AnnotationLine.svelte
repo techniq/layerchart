@@ -111,6 +111,6 @@
     value={label}
     {...labelProps}
     {...props?.label}
-    class={cls('text-xs fill-secondary-content font-bold pointer-events-none', props?.label?.class)}
+    class={cls('text-xs pointer-events-none', props?.label?.class)}
   />
 {/if}

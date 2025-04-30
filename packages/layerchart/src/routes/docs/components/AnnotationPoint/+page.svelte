@@ -67,6 +67,7 @@
               details={annotation.details}
               props={{
                 circle: { class: 'fill-secondary' },
+                label: { class: 'fill-secondary-content font-bold' },
               }}
             />
           {/each}
@@ -119,6 +120,7 @@
               details={annotation.details}
               props={{
                 circle: { class: 'fill-secondary' },
+                label: { class: 'fill-secondary-content font-bold' },
               }}
             />
           {/each}
@@ -167,7 +169,9 @@
             <AnnotationLine
               x={annotation.x}
               y={annotation.y}
-              props={{ line: { class: '[stroke-dasharray:4,4] opacity-50' } }}
+              props={{
+                line: { class: '[stroke-dasharray:4,4] opacity-50' },
+              }}
             />
 
             <AnnotationPoint
@@ -177,6 +181,7 @@
               details={annotation.details}
               props={{
                 circle: { class: 'fill-secondary' },
+                label: { class: 'fill-secondary-content font-bold' },
               }}
             />
           {/each}

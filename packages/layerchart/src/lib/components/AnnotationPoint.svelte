@@ -68,9 +68,6 @@
     textAnchor="middle"
     verticalAnchor="middle"
     {...props?.label}
-    class={cls(
-      'text-[10px] fill-secondary-content font-bold pointer-events-none',
-      props?.label?.class
-    )}
+    class={cls('text-[10px] pointer-events-none', props?.label?.class)}
   />
 {/if}
