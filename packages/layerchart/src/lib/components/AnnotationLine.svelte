@@ -31,7 +31,11 @@
 </script>
 
 <script lang="ts">
-  import { getChartContext, Line, Text, type Placement } from 'layerchart';
+  import { getChartContext } from './Chart.svelte';
+  import Line from './Line.svelte';
+  import Text from './Text.svelte';
+  import type { Placement } from './types.js';
+
   import { cls } from '@layerstack/tailwind';
 
   const {

@@ -46,7 +46,13 @@
 </script>
 
 <script lang="ts">
-  import { getChartContext, LinearGradient, Pattern, Rect, Text, type Placement } from 'layerchart';
+  import { getChartContext } from './Chart.svelte';
+  import LinearGradient from './LinearGradient.svelte';
+  import Pattern from './Pattern.svelte';
+  import Rect from './Rect.svelte';
+  import Text from './Text.svelte';
+  import type { Placement } from './types.js';
+
   import { cls } from '@layerstack/tailwind';
 
   const {

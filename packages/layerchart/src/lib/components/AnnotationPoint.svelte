@@ -37,7 +37,11 @@
 </script>
 
 <script lang="ts">
-  import { Circle, getChartContext, Text, type Placement } from 'layerchart';
+  import { getChartContext } from './Chart.svelte';
+  import Circle from './Circle.svelte';
+  import Text from './Text.svelte';
+  import type { Placement } from './types.js';
+
   import { cls } from '@layerstack/tailwind';
 
   const {
