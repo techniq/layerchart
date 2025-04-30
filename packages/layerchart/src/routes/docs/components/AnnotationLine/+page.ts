@@ -1,7 +1,7 @@
 import { parse } from '@layerstack/utils';
 
-// import api from '$lib/components/charts/LineChart.svelte?raw&sveld';
-// import source from '$lib/components/charts/LineChart.svelte?raw';
+import api from '$lib/components/AnnotationLine.svelte?raw&sveld';
+import source from '$lib/components/AnnotationLine.svelte?raw';
 import pageSource from './+page.svelte?raw';
 
 import type { AppleStockData } from '$static/data/examples/date/apple-stock.js';
@@ -12,15 +12,10 @@ export async function load({ fetch }) {
       parse<AppleStockData>(await r.text())
     ),
     meta: {
-      // api,
-      // source,
+      api,
+      source,
       pageSource,
-      // description: 'Streamlined Chart configuration for Line charts',
-      related: [
-        // 'components/AnnotationLine',
-        // 'components/AnnotationPoint',
-        // 'components/AnnotationRange',
-      ],
+      related: ['components/AnnotationPoint', 'components/AnnotationRange'],
     },
   };
 }

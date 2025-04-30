@@ -82,7 +82,6 @@
       'Text',
     ],
     Marks: [
-      'Annotations',
       'Area',
       'Bars',
       'Calendar',
@@ -94,6 +93,7 @@
       'Spline',
       'Threshold',
     ],
+    Annotations: ['AnnotationLine', 'AnnotationPoint', 'AnnotationRange'],
     Interactions: [
       'BrushContext',
       'Highlight',
