@@ -103,6 +103,7 @@
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import { layerClass } from '$lib/utils/attributes.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
+  import ChartAnnotations from './ChartAnnotations.svelte';
 
   let {
     data = [],
@@ -135,6 +136,7 @@
     marks,
     spline,
     highlight = true,
+    annotations = [],
     context = $bindable(),
     ...restProps
   }: LineChartProps<TData> = $props();
@@ -376,6 +378,16 @@
       {@render childrenProp(snippetProps)}
     {:else}
       {@render belowContext?.(snippetProps)}
+      <!-- TODO: Always use `Svg` until `Pattern` supports `Canvas` (issue #307) -->
+      <Svg>
+        <ChartAnnotations
+          {annotations}
+          layer="below"
+          highlightKey={seriesState.highlightKey.current}
+          visibleSeries={seriesState.visibleSeries}
+        />
+      </Svg>
+
       {@const Component = renderContext === 'canvas' ? Canvas : Svg}
       <Component
         this={renderContext === 'canvas' ? Canvas : Svg}
@@ -457,6 +469,16 @@
           {/if}
         </ChartClipPath>
       </Component>
+
+      <!-- TODO: Always use `Svg` until `Pattern` supports `Canvas` (issue #307) -->
+      <Svg pointerEvents={false}>
+        <ChartAnnotations
+          {annotations}
+          layer="above"
+          highlightKey={seriesState.highlightKey.current}
+          visibleSeries={seriesState.visibleSeries}
+        />
+      </Svg>
 
       {@render aboveContext?.(snippetProps)}
 

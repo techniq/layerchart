@@ -2,7 +2,7 @@
   import {
     Axis,
     Canvas,
-    Circle,
+    defaultChartPadding,
     Highlight,
     Labels,
     LinearGradient,
@@ -20,6 +20,7 @@
   import { format, PeriodType, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { cls } from '@layerstack/tailwind';
@@ -76,14 +77,14 @@
 
   // Get a few random points to use for annotations
   const annotations = $derived(
-    [...dateSeriesData]
+    [...data.appleStock]
       .sort(() => Math.random() - 0.5)
       .slice(0, 5)
       .sort(sortFunc('date'))
       .map((d, i) => ({
         date: d.date,
         label: String.fromCharCode(65 + i),
-        description: `This is an annotation for ${format(d.date)}`,
+        details: `This is an annotation for ${format(d.date)}`,
       }))
   );
 </script>
@@ -850,47 +851,40 @@
   </div>
 </Preview>
 
-<h2>Simple annotations</h2>
+<h2>Point annotations</h2>
 
-<Preview data={dateSeriesData}>
+<Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
-      {#snippet aboveContext({ context })}
-        <Svg>
-          {#each annotations as annotation}
-            <Circle
-              cx={context.xScale(annotation.date)}
-              cy={context.height}
-              r={6}
-              class="fill-secondary"
-              onpointermove={(e) => {
-                e.stopPropagation();
-                context.tooltip.show(e, { annotation });
-              }}
-              onpointerleave={() => {
-                context.tooltip.hide();
-              }}
-            />
-            <Text
-              x={context.xScale(annotation.date)}
-              y={context.height}
-              textAnchor="middle"
-              verticalAnchor="middle"
-              dy={-2}
-              class="text-[10px] fill-secondary-content font-semibold pointer-events-none"
-              value={annotation.label}
-            />
-          {/each}
-        </Svg>
-      {/snippet}
-
+    <LineChart
+      data={data.appleStock}
+      x="date"
+      y="value"
+      annotations={annotations.map((a) => {
+        return {
+          type: 'point',
+          label: a.label,
+          details: a.details,
+          x: a.date,
+          r: 6,
+          props: {
+            circle: { class: 'fill-secondary' },
+            label: { class: 'text-[10px] fill-secondary-content font-bold' },
+          },
+        };
+      })}
+      props={{
+        xAxis: { format: undefined },
+      }}
+      {renderContext}
+      {debug}
+    >
       {#snippet tooltip({ context })}
         <Tooltip.Root>
           {#snippet children({ data })}
             {#if data.annotation}
               <!-- Annotation -->
               <div class="whitespace-nowrap">
-                {data.annotation.description}
+                {data.annotation.details}
               </div>
             {:else}
               <!-- Normal tooltip -->
@@ -905,6 +899,133 @@
     </LineChart>
   </div>
 </Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationPoint">AnnotationPoint</a> for more examples
+</Blockquote>
+
+<h2>Line annotation</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={data.appleStock}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'line',
+          y: 500,
+          label: 'Max',
+          labelOffset: 4,
+          props: {
+            label: { class: 'fill-danger' },
+            line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+          },
+        },
+      ]}
+      props={{
+        xAxis: { format: undefined },
+      }}
+      {renderContext}
+      {debug}
+    ></LineChart>
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationLine">AnnotationLine</a> for more examples
+</Blockquote>
+
+<h2>Range annotation</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={data.appleStock}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'range',
+          layer: 'below',
+          x: [new Date('2010-01-01'), new Date('2010-12-31')],
+          label: 'Range',
+          labelPlacement: 'bottom',
+          labelYOffset: 4,
+          pattern: {
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          },
+        },
+      ]}
+      props={{
+        xAxis: { format: undefined },
+      }}
+      {renderContext}
+      {debug}
+    ></LineChart>
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationRange">AnnotationRange</a> for more examples
+</Blockquote>
+
+<h2>Series point annotations</h2>
+
+<Preview data={data.appleStock}>
+  {@const series = [
+    {
+      key: 'apples',
+      data: multiSeriesDataByFruit.get('apples'),
+      color: 'var(--color-danger)',
+    },
+    {
+      key: 'bananas',
+      data: multiSeriesDataByFruit.get('bananas'),
+      color: 'var(--color-success)',
+    },
+    {
+      key: 'oranges',
+      data: multiSeriesDataByFruit.get('oranges'),
+      color: 'var(--color-warning)',
+    },
+  ]}
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      x="date"
+      y="value"
+      {series}
+      annotations={series.map((s) => {
+        const lastDataPoint = s.data?.[s.data.length - 1] ?? null;
+        return {
+          type: 'point',
+          seriesKey: s.key,
+          label: s.key,
+          labelPlacement: 'right',
+          labelOffset: 4,
+          x: lastDataPoint.date,
+          y: lastDataPoint.value,
+          props: {
+            circle: { fill: s.color },
+            label: { fill: s.color },
+          },
+        };
+      })}
+      padding={{ ...defaultChartPadding(), right: 60 }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationPoint">AnnotationPoint</a> for more examples
+</Blockquote>
 
 <h2>Brushing</h2>
 

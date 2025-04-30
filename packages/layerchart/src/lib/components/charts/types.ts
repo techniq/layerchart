@@ -2,7 +2,19 @@ import type { Accessor } from '$lib/utils/common.js';
 import type { Component, ComponentProps, Snippet } from 'svelte';
 import type BrushContext from '../BrushContext.svelte';
 import type { AnyScale } from '$lib/utils/scales.svelte.js';
-import type { Area, Axis, Group, Labels, Legend, Points, Rule, Spline } from '../index.js';
+import type {
+  AnnotationPoint,
+  AnnotationLine,
+  AnnotationRange,
+  Area,
+  Axis,
+  Group,
+  Labels,
+  Legend,
+  Points,
+  Rule,
+  Spline,
+} from '../index.js';
 import type TooltipContext from '../tooltip/TooltipContext.svelte';
 import type { TooltipContextValue } from '../tooltip/TooltipContext.svelte';
 import type Highlight from '../Highlight.svelte';
@@ -210,6 +222,9 @@ export type BaseChartProps<
 
   highlight?: boolean | ChartSnippet;
 
+  /** Annotations to show on chart */
+  annotations?: ChartAnnotations;
+
   /**
    * The tooltip context to be used for the chart.
    */
@@ -227,12 +242,14 @@ export type BaseChartProps<
    * @default 'svg'
    */
   renderContext?: 'svg' | 'canvas';
+
   /**
    * Whether to log the initial render performance using `console.time`.
    *
    * @default false
    */
   profile?: boolean;
+
   /**
    * Whether to enable debug mode.
    *
@@ -263,3 +280,42 @@ export type SimplifiedChartProps<
     ChartPropsWithoutHTML<TData>,
     BaseChartProps<TData, TComponent, TSnippetProps, ChartSnippet>
   >;
+
+export type ChartAnnotations = Array<
+  | ({
+      /** Create AnnotationPoint */
+      type: 'point';
+
+      /** Apply `above` or `below` marks
+       * @default 'above'
+       */
+      layer?: 'above' | 'below';
+
+      /** Related to specific series (if applicable).  Will hide if set and series not highlighted */
+      seriesKey?: string;
+    } & ComponentProps<typeof AnnotationPoint>)
+  | ({
+      /** Create AnnotationLine */
+      type: 'line';
+
+      /** Apply `above` or `below` marks
+       * @default 'above'
+       */
+      layer?: 'above' | 'below';
+
+      /** Related to specific series (if applicable).  Will hide if set and series not highlighted */
+      seriesKey?: string;
+    } & ComponentProps<typeof AnnotationLine>)
+  | ({
+      /** Create AnnotationRange */
+      type: 'range';
+
+      /** Apply `above` or `below` marks
+       * @default 'above'
+       */
+      layer?: 'above' | 'below';
+
+      /** Related to specific series (if applicable).  Will hide if set and series not highlighted */
+      seriesKey?: string;
+    } & ComponentProps<typeof AnnotationRange>)
+>;
