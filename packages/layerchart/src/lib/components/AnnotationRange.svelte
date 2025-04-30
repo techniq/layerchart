@@ -2,20 +2,25 @@
   import type { ComponentProps } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
-  import type { Placement } from './tooltip/Tooltip.svelte';
 
   export type AnnotationRangePropsWithoutHTML = {
+    /** x values of the range */
+    x?: (Date | null)[] | [Date | null, Date | null];
+
+    /** y values of the range */
+    y?: (number | null)[] | [number | null, number | null];
+
     /** Label to display for line*/
     label?: string;
 
     /** Placement of the label */
     labelPlacement?: Placement;
 
-    /** x values of the range */
-    x?: (Date | null)[] | [Date | null, Date | null];
+    /** X offset of the label */
+    labelXOffset?: number;
 
-    /** y values of the range */
-    y?: (number | null)[] | [number | null, number | null];
+    /** Y offset of the label */
+    labelYOffset?: number;
 
     /** Add Rect with fill */
     fill?: string;
@@ -41,23 +46,26 @@
 </script>
 
 <script lang="ts">
-  import { getChartContext, LinearGradient, Pattern, Rect, Text } from 'layerchart';
+  import { getChartContext, LinearGradient, Pattern, Rect, Text, type Placement } from 'layerchart';
   import { cls } from '@layerstack/tailwind';
 
   const {
-    label,
     x,
     y,
     fill,
     class: className,
     gradient,
     pattern,
+    label,
+    labelPlacement = 'center',
+    labelXOffset = 0,
+    labelYOffset = 0,
     props,
   }: AnnotationRangeProps = $props();
 
   const ctx = getChartContext();
 
-  const rectProps = $derived<ComponentProps<typeof Rect>>({
+  const rect = $derived<ComponentProps<typeof Rect>>({
     x: x ? ctx.xScale(x[0] ?? ctx.xDomain[0]) : ctx.xRange[0],
     y: y ? ctx.yScale(y[1] ?? ctx.yDomain[1]) : ctx.yRange[1],
     width: x ? ctx.xScale(x[1] ?? ctx.xDomain[1]) - ctx.xScale(x[0] ?? ctx.xDomain[0]) : ctx.width,
@@ -65,18 +73,43 @@
       ? ctx.yScale(y[0] ?? ctx.yDomain[0]) - ctx.yScale(y[1] ?? ctx.yDomain[1])
       : ctx.height,
   });
+
+  const labelProps = $derived<ComponentProps<typeof Text>>({
+    x:
+      ((labelPlacement.includes('left')
+        ? rect.x
+        : labelPlacement.includes('right')
+          ? (rect.x ?? 0) + rect.width
+          : (rect.x ?? 0) + rect.width / 2) ?? 0) +
+      (labelPlacement.includes('right') ? -labelXOffset : labelXOffset),
+    y:
+      ((labelPlacement.includes('top')
+        ? rect.y
+        : labelPlacement.includes('bottom')
+          ? (rect.y ?? 0) + rect.height
+          : (rect.y ?? 0) + rect.height / 2) ?? 0) +
+      (labelPlacement.includes('bottom') ? -labelYOffset : labelYOffset),
+    textAnchor: labelPlacement.includes('left')
+      ? 'start'
+      : labelPlacement.includes('right')
+        ? 'end'
+        : 'middle',
+    verticalAnchor: labelPlacement.includes('top')
+      ? 'start'
+      : labelPlacement.includes('bottom')
+        ? 'end'
+        : 'middle',
+  });
 </script>
 
-<!-- TODO: Add `label` and respect `labelPlacement` (example: center within (support border, etc)) -->
-
 {#if fill || className}
-  <Rect {...rectProps} {fill} class={cls(props?.rect?.class, className)} />
+  <Rect {...rect} {fill} class={cls(props?.rect?.class, className)} />
 {/if}
 
 {#if gradient}
   <LinearGradient {...gradient}>
     {#snippet children({ gradient })}
-      <Rect {...rectProps} fill={gradient} class={props?.rect?.class} />
+      <Rect {...rect} fill={gradient} class={props?.rect?.class} />
     {/snippet}
   </LinearGradient>
 {/if}
@@ -84,7 +117,17 @@
 {#if pattern}
   <Pattern {...pattern}>
     {#snippet children({ pattern })}
-      <Rect {...rectProps} fill={pattern} class={props?.rect?.class} />
+      <Rect {...rect} fill={pattern} class={props?.rect?.class} />
     {/snippet}
   </Pattern>
+{/if}
+
+{#if label}
+  <Text
+    dy={-2}
+    value={label}
+    {...labelProps}
+    {...props?.label}
+    class={cls('text-xs pointer-events-none', props?.label?.class)}
+  />
 {/if}

@@ -1,10 +1,34 @@
 <script lang="ts">
-  import { AnnotationRange, LineChart } from 'layerchart';
-  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { AnnotationRange, LineChart, type Placement } from 'layerchart';
+  import {
+    Button,
+    Field,
+    Menu,
+    RangeField,
+    Switch,
+    Toggle,
+    ToggleGroup,
+    ToggleOption,
+  } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
 
   let { data } = $props();
+
+  const placementOptions = [
+    'top-left',
+    'top',
+    'top-right',
+    'left',
+    'center',
+    'right',
+    'bottom-left',
+    'bottom',
+    'bottom-right',
+  ] as const;
+  let placement: Placement = $state('center');
+  let xOffset = $state(0);
+  let yOffset = $state(0);
 
   let renderContext: 'svg' | 'canvas' = $state('svg');
   let debug = $state(false);
@@ -249,6 +273,67 @@
             class: 'from-danger/30 to-danger/1',
             vertical: true,
           }}
+        />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Label placement</h2>
+
+<div class="grid grid-cols-3 gap-2 mb-2">
+  <Toggle let:on={open} let:toggle>
+    <Field label="Placement" class="cursor-pointer" on:click={toggle}>
+      <span class="text-sm">
+        {placement}
+      </span>
+    </Field>
+
+    <Menu {open} on:close={toggle} placement="bottom-start">
+      <div class="grid grid-cols-3 gap-1 p-1">
+        {#each placementOptions as option}
+          <Button
+            variant="outline"
+            color={option === placement ? 'primary' : 'default'}
+            on:click={() => (placement = option)}
+          >
+            {option}
+          </Button>
+        {/each}
+      </div>
+    </Menu>
+  </Toggle>
+
+  <RangeField label="X offset" bind:value={xOffset} max={10} />
+  <RangeField label="Y offset" bind:value={yOffset} max={10} />
+</div>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={data.appleStock}
+      x="date"
+      y="value"
+      props={{
+        xAxis: { format: undefined },
+      }}
+      {renderContext}
+      {debug}
+    >
+      {#snippet aboveMarks({ context })}
+        <AnnotationRange
+          x={[new Date('2010-01-01'), new Date('2010-12-31')]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+          label={placement}
+          labelPlacement={placement}
+          labelXOffset={xOffset}
+          labelYOffset={yOffset}
         />
       {/snippet}
     </LineChart>
