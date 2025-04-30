@@ -89,6 +89,7 @@
           ? (rect.y ?? 0) + rect.height
           : (rect.y ?? 0) + rect.height / 2) ?? 0) +
       (labelPlacement.includes('bottom') ? -labelYOffset : labelYOffset),
+    dy: -2, // adjust for smaler font size
     textAnchor: labelPlacement.includes('left')
       ? 'start'
       : labelPlacement.includes('right')
@@ -124,7 +125,6 @@
 
 {#if label}
   <Text
-    dy={-2}
     value={label}
     {...labelProps}
     {...props?.label}

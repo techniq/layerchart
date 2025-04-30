@@ -265,11 +265,12 @@
           <AnnotationPoint
             x={annotation.x}
             y={annotation.y}
+            r={6}
             label={annotation.label}
             details={annotation.details}
             props={{
               circle: { class: 'fill-secondary' },
-              label: { class: 'fill-secondary-content font-bold' },
+              label: { class: 'text-[10px] fill-secondary-content font-bold' },
             }}
           />
         {/each}

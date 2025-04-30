@@ -63,6 +63,7 @@
             : labelPlacement.includes('bottom')
               ? line.y1
               : (line.y1 - line.y2) / 2,
+          dy: -2, // adjust for smaler font size
           textAnchor: labelPlacement.includes('left')
             ? 'end'
             : labelPlacement.includes('right')
@@ -81,6 +82,7 @@
               ? line.x2
               : (line.x2 - line.x1) / 2,
           y: line.y1 + (labelPlacement.includes('top') ? -labelOffset : labelOffset),
+          dy: -2, // adjust for smaler font size
           textAnchor: labelPlacement.includes('left')
             ? 'start'
             : labelPlacement.includes('right')
@@ -107,7 +109,6 @@
 
 {#if label}
   <Text
-    dy={-2}
     value={label}
     {...labelProps}
     {...props?.label}

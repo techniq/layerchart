@@ -4,17 +4,26 @@
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
 
   export type AnnotationPointPropsWithoutHTML = {
-    /** Label to display on circle*/
-    label?: string;
-
-    /** Details (description, etc) useful to display in tooltip */
-    details?: any;
-
     /** x value of the point */
     x?: Date;
 
     /** y value of the point */
     y?: number;
+
+    /** Radius of the circle */
+    r?: number;
+
+    /** Label to display on circle*/
+    label?: string;
+
+    /** Placement of the label */
+    labelPlacement?: Placement;
+
+    /** Offset of the label */
+    labelOffset?: number;
+
+    /** Details (description, etc) useful to display in tooltip */
+    details?: any;
 
     /** Classes for inner elements */
     props?: {
@@ -28,10 +37,19 @@
 </script>
 
 <script lang="ts">
-  import { Circle, getChartContext, Text } from 'layerchart';
+  import { Circle, getChartContext, Text, type Placement } from 'layerchart';
   import { cls } from '@layerstack/tailwind';
 
-  const { label, details, x, y, props }: AnnotationPointProps = $props();
+  const {
+    x,
+    y,
+    r = 4,
+    label,
+    labelPlacement = 'center',
+    labelOffset = 0,
+    details,
+    props,
+  }: AnnotationPointProps = $props();
 
   const ctx = getChartContext();
 
@@ -39,12 +57,40 @@
     x: x ? ctx.xScale(x) : 0,
     y: y ? ctx.yScale(y) : ctx.height,
   });
+
+  const labelProps = $derived<ComponentProps<typeof Text>>({
+    x:
+      point.x +
+      (labelPlacement.includes('left')
+        ? -(r + labelOffset)
+        : labelPlacement.includes('right')
+          ? r + labelOffset
+          : 0),
+    y:
+      point.y +
+      (labelPlacement.includes('top')
+        ? -(r + labelOffset)
+        : labelPlacement.includes('bottom')
+          ? r + labelOffset
+          : 0),
+    dy: -2, // adjust for smaler font size
+    textAnchor: labelPlacement.includes('left')
+      ? 'end'
+      : labelPlacement.includes('right')
+        ? 'start'
+        : 'middle',
+    verticalAnchor: labelPlacement.includes('top')
+      ? 'end'
+      : labelPlacement.includes('bottom')
+        ? 'start'
+        : 'middle',
+  });
 </script>
 
 <Circle
   cx={point.x}
   cy={point.y}
-  r={6}
+  {r}
   onpointermove={(e) => {
     if (details) {
       e.stopPropagation();
@@ -59,15 +105,12 @@
   {...props?.circle}
   class={cls('stroke-surface-100', props?.circle?.class)}
 />
+
 {#if label}
   <Text
-    x={point.x}
-    y={point.y}
-    dy={-2}
     value={label}
-    textAnchor="middle"
-    verticalAnchor="middle"
+    {...labelProps}
     {...props?.label}
-    class={cls('text-[10px] pointer-events-none', props?.label?.class)}
+    class={cls('text-xs pointer-events-none', props?.label?.class)}
   />
 {/if}
