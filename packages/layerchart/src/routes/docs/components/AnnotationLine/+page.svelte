@@ -2,25 +2,30 @@
   import {
     AnnotationLine,
     AnnotationPoint,
-    AnnotationRange,
     Canvas,
     LineChart,
     Svg,
-    Tooltip,
+    type Placement,
   } from 'layerchart';
-  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { format, PeriodType, sortFunc } from '@layerstack/utils';
+  import {
+    Button,
+    Field,
+    Menu,
+    RangeField,
+    Switch,
+    Toggle,
+    ToggleGroup,
+    ToggleOption,
+  } from 'svelte-ux';
+  import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { createDateSeries } from '$lib/utils/genData.js';
 
   let { data } = $props();
 
   let renderContext: 'svg' | 'canvas' = $state('svg');
   // @ts-expect-error - ignore
   const RenderComponent = $derived(renderContext === 'canvas' ? Canvas : Svg);
-
-  let debug = $state(false);
 
   // Get a few random points to use for annotations
   const annotations = $derived(
@@ -35,6 +40,22 @@
         details: `This is an annotation for ${format(d.date)}`,
       }))
   );
+
+  const placementOptions = [
+    'top-left',
+    'top',
+    'top-right',
+    'left',
+    'center',
+    'right',
+    'bottom-left',
+    'bottom',
+    'bottom-right',
+  ] as const;
+  let placement: Placement = $state('top-right');
+  let offset = $state(0);
+
+  let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
@@ -69,7 +90,12 @@
       {#snippet aboveMarks({ context })}
         <AnnotationLine
           x={new Date('2010-03-30')}
-          props={{ line: { class: '[stroke-dasharray:2,2] stroke-danger' } }}
+          label="Event"
+          labelOffset={4}
+          props={{
+            line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+            label: { class: 'fill-danger' },
+          }}
         />
       {/snippet}
     </LineChart>
@@ -93,14 +119,44 @@
       {#snippet aboveMarks({ context })}
         <AnnotationLine
           y={500}
-          props={{ line: { class: '[stroke-dasharray:2,2] stroke-danger' } }}
+          label="Max"
+          props={{
+            line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+            label: { class: 'fill-danger' },
+          }}
         />
       {/snippet}
     </LineChart>
   </div>
 </Preview>
 
-<h2>Horizontal with label</h2>
+<h2>Horizontal placement</h2>
+
+<div class="grid grid-cols-3 gap-2 mb-2">
+  <Toggle let:on={open} let:toggle>
+    <Field label="Placement" class="cursor-pointer" on:click={toggle}>
+      <span class="text-sm">
+        {placement}
+      </span>
+    </Field>
+
+    <Menu {open} on:close={toggle} placement="bottom-start">
+      <div class="grid grid-cols-3 gap-1 p-1">
+        {#each placementOptions as option}
+          <Button
+            variant="outline"
+            color={option === placement ? 'primary' : 'default'}
+            on:click={() => (placement = option)}
+          >
+            {option}
+          </Button>
+        {/each}
+      </div>
+    </Menu>
+  </Toggle>
+
+  <RangeField label="Offset" bind:value={offset} max={10} />
+</div>
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
@@ -117,8 +173,109 @@
       {#snippet aboveMarks({ context })}
         <AnnotationLine
           y={500}
-          props={{ line: { class: '[stroke-dasharray:2,2] stroke-danger' } }}
+          label={placement}
+          labelPlacement={placement}
+          labelOffset={offset}
+          props={{
+            line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+            label: { class: 'fill-danger' },
+          }}
         />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Vertical placement</h2>
+
+<div class="grid grid-cols-3 gap-2 mb-2">
+  <Toggle let:on={open} let:toggle>
+    <Field label="Placement" class="cursor-pointer" on:click={toggle}>
+      <span class="text-sm">
+        {placement}
+      </span>
+    </Field>
+
+    <Menu {open} on:close={toggle} placement="bottom-start">
+      <div class="grid grid-cols-3 gap-1 p-1">
+        {#each placementOptions as option}
+          <Button
+            variant="outline"
+            color={option === placement ? 'primary' : 'default'}
+            on:click={() => (placement = option)}
+          >
+            {option}
+          </Button>
+        {/each}
+      </div>
+    </Menu>
+  </Toggle>
+
+  <RangeField label="Offset" bind:value={offset} max={10} />
+</div>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={data.appleStock}
+      x="date"
+      y="value"
+      props={{
+        xAxis: { format: undefined },
+      }}
+      {renderContext}
+      {debug}
+    >
+      {#snippet aboveMarks({ context })}
+        <AnnotationLine
+          x={new Date('2010-03-30')}
+          label={placement}
+          labelPlacement={placement}
+          labelOffset={offset}
+          props={{
+            line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+            label: { class: 'fill-danger' },
+          }}
+        />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Vertical to point</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={data.appleStock}
+      x="date"
+      y="value"
+      props={{
+        xAxis: { format: undefined },
+      }}
+      {renderContext}
+      {debug}
+    >
+      {#snippet aboveContext({ context })}
+        <RenderComponent>
+          {#each annotations as annotation}
+            <AnnotationLine
+              x={annotation.x}
+              y={annotation.y}
+              props={{ line: { class: '[stroke-dasharray:4,4] opacity-50' } }}
+            />
+
+            <AnnotationPoint
+              x={annotation.x}
+              y={annotation.y}
+              label={annotation.label}
+              details={annotation.details}
+              props={{
+                circle: { class: 'fill-secondary' },
+              }}
+            />
+          {/each}
+        </RenderComponent>
       {/snippet}
     </LineChart>
   </div>

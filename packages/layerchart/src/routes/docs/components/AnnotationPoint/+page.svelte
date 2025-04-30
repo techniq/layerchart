@@ -1,18 +1,9 @@
 <script lang="ts">
-  import {
-    AnnotationLine,
-    AnnotationPoint,
-    AnnotationRange,
-    Canvas,
-    LineChart,
-    Svg,
-    Tooltip,
-  } from 'layerchart';
+  import { AnnotationLine, AnnotationPoint, Canvas, LineChart, Svg, Tooltip } from 'layerchart';
   import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format, PeriodType, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { createDateSeries } from '$lib/utils/genData.js';
 
   let { data } = $props();
 
