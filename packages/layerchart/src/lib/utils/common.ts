@@ -42,8 +42,8 @@ export function chartDataArray<TData = any>(data: ComponentProps<Chart<TData>>['
 }
 
 export function defaultChartPadding<TData, SeriesComponent extends Component, TSnippetProps>(
-  axis: SimplifiedChartProps<TData, SeriesComponent, TSnippetProps>['axis'],
-  legend: SimplifiedChartProps<TData, SeriesComponent, TSnippetProps>['legend']
+  axis: SimplifiedChartProps<TData, SeriesComponent, TSnippetProps>['axis'] = true,
+  legend: SimplifiedChartProps<TData, SeriesComponent, TSnippetProps>['legend'] = false
 ) {
   if (axis === false) {
     return undefined;
