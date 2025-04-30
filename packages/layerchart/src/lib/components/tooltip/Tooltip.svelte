@@ -2,17 +2,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Without } from '$lib/utils/types.js';
   import type { TooltipPayload } from './tooltipMetaContext.js';
-
-  export type Placement =
-    | 'top-left'
-    | 'top'
-    | 'top-right'
-    | 'left'
-    | 'center'
-    | 'right'
-    | 'bottom-left'
-    | 'bottom'
-    | 'bottom-right';
+  import type { Placement } from '../types.js';
 
   export type Align = 'start' | 'center' | 'end';
 

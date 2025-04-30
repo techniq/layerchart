@@ -1,4 +1,5 @@
 export * from './charts/index.js';
+export * from './types.js';
 
 export { default as AnnotationLine } from './AnnotationLine.svelte';
 export * from './AnnotationLine.svelte';

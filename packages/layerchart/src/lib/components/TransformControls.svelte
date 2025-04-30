@@ -1,14 +1,5 @@
 <script lang="ts" module>
-  type Placement =
-    | 'top-left'
-    | 'top'
-    | 'top-right'
-    | 'left'
-    | 'center'
-    | 'right'
-    | 'bottom-left'
-    | 'bottom'
-    | 'bottom-right';
+  import type { Placement } from './types.js';
 
   type Actions = 'zoomIn' | 'zoomOut' | 'center' | 'reset' | 'scrollMode';
 

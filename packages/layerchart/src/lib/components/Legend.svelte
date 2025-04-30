@@ -1,17 +1,7 @@
 <script lang="ts" module>
-  import type { Without } from '$lib/utils/types.js';
   import type { Snippet } from 'svelte';
-
-  type Placement =
-    | 'top-left'
-    | 'top'
-    | 'top-right'
-    | 'left'
-    | 'center'
-    | 'right'
-    | 'bottom-left'
-    | 'bottom'
-    | 'bottom-right';
+  import type { Placement } from './types.js';
+  import type { Without } from '$lib/utils/types.js';
 
   export type LegendItem = {
     value: any;
