@@ -7,12 +7,6 @@
 
   let { data } = $props();
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
-  // @ts-expect-error - ignore
-  const RenderComponent = $derived(renderContext === 'canvas' ? Canvas : Svg);
-
-  let debug = $state(false);
-
   // Get a few random points to use for annotations
   const annotations = $derived(
     [...data.appleStock]
@@ -26,6 +20,12 @@
         details: `This is an annotation for ${format(d.date)}`,
       }))
   );
+
+  let renderContext: 'svg' | 'canvas' = $state('svg');
+  // @ts-expect-error - ignore
+  const RenderComponent = $derived(renderContext === 'canvas' ? Canvas : Svg);
+
+  let debug = $state(false);
 </script>
 
 <h1>Examples</h1>

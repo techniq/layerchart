@@ -24,10 +24,6 @@
 
   let { data } = $props();
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
-  // @ts-expect-error - ignore
-  const RenderComponent = $derived(renderContext === 'canvas' ? Canvas : Svg);
-
   // Get a few random points to use for annotations
   const annotations = $derived(
     [...data.appleStock]
@@ -56,6 +52,7 @@
   let placement: Placement = $state('top-right');
   let offset = $state(0);
 
+  let renderContext: 'svg' | 'canvas' = $state('svg');
   let debug = $state(false);
 </script>
 
@@ -257,27 +254,25 @@
       {renderContext}
       {debug}
     >
-      {#snippet aboveContext({ context })}
-        <RenderComponent>
-          {#each annotations as annotation}
-            <AnnotationLine
-              x={annotation.x}
-              y={annotation.y}
-              props={{ line: { class: '[stroke-dasharray:4,4] opacity-50' } }}
-            />
+      {#snippet aboveMarks({ context })}
+        {#each annotations as annotation}
+          <AnnotationLine
+            x={annotation.x}
+            y={annotation.y}
+            props={{ line: { class: '[stroke-dasharray:4,4] opacity-50' } }}
+          />
 
-            <AnnotationPoint
-              x={annotation.x}
-              y={annotation.y}
-              label={annotation.label}
-              details={annotation.details}
-              props={{
-                circle: { class: 'fill-secondary' },
-                label: { class: 'fill-secondary-content font-bold' },
-              }}
-            />
-          {/each}
-        </RenderComponent>
+          <AnnotationPoint
+            x={annotation.x}
+            y={annotation.y}
+            label={annotation.label}
+            details={annotation.details}
+            props={{
+              circle: { class: 'fill-secondary' },
+              label: { class: 'fill-secondary-content font-bold' },
+            }}
+          />
+        {/each}
       {/snippet}
     </LineChart>
   </div>

@@ -1,31 +1,13 @@
 <script lang="ts">
-  import { AnnotationRange, Canvas, LineChart, Svg } from 'layerchart';
+  import { AnnotationRange, LineChart } from 'layerchart';
   import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 
   let { data } = $props();
 
   let renderContext: 'svg' | 'canvas' = $state('svg');
-  // @ts-expect-error - ignore
-  const RenderComponent = $derived(renderContext === 'canvas' ? Canvas : Svg);
-
   let debug = $state(false);
-
-  // Get a few random points to use for annotations
-  const annotations = $derived(
-    [...data.appleStock]
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 5)
-      .sort(sortFunc('date'))
-      .map((d, i) => ({
-        x: d.date,
-        y: d.value,
-        label: String.fromCharCode(65 + i),
-        details: `This is an annotation for ${format(d.date)}`,
-      }))
-  );
 </script>
 
 <h1>Examples</h1>
