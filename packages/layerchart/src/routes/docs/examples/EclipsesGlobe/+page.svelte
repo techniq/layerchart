@@ -42,7 +42,6 @@
         y: value.y,
       };
     },
-    disabled: !isSpinning,
   });
 
   $effect(() => {

@@ -2,7 +2,7 @@
   import { scaleBand, scaleOrdinal } from 'd3-scale';
   import { forceX, forceManyBody, forceCollide, forceCenter } from 'd3-force';
 
-  import { Chart, Circle, ForceSimulation, Svg } from 'layerchart';
+  import { asAny, Chart, Circle, ForceSimulation, Svg } from 'layerchart';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -54,11 +54,13 @@
           <ForceSimulation
             forces={{
               x: xForce.x((d) =>
-                groupBy ? context.xGet(d) + context.xScale.bandwidth() / 2 : context.width / 2
+                groupBy
+                  ? context.xGet(asAny(d)) + (context.xScale.bandwidth?.() ?? 0) / 2
+                  : context.width / 2
               ),
               charge: chargeForce,
               collide: collideForce.radius(
-                (d) => context.rGet(d) + nodeStrokeWidth / 2 // Divide this by two because an svg stroke is drawn halfway out
+                (d) => context.rGet(asAny(d)) + nodeStrokeWidth / 2 // Divide this by two because an svg stroke is drawn halfway out
               ),
               center: centerForce.x(context.width / 2).y(context.height / 2),
             }}

@@ -3,7 +3,7 @@
   import { forceX, forceY, forceCollide } from 'd3-force';
   import { PeriodType } from '@layerstack/utils';
 
-  import { Axis, Chart, Circle, ForceSimulation, Svg, Tooltip } from 'layerchart';
+  import { asAny, Axis, Chart, Circle, ForceSimulation, Svg, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -32,7 +32,7 @@
           <Axis placement="bottom" format="none" rule grid />
           <ForceSimulation
             forces={{
-              x: xForce.x((d) => context.xGet(d)),
+              x: xForce.x((d) => context.xGet(asAny(d))),
               y: yForce.y(context.height / 2),
               collide: collideForce.radius(r),
             }}

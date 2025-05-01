@@ -41,7 +41,6 @@
         y: curr.y,
       };
     },
-    disabled: !isSpinning,
   });
   $effect(() => {
     if (isSpinning) {

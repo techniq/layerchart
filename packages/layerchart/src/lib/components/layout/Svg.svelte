@@ -84,7 +84,7 @@
     ...restProps
   }: SVGProps = $props();
 
-  let ref = $state<SVGElement>();
+  let ref = $state<SVGSVGElement>();
   let innerRef = $state<SVGGElement>();
 
   $effect.pre(() => {

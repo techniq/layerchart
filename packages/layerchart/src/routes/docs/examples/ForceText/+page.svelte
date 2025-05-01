@@ -24,7 +24,7 @@
     height = e.height;
   }
 
-  let mouseNode = $state({
+  let mouseNode = $derived({
     x: 0,
     y: height / 2,
     xTarget: width,

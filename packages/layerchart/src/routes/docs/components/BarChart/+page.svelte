@@ -1,6 +1,7 @@
 <script lang="ts">
   import {
     accessor,
+    asAny,
     Axis,
     BarChart,
     Bars,
@@ -1387,6 +1388,7 @@
 <h2>Radial weather</h2>
 
 <Preview data={data.sfoTemperatures}>
+  {@const avgExtents = extent(data.sfoTemperatures, (d) => d.avg)}
   <div class="h-[600px] p-4 border rounded-sm">
     <BarChart
       data={data.sfoTemperatures}
@@ -1396,7 +1398,7 @@
       yRange={({ height }) => [height / 5, height / 2]}
       c="avg"
       cScale={scaleLinear()}
-      cDomain={quantize(interpolate(...extent(data.sfoTemperatures, (d) => d.avg)), 7)}
+      cDomain={quantize(interpolate(avgExtents[0], asAny(avgExtents[1])), 7)}
       cRange={quantize(interpolateSpectral, 7).reverse()}
       radial
       props={{

@@ -36,7 +36,6 @@
         y: curr.y,
       };
     },
-    disabled: !isSpinning,
   });
 
   $effect(() => {

@@ -6,6 +6,7 @@
 
   import {
     Area,
+    asAny,
     Axis,
     Bars,
     Chart,
@@ -695,7 +696,7 @@
     <Chart
       data={stackData}
       flatData={flatten(stackData)}
-      x={(d) => d.data.date}
+      x={(d) => asAny(d).data.date}
       xScale={scaleTime()}
       y={[0, 1]}
       yNice
