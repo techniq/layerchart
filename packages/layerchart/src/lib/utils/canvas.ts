@@ -324,6 +324,9 @@ export function _createPattern(
   const patternCanvas = document.createElement('canvas');
   const patternCtx = patternCanvas.getContext('2d')!;
 
+  // Add pattern canvas to DOM to allow computed styles to be read (`getComputedStyles()`)
+  ctx.canvas.after(patternCanvas);
+
   // TODO: Fix blurry pattern
   // const newScale = scaleCanvas(patternCtx, width, height);
   patternCanvas.width = width;
@@ -351,6 +354,9 @@ export function _createPattern(
   }
 
   const pattern = ctx.createPattern(patternCanvas, 'repeat');
+
+  // Cleanup
+  ctx.canvas.parentElement?.removeChild(patternCanvas);
 
   return pattern;
 }
