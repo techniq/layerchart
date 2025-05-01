@@ -378,14 +378,6 @@
     {:else}
       {@render belowContext?.(snippetProps)}
       <!-- TODO: Always use `Svg` until `Pattern` supports `Canvas` (issue #307) -->
-      <Layer type="svg">
-        <ChartAnnotations
-          {annotations}
-          layer="below"
-          highlightKey={seriesState.highlightKey.current}
-          visibleSeries={seriesState.visibleSeries}
-        />
-      </Layer>
 
       <Layer
         type={renderContext}
@@ -400,6 +392,13 @@
         {/if}
 
         <ChartClipPath disabled={!brush}>
+          <ChartAnnotations
+            {annotations}
+            layer="below"
+            highlightKey={seriesState.highlightKey.current}
+            visibleSeries={seriesState.visibleSeries}
+          />
+
           {@render belowMarks?.(snippetProps)}
           {#if marks}
             {@render marks(snippetProps)}
@@ -465,17 +464,14 @@
               <Highlight {...getHighlightProps(s, i)} />
             {/each}
           {/if}
-        </ChartClipPath>
-      </Layer>
 
-      <!-- TODO: Always use `Svg` until `Pattern` supports `Canvas` (issue #307) -->
-      <Layer type="svg" pointerEvents={false}>
-        <ChartAnnotations
-          {annotations}
-          layer="above"
-          highlightKey={seriesState.highlightKey.current}
-          visibleSeries={seriesState.visibleSeries}
-        />
+          <ChartAnnotations
+            {annotations}
+            layer="above"
+            highlightKey={seriesState.highlightKey.current}
+            visibleSeries={seriesState.visibleSeries}
+          />
+        </ChartClipPath>
       </Layer>
 
       {@render aboveContext?.(snippetProps)}
