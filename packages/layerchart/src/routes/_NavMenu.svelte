@@ -115,16 +115,9 @@
       'TileImage',
     ],
     Layout: ['ForceSimulation', 'Pack', 'Partition', 'Sankey', 'Tree', 'Treemap'],
+    Fill: ['LinearGradient', 'RadialGradient', 'Pattern'],
     Clipping: ['ClipPath', 'ChartClipPath', 'CircleClipPath', 'RectClipPath'],
-    Other: [
-      'Blur',
-      'Bounds',
-      'ColorRamp',
-      'LinearGradient',
-      'RadialGradient',
-      'MotionPath',
-      'Pattern',
-    ],
+    Other: ['Blur', 'Bounds', 'ColorRamp', 'MotionPath'],
   };
 
   const utils = ['pivot'];
