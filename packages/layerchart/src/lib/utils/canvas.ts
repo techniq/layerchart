@@ -322,32 +322,32 @@ export function _createPattern(
   background?: string
 ) {
   const patternCanvas = document.createElement('canvas');
-  const patternContext = patternCanvas.getContext('2d')!;
+  const patternCtx = patternCanvas.getContext('2d')!;
 
+  // TODO: Fix blurry pattern
+  // const newScale = scaleCanvas(patternCtx, width, height);
   patternCanvas.width = width;
   patternCanvas.height = height;
 
-  // scaleCanvas(patternContext, width, height);
-
   if (background) {
-    patternContext.fillStyle = background;
-    patternContext.fillRect(0, 0, width, height);
+    patternCtx.fillStyle = background;
+    patternCtx.fillRect(0, 0, width, height);
   }
 
   for (const shape of shapes) {
-    ctx.save();
+    patternCtx.save();
     if (shape.type === 'circle') {
       renderCircle(
-        patternContext,
+        patternCtx,
         { cx: shape.cx, cy: shape.cy, r: shape.r },
         { styles: { fill: shape.fill, opacity: shape.opacity } }
       );
     } else if (shape.type === 'line') {
-      renderPathData(patternContext, shape.path, {
+      renderPathData(patternCtx, shape.path, {
         styles: { stroke: shape.stroke, strokeWidth: shape.strokeWidth, opacity: shape.opacity },
       });
     }
-    ctx.restore();
+    patternCtx.restore();
   }
 
   const pattern = ctx.createPattern(patternCanvas, 'repeat');
