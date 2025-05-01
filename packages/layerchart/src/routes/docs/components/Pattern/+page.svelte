@@ -1,19 +1,31 @@
 <script lang="ts">
-  import { Chart, LinearGradient, Pattern, Svg } from 'layerchart';
+  import { Chart, Layer, LinearGradient, Pattern, Rect } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
+  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+
+  let renderContext: 'svg' | 'canvas' = $state('canvas');
 </script>
 
 <h1>Examples</h1>
+
+<div class="grid grid-cols-[1fr_auto] gap-2">
+  <Field label="Render context">
+    <ToggleGroup bind:value={renderContext} variant="outline">
+      <ToggleOption value="svg">Svg</ToggleOption>
+      <ToggleOption value="canvas">Canvas</ToggleOption>
+    </ToggleGroup>
+  </Field>
+</div>
 
 <h2>Lines</h2>
 
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={renderContext}>
         <Pattern size={4} lines>
           {#snippet children({ pattern })}
-            <rect
+            <Rect
               x={120 * 0}
               y={0}
               width={100}
@@ -27,7 +39,7 @@
 
         <Pattern size={4} lines={{ rotate: 90 }}>
           {#snippet children({ pattern })}
-            <rect
+            <Rect
               x={120 * 1}
               y={0}
               width={100}
@@ -41,7 +53,7 @@
 
         <Pattern size={5} lines={[{ rotate: 0 }, { rotate: 90 }]}>
           {#snippet children({ pattern })}
-            <rect
+            <Rect
               x={120 * 2}
               y={0}
               width={100}
@@ -55,7 +67,7 @@
 
         <Pattern size={5} lines={{ rotate: -45 }}>
           {#snippet children({ pattern })}
-            <rect
+            <Rect
               x={120 * 3}
               y={0}
               width={100}
@@ -69,7 +81,7 @@
 
         <Pattern size={5} lines={{ rotate: 45 }}>
           {#snippet children({ pattern })}
-            <rect
+            <Rect
               x={120 * 4}
               y={0}
               width={100}
@@ -83,7 +95,7 @@
 
         <Pattern size={6} lines={[{ rotate: 45 }, { rotate: -45 }]}>
           {#snippet children({ pattern })}
-            <rect
+            <Rect
               x={120 * 5}
               y={0}
               width={100}
@@ -94,7 +106,7 @@
             />
           {/snippet}
         </Pattern>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -104,10 +116,10 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={renderContext}>
         <Pattern size={4} circles>
           {#snippet children({ pattern })}
-            <rect
+            <Rect
               x={120 * 0}
               y={0}
               width={100}
@@ -121,7 +133,7 @@
 
         <Pattern size={8} circles>
           {#snippet children({ pattern })}
-            <rect
+            <Rect
               x={120 * 1}
               y={0}
               width={100}
@@ -135,7 +147,7 @@
 
         <Pattern size={8} circles={{ stagger: true }}>
           {#snippet children({ pattern })}
-            <rect
+            <Rect
               x={120 * 2}
               y={0}
               width={100}
@@ -149,7 +161,7 @@
 
         <Pattern size={8} circles={{ radius: 2 }}>
           {#snippet children({ pattern })}
-            <rect
+            <Rect
               x={120 * 3}
               y={0}
               width={100}
@@ -163,7 +175,7 @@
 
         <Pattern size={8} circles={{ radius: 2, stagger: true }}>
           {#snippet children({ pattern })}
-            <rect
+            <Rect
               x={120 * 4}
               y={0}
               width={100}
@@ -177,7 +189,7 @@
 
         <Pattern size={8} circles={{ radius: 2, opacity: 0.3 }}>
           {#snippet children({ pattern })}
-            <rect
+            <Rect
               x={120 * 5}
               y={0}
               width={100}
@@ -188,7 +200,7 @@
             />
           {/snippet}
         </Pattern>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -198,16 +210,16 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={renderContext}>
         <Pattern size={4} circles={{ color: 'white', opacity: 0.25 }} background="hsl(20 100% 50%)">
           {#snippet children({ pattern })}
-            <rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={pattern} />
+            <Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={pattern} />
           {/snippet}
         </Pattern>
 
         <Pattern size={8} circles={{ color: 'white', opacity: 0.6 }} background="hsl(150 100% 45%)">
           {#snippet children({ pattern })}
-            <rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={pattern} />
+            <Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={pattern} />
           {/snippet}
         </Pattern>
 
@@ -217,7 +229,7 @@
           background="hsl(210 100% 50%)"
         >
           {#snippet children({ pattern })}
-            <rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={pattern} />
+            <Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={pattern} />
           {/snippet}
         </Pattern>
 
@@ -227,13 +239,13 @@
           background="hsl(260 100% 50%)"
         >
           {#snippet children({ pattern })}
-            <rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={pattern} />
+            <Rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={pattern} />
           {/snippet}
         </Pattern>
 
         <Pattern size={4} lines={{ color: 'white', opacity: 0.5 }} background="hsl(40 100% 50%)">
           {#snippet children({ pattern })}
-            <rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={pattern} />
+            <Rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={pattern} />
           {/snippet}
         </Pattern>
 
@@ -246,10 +258,10 @@
           background="hsl(360 100% 40%)"
         >
           {#snippet children({ pattern })}
-            <rect x={120 * 5} y={0} width={100} height={300} rx={8} fill={pattern} />
+            <Rect x={120 * 5} y={0} width={100} height={300} rx={8} fill={pattern} />
           {/snippet}
         </Pattern>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -259,14 +271,14 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={renderContext}>
         <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
           {#snippet children({ gradient })}
-            <rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />
+            <Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />
 
             <Pattern size={4} circles={{ color: 'white', opacity: 0.5 }}>
               {#snippet children({ pattern })}
-                <rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={pattern} />
+                <Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={pattern} />
               {/snippet}
             </Pattern>
           {/snippet}
@@ -274,11 +286,11 @@
 
         <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']} rotate={45}>
           {#snippet children({ gradient })}
-            <rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={gradient} />
+            <Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={gradient} />
 
             <Pattern size={8} circles={{ color: 'white', opacity: 0.5 }}>
               {#snippet children({ pattern })}
-                <rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={pattern} />
+                <Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={pattern} />
               {/snippet}
             </Pattern>
           {/snippet}
@@ -286,11 +298,11 @@
 
         <LinearGradient stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']} vertical>
           {#snippet children({ gradient })}
-            <rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={gradient} />
+            <Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={gradient} />
 
             <Pattern size={8} circles={{ color: 'white', opacity: 0.5, stagger: true }}>
               {#snippet children({ pattern })}
-                <rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={pattern} />
+                <Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={pattern} />
               {/snippet}
             </Pattern>
           {/snippet}
@@ -298,11 +310,11 @@
 
         <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
           {#snippet children({ gradient })}
-            <rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={gradient} />
+            <Rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={gradient} />
 
             <Pattern size={8} circles={{ color: 'white', opacity: 0.5, stagger: true, radius: 2 }}>
               {#snippet children({ pattern })}
-                <rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={pattern} />
+                <Rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={pattern} />
               {/snippet}
             </Pattern>
           {/snippet}
@@ -310,11 +322,11 @@
 
         <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']} rotate={45}>
           {#snippet children({ gradient })}
-            <rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={gradient} />
+            <Rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={gradient} />
 
             <Pattern size={4} lines={{ color: 'white', opacity: 0.5 }}>
               {#snippet children({ pattern })}
-                <rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={pattern} />
+                <Rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={pattern} />
               {/snippet}
             </Pattern>
           {/snippet}
@@ -322,7 +334,7 @@
 
         <LinearGradient stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']} vertical>
           {#snippet children({ gradient })}
-            <rect x={120 * 5} y={0} width={100} height={300} rx={8} fill={gradient} />
+            <Rect x={120 * 5} y={0} width={100} height={300} rx={8} fill={gradient} />
 
             <Pattern
               size={4}
@@ -332,12 +344,12 @@
               ]}
             >
               {#snippet children({ pattern })}
-                <rect x={120 * 5} y={0} width={100} height={300} rx={8} fill={pattern} />
+                <Rect x={120 * 5} y={0} width={100} height={300} rx={8} fill={pattern} />
               {/snippet}
             </Pattern>
           {/snippet}
         </LinearGradient>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -347,12 +359,12 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={renderContext}>
         <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
           {#snippet children({ gradient })}
             <Pattern size={4} background={gradient}>
               {#snippet children({ pattern })}
-                <rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={pattern} />
+                <Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={pattern} />
               {/snippet}
             </Pattern>
           {/snippet}
@@ -362,7 +374,7 @@
           {#snippet children({ gradient })}
             <Pattern size={4} background={gradient}>
               {#snippet children({ pattern })}
-                <rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={pattern} />
+                <Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={pattern} />
               {/snippet}
             </Pattern>
           {/snippet}
@@ -372,7 +384,7 @@
           {#snippet children({ gradient })}
             <Pattern size={4} background={gradient}>
               {#snippet children({ pattern })}
-                <rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={pattern} />
+                <Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={pattern} />
               {/snippet}
             </Pattern>
           {/snippet}
@@ -382,7 +394,7 @@
           {#snippet children({ gradient })}
             <Pattern size={8} background={gradient}>
               {#snippet children({ pattern })}
-                <rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={pattern} />
+                <Rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={pattern} />
               {/snippet}
             </Pattern>
           {/snippet}
@@ -392,22 +404,22 @@
           {#snippet children({ gradient })}
             <Pattern size={8} background={gradient}>
               {#snippet children({ pattern })}
-                <rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={pattern} />
+                <Rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={pattern} />
               {/snippet}
             </Pattern>
           {/snippet}
         </LinearGradient>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
-<h2>Lines (custom pattern)</h2>
+<h2>Lines (custom pattern - svg only)</h2>
 
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type="svg">
         <Pattern width={4} height={4}>
           {#snippet patternContent()}
             <line x2="100%" class="stroke-surface-content" />
@@ -517,17 +529,17 @@
             />
           {/snippet}
         </Pattern>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
-<h2>Circles (custom pattern)</h2>
+<h2>Circles (custom pattern - svg only)</h2>
 
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type="svg">
         <Pattern id="circle-pattern-1" width={4} height={4}>
           {#snippet patternContent()}
             <circle cx={2} cy={2} r={1} class="fill-surface-content" />
@@ -583,7 +595,7 @@
             class="stroke-surface-content"
           />
         {/each}
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

@@ -2,7 +2,7 @@
   import type { Snippet } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
 
-  import type { Without } from '$lib/utils/types.js';
+  import { asAny, type Without } from '$lib/utils/types.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { createId } from '$lib/utils/createId.js';
 
@@ -104,9 +104,32 @@
 
   export type PatternProps = PatternPropsWithoutHTML &
     Without<SVGAttributes<SVGPatternElement>, PatternPropsWithoutHTML>;
+
+  export type CircleShape = {
+    type: 'circle';
+    cx: number;
+    cy: number;
+    r: number;
+    fill: string;
+    opacity: number;
+  };
+  export type LineShape = {
+    type: 'line';
+    path: string;
+    stroke: string;
+    strokeWidth: string | number;
+    opacity: number;
+  };
+
+  export type PatternShape = CircleShape | LineShape;
 </script>
 
 <script lang="ts">
+  import { getRenderContext } from './Chart.svelte';
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
+  import { createPattern } from 'layerchart/utils/canvas.js';
+  import { darkColorScheme } from '@layerstack/svelte-stores';
+
   const uid = $props.id();
 
   let {
@@ -122,9 +145,12 @@
     ...restProps
   }: PatternProps = $props();
 
-  let lines = $state<
-    { path: string; stroke: string; strokeWidth: string | number; opacity: number }[]
-  >([]);
+  const renderCtx = getRenderContext();
+
+  let canvasPattern = $state<CanvasPattern | null>(null);
+
+  let shapes = $state<PatternShape[]>([]);
+
   if (linesProp) {
     const lineDefs = Array.isArray(linesProp) ? linesProp : linesProp === true ? [{}] : [linesProp];
     for (const line of lineDefs) {
@@ -168,7 +194,8 @@
         }
       }
 
-      lines.push({
+      shapes.push({
+        type: 'line',
         path,
         stroke,
         strokeWidth,
@@ -177,7 +204,6 @@
     }
   }
 
-  let circles = $state<{ cx: number; cy: number; r: number; fill: string; opacity: number }[]>([]);
   if (circlesProp) {
     const circleDefs = Array.isArray(circlesProp)
       ? circlesProp
@@ -186,8 +212,9 @@
         : [circlesProp];
     for (const circle of circleDefs) {
       if (circle.stagger) {
-        circles.push(
+        shapes.push(
           {
+            type: 'circle',
             cx: size / 4,
             cy: size / 4,
             r: circle.radius ?? 1,
@@ -195,6 +222,7 @@
             opacity: circle.opacity ?? 1,
           },
           {
+            type: 'circle',
             cx: (size * 3) / 4,
             cy: (size * 3) / 4,
             r: circle.radius ?? 1,
@@ -203,7 +231,8 @@
           }
         );
       } else {
-        circles.push({
+        shapes.push({
+          type: 'circle',
           cx: size / 2,
           cy: size / 2,
           r: circle.radius ?? 1,
@@ -213,43 +242,61 @@
       }
     }
   }
+
+  function render(_ctx: CanvasRenderingContext2D) {
+    const pattern = createPattern(_ctx, width, height, shapes, background);
+    canvasPattern = pattern;
+  }
+
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
+      name: 'Pattern',
+      render,
+      deps: () => [width, height, shapes, background],
+    });
+  }
 </script>
 
-<defs>
-  <pattern
-    {id}
-    {width}
-    {height}
-    patternUnits="userSpaceOnUse"
-    {...extractLayerProps(restProps, 'pattern')}
-  >
-    {#if patternContent}
-      {@render patternContent?.()}
-    {:else}
-      {#if background}
-        <rect {width} {height} fill={background} />
+{#if renderCtx === 'canvas'}
+  {@render children?.({ id, pattern: asAny(canvasPattern) })}
+{:else if renderCtx === 'svg'}
+  <defs>
+    <pattern
+      {id}
+      {width}
+      {height}
+      patternUnits="userSpaceOnUse"
+      {...extractLayerProps(restProps, 'pattern')}
+    >
+      {#if patternContent}
+        {@render patternContent?.()}
+      {:else}
+        {#if background}
+          <rect {width} {height} fill={background} />
+        {/if}
+
+        {#each shapes.filter((shape) => shape.type === 'line') as line}
+          <path
+            d={line.path}
+            stroke={line.stroke}
+            stroke-width={line.strokeWidth}
+            fill="none"
+            opacity={line.opacity}
+          />
+        {/each}
+
+        {#each shapes.filter((shape) => shape.type === 'circle') as circle}
+          <circle
+            cx={circle.cx}
+            cy={circle.cy}
+            r={circle.r}
+            fill={circle.fill}
+            opacity={circle.opacity}
+          />
+        {/each}
       {/if}
-      {#each lines as line}
-        <path
-          d={line.path}
-          stroke={line.stroke}
-          stroke-width={line.strokeWidth}
-          fill="none"
-          opacity={line.opacity}
-        />
-      {/each}
+    </pattern>
+  </defs>
 
-      {#each circles as circle}
-        <circle
-          cx={circle.cx}
-          cy={circle.cy}
-          r={circle.r}
-          fill={circle.fill}
-          opacity={circle.opacity}
-        />
-      {/each}
-    {/if}
-  </pattern>
-</defs>
-
-{@render children?.({ id, pattern: `url(#${id})` })}
+  {@render children?.({ id, pattern: `url(#${id})` })}
+{/if}
