@@ -76,11 +76,10 @@
 </script>
 
 <script lang="ts">
-  import { getRenderContext } from './Chart.svelte';
+  import { getChartContext, getRenderContext } from './Chart.svelte';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { createLinearGradient, getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';
-  import { getChartContext } from './Chart.svelte';
   import { createId } from '$lib/utils/createId.js';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
