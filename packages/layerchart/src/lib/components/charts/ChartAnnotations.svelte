@@ -19,7 +19,7 @@
   let visibleAnnotations = $derived(
     annotations.filter(
       (a) =>
-        (a.layer === layer || (layer === 'above' && a.layer == null)) &&
+        (a.layer === layer || (a.layer == null && layer === 'above')) &&
         (highlightKey == null || a.seriesKey == null || a.seriesKey === highlightKey) &&
         visibleSeries.some((s) => a.seriesKey == null || a.seriesKey === s.key)
     )

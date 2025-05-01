@@ -2,13 +2,14 @@
   import type { ComponentProps } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+  import type { SingleDomainType } from '$lib/utils/scales.svelte.js';
 
   export type AnnotationRangePropsWithoutHTML = {
     /** x values of the range */
-    x?: (Date | null)[] | [Date | null, Date | null];
+    x?: [SingleDomainType, SingleDomainType] | SingleDomainType[];
 
     /** y values of the range */
-    y?: (number | null)[] | [number | null, number | null];
+    y?: [SingleDomainType, SingleDomainType] | SingleDomainType[];
 
     /** Label to display for line*/
     label?: string;

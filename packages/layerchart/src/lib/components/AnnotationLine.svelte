@@ -2,13 +2,14 @@
   import type { ComponentProps } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+  import type { SingleDomainType } from '$lib/utils/scales.svelte.js';
 
   export type AnnotationLinePropsWithoutHTML = {
     /** x value of the point */
-    x?: Date;
+    x?: SingleDomainType;
 
     /** y value of the point */
-    y?: number;
+    y?: SingleDomainType;
 
     /** Label to display for line*/
     label?: string;
@@ -135,7 +136,6 @@
   );
 </script>
 
-<!-- TODO: Support label background `<Rect>`-->
 <Line
   x1={line.x1}
   y1={line.y1}

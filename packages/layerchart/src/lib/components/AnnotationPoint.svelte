@@ -2,13 +2,14 @@
   import type { ComponentProps } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+  import type { SingleDomainType } from '$lib/utils/scales.svelte.js';
 
   export type AnnotationPointPropsWithoutHTML = {
     /** x value of the point */
-    x?: Date;
+    x?: SingleDomainType;
 
     /** y value of the point */
-    y?: number;
+    y?: SingleDomainType;
 
     /** Radius of the circle */
     r?: number;
