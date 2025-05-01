@@ -75,6 +75,8 @@ export { default as Hull } from './Hull.svelte';
 export * from './Hull.svelte';
 export { default as Labels } from './Labels.svelte';
 export * from './Labels.svelte';
+export { default as Layer } from './layout/Layer.svelte';
+export * from './layout/Layer.svelte';
 export { default as Legend } from './Legend.svelte';
 export * from './Legend.svelte';
 export { default as Line } from './Line.svelte';
