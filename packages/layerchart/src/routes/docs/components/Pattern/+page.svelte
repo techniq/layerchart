@@ -3,7 +3,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
-  let renderContext: 'svg' | 'canvas' = $state('canvas');
+  let renderContext: 'svg' | 'canvas' = $state('svg');
 </script>
 
 <h1>Examples</h1>
