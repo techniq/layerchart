@@ -1,25 +1,27 @@
 <script lang="ts" module>
   import type { ComponentProps } from 'svelte';
 
-  export type LayerProps<T extends 'canvas' | 'html' | 'svg' = 'svg'> = {
-    /** Type of layer (Canvas, Svg, or Html)
-     *
-     * @default 'svg'
-     */
-    type?: T;
-  } & (T extends 'canvas'
-    ? ComponentProps<typeof Canvas>
-    : T extends 'html'
-      ? ComponentProps<typeof Html>
-      : ComponentProps<typeof Svg>);
+  export type CanvasLayerProps = {
+    type: 'canvas';
+  } & Omit<ComponentProps<typeof Canvas>, 'type'>;
+
+  export type HtmlLayerProps = {
+    type: 'html';
+  } & Omit<ComponentProps<typeof Html>, 'type'>;
+
+  export type SvgLayerProps = {
+    type: 'svg';
+  } & Omit<ComponentProps<typeof Svg>, 'type'>;
+
+  export type LayerProps = CanvasLayerProps | HtmlLayerProps | SvgLayerProps;
 </script>
 
-<script lang="ts" generics="T extends 'canvas' | 'html' | 'svg' = 'svg'">
+<script lang="ts">
   import Canvas from './Canvas.svelte';
   import Html from './Html.svelte';
   import Svg from './Svg.svelte';
 
-  let { type = 'svg' as T, children, ...restProps }: LayerProps<T> = $props();
+  let { type, children, ...restProps }: LayerProps = $props();
 </script>
 
 {#if type === 'canvas'}
