@@ -74,17 +74,16 @@
   import { cls } from '@layerstack/tailwind';
 
   import Axis from '../Axis.svelte';
-  import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import ChartClipPath from '../ChartClipPath.svelte';
   import Grid from '../Grid.svelte';
   import Highlight, { type HighlightPointData } from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
+  import Layer from '../layout/Layer.svelte';
   import Legend from '../Legend.svelte';
   import Points from '../Points.svelte';
   import Rule from '../Rule.svelte';
   import Spline from '../Spline.svelte';
-  import Svg from '../layout/Svg.svelte';
 
   import {
     accessor,
@@ -379,18 +378,17 @@
     {:else}
       {@render belowContext?.(snippetProps)}
       <!-- TODO: Always use `Svg` until `Pattern` supports `Canvas` (issue #307) -->
-      <Svg>
+      <Layer type="svg">
         <ChartAnnotations
           {annotations}
           layer="below"
           highlightKey={seriesState.highlightKey.current}
           visibleSeries={seriesState.visibleSeries}
         />
-      </Svg>
+      </Layer>
 
-      {@const Component = renderContext === 'canvas' ? Canvas : Svg}
-      <Component
-        this={renderContext === 'canvas' ? Canvas : Svg}
+      <Layer
+        type={renderContext}
         {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
         center={radial}
         {debug}
@@ -468,17 +466,17 @@
             {/each}
           {/if}
         </ChartClipPath>
-      </Component>
+      </Layer>
 
       <!-- TODO: Always use `Svg` until `Pattern` supports `Canvas` (issue #307) -->
-      <Svg pointerEvents={false}>
+      <Layer type="svg" pointerEvents={false}>
         <ChartAnnotations
           {annotations}
           layer="above"
           highlightKey={seriesState.highlightKey.current}
           visibleSeries={seriesState.visibleSeries}
         />
-      </Svg>
+      </Layer>
 
       {@render aboveContext?.(snippetProps)}
 

@@ -44,22 +44,21 @@
 </script>
 
 <script lang="ts" generics="TData">
-  import { scaleLinear, scaleOrdinal, scaleTime } from 'd3-scale';
+  import { scaleLinear, scaleTime } from 'd3-scale';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Axis from '../Axis.svelte';
   import BrushContext from '../BrushContext.svelte';
-  import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import ChartClipPath from '../ChartClipPath.svelte';
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
+  import Layer from '../layout/Layer.svelte';
   import Legend from '../Legend.svelte';
   import Points from '../Points.svelte';
   import Rule from '../Rule.svelte';
-  import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
   import { accessor, chartDataArray, defaultChartPadding } from '../../utils/common.js';
@@ -293,9 +292,8 @@
       {@render childrenProp(snippetProps)}
     {:else}
       {@render belowContext?.(snippetProps)}
-      {@const Component = renderContext === 'canvas' ? Canvas : Svg}
-      <Component
-        this={renderContext === 'canvas' ? Canvas : Svg}
+      <Layer
+        type={renderContext}
         {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
         {debug}
       >
@@ -358,7 +356,7 @@
             {/each}
           {/if}
         </ChartClipPath>
-      </Component>
+      </Layer>
 
       {@render aboveContext?.(snippetProps)}
 

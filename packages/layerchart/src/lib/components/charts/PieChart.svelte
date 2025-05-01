@@ -177,12 +177,11 @@
   import { cls } from '@layerstack/tailwind';
 
   import Arc from '../Arc.svelte';
-  import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import Group from '../Group.svelte';
+  import Layer from '../layout/Layer.svelte';
   import Legend from '../Legend.svelte';
   import Pie from '../Pie.svelte';
-  import Svg from '../layout/Svg.svelte';
   import * as Tooltip from '../tooltip/index.js';
 
   import { accessor, chartDataArray, type Accessor } from '../../utils/common.js';
@@ -431,10 +430,9 @@
       {@render childrenProp(snippetProps)}
     {:else}
       {@render belowContext?.(snippetProps)}
-      {@const Component = renderContext === 'canvas' ? Canvas : Svg}
 
-      <Component
-        this={renderContext === 'canvas' ? Canvas : Svg}
+      <Layer
+        type={renderContext}
         {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
         {center}
         {debug}
@@ -476,7 +474,7 @@
         {/if}
 
         {@render aboveMarks?.(snippetProps)}
-      </Component>
+      </Layer>
 
       {@render aboveContext?.(snippetProps)}
 

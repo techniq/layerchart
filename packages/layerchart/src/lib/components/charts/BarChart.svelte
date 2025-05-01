@@ -91,15 +91,14 @@
 
   import Axis from '../Axis.svelte';
   import Bars from '../Bars.svelte';
-  import Canvas from '../layout/Canvas.svelte';
   import Chart from '../Chart.svelte';
   import ChartClipPath from '../ChartClipPath.svelte';
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
   import Labels from '../Labels.svelte';
+  import Layer from '../layout/Layer.svelte';
   import Legend from '../Legend.svelte';
   import Rule from '../Rule.svelte';
-  import Svg from '../layout/Svg.svelte';
 
   import {
     accessor,
@@ -477,10 +476,10 @@
     {#if childrenProp}
       {@render childrenProp(snippetProps)}
     {:else}
-      {@const Component = renderContext === 'canvas' ? Canvas : Svg}
       {@render belowContext?.(snippetProps)}
 
-      <Component
+      <Layer
+        type={renderContext}
         {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
         center={radial}
         {debug}
@@ -544,7 +543,7 @@
             {/each}
           {/if}
         </ChartClipPath>
-      </Component>
+      </Layer>
 
       {@render aboveContext?.(snippetProps)}
 
