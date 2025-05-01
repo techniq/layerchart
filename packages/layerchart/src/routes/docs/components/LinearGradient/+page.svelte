@@ -1,34 +1,46 @@
 <script lang="ts">
-  import { Chart, LinearGradient, Svg } from 'layerchart';
+  import { Chart, Layer, LinearGradient, Rect, Svg } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
+  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
+
+  let renderContext: 'svg' | 'canvas' = $state('svg');
 </script>
 
 <h1>Examples</h1>
+
+<div class="grid grid-cols-[1fr_auto] gap-2">
+  <Field label="Render context">
+    <ToggleGroup bind:value={renderContext} variant="outline">
+      <ToggleOption value="svg">Svg</ToggleOption>
+      <ToggleOption value="canvas">Canvas</ToggleOption>
+    </ToggleGroup>
+  </Field>
+</div>
 
 <h2>Direction with custom colors</h2>
 
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={renderContext}>
         <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
           {#snippet children({ gradient })}
-            <rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />
+            <Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />
           {/snippet}
         </LinearGradient>
 
         <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']} rotate={45}>
           {#snippet children({ gradient })}
-            <rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={gradient} />
+            <Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={gradient} />
           {/snippet}
         </LinearGradient>
 
         <LinearGradient stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']} vertical>
           {#snippet children({ gradient })}
-            <rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={gradient} />
+            <Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={gradient} />
           {/snippet}
         </LinearGradient>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -38,20 +50,61 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
-        <LinearGradient id="tw-1" class="from-pink-500 to-yellow-500" vertical />
-        <LinearGradient id="tw-2" class="from-green-300 to-purple-600" vertical />
-        <LinearGradient id="tw-3" class="from-gray-600 to-black" vertical />
-        <LinearGradient id="tw-4" class="from-pink-300 to-indigo-400" vertical />
-        <LinearGradient id="tw-5" class="from-yellow-100 to-yellow-500" vertical />
-        <LinearGradient id="tw-6" class="from-blue-700 to-gray-900" vertical />
-        <LinearGradient id="tw-7" class="from-sky-300 to-blue-500" vertical />
-        <LinearGradient id="tw-8" class="from-red-500 to-red-800" vertical />
-        <LinearGradient id="tw-9" class="from-blue-400 to-emerald-400" vertical />
-        {#each { length: 9 } as _, i}
-          <rect x={0 + i * 120} y={0} width={100} height={300} rx={8} fill="url(#tw-{i + 1})" />
-        {/each}
-      </Svg>
+      <Layer type={renderContext}>
+        <LinearGradient class="from-pink-500 to-yellow-500" vertical>
+          {#snippet children({ gradient })}
+            <Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
+
+        <LinearGradient class="from-green-300 to-purple-600" vertical>
+          {#snippet children({ gradient })}
+            <Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
+
+        <LinearGradient class="from-gray-600 to-black" vertical>
+          {#snippet children({ gradient })}
+            <Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
+
+        <LinearGradient class="from-pink-300 to-indigo-400" vertical>
+          {#snippet children({ gradient })}
+            <Rect x={120 * 3} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
+
+        <LinearGradient class="from-yellow-100 to-yellow-500" vertical>
+          {#snippet children({ gradient })}
+            <Rect x={120 * 4} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
+
+        <LinearGradient class="from-blue-700 to-gray-900" vertical>
+          {#snippet children({ gradient })}
+            <Rect x={120 * 5} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
+
+        <LinearGradient class="from-sky-300 to-blue-500" vertical>
+          {#snippet children({ gradient })}
+            <Rect x={120 * 6} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
+
+        <LinearGradient class="from-red-500 to-red-800" vertical>
+          {#snippet children({ gradient })}
+            <Rect x={120 * 7} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
+
+        <LinearGradient class="from-blue-400 to-emerald-400" vertical>
+          {#snippet children({ gradient })}
+            <Rect x={120 * 8} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -61,11 +114,11 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={renderContext}>
         <LinearGradient class="from-green-500 to-blue-500" units="objectBoundingBox">
           {#snippet children({ gradient })}
             {#each { length: 6 } as _, i}
-              <rect x={0 + i * 120} y={0} width={100} height={140} rx={8} fill={gradient} />
+              <Rect x={0 + i * 120} y={0} width={100} height={140} rx={8} fill={gradient} />
             {/each}
           {/snippet}
         </LinearGradient>
@@ -73,11 +126,11 @@
         <LinearGradient class="from-green-500 to-blue-500" units="userSpaceOnUse">
           {#snippet children({ gradient })}
             {#each { length: 6 } as _, i}
-              <rect x={0 + i * 120} y={160} width={100} height={140} rx={8} fill={gradient} />
+              <Rect x={0 + i * 120} y={160} width={100} height={140} rx={8} fill={gradient} />
             {/each}
           {/snippet}
         </LinearGradient>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
