@@ -51,6 +51,7 @@
   import Axis from '../Axis.svelte';
   import BrushContext from '../BrushContext.svelte';
   import Chart from '../Chart.svelte';
+  import ChartAnnotations from './ChartAnnotations.svelte';
   import ChartClipPath from '../ChartClipPath.svelte';
   import Grid from '../Grid.svelte';
   import Highlight from '../Highlight.svelte';
@@ -96,6 +97,7 @@
     aboveMarks,
     marks,
     highlight = true,
+    annotations = [],
     ...restProps
   }: ScatterChartProps<TData> = $props();
 
@@ -304,6 +306,13 @@
         {/if}
 
         <ChartClipPath disabled={!brush}>
+          <ChartAnnotations
+            {annotations}
+            layer="below"
+            highlightKey={seriesState.highlightKey.current}
+            visibleSeries={seriesState.visibleSeries}
+          />
+
           {@render belowMarks?.(snippetProps)}
 
           {#if typeof marks === 'function'}
@@ -355,6 +364,13 @@
               <Labels {...getLabelsProps(s, i)} />
             {/each}
           {/if}
+
+          <ChartAnnotations
+            {annotations}
+            layer="above"
+            highlightKey={seriesState.highlightKey.current}
+            visibleSeries={seriesState.visibleSeries}
+          />
         </ChartClipPath>
       </Layer>
 
