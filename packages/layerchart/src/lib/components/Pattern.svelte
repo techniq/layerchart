@@ -128,7 +128,6 @@
   import { getRenderContext } from './Chart.svelte';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { createPattern } from 'layerchart/utils/canvas.js';
-  import { darkColorScheme } from '@layerstack/svelte-stores';
 
   const uid = $props.id();
 
