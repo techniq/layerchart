@@ -5,11 +5,10 @@
     Axis,
     BarChart,
     Bars,
-    Canvas,
     Highlight,
+    Layer,
     Labels,
     LinearGradient,
-    Svg,
     Tooltip,
   } from 'layerchart';
   import { extent, group, sum } from 'd3-array';
@@ -1455,8 +1454,7 @@
   <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value">
       {#snippet children({ context })}
-        {@const Component = renderContext === 'canvas' ? Canvas : Svg}
-        <Component>
+        <Layer type={renderContext}>
           <Axis
             placement="left"
             grid
@@ -1470,7 +1468,7 @@
           />
           <Bars radius={4} strokeWidth={1} class="fill-primary" />
           <Highlight area />
-        </Component>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}

@@ -1,16 +1,14 @@
 <script lang="ts">
   import {
     Axis,
-    Canvas,
     defaultChartPadding,
     Highlight,
     Labels,
+    Layer,
     LinearGradient,
     LineChart,
     pivotLonger,
     Spline,
-    Svg,
-    Text,
     Tooltip,
   } from 'layerchart';
   import { scaleBand, scaleSequential } from 'd3-scale';
@@ -1075,8 +1073,7 @@
   <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
       {#snippet children({ context })}
-        {@const Component = renderContext === 'canvas' ? Canvas : Svg}
-        <Component>
+        <Layer type={renderContext}>
           <Axis placement="left" grid rule />
           <Axis
             placement="bottom"
@@ -1085,7 +1082,7 @@
           />
           <Spline class="stroke-2 stroke-primary" />
           <Highlight points lines />
-        </Component>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}

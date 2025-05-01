@@ -5,15 +5,7 @@
 
   import { mdiPlay, mdiStop } from '@mdi/js';
 
-  import {
-    Canvas,
-    Chart,
-    GeoPath,
-    Graticule,
-    Tooltip,
-    Svg,
-    type ChartContextValue,
-  } from 'layerchart';
+  import { Chart, GeoPath, Graticule, Layer, Tooltip, type ChartContextValue } from 'layerchart';
   import { Button, ButtonGroup, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { sortFunc } from '@layerstack/utils';
   import { scrollIntoView } from '@layerstack/svelte-actions';
@@ -162,8 +154,7 @@
           </div>
         {/if}
 
-        {@const Component = renderContext === 'svg' ? Svg : Canvas}
-        <Component {debug}>
+        <Layer type={renderContext} {debug}>
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
           <Graticule class="stroke-surface-content/20" />
 
@@ -180,15 +171,15 @@
               tooltipContext={context.tooltip}
             />
           {/each}
-        </Component>
+        </Layer>
 
         {#if renderContext === 'canvas'}
           <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
-          <Canvas pointerEvents={false}>
+          <Layer type="canvas" pointerEvents={false}>
             {#if context.tooltip.data}
               <GeoPath geojson={context.tooltip.data} class="fill-surface-content/20" />
             {/if}
-          </Canvas>
+          </Layer>
         {/if}
 
         <Tooltip.Root>

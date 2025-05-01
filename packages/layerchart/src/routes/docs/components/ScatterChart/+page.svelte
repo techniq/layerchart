@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Axis, Canvas, Highlight, Points, ScatterChart, Svg, Tooltip } from 'layerchart';
+  import { Axis, Highlight, Layer, Points, ScatterChart, Tooltip } from 'layerchart';
   import { format } from '@layerstack/utils';
   import { flatGroup } from 'd3-array';
   import { randomNormal } from 'd3-random';
@@ -384,13 +384,12 @@
   <div class="h-[400px] p-4 border rounded-sm">
     <ScatterChart data={spiralData} x="x" y="y" {renderContext} {debug}>
       {#snippet children({ context })}
-        {@const Component = renderContext === 'canvas' ? Canvas : Svg}
-        <Component>
+        <Layer type={renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" grid rule />
           <Points class="fill-primary/10 stroke-primary" />
           <Highlight points lines axis="both" />
-        </Component>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}

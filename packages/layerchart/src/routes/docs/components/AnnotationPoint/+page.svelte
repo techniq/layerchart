@@ -2,10 +2,9 @@
   import {
     AnnotationLine,
     AnnotationPoint,
-    Canvas,
     defaultChartPadding,
+    Layer,
     LineChart,
-    Svg,
     Tooltip,
     type Placement,
   } from 'layerchart';
@@ -56,9 +55,6 @@
   let radius = $state(4);
 
   let renderContext: 'svg' | 'canvas' = $state('svg');
-  // @ts-expect-error - ignore
-  const RenderComponent = $derived(renderContext === 'canvas' ? Canvas : Svg);
-
   let debug = $state(false);
 </script>
 
@@ -91,9 +87,9 @@
       {renderContext}
       {debug}
     >
+      <!-- Placed above context to fix overlap with Axis (might be refined to allow aboveMarks in future) -->
       {#snippet aboveContext({ context })}
-        {@const Component = renderContext === 'canvas' ? Canvas : Svg}
-        <Component>
+        <Layer type={renderContext}>
           {#each annotations as annotation}
             <AnnotationPoint
               x={annotation.x}
@@ -106,7 +102,7 @@
               }}
             />
           {/each}
-        </Component>
+        </Layer>
       {/snippet}
 
       {#snippet tooltip({ context })}
@@ -146,7 +142,7 @@
       {debug}
     >
       {#snippet aboveContext({ context })}
-        <RenderComponent>
+        <Layer type={renderContext}>
           {#each annotations as annotation}
             <AnnotationPoint
               x={annotation.x}
@@ -160,7 +156,7 @@
               }}
             />
           {/each}
-        </RenderComponent>
+        </Layer>
       {/snippet}
 
       {#snippet tooltip({ context })}
@@ -200,7 +196,7 @@
       {debug}
     >
       {#snippet aboveContext({ context })}
-        <RenderComponent>
+        <Layer type={renderContext}>
           {#each annotations as annotation}
             <AnnotationLine
               x={annotation.x}
@@ -223,7 +219,7 @@
               }}
             />
           {/each}
-        </RenderComponent>
+        </Layer>
       {/snippet}
 
       {#snippet tooltip({ context })}
