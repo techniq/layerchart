@@ -97,6 +97,7 @@
   import { createLegendProps, createSeriesState } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
+  import ChartAnnotations from './ChartAnnotations.svelte';
 
   let {
     data = [],
@@ -114,6 +115,7 @@
     points = false,
     tooltip = true,
     highlight = true,
+    annotations = [],
     rule = true,
     onTooltipClick = () => {},
     onPointClick,
@@ -494,6 +496,13 @@
         {/if}
 
         <ChartClipPath disabled={!brush}>
+          <ChartAnnotations
+            {annotations}
+            layer="below"
+            highlightKey={seriesState.highlightKey.current}
+            visibleSeries={seriesState.visibleSeries}
+          />
+
           {@render belowMarks?.(snippetProps)}
 
           {#if marks}
@@ -554,6 +563,13 @@
               <Labels {...getLabelsProps(s, i)} />
             {/each}
           {/if}
+
+          <ChartAnnotations
+            {annotations}
+            layer="above"
+            highlightKey={seriesState.highlightKey.current}
+            visibleSeries={seriesState.visibleSeries}
+          />
         </ChartClipPath>
       </Layer>
 

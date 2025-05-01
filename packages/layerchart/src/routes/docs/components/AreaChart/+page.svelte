@@ -16,11 +16,12 @@
     pivotLonger,
     accessor,
     type ChartContextValue,
+    defaultChartPadding,
   } from 'layerchart';
   import { curveBasis, curveCatmullRom, curveStepAfter } from 'd3-shape';
   import { group } from 'd3-array';
   import { Button, Field, ToggleGroup, ToggleOption, Kbd, Switch } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format, PeriodType, sortFunc } from '@layerstack/utils';
   import { addDays } from 'date-fns';
   import { cls } from '@layerstack/tailwind';
 
@@ -121,6 +122,19 @@
   let context = $state<ChartContextValue<(typeof denseDateSeriesData)[number]>>(null!);
 
   let selectedCurve = $state(curveStepAfter);
+
+  // Get a few random points to use for annotations
+  const annotations = $derived(
+    [...data.appleStock]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 5)
+      .sort(sortFunc('date'))
+      .map((d, i) => ({
+        date: d.date,
+        label: String.fromCharCode(65 + i),
+        details: `This is an annotation for ${format(d.date)}`,
+      }))
+  );
 </script>
 
 <svelte:window
@@ -1071,47 +1085,180 @@
   </div>
 </Preview>
 
-<!-- <Preview data={dateSeries}>
-  <div class="text-sm">
-    {#if $tooltipContext?.data}
-      date: {formatDate($tooltipContext?.data?.date, PeriodType.Day, { variant: 'short' })}
-      value: {$tooltipContext?.data?.value}
-    {:else}
-      [hover chart]
-    {/if}
-  </div>
+<h2>Point annotations</h2>
 
+<Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      data={dateSeries}
+    <AreaChart
+      data={data.appleStock}
       x="date"
-      xScale={scaleTime()}
       y="value"
-      yDomain={[0, null]}
-      yNice
-      padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
-      bind:tooltipContext
+      annotations={annotations.map((a) => {
+        return {
+          type: 'point',
+          label: a.label,
+          details: a.details,
+          x: a.date,
+          r: 6,
+          props: {
+            circle: { class: 'fill-secondary' },
+            label: { class: 'text-[10px] fill-secondary-content font-bold' },
+          },
+        };
+      })}
+      props={{
+        xAxis: { format: undefined },
+      }}
+      {renderContext}
+      {debug}
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
-        <Highlight points lines />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
-        </Tooltip.List>
-      </Tooltip.Root>
-    </Chart>
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {#if data.annotation}
+              <!-- Annotation -->
+              <div class="whitespace-nowrap">
+                {data.annotation.details}
+              </div>
+            {:else}
+              <!-- Normal tooltip -->
+              <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+              <Tooltip.List>
+                <Tooltip.Item label="value" value={context.y(data)} />
+              </Tooltip.List>
+            {/if}
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
+    </AreaChart>
   </div>
-</Preview> -->
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationPoint">AnnotationPoint</a> for more examples
+</Blockquote>
+
+<h2>Line annotation</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <AreaChart
+      data={data.appleStock}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'line',
+          y: 500,
+          label: 'Max',
+          labelOffset: 4,
+          props: {
+            label: { class: 'fill-danger' },
+            line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+          },
+        },
+      ]}
+      props={{
+        xAxis: { format: undefined },
+      }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationLine">AnnotationLine</a> for more examples
+</Blockquote>
+
+<h2>Range annotation</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <AreaChart
+      data={data.appleStock}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'range',
+          x: [new Date('2010-01-01'), new Date('2010-12-31')],
+          label: 'Range',
+          labelPlacement: 'bottom',
+          labelYOffset: 4,
+          pattern: {
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          },
+        },
+      ]}
+      props={{
+        xAxis: { format: undefined },
+      }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationRange">AnnotationRange</a> for more examples
+</Blockquote>
+
+<h2>Series point annotations</h2>
+
+<Preview data={data.appleStock}>
+  {@const series = [
+    {
+      key: 'apples',
+      data: multiSeriesDataByFruit.get('apples'),
+      color: 'var(--color-danger)',
+    },
+    {
+      key: 'bananas',
+      data: multiSeriesDataByFruit.get('bananas'),
+      color: 'var(--color-success)',
+    },
+    {
+      key: 'oranges',
+      data: multiSeriesDataByFruit.get('oranges'),
+      color: 'var(--color-warning)',
+    },
+  ]}
+  <div class="h-[300px] p-4 border rounded-sm">
+    <AreaChart
+      x="date"
+      y="value"
+      {series}
+      annotations={series.map((s) => {
+        const lastDataPoint = s.data?.[s.data.length - 1] ?? null;
+        return {
+          type: 'point',
+          seriesKey: s.key,
+          label: s.key,
+          labelPlacement: 'right',
+          labelOffset: 4,
+          x: lastDataPoint.date,
+          y: lastDataPoint.value,
+          props: {
+            circle: { fill: s.color },
+            label: { fill: s.color },
+          },
+        };
+      })}
+      padding={{ ...defaultChartPadding(), right: 60 }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationPoint">AnnotationPoint</a> for more examples
+</Blockquote>
 
 <h2>Brushing</h2>
 <Preview data={dateSeriesData}>

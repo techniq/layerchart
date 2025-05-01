@@ -927,7 +927,7 @@
       }}
       {renderContext}
       {debug}
-    ></LineChart>
+    />
   </div>
 </Preview>
 
@@ -965,7 +965,7 @@
       }}
       {renderContext}
       {debug}
-    ></LineChart>
+    />
   </div>
 </Preview>
 
