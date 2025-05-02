@@ -11,7 +11,7 @@
     LinearGradient,
     Tooltip,
   } from 'layerchart';
-  import { extent, group, sum } from 'd3-array';
+  import { extent, group, mean, sum } from 'd3-array';
   import { scaleLinear, scaleLog, scaleThreshold, scaleTime } from 'd3-scale';
   import { format, PeriodType } from '@layerstack/utils';
 
@@ -1159,7 +1159,7 @@
   </div>
 </Preview>
 
-<h2>Brushing</h2>
+<h2>Brushing (WIP)</h2>
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
@@ -1447,6 +1447,164 @@
     </BarChart>
   </div>
 </Preview>
+
+<h2>Point annotation</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'point',
+          x: dateSeriesData[dateSeriesData.length - 1].date,
+          r: 4,
+          label: 'Today',
+          labelPlacement: 'bottom',
+          labelOffset: 16,
+          props: {
+            circle: { class: 'fill-secondary' },
+            label: { class: 'text-xs fill-secondary font-bold' },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationPoint">AnnotationPoint</a> for more examples
+</Blockquote>
+
+<h2>Line annotation</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'line',
+          y: mean(dateSeriesData, (d) => d.value),
+          label: 'Avg',
+          props: {
+            line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+            label: { class: 'fill-danger' },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationLine">AnnotationLine</a> for more examples
+</Blockquote>
+
+<h2>Range annotation (single)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'range',
+          x: [dateSeriesData[2].date, dateSeriesData[2].date],
+          pattern: {
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationRange">AnnotationRange</a> for more examples
+</Blockquote>
+
+<h2>Range annotation (multiple)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'range',
+          x: [dateSeriesData[2].date, dateSeriesData[4].date],
+          pattern: {
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Range annotation (value)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'range',
+          y: [75, null],
+          pattern: {
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          },
+        },
+        {
+          type: 'line',
+          label: 'Max',
+          y: 75,
+          props: {
+            line: { class: '[stroke-dasharray:2,2] _stroke-danger' },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationRange">AnnotationRange</a> for more examples
+</Blockquote>
 
 <h2>Custom chart</h2>
 

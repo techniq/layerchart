@@ -2,6 +2,7 @@
   import {
     AnnotationLine,
     AnnotationPoint,
+    BarChart,
     defaultChartPadding,
     Layer,
     LineChart,
@@ -19,9 +20,10 @@
     ToggleOption,
   } from 'svelte-ux';
   import { format, PeriodType, sortFunc } from '@layerstack/utils';
+  import { maxIndex } from 'd3-array';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { maxIndex } from 'd3-array';
+  import { createDateSeries } from '$lib/utils/genData.js';
 
   let { data } = $props();
 
@@ -38,6 +40,14 @@
         details: `This is an annotation for ${format(d.date)}`,
       }))
   );
+
+  const dateSeriesData = createDateSeries({
+    count: 10,
+    min: 20,
+    max: 100,
+    value: 'integer',
+    keys: ['value', 'baseline'],
+  });
 
   const placementOptions = [
     'top-left',
@@ -334,5 +344,53 @@
         />
       {/snippet}
     </LineChart>
+  </div>
+</Preview>
+
+<h2>Band scale on axis</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+      {#snippet aboveContext({ context })}
+        <Layer type={renderContext}>
+          <AnnotationPoint
+            x={dateSeriesData[3].date}
+            r={4}
+            label="Featured"
+            labelPlacement="bottom"
+            labelOffset={16}
+            props={{
+              circle: { class: 'fill-secondary' },
+              label: { class: 'text-xs fill-secondary font-bold' },
+            }}
+          />
+        </Layer>
+      {/snippet}
+    </BarChart>
+  </div>
+</Preview>
+
+<h2>Band scale on value</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+      {#snippet aboveContext({ context })}
+        <Layer type={renderContext}>
+          <AnnotationPoint
+            x={dateSeriesData[3].date}
+            y={dateSeriesData[3].value}
+            r={4}
+            label="Featured"
+            labelPlacement="top"
+            props={{
+              circle: { class: 'fill-secondary' },
+              label: { class: 'text-xs fill-secondary font-bold' },
+            }}
+          />
+        </Layer>
+      {/snippet}
+    </BarChart>
   </div>
 </Preview>

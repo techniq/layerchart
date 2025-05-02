@@ -2,7 +2,7 @@
   import type { ComponentProps } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
-  import type { SingleDomainType } from '$lib/utils/scales.svelte.js';
+  import { isScaleBand, type SingleDomainType } from '$lib/utils/scales.svelte.js';
 
   export type AnnotationRangePropsWithoutHTML = {
     /** x values of the range */
@@ -73,9 +73,16 @@
   const ctx = getChartContext();
 
   const rect = $derived<ComponentProps<typeof Rect>>({
-    x: x ? ctx.xScale(x[0] ?? ctx.xDomain[0]) : ctx.xRange[0],
+    x: x
+      ? ctx.xScale(x[0] ?? ctx.xDomain[0]) -
+        (isScaleBand(ctx.xScale) ? (ctx.xScale.padding() * ctx.xScale.step()) / 2 : 0)
+      : ctx.xRange[0],
     y: y ? ctx.yScale(y[1] ?? ctx.yDomain[1]) : ctx.yRange[1],
-    width: x ? ctx.xScale(x[1] ?? ctx.xDomain[1]) - ctx.xScale(x[0] ?? ctx.xDomain[0]) : ctx.width,
+    width: x
+      ? ctx.xScale(x[1] ?? ctx.xDomain[1]) -
+        ctx.xScale(x[0] ?? ctx.xDomain[0]) +
+        (isScaleBand(ctx.xScale) ? ctx.xScale.step() : 0)
+      : ctx.width,
     height: y
       ? ctx.yScale(y[0] ?? ctx.yDomain[0]) - ctx.yScale(y[1] ?? ctx.yDomain[1])
       : ctx.height,

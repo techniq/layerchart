@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AnnotationRange, LineChart, type Placement } from 'layerchart';
+  import { AnnotationRange, BarChart, LineChart, type Placement } from 'layerchart';
   import {
     Button,
     Field,
@@ -12,8 +12,17 @@
   } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { createDateSeries } from '$lib/utils/genData.js';
 
   let { data } = $props();
+
+  const dateSeriesData = createDateSeries({
+    count: 10,
+    min: 20,
+    max: 100,
+    value: 'integer',
+    keys: ['value', 'baseline'],
+  });
 
   const placementOptions = [
     'top-left',
@@ -337,5 +346,68 @@
         />
       {/snippet}
     </LineChart>
+  </div>
+</Preview>
+
+<h2>Bar chart (single)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+      {#snippet belowMarks({ context })}
+        <AnnotationRange
+          x={[dateSeriesData[2].date, dateSeriesData[2].date]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+        />
+      {/snippet}
+    </BarChart>
+  </div>
+</Preview>
+
+<h2>Bar chart (multiple)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+      {#snippet belowMarks({ context })}
+        <AnnotationRange
+          x={[dateSeriesData[2].date, dateSeriesData[4].date]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+        />
+      {/snippet}
+    </BarChart>
+  </div>
+</Preview>
+
+<h2>Bar chart (value)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+      {#snippet belowMarks({ context })}
+        <AnnotationRange
+          y={[75, null]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+        />
+      {/snippet}
+    </BarChart>
   </div>
 </Preview>

@@ -53,10 +53,10 @@
   const isVertical = $derived(x != null);
 
   const line = $derived({
-    x1: ctx.xScale(x ?? ctx.xDomain[0]),
-    y1: ctx.yScale(y && !x ? y : ctx.yDomain[0]),
-    x2: ctx.xScale(x ?? ctx.xDomain[1]),
-    y2: ctx.yScale(y ?? ctx.yDomain[1]),
+    x1: x ? ctx.xScale(x) : ctx.xRange[0],
+    y1: y && !x ? ctx.yScale(y) : ctx.yRange[0],
+    x2: x ? ctx.xScale(x) : ctx.xRange[1],
+    y2: y ? ctx.yScale(y) : ctx.yRange[1],
   });
 
   const labelProps = $derived<ComponentProps<typeof Text>>(

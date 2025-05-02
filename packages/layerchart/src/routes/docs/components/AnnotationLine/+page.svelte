@@ -3,9 +3,8 @@
     AnnotationLine,
     AnnotationPoint,
     AnnotationRange,
-    Canvas,
+    BarChart,
     LineChart,
-    Svg,
     type Placement,
   } from 'layerchart';
   import {
@@ -21,6 +20,7 @@
   import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { createDateSeries } from '$lib/utils/genData.js';
 
   let { data } = $props();
 
@@ -37,6 +37,14 @@
         details: `This is an annotation for ${format(d.date)}`,
       }))
   );
+
+  const dateSeriesData = createDateSeries({
+    count: 10,
+    min: 20,
+    max: 100,
+    value: 'integer',
+    keys: ['value', 'baseline'],
+  });
 
   const placementOptions = [
     'top-left',
@@ -316,5 +324,24 @@
         />
       {/snippet}
     </LineChart>
+  </div>
+</Preview>
+
+<h2>Bar chart</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
+      {#snippet aboveMarks({ context })}
+        <AnnotationLine
+          y={50}
+          label="Avg"
+          props={{
+            line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+            label: { class: 'fill-danger' },
+          }}
+        />
+      {/snippet}
+    </BarChart>
   </div>
 </Preview>

@@ -2,7 +2,7 @@
   import type { ComponentProps } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
-  import type { SingleDomainType } from '$lib/utils/scales.svelte.js';
+  import { isScaleBand, type SingleDomainType } from '$lib/utils/scales.svelte.js';
 
   export type AnnotationPointPropsWithoutHTML = {
     /** x value of the point */
@@ -59,8 +59,8 @@
   const ctx = getChartContext();
 
   const point = $derived({
-    x: x ? ctx.xScale(x) : 0,
-    y: y ? ctx.yScale(y) : ctx.height,
+    x: x ? ctx.xScale(x) + (isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0) : 0,
+    y: y ? ctx.yScale(y) + (isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0) : ctx.height,
   });
 
   const labelProps = $derived<ComponentProps<typeof Text>>({
