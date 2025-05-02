@@ -1,14 +1,13 @@
 <script lang="ts">
   import type { Component, ComponentProps } from 'svelte';
 
-  import { Field, MenuField, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { Chart, Svg, Canvas } from 'layerchart';
+  import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Connector, Chart, Svg, Canvas } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import type { ConnectorSweep, ConnectorType } from 'layerchart/utils/connectorUtils.js';
   import ConnectorTypeMenuField from 'layerchart/docs/ConnectorTypeMenuField.svelte';
-  import Connector from 'layerchart/components/Connector.svelte';
   import ConnectorSweepMenuField from 'layerchart/docs/ConnectorSweepMenuField.svelte';
 
   let showLine = $state(true);
