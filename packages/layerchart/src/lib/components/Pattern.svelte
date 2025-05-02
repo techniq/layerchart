@@ -127,7 +127,7 @@
 <script lang="ts">
   import { getRenderContext } from './Chart.svelte';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
-  import { createPattern } from 'layerchart/utils/canvas.js';
+  import { createPattern } from '$lib/utils/canvas.js';
 
   const uid = $props.id();
 
