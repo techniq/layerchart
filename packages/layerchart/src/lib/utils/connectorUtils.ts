@@ -143,9 +143,6 @@ export function getConnectorD3Path({ source, target, sweep, curve }: GetConnecto
       [source.x, source.y],
       [target.x, target.y],
     ];
-    // if (forceLinearOnAligned) {
-    //   line.curve(curveLinear);
-    // }
   } else if (sweep === 'horizontal-vertical') {
     points = [
       [source.x, source.y],
