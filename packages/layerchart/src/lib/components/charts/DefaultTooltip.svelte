@@ -14,7 +14,7 @@
     canHaveTotal = false,
   }: {
     tooltipProps?: SimplifiedChartPropsObject['tooltip'];
-    seriesState: SeriesState;
+    seriesState: SeriesState<any, any>;
     canHaveTotal?: boolean;
   } = $props();
 
