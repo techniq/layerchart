@@ -1022,7 +1022,7 @@
       {debug}
     >
       {#snippet aboveMarks()}
-        <Labels x={8} value={(d) => d.date} class="text-sm fill-surface-300 stroke-none" />
+        <Labels x={(d) => 0} value="date" class="text-sm fill-surface-300 stroke-none" />
       {/snippet}
     </BarChart>
   </div>

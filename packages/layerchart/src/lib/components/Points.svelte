@@ -54,7 +54,6 @@
 <script lang="ts">
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
-  import { notNull } from '@layerstack/utils';
 
   import Circle, { type CircleProps } from './Circle.svelte';
   import Link from './Link.svelte';
