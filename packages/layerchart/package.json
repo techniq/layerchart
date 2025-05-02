@@ -54,7 +54,7 @@
     "@types/topojson-simplify": "^3.0.3",
     "@types/topojson-specification": "^1.0.5",
     "marked": "^15.0.11",
-    "mdsvex": "^0.12.5",
+    "mdsvex": "0.12.3",
     "posthog-js": "^1.239.0",
     "prettier": "^3.5.3",
     "prettier-plugin-svelte": "^3.3.3",
