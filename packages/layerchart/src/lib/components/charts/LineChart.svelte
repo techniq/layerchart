@@ -98,7 +98,7 @@
     SimplifiedChartPropsObject,
     SimplifiedChartSnippet,
   } from './types.js';
-  import { createLegendProps, createSeriesState } from './utils.svelte.js';
+  import { createLegendProps, SeriesState } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import { layerClass } from '$lib/utils/attributes.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
@@ -145,7 +145,7 @@
       ? [{ key: 'default', value: yProp, color: 'var(--color-primary)' }]
       : seriesProp
   );
-  const seriesState = createSeriesState(() => series);
+  const seriesState = new SeriesState(() => series);
 
   const chartData = $derived(
     (seriesState.allSeriesData.length

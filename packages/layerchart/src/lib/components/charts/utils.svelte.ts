@@ -1,74 +1,51 @@
 import type { Component, ComponentProps } from 'svelte';
-import { selectionState } from '@layerstack/svelte-state';
+import { SelectionState } from '@layerstack/svelte-state';
 import { scaleOrdinal } from 'd3-scale';
 
 import type { SeriesData } from './types.js';
 import type Legend from '../Legend.svelte';
 
-export function createHighlightKey<TData, SeriesComponent extends Component>() {
-  let current = $state<SeriesData<TData, SeriesComponent>['key'] | null>(null);
+export class HighlightKey<TData, SeriesComponent extends Component> {
+  current = $state<SeriesData<TData, SeriesComponent>['key'] | null>(null);
 
-  function set(seriesKey: SeriesData<TData, SeriesComponent>['key'] | null) {
-    current = seriesKey;
+  set(seriesKey: typeof this.current) {
+    this.current = seriesKey;
   }
-
-  return {
-    get current() {
-      return current;
-    },
-    set current(value: SeriesData<TData, SeriesComponent>['key'] | null) {
-      current = value;
-    },
-    set,
-  };
 }
 
-export type SeriesState<TData = any, TComponent extends Component = Component> = ReturnType<
-  typeof createSeriesState<TData, TComponent>
->;
+export class SeriesState<TData, TComponent extends Component> {
+  #series = $state.raw<SeriesData<TData, TComponent>[]>([]);
+  selectedSeries = new SelectionState();
+  selectedKeys = new SelectionState();
+  highlightKey = new HighlightKey<TData, TComponent>();
 
-export function createSeriesState<TData, TComponent extends Component>(
-  getSeries: () => SeriesData<TData, TComponent>[]
-) {
-  const series = $derived(getSeries());
-  const isDefaultSeries = $derived.by(() => {
-    return series.length === 1 && series[0].key === 'default';
-  });
-  const allSeriesData = $derived(
-    series
+  constructor(getSeries: () => SeriesData<TData, TComponent>[]) {
+    this.#series = getSeries();
+  }
+
+  get series() {
+    return this.#series;
+  }
+
+  get isDefaultSeries() {
+    return this.#series.length === 1 && this.#series[0].key === 'default';
+  }
+
+  get allSeriesData() {
+    return this.#series
       .flatMap((s) => s.data?.map((d) => ({ seriesKey: s.key, ...d })))
-      .filter((d) => d) as Array<TData & { seriesKey: string }>
-  );
+      .filter((d) => d) as Array<TData & { seriesKey: string }>;
+  }
 
-  const selectedSeries = selectionState();
-  const selectedKeys = selectionState();
-  const highlightKey = createHighlightKey<TData, TComponent>();
-
-  const visibleSeries = $derived(
-    series.filter((s) => selectedSeries.isEmpty() || selectedSeries.isSelected(s.key))
-  );
-
-  return {
-    get series() {
-      return series;
-    },
-    selectedSeries,
-    selectedKeys,
-    highlightKey,
-    get visibleSeries() {
-      return visibleSeries;
-    },
-    get allSeriesData() {
-      return allSeriesData;
-    },
-    get isDefaultSeries() {
-      return isDefaultSeries;
-    },
-  };
+  get visibleSeries() {
+    return this.#series.filter(
+      (s) => this.selectedSeries.isEmpty() || this.selectedSeries.isSelected(s.key)
+    );
+  }
 }
 
 type CreateLegendPropsOptions<TData, TComponent extends Component> = {
-  seriesState: ReturnType<typeof createSeriesState<TData, TComponent>>;
+  seriesState: SeriesState<TData, TComponent>;
   props: Partial<ComponentProps<typeof Legend>>;
 };
 

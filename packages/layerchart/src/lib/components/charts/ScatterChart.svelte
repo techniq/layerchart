@@ -64,7 +64,7 @@
 
   import { accessor, chartDataArray, defaultChartPadding } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
-  import { createLegendProps, createSeriesState } from './utils.svelte.js';
+  import { createLegendProps, SeriesState } from './utils.svelte.js';
 
   let {
     data = [],
@@ -105,7 +105,7 @@
     seriesProp === undefined ? [{ key: 'default', data: chartDataArray(data) }] : seriesProp
   );
 
-  const seriesState = createSeriesState(() => series);
+  const seriesState = new SeriesState(() => series);
 
   // Default xScale based on first data's `x` value
   const xScale = $derived(

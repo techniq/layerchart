@@ -124,7 +124,7 @@
   import { sum } from 'd3-array';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { selectionState } from '@layerstack/svelte-state';
+  import { SelectionState } from '@layerstack/svelte-state';
 
   import Arc, { type ArcPropsWithoutHTML } from '../Arc.svelte';
   import Chart from '../Chart.svelte';
@@ -141,7 +141,7 @@
     SimplifiedChartPropsObject,
     SimplifiedChartSnippet,
   } from './types.js';
-  import { createHighlightKey } from './utils.svelte.js';
+  import { HighlightKey } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import { getColorIfDefined } from '$lib/utils/color.js';
 
@@ -223,7 +223,7 @@
     });
   });
 
-  const selectedSeries = selectionState();
+  const selectedSeries = new SelectionState();
 
   const visibleSeries = $derived(
     series.filter((s) => selectedSeries.isEmpty() || selectedSeries.isSelected(s.key))
@@ -245,8 +245,8 @@
 
   const seriesColors = $derived(series.map((s) => s.color).filter((d) => d != null));
 
-  const highlightKey = createHighlightKey<TData, typeof Arc>();
-  const selectedKeys = selectionState();
+  const highlightKey = new HighlightKey<TData, typeof Arc>();
+  const selectedKeys = new SelectionState();
 
   const visibleData = $derived(
     chartData.filter((d) => {

@@ -94,7 +94,7 @@
   import { asAny } from '$lib/utils/types.js';
   import Spline from '../Spline.svelte';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
-  import { createLegendProps, createSeriesState } from './utils.svelte.js';
+  import { createLegendProps, SeriesState } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
@@ -140,7 +140,7 @@
       : seriesProp
   );
 
-  const seriesState = createSeriesState(() => series);
+  const seriesState = new SeriesState(() => series);
 
   const stackSeries = $derived(seriesLayout.startsWith('stack'));
 

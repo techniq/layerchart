@@ -30,8 +30,8 @@ importers:
         specifier: 1.0.1-next.0
         version: 1.0.1-next.0
       '@layerstack/svelte-state':
-        specifier: 0.1.0-next.0
-        version: 0.1.0-next.0
+        specifier: 0.1.0-next.1
+        version: 0.1.0-next.1
       '@layerstack/svelte-stores':
         specifier: 1.0.2-next.0
         version: 1.0.2-next.0
@@ -1193,8 +1193,8 @@ packages:
   '@layerstack/svelte-actions@1.0.1-next.0':
     resolution: {integrity: sha512-5wbVZCvjDmHQACcYrUQbhT6FI9aCQX+zl6tidZbnYBCqd0TV2ORk7NebCc9G8uQCiLSGYLelfVLRuvQLsWzDzw==}
 
-  '@layerstack/svelte-state@0.1.0-next.0':
-    resolution: {integrity: sha512-OOir2RxIUiIdECT0zloOxdzmQAyUyDTewuE1hnGHr+HvIixrk0Kd+jD82KTHFWV72Xv+VFPWYlQ65CCim62ihQ==}
+  '@layerstack/svelte-state@0.1.0-next.1':
+    resolution: {integrity: sha512-d9Slj1Jd2eCtfRe8NWx8AWL9UMGSac6ZU8yL/uE5tmu2XV047QimUtQgCujRDP0cMd6R3liTF3YDltQBFs7KdA==}
 
   '@layerstack/svelte-stores@1.0.2-next.0':
     resolution: {integrity: sha512-YynMtI8AkReKw10ZzzG9jr7a9usKEHZR8SFvDDxV+D/bZS0iWE0/fxfRZN6FE44qcsEZ68gfEfEGKvEHjH/8aA==}
@@ -3960,7 +3960,7 @@ snapshots:
       date-fns: 4.1.0
       lodash-es: 4.17.21
 
-  '@layerstack/svelte-state@0.1.0-next.0':
+  '@layerstack/svelte-state@0.1.0-next.1':
     dependencies:
       '@layerstack/utils': 1.1.0-next.1
 

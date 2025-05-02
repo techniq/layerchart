@@ -110,7 +110,7 @@
   import type { Insets } from '$lib/utils/rect.svelte.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
   import type { AnyScale } from '$lib/utils/scales.svelte.js';
-  import { createLegendProps, createSeriesState } from './utils.svelte.js';
+  import { createLegendProps, SeriesState } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
@@ -166,7 +166,7 @@
       : seriesProp
   );
 
-  const seriesState = createSeriesState(() => series);
+  const seriesState = new SeriesState(() => series);
   const isVertical = $derived(orientation === 'vertical');
   const isStackSeries = $derived(seriesLayout.startsWith('stack'));
   const isGroupSeries = $derived(seriesLayout === 'group');
