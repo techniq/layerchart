@@ -1,8 +1,9 @@
 import type { Component, ComponentProps } from 'svelte';
-import type { SeriesData } from './types.js';
-import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
-import type Legend from '../Legend.svelte';
+import { selectionState } from '@layerstack/svelte-state';
 import { scaleOrdinal } from 'd3-scale';
+
+import type { SeriesData } from './types.js';
+import type Legend from '../Legend.svelte';
 
 export function createHighlightKey<TData, SeriesComponent extends Component>() {
   let current = $state<SeriesData<TData, SeriesComponent>['key'] | null>(null);
@@ -39,8 +40,8 @@ export function createSeriesState<TData, TComponent extends Component>(
       .filter((d) => d) as Array<TData & { seriesKey: string }>
   );
 
-  const selectedSeries = createSelectionState();
-  const selectedKeys = createSelectionState();
+  const selectedSeries = selectionState();
+  const selectedKeys = selectionState();
   const highlightKey = createHighlightKey<TData, TComponent>();
 
   const visibleSeries = $derived(

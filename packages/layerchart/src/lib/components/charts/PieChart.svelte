@@ -175,6 +175,8 @@
   import { onMount, type ComponentProps, type Snippet } from 'svelte';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
+  import { selectionState } from '@layerstack/svelte-state';
+  import type { PieArcDatum } from 'd3-shape';
 
   import Arc from '../Arc.svelte';
   import Chart from '../Chart.svelte';
@@ -193,9 +195,7 @@
     SimplifiedChartSnippet,
   } from './types.js';
   import { createHighlightKey } from './utils.svelte.js';
-  import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
-  import type { PieArcDatum } from 'd3-shape';
 
   let {
     data = [],
@@ -256,8 +256,8 @@
   const seriesColors = $derived(series.map((s) => s.color).filter((d) => d != null));
 
   const highlightKey = createHighlightKey<TData, typeof Arc>();
-  const selectedKeys = createSelectionState();
-  const selectedSeries = createSelectionState();
+  const selectedKeys = selectionState();
+  const selectedSeries = selectionState();
 
   const visibleData = $derived(
     chartData.filter((d) => {
