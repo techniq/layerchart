@@ -1,5 +1,4 @@
 <script lang="ts" module>
-  // this is the LayerCake replacement component
   import { scaleLinear, scaleOrdinal, scaleSqrt } from 'd3-scale';
   import { type Accessor, accessor, chartDataArray } from '$lib/utils/common.js';
   import { printDebug } from '$lib/utils/debug.js';
@@ -28,7 +27,7 @@
     calcDomain,
     calcScaleExtents,
     createGetter,
-    createLayerCakeScale,
+    createChartScale,
   } from '$lib/utils/chart.js';
   import { onMount, type ComponentProps, type Snippet } from 'svelte';
   import GeoContext, { type GeoContextValue } from './GeoContext.svelte';
@@ -226,7 +225,7 @@
 
     /**
      * Determine the positioning of the wrapper div.
-     * Set this to `'absolute'` when you want to stack cakes.
+     * Set this to `'absolute'` when you want to stack layers.
      *
      * @default 'relative'
      */
@@ -913,7 +912,7 @@
   const snappedExtents = $derived($state.snapshot(extents));
 
   const xScale = $derived(
-    createLayerCakeScale('x', {
+    createChartScale('x', {
       scale: xScaleProp,
       domain: xDomain,
       padding: snappedPadding,
@@ -930,7 +929,7 @@
   const xGet = $derived(createGetter(x, xScale));
 
   const yScale = $derived(
-    createLayerCakeScale('y', {
+    createChartScale('y', {
       scale: yScaleProp,
       domain: yDomain,
       padding: yPadding,
@@ -947,7 +946,7 @@
   const yGet = $derived(createGetter(y, yScale));
 
   const zScale = $derived(
-    createLayerCakeScale('z', {
+    createChartScale('z', {
       scale: zScaleProp,
       domain: zDomain,
       padding: zPadding,
@@ -963,7 +962,7 @@
   const zGet = $derived(createGetter(z, zScale));
 
   const rScale = $derived(
-    createLayerCakeScale('r', {
+    createChartScale('r', {
       scale: rScaleProp,
       domain: rDomain,
       padding: rPadding,

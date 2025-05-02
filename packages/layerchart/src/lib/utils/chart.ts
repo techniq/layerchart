@@ -50,7 +50,7 @@ export function partialDomain(
   return domain;
 }
 
-type CreateLayerCakeScaleOpts = {
+type CreateChartScaleOpts = {
   domain: number[];
   scale: AnyScale & {
     interpolator?: () => { name: string };
@@ -66,7 +66,7 @@ type CreateLayerCakeScaleOpts = {
   extents: Extents;
 };
 
-export function createLayerCakeScale(
+export function createChartScale(
   axis: AxisKey,
   {
     domain,
@@ -78,7 +78,7 @@ export function createLayerCakeScale(
     height,
     range,
     percentRange,
-  }: CreateLayerCakeScaleOpts
+  }: CreateChartScaleOpts
 ): AnyScale {
   const defaultRange = getDefaultRange(axis, width, height, reverse, range, percentRange);
 
@@ -398,7 +398,7 @@ function calcUniques<T>(
 ): UniqueResults {
   if (!Array.isArray(data)) {
     throw new TypeError(
-      `The first argument of calcUniques() must be an array. You passed in a ${typeof data}. If you got this error using the <LayerCake> component, consider passing a flat array to the \`flatData\` prop. More info: https://layercake.graphics/guide/#flatdata`
+      `The first argument of calcUniques() must be an array. You passed in a ${typeof data}. If you got this error using the <Chart> component, consider passing a flat array to the \`flatData\` prop`
     );
   }
 
@@ -610,7 +610,7 @@ export function createGetter<TData>(accessor: (d: TData) => any, scale: AnyScale
 function calcExtents<T>(data: DataType<T>, fields: FieldAccessors<T>): UniqueResults {
   if (!Array.isArray(data)) {
     throw new TypeError(
-      `The first argument of calcExtents() must be an array. You passed in a ${typeof data}. If you got this error using the <LayerCake> component, consider passing a flat array to the \`flatData\` prop. More info: https://layercake.graphics/guide/#flatdata`
+      `The first argument of calcExtents() must be an array. You passed in a ${typeof data}. If you got this error using the <Chart> component, consider passing a flat array to the \`flatData\` prop.`
     );
   }
 

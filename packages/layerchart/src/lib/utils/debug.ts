@@ -86,7 +86,7 @@ function contrast({ r, g, b }: Pick<RGBOutput, 'r' | 'g' | 'b'>) {
 }
 
 export function printDebug(obj: Record<string, any>) {
-  console.log('/********* LayerCake Debug ************/');
+  console.log('/********* LayerChart Debug ************/');
   console.log('Bounding box:');
   printObject(obj.boundingBox);
   console.log('Data:');
@@ -99,5 +99,5 @@ export function printDebug(obj: Record<string, any>) {
   Object.keys(obj.activeGetters).forEach((g) => {
     printScale(g, obj[`${g}Scale`], obj[g]);
   });
-  console.log('/************ End LayerCake Debug ***************/\n');
+  console.log('/************ End LayerChart Debug ***************/\n');
 }
