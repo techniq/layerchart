@@ -9,6 +9,7 @@
   import type { ConnectorSweep, ConnectorType } from 'layerchart/utils/connectorUtils.js';
   import ConnectorTypeMenuField from 'layerchart/docs/ConnectorTypeMenuField.svelte';
   import ConnectorSweepMenuField from 'layerchart/docs/ConnectorSweepMenuField.svelte';
+  import { movable } from '$lib/actions/movable.js';
 
   let showLine = $state(true);
   let show = $state(true);
@@ -20,74 +21,11 @@
   let forceLinearOnAligned = $state(false);
   let source = $state({ x: 300, y: 150 });
   let target = $state({ x: 500, y: 300 });
-  let dragOffset = $state({ x: 0, y: 0 });
 
   let sweep: ConnectorSweep = $state('horizontal-vertical'); // Sweep direction
   let type: ConnectorType = $state('rounded'); // Connector type: 'straight', 'square', 'beveled', 'rounded', 'd3'
   let radius = $state(60); // Corner radius (for 'beveled', 'rounded')
-
-  let svgElement = $state<SVGSVGElement>();
-  let draggingPoint: 'source' | 'target' | null = $state(null);
-
-  function handlePointerDown(e: PointerEvent, pointId: 'source' | 'target') {
-    if (e.button !== 0) return;
-
-    draggingPoint = pointId;
-    e.preventDefault();
-
-    const initialSvgClickPoint = getSVGPoint(e);
-    if (!initialSvgClickPoint) return;
-
-    const initialCircleCenter = pointId === 'source' ? source : target;
-
-    dragOffset.x = initialCircleCenter.x - initialSvgClickPoint.x;
-    dragOffset.y = initialCircleCenter.y - initialSvgClickPoint.y;
-  }
-
-  function handlePointerMove(e: PointerEvent) {
-    if (!draggingPoint) return;
-
-    const currentSvgMousePoint = getSVGPoint(e);
-    if (!currentSvgMousePoint) return;
-
-    const newX = currentSvgMousePoint.x + dragOffset.x;
-    const newY = currentSvgMousePoint.y + dragOffset.y;
-
-    if (draggingPoint === 'source') {
-      source.x = newX;
-      source.y = newY;
-    } else if (draggingPoint === 'target') {
-      target.x = newX;
-      target.y = newY;
-    }
-  }
-
-  function handlePointerUp() {
-    if (!draggingPoint) return;
-
-    draggingPoint = null;
-  }
-
-  function getSVGPoint(e: PointerEvent) {
-    if (!svgElement) return { x: 0, y: 0 };
-    const pt = svgElement.createSVGPoint();
-    pt.x = e.clientX;
-    pt.y = e.clientY;
-    try {
-      const svgPoint = pt.matrixTransform(svgElement.getScreenCTM()?.inverse());
-      return { x: svgPoint.x, y: svgPoint.y };
-    } catch (e) {
-      console.error('Error getting screen CTM or transforming point:', e);
-      return { x: 0, y: 0 };
-    }
-  }
 </script>
-
-<svelte:window
-  onpointermove={handlePointerMove}
-  onpointerup={handlePointerUp}
-  onpointercancel={handlePointerUp}
-/>
 
 <h1>Playground</h1>
 
@@ -132,7 +70,7 @@
 <Preview>
   <div class="h-[400px] p-4 border rounded-sm">
     <Chart padding={{ left: 16, bottom: 24 }}>
-      <Svg bind:ref={svgElement}>
+      <Svg>
         {#if show}
           <Connector
             {source}
@@ -149,7 +87,12 @@
           cy={source.y}
           r="10"
           class="cursor-grab fill-info stroke-2 stroke-info"
-          onpointerdown={(e) => handlePointerDown(e, 'source')}
+          use:movable={{
+            onMove: (e) => {
+              source.x += e.detail.dx;
+              source.y += e.detail.dy;
+            },
+          }}
         />
 
         <circle
@@ -157,7 +100,12 @@
           cy={target.y}
           r="10"
           class="cursor-grab fill-accent stroke-2 stroke-accent"
-          onpointerdown={(e) => handlePointerDown(e, 'target')}
+          use:movable={{
+            onMove: (e) => {
+              target.x += e.detail.dx;
+              target.y += e.detail.dy;
+            },
+          }}
         />
       </Svg>
     </Chart>

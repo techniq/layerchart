@@ -8,7 +8,7 @@
   import { clamp } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { movable } from './movable.js';
+  import { movable } from '$lib/actions/movable.js';
 
   const nodes = Array.from({ length: 13 }, (_, i) => ({ id: i }));
   const links = [
