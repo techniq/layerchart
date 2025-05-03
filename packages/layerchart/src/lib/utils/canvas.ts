@@ -88,7 +88,7 @@ function render(
   }
 
   // Text properties
-  ctx.font = `${computedStyles.fontSize} ${computedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
+  ctx.font = `${computedStyles.fontWeight} ${computedStyles.fontSize} ${computedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
 
   // TODO: Hack to handle `textAnchor` with canvas.  Try to find a better approach
   if (computedStyles.textAnchor === 'middle') {
