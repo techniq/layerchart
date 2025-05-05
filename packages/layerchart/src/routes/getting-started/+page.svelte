@@ -124,12 +124,6 @@
     of each examples page. This will show you all of the imports used for that page.
   </div>
 
-  <h2>Layer Cake</h2>
-
-  It is also recommmended to read through
-  <a href="https://layercake.graphics/">Layer Cake</a>'s documentation for a deeper understanding of
-  how LayerChart works.
-
   <h2>Svelte UX</h2>
 
   Lastly, take a look at the complement project

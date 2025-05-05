@@ -1,8 +1,41 @@
+<script lang="ts" module>
+  import type { Placement } from './types.js';
+
+  type Actions = 'zoomIn' | 'zoomOut' | 'center' | 'reset' | 'scrollMode';
+
+  export type TransformControlsPropsWithoutHTML = {
+    /**
+     * @default 'top-right'
+     */
+    placement?: Placement;
+
+    /**
+     * @default 'vertical'
+     */
+    orientation?: 'horizontal' | 'vertical';
+
+    /**
+     * @default 'md'
+     */
+    size?: ComponentProps<Button>['size'];
+
+    /**
+     * @default ['zoomIn', 'zoomOut', 'center', 'reset', 'scrollMode']
+     */
+    show?: Actions[];
+  };
+
+  export type TransformControlsProps = TransformControlsPropsWithoutHTML &
+    Without<HTMLAttributes<HTMLElement>, TransformControlsPropsWithoutHTML>;
+</script>
+
 <script lang="ts">
   import { type ComponentProps } from 'svelte';
   import { Button, Icon, MenuButton, Tooltip } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
 
+  // TODO: maybe we include the icons as I think importing them like this
+  // will bog down the dev server
   import {
     mdiArrowULeftTop,
     mdiMagnifyPlusOutline,
@@ -14,27 +47,19 @@
     mdiCancel,
   } from '@mdi/js';
 
-  import { transformContext } from './TransformContext.svelte';
+  import { getTransformContext } from './TransformContext.svelte';
+  import type { Without } from '$lib/utils/types.js';
+  import type { HTMLAttributes } from 'svelte/elements';
 
-  type Placement =
-    | 'top-left'
-    | 'top'
-    | 'top-right'
-    | 'left'
-    | 'center'
-    | 'right'
-    | 'bottom-left'
-    | 'bottom'
-    | 'bottom-right';
+  let {
+    placement = 'top-right',
+    orientation = 'vertical',
+    size = 'md',
+    show = ['zoomIn', 'zoomOut', 'center', 'reset', 'scrollMode'],
+    class: className,
+  }: TransformControlsProps = $props();
 
-  export let placement: Placement = 'top-right';
-  export let orientation: 'horizontal' | 'vertical' = 'vertical';
-  export let size: ComponentProps<Button>['size'] = 'md';
-
-  type Actions = 'zoomIn' | 'zoomOut' | 'center' | 'reset' | 'scrollMode';
-  export let show: Actions[] = ['zoomIn', 'zoomOut', 'center', 'reset', 'scrollMode'];
-
-  $: menuPlacementByOrientationAndPlacement = {
+  const menuPlacementByOrientationAndPlacement = $derived({
     horizontal: {
       'top-left': 'bottom-end',
       top: 'bottom-end',
@@ -57,13 +82,12 @@
       bottom: 'right-end',
       'bottom-right': 'left-end',
     },
-  } as const;
+  } as const);
 
-  const transform = transformContext();
-  const scrollMode = transform.scrollMode;
+  const transform = getTransformContext();
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
   class={cls(
     'bg-surface-300/50 border rounded-full m-1 backdrop-blur-sm z-10 flex',
@@ -79,9 +103,9 @@
       bottom: 'absolute bottom-0 left-1/2 -translate-x-1/2',
       'bottom-right': 'absolute bottom-0 right-0',
     }[placement],
-    $$props.class
+    className
   )}
-  on:dblclick={(e) => {
+  ondblclick={(e) => {
     // Stop from propagating to TransformContext
     e.stopPropagation();
   }}
@@ -142,7 +166,7 @@
         menuProps={{ placement: menuPlacementByOrientationAndPlacement[orientation][placement] }}
         menuIcon={null}
         {size}
-        value={$scrollMode}
+        value={transform.scrollMode}
         on:change={(e) => transform.setScrollMode(e.detail.value)}
         class="text-surface-content"
       >

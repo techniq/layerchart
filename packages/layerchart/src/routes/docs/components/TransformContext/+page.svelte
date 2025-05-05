@@ -10,15 +10,17 @@
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import { getSpiral } from '$lib/utils/genData.js';
 
-  let pointCount = 500;
-  let angle = 137.5; //
-  let showPoints = true;
-  let showPath = false;
-  let tweened = true;
+  let pointCount = $state(500);
+  let angle = $state(137.5); //
+  let showPoints = $state(true);
+  let showPath = $state(false);
+  let tweened = $state(true);
 
-  $: data = getSpiral({ angle, radius: 10, count: pointCount, width: 500, height: 500 });
+  const data = $derived(
+    getSpiral({ angle, radius: 10, count: pointCount, width: 500, height: 500 })
+  );
 
-  let curve: ComponentProps<CurveMenuField>['value'] = undefined;
+  let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
 </script>
 
 <h1>Examples</h1>
@@ -49,26 +51,28 @@
       y="y"
       transform={{
         mode: 'canvas',
-        tweened: { duration: 800, easing: cubicOut },
+        motion: tweened ? { type: 'tween', duration: 800, easing: cubicOut } : undefined,
         initialScrollMode: 'scale',
       }}
     >
       <TransformControls />
       <Svg>
         {#if showPath}
-          <Spline {curve} {tweened} />
+          <Spline {curve} motion="tween" />
         {/if}
         {#if showPoints}
-          <Points let:points>
-            {#each points as point, index}
-              <Circle
-                cx={point.x}
-                cy={point.y}
-                r={2}
-                class={index % 2 ? 'fill-primary' : 'fill-secondary'}
-                {tweened}
-              />
-            {/each}
+          <Points>
+            {#snippet children({ points })}
+              {#each points as point, index}
+                <Circle
+                  cx={point.x}
+                  cy={point.y}
+                  r={2}
+                  class={index % 2 ? 'fill-primary' : 'fill-secondary'}
+                  motion={tweened ? 'tween' : undefined}
+                />
+              {/each}
+            {/snippet}
           </Points>
         {/if}
       </Svg>
@@ -83,7 +87,7 @@
     <Chart
       transform={{
         mode: 'canvas',
-        tweened: { duration: 800, easing: cubicOut },
+        motion: { type: 'tween', duration: 800, easing: cubicOut },
         initialScrollMode: 'scale',
       }}
     >
@@ -106,7 +110,7 @@
     <Chart
       transform={{
         mode: 'canvas',
-        tweened: { duration: 800, easing: cubicOut },
+        motion: { type: 'tween', duration: 800, easing: cubicOut },
         initialScrollMode: 'scale',
       }}
     >

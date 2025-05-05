@@ -67,9 +67,20 @@
   };
 
   const components: LinkCollection = {
-    Charts: ['Chart', 'AreaChart', 'BarChart', 'LineChart', 'PieChart', 'ScatterChart'],
+    Charts: ['Chart', 'ArcChart', 'AreaChart', 'BarChart', 'LineChart', 'PieChart', 'ScatterChart'],
     Common: ['Axis', 'Frame', 'Grid', 'Legend', 'Rule'],
-    Primitives: ['Arc', 'Bar', 'Circle', 'Group', 'Line', 'Marker', 'Point', 'Rect', 'Text'],
+    Primitives: [
+      'Arc',
+      'Bar',
+      'Circle',
+      'Connector',
+      'Group',
+      'Line',
+      'Marker',
+      'Point',
+      'Rect',
+      'Text',
+    ],
     Marks: [
       'Area',
       'Bars',
@@ -82,6 +93,7 @@
       'Spline',
       'Threshold',
     ],
+    Annotations: ['AnnotationLine', 'AnnotationPoint', 'AnnotationRange'],
     Interactions: [
       'BrushContext',
       'Highlight',
@@ -103,16 +115,9 @@
       'TileImage',
     ],
     Layout: ['ForceSimulation', 'Pack', 'Partition', 'Sankey', 'Tree', 'Treemap'],
+    Fill: ['LinearGradient', 'RadialGradient', 'Pattern'],
     Clipping: ['ClipPath', 'ChartClipPath', 'CircleClipPath', 'RectClipPath'],
-    Other: [
-      'Blur',
-      'Bounds',
-      'ColorRamp',
-      'LinearGradient',
-      'RadialGradient',
-      'MotionPath',
-      'Pattern',
-    ],
+    Other: ['Blur', 'Bounds', 'ColorRamp', 'MotionPath'],
   };
 
   const utils = ['pivot'];

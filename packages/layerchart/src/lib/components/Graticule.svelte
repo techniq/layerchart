@@ -1,32 +1,47 @@
-<script lang="ts">
-  import { geoGraticule } from 'd3-geo';
+<script lang="ts" module>
+  import type { Without } from '$lib/utils/types.js';
   import type { ComponentProps } from 'svelte';
+  import GeoPath, { type GeoPathProps } from './GeoPath.svelte';
 
-  import GeoPath from './GeoPath.svelte';
+  export type GraticulePropsWithoutHTML = {
+    lines?: Partial<ComponentProps<typeof GeoPath>> | boolean | undefined;
+    outline?: Partial<ComponentProps<typeof GeoPath>> | boolean | undefined;
+    step?: [number, number];
+  };
 
-  // TODO: Support full api (stepMinor/Major, extent[Minor/Major], etc
-  export let lines: Partial<ComponentProps<GeoPath>> | boolean | undefined = undefined;
-  export let outline: Partial<ComponentProps<GeoPath>> | boolean | undefined = undefined;
-  export let step: [number, number] = [10, 10];
-
-  $: graticule = geoGraticule();
-
-  $: graticule.step(step);
+  export type GraticuleProps = GraticulePropsWithoutHTML &
+    Without<GeoPathProps, Omit<GraticulePropsWithoutHTML, 'ref'>>;
 </script>
 
-<g class="graticule">
+<script lang="ts">
+  import { geoGraticule } from 'd3-geo';
+  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+
+  let { lines, outline, step = [10, 10], ...restProps }: GraticuleProps = $props();
+
+  const graticule = geoGraticule();
+
+  $effect(() => {
+    graticule.step(step);
+  });
+</script>
+
+<g class={layerClass('graticule-g')}>
   <!-- TODO: Any reason to still render the single `MultiLineString` path if using `lines` and/or `outline` -->
   {#if !lines && !outline}
-    <GeoPath geojson={graticule()} {...$$restProps} />
+    <GeoPath geojson={graticule()} {...extractLayerProps(restProps, 'graticule-geo-path')} />
   {/if}
 
   {#if lines}
     {#each graticule.lines() as line}
-      <GeoPath geojson={line} {...typeof lines === 'object' ? lines : null} />
+      <GeoPath geojson={line} {...extractLayerProps(lines, 'graticule-geo-line')} />
     {/each}
   {/if}
 
   {#if outline}
-    <GeoPath geojson={graticule.outline()} {...typeof outline === 'object' ? outline : null} />
+    <GeoPath
+      geojson={graticule.outline()}
+      {...extractLayerProps(outline, 'graticule-geo-outline')}
+    />
   {/if}
 </g>

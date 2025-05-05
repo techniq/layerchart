@@ -35,50 +35,62 @@
     findAncestor,
   } from 'layerchart';
   import { isNodeVisible } from '$lib/utils/treemap.js';
-  import type { ComponentProps } from 'svelte';
+  import { untrack, type ComponentProps } from 'svelte';
 
-  export let data;
+  let { data } = $props();
 
   const complexDataHierarchy = hierarchy(data.flare)
     .sum((d) => d.value)
     .sort(sortFunc('value', 'desc'));
 
-  let isFiltered = false;
-  $: groupedCars = rollup(
-    data.cars
-      // Limit dataset
-      .filter((d) =>
-        ['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.make)
-      )
-      // Hide some models in each group to show transitions
-      .filter((d) => (isFiltered ? d.year > 2010 : true))
-      // Apply `make` selection
-      .filter((d) => {
-        if (selectedCarNode?.depth === 1) {
-          return d.make === selectedCarNode.data[0];
-        } else {
-          return true;
-        }
-      }),
-    (items) => items[0], //.slice(0, 3),
-    (d) => d.make,
-    (d) => d.model
-    // d => d.year,
+  let selectedCarNode = $state<HierarchyRectangularNode<any>>();
+
+  let isFiltered = $state(false);
+  const groupedCars = $derived(
+    rollup(
+      data.cars
+        // Limit dataset
+        .filter((d) =>
+          ['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.make)
+        )
+        // Hide some models in each group to show transitions
+        .filter((d) => (isFiltered ? d.year > 2010 : true))
+        // Apply `make` selection
+        .filter((d) => {
+          if (selectedCarNode?.depth === 1) {
+            return d.make === selectedCarNode.data[0];
+          } else {
+            return true;
+          }
+        }),
+      (items) => items[0], //.slice(0, 3),
+      (d) => d.make,
+      (d) => d.model
+      // d => d.year,
+    )
   );
-  $: groupedHierarchy = hierarchy(groupedCars).count();
+  let groupedHierarchy = $state<HierarchyRectangularNode<any>>();
+  $effect.pre(() => {
+    untrack(() => {
+      selectedCarNode = groupedHierarchy;
+    });
+  });
 
-  let tile: ComponentProps<Treemap>['tile'] = 'squarify';
-  let colorBy = 'children';
+  $effect.pre(() => {
+    groupedHierarchy = hierarchy(groupedCars).count() as HierarchyRectangularNode<any>;
+  });
 
-  let selectedNested: HierarchyRectangularNode<any> | null = null;
-  let selectedZoomable: HierarchyRectangularNode<any> | null = null;
-  let selectedCarNode: HierarchyNode<any> | null = groupedHierarchy;
-  let paddingOuter = 4;
-  let paddingInner = 4;
-  let paddingTop = 20;
-  let paddingBottom = 0;
-  let paddingLeft = 0;
-  let paddingRight = 0;
+  let tile: ComponentProps<typeof Treemap>['tile'] = $state('squarify');
+  let colorBy = $state('children');
+
+  let selectedNested: HierarchyRectangularNode<any> | null = $state(null);
+  let selectedZoomable: HierarchyRectangularNode<any> | null = $state(null);
+  let paddingOuter = $state(4);
+  let paddingInner = $state(4);
+  let paddingTop = $state(20);
+  let paddingBottom = $state(0);
+  let paddingLeft = $state(0);
+  let paddingRight = $state(0);
 
   const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
   // filter out hard to see yellow and green
@@ -159,92 +171,98 @@
     </Button>
   </Breadcrumb>
   <div class="h-[800px] p-4 border rounded-sm">
-    <Chart data={complexDataHierarchy.copy()} let:tooltip>
-      <Svg>
-        <Bounds
-          domain={selectedNested}
-          tweened={{ duration: 800, easing: cubicOut }}
-          let:xScale
-          let:yScale
-        >
-          <ChartClipPath>
-            <Treemap
-              let:nodes
-              {tile}
-              bind:selected={selectedNested}
-              {paddingOuter}
-              {paddingInner}
-              {paddingTop}
-              {paddingBottom}
-              {paddingLeft}
-              {paddingRight}
-            >
-              {#each nodes as node}
-                <Group
-                  x={xScale(node.x0)}
-                  y={yScale(node.y0)}
-                  onclick={() => (node.children ? (selectedNested = node) : null)}
-                  onpointermove={(e) => tooltip.show(e, node)}
-                  onpointerleave={tooltip.hide}
+    <Chart>
+      {#snippet children({ context })}
+        <Svg>
+          <Bounds
+            domain={selectedNested}
+            motion={{ type: 'tween', duration: 800, easing: cubicOut }}
+          >
+            {#snippet children({ xScale, yScale })}
+              <ChartClipPath>
+                <Treemap
+                  hierarchy={complexDataHierarchy.copy()}
+                  {tile}
+                  bind:selected={selectedNested}
+                  {paddingOuter}
+                  {paddingInner}
+                  {paddingTop}
+                  {paddingBottom}
+                  {paddingLeft}
+                  {paddingRight}
                 >
-                  {@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
-                  {@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
-                  {@const nodeColor = getNodeColor(node, colorBy)}
-                  <g transition:fade={{ duration: 600 }}>
-                    <Rect
-                      width={nodeWidth}
-                      height={nodeHeight}
-                      stroke={colorBy === 'children'
-                        ? 'var(--color-primary-content)'
-                        : hsl(nodeColor).darker(1).toString()}
-                      stroke-opacity={colorBy === 'children' ? 0.2 : 1}
-                      fill={nodeColor}
-                      fillOpacity={node.children ? 0.5 : 1}
-                      rx={5}
-                    />
-                    <RectClipPath width={nodeWidth} height={nodeHeight}>
-                      <text
-                        x={4}
-                        y={16 * 0.6 + 4}
-                        class={cls(
-                          'text-[10px] font-medium',
-                          colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-                        )}
+                  {#snippet children({ nodes })}
+                    {#each nodes as node}
+                      <Group
+                        x={xScale(node.x0)}
+                        y={yScale(node.y0)}
+                        onclick={() => (node.children ? (selectedNested = node) : null)}
+                        onpointermove={(e) => context.tooltip.show(e, node)}
+                        onpointerleave={context.tooltip.hide}
                       >
-                        <tspan>{node.data.name}</tspan>
-                        {#if node.children}
-                          <tspan class="text-[8px] font-extralight">
-                            {format(node.value ?? 0, 'integer')}
-                          </tspan>
-                        {/if}
-                      </text>
-                      {#if !node.children}
-                        <Text
-                          value={format(node.value ?? 0, 'integer')}
-                          class={cls(
-                            'text-[8px] font-extralight',
-                            colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-                          )}
-                          verticalAnchor="start"
-                          x={4}
-                          y={16}
-                        />
-                      {/if}
-                    </RectClipPath>
-                  </g>
-                </Group>
-              {/each}
-            </Treemap>
-          </ChartClipPath>
-        </Bounds>
-      </Svg>
+                        {@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
+                        {@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
+                        {@const nodeColor = getNodeColor(node, colorBy)}
+                        <g transition:fade={{ duration: 600 }}>
+                          <Rect
+                            width={nodeWidth}
+                            height={nodeHeight}
+                            stroke={colorBy === 'children'
+                              ? 'var(--color-primary-content)'
+                              : hsl(nodeColor).darker(1).toString()}
+                            stroke-opacity={colorBy === 'children' ? 0.2 : 1}
+                            fill={nodeColor}
+                            fillOpacity={node.children ? 0.5 : 1}
+                            rx={5}
+                          />
+                          <RectClipPath width={nodeWidth} height={nodeHeight}>
+                            <text
+                              x={4}
+                              y={16 * 0.6 + 4}
+                              class={cls(
+                                'text-[10px] font-medium',
+                                colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                              )}
+                            >
+                              <tspan>{node.data.name}</tspan>
+                              {#if node.children}
+                                <tspan class="text-[8px] font-extralight">
+                                  {format(node.value ?? 0, 'integer')}
+                                </tspan>
+                              {/if}
+                            </text>
+                            {#if !node.children}
+                              <Text
+                                value={format(node.value ?? 0, 'integer')}
+                                class={cls(
+                                  'text-[8px] font-extralight',
+                                  colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                                )}
+                                verticalAnchor="start"
+                                x={4}
+                                y={16}
+                              />
+                            {/if}
+                          </RectClipPath>
+                        </g>
+                      </Group>
+                    {/each}
+                  {/snippet}
+                </Treemap>
+              </ChartClipPath>
+            {/snippet}
+          </Bounds>
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.data.name}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} format="integer" />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.name}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={data.value} format="integer" />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -291,7 +309,9 @@
 </div>
 
 <Preview data={groupedHierarchy}>
-  <Breadcrumb items={(selectedCarNode ?? groupedHierarchy).ancestors().reverse()}>
+  {@const node = selectedCarNode ?? groupedHierarchy ?? null}
+  {@const items = node ? node.ancestors().reverse() : []}
+  <Breadcrumb {items}>
     <Button
       slot="item"
       let:item
@@ -306,10 +326,10 @@
     </Button>
   </Breadcrumb>
   <div class="h-[800px] p-4 border rounded-sm">
-    <Chart data={groupedHierarchy}>
+    <Chart>
       <Svg>
         <Treemap
-          let:nodes
+          hierarchy={groupedHierarchy}
           {tile}
           {paddingOuter}
           {paddingInner}
@@ -318,64 +338,70 @@
           {paddingLeft}
           {paddingRight}
         >
-          {#each nodes as node (node
-            .ancestors()
-            .map((n) => n.data[0])
-            .join('_'))}
-            <Group
-              x={node.x0}
-              y={node.y0}
-              onclick={() => {
-                console.log('click');
-                node.children ? (selectedCarNode = node) : null;
-              }}
-              tweened={{ delay: 600 }}
-            >
-              {@const nodeWidth = node.x1 - node.x0}
-              {@const nodeHeight = node.y1 - node.y0}
-              {@const nodeColor = getNodeColor(node, colorBy)}
+          {#snippet children({ nodes })}
+            {#each nodes as node (node
+              .ancestors()
+              .map((n) => n.data[0])
+              .join('_'))}
               <g in:fade={{ duration: 600, delay: 1200 }} out:fade={{ duration: 600 }}>
-                <Rect
-                  width={nodeWidth}
-                  height={nodeHeight}
-                  stroke={colorBy === 'children'
-                    ? 'var(--color-primary-content)'
-                    : hsl(nodeColor).darker(1).toString()}
-                  stroke-opacity={colorBy === 'children' ? 0.2 : 1}
-                  fill={nodeColor}
-                  fillOpacity={node.children ? 0.5 : 1}
-                  rx={5}
-                  tweened={{ delay: 600 }}
-                />
-                <RectClipPath width={nodeWidth} height={nodeHeight} tweened={{ delay: 600 }}>
-                  <text
-                    x={4}
-                    y={16 * 0.6 + 4}
-                    class={cls(
-                      'text-[10px] font-medium',
-                      colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-                    )}
+                <Group
+                  x={node.x0}
+                  y={node.y0}
+                  onclick={() => {
+                    console.log('click');
+                    node.children ? (selectedCarNode = node) : null;
+                  }}
+                  motion={{ type: 'tween', delay: 600 }}
+                >
+                  {@const nodeWidth = node.x1 - node.x0}
+                  {@const nodeHeight = node.y1 - node.y0}
+                  {@const nodeColor = getNodeColor(node, colorBy)}
+                  <Rect
+                    width={nodeWidth}
+                    height={nodeHeight}
+                    stroke={colorBy === 'children'
+                      ? 'var(--color-primary-content)'
+                      : hsl(nodeColor).darker(1).toString()}
+                    stroke-opacity={colorBy === 'children' ? 0.2 : 1}
+                    fill={nodeColor}
+                    fillOpacity={node.children ? 0.5 : 1}
+                    rx={5}
+                    motion={{ type: 'tween', delay: 600 }}
+                  />
+                  <RectClipPath
+                    width={nodeWidth}
+                    height={nodeHeight}
+                    motion={{ type: 'tween', delay: 600 }}
                   >
-                    <tspan>{node.data[0] ?? 'Overall'}</tspan>
-                    {#if node.children}
-                      <tspan class="text-[8px] font-extralight"
-                        >{format(node.value ?? 0, 'integer')}</tspan
-                      >
-                    {/if}
-                  </text>
-                  {#if !node.children}
-                    <!-- <Text
+                    <text
+                      x={4}
+                      y={16 * 0.6 + 4}
+                      class={cls(
+                        'text-[10px] font-medium',
+                        colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                      )}
+                    >
+                      <tspan>{node.data[0] ?? 'Overall'}</tspan>
+                      {#if node.children}
+                        <tspan class="text-[8px] font-extralight"
+                          >{format(node.value ?? 0, 'integer')}</tspan
+                        >
+                      {/if}
+                    </text>
+                    {#if !node.children}
+                      <!-- <Text
 												value={format(node.value ?? 0, 'integer')}
                         class="text-[8px] font-extralight"
 												verticalAnchor="start"
 												x={4}
 												y={16}
 											/> -->
-                  {/if}
-                </RectClipPath>
+                    {/if}
+                  </RectClipPath>
+                </Group>
               </g>
-            </Group>
-          {/each}
+            {/each}
+          {/snippet}
         </Treemap>
       </Svg>
     </Chart>
@@ -424,65 +450,71 @@
     </Button>
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded-sm">
-    <Chart data={complexDataHierarchy.copy()}>
+    <Chart>
       <Svg>
         <Bounds
           domain={selectedZoomable}
-          tweened={{ duration: 800, easing: cubicOut }}
-          let:xScale
-          let:yScale
+          motion={{ type: 'tween', duration: 800, easing: cubicOut }}
         >
-          <ChartClipPath>
-            <Treemap let:nodes {tile} bind:selected={selectedZoomable}>
-              {#each nodes as node}
-                <Group
-                  x={xScale(node.x0)}
-                  y={yScale(node.y0)}
-                  onclick={() => (node.children ? (selectedZoomable = node) : null)}
-                >
-                  {@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
-                  {@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
-                  <RectClipPath width={nodeWidth} height={nodeHeight}>
-                    {@const nodeColor = getNodeColor(node, colorBy)}
-                    {#if isNodeVisible(node, selectedZoomable)}
-                      <g transition:fade={{ duration: 600 }}>
-                        <Rect
-                          width={nodeWidth}
-                          height={nodeHeight}
-                          stroke={colorBy === 'children'
-                            ? 'var(--color-primary-content)'
-                            : hsl(nodeColor).darker(1).toString()}
-                          stroke-opacity={colorBy === 'children' ? 0.2 : 1}
-                          fill={nodeColor}
-                          rx={5}
-                        />
-                        <Text
-                          value="{node.data.name} ({node.children?.length ?? 0})"
-                          class={cls(
-                            'text-[10px] font-medium',
-                            colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-                          )}
-                          verticalAnchor="start"
-                          x={4}
-                          y={2}
-                        />
-                        <Text
-                          value={format(node.value ?? 0, 'integer')}
-                          class={cls(
-                            'text-[8px] font-extralight',
-                            colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-                          )}
-                          verticalAnchor="start"
-                          x={4}
-                          y={16}
-                        />
-                      </g>
-                    {/if}
-                  </RectClipPath>
-                </Group>
-              {/each}
-            </Treemap>
-          </ChartClipPath>
+          {#snippet children({ xScale, yScale })}
+            <ChartClipPath>
+              <Treemap
+                hierarchy={complexDataHierarchy.copy()}
+                {tile}
+                bind:selected={selectedZoomable}
+              >
+                {#snippet children({ nodes })}
+                  {#each nodes as node}
+                    <Group
+                      x={xScale(node.x0)}
+                      y={yScale(node.y0)}
+                      onclick={() => (node.children ? (selectedZoomable = node) : null)}
+                    >
+                      {@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
+                      {@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
+                      <RectClipPath width={nodeWidth} height={nodeHeight}>
+                        {@const nodeColor = getNodeColor(node, colorBy)}
+                        {#if isNodeVisible(node, selectedZoomable)}
+                          <g transition:fade={{ duration: 600 }}>
+                            <Rect
+                              width={nodeWidth}
+                              height={nodeHeight}
+                              stroke={colorBy === 'children'
+                                ? 'var(--color-primary-content)'
+                                : hsl(nodeColor).darker(1).toString()}
+                              stroke-opacity={colorBy === 'children' ? 0.2 : 1}
+                              fill={nodeColor}
+                              rx={5}
+                            />
+                            <Text
+                              value="{node.data.name} ({node.children?.length ?? 0})"
+                              class={cls(
+                                'text-[10px] font-medium',
+                                colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                              )}
+                              verticalAnchor="start"
+                              x={4}
+                              y={2}
+                            />
+                            <Text
+                              value={format(node.value ?? 0, 'integer')}
+                              class={cls(
+                                'text-[8px] font-extralight',
+                                colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                              )}
+                              verticalAnchor="start"
+                              x={4}
+                              y={16}
+                            />
+                          </g>
+                        {/if}
+                      </RectClipPath>
+                    </Group>
+                  {/each}
+                {/snippet}
+              </Treemap>
+            </ChartClipPath>
+          {/snippet}
         </Bounds>
       </Svg>
     </Chart>

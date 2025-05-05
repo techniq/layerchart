@@ -27,21 +27,26 @@
     <Chart data={nodes}>
       <Svg center>
         <ForceSimulation
+          {links}
           forces={{
             charge: chargeForce,
             link: linkForce,
           }}
-          let:nodes
         >
-          {#key nodes}
-            {#each links as link}
-              <Link data={link} class="stroke-surface-content/20" curve={curveLinear} />
+          {#snippet children({ nodes, linkPositions })}
+            {#each links as link, i (i)}
+              <Link
+                explicitCoords={linkPositions[i]}
+                data={link}
+                class="stroke-surface-content/20"
+                curve={curveLinear}
+              />
             {/each}
-          {/key}
 
-          {#each nodes as node}
-            <Circle cx={node.x} cy={node.y} r={3} class="fill-surface-content" />
-          {/each}
+            {#each nodes as node}
+              <Circle cx={node.x} cy={node.y} r={3} class="fill-surface-content" />
+            {/each}
+          {/snippet}
         </ForceSimulation>
       </Svg>
     </Chart>

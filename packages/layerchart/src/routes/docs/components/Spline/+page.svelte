@@ -9,25 +9,27 @@
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
 
-  let pointCount = 100;
-  let showPoints = false;
-  let show = true;
-  let motion: 'draw' | 'tweened' | 'none' = 'tweened';
-  let Context: Component = Svg;
+  let pointCount = $state(100);
+  let showPoints = $state(false);
+  let show = $state(true);
+  let motion: 'draw' | 'tween' | 'none' = $state('tween');
+  let Context: Component = $state(Svg);
 
-  let pathGenerator = (x: number) => x;
-  let curve: ComponentProps<CurveMenuField>['value'] = undefined;
+  let pathGenerator = $state((x: number) => x);
+  let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
 
-  let amplitude = 1;
-  let frequency = 10;
-  let phase = 0;
+  let amplitude = $state(1);
+  let frequency = $state(10);
+  let phase = $state(0);
 
-  $: data = Array.from({ length: pointCount }).map((_, i) => {
-    return {
-      x: i + 1,
-      y: pathGenerator(i / pointCount) ?? i,
-    };
-  });
+  const data = $derived(
+    Array.from({ length: pointCount }).map((_, i) => {
+      return {
+        x: i + 1,
+        y: pathGenerator(i / pointCount) ?? i,
+      };
+    })
+  );
 </script>
 
 <h1>Playground</h1>
@@ -56,7 +58,7 @@
 
     <Field label="Motion" classes={{ input: 'mt-1 mb-[6px]' }}>
       <ToggleGroup bind:value={motion} variant="outline" size="sm">
-        <ToggleOption value="tweened">tweened</ToggleOption>
+        <ToggleOption value="tween">tween</ToggleOption>
         <ToggleOption value="draw">draw</ToggleOption>
         <ToggleOption value="none">none</ToggleOption>
       </ToggleGroup>
@@ -67,23 +69,27 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="x" y="y" yNice padding={{ left: 24, bottom: 24, top: 4, right: 8 }}>
-      <svelte:component this={Context}>
+      <Context>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
 
         {#if show}
           <Spline
             {curve}
-            tweened={motion === 'tweened'}
+            motion={motion === 'tween' ? 'tween' : 'none'}
             draw={motion === 'draw'}
             class="stroke-primary stroke-2"
           />
 
           {#if showPoints}
-            <Points tweened={motion === 'tweened'} r={3} class="fill-surface-100 stroke-primary" />
+            <Points
+              motion={motion === 'tween' ? 'tween' : 'none'}
+              r={3}
+              class="fill-surface-100 stroke-primary"
+            />
           {/if}
         {/if}
-      </svelte:component>
+      </Context>
     </Chart>
   </div>
 </Preview>
@@ -136,7 +142,7 @@
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
-            <Spline {curve} tweened class="stroke-primary stroke-2" />
+            <Spline {curve} motion="tween" class="stroke-primary stroke-2" />
           {/if}
         </Svg>
       </Chart>
@@ -196,8 +202,12 @@
           <Axis placement="bottom" rule />
           {#if show}
             <Spline {curve} class="stroke-primary stroke-2">
-              <circle slot="start" r={5} class="fill-primary" />
-              <circle slot="end" r={5} class="fill-primary" />
+              {#snippet startContent()}
+                <circle r={5} class="fill-primary" />
+              {/snippet}
+              {#snippet endContent()}
+                <circle r={5} class="fill-primary" />
+              {/snippet}
             </Spline>
           {/if}
         </Svg>
@@ -226,15 +236,15 @@
           <Axis placement="bottom" rule />
           {#if show}
             <Spline {curve} class="stroke-primary stroke-2">
-              <svelte:fragment slot="start">
+              {#snippet startContent()}
                 <circle r={5} class="fill-primary" />
                 <Text value="start" textAnchor="end" verticalAnchor="middle" dx={-8} />
-              </svelte:fragment>
+              {/snippet}
 
-              <svelte:fragment slot="end">
+              {#snippet endContent()}
                 <circle r={5} class="fill-primary" />
                 <Text value="end" verticalAnchor="middle" dx={8} />
-              </svelte:fragment>
+              {/snippet}
             </Spline>
           {/if}
         </Svg>
@@ -263,7 +273,9 @@
           <Axis placement="bottom" rule />
           {#if show}
             <Spline {curve} draw={{ duration: 3000 }} class="stroke-primary stroke-2">
-              <circle slot="end" r={5} class="fill-primary" />
+              {#snippet endContent()}
+                <circle r={5} class="fill-primary" />
+              {/snippet}
             </Spline>
           {/if}
         </Svg>
@@ -293,7 +305,7 @@
         </Svg>
         <Canvas>
           {#if show}
-            <Spline {curve} tweened class="stroke-primary stroke-2" />
+            <Spline {curve} motion="tween" class="stroke-primary stroke-2" />
           {/if}
         </Canvas>
       </Chart>

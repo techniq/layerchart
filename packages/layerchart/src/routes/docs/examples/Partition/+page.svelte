@@ -34,7 +34,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
   const complexHierarchy = hierarchy(data.flare)
     .sum((d) => d.value)
@@ -43,39 +43,45 @@
   const horizontalHierarchy = complexHierarchy.copy();
   const verticalHierarchy = complexHierarchy.copy();
 
-  let isFiltered = false;
-  $: groupedCars = rollup(
-    data.cars
-      // Limit dataset
-      .filter((d) =>
-        ['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.make)
-      )
-      // Hide some models in each group to show transitions
-      .filter((d) => (isFiltered ? d.year > 2010 : true))
-      // Apply `make` selection
-      .filter((d) => {
-        if (selectedCarNode?.depth === 1) {
-          return d.make === selectedCarNode.data[0];
-        } else {
-          return true;
-        }
-      }),
-    (items) => items[0], //.slice(0, 3),
-    (d) => d.make,
-    (d) => d.model
-    // d => d.year,
-  );
-  let groupedHierarchy: HierarchyRectangularNode<any>;
-  $: groupedHierarchy = hierarchy(groupedCars).count() as HierarchyRectangularNode<any>;
+  let isFiltered = $state(false);
 
-  let colorBy = 'children';
+  let selectedCarNode = $state<HierarchyRectangularNode<any>>();
 
-  let padding = 0;
-  let round = false;
-  let fullSizeLeafNodes = false;
-  let selectedHorizontal = horizontalHierarchy; // select root initially
-  let selectedVertical = verticalHierarchy; // select root initially
-  let selectedCarNode = groupedHierarchy;
+  function getGrouped(selected?: HierarchyRectangularNode<any>) {
+    return rollup(
+      data.cars
+        // Limit dataset
+        .filter((d) =>
+          ['BMW', 'Chevrolet', 'Dodge', 'Ford', 'Honda', 'Toyota', 'Volkswagen'].includes(d.make)
+        )
+        // Hide some models in each group to show transitions
+        .filter((d) => (isFiltered ? d.year > 2010 : true))
+        // Apply `make` selection
+        .filter((d) => {
+          if (selected && selected?.depth === 1) {
+            return d.make === selected.data[0];
+          } else {
+            return true;
+          }
+        }),
+      (items) => items[0], //.slice(0, 3),
+      (d) => d.make,
+      (d) => d.model
+      // d => d.year,
+    );
+  }
+
+  let colorBy = $state('children');
+  let horizontalNodes = $state<HierarchyRectangularNode<any>[]>([]);
+  let verticalNodes = $state<HierarchyRectangularNode<any>[]>([]);
+  let carNodes = $state<HierarchyRectangularNode<any>[]>([]);
+  let groupedHierarchy = $derived(hierarchy(getGrouped()).count());
+
+  let padding = $state(0);
+  let round = $state(false);
+  let fullSizeLeafNodes = $state(false);
+  let selectedHorizontal = $state<HierarchyRectangularNode<any>>(); // select root initially
+  let selectedVertical = $state<HierarchyRectangularNode<any>>(); // select root initially
 
   const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
   // filter out hard to see yellow and green
@@ -100,6 +106,23 @@
     }
     return '';
   }
+
+  const horizontalBreadcrumbItems = $derived(
+    selectedHorizontal
+      ? selectedHorizontal?.ancestors().reverse()
+      : (horizontalNodes[0]?.ancestors().reverse() ?? [])
+  );
+  const verticalBreadcrumbItems = $derived(
+    selectedVertical
+      ? selectedVertical?.ancestors().reverse()
+      : (verticalNodes[0]?.ancestors().reverse() ?? [])
+  );
+
+  const carNodeBreadcrumbItems = $derived(
+    selectedCarNode
+      ? selectedCarNode?.ancestors().reverse()
+      : (carNodes[0]?.ancestors().reverse() ?? [])
+  );
 </script>
 
 <div class="grid grid-flow-col gap-4 mb-4">
@@ -132,7 +155,7 @@
 <h2>Horizontal</h2>
 
 <Preview data={horizontalHierarchy}>
-  <Breadcrumb items={selectedHorizontal?.ancestors().reverse() ?? []}>
+  <Breadcrumb items={horizontalBreadcrumbItems}>
     <Button
       slot="item"
       let:item
@@ -147,70 +170,79 @@
     </Button>
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded-sm">
-    <Chart data={horizontalHierarchy} let:width>
-      <Svg>
-        <Bounds
-          let:xScale
-          let:yScale
-          domain={{
-            x0: selectedHorizontal?.y0,
-            y0: selectedHorizontal?.x0,
-            y1: selectedHorizontal?.x1,
-          }}
-          tweened={{ duration: 800, easing: cubicOut }}
-        >
-          <ChartClipPath>
-            <Partition {padding} {round} let:nodes>
-              {#each nodes as node}
-                {@const nodeWidth =
-                  node.children || !fullSizeLeafNodes
-                    ? xScale(node.y1) - xScale(node.y0)
-                    : width - xScale(node.y0)}
-                {@const nodeHeight = yScale(node.x1) - yScale(node.x0)}
-                <Group
-                  x={xScale(node.y0)}
-                  y={yScale(node.x0)}
-                  onclick={() => (selectedHorizontal = node)}
+    <Chart>
+      {#snippet children({ context })}
+        <Svg>
+          <Bounds
+            domain={{
+              x0: selectedHorizontal?.y0,
+              y0: selectedHorizontal?.x0,
+              y1: selectedHorizontal?.x1,
+            }}
+            motion={{ type: 'tween', duration: 800, easing: cubicOut }}
+          >
+            {#snippet children({ xScale, yScale })}
+              <ChartClipPath>
+                <Partition
+                  {padding}
+                  {round}
+                  hierarchy={horizontalHierarchy}
+                  bind:nodes={horizontalNodes}
                 >
-                  <RectClipPath width={nodeWidth} height={nodeHeight}>
-                    {@const nodeColor = getNodeColor(node, colorBy)}
-                    <g transition:fade={{ duration: 600 }}>
-                      <Rect
-                        width={nodeWidth}
-                        height={nodeHeight}
-                        stroke={colorBy === 'children'
-                          ? 'var(--color-primary-content)'
-                          : hsl(nodeColor).darker(1).toString()}
-                        stroke-opacity={colorBy === 'children' ? 0.2 : 1}
-                        fill={nodeColor}
-                        rx={5}
-                      />
-                      <text
-                        x={4}
-                        y={16 * 0.6 + 4}
-                        class={cls(
-                          'text-[10px] font-medium',
-                          colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-                        )}
+                  {#snippet children({ nodes })}
+                    {#each nodes as node}
+                      {@const nodeWidth =
+                        node.children || !fullSizeLeafNodes
+                          ? xScale(node.y1) - xScale(node.y0)
+                          : context.width - xScale(node.y0)}
+                      {@const nodeHeight = yScale(node.x1) - yScale(node.x0)}
+                      <Group
+                        x={xScale(node.y0)}
+                        y={yScale(node.x0)}
+                        onclick={() => (selectedHorizontal = node)}
                       >
-                        <tspan>{node.data.name}</tspan>
-                        <tspan
-                          class={cls(
-                            'text-[8px] font-extralight',
-                            colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-                          )}
-                        >
-                          {format(node.value ?? 0, 'integer')}
-                        </tspan>
-                      </text>
-                    </g>
-                  </RectClipPath>
-                </Group>
-              {/each}
-            </Partition>
-          </ChartClipPath>
-        </Bounds>
-      </Svg>
+                        <RectClipPath width={nodeWidth} height={nodeHeight}>
+                          {@const nodeColor = getNodeColor(node, colorBy)}
+                          <g transition:fade={{ duration: 600 }}>
+                            <Rect
+                              width={nodeWidth}
+                              height={nodeHeight}
+                              stroke={colorBy === 'children'
+                                ? 'var(--color-primary-content)'
+                                : hsl(nodeColor).darker(1).toString()}
+                              stroke-opacity={colorBy === 'children' ? 0.2 : 1}
+                              fill={nodeColor}
+                              rx={5}
+                            />
+                            <text
+                              x={4}
+                              y={16 * 0.6 + 4}
+                              class={cls(
+                                'text-[10px] font-medium',
+                                colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                              )}
+                            >
+                              <tspan>{node.data.name}</tspan>
+                              <tspan
+                                class={cls(
+                                  'text-[8px] font-extralight',
+                                  colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                                )}
+                              >
+                                {format(node.value ?? 0, 'integer')}
+                              </tspan>
+                            </text>
+                          </g>
+                        </RectClipPath>
+                      </Group>
+                    {/each}
+                  {/snippet}
+                </Partition>
+              </ChartClipPath>
+            {/snippet}
+          </Bounds>
+        </Svg>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -218,7 +250,7 @@
 <h2>Vertical</h2>
 
 <Preview data={verticalHierarchy}>
-  <Breadcrumb items={selectedVertical?.ancestors().reverse() ?? []}>
+  <Breadcrumb items={verticalBreadcrumbItems}>
     <Button
       slot="item"
       let:item
@@ -233,68 +265,82 @@
     </Button>
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded-sm">
-    <Chart data={verticalHierarchy} let:height>
-      <Svg>
-        <Bounds
-          let:xScale
-          let:yScale
-          domain={{ x0: selectedVertical?.x0, y0: selectedVertical?.y0, x1: selectedVertical?.x1 }}
-          tweened={{ duration: 800, easing: cubicOut }}
-        >
-          <ChartClipPath>
-            <Partition orientation="vertical" {padding} {round} let:nodes>
-              {#each nodes as node}
-                {@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
-                {@const nodeHeight =
-                  node.children || !fullSizeLeafNodes
-                    ? yScale(node.y1) - yScale(node.y0)
-                    : height - yScale(node.y0)}
-                <Group
-                  x={xScale(node.x0)}
-                  y={yScale(node.y0)}
-                  onclick={() => (selectedVertical = node)}
+    <Chart>
+      {#snippet children({ context })}
+        <Svg>
+          <Bounds
+            domain={{
+              x0: selectedVertical?.x0,
+              y0: selectedVertical?.y0,
+              x1: selectedVertical?.x1,
+            }}
+            motion={{ type: 'tween', duration: 800, easing: cubicOut }}
+          >
+            {#snippet children({ xScale, yScale })}
+              <ChartClipPath>
+                <Partition
+                  hierarchy={verticalHierarchy}
+                  bind:nodes={verticalNodes}
+                  orientation="vertical"
+                  {padding}
+                  {round}
                 >
-                  <RectClipPath width={nodeWidth} height={nodeHeight}>
-                    {@const nodeColor = getNodeColor(node, colorBy)}
-                    <g transition:fade={{ duration: 600 }}>
-                      <Rect
-                        width={nodeWidth}
-                        height={nodeHeight}
-                        stroke={colorBy === 'children'
-                          ? 'var(--color-primary-content)'
-                          : hsl(nodeColor).darker(1).toString()}
-                        stroke-opacity={colorBy === 'children' ? 0.2 : 1}
-                        fill={nodeColor}
-                        rx={5}
-                      />
-                      <Text
-                        value={node.data.name}
-                        class={cls(
-                          'text-[10px] font-medium',
-                          colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-                        )}
-                        verticalAnchor="start"
-                        x={4}
-                        y={2}
-                      />
-                      <Text
-                        value={format(node.value ?? 0, 'integer')}
-                        class={cls(
-                          'text-[8px] font-extralight',
-                          colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-                        )}
-                        verticalAnchor="start"
-                        x={4}
-                        y={16}
-                      />
-                    </g>
-                  </RectClipPath>
-                </Group>
-              {/each}
-            </Partition>
-          </ChartClipPath>
-        </Bounds>
-      </Svg>
+                  {#snippet children({ nodes })}
+                    {#each nodes as node}
+                      {@const nodeWidth = xScale(node.x1) - xScale(node.x0)}
+                      {@const nodeHeight =
+                        node.children || !fullSizeLeafNodes
+                          ? yScale(node.y1) - yScale(node.y0)
+                          : context.height - yScale(node.y0)}
+                      <Group
+                        x={xScale(node.x0)}
+                        y={yScale(node.y0)}
+                        onclick={() => (selectedVertical = node)}
+                      >
+                        <RectClipPath width={nodeWidth} height={nodeHeight}>
+                          {@const nodeColor = getNodeColor(node, colorBy)}
+                          <g transition:fade={{ duration: 600 }}>
+                            <Rect
+                              width={nodeWidth}
+                              height={nodeHeight}
+                              stroke={colorBy === 'children'
+                                ? 'var(--color-primary-content)'
+                                : hsl(nodeColor).darker(1).toString()}
+                              stroke-opacity={colorBy === 'children' ? 0.2 : 1}
+                              fill={nodeColor}
+                              rx={5}
+                            />
+                            <Text
+                              value={node.data.name}
+                              class={cls(
+                                'text-[10px] font-medium',
+                                colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                              )}
+                              verticalAnchor="start"
+                              x={4}
+                              y={2}
+                            />
+                            <Text
+                              value={format(node.value ?? 0, 'integer')}
+                              class={cls(
+                                'text-[8px] font-extralight',
+                                colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                              )}
+                              verticalAnchor="start"
+                              x={4}
+                              y={16}
+                            />
+                          </g>
+                        </RectClipPath>
+                      </Group>
+                    {/each}
+                  {/snippet}
+                </Partition>
+              </ChartClipPath>
+            {/snippet}
+          </Bounds>
+        </Svg>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -310,7 +356,7 @@
 </div>
 
 <Preview data={groupedHierarchy}>
-  <Breadcrumb items={selectedCarNode?.ancestors().reverse() ?? []}>
+  <Breadcrumb items={carNodeBreadcrumbItems}>
     <Button
       slot="item"
       let:item
@@ -325,67 +371,73 @@
     </Button>
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded-sm">
-    <Chart data={groupedHierarchy}>
+    <Chart>
       <Svg>
         <Bounds
-          let:xScale
-          let:yScale
           domain={{ x0: selectedCarNode?.y0, y0: selectedCarNode?.x0, y1: selectedCarNode?.x1 }}
         >
-          <ChartClipPath>
-            <Partition {padding} {round} let:nodes>
-              {#each nodes as node (node
-                .ancestors()
-                .map((n) => n.data[0])
-                .join('_'))}
-                <Group
-                  x={xScale(node.y0)}
-                  y={yScale(node.x0)}
-                  onclick={() => (selectedCarNode = node)}
-                  tweened={{ delay: 600 }}
-                >
-                  {@const nodeWidth = xScale(node.y1) - xScale(node.y0)}
-                  {@const nodeHeight = yScale(node.x1) - yScale(node.x0)}
-                  {@const nodeColor = getNodeColor(node, colorBy)}
-                  <g in:fade={{ duration: 600, delay: 1200 }} out:fade={{ duration: 600 }}>
-                    <Rect
-                      width={nodeWidth}
-                      height={nodeHeight}
-                      stroke={colorBy === 'children'
-                        ? 'var(--color-primary-content)'
-                        : hsl(nodeColor).darker(1).toString()}
-                      stroke-opacity={colorBy === 'children' ? 0.2 : 1}
-                      fill={nodeColor}
-                      rx={5}
-                      tweened={{ delay: 600 }}
-                    />
-                    <RectClipPath width={nodeWidth} height={nodeHeight} tweened={{ delay: 600 }}>
-                      <text
-                        x={4}
-                        y={16 * 0.6 + 4}
-                        class={cls(
-                          'text-[10px] font-medium',
-                          colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
-                        )}
+          {#snippet children({ xScale, yScale })}
+            <ChartClipPath>
+              <Partition bind:nodes={carNodes} hierarchy={groupedHierarchy} {padding} {round}>
+                {#snippet children({ nodes })}
+                  {#each nodes as node (node
+                    .ancestors()
+                    .map((n) => n.data[0])
+                    .join('_'))}
+                    <g in:fade={{ duration: 600, delay: 1200 }} out:fade={{ duration: 600 }}>
+                      <Group
+                        x={xScale(node.y0)}
+                        y={yScale(node.x0)}
+                        onclick={() => (selectedCarNode = node)}
+                        motion={{ type: 'tween', delay: 600 }}
                       >
-                        <tspan>{node.data[0] ?? 'Overall'}</tspan>
-                        {#if node.children}
-                          <tspan
+                        {@const nodeWidth = xScale(node.y1) - xScale(node.y0)}
+                        {@const nodeHeight = yScale(node.x1) - yScale(node.x0)}
+                        {@const nodeColor = getNodeColor(node, colorBy)}
+                        <Rect
+                          width={nodeWidth}
+                          height={nodeHeight}
+                          stroke={colorBy === 'children'
+                            ? 'var(--color-primary-content)'
+                            : hsl(nodeColor).darker(1).toString()}
+                          stroke-opacity={colorBy === 'children' ? 0.2 : 1}
+                          fill={nodeColor}
+                          rx={5}
+                          motion={{ type: 'tween', delay: 600 }}
+                        />
+                        <RectClipPath
+                          width={nodeWidth}
+                          height={nodeHeight}
+                          motion={{ type: 'tween', delay: 600 }}
+                        >
+                          <text
+                            x={4}
+                            y={16 * 0.6 + 4}
                             class={cls(
-                              'text-[8px] font-extralight',
+                              'text-[10px] font-medium',
                               colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
                             )}
                           >
-                            {format(node.value ?? 0, 'integer')}
-                          </tspan>
-                        {/if}
-                      </text>
-                    </RectClipPath>
-                  </g>
-                </Group>
-              {/each}
-            </Partition>
-          </ChartClipPath>
+                            <tspan>{node.data[0] ?? 'Overall'}</tspan>
+                            {#if node.children}
+                              <tspan
+                                class={cls(
+                                  'text-[8px] font-extralight',
+                                  colorBy === 'children' ? 'fill-primary-content' : 'fill-black'
+                                )}
+                              >
+                                {format(node.value ?? 0, 'integer')}
+                              </tspan>
+                            {/if}
+                          </text>
+                        </RectClipPath>
+                      </Group>
+                    </g>
+                  {/each}
+                {/snippet}
+              </Partition>
+            </ChartClipPath>
+          {/snippet}
         </Bounds>
       </Svg>
     </Chart>

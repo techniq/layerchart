@@ -1,21 +1,62 @@
 <script lang="ts">
-  import { Field, RangeField, Switch } from 'svelte-ux';
+  import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { Arc, Chart, Svg, LinearGradient, Text } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  let value = 50;
+  let value = $state(60);
   // let value = 100;
-  let domain = [0, 100];
+  let domain = $state<[number, number]>([0, 100]);
   // let range = [-120, 120];
-  let range = [0, 360];
-  let innerRadius = 50;
-  let outerRadius = 60;
-  let cornerRadius = 5;
-  let padAngle = 0;
-  let padRadius = 0;
+  let range = $state<[number, number]>([-90, 90]);
+  let innerRadius = $state(70);
+  let outerRadius = $state(140);
+  let cornerRadius = $state(8);
+  let padAngle = $state(0);
+  let padRadius = $state(0);
 
-  let spring = true;
+  let spring = $state(true);
+
+  let outerText = $state('outer text');
+  let innerText = $state('inner text');
+  let centroidText = $state('centroid text');
+  let textSize = $state(16);
+
+  const labelExamples: Array<{ label: string; range: [number, number] }> = [
+    {
+      label: 'top cw',
+      range: [-90, 90],
+    },
+    {
+      label: 'top ccw',
+      range: [90, -90],
+    },
+    {
+      label: 'bottom cw',
+      range: [-270, -90],
+    },
+    {
+      label: 'bottom ccw',
+      range: [-90, -270],
+    },
+
+    {
+      label: 'left cw',
+      range: [-180, 0],
+    },
+    {
+      label: 'left ccw',
+      range: [0, -180],
+    },
+    {
+      label: 'right cw',
+      range: [0, 180],
+    },
+    {
+      label: 'right ccw',
+      range: [180, 0],
+    },
+  ];
 
   const labelOptions = [
     { name: 'None', value: undefined },
@@ -47,37 +88,61 @@
   />
   <RangeField label="Pad angle" bind:value={padAngle} max={2} step={0.1} />
   <!-- <RangeField label="Pad radius" bind:value={padRadius} max={2} step={0.1} /> -->
+  <TextField label="Outer Arc Text" bind:value={outerText} />
+  <TextField label="Inner Arc Text" bind:value={innerText} />
+  <TextField label="Centroid Arc Text" bind:value={centroidText} />
+  <RangeField label="Font size (px)" bind:value={textSize} min={domain[0]} max={domain[1]} />
 </div>
 
 <Preview>
-  <div class="h-[200px] p-4 border rounded-sm">
+  <div class="h-[400px] p-4 border rounded-sm">
     <Chart>
       <Svg center>
         {#key spring}
-          <LinearGradient class="from-secondary to-primary" vertical let:gradient>
-            <Arc
-              {value}
-              {domain}
-              {range}
-              {innerRadius}
-              {outerRadius}
-              {cornerRadius}
-              {padAngle}
-              {label}
-              {spring}
-              let:value
-              let:boundingBox
-              fill={gradient}
-              track={{ class: 'fill-surface-content/5' }}
-            >
-              <Text
-                value={Math.round(value)}
-                textAnchor="middle"
-                verticalAnchor="middle"
-                class="text-4xl"
-                dy={8}
-              />
-            </Arc>
+          <LinearGradient class="from-secondary to-primary" vertical>
+            {#snippet children({ gradient })}
+              <Arc
+                {value}
+                {domain}
+                {range}
+                {innerRadius}
+                {outerRadius}
+                {cornerRadius}
+                {padAngle}
+                motion={spring ? 'spring' : undefined}
+                fill={gradient}
+                track={{ class: 'fill-surface-content/5' }}
+              >
+                {#snippet children({ value, getArcTextProps })}
+                  <Text
+                    value={Math.round(value)}
+                    textAnchor="middle"
+                    verticalAnchor="middle"
+                    class="text-4xl"
+                    dy={8}
+                  />
+                  <!-- Arc labels -->
+                  <Text
+                    {...getArcTextProps('inner')}
+                    value={innerText}
+                    font-size="{textSize}px"
+                    truncate
+                  />
+                  <Text
+                    {...getArcTextProps('outer')}
+                    value={outerText}
+                    font-size="{textSize}px"
+                    truncate
+                  />
+                  <Text
+                    {...getArcTextProps('middle')}
+                    value={centroidText}
+                    font-size="{textSize}px"
+                    truncate
+                  />
+                {/snippet}
+              </Arc>
+            {/snippet}
           </LinearGradient>
         {/key}
       </Svg>
@@ -85,78 +150,55 @@
   </div>
 </Preview>
 
-{#if false}
-  <h2>Label location</h2>
+<h2>Label direction</h2>
 
-  <!-- {#if label === 'svg-center'}
-	<text dy={16}>
-		{Math.round($tweened_value)}
-	</text>
-{/if} -->
-
-  <!-- {#if label === 'arc-center'}
-	<text x={labelArcCenterOffset.x} y={labelArcCenterOffset.y} dy={16}>
-		{Math.round($tweened_value)}
-	</text>
-{/if} -->
-
-  <!-- {#if label === 'arc-bottom'}
-	<text x={labelArcBottomOffset.x} y={labelArcBottomOffset.y} dy={0}>
-		{Math.round($tweened_value)}
-	</text>
-{/if} -->
-
-  <!-- {#if label === 'arc-centroid'}
-	<text x={trackArcCentroid[0]} y={trackArcCentroid[1]} dy={16}>
-		{Math.round($tweened_value)}
-	</text>
-{/if} -->
-
-  <Preview>
-    <div class="h-[200px] p-4 border rounded-sm">
+<div class="grid grid-cols-[1fr_1fr_1fr_1fr] gap-2 mb-2">
+  {#each labelExamples as example}
+    <div class="h-[300px] p-4 border rounded-sm">
       <Chart>
         <Svg center>
-          <LinearGradient
-            stops={['hsl(80, 100%, 50%)', 'hsl(200, 100%, 50%)']}
-            vertical
-            let:gradient
-          >
-            <Arc
-              {value}
-              {domain}
-              {range}
-              {innerRadius}
-              {outerRadius}
-              {cornerRadius}
-              {padAngle}
-              {label}
-              let:boundingBox
-              fill={gradient}
-            >
-              <!-- svg center -->
-              <!-- <Text
-							value={Math.round(value)}
-							textAnchor="middle"
-							verticalAnchor="middle"
-              class="text-4xl"
-							dy={8}
-						/> -->
-              <!-- arc center -->
-              <Text
-                value={Math.round(value)}
-                textAnchor="middle"
-                verticalAnchor="middle"
-                class="text-4xl"
-                x={outerRadius - boundingBox.width / 2}
-                y={(outerRadius - boundingBox.height / 2) * -1}
-                dy={8}
-              />
-              <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-4xl" capHeight="1.5rem" /> -->
-              <!-- <Text {value} textAnchor="middle" verticalAnchor="middle" class="text-7xl" capHeight="3.1em" /> -->
-            </Arc>
+          <LinearGradient class="from-secondary to-primary" vertical>
+            {#snippet children({ gradient })}
+              <Arc
+                {value}
+                {domain}
+                range={example.range}
+                {cornerRadius}
+                innerRadius={0.5}
+                fill={gradient}
+                track={{ class: 'fill-surface-content/5' }}
+              >
+                {#snippet children({ getArcTextProps, getTrackTextProps })}
+                  <Text
+                    value={example.label}
+                    textAnchor="middle"
+                    verticalAnchor="middle"
+                    class="text-xs"
+                    dy={-8}
+                  />
+                  <Text
+                    value={example.range.join(',')}
+                    textAnchor="middle"
+                    verticalAnchor="middle"
+                    class="text-xs"
+                    dy={8}
+                  />
+
+                  <!-- Arc Text -->
+                  <Text {...getArcTextProps('inner')} value={innerText} font-size="12px" truncate />
+                  <Text {...getArcTextProps('outer')} value={outerText} font-size="12px" truncate />
+                  <Text
+                    {...getArcTextProps('middle')}
+                    value={centroidText}
+                    font-size="12px"
+                    truncate
+                  />
+                {/snippet}
+              </Arc>
+            {/snippet}
           </LinearGradient>
         </Svg>
       </Chart>
     </div>
-  </Preview>
-{/if}
+  {/each}
+</div>

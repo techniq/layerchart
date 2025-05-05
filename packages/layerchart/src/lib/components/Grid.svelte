@@ -1,177 +1,289 @@
-<script lang="ts">
+<script lang="ts" module>
+  import type { Transition, TransitionParams, Without } from '$lib/utils/types.js';
+  import { extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
   import type { SVGAttributes } from 'svelte/elements';
-  import { fade } from 'svelte/transition';
-  import { cubicIn } from 'svelte/easing';
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
 
-  import { curveLinearClosed } from 'd3-shape';
+  export type GridPropsWithoutHTML<In extends Transition = Transition> = {
+    /**
+     * Draw a x-axis lines
+     *
+     * @default false
+     */
+    x?: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'>;
 
-  import { cls } from '@layerstack/tailwind';
-  import type { TransitionParams } from 'svelte-ux'; // TODO: Replace with `@layerstack/svelte-types` or similar
+    /**
+     * Draw a y-axis lines
+     *
+     * @default false
+     */
+    y?: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'>;
 
-  import { chartContext } from './ChartContext.svelte';
-  import { isScaleBand, type AnyScale } from '$lib/utils/scales.js';
+    /**
+     * Control the number of x-axis ticks
+     */
+    xTicks?: TicksConfig;
 
-  import Rule from './Rule.svelte';
-  import Spline from './Spline.svelte';
-  import Circle from './Circle.svelte';
+    /**
+     * Control the number of y-axis ticks
+     *
+     * @default !isScaleBand(ctx.yScale) ? 4 : undefined
+     */
+    yTicks?: TicksConfig;
 
-  type TicksConfig = number | any[] | ((scale: AnyScale) => any) | null | undefined;
+    /**
+     * Line alignment when band scale is used (x or y axis)
+     *
+     * @default 'center'
+     */
+    bandAlign?: 'center' | 'between';
 
-  const { xScale, yScale, radial } = chartContext();
+    /**
+     * Render `y` lines with circles or linear splines
+     *
+     * @default 'circle'
+     */
+    radialY?: 'circle' | 'linear';
 
-  /** Draw a x-axis lines */
-  export let x: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'> = false;
+    /**
+     * Classes to apply to the rendered elements.
+     *
+     * @default {}
+     */
+    classes?: {
+      root?: string;
+      line?: string;
+    };
 
-  /** Draw a y-axis lines */
-  export let y: boolean | Pick<SVGAttributes<SVGElement>, 'class' | 'style'> = false;
+    /**
+     * Transition function for entering elements
+     * @default  defaults to fade if motion is tweened
+     */
+    transitionIn?: In;
 
-  /** Control the number of x-axis ticks */
-  export let xTicks: TicksConfig = undefined;
+    /**
+     * Parameters for the transitionIn function
+     * @default { easing: cubicIn }
+     */
+    transitionInParams?: TransitionParams<In>;
 
-  /** Control the number of y-axis ticks */
-  export let yTicks: TicksConfig = !isScaleBand($yScale) ? 4 : undefined;
+    /**
+     * A reference to the underlying outermost `<g>` element.
+     *
+     * @bindable
+     */
+    ref?: SVGGElement;
 
-  /** Line alignment when band scale is used (x or y axis) */
-  export let bandAlign: 'center' | 'between' = 'center';
+    motion?: MotionProp;
+  };
 
-  /** Render `y` lines with circles or linear splines */
-  export let radialY: 'circle' | 'linear' = 'circle';
-
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
-
-  export let transitionIn = tweened
-    ? fade
-    : () => {
-        return {};
-      };
-  export let transitionInParams: TransitionParams = { easing: cubicIn };
-
-  export let classes: {
-    root?: string;
-    line?: string;
-  } = {};
-
-  function getTickVals(scale: AnyScale, ticks: TicksConfig): any[] {
-    return Array.isArray(ticks)
-      ? ticks
-      : typeof ticks === 'function'
-        ? ticks(scale)
-        : isScaleBand(scale)
-          ? ticks
-            ? scale.domain().filter((v: any, i: number) => i % ticks === 0)
-            : scale.domain()
-          : scale.ticks?.(ticks);
-  }
-
-  $: xTickVals = getTickVals($xScale, xTicks);
-  $: yTickVals = getTickVals($yScale, yTicks);
-
-  $: xBandOffset = isScaleBand($xScale)
-    ? bandAlign === 'between'
-      ? -($xScale.padding() * $xScale.step()) / 2 // before
-      : $xScale.step() / 2 - ($xScale.padding() * $xScale.step()) / 2 // center
-    : 0;
-
-  $: yBandOffset = isScaleBand($yScale)
-    ? bandAlign === 'between'
-      ? -($yScale.padding() * $yScale.step()) / 2 // before
-      : $yScale.step() / 2 - ($yScale.padding() * $yScale.step()) / 2 // center
-    : 0;
+  export type GridProps<In extends Transition = Transition> = Omit<
+    GridPropsWithoutHTML<In> & Without<SVGAttributes<SVGGElement>, GridPropsWithoutHTML<In>>,
+    'children'
+  >;
 </script>
 
-<g class={cls('Grid', classes.root, $$props.class)}>
+<script lang="ts">
+  import { fade } from 'svelte/transition';
+  import { cubicIn } from 'svelte/easing';
+
+  import { curveLinearClosed, pointRadial } from 'd3-shape';
+
+  import { cls } from '@layerstack/tailwind';
+
+  import { isScaleBand } from '$lib/utils/scales.svelte.js';
+
+  import Circle from './Circle.svelte';
+  import Line from './Line.svelte';
+  import Rule from './Rule.svelte';
+  import Spline from './Spline.svelte';
+  import { getChartContext } from './Chart.svelte';
+  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import { resolveTickVals, type TicksConfig } from '$lib/utils/ticks.js';
+
+  const ctx = getChartContext();
+
+  let {
+    x = false,
+    y = false,
+    xTicks,
+    yTicks: yTicksProp,
+    bandAlign = 'center',
+    radialY = 'circle',
+    motion,
+    transitionIn: transitionInProp,
+    transitionInParams = { easing: cubicIn },
+    classes = {},
+    class: className,
+    ref: refProp = $bindable(),
+    ...restProps
+  }: GridProps = $props();
+
+  let ref = $state<SVGGElement>();
+
+  $effect.pre(() => {
+    refProp = ref;
+  });
+
+  const yTicks = $derived(yTicksProp ?? (!isScaleBand(ctx.yScale) ? 4 : undefined));
+
+  const tweenConfig = $derived(extractTweenConfig(motion));
+
+  const transitionIn = $derived((transitionInProp ?? tweenConfig?.options) ? fade : () => ({}));
+
+  const xTickVals = $derived(resolveTickVals(ctx.xScale, xTicks));
+  const yTickVals = $derived(resolveTickVals(ctx.yScale, yTicks));
+
+  const xBandOffset = $derived(
+    isScaleBand(ctx.xScale)
+      ? bandAlign === 'between'
+        ? -(ctx.xScale.padding() * ctx.xScale.step()) / 2 // before
+        : ctx.xScale.step() / 2 - (ctx.xScale.padding() * ctx.xScale.step()) / 2 // center
+      : 0
+  );
+
+  const yBandOffset = $derived(
+    isScaleBand(ctx.yScale)
+      ? bandAlign === 'between'
+        ? -(ctx.yScale.padding() * ctx.yScale.step()) / 2 // before
+        : ctx.yScale.step() / 2 - (ctx.yScale.padding() * ctx.yScale.step()) / 2 // center
+      : 0
+  );
+</script>
+
+<g bind:this={ref} class={cls(layerClass('grid'), classes.root, className)} {...restProps}>
   {#if x}
-    {@const splineProps = typeof x === 'object' ? x : null}
-    <g in:transitionIn={transitionInParams}>
+    {@const splineProps = extractLayerProps(x, 'grid-x-line')}
+
+    <g in:transitionIn={transitionInParams} class={layerClass('grid-x')}>
       {#each xTickVals as x (x)}
-        {#if $radial}
-          <Spline
-            data={yTickVals.map((y) => ({ x, y }))}
-            x="x"
-            y="y"
-            xOffset={xBandOffset}
-            curve={curveLinearClosed}
-            {tweened}
-            {spring}
+        {#if ctx.radial}
+          {@const [x1, y1] = pointRadial(ctx.xScale(x), ctx.yRange[0])}
+          {@const [x2, y2] = pointRadial(ctx.xScale(x), ctx.yRange[1])}
+          <Line
+            {x1}
+            {y1}
+            {x2}
+            {y2}
+            motion={tweenConfig}
             {...splineProps}
-            class={cls('stroke-surface-content/10', classes.line, splineProps?.class)}
+            class={cls(
+              layerClass('grid-x-radial-line'),
+              'stroke-surface-content/10',
+              classes.line,
+              splineProps?.class
+            )}
           />
         {:else}
           <Rule
             {x}
             xOffset={xBandOffset}
-            {tweened}
-            {spring}
+            {motion}
             {...splineProps}
-            class={cls('stroke-surface-content/10', classes.line, splineProps?.class)}
+            class={cls(
+              layerClass('grid-x-rule'),
+              'stroke-surface-content/10',
+              classes.line,
+              splineProps?.class
+            )}
           />
         {/if}
       {/each}
 
       <!-- Add extra rule after last band -->
-      {#if isScaleBand($xScale) && bandAlign === 'between' && !$radial && xTickVals.length}
+      {#if isScaleBand(ctx.xScale) && bandAlign === 'between' && !ctx.radial && xTickVals.length}
         <Rule
           x={xTickVals[xTickVals.length - 1]}
-          xOffset={xBandOffset + $xScale.step()}
-          {tweened}
-          {spring}
+          xOffset={ctx.xScale.step() + xBandOffset}
+          {motion}
           {...splineProps}
-          class={cls('stroke-surface-content/10', classes.line, splineProps?.class)}
+          class={cls(
+            layerClass('grid-x-end-rule'),
+            'stroke-surface-content/10',
+            classes.line,
+            splineProps?.class
+          )}
         />
       {/if}
     </g>
   {/if}
 
   {#if y}
-    {@const splineProps = typeof y === 'object' ? y : null}
-    <g in:transitionIn={transitionInParams}>
+    {@const splineProps = extractLayerProps(y, 'grid-y-line')}
+    <g in:transitionIn={transitionInParams} class={layerClass('grid-y')}>
       {#each yTickVals as y (y)}
-        {#if $radial}
+        {#if ctx.radial}
           {#if radialY === 'circle'}
             <Circle
-              r={$yScale(y)}
-              {tweened}
-              {spring}
+              r={ctx.yScale(y) + yBandOffset}
+              {motion}
               {...splineProps}
-              class={cls('fill-none stroke-surface-content/10', classes.line, splineProps?.class)}
+              class={cls(
+                layerClass('grid-y-radial-circle'),
+                'fill-none stroke-surface-content/10',
+                classes.line,
+                splineProps?.class
+              )}
             />
           {:else}
             <Spline
               data={xTickVals.map((x) => ({ x, y }))}
               x="x"
               y="y"
-              yOffset={yBandOffset}
-              {tweened}
-              {spring}
+              motion={tweenConfig}
               curve={curveLinearClosed}
               {...splineProps}
-              class={cls('stroke-surface-content/10', classes.line, splineProps?.class)}
+              class={cls(
+                layerClass('grid-y-radial-line'),
+                'stroke-surface-content/10',
+                classes.line,
+                splineProps?.class
+              )}
             />
           {/if}
         {:else}
           <Rule
             {y}
             yOffset={yBandOffset}
-            {tweened}
-            {spring}
+            {motion}
             {...splineProps}
-            class={cls('stroke-surface-content/10', classes.line, splineProps?.class)}
+            class={cls(
+              layerClass('grid-y-rule'),
+              'stroke-surface-content/10',
+              classes.line,
+              splineProps?.class
+            )}
           />
         {/if}
       {/each}
 
       <!-- Add extra rule after last band -->
-      {#if isScaleBand($yScale) && bandAlign === 'between' && !$radial && yTickVals.length}
-        <Rule
-          y={yTickVals[yTickVals.length - 1]}
-          yOffset={yBandOffset + $yScale.step()}
-          {tweened}
-          {spring}
-          {...splineProps}
-          class={cls('stroke-surface-content/10', classes.line, splineProps?.class)}
-        />
+      {#if isScaleBand(ctx.yScale) && bandAlign === 'between' && yTickVals.length}
+        {#if ctx.radial}
+          <Circle
+            r={ctx.yScale(yTickVals[yTickVals.length - 1])! + ctx.yScale.step() + yBandOffset}
+            {motion}
+            {...splineProps}
+            class={cls(
+              layerClass('grid-y-radial-circle'),
+              'fill-none stroke-surface-content/10',
+              classes.line,
+              splineProps?.class
+            )}
+          />
+        {:else}
+          <Rule
+            y={yTickVals[yTickVals.length - 1]}
+            yOffset={ctx.yScale.step() + yBandOffset}
+            {motion}
+            {...splineProps}
+            class={cls(
+              layerClass('grid-y-end-rule'),
+              'stroke-surface-content/10',
+              classes.line,
+              splineProps?.class
+            )}
+          />
+        {/if}
       {/if}
     </g>
   {/if}

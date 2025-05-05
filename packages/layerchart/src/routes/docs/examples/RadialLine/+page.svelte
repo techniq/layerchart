@@ -11,7 +11,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
 
-  export let data;
+  let { data } = $props();
 
   const pitchData = [
     { name: 'fastball', value: 10 },
@@ -20,7 +20,7 @@
     { name: 'cutter', value: 8 },
     { name: 'curve', value: 5 },
   ];
-  let curve = curveLinearClosed;
+  let curve = $state(curveLinearClosed);
 </script>
 
 <h1>Examples</h1>
@@ -117,32 +117,33 @@
       zDomain={[1940, 2024]}
       zRange={[0.1, 0.2]}
       radial
-      let:zScale
     >
-      <Svg center>
-        {#each flatGroup(data.dailyTemperatures, (d) => d.year) as [year, yearData]}
-          <Spline
-            data={yearData}
-            curve={curveCatmullRom}
-            class={cls(
-              year === 2024
-                ? 'stroke-primary'
-                : year === 2023
-                  ? 'stroke-primary/50'
-                  : 'stroke-surface-content'
-            )}
-            opacity={[2023, 2024].includes(year) ? 1 : zScale(year)}
+      {#snippet children({ context })}
+        <Svg center>
+          {#each flatGroup(data.dailyTemperatures, (d) => d.year) as [year, yearData]}
+            <Spline
+              data={yearData}
+              curve={curveCatmullRom}
+              class={cls(
+                year === 2024
+                  ? 'stroke-primary'
+                  : year === 2023
+                    ? 'stroke-primary/50'
+                    : 'stroke-surface-content'
+              )}
+              opacity={[2023, 2024].includes(year) ? 1 : context.zScale(year)}
+            />
+          {/each}
+          <Axis placement="angle" tickLength={0} grid format={PeriodType.Month} />
+          <Axis
+            placement="radius"
+            grid
+            rule={{ y: 'top', class: 'stroke-surface-content/20' }}
+            ticks={4}
+            format={(v) => v + '° F'}
           />
-        {/each}
-        <Axis placement="angle" tickLength={0} grid format={PeriodType.Month} />
-        <Axis
-          placement="radius"
-          grid
-          rule={{ y: 'top', class: 'stroke-surface-content/20' }}
-          ticks={4}
-          format={(v) => v + '° F'}
-        />
-      </Svg>
+        </Svg>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

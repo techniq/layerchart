@@ -5,6 +5,7 @@ import { group } from 'd3-array';
  *  - see: https://observablehq.com/d/3ea8d446f5ba96fe
  *  - see also: https://observablehq.com/d/ac2a320cf2b0adc4 as generator
  */
+
 export function pivotLonger(data: any[], columns: string[], name: string, value: string) {
   const keep = Object.keys(data[0]).filter((c) => !columns.includes(c));
   return data.flatMap((d) => {

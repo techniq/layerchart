@@ -6,33 +6,49 @@
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
   import { timerStore } from '@layerstack/svelte-stores';
 
-  import { Chart, GeoCircle, GeoPath, Graticule, Svg, Tooltip, TransformContext } from 'layerchart';
+  import {
+    Chart,
+    GeoCircle,
+    GeoPath,
+    Graticule,
+    Svg,
+    Tooltip,
+    type ChartContextValue,
+  } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
   // https://observablehq.com/@tansi/earthquake
   // https://observablehq.com/@observablehq/plot-earthquake-globe
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let transformContext: TransformContext;
+  let context = $state<ChartContextValue<(typeof data.earthquakes)[number]>>();
 
-  let velocity = 3;
-  let isSpinning = false;
+  let velocity = $state(3);
+  let isSpinning = $state(false);
   const timer = timerStore({
     delay: 1,
     onTick() {
-      transformContext.translate.update((value) => {
-        return {
-          x: (value.x += velocity),
-          y: value.y,
-        };
-      });
+      if (!context) return;
+      const curr = context.transform.translate;
+
+      context.transform.translate = {
+        x: (curr.x += velocity),
+        y: curr.y,
+      };
     },
-    disabled: !isSpinning,
   });
-  $: isSpinning ? timer.start() : timer.stop();
+
+  $effect(() => {
+    if (isSpinning) {
+      timer.start();
+    } else {
+      timer.stop();
+    }
+  });
+
   $timer;
 </script>
 
@@ -73,6 +89,7 @@
 <Preview data={countries}>
   <div class="h-[600px]">
     <Chart
+      bind:context
       data={data.earthquakes}
       x="longitude"
       y="latitude"
@@ -92,37 +109,38 @@
           timer.start();
         }
       }}
-      bind:transformContext
-      let:tooltip
-      let:rScale
     >
-      <Svg>
-        <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
+      {#snippet children({ context })}
+        <Svg>
+          <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
 
-        <Graticule class="stroke-surface-content/20" />
+          <Graticule class="stroke-surface-content/20" />
 
-        <GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
-        <GeoPath geojson={data.tectonicPlates} class="stroke-danger-100/30" />
+          <GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
+          <GeoPath geojson={data.tectonicPlates} class="stroke-danger-100/30" />
 
-        {#each data.earthquakes as eq}
-          <GeoCircle
-            center={[eq.longitude, eq.latitude]}
-            radius={rScale(Math.exp(eq.magnitude))}
-            class="stroke-danger fill-danger/20"
-            onpointermove={(e) => tooltip?.show(e, eq)}
-            onpointerleave={() => tooltip?.hide()}
-          />
-        {/each}
-      </Svg>
+          {#each data.earthquakes as eq}
+            <GeoCircle
+              center={[eq.longitude, eq.latitude]}
+              radius={context.rScale(Math.exp(eq.magnitude))}
+              class="stroke-danger fill-danger/20"
+              onpointermove={(e) => context.tooltip.show(e, eq)}
+              onpointerleave={() => context.tooltip.hide()}
+            />
+          {/each}
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.place}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
-          <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
-          <Tooltip.Item label="Magnitude" value={data.magnitude} format="decimal" />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root {context}>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.place}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
+              <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
+              <Tooltip.Item label="Magnitude" value={data.magnitude} format="decimal" />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

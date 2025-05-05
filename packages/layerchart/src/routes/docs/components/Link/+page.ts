@@ -8,7 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
-      related: ['components/Points', 'examples/Sankey', 'examples/Tree'],
+      related: ['components/Connector', 'components/Points', 'examples/Sankey', 'examples/Tree'],
     },
   };
 }

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { cubicOut } from 'svelte/easing';
   import { fade } from 'svelte/transition';
   import { hierarchy, type HierarchyCircularNode, type HierarchyNode } from 'd3-hierarchy';
@@ -7,31 +6,40 @@
   import * as chromatic from 'd3-scale-chromatic';
   import { hsl } from 'd3-color';
 
-  import { Chart, Circle, Group, Pack, Svg, TransformContext, findAncestor } from 'layerchart';
+  import {
+    Chart,
+    Circle,
+    Group,
+    Pack,
+    Svg,
+    findAncestor,
+    type ChartContextValue,
+  } from 'layerchart';
   import { Breadcrumb, Button, Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
   const complexHierarchy = hierarchy(data.flare)
     .sum((d) => d.value)
     .sort(sortFunc('value', 'desc')) as HierarchyCircularNode<any>;
 
-  let colorBy = 'parent';
+  let colorBy = $state('parent');
 
-  let padding = 3;
-  let selected: HierarchyCircularNode<any>;
-  let transformContext: TransformContext;
+  let padding = $state(3);
+  let nodes = $state.raw<HierarchyCircularNode<any>[]>([]);
+  let selected = $state.raw<HierarchyCircularNode<any>>();
+  let context = $state<ChartContextValue>(null!);
 
-  $: if (transformContext && selected) {
-    const diameter = selected.r * 2;
-    transformContext.zoomTo(
-      { x: selected.x, y: selected.y },
-      { width: diameter, height: diameter }
-    );
-  }
+  $effect(() => {
+    if (context?.transform && selected) {
+      const node = findSelectedNodeInHierarchy(selected, nodes);
+      const diameter = node.r * 2;
+      context.transform.zoomTo({ x: node.x, y: node.y }, { width: diameter, height: diameter });
+    }
+  });
 
   const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
   // filter out hard to see yellow and green
@@ -57,10 +65,17 @@
     return '';
   }
 
-  onMount(() => {
-    // Set root initially.  Wait for Tree to mount so layout is set
-    selected = complexHierarchy as HierarchyCircularNode<any>; // select root initially
-  });
+  function findSelectedNodeInHierarchy(
+    selectedNode: HierarchyCircularNode<any>,
+    hierarchy: HierarchyCircularNode<any>[]
+  ): HierarchyCircularNode<any> {
+    for (const node of hierarchy) {
+      if (node.data.name === selectedNode.data.name) {
+        return node;
+      }
+    }
+    return selectedNode;
+  }
 </script>
 
 <div class="grid grid-flow-col gap-4 mb-4">
@@ -79,8 +94,10 @@
 
 <h2>General</h2>
 
-<Preview data={complexHierarchy}>
-  <Breadcrumb items={selected?.ancestors().reverse() ?? []}>
+<Preview data={complexHierarchy.data}>
+  <Breadcrumb
+    items={selected ? selected?.ancestors().reverse() : (nodes[0]?.ancestors().reverse() ?? [])}
+  >
     <Button
       slot="item"
       let:item
@@ -96,18 +113,16 @@
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
     <Chart
-      data={complexHierarchy}
       transform={{
         mode: 'canvas',
         disablePointer: true,
-        tweened: { duration: 800, easing: cubicOut },
+        motion: { type: 'tween', duration: 800, easing: cubicOut },
       }}
-      bind:transformContext
-      let:transform
+      bind:context
     >
-      <Svg on:click={() => (selected = complexHierarchy)}>
-        <Pack {padding} let:nodes>
-          {#each nodes as node}
+      <Svg onclick={() => (selected = complexHierarchy)}>
+        <Pack {padding} hierarchy={complexHierarchy} bind:nodes>
+          {#each nodes as node ([node.data.name, node.parent?.data.name].join('-'))}
             <Group
               x={node.x}
               y={node.y}
@@ -123,24 +138,30 @@
                 stroke={hsl(nodeColor)
                   .darker(colorBy === 'children' ? 0.5 : 1)
                   .toString()}
-                strokeWidth={1 / transform.scale}
+                strokeWidth={1 / context.transform.scale}
                 fill={nodeColor}
               />
             </Group>
           {/each}
-          <!-- Show text on top of all circles -->
-          {#each selected ? (selected.children ?? [selected]) : [] as node (node.data.name + node.depth)}
-            {@const fontSize = 1 / transform.scale}
+          {@const selectedNodes = selected
+            ? (selected.children ?? [selected])
+            : nodes[0]
+              ? (nodes[0].children ?? [nodes[0]])
+              : []}
+
+          {#each selectedNodes as node ([node.data.name, node.parent?.data.name].join('-'))}
+            {@const trueNode = findSelectedNodeInHierarchy(node, nodes)}
+            {@const fontSize = 1 / context.transform.scale}
             <g in:fade|local>
               <text
-                x={node.x}
-                y={node.y}
+                x={trueNode.x}
+                y={trueNode.y}
                 dy={fontSize * 8}
                 class="stroke-white/70 pointer-events-none [text-anchor:middle] [paint-order:stroke]"
                 style:font-size="{fontSize}rem"
                 style:stroke-width="{fontSize * 2}px"
               >
-                {node.data.name}
+                {trueNode.data.name}
               </text>
             </g>
           {/each}

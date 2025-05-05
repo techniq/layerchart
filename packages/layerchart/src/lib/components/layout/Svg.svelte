@@ -1,97 +1,149 @@
+<script lang="ts" module>
+  import type { Snippet } from 'svelte';
+  import type { Without } from '$lib/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
+
+  type SVGPropsWithoutHTML = {
+    /**
+     * A reference to the layer's `<svg>` tag.
+     *
+     * @bindable
+     */
+    ref?: SVGSVGElement;
+
+    /**
+     * A reference to the layer's `<g>` tag.
+     *
+     * @bindable
+     */
+    innerRef?: SVGGElement;
+
+    /**
+     * The layer's z-index.
+     */
+    zIndex?: number;
+
+    /**
+     * Set this to `false` to set `pointer-events: none;` on the entire layer.
+     */
+    pointerEvents?: boolean;
+
+    /**
+     * A string passed to the `viewBox` property on the `<svg>` tag.
+     */
+    viewBox?: string;
+
+    /**
+     * Shorthand to set the contents of `<title></title>` for accessibility.
+     * You can also set arbitrary HTML via the title snippet but this is a convenient shorthand.
+     */
+    title?: string | Snippet;
+
+    /**
+     * The inner content of the `<defs>` tag.
+     */
+    defs?: Snippet;
+
+    /**
+     * Translate children to center (useful for radial layouts)
+     */
+    center?: boolean | 'x' | 'y';
+
+    /**
+     * Ignore TransformContext.
+     * Useful to add static elements such as legends.
+     */
+    ignoreTransform?: boolean;
+
+    children?: Snippet<[{ ref: SVGElement }]>;
+  };
+
+  export type SVGProps = SVGPropsWithoutHTML &
+    Without<SVGAttributes<SVGElement>, SVGPropsWithoutHTML>;
+</script>
+
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
+  import { getTransformContext } from '../TransformContext.svelte';
 
-  import { setRenderContext } from '../Chart.svelte';
-  import { chartContext } from '../ChartContext.svelte';
-  import { transformContext } from '../TransformContext.svelte';
+  import { getChartContext, setRenderContext } from '../Chart.svelte';
+  import { layerClass } from '$lib/utils/attributes.js';
 
-  /** The layer's `<svg>` tag. Useful for bindings. */
-  export let element: SVGElement | undefined = undefined;
+  let {
+    ref: refProp = $bindable(),
+    innerRef: innerRefProp = $bindable(),
+    zIndex = 0,
+    pointerEvents,
+    viewBox,
+    ignoreTransform = false,
+    center = false,
+    class: className,
+    title,
+    defs,
+    children,
+    ...restProps
+  }: SVGProps = $props();
 
-  /** The layer's `<g>` tag. Useful for bindings. */
-  export let innerElement: SVGGElement | undefined = undefined;
+  let ref = $state<SVGSVGElement>();
+  let innerRef = $state<SVGGElement>();
 
-  /** The layer's z-index. */
-  export let zIndex = undefined;
+  $effect.pre(() => {
+    refProp = ref;
+  });
+  $effect.pre(() => {
+    innerRefProp = innerRef;
+  });
 
-  /** Set this to `false` to set `pointer-events: none;` on the entire layer. */
-  export let pointerEvents: boolean | undefined = undefined;
+  const ctx = getChartContext();
+  const transformCtx = getTransformContext();
 
-  /** A string passed to the `viewBox` property on the `<svg>` tag. */
-  export let viewBox: string | undefined = undefined;
-
-  /** A string passed to the `aria-label` property on the `<svg>` tag. */
-  export let label: string | undefined = undefined;
-
-  /** A string passed to the `aria-labelledby property` on the `<svg>` tag. */
-  export let labelledBy: string | undefined = undefined;
-
-  /** A string passed to the `aria-describedby` property on the `<svg>` tag. */
-  export let describedBy: string | undefined = undefined;
-
-  /** Shorthand to set the contents of `<title></title>` for accessibility. You can also set arbitrary HTML via the "title" slot but this is a convenient shorthand. If you use the "title" slot, this prop is ignored. */
-  export let title: string | undefined = undefined;
-
-  /**
-   * Translate children to center (useful for radial layouts)
-   */
-  export let center: boolean | 'x' | 'y' = false;
-
-  /** Ignore TransformContext.  Useful to add static elements such as legends. */
-  export let ignoreTransform = false;
-
-  const { containerWidth, containerHeight, width, height, padding } = chartContext();
-  const { mode, scale, translate } = transformContext();
-
-  let transform = '';
-  $: if (mode === 'canvas' && !ignoreTransform) {
-    transform = `translate(${$translate.x},${$translate.y}) scale(${$scale})`;
-  } else if (center) {
-    transform = `translate(${center === 'x' || center === true ? $width / 2 : 0}, ${center === 'y' || center === true ? $height / 2 : 0})`;
-  }
+  const transform = $derived.by(() => {
+    if (transformCtx.mode === 'canvas' && !ignoreTransform) {
+      return `translate(${transformCtx.translate.x},${transformCtx.translate.y}) scale(${transformCtx.scale})`;
+    } else if (center) {
+      return `translate(${center === 'x' || center === true ? ctx.width / 2 : 0}, ${center === 'y' || center === true ? ctx.height / 2 : 0})`;
+    }
+  });
 
   setRenderContext('svg');
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <svg
-  bind:this={element}
+  bind:this={ref}
   {viewBox}
-  width={$containerWidth}
-  height={$containerHeight}
+  width={ctx.containerWidth}
+  height={ctx.containerHeight}
   style:z-index={zIndex}
   class={cls(
-    'layercake-layout-svg',
+    layerClass('layout-svg'),
     'absolute top-0 left-0 overflow-visible',
     pointerEvents === false && 'pointer-events-none',
-    $$props.class
+    className
   )}
-  aria-label={label}
-  aria-labelledby={labelledBy}
-  aria-describedby={describedBy}
-  on:click
   role="figure"
+  {...restProps}
 >
-  <slot name="title">
-    {#if title}<title>{title}</title>{/if}
-  </slot>
+  {#if typeof title === 'function'}
+    {@render title()}
+  {:else if title}
+    <title class={layerClass('layout-svg-title')}>{title}</title>
+  {/if}
 
   <defs>
-    <slot name="defs"></slot>
+    {@render defs?.()}
   </defs>
 
   <g
-    bind:this={innerElement}
-    class="layercake-layout-svg_g"
-    transform="translate({$padding.left}, {$padding.top})"
+    bind:this={innerRef}
+    class={layerClass('layout-svg-g')}
+    transform="translate({ctx.padding.left}, {ctx.padding.top})"
   >
     {#if transform}
-      <g {transform}>
-        <slot {element}></slot>
+      <g {transform} class={layerClass('layout-svg-g-transform')}>
+        {@render children?.({ ref })}
       </g>
     {:else}
-      <slot {element}></slot>
+      {@render children?.({ ref })}
     {/if}
   </g>
 </svg>

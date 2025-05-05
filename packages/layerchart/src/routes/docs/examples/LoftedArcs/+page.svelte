@@ -9,20 +9,22 @@
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let debug = false;
+  let debug = $state(false);
 
   // Use a single link per source
-  $: singleLinks = flatRollup(
-    data.worldLinks,
-    (values) => {
-      return values[1];
-    },
-    (d) => d.sourceId
-  ).map((d) => d[1]);
+  const singleLinks = $derived(
+    flatRollup(
+      data.worldLinks,
+      (values) => {
+        return values[1];
+      },
+      (d) => d.sourceId
+    ).map((d) => d[1])
+  );
 </script>
 
 <h1>Examples</h1>

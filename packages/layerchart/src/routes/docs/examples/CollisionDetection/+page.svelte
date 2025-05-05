@@ -30,38 +30,41 @@
 
 <Preview data={randomData}>
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
-    <Chart data={randomData} let:width let:height>
-      <Svg>
-        <ForceSimulation
-          forces={{
-            x: xForce,
-            y: yForce,
-            collide: collideForce,
-            charge: manyBodyForce.strength((d, i) => (i ? 0 : (-width * 2) / 3)),
-          }}
-          alphaTarget={0.3}
-          velocityDecay={0.1}
-          let:nodes
-        >
-          <Group center>
-            {#each nodes as node, i}
-              {#if i > 0}
-                <Circle cx={node.x} cy={node.y} r={node.r} fill={groupColor(node.group)} />
-              {/if}
-            {/each}
-          </Group>
-
-          <rect
-            {width}
-            {height}
-            on:pointermove={(e) => {
-              nodes[0].fx = e.offsetX - width / 2;
-              nodes[0].fy = e.offsetY - height / 2;
+    <Chart data={randomData}>
+      {#snippet children({ context })}
+        <Svg>
+          <ForceSimulation
+            forces={{
+              x: xForce,
+              y: yForce,
+              collide: collideForce,
+              charge: manyBodyForce.strength((d, i) => (i ? 0 : (-context.width * 2) / 3)),
             }}
-            class="fill-transparent"
-          />
-        </ForceSimulation>
-      </Svg>
+            alphaTarget={0.3}
+            velocityDecay={0.1}
+          >
+            {#snippet children({ nodes, simulation })}
+              <Group center>
+                {#each nodes as node, i}
+                  {#if i > 0}
+                    <Circle cx={node.x} cy={node.y} r={node.r} fill={groupColor(node.group)} />
+                  {/if}
+                {/each}
+              </Group>
+
+              <rect
+                width={context.width}
+                height={context.height}
+                onpointermove={(e) => {
+                  simulation.nodes()[0].fx = e.offsetX - context.width / 2;
+                  simulation.nodes()[0].fy = e.offsetY - context.height / 2;
+                }}
+                class="fill-transparent"
+              />
+            {/snippet}
+          </ForceSimulation>
+        </Svg>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

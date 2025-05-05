@@ -4,38 +4,51 @@
   import { feature } from 'topojson-client';
   import { presimplify, simplify } from 'topojson-simplify';
 
-  import { Chart, GeoPath, Graticule, Svg, TransformContext } from 'layerchart';
+  import {
+    Chart,
+    GeoPath,
+    Graticule,
+    Svg,
+    TransformContext,
+    type ChartContextValue,
+  } from 'layerchart';
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
   import { timerStore } from '@layerstack/svelte-stores';
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
-  export let data;
+  let { data } = $props();
 
-  let curve = curveCatmullRomClosed;
-  let minArea = 2;
+  let curve = $state(curveCatmullRomClosed);
+  let minArea = $state(2);
 
-  $: geojson = simplify(presimplify(data.geojson), Math.pow(10, 2 - minArea));
-  $: land = feature(geojson, data.geojson.objects.land);
+  const geojson = $derived(simplify(presimplify(data.geojson), Math.pow(10, 2 - minArea)));
+  const land = $derived(feature(geojson, data.geojson.objects.land));
 
-  let transformContext: TransformContext;
+  let context = $state<ChartContextValue>(null!);
 
-  let velocity = 3;
-  let isSpinning = false;
+  let velocity = $state(3);
+  let isSpinning = $state(false);
   const timer = timerStore({
     delay: 1,
     onTick() {
-      transformContext.translate.update((value) => {
-        return {
-          x: (value.x += velocity),
-          y: value.y,
-        };
-      });
+      if (!context) return;
+      const curr = context.transform.translate;
+
+      context.transform.translate = {
+        x: (curr.x += velocity),
+        y: curr.y,
+      };
     },
-    disabled: !isSpinning,
   });
-  $: isSpinning ? timer.start() : timer.stop();
+  $effect(() => {
+    if (isSpinning) {
+      timer.start();
+    } else {
+      timer.stop();
+    }
+  });
   $timer;
 </script>
 
@@ -93,7 +106,7 @@
           timer.start();
         }
       }}
-      bind:transformContext
+      bind:context
     >
       <Svg>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />

@@ -1,5 +1,13 @@
+export { default as ArcChart } from './ArcChart.svelte';
+export * from './ArcChart.svelte';
 export { default as AreaChart } from './AreaChart.svelte';
+export * from './AreaChart.svelte';
 export { default as BarChart } from './BarChart.svelte';
+export * from './BarChart.svelte';
 export { default as LineChart } from './LineChart.svelte';
+export * from './LineChart.svelte';
 export { default as PieChart } from './PieChart.svelte';
+export * from './PieChart.svelte';
 export { default as ScatterChart } from './ScatterChart.svelte';
+export * from './ScatterChart.svelte';
+export type * from './types.js';

@@ -1,6 +1,7 @@
 import { cls } from '@layerstack/tailwind';
 import { memoize } from 'lodash-es';
 import type { ClassValue } from 'svelte/elements';
+import type { PatternShape } from '$lib/components/Pattern.svelte';
 
 export const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
@@ -14,7 +15,7 @@ export type ComputedStylesOptions = {
       opacity?: number | string;
     }
   >;
-  classes?: ClassValue;
+  classes?: ClassValue | null;
 };
 
 /**
@@ -87,7 +88,7 @@ function render(
   }
 
   // Text properties
-  ctx.font = `${computedStyles.fontSize} ${computedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
+  ctx.font = `${computedStyles.fontWeight} ${computedStyles.fontSize} ${computedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
 
   // TODO: Hack to handle `textAnchor` with canvas.  Try to find a better approach
   if (computedStyles.textAnchor === 'middle') {
@@ -114,11 +115,12 @@ function render(
     ctx.setLineDash(dashArray);
   }
 
-  paintOrder.forEach((attr) => {
+  for (const attr of paintOrder) {
     if (attr === 'fill') {
       const fill =
         styleOptions.styles?.fill &&
         ((styleOptions.styles?.fill as any) instanceof CanvasGradient ||
+          (styleOptions.styles?.fill as any) instanceof CanvasPattern ||
           !styleOptions.styles?.fill?.includes('var'))
           ? styleOptions.styles.fill
           : computedStyles?.fill;
@@ -154,7 +156,7 @@ function render(
         render.stroke(ctx);
       }
     }
-  });
+  }
 }
 
 /** Render SVG path data onto canvas context.  Supports CSS variables and classes by tranferring to hidden `<svg>` element before retrieval) */
@@ -271,6 +273,14 @@ export function scaleCanvas(ctx: CanvasRenderingContext2D, width: number, height
   return { width: ctx.canvas.width, height: ctx.canvas.height };
 }
 
+/** Get pixel color (r,g,b,a) at canvas coordinates */
+export function getPixelColor(ctx: CanvasRenderingContext2D, x: number, y: number) {
+  const dpr = window.devicePixelRatio ?? 1;
+  const imageData = ctx.getImageData(x * dpr, y * dpr, 1, 1);
+  const [r, g, b, a] = imageData.data;
+  return { r, g, b, a };
+}
+
 export function _createLinearGradient(
   ctx: CanvasRenderingContext2D,
   x0: number,
@@ -281,9 +291,9 @@ export function _createLinearGradient(
 ) {
   const gradient = ctx.createLinearGradient(x0, y0, x1, y1);
 
-  stops.forEach(({ offset, color }) => {
+  for (const { offset, color } of stops) {
     gradient.addColorStop(offset, color);
-  });
+  }
 
   return gradient;
 }
@@ -304,9 +314,64 @@ export const createLinearGradient = memoize(
   }
 );
 
-export function getPixelColor(ctx: CanvasRenderingContext2D, x: number, y: number) {
-  const dpr = window.devicePixelRatio ?? 1;
-  const imageData = ctx.getImageData(x * dpr, y * dpr, 1, 1);
-  const [r, g, b, a] = imageData.data;
-  return { r, g, b, a };
+export function _createPattern(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  shapes: PatternShape[],
+  background?: string
+) {
+  const patternCanvas = document.createElement('canvas');
+  const patternCtx = patternCanvas.getContext('2d')!;
+
+  // Add pattern canvas to DOM to allow computed styles to be read (`getComputedStyles()`)
+  ctx.canvas.after(patternCanvas);
+
+  // TODO: Fix blurry pattern
+  // const newScale = scaleCanvas(patternCtx, width, height);
+  patternCanvas.width = width;
+  patternCanvas.height = height;
+
+  if (background) {
+    patternCtx.fillStyle = background;
+    patternCtx.fillRect(0, 0, width, height);
+  }
+
+  for (const shape of shapes) {
+    patternCtx.save();
+    if (shape.type === 'circle') {
+      renderCircle(
+        patternCtx,
+        { cx: shape.cx, cy: shape.cy, r: shape.r },
+        { styles: { fill: shape.fill, opacity: shape.opacity } }
+      );
+    } else if (shape.type === 'line') {
+      renderPathData(patternCtx, shape.path, {
+        styles: { stroke: shape.stroke, strokeWidth: shape.strokeWidth, opacity: shape.opacity },
+      });
+    }
+    patternCtx.restore();
+  }
+
+  const pattern = ctx.createPattern(patternCanvas, 'repeat');
+
+  // Cleanup
+  ctx.canvas.parentElement?.removeChild(patternCanvas);
+
+  return pattern;
 }
+
+/** Create pattern and memoize result to fix reactivity */
+export const createPattern = memoize(
+  _createPattern,
+  (
+    ctx: CanvasRenderingContext2D,
+    width: number,
+    height: number,
+    shapes: PatternShape[],
+    background?: string
+  ) => {
+    const key = JSON.stringify({ width, height, shapes, background });
+    return key;
+  }
+);

@@ -2,7 +2,7 @@
 
 <h1>Welcome to LayerChart</h1>
 
-LayerChart is a large collection of visualization components and utilities for [Svelte](https://svelte.dev/), built upon the wonderful [Layer Cake](https://layercake.graphics/) framework.
+LayerChart is a large collection of visualization components and utilities for [Svelte](https://svelte.dev/).
 
 The goal is to provide a collection of useful but mostly unopinionated components as building blocks for a wide range of visualizations, such as:
 

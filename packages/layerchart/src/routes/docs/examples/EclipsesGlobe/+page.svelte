@@ -5,7 +5,16 @@
   import { interpolateGreens, interpolatePurples } from 'd3-scale-chromatic';
   import { feature } from 'topojson-client';
 
-  import { Chart, GeoPath, Graticule, Legend, Svg, Tooltip, TransformContext } from 'layerchart';
+  import {
+    Chart,
+    GeoPath,
+    Graticule,
+    Legend,
+    Svg,
+    Tooltip,
+    TransformContext,
+    type ChartContextValue,
+  } from 'layerchart';
 
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
@@ -14,34 +23,41 @@
 
   import Preview from '$lib/docs/Preview.svelte';
 
-  export let data;
+  let { data } = $props();
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
   const eclipses = feature(data.eclipses, data.eclipses.objects.eclipses);
 
-  let transformContext: TransformContext;
+  let context = $state<ChartContextValue>(null!);
 
-  let velocity = 3;
-  let isSpinning = false;
+  let velocity = $state(3);
+  let isSpinning = $state(false);
   const timer = timerStore({
     delay: 1,
     onTick() {
-      transformContext.translate.update((value) => {
-        return {
-          x: (value.x += velocity),
-          y: value.y,
-        };
-      });
+      const value = context.transform.translate;
+
+      context.transform.translate = {
+        x: (value.x += velocity),
+        y: value.y,
+      };
     },
-    disabled: !isSpinning,
   });
-  $: isSpinning ? timer.start() : timer.stop();
+
+  $effect(() => {
+    if (isSpinning) {
+      timer.start();
+    } else {
+      timer.stop();
+    }
+  });
   $timer;
 
-  $: dateExtents = extent(eclipses.features.map((f) => f.properties.Date));
-  $: colorScale = scaleDiverging<string>(
-    [dateExtents[0] ?? 0, new Date(), dateExtents[1] ?? 0],
-    (t) => (t < 0.5 ? interpolatePurples(1 - t) : interpolateGreens(t))
+  const dateExtents = $derived(extent(eclipses.features.map((f) => f.properties.Date)));
+  const colorScale = $derived(
+    scaleDiverging<string>([dateExtents[0] ?? 0, new Date(), dateExtents[1] ?? 0], (t) =>
+      t < 0.5 ? interpolatePurples(1 - t) : interpolateGreens(t)
+    )
   );
 </script>
 
@@ -94,37 +110,44 @@
           timer.start();
         }
       }}
-      bind:transformContext
+      bind:context
       padding={{ top: 60 }}
-      let:tooltip
     >
-      <Legend
-        scale={colorScale}
-        title="Eclipse date"
-        tickFormat={(d) => new Date(d).getFullYear().toString()}
-      />
+      {#snippet children({ context })}
+        <Legend
+          scale={colorScale}
+          title="Eclipse date"
+          tickFormat={(d) => new Date(d).getFullYear().toString()}
+        />
 
-      <Svg>
-        <GeoPath geojson={{ type: 'Sphere' }} class="fill-surface-200 stroke-surface-content/20" />
-        <Graticule class="stroke-surface-content/20" />
-        <GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
-
-        {#each eclipses.features as feature}
-          {@const hasColor = tooltip.data == null || tooltip.data.ID === feature.properties.ID}
-
+        <Svg>
           <GeoPath
-            geojson={feature}
-            fill={hasColor ? colorScale(feature.properties.Date) : undefined}
-            class={cls('transition-colors', !hasColor && 'fill-surface-content/10')}
-            onpointermove={(e) => tooltip?.show(e, feature.properties)}
-            onpointerleave={(e) => tooltip?.hide()}
+            geojson={{ type: 'Sphere' }}
+            class="fill-surface-200 stroke-surface-content/20"
           />
-        {/each}
-      </Svg>
+          <Graticule class="stroke-surface-content/20" />
+          <GeoPath geojson={countries} class="stroke-surface-100/30 fill-surface-content" />
 
-      <Tooltip.Root let:data>
-        {format(data.Date, PeriodType.Day, { variant: 'long' })}
-      </Tooltip.Root>
+          {#each eclipses.features as feature}
+            {@const hasColor =
+              context.tooltip.data == null || context.tooltip.data.ID === feature.properties.ID}
+
+            <GeoPath
+              geojson={feature}
+              fill={hasColor ? colorScale(feature.properties.Date) : undefined}
+              class={cls('transition-colors', !hasColor && 'fill-surface-content/10')}
+              onpointermove={(e) => context.tooltip.show(e, feature.properties)}
+              onpointerleave={(e) => context.tooltip.hide()}
+            />
+          {/each}
+        </Svg>
+
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {format(data.Date, PeriodType.Day, { variant: 'long' })}
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

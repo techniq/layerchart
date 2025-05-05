@@ -1,55 +1,129 @@
-<script lang="ts">
-  import { onDestroy } from 'svelte';
-  import { uniqueId } from '@layerstack/utils';
+<script lang="ts" module>
+  import { asAny, type Without } from '$lib/utils/types.js';
+  import type { SVGAttributes } from 'svelte/elements';
+  import type { Snippet } from 'svelte';
 
-  import { getRenderContext } from './Chart.svelte';
-  import { chartContext } from './ChartContext.svelte';
-  import { getCanvasContext } from './layout/Canvas.svelte';
+  export type LinearGradientPropsWithoutHTML = {
+    /**
+     * Unique id for linearGradient
+     */
+    id?: string;
+
+    /**
+     * Array array of strings (colors), will equally distributed from 0-100%.
+     * If array of tuples, will use first value as the offset, and second as color
+     *
+     * @default `['var(--tw-gradient-from)', 'var(--tw-gradient-to)']`
+     */
+    stops?: string[] | [string | number, string][];
+
+    /**
+     * Apply color stops top-to-bottom (true) or left-to-right (false)
+     *
+     * @default false
+     */
+    vertical?: boolean;
+
+    /**
+     * @default '0%'
+     */
+    x1?: string;
+
+    /**
+     * @default '0%'
+     */
+    y1?: string;
+
+    /**
+     * @default vertical ? '0%' : '100%'
+     */
+    x2?: string;
+    /**
+     * @default vertical ? '100%' : '0%'
+     */
+    y2?: string;
+
+    /**
+     * Rotate the gradient by a given angle in degrees
+     */
+    rotate?: number;
+
+    /**
+     * Define the coordinate system for attributes (i.e. gradientUnits)
+     *
+     * @default 'objectBoundingBox'
+     */
+    units?: 'objectBoundingBox' | 'userSpaceOnUse';
+
+    /**
+     * A bindable reference to the underlying `<linearGradient>` element
+     *
+     * @bindable
+     */
+    ref?: SVGLinearGradientElement;
+
+    /**
+     * Render as a child of the gradient and will opt out of the default stops
+     * being rendered.
+     */
+    stopsContent?: Snippet;
+
+    children?: Snippet<[{ id: string; gradient: string }]>;
+  };
+
+  export type LinearGradientProps = LinearGradientPropsWithoutHTML &
+    Without<SVGAttributes<SVGLinearGradientElement>, LinearGradientPropsWithoutHTML>;
+</script>
+
+<script lang="ts">
+  import { getChartContext, getRenderContext } from './Chart.svelte';
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { createLinearGradient, getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';
+  import { createId } from '$lib/utils/createId.js';
+  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import { cls } from '@layerstack/tailwind';
 
-  /** Unique id for linearGradient */
-  export let id: string = uniqueId('linearGradient-');
+  const uid = $props.id();
 
-  /** Array array of strings (colors), will equally distributed from 0-100%.  If array of tuples, will use first value as the offset, and second as color */
-  export let stops: string[] | [string | number, string][] = [
-    'var(--tw-gradient-from)',
-    'var(--tw-gradient-to)',
-  ];
+  let {
+    id = createId('linearGradient-', uid),
+    stops = ['var(--tw-gradient-from)', 'var(--tw-gradient-to)'],
+    vertical = false,
+    x1 = '0%',
+    y1 = '0%',
+    x2 = vertical ? '0%' : '100%',
+    y2 = vertical ? '100%' : '0%',
+    rotate,
+    units = 'objectBoundingBox',
+    ref: refProp = $bindable(),
+    class: className,
+    stopsContent,
+    children,
+    ...restProps
+  }: LinearGradientProps = $props();
 
-  /** Apply color stops top-to-bottom (true) or left-to-right (false) */
-  export let vertical = false;
-  export let x1 = '0%';
-  export let y1 = '0%';
-  export let x2 = vertical ? '0%' : '100%';
-  export let y2 = vertical ? '100%' : '0%';
+  let ref = $state<SVGLinearGradientElement>();
+  $effect.pre(() => {
+    refProp = ref;
+  });
 
-  export let rotate: number | undefined = undefined;
+  const ctx = getChartContext();
+  const renderCtx = getRenderContext();
 
-  /** Define the coordinate system for attributes (i.e. gradientUnits) */
-  export let units: 'objectBoundingBox' | 'userSpaceOnUse' = 'objectBoundingBox';
+  let canvasGradient = $state<CanvasGradient>();
 
-  let className: string | undefined = undefined;
-  export { className as class };
-
-  const { width, height, padding } = chartContext();
-
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
-
-  let canvasGradient: CanvasGradient;
-
-  function render(ctx: CanvasRenderingContext2D) {
+  function render(_ctx: CanvasRenderingContext2D) {
     // Use `getComputedStyles()` to convert each stop (if using CSS variables and/or classes) to color values
     const _stops = stops.map((stop, i) => {
       if (Array.isArray(stop)) {
-        const { fill } = getComputedStyles(ctx.canvas, {
+        const { fill } = getComputedStyles(_ctx.canvas, {
           styles: { fill: stop[1] },
           classes: className,
         });
         return { offset: parsePercent(stop[0]), color: fill };
       } else {
-        const { fill } = getComputedStyles(ctx.canvas, {
+        const { fill } = getComputedStyles(_ctx.canvas, {
           styles: { fill: stop },
           classes: className,
         });
@@ -57,41 +131,38 @@
       }
     });
 
-    // TODO: Use x1/y1/x2/y2 values (convert from pecentage strings)
+    // TODO: Use x1/y1/x2/y2 values (convert from percentage strings)
     const gradient = createLinearGradient(
-      ctx,
-      $padding.left,
-      $padding.top,
-      vertical ? $padding.left : $width - $padding.right,
-      vertical ? $height + $padding.bottom : $padding.top,
+      _ctx,
+      ctx.padding.left,
+      ctx.padding.top,
+      vertical ? ctx.padding.left : ctx.width - ctx.padding.right,
+      vertical ? ctx.height + ctx.padding.bottom : ctx.padding.top,
       _stops
     );
 
     canvasGradient = gradient;
   }
 
-  $: if (renderContext === 'canvas') {
-    x1 && y1 && x2 && y2 && stops && className;
-    canvasContext.invalidate();
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
+      name: 'Gradient',
+      render,
+      deps: () => [x1, y1, x2, y2, stops, className],
+    });
   }
-
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'Gradient', render });
-  }
-
-  onDestroy(() => {
-    if (renderContext === 'canvas') {
-      canvasUnregister();
-    }
-  });
 </script>
 
-{#if renderContext === 'canvas'}
-  <slot {id} gradient={canvasGradient} />
-{:else if renderContext === 'svg'}
+{#if renderCtx === 'canvas'}
+  <!--
+	TODO: we can probably pass the context to coerce this type so we don't need a bunch
+	of predicates to check if the gradient is a CanvasGradient or not...
+	-->
+  {@render children?.({ id, gradient: asAny(canvasGradient) })}
+{:else if renderCtx === 'svg'}
   <defs>
     <linearGradient
+      bind:this={ref}
       {id}
       {x1}
       {y1}
@@ -99,25 +170,29 @@
       {y2}
       gradientTransform={rotate ? `rotate(${rotate})` : ''}
       gradientUnits={units}
-      {...$$restProps}
+      {...extractLayerProps(restProps, 'linear-gradient')}
     >
-      <slot name="stops">
-        {#if stops}
-          {#each stops as stop, i}
-            {#if Array.isArray(stop)}
-              <stop offset={stop[0]} stop-color={stop[1]} class={className} />
-            {:else}
-              <stop
-                offset="{i * (100 / (stops.length - 1))}%"
-                stop-color={stop}
-                class={className}
-              />
-            {/if}
-          {/each}
-        {/if}
-      </slot>
+      {#if stopsContent}
+        {@render stopsContent?.()}
+      {:else if stops}
+        {#each stops as stop, i}
+          {#if Array.isArray(stop)}
+            <stop
+              offset={stop[0]}
+              stop-color={stop[1]}
+              class={cls(layerClass('linear-gradient-stop'), className)}
+            />
+          {:else}
+            <stop
+              offset="{i * (100 / (stops.length - 1))}%"
+              stop-color={stop}
+              class={cls(layerClass('linear-gradient-stop'), className)}
+            />
+          {/if}
+        {/each}
+      {/if}
     </linearGradient>
   </defs>
 
-  <slot {id} gradient="url(#{id})" />
+  {@render children?.({ id, gradient: `url(#${id})` })}
 {/if}

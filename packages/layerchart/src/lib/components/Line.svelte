@@ -1,79 +1,146 @@
+<script lang="ts" module>
+  import type { SVGAttributes } from 'svelte/elements';
+  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
+  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
+  import MarkerWrapper, { type MarkerOptions } from './MarkerWrapper.svelte';
+  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+
+  export type LinePropsWithoutHTML = {
+    /**
+     * The x-coordinate of the line's starting point
+     *
+     * @required
+     */
+    x1: number;
+
+    /**
+     * The initial x-coordinate of the line's starting point (defaults to x1 if not provided)
+     *
+     * @default x1
+     */
+    initialX1?: number;
+
+    /**
+     * The y-coordinate of the line's starting point
+     *
+     * @required
+     */
+    y1: number;
+
+    /**
+     * The initial y-coordinate of the line's starting point (defaults to y1 if not provided)
+     *
+     * @default y1
+     */
+    initialY1?: number;
+
+    /**
+     * The x-coordinate of the line's ending point
+     *
+     * @required
+     */
+    x2: number;
+
+    /**
+     * The initial x-coordinate of the line's ending point (defaults to x2 if not provided)
+     *
+     * @default x2
+     */
+    initialX2?: number;
+
+    /**
+     * The y-coordinate of the line's ending point
+     *
+     * @default y2
+     */
+    y2: number;
+
+    /**
+     * The initial y-coordinate of the line's ending point (defaults to y2 if not provided)
+     *
+     * @default y2
+     */
+    initialY2?: number;
+
+    /**
+     * Marker to attach to both start and end points of the line
+     */
+    marker?: MarkerOptions;
+
+    /**
+     * Marker to attach to the start point of the line
+     */
+    markerStart?: MarkerOptions;
+
+    /**
+     * Marker to attach to the mid point of the line
+     */
+    markerMid?: MarkerOptions;
+
+    /**
+     * Marker to attach to the end point of the line
+     */
+    markerEnd?: MarkerOptions;
+
+    motion?: MotionProp;
+  } & CommonStyleProps;
+
+  export type LineProps = LinePropsWithoutHTML &
+    Without<SVGAttributes<SVGPathElement>, LinePropsWithoutHTML>;
+</script>
+
 <script lang="ts">
-  import { onDestroy, tick, type ComponentProps } from 'svelte';
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { cls } from '@layerstack/tailwind';
-  import { uniqueId } from '@layerstack/utils';
-  import { objectId } from '@layerstack/utils/object';
   import { merge } from 'lodash-es';
 
-  import { motionStore } from '$lib/stores/motionStore.js';
-
-  import Marker from './Marker.svelte';
-  import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
-  import { getCanvasContext } from './layout/Canvas.svelte';
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { getRenderContext } from './Chart.svelte';
 
-  export let x1: number;
-  export let initialX1 = x1;
+  import { createKey } from '$lib/utils/key.svelte.js';
+  import { createId } from '$lib/utils/createId.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
-  export let y1: number;
-  export let initialY1 = y1;
+  const uid = $props.id();
 
-  export let x2: number;
-  export let initialX2 = x2;
+  let {
+    x1,
+    initialX1 = x1,
+    y1,
+    initialY1 = y1,
+    x2,
+    initialX2 = x2,
+    y2,
+    initialY2 = y2,
+    class: className,
+    strokeWidth,
+    opacity,
+    fill,
+    stroke,
+    marker,
+    markerEnd,
+    markerStart,
+    markerMid,
+    motion,
+    fillOpacity,
+    ...restProps
+  }: LineProps = $props();
 
-  export let y2: number;
-  export let initialY2 = y2;
+  const markerStartId = $derived(markerStart || marker ? createId('marker-start', uid) : '');
+  const markerMidId = $derived(markerMid || marker ? createId('marker-mid', uid) : '');
+  const markerEndId = $derived(markerEnd || marker ? createId('marker-end', uid) : '');
 
-  export let fill: string | undefined = undefined;
-  export let stroke: string | undefined = undefined;
-  export let strokeWidth: number | undefined = undefined;
-  export let opacity: number | undefined = undefined;
+  const motionX1 = createMotion(initialX1, () => x1, motion);
+  const motionY1 = createMotion(initialY1, () => y1, motion);
+  const motionX2 = createMotion(initialX2, () => x2, motion);
+  const motionY2 = createMotion(initialY2, () => y2, motion);
 
-  let className: string | undefined = undefined;
-  export { className as class };
-
-  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
-
-  /** Marker to attach to start and end points of path */
-  export let marker: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
-    undefined;
-  /** Marker to attach to start point of path */
-  export let markerStart: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
-    marker;
-  /** Marker to attach to end point of path */
-  export let markerEnd: ComponentProps<Marker>['type'] | ComponentProps<Marker> | undefined =
-    marker;
-
-  $: markerStartId = markerStart || $$slots['markerStart'] ? uniqueId('marker-') : '';
-  $: markerEndId = markerEnd || $$slots['markerEnd'] ? uniqueId('marker-') : '';
-
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
-
-  let tweened_x1 = motionStore(initialX1, { spring, tweened });
-  let tweened_y1 = motionStore(initialY1, { spring, tweened });
-  let tweened_x2 = motionStore(initialX2, { spring, tweened });
-  let tweened_y2 = motionStore(initialY2, { spring, tweened });
-
-  $: tick().then(() => {
-    tweened_x1.set(x1);
-    tweened_y1.set(y1);
-    tweened_x2.set(x2);
-    tweened_y2.set(y2);
-  });
-
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
+  const renderCtx = getRenderContext();
 
   function render(
     ctx: CanvasRenderingContext2D,
     styleOverrides: ComputedStylesOptions | undefined
   ) {
-    const pathData = `M ${$tweened_x1},${$tweened_y1} L ${$tweened_x2},${$tweened_y2}`;
+    const pathData = `M ${motionX1.current},${motionY1.current} L ${motionX2.current},${motionY2.current}`;
     renderPathData(
       ctx,
       pathData,
@@ -86,81 +153,52 @@
     );
   }
 
-  // TODO: Use objectId to work around Svelte 4 reactivity issue (even when memoizing gradients)
-  $: fillKey = fill && typeof fill === 'object' ? objectId(fill) : fill;
-  $: strokeKey = stroke && typeof stroke === 'object' ? objectId(stroke) : stroke;
+  const fillKey = createKey(() => fill);
+  const strokeKey = createKey(() => stroke);
 
-  $: if (renderContext === 'canvas') {
-    // Redraw when props change
-    $tweened_x1 &&
-      $tweened_y1 &&
-      $tweened_x2 &&
-      $tweened_y2 &&
-      fillKey &&
-      strokeKey &&
-      strokeWidth &&
-      opacity &&
-      className;
-    canvasContext.invalidate();
-  }
-
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
       name: 'Line',
       render,
       events: {
-        click: onclick,
-        pointerenter: onpointerenter,
-        pointermove: onpointermove,
-        pointerleave: onpointerleave,
+        click: restProps.onclick,
+        pointerenter: restProps.onpointerenter,
+        pointermove: restProps.onpointermove,
+        pointerleave: restProps.onpointerleave,
       },
+      deps: () => [
+        motionX1.current,
+        motionY1.current,
+        motionX2.current,
+        motionY2.current,
+        fillKey.current,
+        strokeKey.current,
+        strokeWidth,
+        opacity,
+        className,
+      ],
     });
   }
-
-  onDestroy(() => {
-    if (renderContext === 'canvas') {
-      canvasUnregister();
-    }
-  });
 </script>
 
-{#if renderContext === 'svg'}
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+{#if renderCtx === 'svg'}
   <line
-    x1={$tweened_x1}
-    y1={$tweened_y1}
-    x2={$tweened_x2}
-    y2={$tweened_y2}
+    x1={motionX1.current}
+    y1={motionY1.current}
+    x2={motionX2.current}
+    y2={motionY2.current}
     {fill}
     {stroke}
+    fill-opacity={fillOpacity}
     stroke-width={strokeWidth}
     {opacity}
     marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
+    marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
     marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-    class={cls(stroke === undefined && 'stroke-surface-content', className)}
-    {...$$restProps}
-    on:click={onclick}
-    on:pointerenter={onpointerenter}
-    on:pointermove={onpointermove}
-    on:pointerleave={onpointerleave}
+    class={cls(layerClass('line'), stroke === undefined && 'stroke-surface-content', className)}
+    {...restProps}
   />
-
-  <slot name="markerStart" id={markerStartId}>
-    {#if markerStart}
-      <Marker
-        id={markerStartId}
-        type={typeof markerStart === 'string' ? markerStart : undefined}
-        {...typeof markerStart === 'object' ? markerStart : null}
-      />
-    {/if}
-  </slot>
-
-  <slot name="markerEnd" id={markerEndId}>
-    <Marker
-      id={markerEndId}
-      type={typeof markerEnd === 'string' ? markerEnd : undefined}
-      {...typeof markerEnd === 'object' ? markerEnd : null}
-    />
-  </slot>
+  <MarkerWrapper id={markerStartId} marker={markerStart ?? marker} />
+  <MarkerWrapper id={markerMidId} marker={markerMid ?? marker} />
+  <MarkerWrapper id={markerEndId} marker={markerEnd ?? marker} />
 {/if}

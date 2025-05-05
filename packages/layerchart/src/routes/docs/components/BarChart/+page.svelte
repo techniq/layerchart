@@ -1,26 +1,29 @@
 <script lang="ts">
   import {
     accessor,
+    asAny,
     Axis,
     BarChart,
     Bars,
-    Canvas,
     Highlight,
+    Layer,
     Labels,
     LinearGradient,
-    Svg,
     Tooltip,
   } from 'layerchart';
-  import { group, sum } from 'd3-array';
-  import { scaleLog, scaleThreshold, scaleTime } from 'd3-scale';
+  import { extent, group, mean, sum } from 'd3-array';
+  import { scaleLinear, scaleLog, scaleThreshold, scaleTime } from 'd3-scale';
   import { format, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, wideData, longData } from '$lib/utils/genData.js';
   import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { timeMonth } from 'd3-time';
+  import { interpolate, quantize } from 'd3-interpolate';
+  import { interpolateSpectral } from 'd3-scale-chromatic';
 
-  export let data;
+  let { data } = $props();
 
   const dataByFruit = group(longData, (d) => d.fruit);
 
@@ -50,8 +53,8 @@
     keys: ['value', 'baseline'],
   });
 
-  let renderContext: 'svg' | 'canvas' = 'svg';
-  let debug = false;
+  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
@@ -169,18 +172,15 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
-      <svelte:fragment slot="marks" let:series let:getBarsProps>
+      {#snippet marks({ series, getBarsProps })}
         {#each series as s, i (s.key)}
-          <LinearGradient
-            class="from-blue-500 to-green-400"
-            vertical
-            units="userSpaceOnUse"
-            let:gradient
-          >
-            <Bars {...getBarsProps(s, i)} fill={gradient} />
+          <LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse">
+            {#snippet children({ gradient })}
+              <Bars {...getBarsProps(s, i)} fill={gradient} />
+            {/snippet}
           </LinearGradient>
         {/each}
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -212,9 +212,9 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="belowMarks">
+      {#snippet belowMarks()}
         <Highlight area={{ class: 'fill-surface-content/10' }} />
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -337,23 +337,25 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="tooltip" let:y let:series>
-        <Tooltip.Root let:data>
-          <Tooltip.Header>Age: {format(y(data))}</Tooltip.Header>
-          <Tooltip.List>
-            {#each series as s}
-              {@const valueAccessor = accessor(s.value ?? s.key)}
-              {@const value = Math.abs(valueAccessor(data))}
-              <Tooltip.Item label={s.key} color={s.color}>
-                {format(value)}
-                <span class="text-xs text-surface-content/50"
-                  >({format(value / totalPopulation, 'percent')})</span
-                >
-              </Tooltip.Item>
-            {/each}
-          </Tooltip.List>
+      {#snippet tooltip({ context, series })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>Age: {format(context.y(data))}</Tooltip.Header>
+            <Tooltip.List>
+              {#each series as s}
+                {@const valueAccessor = accessor(s.value ?? s.key)}
+                {@const value = Math.abs(valueAccessor(data))}
+                <Tooltip.Item label={s.key} color={s.color}>
+                  {format(value)}
+                  <span class="text-xs text-surface-content/50"
+                    >({format(value / totalPopulation, 'percent')})</span
+                  >
+                </Tooltip.Item>
+              {/each}
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -393,21 +395,23 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="tooltip" let:y let:series>
-        <Tooltip.Root let:data>
-          <Tooltip.Header>Age: {format(y(data))}</Tooltip.Header>
-          <Tooltip.List>
-            {#each series as s}
-              {@const valueAccessor = accessor(s.value ?? s.key)}
-              {@const value = Math.abs(valueAccessor(data))}
-              <Tooltip.Item label={s.key} color={s.color}>
-                {format(value * totalPopulation)}
-                <span class="text-xs text-surface-content/50">({format(value, 'percent')})</span>
-              </Tooltip.Item>
-            {/each}
-          </Tooltip.List>
+      {#snippet tooltip({ series, context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>Age: {format(context.y(data))}</Tooltip.Header>
+            <Tooltip.List>
+              {#each series as s}
+                {@const valueAccessor = accessor(s.value ?? s.key)}
+                {@const value = Math.abs(valueAccessor(data))}
+                <Tooltip.Item label={s.key} color={s.color}>
+                  {format(value * totalPopulation)}
+                  <span class="text-xs text-surface-content/50">({format(value, 'percent')})</span>
+                </Tooltip.Item>
+              {/each}
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -522,7 +526,7 @@
         },
       }}
       tooltip={false}
-      onbarclick={(e, detail) => {
+      onBarClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
@@ -1017,9 +1021,9 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="aboveMarks">
-        <Labels x={8} value={(d) => d.date} class="text-sm fill-surface-300 stroke-none" />
-      </svelte:fragment>
+      {#snippet aboveMarks()}
+        <Labels x={(d) => 0} value="date" class="text-sm fill-surface-300 stroke-none" />
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -1065,14 +1069,20 @@
       {renderContext}
       {debug}
     >
-      <svelte:fragment slot="tooltip" let:x let:y let:c let:cScale>
-        <Tooltip.Root let:data>
-          <Tooltip.Header>{format(x(data))}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="Status" value={c(data)} color={cScale(c(data))} />
-          </Tooltip.List>
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.x(data))}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item
+                label="Status"
+                value={context.c(data)}
+                color={context.cScale?.(context.c(data))}
+              />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
@@ -1149,6 +1159,258 @@
   </div>
 </Preview>
 
+<h2>Brushing (WIP)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart data={dateSeriesData} x="date" y="value" brush {renderContext} {debug} />
+  </div>
+</Preview>
+
+<h2>Radial (vertical)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <BarChart data={dateSeriesData} x="date" y="value" radial {renderContext} {debug} />
+  </div>
+</Preview>
+
+<h2>Radial (vertical) - yRange</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      yRange={({ height }) => [height / 5, height / 2]}
+      radial
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Radial (vertical) - arcPadding</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      yRange={({ height }) => [height / 5, height / 2]}
+      radial
+      props={{ bars: { padAngle: 0.1 } }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Radial (horizontal)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="value"
+      y="date"
+      yRange={({ height }) => [height / 5, height / 2]}
+      radial
+      orientation="horizontal"
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Radial (horizontal) - color per value</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <BarChart
+      data={[
+        { browser: 'chrome', visitors: 275 },
+        { browser: 'safari', visitors: 200 },
+        { browser: 'firefox', visitors: 187 },
+        { browser: 'edge', visitors: 173 },
+        { browser: 'other', visitors: 90 },
+      ]}
+      x="visitors"
+      y="browser"
+      yRange={({ height }) => [height / 5, height / 2]}
+      c="browser"
+      cRange={[
+        'var(--color-success)',
+        'var(--color-danger)',
+        'var(--color-warning)',
+        'var(--color-info)',
+        'var(--color-secondary)',
+      ]}
+      radial
+      orientation="horizontal"
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Radial (horizontal) - grid between</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <BarChart
+      data={[
+        { browser: 'chrome', visitors: 275 },
+        { browser: 'safari', visitors: 200 },
+        { browser: 'firefox', visitors: 187 },
+        { browser: 'edge', visitors: 173 },
+        { browser: 'other', visitors: 90 },
+      ]}
+      x="visitors"
+      y="browser"
+      yRange={({ height }) => [height / 5, height / 2]}
+      c="browser"
+      cRange={[
+        'var(--color-success)',
+        'var(--color-danger)',
+        'var(--color-warning)',
+        'var(--color-info)',
+        'var(--color-secondary)',
+      ]}
+      radial
+      orientation="horizontal"
+      grid={{ bandAlign: 'between' }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Radial (horizontal) - duration</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <BarChart
+      data={[
+        {
+          category: 'One',
+          start: new Date('2021-01-01'),
+          end: new Date('2021-03-01'),
+        },
+        {
+          category: 'One',
+          start: new Date('2021-04-01'),
+          end: new Date('2021-08-15'),
+        },
+        {
+          category: 'Two',
+          start: new Date('2021-03-01'),
+          end: new Date('2021-06-01'),
+        },
+        {
+          category: 'Two',
+          start: new Date('2021-08-01'),
+          end: new Date('2021-10-01'),
+        },
+        {
+          category: 'Three',
+          start: new Date('2021-02-01'),
+          end: new Date('2021-07-01'),
+        },
+        {
+          category: 'Four',
+          start: new Date('2021-06-09'),
+          end: new Date('2021-09-01'),
+        },
+        {
+          category: 'Four',
+          start: new Date('2021-10-01'),
+          end: new Date('2021-12-15'),
+        },
+        {
+          category: 'Five',
+          start: new Date('2021-02-01'),
+          end: new Date('2021-04-15'),
+        },
+        {
+          category: 'Five',
+          start: new Date('2021-10-01'),
+          end: new Date('2021-12-31'),
+        },
+      ]}
+      x={['start', 'end']}
+      y="category"
+      xDomain={[null, null]}
+      xNice={false}
+      yRange={({ height }) => [height / 5, height / 2]}
+      c="category"
+      cRange={[
+        'var(--color-success)',
+        'var(--color-danger)',
+        'var(--color-warning)',
+        'var(--color-info)',
+        'var(--color-secondary)',
+      ]}
+      radial
+      orientation="horizontal"
+      props={{
+        xAxis: {
+          ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks(),
+          format: PeriodType.Month,
+        },
+        grid: { bandAlign: 'between' },
+        tooltip: {
+          // context: { mode: 'bisect-x' },
+        },
+      }}
+      padding={{ top: 10, bottom: 10 }}
+      {renderContext}
+      {debug}
+    >
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.y(data))}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="Start" value={data.start} format={PeriodType.Day} />
+              <Tooltip.Item label="End" value={data.end} format={PeriodType.Day} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
+    </BarChart>
+  </div>
+</Preview>
+
+<h2>Radial weather</h2>
+
+<Preview data={data.sfoTemperatures}>
+  {@const avgExtents = extent(data.sfoTemperatures, (d) => d.avg)}
+  <div class="h-[600px] p-4 border rounded-sm">
+    <BarChart
+      data={data.sfoTemperatures}
+      x="date"
+      y={['min', 'max']}
+      yDomain={[null, null]}
+      yRange={({ height }) => [height / 5, height / 2]}
+      c="avg"
+      cScale={scaleLinear()}
+      cDomain={quantize(interpolate(avgExtents[0], asAny(avgExtents[1])), 7)}
+      cRange={quantize(interpolateSpectral, 7).reverse()}
+      radial
+      props={{
+        xAxis: { ticks: { interval: timeMonth.every(3) }, format: PeriodType.Month },
+        yAxis: { ticks: 4, format: (v) => v + '° F' },
+        grid: { xTicks: 12 },
+      }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
 <h2>Tooltip click</h2>
 
 <Preview data={dateSeriesData}>
@@ -1157,7 +1419,7 @@
       data={dateSeriesData}
       x="date"
       y="value"
-      ontooltipclick={(e, detail) => {
+      onTooltipClick={(e, detail) => {
         console.log(e, detail);
         alert(JSON.stringify(detail));
       }}
@@ -1172,45 +1434,209 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <BarChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
-      <svelte:fragment slot="tooltip" let:x let:y>
-        <Tooltip.Root let:data>
-          <Tooltip.Header>{format(x(data), PeriodType.DayTime)}</Tooltip.Header>
-          <Tooltip.List>
-            <Tooltip.Item label="value" value={y(data)} />
-          </Tooltip.List>
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={context.y(data)} />
+            </Tooltip.List>
+          {/snippet}
         </Tooltip.Root>
-      </svelte:fragment>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>
+
+<h2>Point annotation</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'point',
+          x: dateSeriesData[dateSeriesData.length - 1].date,
+          r: 4,
+          label: 'Today',
+          labelPlacement: 'bottom',
+          labelOffset: 16,
+          props: {
+            circle: { class: 'fill-secondary' },
+            label: { class: 'text-xs fill-secondary font-bold' },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationPoint">AnnotationPoint</a> for more examples
+</Blockquote>
+
+<h2>Line annotation</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'line',
+          y: mean(dateSeriesData, (d) => d.value),
+          label: 'Avg',
+          props: {
+            line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+            label: { class: 'fill-danger' },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationLine">AnnotationLine</a> for more examples
+</Blockquote>
+
+<h2>Range annotation (single)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'range',
+          x: [dateSeriesData[2].date, dateSeriesData[2].date],
+          pattern: {
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationRange">AnnotationRange</a> for more examples
+</Blockquote>
+
+<h2>Range annotation (multiple)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'range',
+          x: [dateSeriesData[2].date, dateSeriesData[4].date],
+          pattern: {
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Range annotation (value)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      annotations={[
+        {
+          type: 'range',
+          y: [75, null],
+          pattern: {
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          },
+        },
+        {
+          type: 'line',
+          label: 'Max',
+          y: 75,
+          props: {
+            line: { class: '[stroke-dasharray:2,2] _stroke-danger' },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationRange">AnnotationRange</a> for more examples
+</Blockquote>
 
 <h2>Custom chart</h2>
 
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" let:x let:y>
-      <svelte:component this={renderContext === 'canvas' ? Canvas : Svg}>
-        <Axis
-          placement="left"
-          grid
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-        />
-        <Axis
-          placement="bottom"
-          rule
-          format={(value) => format(value, undefined, { variant: 'short' })}
-        />
-        <Bars radius={4} strokeWidth={1} class="fill-primary" />
-        <Highlight area />
-      </svelte:component>
+    <BarChart data={dateSeriesData} x="date" y="value">
+      {#snippet children({ context })}
+        <Layer type={renderContext}>
+          <Axis
+            placement="left"
+            grid
+            rule
+            format={(value) => format(value, undefined, { variant: 'short' })}
+          />
+          <Axis
+            placement="bottom"
+            rule
+            format={(value) => format(value, undefined, { variant: 'short' })}
+          />
+          <Bars radius={4} strokeWidth={1} class="fill-primary" />
+          <Highlight area />
+        </Layer>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(x(data))}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={y(data)} />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.x(data))}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="value" value={context.y(data)} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </BarChart>
   </div>
 </Preview>

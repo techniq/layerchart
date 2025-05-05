@@ -5,17 +5,21 @@
   import type TooltipContext from '$lib/components/tooltip/TooltipContext.svelte';
   import type Highlight from '$lib/components/Highlight.svelte';
 
-  type TooltipContextProps = ComponentProps<TooltipContext>;
-  type HighlightProps = ComponentProps<Highlight>;
+  type TooltipContextProps = ComponentProps<typeof TooltipContext>;
+  type HighlightProps = ComponentProps<typeof Highlight>;
 
-  export let settings: {
-    mode: TooltipContextProps['mode'];
-    highlight: Array<'none' | 'points' | 'lines' | 'area' | 'bar'>;
-    axis: HighlightProps['axis'];
-    snapToDataX: boolean;
-    snapToDataY: boolean;
-    debug: TooltipContextProps['debug'];
-  };
+  let {
+    settings = $bindable(),
+  }: {
+    settings: {
+      mode: TooltipContextProps['mode'];
+      highlight: Array<'none' | 'points' | 'lines' | 'area' | 'bar'>;
+      axis: HighlightProps['axis'];
+      snapToDataX: boolean;
+      snapToDataY: boolean;
+      debug: TooltipContextProps['debug'];
+    };
+  } = $props();
 </script>
 
 <div class="grid grid-cols-[1fr_1fr_120px_120px_64px] gap-2 mb-2">

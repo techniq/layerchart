@@ -1,3 +1,170 @@
+<script lang="ts" module>
+  import type { ComponentProps, Snippet } from 'svelte';
+  import type { PointerEventHandler, SVGAttributes } from 'svelte/elements';
+
+  import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';
+  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
+  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
+  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+
+  export type ArcPropsWithoutHTML = {
+    value?: number;
+    initialValue?: number;
+
+    /**
+     * Domain [min,max] in degrees
+     *
+     * @default [0, 100];
+     */
+    domain?: [number, number];
+
+    /**
+     * Range [min,max] in degrees. See also startAngle/endAngle
+     *
+     * @default [0, 360]
+     */
+    range?: [number, number];
+
+    /**
+     * Start angle in radians
+     */
+    startAngle?: number;
+
+    /**
+     * End angle in radians
+     */
+    endAngle?: number;
+
+    /**
+     * Define innerRadius. Defaults to yRange min
+     *   • value >= 1: discrete value
+     *   • value < 1: percent of `outerRadius`
+     *   • value < 0: offset of `outerRadius`
+     */
+    innerRadius?: number;
+
+    /**
+     * Define outerRadius. Defaults to smallest width (xRange) or height (yRange) dimension (/2)
+     *   • value >= 1: discrete value
+     *   • value < 1: percent of chart width or height (smallest) / 2
+     *   • value < 0: offset of chart width or height (smallest) / 2
+     */
+    outerRadius?: number;
+
+    /**
+     * Corner radius of the arc
+     *
+     * @default 0
+     */
+    cornerRadius?: number;
+
+    /**
+     * Angle between the arcs
+     *
+     * @default 0
+     */
+    padAngle?: number;
+
+    /**
+     * Start angle in radians
+     */
+    trackStartAngle?: number;
+
+    /**
+     * End angle in radians
+     */
+    trackEndAngle?: number;
+
+    /**
+     * Define innerRadius. Defaults to yRange min
+     *   • value >= 1: discrete value
+     *   • value < 1: percent of `outerRadius`
+     *   • value < 0: offset of `outerRadius`
+     */
+    trackInnerRadius?: number;
+
+    /**
+     * Define outerRadius. Defaults to smallest width (xRange) or height (yRange) dimension (/2)
+     *   • value >= 1: discrete value
+     *   • value < 1: percent of chart width or height (smallest) / 2
+     *   • value < 0: offset of chart width or height (smallest) / 2
+     */
+    trackOuterRadius?: number;
+
+    /**
+     * Corner radius of the arc
+     *
+     * @default 0
+     */
+    trackCornerRadius?: number;
+
+    /**
+     * Angle between the arcs
+     *
+     * @default 0
+     */
+    trackPadAngle?: number;
+
+    /**
+     * Offset arc from center
+     *
+     * @default 0
+     */
+    offset?: number;
+
+    /**
+     * Tooltip context to setup pointer events to show tooltip for related data.
+     *
+     * **Must set `data` prop as well**
+     */
+    tooltipContext?: TooltipContextValue;
+
+    /**
+     * Data to set when showing tooltip
+     */
+    data?: any;
+
+    /**
+     * Pass true to enable the track with default props, or pass an object
+     * of props to enable the track.
+     */
+    track?: boolean | Partial<ComponentProps<typeof Spline>>;
+
+    /**
+     * A reference to the track element
+     *
+     * @bindable
+     */
+    trackRef?: SVGPathElement;
+
+    /**
+     * A reference to the arc element
+     *
+     * @bindable
+     */
+    ref?: SVGPathElement;
+
+    children?: Snippet<
+      [
+        {
+          centroid: [number, number];
+          boundingBox: DOMRect;
+          value: number;
+          getTrackTextProps: GetArcTextProps;
+          getArcTextProps: GetArcTextProps;
+        },
+      ]
+    >;
+
+    motion?: MotionProp;
+  } & CommonStyleProps;
+
+  export type ArcProps = ArcPropsWithoutHTML &
+    // we omit the spline props to avoid conflicts with attribute names since we are
+    // passing them through to `<Spline />`
+    Without<SVGAttributes<SVGPathElement>, ArcPropsWithoutHTML & SplinePropsWithoutHTML>;
+</script>
+
 <script lang="ts">
   /*
 		TODO:
@@ -17,84 +184,79 @@
   // https://svelte.dev/repl/09711e43a1264ba18945d7db7cab9335?version=3.38.2
   // https://codepen.io/simeydotme/pen/rrOEmO/
 
-  import { tick, type ComponentProps } from 'svelte';
-  import type { spring as springStore, tweened as tweenedStore } from 'svelte/motion';
   import { arc as d3arc } from 'd3-shape';
   import { scaleLinear } from 'd3-scale';
 
-  import { chartContext } from './ChartContext.svelte';
-  import { motionStore } from '$lib/stores/motionStore.js';
   import { degreesToRadians } from '$lib/utils/math.js';
-  import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
-  import Spline from './Spline.svelte';
+  import { getChartContext } from './Chart.svelte';
+  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import { cls } from '@layerstack/tailwind';
+  import { max } from 'd3-array';
+  import {
+    createArcTextProps,
+    type ArcTextOptions,
+    type ArcTextPosition,
+    type GetArcTextProps,
+  } from '$lib/utils/arcText.svelte.js';
 
-  export let spring: boolean | Parameters<typeof springStore>[1] = undefined;
-  export let tweened: boolean | Parameters<typeof tweenedStore>[1] = undefined;
+  let {
+    ref: refProp = $bindable(),
+    trackRef: trackRefProp = $bindable(),
+    motion,
+    value = 0,
+    initialValue = 0,
+    domain = [0, 100],
+    range = [0, 360], // degrees
+    startAngle: startAngleProp,
+    endAngle: endAngleProp,
+    innerRadius: innerRadiusProp,
+    outerRadius: outerRadiusProp,
+    cornerRadius = 0,
+    padAngle = 0,
+    trackStartAngle: trackStartAngleProp,
+    trackEndAngle: trackEndAngleProp,
+    trackInnerRadius: trackInnerRadiusProp,
+    trackOuterRadius: trackOuterRadiusProp,
+    trackCornerRadius: trackCornerRadiusProp,
+    trackPadAngle: trackPadAngleProp,
+    fill,
+    fillOpacity,
+    stroke = 'none',
+    strokeWidth,
+    opacity,
+    data,
+    offset = 0,
+    onpointerenter = () => {},
+    onpointermove = () => {},
+    onpointerleave = () => {},
+    ontouchmove = () => {},
+    tooltipContext,
+    track = false,
+    children,
+    class: className,
+    ...restProps
+  }: ArcProps = $props();
 
-  export let value = 0;
-  export let initialValue = value;
-  let tweened_value = motionStore(initialValue, { spring, tweened });
+  let ref = $state<SVGPathElement>();
+  let trackRef = $state<SVGPathElement>();
 
-  $: tick().then(() => {
-    tweened_value.set(value);
+  $effect.pre(() => {
+    refProp = ref;
   });
 
-  export let domain = [0, 100];
+  $effect.pre(() => {
+    trackRefProp = trackRef;
+  });
 
-  /**
-   * Range [min,max] in degrees.  See also startAngle/endAngle
-   */
-  export let range = [0, 360]; // degrees
+  const ctx = getChartContext();
 
-  /**
-   * Start angle in radians
-   */
-  export let startAngle: number | undefined = undefined;
+  const endAngle = $derived(
+    endAngleProp ?? degreesToRadians(ctx.config.xRange ? max(ctx.xRange) : max(range))
+  );
 
-  /**
-   * End angle in radians
-   */
-  export let endAngle: number | undefined = undefined;
+  const motionEndAngle = createMotion(initialValue, () => value, motion);
 
-  /**
-   * Define innerRadius. Defaults to yRange min
-   *   • value >= 1: discrete value
-   *   • value < 1: percent of `outerRadius`
-   *   • value < 0: offset of `outerRadius`
-   */
-  export let innerRadius: number | undefined = undefined;
-
-  /**
-   * Define outerRadius. Defaults to smallest width (xRange) or height (yRange) dimension (/2)
-   *   • value >= 1: discrete value
-   *   • value < 1: percent of chart width or height (smallest) / 2
-   *   • value < 0: offset of chart width or height (smallest) / 2
-   */
-  export let outerRadius: number | undefined = undefined;
-
-  export let cornerRadius = 0;
-  export let padAngle = 0;
-  // export let padRadius = 0;
-
-  export let fill: string | undefined = undefined;
-  export let fillOpacity: number | undefined = undefined;
-  export let stroke: string | undefined = 'none';
-  export let strokeWidth: number | undefined = undefined;
-  export let opacity: number | undefined = undefined;
-
-  let className: string | undefined = undefined;
-  export { className as class };
-
-  export let track: boolean | Partial<ComponentProps<Spline>> = false;
-
-  export let onclick: ((e: MouseEvent) => void) | undefined = undefined;
-  export let onpointerenter: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointermove: ((e: PointerEvent) => void) | undefined = undefined;
-  export let onpointerleave: ((e: PointerEvent) => void) | undefined = undefined;
-
-  const { xRange, yRange } = chartContext();
-
-  $: scale = scaleLinear().domain(domain).range(range);
+  const scale = $derived(scaleLinear().domain(domain).range(range));
 
   function getOuterRadius(outerRadius: number | undefined, chartRadius: number) {
     if (!outerRadius) {
@@ -114,11 +276,18 @@
     }
   }
 
-  $: _outerRadius = getOuterRadius(outerRadius, (Math.min($xRange[1], $yRange[0]) ?? 0) / 2);
+  const outerRadius = $derived(
+    getOuterRadius(outerRadiusProp, (Math.min(ctx.xRange[1], ctx.yRange[0]) ?? 0) / 2)
+  );
+  const trackOuterRadius = $derived(
+    trackOuterRadiusProp
+      ? getOuterRadius(trackOuterRadiusProp, (Math.min(ctx.xRange[1], ctx.yRange[0]) ?? 0) / 2)
+      : outerRadius
+  );
 
   function getInnerRadius(innerRadius: number | undefined, outerRadius: number) {
     if (innerRadius == null) {
-      return Math.min(...$yRange);
+      return Math.min(...ctx.yRange);
     } else if (innerRadius > 1) {
       // discrete value
       return innerRadius;
@@ -133,92 +302,112 @@
       return innerRadius;
     }
   }
-  $: _innerRadius = getInnerRadius(innerRadius, _outerRadius);
 
-  $: arc = d3arc()
-    .innerRadius(_innerRadius)
-    .outerRadius(_outerRadius)
-    .startAngle(startAngle ?? degreesToRadians(range[0]))
-    .endAngle(endAngle ?? degreesToRadians(scale($tweened_value)))
-    .cornerRadius(cornerRadius)
-    .padAngle(padAngle) as Function;
-  // .padRadius(padRadius);
+  const innerRadius = $derived(getInnerRadius(innerRadiusProp, outerRadius));
+  const trackInnerRadius = $derived(
+    trackInnerRadiusProp ? getInnerRadius(trackInnerRadiusProp, trackOuterRadius) : innerRadius
+  );
 
-  $: trackArc = d3arc()
-    .innerRadius(_innerRadius)
-    .outerRadius(_outerRadius)
-    .startAngle(startAngle ?? degreesToRadians(range[0]))
-    .endAngle(endAngle ?? degreesToRadians(range[1]))
-    .cornerRadius(cornerRadius)
-    .padAngle(padAngle) as Function;
-  // .padRadius(padRadius);
+  const startAngle = $derived(startAngleProp ?? degreesToRadians(range[0]));
+  const trackStartAngle = $derived(
+    trackStartAngleProp ?? startAngleProp ?? degreesToRadians(range[0])
+  );
+  const trackEndAngle = $derived(trackEndAngleProp ?? endAngleProp ?? degreesToRadians(range[1]));
+  const trackCornerRadius = $derived(trackCornerRadiusProp ?? cornerRadius);
+  const trackPadAngle = $derived(trackPadAngleProp ?? padAngle);
 
-  // @ts-expect-error
-  $: trackArcCentroid = trackArc.centroid();
-  // $: console.log(trackArcCentroid)
+  const arcEndAngle = $derived(endAngleProp ?? degreesToRadians(scale(motionEndAngle.current)));
 
-  let trackArcEl: SVGPathElement | undefined = undefined;
-  $: boundingBox = trackArcEl ? trackArcEl.getBBox() : ({} as DOMRect);
+  const arc = $derived(
+    d3arc()
+      .innerRadius(innerRadius)
+      .outerRadius(outerRadius)
+      .startAngle(startAngle)
+      .endAngle(arcEndAngle)
+      .cornerRadius(cornerRadius)
+      .padAngle(padAngle)
+  );
 
-  // $: labelArcCenterOffset = {
-  //   x: outerRadius - boundingBox.width / 2,
-  //   // x: 0,
-  //   y: (outerRadius - boundingBox.height / 2) * -1,
-  // };
-  // $: console.log(labelArcCenterOffset)
+  const trackArc = $derived(
+    d3arc()
+      .innerRadius(trackInnerRadius)
+      .outerRadius(trackOuterRadius)
+      .startAngle(trackStartAngle)
+      .endAngle(trackEndAngle)
+      .cornerRadius(trackCornerRadius)
+      .padAngle(trackPadAngle)
+  );
 
-  // $: labelArcBottomOffset = {
-  //   // x: outerRadius - boundingBox.width / 2,
-  //   x: outerRadius - boundingBox.width / 2,
-  //   // x: 0,
-  //   // y: (outerRadius - boundingBox.height) * -1
-  //   y: (outerRadius - boundingBox.height) * -1,
-  // };
-  // $: console.log(labelArcBottomOffset)
+  const angle = $derived(((startAngle ?? 0) + (endAngle ?? 0)) / 2);
+  const xOffset = $derived(Math.sin(angle) * offset);
+  const yOffset = $derived(-Math.cos(angle) * offset);
 
-  /**
-   * Offset arc from center
-   */
-  export let offset = 0;
-  $: angle = ((startAngle ?? 0) + (endAngle ?? 0)) / 2;
-  $: xOffset = Math.sin(angle) * offset;
-  $: yOffset = -Math.cos(angle) * offset;
+  const trackArcCentroid = $derived.by(() => {
+    // @ts-expect-error - this is fine.
+    const centroid = trackArc.centroid() as [number, number];
 
-  /**
-   * Tooltip context to setup pointer events to show tooltip for related data.  Must set `data` prop as well
-   */
-  export let tooltip: TooltipContextValue | undefined = undefined;
+    return [centroid[0] + xOffset, centroid[1] + yOffset];
+  }) as [number, number];
 
-  /**
-   * Data to set when showing tooltip
-   */
-  export let data: any = undefined;
+  const boundingBox = $derived(trackRef ? trackRef.getBBox() : ({} as DOMRect));
 
-  function onPointerEnter(e: PointerEvent) {
+  const onPointerEnter: PointerEventHandler<SVGPathElement> = (e) => {
     onpointerenter?.(e);
-    tooltip?.show(e, data);
-  }
-  function onPointerMove(e: PointerEvent) {
+    tooltipContext?.show(e, data);
+  };
+
+  const onPointerMove: PointerEventHandler<SVGPathElement> = (e) => {
     onpointermove?.(e);
-    tooltip?.show(e, data);
-  }
-  function onPointerLeave(e: PointerEvent) {
+    tooltipContext?.show(e, data);
+  };
+
+  const onPointerLeave: PointerEventHandler<SVGPathElement> = (e) => {
     onpointerleave?.(e);
-    tooltip?.hide();
+    tooltipContext?.hide();
+  };
+
+  function getTrackTextProps(position: ArcTextPosition, opts: ArcTextOptions = {}) {
+    return createArcTextProps(
+      {
+        startAngle: () => trackStartAngle,
+        endAngle: () => trackEndAngle,
+        outerRadius: () => trackOuterRadius + (opts.outerPadding ? opts.outerPadding : 0),
+        innerRadius: () => trackInnerRadius,
+        cornerRadius: () => trackCornerRadius,
+        centroid: () => trackArcCentroid,
+      },
+      opts,
+      position
+    ).current;
+  }
+
+  function getArcTextProps(position: ArcTextPosition, opts: ArcTextOptions = {}) {
+    return createArcTextProps(
+      {
+        startAngle: () => startAngle,
+        endAngle: () => arcEndAngle,
+        outerRadius: () => outerRadius + (opts.outerPadding ? opts.outerPadding : 0),
+        innerRadius: () => innerRadius,
+        cornerRadius: () => cornerRadius,
+        centroid: () => trackArcCentroid,
+      },
+      opts,
+      position
+    ).current;
   }
 </script>
 
 {#if track}
   <Spline
     pathData={trackArc()}
-    class="track"
     stroke="none"
-    bind:pathEl={trackArcEl}
-    {...typeof track === 'object' ? track : null}
+    bind:splineRef={trackRef}
+    {...extractLayerProps(track, 'arc-track')}
   />
 {/if}
 
 <Spline
+  bind:splineRef={ref}
   pathData={arc()}
   transform="translate({xOffset}, {yOffset})"
   {fill}
@@ -226,19 +415,23 @@
   {stroke}
   stroke-width={strokeWidth}
   {opacity}
-  class={className}
-  {...$$restProps}
-  {onclick}
+  {...restProps}
+  class={cls(layerClass('arc-line'), className)}
   onpointerenter={onPointerEnter}
   onpointermove={onPointerMove}
   onpointerleave={onPointerLeave}
   ontouchmove={(e) => {
-    if (tooltip) {
-      // Prevent touch to not interfer with pointer when using tooltip
-      e.preventDefault();
-    }
+    ontouchmove?.(e);
+    if (!tooltipContext) return;
+    // Prevent touch to not interfere with pointer when using tooltip
+    e.preventDefault();
   }}
-  on:touchmove
 />
 
-<slot value={$tweened_value} centroid={trackArcCentroid} {boundingBox} />
+{@render children?.({
+  centroid: trackArcCentroid,
+  boundingBox,
+  value: motionEndAngle.current,
+  getTrackTextProps: getTrackTextProps,
+  getArcTextProps: getArcTextProps,
+})}

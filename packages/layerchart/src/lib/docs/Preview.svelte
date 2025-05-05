@@ -10,12 +10,25 @@
 
   import Code from './Code.svelte';
   import Json from './Json.svelte';
+  import type { Snippet } from 'svelte';
 
-  export let code: string | undefined = undefined;
-  export let data: any | undefined = undefined;
-  export let language = 'svelte';
-  export let highlightedCode = code ? Prism.highlight(code, Prism.languages.svelte, language) : '';
-  export let showCode = false;
+  let {
+    code,
+    data,
+    language = 'svelte',
+    highlightedCode = code ? Prism.highlight(code, Prism.languages.svelte, language) : '',
+    showCode = false,
+    class: className,
+    children,
+  }: {
+    code?: string;
+    data?: any;
+    language?: string;
+    highlightedCode?: string;
+    showCode?: boolean;
+    class?: string | null;
+    children: Snippet;
+  } = $props();
 
   /**
    * Custom JSON replacer (to use with JSON.stringify()) to convert `Date` instances to `new Date()`
@@ -41,9 +54,9 @@
   }
 </script>
 
-<div class={cls('Preview border rounded-sm bg-surface-100', $$props.class)}>
+<div class={cls('Preview border rounded-sm bg-surface-100', className)}>
   <div class="p-4">
-    <slot />
+    {@render children?.()}
   </div>
 
   {#if code && showCode}

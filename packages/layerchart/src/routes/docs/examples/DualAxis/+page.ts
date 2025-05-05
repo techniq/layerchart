@@ -3,7 +3,7 @@ import { autoType, csvParse } from 'd3-dsv';
 import pageSource from './+page.svelte?raw';
 import type { NewPassengerCars } from '$static/data/examples/new-passenger-cars.js';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     newPassengerCars: await fetch('/data/examples/new-passenger-cars.csv').then(async (r) =>
       // @ts-expect-error

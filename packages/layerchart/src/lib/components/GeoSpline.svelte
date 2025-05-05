@@ -1,36 +1,85 @@
-<script lang="ts">
+<script lang="ts" module>
+  import Spline, { type SplineProps } from './Spline.svelte';
   import { curveNatural, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
-  import { geoOrthographic, geoInterpolate } from 'd3-geo';
+  import type { Without } from '$lib/utils/types.js';
 
-  import { geoContext } from './GeoContext.svelte';
-  import Spline from './Spline.svelte';
+  export type GeoSplinePropsWithoutHTML = {
+    /**
+     * Link between two points on the globe.
+     */
+    link: { source: [number, number]; target: [number, number] };
 
-  export let link: { source: [number, number]; target: [number, number] };
+    /**
+     * The amount of loft to apply to the middle of the curve.
+     *
+     * @default 1.0
+     */
+    loft?: number;
 
-  /** Amount of loft to apply to the midle of the curve */
-  export let loft = 1.0;
+    /**
+     * Curve of spline drawn. Imported via d3-shape.
+     *
+     * @example
+     * import { curveNatural } from 'd3-shape';
+     * <GeoSpline curve={curveNatural} />
+     *
+     * @default curveNatural
+     */
+    curve?: CurveFactory | CurveFactoryLineOnly;
+  };
 
-  /**
-   * Curve of spline drawn. Imported via d3-shape.
-   *
-   * @example
-   * import { curveNatural } from 'd3-shape';
-   * <GeoSpline curve={curveNatrual} />
-   *
-   * @type {CurveFactory | CurveFactoryLineOnly | undefined}
-   */
-  export let curve: CurveFactory | CurveFactoryLineOnly | undefined = curveNatural;
-
-  const geo = geoContext();
-
-  $: loftedProjection = geoOrthographic()
-    .translate($geo.translate())
-    .rotate($geo.rotate())
-    .scale($geo.scale() * loft);
-
-  $: source = $geo(link.source);
-  $: target = $geo(link.target);
-  $: middle = loftedProjection(geoInterpolate(link.source, link.target)(0.5));
+  export type GeoSplineProps = GeoSplinePropsWithoutHTML &
+    Without<SplineProps, GeoSplinePropsWithoutHTML>;
 </script>
 
-<Spline data={[source, middle, target]} x={(d) => d[0]} y={(d) => d[1]} {curve} {...$$restProps} />
+<script lang="ts">
+  import { geoOrthographic, geoInterpolate } from 'd3-geo';
+
+  import { getGeoContext } from './GeoContext.svelte';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
+
+  let {
+    link,
+    loft = 1.0,
+    curve = curveNatural,
+    splineRef: splineRefProp = $bindable(),
+    ...restProps
+  }: GeoSplineProps = $props();
+
+  let splineRef = $state<SVGPathElement>();
+  $effect.pre(() => {
+    splineRefProp = splineRef;
+  });
+
+  const geoCtx = getGeoContext();
+
+  const loftedProjection = $derived(
+    geoCtx.projection
+      ? geoOrthographic()
+          .translate(geoCtx.projection.translate())
+          .rotate(geoCtx.projection.rotate())
+          .scale(geoCtx.projection.scale() * loft)
+      : undefined
+  );
+
+  const source = $derived(geoCtx.projection ? geoCtx.projection(link.source) : [0, 0]) as [
+    number,
+    number,
+  ];
+  const target = $derived(geoCtx.projection ? geoCtx.projection(link.target) : [0, 0]) as [
+    number,
+    number,
+  ];
+  const middle = $derived(
+    geoCtx.projection ? loftedProjection!(geoInterpolate(link.source, link.target)(0.5)) : [0, 0]
+  ) as [number, number];
+</script>
+
+<Spline
+  bind:splineRef
+  data={[source, middle, target]}
+  x={(d) => d[0]}
+  y={(d) => d[1]}
+  {curve}
+  {...extractLayerProps(restProps, 'geo-spline')}
+/>
