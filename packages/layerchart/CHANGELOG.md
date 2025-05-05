@@ -8,9 +8,11 @@
 
 ### Minor Changes
 
-- feat: New Connector component (issue #11) ([#458](https://github.com/techniq/layerchart/pull/458))
+- feat: Add Annotation components (AnnotationPoint, AnnotationLine, AnnotationRange) ([#458](https://github.com/techniq/layerchart/pull/458))
 
 - feat: Integrate `annotations` into simplified charts ([#458](https://github.com/techniq/layerchart/pull/458))
+
+- feat(Pattern): Simplified definitions via `lines`/`circles` props (issue #472) ([#458](https://github.com/techniq/layerchart/pull/458))
 
 - feat(Pattern): Canvas support ([#458](https://github.com/techniq/layerchart/pull/458))
 
@@ -20,13 +22,11 @@
 
 - feat: New ArcChart component ([#458](https://github.com/techniq/layerchart/pull/458))
 
-- feat(Pattern): Simplified definitions via `lines`/`circles` props (issue #472) ([#458](https://github.com/techniq/layerchart/pull/458))
+- feat: New Connector component (issue #11) ([#458](https://github.com/techniq/layerchart/pull/458))
 
 - feat: Add `Layer` component to easily switch between Svg, Canavs, and Html layers ([#458](https://github.com/techniq/layerchart/pull/458))
 
 - refactor: Remove LayerCake dependency (issue #432) ([#458](https://github.com/techniq/layerchart/pull/458))
-
-- feat: Add Annotation components (AnnotationPoint, AnnotationLine, AnnotationRange) ([#458](https://github.com/techniq/layerchart/pull/458))
 
 ### Patch Changes
 
