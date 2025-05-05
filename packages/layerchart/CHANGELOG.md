@@ -42,6 +42,12 @@
 
 - fix(Text): Respect font weight when canvas rendered ([#458](https://github.com/techniq/layerchart/pull/458))
 
+## 1.0.10
+
+### Patch Changes
+
+- feat(BarChart): Pass derived scales (x1, y1) to slots props. Useful for custom labels with group series layout ([#476](https://github.com/techniq/layerchart/pull/476))
+
 ## 1.0.9
 
 ### Patch Changes
