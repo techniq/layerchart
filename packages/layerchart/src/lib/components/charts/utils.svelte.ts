@@ -8,9 +8,9 @@ import type Legend from '../Legend.svelte';
 export class HighlightKey<TData, SeriesComponent extends Component> {
   current = $state<SeriesData<TData, SeriesComponent>['key'] | null>(null);
 
-  set(seriesKey: typeof this.current) {
+  set = (seriesKey: typeof this.current) => {
     this.current = seriesKey;
-  }
+  };
 }
 
 export class SeriesState<TData, TComponent extends Component> {
