@@ -63,185 +63,6 @@
   </div>
 </Preview>
 
-<h2>Point annotations</h2>
-
-<Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart
-      data={spiralData}
-      x="x"
-      y="y"
-      annotations={[
-        {
-          type: 'point',
-          layer: 'below',
-          label: 'First point',
-          labelPlacement: 'top',
-          labelOffset: 4,
-          x: spiralData[0].x,
-          y: spiralData[0].y,
-          r: 10,
-          props: {
-            circle: { class: 'stroke-secondary fill-secondary/10' },
-            label: { class: 'fill-secondary text-xs' },
-          },
-        },
-        {
-          type: 'point',
-          layer: 'below',
-          label: 'Last point',
-          labelPlacement: 'top',
-          labelOffset: 4,
-          x: spiralData[spiralData.length - 1].x,
-          y: spiralData[spiralData.length - 1].y,
-          r: 10,
-          props: {
-            circle: { class: 'stroke-secondary fill-secondary/10' },
-            label: { class: 'fill-secondary text-xs' },
-          },
-        },
-      ]}
-      {renderContext}
-      {debug}
-    />
-  </div>
-</Preview>
-
-<Blockquote>
-  See also: <a href="/docs/components/AnnotationPoint">AnnotationPoint</a> for more examples
-</Blockquote>
-
-<h2>Line annotations</h2>
-
-<Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart
-      data={spiralData}
-      x="x"
-      y="y"
-      annotations={[
-        {
-          type: 'line',
-          label: 'Max',
-          y: 320,
-          props: {
-            label: { class: 'fill-danger' },
-            line: { class: '[stroke-dasharray:2,2] stroke-danger' },
-          },
-        },
-      ]}
-      {renderContext}
-      {debug}
-    />
-  </div>
-</Preview>
-
-<Blockquote>
-  See also: <a href="/docs/components/AnnotationLine">AnnotationLine</a> for more examples
-</Blockquote>
-
-<h2>Range annotations (vertical)</h2>
-
-<Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart
-      data={spiralData}
-      x="x"
-      y="y"
-      annotations={[
-        {
-          type: 'range',
-          layer: 'below',
-          x: [230, 270],
-          label: 'Range',
-          labelPlacement: 'bottom',
-          labelYOffset: 4,
-          pattern: {
-            size: 8,
-            lines: {
-              rotate: -45,
-              opacity: 0.2,
-            },
-          },
-        },
-      ]}
-      {renderContext}
-      {debug}
-    />
-  </div>
-</Preview>
-
-<Blockquote>
-  See also: <a href="/docs/components/AnnotationRange">AnnotationRange</a> for more examples
-</Blockquote>
-
-<h2>Range annotations (horizontal)</h2>
-
-<Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart
-      data={spiralData}
-      x="x"
-      y="y"
-      annotations={[
-        {
-          type: 'range',
-          layer: 'below',
-          y: [230, 270],
-          label: 'Range',
-          labelPlacement: 'bottom',
-          labelYOffset: 4,
-          pattern: {
-            size: 8,
-            lines: {
-              rotate: -45,
-              opacity: 0.2,
-            },
-          },
-        },
-      ]}
-      {renderContext}
-      {debug}
-    />
-  </div>
-</Preview>
-
-<Blockquote>
-  See also: <a href="/docs/components/AnnotationRange">AnnotationRange</a> for more examples
-</Blockquote>
-
-<h2>Range annotations (both)</h2>
-
-<Preview data={spiralData}>
-  <div class="h-[400px] p-4 border rounded-sm">
-    <ScatterChart
-      data={spiralData}
-      x="x"
-      y="y"
-      annotations={[
-        {
-          type: 'range',
-          layer: 'below',
-          x: [230, 270],
-          y: [230, 270],
-          label: 'Range',
-          labelPlacement: 'bottom',
-          labelYOffset: -16,
-          pattern: {
-            size: 8,
-            lines: {
-              rotate: -45,
-              opacity: 0.2,
-            },
-          },
-        },
-      ]}
-      {renderContext}
-      {debug}
-    />
-  </div>
-</Preview>
-
 <Blockquote>
   See also: <a href="/docs/components/AnnotationRange">AnnotationRange</a> for more examples
 </Blockquote>
@@ -539,6 +360,185 @@
         </Tooltip.Root>
       {/snippet}
     </ScatterChart>
+  </div>
+</Preview>
+
+<h2>Point annotations</h2>
+
+<Preview data={spiralData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <ScatterChart
+      data={spiralData}
+      x="x"
+      y="y"
+      annotations={[
+        {
+          type: 'point',
+          layer: 'below',
+          label: 'First point',
+          labelPlacement: 'top',
+          labelOffset: 4,
+          x: spiralData[0].x,
+          y: spiralData[0].y,
+          r: 10,
+          props: {
+            circle: { class: 'stroke-secondary fill-secondary/10' },
+            label: { class: 'fill-secondary text-xs' },
+          },
+        },
+        {
+          type: 'point',
+          layer: 'below',
+          label: 'Last point',
+          labelPlacement: 'top',
+          labelOffset: 4,
+          x: spiralData[spiralData.length - 1].x,
+          y: spiralData[spiralData.length - 1].y,
+          r: 10,
+          props: {
+            circle: { class: 'stroke-secondary fill-secondary/10' },
+            label: { class: 'fill-secondary text-xs' },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationPoint">AnnotationPoint</a> for more examples
+</Blockquote>
+
+<h2>Line annotations</h2>
+
+<Preview data={spiralData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <ScatterChart
+      data={spiralData}
+      x="x"
+      y="y"
+      annotations={[
+        {
+          type: 'line',
+          label: 'Max',
+          y: 320,
+          props: {
+            label: { class: 'fill-danger' },
+            line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationLine">AnnotationLine</a> for more examples
+</Blockquote>
+
+<h2>Range annotations (vertical)</h2>
+
+<Preview data={spiralData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <ScatterChart
+      data={spiralData}
+      x="x"
+      y="y"
+      annotations={[
+        {
+          type: 'range',
+          layer: 'below',
+          x: [230, 270],
+          label: 'Range',
+          labelPlacement: 'bottom',
+          labelYOffset: 4,
+          pattern: {
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationRange">AnnotationRange</a> for more examples
+</Blockquote>
+
+<h2>Range annotations (horizontal)</h2>
+
+<Preview data={spiralData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <ScatterChart
+      data={spiralData}
+      x="x"
+      y="y"
+      annotations={[
+        {
+          type: 'range',
+          layer: 'below',
+          y: [230, 270],
+          label: 'Range',
+          labelPlacement: 'bottom',
+          labelYOffset: 4,
+          pattern: {
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<Blockquote>
+  See also: <a href="/docs/components/AnnotationRange">AnnotationRange</a> for more examples
+</Blockquote>
+
+<h2>Range annotations (both)</h2>
+
+<Preview data={spiralData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <ScatterChart
+      data={spiralData}
+      x="x"
+      y="y"
+      annotations={[
+        {
+          type: 'range',
+          layer: 'below',
+          x: [230, 270],
+          y: [230, 270],
+          label: 'Range',
+          labelPlacement: 'bottom',
+          labelYOffset: -16,
+          pattern: {
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          },
+        },
+      ]}
+      {renderContext}
+      {debug}
+    />
   </div>
 </Preview>
 
