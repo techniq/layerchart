@@ -2,7 +2,10 @@
   import { createDimensionGetter, type Insets } from '$lib/utils/rect.svelte.js';
 
   export type BarPropsWithoutHTML = {
-    bar: Object;
+    /**
+     * data to render the bar from
+     */
+    data: Object;
 
     /**
      * Override `x` from context. Useful for multiple Bar instances
@@ -89,7 +92,7 @@
   const ctx = getChartContext();
 
   let {
-    bar,
+    data,
     x = ctx.x,
     y = ctx.y,
     x1,
@@ -122,11 +125,11 @@
     }))
   );
 
-  const dimensions = $derived(getDimensions(bar) ?? { x: 0, y: 0, width: 0, height: 0 });
+  const dimensions = $derived(getDimensions(data) ?? { x: 0, y: 0, width: 0, height: 0 });
 
   const isVertical = $derived(isScaleBand(ctx.xScale));
   const valueAccessor = $derived(accessor(isVertical ? y : x));
-  const value = $derived(valueAccessor(bar));
+  const value = $derived(valueAccessor(data));
   const resolvedValue = $derived(Array.isArray(value) ? greatestAbs(value) : value);
 
   // Resolved `rounded="edge"` based on orientation and value

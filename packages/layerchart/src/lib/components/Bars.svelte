@@ -55,10 +55,10 @@
   {:else}
     {#each data as d, i (key(d, i))}
       <Bar
+        data={d}
         {radius}
         {strokeWidth}
         {stroke}
-        bar={d}
         fill={fill ?? (ctx.config.c ? ctx.cGet(d) : null)}
         onclick={(e) => onBarClick(e, { data: d })}
         {...extractLayerProps(restProps, 'bars-bar')}
