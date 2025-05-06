@@ -21,9 +21,9 @@
     children?: Snippet;
     // TODO: investigate
     [key: string]: any;
-  } & Omit<BarPropsWithoutHTML, 'bar' | 'children'>;
+  } & Omit<BarPropsWithoutHTML, 'data' | 'children'>;
 
-  export type BarsProps = BarsPropsWithoutHTML & Omit<BarProps, 'bar'>;
+  export type BarsProps = BarsPropsWithoutHTML & Omit<BarProps, 'data'>;
 </script>
 
 <script lang="ts">

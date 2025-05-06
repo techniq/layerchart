@@ -471,7 +471,7 @@
     {:else}
       <Bar
         motion={motion === 'spring' ? 'spring' : undefined}
-        bar={highlightData}
+        data={highlightData}
         {...barProps}
         class={cls(!barProps.fill && 'fill-primary', barProps.class)}
         onclick={onBarClick && ((e) => onBarClick(e, { data: highlightData }))}

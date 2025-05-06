@@ -498,9 +498,9 @@
           rule
         />
         <Bars>
-          {#each data as bar, i}
+          {#each data as d, i}
             <Bar
-              {bar}
+              data={d}
               strokeWidth={1}
               class={i === data.length - 4 ? 'fill-primary' : 'fill-surface-content'}
             />
@@ -865,9 +865,9 @@
             rule
           />
           {#if show}
-            {#each data as bar, i}
+            {#each data as d, i}
               <Bar
-                {bar}
+                data={d}
                 initialY={300 - 16 * 2 - 2 - 24}
                 initialHeight={0}
                 motion={{
@@ -913,9 +913,9 @@
             rule
           />
           {#if show}
-            {#each data as bar, i}
+            {#each data as d, i}
               <Bar
-                {bar}
+                data={d}
                 motion={{
                   type: 'tween',
                   duration: 500,
@@ -1202,10 +1202,10 @@
           <Axis placement="bottom" rule />
           <g>
             <!-- TODO: 'data' can be used once type issue is resolved -->
-            {#each transitionData as bar (bar.year + '-' + bar.fruit)}
+            {#each transitionData as d (d.year + '-' + d.fruit)}
               <Bar
-                {bar}
-                fill={context.cScale?.(bar.fruit)}
+                data={d}
+                fill={context.cScale?.(d.fruit)}
                 strokeWidth={1}
                 motion={{
                   x: {
@@ -1303,10 +1303,10 @@
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <g>
-            {#each transitionData as bar (bar.year + '-' + bar.fruit)}
+            {#each transitionData as d (d.year + '-' + d.fruit)}
               <Bar
-                {bar}
-                fill={context.cScale?.(bar.fruit)}
+                data={d}
+                fill={context.cScale?.(d.fruit)}
                 strokeWidth={1}
                 motion={{
                   x: {
@@ -1332,10 +1332,10 @@
                 }}
                 class="cursor-pointer"
                 onclick={(e) => {
-                  alert('You clicked on:\n' + JSON.stringify(bar, null, 2));
+                  alert('You clicked on:\n' + JSON.stringify(d, null, 2));
                 }}
-                onpointerenter={(e) => context.tooltip.show(e, bar)}
-                onpointermove={(e) => context.tooltip.show(e, bar)}
+                onpointerenter={(e) => context.tooltip.show(e, d)}
+                onpointermove={(e) => context.tooltip.show(e, d)}
                 onpointerleave={(e) => context.tooltip.hide()}
               />
             {/each}
