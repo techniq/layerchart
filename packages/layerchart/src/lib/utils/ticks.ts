@@ -192,19 +192,28 @@ export function resolveTickVals(
   ticks?: TicksConfig,
   placement?: 'radius' | 'top' | 'bottom' | 'left' | 'right' | 'angle'
 ): any[] {
+  // Explicit tick values
   if (Array.isArray(ticks)) return ticks;
+
+  // Function to generate tick values
   if (typeof ticks === 'function') return ticks(scale) ?? [];
+
+  // Ticks via d3-time interval - https://d3js.org/d3-time#_interval
   if (isLiteralObject(ticks) && 'interval' in ticks) {
     if (ticks.interval === null || !('ticks' in scale) || typeof scale.ticks !== 'function') {
       return []; // Explicitly return empty array for null interval or invalid scale
     }
     return scale.ticks(ticks.interval as any);
   }
+
+  // Band scale ticks
   if (isScaleBand(scale)) {
     return ticks && typeof ticks === 'number'
       ? scale.domain().filter((_, i) => i % ticks === 0)
       : scale.domain();
   }
+
+  // Ticks from scale
   if (scale.ticks && typeof scale.ticks === 'function') {
     if (placement) {
       return scale.ticks(
@@ -213,6 +222,7 @@ export function resolveTickVals(
     }
     return scale.ticks(ticks as number);
   }
+
   return [];
 }
 
