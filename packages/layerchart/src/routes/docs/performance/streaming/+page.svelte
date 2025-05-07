@@ -8,6 +8,7 @@
   let xPoints = $state(100);
   let maxLength = $state(4000);
   let chartData = $state<{ date: Date; value: number }[]>([]);
+  // let chartData = $state.raw<{ date: Date; value: number }[]>([]);
   let isStreaming = $state(false);
   let intervalId: any = null;
 
@@ -54,7 +55,11 @@
       // mutate in place
       chartData.splice(0, Math.max(0, chartData.length + newPoints.length - maxLength));
       chartData.push(...newPoints);
-      chartData = chartData;
+
+      // chartData = [
+      //   ...chartData.slice(Math.max(0, chartData.length + newPoints.length - maxLength)),
+      //   ...newPoints,
+      // ];
 
       nextDate = new Date(nextDate.getTime() + xPoints * 24 * 60 * 60 * 1000);
     }, 1000);
