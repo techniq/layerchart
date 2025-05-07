@@ -77,7 +77,7 @@
   };
 
   export type GridProps<In extends Transition = Transition> = Omit<
-    GridPropsWithoutHTML<In> & Without<SVGAttributes<SVGGElement>, GridPropsWithoutHTML<In>>,
+    GridPropsWithoutHTML<In> & Without<GroupProps, GridPropsWithoutHTML<In>>,
     'children'
   >;
 </script>
@@ -93,6 +93,7 @@
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
 
   import Circle from './Circle.svelte';
+  import Group, { type GroupProps } from './Group.svelte';
   import Line from './Line.svelte';
   import Rule from './Rule.svelte';
   import Spline from './Spline.svelte';
@@ -150,11 +151,11 @@
   );
 </script>
 
-<g bind:this={ref} class={cls(layerClass('grid'), classes.root, className)} {...restProps}>
+<Group bind:ref class={cls(layerClass('grid'), classes.root, className)} {...restProps}>
   {#if x}
     {@const splineProps = extractLayerProps(x, 'grid-x-line')}
 
-    <g in:transitionIn={transitionInParams} class={layerClass('grid-x')}>
+    <Group {transitionIn} {transitionInParams} class={layerClass('grid-x')}>
       {#each xTickVals as x (x)}
         {#if ctx.radial}
           {@const [x1, y1] = pointRadial(ctx.xScale(x), ctx.yRange[0])}
@@ -204,12 +205,12 @@
           )}
         />
       {/if}
-    </g>
+    </Group>
   {/if}
 
   {#if y}
     {@const splineProps = extractLayerProps(y, 'grid-y-line')}
-    <g in:transitionIn={transitionInParams} class={layerClass('grid-y')}>
+    <Group {transitionIn} {transitionInParams} class={layerClass('grid-y')}>
       {#each yTickVals as y (y)}
         {#if ctx.radial}
           {#if radialY === 'circle'}
@@ -285,6 +286,6 @@
           />
         {/if}
       {/if}
-    </g>
+    </Group>
   {/if}
-</g>
+</Group>

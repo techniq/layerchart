@@ -4,6 +4,7 @@
   import { layerClass } from '$lib/utils/attributes.js';
   import type { Snippet } from 'svelte';
   import type { SVGAttributes } from 'svelte/elements';
+  import { getRenderContext } from './Chart.svelte';
 
   export type ClipPathPropsWithoutHTML = {
     /**
@@ -55,20 +56,24 @@
   }: ClipPathPropsWithoutHTML = $props();
 
   const url = $derived(`url(#${id})`);
+
+  const renderContext = getRenderContext();
 </script>
 
-<defs>
-  <clipPath {id} {...restProps}>
-    {@render clip?.({ id })}
+{#if renderContext === 'svg'}
+  <defs>
+    <clipPath {id} {...restProps}>
+      {@render clip?.({ id })}
 
-    {#if useId}
-      <use href="#{useId}" />
-    {/if}
-  </clipPath>
-</defs>
+      {#if useId}
+        <use href="#{useId}" />
+      {/if}
+    </clipPath>
+  </defs>
+{/if}
 
 {#if children}
-  {#if disabled}
+  {#if disabled || renderContext !== 'svg'}
     {@render children({ id, url, useId })}
   {:else}
     <g style:clip-path={url} class={layerClass('clip-path-g')}>
