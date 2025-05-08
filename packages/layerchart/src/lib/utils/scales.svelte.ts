@@ -1,5 +1,5 @@
 import { unique } from '@layerstack/utils';
-import { scaleBand, type ScaleBand } from 'd3-scale';
+import { scaleBand, type ScaleBand, type ScaleTime } from 'd3-scale';
 import {
   createControlledMotion,
   type MotionProp,
@@ -118,6 +118,11 @@ export function scaleBandInvert(scale: ScaleBand<any>) {
 
 export function isScaleBand(scale: AnyScale<any, any>): scale is ScaleBand<any> {
   return typeof scale.bandwidth === 'function';
+}
+
+export function isScaleTime(scale: AnyScale<any, any>): scale is ScaleTime<any, any> {
+  const domain = scale.domain();
+  return domain[0] instanceof Date || domain[1] instanceof Date;
 }
 
 /**
