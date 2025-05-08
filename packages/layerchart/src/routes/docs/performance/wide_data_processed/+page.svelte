@@ -12,6 +12,8 @@
 
   let renderContext = $state<'svg' | 'canvas'>('svg');
   let motion = $state(true);
+  let show = $state(true);
+
   let chartProps = $derived<ComponentProps<typeof LineChart>['props']>({
     xAxis: { format: PeriodType.Day },
     yAxis: { format: 'metric' },
@@ -32,7 +34,7 @@
 </script>
 
 <div class="grid gap-4">
-  <div class="grid grid-cols-3 gap-3">
+  <div class="flex gap-3">
     <Field label="Render context">
       <ToggleGroup bind:value={renderContext} variant="outline">
         <ToggleOption value="svg">Svg</ToggleOption>
@@ -42,6 +44,13 @@
 
     <Field label="Motion">
       <ToggleGroup bind:value={motion} variant="outline">
+        <ToggleOption value={true}>Yes</ToggleOption>
+        <ToggleOption value={false}>No</ToggleOption>
+      </ToggleGroup>
+    </Field>
+
+    <Field label="Show">
+      <ToggleGroup bind:value={show} variant="outline">
         <ToggleOption value={true}>Yes</ToggleOption>
         <ToggleOption value={false}>No</ToggleOption>
       </ToggleGroup>
@@ -58,36 +67,40 @@
       {#if example === 'single'}
         <Preview data={chartData[0]}>
           <div class="h-[500px] p-4 border rounded-sm">
-            <LineChart
-              data={chartData}
-              x="date"
-              y="cpu"
-              props={chartProps}
-              brush
-              {renderContext}
-              profile
-            />
+            {#if show}
+              <LineChart
+                data={chartData}
+                x="date"
+                y="cpu"
+                props={chartProps}
+                brush
+                {renderContext}
+                profile
+              />
+            {/if}
           </div>
         </Preview>
       {:else if example === 'series'}
         <Preview data={chartData[0]}>
           <div class="h-[500px] p-4 border rounded-sm">
-            <LineChart
-              data={chartData}
-              x="date"
-              series={[
-                { key: 'cpu', color: 'var(--color-danger)' },
-                {
-                  key: 'ram',
-                  color: 'var(--color-warning)',
-                },
-                { key: 'tcp', color: 'var(--color-success)' },
-              ]}
-              props={chartProps}
-              brush
-              {renderContext}
-              profile
-            />
+            {#if show}
+              <LineChart
+                data={chartData}
+                x="date"
+                series={[
+                  { key: 'cpu', color: 'var(--color-danger)' },
+                  {
+                    key: 'ram',
+                    color: 'var(--color-warning)',
+                  },
+                  { key: 'tcp', color: 'var(--color-success)' },
+                ]}
+                props={chartProps}
+                brush
+                {renderContext}
+                profile
+              />
+            {/if}
           </div>
         </Preview>
       {/if}
