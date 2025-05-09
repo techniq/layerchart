@@ -4,7 +4,7 @@
   import { Button, ButtonGroup, Field, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format } from '@layerstack/utils';
 
-  let renderContext = $state<'svg' | 'canvas'>('svg');
+  let renderContext = $state<'svg' | 'canvas'>('canvas');
   let motion = $state(true);
   let show = $state(true);
 

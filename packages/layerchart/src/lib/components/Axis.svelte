@@ -356,7 +356,7 @@
     <Text {...resolvedLabelProps} />
   {/if}
 
-  {#each tickVals as tick, index (tick)}
+  {#each tickVals as tick, index (tick.toString())}
     {@const tickCoords = getCoords(tick)}
     {@const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y)}
     {@const [radialTickMarkCoordsX, radialTickMarkCoordsY] = pointRadial(
@@ -396,7 +396,6 @@
           'stroke-surface-content/50',
           classes.tick
         )}
-        <!-- Tick marks -->
         {#if orientation === 'horizontal'}
           <Line
             x1={tickCoords.x}
@@ -426,7 +425,6 @@
           />
         {/if}
       {/if}
-      <!-- TODO: Add tick marks for radial (angle)? -->
 
       {#if tickLabel}
         {@render tickLabel({ props: resolvedTickLabelProps, index })}
