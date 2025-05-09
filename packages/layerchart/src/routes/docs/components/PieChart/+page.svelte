@@ -4,7 +4,7 @@
   import { group, sum } from 'd3-array';
   import { quantize } from 'd3-interpolate';
   import { schemeTableau10, interpolateRainbow } from 'd3-scale-chromatic';
-  import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, RangeField, Switch, Toggle, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { longData } from '$lib/utils/genData.js';
@@ -454,6 +454,52 @@
     </PieChart>
   </div>
 </Preview>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[1fr_auto] gap-2">
+    <h2>Motion (tween)</h2>
+    <Field label="Show" labelPlacement="left" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+  </div>
+  <Preview {data}>
+    <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+      {#if show}
+        <PieChart
+          {data}
+          key="fruit"
+          value="value"
+          props={{ pie: { motion: 'tween' } }}
+          {renderContext}
+          {debug}
+        />
+      {/if}
+    </div>
+  </Preview>
+</Toggle>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[1fr_auto] gap-2">
+    <h2>Motion (spring)</h2>
+    <Field label="Show" labelPlacement="left" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+  </div>
+  <Preview {data}>
+    <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+      {#if show}
+        <PieChart
+          {data}
+          key="fruit"
+          value="value"
+          props={{ pie: { motion: 'spring' } }}
+          {renderContext}
+          {debug}
+        />
+      {/if}
+    </div>
+  </Preview>
+</Toggle>
 
 <!-- <h2>Centroid labels</h2>
 

@@ -357,7 +357,7 @@
 
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[1fr_auto] gap-2">
-    <h2>Tweened</h2>
+    <h2>Motion (tween)</h2>
     <Field label="Show" labelPlacement="left" let:id>
       <Switch checked={show} on:change={toggle} {id} size="md" />
     </Field>
@@ -377,6 +377,39 @@
             };
           })}
           props={{ arc: { motion: 'tween' } }}
+          outerRadius={-25}
+          innerRadius={-20}
+          cornerRadius={10}
+          {renderContext}
+          {debug}
+        />
+      {/if}
+    </div>
+  </Preview>
+</Toggle>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[1fr_auto] gap-2">
+    <h2>Motion (spring)</h2>
+    <Field label="Show" labelPlacement="left" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+  </div>
+  <Preview data={exerciseData}>
+    <div class="h-[200px] p-4 border rounded-sm resize overflow-auto">
+      {#if show}
+        <ArcChart
+          key="key"
+          value="value"
+          series={exerciseData.map((d) => {
+            return {
+              key: d.key,
+              data: [d],
+              maxValue: d.maxValue,
+              color: d.color,
+            };
+          })}
+          props={{ arc: { motion: 'spring' } }}
           outerRadius={-25}
           innerRadius={-20}
           cornerRadius={10}
