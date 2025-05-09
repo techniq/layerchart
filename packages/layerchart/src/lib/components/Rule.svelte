@@ -52,6 +52,7 @@
   import { cls } from '@layerstack/tailwind';
 
   import Circle from './Circle.svelte';
+  import Group from './Group.svelte';
   import Line, { type LinePropsWithoutHTML } from './Line.svelte';
   import { getChartContext } from './Chart.svelte';
   import { layerClass } from '$lib/utils/attributes.js';
@@ -87,7 +88,7 @@
   }
 </script>
 
-<g class={layerClass('rule-g')}>
+<Group class={layerClass('rule-g')}>
   {#if showRule(x, 'x')}
     {@const xCoord =
       x === true || x === 'left'
@@ -153,4 +154,4 @@
       />
     {/if}
   {/if}
-</g>
+</Group>

@@ -27,10 +27,13 @@
 </script>
 
 <script lang="ts">
+  import type { Snippet } from 'svelte';
+
   import Bar, { type BarProps, type BarPropsWithoutHTML } from './Bar.svelte';
+  import Group from './Group.svelte';
+
   import { chartDataArray } from '../utils/common.js';
   import { getChartContext } from './Chart.svelte';
-  import type { Snippet } from 'svelte';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
 
   let {
@@ -49,7 +52,7 @@
   const data = $derived(chartDataArray(dataProp ?? ctx.data));
 </script>
 
-<g class={layerClass('bars')}>
+<Group class={layerClass('bars')}>
   {#if children}
     {@render children()}
   {:else}
@@ -65,4 +68,4 @@
       />
     {/each}
   {/if}
-</g>
+</Group>

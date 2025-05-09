@@ -104,13 +104,11 @@
   };
 
   export type AxisProps<In extends Transition = Transition> = AxisPropsWithoutHTML<In> &
-    Without<SVGAttributes<SVGGElement>, AxisPropsWithoutHTML<In>>;
+    Without<GroupProps, AxisPropsWithoutHTML<In>>;
 </script>
 
 <script lang="ts" generics="T extends Transition = Transition">
   import { type ComponentProps, type Snippet } from 'svelte';
-  import { fade } from 'svelte/transition';
-  import { cubicIn } from 'svelte/easing';
   import type { SVGAttributes } from 'svelte/elements';
 
   import { extent } from 'd3-array';
@@ -119,6 +117,7 @@
   import { format as formatValue, type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
+  import Group, { type GroupProps } from './Group.svelte';
   import Line from './Line.svelte';
   import Rule from './Rule.svelte';
   import Text from './Text.svelte';
@@ -126,7 +125,7 @@
 
   import { getChartContext } from './Chart.svelte';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
-  import { extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
+  import { type MotionProp } from '$lib/utils/motion.svelte.js';
   import { resolveTickVals, type TicksConfig } from '$lib/utils/ticks.js';
 
   let {
@@ -142,21 +141,14 @@
     format,
     tickLabelProps,
     motion,
-    transitionIn: transitionInProp,
-    transitionInParams: transitionInParamsProp,
+    transitionIn,
+    transitionInParams,
     scale: scaleProp,
     classes = {},
     class: className,
     tickLabel,
     ...restProps
   }: AxisProps<T> = $props();
-
-  const transitionIn = $derived(
-    transitionInProp ? transitionInProp : extractTweenConfig(motion)?.options ? fade : () => {}
-  ) as T;
-  const transitionInParams = $derived(
-    transitionInParamsProp ? transitionInParamsProp : { easing: cubicIn }
-  );
 
   const ctx = getChartContext();
 
@@ -342,7 +334,7 @@
   }) satisfies ComponentProps<typeof Text>;
 </script>
 
-<g
+<Group
   {...restProps}
   data-placement={placement}
   class={cls(layerClass('axis'), `placement-${placement}`, classes.root, className)}
@@ -364,7 +356,7 @@
     <Text {...resolvedLabelProps} />
   {/if}
 
-  {#each tickVals as tick, index (tick)}
+  {#each tickVals as tick, index (tick.toString())}
     {@const tickCoords = getCoords(tick)}
     {@const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y)}
     {@const [radialTickMarkCoordsX, radialTickMarkCoordsY] = pointRadial(
@@ -386,7 +378,7 @@
       ),
     }}
 
-    <g in:transitionIn={transitionInParams} class={layerClass('axis-tick-group')}>
+    <Group {transitionIn} {transitionInParams} class={layerClass('axis-tick-group')}>
       {#if grid !== false}
         {@const ruleProps = extractLayerProps(grid, 'axis-grid')}
         <Rule
@@ -404,7 +396,6 @@
           'stroke-surface-content/50',
           classes.tick
         )}
-        <!-- Tick marks -->
         {#if orientation === 'horizontal'}
           <Line
             x1={tickCoords.x}
@@ -434,13 +425,12 @@
           />
         {/if}
       {/if}
-      <!-- TODO: Add tick marks for radial (angle)? -->
 
       {#if tickLabel}
         {@render tickLabel({ props: resolvedTickLabelProps, index })}
       {:else}
         <Text {...resolvedTickLabelProps} />
       {/if}
-    </g>
+    </Group>
   {/each}
-</g>
+</Group>

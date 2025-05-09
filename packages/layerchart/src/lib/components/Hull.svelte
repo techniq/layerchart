@@ -49,8 +49,7 @@
     ref?: SVGGElement;
   };
 
-  export type HullProps = HullPropsWithoutHTML &
-    Without<SVGAttributes<SVGElement>, HullPropsWithoutHTML>;
+  export type HullProps = HullPropsWithoutHTML & Without<GroupProps, HullPropsWithoutHTML>;
 </script>
 
 <script lang="ts">
@@ -62,6 +61,7 @@
   import { cls } from '@layerstack/tailwind';
 
   import GeoPath from './GeoPath.svelte';
+  import Group, { type GroupProps } from './Group.svelte';
   import Spline from './Spline.svelte';
   import { getChartContext } from './Chart.svelte';
   import { getGeoContext } from './GeoContext.svelte';
@@ -104,7 +104,7 @@
   );
 </script>
 
-<g {...restProps} class={cls(layerClass('hull-g'), classes.root, className)} bind:this={ref}>
+<Group {...restProps} class={cls(layerClass('hull-g'), classes.root, className)} bind:ref>
   {#if geoCtx.projection}
     {@const polygon = geoVoronoi().hull(points)}
     <GeoPath
@@ -129,4 +129,4 @@
       {onpointerleave}
     />
   {/if}
-</g>
+</Group>

@@ -50,7 +50,7 @@
   };
 
   export type VoronoiProps = VoronoiPropsWithoutHTML &
-    Without<Omit<SVGAttributes<SVGGElement>, 'children'>, VoronoiPropsWithoutHTML>;
+    Without<Omit<GroupProps, 'children'>, VoronoiPropsWithoutHTML>;
 </script>
 
 <script lang="ts">
@@ -63,6 +63,7 @@
   import { cls } from '@layerstack/tailwind';
 
   import GeoPath from './GeoPath.svelte';
+  import Group, { type GroupProps } from './Group.svelte';
   import Spline from './Spline.svelte';
   import { getChartContext } from './Chart.svelte';
   import { getGeoContext } from './GeoContext.svelte';
@@ -110,7 +111,7 @@
   const boundHeight = $derived(Math.max(ctx.height, 0));
 </script>
 
-<g {...restProps} class={cls(layerClass('voronoi-g'), classes.root, className)}>
+<Group {...restProps} class={cls(layerClass('voronoi-g'), classes.root, className)}>
   {#if geo.projection}
     {@const polygons = geoVoronoi().polygons(points)}
     {#each polygons.features as feature}
@@ -158,4 +159,4 @@
       {/if}
     {/each}
   {/if}
-</g>
+</Group>

@@ -16,6 +16,7 @@
 <script lang="ts">
   import { geoGraticule } from 'd3-geo';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import Group from './Group.svelte';
 
   let { lines, outline, step = [10, 10], ...restProps }: GraticuleProps = $props();
 
@@ -26,7 +27,7 @@
   });
 </script>
 
-<g class={layerClass('graticule-g')}>
+<Group class={layerClass('graticule-g')}>
   <!-- TODO: Any reason to still render the single `MultiLineString` path if using `lines` and/or `outline` -->
   {#if !lines && !outline}
     <GeoPath geojson={graticule()} {...extractLayerProps(restProps, 'graticule-geo-path')} />
@@ -44,4 +45,4 @@
       {...extractLayerProps(outline, 'graticule-geo-outline')}
     />
   {/if}
-</g>
+</Group>

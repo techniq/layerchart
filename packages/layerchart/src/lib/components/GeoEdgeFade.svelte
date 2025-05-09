@@ -15,7 +15,7 @@
   };
 
   export type GeoEdgeFadeProps = GeoEdgeFadePropsWithoutHTML &
-    Without<SVGAttributes<SVGGElement>, GeoEdgeFadePropsWithoutHTML>;
+    Without<GroupProps, GeoEdgeFadePropsWithoutHTML>;
 </script>
 
 <script lang="ts">
@@ -23,6 +23,7 @@
   import { geoDistance } from 'd3-geo';
 
   import { getGeoContext } from './GeoContext.svelte';
+  import Group, { type GroupProps } from './Group.svelte';
   import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
@@ -55,6 +56,6 @@
   const opacity = $derived(opacityProp ?? clamper(fade(distance)));
 </script>
 
-<g {opacity} bind:this={ref} {...extractLayerProps(restProps, 'geo-edge-fade')}>
+<Group {opacity} bind:ref {...extractLayerProps(restProps, 'geo-edge-fade')}>
   {@render children?.()}
-</g>
+</Group>

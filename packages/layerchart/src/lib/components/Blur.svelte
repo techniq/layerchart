@@ -21,22 +21,28 @@
 </script>
 
 <script lang="ts">
+  import type { Snippet } from 'svelte';
+  import { getRenderContext } from './Chart.svelte';
   import { createId } from '$lib/utils/createId.js';
   import { layerClass } from '$lib/utils/attributes.js';
-  import type { Snippet } from 'svelte';
+
   const uid = $props.id();
 
   let { id = createId('blur-', uid), stdDeviation = 5, children }: BlurProps = $props();
+
+  const renderContext = getRenderContext();
 </script>
 
-<defs>
-  <filter {id} class={layerClass('blur-filter')}>
-    <feGaussianBlur in="SourceGraphic" {stdDeviation} />
-  </filter>
-</defs>
+{#if renderContext === 'svg'}
+  <defs>
+    <filter {id} class={layerClass('blur-filter')}>
+      <feGaussianBlur in="SourceGraphic" {stdDeviation} />
+    </filter>
+  </defs>
 
-{#if children}
-  <g filter="url(#{id})" class={layerClass('blur-g')}>
-    {@render children({ id, url: `url(#${id})` })}
-  </g>
+  {#if children}
+    <g filter="url(#{id})" class={layerClass('blur-g')}>
+      {@render children({ id, url: `url(#${id})` })}
+    </g>
+  {/if}
 {/if}

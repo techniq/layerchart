@@ -128,6 +128,7 @@
     'series_arrays',
     'dimension_arrays',
     'dimension_arrays_processed',
+    'streaming',
   ];
 </script>
 

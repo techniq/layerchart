@@ -1,10 +1,10 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
   import type { HTMLAttributes, TouchEventHandler } from 'svelte/elements';
-  import type { Without } from '$lib/utils/types.js';
-  import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
+  import type { Transition, TransitionParams, Without } from '$lib/utils/types.js';
+  import { createMotion, extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
 
-  export type GroupPropsWithoutHTML = {
+  export type GroupPropsWithoutHTML<In extends Transition = Transition> = {
     /**
      * Translate x
      */
@@ -44,6 +44,11 @@
      */
     preventTouchMove?: boolean;
 
+    /**
+     * The opacity of the element. (0 to 1)
+     */
+    opacity?: number;
+
     children?: Snippet;
 
     /**
@@ -56,13 +61,28 @@
     ref?: Element;
 
     motion?: MotionProp;
+
+    /**
+     * Transition function for entering elements
+     * @default defaults to fade if the motion prop is set to tweened
+     */
+    transitionIn?: In;
+
+    /**
+     * Parameters for the transitionIn function
+     * @default { easing: cubicIn }
+     */
+    transitionInParams?: TransitionParams<In>;
   };
 
   export type GroupProps = GroupPropsWithoutHTML &
     Without<HTMLAttributes<Element>, GroupPropsWithoutHTML>;
 </script>
 
-<script lang="ts">
+<script lang="ts" generics="T extends Transition = Transition">
+  import { fade } from 'svelte/transition';
+  import { cubicIn } from 'svelte/easing';
+
   import { cls } from '@layerstack/tailwind';
 
   import { getRenderContext } from './Chart.svelte';
@@ -80,7 +100,10 @@
     initialY: initialYProp,
     center = false,
     preventTouchMove = false,
+    opacity = 1,
     motion,
+    transitionIn: transitionInProp,
+    transitionInParams: transitionInParamsProp,
     class: className,
     children,
     ref: refProp = $bindable(),
@@ -101,6 +124,13 @@
   const motionX = createMotion(initialX, () => trueX, motion);
   const motionY = createMotion(initialY, () => trueY, motion);
 
+  const transitionIn = $derived(
+    transitionInProp ? transitionInProp : extractTweenConfig(motion)?.options ? fade : () => {}
+  ) as T;
+  const transitionInParams = $derived(
+    transitionInParamsProp ? transitionInParamsProp : { easing: cubicIn }
+  );
+
   const transform = $derived.by(() => {
     if (center || x != null || y != null) {
       return `translate(${motionX.current}px, ${motionY.current}px)`;
@@ -113,7 +143,13 @@
     registerCanvasComponent({
       name: 'Group',
       render: (ctx) => {
+        const currentGlobalAlpha = ctx.globalAlpha;
+        ctx.globalAlpha = opacity;
+
         ctx.translate(motionX.current ?? 0, motionY.current ?? 0);
+
+        // Restore in case it was modified by `opacity`
+        ctx.globalAlpha = currentGlobalAlpha;
       },
       retainState: true,
       events: {
@@ -124,7 +160,7 @@
         pointerleave: restProps.onpointerleave,
         pointerdown: restProps.onpointerdown,
       },
-      deps: () => [motionX.current, motionY.current],
+      deps: () => [motionX.current, motionY.current, opacity],
     });
   }
 
@@ -143,6 +179,8 @@
   <g
     style:transform
     class={cls(layerClass('group-g'), className)}
+    in:transitionIn={transitionInParams}
+    {opacity}
     {...restProps}
     ontouchmove={handleTouchMove}
     bind:this={ref}
@@ -153,6 +191,8 @@
   <div
     bind:this={ref}
     style:transform
+    style:opacity
+    in:transitionIn={transitionInParams}
     {...restProps}
     class={cls(layerClass('group-div'), 'absolute', className)}
     ontouchmove={handleTouchMove}
