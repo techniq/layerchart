@@ -20,8 +20,11 @@
     /** Placement of the label */
     labelPlacement?: Placement;
 
-    /** Offset of the label */
-    labelOffset?: number;
+    /** X offset of the label */
+    labelXOffset?: number;
+
+    /** Y offset of the label */
+    labelYOffset?: number;
 
     /** Details (description, etc) useful to display in tooltip */
     details?: any;
@@ -51,7 +54,8 @@
     r = 4,
     label,
     labelPlacement = 'center',
-    labelOffset = 0,
+    labelXOffset = 0,
+    labelYOffset = 0,
     details,
     props,
   }: AnnotationPointProps = $props();
@@ -66,18 +70,12 @@
   const labelProps = $derived<ComponentProps<typeof Text>>({
     x:
       point.x +
-      (labelPlacement.includes('left')
-        ? -(r + labelOffset)
-        : labelPlacement.includes('right')
-          ? r + labelOffset
-          : 0),
+      ((['top', 'center', 'bottom'].includes(labelPlacement) ? 0 : r) + labelXOffset) *
+        (labelPlacement.includes('left') ? -1 : 1),
     y:
       point.y +
-      (labelPlacement.includes('top')
-        ? -(r + labelOffset)
-        : labelPlacement.includes('bottom')
-          ? r + labelOffset
-          : 0),
+      ((['left', 'center', 'right'].includes(labelPlacement) ? 0 : r) + labelYOffset) *
+        (labelPlacement.includes('top') ? -1 : 1),
     dy: -2, // adjust for smaler font size
     textAnchor: labelPlacement.includes('left')
       ? 'end'

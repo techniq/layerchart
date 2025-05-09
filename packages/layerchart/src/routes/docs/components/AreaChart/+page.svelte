@@ -1151,7 +1151,8 @@
           type: 'line',
           y: 500,
           label: 'Max',
-          labelOffset: 4,
+          labelXOffset: 4,
+          labelYOffset: 2,
           props: {
             label: { class: 'fill-danger' },
             line: { class: '[stroke-dasharray:2,2] stroke-danger' },
@@ -1240,7 +1241,7 @@
           seriesKey: s.key,
           label: s.key,
           labelPlacement: 'right',
-          labelOffset: 4,
+          labelXOffset: 4,
           x: lastDataPoint.date,
           y: lastDataPoint.value,
           props: {

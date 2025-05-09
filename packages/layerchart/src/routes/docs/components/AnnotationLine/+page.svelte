@@ -58,7 +58,8 @@
     'bottom-right',
   ] as const;
   let placement: Placement = $state('top-right');
-  let offset = $state(0);
+  let xOffset = $state(0);
+  let yOffset = $state(0);
 
   let renderContext: 'svg' | 'canvas' = $state('svg');
   let debug = $state(false);
@@ -97,7 +98,7 @@
         <AnnotationLine
           x={new Date('2010-03-30')}
           label="Event"
-          labelOffset={4}
+          labelXOffset={4}
           props={{
             line: { class: '[stroke-dasharray:2,2] stroke-danger' },
             label: { class: 'fill-danger' },
@@ -161,7 +162,8 @@
     </Menu>
   </Toggle>
 
-  <RangeField label="Offset" bind:value={offset} max={10} />
+  <RangeField label="X Offset" bind:value={xOffset} max={10} />
+  <RangeField label="Y Offset" bind:value={yOffset} max={10} />
 </div>
 
 <Preview data={data.appleStock}>
@@ -181,7 +183,8 @@
           y={500}
           label={placement}
           labelPlacement={placement}
-          labelOffset={offset}
+          labelXOffset={xOffset}
+          labelYOffset={yOffset}
           props={{
             line: { class: '[stroke-dasharray:2,2] stroke-danger' },
             label: { class: 'fill-danger' },
@@ -217,7 +220,8 @@
     </Menu>
   </Toggle>
 
-  <RangeField label="Offset" bind:value={offset} max={10} />
+  <RangeField label="X Offset" bind:value={xOffset} max={10} />
+  <RangeField label="Y Offset" bind:value={yOffset} max={10} />
 </div>
 
 <Preview data={data.appleStock}>
@@ -237,7 +241,8 @@
           x={new Date('2010-03-30')}
           label={placement}
           labelPlacement={placement}
-          labelOffset={offset}
+          labelXOffset={xOffset}
+          labelYOffset={yOffset}
           props={{
             line: { class: '[stroke-dasharray:2,2] stroke-danger' },
             label: { class: 'fill-danger' },
@@ -317,7 +322,7 @@
           y={500}
           label="Max"
           labelPlacement="bottom-right"
-          labelOffset={2}
+          labelYOffset={2}
           props={{
             line: { class: '[stroke-dasharray:2,2] _stroke-danger' },
           }}
