@@ -1463,7 +1463,7 @@
           r: 4,
           label: 'Today',
           labelPlacement: 'bottom',
-          labelOffset: 16,
+          labelYOffset: 16,
           props: {
             circle: { class: 'fill-secondary' },
             label: { class: 'text-xs fill-secondary font-bold' },

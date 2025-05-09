@@ -377,7 +377,7 @@
           layer: 'below',
           label: 'First point',
           labelPlacement: 'top',
-          labelOffset: 4,
+          labelYOffset: 4,
           x: spiralData[0].x,
           y: spiralData[0].y,
           r: 10,
@@ -391,7 +391,7 @@
           layer: 'below',
           label: 'Last point',
           labelPlacement: 'top',
-          labelOffset: 4,
+          labelYOffset: 4,
           x: spiralData[spiralData.length - 1].x,
           y: spiralData[spiralData.length - 1].y,
           r: 10,
@@ -423,6 +423,8 @@
         {
           type: 'line',
           label: 'Max',
+          labelXOffset: 4,
+          labelYOffset: 2,
           y: 320,
           props: {
             label: { class: 'fill-danger' },
@@ -490,7 +492,7 @@
           y: [230, 270],
           label: 'Range',
           labelPlacement: 'bottom',
-          labelYOffset: 4,
+          labelYOffset: -16,
           pattern: {
             size: 8,
             lines: {

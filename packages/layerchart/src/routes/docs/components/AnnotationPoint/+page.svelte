@@ -61,7 +61,8 @@
     'bottom-right',
   ] as const;
   let placement: Placement = $state('top');
-  let offset = $state(0);
+  let xOffset = $state(0);
+  let yOffset = $state(0);
   let radius = $state(4);
 
   let renderContext: 'svg' | 'canvas' = $state('svg');
@@ -276,7 +277,7 @@
           y={lastPoint.value}
           label="Apple"
           labelPlacement="right"
-          labelOffset={4}
+          labelXOffset={4}
           props={{
             circle: { class: 'fill-primary' },
             label: { class: 'fill-primary font-bold' },
@@ -289,7 +290,7 @@
 
 <h2>Label placement</h2>
 
-<div class="grid grid-cols-3 gap-2 mb-2">
+<div class="grid grid-cols-4 gap-2 mb-2">
   <Toggle let:on={open} let:toggle>
     <Field label="Placement" class="cursor-pointer" on:click={toggle}>
       <span class="text-sm">
@@ -312,8 +313,9 @@
     </Menu>
   </Toggle>
 
-  <RangeField label="Offset" bind:value={offset} max={10} />
   <RangeField label="Radius" bind:value={radius} max={10} />
+  <RangeField label="X Offset" bind:value={xOffset} max={10} />
+  <RangeField label="Y Offset" bind:value={yOffset} max={10} />
 </div>
 
 <Preview data={data.appleStock}>
@@ -336,7 +338,8 @@
           r={radius}
           label={placement}
           labelPlacement={placement}
-          labelOffset={offset}
+          labelXOffset={xOffset}
+          labelYOffset={yOffset}
           props={{
             circle: { class: 'fill-secondary' },
             label: { class: 'fill-secondary font-bold' },
@@ -359,7 +362,7 @@
             r={4}
             label="Featured"
             labelPlacement="bottom"
-            labelOffset={16}
+            labelYOffset={16}
             props={{
               circle: { class: 'fill-secondary' },
               label: { class: 'text-xs fill-secondary font-bold' },

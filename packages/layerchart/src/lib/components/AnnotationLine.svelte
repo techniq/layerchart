@@ -17,8 +17,11 @@
     /** Placement of the label */
     labelPlacement?: Placement;
 
-    /** Offset of the label */
-    labelOffset?: number;
+    /** X offset of the label */
+    labelXOffset?: number;
+
+    /** Y offset of the label */
+    labelYOffset?: number;
 
     /** Classes for inner elements */
     props?: {
@@ -44,7 +47,8 @@
     y,
     label,
     labelPlacement = 'top-right',
-    labelOffset = 0,
+    labelXOffset = 0,
+    labelYOffset = 0,
     props,
   }: AnnotationLineProps = $props();
 
@@ -62,25 +66,17 @@
   const labelProps = $derived<ComponentProps<typeof Text>>(
     isVertical
       ? {
-          x:
-            line.x1 +
-            (['top', 'bottom'].includes(labelPlacement)
-              ? 0 // Offset applies to `y`
-              : labelPlacement.includes('left')
-                ? -labelOffset
-                : labelOffset),
+          x: line.x1 + (labelPlacement.includes('left') ? -labelXOffset : labelXOffset),
           y:
             (labelPlacement.includes('top')
               ? line.y2
               : labelPlacement.includes('bottom')
                 ? line.y1
                 : (line.y1 - line.y2) / 2) +
-            (labelPlacement === 'top'
-              ? -labelOffset
-              : labelPlacement === 'bottom'
-                ? labelOffset
-                : 0),
-          dy: -2, // adjust for smaler font size
+            (['top', 'bottom-left', 'bottom-right'].includes(labelPlacement)
+              ? -labelYOffset
+              : labelYOffset),
+          dy: -2, // adjust for smaller font size
           textAnchor: labelPlacement.includes('left')
             ? 'end'
             : labelPlacement.includes('right')
@@ -104,19 +100,11 @@
               : labelPlacement.includes('right')
                 ? line.x2
                 : (line.x2 - line.x1) / 2) +
-            (labelPlacement === 'left'
-              ? -labelOffset
-              : labelPlacement === 'right'
-                ? labelOffset
-                : 0),
-          y:
-            line.y1 +
-            (['left', 'right'].includes(labelPlacement)
-              ? 0 // Offset applies to `x`
-              : labelPlacement.includes('top')
-                ? -labelOffset
-                : labelOffset),
-          dy: -2, // adjust for smaler font size
+            (['left', 'top-right', 'bottom-right'].includes(labelPlacement)
+              ? -labelXOffset
+              : labelXOffset),
+          y: line.y1 + (labelPlacement.includes('top') ? -labelYOffset : labelYOffset),
+          dy: -2, // adjust for smaller font size
           textAnchor:
             labelPlacement === 'left'
               ? 'end' // place beside line
