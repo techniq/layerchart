@@ -204,10 +204,13 @@
       {renderContext}
       {debug}
       brush
+      legend
     >
-      {#snippet marks({ series, context })}
-        {#each series as s}
-          {@const active = context.tooltip.data == null || context.tooltip.data?.fruit === s.key}
+      {#snippet marks({ context, visibleSeries, highlightKey })}
+        {#each visibleSeries as s}
+          {@const active =
+            (context.tooltip.data == null || s.key === context.tooltip.data?.fruit) &&
+            (highlightKey === null || s.key === highlightKey)}
           <Spline
             data={multiSeriesData}
             y={s.key}
