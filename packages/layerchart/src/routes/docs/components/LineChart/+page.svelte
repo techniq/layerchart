@@ -218,16 +218,14 @@
       {/snippet}
 
       {#snippet highlight({ series, context })}
-        <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-        {@const activeSeriesColor = [...series].find(
+        {@const activeSeriesColor = series.find(
           (s) => s.key === context.tooltip.data?.fruit
         )?.color}
         <Highlight lines points={{ fill: activeSeriesColor }} />
       {/snippet}
 
       {#snippet tooltip({ context, series })}
-        <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-        {@const activeSeriesColor = [...series].find(
+        {@const activeSeriesColor = series.find(
           (s) => s.key === context.tooltip.data?.fruit
         )?.color}
         <Tooltip.Root>
@@ -301,8 +299,7 @@
     >
       {#snippet aboveMarks({ getLabelsProps, series, highlightKey })}
         {#if highlightKey}
-          <!-- TODO: Remove [...] type hack to make svelte-check happy -->
-          {@const activeSeriesIndex = [...series].findIndex((s) => s.key === highlightKey)}
+          {@const activeSeriesIndex = series.findIndex((s) => s.key === highlightKey)}
           <Labels {...getLabelsProps(series[activeSeriesIndex], activeSeriesIndex)} offset={10} />
         {/if}
       {/snippet}

@@ -374,14 +374,12 @@
       {/snippet}
 
       {#snippet highlight({ series, context })}
-        <!-- TODO: Remove hack to make typescript happy -->
-        {@const activeSeries = [...series].find((s) => s.key === context.tooltip?.data?.fruit)}
+        {@const activeSeries = series.find((s) => s.key === context.tooltip?.data?.fruit)}
         <Highlight lines points={{ fill: activeSeries?.color }} />
       {/snippet}
 
       {#snippet tooltip({ series, context })}
-        <!-- TODO: Remove hack to make typescript happy -->
-        {@const activeSeries = [...series].find((s) => s.key === context.tooltip?.data?.fruit)}
+        {@const activeSeries = series.find((s) => s.key === context.tooltip?.data?.fruit)}
         <Tooltip.Root>
           {#snippet children({ data })}
             <Tooltip.Header>{format(context.x(data))}</Tooltip.Header>

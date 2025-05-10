@@ -377,7 +377,6 @@
       {@render childrenProp(snippetProps)}
     {:else}
       {@render belowContext?.(snippetProps)}
-      <!-- TODO: Always use `Svg` until `Pattern` supports `Canvas` (issue #307) -->
 
       <Layer
         type={renderContext}
