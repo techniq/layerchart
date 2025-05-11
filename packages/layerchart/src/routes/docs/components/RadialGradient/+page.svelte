@@ -1,18 +1,29 @@
 <script lang="ts">
-  import { Chart, Circle, RadialGradient, Svg } from 'layerchart';
+  import { Chart, Circle, Layer, RadialGradient, Svg } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
+  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   const radius = 50;
+  let renderContext: 'svg' | 'canvas' = $state('svg');
 </script>
 
 <h1>Examples</h1>
+
+<!-- <div class="grid grid-cols-[1fr_auto] gap-2">
+  <Field label="Render context">
+    <ToggleGroup bind:value={renderContext} variant="outline">
+      <ToggleOption value="svg">Svg</ToggleOption>
+      <ToggleOption value="canvas">Canvas</ToggleOption>
+    </ToggleGroup>
+  </Field>
+</div> -->
 
 <h2>Focal location and radius with custom colors</h2>
 
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={renderContext}>
         <RadialGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
           {#snippet children({ gradient })}
             <Circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />
@@ -30,7 +41,7 @@
             <Circle cx={radius + 2 * 120} cy={radius} r={radius} fill={gradient} />
           {/snippet}
         </RadialGradient>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -40,7 +51,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={renderContext}>
         <RadialGradient id="tw-1" class="from-pink-500 to-yellow-500" />
         <RadialGradient id="tw-2" class="from-green-300 to-purple-600" />
         <RadialGradient id="tw-3" class="from-gray-600 to-black" />
@@ -53,7 +64,7 @@
         {#each { length: 9 } as _, i}
           <Circle cx={radius + i * 120} cy={radius} r={radius} fill="url(#tw-{i + 1})" />
         {/each}
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -63,7 +74,7 @@
 <Preview>
   <div class="h-[252px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={renderContext}>
         <RadialGradient class="from-green-500 to-blue-500" r="30%" spreadMethod="pad">
           {#snippet children({ gradient })}
             <Circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />
@@ -81,7 +92,7 @@
             <Circle cx={radius + 2 * 120} cy={radius} r={radius} fill={gradient} />
           {/snippet}
         </RadialGradient>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -91,7 +102,7 @@
 <Preview>
   <div class="h-[252px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={renderContext}>
         <RadialGradient class="from-green-500 to-blue-500" units="objectBoundingBox">
           {#snippet children({ gradient })}
             {#each { length: 6 } as _, i}
@@ -107,7 +118,7 @@
             {/each}
           {/snippet}
         </RadialGradient>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
