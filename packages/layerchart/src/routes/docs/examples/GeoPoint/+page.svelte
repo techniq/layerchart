@@ -38,7 +38,7 @@
         <g class="points pointer-events-none">
           {#each data.us.capitals as capital}
             <GeoPoint lat={capital.latitude} long={capital.longitude}>
-              <circle r="2" class="fill-white stroke-danger" />
+              <Circle r={2} class="fill-white stroke-danger" />
               <Text
                 y="-6"
                 value={capital.description}
@@ -88,6 +88,7 @@
               />
             {/each}
           </g>
+
           <g class="points pointer-events-none">
             {#each data.world.capitals as capital}
               <GeoPoint
@@ -97,13 +98,14 @@
                 class="fill-white stroke-danger"
               />
 
+              <!-- Show tooltip as GeoPoint (Svg/Canvas) instead of Tooltip.Point (Html)) -->
               {#if context.tooltip.data}
                 <GeoPoint
                   lat={context.tooltip.data.latitude}
                   long={context.tooltip.data.longitude}
                   motion="spring"
                 >
-                  <circle r="4" class="stroke-primary/50 fill-none" />
+                  <Circle r={4} class="stroke-primary/50 fill-none" />
                   <Text
                     y="-6"
                     value={context.tooltip.data.label}
@@ -115,14 +117,6 @@
             {/each}
           </g>
         </Svg>
-
-        <!-- <Tooltip.Root let:data>
-        <Tooltip.Header>{data.name}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
-          <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
-        </Tooltip.List>
-      </Tooltip.Root> -->
       {/snippet}
     </Chart>
   </div>

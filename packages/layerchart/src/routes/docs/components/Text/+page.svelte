@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Chart, Canvas, Svg, Text } from 'layerchart';
+  import { Chart, Canvas, Svg, Text, Circle } from 'layerchart';
   import type { TruncateTextOptions } from '$lib/utils/string.js';
   import type { ComponentProps } from 'svelte';
   import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
@@ -117,7 +117,7 @@
           <Svg>
             <Text {...config} truncate={truncate ? truncateOptions : false} />
             {#if config.showAnchor}
-              <circle cx={config.x} cy={config.y} r="2" fill="red" />
+              <Circle cx={config.x} cy={config.y} r={2} fill="red" />
             {/if}
           </Svg>
         </Chart>
@@ -136,7 +136,7 @@
           <Canvas>
             <Text {...config} truncate={truncate ? truncateOptions : false} />
             {#if config.showAnchor}
-              <circle cx={config.x} cy={config.y} r="2" fill="red" />
+              <Circle cx={config.x} cy={config.y} r={2} fill="red" />
             {/if}
           </Canvas>
         </Chart>

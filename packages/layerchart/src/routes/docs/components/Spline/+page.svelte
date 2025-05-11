@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Component, ComponentProps } from 'svelte';
 
-  import { Axis, Canvas, Chart, Points, Spline, Svg, Text } from 'layerchart';
+  import { Axis, Canvas, Chart, Circle, Points, Spline, Svg, Text } from 'layerchart';
   import { Field, RangeField, Switch, Toggle, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -203,10 +203,10 @@
           {#if show}
             <Spline {curve} class="stroke-primary stroke-2">
               {#snippet startContent()}
-                <circle r={5} class="fill-primary" />
+                <Circle r={5} class="fill-primary" />
               {/snippet}
               {#snippet endContent()}
-                <circle r={5} class="fill-primary" />
+                <Circle r={5} class="fill-primary" />
               {/snippet}
             </Spline>
           {/if}
@@ -237,12 +237,12 @@
           {#if show}
             <Spline {curve} class="stroke-primary stroke-2">
               {#snippet startContent()}
-                <circle r={5} class="fill-primary" />
+                <Circle r={5} class="fill-primary" />
                 <Text value="start" textAnchor="end" verticalAnchor="middle" dx={-8} />
               {/snippet}
 
               {#snippet endContent()}
-                <circle r={5} class="fill-primary" />
+                <Circle r={5} class="fill-primary" />
                 <Text value="end" verticalAnchor="middle" dx={8} />
               {/snippet}
             </Spline>
@@ -274,7 +274,7 @@
           {#if show}
             <Spline {curve} draw={{ duration: 3000 }} class="stroke-primary stroke-2">
               {#snippet endContent()}
-                <circle r={5} class="fill-primary" />
+                <Circle r={5} class="fill-primary" />
               {/snippet}
             </Spline>
           {/if}

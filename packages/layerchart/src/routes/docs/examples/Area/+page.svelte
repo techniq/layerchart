@@ -10,6 +10,7 @@
     Axis,
     Chart,
     ChartClipPath,
+    Circle,
     Highlight,
     Labels,
     LinearGradient,
@@ -303,7 +304,7 @@
             />
             <Point d={data[data.length - 1]}>
               {#snippet children({ x, y })}
-                <circle cx={x} cy={y} r={4} fill={color} />
+                <Circle cx={x} cy={y} r={4} fill={color} />
                 <Text
                   {x}
                   {y}
@@ -434,7 +435,7 @@
               />
               <Point d={data[data.length - 1]}>
                 {#snippet children({ x, y })}
-                  <circle cx={x} cy={y} r={4} fill={color} />
+                  <Circle cx={x} cy={y} r={4} fill={color} />
                   <Text
                     {x}
                     {y}

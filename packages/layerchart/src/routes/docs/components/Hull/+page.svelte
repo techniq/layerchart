@@ -5,7 +5,7 @@
   import { curveLinearClosed } from 'd3-shape';
   import { feature } from 'topojson-client';
 
-  import { Axis, Chart, GeoPath, GeoPoint, Hull, Points, Svg, Text } from 'layerchart';
+  import { Axis, Chart, Circle, GeoPath, GeoPoint, Hull, Points, Svg, Text } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
@@ -97,7 +97,7 @@
 
           {#each data.us.stateCaptitals as capital}
             <GeoPoint lat={capital.latitude} long={capital.longitude}>
-              <circle r="2" class="fill-white stroke-danger" />
+              <Circle r={2} class="fill-white stroke-danger" />
               <Text
                 y="-6"
                 value={capital.description}

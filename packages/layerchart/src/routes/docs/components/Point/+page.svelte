@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Axis, Chart, Point, Svg } from 'layerchart';
+  import { Axis, Chart, Circle, Point, Svg } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   let data: Array<{ x: number; y: number }> = [];
@@ -22,12 +22,12 @@
         <Axis placement="left" rule />
         <Point d={{ x: 50, y: 50 }}>
           {#snippet children({ x, y })}
-            <circle cx={x} cy={y} r={10} class="fill-surface-content" />
+            <Circle cx={x} cy={y} r={10} class="fill-surface-content" />
           {/snippet}
         </Point>
         <Point d={{ x: 20, y: 20 }}>
           {#snippet children({ x, y })}
-            <circle cx={x} cy={y} r={15} class="fill-primary" />
+            <Circle cx={x} cy={y} r={15} class="fill-primary" />
           {/snippet}
         </Point>
       </Svg>

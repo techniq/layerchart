@@ -10,6 +10,7 @@
     Axis,
     Canvas,
     Chart,
+    Circle,
     Highlight,
     Labels,
     Legend,
@@ -283,7 +284,7 @@
             {@const color = context.cScale?.(fruit)}
             <Spline {data} class="stroke-2" stroke={color}>
               {#snippet endContent()}
-                <circle r={4} fill={color} />
+                <Circle r={4} fill={color} />
                 <Text
                   value={fruit}
                   verticalAnchor="middle"
@@ -386,7 +387,7 @@
             <g class={cls(!active && 'opacity-20 saturate-0')}>
               <Spline {data} class="stroke-2" stroke={color}>
                 {#snippet endContent()}
-                  <circle r={4} fill={color} />
+                  <Circle r={4} fill={color} />
                   <Text
                     value={fruit}
                     verticalAnchor="middle"

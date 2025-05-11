@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Chart, RadialGradient, Svg } from 'layerchart';
+  import { Chart, Circle, RadialGradient, Svg } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   const radius = 50;
@@ -15,19 +15,19 @@
       <Svg>
         <RadialGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
           {#snippet children({ gradient })}
-            <circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />
+            <Circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />
           {/snippet}
         </RadialGradient>
 
         <RadialGradient stops={['hsl(60 100% 50%)', 'hsl(140 100% 40%)']} fx="20%" fy="20%">
           {#snippet children({ gradient })}
-            <circle cx={radius + 1 * 120} cy={radius} r={radius} fill={gradient} />
+            <Circle cx={radius + 1 * 120} cy={radius} r={radius} fill={gradient} />
           {/snippet}
         </RadialGradient>
 
         <RadialGradient stops={['hsl(195 100% 50%)', 'hsl(270 100% 30%)']} r="30%">
           {#snippet children({ gradient })}
-            <circle cx={radius + 2 * 120} cy={radius} r={radius} fill={gradient} />
+            <Circle cx={radius + 2 * 120} cy={radius} r={radius} fill={gradient} />
           {/snippet}
         </RadialGradient>
       </Svg>
@@ -51,7 +51,7 @@
         <RadialGradient id="tw-8" class="from-red-500 to-red-800" />
         <RadialGradient id="tw-9" class="from-blue-400 to-emerald-400" />
         {#each { length: 9 } as _, i}
-          <circle cx={radius + i * 120} cy={radius} r={radius} fill="url(#tw-{i + 1})" />
+          <Circle cx={radius + i * 120} cy={radius} r={radius} fill="url(#tw-{i + 1})" />
         {/each}
       </Svg>
     </Chart>
@@ -66,19 +66,19 @@
       <Svg>
         <RadialGradient class="from-green-500 to-blue-500" r="30%" spreadMethod="pad">
           {#snippet children({ gradient })}
-            <circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />
+            <Circle cx={radius + 0 * 120} cy={radius} r={radius} fill={gradient} />
           {/snippet}
         </RadialGradient>
 
         <RadialGradient class="from-green-500 to-blue-500" r="30%" spreadMethod="reflect">
           {#snippet children({ gradient })}
-            <circle cx={radius + 1 * 120} cy={radius} r={radius} fill={gradient} />
+            <Circle cx={radius + 1 * 120} cy={radius} r={radius} fill={gradient} />
           {/snippet}
         </RadialGradient>
 
         <RadialGradient class="from-green-500 to-blue-500" r="30%" spreadMethod="repeat">
           {#snippet children({ gradient })}
-            <circle cx={radius + 2 * 120} cy={radius} r={radius} fill={gradient} />
+            <Circle cx={radius + 2 * 120} cy={radius} r={radius} fill={gradient} />
           {/snippet}
         </RadialGradient>
       </Svg>
@@ -95,7 +95,7 @@
         <RadialGradient class="from-green-500 to-blue-500" units="objectBoundingBox">
           {#snippet children({ gradient })}
             {#each { length: 6 } as _, i}
-              <circle cx={radius + i * 120} cy={radius} r={radius} fill={gradient} />
+              <Circle cx={radius + i * 120} cy={radius} r={radius} fill={gradient} />
             {/each}
           {/snippet}
         </RadialGradient>
@@ -103,7 +103,7 @@
         <RadialGradient class="from-green-500 to-blue-500" units="userSpaceOnUse">
           {#snippet children({ gradient })}
             {#each { length: 6 } as _, i}
-              <circle cx={radius + i * 120} cy={120 + radius} r={radius} fill={gradient} />
+              <Circle cx={radius + i * 120} cy={120 + radius} r={radius} fill={gradient} />
             {/each}
           {/snippet}
         </RadialGradient>

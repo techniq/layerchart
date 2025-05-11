@@ -97,7 +97,7 @@
               {#snippet children({ geoPath })}
                 {@const [cx, cy] = geoPath?.centroid(feature) ?? []}
                 {@const d = feature.properties.data}
-                <circle
+                <Circle
                   {cx}
                   {cy}
                   r={rScale(d?.population ?? 0)}

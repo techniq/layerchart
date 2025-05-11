@@ -8,6 +8,7 @@
 
   import {
     Chart,
+    Circle,
     GeoPath,
     GeoPoint,
     GeoVisible,
@@ -142,7 +143,7 @@
             {@const [long, lat] = feature.geometry.coordinates}
             <GeoVisible {lat} {long}>
               <GeoPoint {lat} {long}>
-                <circle
+                <Circle
                   r={2}
                   class="fill-surface-content stroke-surface-100 stroke"
                   onpointermove={(e) => context.tooltip.show(e, feature.properties)}

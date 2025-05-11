@@ -2,7 +2,7 @@
   import type { ComponentProps } from 'svelte';
   import { linear } from 'svelte/easing';
 
-  import { Axis, Chart, MotionPath, Spline, Svg } from 'layerchart';
+  import { Axis, Chart, Circle, MotionPath, Spline, Svg } from 'layerchart';
   import { Field, RangeField, Switch, Toggle } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -53,7 +53,7 @@
             <MotionPath duration="3s" repeatCount="indefinite">
               {#snippet children({ pathId, objectId })}
                 <Spline id={pathId} {curve} />
-                <circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
+                <Circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
               {/snippet}
             </MotionPath>
           {/if}
@@ -125,7 +125,7 @@
               <MotionPath duration="3s">
                 {#snippet children({ pathId, objectId })}
                   <Spline id={pathId} {curve} draw={{ duration: 3000, easing: linear }} />
-                  <circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
+                  <Circle id={objectId} r={5} class="fill-surface-100 stroke-surface-content" />
                 {/snippet}
               </MotionPath>
             {/key}
