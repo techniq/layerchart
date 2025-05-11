@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.2",
+    "@iconify-json/lucide": "^1.2.42",
     "@mdi/js": "^7.4.47",
     "@rollup/plugin-dsv": "^3.0.5",
     "@sveltejs/adapter-cloudflare": "^4.9.0",
@@ -75,6 +76,7 @@
     "tslib": "^2.8.1",
     "typescript": "^5.8.3",
     "unist-util-visit": "^5.0.0",
+    "unplugin-icons": "^22.1.0",
     "us-atlas": "^3.0.1",
     "vite": "^6.3.4",
     "vitest": "^3.1.2"

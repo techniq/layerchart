@@ -6,6 +6,8 @@
   import { Canvas, Chart, Circle, GeoPath, GeoPoint, Svg, Text, Tooltip } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
+  import LucideStar from '~icons/lucide/star';
+
   let { data } = $props();
 
   const states = feature(data.us.geojson, data.us.geojson.objects.states);
@@ -289,6 +291,44 @@
           </GeoPoint>
         {/each}
       </Canvas>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Lucide icons</h2>
+
+<Preview data={states}>
+  <div class="h-[600px]">
+    <Chart
+      geo={{
+        projection: geoAlbersUsa,
+        fitGeojson: states,
+      }}
+    >
+      <Svg>
+        <g class="states">
+          {#each states.features as feature}
+            <GeoPath
+              geojson={feature}
+              class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
+            />
+          {/each}
+        </g>
+        <g class="points pointer-events-none">
+          {#each data.us.capitals as capital}
+            <GeoPoint lat={capital.latitude} long={capital.longitude}>
+              <!-- <Circle r={2} class="fill-white stroke-danger" /> -->
+              <LucideStar class="text-blue-500 text-[8px] icons" x={-5} y={-5} />
+              <Text
+                y="-6"
+                value={capital.description}
+                textAnchor="middle"
+                class="text-[8px] stroke-surface-100 [stroke-width:2px]"
+              />
+            </GeoPoint>
+          {/each}
+        </g>
+      </Svg>
     </Chart>
   </div>
 </Preview>
