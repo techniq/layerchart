@@ -6,6 +6,7 @@
   import { Canvas, Chart, Circle, GeoPath, GeoPoint, Svg, Text, Tooltip } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
+  // @ts-expect-error
   import LucideStar from '~icons/lucide/star';
 
   let { data } = $props();
