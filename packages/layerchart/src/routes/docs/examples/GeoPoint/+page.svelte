@@ -318,7 +318,7 @@
           {#each data.us.capitals as capital}
             <GeoPoint lat={capital.latitude} long={capital.longitude}>
               <!-- <Circle r={2} class="fill-white stroke-danger" /> -->
-              <LucideStar class="text-blue-500 text-[8px] icons" x={-5} y={-5} />
+              <LucideStar class="text-danger text-[8px]" x={-5} y={-5} />
               <Text
                 y="-6"
                 value={capital.description}
