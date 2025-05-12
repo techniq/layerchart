@@ -116,11 +116,14 @@
 </script>
 
 <script lang="ts" generics="TData = any">
+  import type { Snippet } from 'svelte';
   import { bisector, max, min } from 'd3-array';
   import { quadtree as d3Quadtree, type Quadtree } from 'd3-quadtree';
   import { sortFunc, localPoint } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
+  import { getChartContext } from '../Chart.svelte';
+  import { getGeoContext } from '../GeoContext.svelte';
   import Svg from './../layout/Svg.svelte';
   import Arc from '../Arc.svelte';
   import ChartClipPath from './../ChartClipPath.svelte';
@@ -130,8 +133,6 @@
   import { cartesianToPolar } from '$lib/utils/math.js';
   import { quadtreeRects } from '$lib/utils/quadtree.js';
   import { raise } from '$lib/utils/chart.js';
-  import { getChartContext } from '../Chart.svelte';
-  import type { Snippet } from 'svelte';
   import {
     getTooltipMetaContext,
     getTooltipPayload,
@@ -140,6 +141,7 @@
   import { layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext<any>();
+  const geoCtx = getGeoContext();
 
   let {
     ref: refProp = $bindable(),
@@ -357,7 +359,11 @@
         }
 
         case 'quadtree': {
-          tooltipData = quadtree?.find(point.x, point.y, radius);
+          tooltipData = quadtree?.find(
+            point.x - ctx.padding.left,
+            point.y - ctx.padding.top,
+            radius
+          );
           break;
         }
       }
@@ -402,11 +408,14 @@
   const quadtree: Quadtree<[number, number]> | undefined = $derived.by(() => {
     if (mode === 'quadtree') {
       return d3Quadtree()
-        .extent([
-          [0, 0],
-          [ctx.width, ctx.height],
-        ])
         .x((d) => {
+          if (geoCtx.projection) {
+            const lat = ctx.x(d);
+            const long = ctx.y(d);
+            const geoValue = geoCtx.projection([lat, long]) ?? [0, 0];
+            return geoValue[0];
+          }
+
           const value = ctx.xGet(d);
 
           if (Array.isArray(value)) {
@@ -420,6 +429,13 @@
           }
         })
         .y((d) => {
+          if (geoCtx.projection) {
+            const lat = ctx.x(d);
+            const long = ctx.y(d);
+            const geoValue = geoCtx.projection([lat, long]) ?? [0, 0];
+            return geoValue[1];
+          }
+
           const value = ctx.yGet(d);
 
           if (Array.isArray(value)) {

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { geoAlbersUsa, geoNaturalEarth1 } from 'd3-geo';
   import { feature } from 'topojson-client';
-  import { Field, Switch } from 'svelte-ux';
+  import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import { Canvas, Chart, Circle, GeoPath, GeoPoint, Svg, Text, Tooltip } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
@@ -14,15 +14,38 @@
   const states = feature(data.us.geojson, data.us.geojson.objects.states);
   const countries = feature(data.world.geojson, data.world.geojson.objects.countries);
 
-  let debugTooltip = $state(false);
-  let voronoiRadius = $state(0);
+  let tooltipMode = $state<'quadtree' | 'voronoi'>('quadtree');
+  let tooltipRadius = $state(30);
+  let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
 
+<div class="flex gap-2">
+  <!-- <Field label="Render context">
+    <ToggleGroup bind:value={renderContext} variant="outline">
+      <ToggleOption value="svg">Svg</ToggleOption>
+      <ToggleOption value="canvas">Canvas</ToggleOption>
+    </ToggleGroup>
+  </Field> -->
+
+  <Field label="Tooltip mode" class="grow">
+    <ToggleGroup bind:value={tooltipMode} variant="outline">
+      <ToggleOption value="quadtree">quadtree</ToggleOption>
+      <ToggleOption value="voronoi">voronoi</ToggleOption>
+    </ToggleGroup>
+  </Field>
+
+  <RangeField label="Tooltip radius" bind:value={tooltipRadius} max={100} class="grow" />
+
+  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
+    <Switch {id} bind:checked={debug} />
+  </Field>
+</div>
+
 <h2>US State Capitals</h2>
 
-<Preview data={states}>
+<Preview data={data.us.capitals}>
   <div class="h-[600px]">
     <Chart
       geo={{
@@ -57,26 +80,9 @@
   </div>
 </Preview>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>World Capitals</h2>
-  <div class="flex gap-2 mb-2">
-    <Field dense let:id>
-      <label class="flex gap-2 items-center text-sm" for={id}>
-        Show Voronoi
-        <Switch bind:checked={debugTooltip} {id} />
-      </label>
-    </Field>
+<h2>World Capitals</h2>
 
-    <Field let:id>
-      <label class="flex gap-2 items-center text-sm" for={id}>
-        Voronoi radius
-        <input type="range" bind:value={voronoiRadius} {id} />
-      </label>
-    </Field>
-  </div>
-</div>
-
-<Preview data={states}>
+<Preview data={data.world.capitals}>
   <div class="h-[600px]">
     <Chart
       data={data.world.capitals}
@@ -86,7 +92,7 @@
         projection: geoNaturalEarth1,
         fitGeojson: countries,
       }}
-      tooltip={{ mode: 'voronoi', debug: debugTooltip, radius: voronoiRadius }}
+      tooltip={{ mode: tooltipMode, debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
         <Svg>
@@ -95,7 +101,6 @@
               <GeoPath
                 geojson={feature}
                 class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
-                tooltipContext={context.tooltip}
               />
             {/each}
           </g>
@@ -133,25 +138,9 @@
   </div>
 </Preview>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>US Airports</h2>
-  <div class="flex gap-2 mb-2">
-    <Field dense let:id>
-      <label class="flex gap-2 items-center text-sm" for={id}>
-        Show Voronoi
-        <Switch bind:checked={debugTooltip} {id} />
-      </label>
-    </Field>
+<h2>US Airports</h2>
 
-    <Field let:id>
-      <label class="flex gap-2 items-center text-sm" for={id}>
-        Voronoi radius
-        <input type="range" bind:value={voronoiRadius} {id} />
-      </label>
-    </Field>
-  </div>
-</div>
-<Preview data={states} class="overflow-hidden">
+<Preview data={data.us.airports} class="overflow-hidden">
   <div class="h-[600px]">
     <Chart
       data={data.us.airports}
@@ -161,7 +150,7 @@
         projection: geoAlbersUsa,
         fitGeojson: states,
       }}
-      tooltip={{ mode: 'voronoi', debug: debugTooltip, radius: voronoiRadius }}
+      tooltip={{ mode: tooltipMode, debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
         <Svg>
@@ -210,24 +199,7 @@
   </div>
 </Preview>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>World Airports</h2>
-  <div class="flex gap-2 mb-2">
-    <Field dense let:id>
-      <label class="flex gap-2 items-center text-sm" for={id}>
-        Show Voronoi
-        <Switch bind:checked={debugTooltip} {id} />
-      </label>
-    </Field>
-
-    <Field let:id>
-      <label class="flex gap-2 items-center text-sm" for={id}>
-        Voronoi radius
-        <input type="range" bind:value={voronoiRadius} {id} />
-      </label>
-    </Field>
-  </div>
-</div>
+<h2>World Airports</h2>
 
 <Preview data={data.world.airports}>
   <div class="h-[600px]">
@@ -239,7 +211,7 @@
         projection: geoNaturalEarth1,
         fitGeojson: countries,
       }}
-      tooltip={{ mode: 'voronoi', debug: debugTooltip, radius: voronoiRadius }}
+      tooltip={{ mode: tooltipMode, debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
         <Svg>
@@ -286,7 +258,7 @@
 
 <h2>Canvas</h2>
 
-<Preview data={states}>
+<Preview data={data.us.capitals}>
   <div class="h-[600px]">
     <Chart
       geo={{
@@ -319,7 +291,7 @@
 
 <h2>Lucide icons</h2>
 
-<Preview data={states}>
+<Preview data={data.us.capitals}>
   <div class="h-[600px]">
     <Chart
       geo={{
