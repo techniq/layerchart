@@ -411,3 +411,41 @@
     </BarChart>
   </div>
 </Preview>
+
+<h2>Hide tooltip</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={data.appleStock}
+      x="date"
+      y="value"
+      props={{
+        xAxis: { format: undefined },
+      }}
+      {renderContext}
+      {debug}
+    >
+      {#snippet aboveMarks({ context })}
+        <AnnotationRange
+          x={[new Date('2010-01-01'), null]}
+          pattern={{
+            size: 8,
+            lines: {
+              rotate: -45,
+              opacity: 0.2,
+            },
+          }}
+          props={{
+            rect: {
+              onpointermove: (e) => {
+                e.stopPropagation();
+                context.tooltip.hide();
+              },
+            },
+          }}
+        />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>

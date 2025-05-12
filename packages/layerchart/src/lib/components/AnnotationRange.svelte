@@ -118,13 +118,13 @@
 </script>
 
 {#if fill || className}
-  <Rect {...rect} {fill} class={cls(props?.rect?.class, className)} />
+  <Rect {...rect} {...props?.rect} {fill} class={cls(props?.rect?.class, className)} />
 {/if}
 
 {#if gradient}
   <LinearGradient {...gradient}>
     {#snippet children({ gradient })}
-      <Rect {...rect} fill={gradient} class={props?.rect?.class} />
+      <Rect {...rect} {...props?.rect} fill={gradient} />
     {/snippet}
   </LinearGradient>
 {/if}
@@ -132,7 +132,7 @@
 {#if pattern}
   <Pattern {...pattern}>
     {#snippet children({ pattern })}
-      <Rect {...rect} fill={pattern} class={props?.rect?.class} />
+      <Rect {...rect} {...props?.rect} fill={pattern} />
     {/snippet}
   </Pattern>
 {/if}
