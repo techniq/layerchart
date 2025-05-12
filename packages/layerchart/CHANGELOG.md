@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.5
+
+### Patch Changes
+
+- fix(AnnotationRange): Fix passing non-class/fill props (ex. pointer events) via `props.rect` ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.4
 
 ### Patch Changes
