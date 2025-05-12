@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { Canvas, Chart, ChartClipPath, Circle, Points, Svg, Voronoi } from 'layerchart';
+  import { Chart, ChartClipPath, Circle, Layer, Points, Voronoi } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { getSpiral } from '$lib/utils/genData.js';
+  import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   const data = getSpiral({ angle: 137.5, radius: 10, count: 100, width: 500, height: 500 });
 
@@ -13,15 +14,29 @@
       y: e.offsetY,
     };
   }
+
+  let radius = $state(0);
+  let renderContext: 'svg' | 'canvas' = $state('svg');
 </script>
 
-<h2>Svg</h2>
+<h2>Example</h2>
+
+<div class="grid grid-cols-[1fr_auto] gap-2">
+  <Field label="Render context">
+    <ToggleGroup bind:value={renderContext} variant="outline">
+      <ToggleOption value="svg">Svg</ToggleOption>
+      <ToggleOption value="canvas">Canvas</ToggleOption>
+    </ToggleGroup>
+  </Field>
+
+  <RangeField label="Radius" bind:value={radius} max={100} />
+</div>
 
 <Preview {data}>
   <div class="h-[400px] p-4 border rounded-sm relative" onpointermove={onPointerMove}>
     <Chart {data} x="x" y="y">
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={renderContext}>
           <ChartClipPath>
             <Points r={2} class="fill-primary stroke-primary" />
             <Voronoi
@@ -29,39 +44,14 @@
                 { x: context.xScale?.invert?.(point.x), y: context.yScale?.invert?.(point.y) },
                 ...data,
               ]}
+              r={radius}
               classes={{
                 path: 'pointer-events-none stroke-primary fill-primary/10 first:fill-primary/50',
               }}
             />
             <Circle cx={point.x} cy={point.y} r={4} class="fill-primary" />
           </ChartClipPath>
-        </Svg>
-      {/snippet}
-    </Chart>
-  </div>
-</Preview>
-
-<h2>Canvas</h2>
-
-<Preview {data}>
-  <div class="h-[400px] p-4 border rounded-sm relative" onpointermove={onPointerMove}>
-    <Chart {data} x="x" y="y">
-      {#snippet children({ context })}
-        <Canvas>
-          <ChartClipPath>
-            <Points r={2} class="fill-primary stroke-primary" />
-            <Voronoi
-              data={[
-                { x: context.xScale?.invert?.(point.x), y: context.yScale?.invert?.(point.y) },
-                ...data,
-              ]}
-              classes={{
-                path: 'pointer-events-none stroke-primary fill-primary/10 first:fill-primary/50',
-              }}
-            />
-            <Circle cx={point.x} cy={point.y} r={4} class="fill-primary" />
-          </ChartClipPath>
-        </Canvas>
+        </Layer>
       {/snippet}
     </Chart>
   </div>

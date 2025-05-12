@@ -1,12 +1,14 @@
 <script lang="ts" module>
   import type { Without } from '$lib/utils/types.js';
-  import type { SVGAttributes } from 'svelte/elements';
 
   export type VoronoiPropsWithoutHTML = {
     /**
      * Override data instead of using context
      */
     data?: any;
+
+    /** Radius to clip voronoi cells.  `0` or `undefined` to disables clipping */
+    r?: number;
 
     /**
      * Classes to apply to the root and path elements
@@ -56,7 +58,7 @@
 <script lang="ts">
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
-  import type { GeoPermissibleObjects } from 'd3-geo';
+  import { type GeoPermissibleObjects } from 'd3-geo';
   // @ts-expect-error
   import { geoVoronoi } from 'd3-geo-voronoi';
   import { pointRadial } from 'd3-shape';
@@ -67,10 +69,13 @@
   import Spline from './Spline.svelte';
   import { getChartContext } from './Chart.svelte';
   import { getGeoContext } from './GeoContext.svelte';
+  import CircleClipPath from './CircleClipPath.svelte';
+
   import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     data,
+    r,
     classes = {},
     onclick,
     onpointerenter,
@@ -109,29 +114,40 @@
   // Width and/or height can sometimes be negative (when loading data remotely and updately)
   const boundWidth = $derived(Math.max(ctx.width, 0));
   const boundHeight = $derived(Math.max(ctx.height, 0));
+
+  const disableClip = $derived(r === 0 || r == null || r === Infinity);
 </script>
 
 <Group {...restProps} class={cls(layerClass('voronoi-g'), classes.root, className)}>
   {#if geo.projection}
     {@const polygons = geoVoronoi().polygons(points)}
     {#each polygons.features as feature}
-      <GeoPath
-        geojson={feature}
-        class={cls(
-          layerClass('voronoi-geo-path'),
-          'fill-transparent stroke-transparent',
-          classes.path
-        )}
-        onclick={(e) => onclick?.(e, { data: feature.properties.site.data, feature })}
-        onpointerenter={(e) => onpointerenter?.(e, { data: feature.properties.site.data, feature })}
-        onpointermove={(e) => onpointermove?.(e, { data: feature.properties.site.data, feature })}
-        onpointerdown={(e) => onpointerdown?.(e, { data: feature.properties.site.data, feature })}
-        {onpointerleave}
-        ontouchmove={(e) => {
-          // Prevent touch to not interfere with pointer
-          e.preventDefault();
-        }}
-      />
+      {@const point = r ? geo.projection?.(feature.properties.sitecoordinates) : null}
+      <CircleClipPath
+        cx={point?.[0]}
+        cy={point?.[1]}
+        r={r ?? 0}
+        disabled={point == null || disableClip}
+      >
+        <GeoPath
+          geojson={feature}
+          class={cls(
+            layerClass('voronoi-geo-path'),
+            'fill-transparent stroke-transparent',
+            classes.path
+          )}
+          onclick={(e) => onclick?.(e, { data: feature.properties.site.data, feature })}
+          onpointerenter={(e) =>
+            onpointerenter?.(e, { data: feature.properties.site.data, feature })}
+          onpointermove={(e) => onpointermove?.(e, { data: feature.properties.site.data, feature })}
+          onpointerdown={(e) => onpointerdown?.(e, { data: feature.properties.site.data, feature })}
+          {onpointerleave}
+          ontouchmove={(e) => {
+            // Prevent touch to not interfere with pointer
+            e.preventDefault();
+          }}
+        />
+      </CircleClipPath>
     {/each}
   {:else}
     {@const voronoi = Delaunay.from(points).voronoi([0, 0, boundWidth, boundHeight])}
@@ -139,23 +155,25 @@
       {@const pathData = voronoi.renderCell(i)}
       <!-- Wait to render Spline until pathData is available to fix path artifacts from injected tweened points in Spline  -->
       {#if pathData}
-        <Spline
-          {pathData}
-          class={cls(
-            layerClass('voronoi-path'),
-            'fill-transparent stroke-transparent',
-            classes.path
-          )}
-          onclick={(e) => onclick?.(e, { data: point.data, point })}
-          onpointerenter={(e) => onpointerenter?.(e, { data: point.data, point })}
-          onpointermove={(e) => onpointermove?.(e, { data: point.data, point })}
-          {onpointerleave}
-          onpointerdown={(e) => onpointerdown?.(e, { data: point.data, point })}
-          ontouchmove={(e) => {
-            // Prevent touch to not interfere with pointer
-            e.preventDefault();
-          }}
-        />
+        <CircleClipPath cx={point[0]} cy={point[1]} r={r ?? 0} disabled={disableClip}>
+          <Spline
+            {pathData}
+            class={cls(
+              layerClass('voronoi-path'),
+              'fill-transparent stroke-transparent',
+              classes.path
+            )}
+            onclick={(e) => onclick?.(e, { data: point.data, point })}
+            onpointerenter={(e) => onpointerenter?.(e, { data: point.data, point })}
+            onpointermove={(e) => onpointermove?.(e, { data: point.data, point })}
+            {onpointerleave}
+            onpointerdown={(e) => onpointerdown?.(e, { data: point.data, point })}
+            ontouchmove={(e) => {
+              // Prevent touch to not interfere with pointer
+              e.preventDefault();
+            }}
+          />
+        </CircleClipPath>
       {/if}
     {/each}
   {/if}

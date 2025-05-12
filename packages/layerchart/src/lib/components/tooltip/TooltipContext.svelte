@@ -72,7 +72,7 @@
     locked?: boolean;
 
     /**
-     * quadtree search radius
+     * quadtree search or voronoi clip radius
      * @default Infinity
      */
     radius?: number;
@@ -546,6 +546,7 @@
     {#if mode === 'voronoi'}
       <Svg>
         <Voronoi
+          r={radius}
           onpointerenter={(e, { data }) => {
             showTooltip(e, data);
           }}

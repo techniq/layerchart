@@ -15,6 +15,7 @@
   const countries = feature(data.world.geojson, data.world.geojson.objects.countries);
 
   let debugTooltip = $state(false);
+  let voronoiRadius = $state(0);
 </script>
 
 <h1>Examples</h1>
@@ -58,11 +59,18 @@
 
 <div class="grid grid-cols-[1fr_auto] gap-2 items-end">
   <h2>World Capitals</h2>
-  <div class="mb-2">
+  <div class="flex gap-2 mb-2">
     <Field dense let:id>
       <label class="flex gap-2 items-center text-sm" for={id}>
         Show Voronoi
         <Switch bind:checked={debugTooltip} {id} />
+      </label>
+    </Field>
+
+    <Field let:id>
+      <label class="flex gap-2 items-center text-sm" for={id}>
+        Voronoi radius
+        <input type="range" bind:value={voronoiRadius} {id} />
       </label>
     </Field>
   </div>
@@ -78,7 +86,7 @@
         projection: geoNaturalEarth1,
         fitGeojson: countries,
       }}
-      tooltip={{ mode: 'voronoi', debug: debugTooltip }}
+      tooltip={{ mode: 'voronoi', debug: debugTooltip, radius: voronoiRadius }}
     >
       {#snippet children({ context })}
         <Svg>
@@ -127,16 +135,22 @@
 
 <div class="grid grid-cols-[1fr_auto] gap-2 items-end">
   <h2>US Airports</h2>
-  <div class="mb-2">
+  <div class="flex gap-2 mb-2">
     <Field dense let:id>
       <label class="flex gap-2 items-center text-sm" for={id}>
         Show Voronoi
         <Switch bind:checked={debugTooltip} {id} />
       </label>
     </Field>
+
+    <Field let:id>
+      <label class="flex gap-2 items-center text-sm" for={id}>
+        Voronoi radius
+        <input type="range" bind:value={voronoiRadius} {id} />
+      </label>
+    </Field>
   </div>
 </div>
-
 <Preview data={states} class="overflow-hidden">
   <div class="h-[600px]">
     <Chart
@@ -147,7 +161,7 @@
         projection: geoAlbersUsa,
         fitGeojson: states,
       }}
-      tooltip={{ mode: 'voronoi', debug: debugTooltip }}
+      tooltip={{ mode: 'voronoi', debug: debugTooltip, radius: voronoiRadius }}
     >
       {#snippet children({ context })}
         <Svg>
@@ -198,11 +212,18 @@
 
 <div class="grid grid-cols-[1fr_auto] gap-2 items-end">
   <h2>World Airports</h2>
-  <div class="mb-2">
+  <div class="flex gap-2 mb-2">
     <Field dense let:id>
       <label class="flex gap-2 items-center text-sm" for={id}>
         Show Voronoi
         <Switch bind:checked={debugTooltip} {id} />
+      </label>
+    </Field>
+
+    <Field let:id>
+      <label class="flex gap-2 items-center text-sm" for={id}>
+        Voronoi radius
+        <input type="range" bind:value={voronoiRadius} {id} />
       </label>
     </Field>
   </div>
@@ -218,7 +239,7 @@
         projection: geoNaturalEarth1,
         fitGeojson: countries,
       }}
-      tooltip={{ mode: 'voronoi', debug: debugTooltip }}
+      tooltip={{ mode: 'voronoi', debug: debugTooltip, radius: voronoiRadius }}
     >
       {#snippet children({ context })}
         <Svg>
@@ -306,30 +327,44 @@
         fitGeojson: states,
       }}
     >
-      <Svg>
-        <g class="states">
-          {#each states.features as feature}
-            <GeoPath
-              geojson={feature}
-              class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
-            />
-          {/each}
-        </g>
-        <g class="points pointer-events-none">
-          {#each data.us.capitals as capital}
-            <GeoPoint lat={capital.latitude} long={capital.longitude}>
-              <!-- <Circle r={2} class="fill-white stroke-danger" /> -->
-              <LucideStar class="text-danger text-[8px]" x={-5} y={-5} />
-              <Text
-                y="-6"
-                value={capital.description}
-                textAnchor="middle"
-                class="text-[8px] stroke-surface-100 [stroke-width:2px]"
+      {#snippet children({ context })}
+        <Svg>
+          <g class="states">
+            {#each states.features as feature}
+              <GeoPath
+                geojson={feature}
+                class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
               />
-            </GeoPoint>
-          {/each}
-        </g>
-      </Svg>
+            {/each}
+          </g>
+          <g class="points">
+            {#each data.us.capitals as capital}
+              <GeoPoint lat={capital.latitude} long={capital.longitude}>
+                <LucideStar class="text-danger text-[8px]" x={-5} y={-5} />
+                <Text
+                  y="-6"
+                  value={capital.description}
+                  textAnchor="middle"
+                  class="text-[8px] stroke-surface-100 [stroke-width:2px]"
+                />
+                <Circle
+                  r={10}
+                  class="fill-transparent"
+                  onpointerenter={(e) => context.tooltip.show(e, capital)}
+                  onpointermove={(e) => context.tooltip.show(e, capital)}
+                  onpointerleave={(e) => context.tooltip.hide(e)}
+                />
+              </GeoPoint>
+            {/each}
+          </g>
+        </Svg>
+
+        <Tooltip.Root {context}>
+          {#snippet children({ data })}
+            {data.description}
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
