@@ -44,6 +44,15 @@ function isAnyScale(scale: any): scale is AnyScale {
   return typeof scale === 'function' && typeof scale.range === 'function';
 }
 
+export function isScaleBand(scale: AnyScale<any, any>): scale is ScaleBand<any> {
+  return typeof scale.bandwidth === 'function';
+}
+
+export function isScaleTime(scale: AnyScale<any, any>): scale is ScaleTime<any, any> {
+  const domain = scale.domain();
+  return domain[0] instanceof Date || domain[1] instanceof Date;
+}
+
 export function getRange(scale: any) {
   if (isAnyScale(scale)) {
     return scale.range();
@@ -114,15 +123,6 @@ export function scaleBandInvert(scale: ScaleBand<any>) {
     const index = Math.floor((value - paddingOuter / 2) / eachBand);
     return domain[Math.max(0, Math.min(index, domain.length - 1))];
   };
-}
-
-export function isScaleBand(scale: AnyScale<any, any>): scale is ScaleBand<any> {
-  return typeof scale.bandwidth === 'function';
-}
-
-export function isScaleTime(scale: AnyScale<any, any>): scale is ScaleTime<any, any> {
-  const domain = scale.domain();
-  return domain[0] instanceof Date || domain[1] instanceof Date;
 }
 
 /**

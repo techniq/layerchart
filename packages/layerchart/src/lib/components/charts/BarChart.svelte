@@ -84,7 +84,7 @@
 
 <script lang="ts" generics="TData">
   import { onMount, type ComponentProps } from 'svelte';
-  import { scaleBand, scaleLinear } from 'd3-scale';
+  import { scaleBand, scaleLinear, scaleTime } from 'd3-scale';
   import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
@@ -109,7 +109,7 @@
   import { asAny } from '$lib/utils/types.js';
   import type { Insets } from '$lib/utils/rect.svelte.js';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
-  import type { AnyScale } from '$lib/utils/scales.svelte.js';
+  import { isScaleTime, type AnyScale } from '$lib/utils/scales.svelte.js';
   import { createLegendProps, SeriesState } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
@@ -171,15 +171,56 @@
   const isStackSeries = $derived(seriesLayout.startsWith('stack'));
   const isGroupSeries = $derived(seriesLayout === 'group');
 
+  const chartData: Array<TData & { stackData?: any }> = $derived.by(() => {
+    let _chartData = (
+      seriesState.allSeriesData.length ? seriesState.allSeriesData : chartDataArray(data)
+    ) as Array<TData & { stackData?: any }>;
+    if (isStackSeries) {
+      const seriesKeys = seriesState.visibleSeries.map((s) => s.key);
+
+      const offset =
+        seriesLayout === 'stackExpand'
+          ? stackOffsetExpand
+          : seriesLayout === 'stackDiverging'
+            ? stackOffsetDiverging
+            : stackOffsetNone;
+      const stackData = stack()
+        .keys(seriesKeys)
+        .value((d, key) => {
+          const s = series.find((d) => d.key === key)!;
+          return accessor(s.value ?? s.key)(d as any);
+        })
+        .offset(offset)(chartDataArray(data)) as any[];
+
+      _chartData = _chartData.map((d, i) => {
+        return {
+          ...d,
+          stackData: stackData.map((sd) => sd[i]),
+        };
+      });
+    }
+    return _chartData;
+  });
+
   const xScale = $derived(
-    xScaleProp ?? (isVertical ? scaleBand().padding(bandPadding) : scaleLinear())
+    xScaleProp ??
+      (isVertical
+        ? scaleBand().padding(bandPadding)
+        : accessor(xProp)(chartData[0]) instanceof Date // TODO: also check for Array<Date> instances (ex. x={['start', 'end']})
+          ? scaleTime()
+          : scaleLinear())
   );
-  const xBaseline = $derived(isVertical ? undefined : 0);
+  const xBaseline = $derived(isVertical || isScaleTime(xScale) ? undefined : 0);
 
   const yScale = $derived(
-    yScaleProp ?? (isVertical ? scaleLinear() : scaleBand().padding(bandPadding))
+    yScaleProp ??
+      (isVertical
+        ? accessor(yProp)(chartData[0]) instanceof Date // TODO: also check for Array<Date> instances (ex. y={['start', 'end']})
+          ? scaleTime()
+          : scaleLinear()
+        : scaleBand().padding(bandPadding))
   );
-  const yBaseline = $derived(isVertical ? 0 : undefined);
+  const yBaseline = $derived(isVertical || isScaleTime(yScale) ? 0 : undefined);
 
   const x1Scale = $derived(
     isGroupSeries && isVertical ? scaleBand().padding(groupPadding) : undefined
@@ -214,37 +255,6 @@
     return d && typeof d === 'object' && 'stackData' in d;
   }
 
-  const chartData: Array<TData & { stackData?: any }> = $derived.by(() => {
-    let _chartData = (
-      seriesState.allSeriesData.length ? seriesState.allSeriesData : chartDataArray(data)
-    ) as Array<TData & { stackData?: any }>;
-    if (isStackSeries) {
-      const seriesKeys = seriesState.visibleSeries.map((s) => s.key);
-
-      const offset =
-        seriesLayout === 'stackExpand'
-          ? stackOffsetExpand
-          : seriesLayout === 'stackDiverging'
-            ? stackOffsetDiverging
-            : stackOffsetNone;
-      const stackData = stack()
-        .keys(seriesKeys)
-        .value((d, key) => {
-          const s = series.find((d) => d.key === key)!;
-          return accessor(s.value ?? s.key)(d as any);
-        })
-        .offset(offset)(chartDataArray(data)) as any[];
-
-      _chartData = _chartData.map((d, i) => {
-        return {
-          ...d,
-          stackData: stackData.map((sd) => sd[i]),
-        };
-      });
-    }
-    return _chartData;
-  });
-
   function getBarsProps(s: SeriesData<TData, typeof Bars>, i: number): ComponentProps<typeof Bars> {
     const isFirst = i == 0;
     const isLast = i == seriesState.visibleSeries.length - 1;
@@ -278,7 +288,12 @@
       y: isVertical ? valueAccessor : undefined,
       x1: isVertical && isGroupSeries ? (d) => s.value ?? s.key : undefined,
       y1: !isVertical && isGroupSeries ? (d) => s.value ?? s.key : undefined,
-      rounded: isStackLayout && i !== seriesState.visibleSeries.length - 1 ? 'none' : 'edge',
+      rounded:
+        isStackLayout && i !== seriesState.visibleSeries.length - 1
+          ? 'none'
+          : Array.isArray(xProp) || Array.isArray(yProp)
+            ? 'all'
+            : 'edge',
       radius: 4,
       strokeWidth: 1,
       insets: stackInsets,
