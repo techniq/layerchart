@@ -53,6 +53,54 @@
     keys: ['value', 'baseline'],
   });
 
+  const durationData = [
+    {
+      category: 'One',
+      start: new Date('2021-01-01'),
+      end: new Date('2021-03-01'),
+    },
+    {
+      category: 'One',
+      start: new Date('2021-04-01'),
+      end: new Date('2021-08-15'),
+    },
+    {
+      category: 'Two',
+      start: new Date('2021-03-01'),
+      end: new Date('2021-06-01'),
+    },
+    {
+      category: 'Two',
+      start: new Date('2021-08-01'),
+      end: new Date('2021-10-01'),
+    },
+    {
+      category: 'Three',
+      start: new Date('2021-02-01'),
+      end: new Date('2021-07-01'),
+    },
+    {
+      category: 'Four',
+      start: new Date('2021-06-09'),
+      end: new Date('2021-09-01'),
+    },
+    {
+      category: 'Four',
+      start: new Date('2021-10-01'),
+      end: new Date('2021-12-15'),
+    },
+    {
+      category: 'Five',
+      start: new Date('2021-02-01'),
+      end: new Date('2021-04-15'),
+    },
+    {
+      category: 'Five',
+      start: new Date('2021-10-01'),
+      end: new Date('2021-12-31'),
+    },
+  ];
+
   let renderContext: 'svg' | 'canvas' = $state('svg');
   let debug = $state(false);
 </script>
@@ -197,6 +245,53 @@
       {renderContext}
       {debug}
     />
+  </div>
+</Preview>
+
+<h2>Duration</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[400px] p-4 border rounded-sm">
+    <BarChart
+      data={durationData}
+      x={['start', 'end']}
+      xScale={scaleTime()}
+      y="category"
+      xBaseline={undefined}
+      xNice={false}
+      c="category"
+      cRange={[
+        'var(--color-success)',
+        'var(--color-danger)',
+        'var(--color-warning)',
+        'var(--color-info)',
+        'var(--color-secondary)',
+      ]}
+      grid={{ y: true, bandAlign: 'between' }}
+      orientation="horizontal"
+      props={{
+        xAxis: {
+          format: PeriodType.Month,
+        },
+        tooltip: {
+          context: { mode: 'bounds' },
+        },
+      }}
+      {renderContext}
+      {debug}
+    >
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(context.y(data))}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="Start" value={data.start} format={PeriodType.Day} />
+              <Tooltip.Item label="End" value={data.end} format={PeriodType.Day} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
+    </BarChart>
   </div>
 </Preview>
 
@@ -1293,54 +1388,9 @@
 <Preview data={dateSeriesData}>
   <div class="h-[400px] p-4 border rounded-sm">
     <BarChart
-      data={[
-        {
-          category: 'One',
-          start: new Date('2021-01-01'),
-          end: new Date('2021-03-01'),
-        },
-        {
-          category: 'One',
-          start: new Date('2021-04-01'),
-          end: new Date('2021-08-15'),
-        },
-        {
-          category: 'Two',
-          start: new Date('2021-03-01'),
-          end: new Date('2021-06-01'),
-        },
-        {
-          category: 'Two',
-          start: new Date('2021-08-01'),
-          end: new Date('2021-10-01'),
-        },
-        {
-          category: 'Three',
-          start: new Date('2021-02-01'),
-          end: new Date('2021-07-01'),
-        },
-        {
-          category: 'Four',
-          start: new Date('2021-06-09'),
-          end: new Date('2021-09-01'),
-        },
-        {
-          category: 'Four',
-          start: new Date('2021-10-01'),
-          end: new Date('2021-12-15'),
-        },
-        {
-          category: 'Five',
-          start: new Date('2021-02-01'),
-          end: new Date('2021-04-15'),
-        },
-        {
-          category: 'Five',
-          start: new Date('2021-10-01'),
-          end: new Date('2021-12-31'),
-        },
-      ]}
+      data={durationData}
       x={['start', 'end']}
+      xScale={scaleTime()}
       y="category"
       xDomain={[null, null]}
       xNice={false}
@@ -1357,12 +1407,11 @@
       orientation="horizontal"
       props={{
         xAxis: {
-          ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks(),
           format: PeriodType.Month,
         },
         grid: { bandAlign: 'between' },
         tooltip: {
-          // context: { mode: 'bisect-x' },
+          context: { mode: 'bounds' },
         },
       }}
       padding={{ top: 10, bottom: 10 }}
