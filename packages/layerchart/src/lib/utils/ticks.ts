@@ -206,11 +206,11 @@ export function resolveTickVals(
       : scale.domain();
   }
 
-  if (isScaleTime(scale)) {
-    const interval = getMajorTicks(scale.domain()[0], scale.domain()[1])!;
-    // const interval = getMinorTicks(scale.domain()[0], scale.domain()[1]);
-    return scale.ticks(interval);
-  }
+  // if (isScaleTime(scale)) {
+  //   const interval = getMajorTicks(scale.domain()[0], scale.domain()[1])!;
+  //   // const interval = getMinorTicks(scale.domain()[0], scale.domain()[1]);
+  //   return scale.ticks(interval);
+  // }
 
   // Ticks from scale
   if (scale.ticks && typeof scale.ticks === 'function') {
