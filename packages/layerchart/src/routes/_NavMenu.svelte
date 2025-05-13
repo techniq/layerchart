@@ -18,7 +18,7 @@
       { label: 'Bar Chart (Horizontal)', value: 'Bars' },
       'Candlestick',
       'Compound',
-      'DotPlot',
+      'Duration',
       'DualAxis',
       'Histogram',
       'Line',
