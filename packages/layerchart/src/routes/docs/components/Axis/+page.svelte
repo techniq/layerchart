@@ -1,21 +1,24 @@
 <script lang="ts">
   import { scaleLinear, scaleTime, scaleBand, scaleLog } from 'd3-scale';
   import { range } from 'd3-array';
-  import { timeDay } from 'd3-time';
+  import { timeDay, timeYear } from 'd3-time';
   import { Field, Switch } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
   import { mdScreen } from '@layerstack/svelte-stores';
+  import { subYears } from 'date-fns';
 
-  import { Axis, Chart, Svg, Frame, Rule, Text, Grid, LineChart } from 'layerchart';
+  import { Axis, Chart, Svg, Frame, Rule, Text, Grid, asAny } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   import { createDateSeries } from '$lib/utils/genData.js';
   import Blockquote from '$lib/docs/Blockquote.svelte';
 
-  const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
   const largeData = createDateSeries({ count: 100, min: 50, max: 100, value: 'integer' });
 
-  const superLargeData = createDateSeries({ count: 2000, min: 50, max: 100, value: 'integer' });
+  const now = new Date();
+
+  let initialXDomain = [timeYear.offset(now, -4), now];
+  let xDomain = $state([timeYear.offset(now, -4), now]);
 
   let debug = $state(false);
 </script>
@@ -24,33 +27,52 @@
 
 <h2>Time scale</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={superLargeData}
+    <Chart
       x="date"
+      xScale={scaleTime()}
+      {xDomain}
       y="value"
-      yNice
+      yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-      brush
     >
       <Svg>
         <Axis placement="bottom" rule grid />
         <Axis placement="left" />
       </Svg>
-    </LineChart>
+    </Chart>
+  </div>
+
+  <div class="h-[100px] p-4 border rounded-sm">
+    <Chart
+      x="date"
+      xScale={scaleTime()}
+      xDomain={initialXDomain}
+      y="value"
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+      brush={{
+        onChange: (e) => {
+          xDomain = asAny(e.xDomain);
+        },
+      }}
+    >
+      <Svg>
+        <Axis placement="bottom" rule grid />
+      </Svg>
+    </Chart>
   </div>
 </Preview>
 
 {#if false}
   <h2>left / bottom placement</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -66,12 +88,12 @@
 
   <h2>top / right placement</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -87,12 +109,12 @@
 
   <h2>rule (left/bottom placement)</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -108,12 +130,12 @@
 
   <h2>rule (top/right placement)</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -129,12 +151,12 @@
 
   <h2>grid</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -150,12 +172,12 @@
 
   <h2>dashed grid lines</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -171,12 +193,12 @@
 
   <h2>multiple axis grids with single rule</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -194,12 +216,12 @@
 
   <h2>multiple axis grids and rules</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -218,12 +240,12 @@
 
   <h2>multiple axis grids and rules (separate grid)</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -240,12 +262,12 @@
 
   <h2>Arrow markers</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -261,12 +283,12 @@
 
   <h2>tick label styling</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, null]}
         yNice
@@ -290,12 +312,12 @@
 
   <h2>rotated tick labels and styling</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, null]}
         yNice
@@ -319,12 +341,12 @@
 
   <h2>Remove ticks hashes</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -340,12 +362,12 @@
 
   <h2>show only first/last ticks with alignment</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -370,12 +392,12 @@
 
   <h2>integer-only ticks</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 2]}
         yNice
@@ -396,12 +418,12 @@
 
   <h2>explicit ticks</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -417,12 +439,12 @@
 
   <h2>Inject tick value</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -438,12 +460,12 @@
 
   <h2>tick count</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -459,12 +481,12 @@
 
   <h2>tick count (responsive)</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -480,12 +502,12 @@
 
   <h2>tick time interval</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -501,12 +523,12 @@
 
   <h2>remove default tick count</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -522,12 +544,12 @@
 
   <h2>label next to hash</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -549,12 +571,12 @@
 
   <h2>Hide `0` tick via ticks</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -570,12 +592,12 @@
 
   <h2>Hide `0` tick via format</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -597,6 +619,7 @@
         data={largeData}
         x="date"
         xScale={scaleBand()}
+        _xDomain={[timeDay.offset(now, -100), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -625,12 +648,12 @@
     </div>
   </div>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -664,12 +687,12 @@
     </div>
   </div>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -703,12 +726,12 @@
     </div>
   </div>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yDomain={[0, 100]}
         yNice
@@ -745,9 +768,16 @@
 
   <h2>radial rule</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
-      <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
+      <Chart
+        x="date"
+        xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
+        y="value"
+        yDomain={[0, 100]}
+        radial
+      >
         <Svg center>
           <Axis placement="radius" rule />
           <Axis placement="angle" rule ticks={(scale) => scale.ticks?.().splice(1)} />
@@ -758,9 +788,16 @@
 
   <h2>radial grid</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
-      <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
+      <Chart
+        x="date"
+        xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
+        y="value"
+        yDomain={[0, 100]}
+        radial
+      >
         <Svg center>
           <Axis placement="radius" grid />
           <Axis placement="angle" grid ticks={(scale) => scale.ticks?.().splice(1)} />
@@ -771,12 +808,12 @@
 
   <h2>Log scale</h2>
 
-  <Preview {data}>
+  <Preview>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart
-        {data}
         x="date"
         xScale={scaleTime()}
+        xDomain={[timeDay.offset(now, -10), now]}
         y="value"
         yScale={scaleLog()}
         yDomain={[1, 100]}
