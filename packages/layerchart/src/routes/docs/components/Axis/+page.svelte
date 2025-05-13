@@ -2,12 +2,11 @@
   import { scaleLinear, scaleTime, scaleBand, scaleLog } from 'd3-scale';
   import { range } from 'd3-array';
   import { timeDay, timeYear } from 'd3-time';
-  import { Field, Switch } from 'svelte-ux';
+  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
   import { mdScreen } from '@layerstack/svelte-stores';
-  import { subYears } from 'date-fns';
 
-  import { Axis, Chart, Svg, Frame, Rule, Text, Grid, asAny } from 'layerchart';
+  import { Axis, Chart, Frame, Layer, Rule, Text, Grid, asAny } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -20,10 +19,20 @@
   let initialXDomain = [timeYear.offset(now, -4), now];
   let xDomain = $state([timeYear.offset(now, -4), now]);
 
+  let renderContext: 'svg' | 'canvas' = $state('svg');
   let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
+
+<div class="flex gap-2">
+  <Field label="Render context" class="grow">
+    <ToggleGroup bind:value={renderContext} variant="outline">
+      <ToggleOption value="svg">Svg</ToggleOption>
+      <ToggleOption value="canvas">Canvas</ToggleOption>
+    </ToggleGroup>
+  </Field>
+</div>
 
 <h2>Time scale</h2>
 
@@ -37,10 +46,10 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule grid />
         <Axis placement="left" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 
@@ -57,14 +66,14 @@
         },
       }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule grid />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
-{#if false}
+{#if true}
   <h2>left / bottom placement</h2>
 
   <Preview>
@@ -78,10 +87,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" rule />
           <Axis placement="left" rule />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -99,10 +108,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="top" rule />
           <Axis placement="right" rule />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -120,10 +129,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" rule />
           <Axis placement="left" rule />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -141,10 +150,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="top" rule />
           <Axis placement="right" rule />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -162,10 +171,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" grid />
           <Axis placement="left" grid />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -183,10 +192,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" />
           <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -204,10 +213,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="left" grid />
           <Axis placement="bottom" grid rule />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -227,11 +236,11 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="left" grid />
           <Axis placement="bottom" grid rule />
           <Rule x="left" />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -251,11 +260,11 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Grid x y />
           <Axis placement="left" rule />
           <Axis placement="bottom" rule />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -273,10 +282,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="left" grid rule={{ markerEnd: 'arrow' }} />
           <Axis placement="bottom" grid rule={{ markerEnd: 'arrow' }} />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -294,7 +303,7 @@
         yNice
         padding={{ top: 20, bottom: 36, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis
             placement="bottom"
             rule
@@ -305,7 +314,7 @@
             }}
           />
           <Axis placement="left" />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -323,7 +332,7 @@
         yNice
         padding={{ top: 20, bottom: 36, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis
             placement="bottom"
             rule={{ class: 'stroke-danger' }}
@@ -334,7 +343,7 @@
             }}
           />
           <Axis placement="left" />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -352,10 +361,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" rule tickLength={0} />
           <Axis placement="left" rule tickLength={0} />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -373,7 +382,7 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis
             placement="bottom"
             rule
@@ -385,7 +394,7 @@
             {/snippet}
           </Axis>
           <Axis placement="left" rule ticks={(scale) => scale.domain()} />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -403,7 +412,7 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" rule />
           <Axis
             placement="left"
@@ -411,7 +420,7 @@
             ticks={(scale) => scale.ticks?.().filter(Number.isInteger)}
             format="integer"
           />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -429,10 +438,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" rule />
           <Axis placement="left" rule ticks={[0, 50, 100]} />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -450,10 +459,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" rule />
           <Axis placement="left" rule ticks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -471,10 +480,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" rule />
           <Axis placement="left" rule ticks={20} />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -492,10 +501,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" rule ticks={$mdScreen ? 10 : 5} />
           <Axis placement="left" rule />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -513,10 +522,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" rule ticks={{ interval: timeDay.every(3) }} />
           <Axis placement="left" rule />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -534,10 +543,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" rule />
           <Axis placement="left" rule ticks={null} />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -555,7 +564,7 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis
             placement="bottom"
             rule={{ class: 'stroke-surface-content/10' }}
@@ -564,7 +573,7 @@
             tickLength={22}
           />
           <Axis placement="left" rule />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -582,10 +591,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" rule />
           <Axis placement="left" rule ticks={(scale) => scale.ticks?.().filter((d) => d !== 0)} />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -603,10 +612,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" rule />
           <Axis placement="left" rule format={(v) => v || ''} />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -625,7 +634,7 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis
             placement="bottom"
             rule
@@ -633,7 +642,7 @@
             format={PeriodType.Day}
           />
           <Axis placement="left" rule />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -659,7 +668,7 @@
         yNice
         padding={{ top: 32, bottom: 32, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           {#if debug}
             <Frame class="fill-danger/5" />
             <Frame class="fill-danger/5" full />
@@ -672,7 +681,7 @@
           <Axis label="bottom start" placement="bottom" labelPlacement="start" rule />
           <Axis label="bottom middle" placement="bottom" labelPlacement="middle" rule />
           <Axis label="bottom end" placement="bottom" labelPlacement="end" rule />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -698,7 +707,7 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 32, right: 32 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           {#if debug}
             <Frame class="fill-danger/5" />
             <Frame class="fill-danger/5" full />
@@ -711,7 +720,7 @@
           <Axis label="right start" placement="right" labelPlacement="start" rule />
           <Axis label="right middle" placement="right" labelPlacement="middle" rule />
           <Axis label="right end" placement="right" labelPlacement="end" rule />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -738,7 +747,7 @@
         padding={{ right: 90 }}
       >
         {#snippet children({ context })}
-          <Svg>
+          <Layer type={renderContext}>
             {#if debug}
               <Frame class="fill-danger/5" />
               <Frame class="fill-danger/5" full />
@@ -760,7 +769,7 @@
               class="translate-x-[50px]"
               labelProps={{ dx: -50 }}
             />
-          </Svg>
+          </Layer>
         {/snippet}
       </Chart>
     </div>
@@ -778,10 +787,10 @@
         yDomain={[0, 100]}
         radial
       >
-        <Svg center>
+        <Layer type={renderContext} center>
           <Axis placement="radius" rule />
           <Axis placement="angle" rule ticks={(scale) => scale.ticks?.().splice(1)} />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -798,10 +807,10 @@
         yDomain={[0, 100]}
         radial
       >
-        <Svg center>
+        <Layer type={renderContext} center>
           <Axis placement="radius" grid />
           <Axis placement="angle" grid ticks={(scale) => scale.ticks?.().splice(1)} />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -820,10 +829,10 @@
         yNice
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
-        <Svg>
+        <Layer type={renderContext}>
           <Axis placement="bottom" rule />
           <Axis placement="left" rule />
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
