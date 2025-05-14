@@ -1,5 +1,11 @@
 # LayerChart
 
+## 1.0.11
+
+### Patch Changes
+
+- fix: Update dependencies, notable `@layerstack/utils` with improved `metric` number formatting ([`71920fc`](https://github.com/techniq/layerchart/commit/71920fc6d8bb91cc6a15fe5a33f805f166a9de13))
+
 ## 1.0.10
 
 ### Patch Changes
