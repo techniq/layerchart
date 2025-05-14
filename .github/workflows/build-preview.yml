@@ -31,3 +31,4 @@ jobs:
         with:
           name: preview-build
           path: packages/layerchart/.svelte-kit
+          include-hidden-files: true
