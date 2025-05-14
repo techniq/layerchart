@@ -21,6 +21,11 @@ export class SeriesState<TData, TComponent extends Component> {
 
   constructor(getSeries: () => SeriesData<TData, TComponent>[]) {
     this.#series = getSeries();
+
+    $effect.pre(() => {
+      // keep series state in sync with the prop
+      this.#series = getSeries();
+    });
   }
 
   get series() {
