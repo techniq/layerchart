@@ -65,6 +65,13 @@
     ignoreTransform?: boolean;
 
     /**
+     * Disable the hit canvas (useful when animations are playing)
+     *
+     * @default false
+     */
+    disableHitCanvas?: boolean;
+
+    /**
      * Show the hit canvas for debugging purposes.
      *
      * @default false
@@ -171,6 +178,7 @@
     fallback,
     center = false,
     ignoreTransform = false,
+    disableHitCanvas = false,
     class: className,
     children,
     onclick,
@@ -366,7 +374,7 @@
       for (const c of nonRetainStateComponents) {
         const componentHasEvents = c.events && Object.values(c.events).filter((d) => d).length > 0;
 
-        if (componentHasEvents && !inactiveMoving && !transformCtx.dragging) {
+        if (componentHasEvents && !inactiveMoving && !transformCtx.dragging && !disableHitCanvas) {
           const color = getColorStr(colorGenerator.next().value);
           const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
 
