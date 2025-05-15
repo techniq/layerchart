@@ -41,7 +41,7 @@
       {/each}
 
       {#if canHaveTotal && payload.length > 1 && !tooltipProps?.hideTotal}
-        <Tooltip.Separator {...tooltipProps?.separator} />
+        <Tooltip.Separator {...tooltipProps?.separator} children={undefined} />
 
         <Tooltip.Item
           label="total"
