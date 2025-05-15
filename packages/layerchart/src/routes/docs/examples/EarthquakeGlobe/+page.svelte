@@ -3,7 +3,15 @@
   import { scaleSqrt } from 'd3-scale';
   import { feature } from 'topojson-client';
 
-  import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
+  import {
+    Button,
+    ButtonGroup,
+    Field,
+    RangeField,
+    Switch,
+    ToggleGroup,
+    ToggleOption,
+  } from 'svelte-ux';
   import { TimerState } from '@layerstack/svelte-state';
 
   import {
@@ -11,7 +19,7 @@
     GeoCircle,
     GeoPath,
     Graticule,
-    Svg,
+    Layer,
     Tooltip,
     type ChartContextValue,
   } from 'layerchart';
@@ -41,30 +49,42 @@
     },
     disabled: true,
   });
+
+  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>SVG</h2>
+<div class="flex gap-2 items-end mb-2">
+  <Field label="Render context">
+    <ToggleGroup bind:value={renderContext} variant="outline">
+      <ToggleOption value="svg">Svg</ToggleOption>
+      <ToggleOption value="canvas">Canvas</ToggleOption>
+    </ToggleGroup>
+  </Field>
 
-  <div class="mb-2 flex gap-6">
-    <Field label="Spin:" dense labelPlacement="left" let:id>
-      <ButtonGroup size="sm" variant="fill-light">
-        <Button on:click={timer.start} disabled={timer.running}>Start</Button>
-        <Button on:click={timer.stop} disabled={!timer.running}>Stop</Button>
-      </ButtonGroup>
-    </Field>
+  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
+    <Switch {id} bind:checked={debug} />
+  </Field>
 
-    <RangeField
-      label="Velocity:"
-      bind:value={velocity}
-      min={-10}
-      max={10}
-      disabled={!timer.running}
-      labelPlacement="left"
-    />
-  </div>
+  <div class="grow"></div>
+
+  <Field label="Spin:" dense labelPlacement="left" let:id>
+    <ButtonGroup size="sm" variant="fill-light">
+      <Button on:click={timer.start} disabled={timer.running}>Start</Button>
+      <Button on:click={timer.stop} disabled={!timer.running}>Stop</Button>
+    </ButtonGroup>
+  </Field>
+
+  <RangeField
+    label="Velocity:"
+    bind:value={velocity}
+    min={-10}
+    max={10}
+    disabled={!timer.running}
+    labelPlacement="left"
+  />
 </div>
 
 <Preview data={countries}>
@@ -86,7 +106,7 @@
       ondragstart={timer.stop}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={renderContext} {debug} disableHitCanvas={timer.running}>
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
 
           <Graticule class="stroke-surface-content/20" />
@@ -103,7 +123,7 @@
               onpointerleave={() => context.tooltip.hide()}
             />
           {/each}
-        </Svg>
+        </Layer>
 
         <Tooltip.Root {context}>
           {#snippet children({ data })}
