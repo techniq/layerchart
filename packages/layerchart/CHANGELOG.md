@@ -1,5 +1,13 @@
 # LayerChart
 
+## 2.0.0-next.7
+
+### Patch Changes
+
+- feat(Canvas): Support disabling the hit canavs (useful when animations are playing) ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- refactor: Update `@layerstack/svelte-state` and replace remaining `@layerstack/svelte-stores` usage (media query) (mostly docs related except Canvas) ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.6
 
 ### Patch Changes
