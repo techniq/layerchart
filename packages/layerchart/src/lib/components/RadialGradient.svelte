@@ -102,6 +102,7 @@
     fx = cx,
     fy = cy,
     r = '50%',
+    // fr = '0%'; // TODO: Svelte / Typescript does not know `<radialRadiant fr="...">`
     spreadMethod = 'pad',
     transform = undefined,
     units = 'objectBoundingBox',
@@ -110,9 +111,6 @@
     class: className,
     ...restProps
   }: RadialGradientProps = $props();
-
-  // TODO: Svelte / Typescript does not know `<radialRadiant fr="...">`
-  // export let fr = '0%';
 
   const ctx = getChartContext();
 

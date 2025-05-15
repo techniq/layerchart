@@ -70,7 +70,7 @@ export function createLegendProps<TData, TComponent extends Component>(
     tickFormat: (key) => opts.seriesState.series.find((s) => s.key === key)?.label ?? key,
     placement: 'bottom',
     variant: 'swatches',
-    onclick: (_, item) => opts.seriesState.selectedSeries.toggleSelected(item.value),
+    onclick: (_, item) => opts.seriesState.selectedSeries.toggle(item.value),
     onpointerenter: (_, item) => (opts.seriesState.highlightKey.current = item.value),
     onpointerleave: () => (opts.seriesState.highlightKey.current = null),
     ...opts.props,

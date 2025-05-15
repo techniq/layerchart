@@ -2,13 +2,9 @@
   import { NavItem } from 'svelte-ux';
   import { mdiFormatListBulleted, mdiHome, mdiPlayCircle } from '@mdi/js';
 
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
 
   type LinkCollection = Record<string, Array<string | { label: string; value: string }>>;
-
-  const charts: LinkCollection = {
-    'Cartesian & Polar': ['AreaChart', 'BarChart'],
-  };
 
   const examples: LinkCollection = {
     'Cartesian & Polar': [
@@ -132,14 +128,14 @@
   ];
 </script>
 
-<NavItem text="Home" icon={mdiHome} currentUrl={$page.url} path="/" />
+<NavItem text="Home" icon={mdiHome} currentUrl={page.url} path="/" />
 <NavItem
   text="Getting Started"
   icon={mdiPlayCircle}
-  currentUrl={$page.url}
+  currentUrl={page.url}
   path="/getting-started"
 />
-<NavItem text="Changelog" icon={mdiFormatListBulleted} currentUrl={$page.url} path="/changelog" />
+<NavItem text="Changelog" icon={mdiFormatListBulleted} currentUrl={page.url} path="/changelog" />
 
 <!-- <h1>Charts</h1>
 {#each Object.entries(charts) as [header, items]}
@@ -149,7 +145,7 @@
     {@const pathValue = typeof item === 'object' ? item.value : item}
     <NavItem
       text={label}
-      currentUrl={$page.url}
+      currentUrl={page.url}
       path="/docs/charts/{pathValue}"
       class="pl-6 py-2"
     />
@@ -165,7 +161,7 @@
     {@const pathValue = typeof item === 'object' ? item.value : item}
     <NavItem
       text={label}
-      currentUrl={$page.url}
+      currentUrl={page.url}
       path="/docs/examples/{pathValue}"
       class="pl-6 py-2"
     />
@@ -180,7 +176,7 @@
     {@const pathValue = typeof item === 'object' ? item.value : item}
     <NavItem
       text={label}
-      currentUrl={$page.url}
+      currentUrl={page.url}
       path="/docs/components/{pathValue}"
       class="pl-6 py-2"
     />
@@ -189,14 +185,14 @@
 
 <h1>Utils</h1>
 {#each utils as item}
-  <NavItem text={item} currentUrl={$page.url} path="/docs/utils/{item}" class="pl-6 py-2" />
+  <NavItem text={item} currentUrl={page.url} path="/docs/utils/{item}" class="pl-6 py-2" />
 {/each}
 
 <h1>Tools</h1>
 {#each tools as item}
   <NavItem
     text={item.replace(/([a-z])([A-Z])/g, '$1 $2')}
-    currentUrl={$page.url}
+    currentUrl={page.url}
     path="/docs/tools/{item}"
     class="pl-6 py-2"
   />
@@ -206,7 +202,7 @@
 {#each performance as item}
   <NavItem
     text={item.replace(/([a-z])([A-Z])/g, '$1 $2')}
-    currentUrl={$page.url}
+    currentUrl={page.url}
     path="/docs/performance/{item}"
     class="pl-6 py-2"
   />

@@ -17,22 +17,25 @@
 
   import { ApiDocs, Button, Dialog, Icon, ListItem, TableOfContents } from 'svelte-ux';
 
-  import { xlScreen } from '@layerstack/svelte-stores';
+  import { MediaQueryPresets } from '@layerstack/svelte-state';
   import { cls } from '@layerstack/tailwind';
   import { toTitleCase } from '@layerstack/utils';
 
   import Code from '$lib/docs/Code.svelte';
   import ViewSourceButton from '$lib/docs/ViewSourceButton.svelte';
-  import { page } from '$app/stores';
-  import { goto } from '$app/navigation';
+  import { page } from '$app/state';
 
-  $: [type, name] = $page.url.pathname.split('/').slice(2) ?? [];
-  $: title = $page.data.meta?.title ?? name;
-  $: pageUrl = `src/routes/docs/${type}/${name}/+page.svelte?plain=1`;
-  $: sourceUrl = ['components', 'utils'].includes(type)
-    ? `src/lib/${type}/${name}.${type === 'components' ? 'svelte' : 'ts'}`
-    : null;
-  $: ({
+  const { children } = $props();
+
+  const [type, name] = $derived(page.url.pathname.split('/').slice(2) ?? []);
+  const title = $derived(page.data.meta?.title ?? name);
+  const pageUrl = $derived(`src/routes/docs/${type}/${name}/+page.svelte?plain=1`);
+  const sourceUrl = $derived(
+    ['components', 'utils'].includes(type)
+      ? `src/lib/${type}/${name}.${type === 'components' ? 'svelte' : 'ts'}`
+      : null
+  );
+  const {
     description,
     features,
     related,
@@ -42,11 +45,13 @@
     pageSource,
     api,
     status,
-  } = $page.data.meta ?? {});
+  } = $derived(page.data.meta ?? {});
 
-  $: showTableOfContents = $xlScreen;
+  const { xlScreen } = new MediaQueryPresets();
+  let showTableOfContents = $state(xlScreen.current);
+
   onMount(() => {
-    showTableOfContents = !hideTableOfContents && $xlScreen;
+    showTableOfContents = !hideTableOfContents && xlScreen.current;
 
     // Assign an `id` to every header element
     const headers = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
@@ -148,8 +153,8 @@
 </div>
 
 <div class="px-4">
-  {#if !$xlScreen}
-    {#key $page.route.id}
+  {#if !xlScreen.current}
+    {#key page.route.id}
       <Dialog
         bind:open={showTableOfContents}
         classes={{ dialog: 'w-[420px] max-w-[95vw] max-h-[95dvh]' }}
@@ -175,14 +180,14 @@
   <div class="grid xl:grid-cols-[1fr_auto] gap-6 pb-4">
     <div class="_overflow-auto p-1">
       {#if type === 'components' && !hideUsage}
-        {#key $page.route.id}
+        {#key page.route.id}
           <h1 id="usage">Usage</h1>
           <Code source={`import { ${name} } from 'layerchart';`} language="javascript" />
         {/key}
       {/if}
 
       {#if features}
-        {#key $page.route.id}
+        {#key page.route.id}
           <h1 id="features">Features</h1>
           <ul>
             {#each features.flatMap( (feature) => (Array.isArray(feature) ? feature.map( (f) => ({ description: f, depth: 1 }) ) : { description: feature, depth: 0 }) ) as feature}
@@ -197,7 +202,7 @@
         {/key}
       {/if}
 
-      <slot />
+      {@render children()}
 
       {#if related}
         <h1 id="related">Related</h1>
@@ -249,7 +254,7 @@
       {/if} -->
     </div>
 
-    {#if showTableOfContents && $xlScreen}
+    {#if showTableOfContents && xlScreen.current}
       <div
         class="w-[224px] sticky top-[calc(var(--headerHeight)+10px)] pr-2 max-h-[calc(100dvh-64px)] overflow-auto z-60"
       >
@@ -257,7 +262,7 @@
           On this page
         </div>
         <!-- Rebuild toc when page changes -->
-        {#key $page.route.id}
+        {#key page.route.id}
           <TableOfContents icon={mdiChevronRight} class="border-l pl-3" scrollOffset={184} />
         {/key}
       </div>

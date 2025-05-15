@@ -4,20 +4,28 @@
   import { CopyButton } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
 
-  export let source: string | null = null;
-  export let language = 'svelte';
-  export let highlightedSource = source
-    ? Prism.highlight(source, Prism.languages[language] ?? Prism.languages.text, language)
-    : '';
-
-  export let classes: {
-    root?: string;
-    pre?: string;
-    code?: string;
-  } = {};
+  const {
+    source = null,
+    language = 'svelte',
+    highlightedSource = source
+      ? Prism.highlight(source, Prism.languages[language] ?? Prism.languages.text, language)
+      : '',
+    classes = {},
+    class: className,
+  }: {
+    source: string | null;
+    language: string;
+    highlightedSource: string;
+    classes: {
+      root?: string;
+      pre?: string;
+      code?: string;
+    };
+    class: string;
+  } = $props();
 </script>
 
-<div class={cls('Code', 'rounded-sm', classes.root, $$props.class)}>
+<div class={cls('Code', 'rounded-sm', classes.root, className)}>
   {#if source}
     <div class="relative">
       <pre

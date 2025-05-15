@@ -4,7 +4,7 @@
   import { timeDay } from 'd3-time';
   import { Field, Switch } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
-  import { mdScreen } from '@layerstack/svelte-stores';
+  import { MediaQueryPresets } from '@layerstack/svelte-state';
 
   import { Axis, Chart, Svg, Frame, Rule, Text, Grid } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
@@ -16,6 +16,7 @@
   const largeData = createDateSeries({ count: 100, min: 50, max: 100, value: 'integer' });
 
   let debug = $state(false);
+  const { mdScreen } = new MediaQueryPresets();
 </script>
 
 <h1>Examples</h1>
@@ -448,7 +449,7 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="bottom" rule ticks={$mdScreen ? 10 : 5} />
+        <Axis placement="bottom" rule ticks={mdScreen.current ? 10 : 5} />
         <Axis placement="left" rule />
       </Svg>
     </Chart>

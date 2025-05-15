@@ -264,8 +264,8 @@
       placement: 'bottom',
       variant: 'swatches',
       onclick: (e, item) => {
-        selectedKeys.toggleSelected(item.value);
-        selectedSeries.toggleSelected(item.value);
+        selectedKeys.toggle(item.value);
+        selectedSeries.toggle(item.value);
       },
       onpointerenter: (e, item) => (highlightKey.current = item.value),
       onpointerleave: (e) => (highlightKey.current = null),

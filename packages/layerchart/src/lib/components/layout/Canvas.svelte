@@ -151,13 +151,13 @@
   import { onMount, untrack, type Snippet } from 'svelte';
   import { cls } from '@layerstack/tailwind';
   import { Logger, localPoint } from '@layerstack/utils';
-  import { darkColorScheme } from '@layerstack/svelte-stores';
+  import { MediaQueryPresets } from '@layerstack/svelte-state';
 
   import { setRenderContext } from '../Chart.svelte';
   import { getTransformContext } from '../TransformContext.svelte';
   import { getPixelColor, scaleCanvas, type ComputedStylesOptions } from '../../utils/canvas.js';
   import { getColorStr, rgbColorGenerator } from '../../utils/color.js';
-  import { Context } from 'runed';
+  import { Context, useMutationObserver, watch } from 'runed';
   import type {
     HTMLCanvasAttributes,
     MouseEventHandler,
@@ -264,6 +264,23 @@
    * end HitCanvas
    */
 
+  // Invalidate/redraw if color scheme changes, either via browser `prefers-color-scheme` (including emulation) or by changing `<html class="dark">` or `<html data-theme="...">`
+  const { dark } = new MediaQueryPresets();
+  watch(
+    () => dark.current,
+    () => {
+      canvasContext.invalidate();
+    }
+  );
+  useMutationObserver(
+    () => document.documentElement,
+    () => canvasContext.invalidate(),
+    {
+      attributes: true,
+      attributeFilter: ['class', 'data-theme'],
+    }
+  );
+
   onMount(() => {
     context = ref?.getContext('2d', { willReadFrequently }) as CanvasRenderingContext2D;
 
@@ -271,22 +288,7 @@
       willReadFrequently: false, // Explicitly set to `false` to resolve pixel artifacts between fill and stroke with the same color (issue #372)
     }) as CanvasRenderingContext2D;
 
-    // Invalidate/redraw if color scheme changes, either via browser `prefers-color-scheme` (including emulation) or by changing `<html class="dark">` or `<html data-theme="...">`
-    darkColorScheme.subscribe(() => {
-      canvasContext.invalidate();
-    });
-
-    const observer = new MutationObserver(() => {
-      canvasContext.invalidate();
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class', 'data-theme'],
-    });
-
     return () => {
-      observer.disconnect();
       if (frameId) {
         cancelAnimationFrame(frameId);
       }

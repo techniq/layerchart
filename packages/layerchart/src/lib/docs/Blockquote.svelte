@@ -2,6 +2,8 @@
   import { mdiInformation } from '@mdi/js';
   import { Icon } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
+
+  const { children } = $props();
 </script>
 
 <div
@@ -11,5 +13,5 @@
   )}
 >
   <Icon data={mdiInformation} class="text-primary" />
-  <slot />
+  {@render children()}
 </div>

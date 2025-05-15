@@ -1,6 +1,6 @@
 <script lang="ts">
   import { scaleTime, scaleBand } from 'd3-scale';
-  import { mdScreen } from '@layerstack/svelte-stores';
+  import { MediaQueryPresets } from '@layerstack/svelte-state';
   import { format, PeriodType } from '@layerstack/utils';
 
   import { Axis, Chart, Grid, Svg } from 'layerchart';
@@ -9,6 +9,7 @@
   import { createDateSeries } from '$lib/utils/genData.js';
 
   const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
+  const { mdScreen } = new MediaQueryPresets();
 </script>
 
 <h1>Examples</h1>
@@ -259,8 +260,8 @@
       padding={{ bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Grid x xTicks={$mdScreen ? 10 : 5} />
-        <Axis placement="bottom" rule ticks={$mdScreen ? 10 : 5} />
+        <Grid x xTicks={mdScreen.current ? 10 : 5} />
+        <Axis placement="bottom" rule ticks={mdScreen.current ? 10 : 5} />
       </Svg>
     </Chart>
   </div>

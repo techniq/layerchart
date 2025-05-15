@@ -2,7 +2,7 @@
   import { marked } from 'marked';
   import { TableOfContents } from 'svelte-ux';
 
-  export let data;
+  const { data } = $props();
 
   function sanitize(str: string) {
     return str.replace(/</g, '\\<').replace(/>/g, '\\>');

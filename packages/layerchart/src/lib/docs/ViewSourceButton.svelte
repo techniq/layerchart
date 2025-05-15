@@ -5,10 +5,13 @@
 
   import Code from './Code.svelte';
 
-  export let label: string;
-  export let source: string | undefined = undefined;
-  export let href: string | undefined = undefined;
-  export let icon: ComponentProps<Button>['icon'];
+  const {
+    label,
+    source,
+    href,
+    icon,
+  }: { label: string; source?: string; href?: string; icon: ComponentProps<Button>['icon'] } =
+    $props();
 </script>
 
 {#if source}
