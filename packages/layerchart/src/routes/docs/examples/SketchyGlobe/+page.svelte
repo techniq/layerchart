@@ -4,16 +4,9 @@
   import { feature } from 'topojson-client';
   import { presimplify, simplify } from 'topojson-simplify';
 
-  import {
-    Chart,
-    GeoPath,
-    Graticule,
-    Svg,
-    TransformContext,
-    type ChartContextValue,
-  } from 'layerchart';
+  import { Chart, GeoPath, Graticule, Svg, type ChartContextValue } from 'layerchart';
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
-  import { timerStore } from '@layerstack/svelte-stores';
+  import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
@@ -28,9 +21,8 @@
 
   let context = $state<ChartContextValue>(null!);
 
-  let velocity = $state(3);
-  let isSpinning = $state(false);
-  const timer = timerStore({
+  let velocity = $state(1);
+  const timer = new TimerState({
     delay: 1,
     onTick() {
       if (!context) return;
@@ -41,15 +33,8 @@
         y: curr.y,
       };
     },
+    disabled: true,
   });
-  $effect(() => {
-    if (isSpinning) {
-      timer.start();
-    } else {
-      timer.stop();
-    }
-  });
-  $timer;
 </script>
 
 <div class="grid grid-cols-[1fr_1fr_1fr] gap-2">
@@ -65,18 +50,8 @@
   <div class="mb-2 flex gap-6">
     <Field label="Spin:" dense labelPlacement="left">
       <ButtonGroup size="sm" variant="fill-light">
-        <Button
-          on:click={() => {
-            isSpinning = true;
-          }}
-          disabled={isSpinning}>Start</Button
-        >
-        <Button
-          on:click={() => {
-            isSpinning = false;
-          }}
-          disabled={!isSpinning}>Stop</Button
-        >
+        <Button on:click={timer.start} disabled={timer.running}>Start</Button>
+        <Button on:click={timer.stop} disabled={!timer.running}>Stop</Button>
       </ButtonGroup>
     </Field>
 
@@ -85,7 +60,7 @@
       bind:value={velocity}
       min={-10}
       max={10}
-      disabled={!isSpinning}
+      disabled={!timer.running}
       labelPlacement="left"
     />
   </div>
@@ -99,13 +74,7 @@
         fitGeojson: land,
         applyTransform: ['rotate'],
       }}
-      ondragstart={() => timer.stop()}
-      ondragend={() => {
-        if (isSpinning) {
-          // Restart
-          timer.start();
-        }
-      }}
+      ondragstart={timer.stop}
       bind:context
     >
       <Svg>

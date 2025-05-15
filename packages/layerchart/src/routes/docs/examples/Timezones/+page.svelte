@@ -26,7 +26,7 @@
     antipode,
   } from 'layerchart';
   import { Field, SelectField, Switch } from 'svelte-ux';
-  import { timerStore } from '@layerstack/svelte-stores';
+  import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -63,7 +63,7 @@
     )
   );
 
-  const dateTimer = timerStore();
+  const dateTimer = new TimerState();
 
   function formatDate(date: Date, timeZone: string | null) {
     let result = '-';
@@ -163,7 +163,10 @@
               <Tooltip.Item label="Timezone" value={time_zone} />
               <Tooltip.Item
                 label="Current time"
-                value={formatDate($dateTimer, time_zone.replace('UTC', '').replace('±', '+'))}
+                value={formatDate(
+                  dateTimer.current,
+                  time_zone.replace('UTC', '').replace('±', '+')
+                )}
               />
             </Tooltip.List>
           {/snippet}

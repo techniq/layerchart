@@ -10,16 +10,15 @@
     GeoPath,
     Graticule,
     Legend,
-    Svg,
+    Layer,
     Tooltip,
-    TransformContext,
     type ChartContextValue,
   } from 'layerchart';
 
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { timerStore } from '@layerstack/svelte-stores';
+  import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -31,8 +30,7 @@
   let context = $state<ChartContextValue>(null!);
 
   let velocity = $state(3);
-  let isSpinning = $state(false);
-  const timer = timerStore({
+  const timer = new TimerState({
     delay: 1,
     onTick() {
       const value = context.transform.translate;
@@ -42,16 +40,8 @@
         y: value.y,
       };
     },
+    disabled: true,
   });
-
-  $effect(() => {
-    if (isSpinning) {
-      timer.start();
-    } else {
-      timer.stop();
-    }
-  });
-  $timer;
 
   const dateExtents = $derived(extent(eclipses.features.map((f) => f.properties.Date)));
   const colorScale = $derived(
@@ -69,18 +59,8 @@
   <div class="mb-2 flex gap-6">
     <Field label="Spin:" dense labelPlacement="left" let:id>
       <ButtonGroup size="sm" variant="fill-light">
-        <Button
-          on:click={() => {
-            isSpinning = true;
-          }}
-          disabled={isSpinning}>Start</Button
-        >
-        <Button
-          on:click={() => {
-            isSpinning = false;
-          }}
-          disabled={!isSpinning}>Stop</Button
-        >
+        <Button on:click={timer.start} disabled={timer.running}>Start</Button>
+        <Button on:click={timer.stop} disabled={!timer.running}>Stop</Button>
       </ButtonGroup>
     </Field>
 
@@ -89,7 +69,7 @@
       bind:value={velocity}
       min={-10}
       max={10}
-      disabled={!isSpinning}
+      disabled={!timer.running}
       labelPlacement="left"
     />
   </div>
@@ -103,13 +83,7 @@
         fitGeojson: countries,
         applyTransform: ['rotate'],
       }}
-      ondragstart={() => timer.stop()}
-      ondragend={() => {
-        if (isSpinning) {
-          // Restart
-          timer.start();
-        }
-      }}
+      ondragstart={timer.stop}
       bind:context
       padding={{ top: 60 }}
     >
@@ -120,7 +94,7 @@
           tickFormat={(d) => new Date(d).getFullYear().toString()}
         />
 
-        <Svg>
+        <Layer type="svg">
           <GeoPath
             geojson={{ type: 'Sphere' }}
             class="fill-surface-200 stroke-surface-content/20"
@@ -140,7 +114,7 @@
               onpointerleave={(e) => context.tooltip.hide()}
             />
           {/each}
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}

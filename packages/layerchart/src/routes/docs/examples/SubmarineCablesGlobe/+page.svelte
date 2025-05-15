@@ -4,7 +4,7 @@
 
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
-  import { timerStore } from '@layerstack/svelte-stores';
+  import { TimerState } from '@layerstack/svelte-state';
 
   import {
     Chart,
@@ -28,8 +28,7 @@
   let context = $state<ChartContextValue>();
 
   let velocity = $state(3);
-  let isSpinning = $state(false);
-  const timer = timerStore({
+  const timer = new TimerState({
     delay: 1,
     onTick() {
       if (!context) return;
@@ -40,16 +39,8 @@
         y: value.y,
       };
     },
+    disabled: true,
   });
-
-  $effect(() => {
-    if (isSpinning) {
-      timer.start();
-    } else {
-      timer.stop();
-    }
-  });
-  $timer;
 </script>
 
 <h1>Examples</h1>
@@ -60,18 +51,8 @@
   <div class="mb-2 flex gap-6">
     <Field label="Spin:" dense labelPlacement="left" let:id>
       <ButtonGroup size="sm" variant="fill-light">
-        <Button
-          on:click={() => {
-            isSpinning = true;
-          }}
-          disabled={isSpinning}>Start</Button
-        >
-        <Button
-          on:click={() => {
-            isSpinning = false;
-          }}
-          disabled={!isSpinning}>Stop</Button
-        >
+        <Button on:click={timer.start} disabled={timer.running}>Start</Button>
+        <Button on:click={timer.stop} disabled={!timer.running}>Stop</Button>
       </ButtonGroup>
     </Field>
 
@@ -80,7 +61,7 @@
       bind:value={velocity}
       min={-10}
       max={10}
-      disabled={!isSpinning}
+      disabled={!timer.running}
       labelPlacement="left"
     />
   </div>
@@ -94,13 +75,7 @@
         fitGeojson: countries,
         applyTransform: ['rotate'],
       }}
-      ondragstart={() => timer.stop()}
-      ondragend={() => {
-        if (isSpinning) {
-          // Restart
-          timer.start();
-        }
-      }}
+      ondragstart={timer.stop}
       bind:context
     >
       {#snippet children({ context })}

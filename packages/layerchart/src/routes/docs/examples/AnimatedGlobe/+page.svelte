@@ -10,7 +10,7 @@
   import { sortFunc } from '@layerstack/utils';
   import { scrollIntoView } from '@layerstack/svelte-actions';
   import { cls } from '@layerstack/tailwind';
-  import { timerStore } from '@layerstack/svelte-stores';
+  import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
@@ -59,7 +59,10 @@
   let isPlaying = $state(false);
 
   $effect(() => {
-    if (isPlaying && ($audioCurrentTime ?? 0) >= countryTimings[currentIndex + 1]?.audioTime) {
+    if (
+      isPlaying &&
+      (audioCurrentTime.current ?? 0) >= countryTimings[currentIndex + 1]?.audioTime
+    ) {
       const countryName = countryTimings[currentIndex + 1].country;
       selectedFeature = countryFeaturesByName.get(countryName) ?? null;
       currentIndex += 1;
@@ -69,7 +72,7 @@
   const audioFile = new Audio('/audio/yakko_world.mp3');
   audioFile.addEventListener('ended', () => stop());
 
-  const audioCurrentTime = timerStore({
+  const audioCurrentTime = new TimerState({
     initial: 0,
     delay: 100,
     onTick: () => audioFile.currentTime,
