@@ -32,9 +32,6 @@ importers:
       '@layerstack/svelte-state':
         specifier: 0.1.0-next.4
         version: 0.1.0-next.4
-      '@layerstack/svelte-stores':
-        specifier: 1.0.2-next.2
-        version: 1.0.2-next.2
       '@layerstack/tailwind':
         specifier: 2.0.0-next.4
         version: 2.0.0-next.4
@@ -750,9 +747,6 @@ packages:
 
   '@layerstack/svelte-stores@1.0.2-next.0':
     resolution: {integrity: sha512-YynMtI8AkReKw10ZzzG9jr7a9usKEHZR8SFvDDxV+D/bZS0iWE0/fxfRZN6FE44qcsEZ68gfEfEGKvEHjH/8aA==}
-
-  '@layerstack/svelte-stores@1.0.2-next.2':
-    resolution: {integrity: sha512-YC1eEwtRAG+1ek+xdkfHCVoUPrhnVbJM+M4xTzoD4JuIf45GTUtwXop9MARYVX2G3ZlUUw1TdbjmHpfbzVLI9g==}
 
   '@layerstack/svelte-table@1.0.1-next.0':
     resolution: {integrity: sha512-ykoibfHRfMz7LPXy8+xOvF8p793wvh7mcPwaS+QxphG3j5oGqMAkRNyP/UUubZnmPS/ye5T9Xp5IB1hBaWNrPw==}
@@ -3229,15 +3223,6 @@ snapshots:
   '@layerstack/svelte-stores@1.0.2-next.0':
     dependencies:
       '@layerstack/utils': 1.1.0-next.0
-      d3-array: 3.2.4
-      date-fns: 4.1.0
-      immer: 10.1.1
-      lodash-es: 4.17.21
-      zod: 3.24.4
-
-  '@layerstack/svelte-stores@1.0.2-next.2':
-    dependencies:
-      '@layerstack/utils': 1.1.0-next.2
       d3-array: 3.2.4
       date-fns: 4.1.0
       immer: 10.1.1
