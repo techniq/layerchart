@@ -8,6 +8,7 @@
     AppBar,
     AppLayout,
     Button,
+    Icon,
     MenuButton,
     QuickSearch,
     ThemeSelect,
@@ -124,14 +125,23 @@
   {/if}
 </svelte:head>
 
-<AppLayout>
+<div
+  class="fixed top-0 left-0 w-full h-8 bg-primary-700 flex gap-2 items-center justify-center text-sm font-medium z-50"
+>
+  LayerChart for Svelte 5 has been released! -
+  <a href="https://next.layerchart.com" class="underline-offset-2 hover:underline">
+    Visit the preview docs <Icon data={mdiArrowTopRight} class="text-xs mt-[-2px]" />
+  </a>
+</div>
+
+<AppLayout classes={{ aside: 'pt-8' }}>
   <svelte:fragment slot="nav">
     <NavMenu />
     <!-- Spacer -->
     <div class="h-4"></div>
   </svelte:fragment>
 
-  <AppBar title="LayerChart">
+  <AppBar title="LayerChart" class="mt-8">
     <div slot="actions" class="flex gap-3">
       <Button
         href="https://svelte-ux.techniq.dev"
@@ -216,7 +226,7 @@
     </div>
   </AppBar>
 
-  <main class="isolate" bind:this={mainEl}>
+  <main class="isolate pt-8" bind:this={mainEl}>
     <slot />
   </main>
 </AppLayout>
