@@ -5,10 +5,13 @@
 
   import Code from './Code.svelte';
 
-  export let label: string;
-  export let source: string | undefined = undefined;
-  export let href: string | undefined = undefined;
-  export let icon: ComponentProps<Button>['icon'];
+  const {
+    label,
+    source,
+    href,
+    icon,
+  }: { label: string; source?: string; href?: string; icon: ComponentProps<Button>['icon'] } =
+    $props();
 </script>
 
 {#if source}
@@ -17,7 +20,7 @@
     <Dialog
       {open}
       on:close={toggleOff}
-      class="max-h-[98dvh] md:max-h-[90dvh] max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto,1fr,auto]"
+      class="max-h-[98dvh] md:max-h-[90dvh] max-w-[98vw] md:max-w-[90vw] grid grid-rows-[auto_1fr_auto]"
     >
       <div class="grid grid-cols-[1fr_auto] gap-3 items-center p-4">
         <div class="overflow-auto">

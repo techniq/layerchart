@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
   // Custom components: https://mdsvex.com/docs#custom-components
   import blockquote from './Blockquote.svelte';
   import a from './Link.svelte';
@@ -8,11 +8,14 @@
 </script>
 
 <script lang="ts">
-  // frontmatter: https://mdsvex.com/docs#frontmatter-1
-  // export let name = undefined;
-  // export let sourceUrl = undefined;
-  // export let docUrl = undefined;
-  // export let description = undefined;
+  let {
+    // frontmatter: https://mdsvex.com/docs#frontmatter-1
+    // name,
+    // sourceUrl,
+    // docUrl,
+    // description,
+    children,
+  } = $props();
 </script>
 
-<slot />
+{@render children()}

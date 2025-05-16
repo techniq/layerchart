@@ -1,35 +1,98 @@
-<script context="module" lang="ts">
+<script lang="ts" module>
+  import type { Without } from '$lib/utils/types.js';
+
   let tileCache = new Map<string, Promise<string>>();
+
+  export type TileImagePropsWithoutHTML = {
+    /**
+     * x position of the tile
+     */
+    x: number;
+    /**
+     * y position of the tile
+     */
+    y: number;
+
+    /**
+     * z position of the tile
+     */
+    z: number;
+
+    /**
+     * translate x
+     */
+    tx: number;
+
+    /**
+   * translate y
+
+   */
+    ty: number;
+
+    /**
+     * scale of the tile
+     */
+    scale: number;
+
+    /**
+     * Whether to disable cache
+     *
+     * @default false
+     */
+    disableCache?: boolean;
+
+    /**
+     * Whether to enable debug mode
+     *
+     * @default false
+     */
+    debug?: boolean;
+
+    /**
+     * URL function to get the tile image
+     */
+    url: (x: number, y: number, z: number) => string;
+  };
+
+  export type TileImageProps = TileImagePropsWithoutHTML &
+    Omit<Without<SVGAttributes<SVGImageElement>, TileImagePropsWithoutHTML>, 'href'>;
 </script>
 
 <script lang="ts">
+  import { extractLayerProps } from '$lib/utils/attributes.js';
+
   import Text from './Text.svelte';
+  import type { SVGAttributes } from 'svelte/elements';
+  import { onMount } from 'svelte';
 
-  export let x: number;
-  export let y: number;
-  export let z: number;
-  /** translate x */
-  export let tx: number;
-  /** translate y */
-  export let ty: number;
-  export let scale: number;
-
-  export let disableCache = false;
-  export let debug = false;
-
-  export let url: (x: number, y: number, z: number) => string;
+  let {
+    x,
+    y,
+    z,
+    tx,
+    ty,
+    scale,
+    disableCache = false,
+    debug = false,
+    url,
+    ...restProps
+  }: TileImageProps = $props();
 
   // if disable cache, set href immediately, otherwise set from cache / dataUri
-  let href = disableCache ? url(x, y, z) : '';
+  let href = $state(disableCache ? url(x, y, z) : '');
+
   function loadImage(url: string) {
     // const key = [x, y, z].join('-');
     const key = url;
 
     if (tileCache.has(key)) {
-      tileCache.get(key)?.then((dataUri) => {
-        // console.log('from cache', { x, y, z });
-        href = dataUri;
-      });
+      tileCache
+        .get(key)
+        ?.then((dataUri) => {
+          // console.log('from cache', { x, y, z });
+          href = dataUri;
+        })
+        .catch(() => {});
     } else {
       const promise = new Promise<string>((resolve, reject) => {
         const img = new Image();
@@ -58,21 +121,31 @@
     }
   }
 
-  $: if (!disableCache) {
-    // load using cache
+  $effect(() => {
+    if (disableCache) return;
     loadImage(url(x, y, z));
-  }
+  });
 </script>
 
 <!-- To avoid aliasing artifacts (thin white lines) between tiles, two layers of tiles are drawn, with the lower layer’s tiles enlarged by one pixel -->
-<image
-  xlink:href={href}
-  x={(x + tx) * scale - 0.5}
-  y={(y + ty) * scale - 0.5}
-  width={scale + 1}
-  height={scale + 1}
-/>
-<image xlink:href={href} x={(x + tx) * scale} y={(y + ty) * scale} width={scale} height={scale} />
+{#key href}
+  <image
+    {href}
+    x={(x + tx) * scale - 0.5}
+    y={(y + ty) * scale - 0.5}
+    width={scale + 1}
+    height={scale + 1}
+    {...extractLayerProps(restProps, 'tile-image-lower')}
+  />
+  <image
+    {href}
+    x={(x + tx) * scale}
+    y={(y + ty) * scale}
+    width={scale}
+    height={scale}
+    {...extractLayerProps(restProps, 'tile-image')}
+  />
+{/key}
 {#if debug}
   <rect
     x={(x + tx) * scale}

@@ -32,7 +32,7 @@
 <h2>Basic</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x={['startDate', 'endDate']}
@@ -42,33 +42,37 @@
       padding={{ left: 36, bottom: 36 }}
       tooltip={{ mode: 'band' }}
     >
-      <Svg>
-        <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.TimeOnly, { custom: 'h:mm aa' })}
-        />
-        <Points class="fill-primary-100 stroke-primary" links={{ class: 'stroke-primary' }} />
-        <Highlight area />
-        <Highlight points lines axis="x" />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.name}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item
-            label="start"
-            value={format(data.startDate, PeriodType.TimeOnly, { variant: 'short' })}
+      {#snippet children({ context })}
+        <Svg>
+          <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
+          <Axis
+            placement="bottom"
+            format={(d) => format(d, PeriodType.TimeOnly, { custom: 'h:mm aa' })}
           />
-          <Tooltip.Item
-            label="end"
-            value={format(data.endDate, PeriodType.TimeOnly, { variant: 'short' })}
-          />
-          <Tooltip.Separator />
-          <Tooltip.Item label="duration" valueAlign="right">
-            <Duration start={data.startDate} end={data.endDate} totalUnits={2} />
-          </Tooltip.Item>
-        </Tooltip.List>
-      </Tooltip.Root>
+          <Points class="fill-primary-100 stroke-primary" links={{ class: 'stroke-primary' }} />
+          <Highlight area />
+          <Highlight points lines axis="x" />
+        </Svg>
+        <Tooltip.Root {context}>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.name}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item
+                label="start"
+                value={format(data.startDate, PeriodType.TimeOnly, { variant: 'short' })}
+              />
+              <Tooltip.Item
+                label="end"
+                value={format(data.endDate, PeriodType.TimeOnly, { variant: 'short' })}
+              />
+              <Tooltip.Separator />
+              <Tooltip.Item label="duration" valueAlign="right">
+                <Duration start={data.startDate} end={data.endDate} totalUnits={2} />
+              </Tooltip.Item>
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -76,7 +80,7 @@
 <h2>Colors</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x={['startDate', 'endDate']}
@@ -84,10 +88,10 @@
       y="name"
       c="name"
       cRange={[
-        'hsl(var(--color-danger))',
-        'hsl(var(--color-warning))',
-        'hsl(var(--color-success))',
-        'hsl(var(--color-info))',
+        'var(--color-danger)',
+        'var(--color-warning)',
+        'var(--color-success)',
+        'var(--color-info)',
       ]}
       yScale={scaleBand()}
       padding={{ left: 36, bottom: 36 }}
@@ -103,22 +107,24 @@
         <Highlight area />
         <Highlight points lines axis="x" />
       </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{data.name}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item
-            label="start"
-            value={format(data.startDate, PeriodType.TimeOnly, { variant: 'short' })}
-          />
-          <Tooltip.Item
-            label="end"
-            value={format(data.endDate, PeriodType.TimeOnly, { variant: 'short' })}
-          />
-          <Tooltip.Separator />
-          <Tooltip.Item label="duration" valueAlign="right">
-            <Duration start={data.startDate} end={data.endDate} totalUnits={2} />
-          </Tooltip.Item>
-        </Tooltip.List>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header>{data.name}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item
+              label="start"
+              value={format(data.startDate, PeriodType.TimeOnly, { variant: 'short' })}
+            />
+            <Tooltip.Item
+              label="end"
+              value={format(data.endDate, PeriodType.TimeOnly, { variant: 'short' })}
+            />
+            <Tooltip.Separator />
+            <Tooltip.Item label="duration" valueAlign="right">
+              <Duration start={data.startDate} end={data.endDate} totalUnits={2} />
+            </Tooltip.Item>
+          </Tooltip.List>
+        {/snippet}
       </Tooltip.Root>
     </Chart>
   </div>

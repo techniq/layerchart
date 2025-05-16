@@ -1,75 +1,126 @@
+<script lang="ts" module>
+  import type { ComponentProps, Snippet } from 'svelte';
+
+  export type GeoTilePropsWithoutHTML = {
+    url: (x: number, y: number, z: number) => string;
+    /**
+     * The zoom delta for the tile.
+     *
+     * @default 0
+     */
+    zoomDelta?: number;
+
+    /**
+     * The tile size for the tile.
+     *
+     * @default 256
+     */
+    tileSize?: number;
+
+    /**
+     * Whether to disable the cache for the tile.
+     *
+     * @default false
+     */
+    disableCache?: boolean;
+
+    /**
+     * Additional props to apply to the `Group` component.
+     */
+    group?: Partial<ComponentProps<typeof Group>>;
+
+    /**
+     * Whether to enable debug mode for the tile.
+     *
+     * @default false
+     */
+    debug?: boolean;
+
+    children?: Snippet<[{ tiles: any[] }]>;
+  };
+</script>
+
 <script lang="ts">
-  import { onDestroy } from 'svelte';
   // @ts-expect-error
   import { tile as d3Tile } from 'd3-tile';
 
-  import { getRenderContext } from './Chart.svelte';
-  import { chartContext } from './ChartContext.svelte';
-  import { getCanvasContext } from './layout/Canvas.svelte';
-  import { geoContext } from './GeoContext.svelte';
+  import { getRenderContext, getChartContext } from './Chart.svelte';
+  import { registerCanvasComponent } from './layout/Canvas.svelte';
   import Group from './Group.svelte';
   import TileImage from './TileImage.svelte';
+  import { getGeoContext } from './GeoContext.svelte';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
-  export let url: (x: number, y: number, z: number) => string;
-  export let zoomDelta = 0;
-  export let tileSize = 256;
-  export let disableCache = false;
-  export let debug = false;
+  let {
+    url,
+    zoomDelta = 0,
+    tileSize = 256,
+    disableCache = false,
+    debug = false,
+    group,
+    children,
+  }: GeoTilePropsWithoutHTML = $props();
 
-  const { containerWidth, containerHeight, padding } = chartContext();
-  const geo = geoContext();
+  const ctx = getChartContext();
+  const geoCtx = getGeoContext();
+  const renderCtx = getRenderContext();
 
-  $: center = $geo([0, 0]) ?? [0, 0];
+  const center = $derived(geoCtx.projection?.([0, 0]) ?? [0, 0]);
 
-  $: tile = d3Tile()
-    .size([$containerWidth, $containerHeight])
-    .translate([center[0] + $padding.left, center[1] + $padding.top])
-    .scale($geo.scale() * 2 * Math.PI)
-    .tileSize(tileSize)
-    .zoomDelta(zoomDelta);
+  const tiles = $derived(
+    d3Tile()
+      .size([ctx.containerWidth, ctx.containerHeight])
+      .translate([center[0] + ctx.padding.left, center[1] + ctx.padding.top])
+      // TODO: is this fine to add the 0 as a default?
+      .scale(geoCtx.projection ? geoCtx.projection.scale() * 2 * Math.PI : undefined)
+      .tileSize(tileSize)
+      .zoomDelta(zoomDelta)()
+  );
 
-  $: tiles = tile();
-  $: ({
-    translate: [tx, ty],
-    scale,
-  } = tiles);
-
-  const renderContext = getRenderContext();
-  const canvasContext = getCanvasContext();
+  const translate = $derived(tiles.translate);
+  const scale = $derived(tiles.scale);
 
   function render(ctx: CanvasRenderingContext2D) {
-    tiles.forEach(([x, y, z]: number[]) => {
+    for (const [x, y, z] of tiles) {
       const image = new Image();
       image.onload = () => {
-        ctx.drawImage(image, (x + tx) * scale, (y + ty) * scale, scale, scale);
+        ctx.drawImage(image, (x + translate[0]) * scale, (y + translate[1]) * scale, scale, scale);
       };
       image.src = url(x, y, z);
+    }
+  }
+
+  if (renderCtx === 'canvas') {
+    registerCanvasComponent({
+      name: 'GeoTile',
+      render,
+      deps: () => [tiles],
     });
   }
-
-  $: if (renderContext === 'canvas') {
-    tile;
-    canvasContext.invalidate();
-  }
-
-  let canvasUnregister: ReturnType<typeof canvasContext.register>;
-  $: if (renderContext === 'canvas') {
-    canvasUnregister = canvasContext.register({ name: 'GeoTile', render });
-  }
-
-  onDestroy(() => {
-    if (renderContext === 'canvas') {
-      canvasUnregister();
-    }
-  });
 </script>
 
-{#if renderContext === 'svg' && url}
-  <slot {tiles}>
-    <Group x={-$padding.left} y={-$padding.top}>
+{#if renderCtx === 'svg' && url}
+  {#if children}
+    {@render children({ tiles })}
+  {:else}
+    <Group
+      x={-ctx.padding.left}
+      y={-ctx.padding.top}
+      {...extractLayerProps(group, 'geo-tile-group')}
+    >
       {#each tiles as [x, y, z] (url(x, y, z))}
-        <TileImage {url} {x} {y} {z} {tx} {ty} {scale} {disableCache} {debug} />
+        <TileImage
+          {url}
+          {x}
+          {y}
+          {z}
+          tx={translate[0]}
+          ty={translate[1]}
+          {scale}
+          {disableCache}
+          {debug}
+        />
       {/each}
     </Group>
-  </slot>
+  {/if}
 {/if}

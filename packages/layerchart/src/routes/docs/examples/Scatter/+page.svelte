@@ -21,7 +21,7 @@
 <h2>Basic</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -47,7 +47,7 @@
 <h2>With Tooltip and Highlight</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -69,11 +69,13 @@
         <Highlight points lines />
       </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
-        </Tooltip.List>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} />
+          </Tooltip.List>
+        {/snippet}
       </Tooltip.Root>
     </Chart>
   </div>
@@ -82,7 +84,7 @@
 <h2>With Labels</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -111,7 +113,7 @@
 <h3>red (0-49), yellow (50-89), green (90+)</h3>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -122,11 +124,7 @@
       c="value"
       cScale={scaleThreshold()}
       cDomain={[50, 90]}
-      cRange={[
-        'hsl(var(--color-danger))',
-        'hsl(var(--color-warning))',
-        'hsl(var(--color-success))',
-      ]}
+      cRange={['var(--color-danger)', 'var(--color-warning)', 'var(--color-success)']}
       padding={{ left: 16, bottom: 24 }}
     >
       <Svg>

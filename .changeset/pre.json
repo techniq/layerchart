@@ -1,0 +1,43 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "layerchart": "1.0.7"
+  },
+  "changesets": [
+    "beige-bears-joke",
+    "big-boxes-shout",
+    "blue-doodles-chew",
+    "calm-jars-mix",
+    "chatty-flies-bet",
+    "chatty-shirts-rule",
+    "easy-candies-wait",
+    "eighty-islands-jam",
+    "evil-flowers-float",
+    "giant-donuts-yell",
+    "green-mirrors-retire",
+    "legal-parrots-beam",
+    "odd-pears-float",
+    "pink-showers-hunt",
+    "polite-parts-learn",
+    "public-queens-invite",
+    "quiet-insects-share",
+    "quiet-mangos-kneel",
+    "rare-olives-change",
+    "real-badgers-say",
+    "red-monkeys-sleep",
+    "rich-keys-take",
+    "shaggy-dryers-make",
+    "shaky-animals-wave",
+    "smart-paths-jog",
+    "some-frogs-camp",
+    "sour-hounds-repeat",
+    "swift-gifts-flow",
+    "tall-poems-take",
+    "thirty-glasses-pick",
+    "true-waves-roll",
+    "violet-horses-walk",
+    "witty-clocks-divide",
+    "young-bobcats-yawn"
+  ]
+}

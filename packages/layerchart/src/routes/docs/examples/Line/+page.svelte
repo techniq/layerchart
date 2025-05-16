@@ -4,11 +4,13 @@
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { format } from 'date-fns';
   import { formatDate, PeriodType } from '@layerstack/utils';
+  import { cls } from '@layerstack/tailwind';
 
   import {
     Axis,
     Canvas,
     Chart,
+    Circle,
     Highlight,
     Labels,
     Legend,
@@ -24,9 +26,9 @@
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
 
-  export let data;
+  let { data } = $props();
 
-  const temperatureData = data.dailyTemperature;
+  const temperatureData = $derived(data.dailyTemperature);
 
   const dateSeriesData = createDateSeries({ count: 30, min: 50, max: 100, value: 'integer' });
 
@@ -42,14 +44,13 @@
   const dataByFruit = flatGroup(multiSeriesFlatData, (d) => d.fruit);
 
   const fruitColors = {
-    apples: 'hsl(var(--color-info))',
-    bananas: 'hsl(var(--color-success))',
-    oranges: 'hsl(var(--color-warning))',
+    apples: 'var(--color-info)',
+    bananas: 'var(--color-success)',
+    oranges: 'var(--color-warning)',
   };
 
-  const temperatureColor = scaleSequential(
-    extent(temperatureData, (d) => d.value) as [number, number],
-    interpolateTurbo
+  const temperatureColor = $derived(
+    scaleSequential(extent(temperatureData, (d) => d.value) as [number, number], interpolateTurbo)
   );
 </script>
 
@@ -62,7 +63,7 @@
 <h2>Basic</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -88,7 +89,7 @@
 <h2>Canvas</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -116,7 +117,7 @@
 <h2>With Tooltip and Highlight</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -138,11 +139,13 @@
         <Highlight points lines />
       </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label="value" value={data.value} />
-        </Tooltip.List>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="value" value={data.value} />
+          </Tooltip.List>
+        {/snippet}
       </Tooltip.Root>
     </Chart>
   </div>
@@ -151,7 +154,7 @@
 <h2>With Labels</h2>
 
 <Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={dateSeriesData}
       x="date"
@@ -178,7 +181,7 @@
 <h2>Gradient encoding</h2>
 
 <Preview data={temperatureData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={temperatureData}
       x="date"
@@ -194,12 +197,10 @@
           format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
           rule
         />
-        <LinearGradient
-          stops={ticks(1, 0, 10).map(temperatureColor.interpolator())}
-          vertical
-          let:gradient
-        >
-          <Spline class="stroke-2" stroke={gradient} />
+        <LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>
+          {#snippet children({ gradient })}
+            <Spline class="stroke-2" stroke={gradient} />
+          {/snippet}
         </LinearGradient>
       </Svg>
       <Legend
@@ -216,7 +217,7 @@
 <h2>Gradient threshold</h2>
 
 <Preview data={temperatureData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={temperatureData}
       x="date"
@@ -224,30 +225,31 @@
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
-      let:yScale
-      let:height
-      let:padding
     >
-      {@const thresholdOffset = (yScale(50) / (height + padding.bottom)) * 100 + '%'}
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        <LinearGradient
-          stops={[
-            [thresholdOffset, 'hsl(var(--color-info))'],
-            [thresholdOffset, 'hsl(var(--color-danger))'],
-          ]}
-          units="userSpaceOnUse"
-          vertical
-          let:gradient
-        >
-          <Spline class="stroke-2" stroke={gradient} />
-        </LinearGradient>
-      </Svg>
+      {#snippet children({ context })}
+        {@const thresholdOffset =
+          (context.yScale(50) / (context.height + context.padding.bottom)) * 100 + '%'}
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis
+            placement="bottom"
+            format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
+          <LinearGradient
+            stops={[
+              [thresholdOffset, 'var(--color-info)'],
+              [thresholdOffset, 'var(--color-danger)'],
+            ]}
+            units="userSpaceOnUse"
+            vertical
+          >
+            {#snippet children({ gradient })}
+              <Spline class="stroke-2" stroke={gradient} />
+            {/snippet}
+          </LinearGradient>
+        </Svg>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -255,7 +257,7 @@
 <h2>Multiple series</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"
@@ -269,40 +271,43 @@
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
       tooltip={{ mode: 'voronoi' }}
-      let:cScale
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        {#each dataByFruit as [fruit, data]}
-          {@const color = cScale?.(fruit)}
-          <Spline {data} class="stroke-2" stroke={color}>
-            <svelte:fragment slot="end">
-              <circle r={4} fill={color} />
-              <Text
-                value={fruit}
-                verticalAnchor="middle"
-                dx={6}
-                dy={-2}
-                class="text-xs"
-                fill={color}
-              />
-            </svelte:fragment>
-          </Spline>
-        {/each}
-        <Highlight points lines />
-      </Svg>
+      {#snippet children({ context })}
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis
+            placement="bottom"
+            format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
+          {#each dataByFruit as [fruit, data]}
+            {@const color = context.cScale?.(fruit)}
+            <Spline {data} class="stroke-2" stroke={color}>
+              {#snippet endContent()}
+                <Circle r={4} fill={color} />
+                <Text
+                  value={fruit}
+                  verticalAnchor="middle"
+                  dx={6}
+                  dy={-2}
+                  class="text-xs"
+                  fill={color}
+                />
+              {/snippet}
+            </Spline>
+          {/each}
+          <Highlight points lines />
+        </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label={data.fruit} value={data.value} />
-        </Tooltip.List>
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label={data.fruit} value={data.value} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -310,7 +315,7 @@
 <h2>Multiple series (using overrides)</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={Array.from({ length: 90 }).map((_, i) => ({
         x: i,
@@ -338,11 +343,13 @@
         <Highlight lines />
       </Svg>
 
-      <Tooltip.Root let:data>
-        <Tooltip.List>
-          <Tooltip.Item label="bananas" value={data.y} />
-          <Tooltip.Item label="oranges" value={data.y1} />
-        </Tooltip.List>
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.List>
+            <Tooltip.Item label="bananas" value={data.y} />
+            <Tooltip.Item label="oranges" value={data.y1} />
+          </Tooltip.List>
+        {/snippet}
       </Tooltip.Root>
     </Chart>
   </div>
@@ -351,7 +358,7 @@
 <h2>Multiple series (highlight on hover)</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"
@@ -365,43 +372,43 @@
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
       tooltip={{ mode: 'voronoi' }}
-      let:tooltip
-      let:cScale
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        {#each dataByFruit as [fruit, data]}
-          {@const color =
-            tooltip.data == null || tooltip.data.fruit === fruit
-              ? cScale?.(fruit)
-              : 'hsl(var(--color-surface-content) / 20%)'}
-          <Spline {data} class="stroke-2" stroke={color}>
-            <svelte:fragment slot="end">
-              <circle r={4} fill={color} />
-              <Text
-                value={fruit}
-                verticalAnchor="middle"
-                dx={6}
-                dy={-2}
-                class="text-xs"
-                fill={color}
-              />
-            </svelte:fragment>
-          </Spline>
-        {/each}
-        <Highlight points lines />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label={data.fruit} value={data.value} />
-        </Tooltip.List>
-      </Tooltip.Root>
+      {#snippet children({ context })}
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis
+            placement="bottom"
+            format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
+          {#each dataByFruit as [fruit, data]}
+            {@const active = context.tooltip.data == null || context.tooltip.data.fruit === fruit}
+            {@const color = context.cScale?.(fruit)}
+            <g class={cls(!active && 'opacity-20 saturate-0')}>
+              <Spline {data} class="stroke-2" stroke={color}>
+                {#snippet endContent()}
+                  <Circle r={4} fill={color} />
+                  <Text
+                    value={fruit}
+                    verticalAnchor="middle"
+                    dx={6}
+                    dy={-2}
+                    class="text-xs"
+                    fill={color}
+                  />
+                {/snippet}
+              </Spline>
+            </g>
+          {/each}
+          <Highlight points lines />
+        </Svg>
+        <Tooltip.Root>
+          <Tooltip.Header>{format(context.tooltip.data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label={context.tooltip.data.fruit} value={context.tooltip.data.value} />
+          </Tooltip.List>
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -409,7 +416,7 @@
 <h2>Multiple series with labels</h2>
 
 <Preview data={multiSeriesFlatData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={multiSeriesFlatData}
       x="date"
@@ -423,28 +430,31 @@
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'voronoi' }}
-      let:cScale
     >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
-        {#each dataByFruit as [fruit, data]}
-          {@const color = cScale?.(fruit)}
-          <Spline {data} class="stroke-2" stroke={color} />
-        {/each}
-        <Labels format="integer" />
-        <Highlight points lines />
-      </Svg>
-      <Tooltip.Root let:data>
-        <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
-        <Tooltip.List>
-          <Tooltip.Item label={data.fruit} value={data.value} />
-        </Tooltip.List>
-      </Tooltip.Root>
+      {#snippet children({ context })}
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis
+            placement="bottom"
+            format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
+            rule
+          />
+          {#each dataByFruit as [fruit, data]}
+            {@const color = context.cScale?.(fruit)}
+            <Spline {data} class="stroke-2" stroke={color} />
+          {/each}
+          <Labels format="integer" />
+          <Highlight points lines />
+        </Svg>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label={data.fruit} value={data.value} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

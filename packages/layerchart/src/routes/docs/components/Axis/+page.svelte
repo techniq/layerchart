@@ -4,7 +4,7 @@
   import { timeDay } from 'd3-time';
   import { Field, Switch } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
-  import { mdScreen } from '@layerstack/svelte-stores';
+  import { MediaQueryPresets } from '@layerstack/svelte-state';
 
   import { Axis, Chart, Svg, Frame, Rule, Text, Grid } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
@@ -15,10 +15,8 @@
   const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
   const largeData = createDateSeries({ count: 100, min: 50, max: 100, value: 'integer' });
 
-  // Added to make svelte-check happy
-  const isNotZero = (v: any) => v !== 0;
-
-  let debug = false;
+  let debug = $state(false);
+  const { mdScreen } = new MediaQueryPresets();
 </script>
 
 <h1>Examples</h1>
@@ -26,7 +24,7 @@
 <h2>left / bottom placement</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -47,7 +45,7 @@
 <h2>top / right placement</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -68,7 +66,7 @@
 <h2>rule (left/bottom placement)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -89,7 +87,7 @@
 <h2>rule (top/right placement)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -110,7 +108,7 @@
 <h2>grid</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -131,7 +129,7 @@
 <h2>dashed grid lines</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -152,7 +150,7 @@
 <h2>multiple axis grids with single rule</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -175,7 +173,7 @@
 <h2>multiple axis grids and rules</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -199,7 +197,7 @@
 <h2>multiple axis grids and rules (separate grid)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -221,7 +219,7 @@
 <h2>Arrow markers</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -242,7 +240,7 @@
 <h2>tick label styling</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -271,7 +269,7 @@
 <h2>rotated tick labels and styling</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -300,7 +298,7 @@
 <h2>Remove ticks hashes</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -321,7 +319,7 @@
 <h2>show only first/last ticks with alignment</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -338,9 +336,9 @@
           ticks={(scale) => scale.domain()}
           format={(d) => format(d, PeriodType.Day, { variant: 'long' })}
         >
-          <svelte:fragment slot="tickLabel" let:labelProps let:index>
-            <Text {...labelProps} textAnchor={index === 0 ? 'start' : 'end'} />
-          </svelte:fragment>
+          {#snippet tickLabel({ props, index })}
+            <Text {...props} textAnchor={index === 0 ? 'start' : 'end'} />
+          {/snippet}
         </Axis>
         <Axis placement="left" rule ticks={(scale) => scale.domain()} />
       </Svg>
@@ -351,7 +349,7 @@
 <h2>integer-only ticks</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -377,7 +375,7 @@
 <h2>explicit ticks</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -398,7 +396,7 @@
 <h2>Inject tick value</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -410,7 +408,7 @@
     >
       <Svg>
         <Axis placement="bottom" rule />
-        <Axis placement="left" rule ticks={(scale) => [45, ...scale.ticks?.()]} />
+        <Axis placement="left" rule ticks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />
       </Svg>
     </Chart>
   </div>
@@ -419,7 +417,7 @@
 <h2>tick count</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -440,7 +438,7 @@
 <h2>tick count (responsive)</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -451,7 +449,7 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <Axis placement="bottom" rule ticks={$mdScreen ? 10 : 5} />
+        <Axis placement="bottom" rule ticks={mdScreen.current ? 10 : 5} />
         <Axis placement="left" rule />
       </Svg>
     </Chart>
@@ -461,7 +459,7 @@
 <h2>tick time interval</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -482,7 +480,7 @@
 <h2>remove default tick count</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -503,7 +501,7 @@
 <h2>label next to hash</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -530,7 +528,7 @@
 <h2>Hide `0` tick via ticks</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -542,7 +540,7 @@
     >
       <Svg>
         <Axis placement="bottom" rule />
-        <Axis placement="left" rule ticks={(scale) => scale.ticks?.().filter(isNotZero)} />
+        <Axis placement="left" rule ticks={(scale) => scale.ticks?.().filter((d) => d !== 0)} />
       </Svg>
     </Chart>
   </div>
@@ -551,7 +549,7 @@
 <h2>Hide `0` tick via format</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -572,7 +570,7 @@
 <h2>Override axis ticks with custom scale</h2>
 
 <Preview data={largeData}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={largeData}
       x="date"
@@ -606,7 +604,7 @@
 </div>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -645,7 +643,7 @@
 </div>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -684,7 +682,7 @@
 </div>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"
@@ -693,31 +691,32 @@
       yDomain={[0, 100]}
       yNice
       padding={{ right: 90 }}
-      let:height
     >
-      <Svg>
-        {#if debug}
-          <Frame class="fill-danger/5" />
-          <Frame class="fill-danger/5" full />
-        {/if}
+      {#snippet children({ context })}
+        <Svg>
+          {#if debug}
+            <Frame class="fill-danger/5" />
+            <Frame class="fill-danger/5" full />
+          {/if}
 
-        <Axis
-          label="Celsius"
-          scale={scaleLinear([0, 100], [height, 0])}
-          placement="right"
-          rule
-          labelProps={{ dx: -60 }}
-        />
-        <Axis
-          label="Fahrenheit"
-          scale={scaleLinear([32, 212], [height, 0])}
-          ticks={range(0, 100 + 1, 10).map((x) => x * (9 / 5) + 32)}
-          placement="right"
-          rule
-          class="translate-x-[50px]"
-          labelProps={{ dx: -50 }}
-        />
-      </Svg>
+          <Axis
+            label="Celsius"
+            scale={scaleLinear([0, 100], [context.height, 0])}
+            placement="right"
+            rule
+            labelProps={{ dx: -60 }}
+          />
+          <Axis
+            label="Fahrenheit"
+            scale={scaleLinear([32, 212], [context.height, 0])}
+            ticks={range(0, 100 + 1, 10).map((x) => x * (9 / 5) + 32)}
+            placement="right"
+            rule
+            class="translate-x-[50px]"
+            labelProps={{ dx: -50 }}
+          />
+        </Svg>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -725,7 +724,7 @@
 <h2>radial rule</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
       <Svg center>
         <Axis placement="radius" rule />
@@ -738,7 +737,7 @@
 <h2>radial grid</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
       <Svg center>
         <Axis placement="radius" grid />
@@ -751,7 +750,7 @@
 <h2>Log scale</h2>
 
 <Preview {data}>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       {data}
       x="date"

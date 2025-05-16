@@ -95,3 +95,126 @@ function getPixel(imageData: ImageData, x: number, y: number) {
   var d = imageData.data;
   return [d[i], d[i + 1], d[i + 2], d[i + 3]];
 }
+
+export function toTitleCase(str: string) {
+  return str.replace(/^\w/, (d) => d.toUpperCase());
+}
+
+const DEFAULT_ELLIPSIS = '…';
+
+export type TruncateTextOptions = {
+  /**
+   * The maximum pixel width (optional if maxChars is provided).
+   */
+  maxWidth?: number;
+
+  /**
+   * CSS style for width calculation
+   */
+  style?: CSSStyleDeclaration;
+
+  /**
+   * The maximum character count
+   */
+  maxChars?: number;
+
+  /**
+   * Where to place the ellipsis: 'start', 'middle', or 'end'
+   *
+   * @default 'end'
+   */
+  position?: 'start' | 'middle' | 'end';
+
+  /**
+   * The character(s) to use as the ellipsis
+   *
+   * @default '…'
+   */
+  ellipsis?: string;
+};
+
+/**
+ * Truncates a string to fit within a specified pixel width or character count.
+ * If the string's width exceeds the maxWidth, it will be truncated. If the character
+ * count exceeds maxChars, it will also be truncated.
+ *
+ * The ellipsis can be placed at the start, middle, or end of the string.
+ */
+export function truncateText(
+  text: string,
+  { position = 'end', ellipsis = DEFAULT_ELLIPSIS, maxWidth, style, maxChars }: TruncateTextOptions
+): string {
+  if (!text) return '';
+
+  // no constraints, return original text
+  if (maxWidth === undefined && maxChars === undefined) return text;
+
+  // apply maxChars constraint first (if provided)
+  let workingText = text;
+  if (maxChars !== undefined && text.length > maxChars) {
+    if (position === 'start') {
+      workingText = ellipsis + text.slice(-maxChars);
+    } else if (position === 'middle') {
+      const half = Math.floor(maxChars / 2);
+      workingText = text.slice(0, half) + ellipsis + text.slice(-half);
+    } else {
+      workingText = text.slice(0, maxChars) + ellipsis;
+    }
+  }
+
+  // apply maxWidth constraint (if provided)
+  if (maxWidth !== undefined) {
+    const fullWidth = getStringWidth(workingText, style);
+    // if width measurement fails or text fits, return current text
+    if (fullWidth === null || fullWidth <= maxWidth) return workingText;
+
+    const ellipsisWidth = getStringWidth(ellipsis, style) ?? 0;
+    let availableWidth = maxWidth - ellipsisWidth;
+
+    if (position === 'start') {
+      let truncated = workingText.slice(ellipsis.length); // remove initial ellipsis if present
+      let truncatedWidth = getStringWidth(truncated, style);
+      while (truncatedWidth !== null && truncatedWidth > availableWidth && truncated.length > 0) {
+        truncated = truncated.slice(1);
+        truncatedWidth = getStringWidth(truncated, style);
+      }
+      return ellipsis + truncated;
+    } else if (position === 'middle') {
+      const halfWidth = availableWidth / 2;
+      let left = '';
+      let right = '';
+      let bestLeft = '';
+      let bestRight = '';
+
+      for (let i = 0, j = workingText.length - 1; i < workingText.length && j >= 0; i++, j--) {
+        const leftTest = workingText.slice(0, i + 1);
+        const rightTest = workingText.slice(j);
+        const leftWidth = getStringWidth(leftTest, style);
+        const rightWidth = getStringWidth(rightTest, style);
+
+        if (leftWidth !== null && leftWidth <= halfWidth) left = leftTest;
+        if (rightWidth !== null && rightWidth <= halfWidth) right = rightTest;
+
+        const combinedWidth = getStringWidth(left + ellipsis + right, style);
+        if (combinedWidth !== null && combinedWidth <= maxWidth) {
+          bestLeft = left; // longest valid left
+          bestRight = right; // longest valid right
+        } else {
+          // we've exceed maxWidth, so break out
+          break;
+        }
+      }
+      return bestLeft + ellipsis + bestRight;
+    } else {
+      let truncated = workingText.slice(0, -ellipsis.length);
+      let truncatedWidth = getStringWidth(truncated + ellipsis, style);
+      while (truncatedWidth !== null && truncatedWidth > maxWidth && truncated.length > 0) {
+        truncated = truncated.slice(0, -1);
+        truncatedWidth = getStringWidth(truncated + ellipsis, style);
+      }
+      return truncated + ellipsis;
+    }
+  }
+
+  return workingText;
+}

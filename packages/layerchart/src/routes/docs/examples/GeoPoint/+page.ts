@@ -6,7 +6,7 @@ import type { USStateCapitalsData } from '$static/data/examples/geo/us-state-cap
 import type { WorldAirportsData } from '$static/data/examples/geo/world-airports.js';
 import type { WorldCapitalsData } from '$static/data/examples/geo/world-capitals.js';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     us: {
       geojson: (await fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then((r) =>
@@ -17,7 +17,7 @@ export async function load() {
       airports: (await fetch('/data/examples/geo/us-airports.csv').then(async (r) =>
         csvParse(await r.text(), autoType)
       )) as USAirportsData,
-      captitals: (await fetch('/data/examples/geo/us-state-capitals.csv').then(async (r) =>
+      capitals: (await fetch('/data/examples/geo/us-state-capitals.csv').then(async (r) =>
         csvParse(await r.text(), autoType)
       )) as USStateCapitalsData,
     },
@@ -31,7 +31,7 @@ export async function load() {
       airports: (await fetch('/data/examples/geo/world-airports.csv').then(async (r) =>
         csvParse(await r.text(), autoType)
       )) as WorldAirportsData,
-      captitals: (await fetch('/data/examples/geo/world-capitals.json').then(async (r) =>
+      capitals: (await fetch('/data/examples/geo/world-capitals.json').then(async (r) =>
         r.json()
       )) as WorldCapitalsData,
     },
