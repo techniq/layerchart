@@ -289,7 +289,7 @@
   </div>
 </Preview>
 
-<h2>Lucide icons</h2>
+<h2>Icons</h2>
 
 <Preview data={data.us.capitals}>
   <div class="h-[600px]">

@@ -14,17 +14,7 @@
   // @ts-expect-error
   import { century, equationOfTime, declination } from 'solar-calculator';
 
-  import {
-    Blur,
-    Chart,
-    ClipPath,
-    GeoCircle,
-    GeoPath,
-    Graticule,
-    Svg,
-    Tooltip,
-    antipode,
-  } from 'layerchart';
+  import { Blur, Chart, ClipPath, GeoCircle, GeoPath, Svg, Tooltip, antipode } from 'layerchart';
   import { Field, SelectField, Switch } from 'svelte-ux';
   import { TimerState } from '@layerstack/svelte-state';
 
@@ -46,14 +36,15 @@
     // { label: 'Orthographic', value: geoOrthographic },
   ];
 
-  const geojson = $derived(feature(data.geojson, data.geojson.objects.countries));
-  const features = $derived(
-    projection === geoAlbersUsa
-      ? geojson.features.filter((f) => f.properties.name === 'United States of America')
-      : geojson.features
+  const countriesGeojson = $derived(
+    feature(data.topojson.countries, data.topojson.countries.objects.countries)
   );
-
-  const timezoneGeojson = $derived(feature(data.timezones, data.timezones.objects.timezones));
+  const statesGeojson = $derived(
+    feature(data.topojson.states, data.topojson.states.objects.states)
+  );
+  const timezoneGeojson = $derived(
+    feature(data.topojson.timezones, data.topojson.timezones.objects.timezones)
+  );
 
   const colorScale = $derived(
     scaleSequential(
@@ -110,21 +101,20 @@
 
 <h2>SVG</h2>
 
-<Preview data={geojson}>
+<Preview data={countriesGeojson}>
   <div class="h-[600px] overflow-hidden">
     <Chart
       geo={{
         projection,
-        fitGeojson: geojson,
+        fitGeojson: countriesGeojson,
       }}
-      padding={{ left: 100, right: 100 }}
+      padding={{ left: 10, right: 10 }}
     >
       {#snippet children({ context })}
         <Svg>
           <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" id="globe" />
-          <Graticule class="stroke-surface-content/20" />
 
-          <GeoPath {geojson} id="clip" />
+          <GeoPath geojson={countriesGeojson} id="clip" />
           <ClipPath useId="clip" disabled={!enableClip}>
             {#each timezoneGeojson.features as feature}
               <GeoPath
@@ -136,11 +126,15 @@
             {/each}
           </ClipPath>
 
-          {#each features as feature}
+          {#each countriesGeojson.features as feature}
             <GeoPath
               geojson={feature}
               class="stroke-gray-900/10 fill-gray-900/20 pointer-events-none"
             />
+          {/each}
+
+          {#each statesGeojson.features as feature}
+            <GeoPath geojson={feature} class="stroke-gray-900/10 pointer-events-none" />
           {/each}
 
           {#if showDaylight}
