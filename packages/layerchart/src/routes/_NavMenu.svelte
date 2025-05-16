@@ -133,7 +133,13 @@
   currentUrl={$page.url}
   path="/getting-started"
 />
-<NavItem text="Changelog" icon={mdiFormatListBulleted} currentUrl={$page.url} path="/changelog" />
+<NavItem
+  text="Changelog"
+  icon={mdiFormatListBulleted}
+  currentUrl={$page.url}
+  path="https://github.com/techniq/layerchart/releases"
+  target="_blank"
+/>
 
 <!-- <h1>Charts</h1>
 {#each Object.entries(charts) as [header, items]}
