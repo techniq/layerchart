@@ -14,14 +14,14 @@
     class: className,
   }: {
     source: string | null;
-    language: string;
-    highlightedSource: string;
-    classes: {
+    language?: string;
+    highlightedSource?: string;
+    classes?: {
       root?: string;
       pre?: string;
       code?: string;
     };
-    class: string;
+    class?: string;
   } = $props();
 </script>
 

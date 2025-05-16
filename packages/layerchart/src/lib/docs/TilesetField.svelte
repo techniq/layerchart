@@ -129,7 +129,7 @@
   toggleIcon={null}
   stepper
 >
-  <div slot="append" on:click|stopPropagation role="none">
+  <div slot="append" onclick={(e) => e.stopPropagation()} role="none">
     <div class="text-[10px] text-surface-content/50 text-center">2x</div>
     <Switch bind:checked={doubleScale} size="md" />
   </div>
