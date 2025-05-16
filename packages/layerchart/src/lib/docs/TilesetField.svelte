@@ -1,26 +1,26 @@
 <script lang="ts">
   import { SelectField, Switch } from 'svelte-ux';
 
-  export let doubleScale = devicePixelRatio > 1;
+  let { doubleScale = $bindable(devicePixelRatio > 1), serviceUrl = $bindable() } = $props();
 
   // TODO: Access via context, or possibly global state
   const ACCESS_TOKEN =
     'pk.eyJ1IjoidGVjaG5pcTM1IiwiYSI6ImNsZTR5cDd0ZjAyNm8zdnFvczhzdnFpcXkifQ.-LAr8sl5BZ3y-H0pDyD1qA';
 
   // https://docs.mapbox.com/api/maps/styles/
-  $: mapboxv1 = (style: string) => (x: number, y: number, z: number) => {
+  const mapboxv1 = $derived((style: string) => (x: number, y: number, z: number) => {
     return `https://api.mapbox.com/styles/v1/mapbox/${style}/tiles/${z}/${x}/${y}${
       doubleScale ? '@2x' : ''
     }?access_token=${ACCESS_TOKEN}`;
-  };
+  });
 
   // https://docs.mapbox.com/api/maps/raster-tiles/
   // https://docs.mapbox.com/data/tilesets/reference/mapbox-streets-v8/
-  $: mapboxv4 = (tileset: string) => (x: number, y: number, z: number) => {
+  const mapboxv4 = $derived((tileset: string) => (x: number, y: number, z: number) => {
     return `https://${'abc'[Math.abs(x + y) % 3]}.tiles.mapbox.com/v4/${tileset}/${z}/${x}/${y}${
       doubleScale ? '@2x' : ''
     }.png?access_token=${ACCESS_TOKEN}`;
-  };
+  });
 
   // https://apps.nationalmap.gov/services/
   const nationalmap = (tileset: string) => (x: number, y: number, z: number) => {
@@ -54,7 +54,7 @@
     return `https://${s}.tile.opentopomap.org/${z}/${x}/${y}.png`;
   };
 
-  $: services = {
+  const services = $derived<Record<string, Record<string, Function>>>({
     'mapbox v1': {
       'streets-v11': mapboxv1('streets-v11'),
       'light-v10': mapboxv1('light-v10'),
@@ -100,24 +100,25 @@
     // 'ArcGIS Vector': {
     // 	 'Community Map', url: arcgisVector('World_Basemap_v2'),
     // }
-  } as Record<string, Record<string, Function>>;
-
-  $: serviceOptions = Object.entries(services).flatMap(([group, service]) => {
-    return Object.entries(service).map(([label, value]) => {
-      return { label, value: `${group}:${label}`, group, serviceUrl: value };
-    });
   });
 
-  $: defaultServiceUrl = services['mapbox v1']['streets-v11'];
-  export let serviceUrl = defaultServiceUrl;
+  const serviceOptions = $derived(
+    Object.entries(services).flatMap(([group, service]) => {
+      return Object.entries(service).map(([label, value]) => {
+        return { label, value: `${group}:${label}`, group, serviceUrl: value };
+      });
+    })
+  );
 
-  $: getServiceUrl = (option: string) => {
+  const getServiceUrl = $derived((option: string) => {
     const [selectedService, selectedTileset] = selected.split(':');
     return services[selectedService][selectedTileset];
-  };
+  });
 
-  let selected = 'mapbox v1:streets-v11';
-  $: serviceUrl = getServiceUrl(selected);
+  let selected = $state('mapbox v1:streets-v11');
+  $effect(() => {
+    serviceUrl = getServiceUrl(selected);
+  });
 </script>
 
 <SelectField
