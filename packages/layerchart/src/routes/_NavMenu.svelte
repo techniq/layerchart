@@ -28,6 +28,7 @@
       'Scatter',
       'Sparkbar',
       'Sparkline',
+      'SyncBrushContext',
       'Threshold',
     ],
     Hierarchy: ['Pack', 'Partition', 'Sunburst', 'Tree', 'Treemap'],
