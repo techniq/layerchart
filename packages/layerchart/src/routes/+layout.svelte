@@ -136,12 +136,12 @@
     <div
       class="fixed top-0 left-0 w-full h-8 bg-primary-700 border-b border-primary-800/50 shadow flex gap-2 items-center justify-center text-sm font-medium"
     >
-      LayerChart for Svelte 5 has been released! -
+      LayerChart for Svelte 5 released! -
       <a
         href="https://next.layerchart.com"
         class="font-semibold underline-offset-2 hover:underline"
       >
-        Visit the preview docs <Icon data={mdiArrowTopRight} class="text-xs mt-[-2px]" />
+        Preview <Icon data={mdiArrowTopRight} class="text-xs mt-[-2px]" />
       </a>
     </div>
 
