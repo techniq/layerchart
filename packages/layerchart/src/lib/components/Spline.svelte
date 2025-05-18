@@ -351,8 +351,8 @@
 
   $effect(() => {
     if (!draw) return;
-    [tweenedState.current];
     // Anytime the path data changes, redraw
+    [pathData, data, ctx.data];
     key = Symbol();
   });
 </script>
