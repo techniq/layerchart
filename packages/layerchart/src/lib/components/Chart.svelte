@@ -844,12 +844,12 @@
     if (verbose === true) {
       if (width <= 0 && isMounted === true) {
         console.warn(
-          '[LayerChart] Target div has zero or negative width. Did you forget to set an explicit width in CSS on the container?'
+          `[LayerChart] Target div has zero or negative width (${width}). Did you forget to set an explicit width in CSS on the container?`
         );
       }
       if (height <= 0 && isMounted === true) {
         console.warn(
-          '[LayerChart] Target div has zero or negative height. Did you forget to set an explicit height in CSS on the container?'
+          `[LayerChart] Target div has zero or negative height (${height}). Did you forget to set an explicit height in CSS on the container?`
         );
       }
     }
