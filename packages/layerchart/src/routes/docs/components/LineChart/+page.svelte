@@ -1081,7 +1081,7 @@
 
 <Preview data={dateSeriesData}>
   {#if show}
-    <div class="h-[300px] p-4 border rounded-sm" in:slide>
+    <div class="h-[300px] p-4 border rounded-sm" transition:slide>
       <LineChart
         data={dateSeriesData}
         x="date"
