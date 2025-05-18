@@ -22,6 +22,7 @@
   import { createDateSeries } from '$lib/utils/genData.js';
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { cls } from '@layerstack/tailwind';
+  import { slide } from 'svelte/transition';
 
   let { data } = $props();
 
@@ -85,6 +86,8 @@
         details: `This is an annotation for ${format(d.date)}`,
       }))
   );
+
+  let show = $state(false);
 </script>
 
 <h1>Examples</h1>
@@ -1066,6 +1069,29 @@
       {debug}
     />
   </div>
+</Preview>
+
+<div class="flex">
+  <h2 class="grow">Draw</h2>
+
+  <Field label="Show" labelPlacement="left" let:id>
+    <Switch {id} bind:checked={show} />
+  </Field>
+</div>
+
+<Preview data={dateSeriesData}>
+  {#if show}
+    <div class="h-[300px] p-4 border rounded-sm" transition:slide>
+      <LineChart
+        data={dateSeriesData}
+        x="date"
+        y="value"
+        props={{ spline: { draw: { delay: 0 } } }}
+        {renderContext}
+        {debug}
+      />
+    </div>
+  {/if}
 </Preview>
 
 <h2>Custom chart</h2>
