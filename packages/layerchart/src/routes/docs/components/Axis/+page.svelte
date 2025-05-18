@@ -503,7 +503,7 @@
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       >
         <Layer type={renderContext}>
-          <Axis placement="bottom" rule ticks={$mdScreen ? 10 : 5} />
+          <Axis placement="bottom" rule ticks={mdScreen.current ? 10 : 5} />
           <Axis placement="left" rule />
         </Layer>
       </Chart>
