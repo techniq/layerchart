@@ -141,7 +141,11 @@
     rule = false,
     grid = false,
     ticks,
-    tickSpacing,
+    tickSpacing = ['top', 'bottom'].includes(placement)
+      ? 80
+      : ['left', 'right'].includes(placement)
+        ? 50
+        : undefined,
     tickLength = 4,
     tickMarks = true,
     format,
