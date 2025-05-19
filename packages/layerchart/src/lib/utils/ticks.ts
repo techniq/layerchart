@@ -12,7 +12,7 @@ import {
 import { format } from 'date-fns';
 
 import { formatDate, PeriodType, getDuration, fail } from '@layerstack/utils';
-import { isScaleBand, type AnyScale } from './scales.svelte.js';
+import { isScaleBand, isScaleTime, type AnyScale } from './scales.svelte.js';
 
 type Duration = ReturnType<typeof getDuration>;
 
@@ -193,18 +193,29 @@ export function resolveTickVals(
   placement?: 'radius' | 'top' | 'bottom' | 'left' | 'right' | 'angle'
 ): any[] {
   if (Array.isArray(ticks)) return ticks;
+
   if (typeof ticks === 'function') return ticks(scale) ?? [];
+
   if (isLiteralObject(ticks) && 'interval' in ticks) {
     if (ticks.interval === null || !('ticks' in scale) || typeof scale.ticks !== 'function') {
       return []; // Explicitly return empty array for null interval or invalid scale
     }
     return scale.ticks(ticks.interval as any);
   }
+
   if (isScaleBand(scale)) {
     return ticks && typeof ticks === 'number'
       ? scale.domain().filter((_, i) => i % ticks === 0)
       : scale.domain();
   }
+
+  // if (isScaleTime(scale)) {
+  //   const interval = getMajorTicks(scale.domain()[0], scale.domain()[1])!;
+  //   // const interval = getMinorTicks(scale.domain()[0], scale.domain()[1]);
+  //   return scale.ticks(interval);
+  // }
+
+  // Ticks from scale
   if (scale.ticks && typeof scale.ticks === 'function') {
     if (placement) {
       return scale.ticks(
@@ -213,6 +224,7 @@ export function resolveTickVals(
     }
     return scale.ticks(ticks as number);
   }
+
   return [];
 }
 

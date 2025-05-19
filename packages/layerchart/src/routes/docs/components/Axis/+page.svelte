@@ -2,168 +2,179 @@
   import { scaleLinear, scaleTime, scaleBand, scaleLog } from 'd3-scale';
   import { range } from 'd3-array';
   import { timeDay } from 'd3-time';
-  import { Field, Switch } from 'svelte-ux';
+  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
   import { MediaQueryPresets } from '@layerstack/svelte-state';
 
-  import { Axis, Chart, Svg, Frame, Rule, Text, Grid } from 'layerchart';
+  import { Axis, Chart, Frame, Layer, Rule, Text, Grid } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   import { createDateSeries } from '$lib/utils/genData.js';
   import Blockquote from '$lib/docs/Blockquote.svelte';
 
-  const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
   const largeData = createDateSeries({ count: 100, min: 50, max: 100, value: 'integer' });
 
+  const now = new Date();
+
+  let renderContext: 'svg' | 'canvas' = $state('svg');
   let debug = $state(false);
   const { mdScreen } = new MediaQueryPresets();
 </script>
 
 <h1>Examples</h1>
 
+<div class="flex gap-2">
+  <Field label="Render context" class="grow">
+    <ToggleGroup bind:value={renderContext} variant="outline">
+      <ToggleOption value="svg">Svg</ToggleOption>
+      <ToggleOption value="canvas">Canvas</ToggleOption>
+    </ToggleGroup>
+  </Field>
+</div>
+
 <h2>left / bottom placement</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>top / right placement</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="top" rule />
         <Axis placement="right" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>rule (left/bottom placement)</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>rule (top/right placement)</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="top" rule />
         <Axis placement="right" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>grid</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" grid />
         <Axis placement="left" grid />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>dashed grid lines</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" />
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>multiple axis grids with single rule</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="left" grid />
         <Axis placement="bottom" grid rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -172,22 +183,22 @@
 
 <h2>multiple axis grids and rules</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="left" grid />
         <Axis placement="bottom" grid rule />
         <Rule x="left" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -196,61 +207,61 @@
 
 <h2>multiple axis grids and rules (separate grid)</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Grid x y />
         <Axis placement="left" rule />
         <Axis placement="bottom" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>Arrow markers</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="left" grid rule={{ markerEnd: 'arrow' }} />
         <Axis placement="bottom" grid rule={{ markerEnd: 'arrow' }} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>tick label styling</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, null]}
       yNice
       padding={{ top: 20, bottom: 36, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis
           placement="bottom"
           rule
@@ -261,25 +272,25 @@
           }}
         />
         <Axis placement="left" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>rotated tick labels and styling</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, null]}
       yNice
       padding={{ top: 20, bottom: 36, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis
           placement="bottom"
           rule={{ class: 'stroke-danger' }}
@@ -290,46 +301,46 @@
           }}
         />
         <Axis placement="left" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>Remove ticks hashes</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule tickLength={0} />
         <Axis placement="left" rule tickLength={0} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>show only first/last ticks with alignment</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis
           placement="bottom"
           rule
@@ -341,25 +352,25 @@
           {/snippet}
         </Axis>
         <Axis placement="left" rule ticks={(scale) => scale.domain()} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>integer-only ticks</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 2]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule />
         <Axis
           placement="left"
@@ -367,151 +378,151 @@
           ticks={(scale) => scale.ticks?.().filter(Number.isInteger)}
           format="integer"
         />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>explicit ticks</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule ticks={[0, 50, 100]} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>Inject tick value</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule ticks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>tick count</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule ticks={20} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>tick count (responsive)</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule ticks={mdScreen.current ? 10 : 5} />
         <Axis placement="left" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>tick time interval</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule ticks={{ interval: timeDay.every(3) }} />
         <Axis placement="left" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>remove default tick count</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule ticks={null} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>label next to hash</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis
           placement="bottom"
           rule={{ class: 'stroke-surface-content/10' }}
@@ -520,49 +531,49 @@
           tickLength={22}
         />
         <Axis placement="left" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>Hide `0` tick via ticks</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule ticks={(scale) => scale.ticks?.().filter((d) => d !== 0)} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>Hide `0` tick via format</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule format={(v) => v || ''} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -580,7 +591,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis
           placement="bottom"
           rule
@@ -588,7 +599,7 @@
           format={PeriodType.Day}
         />
         <Axis placement="left" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -603,18 +614,18 @@
   </div>
 </div>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 32, bottom: 32, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         {#if debug}
           <Frame class="fill-danger/5" />
           <Frame class="fill-danger/5" full />
@@ -627,7 +638,7 @@
         <Axis label="bottom start" placement="bottom" labelPlacement="start" rule />
         <Axis label="bottom middle" placement="bottom" labelPlacement="middle" rule />
         <Axis label="bottom end" placement="bottom" labelPlacement="end" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -642,18 +653,18 @@
   </div>
 </div>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 32, right: 32 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         {#if debug}
           <Frame class="fill-danger/5" />
           <Frame class="fill-danger/5" full />
@@ -666,7 +677,7 @@
         <Axis label="right start" placement="right" labelPlacement="start" rule />
         <Axis label="right middle" placement="right" labelPlacement="middle" rule />
         <Axis label="right end" placement="right" labelPlacement="end" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -681,19 +692,19 @@
   </div>
 </div>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ right: 90 }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={renderContext}>
           {#if debug}
             <Frame class="fill-danger/5" />
             <Frame class="fill-danger/5" full />
@@ -715,7 +726,7 @@
             class="translate-x-[50px]"
             labelProps={{ dx: -50 }}
           />
-        </Svg>
+        </Layer>
       {/snippet}
     </Chart>
   </div>
@@ -723,48 +734,62 @@
 
 <h2>radial rule</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
-      <Svg center>
+    <Chart
+      x="date"
+      xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
+      y="value"
+      yDomain={[0, 100]}
+      radial
+    >
+      <Layer type={renderContext} center>
         <Axis placement="radius" rule />
         <Axis placement="angle" rule ticks={(scale) => scale.ticks?.().splice(1)} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>radial grid</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
-      <Svg center>
+    <Chart
+      x="date"
+      xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
+      y="value"
+      yDomain={[0, 100]}
+      radial
+    >
+      <Layer type={renderContext} center>
         <Axis placement="radius" grid />
         <Axis placement="angle" grid ticks={(scale) => scale.ticks?.().splice(1)} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
 <h2>Log scale</h2>
 
-<Preview {data}>
+<Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      {data}
       x="date"
       xScale={scaleTime()}
+      xDomain={[timeDay.offset(now, -10), now]}
       y="value"
       yScale={scaleLog()}
       yDomain={[1, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

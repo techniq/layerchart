@@ -55,7 +55,7 @@
 
 <h1>Examples</h1>
 
-<h2>Band scale</h2>
+<!-- <h2>Band scale</h2>
 
 <Preview data={dataSeriesData}>
   <div class="h-[100px]">
@@ -65,7 +65,7 @@
       </Svg>
     </Chart>
   </div>
-</Preview>
+</Preview> -->
 
 <h2>Basic</h2>
 
