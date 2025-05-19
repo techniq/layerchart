@@ -193,13 +193,16 @@ export function resolveTickVals(
   placement?: 'radius' | 'top' | 'bottom' | 'left' | 'right' | 'angle'
 ): any[] {
   if (Array.isArray(ticks)) return ticks;
+
   if (typeof ticks === 'function') return ticks(scale) ?? [];
+
   if (isLiteralObject(ticks) && 'interval' in ticks) {
     if (ticks.interval === null || !('ticks' in scale) || typeof scale.ticks !== 'function') {
       return []; // Explicitly return empty array for null interval or invalid scale
     }
     return scale.ticks(ticks.interval as any);
   }
+
   if (isScaleBand(scale)) {
     return ticks && typeof ticks === 'number'
       ? scale.domain().filter((_, i) => i % ticks === 0)
@@ -221,6 +224,7 @@ export function resolveTickVals(
     }
     return scale.ticks(ticks as number);
   }
+
   return [];
 }
 
