@@ -227,6 +227,8 @@
     ...restProps
   }: TextProps = $props();
 
+  const renderCtx = getRenderContext();
+
   let ref = $state<SVGTextElement>();
   let svgRef = $state<SVGElement>();
   let pathRef = $state<SVGPathElement>();
@@ -267,42 +269,41 @@
     return truncateText(rawText, truncateConfig);
   });
 
-  const renderCtx = getRenderContext();
-
-  const words = $derived(textValue ? textValue.split(/(?:(?!\u00A0+)\s+)/) : []);
-
-  const wordsWithWidth = $derived(
-    words.map((word) => ({
-      word,
-      width: getStringWidth(word, style) || 0,
-    }))
-  );
-
   const spaceWidth = $derived(getStringWidth('\u00A0', style) || 0);
 
-  const wordsByLines = $derived(
-    wordsWithWidth.reduce((result: { words: string[]; width?: number }[], item) => {
-      const currentLine = result[result.length - 1];
+  const wordsByLines = $derived.by(() => {
+    // Split by newlines to preserve explicit line breaks
+    const lines = textValue.split('\n');
 
-      if (
-        currentLine &&
-        (width == null || scaleToFit || (currentLine.width || 0) + item.width + spaceWidth < width)
-      ) {
-        // Word can be added to an existing line
-        currentLine.words.push(item.word);
-        currentLine.width = currentLine.width || 0;
-        currentLine.width += item.width + spaceWidth;
-      } else {
-        // Add first word to line or word is too long to scaleToFit on existing line
-        const newLine = { words: [item.word], width: item.width };
-        result.push(newLine);
-      }
+    return lines.flatMap((line) => {
+      // Split each line into words
+      const words = line.split(/(?:(?!\u00A0+)\s+)/);
 
-      return result;
-    }, [])
-  );
+      // Handle word wrapping within each line
+      return words.reduce((result: { words: string[]; width?: number }[], item) => {
+        const currentLine = result[result.length - 1];
+        const itemWidth = getStringWidth(item, style) || 0;
 
-  const lines = $derived(wordsByLines.length);
+        if (
+          currentLine &&
+          (width == null || scaleToFit || (currentLine.width || 0) + itemWidth + spaceWidth < width)
+        ) {
+          // Word can be added to an existing line
+          currentLine.words.push(item);
+          currentLine.width = currentLine.width || 0;
+          currentLine.width += itemWidth + spaceWidth;
+        } else {
+          // Add first word to line or word is too long to scaleToFit on existing line
+          const newLine = { words: [item], width: itemWidth };
+          result.push(newLine);
+        }
+
+        return result;
+      }, []);
+    });
+  });
+
+  const lineCount = $derived(wordsByLines.length);
 
   /**
    * Convert css value to pixel value (ex. 0.71em => 11.36)
@@ -329,9 +330,9 @@
     if (verticalAnchor === 'start') {
       return getPixelValue(capHeight);
     } else if (verticalAnchor === 'middle') {
-      return ((lines - 1) / 2) * -getPixelValue(lineHeight) + getPixelValue(capHeight) / 2;
+      return ((lineCount - 1) / 2) * -getPixelValue(lineHeight) + getPixelValue(capHeight) / 2;
     } else {
-      return (lines - 1) * -getPixelValue(lineHeight);
+      return (lineCount - 1) * -getPixelValue(lineHeight);
     }
   });
 
@@ -348,7 +349,7 @@
   const scaleTransform = $derived.by(() => {
     if (
       scaleToFit &&
-      lines > 0 &&
+      lineCount > 0 &&
       typeof x == 'number' &&
       typeof y == 'number' &&
       typeof width == 'number'

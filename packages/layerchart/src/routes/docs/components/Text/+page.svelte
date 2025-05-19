@@ -3,6 +3,7 @@
   import type { TruncateTextOptions } from '$lib/utils/string.js';
   import type { ComponentProps } from 'svelte';
   import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import Preview from 'layerchart/docs/Preview.svelte';
 
   const config = $state({
     x: 0,
@@ -144,3 +145,17 @@
     </div>
   </div>
 </div>
+
+<h1>Examples</h1>
+
+<h2>Word wrap with explicit `\n`</h2>
+
+<Preview>
+  <div class="h-[100px] p-4 border rounded-sm">
+    <Chart>
+      <Svg>
+        <Text value={'March\n2025'} verticalAnchor="start" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
