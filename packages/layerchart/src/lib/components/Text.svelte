@@ -262,7 +262,8 @@
     };
   });
 
-  const rawText = $derived(value != null ? value.toString() : '');
+  // Handle null and convert `\n` strings back to newline characters
+  const rawText = $derived(value != null ? value.toString().replace(/\\n/g, '\n') : '');
 
   const textValue = $derived.by(() => {
     if (!truncateConfig) return rawText;
