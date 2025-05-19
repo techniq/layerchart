@@ -44,6 +44,11 @@
     ticks?: TicksConfig;
 
     /**
+     * Width or height of each tick in pxiels (responsive reduce)
+     */
+    tickSpacing?: number;
+
+    /**
      * Length of the tick line
      * @default 4
      */
@@ -114,7 +119,7 @@
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
 
-  import { format as formatValue, type FormatType } from '@layerstack/utils';
+  import { type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Group, { type GroupProps } from './Group.svelte';
@@ -126,7 +131,7 @@
   import { getChartContext } from './Chart.svelte';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { type MotionProp } from '$lib/utils/motion.svelte.js';
-  import { resolveTickVals, type TicksConfig } from '$lib/utils/ticks.js';
+  import { resolveTickFormat, resolveTickVals, type TicksConfig } from '$lib/utils/ticks.js';
 
   let {
     placement,
@@ -136,6 +141,7 @@
     rule = false,
     grid = false,
     ticks,
+    tickSpacing,
     tickLength = 4,
     tickMarks = true,
     format,
@@ -169,7 +175,21 @@
   const xRangeMinMax = $derived(extent<number>(ctx.xRange)) as [number, number];
   const yRangeMinMax = $derived(extent<number>(ctx.yRange)) as [number, number];
 
-  const tickVals = $derived(resolveTickVals(scale, ticks, placement));
+  // TODO: Handle radial orientation;
+  const ctxSize = $derived(
+    orientation === 'vertical' ? ctx.height : orientation === 'horizontal' ? ctx.width : null
+  );
+
+  // TODO: Handle vertical orientation (placement === 'left' | right')?  Previously used `4` but could use `tickSpacing = 50` or similar
+  const tickCount = $derived(
+    typeof ticks === 'number'
+      ? ticks
+      : tickSpacing && ctxSize
+        ? Math.round(ctxSize / tickSpacing)
+        : undefined
+  );
+  const tickVals = $derived(resolveTickVals(scale, ticks, tickCount));
+  const tickFormat = $derived(resolveTickFormat(scale, format, tickCount));
 
   function getCoords(tick: any) {
     switch (placement) {
@@ -366,7 +386,7 @@
     {@const resolvedTickLabelProps = {
       x: orientation === 'angle' ? radialTickCoordsX : tickCoords.x,
       y: orientation === 'angle' ? radialTickCoordsY : tickCoords.y,
-      value: formatValue(tick, format ?? scale.tickFormat?.() ?? ((v) => v)),
+      value: tickFormat(tick),
       ...getDefaultTickLabelProps(tick),
       motion,
       ...tickLabelProps,
