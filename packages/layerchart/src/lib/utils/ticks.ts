@@ -207,7 +207,7 @@ export function resolveTickVals(scale: AnyScale, ticks?: TicksConfig, count?: nu
 
   // Ticks from scale
   if (scale.ticks && typeof scale.ticks === 'function') {
-    return scale.ticks(count);
+    return scale.ticks(count ?? (typeof ticks === 'number' ? ticks : undefined));
   }
 
   return [];
