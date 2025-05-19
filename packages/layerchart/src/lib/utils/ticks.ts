@@ -11,7 +11,7 @@ import {
 } from 'd3-time';
 import { format } from 'date-fns';
 
-import { formatDate, PeriodType, getDuration, fail } from '@layerstack/utils';
+import { formatDate, PeriodType, getDuration, fail, isLiteralObject } from '@layerstack/utils';
 import { isScaleBand, isScaleTime, type AnyScale } from './scales.svelte.js';
 
 type Duration = ReturnType<typeof getDuration>;
@@ -226,8 +226,4 @@ export function resolveTickVals(
   }
 
   return [];
-}
-
-function isLiteralObject(val: unknown): val is Record<string, unknown> {
-  return val !== null && typeof val === 'object' && !Array.isArray(val);
 }

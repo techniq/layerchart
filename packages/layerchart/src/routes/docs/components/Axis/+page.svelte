@@ -1,12 +1,12 @@
 <script lang="ts">
   import { scaleLinear, scaleTime, scaleBand, scaleLog } from 'd3-scale';
   import { range } from 'd3-array';
-  import { timeDay } from 'd3-time';
+  import { timeDay, timeHour, timeMonth, timeYear } from 'd3-time';
   import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
   import { MediaQueryPresets } from '@layerstack/svelte-state';
 
-  import { Axis, Chart, Frame, Layer, Rule, Text, Grid } from 'layerchart';
+  import { Axis, Chart, Frame, Layer, Rule, Text, Grid, asAny } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -15,6 +15,22 @@
   const largeData = createDateSeries({ count: 100, min: 50, max: 100, value: 'integer' });
 
   const now = new Date();
+
+  let initialXDomain = [timeYear.offset(now, -4), now];
+  let xDomain = $state([timeYear.offset(now, -4), now]);
+
+  const timeScaleExamples = [
+    { label: '5 years', domain: [timeYear.offset(now, -5), now] },
+    { label: '1 year', domain: [timeYear.offset(now, -1), now] },
+    { label: '6 months', domain: [timeMonth.offset(now, -6), now] },
+    { label: '90 days', domain: [timeDay.offset(now, -90), now] },
+    { label: '30 days', domain: [timeDay.offset(now, -30), now] },
+    { label: '10 days', domain: [timeDay.offset(now, -10), now] },
+    { label: '7 days', domain: [timeDay.offset(now, -7), now] },
+    { label: '2 days', domain: [timeDay.offset(now, -2), now] },
+    { label: '12 hours', domain: [timeHour.offset(now, -12), now] },
+    { label: '1 hour', domain: [timeHour.offset(now, -1), now] },
+  ];
 
   let renderContext: 'svg' | 'canvas' = $state('svg');
   let debug = $state(false);
@@ -789,6 +805,68 @@
       <Layer type={renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Time scale (ranges)</h2>
+
+<Preview>
+  <div class="grid gap-3">
+    {#each timeScaleExamples as example}
+      <div>
+        <div class="text-sm mb-1">{example.label}</div>
+        <div class="h-[100px] p-4 border rounded-sm">
+          <Chart
+            xScale={scaleTime()}
+            xDomain={example.domain}
+            padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+          >
+            <Layer type={renderContext}>
+              <Axis placement="bottom" rule grid />
+            </Layer>
+          </Chart>
+        </div>
+      </div>
+    {/each}
+  </div>
+</Preview>
+
+<h2>Time scale (brush)</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <Chart
+      x="date"
+      xScale={scaleTime()}
+      {xDomain}
+      y="value"
+      yDomain={[0, 100]}
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Layer type={renderContext}>
+        <Axis placement="bottom" rule grid />
+        <Axis placement="left" />
+      </Layer>
+    </Chart>
+  </div>
+
+  <div class="h-[100px] p-4 border rounded-sm">
+    <Chart
+      x="date"
+      xScale={scaleTime()}
+      xDomain={initialXDomain}
+      y="value"
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+      brush={{
+        onChange: (e) => {
+          xDomain = asAny(e.xDomain);
+        },
+      }}
+    >
+      <Layer type={renderContext}>
+        <Axis placement="bottom" rule grid />
       </Layer>
     </Chart>
   </div>
