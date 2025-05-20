@@ -98,6 +98,20 @@
     verticalAnchor?: 'start' | 'middle' | 'end' | 'inherit';
 
     /**
+     * The dominant baseline of the text.  Useful for aligning text to the baseline of the axis.
+     *
+     * @default 'auto'
+     */
+    dominantBaseline?:
+      | 'auto'
+      | 'text-before-edge'
+      | 'text-after-edge'
+      | 'middle'
+      | 'hanging'
+      | 'ideographic'
+      | 'mathematical';
+
+    /**
      * Rotational angle of the text
      */
     rotate?: number;
@@ -208,6 +222,7 @@
     scaleToFit = false,
     textAnchor = 'start',
     verticalAnchor = 'end',
+    dominantBaseline = 'auto',
     rotate,
     opacity = 1,
     strokeWidth = 0,
@@ -502,6 +517,7 @@
       >
         <textPath
           style="text-anchor: {textAnchor};"
+          dominant-baseline={dominantBaseline}
           href="#{pathId}"
           {startOffset}
           class={cls(layerClass('text-path'))}
@@ -516,6 +532,7 @@
         y={motionY.current}
         {transform}
         text-anchor={textAnchor}
+        dominant-baseline={dominantBaseline}
         {...restProps}
         {fill}
         fill-opacity={fillOpacity}
