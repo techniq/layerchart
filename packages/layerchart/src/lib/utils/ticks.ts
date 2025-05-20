@@ -13,14 +13,12 @@ import {
 import {
   format,
   PeriodType,
-  getDuration,
+  Duration,
   fail,
   isLiteralObject,
   type FormatType,
 } from '@layerstack/utils';
 import { isScaleBand, isScaleTime, type AnyScale } from './scales.svelte.js';
-
-type Duration = ReturnType<typeof getDuration>;
 
 // TODO: Use PeriodType along with Duration to format (and possibly select intervals)
 
@@ -151,7 +149,7 @@ const minorTicks = [
 ];
 
 export function getMajorTicks(domain: Date[]) {
-  const duration = getDuration(domain[0], domain[1]);
+  const duration = new Duration({ start: domain[0], end: domain[1] });
 
   for (var t of majorTicks) {
     if (t.predicate(duration)) {
@@ -163,7 +161,7 @@ export function getMajorTicks(domain: Date[]) {
 }
 
 export function getMinorTicks(domain: Date[]) {
-  const duration = getDuration(domain[0], domain[1]);
+  const duration = new Duration({ start: domain[0], end: domain[1] });
 
   for (var t of minorTicks) {
     if (t.predicate(duration)) {
