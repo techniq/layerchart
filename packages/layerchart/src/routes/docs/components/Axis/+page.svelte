@@ -27,7 +27,8 @@
     { label: '30 days', domain: [timeDay.offset(now, -30), now] },
     { label: '10 days', domain: [timeDay.offset(now, -10), now] },
     { label: '7 days', domain: [timeDay.offset(now, -7), now] },
-    { label: '2 days', domain: [timeDay.offset(now, -2), now] },
+    { label: '3 days', domain: [timeDay.offset(now, -3), now] },
+    { label: '24 hours', domain: [timeHour.offset(now, -24), now] },
     { label: '12 hours', domain: [timeHour.offset(now, -12), now] },
     { label: '1 hour', domain: [timeHour.offset(now, -1), now] },
   ];
@@ -833,6 +834,29 @@
   </div>
 </Preview>
 
+<h2>Time scale (ranges) with multiline ticks</h2>
+
+<Preview>
+  <div class="grid gap-3">
+    {#each timeScaleExamples as example}
+      <div>
+        <div class="text-sm mb-1">{example.label}</div>
+        <div class="h-[100px] p-4 border rounded-sm">
+          <Chart
+            xScale={scaleTime()}
+            xDomain={example.domain}
+            padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+          >
+            <Layer type={renderContext}>
+              <Axis placement="bottom" rule grid tickMultiline />
+            </Layer>
+          </Chart>
+        </div>
+      </div>
+    {/each}
+  </div>
+</Preview>
+
 <h2>Time scale (brush)</h2>
 
 <Preview>
@@ -847,6 +871,45 @@
     >
       <Layer type={renderContext}>
         <Axis placement="bottom" rule grid />
+        <Axis placement="left" />
+      </Layer>
+    </Chart>
+  </div>
+
+  <div class="h-[100px] p-4 border rounded-sm">
+    <Chart
+      x="date"
+      xScale={scaleTime()}
+      xDomain={initialXDomain}
+      y="value"
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+      brush={{
+        onChange: (e) => {
+          xDomain = asAny(e.xDomain);
+        },
+      }}
+    >
+      <Layer type={renderContext}>
+        <Axis placement="bottom" rule grid />
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Time scale (brush) with multiline ticks</h2>
+
+<Preview>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <Chart
+      x="date"
+      xScale={scaleTime()}
+      {xDomain}
+      y="value"
+      yDomain={[0, 100]}
+      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+    >
+      <Layer type={renderContext}>
+        <Axis placement="bottom" rule grid tickMultiline />
         <Axis placement="left" />
       </Layer>
     </Chart>

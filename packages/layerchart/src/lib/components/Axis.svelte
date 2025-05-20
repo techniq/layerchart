@@ -49,6 +49,13 @@
     tickSpacing?: number;
 
     /**
+     * Whether to render tick labels on multiple lines for additional context
+     *
+     * @default false
+     */
+    tickMultiline?: boolean;
+
+    /**
      * Length of the tick line
      * @default 4
      */
@@ -146,6 +153,7 @@
       : ['left', 'right'].includes(placement)
         ? 50
         : undefined,
+    tickMultiline = false,
     tickLength = 4,
     tickMarks = true,
     format,
@@ -193,7 +201,7 @@
         : undefined
   );
   const tickVals = $derived(resolveTickVals(scale, ticks, tickCount));
-  const tickFormat = $derived(resolveTickFormat(scale, format, tickCount));
+  const tickFormat = $derived(resolveTickFormat(scale, format, tickCount, tickMultiline));
 
   function getCoords(tick: any) {
     switch (placement) {
@@ -390,7 +398,7 @@
     {@const resolvedTickLabelProps = {
       x: orientation === 'angle' ? radialTickCoordsX : tickCoords.x,
       y: orientation === 'angle' ? radialTickCoordsY : tickCoords.y,
-      value: tickFormat(tick),
+      value: tickFormat(tick, index),
       ...getDefaultTickLabelProps(tick),
       motion,
       ...tickLabelProps,
