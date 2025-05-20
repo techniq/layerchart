@@ -87,7 +87,7 @@
       }))
   );
 
-  let show = $state(false);
+  let show = $state(true);
 </script>
 
 <h1>Examples</h1>
@@ -1086,7 +1086,7 @@
         data={dateSeriesData}
         x="date"
         y="value"
-        props={{ spline: { draw: { delay: 0 } } }}
+        props={{ spline: { draw: true } }}
         {renderContext}
         {debug}
       />
