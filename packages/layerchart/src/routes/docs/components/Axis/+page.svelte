@@ -811,7 +811,13 @@
 
 <div class="flex gap-2 mb-1/2">
   <h2 class="grow">Time scale (auto)</h2>
-  <RangeField label="tickSpacing" labelPlacement="left" bind:value={tickSpacing} max={300} />
+  <RangeField
+    label="tickSpacing"
+    labelPlacement="left"
+    bind:value={tickSpacing}
+    max={300}
+    step={10}
+  />
 </div>
 
 <Preview>
@@ -837,7 +843,13 @@
 
 <div class="flex gap-2 mb-1/2">
   <h2 class="grow">Time scale (auto) with multiline ticks</h2>
-  <RangeField label="tickSpacing" labelPlacement="left" bind:value={tickSpacing} max={300} />
+  <RangeField
+    label="tickSpacing"
+    labelPlacement="left"
+    bind:value={tickSpacing}
+    max={300}
+    step={10}
+  />
 </div>
 
 <Preview>
@@ -922,7 +934,13 @@
 
 <div class="flex gap-2 mb-1/2">
   <h2 class="grow">Time scale (brush)</h2>
-  <RangeField label="tickSpacing" labelPlacement="left" bind:value={tickSpacing} max={300} />
+  <RangeField
+    label="tickSpacing"
+    labelPlacement="left"
+    bind:value={tickSpacing}
+    max={300}
+    step={10}
+  />
 </div>
 
 <Preview>
@@ -974,7 +992,13 @@
 
 <div class="flex gap-2 mb-1/2">
   <h2 class="grow">Time scale (brush) with multiline ticks</h2>
-  <RangeField label="tickSpacing" labelPlacement="left" bind:value={tickSpacing} max={300} />
+  <RangeField
+    label="tickSpacing"
+    labelPlacement="left"
+    bind:value={tickSpacing}
+    max={300}
+    step={10}
+  />
 </div>
 
 <Preview>
