@@ -61,6 +61,7 @@
 
       nextDate = new Date(nextDate.getTime() + points * 24 * 60 * 60 * 1000);
     },
+    // svelte-ignore state_referenced_locally
     delay: points,
     disabled: true,
   });
