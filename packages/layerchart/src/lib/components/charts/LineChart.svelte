@@ -70,7 +70,6 @@
 <script lang="ts" generics="TData">
   import { onMount, type ComponentProps } from 'svelte';
   import { scaleLinear, scaleTime } from 'd3-scale';
-  import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Axis from '../Axis.svelte';
