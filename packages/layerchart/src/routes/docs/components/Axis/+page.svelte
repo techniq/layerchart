@@ -868,6 +868,12 @@
       y="value"
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+      brush={{
+        resetOnEnd: true,
+        onBrushEnd: (e) => {
+          xDomain = asAny(e.xDomain);
+        },
+      }}
     >
       <Layer type={renderContext}>
         <Axis placement="bottom" rule grid />
@@ -884,6 +890,8 @@
       y="value"
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       brush={{
+        mode: 'separated',
+        xDomain,
         onChange: (e) => {
           xDomain = asAny(e.xDomain);
         },
@@ -907,6 +915,12 @@
       y="value"
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+      brush={{
+        resetOnEnd: true,
+        onBrushEnd: (e) => {
+          xDomain = asAny(e.xDomain);
+        },
+      }}
     >
       <Layer type={renderContext}>
         <Axis placement="bottom" rule grid tickMultiline />
@@ -923,6 +937,8 @@
       y="value"
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
       brush={{
+        mode: 'separated',
+        xDomain,
         onChange: (e) => {
           xDomain = asAny(e.xDomain);
         },
