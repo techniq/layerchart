@@ -104,11 +104,7 @@
     >
       <Svg>
         <Grid x />
-        <Axis
-          placement="bottom"
-          rule
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-        />
+        <Axis placement="bottom" rule />
       </Svg>
     </Chart>
   </div>
@@ -128,11 +124,7 @@
     >
       <Svg>
         <Grid x bandAlign="between" />
-        <Axis
-          placement="bottom"
-          rule
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-        />
+        <Axis placement="bottom" rule />
       </Svg>
     </Chart>
   </div>

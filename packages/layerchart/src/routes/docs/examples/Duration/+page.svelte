@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { scaleBand, scaleTime } from 'd3-scale';
+  import { scaleTime } from 'd3-scale';
   import { addMinutes, startOfDay } from 'date-fns';
   import { Duration } from 'svelte-ux';
   import { PeriodType, format } from '@layerstack/utils';
 
-  import { Axis, BarChart, Chart, Highlight, LineChart, Points, Svg, Tooltip } from 'layerchart';
+  import { BarChart, Points, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { getRandomInteger } from '$lib/utils/genData.js';
@@ -41,11 +41,6 @@
       grid={{ x: false, y: true, bandAlign: 'between' }}
       orientation="horizontal"
       padding={{ left: 36, bottom: 36 }}
-      props={{
-        xAxis: {
-          format: (d) => format(d, PeriodType.TimeOnly, { custom: 'h:mm aa' }),
-        },
-      }}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -91,11 +86,6 @@
       grid={{ x: false, y: true, bandAlign: 'between' }}
       orientation="horizontal"
       padding={{ left: 36, bottom: 36 }}
-      props={{
-        xAxis: {
-          format: (d) => format(d, PeriodType.TimeOnly, { custom: 'h:mm aa' }),
-        },
-      }}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -139,9 +129,6 @@
           axis: 'x',
           area: true,
           points: true,
-        },
-        xAxis: {
-          format: (d) => format(d, PeriodType.TimeOnly, { custom: 'h:mm aa' }),
         },
       }}
     >
@@ -198,9 +185,6 @@
           axis: 'x',
           area: true,
           points: true,
-        },
-        xAxis: {
-          format: (d) => format(d, PeriodType.TimeOnly, { custom: 'h:mm aa' }),
         },
       }}
     >

@@ -33,11 +33,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Points class="fill-primary/10 stroke-primary" />
       </Svg>
     </Chart>
@@ -60,11 +56,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Points class="fill-primary/10 stroke-primary" />
         <Highlight points lines />
       </Svg>
@@ -96,11 +88,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Points class="fill-primary/10 stroke-primary" />
         <Labels format="integer" offset={10} />
       </Svg>
@@ -129,11 +117,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Points class="stroke-surface-content/50" />
       </Svg>
     </Chart>

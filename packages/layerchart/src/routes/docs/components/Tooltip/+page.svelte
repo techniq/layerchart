@@ -158,11 +158,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
       </Svg>
@@ -194,11 +190,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
       </Svg>
@@ -223,11 +215,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
       </Svg>
@@ -259,11 +247,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
       </Svg>
@@ -295,11 +279,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
       </Svg>
@@ -334,11 +314,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
       </Svg>
@@ -370,11 +346,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
       </Svg>
@@ -407,11 +379,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
           <Highlight points lines axis="both" />
         </Svg>
@@ -460,11 +428,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           <Bars radius={4} strokeWidth={1} class="fill-primary" />
           <Highlight area />
         </Svg>
@@ -557,11 +521,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
       </Svg>
@@ -612,11 +572,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
       </Svg>
@@ -657,11 +613,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight
           points={charts.area.highlight.includes('points')}
@@ -713,11 +665,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
 
           {#each stackData as seriesData}
             {@const color = context.cGet(seriesData)}
@@ -776,7 +724,7 @@
     >
       <Svg>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
-        <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
+        <Axis placement="bottom" />
         <Points class="fill-primary-100 stroke-primary" />
         <Highlight
           points={charts.dateTime.highlight.includes('points')}
@@ -824,7 +772,7 @@
     >
       <Svg>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
-        <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
+        <Axis placement="bottom" />
         <Points class="fill-primary-100 stroke-primary" links />
         <Highlight
           points={charts.duration.highlight.includes('points')}
@@ -876,7 +824,7 @@
     >
       <Svg>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
-        <Axis placement="bottom" format={(d) => format(d, 'h:mm aa')} />
+        <Axis placement="bottom" />
         <Points class="fill-primary-100 stroke-primary" links />
         <Highlight
           points={charts.multiDuration.highlight.includes('points')}
@@ -930,11 +878,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
         <Highlight
           points={charts.bars.highlight.includes('points')}
@@ -985,11 +929,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Bars y="baseline" radius={4} strokeWidth={1} class="fill-surface-content/10" />
         <Bars y="value" radius={4} strokeWidth={1} insets={{ x: 4 }} class="fill-primary" />
         <Highlight

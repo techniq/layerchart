@@ -622,7 +622,7 @@
       rule={{ class: 'stroke-surface-content/20' }}
       props={{
         area: { line: false, fillOpacity: 1 },
-        xAxis: { format: PeriodType.Month, tickLength: 0 },
+        xAxis: { format: PeriodType.Month, tickMarks: false },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
       }}
@@ -1073,10 +1073,6 @@
       x="date"
       y="value"
       {xDomain}
-      props={{
-        area: { motion: { type: 'tween', duration: 200 } },
-        xAxis: { format: undefined, motion: { type: 'tween', duration: 200 } },
-      }}
       {renderContext}
       {debug}
     />
@@ -1104,9 +1100,6 @@
           },
         };
       })}
-      props={{
-        xAxis: { format: undefined },
-      }}
       {renderContext}
       {debug}
     >
@@ -1157,9 +1150,6 @@
           },
         },
       ]}
-      props={{
-        xAxis: { format: undefined },
-      }}
       {renderContext}
       {debug}
     />
@@ -1194,9 +1184,6 @@
           },
         },
       ]}
-      props={{
-        xAxis: { format: undefined },
-      }}
       {renderContext}
       {debug}
     />
@@ -1269,7 +1256,7 @@
       brush
       props={{
         area: { motion: { type: 'tween', duration: 200 } },
-        xAxis: { format: undefined, motion: { type: 'tween', duration: 200 } },
+        xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true },
         canvas: {
           class: 'cursor-crosshair',
         },
@@ -1296,7 +1283,7 @@
         brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
         props={{
           area: { motion: { type: 'tween', duration: 200 } },
-          xAxis: { format: undefined, motion: { type: 'tween', duration: 200 } },
+          xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true },
         }}
         {renderContext}
         {debug}
@@ -1312,7 +1299,7 @@
         brush={{ onBrushEnd: (e) => (xDomain = e.xDomain) }}
         props={{
           area: { motion: { type: 'tween', duration: 200 } },
-          xAxis: { format: undefined, motion: { type: 'tween', duration: 200 } },
+          xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true },
         }}
         {renderContext}
         {debug}
@@ -1329,11 +1316,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           <Area line={{ class: 'stroke-primary' }} class="fill-primary/30" />
           <Highlight points lines />
         </Svg>

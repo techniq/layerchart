@@ -612,7 +612,6 @@
           placement="bottom"
           rule
           ticks={(scale) => scaleTime(scale.domain(), scale.range()).ticks()}
-          format={PeriodType.Day}
         />
         <Axis placement="left" rule />
       </Layer>

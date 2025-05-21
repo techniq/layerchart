@@ -88,11 +88,7 @@
       padding={{ top: 60 }}
     >
       {#snippet children({ context })}
-        <Legend
-          scale={colorScale}
-          title="Eclipse date"
-          tickFormat={(d) => new Date(d).getFullYear().toString()}
-        />
+        <Legend scale={colorScale} title="Eclipse date" tickFormat={PeriodType.CalendarYear} />
 
         <Layer type="svg">
           <GeoPath

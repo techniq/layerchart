@@ -88,16 +88,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.appleStock}
-      x="date"
-      y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
       <!-- Placed above context to fix overlap with Axis (might be refined to allow aboveMarks in future) -->
       {#snippet aboveContext({ context })}
         <Layer type={renderContext}>
@@ -142,16 +133,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.appleStock}
-      x="date"
-      y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
       {#snippet aboveContext({ context })}
         <Layer type={renderContext}>
           {#each annotations as annotation}
@@ -196,16 +178,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.appleStock}
-      x="date"
-      y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
       {#snippet aboveContext({ context })}
         <Layer type={renderContext}>
           {#each annotations as annotation}
@@ -263,9 +236,6 @@
       data={data.appleStock}
       x="date"
       y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
       padding={{ ...defaultChartPadding(), right: 40 }}
       {renderContext}
       {debug}
@@ -320,16 +290,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.appleStock}
-      x="date"
-      y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
       {#snippet aboveMarks({ context })}
         {@const maxPoint = data.appleStock[maxIndex(data.appleStock, (d) => d.value)]}
         <AnnotationPoint

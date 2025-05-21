@@ -75,11 +75,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Spline class="stroke-2 stroke-primary" />
       </Svg>
     </Chart>
@@ -101,11 +97,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
       </Svg>
       <Canvas>
         <Spline class="stroke-2 stroke-primary" />
@@ -130,11 +122,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Spline class="stroke-2 stroke-primary" />
         <Highlight points lines />
       </Svg>
@@ -166,11 +154,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Spline class="stroke-2 stroke-primary" />
         <Labels format="integer" />
       </Svg>
@@ -192,11 +176,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>
           {#snippet children({ gradient })}
             <Spline class="stroke-2" stroke={gradient} />
@@ -231,11 +211,7 @@
           (context.yScale(50) / (context.height + context.padding.bottom)) * 100 + '%'}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           <LinearGradient
             stops={[
               [thresholdOffset, 'var(--color-info)'],
@@ -275,11 +251,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}
             {@const color = context.cScale?.(fruit)}
             <Spline {data} class="stroke-2" stroke={color}>
@@ -331,11 +303,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Spline y={(d) => d.y} class="stroke-2" stroke={fruitColors.bananas} />
         <Spline y={(d) => d.y1} class="stroke-2" stroke={fruitColors.oranges} />
         <Highlight y={(d) => d.y} points={{ fill: fruitColors.bananas }} />
@@ -376,11 +344,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}
             {@const active = context.tooltip.data == null || context.tooltip.data.fruit === fruit}
             {@const color = context.cScale?.(fruit)}
@@ -434,11 +398,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => formatDate(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}
             {@const color = context.cScale?.(fruit)}
             <Spline {data} class="stroke-2" stroke={color} />

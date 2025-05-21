@@ -658,7 +658,7 @@
       rule={{ y: 'top', class: 'stroke-surface-content/20' }}
       props={{
         spline: { class: 'stroke' },
-        xAxis: { format: PeriodType.Month, tickLength: 0 },
+        xAxis: { format: PeriodType.Month, tickMarks: false },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
         tooltip: {
@@ -873,9 +873,6 @@
           },
         };
       })}
-      props={{
-        xAxis: { format: undefined },
-      }}
       {renderContext}
       {debug}
     >
@@ -926,9 +923,6 @@
           },
         },
       ]}
-      props={{
-        xAxis: { format: undefined },
-      }}
       {renderContext}
       {debug}
     />
@@ -964,9 +958,6 @@
           },
         },
       ]}
-      props={{
-        xAxis: { format: undefined },
-      }}
       {renderContext}
       {debug}
     />
@@ -1040,7 +1031,7 @@
       brush
       props={{
         spline: { motion: { type: 'tween', duration: 200 } },
-        xAxis: { format: undefined, motion: { type: 'tween', duration: 200 } },
+        xAxis: { motion: { type: 'tween', duration: 200 }, tickMultiline: true },
       }}
       {renderContext}
       {debug}
@@ -1102,11 +1093,7 @@
       {#snippet children({ context })}
         <Layer type={renderContext}>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           <Spline class="stroke-2 stroke-primary" />
           <Highlight points lines />
         </Layer>

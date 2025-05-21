@@ -1450,7 +1450,7 @@
       cRange={quantize(interpolateSpectral, 7).reverse()}
       radial
       props={{
-        xAxis: { ticks: { interval: timeMonth.every(3) }, format: PeriodType.Month },
+        xAxis: { ticks: { interval: timeMonth.every(3) } },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         grid: { xTicks: 12 },
       }}
@@ -1662,17 +1662,8 @@
     <BarChart data={dateSeriesData} x="date" y="value">
       {#snippet children({ context })}
         <Layer type={renderContext}>
-          <Axis
-            placement="left"
-            grid
-            rule
-            format={(value) => format(value, undefined, { variant: 'short' })}
-          />
-          <Axis
-            placement="bottom"
-            rule
-            format={(value) => format(value, undefined, { variant: 'short' })}
-          />
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
           <Bars radius={4} strokeWidth={1} class="fill-primary" />
           <Highlight area />
         </Layer>

@@ -99,11 +99,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
       </Svg>
     </Chart>
@@ -126,11 +122,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
         <Highlight points lines />
       </Svg>
@@ -161,11 +153,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/30" />
         <Labels format="integer" />
       </Svg>
@@ -188,12 +176,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day)}
-          rule
-          ticks={(scale) => scale.domain()}
-        >
+        <Axis placement="bottom" format={PeriodType.Day} rule ticks={(scale) => scale.domain()}>
           {#snippet tickLabel({ props, index })}
             <Text {...props} textAnchor={index ? 'end' : 'start'} />
           {/snippet}
@@ -219,11 +202,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <LinearGradient class="from-primary/50 to-primary/1" vertical>
           {#snippet children({ gradient })}
             <Area line={{ class: 'stroke-2 stroke-primary' }} fill={gradient} />
@@ -249,11 +228,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         <LinearGradient class="from-secondary/1 to-secondary">
           {#snippet children({ gradient: strokeGradient })}
             <LinearGradient class="from-primary/50 to-primary/1" vertical>
@@ -289,11 +264,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}
             {@const color = context.cScale?.(fruit)}
             <Area
@@ -348,11 +319,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
 
         <Area
           y1={(d) => d.apples}
@@ -418,11 +385,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}
             {@const active = context.tooltip.data == null || context.tooltip.data.fruit === fruit}
             {@const color = context.cScale?.(fruit)}
@@ -486,11 +449,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}
             {@const color = context.cScale?.(fruit)}
             <Area
@@ -537,11 +496,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
 
           {#each stackData as seriesData}
             {@const color = context.cGet(seriesData)}
@@ -586,11 +541,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis
-          placement="bottom"
-          format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          rule
-        />
+        <Axis placement="bottom" rule />
         {@const primaryColors = [
           'var(--color-danger)',
           'var(--color-success)',
@@ -644,11 +595,7 @@
       >
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           {#if show}
             <ChartClipPath
               initialWidth={0}
@@ -683,11 +630,7 @@
       >
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           {#if show}
             <Spline draw={{ easing: cubicInOut, delay: 700 }} class="stroke-2 stroke-primary" />
             <ChartClipPath
@@ -723,11 +666,7 @@
       >
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-            rule
-          />
+          <Axis placement="bottom" rule />
           {#if show}
             <Spline draw={{ easing: cubicInOut }} class="stroke-2 stroke-primary" />
             <ChartClipPath
@@ -762,10 +701,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          />
+          <Axis placement="bottom" />
           <Rule y={0} />
           <RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>
             <Area line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
@@ -800,10 +736,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          />
+          <Axis placement="bottom" />
           <Rule y={0} />
           <RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>
             <Area line={{ class: 'stroke-2 stroke-success' }} class="fill-success/20" />
@@ -842,10 +775,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          />
+          <Axis placement="bottom" />
           <Rule y={0} />
           <RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>
             <Area
@@ -894,10 +824,7 @@
       {#snippet children({ context })}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          />
+          <Axis placement="bottom" />
           <Rule y={0} />
           <RectClipPath x={0} y={0} width={context.width} height={context.yScale(0)}>
             <Area
@@ -964,10 +891,7 @@
           context.yScale(thresholdValue) / (context.height + context.padding.bottom)}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          />
+          <Axis placement="bottom" />
           <Rule y={0} />
           <LinearGradient
             stops={[
@@ -1010,10 +934,7 @@
           context.yScale(thresholdValue) / (context.height + context.padding.bottom)}
         <Svg>
           <Axis placement="left" grid rule />
-          <Axis
-            placement="bottom"
-            format={(d) => format(d, PeriodType.Day, { variant: 'short' })}
-          />
+          <Axis placement="bottom" />
           <Rule y={0} />
           <LinearGradient
             stops={[
