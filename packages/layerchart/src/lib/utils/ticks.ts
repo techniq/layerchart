@@ -66,19 +66,24 @@ export function getDurationFormat(duration: Duration, multiline = false) {
       }
     } else if (+duration >= +new Duration({ duration: { seconds: 1 } })) {
       // Seconds
+      const isFirst = i === 0 || +timeDay.floor(date) === +date;
       return (
         format(date, PeriodType.TimeOnly) +
-        (multiline && (i === 0 || +timeDay.floor(date) === +date)
-          ? `\n${format(date, PeriodType.Day, { variant: 'short' })}`
-          : '')
+        (multiline && isFirst ? `\n${format(date, PeriodType.Day, { variant: 'short' })}` : '')
       );
     } else if (+duration >= +new Duration({ duration: { milliseconds: 1 } })) {
       // Milliseconds
+      const isFirst = i === 0 || +timeDay.floor(date) === +date;
       return (
-        format(date, PeriodType.TimeOnly, { variant: 'long' }) +
-        (multiline && (i === 0 || +timeDay.floor(date) === +date)
-          ? `\n${format(date, PeriodType.Day, { variant: 'short' })}`
-          : '')
+        format(date, PeriodType.Custom, {
+          custom: [
+            DateToken.Hour_2Digit,
+            DateToken.Minute_2Digit,
+            DateToken.Second_2Digit,
+            DateToken.MiliSecond_3,
+            DateToken.Hour_woAMPM,
+          ],
+        }) + (multiline && isFirst ? `\n${format(date, PeriodType.Day, { variant: 'short' })}` : '')
       );
     } else {
       return date.toString();
