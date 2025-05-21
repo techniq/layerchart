@@ -148,9 +148,9 @@
     rule = false,
     grid = false,
     ticks,
-    tickSpacing = ['top', 'bottom'].includes(placement)
+    tickSpacing = ['top', 'bottom', 'angle'].includes(placement)
       ? 80
-      : ['left', 'right'].includes(placement)
+      : ['left', 'right', 'radius'].includes(placement)
         ? 50
         : undefined,
     tickMultiline = false,
@@ -187,9 +187,16 @@
   const xRangeMinMax = $derived(extent<number>(ctx.xRange)) as [number, number];
   const yRangeMinMax = $derived(extent<number>(ctx.yRange)) as [number, number];
 
-  // TODO: Handle radial orientation;
   const ctxSize = $derived(
-    orientation === 'vertical' ? ctx.height : orientation === 'horizontal' ? ctx.width : null
+    orientation === 'vertical'
+      ? ctx.height
+      : orientation === 'horizontal'
+        ? ctx.width
+        : orientation === 'radius'
+          ? ctx.height / 2
+          : orientation === 'angle'
+            ? ctx.width
+            : null
   );
 
   // TODO: Handle vertical orientation (placement === 'left' | right')?  Previously used `4` but could use `tickSpacing = 50` or similar
