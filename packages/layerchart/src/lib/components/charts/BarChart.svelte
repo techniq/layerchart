@@ -365,26 +365,20 @@
       return {
         placement: radial ? 'radius' : 'left',
 
-        format: (value) => {
-          if (isVertical && seriesLayout === 'stackExpand') {
-            return format(value, 'percentRound');
-          } else {
-            return format(value, undefined, { variant: 'short' });
-          }
-        },
+        format:
+          isVertical && seriesLayout === 'stackExpand'
+            ? (value) => format(value, 'percentRound')
+            : undefined,
         ...(typeof axis === 'object' ? axis : null),
         ...props.yAxis,
       };
     }
     return {
       placement: radial ? 'angle' : 'bottom',
-      format: (value) => {
-        if (!isVertical && seriesLayout === 'stackExpand') {
-          return format(value, 'percentRound');
-        } else {
-          return format(value, undefined, { variant: 'short' });
-        }
-      },
+      format:
+        !isVertical && seriesLayout === 'stackExpand'
+          ? (value) => format(value, 'percentRound')
+          : undefined,
       ...(typeof axis === 'object' ? axis : null),
       ...props.xAxis,
     };
