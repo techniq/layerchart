@@ -192,20 +192,6 @@
   import { degreesToRadians } from '$lib/utils/math.js';
   import { createId } from '$lib/utils/createId.js';
 
-  /*
-    TODO:
-      - [ ] Handle styled text (use <slot /> to measure?)
-			- [ ] Simplify by using `alignment-baseline` / `dominant-baseline`, rework multiline or drop support, etc
-			  - https://svelte.dev/repl/f12d3003313a43ba8a0be53e5786f1c7?version=3.44.3
-				- https://observablehq.com/@neocartocnrs/cheat-sheet-on-texts-in-svg
-
-    Reference:
-    - https://bl.ocks.org/mbostock/7555321
-    - https://github.com/airbnb/visx/blob/master/packages/visx-text/src/Text.tsx
-      - https://airbnb.io/visx/text
-      - https://github.com/airbnb/visx/blob/master/packages/visx-demo/src/pages/text.tsx
-  */
-
   const uid = $props.id();
 
   let {

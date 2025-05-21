@@ -199,7 +199,6 @@
             : null
   );
 
-  // TODO: Handle vertical orientation (placement === 'left' | right')?  Previously used `4` but could use `tickSpacing = 50` or similar
   const tickCount = $derived(
     typeof ticks === 'number'
       ? ticks
