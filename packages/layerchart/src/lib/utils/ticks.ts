@@ -125,8 +125,9 @@ export function resolveTickVals(scale: AnyScale, ticks?: TicksConfig, count?: nu
 
 export function resolveTickFormat(
   scale: AnyScale,
-  formatType: FormatType | undefined,
-  count: number | undefined,
+  ticks?: TicksConfig,
+  count?: number,
+  formatType?: FormatType,
   multiline = false
 ) {
   // Explicit format
@@ -136,9 +137,15 @@ export function resolveTickFormat(
 
   // Time scale
   if (isScaleTime(scale) && count) {
-    // Compare first 2 ticks to determine duration between ticks for formatting
-    const ticks = timeTicks(scale.domain()[0], scale.domain()[1], count);
-    return getDurationFormat(new Duration({ start: ticks[0], end: ticks[1] }), multiline);
+    if (isLiteralObject(ticks) && 'interval' in ticks && ticks.interval != null) {
+      const start = ticks.interval.floor(new Date());
+      const end = ticks.interval.ceil(new Date());
+      return getDurationFormat(new Duration({ start, end }), multiline);
+    } else {
+      // Compare first 2 ticks to determine duration between ticks for formatting
+      const [start, end] = timeTicks(scale.domain()[0], scale.domain()[1], count);
+      return getDurationFormat(new Duration({ start, end }), multiline);
+    }
   }
 
   // Format from scale

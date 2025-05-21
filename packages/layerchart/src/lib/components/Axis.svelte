@@ -201,7 +201,7 @@
         : undefined
   );
   const tickVals = $derived(resolveTickVals(scale, ticks, tickCount));
-  const tickFormat = $derived(resolveTickFormat(scale, format, tickCount, tickMultiline));
+  const tickFormat = $derived(resolveTickFormat(scale, ticks, tickCount, format, tickMultiline));
 
   function getCoords(tick: any) {
     switch (placement) {

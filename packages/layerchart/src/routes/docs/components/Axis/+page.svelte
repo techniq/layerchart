@@ -823,7 +823,7 @@
 <Preview>
   <div class="grid gap-3">
     {#each timeScaleExamples as example}
-      <div>
+      <div class="resize-x overflow-auto">
         <div class="text-sm mb-1">{example.label}</div>
         <div class="h-[100px] p-4 border rounded-sm">
           <Chart
@@ -849,7 +849,7 @@
 <Preview>
   <div class="grid gap-3">
     {#each timeScaleExamples as example}
-      <div>
+      <div class="resize-x overflow-auto">
         <div class="text-sm mb-1">{example.label}</div>
         <div class="h-[100px] p-4 border rounded-sm">
           <Chart
@@ -873,47 +873,49 @@
 </div>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      {xDomain}
-      y="value"
-      yDomain={[0, 100]}
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-      brush={{
-        resetOnEnd: true,
-        onBrushEnd: (e) => {
-          xDomain = asAny(e.xDomain);
-        },
-      }}
-    >
-      <Layer type={renderContext}>
-        <Axis placement="bottom" rule grid {tickSpacing} />
-        <Axis placement="left" />
-      </Layer>
-    </Chart>
-  </div>
+  <div class="p-4 border rounded-sm resize-x overflow-auto">
+    <div class="h-[300px]">
+      <Chart
+        x="date"
+        xScale={scaleTime()}
+        {xDomain}
+        y="value"
+        yDomain={[0, 100]}
+        padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        brush={{
+          resetOnEnd: true,
+          onBrushEnd: (e) => {
+            xDomain = asAny(e.xDomain);
+          },
+        }}
+      >
+        <Layer type={renderContext}>
+          <Axis placement="bottom" rule grid {tickSpacing} />
+          <Axis placement="left" />
+        </Layer>
+      </Chart>
+    </div>
 
-  <div class="h-[100px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={initialXDomain}
-      y="value"
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-      brush={{
-        mode: 'separated',
-        xDomain,
-        onChange: (e) => {
-          xDomain = asAny(e.xDomain);
-        },
-      }}
-    >
-      <Layer type={renderContext}>
-        <Axis placement="bottom" rule grid />
-      </Layer>
-    </Chart>
+    <div class="h-[80px]">
+      <Chart
+        x="date"
+        xScale={scaleTime()}
+        xDomain={initialXDomain}
+        y="value"
+        padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        brush={{
+          mode: 'separated',
+          xDomain,
+          onChange: (e) => {
+            xDomain = asAny(e.xDomain);
+          },
+        }}
+      >
+        <Layer type={renderContext}>
+          <Axis placement="bottom" rule grid ticks={{ interval: timeYear.every(1) }} />
+        </Layer>
+      </Chart>
+    </div>
   </div>
 </Preview>
 
@@ -923,46 +925,48 @@
 </div>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      {xDomain}
-      y="value"
-      yDomain={[0, 100]}
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-      brush={{
-        resetOnEnd: true,
-        onBrushEnd: (e) => {
-          xDomain = asAny(e.xDomain);
-        },
-      }}
-    >
-      <Layer type={renderContext}>
-        <Axis placement="bottom" rule grid tickMultiline {tickSpacing} />
-        <Axis placement="left" />
-      </Layer>
-    </Chart>
-  </div>
+  <div class="p-4 border rounded-sm resize-x overflow-auto">
+    <div class="h-[300px]">
+      <Chart
+        x="date"
+        xScale={scaleTime()}
+        {xDomain}
+        y="value"
+        yDomain={[0, 100]}
+        padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        brush={{
+          resetOnEnd: true,
+          onBrushEnd: (e) => {
+            xDomain = asAny(e.xDomain);
+          },
+        }}
+      >
+        <Layer type={renderContext}>
+          <Axis placement="bottom" rule grid tickMultiline {tickSpacing} />
+          <Axis placement="left" />
+        </Layer>
+      </Chart>
+    </div>
 
-  <div class="h-[100px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={initialXDomain}
-      y="value"
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-      brush={{
-        mode: 'separated',
-        xDomain,
-        onChange: (e) => {
-          xDomain = asAny(e.xDomain);
-        },
-      }}
-    >
-      <Layer type={renderContext}>
-        <Axis placement="bottom" rule grid />
-      </Layer>
-    </Chart>
+    <div class="h-[80px]">
+      <Chart
+        x="date"
+        xScale={scaleTime()}
+        xDomain={initialXDomain}
+        y="value"
+        padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        brush={{
+          mode: 'separated',
+          xDomain,
+          onChange: (e) => {
+            xDomain = asAny(e.xDomain);
+          },
+        }}
+      >
+        <Layer type={renderContext}>
+          <Axis placement="bottom" rule grid ticks={{ interval: timeYear.every(1) }} />
+        </Layer>
+      </Chart>
+    </div>
   </div>
 </Preview>

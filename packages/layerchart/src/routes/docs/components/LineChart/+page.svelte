@@ -71,9 +71,6 @@
 
   let dynamicData = $state(ticks(-2, 2, 200).map(Math.sin));
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
-  let debug = $state(false);
-
   // Get a few random points to use for annotations
   const annotations = $derived(
     [...data.appleStock]
@@ -88,6 +85,9 @@
   );
 
   let show = $state(true);
+
+  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
