@@ -44,6 +44,18 @@
     ticks?: TicksConfig;
 
     /**
+     * Width or height of each tick in pxiels (responsive reduce)
+     */
+    tickSpacing?: number;
+
+    /**
+     * Whether to render tick labels on multiple lines for additional context
+     *
+     * @default false
+     */
+    tickMultiline?: boolean;
+
+    /**
      * Length of the tick line
      * @default 4
      */
@@ -114,7 +126,7 @@
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
 
-  import { format as formatValue, type FormatType } from '@layerstack/utils';
+  import { type FormatType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Group, { type GroupProps } from './Group.svelte';
@@ -126,7 +138,7 @@
   import { getChartContext } from './Chart.svelte';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { type MotionProp } from '$lib/utils/motion.svelte.js';
-  import { resolveTickVals, type TicksConfig } from '$lib/utils/ticks.js';
+  import { resolveTickFormat, resolveTickVals, type TicksConfig } from '$lib/utils/ticks.js';
 
   let {
     placement,
@@ -136,6 +148,12 @@
     rule = false,
     grid = false,
     ticks,
+    tickSpacing = ['top', 'bottom', 'angle'].includes(placement)
+      ? 80
+      : ['left', 'right', 'radius'].includes(placement)
+        ? 50
+        : undefined,
+    tickMultiline = false,
     tickLength = 4,
     tickMarks = true,
     format,
@@ -169,7 +187,27 @@
   const xRangeMinMax = $derived(extent<number>(ctx.xRange)) as [number, number];
   const yRangeMinMax = $derived(extent<number>(ctx.yRange)) as [number, number];
 
-  const tickVals = $derived(resolveTickVals(scale, ticks, placement));
+  const ctxSize = $derived(
+    orientation === 'vertical'
+      ? ctx.height
+      : orientation === 'horizontal'
+        ? ctx.width
+        : orientation === 'radius'
+          ? ctx.height / 2
+          : orientation === 'angle'
+            ? ctx.width
+            : null
+  );
+
+  const tickCount = $derived(
+    typeof ticks === 'number'
+      ? ticks
+      : tickSpacing && ctxSize
+        ? Math.round(ctxSize / tickSpacing)
+        : undefined
+  );
+  const tickVals = $derived(resolveTickVals(scale, ticks, tickCount));
+  const tickFormat = $derived(resolveTickFormat(scale, ticks, tickCount, format, tickMultiline));
 
   function getCoords(tick: any) {
     switch (placement) {
@@ -356,7 +394,7 @@
     <Text {...resolvedLabelProps} />
   {/if}
 
-  {#each tickVals as tick, index (tick.toString())}
+  {#each tickVals as tick, index (tick)}
     {@const tickCoords = getCoords(tick)}
     {@const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y)}
     {@const [radialTickMarkCoordsX, radialTickMarkCoordsY] = pointRadial(
@@ -366,7 +404,7 @@
     {@const resolvedTickLabelProps = {
       x: orientation === 'angle' ? radialTickCoordsX : tickCoords.x,
       y: orientation === 'angle' ? radialTickCoordsY : tickCoords.y,
-      value: formatValue(tick, format ?? scale.tickFormat?.() ?? ((v) => v)),
+      value: tickFormat(tick, index),
       ...getDefaultTickLabelProps(tick),
       motion,
       ...tickLabelProps,

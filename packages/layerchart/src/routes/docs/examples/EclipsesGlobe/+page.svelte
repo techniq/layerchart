@@ -32,7 +32,7 @@
   let velocity = $state(3);
   const timer = new TimerState({
     delay: 1,
-    onTick() {
+    tick: () => {
       const value = context.transform.translate;
 
       context.transform.translate = {
@@ -88,11 +88,7 @@
       padding={{ top: 60 }}
     >
       {#snippet children({ context })}
-        <Legend
-          scale={colorScale}
-          title="Eclipse date"
-          tickFormat={(d) => new Date(d).getFullYear().toString()}
-        />
+        <Legend scale={colorScale} title="Eclipse date" tickFormat={PeriodType.CalendarYear} />
 
         <Layer type="svg">
           <GeoPath

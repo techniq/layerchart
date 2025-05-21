@@ -205,14 +205,12 @@
     if (axisDirection === 'y') {
       return {
         placement: 'left',
-        format: (value) => format(value, undefined, { variant: 'short' }),
         ...(typeof axis === 'object' ? axis : null),
         ...props.yAxis,
       };
     }
     return {
       placement: 'bottom',
-      format: (value) => format(value, undefined, { variant: 'short' }),
       ...(typeof axis === 'object' ? axis : null),
       ...props.xAxis,
     };

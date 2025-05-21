@@ -44,38 +44,26 @@ describe('resolveTickVals', () => {
     expect(resolveTickVals(scale)).toEqual(['a', 'b', 'c', 'd', 'e']);
   });
 
-  it('uses default 4 ticks for left placement', () => {
-    const scale = { ticks: vi.fn(() => [1, 2, 3, 4]) } as any;
-    expect(resolveTickVals(scale, undefined, 'left')).toEqual([1, 2, 3, 4]);
-    expect(scale.ticks).toHaveBeenCalledWith(4);
-  });
-
-  it('uses default 4 ticks for right placement', () => {
-    const scale = { ticks: vi.fn(() => [1, 2, 3, 4]) } as any;
-    expect(resolveTickVals(scale, undefined, 'right')).toEqual([1, 2, 3, 4]);
-    expect(scale.ticks).toHaveBeenCalledWith(4);
-  });
-
   it('uses undefined for non-left/right placement', () => {
-    const scale = { ticks: vi.fn(() => [1, 2]) } as any;
-    expect(resolveTickVals(scale, undefined, 'top')).toEqual([1, 2]);
+    const scale = { domain: mockDomain, ticks: vi.fn(() => [1, 2]) } as any;
+    expect(resolveTickVals(scale, undefined, undefined)).toEqual([1, 2]);
     expect(scale.ticks).toHaveBeenCalledWith(undefined);
   });
 
   it('passes number ticks to scale.ticks', () => {
-    const scale = { ticks: vi.fn(() => [10, 20]) } as any;
+    const scale = { domain: mockDomain, ticks: vi.fn(() => [10, 20]) } as any;
     expect(resolveTickVals(scale, 5)).toEqual([10, 20]);
     expect(scale.ticks).toHaveBeenCalledWith(5);
   });
 
   it('returns empty array for scale without ticks', () => {
-    const scale = {} as any;
+    const scale = { domain: mockDomain } as any;
     expect(resolveTickVals(scale, 5)).toEqual([]);
   });
 
   it('handles null ticks with placement', () => {
-    const scale = { ticks: vi.fn(() => [1, 2, 3]) } as any;
-    expect(resolveTickVals(scale, null, 'bottom')).toEqual([1, 2, 3]);
+    const scale = { domain: mockDomain, ticks: vi.fn(() => [1, 2, 3]) } as any;
+    expect(resolveTickVals(scale, null, undefined)).toEqual([1, 2, 3]);
     expect(scale.ticks).toHaveBeenCalledWith(undefined);
   });
 });

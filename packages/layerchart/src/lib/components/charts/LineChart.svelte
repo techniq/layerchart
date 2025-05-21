@@ -70,7 +70,6 @@
 <script lang="ts" generics="TData">
   import { onMount, type ComponentProps } from 'svelte';
   import { scaleLinear, scaleTime } from 'd3-scale';
-  import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Axis from '../Axis.svelte';
@@ -284,14 +283,12 @@
     if (axisDirection === 'y') {
       return {
         placement: radial ? 'radius' : 'left',
-        format: (value) => format(value, undefined, { variant: 'short' }),
         ...(typeof axis === 'object' ? axis : null),
         ...props.yAxis,
       };
     }
     return {
       placement: radial ? 'angle' : 'bottom',
-      format: (value) => format(value, undefined, { variant: 'short' }),
       ...(typeof axis === 'object' ? axis : null),
       ...props.xAxis,
     };

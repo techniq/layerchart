@@ -98,6 +98,20 @@
     verticalAnchor?: 'start' | 'middle' | 'end' | 'inherit';
 
     /**
+     * The dominant baseline of the text.  Useful for aligning text to the baseline of the axis.
+     *
+     * @default 'auto'
+     */
+    dominantBaseline?:
+      | 'auto'
+      | 'text-before-edge'
+      | 'text-after-edge'
+      | 'middle'
+      | 'hanging'
+      | 'ideographic'
+      | 'mathematical';
+
+    /**
      * Rotational angle of the text
      */
     rotate?: number;
@@ -178,20 +192,6 @@
   import { degreesToRadians } from '$lib/utils/math.js';
   import { createId } from '$lib/utils/createId.js';
 
-  /*
-    TODO:
-      - [ ] Handle styled text (use <slot /> to measure?)
-			- [ ] Simplify by using `alignment-baseline` / `dominant-baseline`, rework multiline or drop support, etc
-			  - https://svelte.dev/repl/f12d3003313a43ba8a0be53e5786f1c7?version=3.44.3
-				- https://observablehq.com/@neocartocnrs/cheat-sheet-on-texts-in-svg
-
-    Reference:
-    - https://bl.ocks.org/mbostock/7555321
-    - https://github.com/airbnb/visx/blob/master/packages/visx-text/src/Text.tsx
-      - https://airbnb.io/visx/text
-      - https://github.com/airbnb/visx/blob/master/packages/visx-demo/src/pages/text.tsx
-  */
-
   const uid = $props.id();
 
   let {
@@ -208,6 +208,7 @@
     scaleToFit = false,
     textAnchor = 'start',
     verticalAnchor = 'end',
+    dominantBaseline = 'auto',
     rotate,
     opacity = 1,
     strokeWidth = 0,
@@ -226,6 +227,8 @@
     transform: transformProp,
     ...restProps
   }: TextProps = $props();
+
+  const renderCtx = getRenderContext();
 
   let ref = $state<SVGTextElement>();
   let svgRef = $state<SVGElement>();
@@ -260,49 +263,49 @@
     };
   });
 
-  const rawText = $derived(value != null ? value.toString() : '');
+  // Handle null and convert `\n` strings back to newline characters
+  const rawText = $derived(value != null ? value.toString().replace(/\\n/g, '\n') : '');
 
   const textValue = $derived.by(() => {
     if (!truncateConfig) return rawText;
     return truncateText(rawText, truncateConfig);
   });
 
-  const renderCtx = getRenderContext();
-
-  const words = $derived(textValue ? textValue.split(/(?:(?!\u00A0+)\s+)/) : []);
-
-  const wordsWithWidth = $derived(
-    words.map((word) => ({
-      word,
-      width: getStringWidth(word, style) || 0,
-    }))
-  );
-
   const spaceWidth = $derived(getStringWidth('\u00A0', style) || 0);
 
-  const wordsByLines = $derived(
-    wordsWithWidth.reduce((result: { words: string[]; width?: number }[], item) => {
-      const currentLine = result[result.length - 1];
+  const wordsByLines = $derived.by(() => {
+    // Split by newlines to preserve explicit line breaks
+    const lines = textValue.split('\n');
 
-      if (
-        currentLine &&
-        (width == null || scaleToFit || (currentLine.width || 0) + item.width + spaceWidth < width)
-      ) {
-        // Word can be added to an existing line
-        currentLine.words.push(item.word);
-        currentLine.width = currentLine.width || 0;
-        currentLine.width += item.width + spaceWidth;
-      } else {
-        // Add first word to line or word is too long to scaleToFit on existing line
-        const newLine = { words: [item.word], width: item.width };
-        result.push(newLine);
-      }
+    return lines.flatMap((line) => {
+      // Split each line into words
+      const words = line.split(/(?:(?!\u00A0+)\s+)/);
 
-      return result;
-    }, [])
-  );
+      // Handle word wrapping within each line
+      return words.reduce((result: { words: string[]; width?: number }[], item) => {
+        const currentLine = result[result.length - 1];
+        const itemWidth = getStringWidth(item, style) || 0;
 
-  const lines = $derived(wordsByLines.length);
+        if (
+          currentLine &&
+          (width == null || scaleToFit || (currentLine.width || 0) + itemWidth + spaceWidth < width)
+        ) {
+          // Word can be added to an existing line
+          currentLine.words.push(item);
+          currentLine.width = currentLine.width || 0;
+          currentLine.width += itemWidth + spaceWidth;
+        } else {
+          // Add first word to line or word is too long to scaleToFit on existing line
+          const newLine = { words: [item], width: itemWidth };
+          result.push(newLine);
+        }
+
+        return result;
+      }, []);
+    });
+  });
+
+  const lineCount = $derived(wordsByLines.length);
 
   /**
    * Convert css value to pixel value (ex. 0.71em => 11.36)
@@ -329,9 +332,9 @@
     if (verticalAnchor === 'start') {
       return getPixelValue(capHeight);
     } else if (verticalAnchor === 'middle') {
-      return ((lines - 1) / 2) * -getPixelValue(lineHeight) + getPixelValue(capHeight) / 2;
+      return ((lineCount - 1) / 2) * -getPixelValue(lineHeight) + getPixelValue(capHeight) / 2;
     } else {
-      return (lines - 1) * -getPixelValue(lineHeight);
+      return (lineCount - 1) * -getPixelValue(lineHeight);
     }
   });
 
@@ -348,7 +351,7 @@
   const scaleTransform = $derived.by(() => {
     if (
       scaleToFit &&
-      lines > 0 &&
+      lineCount > 0 &&
       typeof x == 'number' &&
       typeof y == 'number' &&
       typeof width == 'number'
@@ -500,6 +503,7 @@
       >
         <textPath
           style="text-anchor: {textAnchor};"
+          dominant-baseline={dominantBaseline}
           href="#{pathId}"
           {startOffset}
           class={cls(layerClass('text-path'))}
@@ -514,6 +518,7 @@
         y={motionY.current}
         {transform}
         text-anchor={textAnchor}
+        dominant-baseline={dominantBaseline}
         {...restProps}
         {fill}
         fill-opacity={fillOpacity}

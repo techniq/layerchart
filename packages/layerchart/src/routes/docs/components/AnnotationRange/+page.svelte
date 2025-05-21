@@ -62,16 +62,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.appleStock}
-      x="date"
-      y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
       {#snippet belowMarks({ context })}
         <AnnotationRange
           y={[500, null]}
@@ -92,16 +83,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.appleStock}
-      x="date"
-      y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
       {#snippet belowMarks({ context })}
         <AnnotationRange
           y={[null, 500]}
@@ -122,16 +104,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.appleStock}
-      x="date"
-      y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
       {#snippet belowMarks({ context })}
         <AnnotationRange
           y={[300, 500]}
@@ -152,16 +125,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.appleStock}
-      x="date"
-      y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
       {#snippet belowMarks({ context })}
         <AnnotationRange y={[0, 400]} class="fill-success/10" />
         <AnnotationRange y={[400, 600]} class="fill-warning/10" />
@@ -175,16 +139,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.appleStock}
-      x="date"
-      y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
       {#snippet belowMarks({ context })}
         <AnnotationRange
           x={[new Date('2010-01-01'), null]}
@@ -205,16 +160,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.appleStock}
-      x="date"
-      y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
       {#snippet belowMarks({ context })}
         <AnnotationRange
           x={[null, new Date('2010-12-31')]}
@@ -235,16 +181,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.appleStock}
-      x="date"
-      y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
       {#snippet belowMarks({ context })}
         <AnnotationRange
           x={[new Date('2010-01-01'), new Date('2010-12-31')]}
@@ -265,16 +202,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.appleStock}
-      x="date"
-      y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
       {#snippet belowMarks({ context })}
         <AnnotationRange
           x={[new Date('2011-01-01'), new Date('2011-06-30')]}
@@ -319,16 +247,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.appleStock}
-      x="date"
-      y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
       {#snippet aboveMarks({ context })}
         <AnnotationRange
           x={[new Date('2010-01-01'), new Date('2010-12-31')]}
@@ -416,16 +335,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <LineChart
-      data={data.appleStock}
-      x="date"
-      y="value"
-      props={{
-        xAxis: { format: undefined },
-      }}
-      {renderContext}
-      {debug}
-    >
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
       {#snippet aboveMarks({ context })}
         <AnnotationRange
           x={[new Date('2010-01-01'), null]}

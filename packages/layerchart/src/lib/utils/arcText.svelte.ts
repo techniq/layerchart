@@ -261,13 +261,13 @@ export function createArcTextProps(
   const outerPath = getArcPathOuter(pathGenProps);
 
   const innerDominantBaseline = $derived.by(() => {
-    if (isBottomCw || isBottomCcw) return 'auto';
-    if (isTopCw || isTopCcw) return 'hanging';
-    return 'auto';
+    if (isBottomCw || isBottomCcw) return 'auto' as const;
+    if (isTopCw || isTopCcw) return 'hanging' as const;
+    return 'auto' as const;
   });
 
   const outerDominantBaseline = $derived.by(() => {
-    if (isBottomCw || isBottomCcw) return 'hanging';
+    if (isBottomCw || isBottomCcw) return 'hanging' as const;
     return undefined;
   });
 
@@ -317,7 +317,7 @@ export function createArcTextProps(
       x: x,
       y: y,
       textAnchor,
-      'dominant-baseline': 'middle',
+      dominantBaseline: 'middle' as const,
     };
   });
 
@@ -326,19 +326,19 @@ export function createArcTextProps(
       return {
         path: innerPath.current,
         ...sharedProps,
-        'dominant-baseline': innerDominantBaseline,
+        dominantBaseline: innerDominantBaseline,
       };
     } else if (position === 'outer') {
       return {
         path: outerPath.current,
         ...sharedProps,
-        'dominant-baseline': outerDominantBaseline,
+        dominantBaseline: outerDominantBaseline,
       };
     } else if (position === 'middle') {
       return {
         path: middlePath.current,
         ...sharedProps,
-        'dominant-baseline': 'middle' as const,
+        dominantBaseline: 'middle' as const,
       };
     } else if (position === 'centroid') {
       const centroid = props.centroid();

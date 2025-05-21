@@ -556,10 +556,7 @@
           >
             <Svg>
               <Axis placement="left" grid rule />
-              <Axis
-                placement="bottom"
-                format={(v) => format(v, PeriodType.Day, { variant: 'short' })}
-              />
+              <Axis placement="bottom" />
               <Rule y={0} />
               <ChartClipPath>
                 <LinearGradient

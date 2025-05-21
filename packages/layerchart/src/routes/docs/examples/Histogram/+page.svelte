@@ -263,11 +263,7 @@
                 <Tooltip.Item label="count" value={data.length} format="integer" />
                 <Tooltip.Separator />
                 {#each data.slice(0, 5) as d}
-                  <Tooltip.Item
-                    label="value"
-                    value={d}
-                    format={(value) => format(value, PeriodType.DayTime)}
-                  />
+                  <Tooltip.Item label="value" value={d} format={PeriodType.DayTime} />
                 {/each}
                 {#if data.length > 5}
                   <span></span>
@@ -319,7 +315,6 @@
         padding={{ left: 16, bottom: 48 }}
         props={{
           xAxis: {
-            format: PeriodType.Day,
             ticks: (scale) => scaleTime(scale.domain(), scale.range()).ticks(),
             tickLabelProps: { rotate: 315, textAnchor: 'end', verticalAnchor: 'middle', dy: 8 },
             motion: 'tween',
@@ -340,11 +335,7 @@
                 <Tooltip.Item label="count" value={data.length} format="integer" />
                 <Tooltip.Separator />
                 {#each data.slice(0, 5) as d}
-                  <Tooltip.Item
-                    label="value"
-                    value={d}
-                    format={(value) => format(value, PeriodType.DayTime)}
-                  />
+                  <Tooltip.Item label="value" value={d} format={PeriodType.DayTime} />
                 {/each}
                 {#if data.length > 5}
                   <span></span>

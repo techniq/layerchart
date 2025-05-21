@@ -3,7 +3,7 @@
   import { scaleQuantile } from 'd3-scale';
   import { schemeBlues } from 'd3-scale-chromatic';
   import { geoIdentity, type GeoProjection } from 'd3-geo';
-  import { feature, transform } from 'topojson-client';
+  import { feature } from 'topojson-client';
   import { format } from '@layerstack/utils';
 
   import { Canvas, Chart, GeoPath, Legend, Svg, Tooltip } from 'layerchart';

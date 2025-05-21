@@ -1,12 +1,20 @@
 <script lang="ts">
   import { scaleLinear, scaleTime, scaleBand, scaleLog } from 'd3-scale';
   import { range } from 'd3-array';
-  import { timeDay } from 'd3-time';
-  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import {
+    timeDay,
+    timeHour,
+    timeMinute,
+    timeMonth,
+    timeSecond,
+    timeYear,
+    timeMillisecond,
+  } from 'd3-time';
+  import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
   import { MediaQueryPresets } from '@layerstack/svelte-state';
 
-  import { Axis, Chart, Frame, Layer, Rule, Text, Grid } from 'layerchart';
+  import { Axis, Chart, Frame, Layer, Rule, Text, Grid, asAny } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -15,6 +23,35 @@
   const largeData = createDateSeries({ count: 100, min: 50, max: 100, value: 'integer' });
 
   const now = new Date();
+
+  let initialXDomain = [timeYear.offset(now, -4), now];
+  let xDomain = $state([timeYear.offset(now, -4), now]);
+
+  const timeScaleExamples = [
+    { label: '5 years', domain: [timeYear.offset(now, -5), now], interval: timeYear.every(1) },
+    { label: '1 year', domain: [timeYear.offset(now, -1), now], interval: timeMonth.every(1) },
+    { label: '6 months', domain: [timeMonth.offset(now, -6), now], interval: timeMonth.every(1) },
+    { label: '90 days', domain: [timeDay.offset(now, -90), now], interval: timeDay.every(7) },
+    { label: '30 days', domain: [timeDay.offset(now, -30), now], interval: timeDay.every(1) },
+    { label: '10 days', domain: [timeDay.offset(now, -10), now], interval: timeDay.every(1) },
+    { label: '7 days', domain: [timeDay.offset(now, -7), now], interval: timeDay.every(1) },
+    { label: '3 days', domain: [timeDay.offset(now, -3), now], interval: timeHour.every(4) },
+    { label: '24 hours', domain: [timeHour.offset(now, -24), now], interval: timeHour.every(1) },
+    { label: '12 hours', domain: [timeHour.offset(now, -12), now], interval: timeHour.every(1) },
+    { label: '1 hour', domain: [timeHour.offset(now, -1), now], interval: timeMinute.every(5) },
+    {
+      label: '1 minute',
+      domain: [timeMinute.offset(now, -1), now],
+      interval: timeSecond.every(10),
+    },
+    {
+      label: '1 second',
+      domain: [timeSecond.offset(now, -1), now],
+      interval: timeMillisecond.every(100),
+    },
+  ];
+
+  let tickSpacing = $state(80); // x-axis default
 
   let renderContext: 'svg' | 'canvas' = $state('svg');
   let debug = $state(false);
@@ -467,27 +504,6 @@
   </div>
 </Preview>
 
-<h2>tick time interval</h2>
-
-<Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
-      <Layer type={renderContext}>
-        <Axis placement="bottom" rule ticks={{ interval: timeDay.every(3) }} />
-        <Axis placement="left" rule />
-      </Layer>
-    </Chart>
-  </div>
-</Preview>
-
 <h2>remove default tick count</h2>
 
 <Preview>
@@ -596,7 +612,6 @@
           placement="bottom"
           rule
           ticks={(scale) => scaleTime(scale.domain(), scale.range()).ticks()}
-          format={PeriodType.Day}
         />
         <Axis placement="left" rule />
       </Layer>
@@ -791,5 +806,244 @@
         <Axis placement="left" rule />
       </Layer>
     </Chart>
+  </div>
+</Preview>
+
+<div class="flex gap-2 mb-1/2">
+  <h2 class="grow">Time scale (auto)</h2>
+  <RangeField
+    label="tickSpacing"
+    labelPlacement="left"
+    bind:value={tickSpacing}
+    max={300}
+    step={10}
+  />
+</div>
+
+<Preview>
+  <div class="grid gap-3">
+    {#each timeScaleExamples as example}
+      <div class="resize-x overflow-auto">
+        <div class="text-sm mb-1">{example.label}</div>
+        <div class="h-[100px] p-4 border rounded-sm">
+          <Chart
+            xScale={scaleTime()}
+            xDomain={example.domain}
+            padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+          >
+            <Layer type={renderContext}>
+              <Axis placement="bottom" rule grid {tickSpacing} />
+            </Layer>
+          </Chart>
+        </div>
+      </div>
+    {/each}
+  </div>
+</Preview>
+
+<div class="flex gap-2 mb-1/2">
+  <h2 class="grow">Time scale (auto) with multiline ticks</h2>
+  <RangeField
+    label="tickSpacing"
+    labelPlacement="left"
+    bind:value={tickSpacing}
+    max={300}
+    step={10}
+  />
+</div>
+
+<Preview>
+  <div class="grid gap-3">
+    {#each timeScaleExamples as example}
+      <div class="resize-x overflow-auto">
+        <div class="text-sm mb-1">{example.label}</div>
+        <div class="h-[100px] p-4 border rounded-sm">
+          <Chart
+            xScale={scaleTime()}
+            xDomain={example.domain}
+            padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+          >
+            <Layer type={renderContext}>
+              <Axis placement="bottom" rule grid tickMultiline {tickSpacing} />
+            </Layer>
+          </Chart>
+        </div>
+      </div>
+    {/each}
+  </div>
+</Preview>
+
+<h2>Time scale (explicit intervals)</h2>
+
+<Preview>
+  <div class="grid gap-3">
+    {#each timeScaleExamples as example}
+      <div class="resize-x overflow-auto">
+        <div class="text-sm mb-1">{example.label}</div>
+        <div class="h-[100px] p-4 border rounded-sm">
+          <Chart
+            xScale={scaleTime()}
+            xDomain={example.domain}
+            padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+          >
+            <Layer type={renderContext}>
+              <Axis
+                placement="bottom"
+                rule
+                grid
+                {tickSpacing}
+                ticks={{ interval: example.interval }}
+              />
+            </Layer>
+          </Chart>
+        </div>
+      </div>
+    {/each}
+  </div>
+</Preview>
+
+<h2>Time scale (explicit intervals) with multiline ticks</h2>
+
+<Preview>
+  <div class="grid gap-3">
+    {#each timeScaleExamples as example}
+      <div class="resize-x overflow-auto">
+        <div class="text-sm mb-1">{example.label}</div>
+        <div class="h-[100px] p-4 border rounded-sm">
+          <Chart
+            xScale={scaleTime()}
+            xDomain={example.domain}
+            padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+          >
+            <Layer type={renderContext}>
+              <Axis
+                placement="bottom"
+                rule
+                grid
+                tickMultiline
+                {tickSpacing}
+                ticks={{ interval: example.interval }}
+              />
+            </Layer>
+          </Chart>
+        </div>
+      </div>
+    {/each}
+  </div>
+</Preview>
+
+<div class="flex gap-2 mb-1/2">
+  <h2 class="grow">Time scale (brush)</h2>
+  <RangeField
+    label="tickSpacing"
+    labelPlacement="left"
+    bind:value={tickSpacing}
+    max={300}
+    step={10}
+  />
+</div>
+
+<Preview>
+  <div class="p-4 border rounded-sm resize-x overflow-auto">
+    <div class="h-[300px]">
+      <Chart
+        x="date"
+        xScale={scaleTime()}
+        {xDomain}
+        y="value"
+        yDomain={[0, 100]}
+        padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        brush={{
+          resetOnEnd: true,
+          onBrushEnd: (e) => {
+            xDomain = asAny(e.xDomain);
+          },
+        }}
+      >
+        <Layer type={renderContext}>
+          <Axis placement="bottom" rule grid {tickSpacing} />
+          <Axis placement="left" />
+        </Layer>
+      </Chart>
+    </div>
+
+    <div class="h-[80px]">
+      <Chart
+        x="date"
+        xScale={scaleTime()}
+        xDomain={initialXDomain}
+        y="value"
+        padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        brush={{
+          mode: 'separated',
+          xDomain,
+          onChange: (e) => {
+            xDomain = asAny(e.xDomain);
+          },
+        }}
+      >
+        <Layer type={renderContext}>
+          <Axis placement="bottom" rule grid ticks={{ interval: timeYear.every(1) }} />
+        </Layer>
+      </Chart>
+    </div>
+  </div>
+</Preview>
+
+<div class="flex gap-2 mb-1/2">
+  <h2 class="grow">Time scale (brush) with multiline ticks</h2>
+  <RangeField
+    label="tickSpacing"
+    labelPlacement="left"
+    bind:value={tickSpacing}
+    max={300}
+    step={10}
+  />
+</div>
+
+<Preview>
+  <div class="p-4 border rounded-sm resize-x overflow-auto">
+    <div class="h-[300px]">
+      <Chart
+        x="date"
+        xScale={scaleTime()}
+        {xDomain}
+        y="value"
+        yDomain={[0, 100]}
+        padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        brush={{
+          resetOnEnd: true,
+          onBrushEnd: (e) => {
+            xDomain = asAny(e.xDomain);
+          },
+        }}
+      >
+        <Layer type={renderContext}>
+          <Axis placement="bottom" rule grid tickMultiline {tickSpacing} />
+          <Axis placement="left" />
+        </Layer>
+      </Chart>
+    </div>
+
+    <div class="h-[80px]">
+      <Chart
+        x="date"
+        xScale={scaleTime()}
+        xDomain={initialXDomain}
+        y="value"
+        padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        brush={{
+          mode: 'separated',
+          xDomain,
+          onChange: (e) => {
+            xDomain = asAny(e.xDomain);
+          },
+        }}
+      >
+        <Layer type={renderContext}>
+          <Axis placement="bottom" rule grid ticks={{ interval: timeYear.every(1) }} />
+        </Layer>
+      </Chart>
+    </div>
   </div>
 </Preview>
