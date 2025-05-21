@@ -32,7 +32,7 @@
   let velocity = $state(3);
   const timer = new TimerState({
     delay: 1,
-    onTick() {
+    tick: () => {
       const value = context.transform.translate;
 
       context.transform.translate = {

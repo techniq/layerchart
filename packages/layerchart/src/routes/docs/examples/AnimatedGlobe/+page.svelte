@@ -75,7 +75,7 @@
   const audioCurrentTime = new TimerState({
     initial: 0,
     delay: 100,
-    onTick: () => audioFile.currentTime,
+    tick: () => audioFile.currentTime,
   });
 
   async function play() {

@@ -24,7 +24,7 @@
   let velocity = $state(1);
   const timer = new TimerState({
     delay: 1,
-    onTick() {
+    tick: () => {
       if (!context) return;
       const curr = context.transform.translate;
 
