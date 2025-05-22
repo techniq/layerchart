@@ -55,7 +55,6 @@
 
   let renderContext: 'svg' | 'canvas' = $state('svg');
   let debug = $state(false);
-  const { mdScreen } = new MediaQueryPresets();
 </script>
 
 <h1>Examples</h1>
@@ -478,27 +477,6 @@
       <Layer type={renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule ticks={20} />
-      </Layer>
-    </Chart>
-  </div>
-</Preview>
-
-<h2>tick count (responsive)</h2>
-
-<Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
-      <Layer type={renderContext}>
-        <Axis placement="bottom" rule ticks={mdScreen.current ? 10 : 5} />
-        <Axis placement="left" rule />
       </Layer>
     </Chart>
   </div>
