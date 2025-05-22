@@ -359,13 +359,8 @@
 {#if tooltipCtx.data}
   <div
     {...props.root}
-    class={cls(
-      layerClass('tooltip-root'),
-      'absolute z-50 select-none',
-      !pointerEvents && 'pointer-events-none',
-      classes.root,
-      props.root?.class
-    )}
+    class={cls('root', layerClass('tooltip-root'), classes.root, props.root?.class)}
+    class:pointer-events-none={!pointerEvents}
     style:top="{motionY.current}px"
     style:left="{motionX.current}px"
     transition:fade={{ duration: 100 }}
@@ -408,3 +403,15 @@
     </div>
   </div>
 {/if}
+
+<style>
+  .root {
+    position: absolute;
+    z-index: 50;
+    user-select: none;
+  }
+
+  .pointer-events-none {
+    pointer-events: none;
+  }
+</style>
