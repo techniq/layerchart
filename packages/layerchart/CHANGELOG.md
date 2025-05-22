@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.10
+
+### Patch Changes
+
+- fix(Tooltip): Use standard CSS classes (non-tailwind) for root element to simplify some usage (including shadcn-svelte) ([#511](https://github.com/techniq/layerchart/pull/511))
+
 ## 2.0.0-next.9
 
 ### Patch Changes
