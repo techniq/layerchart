@@ -12,7 +12,6 @@
   } from 'd3-time';
   import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format, PeriodType } from '@layerstack/utils';
-  import { MediaQueryPresets } from '@layerstack/svelte-state';
 
   import { Axis, Chart, Frame, Layer, Rule, Text, Grid, asAny } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
@@ -73,10 +72,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      x="date"
       xScale={scaleTime()}
       xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -94,10 +91,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      x="date"
       xScale={scaleTime()}
       xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -115,10 +110,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      x="date"
       xScale={scaleTime()}
       xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -136,10 +129,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      x="date"
       xScale={scaleTime()}
       xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -157,10 +148,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      x="date"
       xScale={scaleTime()}
       xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -178,10 +167,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      x="date"
       xScale={scaleTime()}
       xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -199,10 +186,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      x="date"
       xScale={scaleTime()}
       xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -222,10 +207,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      x="date"
       xScale={scaleTime()}
       xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -246,10 +229,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      x="date"
       xScale={scaleTime()}
       xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -268,10 +249,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      x="date"
       xScale={scaleTime()}
       xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
       yDomain={[0, 100]}
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -287,16 +266,8 @@
 <h2>tick label styling</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, null]}
-      yNice
-      padding={{ top: 20, bottom: 36, left: 20, right: 20 }}
-    >
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xScale={scaleTime()} xDomain={[timeDay.offset(now, -10), now]} padding={{ bottom: 24 }}>
       <Layer type={renderContext}>
         <Axis
           placement="bottom"
@@ -307,7 +278,6 @@
             tickLabel: 'fill-danger font-semibold',
           }}
         />
-        <Axis placement="left" />
       </Layer>
     </Chart>
   </div>
@@ -316,27 +286,17 @@
 <h2>rotated tick labels and styling</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, null]}
-      yNice
-      padding={{ top: 20, bottom: 36, left: 20, right: 20 }}
-    >
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xScale={scaleTime()} xDomain={[timeDay.offset(now, -10), now]} padding={{ bottom: 24 }}>
       <Layer type={renderContext}>
         <Axis
           placement="bottom"
-          rule={{ class: 'stroke-danger' }}
+          rule
           tickLabelProps={{
             rotate: 315,
             textAnchor: 'end',
-            class: 'fill-danger font-semibold',
           }}
         />
-        <Axis placement="left" />
       </Layer>
     </Chart>
   </div>
@@ -345,19 +305,10 @@
 <h2>Remove ticks hashes</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xScale={scaleTime()} xDomain={[timeDay.offset(now, -10), now]} padding={{ bottom: 24 }}>
       <Layer type={renderContext}>
-        <Axis placement="bottom" rule tickLength={0} />
-        <Axis placement="left" rule tickLength={0} />
+        <Axis placement="bottom" rule tickMarks={false} />
       </Layer>
     </Chart>
   </div>
@@ -366,14 +317,11 @@
 <h2>show only first/last ticks with alignment</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
+  <div class="h-[200px] p-4 border rounded-sm">
     <Chart
-      x="date"
       xScale={scaleTime()}
       xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
       yDomain={[0, 100]}
-      yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Layer type={renderContext}>
@@ -396,20 +344,11 @@
 <h2>integer-only ticks</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 2]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xDomain={[0, 2]} padding={{ bottom: 24 }}>
       <Layer type={renderContext}>
-        <Axis placement="bottom" rule />
         <Axis
-          placement="left"
+          placement="bottom"
           rule
           ticks={(scale) => scale.ticks?.().filter(Number.isInteger)}
           format="integer"
@@ -422,19 +361,10 @@
 <h2>explicit ticks</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xDomain={[0, 100]} padding={{ bottom: 24 }}>
       <Layer type={renderContext}>
-        <Axis placement="bottom" rule />
-        <Axis placement="left" rule ticks={[0, 50, 100]} />
+        <Axis placement="bottom" rule ticks={[0, 50, 100]} />
       </Layer>
     </Chart>
   </div>
@@ -443,19 +373,10 @@
 <h2>Inject tick value</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xDomain={[0, 100]} padding={{ bottom: 24 }}>
       <Layer type={renderContext}>
-        <Axis placement="bottom" rule />
-        <Axis placement="left" rule ticks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />
+        <Axis placement="bottom" rule ticks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />
       </Layer>
     </Chart>
   </div>
@@ -464,40 +385,22 @@
 <h2>tick count</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xDomain={[0, 100]} padding={{ bottom: 24 }}>
       <Layer type={renderContext}>
-        <Axis placement="bottom" rule />
-        <Axis placement="left" rule ticks={20} />
+        <Axis placement="bottom" rule ticks={20} />
       </Layer>
     </Chart>
   </div>
 </Preview>
 
-<h2>remove default tick count</h2>
+<h2>tick spacing</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xDomain={[0, 100]} padding={{ bottom: 24 }}>
       <Layer type={renderContext}>
-        <Axis placement="bottom" rule />
-        <Axis placement="left" rule ticks={null} />
+        <Axis placement="bottom" rule tickSpacing={200} />
       </Layer>
     </Chart>
   </div>
@@ -506,25 +409,16 @@
 <h2>label next to hash</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xScale={scaleTime()} xDomain={[timeDay.offset(now, -10), now]} padding={{ bottom: 24 }}>
       <Layer type={renderContext}>
         <Axis
           placement="bottom"
-          rule={{ class: 'stroke-surface-content/10' }}
+          rule
           tickLabelProps={{ textAnchor: 'start', dx: 8, dy: 4 }}
           ticks={(scale) => scale.ticks?.().slice(0, -1)}
           tickLength={22}
         />
-        <Axis placement="left" rule />
       </Layer>
     </Chart>
   </div>
@@ -533,19 +427,10 @@
 <h2>Hide `0` tick via ticks</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xDomain={[0, 100]} padding={{ bottom: 24 }}>
       <Layer type={renderContext}>
-        <Axis placement="bottom" rule />
-        <Axis placement="left" rule ticks={(scale) => scale.ticks?.().filter((d) => d !== 0)} />
+        <Axis placement="bottom" rule ticks={(scale) => scale.ticks?.().filter((d) => d !== 0)} />
       </Layer>
     </Chart>
   </div>
@@ -554,19 +439,10 @@
 <h2>Hide `0` tick via format</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xDomain={[0, 100]} padding={{ bottom: 24 }}>
       <Layer type={renderContext}>
-        <Axis placement="bottom" rule />
-        <Axis placement="left" rule format={(v) => v || ''} />
+        <Axis placement="bottom" rule format={(v) => v || ''} />
       </Layer>
     </Chart>
   </div>
@@ -575,23 +451,14 @@
 <h2>Override axis ticks with custom scale</h2>
 
 <Preview data={largeData}>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      data={largeData}
-      x="date"
-      xScale={scaleBand()}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart data={largeData} x="date" xScale={scaleBand()} y="value" padding={{ bottom: 24 }}>
       <Layer type={renderContext}>
         <Axis
           placement="bottom"
           rule
           ticks={(scale) => scaleTime(scale.domain(), scale.range()).ticks()}
         />
-        <Axis placement="left" rule />
       </Layer>
     </Chart>
   </div>
@@ -610,12 +477,8 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      x="date"
       xScale={scaleTime()}
       xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
       padding={{ top: 32, bottom: 32, left: 20, right: 20 }}
     >
       <Layer type={renderContext}>
@@ -648,15 +511,7 @@
 
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 32, right: 32 }}
-    >
+    <Chart yDomain={[0, 100]} padding={{ top: 20, bottom: 20, left: 32, right: 32 }}>
       <Layer type={renderContext}>
         {#if debug}
           <Frame class="fill-danger/5" />
@@ -676,7 +531,66 @@
 </Preview>
 
 <div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>Multiple axis with same placement</h2>
+  <h2>Multiple time axis with same placement (bottom)</h2>
+
+  <div class="mb-2 flex gap-6">
+    <Field label="Debug:" dense labelPlacement="left" let:id>
+      <Switch {id} bind:checked={debug} />
+    </Field>
+  </div>
+</div>
+
+<Preview>
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xScale={scaleTime()} xDomain={[timeYear.offset(now, -2), now]} padding={{ bottom: 30 }}>
+      <Layer type={renderContext}>
+        {#if debug}
+          <Frame class="fill-danger/5" />
+          <Frame class="fill-danger/5" full />
+        {/if}
+
+        <Axis
+          placement="bottom"
+          ticks={{ interval: timeMonth.every(3) }}
+          format={(d) => 'Q' + (d.getMonth() / 3 + 1)}
+          rule
+        />
+        <Axis
+          placement="bottom"
+          ticks={{ interval: timeYear.every(1) }}
+          tickLength={0}
+          tickLabelProps={{ dy: 20, class: 'text-sm' }}
+        />
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Multiline labels with format (\n)</h2>
+
+<Preview>
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xScale={scaleTime()} xDomain={[timeYear.offset(now, -2), now]} padding={{ bottom: 30 }}>
+      <Layer type={renderContext}>
+        {#if debug}
+          <Frame class="fill-danger/5" />
+          <Frame class="fill-danger/5" full />
+        {/if}
+
+        <Axis
+          placement="bottom"
+          ticks={{ interval: timeMonth.every(3) }}
+          format={(d) =>
+            'Q' + (d.getMonth() / 3 + 1) + (d.getMonth() === 0 ? '\n' + d.getFullYear() : '')}
+          rule
+        />
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
+  <h2>Multiple different axis with same placement (right)</h2>
 
   <div class="mb-2 flex gap-6">
     <Field label="Debug:" dense labelPlacement="left" let:id>
@@ -687,15 +601,7 @@
 
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      yNice
-      padding={{ right: 90 }}
-    >
+    <Chart yDomain={[0, 100]} padding={{ right: 90 }}>
       {#snippet children({ context })}
         <Layer type={renderContext}>
           {#if debug}
@@ -729,17 +635,10 @@
 
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      radial
-    >
+    <Chart xScale={scaleTime()} xDomain={[timeDay.offset(now, -10), now]} yDomain={[0, 100]} radial>
       <Layer type={renderContext} center>
         <Axis placement="radius" rule />
-        <Axis placement="angle" rule ticks={(scale) => scale.ticks?.().splice(1)} />
+        <Axis placement="angle" rule />
       </Layer>
     </Chart>
   </div>
@@ -749,17 +648,10 @@
 
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yDomain={[0, 100]}
-      radial
-    >
+    <Chart xScale={scaleTime()} xDomain={[timeDay.offset(now, -10), now]} yDomain={[0, 100]} radial>
       <Layer type={renderContext} center>
         <Axis placement="radius" grid />
-        <Axis placement="angle" grid ticks={(scale) => scale.ticks?.().splice(1)} />
+        <Axis placement="angle" grid />
       </Layer>
     </Chart>
   </div>
@@ -768,20 +660,10 @@
 <h2>Log scale</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      x="date"
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(now, -10), now]}
-      y="value"
-      yScale={scaleLog()}
-      yDomain={[1, 100]}
-      yNice
-      padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-    >
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xScale={scaleLog()} xDomain={[1, 100]} padding={{ bottom: 24 }}>
       <Layer type={renderContext}>
         <Axis placement="bottom" rule />
-        <Axis placement="left" rule />
       </Layer>
     </Chart>
   </div>
@@ -923,12 +805,10 @@
 
 <Preview>
   <div class="p-4 border rounded-sm resize-x overflow-auto">
-    <div class="h-[300px]">
+    <div class="h-[200px]">
       <Chart
-        x="date"
         xScale={scaleTime()}
         {xDomain}
-        y="value"
         yDomain={[0, 100]}
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
         brush={{
@@ -947,10 +827,8 @@
 
     <div class="h-[80px]">
       <Chart
-        x="date"
         xScale={scaleTime()}
         xDomain={initialXDomain}
-        y="value"
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
         brush={{
           mode: 'separated',
@@ -981,12 +859,10 @@
 
 <Preview>
   <div class="p-4 border rounded-sm resize-x overflow-auto">
-    <div class="h-[300px]">
+    <div class="h-[200px]">
       <Chart
-        x="date"
         xScale={scaleTime()}
         {xDomain}
-        y="value"
         yDomain={[0, 100]}
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
         brush={{
@@ -1005,10 +881,8 @@
 
     <div class="h-[80px]">
       <Chart
-        x="date"
         xScale={scaleTime()}
         xDomain={initialXDomain}
-        y="value"
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
         brush={{
           mode: 'separated',
