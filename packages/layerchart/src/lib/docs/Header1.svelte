@@ -1,5 +1,7 @@
 <script lang="ts">
   import { SectionDivider } from 'svelte-ux';
+
+  let { children, ...restProps } = $props();
 </script>
 
 <!--
@@ -9,6 +11,6 @@
       - Maybe possible to set/get props from markdown/mdsvex
         - Example: `#API { id: 'api' }
 -->
-<SectionDivider {...$$restProps}>
-  <slot />
+<SectionDivider {...restProps}>
+  {@render children()}
 </SectionDivider>

@@ -11,7 +11,7 @@
 <h2>x and y baselines</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       xDomain={[0, 100]}
       yDomain={[0, 100]}
@@ -29,7 +29,7 @@
 <h2>top right x and y baselines</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       xDomain={[0, 100]}
       yDomain={[0, 100]}
@@ -47,7 +47,7 @@
 <h2>x baseline with negative values</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       xDomain={[-20, 100]}
       yDomain={[0, 100]}
@@ -65,7 +65,7 @@
 <h2>x annotation</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       xDomain={[0, 100]}
       yDomain={[0, 100]}
@@ -83,7 +83,7 @@
 <h2>y baseline with negative values</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={[]}
       xDomain={[0, 100]}
@@ -102,7 +102,7 @@
 <h2>y annotation</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       xDomain={[0, 100]}
       yDomain={[0, 100]}

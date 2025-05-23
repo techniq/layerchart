@@ -8,7 +8,7 @@
 <h2>Basic</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={[]}
       x="x"
@@ -30,7 +30,7 @@
 <h2>full</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={[]}
       x="x"
@@ -52,7 +52,7 @@
 <h2>border</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={[]}
       x="x"
@@ -74,7 +74,7 @@
 <h2>gradient background</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={[]}
       x="x"
@@ -85,8 +85,10 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Svg>
-        <LinearGradient class="from-primary/10 to-secondary/10" vertical let:gradient>
-          <Frame class="stroke-primary/10" fill={gradient} />
+        <LinearGradient class="from-primary/10 to-secondary/10" vertical>
+          {#snippet children({ gradient })}
+            <Frame class="stroke-primary/10" fill={gradient} />
+          {/snippet}
         </LinearGradient>
         <Axis placement="bottom" />
         <Axis placement="left" />
@@ -98,7 +100,7 @@
 <h2>Canvas</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={[]}
       x="x"
@@ -120,7 +122,7 @@
 <h2>Canvas gradient background</h2>
 
 <Preview>
-  <div class="h-[300px] p-4 border rounded">
+  <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={[]}
       x="x"
@@ -131,8 +133,10 @@
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
       <Canvas>
-        <LinearGradient class="from-primary/10 to-secondary/10" vertical let:gradient>
-          <Frame class="stroke-primary/10" fill={gradient} />
+        <LinearGradient class="from-primary/10 to-secondary/10" vertical>
+          {#snippet children({ gradient })}
+            <Frame class="stroke-primary/10" fill={gradient} />
+          {/snippet}
         </LinearGradient>
         <Axis placement="bottom" />
         <Axis placement="left" />

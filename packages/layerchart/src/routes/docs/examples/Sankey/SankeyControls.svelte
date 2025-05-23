@@ -3,14 +3,21 @@
   import { RangeField, MenuField } from 'svelte-ux';
 
   import type Sankey from '$lib/components/Sankey.svelte';
+  type SankeyProps = ComponentProps<typeof Sankey>;
 
-  type SankeyProps = ComponentProps<Sankey>;
-
-  export let nodeAlign: SankeyProps['nodeAlign'];
-  export let nodeColorBy: 'layer' | 'depth' | 'height' | 'index';
-  export let linkColorBy: 'static' | 'source' | 'target';
-  export let nodePadding: number;
-  export let nodeWidth: number;
+  let {
+    nodeAlign = $bindable(),
+    nodeColorBy = $bindable(),
+    linkColorBy = $bindable(),
+    nodePadding = $bindable(),
+    nodeWidth = $bindable(),
+  }: {
+    nodeAlign: SankeyProps['nodeAlign'];
+    nodeColorBy: 'layer' | 'depth' | 'height' | 'index';
+    linkColorBy: 'source' | 'target' | 'static';
+    nodePadding: number;
+    nodeWidth: number;
+  } = $props();
 </script>
 
 <div class="grid grid-flow-col gap-1 mb-4">

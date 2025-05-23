@@ -1,18 +1,48 @@
-<script lang="ts">
-  import { uniqueId } from '@layerstack/utils';
+<script lang="ts" module>
+  export type BlurProps = {
+    /**
+     * A unique id for the filter.
+     */
+    id?: string;
 
-  export let id: string = uniqueId('blur-');
-  export let stdDeviation = 5;
+    /**
+     * The standard deviation for the blur effect.
+     *
+     * @default 5
+     */
+    stdDeviation?: number;
+
+    /**
+     * The default children snippet which provides
+     * the id and url for the filter.
+     */
+    children?: Snippet<[{ id: string; url: string }]>;
+  };
 </script>
 
-<defs>
-  <filter {id}>
-    <feGaussianBlur in="SourceGraphic" {stdDeviation} />
-  </filter>
-</defs>
+<script lang="ts">
+  import type { Snippet } from 'svelte';
+  import { getRenderContext } from './Chart.svelte';
+  import { createId } from '$lib/utils/createId.js';
+  import { layerClass } from '$lib/utils/attributes.js';
 
-{#if $$slots.default}
-  <g filter="url(#{id})">
-    <slot {id} url="url(#{id})" />
-  </g>
+  const uid = $props.id();
+
+  let { id = createId('blur-', uid), stdDeviation = 5, children }: BlurProps = $props();
+
+  const renderContext = getRenderContext();
+</script>
+
+{#if renderContext === 'svg'}
+  <defs>
+    <filter {id} class={layerClass('blur-filter')}>
+      <feGaussianBlur in="SourceGraphic" {stdDeviation} />
+    </filter>
+  </defs>
+
+  {#if children}
+    <g filter="url(#{id})" class={layerClass('blur-g')}>
+      {@render children({ id, url: `url(#${id})` })}
+    </g>
+  {/if}
 {/if}

@@ -4,7 +4,6 @@
   import {
     Arc,
     Chart,
-    Circle,
     ClipPath,
     Group,
     LinearGradient,
@@ -12,7 +11,6 @@
     Text,
     Tooltip,
     cartesianToPolar,
-    degreesToRadians,
     radiansToDegrees,
   } from 'layerchart';
   import { Field, RangeField, SpringValue, Switch, Toggle } from 'svelte-ux';
@@ -22,8 +20,8 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
 
-  let value = 75;
-  let segments = 60;
+  let value = $state(75);
+  let segments = $state(60);
 
   // color wheel
   const layerCount = 6;
@@ -49,7 +47,8 @@
 <h1>Examples</h1>
 
 <Blockquote>
-  See also: <a href="/docs/components/PieChart">PieChart</a> for simplified examples
+  See also: <a href="/docs/components/ArcChart">ArcChart</a> and
+  <a href="/docs/components/PieChart">PieChart</a> for simplified examples
 </Blockquote>
 
 <h2>Partial Arc</h2>
@@ -62,25 +61,28 @@
     <Chart>
       <Svg center>
         <Group y={16}>
-          <LinearGradient class="from-secondary to-primary" let:gradient>
-            <Arc
-              {value}
-              range={[-120, 120]}
-              outerRadius={60}
-              innerRadius={50}
-              cornerRadius={5}
-              spring
-              let:value
-              fill={gradient}
-              track={{ class: 'fill-none stroke-surface-content/10' }}
-            >
-              <Text
-                value={Math.round(value) + '%'}
-                textAnchor="middle"
-                verticalAnchor="middle"
-                class="text-3xl tabular-nums"
-              />
-            </Arc>
+          <LinearGradient class="from-secondary to-primary">
+            {#snippet children({ gradient })}
+              <Arc
+                {value}
+                range={[-120, 120]}
+                outerRadius={60}
+                innerRadius={50}
+                cornerRadius={5}
+                motion="spring"
+                fill={gradient}
+                track={{ class: 'fill-none stroke-surface-content/10' }}
+              >
+                {#snippet children({ value })}
+                  <Text
+                    value={Math.round(value) + '%'}
+                    textAnchor="middle"
+                    verticalAnchor="middle"
+                    class="text-3xl tabular-nums"
+                  />
+                {/snippet}
+              </Arc>
+            {/snippet}
           </LinearGradient>
         </Group>
       </Svg>
@@ -177,7 +179,7 @@
       <Svg center>
         <SpringValue {value} let:value>
           <ClipPath>
-            <svelte:fragment slot="clip">
+            {#snippet clip()}
               {#each { length: segments } as _, segmentIndex}
                 {@const segmentAngle = (2 * Math.PI) / segments}
                 <Arc
@@ -188,11 +190,11 @@
                   padAngle={0.02}
                 />
               {/each}
-            </svelte:fragment>
+            {/snippet}
             <Arc
               value={value ?? 0}
               innerRadius={-20}
-              spring
+              motion="spring"
               class="fill-success-300"
               track={{ class: 'fill-surface-content/10' }}
             />
@@ -215,33 +217,37 @@
 
 <Preview>
   <div class="h-[300px] p-4 border resize overflow-auto">
-    <Chart let:tooltip>
-      <Svg center>
-        {#each { length: layerCount } as _, layerIndex}
-          {@const layer = layerIndex + 1}
-          {#each { length: divisions } as _, segmentIndex}
-            {@const segmentAngle = (2 * Math.PI) / divisions}
-            {@const startAngle = segmentIndex * segmentAngle}
-            {@const endAngle = (segmentIndex + 1) * segmentAngle}
-            {@const color = wheelSegmentColor(startAngle, layer)}
-            <Arc
-              {startAngle}
-              {endAngle}
-              outerRadius={layer / layerCount}
-              innerRadius={-20}
-              cornerRadius={4}
-              padAngle={0.02}
-              fill={color}
-              class="hover:scale-90 origin-center [transform-box:fill-box] transition-transform"
-              onpointermove={(e) => tooltip?.show(e, color)}
-              onpointerleave={(e) => tooltip?.hide()}
-            />
+    <Chart>
+      {#snippet children({ context })}
+        <Svg center>
+          {#each { length: layerCount } as _, layerIndex}
+            {@const layer = layerIndex + 1}
+            {#each { length: divisions } as _, segmentIndex}
+              {@const segmentAngle = (2 * Math.PI) / divisions}
+              {@const startAngle = segmentIndex * segmentAngle}
+              {@const endAngle = (segmentIndex + 1) * segmentAngle}
+              {@const color = wheelSegmentColor(startAngle, layer)}
+              <Arc
+                {startAngle}
+                {endAngle}
+                outerRadius={layer / layerCount}
+                innerRadius={-20}
+                cornerRadius={4}
+                padAngle={0.02}
+                fill={color}
+                class="hover:scale-90 origin-center [transform-box:fill-box] transition-transform"
+                onpointermove={(e) => context.tooltip.show(e, color)}
+                onpointerleave={() => context.tooltip.hide()}
+              />
+            {/each}
           {/each}
-        {/each}
-      </Svg>
-      <Tooltip.Root let:data>
-        {data}
-      </Tooltip.Root>
+        </Svg>
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            {data}
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>
@@ -267,7 +273,7 @@
               cornerRadius={10}
               class="fill-red-500"
               track={{ class: 'fill-red-500/10' }}
-              tweened={{ duration: 1000, easing: cubicInOut }}
+              motion={{ type: 'tween', duration: 1000, easing: cubicInOut }}
             />
             <Arc
               initialValue={0}
@@ -277,7 +283,7 @@
               cornerRadius={10}
               class="fill-lime-400"
               track={{ class: 'fill-lime-400/10' }}
-              tweened={{ duration: 1000, easing: cubicInOut }}
+              motion={{ type: 'tween', duration: 1000, easing: cubicInOut }}
             />
             <Arc
               initialValue={0}
@@ -287,7 +293,7 @@
               cornerRadius={10}
               class="fill-cyan-400"
               track={{ class: 'fill-cyan-500/10' }}
-              tweened={{ duration: 1000, easing: cubicInOut }}
+              motion={{ type: 'tween', duration: 1000, easing: cubicInOut }}
             />
           {/if}
         </Svg>
@@ -300,73 +306,73 @@
 
 <Preview>
   <div class="h-[200px] p-4 border resize overflow-auto">
-    <Chart let:width let:height>
-      <Svg center>
-        {@const arcWidth = 20}
-        {@const maxValue = 100}
-        <SpringValue {value} let:value={springValue}>
-          <Arc
-            value={springValue ?? 0}
-            domain={[0, maxValue]}
-            innerRadius={-arcWidth}
-            cornerRadius={10}
-            class="fill-secondary pointer-events-none"
-            track={{
-              class: 'fill-secondary/10',
-              onpointerdown: (e) => {
-                // pointer releative to center of chart and arc center
-                const { x, y } = localPoint(e);
-                const centerX = x - width / 2;
-                const centerY = y - height / 2;
+    <Chart>
+      {#snippet children({ context })}
+        <Svg center>
+          {@const arcWidth = 20}
+          {@const maxValue = 100}
+          <SpringValue {value} let:value={springValue}>
+            <Arc
+              value={springValue ?? 0}
+              domain={[0, maxValue]}
+              innerRadius={-arcWidth}
+              cornerRadius={10}
+              class="fill-secondary pointer-events-none"
+              track={{
+                class: 'fill-secondary/10',
+                onpointerdown: (e) => {
+                  // pointer releative to center of chart and arc center
+                  const { x, y } = localPoint(e);
+                  const centerX = x - context.width / 2;
+                  const centerY = y - context.height / 2;
 
-                const pointerAngle = radiansToDegrees(cartesianToPolar(centerX, centerY).radians);
-                value = Math.round((pointerAngle / 360) * maxValue);
-              },
-              onpointermove: (e) => {
-                if (e.buttons !== 1) {
-                  // button not pressed, ignoring
-                  return;
-                }
+                  const pointerAngle = radiansToDegrees(cartesianToPolar(centerX, centerY).radians);
+                  value = Math.round((pointerAngle / 360) * maxValue);
+                },
+                onpointermove: (e) => {
+                  if (e.buttons !== 1) {
+                    // button not pressed, ignoring
+                    return;
+                  }
 
-                // @ts-expect-error
-                e.currentTarget?.setPointerCapture(e.pointerId);
+                  e.currentTarget?.setPointerCapture(e.pointerId);
 
-                // pointer releative to center of chart and arc center
-                const { x, y } = localPoint(e);
-                const centerX = x - width / 2;
-                const centerY = y - height / 2;
+                  // pointer relative to center of chart and arc center
+                  const { x, y } = localPoint(e);
+                  const centerX = x - context.width / 2;
+                  const centerY = y - context.height / 2;
 
-                const pointerAngle = radiansToDegrees(cartesianToPolar(centerX, centerY).radians);
+                  const pointerAngle = radiansToDegrees(cartesianToPolar(centerX, centerY).radians);
 
-                const newValue = Math.round((pointerAngle / 360) * maxValue);
+                  const newValue = Math.round((pointerAngle / 360) * maxValue);
 
-                // 1.) No clamping
-                // value = newValue;
+                  // 1.) No clamping
+                  // value = newValue;
 
-                // 2.) Clamp to prevent wrapping around below 0 / above max
-                if (value > maxValue * 0.75 && newValue < maxValue * 0.25) {
-                  // Do not allow wrapping around above max
-                  value = maxValue;
-                } else if (value < maxValue * 0.25 && newValue > maxValue * 0.75) {
-                  // Do not allow wrapping around below 0
-                  value = 0;
-                } else {
-                  value = newValue;
-                }
-              },
-            }}
-          />
+                  // 2.) Clamp to prevent wrapping around below 0 / above max
+                  if (value > maxValue * 0.75 && newValue < maxValue * 0.25) {
+                    // Do not allow wrapping around above max
+                    value = maxValue;
+                  } else if (value < maxValue * 0.25 && newValue > maxValue * 0.75) {
+                    // Do not allow wrapping around below 0
+                    value = 0;
+                  } else {
+                    value = newValue;
+                  }
+                },
+              }}
+            />
 
-          <Text
-            value={Math.round(springValue ?? 0)}
-            textAnchor="middle"
-            verticalAnchor="middle"
-            dy={10}
-            class="text-5xl tabular-nums"
-          />
-        </SpringValue>
+            <Text
+              value={Math.round(springValue ?? 0)}
+              textAnchor="middle"
+              verticalAnchor="middle"
+              dy={10}
+              class="text-5xl tabular-nums"
+            />
+          </SpringValue>
 
-        <!--
+          <!--
         {@const radius = height / 2}
         {@const circleRadius = 10}
         {@const angle =
@@ -377,7 +383,8 @@
           r={circleRadius}
           class="stroke-black/10 fill-black/10"
         /> -->
-      </Svg>
+        </Svg>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

@@ -5,36 +5,38 @@
 
   import { mdiPlay, mdiStop } from '@mdi/js';
 
-  import { Canvas, Chart, GeoPath, Graticule, Tooltip, TransformContext, Svg } from 'layerchart';
+  import { Chart, GeoPath, Graticule, Layer, Tooltip, type ChartContextValue } from 'layerchart';
   import { Button, ButtonGroup, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { sortFunc } from '@layerstack/utils';
   import { scrollIntoView } from '@layerstack/svelte-actions';
   import { cls } from '@layerstack/tailwind';
-  import { timerStore } from '@layerstack/svelte-stores';
+  import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import TransformDebug from '$lib/docs/TransformDebug.svelte';
 
   import { timings } from './timings.js';
-  import type { Component } from 'svelte';
 
-  export let data;
+  let { data } = $props();
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let Context: Component = Svg;
-  let transformContext: TransformContext;
+  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let context = $state<ChartContextValue>(null!);
 
-  let selectedFeature: (typeof countries.features)[0] | null;
-  $: if (selectedFeature) {
-    const centroid = geoCentroid(selectedFeature);
+  let selectedFeature: (typeof countries.features)[0] | null = $state(null);
 
-    transformContext.setTranslate({
-      x: -centroid[0],
-      y: -centroid[1],
-    });
-  }
+  $effect.pre(() => {
+    if (selectedFeature && context?.transform) {
+      const centroid = geoCentroid(selectedFeature);
+
+      context.transform.setTranslate({
+        x: -centroid[0],
+        y: -centroid[1],
+      });
+    }
+  });
 
   // Animate to Yakko's song
   // https://animaniacs.fandom.com/wiki/Yakko%27s_World_(song)#New_Updated_Verse
@@ -53,22 +55,27 @@
   });
 
   // Set to jump to a country
-  let currentIndex = -1;
-  let isPlaying = false;
+  let currentIndex = $state(-1);
+  let isPlaying = $state(false);
 
-  $: if (isPlaying && ($audioCurrentTime ?? 0) >= countryTimings[currentIndex + 1]?.audioTime) {
-    const countryName = countryTimings[currentIndex + 1].country;
-    selectedFeature = countryFeaturesByName.get(countryName) ?? null;
-    currentIndex += 1;
-  }
+  $effect(() => {
+    if (
+      isPlaying &&
+      (audioCurrentTime.current ?? 0) >= countryTimings[currentIndex + 1]?.audioTime
+    ) {
+      const countryName = countryTimings[currentIndex + 1].country;
+      selectedFeature = countryFeaturesByName.get(countryName) ?? null;
+      currentIndex += 1;
+    }
+  });
 
   const audioFile = new Audio('/audio/yakko_world.mp3');
   audioFile.addEventListener('ended', () => stop());
 
-  const audioCurrentTime = timerStore({
+  const audioCurrentTime = new TimerState({
     initial: 0,
     delay: 100,
-    onTick: () => audioFile.currentTime,
+    tick: () => audioFile.currentTime,
   });
 
   async function play() {
@@ -85,14 +92,14 @@
     selectedFeature = null;
   }
 
-  let debug = false;
+  let debug = $state(false);
 </script>
 
 <div class="grid grid-cols-[1fr_auto] gap-2 mb-3">
   <Field label="Render context">
-    <ToggleGroup bind:value={Context} variant="outline">
-      <ToggleOption value={Svg}>Svg</ToggleOption>
-      <ToggleOption value={Canvas}>Canvas</ToggleOption>
+    <ToggleGroup bind:value={renderContext} variant="outline">
+      <ToggleOption value="svg">Svg</ToggleOption>
+      <ToggleOption value="canvas">Canvas</ToggleOption>
     </ToggleGroup>
   </Field>
 
@@ -102,7 +109,7 @@
 </div>
 
 <Preview data={countries}>
-  <div class="h-[600px] grid grid-cols-[224px,1fr] relative">
+  <div class="h-[600px] grid grid-cols-[224px_1fr] relative">
     <div class="absolute top-0 right-0 z-10 flex items-center gap-3">
       {#if isPlaying && selectedFeature}
         <span class="text-sm px-2 py-1 font-semibold text-primary bg-primary/5 rounded-full">
@@ -116,8 +123,8 @@
     </div>
 
     <div class="overflow-auto scrollbar-none">
-      {#each countries.features.sort(sortFunc('properties.name')) as country}
-        {@const isSelected = selectedFeature === country}
+      {#each countries.features.sort(sortFunc('properties.name')) as country (country)}
+        {@const isSelected = selectedFeature?.properties.name === country.properties.name}
         <div use:scrollIntoView={{ condition: isSelected }}>
           <Button
             variant={isSelected ? 'fill-light' : 'default'}
@@ -138,49 +145,50 @@
         applyTransform: ['rotate'],
       }}
       transform={{
-        spring: { stiffness: 0.04 },
+        motion: { type: 'spring', stiffness: 0.04 },
       }}
-      bind:transformContext
-      let:tooltip
+      bind:context
     >
-      {#if debug}
-        <div class="absolute bottom-0 right-0 z-10 grid gap-1">
-          <GeoDebug />
-          <TransformDebug />
-        </div>
-      {/if}
+      {#snippet children()}
+        {#if debug}
+          <div class="absolute bottom-0 right-0 z-10 grid gap-1">
+            <GeoDebug />
+            <TransformDebug />
+          </div>
+        {/if}
 
-      <svelte:component this={Context} {debug}>
-        <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
-        <Graticule class="stroke-surface-content/20" />
+        <Layer type={renderContext} {debug}>
+          <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
+          <Graticule class="stroke-surface-content/20" />
 
-        {#each countries.features as country}
-          <GeoPath
-            geojson={country}
-            class={cls(
-              'stroke-surface-content/50 fill-white cursor-pointer',
-              selectedFeature === country
-                ? 'stroke-primary-900 fill-primary'
-                : 'hover:fill-gray-200' // Canvas highlight handled below
-            )}
-            onclick={() => (selectedFeature = country)}
-            {tooltip}
-          />
-        {/each}
-      </svelte:component>
+          {#each countries.features as country (country)}
+            <GeoPath
+              geojson={country}
+              class={cls(
+                'stroke-surface-content/50 fill-white cursor-pointer',
+                selectedFeature?.properties.name === country.properties.name
+                  ? 'stroke-primary-900 fill-primary'
+                  : 'hover:fill-gray-200' // Canvas highlight handled below
+              )}
+              onclick={() => (selectedFeature = country)}
+              tooltipContext={context.tooltip}
+            />
+          {/each}
+        </Layer>
 
-      {#if Context === Canvas}
-        <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
-        <Canvas pointerEvents={false}>
-          {#if tooltip.data}
-            <GeoPath geojson={tooltip.data} class="fill-surface-content/20" />
-          {/if}
-        </Canvas>
-      {/if}
+        {#if renderContext === 'canvas'}
+          <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
+          <Layer type="canvas" pointerEvents={false}>
+            {#if context.tooltip.data}
+              <GeoPath geojson={context.tooltip.data} class="fill-surface-content/20" />
+            {/if}
+          </Layer>
+        {/if}
 
-      <Tooltip.Root let:data>
-        {data.properties.name}
-      </Tooltip.Root>
+        <Tooltip.Root>
+          {context.tooltip.data.properties.name}
+        </Tooltip.Root>
+      {/snippet}
     </Chart>
   </div>
 </Preview>

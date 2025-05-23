@@ -1,3 +1,81 @@
+<script lang="ts" module>
+  import type { Snippet } from 'svelte';
+
+  export type NodeExtraProperties = Record<string, any>;
+
+  export type SankeyProps = {
+    /**
+     * The function to get the nodes from the data.
+     * @default (d: any) => d.nodes
+     */
+    nodes?: (d: any) => any;
+
+    /**
+     * The function to get the node ID from the node data.
+     *
+     * @default (d: any) => d.index
+     */
+    nodeId?: (d: any) => any;
+    /**
+     * @see https://github.com/d3/d3-sankey#alignments
+     *
+     * @default sankeyJustify
+     */
+    nodeAlign?:
+      | ((node: SankeyNode<any, any>, n: number) => number)
+      | 'left'
+      | 'right'
+      | 'center'
+      | 'justify';
+
+    /**
+     * The width of the nodes.
+     *
+     * @default 4
+     */
+    nodeWidth?: number;
+
+    /**
+     * The padding between nodes.
+     *
+     * @default 10
+     */
+    nodePadding?: number;
+
+    /**
+     * The function to sort the nodes.
+     */
+    nodeSort?: (a: SankeyNode<any, any>, b: SankeyNode<any, any>) => number | undefined;
+
+    /**
+     * The function to get the links from the data.
+     *
+     * @default (d: any) => d.links
+     */
+    links?: (d: any) => any;
+
+    /**
+     * The function to sort the links.
+     *
+     */
+    linkSort?: (a: SankeyLink<any, any>, b: SankeyLink<any, any>) => number | undefined;
+
+    /**
+     * A function to be called when the data is updated.
+     */
+    onUpdate?: (data: SankeyGraph<{}, {}>) => void;
+
+    children?: Snippet<
+      [
+        {
+          nodes: SankeyNode<NodeExtraProperties, any>[];
+          links: SankeyNode<NodeExtraProperties, any>[];
+        },
+      ]
+    >;
+  };
+</script>
+
 <script lang="ts">
   // https://github.com/d3/d3-sankey
   import {
@@ -8,62 +86,61 @@
     sankeyJustify,
     type SankeyNode,
     type SankeyLink,
+    type SankeyGraph,
   } from 'd3-sankey';
 
-  import { chartContext } from './ChartContext.svelte';
+  import { getChartContext } from './Chart.svelte';
 
-  const { data, width, height } = chartContext();
+  let {
+    nodes: nodesProp = (d: any) => d.nodes,
+    nodeId = (d: any) => d.index,
+    nodeAlign = sankeyJustify,
+    nodeWidth = 4,
+    nodePadding = 10,
+    nodeSort,
+    links: linksProp = (d: any) => d.links,
+    linkSort,
+    onUpdate,
+    children,
+  }: SankeyProps = $props();
 
-  export let nodes = (d: any) => d.nodes;
-  export let nodeId = (d: any) => d.index;
-  /**
-   * see: https://github.com/d3/d3-sankey#alignments
-   */
-  export let nodeAlign:
-    | ((node: SankeyNode<any, any>, n: number) => number)
-    | 'left'
-    | 'right'
-    | 'center'
-    | 'justify' = sankeyJustify;
-  export let nodeWidth = 4;
-  export let nodePadding = 10;
-  export let nodeSort = undefined;
+  const ctx = getChartContext();
 
-  export let links = (d: any) => d.links;
-  export let linkSort = undefined;
+  const sankeyData = $derived.by(() => {
+    if (typeof document === 'undefined') return { nodes: [], links: [] };
 
-  export let onupdate: ((data: typeof sankeyData) => void) | undefined = undefined;
+    return (
+      d3Sankey()
+        .size([ctx.width, ctx.height])
+        .nodes(nodesProp)
+        .nodeId(nodeId)
+        .nodeAlign(
+          nodeAlign === 'left'
+            ? sankeyLeft
+            : nodeAlign === 'center'
+              ? sankeyCenter
+              : nodeAlign === 'right'
+                ? sankeyRight
+                : nodeAlign === 'justify'
+                  ? sankeyJustify
+                  : nodeAlign
+        )
+        .nodeWidth(nodeWidth)
+        .nodePadding(nodePadding)
+        // @ts-expect-error
+        .nodeSort(nodeSort)
+        .links(linksProp)
+        // @ts-expect-error
+        .linkSort(linkSort)(structuredClone(ctx.data))
+    );
+  });
 
-  $: sankey = d3Sankey()
-    .size([$width, $height])
-    .nodes(nodes)
-    .nodeId(nodeId)
-    .nodeAlign(
-      nodeAlign === 'left'
-        ? sankeyLeft
-        : nodeAlign === 'center'
-          ? sankeyCenter
-          : nodeAlign === 'right'
-            ? sankeyRight
-            : nodeAlign === 'justify'
-              ? sankeyJustify
-              : nodeAlign
-    )
-    .nodeWidth(nodeWidth)
-    .nodePadding(nodePadding)
-    // @ts-expect-error
-    .nodeSort(nodeSort)
-    .links(links)
-    // @ts-expect-error
-    .linkSort(linkSort);
-
-  // @ts-expect-error
-  $: sankeyData = sankey($data);
-  type NodeExtraProperties = Record<string, any>;
-  $: _nodes = sankeyData.nodes as SankeyNode<NodeExtraProperties, any>[];
-  $: _links = sankeyData.links as SankeyLink<NodeExtraProperties, any>[];
-
-  $: onupdate?.(sankeyData);
+  $effect(() => {
+    onUpdate?.(sankeyData);
+  });
 </script>
 
-<slot nodes={_nodes} links={_links} />
+{@render children?.({
+  nodes: sankeyData.nodes,
+  links: sankeyData.links,
+})}

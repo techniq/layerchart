@@ -3,7 +3,7 @@ import source from '$lib/components/GeoCircle.svelte?raw';
 import pageSource from './+page.svelte?raw';
 import type { GeometryCollection, Topology } from 'topojson-specification';
 
-export async function load() {
+export async function load({ fetch }) {
   return {
     geojson: (await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(
       (r) => r.json()

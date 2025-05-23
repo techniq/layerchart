@@ -8,23 +8,40 @@
   import type Spline from '$lib/components/Spline.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
 
-  type DagreProps = ComponentProps<Dagre>;
+  type DagreProps = ComponentProps<typeof Dagre>;
 
-  export let settings = {
-    ranker: 'network-simplex' as DagreProps['ranker'],
-    direction: 'left-right' as DagreProps['direction'],
-    align: 'up-left' as DagreProps['align'],
-    rankSeparation: 50 as DagreProps['rankSeparation'],
-    nodeSeparation: 50 as DagreProps['nodeSeparation'],
-    edgeSeparation: 10 as DagreProps['rankSeparation'],
-    edgeLabelPosition: 'center' as DagreProps['edgeLabelPosition'],
-    edgeLabelOffset: 10 as DagreProps['edgeLabelOffset'],
-    curve: curveLinear as ComponentProps<CurveMenuField>['value'],
-    arrow: 'arrow' as ComponentProps<Spline>['marker'],
-  };
+  let {
+    settings = $bindable({
+      ranker: 'network-simplex',
+      direction: 'left-right',
+      align: 'up-left',
+      rankSeparation: 50,
+      nodeSeparation: 50,
+      edgeSeparation: 10,
+      edgeLabelPosition: 'center',
+      edgeLabelOffset: 10,
+      curve: curveLinear,
+      arrow: 'arrow',
+    }),
+    class: className,
+  }: {
+    settings: {
+      ranker: DagreProps['ranker'];
+      direction: DagreProps['direction'];
+      align: DagreProps['align'];
+      rankSeparation: DagreProps['rankSeparation'];
+      nodeSeparation: DagreProps['nodeSeparation'];
+      edgeSeparation: DagreProps['rankSeparation'];
+      edgeLabelPosition: DagreProps['edgeLabelPosition'];
+      edgeLabelOffset: DagreProps['edgeLabelOffset'];
+      curve: ComponentProps<typeof CurveMenuField>['value'];
+      arrow: ComponentProps<typeof Spline>['marker'];
+    };
+    class?: string;
+  } = $props();
 </script>
 
-<div class={cls('grid gap-2', $$props.class)}>
+<div class={cls('grid gap-2', className)}>
   <MenuField
     label="Ranker"
     options={[

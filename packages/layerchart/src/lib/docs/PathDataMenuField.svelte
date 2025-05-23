@@ -1,17 +1,21 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import * as easings from 'svelte/easing';
-
   import { MenuField } from 'svelte-ux';
 
-  export let value: any | undefined = undefined;
+  let {
+    value = $bindable(),
+    amplitude = 1,
+    frequency = 10,
+    phase = 0,
+  }: {
+    value?: any;
+    amplitude?: number;
+    frequency?: number;
+    phase?: number;
+  } = $props();
 
-  // TODO: Allow updating externally without loosing selection
-  export let amplitude = 1;
-  export let frequency = 10;
-  export let phase = 0;
-
-  $: mathOptions = [
+  const mathOptions = $derived([
     {
       label: 'sin',
       group: 'math',
@@ -53,7 +57,7 @@
       group: 'math',
       value: (x: number) => amplitude * Math.pow(x, frequency) + phase,
     },
-  ];
+  ]);
 
   const easingOptions = Object.entries(easings).map(([key, value]) => {
     return {
@@ -63,7 +67,7 @@
     };
   });
 
-  $: options = [...mathOptions, ...easingOptions];
+  const options = $derived([...mathOptions, ...easingOptions]);
 
   // Select initial option
   onMount(() => {
