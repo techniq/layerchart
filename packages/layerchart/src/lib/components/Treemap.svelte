@@ -59,13 +59,6 @@
      */
     paddingRight?: number;
 
-    /**
-     * The selected node.
-     *
-     * @default null
-     */
-    selected?: HierarchyRectangularNode<T> | null;
-
     hierarchy?: HierarchyNode<T>;
 
     children?: Snippet<[{ nodes: HierarchyRectangularNode<T>[] }]>;
@@ -121,7 +114,7 @@
                 : tile
   );
 
-  const treemap = $derived.by(() => {
+  const treemapData = $derived.by(() => {
     const _treemap = d3treemap<T>()
       .size([ctx.width, ctx.height])
       .tile(aspectTile(tileFunc, ctx.width, ctx.height));
@@ -152,14 +145,21 @@
     if (paddingRight) {
       _treemap.paddingRight(paddingRight);
     }
-    return _treemap;
-  });
 
-  const treemapData = $derived(hierarchy ? treemap(hierarchy) : null);
+    if (hierarchy) {
+      const h = hierarchy.copy();
+      const treemapData = _treemap(h);
+      return {
+        links: treemapData.links(),
+        nodes: treemapData.descendants(),
+      };
+    }
 
-  $effect.pre(() => {
-    selected = treemapData;
+    return {
+      links: [],
+      nodes: [],
+    };
   });
 </script>
 
-{@render children?.({ nodes: treemapData ? treemapData.descendants() : [] })}
+{@render children?.({ nodes: treemapData.nodes })}
