@@ -29,6 +29,26 @@
     .sum((d) => d.value)
     .sort(sortFunc('value', 'desc'));
 
+  const simpleRoot = hierarchy({
+    name: 'root',
+    children: [
+      { name: 'A', value: 1000 },
+      { name: 'B', value: 900 },
+      { name: 'C', value: 800 },
+      { name: 'D', value: 700 },
+      { name: 'E', value: 600 },
+      { name: 'F', value: 500 },
+      { name: 'G', value: 400 },
+      { name: 'H', value: 300 },
+      { name: 'I', value: 200 },
+      { name: 'J', value: 100 },
+      { name: 'K', value: 100 },
+    ],
+  }).sum((d) => {
+    // @ts-expect-error
+    return d.value;
+  });
+
   let tile: ComponentProps<typeof Treemap>['tile'] = $state('squarify');
   let colorBy = $state('children');
 
@@ -42,6 +62,10 @@
   const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
   const ordinalColor = scaleOrdinal(
     chromatic.schemeSpectral[9].filter((c) => hsl(c).h < 60 || hsl(c).h > 90) // filter out hard to see yellow and green
+  );
+
+  const simpleOrdinalColor = scaleOrdinal(
+    chromatic.schemeSpectral[11].filter((c) => hsl(c).h < 60 || hsl(c).h > 90) // filter out hard to see yellow and green
   );
 
   function getNodeColor(node: HierarchyNode<any>, colorBy: string) {
@@ -64,7 +88,7 @@
 
 <h1>Example</h1>
 
-<h1>Complex</h1>
+<h2>Playground</h2>
 
 <div class="grid gap-1 mb-4">
   <div class="grid grid-cols-[6fr_3fr] gap-1">
@@ -98,13 +122,13 @@
   </div>
 </div>
 
-<Preview>
+<Preview data={root}>
   <div class="h-[800px]">
     <Chart>
       {#snippet children({ context })}
         <Svg>
           <Treemap
-            hierarchy={root.copy()}
+            hierarchy={root}
             {tile}
             {paddingOuter}
             {paddingInner}
@@ -180,6 +204,41 @@
           {/snippet}
         </Tooltip.Root>
       {/snippet}
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Simple / flat</h2>
+
+<Preview data={simpleRoot}>
+  <div class="h-[400px]">
+    <Chart>
+      <Svg>
+        <Treemap hierarchy={simpleRoot}>
+          {#snippet children({ nodes })}
+            {#each nodes.filter((n) => n.depth > 0) as node}
+              <Group x={node.x0} y={node.y0}>
+                {@const nodeWidth = node.x1 - node.x0}
+                {@const nodeHeight = node.y1 - node.y0}
+                <Rect
+                  width={nodeWidth}
+                  height={nodeHeight}
+                  stroke="rgb(0, 0, 0, 0.2)"
+                  fill={simpleOrdinalColor(node.data.name)}
+                />
+                <Text
+                  x={nodeWidth / 2}
+                  y={nodeHeight / 2}
+                  value={node.data.name}
+                  fill="rgb(0, 0, 0, 0.8)"
+                  textAnchor="middle"
+                  verticalAnchor="middle"
+                />
+              </Group>
+            {/each}
+          {/snippet}
+        </Treemap>
+      </Svg>
     </Chart>
   </div>
 </Preview>
