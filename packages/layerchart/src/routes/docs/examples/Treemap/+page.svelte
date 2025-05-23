@@ -83,8 +83,8 @@
   let tile: ComponentProps<typeof Treemap>['tile'] = $state('squarify');
   let colorBy = $state('children');
 
-  let selectedNested: HierarchyRectangularNode<any> | null = $state(null);
-  let selectedZoomable: HierarchyRectangularNode<any> | null = $state(null);
+  let selectedNested: HierarchyNode<any> = $state(complexDataHierarchy.copy());
+  let selectedZoomable: HierarchyNode<any> = $state(complexDataHierarchy.copy());
   let paddingOuter = $state(4);
   let paddingInner = $state(4);
   let paddingTop = $state(20);
@@ -180,9 +180,8 @@
             {#snippet children({ xScale, yScale })}
               <ChartClipPath>
                 <Treemap
-                  hierarchy={complexDataHierarchy.copy()}
+                  hierarchy={selectedNested}
                   {tile}
-                  bind:selected={selectedNested}
                   {paddingOuter}
                   {paddingInner}
                   {paddingTop}
@@ -457,11 +456,7 @@
         >
           {#snippet children({ xScale, yScale })}
             <ChartClipPath>
-              <Treemap
-                hierarchy={complexDataHierarchy.copy()}
-                {tile}
-                bind:selected={selectedZoomable}
-              >
+              <Treemap hierarchy={selectedZoomable} {tile}>
                 {#snippet children({ nodes })}
                   {#each nodes as node}
                     <Group
