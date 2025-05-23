@@ -93,9 +93,8 @@
   let paddingRight = $state(0);
 
   const sequentialColor = scaleSequential([4, -1], chromatic.interpolateGnBu);
-  // filter out hard to see yellow and green
   const ordinalColor = scaleOrdinal(
-    chromatic.schemeSpectral[9].filter((c) => hsl(c).h < 60 || hsl(c).h > 90)
+    chromatic.schemeSpectral[9].filter((c) => hsl(c).h < 60 || hsl(c).h > 90) // filter out hard to see yellow and green
   );
   // const ordinalColor = scaleOrdinal(chromatic.schemeCategory10)
 
@@ -256,7 +255,7 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{data.name}</Tooltip.Header>
+            <Tooltip.Header>{data.data.name}</Tooltip.Header>
             <Tooltip.List>
               <Tooltip.Item label="value" value={data.value} format="integer" />
             </Tooltip.List>
