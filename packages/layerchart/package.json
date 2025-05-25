@@ -79,6 +79,7 @@
     "unplugin-icons": "^22.1.0",
     "us-atlas": "^3.0.1",
     "vite": "^6.3.5",
+    "vite-plugin-devtools-json": "^0.1.0",
     "vitest": "^3.1.4"
   },
   "type": "module",

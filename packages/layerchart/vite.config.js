@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import dsv from '@rollup/plugin-dsv';
 import { autoType } from 'd3-dsv';
 import Icons from 'unplugin-icons/vite';
+import devtoolsJson from 'vite-plugin-devtools-json';
 
 /** @type {import('vite').UserConfig} */
 const config = {
@@ -16,6 +17,7 @@ const config = {
     Icons({
       compiler: 'svelte',
     }),
+    devtoolsJson(),
   ],
   // optimizeDeps: {
   //   include: ['svelte-ux'],
