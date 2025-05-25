@@ -17,6 +17,7 @@ const config = {
     Icons({
       compiler: 'svelte',
     }),
+    // @ts-expect-error
     devtoolsJson(),
   ],
   // optimizeDeps: {
