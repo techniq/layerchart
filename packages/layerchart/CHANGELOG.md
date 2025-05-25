@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.11
+
+### Patch Changes
+
+- fix(Axis): Fix multiline month when day tick does not align on first of month ([#517](https://github.com/techniq/layerchart/pull/517))
+
 ## 2.0.0-next.10
 
 ### Patch Changes
