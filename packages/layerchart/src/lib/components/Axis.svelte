@@ -44,7 +44,7 @@
     ticks?: TicksConfig;
 
     /**
-     * Width or height of each tick in pxiels (responsive reduce)
+     * Width or height of each tick in pixels (enabling responsive count)
      */
     tickSpacing?: number;
 
