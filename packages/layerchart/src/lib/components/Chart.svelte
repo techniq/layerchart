@@ -40,6 +40,7 @@
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
   import BrushContext, { type BrushContextValue } from './BrushContext.svelte';
   import { layerClass } from '$lib/utils/attributes.js';
+  import type { TimeInterval } from 'd3-time';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -149,6 +150,8 @@
     cGet: (d: T) => any;
     x1Get: (d: T) => any;
     y1Get: (d: T) => any;
+    xInterval: TimeInterval | null;
+    yInterval: TimeInterval | null;
     radial: boolean;
     tooltip: TooltipContextValue<T>;
     geo: GeoContextValue;
@@ -640,6 +643,16 @@
      */
     yBaseline?: number | null;
 
+    /**
+     * Time interval to use for the x-axis when using a time scale.
+     */
+    xInterval?: TimeInterval | null;
+
+    /**
+     * Time interval to use for the y-axis when using a time scale.
+     */
+    yInterval?: TimeInterval | null;
+
     /* Props passed to ChartContext */
 
     /**
@@ -738,6 +751,8 @@
     rRange: rRangeProp,
     xBaseline = null,
     yBaseline = null,
+    xInterval = null,
+    yInterval = null,
     meta = {},
     children: _children,
     radial = false,
@@ -1246,6 +1261,12 @@
     },
     get y1Scale() {
       return y1Scale;
+    },
+    get xInterval() {
+      return xInterval;
+    },
+    get yInterval() {
+      return yInterval;
     },
     get radial() {
       return radial;

@@ -3,6 +3,7 @@
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { mean, sum } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
+  import { timeDay } from 'd3-time';
 
   import {
     Axis,
@@ -107,6 +108,54 @@
 <Blockquote>
   See also: <a href="/docs/components/BarChart">BarChart</a> for simplified examples
 </Blockquote>
+
+<h2>Time scale</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      xDomain={[null, timeDay.offset(data[data.length - 1].date)]}
+      xInterval={timeDay}
+      y="value"
+      yDomain={[0, null]}
+      yNice={4}
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule tickMultiline />
+        <Bars strokeWidth={1} class="fill-primary" />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Time scale with inset</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      xDomain={[null, timeDay.offset(data[data.length - 1].date)]}
+      xInterval={timeDay}
+      y="value"
+      yDomain={[0, null]}
+      yNice={4}
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Svg>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule tickMultiline />
+        <Bars class="fill-primary" insets={{ x: 2 }} />
+      </Svg>
+    </Chart>
+  </div>
+</Preview>
 
 <h2>Basic</h2>
 

@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { scaleBand, scaleOrdinal } from 'd3-scale';
+  import { scaleOrdinal, scaleTime, scaleUtc } from 'd3-scale';
+  import { utcDay } from 'd3-time';
 
   import { Axis, Bars, Chart, Highlight, Points, Svg, Tooltip } from 'layerchart';
   import { PeriodType, formatDate } from '@layerstack/utils';
@@ -13,13 +14,14 @@
 
 <h2>Basic</h2>
 
-<!-- TODO: Should use xScale={scaleTime()} once `<Bar>` / createDimensionGetter() supports it -->
 <Preview data={data.appleTicker}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={data.appleTicker}
       x="date"
-      xScale={scaleBand().paddingInner(0.4)}
+      xScale={scaleUtc()}
+      xDomain={[null, utcDay.offset(data.appleTicker[data.appleTicker.length - 1].date)]}
+      xInterval={utcDay}
       y={['high', 'low']}
       yNice
       c={(d) => (d.close < d.open ? 'desc' : 'asc')}
@@ -31,10 +33,10 @@
     >
       {#snippet children({ context })}
         <Svg>
-          <Axis placement="left" grid rule ticks={10} />
-          <Axis placement="bottom" rule format={(d) => ''} />
+          <Axis placement="left" grid rule tickSpacing={20} />
+          <Axis placement="bottom" rule />
           <Points links r={0} />
-          <Bars y={(d) => [d.open, d.close]} radius={2} />
+          <Bars y={(d) => [d.open, d.close]} radius={2} insets={{ x: 1 }} />
           <Highlight area />
         </Svg>
         <Tooltip.Root {context}>
