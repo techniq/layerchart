@@ -675,6 +675,7 @@
     label="tickSpacing"
     labelPlacement="left"
     bind:value={tickSpacing}
+    min={10}
     max={300}
     step={10}
   />
@@ -707,6 +708,7 @@
     label="tickSpacing"
     labelPlacement="left"
     bind:value={tickSpacing}
+    min={10}
     max={300}
     step={10}
   />
@@ -798,6 +800,7 @@
     label="tickSpacing"
     labelPlacement="left"
     bind:value={tickSpacing}
+    min={10}
     max={300}
     step={10}
   />
@@ -852,6 +855,7 @@
     label="tickSpacing"
     labelPlacement="left"
     bind:value={tickSpacing}
+    min={10}
     max={300}
     step={10}
   />
