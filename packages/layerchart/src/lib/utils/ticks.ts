@@ -31,7 +31,7 @@ export function getDurationFormat(duration: Duration, multiline = false) {
       }
     } else if (+duration >= +new Duration({ duration: { days: 1 } })) {
       // Day
-      const isFirst = i === 0 || date.getDate() < duration.days;
+      const isFirst = i === 0 || date.getDate() <= duration.days;
       if (multiline) {
         return (
           format(date, PeriodType.Custom, { custom: DateToken.DayOfMonth_numeric }) +
