@@ -100,7 +100,7 @@
     initialY: initialYProp,
     center = false,
     preventTouchMove = false,
-    opacity = 1,
+    opacity = undefined,
     motion,
     transitionIn: transitionInProp,
     transitionInParams: transitionInParamsProp,
@@ -144,7 +144,7 @@
       name: 'Group',
       render: (ctx) => {
         const currentGlobalAlpha = ctx.globalAlpha;
-        ctx.globalAlpha = opacity;
+        ctx.globalAlpha = opacity ?? 1;
 
         ctx.translate(motionX.current ?? 0, motionY.current ?? 0);
 
