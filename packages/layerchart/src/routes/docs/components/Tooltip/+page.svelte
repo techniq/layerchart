@@ -2,7 +2,6 @@
   import type { ComponentProps } from 'svelte';
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { stack } from 'd3-shape';
-  import { format } from 'date-fns';
 
   import {
     Area,
@@ -17,7 +16,7 @@
     type ChartContextValue,
   } from 'layerchart';
   import { Button, Duration, Field, Menu, MenuField, Toggle } from 'svelte-ux';
-  import { flatten, formatDate, PeriodType } from '@layerstack/utils';
+  import { flatten, format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import TooltipControls from './TooltipControls.svelte';
@@ -164,7 +163,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -221,7 +220,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} color="#f00" />
           </Tooltip.List>
@@ -253,7 +252,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} color="var(--color-primary)" />
           </Tooltip.List>
@@ -286,7 +285,7 @@
       <Tooltip.Root variant="invert">
         {#snippet children({ data })}
           <Tooltip.Header>
-            {format(data.date, 'eee, MMMM do')}
+            {format(data.date, 'custom', { custom: 'eee, MMMM do' })}
           </Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
@@ -320,7 +319,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -352,7 +351,7 @@
       </Svg>
       <Tooltip.Root x="data" y="data" xOffset={8} yOffset={8}>
         {#snippet children({ data })}
-          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -403,7 +402,7 @@
           class="text-[10px] font-semibold text-primary bg-surface-100 px-2 py-[2px] border border-primary rounded-sm whitespace-nowrap"
         >
           {#snippet children({ data })}
-            {formatDate(data.date, PeriodType.Day)}
+            {format(data.date, 'day')}
           {/snippet}
         </Tooltip.Root>
       {/snippet}
@@ -454,7 +453,7 @@
           class="text-[10px] font-semibold text-primary bg-surface-100 px-2 py-[2px] border border-primary rounded-sm whitespace-nowrap"
         >
           {#snippet children({ data })}
-            {formatDate(data.date, PeriodType.Day)}
+            {format(data.date, 'day')}
           {/snippet}
         </Tooltip.Root>
       {/snippet}
@@ -534,7 +533,7 @@
         {contained}
       >
         {#snippet children({ data })}
-          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -550,7 +549,7 @@
   <div class="text-sm">
     {#if context}
       {#if context.tooltip.data}
-        date: {formatDate(context.tooltip.data.date, PeriodType.Day, { variant: 'short' })}
+        date: {format(context.tooltip.data.date, 'day', { variant: 'short' })}
         value: {context.tooltip.data.value}
       {:else}
         [hover chart]
@@ -578,7 +577,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -627,7 +626,7 @@
         y={charts.area.snapToDataY ? 'data' : 'pointer'}
       >
         {#snippet children({ data })}
-          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -689,7 +688,9 @@
           y={charts.areaStack.snapToDataY ? 'data' : 'pointer'}
         >
           {#snippet children({ data })}
-            <Tooltip.Header>{format(data.data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header
+              >{format(data.data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header
+            >
             <Tooltip.List>
               {#each keys as key}
                 <Tooltip.Item label={key} value={data.data[key]} />
@@ -740,7 +741,10 @@
         {#snippet children({ data })}
           <Tooltip.Header>{data.name}</Tooltip.Header>
           <Tooltip.List>
-            <Tooltip.Item label="date" value={format(data.startDate, 'h:mm a')} />
+            <Tooltip.Item
+              label="date"
+              value={format(data.startDate, 'custom', { custom: 'h:mm a' })}
+            />
           </Tooltip.List>
         {/snippet}
       </Tooltip.Root>
@@ -788,8 +792,14 @@
         {#snippet children({ data })}
           <Tooltip.Header>{data.name}</Tooltip.Header>
           <Tooltip.List>
-            <Tooltip.Item label="start" value={format(data.startDate, 'h:mm a')} />
-            <Tooltip.Item label="end" value={format(data.endDate, 'h:mm a')} />
+            <Tooltip.Item
+              label="start"
+              value={format(data.startDate, 'custom', { custom: 'h:mm a' })}
+            />
+            <Tooltip.Item
+              label="end"
+              value={format(data.endDate, 'custom', { custom: 'h:mm a' })}
+            />
             <Tooltip.Separator />
             <Tooltip.Item label="duration" valueAlign="right">
               <Duration start={data.startDate} end={data.endDate} />
@@ -840,8 +850,14 @@
         {#snippet children({ data })}
           <Tooltip.Header>{data.name}</Tooltip.Header>
           <Tooltip.List>
-            <Tooltip.Item label="start" value={format(data.startDate, 'h:mm a')} />
-            <Tooltip.Item label="end" value={format(data.endDate, 'h:mm a')} />
+            <Tooltip.Item
+              label="start"
+              value={format(data.startDate, 'custom', { custom: 'h:mm a' })}
+            />
+            <Tooltip.Item
+              label="end"
+              value={format(data.endDate, 'custom', { custom: 'h:mm a' })}
+            />
             <Tooltip.Separator />
             <Tooltip.Item label="duration" valueAlign="right">
               <Duration start={data.startDate} end={data.endDate} />
@@ -893,7 +909,7 @@
         y={charts.bars.snapToDataY ? 'data' : 'pointer'}
       >
         {#snippet children({ data })}
-          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -952,7 +968,7 @@
         y={charts.multiBars.snapToDataY ? 'data' : 'pointer'}
       >
         {#snippet children({ data })}
-          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
             <Tooltip.Item label="baseline" value={data.baseline} />

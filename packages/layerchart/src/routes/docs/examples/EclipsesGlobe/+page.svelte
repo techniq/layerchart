@@ -16,7 +16,7 @@
   } from 'layerchart';
 
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import { TimerState } from '@layerstack/svelte-state';
 
@@ -88,7 +88,7 @@
       padding={{ top: 60 }}
     >
       {#snippet children({ context })}
-        <Legend scale={colorScale} title="Eclipse date" tickFormat={PeriodType.CalendarYear} />
+        <Legend scale={colorScale} title="Eclipse date" tickFormat={'year'} />
 
         <Layer type="svg">
           <GeoPath
@@ -114,7 +114,7 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            {format(data.Date, PeriodType.Day, { variant: 'long' })}
+            {format(data.Date, 'day', { variant: 'long' })}
           {/snippet}
         </Tooltip.Root>
       {/snippet}

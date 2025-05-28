@@ -14,7 +14,7 @@
 
   import { BarChart, Tooltip, thresholdTime } from 'layerchart';
   import { MenuField, RangeField, NumberStepper, State } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -255,15 +255,13 @@
           <Tooltip.Root>
             {#snippet children({ data })}
               <Tooltip.Header class="text-center">
-                {format(data.x0, PeriodType.Day) +
-                  ' - ' +
-                  format(data.x1, PeriodType.Day)}</Tooltip.Header
+                {format(data.x0, 'day') + ' - ' + format(data.x1, 'day')}</Tooltip.Header
               >
               <Tooltip.List>
                 <Tooltip.Item label="count" value={data.length} format="integer" />
                 <Tooltip.Separator />
                 {#each data.slice(0, 5) as d}
-                  <Tooltip.Item label="value" value={d} format={PeriodType.DayTime} />
+                  <Tooltip.Item label="value" value={d} format={'daytime'} />
                 {/each}
                 {#if data.length > 5}
                   <span></span>
@@ -327,15 +325,13 @@
           <Tooltip.Root>
             {#snippet children({ data })}
               <Tooltip.Header class="text-center">
-                {format(data.x0, PeriodType.Day) +
-                  ' - ' +
-                  format(data.x1, PeriodType.Day)}</Tooltip.Header
+                {format(data.x0, 'day') + ' - ' + format(data.x1, 'day')}</Tooltip.Header
               >
               <Tooltip.List>
                 <Tooltip.Item label="count" value={data.length} format="integer" />
                 <Tooltip.Separator />
                 {#each data.slice(0, 5) as d}
-                  <Tooltip.Item label="value" value={d} format={PeriodType.DayTime} />
+                  <Tooltip.Item label="value" value={d} format={'daytime'} />
                 {/each}
                 {#if data.length > 5}
                   <span></span>

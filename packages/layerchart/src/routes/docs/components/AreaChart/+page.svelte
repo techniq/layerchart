@@ -21,7 +21,7 @@
   import { curveBasis, curveCatmullRom, curveStepAfter } from 'd3-shape';
   import { group } from 'd3-array';
   import { Button, Field, ToggleGroup, ToggleOption, Kbd, Switch } from 'svelte-ux';
-  import { format, PeriodType, sortFunc } from '@layerstack/utils';
+  import { format, sortFunc } from '@layerstack/utils';
   import { addDays } from 'date-fns';
   import { cls } from '@layerstack/tailwind';
 
@@ -228,7 +228,7 @@
         <Tooltip.Root>
           {#snippet children({ data })}
             {@const value = context.y(data)}
-            <Tooltip.Header>{format(context.x(data), PeriodType.Day)}</Tooltip.Header>
+            <Tooltip.Header>{format(context.x(data), 'day')}</Tooltip.Header>
             <Tooltip.List>
               <Tooltip.Item
                 label="value"
@@ -622,7 +622,7 @@
       rule={{ class: 'stroke-surface-content/20' }}
       props={{
         area: { line: false, fillOpacity: 1 },
-        xAxis: { format: PeriodType.Month, tickMarks: false },
+        xAxis: { format: 'month', tickMarks: false },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
       }}
@@ -936,7 +936,7 @@
           contained={false}
         >
           {#snippet children({ data })}
-            {format(context.x(data), PeriodType.Day)}
+            {format(context.x(data), 'day')}
           {/snippet}
         </Tooltip.Root>
       {/snippet}
@@ -970,7 +970,7 @@
         <Tooltip.Root pointerEvents>
           {#snippet children({ data })}
             <Tooltip.Header>
-              {format(context.x(data), PeriodType.Day)}
+              {format(context.x(data), 'day')}
             </Tooltip.Header>
 
             <Tooltip.List>
@@ -1031,7 +1031,7 @@
         <Tooltip.Root x="data" y={context.height + 24} pointerEvents>
           {#snippet children({ data })}
             <Tooltip.Header>
-              {format(context.x(data), PeriodType.Day)}
+              {format(context.x(data), 'day')}
             </Tooltip.Header>
 
             <Tooltip.List>
@@ -1060,7 +1060,7 @@
 <Preview data={{ denseDateSeriesData, denseDateSeriesData2 }}>
   <div class="text-sm">
     {#if context && context.tooltip.data}
-      date: {format(context.tooltip.data.date, PeriodType.Day, { variant: 'short' })}
+      date: {format(context.tooltip.data.date, 'day', { variant: 'short' })}
       value: {context.tooltip.data.value}
     {:else}
       [hover chart]
@@ -1113,7 +1113,7 @@
               </div>
             {:else}
               <!-- Normal tooltip -->
-              <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+              <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
               <Tooltip.List>
                 <Tooltip.Item label="value" value={context.y(data)} />
               </Tooltip.List>
@@ -1323,7 +1323,7 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+            <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
             <Tooltip.List>
               <Tooltip.Item label="value" value={context.y(data)} />
             </Tooltip.List>

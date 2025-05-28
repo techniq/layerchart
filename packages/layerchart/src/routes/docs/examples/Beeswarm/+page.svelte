@@ -1,7 +1,6 @@
 <script lang="ts">
   import { scaleOrdinal } from 'd3-scale';
   import { forceX, forceY, forceCollide } from 'd3-force';
-  import { PeriodType } from '@layerstack/utils';
 
   import { asAny, Axis, Chart, Circle, ForceSimulation, Svg, Tooltip } from 'layerchart';
 
@@ -58,7 +57,7 @@
           {#snippet children({ data })}
             <Tooltip.Header>{data.name}</Tooltip.Header>
             <Tooltip.List>
-              <Tooltip.Item label="Birth date" value={data.date_of_birth} format={PeriodType.Day} />
+              <Tooltip.Item label="Birth date" value={data.date_of_birth} format={'day'} />
               <Tooltip.Item label="State" value={data.state_name} />
               <Tooltip.Item label="Party" value={data.party} />
               <Tooltip.Item label="Gender" value={data.gender} />

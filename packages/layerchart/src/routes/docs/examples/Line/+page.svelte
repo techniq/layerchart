@@ -2,8 +2,7 @@
   import { scaleOrdinal, scaleSequential, scaleTime } from 'd3-scale';
   import { extent, flatGroup, ticks } from 'd3-array';
   import { interpolateTurbo } from 'd3-scale-chromatic';
-  import { format } from 'date-fns';
-  import { formatDate, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import {
@@ -129,7 +128,7 @@
 
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -273,7 +272,9 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header
+              >{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header
+            >
             <Tooltip.List>
               <Tooltip.Item label={data.fruit} value={data.value} />
             </Tooltip.List>
@@ -367,7 +368,9 @@
           <Highlight points lines />
         </Svg>
         <Tooltip.Root>
-          <Tooltip.Header>{format(context.tooltip.data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header>
+            {format(context.tooltip.data.date, 'custom', { custom: 'eee, MMMM do' })}
+          </Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label={context.tooltip.data.fruit} value={context.tooltip.data.value} />
           </Tooltip.List>
@@ -408,7 +411,9 @@
         </Svg>
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header
+              >{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header
+            >
             <Tooltip.List>
               <Tooltip.Item label={data.fruit} value={data.value} />
             </Tooltip.List>

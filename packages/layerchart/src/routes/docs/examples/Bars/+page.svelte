@@ -5,7 +5,7 @@
   import { stackOffsetExpand } from 'd3-shape';
 
   import { Field, ToggleGroup, ToggleOption, Toggle, Switch } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
 
   import {
     Bar,
@@ -175,9 +175,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header
-            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-          >
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -209,9 +207,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header
-            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-          >
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -255,9 +251,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header
-            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-          >
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -622,9 +616,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header
-            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-          >
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
             <Tooltip.Item label="baseline" value={data.baseline} />
@@ -659,9 +651,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header
-            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-          >
+          <Tooltip.Header>{format(data.date, 'custom', { custom: 'eee, MMMM do' })}</Tooltip.Header>
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
             <Tooltip.Item label="baseline" value={data.baseline} />

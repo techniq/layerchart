@@ -11,7 +11,7 @@
     timeMillisecond,
   } from 'd3-time';
   import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
 
   import { Axis, Chart, Frame, Layer, Rule, Text, Grid, asAny } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
@@ -329,7 +329,7 @@
           placement="bottom"
           rule
           ticks={(scale) => scale.domain()}
-          format={(d) => format(d, PeriodType.Day, { variant: 'long' })}
+          format={(d) => format(d, 'day', { variant: 'long' })}
         >
           {#snippet tickLabel({ props, index })}
             <Text {...props} textAnchor={index === 0 ? 'start' : 'end'} />
