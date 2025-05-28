@@ -36,8 +36,8 @@ importers:
         specifier: 2.0.0-next.6
         version: 2.0.0-next.6
       '@layerstack/utils':
-        specifier: 2.0.0-next.4
-        version: 2.0.0-next.4
+        specifier: 2.0.0-next.6
+        version: 2.0.0-next.6
       d3-array:
         specifier: ^3.2.4
         version: 3.2.4
@@ -768,6 +768,9 @@ packages:
 
   '@layerstack/utils@2.0.0-next.4':
     resolution: {integrity: sha512-fs9RWlW08WHqn6m4u1MNJHKMfWYXdj4X0r1wMVjL2mc4RKr9SFtcRjSM51WA4IPf/C94DBkca9REzjAJt58ipg==}
+
+  '@layerstack/utils@2.0.0-next.6':
+    resolution: {integrity: sha512-49Anr+Ihx1DJ20Q3lIpo0CNjBmRSWxAF+ZQychJ9I1UlhSGBlVv5YcEq1pbsCCrJbSNXmE0tApcdBl5SVcwU5A==}
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -3268,7 +3271,7 @@ snapshots:
 
   '@layerstack/tailwind@2.0.0-next.6':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.4
+      '@layerstack/utils': 2.0.0-next.6
       clsx: 2.1.1
       culori: 4.0.1
       d3-array: 3.2.4
@@ -3290,6 +3293,12 @@ snapshots:
       lodash-es: 4.17.21
 
   '@layerstack/utils@2.0.0-next.4':
+    dependencies:
+      d3-array: 3.2.4
+      date-fns: 4.1.0
+      lodash-es: 4.17.21
+
+  '@layerstack/utils@2.0.0-next.6':
     dependencies:
       d3-array: 3.2.4
       date-fns: 4.1.0

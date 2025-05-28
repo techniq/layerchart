@@ -57,7 +57,7 @@
           {#snippet children({ data })}
             <Tooltip.Header>{data.name}</Tooltip.Header>
             <Tooltip.List>
-              <Tooltip.Item label="Birth date" value={data.date_of_birth} format={'day'} />
+              <Tooltip.Item label="Birth date" value={data.date_of_birth} format="day" />
               <Tooltip.Item label="State" value={data.state_name} />
               <Tooltip.Item label="Party" value={data.party} />
               <Tooltip.Item label="Gender" value={data.gender} />

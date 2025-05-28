@@ -37,7 +37,7 @@
      * @default width / 64
      */
     ticks?: number;
-    tickFormat?: FormatType;
+    tickFormat?: FormatType | FormatConfig;
     tickValues?: any[];
     /**
      * The font size of the tick labels.
@@ -110,7 +110,7 @@
   import { scaleBand, scaleLinear } from 'd3-scale';
   import { quantize, interpolate, interpolateRound } from 'd3-interpolate';
   import { quantile, range } from 'd3-array';
-  import { format, type FormatType } from '@layerstack/utils';
+  import { format, type FormatType, type FormatConfig } from '@layerstack/utils';
 
   import ColorRamp from './ColorRamp.svelte';
   import { cls } from '@layerstack/tailwind';

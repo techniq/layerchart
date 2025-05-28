@@ -329,7 +329,7 @@
           placement="bottom"
           rule
           ticks={(scale) => scale.domain()}
-          format={(d) => format(d, 'day', { variant: 'long' })}
+          format={{ type: 'day', options: { variant: 'long' } }}
         >
           {#snippet tickLabel({ props, index })}
             <Text {...props} textAnchor={index === 0 ? 'start' : 'end'} />

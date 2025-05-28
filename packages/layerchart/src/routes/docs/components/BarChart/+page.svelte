@@ -285,8 +285,8 @@
           {#snippet children({ data })}
             <Tooltip.Header>{format(context.y(data))}</Tooltip.Header>
             <Tooltip.List>
-              <Tooltip.Item label="Start" value={data.start} format={'day'} />
-              <Tooltip.Item label="End" value={data.end} format={'day'} />
+              <Tooltip.Item label="Start" value={data.start} format="day" />
+              <Tooltip.Item label="End" value={data.end} format="day" />
             </Tooltip.List>
           {/snippet}
         </Tooltip.Root>
@@ -1423,8 +1423,8 @@
           {#snippet children({ data })}
             <Tooltip.Header>{format(context.y(data))}</Tooltip.Header>
             <Tooltip.List>
-              <Tooltip.Item label="Start" value={data.start} format={'day'} />
-              <Tooltip.Item label="End" value={data.end} format={'day'} />
+              <Tooltip.Item label="Start" value={data.start} format="day" />
+              <Tooltip.Item label="End" value={data.end} format="day" />
             </Tooltip.List>
           {/snippet}
         </Tooltip.Root>

@@ -1,6 +1,13 @@
 import { timeYear, timeMonth, timeDay, type TimeInterval, timeTicks } from 'd3-time';
 
-import { format, Duration, isLiteralObject, type FormatType, DateToken } from '@layerstack/utils';
+import {
+  format,
+  Duration,
+  isLiteralObject,
+  type FormatType,
+  type FormatConfig,
+  DateToken,
+} from '@layerstack/utils';
 import { isScaleBand, isScaleTime, type AnyScale } from './scales.svelte.js';
 
 export function getDurationFormat(duration: Duration, multiline = false) {
@@ -124,7 +131,7 @@ export function resolveTickFormat(
   scale: AnyScale,
   ticks?: TicksConfig,
   count?: number,
-  formatType?: FormatType,
+  formatType?: FormatType | FormatConfig,
   multiline = false
 ) {
   // Explicit format

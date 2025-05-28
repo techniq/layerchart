@@ -175,7 +175,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={'day'} rule ticks={(scale) => scale.domain()}>
+        <Axis placement="bottom" format="day" rule ticks={(scale) => scale.domain()}>
           {#snippet tickLabel({ props, index })}
             <Text {...props} textAnchor={index ? 'end' : 'start'} />
           {/snippet}

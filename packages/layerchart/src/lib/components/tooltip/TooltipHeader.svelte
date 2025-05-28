@@ -13,7 +13,7 @@
     /**
      * The format to use when displaying the value.
      */
-    format?: FormatType;
+    format?: FormatType | FormatConfig;
 
     /**
      * The color to use for the color dot.
@@ -54,7 +54,7 @@
 </script>
 
 <script lang="ts">
-  import { format as formatUtil, type FormatType } from '@layerstack/utils';
+  import { format as formatUtil, type FormatType, type FormatConfig } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import { layerClass } from '$lib/utils/attributes.js';
 

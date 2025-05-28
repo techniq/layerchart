@@ -16,7 +16,7 @@
     /**
      * Format to use when displaying the value.
      */
-    format?: FormatType;
+    format?: FormatType | FormatConfig;
 
     /**
      * Alignment of the value.
@@ -75,7 +75,7 @@
 </script>
 
 <script lang="ts">
-  import { format as formatUtil, type FormatType } from '@layerstack/utils';
+  import { format as formatUtil, type FormatType, type FormatConfig } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import type { Snippet } from 'svelte';
   import { layerClass } from '$lib/utils/attributes.js';
