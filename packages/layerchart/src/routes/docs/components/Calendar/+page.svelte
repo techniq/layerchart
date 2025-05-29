@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { format } from '@layerstack/utils';
   import { startOfYear, endOfYear } from 'date-fns';
   import { scaleThreshold } from 'd3-scale';
   import { range } from 'd3-array';
@@ -54,7 +53,7 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(data.date, 'day')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
 
             {#if data.value != null}
               <Tooltip.List>
@@ -103,7 +102,7 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(data.date, 'day')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
 
             {#if data.value != null}
               <Tooltip.List>

@@ -86,7 +86,6 @@
   import { onMount, type ComponentProps } from 'svelte';
   import { scaleBand, scaleLinear, scaleTime } from 'd3-scale';
   import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
-  import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Axis from '../Axis.svelte';

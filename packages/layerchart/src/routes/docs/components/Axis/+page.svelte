@@ -11,7 +11,6 @@
     timeMillisecond,
   } from 'd3-time';
   import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { format } from '@layerstack/utils';
 
   import { Axis, Chart, Frame, Layer, Rule, Text, Grid, asAny } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';

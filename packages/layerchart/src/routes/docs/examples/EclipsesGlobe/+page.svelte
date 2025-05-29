@@ -88,7 +88,7 @@
       padding={{ top: 60 }}
     >
       {#snippet children({ context })}
-        <Legend scale={colorScale} title="Eclipse date" tickFormat={'year'} />
+        <Legend scale={colorScale} title="Eclipse date" tickFormat="year" />
 
         <Layer type="svg">
           <GeoPath

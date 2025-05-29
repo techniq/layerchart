@@ -2,7 +2,6 @@
   import { scaleTime } from 'd3-scale';
   import { addMinutes, startOfDay } from 'date-fns';
   import { Duration } from 'svelte-ux';
-  import { format } from '@layerstack/utils';
 
   import { BarChart, Points, Tooltip } from 'layerchart';
 
@@ -49,11 +48,13 @@
             <Tooltip.List>
               <Tooltip.Item
                 label="start"
-                value={format(data.startDate, 'time', { variant: 'short' })}
+                value={data.startDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Item
                 label="end"
-                value={format(data.endDate, 'time', { variant: 'short' })}
+                value={data.endDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Separator />
               <Tooltip.Item label="duration" valueAlign="right">
@@ -94,11 +95,13 @@
             <Tooltip.List>
               <Tooltip.Item
                 label="start"
-                value={format(data.startDate, 'time', { variant: 'short' })}
+                value={data.startDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Item
                 label="end"
-                value={format(data.endDate, 'time', { variant: 'short' })}
+                value={data.endDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Separator />
               <Tooltip.Item label="duration" valueAlign="right">
@@ -143,11 +146,13 @@
             <Tooltip.List>
               <Tooltip.Item
                 label="start"
-                value={format(data.startDate, 'time', { variant: 'short' })}
+                value={data.startDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Item
                 label="end"
-                value={format(data.endDate, 'time', { variant: 'short' })}
+                value={data.endDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Separator />
               <Tooltip.Item label="duration" valueAlign="right">
@@ -199,11 +204,13 @@
             <Tooltip.List>
               <Tooltip.Item
                 label="start"
-                value={format(data.startDate, 'time', { variant: 'short' })}
+                value={data.startDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Item
                 label="end"
-                value={format(data.endDate, 'time', { variant: 'short' })}
+                value={data.endDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Separator />
               <Tooltip.Item label="duration" valueAlign="right">

@@ -2,7 +2,6 @@
   import { scaleBand, scaleOrdinal } from 'd3-scale';
 
   import { Axis, Bars, Chart, Highlight, Points, Svg, Tooltip } from 'layerchart';
-  import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -39,7 +38,7 @@
         </Svg>
         <Tooltip.Root {context}>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(data.date, 'day')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label="Open" value={data.open} format="decimal" />
               <Tooltip.Item label="Close" value={data.close} format="decimal" />

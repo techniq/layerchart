@@ -4,7 +4,6 @@
   import { getDay, getWeek } from 'date-fns';
 
   import { Highlight, ScatterChart, Tooltip } from 'layerchart';
-  import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -46,7 +45,7 @@
       {#snippet tooltip()}
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(data.date, 'day')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label="value" value={data.value} valueAlign="right" />
             </Tooltip.List>
