@@ -161,7 +161,7 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(data.date, 'day')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
 
             {#if data.value != null}
               <Tooltip.List>
