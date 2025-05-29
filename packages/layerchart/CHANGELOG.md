@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.14
+
+### Patch Changes
+
+- fix(AreaChart|BarChar|LineChart): Use value axis (typically y) property name/accessor for tooltip label if defined as string (ex. `<AreaChart x="date" y="visitors">` will use `visitors` instead of `value`) ([#523](https://github.com/techniq/layerchart/pull/523))
+
 ## 2.0.0-next.13
 
 ### Patch Changes
