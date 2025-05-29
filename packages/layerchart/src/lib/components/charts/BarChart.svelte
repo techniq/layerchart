@@ -159,6 +159,14 @@
       ? [
           {
             key: 'default',
+            label:
+              orientation === 'vertical'
+                ? typeof yProp === 'string'
+                  ? yProp
+                  : 'value'
+                : typeof xProp === 'string'
+                  ? xProp
+                  : 'value',
             value: orientation === 'vertical' ? yProp : xProp,
           },
         ]

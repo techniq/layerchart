@@ -141,7 +141,14 @@
 
   const series = $derived(
     seriesProp === undefined
-      ? [{ key: 'default', value: yProp, color: 'var(--color-primary)' }]
+      ? [
+          {
+            key: 'default',
+            label: typeof yProp === 'string' ? yProp : 'value',
+            value: yProp,
+            color: 'var(--color-primary)',
+          },
+        ]
       : seriesProp
   );
   const seriesState = new SeriesState(() => series);
