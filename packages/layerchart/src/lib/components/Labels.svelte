@@ -109,6 +109,7 @@
 
     const formattedValue = formatValue(
       displayValue,
+      // @ts-expect-error - improve types
       format ??
         (value
           ? undefined

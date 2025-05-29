@@ -136,6 +136,7 @@ export function resolveTickFormat(
 ) {
   // Explicit format
   if (formatType) {
+    // @ts-expect-error - improve types
     return (tick: any) => format(tick, formatType);
   }
 

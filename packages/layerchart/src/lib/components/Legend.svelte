@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
   import type { Placement } from './types.js';
-  import type { Without } from '$lib/utils/types.js';
+  import { asAny, type Without } from '$lib/utils/types.js';
 
   export type LegendItem = {
     value: any;
@@ -245,6 +245,7 @@
       const tickValues = range(thresholds.length);
       const tickFormat = (i: number) => {
         const value = thresholds[i];
+        // @ts-expect-error - improve types
         return tickFormatProp ? format(value, tickFormatProp) : value;
       };
 
@@ -360,7 +361,8 @@
               classes.label
             )}
           >
-            {tickFormatProp ? format(tick, tickFormatProp) : tick}
+            <!-- @ts-expect-error - improve types -->
+            {tickFormatProp ? format(tick, asAny(tickFormatProp)) : tick}
           </text>
 
           {#if scaleConfig.tickLine}
@@ -409,7 +411,8 @@
               classes.label
             )}
           >
-            {tickFormatProp ? format(tick, tickFormatProp) : tick}
+            <!-- @ts-expect-error - improve types -->
+            {tickFormatProp ? format(tick, asAny(tickFormatProp)) : tick}
           </div>
         </button>
       {/each}

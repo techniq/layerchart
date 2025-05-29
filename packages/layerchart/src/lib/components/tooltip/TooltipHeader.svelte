@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Snippet } from 'svelte';
-  import type { Without } from '$lib/utils/types.js';
+  import { asAny, type Without } from '$lib/utils/types.js';
 
   export type TooltipHeaderPropsWithoutHTML = {
     /**
@@ -114,6 +114,7 @@
   {#if children}
     {@render children?.()}
   {:else}
-    {format ? formatUtil(value, format) : value}
+    <!-- @ts-expect-error - improve types -->
+    {format ? formatUtil(value, asAny(format)) : value}
   {/if}
 </div>
