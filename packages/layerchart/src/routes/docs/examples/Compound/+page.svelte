@@ -1,6 +1,5 @@
 <script lang="ts">
   import { Area, BarChart, Spline, Tooltip } from 'layerchart';
-  import { formatDate, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -37,9 +36,7 @@
       {#snippet tooltip()}
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>
-              {formatDate(data.date, PeriodType.Day)}
-            </Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label="baseline" value={data.baseline} color="var(--color-primary)" />
               <Tooltip.Item label="value" value={data.value} color="var(--color-secondary)" />
@@ -90,9 +87,7 @@
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
           {#snippet children({ data })}
-            <Tooltip.Header>
-              {formatDate(data.date, PeriodType.Day)}
-            </Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label="open" value={data.open} format="currency" />
               <Tooltip.Item label="close" value={data.close} format="currency" />

@@ -69,7 +69,6 @@
   import { onMount, type ComponentProps } from 'svelte';
   import { scaleLinear, scaleTime } from 'd3-scale';
   import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
-  import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Area from '../Area.svelte';
@@ -398,8 +397,7 @@
     if (axisDirection === 'y') {
       return {
         placement: radial ? 'radius' : 'left',
-        format:
-          seriesLayout === 'stackExpand' ? (value) => format(value, 'percentRound') : undefined,
+        format: seriesLayout === 'stackExpand' ? 'percentRound' : undefined,
         ...(typeof axis === 'object' ? axis : null),
         ...props.yAxis,
       };

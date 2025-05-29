@@ -2,7 +2,7 @@
   import { type ComponentProps } from 'svelte';
   import { LineChart } from 'layerchart';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
 

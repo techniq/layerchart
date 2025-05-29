@@ -71,7 +71,7 @@
     /**
      * Format tick labels
      */
-    format?: FormatType;
+    format?: FormatType | FormatConfig;
 
     /**
      * Props to apply to each tick label
@@ -126,7 +126,7 @@
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
 
-  import { type FormatType } from '@layerstack/utils';
+  import { type FormatType, type FormatConfig } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Group, { type GroupProps } from './Group.svelte';

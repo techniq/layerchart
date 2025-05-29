@@ -4,7 +4,6 @@
   import { curveLinearClosed, curveCatmullRomClosed, curveCatmullRom } from 'd3-shape';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
-  import { PeriodType } from '@layerstack/utils';
 
   import { Area, Axis, Chart, Points, Spline, Svg } from 'layerchart';
 
@@ -91,7 +90,7 @@
           curve={curveCatmullRomClosed}
           class="fill-primary/20"
         />
-        <Axis placement="angle" grid tickLength={0} format={PeriodType.Month} />
+        <Axis placement="angle" grid tickLength={0} format={'month'} />
         <Axis
           placement="radius"
           rule={{ y: 'top', class: 'stroke-surface-content/20' }}
@@ -134,7 +133,7 @@
               opacity={[2023, 2024].includes(year) ? 1 : context.zScale(year)}
             />
           {/each}
-          <Axis placement="angle" tickLength={0} grid format={PeriodType.Month} />
+          <Axis placement="angle" tickLength={0} grid format={'month'} />
           <Axis
             placement="radius"
             grid

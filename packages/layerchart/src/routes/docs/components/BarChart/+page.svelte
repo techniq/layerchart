@@ -13,7 +13,7 @@
   } from 'layerchart';
   import { extent, group, mean, sum } from 'd3-array';
   import { scaleLinear, scaleLog, scaleThreshold, scaleTime } from 'd3-scale';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
@@ -271,7 +271,7 @@
       orientation="horizontal"
       props={{
         xAxis: {
-          format: PeriodType.Month,
+          format: 'month',
         },
         tooltip: {
           context: { mode: 'bounds' },
@@ -285,8 +285,8 @@
           {#snippet children({ data })}
             <Tooltip.Header>{format(context.y(data))}</Tooltip.Header>
             <Tooltip.List>
-              <Tooltip.Item label="Start" value={data.start} format={PeriodType.Day} />
-              <Tooltip.Item label="End" value={data.end} format={PeriodType.Day} />
+              <Tooltip.Item label="Start" value={data.start} format="day" />
+              <Tooltip.Item label="End" value={data.end} format="day" />
             </Tooltip.List>
           {/snippet}
         </Tooltip.Root>
@@ -1407,7 +1407,7 @@
       orientation="horizontal"
       props={{
         xAxis: {
-          format: PeriodType.Month,
+          format: 'month',
         },
         grid: { bandAlign: 'between' },
         tooltip: {
@@ -1423,8 +1423,8 @@
           {#snippet children({ data })}
             <Tooltip.Header>{format(context.y(data))}</Tooltip.Header>
             <Tooltip.List>
-              <Tooltip.Item label="Start" value={data.start} format={PeriodType.Day} />
-              <Tooltip.Item label="End" value={data.end} format={PeriodType.Day} />
+              <Tooltip.Item label="Start" value={data.start} format="day" />
+              <Tooltip.Item label="End" value={data.end} format="day" />
             </Tooltip.List>
           {/snippet}
         </Tooltip.Root>
@@ -1486,7 +1486,7 @@
       {#snippet tooltip({ context })}
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+            <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
             <Tooltip.List>
               <Tooltip.Item label="value" value={context.y(data)} />
             </Tooltip.List>

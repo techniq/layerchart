@@ -4,7 +4,6 @@
   import { schemeBlues } from 'd3-scale-chromatic';
   import { geoIdentity, type GeoProjection } from 'd3-geo';
   import { feature } from 'topojson-client';
-  import { format } from '@layerstack/utils';
 
   import { Canvas, Chart, GeoPath, Legend, Svg, Tooltip } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
@@ -94,7 +93,6 @@
         <Legend
           scale={colorScale}
           title="Population"
-          tickFormat={(d) => format(d, 'metric', { maximumSignificantDigits: 2 })}
           class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-xs rounded-sm m-1"
         />
 
@@ -175,7 +173,6 @@
         <Legend
           scale={colorScale}
           title="Population"
-          tickFormat={(d) => format(d, 'metric', { maximumSignificantDigits: 2 })}
           placement="top-left"
           class="absolute bg-surface-100/80 px-2 py-1 backdrop-blur-xs rounded-sm m-1"
         />

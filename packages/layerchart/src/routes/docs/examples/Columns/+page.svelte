@@ -23,7 +23,7 @@
   } from 'layerchart';
 
   import { Field, ToggleGroup, ToggleOption, Toggle, Switch } from 'svelte-ux';
-  import { format, PeriodType, unique } from '@layerstack/utils';
+  import { format, unique } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
@@ -174,9 +174,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header
-            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-          >
+          <Tooltip.Header value={data.date} format="day" />
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -208,9 +206,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header
-            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-          >
+          <Tooltip.Header value={data.date} format="day" />
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -254,9 +250,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header
-            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-          >
+          <Tooltip.Header value={data.date} format="day" />
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -623,9 +617,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header
-            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-          >
+          <Tooltip.Header value={data.date} format="day" />
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
             <Tooltip.Item label="baseline" value={data.baseline} />
@@ -659,9 +651,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header
-            >{format(data.date, PeriodType.Custom, { custom: 'eee, MMMM do' })}</Tooltip.Header
-          >
+          <Tooltip.Header value={data.date} format="day" />
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
             <Tooltip.Item label="baseline" value={data.baseline} />

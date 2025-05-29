@@ -15,7 +15,7 @@
   import { curveCatmullRom, curveLinearClosed } from 'd3-shape';
   import { extent, flatGroup, group, ticks } from 'd3-array';
   import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { format, PeriodType, sortFunc } from '@layerstack/utils';
+  import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
@@ -620,7 +620,7 @@
       yDomain={null}
       props={{
         spline: { class: 'stroke' },
-        xAxis: { format: PeriodType.Month },
+        xAxis: { format: 'month' },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
         tooltip: {
@@ -658,7 +658,7 @@
       rule={{ y: 'top', class: 'stroke-surface-content/20' }}
       props={{
         spline: { class: 'stroke' },
-        xAxis: { format: PeriodType.Month, tickMarks: false },
+        xAxis: { format: 'month', tickMarks: false },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
         tooltip: {
@@ -844,7 +844,7 @@
           contained={false}
         >
           {#snippet children({ data })}
-            {format(context.x(data), PeriodType.Day)}
+            {format(context.x(data), 'day')}
           {/snippet}
         </Tooltip.Root>
       {/snippet}
@@ -886,7 +886,7 @@
               </div>
             {:else}
               <!-- Normal tooltip -->
-              <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+              <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
               <Tooltip.List>
                 <Tooltip.Item label="value" value={context.y(data)} />
               </Tooltip.List>
@@ -1100,7 +1100,7 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+            <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
             <Tooltip.List>
               <Tooltip.Item label="value" value={context.y(data)} />
             </Tooltip.List>

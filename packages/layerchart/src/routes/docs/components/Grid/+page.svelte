@@ -1,7 +1,6 @@
 <script lang="ts">
   import { scaleTime, scaleBand } from 'd3-scale';
   import { MediaQueryPresets } from '@layerstack/svelte-state';
-  import { format, PeriodType } from '@layerstack/utils';
 
   import { Axis, Chart, Grid, Svg } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';

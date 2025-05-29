@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
-  import type { Without } from '$lib/utils/types.js';
+  import { asAny, type Without } from '$lib/utils/types.js';
 
   export type TooltipItemPropsWithoutHTML = {
     /**
@@ -16,7 +16,7 @@
     /**
      * Format to use when displaying the value.
      */
-    format?: FormatType;
+    format?: FormatType | FormatConfig;
 
     /**
      * Alignment of the value.
@@ -75,7 +75,7 @@
 </script>
 
 <script lang="ts">
-  import { format as formatUtil, type FormatType } from '@layerstack/utils';
+  import { format as formatUtil, type FormatType, type FormatConfig } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import type { Snippet } from 'svelte';
   import { layerClass } from '$lib/utils/attributes.js';
@@ -189,7 +189,8 @@
     {#if children}
       {@render children()}
     {:else}
-      {format ? formatUtil(value, format) : value}
+      <!-- @ts-expect-error - improve types -->
+      {format ? formatUtil(value, asAny(format)) : value}
     {/if}
   </div>
 </div>
