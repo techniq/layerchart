@@ -398,8 +398,7 @@
     if (axisDirection === 'y') {
       return {
         placement: radial ? 'radius' : 'left',
-        format:
-          seriesLayout === 'stackExpand' ? (value) => format(value, 'percentRound') : undefined,
+        format: seriesLayout === 'stackExpand' ? 'percentRound' : undefined,
         ...(typeof axis === 'object' ? axis : null),
         ...props.yAxis,
       };

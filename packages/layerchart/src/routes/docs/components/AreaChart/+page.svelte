@@ -1113,7 +1113,7 @@
               </div>
             {:else}
               <!-- Normal tooltip -->
-              <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
+              <Tooltip.Header>{format(context.x(data), 'day')}</Tooltip.Header>
               <Tooltip.List>
                 <Tooltip.Item label="value" value={context.y(data)} />
               </Tooltip.List>

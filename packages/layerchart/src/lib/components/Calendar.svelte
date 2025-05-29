@@ -57,7 +57,7 @@
   import { type ComponentProps, type Snippet } from 'svelte';
   import { timeDays, timeMonths, timeWeek, timeYear } from 'd3-time';
   import { index } from 'd3-array';
-  import { format } from 'date-fns';
+  import { format } from '@layerstack/utils';
 
   import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
@@ -140,7 +140,7 @@
     <Text
       x={timeWeek.count(timeYear.floor(date), timeWeek.ceil(date)) * cellSize[0]}
       y={-4}
-      value={format(date, 'MMM')}
+      value={format(date, 'month', { variant: 'short' })}
       {...extractLayerProps(monthLabel, 'calendar-month-label', 'text-xs')}
     />
   {/each}
