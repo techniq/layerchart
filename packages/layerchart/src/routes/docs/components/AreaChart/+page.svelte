@@ -42,6 +42,14 @@
       };
     })
   );
+  const dataVisits = $derived(
+    dateSeriesData.map((d) => {
+      return {
+        ...d,
+        visits: d.value,
+      };
+    })
+  );
 
   const now = new Date();
   const denseDateSeriesData = randomWalk({ count: 1000 }).map((value, i) => ({
@@ -170,6 +178,14 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={dateSeriesData} x="date" y="value" {renderContext} {debug} />
+  </div>
+</Preview>
+
+<h2>Default series label</h2>
+
+<Preview data={dataVisits}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <AreaChart data={dataVisits} x="date" y="visits" {renderContext} {debug} />
   </div>
 </Preview>
 
