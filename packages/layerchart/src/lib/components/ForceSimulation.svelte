@@ -4,6 +4,11 @@
 
   type Forces = Record<string, Force<any, any>>;
 
+  export type Data<TNode = any, TLink = any> = {
+    nodes: TNode[];
+    links?: TLink[];
+  };
+
   export type LinkPosition = {
     x1: number;
     y1: number;
@@ -18,9 +23,10 @@
     forces: Forces;
 
     /**
-     * An array of links to be used for position calculation.
+     * An object with arrays of nodes and links,
+     * to be used for position calculation.
      */
-    links?: any[];
+    data: Data;
 
     /**
      * Current alpha value of the simulation
@@ -98,12 +104,11 @@
 </script>
 
 <script lang="ts">
-  import { getChartContext } from './Chart.svelte';
   import { watch } from 'runed';
 
   let {
     forces,
-    links = [],
+    data,
     alpha = $bindable(1),
     alphaTarget = 0,
     alphaDecay = 1 - Math.pow(0.001, 1 / 300),
@@ -118,13 +123,11 @@
     cloneNodes = false,
   }: ForceSimulationProps = $props();
 
-  const ctx = getChartContext();
-
   // MARK: Public Props
 
   // MARK: Private Props
 
-  let nodes: SimulationNodeDatum[] = $state([]);
+  let simulatedNodes: SimulationNodeDatum[] = $state([]);
   let linkPositions: LinkPosition[] = $state([]);
 
   const simulation = forceSimulation().stop();
@@ -166,11 +169,11 @@
   );
 
   watch.pre(
-    () => ctx.data,
+    () => data,
     () => {
-      // Any time the `data` store gets changed we
-      // pass them to the internal d3 simulation object:
-      pushNodesToSimulation(ctx.data as any[]);
+      // Any time the `nodes` prop, or the `data` store gets changed
+      // we pass them to the internal d3 simulation object:
+      pushNodesToSimulation(data.nodes);
       runOrResumeSimulation();
     }
   );
@@ -256,6 +259,8 @@
   }
 
   function updateLinkPositions() {
+    const links = data.links ?? [];
+
     // Keeping the link positions in sync with the simulation
     // so we don't need to recalculate _all_ link positions on each tick
     // which bogs down the simulation
@@ -270,7 +275,7 @@
   // MARK: Pull State
 
   function pullNodesFromSimulation() {
-    nodes = cloneNodes ? structuredClone(simulation.nodes()) : simulation.nodes();
+    simulatedNodes = cloneNodes ? structuredClone(simulation.nodes()) : simulation.nodes();
   }
 
   function pullAlphaFromSimulation() {
@@ -393,4 +398,4 @@
   });
 </script>
 
-{@render children?.({ nodes: nodes, simulation, linkPositions })}
+{@render children?.({ nodes: simulatedNodes, simulation, linkPositions })}
