@@ -1,5 +1,11 @@
 <script lang="ts" module>
-  import { forceSimulation, type Force, type Simulation, type SimulationNodeDatum } from 'd3-force';
+  import {
+    forceSimulation,
+    type Force,
+    type Simulation,
+    type SimulationLinkDatum,
+    type SimulationNodeDatum,
+  } from 'd3-force';
   import type { Snippet } from 'svelte';
 
   type Forces = Record<string, Force<any, any>>;
@@ -9,14 +15,24 @@
     links?: TLink[];
   };
 
-  export type LinkPosition = {
+  export type LinkPosition = Prettify<{
     x1: number;
     y1: number;
     x2: number;
     y2: number;
-  };
+  }>;
 
-  export type ForceSimulationProps = {
+  type NodeDatumFor<NodeDatum> = Prettify<NodeDatum & SimulationNodeDatum>;
+  type LinkDatumFor<NodeDatum, LinkDatum> = Prettify<
+    LinkDatum & SimulationLinkDatum<NodeDatumFor<NodeDatum>>
+  >;
+
+  type SimulationFor<NodeDatum, LinkDatum> = Simulation<
+    NodeDatumFor<NodeDatum>,
+    LinkDatumFor<NodeDatum, LinkDatum>
+  >;
+
+  export type ForceSimulationProps<NodeDatum, LinkDatum> = {
     /**
      * Force simulation parameters
      */
@@ -26,7 +42,7 @@
      * An object with arrays of nodes and links,
      * to be used for position calculation.
      */
-    data: Data;
+    data: Data<NodeDatum, LinkDatum>;
 
     /**
      * Current alpha value of the simulation
@@ -94,17 +110,18 @@
     children?: Snippet<
       [
         {
-          nodes: any[];
-          simulation: Simulation<SimulationNodeDatum, undefined>;
+          nodes: NodeDatumFor<NodeDatum>[];
           linkPositions: LinkPosition[];
+          simulation: SimulationFor<NodeDatum, LinkDatum>;
         },
       ]
     >;
   };
 </script>
 
-<script lang="ts">
+<script lang="ts" generics="NodeDatum, LinkDatum = undefined">
   import { watch } from 'runed';
+  import type { Prettify } from '@layerstack/utils';
 
   let {
     forces,
@@ -121,16 +138,20 @@
     onEnd: onEndProp = () => {},
     children,
     cloneNodes = false,
-  }: ForceSimulationProps = $props();
+  }: ForceSimulationProps<NodeDatum, LinkDatum> = $props();
 
   // MARK: Public Props
 
   // MARK: Private Props
 
-  let simulatedNodes: SimulationNodeDatum[] = $state([]);
   let linkPositions: LinkPosition[] = $state([]);
+  let simulatedNodes: NodeDatumFor<NodeDatum>[] = $state([]);
 
-  const simulation = forceSimulation().stop();
+  // This casting is unfortunately necessary, due to unfortunate
+  // overloading choices made, over at `@typed/d3-force`:
+  const simulation: SimulationFor<NodeDatum, LinkDatum> = (
+    forceSimulation() as SimulationFor<NodeDatum, LinkDatum>
+  ).stop();
 
   // d3.Simulation does not provide a `.forces()` getter, so we need to
   // keep track of previous forces ourselves, for diffing against `forces`.
@@ -275,7 +296,8 @@
   // MARK: Pull State
 
   function pullNodesFromSimulation() {
-    simulatedNodes = cloneNodes ? structuredClone(simulation.nodes()) : simulation.nodes();
+    const simulationNodes = simulation.nodes();
+    simulatedNodes = cloneNodes ? structuredClone(simulationNodes) : simulationNodes;
   }
 
   function pullAlphaFromSimulation() {
