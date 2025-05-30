@@ -1,5 +1,12 @@
 <script lang="ts">
-  import { forceCollide, forceManyBody, forceLink, forceCenter } from 'd3-force';
+  import {
+    forceCollide,
+    forceManyBody,
+    forceLink,
+    forceCenter,
+    type SimulationNodeDatum,
+    type SimulationLinkDatum,
+  } from 'd3-force';
   import { curveLinear } from 'd3-shape';
   import { scaleOrdinal } from 'd3-scale';
   import { schemeCategory10 } from 'd3-scale-chromatic';
@@ -11,8 +18,19 @@
 
   let { data } = $props();
 
-  const nodes = data.miserables.nodes;
-  const links = data.miserables.links;
+  type Node = {
+    id: string;
+    group: number;
+  };
+
+  type Link = {
+    source: string;
+    target: string;
+    value: number;
+  };
+
+  const nodes: (Node & SimulationNodeDatum)[] = data.miserables.nodes;
+  const links: (Link & SimulationLinkDatum<Node & SimulationNodeDatum>)[] = data.miserables.links;
 
   const colorScale = scaleOrdinal(schemeCategory10);
 
@@ -288,7 +306,7 @@
                   cx={node.x}
                   cy={node.y}
                   r={nodeRadius}
-                  fill={colorScale(node.group)}
+                  fill={colorScale(node.group.toString())}
                   stroke-width={nodeStrokeWidth}
                   class="stroke-surface-content"
                   onpointermove={(e) => context.tooltip.show(e, node)}
