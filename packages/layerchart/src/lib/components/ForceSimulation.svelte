@@ -111,6 +111,7 @@
       [
         {
           nodes: NodeDatumFor<NodeDatum>[];
+          links: LinkDatumFor<NodeDatum, LinkDatum>[];
           linkPositions: LinkPosition[];
           simulation: SimulationFor<NodeDatum, LinkDatum>;
         },
@@ -146,6 +147,9 @@
 
   let linkPositions: LinkPosition[] = $state([]);
   let simulatedNodes: NodeDatumFor<NodeDatum>[] = $state([]);
+  let simulatedLinks: LinkDatumFor<NodeDatum, LinkDatum>[] = $derived(
+    (data.links ?? []) as LinkDatumFor<NodeDatum, LinkDatum>[]
+  );
 
   // This casting is unfortunately necessary, due to unfortunate
   // overloading choices made, over at `@typed/d3-force`:
@@ -280,12 +284,10 @@
   }
 
   function updateLinkPositions() {
-    const links = data.links ?? [];
-
     // Keeping the link positions in sync with the simulation
     // so we don't need to recalculate _all_ link positions on each tick
     // which bogs down the simulation
-    linkPositions = links.map((link: any) => ({
+    linkPositions = simulatedLinks.map((link: any) => ({
       x1: link.source.x ?? 0,
       y1: link.source.y ?? 0,
       x2: link.target.x ?? 0,
@@ -420,4 +422,9 @@
   });
 </script>
 
-{@render children?.({ nodes: simulatedNodes, simulation, linkPositions })}
+{@render children?.({
+  nodes: simulatedNodes,
+  links: simulatedLinks,
+  simulation,
+  linkPositions,
+})}
