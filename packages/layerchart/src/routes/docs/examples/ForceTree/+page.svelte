@@ -33,7 +33,7 @@
               x: xForce,
               y: yForce,
             }}
-            {links}
+            data={{ nodes, links }}
             cloneNodes
           >
             {#snippet children({ nodes, linkPositions })}

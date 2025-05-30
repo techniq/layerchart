@@ -27,7 +27,7 @@
     <Chart data={nodes}>
       <Svg center>
         <ForceSimulation
-          {links}
+          data={{ nodes, links }}
           forces={{
             charge: chargeForce,
             link: linkForce,

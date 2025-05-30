@@ -111,6 +111,7 @@
               charge: manyBodyForce.strength((d, i) => (i ? 0 : (-context.width * 2) / 10)),
             }),
           }}
+          data={{ nodes: data }}
           alphaTarget={1}
           velocityDecay={0.2}
         >

@@ -10,8 +10,8 @@
 
   let { data } = $props();
 
-  const nodes = $derived(data.miserables.nodes);
-  const links = $derived(data.miserables.links);
+  const nodes = data.miserables.nodes;
+  const links = data.miserables.links;
 
   const colorScale = scaleOrdinal(schemeCategory10);
 
@@ -39,7 +39,7 @@
             x: xForce,
             y: yForce,
           }}
-          {links}
+          data={{ nodes, links }}
         >
           {#snippet children({ nodes, linkPositions })}
             {#each links as link, i (link.value + link.index)}

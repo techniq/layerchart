@@ -40,6 +40,7 @@
               collide: collideForce,
               charge: manyBodyForce.strength((d, i) => (i ? 0 : (-context.width * 2) / 3)),
             }}
+            data={{ nodes: randomData }}
             alphaTarget={0.3}
             velocityDecay={0.1}
           >

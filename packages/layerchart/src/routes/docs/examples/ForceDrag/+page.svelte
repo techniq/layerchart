@@ -60,7 +60,7 @@
               charge: chargeForce,
               center: centerForce.x(context.width / 2).y(context.height / 2),
             }}
-            {links}
+            data={{ nodes, links }}
           >
             {#snippet children({ nodes, simulation, linkPositions })}
               {#each links as link, i}

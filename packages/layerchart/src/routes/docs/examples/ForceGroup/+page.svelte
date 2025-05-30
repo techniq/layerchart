@@ -64,6 +64,7 @@
               ),
               center: centerForce.x(context.width / 2).y(context.height / 2),
             }}
+            data={{ nodes: dots }}
             bind:alpha
           >
             {#snippet children({ nodes })}

@@ -9,6 +9,8 @@
 
   let { data } = $props();
 
+  const nodes = data.usSenators;
+
   const genderColor = scaleOrdinal(['var(--color-info)', 'var(--color-warning)']);
 
   const xForce = forceX().strength(0.95);
@@ -36,6 +38,7 @@
               y: yForce.y(context.height / 2),
               collide: collideForce.radius(r),
             }}
+            data={{ nodes }}
             static
           >
             {#snippet children({ nodes })}
