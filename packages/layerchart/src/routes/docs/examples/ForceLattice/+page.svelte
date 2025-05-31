@@ -24,7 +24,7 @@
 
 <Preview data={nodes}>
   <div class="h-[800px] p-4 border rounded-sm overflow-hidden">
-    <Chart data={nodes}>
+    <Chart>
       <Svg center>
         <ForceSimulation
           data={{ nodes, links }}

@@ -250,7 +250,7 @@
 </div>
 <Preview data={data.miserables}>
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
-    <Chart data={nodes}>
+    <Chart>
       {#snippet children({ context })}
         <Svg>
           <ForceSimulation

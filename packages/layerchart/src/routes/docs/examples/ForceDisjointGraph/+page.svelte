@@ -30,7 +30,7 @@
 
 <Preview data={data.miserables}>
   <div class="h-[680px] p-4 border rounded-sm">
-    <Chart data={nodes}>
+    <Chart>
       <Svg center>
         <ForceSimulation
           forces={{

@@ -23,7 +23,7 @@
 
 <Preview data={nodes}>
   <div class="h-[600px] p-4 border rounded-sm">
-    <Chart data={nodes}>
+    <Chart>
       {#snippet children({ context })}
         <Svg center>
           <ForceSimulation

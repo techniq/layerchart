@@ -90,13 +90,13 @@
 <Preview {data}>
   <div class="h-[500px] p-4 border rounded-sm overflow-hidden">
     <Chart
+      {data}
       x="x"
       xDomain={[0, 1]}
       xRange={[0, 1]}
       y="y"
       yDomain={[0, 1]}
       yRange={[0, 1]}
-      {data}
       {onResize}
     >
       {#snippet children({ context })}
