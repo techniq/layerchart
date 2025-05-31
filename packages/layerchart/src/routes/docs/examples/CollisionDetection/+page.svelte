@@ -48,7 +48,12 @@
               <Group center>
                 {#each nodes as node, i}
                   {#if i > 0}
-                    <Circle cx={node.x} cy={node.y} r={node.r} fill={groupColor(node.group)} />
+                    <Circle
+                      cx={node.x}
+                      cy={node.y}
+                      r={node.r}
+                      fill={groupColor(node.group.toString())}
+                    />
                   {/if}
                 {/each}
               </Group>
