@@ -9,7 +9,10 @@
     Layer,
     Labels,
     LinearGradient,
+    Text,
     Tooltip,
+    Circle,
+    Group,
   } from 'layerchart';
   import { extent, group, mean, sum } from 'd3-array';
   import { scaleLinear, scaleLog, scaleThreshold, scaleTime } from 'd3-scale';
@@ -1174,6 +1177,99 @@
                 value={context.c(data)}
                 color={context.cScale?.(context.c(data))}
               />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
+    </BarChart>
+  </div>
+</Preview>
+
+<h2>Single stack with indicator</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[50px] p-4 border rounded-sm">
+    <BarChart
+      data={[
+        {
+          label: 'Severe thinness',
+          start: 15,
+          end: 16,
+        },
+        {
+          label: 'Thinness',
+          start: 16,
+          end: 18.5,
+        },
+        {
+          label: 'Normal',
+          start: 18.5,
+          end: 25,
+        },
+        {
+          label: 'Overweight',
+          start: 25,
+          end: 30,
+        },
+        {
+          label: 'Obese',
+          start: 30,
+          end: 35,
+        },
+        {
+          label: 'Severe obese',
+          start: 35,
+          end: 40,
+        },
+      ]}
+      x={['start', 'end']}
+      y={(d) => 1}
+      xBaseline={undefined}
+      xNice={false}
+      c="label"
+      cRange={[
+        'var(--color-blue-500)',
+        'var(--color-blue-400)',
+        'var(--color-teal-500)',
+        'var(--color-yellow-500)',
+        'var(--color-orange-500)',
+        'var(--color-red-500)',
+      ]}
+      bandPadding={0}
+      orientation="horizontal"
+      props={{
+        tooltip: {
+          context: { mode: 'bounds' },
+        },
+      }}
+      {renderContext}
+      {debug}
+    >
+      {#snippet axis({ context })}
+        <Axis placement="bottom" tickLength={0} ticks={[15, 16, 18.5, 25, 30, 35, 40]}>
+          {#snippet tickLabel({ props })}
+            <Text {...props} textAnchor={props.value === '40' ? 'end' : 'start'} />
+          {/snippet}
+        </Axis>
+      {/snippet}
+
+      {#snippet aboveMarks({ context })}
+        <Group x={context.xScale(26.5)} y={-4}>
+          {@const width = 12}
+          {@const height = 12}
+          <polygon
+            points="{-width / 2},0 0,{height} {width / 2},0"
+            class="fill-black stroke-white/50 dark:fill-white dark:stroke-black/50"
+          />
+        </Group>
+      {/snippet}
+
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.List>
+              <Tooltip.Item label="Label:" value={data.label} />
+              <Tooltip.Item label="Range:" value="{data.start} - {data.end}" />
             </Tooltip.List>
           {/snippet}
         </Tooltip.Root>
