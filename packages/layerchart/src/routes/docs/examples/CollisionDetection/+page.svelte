@@ -30,7 +30,7 @@
 
 <Preview data={randomData}>
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
-    <Chart data={randomData}>
+    <Chart>
       {#snippet children({ context })}
         <Svg>
           <ForceSimulation
