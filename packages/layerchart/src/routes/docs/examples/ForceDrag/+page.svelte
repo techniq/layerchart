@@ -51,7 +51,7 @@
 
 <Preview data={nodes}>
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
-    <Chart data={nodes}>
+    <Chart>
       {#snippet children({ context })}
         <Svg>
           <ForceSimulation
@@ -60,7 +60,7 @@
               charge: chargeForce,
               center: centerForce.x(context.width / 2).y(context.height / 2),
             }}
-            {links}
+            data={{ nodes, links }}
           >
             {#snippet children({ nodes, simulation, linkPositions })}
               {#each links as link, i}

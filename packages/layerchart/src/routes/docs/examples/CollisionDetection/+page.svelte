@@ -30,7 +30,7 @@
 
 <Preview data={randomData}>
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
-    <Chart data={randomData}>
+    <Chart>
       {#snippet children({ context })}
         <Svg>
           <ForceSimulation
@@ -40,6 +40,7 @@
               collide: collideForce,
               charge: manyBodyForce.strength((d, i) => (i ? 0 : (-context.width * 2) / 3)),
             }}
+            data={{ nodes: randomData }}
             alphaTarget={0.3}
             velocityDecay={0.1}
           >

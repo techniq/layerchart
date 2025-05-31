@@ -24,10 +24,10 @@
 
 <Preview data={nodes}>
   <div class="h-[800px] p-4 border rounded-sm overflow-hidden">
-    <Chart data={nodes}>
+    <Chart>
       <Svg center>
         <ForceSimulation
-          {links}
+          data={{ nodes, links }}
           forces={{
             charge: chargeForce,
             link: linkForce,
