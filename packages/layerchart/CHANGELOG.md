@@ -1,5 +1,14 @@
 # LayerChart
 
+## 2.0.0-next.15
+
+### Minor Changes
+
+- - Made `ForceSimulation` generic over its nodes and links, i.e. `ForceSimulation<Node, Link>.` ([#527](https://github.com/techniq/layerchart/pull/527))
+  - Exposed `links` via `children` snippet of `ForceSimulation`.
+
+- Decoupled `ForceSimulation` from `ChartContext`, by taking nodes and links via `data` prop. ([#526](https://github.com/techniq/layerchart/pull/526))
+
 ## 2.0.0-next.14
 
 ### Patch Changes
