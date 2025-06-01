@@ -8,7 +8,10 @@
   } from 'd3-force';
   import type { Snippet } from 'svelte';
 
-  type Forces = Record<string, Force<any, any>>;
+  export type Forces<
+    NodeDatum extends SimulationNodeDatum,
+    LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,
+  > = Record<string, Force<NodeDatum, LinkDatum>>;
 
   export type Data<TNode = any, TLink = any> = {
     nodes: TNode[];
@@ -32,11 +35,14 @@
     LinkDatumFor<NodeDatum, LinkDatum>
   >;
 
-  export type ForceSimulationProps<NodeDatum, LinkDatum> = {
+  export type ForceSimulationProps<
+    NodeDatum extends SimulationNodeDatum,
+    LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,
+  > = {
     /**
      * Force simulation parameters
      */
-    forces: Forces;
+    forces: Forces<NodeDatum, LinkDatum>;
 
     /**
      * An object with arrays of nodes and links,
@@ -120,7 +126,11 @@
   };
 </script>
 
-<script lang="ts" generics="NodeDatum, LinkDatum = undefined">
+<script
+  lang="ts"
+  generics="NodeDatum extends SimulationNodeDatum,
+    LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,"
+>
   import { watch } from 'runed';
   import type { Prettify } from '@layerstack/utils';
 
@@ -159,7 +169,7 @@
 
   // d3.Simulation does not provide a `.forces()` getter, so we need to
   // keep track of previous forces ourselves, for diffing against `forces`.
-  let previousForces: Forces = {};
+  let previousForces: Forces<NodeDatum, LinkDatum> = {};
 
   let paused: boolean = true;
 
@@ -263,7 +273,7 @@
     simulation.nodes(nodes);
   }
 
-  function pushForcesToSimulation(forces: Forces) {
+  function pushForcesToSimulation(forces: Forces<NodeDatum, LinkDatum>) {
     // Evict obsolete forces:
     const names = Object.keys(previousForces);
     for (const name of names) {
