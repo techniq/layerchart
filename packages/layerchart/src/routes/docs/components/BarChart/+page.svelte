@@ -1187,7 +1187,7 @@
 
 <h2>Single stack with indicator</h2>
 
-<Preview data={dateSeriesData}>
+<Preview>
   <div class="h-[50px] p-4 border rounded-sm">
     <BarChart
       data={[
