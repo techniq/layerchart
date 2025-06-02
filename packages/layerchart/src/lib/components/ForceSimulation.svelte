@@ -22,7 +22,35 @@
     y2: number;
   }>;
 
+  /**
+   * Default initial alpha value of the simulation.
+   */
+  export const DEFAULT_ALPHA: number = 1;
+
+  /**
+   * Default target alpha value for the simulation.
+   */
+  export const DEFAULT_ALPHA_TARGET: number = 0;
+
+  /**
+   * Default alpha decay rate per tick.
+   *
+   * Formula: `1 - Math.pow(0.001, 1 / 300)`.
+   */
+  export const DEFAULT_ALPHA_DECAY: number = 1 - Math.pow(0.001, 1 / 300);
+
+  /**
+   * Default minimum alpha value at which simulation stops.
+   */
+  export const DEFAULT_ALPHA_MIN: number = 0.01;
+
+  /**
+   * Default velocity decay factor applied to nodes each tick.
+   */
+  export const DEFAULT_VELOCITY_DECAY: number = 0.4;
+
   type NodeDatumFor<NodeDatum> = Prettify<NodeDatum & SimulationNodeDatum>;
+
   type LinkDatumFor<NodeDatum, LinkDatum> = Prettify<
     LinkDatum & SimulationLinkDatum<NodeDatumFor<NodeDatum>>
   >;
@@ -46,31 +74,31 @@
 
     /**
      * Current alpha value of the simulation
-     * @default 1
+     * @default DEFAULT_ALPHA
      */
     alpha?: number;
 
     /**
      * Target alpha value for the simulation
-     * @default 0
+     * @default DEFAULT_ALPHA_TARGET
      */
     alphaTarget?: number;
 
     /**
      * Alpha decay rate per tick
-     * @default 1 - Math.pow(0.001, 1 / 300)
+     * @default DEFAULT_ALPHA_DECAY
      */
     alphaDecay?: number;
 
     /**
      * Minimum alpha value at which simulation stops
-     * @default 0.01
+     * @default DEFAULT_ALPHA_MIN
      */
     alphaMin?: number;
 
     /**
      * Velocity decay factor applied to nodes each tick
-     * @default 0.4
+     * @default DEFAULT_VELOCITY_DECAY
      */
     velocityDecay?: number;
 
@@ -127,11 +155,11 @@
   let {
     forces,
     data,
-    alpha = $bindable(1),
-    alphaTarget = 0,
-    alphaDecay = 1 - Math.pow(0.001, 1 / 300),
-    alphaMin = 0.001,
-    velocityDecay = 0.4,
+    alpha = $bindable(DEFAULT_ALPHA),
+    alphaTarget = DEFAULT_ALPHA_TARGET,
+    alphaDecay = DEFAULT_ALPHA_DECAY,
+    alphaMin = DEFAULT_ALPHA_MIN,
+    velocityDecay = DEFAULT_VELOCITY_DECAY,
     stopped = false,
     static: staticProp,
     onStart: onStartProp = () => {},
