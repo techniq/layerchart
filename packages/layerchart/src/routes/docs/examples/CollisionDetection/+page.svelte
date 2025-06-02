@@ -6,11 +6,18 @@
   import { Chart, Circle, Group, ForceSimulation, Svg } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import type { Prettify } from '@layerstack/utils';
+
+  type NodeDatum = { r: number; group: number };
+  type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
 
   const k = 600 / 200;
   const r = randomUniform(k, k * 4);
   const n = 4;
-  const randomData = Array.from({ length: 200 }, (_, i) => ({ r: r(), group: i && (i % n) + 1 }));
+  const randomData: MySimulationNodeDatum[] = Array.from({ length: 200 }, (_, i) => ({
+    r: r(),
+    group: i && (i % n) + 1,
+  }));
 
   const groupColor = scaleOrdinal([
     'var(--color-info)',
@@ -18,12 +25,12 @@
     'var(--color-danger)',
   ]);
 
-  const xForce = forceX().strength(0.01);
-  const yForce = forceY().strength(0.01);
-  const collideForce = forceCollide<SimulationNodeDatum & { r: number }>()
+  const xForce = forceX<MySimulationNodeDatum>().strength(0.01);
+  const yForce = forceY<MySimulationNodeDatum>().strength(0.01);
+  const collideForce = forceCollide<MySimulationNodeDatum>()
     .radius((d) => d.r + 1)
     .iterations(3);
-  const manyBodyForce = forceManyBody();
+  const manyBodyForce = forceManyBody<MySimulationNodeDatum>();
 </script>
 
 <h1>Examples</h1>

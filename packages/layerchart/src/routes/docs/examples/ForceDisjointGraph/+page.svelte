@@ -14,32 +14,39 @@
   import { Chart, Circle, ForceSimulation, Link, Svg } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import type { Prettify } from '@layerstack/utils';
 
   let { data } = $props();
 
-  type Node = {
+  type NodeDatum = {
     id: string;
     group: number;
   };
 
-  type Link = {
+  type LinkDatum = {
     source: string;
     target: string;
     value: number;
   };
 
-  const nodes: (Node & SimulationNodeDatum)[] = data.miserables.nodes;
-  const links: (Link & SimulationLinkDatum<Node & SimulationNodeDatum>)[] = data.miserables.links;
+  type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
+  type MySimulationLinkDatum = Prettify<
+    LinkDatum & SimulationLinkDatum<NodeDatum & SimulationNodeDatum>
+  >;
+
+  const nodes: MySimulationNodeDatum[] = data.miserables.nodes;
+  const links: MySimulationLinkDatum[] = data.miserables.links;
 
   const colorScale = scaleOrdinal(schemeCategory10);
 
-  // @ts-expect-error - TODO: can we fix these types
-  const linkForce = $derived(forceLink(links).id((d) => d.id));
-  const chargeForce = forceManyBody().strength(-30).theta(0.9);
-  const xForce = forceX();
-  const yForce = forceY();
+  const linkForce = $derived(
+    forceLink<MySimulationNodeDatum, MySimulationLinkDatum>(links).id((d) => d.id)
+  );
+  const chargeForce = forceManyBody<MySimulationNodeDatum>().strength(-30).theta(0.9);
+  const xForce = forceX<MySimulationNodeDatum>();
+  const yForce = forceY<MySimulationNodeDatum>();
 
-  function keyForLink(link: Link & SimulationLinkDatum<Node & SimulationNodeDatum>): any {
+  function keyForLink(link: MySimulationLinkDatum): any {
     return link.value + link.index!;
   }
 </script>
