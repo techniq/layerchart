@@ -46,9 +46,9 @@
           cy={context.height / 2}
           r={100}
           {points}
-          {curveRadius}
           {inset}
           {rotate}
+          {curveRadius}
         />
       </Layer>
     {/snippet}
@@ -77,8 +77,8 @@
                   cy={context.height / 2}
                   r={60}
                   points={example.points}
-                  {curveRadius}
                   {rotate}
+                  {curveRadius}
                 />
               </Layer>
             {/snippet}
@@ -92,8 +92,9 @@
 <h2>Stars</h2>
 
 <div class="flex gap-2 mb-1/2">
-  <RangeField label="curveRadius" labelPlacement="left" bind:value={curveRadius} max={50} />
   <RangeField label="inset" labelPlacement="left" bind:value={inset} max={2} step={0.1} />
+  <RangeField label="rotate" labelPlacement="left" bind:value={rotate} max={360} />
+  <RangeField label="curveRadius" labelPlacement="left" bind:value={curveRadius} max={50} />
 </div>
 
 <div class="grid grid-cols-sm gap-3">
@@ -104,7 +105,15 @@
         <div class="h-[150px] p-4 border rounded-sm">
           <Chart>
             <Layer type="svg">
-              <Polygon cx={50} cy={50} r={50} points={example.points} {curveRadius} {inset} />
+              <Polygon
+                cx={50}
+                cy={50}
+                r={50}
+                points={example.points}
+                {inset}
+                {rotate}
+                {curveRadius}
+              />
             </Layer>
           </Chart>
         </div>
