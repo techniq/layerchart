@@ -59,6 +59,13 @@
     curveRadius?: number;
 
     /**
+     * The rotation of the polygon.
+     *
+     * @default 0
+     */
+    rotate?: number;
+
+    /**
      * The percent to inset the odd points of the star (<1 inset, >1 outset)
      *
      * @default 1
@@ -96,7 +103,7 @@
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { layerClass } from '$lib/utils/attributes.js';
-  import { star } from '$lib/utils/shape.js';
+  import { polygon } from '$lib/utils/shape.js';
   import { roundedPolygonPath } from '$lib/utils/path.js';
 
   let {
@@ -108,6 +115,7 @@
     initialR: initialRProp,
     points = 4,
     curveRadius = 0,
+    rotate = 0,
     inset = 1,
     motion,
     fill,
@@ -134,12 +142,17 @@
   const motionCy = createMotion(initialCy, () => cy, motion);
   const motionR = createMotion(initialR, () => r, motion);
 
-  // let polygonPoints = $derived(polygon(cx, cy, points, r));
-  let starPoints = $derived(
-    star(motionCx.current, motionCy.current, points, motionR.current, inset)
+  let polygonPoints = $derived(
+    polygon({
+      cx: motionCx.current,
+      cy: motionCy.current,
+      count: points,
+      radius: motionR.current,
+      rotate,
+      inset,
+    })
   );
-
-  let d = $derived(roundedPolygonPath(starPoints, curveRadius));
+  let d = $derived(roundedPolygonPath(polygonPoints, curveRadius));
 
   const extractedTween = extractTweenConfig(motion);
 
@@ -150,7 +163,7 @@
       }
     : undefined;
 
-  const tweenedState = createMotion(null /*defaultPathData()*/, () => d, tweenedOptions);
+  const tweenedState = createMotion(null, () => d, tweenedOptions);
 
   const renderCtx = getRenderContext();
 

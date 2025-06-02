@@ -6,10 +6,11 @@
   let points = $state(10);
   let curveRadius = $state(0);
   let inset = $state(0.3);
+  let rotate = $state(0);
 
   const simpleExamples = [
     { label: 'Triangle', points: 3 },
-    { label: 'Square', points: 4 },
+    { label: 'Square / Diamond', points: 4 },
     { label: 'Pentagon', points: 5 },
     { label: 'Hexagon', points: 6 },
     { label: 'Octagon', points: 8 },
@@ -29,10 +30,11 @@
 
 <h1>Playground</h1>
 
-<div class="grid grid-cols-sm gap-2 mb-2">
+<div class="grid grid-cols-xs gap-2 mb-2">
   <RangeField label="points" bind:value={points} min={3} max={20} />
-  <RangeField label="curveRadius" bind:value={curveRadius} max={50} />
   <RangeField label="inset" bind:value={inset} max={2} step={0.1} />
+  <RangeField label="rotate" bind:value={rotate} max={360} />
+  <RangeField label="curveRadius" bind:value={curveRadius} max={50} />
 </div>
 
 <div class="h-[300px] p-4 border rounded-sm">
@@ -46,10 +48,7 @@
           {points}
           {curveRadius}
           {inset}
-          motion={{
-            type: 'tween',
-            duration: 200,
-          }}
+          {rotate}
         />
       </Layer>
     {/snippet}
@@ -60,6 +59,7 @@
 
 <div class="flex gap-2 mb-1/2">
   <h2 class="grow">Simple</h2>
+  <RangeField label="rotate" labelPlacement="left" bind:value={rotate} max={360} />
   <RangeField label="curveRadius" labelPlacement="left" bind:value={curveRadius} max={50} />
 </div>
 
@@ -78,6 +78,7 @@
                   r={60}
                   points={example.points}
                   {curveRadius}
+                  {rotate}
                 />
               </Layer>
             {/snippet}
