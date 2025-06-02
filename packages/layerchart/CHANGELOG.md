@@ -1,5 +1,13 @@
 # LayerChart
 
+## 2.0.0-next.16
+
+### Patch Changes
+
+- fix(ForceSimulation): Expose default values by exporting them as constants ([#530](https://github.com/techniq/layerchart/pull/530))
+
+- fix(ForceSimulation): Export Forces<NodeDatum, LinkDatum> type. ([#531](https://github.com/techniq/layerchart/pull/531))
+
 ## 2.0.0-next.15
 
 ### Minor Changes
