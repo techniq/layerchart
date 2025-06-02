@@ -15,22 +15,28 @@
   import { Checkbox, Field, ProgressCircle, RangeField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import type { Prettify } from '@layerstack/utils';
 
   let { data } = $props();
 
-  type Node = {
+  type NodeDatum = {
     id: string;
     group: number;
   };
 
-  type Link = {
+  type LinkDatum = {
     source: string;
     target: string;
     value: number;
   };
 
-  const nodes: (Node & SimulationNodeDatum)[] = data.miserables.nodes;
-  const links: (Link & SimulationLinkDatum<Node & SimulationNodeDatum>)[] = data.miserables.links;
+  type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
+  type MySimulationLinkDatum = Prettify<
+    LinkDatum & SimulationLinkDatum<NodeDatum & SimulationNodeDatum>
+  >;
+
+  const nodes: MySimulationNodeDatum[] = data.miserables.nodes;
+  const links: MySimulationLinkDatum[] = data.miserables.links;
 
   const colorScale = scaleOrdinal(schemeCategory10);
 
@@ -61,11 +67,12 @@
     });
   });
 
-  // @ts-expect-error
-  const linkForce = $derived(forceLink(links).id((d) => d.id));
-  const chargeForce = forceManyBody();
-  const collideForce = forceCollide();
-  const centerForce = forceCenter(0, 0);
+  const linkForce = $derived(
+    forceLink<MySimulationNodeDatum, MySimulationLinkDatum>(links).id((d) => d.id)
+  );
+  const chargeForce = forceManyBody<MySimulationNodeDatum>();
+  const collideForce = forceCollide<MySimulationNodeDatum>();
+  const centerForce = forceCenter<MySimulationNodeDatum>(0, 0);
 
   let linkDistance = $state(30);
 
