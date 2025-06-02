@@ -103,6 +103,8 @@ export { default as Point } from './Point.svelte';
 export * from './Point.svelte';
 export { default as Points } from './Points.svelte';
 export * from './Points.svelte';
+export { default as Polygon } from './Polygon.svelte';
+export * from './Polygon.svelte';
 export { default as RadialGradient } from './RadialGradient.svelte';
 export * from './RadialGradient.svelte';
 export { default as Rect } from './Rect.svelte';

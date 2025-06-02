@@ -74,6 +74,7 @@
       'Line',
       'Marker',
       'Point',
+      'Polygon',
       'Rect',
       'Text',
     ],
