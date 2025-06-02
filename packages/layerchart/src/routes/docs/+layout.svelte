@@ -39,7 +39,7 @@
   const sourceUrl = $derived(
     ['components', 'utils'].includes(type)
       ? `src/lib/${type}/${getComponentPath(name)}.${type === 'components' ? 'svelte' : 'ts'}`
-      : null,
+      : null
   );
   const {
     description,
