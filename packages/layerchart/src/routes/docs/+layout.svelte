@@ -30,10 +30,16 @@
   const [type, name] = $derived(page.url.pathname.split('/').slice(2) ?? []);
   const title = $derived(page.data.meta?.title ?? name);
   const pageUrl = $derived(`src/routes/docs/${type}/${name}/+page.svelte?plain=1`);
+
+  const getComponentPath = (name: string) => {
+    if (name.endsWith('Chart') && name !== 'Chart') return `charts/${name}`;
+    if (name.startsWith('Tooltip')) return `tooltip/${name}`;
+    return name;
+  };
   const sourceUrl = $derived(
     ['components', 'utils'].includes(type)
-      ? `src/lib/${type}/${name}.${type === 'components' ? 'svelte' : 'ts'}`
-      : null
+      ? `src/lib/${type}/${getComponentPath(name)}.${type === 'components' ? 'svelte' : 'ts'}`
+      : null,
   );
   const {
     description,
@@ -121,7 +127,7 @@
         label="Source"
         {source}
         href={sourceUrl
-          ? `https://github.com/techniq/layerchart/blob/main/packages/layerchart/${sourceUrl}`
+          ? `https://github.com/techniq/layerchart/blob/next/packages/layerchart/${sourceUrl}`
           : ''}
         icon={mdiCodeTags}
       />
@@ -130,7 +136,7 @@
         label="Page source"
         source={pageSource}
         href={pageUrl
-          ? `https://github.com/techniq/layerchart/blob/main/packages/layerchart/${pageUrl}`
+          ? `https://github.com/techniq/layerchart/blob/next/packages/layerchart/${pageUrl}`
           : ''}
         icon={mdiFileDocumentEditOutline}
       />
