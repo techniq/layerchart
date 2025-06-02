@@ -3,9 +3,9 @@
   import { RangeField } from 'svelte-ux';
   import Preview from 'layerchart/docs/Preview.svelte';
 
-  let points = $state(3);
+  let points = $state(10);
   let curveRadius = $state(0);
-  let inset = $state(0.5);
+  let inset = $state(0.3);
 
   const simpleExamples = [
     { label: 'Triangle', points: 3 },

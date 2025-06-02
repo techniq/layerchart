@@ -62,18 +62,13 @@ export function spikePath({
  *
  * @param coords - Array of points (x, y)
  * @param radius - Radius of the curve
- * @param close - Whether to close the path
  * @returns String of path data
  */
-export function roundedPolygonPath(
-  coords: { x: number; y: number }[],
-  radius: number,
-  close: boolean
-) {
+export function roundedPolygonPath(coords: { x: number; y: number }[], radius: number) {
   // See: https://stackoverflow.com/questions/10177985/svg-rounded-corner
 
   let path = '';
-  const length = coords.length + (close ? 1 : -1);
+  const length = coords.length + 1;
   for (let i = 0; i < length; i++) {
     const a = coords[i % coords.length];
     const b = coords[(i + 1) % coords.length];
@@ -87,7 +82,7 @@ export function roundedPolygonPath(
     if (!close && i == length - 1) path += `L${b.x},${b.y}`;
     else if (i < length - 1) path += `L${a.x * t + b.x * (1 - t)},${a.y * t + b.y * (1 - t)}`;
   }
-  if (close) path += 'Z';
+  path += 'Z';
   return path;
 }
 

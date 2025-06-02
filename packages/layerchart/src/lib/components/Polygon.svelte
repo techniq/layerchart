@@ -139,7 +139,7 @@
     star(motionCx.current, motionCy.current, points, motionR.current, inset)
   );
 
-  let d = $derived(roundedPolygonPath(starPoints, curveRadius, true));
+  let d = $derived(roundedPolygonPath(starPoints, curveRadius));
 
   const extractedTween = extractTweenConfig(motion);
 
