@@ -96,7 +96,7 @@
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { layerClass } from '$lib/utils/attributes.js';
-  import { polygon, star } from '$lib/utils/shape.js';
+  import { star } from '$lib/utils/shape.js';
   import { roundedPolygonPath } from '$lib/utils/path.js';
 
   let {
