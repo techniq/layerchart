@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Area, BarChart, Spline, Tooltip } from 'layerchart';
+  import { Area, Axis, BarChart, Chart, Highlight, Spline, Svg, Tooltip } from 'layerchart';
+  import { scaleLinear } from 'd3-scale';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -17,9 +18,9 @@
 
 <h1>Examples</h1>
 
-<h2>Common scale</h2>
+<h2>Common scale with extra marks</h2>
 
-<Preview {data}>
+<Preview data={dateSeries}>
   <div class="h-[300px] p-4 border rounded-sm">
     <BarChart
       data={dateSeries}
@@ -48,9 +49,9 @@
   </div>
 </Preview>
 
-<h2>Stacked Charts</h2>
+<h2>Separate scales with stacked charts and overridden marks</h2>
 
-<Preview {data}>
+<Preview data={data.appleTicker}>
   <div class="h-[300px] grid grid-stack p-4 border rounded-sm">
     <!-- First chart (bar), with different domain scale for volume -->
     <BarChart
@@ -99,5 +100,127 @@
         </Tooltip.Root>
       {/snippet}
     </BarChart>
+  </div>
+</Preview>
+
+<h2>Dual axis with single chart using remapped scale</h2>
+
+<Preview data={data.newPassengerCars}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <!-- Remap efficiency to its equivalent value in sales - https://observablehq.com/@observablehq/plot-dual-axis -->
+    <Chart
+      data={data.newPassengerCars}
+      x="year"
+      y="sales"
+      yDomain={[0, null]}
+      yNice
+      y1="efficiency"
+      y1Scale={scaleLinear()}
+      y1Range={({ yScale }) => yScale.domain()}
+      padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+    >
+      {#snippet children({ context })}
+        <Svg>
+          <Axis
+            placement="left"
+            rule
+            format="metric"
+            label="↑ sales (M)"
+            labelPlacement="start"
+            labelProps={{ class: 'fill-primary' }}
+          />
+          <Axis
+            placement="right"
+            scale={scaleLinear(context.y1Scale?.domain() ?? [], [context.height, 0])}
+            ticks={context.y1Scale?.ticks?.()}
+            rule
+            label="efficiency (mpg) ↑"
+            labelPlacement="start"
+            labelProps={{ class: 'fill-secondary' }}
+          />
+          <Axis placement="bottom" format="none" rule />
+          <Spline class="stroke-2 stroke-primary" />
+          <Spline y={(d) => context.y1Scale?.(d.efficiency)} class="stroke-2 stroke-secondary" />
+          <Highlight lines points />
+          <Highlight
+            points={{ class: 'fill-secondary' }}
+            y={(d) => context.y1Scale?.(d.efficiency)}
+          />
+        </Svg>
+
+        <Tooltip.Root {context}>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.year}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="sales" value={data.sales} format="currencyRound" />
+              <Tooltip.Item label="efficiency" value={data.efficiency} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Dual axis with stacked charts</h2>
+
+<Preview data={data.newPassengerCars}>
+  <div class="h-[300px] grid grid-stack p-4 border rounded-sm">
+    <!-- Sales chart-->
+    <Chart
+      data={data.newPassengerCars}
+      x="year"
+      y="sales"
+      yDomain={[0, null]}
+      yNice
+      padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
+    >
+      <Svg>
+        <Axis
+          placement="left"
+          rule
+          format="metric"
+          label="↑ sales (M)"
+          labelPlacement="start"
+          labelProps={{ class: 'fill-primary' }}
+        />
+        <Axis placement="bottom" format="none" rule />
+        <Spline class="stroke-2 stroke-primary" />
+        <Highlight lines points />
+      </Svg>
+    </Chart>
+
+    <!-- Efficiency chart, provides tooltip for both values  -->
+    <Chart
+      data={data.newPassengerCars}
+      x="year"
+      y="efficiency"
+      padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
+      tooltip={{ mode: 'bisect-x' }}
+    >
+      <Svg>
+        <Axis
+          placement="right"
+          rule
+          label="efficiency (mpg) ↑"
+          labelPlacement="start"
+          labelProps={{ class: 'fill-secondary' }}
+        />
+        <Spline class="stroke-2 stroke-secondary" />
+        <!-- Difficult to add points for both charts without using a remaped scale for one value -->
+        <Highlight lines />
+      </Svg>
+
+      <Tooltip.Root>
+        {#snippet children({ data })}
+          <Tooltip.Header>{data.year}</Tooltip.Header>
+          <Tooltip.List>
+            <Tooltip.Item label="sales" value={data.sales} format="currencyRound" />
+            <Tooltip.Item label="efficiency" value={data.efficiency} />
+          </Tooltip.List>
+        {/snippet}
+      </Tooltip.Root>
+    </Chart>
   </div>
 </Preview>
