@@ -9,6 +9,8 @@
   let rotate = $state(0);
   let scaleX = $state(1);
   let scaleY = $state(1);
+  let skewX = $state(0);
+  let skewY = $state(0);
 
   const simpleExamples = [
     { label: 'Triangle', points: 3 },
@@ -39,6 +41,8 @@
   <RangeField label="curveRadius" bind:value={curveRadius} max={50} />
   <RangeField label="scaleX" bind:value={scaleX} max={2} step={0.1} />
   <RangeField label="scaleY" bind:value={scaleY} max={2} step={0.1} />
+  <RangeField label="skewX" bind:value={skewX} min={-50} max={50} />
+  <RangeField label="skewY" bind:value={skewY} min={-50} max={50} />
 </div>
 
 <div class="h-[300px] p-4 border rounded-sm">
@@ -55,6 +59,8 @@
           {curveRadius}
           {scaleX}
           {scaleY}
+          {skewX}
+          {skewY}
         />
       </Layer>
     {/snippet}
@@ -70,29 +76,207 @@
 </div>
 
 <div class="grid grid-cols-sm gap-3">
-  {#each simpleExamples as example}
-    <div>
-      <h3>{example.label}</h3>
-      <Preview>
-        <div class="h-[150px] p-4 border rounded-sm">
-          <Chart>
-            {#snippet children({ context })}
-              <Layer type="svg">
-                <Polygon
-                  cx={context.width / 2}
-                  cy={context.height / 2}
-                  r={60}
-                  points={example.points}
-                  {rotate}
-                  {curveRadius}
-                />
-              </Layer>
-            {/snippet}
-          </Chart>
-        </div>
-      </Preview>
-    </div>
-  {/each}
+  <div>
+    <h3>Triangle</h3>
+    <Preview>
+      <div class="h-[150px] p-4 border rounded-sm">
+        <Chart>
+          {#snippet children({ context })}
+            <Layer type="svg">
+              <Polygon
+                cx={context.width / 2}
+                cy={context.height / 2}
+                r={60}
+                points={3}
+                {rotate}
+                {curveRadius}
+              />
+            </Layer>
+          {/snippet}
+        </Chart>
+      </div>
+    </Preview>
+  </div>
+
+  <div>
+    <h3>Square</h3>
+    <Preview>
+      <div class="h-[150px] p-4 border rounded-sm">
+        <Chart>
+          {#snippet children({ context })}
+            <Layer type="svg">
+              <Polygon
+                cx={context.width / 2}
+                cy={context.height / 2}
+                r={60}
+                points={4}
+                rotate={rotate + 45}
+                {curveRadius}
+              />
+            </Layer>
+          {/snippet}
+        </Chart>
+      </div>
+    </Preview>
+  </div>
+
+  <div>
+    <h3>Diamond</h3>
+    <Preview>
+      <div class="h-[150px] p-4 border rounded-sm">
+        <Chart>
+          {#snippet children({ context })}
+            <Layer type="svg">
+              <Polygon
+                cx={context.width / 2}
+                cy={context.height / 2}
+                r={60}
+                points={4}
+                scaleX={0.5}
+                {rotate}
+                {curveRadius}
+              />
+            </Layer>
+          {/snippet}
+        </Chart>
+      </div>
+    </Preview>
+  </div>
+
+  <div>
+    <h3>Rhombus</h3>
+    <Preview>
+      <div class="h-[150px] p-4 border rounded-sm">
+        <Chart>
+          {#snippet children({ context })}
+            <Layer type="svg">
+              <Polygon
+                cx={context.width / 2}
+                cy={context.height / 2}
+                r={60}
+                points={4}
+                skewX={-20}
+                rotate={rotate + 45}
+                {curveRadius}
+              />
+            </Layer>
+          {/snippet}
+        </Chart>
+      </div>
+    </Preview>
+  </div>
+
+  <div>
+    <h3>Parallelogram</h3>
+    <Preview>
+      <div class="h-[150px] p-4 border rounded-sm">
+        <Chart>
+          {#snippet children({ context })}
+            <Layer type="svg">
+              <Polygon
+                cx={context.width / 2}
+                cy={context.height / 2}
+                r={60}
+                points={4}
+                skewX={-20}
+                scaleX={1.5}
+                rotate={rotate + 45}
+                {curveRadius}
+              />
+            </Layer>
+          {/snippet}
+        </Chart>
+      </div>
+    </Preview>
+  </div>
+
+  <div>
+    <h3>Pentagon</h3>
+    <Preview>
+      <div class="h-[150px] p-4 border rounded-sm">
+        <Chart>
+          {#snippet children({ context })}
+            <Layer type="svg">
+              <Polygon
+                cx={context.width / 2}
+                cy={context.height / 2}
+                r={60}
+                points={5}
+                {rotate}
+                {curveRadius}
+              />
+            </Layer>
+          {/snippet}
+        </Chart>
+      </div>
+    </Preview>
+  </div>
+
+  <div>
+    <h3>Hexagon</h3>
+    <Preview>
+      <div class="h-[150px] p-4 border rounded-sm">
+        <Chart>
+          {#snippet children({ context })}
+            <Layer type="svg">
+              <Polygon
+                cx={context.width / 2}
+                cy={context.height / 2}
+                r={60}
+                points={6}
+                {rotate}
+                {curveRadius}
+              />
+            </Layer>
+          {/snippet}
+        </Chart>
+      </div>
+    </Preview>
+  </div>
+
+  <div>
+    <h3>Octagon</h3>
+    <Preview>
+      <div class="h-[150px] p-4 border rounded-sm">
+        <Chart>
+          {#snippet children({ context })}
+            <Layer type="svg">
+              <Polygon
+                cx={context.width / 2}
+                cy={context.height / 2}
+                r={60}
+                points={8}
+                {rotate}
+                {curveRadius}
+              />
+            </Layer>
+          {/snippet}
+        </Chart>
+      </div>
+    </Preview>
+  </div>
+
+  <div>
+    <h3>Octagon</h3>
+    <Preview>
+      <div class="h-[150px] p-4 border rounded-sm">
+        <Chart>
+          {#snippet children({ context })}
+            <Layer type="svg">
+              <Polygon
+                cx={context.width / 2}
+                cy={context.height / 2}
+                r={60}
+                points={8}
+                {rotate}
+                {curveRadius}
+              />
+            </Layer>
+          {/snippet}
+        </Chart>
+      </div>
+    </Preview>
+  </div>
 </div>
 
 <h2>Stars</h2>

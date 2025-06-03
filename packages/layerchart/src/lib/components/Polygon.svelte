@@ -87,6 +87,20 @@
     scaleY?: number;
 
     /**
+     * The skew angle in degrees along the X axis.
+     *
+     * @default 0
+     */
+    skewX?: number;
+
+    /**
+     * The skew angle in degrees along the Y axis.
+     *
+     * @default 0
+     */
+    skewY?: number;
+
+    /**
      * A bindable reference to the `<path>` element
      *
      * @bindable
@@ -133,6 +147,8 @@
     inset = 1,
     scaleX = 1,
     scaleY = 1,
+    skewX = 0,
+    skewY = 0,
     motion,
     fill,
     fillOpacity,
@@ -168,6 +184,8 @@
       inset,
       scaleX,
       scaleY,
+      skewX,
+      skewY,
     })
   );
   let d = $derived(roundedPolygonPath(polygonPoints, curveRadius));
