@@ -87,16 +87,16 @@
     /**
      * Add additional content at the start of the line.
      *
-     * Receives `{ point: DOMPoint }` as a snippet prop.
+     * Receives `{ point: DOMPoint; value: { x: number; y: number } }` as a snippet prop.
      */
-    startContent?: Snippet<[{ point: DOMPoint }]>;
+    startContent?: Snippet<[{ point: DOMPoint; value: { x: number; y: number } }]>;
 
     /**
      * Add additional content at the end of the line.
      *
-     * Receives `{ point: DOMPoint }` as a snippet prop.
+     * Receives `{ point: DOMPoint; value: { x: number; y: number } }` as a snippet prop.
      */
-    endContent?: Snippet<[{ point: DOMPoint }]>;
+    endContent?: Snippet<[{ point: DOMPoint; value: { x: number; y: number } }]>;
 
     /**
      * A reference to the `<path>` element.
@@ -385,13 +385,25 @@
 
     {#if startContent && startPoint}
       <Group x={startPoint.x} y={startPoint.y} class={layerClass('spline-g-start')}>
-        {@render startContent({ point: startPoint })}
+        {@render startContent({
+          point: startPoint,
+          value: {
+            x: ctx.xScale?.invert?.(startPoint.x),
+            y: ctx.yScale?.invert?.(startPoint.y),
+          },
+        })}
       </Group>
     {/if}
 
     {#if endContent && endPoint.current}
       <Group x={endPoint.current.x} y={endPoint.current.y} class={layerClass('spline-g-end')}>
-        {@render endContent({ point: endPoint.current })}
+        {@render endContent({
+          point: endPoint.current,
+          value: {
+            x: ctx.xScale?.invert?.(endPoint.current.x),
+            y: ctx.yScale?.invert?.(endPoint.current.y),
+          },
+        })}
       </Group>
     {/if}
   {/key}

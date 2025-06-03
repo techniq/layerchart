@@ -8,6 +8,7 @@
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
+  import { format } from '@layerstack/utils';
 
   let pointCount = $state(100);
   let showPoints = $state(false);
@@ -275,6 +276,43 @@
             <Spline {curve} draw={{ duration: 3000 }} class="stroke-primary stroke-2">
               {#snippet endContent()}
                 <Circle r={5} class="fill-primary" />
+              {/snippet}
+            </Spline>
+          {/if}
+        </Svg>
+      </Chart>
+    </div>
+  </Preview>
+</Toggle>
+
+<h2>end slot with draw with value</h2>
+
+<Toggle on let:on={show} let:toggle>
+  <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
+    <Field label="Show" let:id>
+      <Switch checked={show} on:change={toggle} {id} size="md" />
+    </Field>
+    <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
+    <CurveMenuField bind:value={curve} />
+    <RangeField label="Points" bind:value={pointCount} min={2} />
+  </div>
+
+  <Preview {data}>
+    <div class="h-[300px] p-4 border rounded-sm">
+      <Chart {data} x="x" y="y" yNice padding={{ left: 16, right: 40, bottom: 24 }}>
+        <Svg>
+          <Axis placement="left" grid rule />
+          <Axis placement="bottom" rule />
+          {#if show}
+            <Spline {curve} draw={{ duration: 3000 }} class="stroke-primary stroke-2">
+              {#snippet endContent({ value })}
+                <Circle r={5} class="fill-primary" />
+                <Text
+                  value={format(value.y, 'decimal')}
+                  textAnchor="start"
+                  verticalAnchor="middle"
+                  dx={8}
+                />
               {/snippet}
             </Spline>
           {/if}
