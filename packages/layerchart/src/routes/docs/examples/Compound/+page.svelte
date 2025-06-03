@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Area, Axis, BarChart, Chart, Highlight, Spline, Svg, Tooltip } from 'layerchart';
-  import { scaleLinear } from 'd3-scale';
+  import { scaleLinear, scaleTime } from 'd3-scale';
+  import { extent } from 'd3-array';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -222,5 +223,100 @@
         {/snippet}
       </Tooltip.Root>
     </Chart>
+  </div>
+</Preview>
+
+<h2>Separate scales with stacked charts with inverted range (top down)</h2>
+
+<Preview data={data.hydropgraph}>
+  <div class="h-[300px] grid grid-stack p-4 border rounded-sm">
+    <!-- First chart with inverted yRange (top down) -->
+    <BarChart
+      data={data.hydropgraph}
+      x="date"
+      y="rain"
+      axis={{ placement: 'right', tickMarks: false }}
+      yDomain={[0, 500]}
+      yRange={({ height }) => [0, height]}
+      padding={{ left: 32, right: 32, bottom: 20 }}
+      props={{
+        bars: {
+          // TODO: Determine why non-rounded Rect within Bar is not working for inverted range
+          // rounded: 'none',
+          class: 'stroke-none fill-blue-500',
+        },
+      }}
+    />
+
+    <BarChart
+      data={data.hydropgraph}
+      x="date"
+      yDomain={[0, 1000]}
+      padding={{ left: 32, right: 32, bottom: 20 }}
+      series={[
+        {
+          key: 'infiltration',
+          // TODO: Not sure what to be done with negative values
+          // value: (d) => Math.abs(d.infiltration),
+          value: (d) => (d.infiltration > 0 ? d.infiltration : 0),
+          color: 'hsl(25, 95%, 53%)',
+          props: {
+            rounded: 'none',
+          },
+        },
+        {
+          key: 'dirtyh2o',
+          color: 'hsl(0, 84%, 60%)',
+          props: {
+            rounded: 'none',
+          },
+        },
+        {
+          key: 'rain_induced',
+          color: 'hsl(142, 71%, 45%)',
+          props: {
+            rounded: 'none',
+          },
+        },
+      ]}
+      seriesLayout="stack"
+    >
+      {#snippet axis({ context })}
+        <Axis placement="left" />
+        <!-- Provide better axis than band scale currently does with time data-->
+        <Axis
+          placement="bottom"
+          scale={scaleTime(
+            // @ts-expect-error
+            extent(data.hydropgraph, (d) => d.date),
+            [0, context.width]
+          )}
+          tickMultiline
+          rule
+        />
+      {/snippet}
+
+      {#snippet tooltip({ context })}
+        <Tooltip.Root {context}>
+          {#snippet children({ data })}
+            <Tooltip.Header value={data.date} format="day" />
+            <Tooltip.List>
+              <Tooltip.Item label="rain" color="hsl(200 100% 50%)" value={data.rain} />
+              <Tooltip.Item
+                label="infiltration"
+                color="hsl(25, 95%, 53%)"
+                value={data.infiltration}
+              />
+              <Tooltip.Item label="dirtyh2o" color="hsl(0, 84%, 60%)" value={data.dirtyh2o} />
+              <Tooltip.Item
+                label="rain_induced"
+                color="hsl(142, 71%, 45%)"
+                value={data.rain_induced}
+              />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
+    </BarChart>
   </div>
 </Preview>
