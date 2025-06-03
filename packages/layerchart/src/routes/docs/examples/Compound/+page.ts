@@ -3,8 +3,7 @@ import { parse } from '@layerstack/utils';
 
 import type { AppleTickerData } from '$static/data/examples/date/apple-ticker.js';
 import type { NewPassengerCars } from '$static/data/examples/new-passenger-cars.js';
-
-import { data as hydropgraphData } from './hydropgraph.js';
+import type { HydroData } from '$static/data/examples/date/hydro.js';
 
 import pageSource from './+page.svelte?raw';
 
@@ -17,7 +16,9 @@ export async function load({ fetch }) {
       // @ts-expect-error
       csvParse<NewPassengerCars>(await r.text(), autoType)
     ),
-    hydropgraph: hydropgraphData,
+    hydro: (await fetch('/data/examples/date/hydro.json').then(async (r) =>
+      parse(await r.text())
+    )) as HydroData,
     meta: {
       pageSource,
       related: [

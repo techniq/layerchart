@@ -228,11 +228,11 @@
 
 <h2>Separate scales with stacked charts with inverted range (top down)</h2>
 
-<Preview data={data.hydropgraph}>
+<Preview data={data.hydro}>
   <div class="h-[300px] grid grid-stack p-4 border rounded-sm">
     <!-- First chart with inverted yRange (top down) -->
     <BarChart
-      data={data.hydropgraph}
+      data={data.hydro}
       x="date"
       y="rain"
       axis={{ placement: 'right', tickMarks: false }}
@@ -249,7 +249,7 @@
     />
 
     <BarChart
-      data={data.hydropgraph}
+      data={data.hydro}
       x="date"
       yDomain={[0, 1000]}
       padding={{ left: 32, right: 32, bottom: 20 }}
@@ -288,7 +288,7 @@
           placement="bottom"
           scale={scaleTime(
             // @ts-expect-error
-            extent(data.hydropgraph, (d) => d.date),
+            extent(data.hydro, (d) => d.date),
             [0, context.width]
           )}
           tickMultiline
