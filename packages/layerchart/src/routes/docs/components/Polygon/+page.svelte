@@ -3,7 +3,7 @@
   import { RangeField } from 'svelte-ux';
   import Preview from 'layerchart/docs/Preview.svelte';
 
-  let points = $state(10);
+  let points = $state(8);
   let curveRadius = $state(0);
   let inset = $state(0.3);
   let rotate = $state(0);
@@ -13,40 +13,21 @@
   let skewY = $state(0);
   let tiltX = $state(1);
   let tiltY = $state(1);
-
-  const simpleExamples = [
-    { label: 'Triangle', points: 3 },
-    { label: 'Square / Diamond', points: 4 },
-    { label: 'Pentagon', points: 5 },
-    { label: 'Hexagon', points: 6 },
-    { label: 'Octagon', points: 8 },
-  ];
-
-  const starExamples = [
-    { label: '6 point', points: 6 },
-    { label: '8 point', points: 8 },
-    { label: '10 point', points: 10 },
-    { label: '12 point', points: 12 },
-    { label: '14 point', points: 14 },
-    { label: '16 point', points: 16 },
-    { label: '18 point', points: 18 },
-    { label: '20 point', points: 20 },
-  ];
 </script>
 
 <h1>Playground</h1>
 
 <div class="grid grid-cols-xs gap-2 mb-2">
   <RangeField label="points" bind:value={points} min={3} max={20} />
-  <RangeField label="inset" bind:value={inset} max={2} step={0.1} />
+  <RangeField label="inset" bind:value={inset} min={0.1} max={2} step={0.1} format="decimal" />
   <RangeField label="rotate" bind:value={rotate} max={360} />
   <RangeField label="curveRadius" bind:value={curveRadius} max={50} />
-  <RangeField label="scaleX" bind:value={scaleX} min={-2} max={2} step={0.1} />
-  <RangeField label="scaleY" bind:value={scaleY} min={-2} max={2} step={0.1} />
+  <RangeField label="scaleX" bind:value={scaleX} min={-2} max={2} step={0.1} format="decimal" />
+  <RangeField label="scaleY" bind:value={scaleY} min={-2} max={2} step={0.1} format="decimal" />
   <RangeField label="skewX" bind:value={skewX} min={-50} max={50} />
   <RangeField label="skewY" bind:value={skewY} min={-50} max={50} />
-  <RangeField label="tiltX" bind:value={tiltX} min={-2} max={2} step={0.1} />
-  <RangeField label="tiltY" bind:value={tiltY} min={-2} max={2} step={0.1} />
+  <RangeField label="tiltX" bind:value={tiltX} min={-2} max={2} step={0.1} format="decimal" />
+  <RangeField label="tiltY" bind:value={tiltY} min={-2} max={2} step={0.1} format="decimal" />
 </div>
 
 <div class="h-[300px] p-4 border rounded-sm">
@@ -308,31 +289,29 @@
   </div>
 </div>
 
-<h2>Stars</h2>
-
 <div class="flex gap-2 mb-1/2">
-  <RangeField label="inset" labelPlacement="left" bind:value={inset} max={2} step={0.1} />
+  <h2 class="grow">Stars</h2>
+  <RangeField
+    label="inset"
+    labelPlacement="left"
+    bind:value={inset}
+    max={2}
+    step={0.1}
+    format="decimal"
+  />
   <RangeField label="rotate" labelPlacement="left" bind:value={rotate} max={360} />
   <RangeField label="curveRadius" labelPlacement="left" bind:value={curveRadius} max={50} />
 </div>
 
 <div class="grid grid-cols-sm gap-3">
-  {#each starExamples as example}
+  {#each [6, 8, 10, 12, 14, 16, 18, 20] as points}
     <div>
-      <h3>{example.label}</h3>
+      <h3>{points} point</h3>
       <Preview>
         <div class="h-[150px] p-4 border rounded-sm">
           <Chart>
             <Layer type="svg">
-              <Polygon
-                cx={50}
-                cy={50}
-                r={50}
-                points={example.points}
-                {inset}
-                {rotate}
-                {curveRadius}
-              />
+              <Polygon cx={50} cy={50} r={50} {points} {inset} {rotate} {curveRadius} />
             </Layer>
           </Chart>
         </div>
