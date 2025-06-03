@@ -232,6 +232,28 @@ export function renderCircle(
   ctx.closePath();
 }
 
+export function renderEllipse(
+  ctx: CanvasRenderingContext2D,
+  coords: { cx: number; cy: number; rx: number; ry: number },
+  styleOptions: ComputedStylesOptions = {}
+) {
+  ctx.beginPath();
+  ctx.ellipse(coords.cx, coords.cy, coords.rx, coords.ry, 0, 0, 2 * Math.PI);
+  render(
+    ctx,
+    {
+      fill: (ctx) => {
+        ctx.fill();
+      },
+      stroke: (ctx) => {
+        ctx.stroke();
+      },
+    },
+    styleOptions
+  );
+  ctx.closePath();
+}
+
 /** Clear canvas accounting for Canvas `context.translate(...)` */
 export function clearCanvasContext(
   ctx: CanvasRenderingContext2D,

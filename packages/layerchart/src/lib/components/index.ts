@@ -43,6 +43,8 @@ export { default as Connector } from './Connector.svelte';
 export * from './Connector.svelte';
 export { default as Dagre } from './Dagre.svelte';
 export * from './Dagre.svelte';
+export { default as Ellipse } from './Ellipse.svelte';
+export * from './Ellipse.svelte';
 export { default as Frame } from './Frame.svelte';
 export * from './Frame.svelte';
 export { default as ForceSimulation } from './ForceSimulation.svelte';

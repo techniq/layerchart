@@ -70,6 +70,7 @@
       'Bar',
       'Circle',
       'Connector',
+      'Ellipse',
       'Group',
       'Line',
       'Marker',
