@@ -11,6 +11,8 @@
   let scaleY = $state(1);
   let skewX = $state(0);
   let skewY = $state(0);
+  let tiltX = $state(1);
+  let tiltY = $state(1);
 
   const simpleExamples = [
     { label: 'Triangle', points: 3 },
@@ -39,10 +41,12 @@
   <RangeField label="inset" bind:value={inset} max={2} step={0.1} />
   <RangeField label="rotate" bind:value={rotate} max={360} />
   <RangeField label="curveRadius" bind:value={curveRadius} max={50} />
-  <RangeField label="scaleX" bind:value={scaleX} max={2} step={0.1} />
-  <RangeField label="scaleY" bind:value={scaleY} max={2} step={0.1} />
+  <RangeField label="scaleX" bind:value={scaleX} min={-2} max={2} step={0.1} />
+  <RangeField label="scaleY" bind:value={scaleY} min={-2} max={2} step={0.1} />
   <RangeField label="skewX" bind:value={skewX} min={-50} max={50} />
   <RangeField label="skewY" bind:value={skewY} min={-50} max={50} />
+  <RangeField label="tiltX" bind:value={tiltX} min={-2} max={2} step={0.1} />
+  <RangeField label="tiltY" bind:value={tiltY} min={-2} max={2} step={0.1} />
 </div>
 
 <div class="h-[300px] p-4 border rounded-sm">
@@ -61,6 +65,8 @@
           {scaleY}
           {skewX}
           {skewY}
+          {tiltX}
+          {tiltY}
         />
       </Layer>
     {/snippet}
@@ -180,6 +186,29 @@
                 points={4}
                 skewX={-20}
                 scaleX={1.5}
+                rotate={rotate + 45}
+                {curveRadius}
+              />
+            </Layer>
+          {/snippet}
+        </Chart>
+      </div>
+    </Preview>
+  </div>
+
+  <div>
+    <h3>Trapezoid</h3>
+    <Preview>
+      <div class="h-[150px] p-4 border rounded-sm">
+        <Chart>
+          {#snippet children({ context })}
+            <Layer type="svg">
+              <Polygon
+                cx={context.width / 2}
+                cy={context.height / 2}
+                r={60}
+                points={4}
+                tiltX={2}
                 rotate={rotate + 45}
                 {curveRadius}
               />

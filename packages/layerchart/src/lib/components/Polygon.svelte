@@ -101,6 +101,20 @@
     skewY?: number;
 
     /**
+     * The tilt factor for x-coordinates.
+     *
+     * @default 1
+     */
+    tiltX?: number;
+
+    /**
+     * The tilt factor for y-coordinates.
+     *
+     * @default 1
+     */
+    tiltY?: number;
+
+    /**
      * A bindable reference to the `<path>` element
      *
      * @bindable
@@ -149,6 +163,8 @@
     scaleY = 1,
     skewX = 0,
     skewY = 0,
+    tiltX = 1,
+    tiltY = 1,
     motion,
     fill,
     fillOpacity,
@@ -186,6 +202,8 @@
       scaleY,
       skewX,
       skewY,
+      tiltX,
+      tiltY,
     })
   );
   let d = $derived(roundedPolygonPath(polygonPoints, curveRadius));
