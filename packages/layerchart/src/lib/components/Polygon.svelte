@@ -73,6 +73,20 @@
     inset?: number;
 
     /**
+     * The horizontal stretch factor of the polygon.
+     *
+     * @default 1
+     */
+    scaleX?: number;
+
+    /**
+     * The vertical stretch factor of the polygon.
+     *
+     * @default 1
+     */
+    scaleY?: number;
+
+    /**
      * A bindable reference to the `<path>` element
      *
      * @bindable
@@ -117,6 +131,8 @@
     curveRadius = 0,
     rotate = 0,
     inset = 1,
+    scaleX = 1,
+    scaleY = 1,
     motion,
     fill,
     fillOpacity,
@@ -150,6 +166,8 @@
       radius: motionR.current,
       rotate,
       inset,
+      scaleX,
+      scaleY,
     })
   );
   let d = $derived(roundedPolygonPath(polygonPoints, curveRadius));

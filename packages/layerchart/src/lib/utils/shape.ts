@@ -26,6 +26,8 @@ export function polygonPoints(count: number, radius: number, rotate: number = 0)
  * @param radius - Radius of the polygon
  * @param rotate - Rotation of the polygon (degrees)
  * @param inset - Percent to inset odd points (<1 inset, >1 outset)
+ * @param scaleX - Horizontal stretch factor
+ * @param scaleY - Vertical stretch factor
  * @returns Array of points (x, y)
  */
 export function polygon(options: {
@@ -35,13 +37,15 @@ export function polygon(options: {
   radius: number;
   rotate?: number;
   inset?: number;
+  scaleX?: number;
+  scaleY?: number;
 }) {
-  const { cx, cy, count, radius, rotate = 0, inset = 1 } = options;
+  const { cx, cy, count, radius, rotate = 0, inset = 1, scaleX = 1, scaleY = 1 } = options;
   return polygonPoints(count, radius, rotate).map(({ angle, radius }, i) => {
     const scale = i % 2 == 0 ? 1 : inset;
     return {
-      x: cx + radius * scale * Math.cos(angle),
-      y: cy + radius * scale * Math.sin(angle),
+      x: cx + radius * scale * Math.cos(angle) * scaleX,
+      y: cy + radius * scale * Math.sin(angle) * scaleY,
     };
   });
 }

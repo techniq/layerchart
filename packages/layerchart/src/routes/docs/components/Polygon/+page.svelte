@@ -7,6 +7,8 @@
   let curveRadius = $state(0);
   let inset = $state(0.3);
   let rotate = $state(0);
+  let scaleX = $state(1);
+  let scaleY = $state(1);
 
   const simpleExamples = [
     { label: 'Triangle', points: 3 },
@@ -35,6 +37,8 @@
   <RangeField label="inset" bind:value={inset} max={2} step={0.1} />
   <RangeField label="rotate" bind:value={rotate} max={360} />
   <RangeField label="curveRadius" bind:value={curveRadius} max={50} />
+  <RangeField label="scaleX" bind:value={scaleX} max={2} step={0.1} />
+  <RangeField label="scaleY" bind:value={scaleY} max={2} step={0.1} />
 </div>
 
 <div class="h-[300px] p-4 border rounded-sm">
@@ -49,6 +53,8 @@
           {inset}
           {rotate}
           {curveRadius}
+          {scaleX}
+          {scaleY}
         />
       </Layer>
     {/snippet}
