@@ -69,7 +69,7 @@
 
 <h1>Example</h1>
 
-<h1>Simple</h1>
+<h2>Simple</h2>
 
 <div class="grid gap-1 mb-4">
   <div class="grid grid-cols-[6fr_1fr_3fr] gap-1">
@@ -202,7 +202,7 @@
   </div>
 </Preview>
 
-<h1>Complex</h1>
+<h2>Complex</h2>
 
 <div class="grid gap-1 mb-4">
   <div class="grid grid-cols-[6fr_1fr_3fr] gap-1">
