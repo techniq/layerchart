@@ -100,7 +100,6 @@
     paddingLeft,
     paddingRight,
     maintainAspectRatio = false,
-    selected = $bindable(null),
     children,
   }: TreemapProps<T> = $props();
 

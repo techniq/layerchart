@@ -32,6 +32,7 @@
     Text,
     Tooltip,
     Treemap,
+    asAny,
     findAncestor,
   } from 'layerchart';
   import { isNodeVisible } from '$lib/utils/treemap.js';
@@ -187,7 +188,7 @@
       {#snippet children({ context })}
         <Svg>
           <Bounds
-            domain={selectedNested}
+            domain={asAny(selectedNested)}
             motion={{ type: 'tween', duration: 800, easing: cubicOut }}
           >
             {#snippet children({ xScale, yScale })}
@@ -490,7 +491,7 @@
     <Chart>
       <Svg>
         <Bounds
-          domain={selectedZoomable}
+          domain={asAny(selectedZoomable)}
           motion={{ type: 'tween', duration: 800, easing: cubicOut }}
         >
           {#snippet children({ xScale, yScale })}
