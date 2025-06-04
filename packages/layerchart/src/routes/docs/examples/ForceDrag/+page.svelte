@@ -1,17 +1,37 @@
 <script lang="ts">
-  import { forceManyBody, forceLink, forceCenter } from 'd3-force';
+  import {
+    forceManyBody,
+    forceLink,
+    forceCenter,
+    type SimulationNodeDatum,
+    type SimulationLinkDatum,
+  } from 'd3-force';
   import { curveLinear } from 'd3-shape';
 
   import { Field, Switch } from 'svelte-ux';
   import { Chart, ForceSimulation, Link, Svg, Tooltip } from 'layerchart';
   import { cls } from '@layerstack/tailwind';
-  import { clamp } from '@layerstack/utils';
+  import { clamp, type Prettify } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { movable } from '$lib/actions/movable.js';
 
-  const nodes = Array.from({ length: 13 }, (_, i) => ({ id: i }));
-  const links = [
+  type NodeDatum = {
+    id: number;
+  };
+
+  type LinkDatum = {
+    source: number;
+    target: number;
+  };
+
+  type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
+  type MySimulationLinkDatum = Prettify<
+    LinkDatum & SimulationLinkDatum<NodeDatum & SimulationNodeDatum>
+  >;
+
+  const nodes: MySimulationNodeDatum[] = Array.from({ length: 13 }, (_, i) => ({ id: i }));
+  const links: MySimulationLinkDatum[] = [
     { source: 0, target: 1 },
     { source: 1, target: 2 },
     { source: 2, target: 0 },
@@ -51,7 +71,7 @@
 
 <Preview data={nodes}>
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
-    <Chart data={nodes}>
+    <Chart>
       {#snippet children({ context })}
         <Svg>
           <ForceSimulation
@@ -60,7 +80,7 @@
               charge: chargeForce,
               center: centerForce.x(context.width / 2).y(context.height / 2),
             }}
-            {links}
+            data={{ nodes, links }}
           >
             {#snippet children({ nodes, simulation, linkPositions })}
               {#each links as link, i}

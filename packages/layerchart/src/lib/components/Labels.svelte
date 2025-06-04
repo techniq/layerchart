@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import Text, { type TextProps } from './Text.svelte';
   import { type ComponentProps, type Snippet } from 'svelte';
-  import { format as formatValue, type FormatType } from '@layerstack/utils';
+  import { format as formatValue, type FormatType, type FormatConfig } from '@layerstack/utils';
   import type { Without } from '$lib/utils/types.js';
   import Points, { type Point } from './Points.svelte';
   import { accessor, type Accessor } from '../utils/common.js';
@@ -51,7 +51,7 @@
     /**
      * The format of the label
      */
-    format?: FormatType;
+    format?: FormatType | FormatConfig;
 
     /**
      * Define unique value for {#each} `(key)` expressions to improve transitions.
@@ -109,6 +109,7 @@
 
     const formattedValue = formatValue(
       displayValue,
+      // @ts-expect-error - improve types
       format ??
         (value
           ? undefined

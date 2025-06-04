@@ -1,5 +1,51 @@
 # LayerChart
 
+## 2.0.0-next.16
+
+### Patch Changes
+
+- fix(ForceSimulation): Expose default values by exporting them as constants ([#530](https://github.com/techniq/layerchart/pull/530))
+
+- fix(ForceSimulation): Export Forces<NodeDatum, LinkDatum> type. ([#531](https://github.com/techniq/layerchart/pull/531))
+
+## 2.0.0-next.15
+
+### Minor Changes
+
+- fix(ForceSimulation): Decouple from `ChartContext` by taking nodes and links via `data` prop. ([#526](https://github.com/techniq/layerchart/pull/526))
+
+- fix(ForceSimulation): Improve types of `nodes` and `links` via generics (i.e. `ForceSimulation<Node, Link>`). ([#527](https://github.com/techniq/layerchart/pull/527))
+
+- fix(ForceSimulation): Expose `links` via `children` snippet.
+
+## 2.0.0-next.14
+
+### Patch Changes
+
+- fix(AreaChart|BarChar|LineChart): Use value axis (typically y) property name/accessor for tooltip label if defined as string (ex. `<AreaChart x="date" y="visitors">` will use `visitors` instead of `value`) ([#523](https://github.com/techniq/layerchart/pull/523))
+
+## 2.0.0-next.13
+
+### Patch Changes
+
+- feat: Support passing `FormatConfig` (ex. `{ type: '...', options: { ... } }`) anywhere `FormatType` is supported to simplify custom formatting (ex. `variant`) ([#521](https://github.com/techniq/layerchart/pull/521))
+
+- feat: Support passing `PeriodTypeCode` strings for simplified date formatting and reduce imports. Example: `format={PeriodType.Day}` is now `format="day"`. Also supported with config object for passing additional options (ex. `format={{ type: 'day', options: { variant: 'long' } }}`). Supported for all `format` props include Axis, Labels, Legend and Tooltip. ([#521](https://github.com/techniq/layerchart/pull/521))
+
+## 2.0.0-next.12
+
+### Patch Changes
+
+- fix(Group): Default `opacity` to `undefined` instead of `1` to allow overriding via class (ex. `opacity-20`) ([#520](https://github.com/techniq/layerchart/pull/520))
+
+- fix(Axis): Additional multiline month fix for day ticks ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.11
+
+### Patch Changes
+
+- fix(Axis): Fix multiline month when day tick does not align on first of month ([#517](https://github.com/techniq/layerchart/pull/517))
+
 ## 2.0.0-next.10
 
 ### Patch Changes

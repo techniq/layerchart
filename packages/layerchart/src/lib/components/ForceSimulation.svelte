@@ -1,54 +1,110 @@
 <script lang="ts" module>
-  import { forceSimulation, type Force, type Simulation, type SimulationNodeDatum } from 'd3-force';
+  import {
+    forceSimulation,
+    type Force,
+    type Simulation,
+    type SimulationLinkDatum,
+    type SimulationNodeDatum,
+  } from 'd3-force';
   import type { Snippet } from 'svelte';
 
-  type Forces = Record<string, Force<any, any>>;
+  export type Forces<
+    NodeDatum extends SimulationNodeDatum,
+    LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,
+  > = Record<string, Force<NodeDatum, LinkDatum>>;
 
-  export type LinkPosition = {
+  export type Data<TNode = any, TLink = any> = {
+    nodes: TNode[];
+    links?: TLink[];
+  };
+
+  export type LinkPosition = Prettify<{
     x1: number;
     y1: number;
     x2: number;
     y2: number;
-  };
+  }>;
 
-  export type ForceSimulationProps = {
+  /**
+   * Default initial alpha value of the simulation.
+   */
+  export const DEFAULT_ALPHA: number = 1;
+
+  /**
+   * Default target alpha value for the simulation.
+   */
+  export const DEFAULT_ALPHA_TARGET: number = 0;
+
+  /**
+   * Default alpha decay rate per tick.
+   *
+   * Formula: `1 - Math.pow(0.001, 1 / 300)`.
+   */
+  export const DEFAULT_ALPHA_DECAY: number = 1 - Math.pow(0.001, 1 / 300);
+
+  /**
+   * Default minimum alpha value at which simulation stops.
+   */
+  export const DEFAULT_ALPHA_MIN: number = 0.01;
+
+  /**
+   * Default velocity decay factor applied to nodes each tick.
+   */
+  export const DEFAULT_VELOCITY_DECAY: number = 0.4;
+
+  type NodeDatumFor<NodeDatum> = Prettify<NodeDatum & SimulationNodeDatum>;
+
+  type LinkDatumFor<NodeDatum, LinkDatum> = Prettify<
+    LinkDatum & SimulationLinkDatum<NodeDatumFor<NodeDatum>>
+  >;
+
+  type SimulationFor<NodeDatum, LinkDatum> = Simulation<
+    NodeDatumFor<NodeDatum>,
+    LinkDatumFor<NodeDatum, LinkDatum>
+  >;
+
+  export type ForceSimulationProps<
+    NodeDatum extends SimulationNodeDatum,
+    LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,
+  > = {
     /**
      * Force simulation parameters
      */
-    forces: Forces;
+    forces: Forces<NodeDatum, LinkDatum>;
 
     /**
-     * An array of links to be used for position calculation.
+     * An object with arrays of nodes and links,
+     * to be used for position calculation.
      */
-    links?: any[];
+    data: Data<NodeDatum, LinkDatum>;
 
     /**
      * Current alpha value of the simulation
-     * @default 1
+     * @default DEFAULT_ALPHA
      */
     alpha?: number;
 
     /**
      * Target alpha value for the simulation
-     * @default 0
+     * @default DEFAULT_ALPHA_TARGET
      */
     alphaTarget?: number;
 
     /**
      * Alpha decay rate per tick
-     * @default 1 - Math.pow(0.001, 1 / 300)
+     * @default DEFAULT_ALPHA_DECAY
      */
     alphaDecay?: number;
 
     /**
      * Minimum alpha value at which simulation stops
-     * @default 0.01
+     * @default DEFAULT_ALPHA_MIN
      */
     alphaMin?: number;
 
     /**
      * Velocity decay factor applied to nodes each tick
-     * @default 0.4
+     * @default DEFAULT_VELOCITY_DECAY
      */
     velocityDecay?: number;
 
@@ -88,27 +144,32 @@
     children?: Snippet<
       [
         {
-          nodes: any[];
-          simulation: Simulation<SimulationNodeDatum, undefined>;
+          nodes: NodeDatumFor<NodeDatum>[];
+          links: LinkDatumFor<NodeDatum, LinkDatum>[];
           linkPositions: LinkPosition[];
+          simulation: SimulationFor<NodeDatum, LinkDatum>;
         },
       ]
     >;
   };
 </script>
 
-<script lang="ts">
-  import { getChartContext } from './Chart.svelte';
+<script
+  lang="ts"
+  generics="NodeDatum extends SimulationNodeDatum,
+    LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,"
+>
   import { watch } from 'runed';
+  import type { Prettify } from '@layerstack/utils';
 
   let {
     forces,
-    links = [],
-    alpha = $bindable(1),
-    alphaTarget = 0,
-    alphaDecay = 1 - Math.pow(0.001, 1 / 300),
-    alphaMin = 0.001,
-    velocityDecay = 0.4,
+    data,
+    alpha = $bindable(DEFAULT_ALPHA),
+    alphaTarget = DEFAULT_ALPHA_TARGET,
+    alphaDecay = DEFAULT_ALPHA_DECAY,
+    alphaMin = DEFAULT_ALPHA_MIN,
+    velocityDecay = DEFAULT_VELOCITY_DECAY,
     stopped = false,
     static: staticProp,
     onStart: onStartProp = () => {},
@@ -116,22 +177,27 @@
     onEnd: onEndProp = () => {},
     children,
     cloneNodes = false,
-  }: ForceSimulationProps = $props();
-
-  const ctx = getChartContext();
+  }: ForceSimulationProps<NodeDatum, LinkDatum> = $props();
 
   // MARK: Public Props
 
   // MARK: Private Props
 
-  let nodes: SimulationNodeDatum[] = $state([]);
   let linkPositions: LinkPosition[] = $state([]);
+  let simulatedNodes: NodeDatumFor<NodeDatum>[] = $state([]);
+  let simulatedLinks: LinkDatumFor<NodeDatum, LinkDatum>[] = $derived(
+    (data.links ?? []) as LinkDatumFor<NodeDatum, LinkDatum>[]
+  );
 
-  const simulation = forceSimulation().stop();
+  // This casting is unfortunately necessary, due to unfortunate
+  // overloading choices made, over at `@typed/d3-force`:
+  const simulation: SimulationFor<NodeDatum, LinkDatum> = (
+    forceSimulation() as SimulationFor<NodeDatum, LinkDatum>
+  ).stop();
 
   // d3.Simulation does not provide a `.forces()` getter, so we need to
   // keep track of previous forces ourselves, for diffing against `forces`.
-  let previousForces: Forces = {};
+  let previousForces: Forces<NodeDatum, LinkDatum> = {};
 
   let paused: boolean = true;
 
@@ -166,11 +232,11 @@
   );
 
   watch.pre(
-    () => ctx.data,
+    () => data,
     () => {
-      // Any time the `data` store gets changed we
-      // pass them to the internal d3 simulation object:
-      pushNodesToSimulation(ctx.data as any[]);
+      // Any time the `nodes` prop, or the `data` store gets changed
+      // we pass them to the internal d3 simulation object:
+      pushNodesToSimulation(data.nodes);
       runOrResumeSimulation();
     }
   );
@@ -235,7 +301,7 @@
     simulation.nodes(nodes);
   }
 
-  function pushForcesToSimulation(forces: Forces) {
+  function pushForcesToSimulation(forces: Forces<NodeDatum, LinkDatum>) {
     // Evict obsolete forces:
     const names = Object.keys(previousForces);
     for (const name of names) {
@@ -259,7 +325,7 @@
     // Keeping the link positions in sync with the simulation
     // so we don't need to recalculate _all_ link positions on each tick
     // which bogs down the simulation
-    linkPositions = links.map((link: any) => ({
+    linkPositions = simulatedLinks.map((link: any) => ({
       x1: link.source.x ?? 0,
       y1: link.source.y ?? 0,
       x2: link.target.x ?? 0,
@@ -270,7 +336,8 @@
   // MARK: Pull State
 
   function pullNodesFromSimulation() {
-    nodes = cloneNodes ? structuredClone(simulation.nodes()) : simulation.nodes();
+    const simulationNodes = simulation.nodes();
+    simulatedNodes = cloneNodes ? structuredClone(simulationNodes) : simulationNodes;
   }
 
   function pullAlphaFromSimulation() {
@@ -393,4 +460,9 @@
   });
 </script>
 
-{@render children?.({ nodes: nodes, simulation, linkPositions })}
+{@render children?.({
+  nodes: simulatedNodes,
+  links: simulatedLinks,
+  simulation,
+  linkPositions,
+})}

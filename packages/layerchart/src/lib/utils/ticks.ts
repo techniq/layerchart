@@ -2,10 +2,10 @@ import { timeYear, timeMonth, timeDay, type TimeInterval, timeTicks } from 'd3-t
 
 import {
   format,
-  PeriodType,
   Duration,
   isLiteralObject,
   type FormatType,
+  type FormatConfig,
   DateToken,
 } from '@layerstack/utils';
 import { isScaleBand, isScaleTime, type AnyScale } from './scales.svelte.js';
@@ -14,68 +14,67 @@ export function getDurationFormat(duration: Duration, multiline = false) {
   return function (date: Date, i: number) {
     if (+duration >= +new Duration({ duration: { years: 1 } })) {
       // Year
-      return format(date, PeriodType.CalendarYear);
+      return format(date, 'year');
     } else if (+duration >= +new Duration({ duration: { days: 28 } })) {
       // Month
       const isFirst = i === 0 || +timeYear.floor(date) === +date;
       if (multiline) {
         return (
-          format(date, PeriodType.Month, { variant: 'short' }) +
-          (isFirst ? `\n${format(date, PeriodType.CalendarYear)}` : '')
+          format(date, 'month', { variant: 'short' }) + (isFirst ? `\n${format(date, 'year')}` : '')
         );
       } else {
         return (
-          format(date, PeriodType.Month, { variant: 'short' }) +
-          (isFirst ? ` '${format(date, PeriodType.CalendarYear, { variant: 'short' })}` : '')
+          format(date, 'month', { variant: 'short' }) +
+          (isFirst ? ` '${format(date, 'year', { variant: 'short' })}` : '')
         );
       }
     } else if (+duration >= +new Duration({ duration: { days: 1 } })) {
       // Day
-      const isFirst = i === 0 || +timeMonth.floor(date) === +date;
+      const isFirst = i === 0 || date.getDate() <= duration.days;
       if (multiline) {
         return (
-          format(date, PeriodType.Custom, { custom: DateToken.DayOfMonth_numeric }) +
-          (isFirst ? `\n${format(date, PeriodType.Month, { variant: 'short' })}` : '')
+          format(date, 'custom', { custom: DateToken.DayOfMonth_numeric }) +
+          (isFirst ? `\n${format(date, 'month', { variant: 'short' })}` : '')
         );
       } else {
-        return format(date, PeriodType.Day, { variant: 'short' });
+        return format(date, 'day', { variant: 'short' });
       }
     } else if (+duration >= +new Duration({ duration: { hours: 1 } })) {
       // Hours
       const isFirst = i === 0 || +timeDay.floor(date) === +date;
       if (multiline) {
         return (
-          format(date, PeriodType.Custom, { custom: DateToken.Hour_numeric }) +
-          (isFirst ? `\n${format(date, PeriodType.Day, { variant: 'short' })}` : '')
+          format(date, 'custom', { custom: DateToken.Hour_numeric }) +
+          (isFirst ? `\n${format(date, 'day', { variant: 'short' })}` : '')
         );
       } else {
         return isFirst
-          ? format(date, PeriodType.Day, { variant: 'short' })
-          : format(date, PeriodType.Custom, { custom: DateToken.Hour_numeric });
+          ? format(date, 'day', { variant: 'short' })
+          : format(date, 'custom', { custom: DateToken.Hour_numeric });
       }
     } else if (+duration >= +new Duration({ duration: { minutes: 1 } })) {
       // Minutes
       const isFirst = i === 0 || +timeDay.floor(date) === +date;
       if (multiline) {
         return (
-          format(date, PeriodType.TimeOnly, { variant: 'short' }) +
-          (isFirst ? `\n${format(date, PeriodType.Day, { variant: 'short' })}` : '')
+          format(date, 'time', { variant: 'short' }) +
+          (isFirst ? `\n${format(date, 'day', { variant: 'short' })}` : '')
         );
       } else {
-        return format(date, PeriodType.TimeOnly, { variant: 'short' });
+        return format(date, 'time', { variant: 'short' });
       }
     } else if (+duration >= +new Duration({ duration: { seconds: 1 } })) {
       // Seconds
       const isFirst = i === 0 || +timeDay.floor(date) === +date;
       return (
-        format(date, PeriodType.TimeOnly) +
-        (multiline && isFirst ? `\n${format(date, PeriodType.Day, { variant: 'short' })}` : '')
+        format(date, 'time') +
+        (multiline && isFirst ? `\n${format(date, 'day', { variant: 'short' })}` : '')
       );
     } else if (+duration >= +new Duration({ duration: { milliseconds: 1 } })) {
       // Milliseconds
       const isFirst = i === 0 || +timeDay.floor(date) === +date;
       return (
-        format(date, PeriodType.Custom, {
+        format(date, 'custom', {
           custom: [
             DateToken.Hour_2Digit,
             DateToken.Minute_2Digit,
@@ -83,7 +82,7 @@ export function getDurationFormat(duration: Duration, multiline = false) {
             DateToken.MiliSecond_3,
             DateToken.Hour_woAMPM,
           ],
-        }) + (multiline && isFirst ? `\n${format(date, PeriodType.Day, { variant: 'short' })}` : '')
+        }) + (multiline && isFirst ? `\n${format(date, 'day', { variant: 'short' })}` : '')
       );
     } else {
       return date.toString();
@@ -132,11 +131,12 @@ export function resolveTickFormat(
   scale: AnyScale,
   ticks?: TicksConfig,
   count?: number,
-  formatType?: FormatType,
+  formatType?: FormatType | FormatConfig,
   multiline = false
 ) {
   // Explicit format
   if (formatType) {
+    // @ts-expect-error - improve types
     return (tick: any) => format(tick, formatType);
   }
 

@@ -1,5 +1,12 @@
 <script lang="ts">
-  import { forceCollide, forceManyBody, forceLink, forceCenter } from 'd3-force';
+  import {
+    forceCollide,
+    forceManyBody,
+    forceLink,
+    forceCenter,
+    type SimulationNodeDatum,
+    type SimulationLinkDatum,
+  } from 'd3-force';
   import { curveLinear } from 'd3-shape';
   import { scaleOrdinal } from 'd3-scale';
   import { schemeCategory10 } from 'd3-scale-chromatic';
@@ -8,11 +15,28 @@
   import { Checkbox, Field, ProgressCircle, RangeField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import type { Prettify } from '@layerstack/utils';
 
   let { data } = $props();
 
-  const nodes = $derived(data.miserables.nodes);
-  const links = $derived(data.miserables.links);
+  type NodeDatum = {
+    id: string;
+    group: number;
+  };
+
+  type LinkDatum = {
+    source: string;
+    target: string;
+    value: number;
+  };
+
+  type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
+  type MySimulationLinkDatum = Prettify<
+    LinkDatum & SimulationLinkDatum<NodeDatum & SimulationNodeDatum>
+  >;
+
+  const nodes: MySimulationNodeDatum[] = data.miserables.nodes;
+  const links: MySimulationLinkDatum[] = data.miserables.links;
 
   const colorScale = scaleOrdinal(schemeCategory10);
 
@@ -43,11 +67,12 @@
     });
   });
 
-  // @ts-expect-error
-  const linkForce = $derived(forceLink(links).id((d) => d.id));
-  const chargeForce = forceManyBody();
-  const collideForce = forceCollide();
-  const centerForce = forceCenter(0, 0);
+  const linkForce = $derived(
+    forceLink<MySimulationNodeDatum, MySimulationLinkDatum>(links).id((d) => d.id)
+  );
+  const chargeForce = forceManyBody<MySimulationNodeDatum>();
+  const collideForce = forceCollide<MySimulationNodeDatum>();
+  const centerForce = forceCenter<MySimulationNodeDatum>(0, 0);
 
   let linkDistance = $state(30);
 
@@ -250,7 +275,7 @@
 </div>
 <Preview data={data.miserables}>
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
-    <Chart data={nodes}>
+    <Chart>
       {#snippet children({ context })}
         <Svg>
           <ForceSimulation
@@ -269,7 +294,7 @@
             onStart={handleStart}
             onTick={handleTick}
             onEnd={handleEnd}
-            {links}
+            data={{ nodes, links }}
           >
             {#snippet children({ nodes, linkPositions })}
               {#each links as link, i}
@@ -288,7 +313,7 @@
                   cx={node.x}
                   cy={node.y}
                   r={nodeRadius}
-                  fill={colorScale(node.group)}
+                  fill={colorScale(node.group.toString())}
                   stroke-width={nodeStrokeWidth}
                   class="stroke-surface-content"
                   onpointermove={(e) => context.tooltip.show(e, node)}

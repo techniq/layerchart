@@ -190,3 +190,47 @@ export function getSpiral({
     };
   });
 }
+
+interface SineWaveOptions {
+  numPoints: number;
+  frequency?: number;
+  amplitude?: number;
+  noiseLevel?: number;
+  phase?: number;
+  xMin?: number;
+  xMax?: number;
+}
+
+export function generateSineWave(options: SineWaveOptions) {
+  const {
+    numPoints,
+    frequency = 1,
+    amplitude = 1,
+    noiseLevel = 0,
+    phase = 0,
+    xMin = 0,
+    xMax = 2 * Math.PI,
+  } = options;
+
+  if (numPoints <= 0) {
+    throw new Error('Number of points must be greater than 0');
+  }
+
+  const points: { x: number; y: number }[] = [];
+  const xStep = (xMax - xMin) / (numPoints - 1);
+
+  for (let i = 0; i < numPoints; i++) {
+    const x = xMin + i * xStep;
+
+    // Generate base sine wave
+    const sineValue = amplitude * Math.sin(frequency * x + phase);
+
+    // Add random noise if specified
+    const noise = noiseLevel > 0 ? (Math.random() - 0.5) * 2 * noiseLevel : 0;
+    const y = sineValue + noise;
+
+    points.push({ x, y });
+  }
+
+  return points;
+}

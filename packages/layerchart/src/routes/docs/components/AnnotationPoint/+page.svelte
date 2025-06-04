@@ -19,7 +19,7 @@
     ToggleGroup,
     ToggleOption,
   } from 'svelte-ux';
-  import { format, PeriodType, sortFunc } from '@layerstack/utils';
+  import { format, sortFunc } from '@layerstack/utils';
   import { maxIndex } from 'd3-array';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -117,7 +117,7 @@
               </div>
             {:else}
               <!-- Normal tooltip -->
-              <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+              <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
               <Tooltip.List>
                 <Tooltip.Item label="value" value={context.y(data)} />
               </Tooltip.List>
@@ -162,7 +162,7 @@
               </div>
             {:else}
               <!-- Normal tooltip -->
-              <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+              <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
               <Tooltip.List>
                 <Tooltip.Item label="value" value={context.y(data)} />
               </Tooltip.List>
@@ -216,7 +216,7 @@
               </div>
             {:else}
               <!-- Normal tooltip -->
-              <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+              <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
               <Tooltip.List>
                 <Tooltip.Item label="value" value={context.y(data)} />
               </Tooltip.List>

@@ -3,7 +3,6 @@
   import { scaleOrdinal, scaleTime } from 'd3-scale';
   import { flatGroup } from 'd3-array';
   import { stack, type Series } from 'd3-shape';
-  import { format as formatDate } from 'date-fns';
 
   import {
     Area,
@@ -26,7 +25,7 @@
     pivotLonger,
   } from 'layerchart';
   import { Field, Switch, Toggle } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -128,7 +127,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header value={data.date} format="day" />
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -176,7 +175,7 @@
     >
       <Svg>
         <Axis placement="left" grid rule />
-        <Axis placement="bottom" format={PeriodType.Day} rule ticks={(scale) => scale.domain()}>
+        <Axis placement="bottom" format="day" rule ticks={(scale) => scale.domain()}>
           {#snippet tickLabel({ props, index })}
             <Text {...props} textAnchor={index ? 'end' : 'start'} />
           {/snippet}
@@ -293,7 +292,7 @@
         </Svg>
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label={data.fruit} value={data.value} />
             </Tooltip.List>
@@ -352,7 +351,7 @@
       </Svg>
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header value={data.date} format="day" />
           <Tooltip.List>
             <Tooltip.Item label="apples" value={data.apples} />
             <Tooltip.Item label="bananas" value={data.bananas} />
@@ -417,7 +416,7 @@
         </Svg>
         <Tooltip.Root {context}>
           {#snippet children({ data })}
-            <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label={data.fruit} value={data.value} />
             </Tooltip.List>
@@ -464,7 +463,7 @@
         </Svg>
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label={data.fruit} value={data.value} />
             </Tooltip.List>
@@ -513,7 +512,7 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{formatDate(data.data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               {#each keys as key}
                 <Tooltip.Item label={key} value={data.data[key]} color={context.cScale?.(key)} />
@@ -797,7 +796,7 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label="value" value={data.value} />
             </Tooltip.List>
@@ -861,7 +860,7 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{formatDate(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label="value" value={data.value} />
             </Tooltip.List>
@@ -1006,7 +1005,7 @@
 
         <Tooltip.Root x={4} y={4} variant="none" class="text-sm font-semibold leading-3">
           {#snippet children({ data })}
-            {format(data.date, PeriodType.Day)}
+            {format(data.date, 'day')}
           {/snippet}
         </Tooltip.Root>
 
@@ -1018,7 +1017,7 @@
           class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded-sm whitespace-nowrap"
         >
           {#snippet children({ data })}
-            {format(data.date, PeriodType.Day)}
+            {format(data.date, 'day')}
           {/snippet}
         </Tooltip.Root>
       {/snippet}

@@ -1,5 +1,12 @@
 <script lang="ts">
-  import { forceManyBody, forceLink, forceX, forceY } from 'd3-force';
+  import {
+    forceManyBody,
+    forceLink,
+    forceX,
+    forceY,
+    type SimulationNodeDatum,
+    type SimulationLinkDatum,
+  } from 'd3-force';
   import { curveLinear } from 'd3-shape';
   import { scaleOrdinal } from 'd3-scale';
   import { schemeCategory10 } from 'd3-scale-chromatic';
@@ -7,19 +14,41 @@
   import { Chart, Circle, ForceSimulation, Link, Svg } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import type { Prettify } from '@layerstack/utils';
 
   let { data } = $props();
 
-  const nodes = $derived(data.miserables.nodes);
-  const links = $derived(data.miserables.links);
+  type NodeDatum = {
+    id: string;
+    group: number;
+  };
+
+  type LinkDatum = {
+    source: string;
+    target: string;
+    value: number;
+  };
+
+  type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
+  type MySimulationLinkDatum = Prettify<
+    LinkDatum & SimulationLinkDatum<NodeDatum & SimulationNodeDatum>
+  >;
+
+  const nodes: MySimulationNodeDatum[] = data.miserables.nodes;
+  const links: MySimulationLinkDatum[] = data.miserables.links;
 
   const colorScale = scaleOrdinal(schemeCategory10);
 
-  // @ts-expect-error - TODO: can we fix these types
-  const linkForce = $derived(forceLink(links).id((d) => d.id));
-  const chargeForce = forceManyBody().strength(-30).theta(0.9);
-  const xForce = forceX();
-  const yForce = forceY();
+  const linkForce = $derived(
+    forceLink<MySimulationNodeDatum, MySimulationLinkDatum>(links).id((d) => d.id)
+  );
+  const chargeForce = forceManyBody<MySimulationNodeDatum>().strength(-30).theta(0.9);
+  const xForce = forceX<MySimulationNodeDatum>();
+  const yForce = forceY<MySimulationNodeDatum>();
+
+  function keyForLink(link: MySimulationLinkDatum): any {
+    return link.value + link.index!;
+  }
 </script>
 
 <h1>Examples</h1>
@@ -30,7 +59,7 @@
 
 <Preview data={data.miserables}>
   <div class="h-[680px] p-4 border rounded-sm">
-    <Chart data={nodes}>
+    <Chart>
       <Svg center>
         <ForceSimulation
           forces={{
@@ -39,10 +68,10 @@
             x: xForce,
             y: yForce,
           }}
-          {links}
+          data={{ nodes, links }}
         >
-          {#snippet children({ nodes, linkPositions })}
-            {#each links as link, i (link.value + link.index)}
+          {#snippet children({ nodes, links, linkPositions })}
+            {#each links as link, i (keyForLink(link))}
               <Link
                 data={link}
                 explicitCoords={linkPositions[i]}
@@ -52,7 +81,7 @@
             {/each}
 
             {#each nodes as node}
-              <Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group)} />
+              <Circle cx={node.x} cy={node.y} r={3} fill={colorScale(node.group.toString())} />
             {/each}
           {/snippet}
         </ForceSimulation>

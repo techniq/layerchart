@@ -27,17 +27,17 @@ importers:
         specifier: ^1.1.4
         version: 1.1.4
       '@layerstack/svelte-actions':
-        specifier: 1.0.1-next.2
-        version: 1.0.1-next.2
+        specifier: 1.0.1-next.4
+        version: 1.0.1-next.4
       '@layerstack/svelte-state':
-        specifier: 0.1.0-next.7
-        version: 0.1.0-next.7
+        specifier: 0.1.0-next.9
+        version: 0.1.0-next.9
       '@layerstack/tailwind':
-        specifier: 2.0.0-next.4
-        version: 2.0.0-next.4
+        specifier: 2.0.0-next.6
+        version: 2.0.0-next.6
       '@layerstack/utils':
-        specifier: 2.0.0-next.3
-        version: 2.0.0-next.3
+        specifier: 2.0.0-next.6
+        version: 2.0.0-next.6
       d3-array:
         specifier: ^3.2.4
         version: 3.2.4
@@ -285,6 +285,9 @@ importers:
       vite:
         specifier: ^6.3.5
         version: 6.3.5(@types/node@22.15.21)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)
+      vite-plugin-devtools-json:
+        specifier: ^0.1.0
+        version: 0.1.0(vite@6.3.5(@types/node@22.15.21)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0))
       vitest:
         specifier: ^3.1.4
         version: 3.1.4(@types/node@22.15.21)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)
@@ -739,11 +742,11 @@ packages:
   '@layerstack/svelte-actions@1.0.1-next.0':
     resolution: {integrity: sha512-5wbVZCvjDmHQACcYrUQbhT6FI9aCQX+zl6tidZbnYBCqd0TV2ORk7NebCc9G8uQCiLSGYLelfVLRuvQLsWzDzw==}
 
-  '@layerstack/svelte-actions@1.0.1-next.2':
-    resolution: {integrity: sha512-s4iGrFIt+obdHP+Mzre+drCiZttqs5UYSw6CfQs1D2IeqTFkkbvRvYosh47flMi6ElN4psCrCcwn8KntClhMow==}
+  '@layerstack/svelte-actions@1.0.1-next.4':
+    resolution: {integrity: sha512-zfuvVBI7gXWOQxQh3GeIyWn+UMA8rlFVe80W/+Z7bZS85SRKACtQUNnvJdfRvPh+Av2aSau5CChpesKZ/XiTZg==}
 
-  '@layerstack/svelte-state@0.1.0-next.7':
-    resolution: {integrity: sha512-9JQ5EyN/ghcSBKXjv1ueiM0TlsJv4eEWgW8mvd4dqxMLUzs+/fPJlXlxqBqvH/T64yauxvFUfytCGPnx1lRJsA==}
+  '@layerstack/svelte-state@0.1.0-next.9':
+    resolution: {integrity: sha512-hGixkM7U5WhGRsW7gFNwU43mJqMmxvVqPod0onXuAxYTvC4AzLuYllNVrgrGHVoAUhOFpYmUSNoPcuIEcJtFKQ==}
 
   '@layerstack/svelte-stores@1.0.2-next.0':
     resolution: {integrity: sha512-YynMtI8AkReKw10ZzzG9jr7a9usKEHZR8SFvDDxV+D/bZS0iWE0/fxfRZN6FE44qcsEZ68gfEfEGKvEHjH/8aA==}
@@ -754,8 +757,8 @@ packages:
   '@layerstack/tailwind@2.0.0-next.2':
     resolution: {integrity: sha512-ApSF+4CqczFS7rqPJ7aEOaloEPageatc1je/K6cj7nO8IPZJqynGBkQ5sJ0M5DrGDJr7x9qmfLE842oCszh6ZA==}
 
-  '@layerstack/tailwind@2.0.0-next.4':
-    resolution: {integrity: sha512-46QUWvMaYGlGmi17vfT2o6mV7/0ZaWi0qJ4vjPKrayBsxn1mVjqX0cbW7EXC6JnmMVYt5CZu0768rWCM4nGCzA==}
+  '@layerstack/tailwind@2.0.0-next.6':
+    resolution: {integrity: sha512-JoaGGKKmvGNBH3O0xp6XLeVN/z3csPW8vyBJcn4ZyLMXEVyciszRw2qZRrm5Kk4Uw+HHtb37Gjb4KKkfie4Avg==}
 
   '@layerstack/utils@1.1.0-next.0':
     resolution: {integrity: sha512-xDUHUhI8CALTYvpTlJ9P0Eo8qKIoga9w1px6GFY7aSccKjLStOFjdCFCyLe0L/EUHDODpcP1o8Vl/HaBiHP6hg==}
@@ -763,8 +766,11 @@ packages:
   '@layerstack/utils@1.1.0-next.2':
     resolution: {integrity: sha512-9Y4TOAE0iIVvnrf1mkft79rF/vTO84bZuc4hjhJB7XguFjy2f00pEfrDjF+IqleWImMFfRu31K2IMM6wRWEBXQ==}
 
-  '@layerstack/utils@2.0.0-next.3':
-    resolution: {integrity: sha512-sTOF9cdh5lb9bqWW10kWwo4toSTjGOH4RNTr++59obVvdGp/hXo6LAN2WsdzkK9QFqBgEpuJH0rZ+D77lMSdeQ==}
+  '@layerstack/utils@2.0.0-next.4':
+    resolution: {integrity: sha512-fs9RWlW08WHqn6m4u1MNJHKMfWYXdj4X0r1wMVjL2mc4RKr9SFtcRjSM51WA4IPf/C94DBkca9REzjAJt58ipg==}
+
+  '@layerstack/utils@2.0.0-next.6':
+    resolution: {integrity: sha512-49Anr+Ihx1DJ20Q3lIpo0CNjBmRSWxAF+ZQychJ9I1UlhSGBlVv5YcEq1pbsCCrJbSNXmE0tApcdBl5SVcwU5A==}
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -2609,6 +2615,10 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
+  uuid@11.1.0:
+    resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
+    hasBin: true
+
   vfile-message@2.0.4:
     resolution: {integrity: sha512-DjssxRGkMvifUOJre00juHoP9DPWuzjxKuMDrhNbk2TdaYYBNMStsNhEOt3idrtI12VQYM/1+iM0KOzXi4pxwQ==}
 
@@ -2616,6 +2626,11 @@ packages:
     resolution: {integrity: sha512-6enNwYnpyDo4hEgytbmc6mYWHXDHYEn0D1/rw4Q+tnHUGtKTJsn8T1YkX6Q18wI5LCrS8CTYlBaiCqxOy2kvUA==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
+
+  vite-plugin-devtools-json@0.1.0:
+    resolution: {integrity: sha512-KvdgPBUAAhwnpOgXmJhs6KI4/IPn6xUppLGm20D0Uvp/doZ9TpTYYfzSHX0TgvdsSlTAwzZfzDse+ujGskp68g==}
+    peerDependencies:
+      vite: ^2.7.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0
 
   vite@6.3.5:
     resolution: {integrity: sha512-cZn6NDFE7wdTpINgs++ZJ4N49W2vRp8LCKrn3Ob1kYNtOo21vfDoaV5GzBfLU4MovSAB8uNRm4jgzVQZ+mBzPQ==}
@@ -3213,18 +3228,18 @@ snapshots:
       date-fns: 4.1.0
       lodash-es: 4.17.21
 
-  '@layerstack/svelte-actions@1.0.1-next.2':
+  '@layerstack/svelte-actions@1.0.1-next.4':
     dependencies:
       '@floating-ui/dom': 1.7.0
-      '@layerstack/utils': 1.1.0-next.2
+      '@layerstack/utils': 2.0.0-next.4
       d3-array: 3.2.4
       d3-scale: 4.0.2
       date-fns: 4.1.0
       lodash-es: 4.17.21
 
-  '@layerstack/svelte-state@0.1.0-next.7':
+  '@layerstack/svelte-state@0.1.0-next.9':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.3
+      '@layerstack/utils': 2.0.0-next.4
 
   '@layerstack/svelte-stores@1.0.2-next.0':
     dependencies:
@@ -3254,9 +3269,9 @@ snapshots:
       tailwind-merge: 3.3.0
       tailwindcss: 4.1.7
 
-  '@layerstack/tailwind@2.0.0-next.4':
+  '@layerstack/tailwind@2.0.0-next.6':
     dependencies:
-      '@layerstack/utils': 1.1.0-next.2
+      '@layerstack/utils': 2.0.0-next.6
       clsx: 2.1.1
       culori: 4.0.1
       d3-array: 3.2.4
@@ -3277,7 +3292,13 @@ snapshots:
       date-fns: 4.1.0
       lodash-es: 4.17.21
 
-  '@layerstack/utils@2.0.0-next.3':
+  '@layerstack/utils@2.0.0-next.4':
+    dependencies:
+      d3-array: 3.2.4
+      date-fns: 4.1.0
+      lodash-es: 4.17.21
+
+  '@layerstack/utils@2.0.0-next.6':
     dependencies:
       d3-array: 3.2.4
       date-fns: 4.1.0
@@ -5070,6 +5091,8 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
+  uuid@11.1.0: {}
+
   vfile-message@2.0.4:
     dependencies:
       '@types/unist': 2.0.11
@@ -5095,6 +5118,11 @@ snapshots:
       - terser
       - tsx
       - yaml
+
+  vite-plugin-devtools-json@0.1.0(vite@6.3.5(@types/node@22.15.21)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)):
+    dependencies:
+      uuid: 11.1.0
+      vite: 6.3.5(@types/node@22.15.21)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)
 
   vite@6.3.5(@types/node@22.15.21)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0):
     dependencies:

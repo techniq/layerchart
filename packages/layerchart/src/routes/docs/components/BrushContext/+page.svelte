@@ -2,7 +2,7 @@
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { range } from 'd3-array';
   import { State } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import { subDays } from 'date-fns';
   import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
@@ -658,7 +658,7 @@
               class="text-sm font-semibold bg-primary text-primary-content leading-3 px-2 py-1 rounded-sm whitespace-nowrap"
             >
               {#snippet children({ data })}
-                {format(data.date, PeriodType.Day)}
+                {format(data.date, 'day')}
               {/snippet}
             </Tooltip.Root>
           {/snippet}

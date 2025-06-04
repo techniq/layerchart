@@ -6,11 +6,18 @@
   import { Chart, Circle, Group, ForceSimulation, Svg } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import type { Prettify } from '@layerstack/utils';
+
+  type NodeDatum = { r: number; group: number };
+  type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
 
   const k = 600 / 200;
   const r = randomUniform(k, k * 4);
   const n = 4;
-  const randomData = Array.from({ length: 200 }, (_, i) => ({ r: r(), group: i && (i % n) + 1 }));
+  const randomData: MySimulationNodeDatum[] = Array.from({ length: 200 }, (_, i) => ({
+    r: r(),
+    group: i && (i % n) + 1,
+  }));
 
   const groupColor = scaleOrdinal([
     'var(--color-info)',
@@ -18,19 +25,19 @@
     'var(--color-danger)',
   ]);
 
-  const xForce = forceX().strength(0.01);
-  const yForce = forceY().strength(0.01);
-  const collideForce = forceCollide<SimulationNodeDatum & { r: number }>()
+  const xForce = forceX<MySimulationNodeDatum>().strength(0.01);
+  const yForce = forceY<MySimulationNodeDatum>().strength(0.01);
+  const collideForce = forceCollide<MySimulationNodeDatum>()
     .radius((d) => d.r + 1)
     .iterations(3);
-  const manyBodyForce = forceManyBody();
+  const manyBodyForce = forceManyBody<MySimulationNodeDatum>();
 </script>
 
 <h1>Examples</h1>
 
 <Preview data={randomData}>
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
-    <Chart data={randomData}>
+    <Chart>
       {#snippet children({ context })}
         <Svg>
           <ForceSimulation
@@ -40,6 +47,7 @@
               collide: collideForce,
               charge: manyBodyForce.strength((d, i) => (i ? 0 : (-context.width * 2) / 3)),
             }}
+            data={{ nodes: randomData }}
             alphaTarget={0.3}
             velocityDecay={0.1}
           >
@@ -47,7 +55,12 @@
               <Group center>
                 {#each nodes as node, i}
                   {#if i > 0}
-                    <Circle cx={node.x} cy={node.y} r={node.r} fill={groupColor(node.group)} />
+                    <Circle
+                      cx={node.x}
+                      cy={node.y}
+                      r={node.r}
+                      fill={groupColor(node.group.toString())}
+                    />
                   {/if}
                 {/each}
               </Group>
