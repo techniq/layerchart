@@ -81,6 +81,7 @@
   });
 
   let tile: ComponentProps<typeof Treemap>['tile'] = $state('squarify');
+  let maintainAspectRatio = $state(false);
   let colorBy = $state('children');
 
   let selectedNested: HierarchyNode<any> = $state(complexDataHierarchy.copy());
@@ -123,7 +124,7 @@
 <h3>Zoomable</h3>
 
 <div class="grid gap-1 mb-4">
-  <div class="grid grid-cols-[6fr_3fr] gap-1">
+  <div class="grid grid-cols-[6fr_1fr_3fr] gap-1">
     <Field label="Tile">
       <ToggleGroup bind:value={tile} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="squarify">Squarify</ToggleOption>
@@ -132,6 +133,18 @@
         <ToggleOption value="slice">Slice</ToggleOption>
         <ToggleOption value="dice">Dice</ToggleOption>
         <ToggleOption value="sliceDice">Slice / Dice</ToggleOption>
+      </ToggleGroup>
+    </Field>
+    <Field label="Maintain Aspect Ratio">
+      <ToggleGroup
+        bind:value={maintainAspectRatio}
+        variant="outline"
+        size="sm"
+        inset
+        class="w-full"
+      >
+        <ToggleOption value={false}>No</ToggleOption>
+        <ToggleOption value={true}>Yes</ToggleOption>
       </ToggleGroup>
     </Field>
     <Field label="Color By">
@@ -182,6 +195,7 @@
                 <Treemap
                   hierarchy={selectedNested}
                   {tile}
+                  {maintainAspectRatio}
                   {paddingOuter}
                   {paddingInner}
                   {paddingTop}
@@ -270,7 +284,7 @@
 <h3>Grouped and Filterable</h3>
 
 <div class="grid gap-1 mb-4">
-  <div class="grid grid-cols-[6fr_3fr] gap-1">
+  <div class="grid grid-cols-[6fr_1fr_3fr] gap-1">
     <Field label="Tile">
       <ToggleGroup bind:value={tile} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="squarify">Squarify</ToggleOption>
@@ -279,6 +293,18 @@
         <ToggleOption value="slice">Slice</ToggleOption>
         <ToggleOption value="dice">Dice</ToggleOption>
         <ToggleOption value="sliceDice">Slice / Dice</ToggleOption>
+      </ToggleGroup>
+    </Field>
+    <Field label="Maintain Aspect Ratio">
+      <ToggleGroup
+        bind:value={maintainAspectRatio}
+        variant="outline"
+        size="sm"
+        inset
+        class="w-full"
+      >
+        <ToggleOption value={false}>No</ToggleOption>
+        <ToggleOption value={true}>Yes</ToggleOption>
       </ToggleGroup>
     </Field>
     <Field label="Color By">
@@ -329,6 +355,7 @@
         <Treemap
           hierarchy={groupedHierarchy}
           {tile}
+          {maintainAspectRatio}
           {paddingOuter}
           {paddingInner}
           {paddingTop}
@@ -411,7 +438,7 @@
 <h3>Zoomable</h3>
 
 <div class="grid grid-flow-col gap-4 mb-4">
-  <div class="grid grid-cols-[6fr_3fr] gap-2">
+  <div class="grid grid-cols-[6fr_1fr_3fr] gap-2">
     <Field label="Tile">
       <ToggleGroup bind:value={tile} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="squarify">Squarify</ToggleOption>
@@ -420,6 +447,18 @@
         <ToggleOption value="slice">Slice</ToggleOption>
         <ToggleOption value="dice">Dice</ToggleOption>
         <ToggleOption value="sliceDice">Slice / Dice</ToggleOption>
+      </ToggleGroup>
+    </Field>
+    <Field label="Maintain Aspect Ratio">
+      <ToggleGroup
+        bind:value={maintainAspectRatio}
+        variant="outline"
+        size="sm"
+        inset
+        class="w-full"
+      >
+        <ToggleOption value={false}>No</ToggleOption>
+        <ToggleOption value={true}>Yes</ToggleOption>
       </ToggleGroup>
     </Field>
     <Field label="Color By">
@@ -456,7 +495,7 @@
         >
           {#snippet children({ xScale, yScale })}
             <ChartClipPath>
-              <Treemap hierarchy={selectedZoomable} {tile}>
+              <Treemap hierarchy={selectedZoomable} {tile} {maintainAspectRatio}>
                 {#snippet children({ nodes })}
                   {#each nodes as node}
                     <Group

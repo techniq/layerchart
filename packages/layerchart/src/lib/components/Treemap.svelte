@@ -59,6 +59,13 @@
      */
     paddingRight?: number;
 
+    /**
+     * Modify tiling function for approapriate aspect ratio when treemap is zoomed in
+     *
+     * @default false
+     */
+    maintainAspectRatio?: boolean;
+
     hierarchy?: HierarchyNode<T>;
 
     children?: Snippet<[{ nodes: HierarchyRectangularNode<T>[] }]>;
@@ -92,6 +99,7 @@
     paddingBottom = 0,
     paddingLeft,
     paddingRight,
+    maintainAspectRatio = false,
     selected = $bindable(null),
     children,
   }: TreemapProps<T> = $props();
@@ -117,7 +125,7 @@
   const treemapData = $derived.by(() => {
     const _treemap = d3treemap<T>()
       .size([ctx.width, ctx.height])
-      .tile(aspectTile(tileFunc, ctx.width, ctx.height));
+      .tile(maintainAspectRatio ? aspectTile(tileFunc, ctx.width, ctx.height) : tileFunc);
 
     if (padding) {
       _treemap.padding(padding);
