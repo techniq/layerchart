@@ -65,7 +65,7 @@ export function polygon(options: {
   const skewXRad = degreesToRadians(skewX);
   const skewYRad = degreesToRadians(skewY);
   return polygonPoints(count, radius, rotate).map(({ angle, radius }, i) => {
-    const scale = i % 2 == 0 ? 1 : inset;
+    const scale = i % 2 == 0 ? 1 : 1 - inset;
     let x = radius * scale * Math.cos(angle) * scaleX;
     let y = radius * scale * Math.sin(angle) * scaleY;
 

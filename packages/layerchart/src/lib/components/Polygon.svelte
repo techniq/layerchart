@@ -68,7 +68,7 @@
     /**
      * The percent to inset the odd points of the star (<1 inset, >1 outset)
      *
-     * @default 1
+     * @default 0
      */
     inset?: number;
 
@@ -158,7 +158,7 @@
     points = 4,
     cornerRadius = 0,
     rotate = 0,
-    inset = 1,
+    inset = 0,
     scaleX = 1,
     scaleY = 1,
     skewX = 0,

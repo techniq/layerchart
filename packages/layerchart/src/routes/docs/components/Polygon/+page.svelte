@@ -5,7 +5,7 @@
 
   let points = $state(8);
   let cornerRadius = $state(0);
-  let inset = $state(0.3);
+  let inset = $state(0);
   let rotate = $state(0);
   let scaleX = $state(1);
   let scaleY = $state(1);
@@ -14,6 +14,9 @@
   let tiltX = $state(1);
   let tiltY = $state(1);
 
+  // Separate inset to allow playground to default to 0
+  let starInset = $state(0.7);
+
   let renderContext = $state<'svg' | 'canvas'>('svg');
 </script>
 
@@ -21,15 +24,15 @@
 
 <div class="grid grid-cols-xs gap-2 mb-2">
   <RangeField label="points" bind:value={points} min={3} max={20} />
-  <RangeField label="inset" bind:value={inset} min={0.1} max={2} step={0.1} format="decimal" />
+  <RangeField label="inset" bind:value={inset} min={-1} max={1} step={0.1} format="decimal" />
   <RangeField label="rotate" bind:value={rotate} max={360} />
   <RangeField label="cornerRadius" bind:value={cornerRadius} max={50} />
   <RangeField label="scaleX" bind:value={scaleX} min={-2} max={2} step={0.1} format="decimal" />
   <RangeField label="scaleY" bind:value={scaleY} min={-2} max={2} step={0.1} format="decimal" />
   <RangeField label="skewX" bind:value={skewX} min={-50} max={50} />
   <RangeField label="skewY" bind:value={skewY} min={-50} max={50} />
-  <RangeField label="tiltX" bind:value={tiltX} min={-2} max={2} step={0.1} format="decimal" />
-  <RangeField label="tiltY" bind:value={tiltY} min={-2} max={2} step={0.1} format="decimal" />
+  <RangeField label="tiltX" bind:value={tiltX} min={-5} max={5} step={0.1} format="decimal" />
+  <RangeField label="tiltY" bind:value={tiltY} min={-5} max={5} step={0.1} format="decimal" />
 </div>
 
 <div class="h-[300px] p-4 border rounded-sm">
@@ -296,8 +299,9 @@
   <RangeField
     label="inset"
     labelPlacement="left"
-    bind:value={inset}
-    max={2}
+    bind:value={starInset}
+    min={-1}
+    max={1}
     step={0.1}
     format="decimal"
   />
@@ -313,7 +317,7 @@
         <div class="h-[150px] p-4 border rounded-sm">
           <Chart>
             <Layer type={renderContext}>
-              <Polygon cx={50} cy={50} r={50} {points} {inset} {rotate} {cornerRadius} />
+              <Polygon cx={50} cy={50} r={50} {points} inset={starInset} {rotate} {cornerRadius} />
             </Layer>
           </Chart>
         </div>
