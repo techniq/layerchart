@@ -30,8 +30,8 @@ export function polygonPoints(count: number, radius: number, rotate: number = 0)
  * @param scaleY - Vertical stretch factor
  * @param skewX - Skew angle in degrees along the X axis
  * @param skewY - Skew angle in degrees along the Y axis
- * @param tiltX - Tilt factor for x-coordinates (1 = no tilt, <1 = tilt left, >1 = tilt right)
- * @param tiltY - Tilt factor for y-coordinates (1 = no tilt, <1 = tilt up, >1 = tilt down)
+ * @param tiltX - Tilt factor for x-coordinates (0 = no tilt, positive moves points top => down, negative moves points bottom => up)
+ * @param tiltY - Tilt factor for y-coordinates (0 = no tilt, positive moves points left => right, negative moves points right => left)
  * @returns Array of points (x, y)
  */
 export function polygon(options: {
@@ -59,24 +59,28 @@ export function polygon(options: {
     scaleY = 1,
     skewX = 0,
     skewY = 0,
-    tiltX = 1,
-    tiltY = 1,
+    tiltX = 0,
+    tiltY = 0,
   } = options;
   const skewXRad = degreesToRadians(skewX);
   const skewYRad = degreesToRadians(skewY);
   return polygonPoints(count, radius, rotate).map(({ angle, radius }, i) => {
-    const scale = i % 2 == 0 ? 1 : 1 - inset;
-    let x = radius * scale * Math.cos(angle) * scaleX;
-    let y = radius * scale * Math.sin(angle) * scaleY;
+    // inset
+    const insetScale = i % 2 == 0 ? 1 : 1 - inset;
 
-    // Apply tilt effects
-    const normalizedY = (y + radius) / (2 * radius); // 0 to 1 from bottom to top
-    const normalizedX = (x + radius) / (2 * radius); // 0 to 1 from left to right
-    const tiltScaleX = 1 + (tiltX - 1) * normalizedY;
-    const tiltScaleY = 1 + (tiltY - 1) * normalizedX;
+    // scale
+    let x = radius * insetScale * Math.cos(angle) * scaleX;
+    let y = radius * insetScale * Math.sin(angle) * scaleY;
+
+    // tilt
+    const normalizedY = (y + radius) / (2 * radius);
+    const normalizedX = (x + radius) / (2 * radius);
+    const tiltScaleX = tiltX > 0 ? 1 + tiltX * (1 - normalizedY) : 1 - tiltX * normalizedY;
+    const tiltScaleY = tiltY > 0 ? 1 + tiltY * (1 - normalizedX) : 1 - tiltY * normalizedX;
     x *= tiltScaleX;
     y *= tiltScaleY;
 
+    // skew
     const xSkewed = x + Math.tan(skewXRad) * y;
     const ySkewed = y + Math.tan(skewYRad) * x;
     return {

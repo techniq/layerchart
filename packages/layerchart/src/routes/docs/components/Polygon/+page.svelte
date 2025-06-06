@@ -11,8 +11,8 @@
   let scaleY = $state(1);
   let skewX = $state(0);
   let skewY = $state(0);
-  let tiltX = $state(1);
-  let tiltY = $state(1);
+  let tiltX = $state(0);
+  let tiltY = $state(0);
 
   // Separate inset to allow playground to default to 0
   let starInset = $state(0.7);
@@ -31,8 +31,8 @@
   <RangeField label="scaleY" bind:value={scaleY} min={-2} max={2} step={0.1} format="decimal" />
   <RangeField label="skewX" bind:value={skewX} min={-50} max={50} />
   <RangeField label="skewY" bind:value={skewY} min={-50} max={50} />
-  <RangeField label="tiltX" bind:value={tiltX} min={-5} max={5} step={0.1} format="decimal" />
-  <RangeField label="tiltY" bind:value={tiltY} min={-5} max={5} step={0.1} format="decimal" />
+  <RangeField label="tiltX" bind:value={tiltX} min={-2} max={2} step={0.1} format="decimal" />
+  <RangeField label="tiltY" bind:value={tiltY} min={-2} max={2} step={0.1} format="decimal" />
 </div>
 
 <div class="h-[300px] p-4 border rounded-sm">
@@ -194,7 +194,7 @@
                 cy={context.height / 2}
                 r={60}
                 points={4}
-                tiltX={2}
+                tiltX={-1}
                 rotate={rotate + 45}
                 {cornerRadius}
               />
