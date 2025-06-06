@@ -194,7 +194,7 @@
             {#snippet children({ xScale, yScale })}
               <ChartClipPath>
                 <Treemap
-                  hierarchy={selectedNested}
+                  hierarchy={complexDataHierarchy}
                   {tile}
                   {maintainAspectRatio}
                   {paddingOuter}
@@ -496,7 +496,7 @@
         >
           {#snippet children({ xScale, yScale })}
             <ChartClipPath>
-              <Treemap hierarchy={selectedZoomable} {tile} {maintainAspectRatio}>
+              <Treemap hierarchy={complexDataHierarchy} {tile} {maintainAspectRatio}>
                 {#snippet children({ nodes })}
                   {#each nodes as node}
                     <Group
@@ -508,7 +508,7 @@
                       {@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
                       <RectClipPath width={nodeWidth} height={nodeHeight}>
                         {@const nodeColor = getNodeColor(node, colorBy)}
-                        {#if isNodeVisible(node, nodes[0])}
+                        {#if isNodeVisible( node, nodes.find((n) => n.data.name === selectedZoomable.data.name && n.depth === selectedZoomable.depth) )}
                           <g transition:fade={{ duration: 600 }}>
                             <Rect
                               width={nodeWidth}
