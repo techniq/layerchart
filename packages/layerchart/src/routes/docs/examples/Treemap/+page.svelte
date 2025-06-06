@@ -508,7 +508,7 @@
                       {@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
                       <RectClipPath width={nodeWidth} height={nodeHeight}>
                         {@const nodeColor = getNodeColor(node, colorBy)}
-                        {#if isNodeVisible(node, selectedZoomable)}
+                        {#if isNodeVisible(node, nodes[0])}
                           <g transition:fade={{ duration: 600 }}>
                             <Rect
                               width={nodeWidth}
