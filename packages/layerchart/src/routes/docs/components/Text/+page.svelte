@@ -29,9 +29,7 @@
   });
 </script>
 
-<h1>Examples</h1>
-
-<h2>Playground</h2>
+<h1>Playground</h1>
 
 <div class="grid gap-2 mb-2">
   <TextField label="value" bind:value={config.value} />

@@ -58,6 +58,36 @@ export function spikePath({
   return pathData;
 }
 
+/** Create rounded polygon path
+ *
+ * @param coords - Array of points (x, y)
+ * @param radius - Radius of the curve
+ * @returns String of path data
+ */
+export function roundedPolygonPath(coords: { x: number; y: number }[], radius: number) {
+  if (radius === 0) {
+    // Simple polygon with straight lines
+    return `M${coords[0].x},${coords[0].y}${coords
+      .slice(1)
+      .map((p) => `L${p.x},${p.y}`)
+      .join('')}Z`;
+  }
+
+  let path = '';
+  const length = coords.length + 1;
+  for (let i = 0; i < length; i++) {
+    const a = coords[i % coords.length];
+    const b = coords[(i + 1) % coords.length];
+    const t = Math.min(radius / Math.hypot(b.x - a.x, b.y - a.y), 0.5);
+
+    if (i == 0) path += `M${a.x * (1 - t) + b.x * t},${a.y * (1 - t) + b.y * t}`;
+    if (i > 0) path += `Q${a.x},${a.y} ${a.x * (1 - t) + b.x * t},${a.y * (1 - t) + b.y * t}`;
+    if (i < length - 1) path += `L${a.x * t + b.x * (1 - t)},${a.y * t + b.y * (1 - t)}`;
+  }
+  path += 'Z';
+  return path;
+}
+
 /** Flatten all `y` coordinates to `0` */
 export function flattenPathData(pathData: string, yOverride = 0) {
   let result = pathData;
