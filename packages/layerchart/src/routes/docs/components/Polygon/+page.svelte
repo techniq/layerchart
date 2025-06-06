@@ -13,6 +13,8 @@
   let skewY = $state(0);
   let tiltX = $state(1);
   let tiltY = $state(1);
+
+  let renderContext = $state<'svg' | 'canvas'>('svg');
 </script>
 
 <h1>Playground</h1>
@@ -33,7 +35,7 @@
 <div class="h-[300px] p-4 border rounded-sm">
   <Chart>
     {#snippet children({ context })}
-      <Layer type="svg">
+      <Layer type={renderContext}>
         <Polygon
           cx={context.width / 2}
           cy={context.height / 2}
@@ -69,7 +71,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type="svg">
+            <Layer type={renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -91,7 +93,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type="svg">
+            <Layer type={renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -113,7 +115,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type="svg">
+            <Layer type={renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -136,7 +138,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type="svg">
+            <Layer type={renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -159,7 +161,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type="svg">
+            <Layer type={renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -183,7 +185,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type="svg">
+            <Layer type={renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -206,7 +208,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type="svg">
+            <Layer type={renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -228,7 +230,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type="svg">
+            <Layer type={renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -250,7 +252,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type="svg">
+            <Layer type={renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -272,7 +274,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type="svg">
+            <Layer type={renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -310,7 +312,7 @@
       <Preview>
         <div class="h-[150px] p-4 border rounded-sm">
           <Chart>
-            <Layer type="svg">
+            <Layer type={renderContext}>
               <Polygon cx={50} cy={50} r={50} {points} {inset} {rotate} {cornerRadius} />
             </Layer>
           </Chart>
