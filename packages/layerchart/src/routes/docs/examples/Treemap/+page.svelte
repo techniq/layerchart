@@ -118,9 +118,7 @@
 
 <h1>Examples</h1>
 
-<h2>Nested</h2>
-
-<h3>Zoomable</h3>
+<h2>Nested (zoom)</h2>
 
 <div class="grid gap-1 mb-4">
   <div class="grid grid-cols-[6fr_3fr] gap-1">
@@ -266,9 +264,7 @@
   </div>
 </Preview>
 
-<h2>Nested</h2>
-
-<h3>Grouped and Filterable</h3>
+<h2>Nested (filter)</h2>
 
 <div class="grid gap-1 mb-4">
   <div class="grid grid-cols-[6fr_3fr] gap-1">
@@ -407,9 +403,7 @@
   </div>
 </Preview>
 
-<h2>Stacked</h2>
-
-<h3>Zoomable</h3>
+<h2>Stacked (zoom)</h2>
 
 <div class="grid grid-flow-col gap-4 mb-4">
   <div class="grid grid-cols-[6fr_3fr] gap-2">
