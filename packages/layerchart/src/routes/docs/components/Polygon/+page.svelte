@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Chart, Layer, Polygon } from 'layerchart';
+  import { Chart, Group, Layer, Polygon } from 'layerchart';
   import { RangeField } from 'svelte-ux';
   import Preview from 'layerchart/docs/Preview.svelte';
 
@@ -316,12 +316,93 @@
       <Preview>
         <div class="h-[150px] p-4 border rounded-sm">
           <Chart>
-            <Layer type={renderContext}>
-              <Polygon cx={50} cy={50} r={50} {points} inset={starInset} {rotate} {cornerRadius} />
-            </Layer>
+            {#snippet children({ context })}
+              <Layer type={renderContext}>
+                <Polygon
+                  cx={context.width / 2}
+                  cy={context.height / 2}
+                  r={50}
+                  {points}
+                  inset={starInset}
+                  {rotate}
+                  {cornerRadius}
+                />
+              </Layer>
+            {/snippet}
           </Chart>
         </div>
       </Preview>
     </div>
   {/each}
+</div>
+
+<div class="flex gap-2 mb-1/2">
+  <h2 class="grow">Custom points</h2>
+  <RangeField label="cornerRadius" labelPlacement="left" bind:value={cornerRadius} max={50} />
+</div>
+
+<div class="grid grid-cols-sm gap-3">
+  <div>
+    <h3>Arrow</h3>
+    <Preview>
+      <div class="h-[150px] p-4 border rounded-sm">
+        <Chart>
+          {#snippet children({ context })}
+            <Layer type={renderContext}>
+              <Group x={context.width / 2} y={context.height / 2}>
+                {@const size = 60}
+                <Polygon
+                  points={[
+                    { x: size, y: 0 },
+                    { x: size / 4, y: -size / 2 },
+                    { x: size / 4, y: -size / 4 },
+                    { x: -size, y: -size / 4 },
+                    { x: -size, y: size / 4 },
+                    { x: size / 4, y: size / 4 },
+                    { x: size / 4, y: size / 2 },
+                    { x: size, y: 0 },
+                  ]}
+                  {cornerRadius}
+                />
+              </Group>
+            </Layer>
+          {/snippet}
+        </Chart>
+      </div>
+    </Preview>
+  </div>
+
+  <div>
+    <h3>Cross</h3>
+    <Preview>
+      <div class="h-[150px] p-4 border rounded-sm">
+        <Chart>
+          {#snippet children({ context })}
+            <Layer type={renderContext}>
+              <Group x={context.width / 2} y={context.height / 2}>
+                {@const size = 50}
+                <Polygon
+                  points={[
+                    { x: -size, y: -size / 3 },
+                    { x: -size / 3, y: -size / 3 },
+                    { x: -size / 3, y: -size },
+                    { x: size / 3, y: -size },
+                    { x: size / 3, y: -size / 3 },
+                    { x: size, y: -size / 3 },
+                    { x: size, y: size / 3 },
+                    { x: size / 3, y: size / 3 },
+                    { x: size / 3, y: size },
+                    { x: -size / 3, y: size },
+                    { x: -size / 3, y: size / 3 },
+                    { x: -size, y: size / 3 },
+                  ]}
+                  {cornerRadius}
+                />
+              </Group>
+            </Layer>
+          {/snippet}
+        </Chart>
+      </div>
+    </Preview>
+  </div>
 </div>

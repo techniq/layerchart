@@ -45,11 +45,11 @@
     initialR?: number;
 
     /**
-     * The number of points in the polygon.
+     * The number of points or explicit points to create the polygon.
      *
      * @default 4
      */
-    points?: number;
+    points?: number | { x: number; y: number }[];
 
     /**
      * The radius of the curve for rounded corners.
@@ -191,20 +191,22 @@
   const motionR = createMotion(initialR, () => r, motion);
 
   let polygonPoints = $derived(
-    polygon({
-      cx: motionCx.current,
-      cy: motionCy.current,
-      count: points,
-      radius: motionR.current,
-      rotate,
-      inset,
-      scaleX,
-      scaleY,
-      skewX,
-      skewY,
-      tiltX,
-      tiltY,
-    })
+    typeof points === 'number'
+      ? polygon({
+          cx: motionCx.current,
+          cy: motionCy.current,
+          count: points,
+          radius: motionR.current,
+          rotate,
+          inset,
+          scaleX,
+          scaleY,
+          skewX,
+          skewY,
+          tiltX,
+          tiltY,
+        })
+      : points
   );
   let d = $derived(roundedPolygonPath(polygonPoints, cornerRadius));
 
