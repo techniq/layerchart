@@ -1189,7 +1189,7 @@
 <h2>Single stack with indicator</h2>
 
 <Preview>
-  <div class="h-[50px] p-4 border rounded-sm">
+  <div class="h-[68px] p-4 border rounded-sm">
     <BarChart
       data={[
         {
@@ -1237,6 +1237,7 @@
         'var(--color-red-500)',
       ]}
       bandPadding={0}
+      padding={{ top: 12, bottom: 12 }}
       orientation="horizontal"
       props={{
         tooltip: {
@@ -1261,7 +1262,7 @@
           r={6}
           points={3}
           rotate={90}
-          class="fill-black stroke-white/50 dark:fill-white dark:stroke-black/50"
+          class="fill-black stroke-white dark:fill-white dark:stroke-black"
         />
       {/snippet}
 
