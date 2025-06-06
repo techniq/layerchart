@@ -4,7 +4,7 @@
   import Preview from 'layerchart/docs/Preview.svelte';
 
   let points = $state(8);
-  let curveRadius = $state(0);
+  let cornerRadius = $state(0);
   let inset = $state(0.3);
   let rotate = $state(0);
   let scaleX = $state(1);
@@ -21,7 +21,7 @@
   <RangeField label="points" bind:value={points} min={3} max={20} />
   <RangeField label="inset" bind:value={inset} min={0.1} max={2} step={0.1} format="decimal" />
   <RangeField label="rotate" bind:value={rotate} max={360} />
-  <RangeField label="curveRadius" bind:value={curveRadius} max={50} />
+  <RangeField label="cornerRadius" bind:value={cornerRadius} max={50} />
   <RangeField label="scaleX" bind:value={scaleX} min={-2} max={2} step={0.1} format="decimal" />
   <RangeField label="scaleY" bind:value={scaleY} min={-2} max={2} step={0.1} format="decimal" />
   <RangeField label="skewX" bind:value={skewX} min={-50} max={50} />
@@ -41,7 +41,7 @@
           {points}
           {inset}
           {rotate}
-          {curveRadius}
+          {cornerRadius}
           {scaleX}
           {scaleY}
           {skewX}
@@ -59,7 +59,7 @@
 <div class="flex gap-2 mb-1/2">
   <h2 class="grow">Simple</h2>
   <RangeField label="rotate" labelPlacement="left" bind:value={rotate} max={360} />
-  <RangeField label="curveRadius" labelPlacement="left" bind:value={curveRadius} max={50} />
+  <RangeField label="cornerRadius" labelPlacement="left" bind:value={cornerRadius} max={50} />
 </div>
 
 <div class="grid grid-cols-sm gap-3">
@@ -76,7 +76,7 @@
                 r={60}
                 points={3}
                 {rotate}
-                {curveRadius}
+                {cornerRadius}
               />
             </Layer>
           {/snippet}
@@ -98,7 +98,7 @@
                 r={60}
                 points={4}
                 rotate={rotate + 45}
-                {curveRadius}
+                {cornerRadius}
               />
             </Layer>
           {/snippet}
@@ -121,7 +121,7 @@
                 points={4}
                 scaleX={0.5}
                 {rotate}
-                {curveRadius}
+                {cornerRadius}
               />
             </Layer>
           {/snippet}
@@ -144,7 +144,7 @@
                 points={4}
                 skewX={-20}
                 rotate={rotate + 45}
-                {curveRadius}
+                {cornerRadius}
               />
             </Layer>
           {/snippet}
@@ -168,7 +168,7 @@
                 skewX={-20}
                 scaleX={1.5}
                 rotate={rotate + 45}
-                {curveRadius}
+                {cornerRadius}
               />
             </Layer>
           {/snippet}
@@ -191,7 +191,7 @@
                 points={4}
                 tiltX={2}
                 rotate={rotate + 45}
-                {curveRadius}
+                {cornerRadius}
               />
             </Layer>
           {/snippet}
@@ -213,7 +213,7 @@
                 r={60}
                 points={5}
                 {rotate}
-                {curveRadius}
+                {cornerRadius}
               />
             </Layer>
           {/snippet}
@@ -235,7 +235,7 @@
                 r={60}
                 points={6}
                 {rotate}
-                {curveRadius}
+                {cornerRadius}
               />
             </Layer>
           {/snippet}
@@ -257,7 +257,7 @@
                 r={60}
                 points={8}
                 {rotate}
-                {curveRadius}
+                {cornerRadius}
               />
             </Layer>
           {/snippet}
@@ -279,7 +279,7 @@
                 r={60}
                 points={8}
                 {rotate}
-                {curveRadius}
+                {cornerRadius}
               />
             </Layer>
           {/snippet}
@@ -300,7 +300,7 @@
     format="decimal"
   />
   <RangeField label="rotate" labelPlacement="left" bind:value={rotate} max={360} />
-  <RangeField label="curveRadius" labelPlacement="left" bind:value={curveRadius} max={50} />
+  <RangeField label="cornerRadius" labelPlacement="left" bind:value={cornerRadius} max={50} />
 </div>
 
 <div class="grid grid-cols-sm gap-3">
@@ -311,7 +311,7 @@
         <div class="h-[150px] p-4 border rounded-sm">
           <Chart>
             <Layer type="svg">
-              <Polygon cx={50} cy={50} r={50} {points} {inset} {rotate} {curveRadius} />
+              <Polygon cx={50} cy={50} r={50} {points} {inset} {rotate} {cornerRadius} />
             </Layer>
           </Chart>
         </div>

@@ -56,7 +56,7 @@
      *
      * @default 0
      */
-    curveRadius?: number;
+    cornerRadius?: number;
 
     /**
      * The rotation of the polygon.
@@ -156,7 +156,7 @@
     r = 1,
     initialR: initialRProp,
     points = 4,
-    curveRadius = 0,
+    cornerRadius = 0,
     rotate = 0,
     inset = 1,
     scaleX = 1,
@@ -206,7 +206,7 @@
       tiltY,
     })
   );
-  let d = $derived(roundedPolygonPath(polygonPoints, curveRadius));
+  let d = $derived(roundedPolygonPath(polygonPoints, cornerRadius));
 
   const extractedTween = extractTweenConfig(motion);
 
