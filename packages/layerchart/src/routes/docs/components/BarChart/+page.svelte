@@ -13,6 +13,7 @@
     Tooltip,
     Circle,
     Group,
+    Polygon,
   } from 'layerchart';
   import { extent, group, mean, sum } from 'd3-array';
   import { scaleLinear, scaleLog, scaleThreshold, scaleTime } from 'd3-scale';
@@ -1254,14 +1255,14 @@
       {/snippet}
 
       {#snippet aboveMarks({ context })}
-        <Group x={context.xScale(26.5)} y={-4}>
-          {@const width = 12}
-          {@const height = 12}
-          <polygon
-            points="{-width / 2},0 0,{height} {width / 2},0"
-            class="fill-black stroke-white/50 dark:fill-white dark:stroke-black/50"
-          />
-        </Group>
+        <Polygon
+          cx={context.xScale(26.5)}
+          cy={-3}
+          r={6}
+          points={3}
+          rotate={90}
+          class="fill-black stroke-white/50 dark:fill-white dark:stroke-black/50"
+        />
       {/snippet}
 
       {#snippet tooltip({ context })}
