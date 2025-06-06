@@ -1,6 +1,12 @@
 <script lang="ts">
   import { scaleBand, scaleOrdinal } from 'd3-scale';
-  import { forceX, forceManyBody, forceCollide, forceCenter } from 'd3-force';
+  import {
+    forceX,
+    forceManyBody,
+    forceCollide,
+    forceCenter,
+    type SimulationNodeDatum,
+  } from 'd3-force';
 
   import { asAny, Chart, Circle, ForceSimulation, Svg } from 'layerchart';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
@@ -8,6 +14,12 @@
   import Preview from '$lib/docs/Preview.svelte';
 
   import dots from './dots.json' with { type: 'json' };
+  import type { Prettify } from '@layerstack/utils';
+
+  type NodeDatum = { category: string; value: number };
+  type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
+
+  const nodes: MySimulationNodeDatum[] = dots as MySimulationNodeDatum[];
 
   const categoryColor = scaleOrdinal([
     'var(--color-info)',
@@ -22,10 +34,10 @@
     reheatSimulation({ groupBy });
   });
 
-  const xForce = forceX().strength(0.1);
-  const chargeForce = forceManyBody().strength(3);
-  const collideForce = forceCollide();
-  const centerForce = forceCenter();
+  const xForce = forceX<MySimulationNodeDatum>().strength(0.1);
+  const chargeForce = forceManyBody<MySimulationNodeDatum>().strength(3);
+  const collideForce = forceCollide<MySimulationNodeDatum>();
+  const centerForce = forceCenter<MySimulationNodeDatum>();
 
   function reheatSimulation(args: Record<string, any> = {}) {
     const _ = args;
@@ -45,9 +57,9 @@
   </Field>
 </div>
 
-<Preview data={dots}>
+<Preview data={nodes}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart data={dots} x="category" xScale={scaleBand()} r="value" rRange={[3, 12]}>
+    <Chart data={nodes} x="category" xScale={scaleBand()} r="value" rRange={[3, 12]}>
       {#snippet children({ context })}
         {@const nodeStrokeWidth = 1}
         <Svg>
@@ -64,7 +76,7 @@
               ),
               center: centerForce.x(context.width / 2).y(context.height / 2),
             }}
-            data={{ nodes: dots }}
+            data={{ nodes }}
             bind:alpha
           >
             {#snippet children({ nodes })}

@@ -15,7 +15,6 @@
       'Candlestick',
       'Compound',
       'Duration',
-      'DualAxis',
       'Histogram',
       'Line',
       'Oscilloscope',

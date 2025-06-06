@@ -6,6 +6,7 @@
     geoEquirectangular,
     geoMercator,
     geoNaturalEarth1,
+    geoOrthographic,
   } from 'd3-geo';
   import { extent } from 'd3-array';
   import { scaleSequential } from 'd3-scale';
@@ -151,9 +152,10 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            {@const { tz_name1st, time_zone } = data.properties}
+            {@const { tz_name1st, time_zone, places } = data.properties}
             <Tooltip.List>
               <Tooltip.Item label="Name" value={tz_name1st} />
+              <Tooltip.Item label="Places" value={places} classes={{ value: 'max-w-[200px]' }} />
               <Tooltip.Item label="Timezone" value={time_zone} />
               <Tooltip.Item
                 label="Current time"

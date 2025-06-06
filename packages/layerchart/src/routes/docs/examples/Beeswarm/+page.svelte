@@ -1,20 +1,26 @@
 <script lang="ts">
   import { scaleOrdinal } from 'd3-scale';
-  import { forceX, forceY, forceCollide } from 'd3-force';
+  import { forceX, forceY, forceCollide, type SimulationNodeDatum } from 'd3-force';
 
   import { asAny, Axis, Chart, Circle, ForceSimulation, Svg, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import type { USSenatorsDatum } from '$static/data/examples/us-senators.js';
+  import type { Prettify } from '@layerstack/utils';
+
+  type NodeDatum = USSenatorsDatum;
+
+  type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
 
   let { data } = $props();
 
-  const nodes = data.usSenators;
+  const nodes: MySimulationNodeDatum[] = data.usSenators;
 
   const genderColor = scaleOrdinal(['var(--color-info)', 'var(--color-warning)']);
 
-  const xForce = forceX().strength(0.95);
-  const yForce = forceY().strength(0.075);
-  const collideForce = forceCollide();
+  const xForce = forceX<MySimulationNodeDatum>().strength(0.95);
+  const yForce = forceY<MySimulationNodeDatum>().strength(0.075);
+  const collideForce = forceCollide<MySimulationNodeDatum>();
 </script>
 
 <h1>Examples</h1>
