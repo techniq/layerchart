@@ -18,12 +18,12 @@
     links?: TLink[];
   };
 
-  export type LinkPosition = Prettify<{
+  export type LinkPosition = {
     x1: number;
     y1: number;
     x2: number;
     y2: number;
-  }>;
+  };
 
   /**
    * Default initial alpha value of the simulation.
@@ -52,11 +52,10 @@
    */
   export const DEFAULT_VELOCITY_DECAY: number = 0.4;
 
-  type NodeDatumFor<NodeDatum> = Prettify<NodeDatum & SimulationNodeDatum>;
+  type NodeDatumFor<NodeDatum> = NodeDatum & SimulationNodeDatum;
 
-  type LinkDatumFor<NodeDatum, LinkDatum> = Prettify<
-    LinkDatum & SimulationLinkDatum<NodeDatumFor<NodeDatum>>
-  >;
+  type LinkDatumFor<NodeDatum, LinkDatum> = LinkDatum &
+    SimulationLinkDatum<NodeDatumFor<NodeDatum>>;
 
   type SimulationFor<NodeDatum, LinkDatum> = Simulation<
     NodeDatumFor<NodeDatum>,
@@ -160,7 +159,6 @@
     LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,"
 >
   import { watch } from 'runed';
-  import type { Prettify } from '@layerstack/utils';
 
   let {
     forces,
