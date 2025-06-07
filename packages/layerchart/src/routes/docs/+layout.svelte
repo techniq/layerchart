@@ -15,7 +15,16 @@
     mdiLink,
   } from '@mdi/js';
 
-  import { ApiDocs, Button, Dialog, Icon, ListItem, TableOfContents } from 'svelte-ux';
+  import {
+    ApiDocs,
+    Button,
+    Dialog,
+    Icon,
+    ListItem,
+    TableOfContents,
+    ToggleGroup,
+    ToggleOption,
+  } from 'svelte-ux';
 
   import { MediaQueryPresets } from '@layerstack/svelte-state';
   import { cls } from '@layerstack/tailwind';
@@ -24,6 +33,7 @@
   import Code from '$lib/docs/Code.svelte';
   import ViewSourceButton from '$lib/docs/ViewSourceButton.svelte';
   import { page } from '$app/state';
+  import { shared } from './shared.svelte.js';
 
   const { children } = $props();
 
@@ -51,6 +61,7 @@
     pageSource,
     api,
     status,
+    supportedContexts,
   } = $derived(page.data.meta ?? {});
 
   const { xlScreen } = new MediaQueryPresets();
@@ -96,11 +107,28 @@
       </div>
     </div>
 
-    <div class="text-2xl font-bold">
-      {#if type === 'examples' || type === 'tools'}
-        {title.replace(/([a-z])([A-Z])/g, '$1 $2')}
-      {:else}
-        {title}
+    <div class="flex items-center gap-2">
+      <span class="text-2xl font-bold">
+        {#if type === 'examples' || type === 'tools'}
+          {title.replace(/([a-z])([A-Z])/g, '$1 $2')}
+        {:else}
+          {title}
+        {/if}
+      </span>
+
+      {#if supportedContexts}
+        <ToggleGroup
+          bind:value={shared.renderContext}
+          variant="fill"
+          color="primary"
+          inset
+          gap="px"
+          size="sm"
+        >
+          {#each supportedContexts as context}
+            <ToggleOption value={context}>{toTitleCase(context)}</ToggleOption>
+          {/each}
+        </ToggleGroup>
       {/if}
 
       {#if status}
