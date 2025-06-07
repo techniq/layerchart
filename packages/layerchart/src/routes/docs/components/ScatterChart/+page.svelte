@@ -38,9 +38,7 @@
 
   const dateSeriesData = createDateSeries({ count: 30, min: 20, max: 100, value: 'integer' });
 
-  let renderContext = $derived(
-    shared.renderContext as ComponentProps<typeof ScatterChart>['renderContext']
-  );
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
   let debug = $state(false);
 </script>
 

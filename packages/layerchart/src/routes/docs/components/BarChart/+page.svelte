@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { ComponentProps } from 'svelte';
   import {
     accessor,
     asAny,
@@ -12,8 +11,6 @@
     LinearGradient,
     Text,
     Tooltip,
-    Circle,
-    Group,
     Polygon,
   } from 'layerchart';
   import { extent, group, mean, sum } from 'd3-array';
@@ -23,7 +20,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, wideData, longData } from '$lib/utils/genData.js';
-  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, Switch } from 'svelte-ux';
   import { timeMonth } from 'd3-time';
   import { interpolate, quantize } from 'd3-interpolate';
   import { interpolateSpectral } from 'd3-scale-chromatic';
@@ -107,9 +104,7 @@
     },
   ];
 
-  let renderContext = $derived(
-    shared.renderContext as ComponentProps<typeof BarChart>['renderContext']
-  );
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
   let debug = $state(false);
 </script>
 
