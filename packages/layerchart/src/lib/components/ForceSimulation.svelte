@@ -258,12 +258,8 @@
       // pass it to the internal d3 simulation object:
       pushAlphaToSimulation(alpha);
 
-      // Only resume the simulation as long as `alpha`
-      // is above the cut-off threshold of `alphaMin`,
-      // otherwise our simulation will never terminate:
-      if (simulation.alpha() >= simulation.alphaMin()) {
-        runOrResumeSimulation();
-      }
+      // Then we attempt to resume the simulation:
+      runOrResumeSimulation();
     }
   );
 
@@ -401,6 +397,13 @@
 
     if (staticProp) {
       // Only dynamic simulations can be resumed.
+      return;
+    }
+
+    if (simulation.alpha() < simulation.alphaMin()) {
+      // Only resume the simulation as long as `alpha`
+      // is above the cut-off threshold of `alphaMin`,
+      // otherwise our simulation will never terminate:
       return;
     }
 
