@@ -20,11 +20,13 @@
      *
      * @bindable
      */
-    ref?: SVGPathElement;
+    pathRef?: SVGPathElement;
   };
 
   export type MonthPathProps = MonthPathPropsWithoutHTML &
-    Without<SVGAttributes<SVGPathElement>, MonthPathPropsWithoutHTML>;
+    // we omit the spline props to avoid conflicts with attribute names since we are
+    // passing them through to `<Spline />`
+    Without<SVGAttributes<SVGPathElement>, MonthPathPropsWithoutHTML & SplinePropsWithoutHTML>;
 </script>
 
 <script lang="ts">
@@ -32,18 +34,19 @@
   import { endOfMonth } from 'date-fns';
   import { cls } from '@layerstack/tailwind';
   import { layerClass } from '$lib/utils/attributes.js';
+  import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';
 
   let {
     date,
     cellSize: cellSizeProp,
-    ref: refProp = $bindable(),
+    pathRef: pathRefProp = $bindable(),
     class: className,
     ...restProps
   }: MonthPathProps = $props();
 
-  let ref = $state<SVGPathElement>();
+  let pathRef = $state<SVGPathElement>();
   $effect.pre(() => {
-    refProp = ref;
+    pathRefProp = pathRef;
   });
 
   const cellSize = $derived(
@@ -68,9 +71,9 @@
   `);
 </script>
 
-<path
-  bind:this={ref}
-  d={pathData}
+<Spline
+  bind:pathRef
+  {pathData}
   fill="none"
   class={cls(layerClass('month-path'), 'stroke-surface-content/20', className)}
   {...restProps}
