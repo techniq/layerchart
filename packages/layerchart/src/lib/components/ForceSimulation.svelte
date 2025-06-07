@@ -18,12 +18,41 @@
     links?: TLink[];
   };
 
-  export type LinkPosition = Prettify<{
+  export type LinkPosition = {
     x1: number;
     y1: number;
     x2: number;
     y2: number;
-  }>;
+  };
+
+  export type OnStartEvent<
+    NodeDatum extends SimulationNodeDatum,
+    LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,
+  > = {
+    alpha: number;
+    alphaTarget: number;
+    simulation: SimulationFor<NodeDatum, LinkDatum>;
+  };
+
+  export type OnTickEvent<
+    NodeDatum extends SimulationNodeDatum,
+    LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,
+  > = {
+    alpha: number;
+    alphaTarget: number;
+    nodes: NodeDatumFor<NodeDatum>[];
+    links: LinkDatumFor<NodeDatum, LinkDatum>[];
+    simulation: SimulationFor<NodeDatum, LinkDatum>;
+  };
+
+  export type OnEndEvent<
+    NodeDatum extends SimulationNodeDatum,
+    LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,
+  > = {
+    alpha: number;
+    alphaTarget: number;
+    simulation: SimulationFor<NodeDatum, LinkDatum>;
+  };
 
   /**
    * Default initial alpha value of the simulation.
@@ -52,11 +81,10 @@
    */
   export const DEFAULT_VELOCITY_DECAY: number = 0.4;
 
-  type NodeDatumFor<NodeDatum> = Prettify<NodeDatum & SimulationNodeDatum>;
+  type NodeDatumFor<NodeDatum> = NodeDatum & SimulationNodeDatum;
 
-  type LinkDatumFor<NodeDatum, LinkDatum> = Prettify<
-    LinkDatum & SimulationLinkDatum<NodeDatumFor<NodeDatum>>
-  >;
+  type LinkDatumFor<NodeDatum, LinkDatum> = LinkDatum &
+    SimulationLinkDatum<NodeDatumFor<NodeDatum>>;
 
   type SimulationFor<NodeDatum, LinkDatum> = Simulation<
     NodeDatumFor<NodeDatum>,
@@ -129,17 +157,17 @@
     /**
      * Callback function triggered when simulation starts
      */
-    onStart?: () => void;
+    onStart?: (e: OnStartEvent<NodeDatum, LinkDatum | undefined>) => void;
 
     /**
      * Callback function triggered on each simulation tick
      */
-    onTick?: (e: { alpha: number; alphaTarget: number }) => void;
+    onTick?: (e: OnTickEvent<NodeDatum, LinkDatum | undefined>) => void;
 
     /**
      * Callback function triggered when simulation ends
      */
-    onEnd?: () => void;
+    onEnd?: (e: OnEndEvent<NodeDatum, LinkDatum | undefined>) => void;
 
     children?: Snippet<
       [
@@ -160,7 +188,6 @@
     LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,"
 >
   import { watch } from 'runed';
-  import type { Prettify } from '@layerstack/utils';
 
   let {
     forces,
@@ -172,9 +199,9 @@
     velocityDecay = DEFAULT_VELOCITY_DECAY,
     stopped = false,
     static: staticProp,
-    onStart: onStartProp = () => {},
-    onTick: onTickProp = () => {},
-    onEnd: onEndProp = () => {},
+    onStart: onStartProp,
+    onTick: onTickProp,
+    onEnd: onEndProp,
     children,
     cloneNodes = false,
   }: ForceSimulationProps<NodeDatum, LinkDatum> = $props();
@@ -434,7 +461,12 @@
     }
 
     paused = false;
-    onStartProp();
+
+    onStartProp?.({
+      alpha,
+      alphaTarget,
+      simulation,
+    });
   }
 
   function onTick() {
@@ -442,7 +474,13 @@
     pullAlphaFromSimulation();
     updateLinkPositions();
 
-    onTickProp({ alpha, alphaTarget });
+    onTickProp?.({
+      alpha,
+      alphaTarget,
+      nodes: simulatedNodes,
+      links: simulatedLinks,
+      simulation,
+    });
   }
 
   function onEnd() {
@@ -452,7 +490,12 @@
     }
 
     paused = true;
-    onEndProp();
+
+    onEndProp?.({
+      alpha,
+      alphaTarget,
+      simulation,
+    });
   }
 
   $effect(() => {
