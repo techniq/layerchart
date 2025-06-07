@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { Arc, Group, LinearGradient, Text, ArcChart } from 'layerchart';
+  import type { ComponentProps } from 'svelte';
+  import { ArcChart, Arc, Group, LinearGradient, Text } from 'layerchart';
   import { group } from 'd3-array';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { longData } from '$lib/utils/genData.js';
-  import { Field, Switch, Toggle, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, Switch, Toggle } from 'svelte-ux';
+  import { shared } from '../../shared.svelte.js';
 
   const dataByYear = group(longData, (d) => d.year);
   const data = dataByYear.get(2019) ?? [];
@@ -27,20 +29,15 @@
     { key: 'stand', value: 10, maxValue: 12, color: '#22d3ee' },
   ];
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let renderContext = $derived(
+    shared.renderContext as ComponentProps<typeof ArcChart>['renderContext']
+  );
   let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-
   <Field label="Debug" let:id classes={{ container: 'h-full' }}>
     <Switch {id} bind:checked={debug} />
   </Field>

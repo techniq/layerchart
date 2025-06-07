@@ -9,6 +9,7 @@ export async function load() {
       source,
       pageSource,
       description: 'Streamlined Chart configuration for Pie charts',
+      supportedContexts: ['svg', 'canvas'],
       related: ['components/Chart', 'components/Pie', 'examples/Arc'],
     },
   };

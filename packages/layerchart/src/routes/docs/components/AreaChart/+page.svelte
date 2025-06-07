@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { ComponentProps } from 'svelte';
   import {
     AreaChart,
     Area,
@@ -30,6 +31,7 @@
   import type { DomainType } from '$lib/utils/scales.svelte.js';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -121,9 +123,12 @@
     });
   }
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
   let lockedTooltip = $state(false);
   let xDomain: DomainType | undefined = $state();
+
+  let renderContext = $derived(
+    shared.renderContext as ComponentProps<typeof AreaChart>['renderContext']
+  );
   let debug = $state(false);
 
   let markerPoints: { date: Date; value: number }[] = $state([]);
@@ -161,13 +166,6 @@
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-
   <Field label="Debug" let:id classes={{ container: 'h-full' }}>
     <Switch {id} bind:checked={debug} />
   </Field>

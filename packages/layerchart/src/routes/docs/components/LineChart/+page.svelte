@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { ComponentProps } from 'svelte';
   import {
     Axis,
     defaultChartPadding,
@@ -23,6 +24,7 @@
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { cls } from '@layerstack/tailwind';
   import { slide } from 'svelte/transition';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -86,20 +88,15 @@
 
   let show = $state(true);
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let renderContext = $derived(
+    shared.renderContext as ComponentProps<typeof LineChart>['renderContext']
+  );
   let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-
   <Field label="Debug" let:id classes={{ container: 'h-full' }}>
     <Switch {id} bind:checked={debug} />
   </Field>

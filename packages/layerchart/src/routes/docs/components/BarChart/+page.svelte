@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { ComponentProps } from 'svelte';
   import {
     accessor,
     asAny,
@@ -26,6 +27,7 @@
   import { timeMonth } from 'd3-time';
   import { interpolate, quantize } from 'd3-interpolate';
   import { interpolateSpectral } from 'd3-scale-chromatic';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -105,20 +107,15 @@
     },
   ];
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let renderContext = $derived(
+    shared.renderContext as ComponentProps<typeof BarChart>['renderContext']
+  );
   let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-
   <Field label="Debug" let:id classes={{ container: 'h-full' }}>
     <Switch {id} bind:checked={debug} />
   </Field>
