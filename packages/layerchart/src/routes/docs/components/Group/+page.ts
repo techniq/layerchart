@@ -10,6 +10,10 @@ export async function load() {
       pageSource,
       description:
         '`<g>` element with convenient x/y and center placement along with tweened properties using `motionStore`',
+      supportedContexts: [
+        'svg',
+        // 'canvas' // TODO: Supported, but limited use cases
+      ],
       related: [
         'examples/Pack',
         'examples/Partition',

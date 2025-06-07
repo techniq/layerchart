@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { Chart, Canvas, Svg, Text, Circle } from 'layerchart';
+  import { Chart, Layer, Text, Circle } from 'layerchart';
   import type { TruncateTextOptions } from '$lib/utils/string.js';
   import type { ComponentProps } from 'svelte';
   import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
   import Preview from 'layerchart/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   const config = $state({
     x: 0,
@@ -113,12 +114,12 @@
         style:width="{config.resizeSvg ? config.width : 300}px"
       >
         <Chart>
-          <Svg>
+          <Layer type="svg">
             <Text {...config} truncate={truncate ? truncateOptions : false} />
             {#if config.showAnchor}
               <Circle cx={config.x} cy={config.y} r={2} fill="red" />
             {/if}
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </div>
@@ -132,12 +133,12 @@
         style:width="{config.resizeSvg ? config.width : 300}px"
       >
         <Chart>
-          <Canvas>
+          <Layer type="canvas">
             <Text {...config} truncate={truncate ? truncateOptions : false} />
             {#if config.showAnchor}
               <Circle cx={config.x} cy={config.y} r={2} fill="red" />
             {/if}
-          </Canvas>
+          </Layer>
         </Chart>
       </div>
     </div>
@@ -151,9 +152,9 @@
 <Preview>
   <div class="h-[100px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Text value={'March\n2025'} verticalAnchor="start" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

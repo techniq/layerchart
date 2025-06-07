@@ -9,6 +9,7 @@ export async function load() {
       source,
       pageSource,
       description: 'Graphic used for drawing arrowheads or polymarkers on Line, Spline, etc',
+      supportedContexts: ['svg'],
       related: ['components/Spline', 'components/Line', 'components/Rule', 'components/GeoSpline'],
     },
   };

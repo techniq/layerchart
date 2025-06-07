@@ -1,8 +1,9 @@
 <script lang="ts">
   import { Field, RangeField, Switch, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { Arc, Chart, Svg, LinearGradient, Text } from 'layerchart';
+  import { Arc, Chart, LinearGradient, Text, Layer } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let value = $state(60);
   // let value = 100;
@@ -97,7 +98,7 @@
 <Preview>
   <div class="h-[400px] p-4 border rounded-sm">
     <Chart>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         {#key spring}
           <LinearGradient class="from-secondary to-primary" vertical>
             {#snippet children({ gradient })}
@@ -145,7 +146,7 @@
             {/snippet}
           </LinearGradient>
         {/key}
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -156,7 +157,7 @@
   {#each labelExamples as example}
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart>
-        <Svg center>
+        <Layer type={shared.renderContext} center>
           <LinearGradient class="from-secondary to-primary" vertical>
             {#snippet children({ gradient })}
               <Arc
@@ -197,7 +198,7 @@
               </Arc>
             {/snippet}
           </LinearGradient>
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   {/each}

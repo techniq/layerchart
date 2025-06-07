@@ -2,7 +2,7 @@
   import type { ComponentProps } from 'svelte';
 
   import { RangeField } from 'svelte-ux';
-  import { Connector, Chart, Svg } from 'layerchart';
+  import { Connector, Chart, Layer } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
@@ -10,6 +10,7 @@
   import ConnectorTypeMenuField from 'layerchart/docs/ConnectorTypeMenuField.svelte';
   import ConnectorSweepMenuField from 'layerchart/docs/ConnectorSweepMenuField.svelte';
   import { movable } from '$lib/actions/movable.js';
+  import { shared } from '../../shared.svelte.js';
 
   let source = $state({ x: 300, y: 150 });
   let target = $state({ x: 500, y: 300 });
@@ -36,7 +37,7 @@
 <Preview>
   <div class="h-[400px] p-4 border rounded-sm">
     <Chart padding={{ left: 16, bottom: 24 }}>
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Connector
           {source}
           {target}
@@ -71,7 +72,7 @@
             },
           }}
         />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
