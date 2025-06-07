@@ -10,6 +10,7 @@ export async function load() {
       pageSource,
       description:
         'Convenient way to clip specific components (axis labels, etc) within chart while still allowing some to overflow (tooltips, etc)',
+      supportedContexts: ['svg'],
       related: [
         'components/RectClipPath',
         'components/Rect',

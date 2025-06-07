@@ -8,6 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
+      supportedContexts: ['svg'], // TODO: `canvas` coming soon
       related: ['components/LinearGradient', 'components/Pattern'],
     },
   };
