@@ -103,7 +103,7 @@
      *
      * @bindable
      */
-    splineRef?: SVGPathElement;
+    pathRef?: SVGPathElement;
 
     motion?: MotionProp;
   } & CommonStyleProps;
@@ -159,14 +159,14 @@
     startContent,
     endContent,
     opacity,
-    splineRef: splineRefProp = $bindable(),
+    pathRef: pathRefProp = $bindable(),
     ...restProps
   }: SplineProps = $props();
 
-  let splineRef = $state<SVGPathElement>();
+  let pathRef = $state<SVGPathElement>();
 
   $effect.pre(() => {
-    splineRefProp = splineRef;
+    pathRefProp = pathRef;
   });
 
   const markerStart = $derived(markerStartProp ?? marker);
@@ -331,8 +331,8 @@
           easing: typeof draw === 'object' && draw.easing ? draw.easing : cubicInOut,
           interpolate() {
             return (t: number) => {
-              const totalLength = splineRef?.getTotalLength() ?? 0;
-              const point = splineRef?.getPointAtLength(totalLength * t);
+              const totalLength = pathRef?.getTotalLength() ?? 0;
+              const point = pathRef?.getPointAtLength(totalLength * t);
               return point;
             };
           },
@@ -343,10 +343,10 @@
   $effect(() => {
     if (!startContent && !endContent) return;
     d;
-    if (!splineRef || !splineRef.getTotalLength()) return;
-    startPoint = splineRef.getPointAtLength(0);
-    const totalLength = splineRef.getTotalLength();
-    endPoint.target = splineRef.getPointAtLength(totalLength);
+    if (!pathRef || !pathRef.getTotalLength()) return;
+    startPoint = pathRef.getPointAtLength(0);
+    const totalLength = pathRef.getTotalLength();
+    endPoint.target = pathRef.getPointAtLength(totalLength);
   });
 
   $effect(() => {
@@ -377,7 +377,7 @@
       marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
       marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
       in:drawTransition|global={typeof draw === 'object' ? draw : undefined}
-      bind:this={splineRef}
+      bind:this={pathRef}
     />
     <MarkerWrapper id={markerStartId} marker={markerStart} />
     <MarkerWrapper id={markerMidId} marker={markerMid} />

@@ -401,13 +401,13 @@
   <Spline
     pathData={trackArc()}
     stroke="none"
-    bind:splineRef={trackRef}
+    bind:pathRef={trackRef}
     {...extractLayerProps(track, 'arc-track')}
   />
 {/if}
 
 <Spline
-  bind:splineRef={ref}
+  bind:pathRef={ref}
   pathData={arc()}
   transform="translate({xOffset}, {yOffset})"
   {fill}
