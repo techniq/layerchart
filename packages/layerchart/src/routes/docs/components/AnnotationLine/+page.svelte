@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { ComponentProps } from 'svelte';
   import {
     AnnotationLine,
     AnnotationPoint,
@@ -7,20 +8,12 @@
     LineChart,
     type Placement,
   } from 'layerchart';
-  import {
-    Button,
-    Field,
-    Menu,
-    RangeField,
-    Switch,
-    Toggle,
-    ToggleGroup,
-    ToggleOption,
-  } from 'svelte-ux';
+  import { Button, Field, Menu, RangeField, Switch, Toggle } from 'svelte-ux';
   import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -61,24 +54,17 @@
   let xOffset = $state(0);
   let yOffset = $state(0);
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let renderContext = $derived(
+    shared.renderContext as ComponentProps<typeof LineChart>['renderContext']
+  );
   let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
 
-<div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-
-  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
-</div>
+<Field label="Debug" let:id classes={{ container: 'h-full' }}>
+  <Switch {id} bind:checked={debug} />
+</Field>
 
 <h2>Vertical</h2>
 
