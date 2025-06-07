@@ -10,6 +10,7 @@ export async function load() {
       pageSource,
       description:
         'Areas between two values (`y={["value", "baseline"]}`) depending on which is greater (ex. green/red)',
+      supportedContexts: ['svg'], // dependency on ClipPath getting canvas support
       related: ['examples/Threshold'],
     },
   };
