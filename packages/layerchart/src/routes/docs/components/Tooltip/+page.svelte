@@ -9,9 +9,9 @@
     Axis,
     Bars,
     Chart,
+    Layer,
     Highlight,
     Points,
-    Svg,
     Tooltip,
     type ChartContextValue,
   } from 'layerchart';
@@ -21,6 +21,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import TooltipControls from './TooltipControls.svelte';
   import { createDateSeries, createTimeSeries, getSpiral } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   const dateSeries = createDateSeries({
     count: 30,
@@ -155,12 +156,12 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
-      </Svg>
+      </Layer>
       <Tooltip.Root>
         {#snippet children({ data })}
           <Tooltip.Header value={data.date} format="day" />
@@ -187,12 +188,12 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
-      </Svg>
+      </Layer>
       <Tooltip.Root>Anything can go here test</Tooltip.Root>
     </Chart>
   </div>
@@ -212,12 +213,12 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
-      </Svg>
+      </Layer>
       <Tooltip.Root>
         {#snippet children({ data })}
           <Tooltip.Header value={data.date} format="day" />
@@ -244,12 +245,12 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
-      </Svg>
+      </Layer>
       <Tooltip.Root>
         {#snippet children({ data })}
           <Tooltip.Header value={data.date} format="day" />
@@ -276,12 +277,12 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
-      </Svg>
+      </Layer>
       <Tooltip.Root variant="invert">
         {#snippet children({ data })}
           <Tooltip.Header value={data.date} format="day" />
@@ -309,12 +310,12 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
-      </Svg>
+      </Layer>
       <Tooltip.Root>
         {#snippet children({ data })}
           <Tooltip.Header value={data.date} format="day" />
@@ -341,12 +342,12 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
-      </Svg>
+      </Layer>
       <Tooltip.Root x="data" y="data" xOffset={8} yOffset={8}>
         {#snippet children({ data })}
           <Tooltip.Header value={data.date} format="day" />
@@ -374,12 +375,12 @@
       tooltip={{ mode: 'bisect-x' }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
           <Highlight points lines axis="both" />
-        </Svg>
+        </Layer>
 
         <Tooltip.Root
           x={context.padding.left}
@@ -423,12 +424,12 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Bars radius={4} strokeWidth={1} class="fill-primary" />
           <Highlight area />
-        </Svg>
+        </Layer>
 
         <Tooltip.Root
           x="data"
@@ -516,12 +517,12 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
-      </Svg>
+      </Layer>
       <Tooltip.Root
         {anchor}
         x={snap}
@@ -567,12 +568,12 @@
       tooltip={{ mode: 'bisect-x' }}
       bind:context
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
         <Highlight points lines />
-      </Svg>
+      </Layer>
       <Tooltip.Root>
         {#snippet children({ data })}
           <Tooltip.Header value={data.date} format="day" />
@@ -608,7 +609,7 @@
         debug: charts.area.debug,
       }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Area class="fill-primary/30" line={{ class: 'stroke-primary stroke-2' }} />
@@ -618,7 +619,7 @@
           area={charts.area.highlight.includes('area')}
           axis={charts.area.axis}
         />
-      </Svg>
+      </Layer>
       <Tooltip.Root
         x={charts.area.snapToDataX ? 'data' : 'pointer'}
         y={charts.area.snapToDataY ? 'data' : 'pointer'}
@@ -660,7 +661,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
 
@@ -680,7 +681,7 @@
             area={charts.areaStack.highlight.includes('area')}
             axis={charts.areaStack.axis}
           />
-        </Svg>
+        </Layer>
         <Tooltip.Root
           x={charts.areaStack.snapToDataX ? 'data' : 'pointer'}
           y={charts.areaStack.snapToDataY ? 'data' : 'pointer'}
@@ -719,7 +720,7 @@
         debug: charts.dateTime.debug,
       }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" />
         <Points class="fill-primary-100 stroke-primary" />
@@ -729,7 +730,7 @@
           area={charts.dateTime.highlight.includes('area')}
           axis={charts.dateTime.axis}
         />
-      </Svg>
+      </Layer>
       <Tooltip.Root
         x={charts.dateTime.snapToDataX ? 'data' : 'pointer'}
         y={charts.dateTime.snapToDataY ? 'data' : 'pointer'}
@@ -771,7 +772,7 @@
         debug: charts.duration.debug,
       }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" />
         <Points class="fill-primary-100 stroke-primary" links />
@@ -781,7 +782,7 @@
           area={charts.duration.highlight.includes('area')}
           axis={charts.duration.axis}
         />
-      </Svg>
+      </Layer>
       <Tooltip.Root
         x={charts.duration.snapToDataX ? 'data' : 'pointer'}
         y={charts.duration.snapToDataY ? 'data' : 'pointer'}
@@ -831,7 +832,7 @@
         debug: charts.multiDuration.debug,
       }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" />
         <Points class="fill-primary-100 stroke-primary" links />
@@ -841,7 +842,7 @@
           area={charts.multiDuration.highlight.includes('area')}
           axis={charts.multiDuration.axis}
         />
-      </Svg>
+      </Layer>
       <Tooltip.Root
         x={charts.multiDuration.snapToDataX ? 'data' : 'pointer'}
         y={charts.multiDuration.snapToDataY ? 'data' : 'pointer'}
@@ -893,7 +894,7 @@
         debug: charts.bars.debug,
       }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars radius={4} strokeWidth={1} class="fill-primary" />
@@ -904,7 +905,7 @@
           bar={charts.bars.highlight.includes('bar') ? { radius: 4, class: 'fill-primary' } : false}
           axis={charts.bars.axis}
         />
-      </Svg>
+      </Layer>
       <Tooltip.Root
         x={charts.bars.snapToDataX ? 'data' : 'pointer'}
         y={charts.bars.snapToDataY ? 'data' : 'pointer'}
@@ -944,7 +945,7 @@
         debug: charts.multiBars.debug,
       }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars y="baseline" radius={4} strokeWidth={1} class="fill-surface-content/10" />
@@ -963,7 +964,7 @@
             ? { y: 'value', radius: 4, strokeWidth: 1, class: 'fill-primary' }
             : false}
         />
-      </Svg>
+      </Layer>
       <Tooltip.Root
         x={charts.multiBars.snapToDataX ? 'data' : 'pointer'}
         y={charts.multiBars.snapToDataY ? 'data' : 'pointer'}
@@ -998,7 +999,7 @@
         debug: charts.scatter.debug,
       }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" grid rule />
         <Points class="fill-primary stroke-primary" />
@@ -1008,7 +1009,7 @@
           area={charts.scatter.highlight.includes('area')}
           axis={charts.scatter.axis}
         />
-      </Svg>
+      </Layer>
       <Tooltip.Root
         x={charts.scatter.snapToDataX ? 'data' : 'pointer'}
         y={charts.scatter.snapToDataY ? 'data' : 'pointer'}

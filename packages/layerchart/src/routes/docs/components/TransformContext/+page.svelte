@@ -2,13 +2,14 @@
   import type { ComponentProps } from 'svelte';
   import { cubicOut } from 'svelte/easing';
 
-  import { Chart, Circle, Html, Points, Spline, Svg } from 'layerchart';
+  import { Chart, Circle, Html, Layer, Points, Spline, Svg } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
   import { Field, RangeField, Switch } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import { getSpiral } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   let pointCount = $state(500);
   let angle = $state(137.5); //
@@ -56,7 +57,7 @@
       }}
     >
       <TransformControls />
-      <Svg>
+      <Layer type={shared.renderContext}>
         {#if showPath}
           <Spline {curve} motion="tween" />
         {/if}
@@ -75,7 +76,7 @@
             {/snippet}
           </Points>
         {/if}
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -92,13 +93,13 @@
       }}
     >
       <TransformControls />
-      <Svg>
+      <Layer type="svg">
         <image
           href="https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg"
           width="100%"
           height="100%"
         />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -115,7 +116,7 @@
       }}
     >
       <TransformControls />
-      <Html>
+      <Layer type="html">
         <div class="h-full flex justify-center">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Ghostscript_Tiger.svg/512px-Ghostscript_Tiger.svg.png?20091116194118"
@@ -123,7 +124,7 @@
             class="h-full"
           />
         </div>
-      </Html>
+      </Layer>
     </Chart>
   </div>
 </Preview>
