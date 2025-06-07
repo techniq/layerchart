@@ -2,11 +2,12 @@
   import { scaleOrdinal } from 'd3-scale';
   import { forceX, forceY, forceCollide, type SimulationNodeDatum } from 'd3-force';
 
-  import { asAny, Axis, Chart, Circle, ForceSimulation, Svg, Tooltip } from 'layerchart';
+  import { asAny, Axis, Chart, Circle, ForceSimulation, Layer, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import type { USSenatorsDatum } from '$static/data/examples/us-senators.js';
   import type { Prettify } from '@layerstack/utils';
+  import { shared } from '../../shared.svelte.js';
 
   type NodeDatum = USSenatorsDatum;
 
@@ -31,11 +32,11 @@
       data={data.usSenators}
       x={(d) => d.date_of_birth.getFullYear()}
       xNice
-      padding={{ bottom: 12, left: 8, right: 8 }}
+      padding={{ bottom: 20, left: 12, right: 12 }}
     >
       {#snippet children({ context })}
         {@const r = 6}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="bottom" format="none" rule grid />
           <ForceSimulation
             forces={{
@@ -60,7 +61,7 @@
               {/each}
             {/snippet}
           </ForceSimulation>
-        </Svg>
+        </Layer>
 
         <Tooltip.Root {context}>
           {#snippet children({ data })}

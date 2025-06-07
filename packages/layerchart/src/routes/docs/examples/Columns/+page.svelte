@@ -15,7 +15,7 @@
     Pattern,
     RectClipPath,
     Rule,
-    Svg,
+    Layer,
     Text,
     Tooltip,
     groupStackData,
@@ -28,6 +28,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, longData } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   const data = createDateSeries({
     count: 30,
@@ -121,11 +122,11 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -143,11 +144,11 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars radius={4} rounded="top" strokeWidth={1} class="fill-primary" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -166,12 +167,12 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary" />
         <Highlight area />
-      </Svg>
+      </Layer>
       <Tooltip.Root>
         {#snippet children({ data })}
           <Tooltip.Header value={data.date} format="day" />
@@ -198,12 +199,12 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary group-hover:fill-gray-300 transition-colors" />
         <Highlight area bar={{ class: 'fill-primary', strokeWidth: 1 }} />
-      </Svg>
+      </Layer>
       <Tooltip.Root>
         {#snippet children({ data })}
           <Tooltip.Header value={data.date} format="day" />
@@ -230,7 +231,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary group-hover:fill-gray-300 transition-colors" />
@@ -247,7 +248,7 @@
             </RectClipPath>
           {/snippet}
         </Highlight>
-      </Svg>
+      </Layer>
       <Tooltip.Root>
         {#snippet children({ data })}
           <Tooltip.Header value={data.date} format="day" />
@@ -272,11 +273,11 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -293,11 +294,11 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -316,13 +317,13 @@
       yPadding={[16, 16]}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Rule y={0} />
         <Bars strokeWidth={1} class="fill-primary" />
         <Labels format="integer" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -340,13 +341,13 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Rule y={0} />
         <Bars strokeWidth={1} class="fill-primary" />
         <Labels placement="inside" format="integer" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -364,11 +365,11 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" ticks={4} rule />
         <Bars strokeWidth={1} class="fill-primary" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -386,7 +387,7 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis
           placement="bottom"
@@ -394,7 +395,7 @@
           rule
         />
         <Bars strokeWidth={1} class="fill-primary" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -412,7 +413,7 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <LinearGradient class="from-blue-500 to-green-400" vertical units="userSpaceOnUse">
@@ -420,7 +421,7 @@
             <Bars strokeWidth={1} fill={gradient} class="stroke-blue-900" />
           {/snippet}
         </LinearGradient>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -438,7 +439,7 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars>
@@ -450,7 +451,7 @@
             />
           {/each}
         </Bars>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -468,7 +469,7 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -480,7 +481,7 @@
           data={data[3]}
           area={{ fill: 'url(#highlight-pattern)', class: 'stroke-secondary/50' }}
         />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -498,7 +499,7 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary" />
@@ -507,7 +508,7 @@
           lines={{ class: 'stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] ' }}
           axis="y"
         />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -527,7 +528,7 @@
     >
       {#snippet children({ context })}
         {@const avg = mean(data, (d) => d.value)}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Bars strokeWidth={1} class="fill-primary" />
@@ -544,7 +545,7 @@
             verticalAnchor="end"
             class="text-sm fill-danger stroke-surface-100 stroke-2"
           />
-        </Svg>
+        </Layer>
       {/snippet}
     </Chart>
   </div>
@@ -563,11 +564,11 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Bars strokeWidth={1} class="fill-primary" />
         <Axis placement="left" grid={{ class: 'stroke-surface-100' }} rule />
         <Axis placement="bottom" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -585,11 +586,11 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Bars strokeWidth={1} class="fill-primary" />
         <Axis placement="left" grid={{ class: 'mix-blend-multiply' }} rule />
         <Axis placement="bottom" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -608,13 +609,13 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars y="baseline" strokeWidth={1} class="fill-surface-content/20" />
         <Bars y="value" strokeWidth={1} insets={{ x: 4 }} class="fill-primary" />
         <Highlight area />
-      </Svg>
+      </Layer>
       <Tooltip.Root>
         {#snippet children({ data })}
           <Tooltip.Header value={data.date} format="day" />
@@ -641,14 +642,14 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule format={(d) => format(Math.abs(d), 'integer')} />
         <Axis placement="bottom" />
         <Bars y="value" rounded-sm="top" strokeWidth={1} class="fill-primary" />
         <Bars y={(d) => -d.baseline} rounded="bottom" strokeWidth={1} class="fill-secondary" />
         <Rule y={0} />
         <Highlight area />
-      </Svg>
+      </Layer>
       <Tooltip.Root>
         {#snippet children({ data })}
           <Tooltip.Header value={data.date} format="day" />
@@ -682,7 +683,7 @@
         yNice={4}
         padding={{ left: 16, bottom: 24 }}
       >
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -697,7 +698,7 @@
               class="fill-primary"
             />
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -723,7 +724,7 @@
         yNice={4}
         padding={{ left: 16, bottom: 24 }}
       >
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -739,7 +740,7 @@
               class="fill-primary"
             />
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -765,7 +766,7 @@
         yNice={4}
         padding={{ left: 16, bottom: 24 }}
       >
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -783,7 +784,7 @@
               />
             {/each}
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -809,7 +810,7 @@
         yNice={4}
         padding={{ left: 16, bottom: 24 }}
       >
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -829,7 +830,7 @@
               />
             {/each}
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -857,12 +858,12 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Bars strokeWidth={1} />
           <Highlight area />
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -912,12 +913,12 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Bars strokeWidth={1} />
           <Highlight area />
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -967,12 +968,12 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule format="percentRound" />
           <Axis placement="bottom" rule />
           <Bars strokeWidth={1} />
           <Highlight area />
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -1026,12 +1027,12 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Bars strokeWidth={1} />
           <Highlight area />
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -1097,7 +1098,7 @@
       tooltip={{ mode: 'band' }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <g>
@@ -1133,7 +1134,7 @@
             {/each}
           </g>
           <Highlight area />
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -1199,7 +1200,7 @@
       padding={{ left: 16, bottom: 24 }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <g>
@@ -1240,7 +1241,7 @@
               />
             {/each}
           </g>
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -1280,12 +1281,12 @@
         },
       }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Bars strokeWidth={1} class="fill-primary" />
         <Highlight area />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

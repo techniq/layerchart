@@ -11,10 +11,11 @@
   import { scaleOrdinal } from 'd3-scale';
   import { schemeCategory10 } from 'd3-scale-chromatic';
 
-  import { Chart, Circle, ForceSimulation, Link, Svg } from 'layerchart';
+  import { Chart, Circle, ForceSimulation, Link, Layer } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import type { Prettify } from '@layerstack/utils';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -53,14 +54,10 @@
 
 <h1>Examples</h1>
 
-<!-- <pre>
-	{JSON.stringify(links, null, 2)}
-</pre> -->
-
 <Preview data={data.miserables}>
   <div class="h-[680px] p-4 border rounded-sm">
     <Chart>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <ForceSimulation
           forces={{
             link: linkForce,
@@ -85,7 +82,7 @@
             {/each}
           {/snippet}
         </ForceSimulation>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

@@ -8,13 +8,13 @@
     type SimulationNodeDatum,
   } from 'd3-force';
 
-  import { asAny, Chart, Circle, ForceSimulation, Svg } from 'layerchart';
+  import { asAny, Chart, Circle, ForceSimulation, Layer } from 'layerchart';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-
   import dots from './dots.json' with { type: 'json' };
   import type { Prettify } from '@layerstack/utils';
+  import { shared } from '../../shared.svelte.js';
 
   type NodeDatum = { category: string; value: number };
   type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
@@ -62,7 +62,7 @@
     <Chart data={nodes} x="category" xScale={scaleBand()} r="value" rRange={[3, 12]}>
       {#snippet children({ context })}
         {@const nodeStrokeWidth = 1}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <ForceSimulation
             forces={{
               x: xForce.x((d) =>
@@ -91,7 +91,7 @@
               {/each}
             {/snippet}
           </ForceSimulation>
-        </Svg>
+        </Layer>
       {/snippet}
     </Chart>
   </div>

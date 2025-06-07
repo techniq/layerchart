@@ -2,11 +2,12 @@
   import { hierarchy, type HierarchyLink, type HierarchyNode } from 'd3-hierarchy';
   import { forceX, forceY, forceManyBody, forceLink, type SimulationNodeDatum } from 'd3-force';
 
-  import { Chart, Circle, ForceSimulation, Link, Svg, Tooltip } from 'layerchart';
+  import { Chart, Circle, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
   import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
   import type { Prettify } from '@layerstack/utils';
+  import { shared } from '../../shared.svelte.js';
 
   type NodeDatum = { name: string; value: number };
   type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
@@ -34,18 +35,18 @@
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
       {#snippet children({ context })}
-        <Svg center>
-          <ForceSimulation
-            forces={{
-              link: linkForce,
-              charge: chargeForce,
-              x: xForce,
-              y: yForce,
-            }}
-            data={{ nodes, links }}
-            cloneNodes
-          >
-            {#snippet children({ nodes, linkPositions })}
+        <ForceSimulation
+          forces={{
+            link: linkForce,
+            charge: chargeForce,
+            x: xForce,
+            y: yForce,
+          }}
+          data={{ nodes, links }}
+          cloneNodes
+        >
+          {#snippet children({ nodes, linkPositions })}
+            <Layer type={shared.renderContext} center>
               {#each links as link, i}
                 <Link
                   data={link}
@@ -68,9 +69,9 @@
                   onpointerleave={context.tooltip.hide}
                 />
               {/each}
-            {/snippet}
-          </ForceSimulation>
-        </Svg>
+            </Layer>
+          {/snippet}
+        </ForceSimulation>
 
         <Tooltip.Root>
           {#snippet children({ data })}
