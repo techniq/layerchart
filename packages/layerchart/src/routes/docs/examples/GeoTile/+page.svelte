@@ -3,11 +3,12 @@
   import { geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Canvas, ClipPath, Chart, GeoPath, GeoTile, Svg, Tooltip } from 'layerchart';
+  import { Canvas, ClipPath, Chart, GeoPath, GeoTile, Layer, Svg, Tooltip } from 'layerchart';
   import { Field, RangeField, Switch } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import TilesetField from '$lib/docs/TilesetField.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -38,7 +39,7 @@
 
 <h1>Examples</h1>
 
-<h2>SVG</h2>
+<h2>Basic</h2>
 
 <Preview data={filteredStates}>
   <div class="h-[600px] overflow-hidden">
@@ -49,9 +50,10 @@
       }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <GeoTile url={serviceUrl} {zoomDelta} {debug} />
           {#each filteredStates.features as feature}
+            <!-- TODO: Renders on canvas if put on separate Layer  -->
             <GeoPath
               geojson={feature}
               tooltipContext={context.tooltip}
@@ -60,7 +62,7 @@
                 (selectedFeature = selectedFeature === feature ? filteredStates : feature)}
             />
           {/each}
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -78,7 +80,7 @@
   </div>
 </Preview>
 
-<h2>SVG (clipped)</h2>
+<h2>Clippped (currently svg-only)</h2>
 
 <Preview data={filteredStates}>
   <div class="h-[600px] overflow-hidden">
@@ -89,7 +91,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <ClipPath useId="clip">
             <GeoTile url={serviceUrl} {zoomDelta} />
           </ClipPath>
@@ -103,7 +105,7 @@
                 (selectedFeature = selectedFeature === feature ? filteredStates : feature)}
             />
           {/each}
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -117,26 +119,6 @@
           {/snippet}
         </Tooltip.Root>
       {/snippet}
-    </Chart>
-  </div>
-</Preview>
-
-<h2>Canvas</h2>
-
-<Preview data={filteredStates}>
-  <div class="h-[600px]">
-    <Chart
-      geo={{
-        projection: geoMercator,
-        fitGeojson: selectedFeature,
-      }}
-    >
-      <Canvas>
-        <GeoTile url={serviceUrl} {zoomDelta} />
-      </Canvas>
-      <Canvas>
-        <GeoPath geojson={filteredStates} class="stroke-black/20" />
-      </Canvas>
     </Chart>
   </div>
 </Preview>

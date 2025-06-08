@@ -2,11 +2,13 @@
   import { geoAlbersUsa, geoAlbers, geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Chart, ChartClipPath, GeoPath, Svg, Tooltip } from 'layerchart';
+  import { Chart, ChartClipPath, GeoPath, Layer, Svg, Tooltip } from 'layerchart';
   import { SelectField } from 'svelte-ux';
   import { sort } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
+
   let { data } = $props();
 
   const counties = feature(data.geojson, data.geojson.objects.counties);
@@ -63,9 +65,9 @@
         fitGeojson: selectedStateFeature,
       }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <GeoPath geojson={selectedStateFeature} class="stroke-surface-content" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -81,7 +83,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           {#each selectedCountiesFeatures as feature}
             <GeoPath
               geojson={feature}
@@ -93,7 +95,7 @@
             geojson={selectedStateFeature}
             class="fill-none stroke-surface-content pointer-events-none"
           />
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {context.tooltip.data?.properties.name}
@@ -114,7 +116,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <ChartClipPath>
             {#each counties.features as feature}
               <GeoPath
@@ -134,7 +136,7 @@
               class="fill-none stroke-surface-content pointer-events-none"
             />
           </ChartClipPath>
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {context.tooltip.data?.properties.name}

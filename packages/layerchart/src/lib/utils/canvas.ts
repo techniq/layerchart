@@ -46,6 +46,8 @@ export function getComputedStyles(
     if (styles) {
       Object.assign(svg.style, styles);
     }
+    // Make sure `<svg>` is not visible
+    svg.style.display = 'none';
 
     if (classes) {
       svg.setAttribute(
