@@ -10,6 +10,7 @@ export async function load({ fetch }) {
     )) as AppleTickerData,
     meta: {
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       related: [
         'components/Bars',
         'components/Points',

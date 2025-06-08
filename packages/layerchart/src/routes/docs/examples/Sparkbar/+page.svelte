@@ -5,6 +5,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   const data = createDateSeries({
     count: 30,
@@ -14,6 +15,8 @@
     keys: ['value', 'baseline'],
   });
   const negativeData = createDateSeries({ count: 30, min: -20, max: 50, value: 'integer' });
+
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -30,6 +33,7 @@
       grid={false}
       bandPadding={0.1}
       props={{ bars: { radius: 1, strokeWidth: 0 } }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -49,6 +53,7 @@
           grid={false}
           bandPadding={0.1}
           props={{ bars: { radius: 1, strokeWidth: 0 } }}
+          {renderContext}
         />
       </span> Sed ipsum justo, facilisis id tempor hendrerit, suscipit eu ipsum. Mauris ut sapien quis
       nibh volutpat venenatis. Ut viverra justo varius sapien convallis venenatis vel faucibus urna.
@@ -68,6 +73,7 @@
       grid={false}
       bandPadding={0.1}
       props={{ bars: { radius: 1, strokeWidth: 0 } }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -84,6 +90,7 @@
       grid={false}
       bandPadding={0.1}
       props={{ bars: { radius: 1, strokeWidth: 0 } }}
+      {renderContext}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root
@@ -123,6 +130,7 @@
           grid={false}
           bandPadding={0.1}
           props={{ bars: { radius: 1, strokeWidth: 0 } }}
+          {renderContext}
         >
           {#snippet tooltip({ context })}
             <Tooltip.Root

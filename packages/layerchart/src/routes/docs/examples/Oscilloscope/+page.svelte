@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
+  import { onMount } from 'svelte';
   import { range, ticks } from 'd3-array';
   import { scaleLinear, scaleSequential } from 'd3-scale';
   import { interpolateTurbo } from 'd3-scale-chromatic';
@@ -7,6 +7,7 @@
   import { BarChart, Bars, LinearGradient, LineChart } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   // Inspired by: https://observablehq.com/@visnup/microphone-oscilloscope and https://codepen.io/agalliat/pen/PoZLBxP
 
@@ -66,6 +67,8 @@
     };
   });
   const colorScale = scaleSequential([0, 256], interpolateTurbo);
+
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -83,6 +86,7 @@
       grid={false}
       props={{ spline: { class: 'stroke-surface-content' } }}
       tooltip={{ mode: 'manual' }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -104,6 +108,7 @@
       props={{
         yAxis: { format: (d) => decibels(d)?.toFixed(1) },
       }}
+      {renderContext}
     >
       {#snippet marks()}
         <LinearGradient

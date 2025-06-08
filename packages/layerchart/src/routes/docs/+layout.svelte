@@ -107,7 +107,7 @@
       </div>
     </div>
 
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-4">
       <span class="text-2xl font-bold">
         {#if type === 'examples' || type === 'tools'}
           {title.replace(/([a-z])([A-Z])/g, '$1 $2')}

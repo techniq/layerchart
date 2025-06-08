@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { Area, Axis, BarChart, Chart, Highlight, Spline, Svg, Tooltip } from 'layerchart';
+  import { Area, Axis, BarChart, Chart, Highlight, Layer, Spline, Svg, Tooltip } from 'layerchart';
   import { scaleLinear, scaleTime } from 'd3-scale';
   import { extent } from 'd3-array';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
+  import { render } from 'svelte/server';
 
   let { data } = $props();
 
@@ -15,6 +17,8 @@
     value: 'integer',
     keys: ['value', 'baseline'],
   });
+
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -30,6 +34,7 @@
       props={{
         bars: { y: 'baseline' },
       }}
+      {renderContext}
     >
       {#snippet aboveMarks()}
         <Area y1="value" class="fill-secondary/20" line={{ class: 'stroke-secondary' }} />
@@ -66,6 +71,7 @@
       props={{
         bars: { radius: 1, class: 'stroke-none fill-surface-content/10' },
       }}
+      {renderContext}
     />
 
     <!-- Second chart (line), responsible for tooltip -->
@@ -80,6 +86,7 @@
         xAxis: { ticks: 10, rule: true },
         tooltip: { context: { mode: 'band' } },
       }}
+      {renderContext}
     >
       {#snippet marks()}
         <Spline y="open" class="stroke-primary" />
@@ -122,7 +129,7 @@
       tooltip={{ mode: 'bisect-x' }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis
             placement="left"
             rule
@@ -148,7 +155,7 @@
             points={{ class: 'fill-secondary' }}
             y={(d) => context.y1Scale?.(d.efficiency)}
           />
-        </Svg>
+        </Layer>
 
         <Tooltip.Root {context}>
           {#snippet children({ data })}
@@ -177,7 +184,7 @@
       yNice
       padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis
           placement="left"
           rule
@@ -189,7 +196,7 @@
         <Axis placement="bottom" format="none" rule />
         <Spline class="stroke-2 stroke-primary" />
         <Highlight lines points />
-      </Svg>
+      </Layer>
     </Chart>
 
     <!-- Efficiency chart, provides tooltip for both values  -->
@@ -200,7 +207,7 @@
       padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis
           placement="right"
           rule
@@ -211,7 +218,7 @@
         <Spline class="stroke-2 stroke-secondary" />
         <!-- Difficult to add points for both charts without using a remaped scale for one value -->
         <Highlight lines />
-      </Svg>
+      </Layer>
 
       <Tooltip.Root>
         {#snippet children({ data })}
@@ -246,6 +253,7 @@
           class: 'stroke-none fill-blue-500',
         },
       }}
+      {renderContext}
     />
 
     <BarChart
@@ -280,6 +288,7 @@
         },
       ]}
       seriesLayout="stack"
+      {renderContext}
     >
       {#snippet axis({ context })}
         <Axis placement="left" />

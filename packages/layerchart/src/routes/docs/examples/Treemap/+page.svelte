@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { untrack, type ComponentProps } from 'svelte';
   import { cubicOut } from 'svelte/easing';
   import { fade } from 'svelte/transition';
   import { hierarchy, type HierarchyNode, type HierarchyRectangularNode } from 'd3-hierarchy';
@@ -28,7 +29,7 @@
     Group,
     Rect,
     RectClipPath,
-    Svg,
+    Layer,
     Text,
     Tooltip,
     Treemap,
@@ -36,7 +37,7 @@
     findAncestor,
   } from 'layerchart';
   import { isNodeVisible } from '$lib/utils/treemap.js';
-  import { untrack, type ComponentProps } from 'svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -184,7 +185,7 @@
   <div class="h-[800px] p-4 border rounded-sm">
     <Chart>
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Bounds
             domain={asAny(selectedNested)}
             motion={{ type: 'tween', duration: 800, easing: cubicOut }}
@@ -263,7 +264,7 @@
               </ChartClipPath>
             {/snippet}
           </Bounds>
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -348,7 +349,7 @@
   </Breadcrumb>
   <div class="h-[800px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Treemap
           hierarchy={groupedHierarchy}
           {tile}
@@ -425,7 +426,7 @@
             {/each}
           {/snippet}
         </Treemap>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -483,7 +484,7 @@
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Bounds
           domain={asAny(selectedZoomable)}
           motion={{ type: 'tween', duration: 800, easing: cubicOut }}
@@ -544,7 +545,7 @@
             </ChartClipPath>
           {/snippet}
         </Bounds>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

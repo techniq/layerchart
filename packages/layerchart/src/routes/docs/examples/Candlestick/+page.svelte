@@ -1,16 +1,15 @@
 <script lang="ts">
   import { scaleBand, scaleOrdinal } from 'd3-scale';
 
-  import { Axis, Bars, Chart, Highlight, Points, Svg, Tooltip } from 'layerchart';
+  import { Axis, Bars, Chart, Highlight, Layer, Points, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 </script>
 
 <h1>Examples</h1>
-
-<h2>Basic</h2>
 
 <!-- TODO: Should use xScale={scaleTime()} once `<Bar>` / createDimensionGetter() supports it -->
 <Preview data={data.appleTicker}>
@@ -29,13 +28,13 @@
       tooltip={{ mode: 'bisect-x' }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule ticks={10} />
           <Axis placement="bottom" rule format={(d) => ''} />
           <Points links r={0} />
           <Bars y={(d) => [d.open, d.close]} radius={2} />
           <Highlight area />
-        </Svg>
+        </Layer>
         <Tooltip.Root {context}>
           {#snippet children({ data })}
             <Tooltip.Header value={data.date} format="day" />
