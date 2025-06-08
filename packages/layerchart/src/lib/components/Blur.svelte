@@ -14,9 +14,9 @@
 
     /**
      * The default children snippet which provides
-     * the id and url for the filter.
+     * the id for the filter.
      */
-    children?: Snippet<[{ id: string; url: string }]>;
+    children?: Snippet<[{ id: string }]>;
   };
 </script>
 
@@ -42,7 +42,9 @@
 
   {#if children}
     <g filter="url(#{id})" class={layerClass('blur-g')}>
-      {@render children({ id, url: `url(#${id})` })}
+      {@render children({ id })}
     </g>
   {/if}
+{:else if children}
+  {@render children({ id })}
 {/if}

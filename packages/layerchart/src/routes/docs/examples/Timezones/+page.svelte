@@ -15,11 +15,12 @@
   // @ts-expect-error
   import { century, equationOfTime, declination } from 'solar-calculator';
 
-  import { Blur, Chart, ClipPath, GeoCircle, GeoPath, Svg, Tooltip, antipode } from 'layerchart';
+  import { Blur, Chart, ClipPath, GeoCircle, GeoPath, Layer, Tooltip, antipode } from 'layerchart';
   import { Field, SelectField, Switch } from 'svelte-ux';
   import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -100,7 +101,7 @@
 
 <h1>Examples</h1>
 
-<h2>SVG</h2>
+<h2>Basic</h2>
 
 <Preview data={countriesGeojson}>
   <div class="h-[600px] overflow-hidden">
@@ -112,7 +113,7 @@
       padding={{ left: 10, right: 10 }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" id="globe" />
 
           <GeoPath geojson={countriesGeojson} id="clip" />
@@ -148,7 +149,7 @@
               </Blur>
             </ClipPath>
           {/if}
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
