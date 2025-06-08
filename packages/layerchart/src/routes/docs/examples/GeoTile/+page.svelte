@@ -3,7 +3,7 @@
   import { geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Canvas, ClipPath, Chart, GeoPath, GeoTile, Layer, Svg, Tooltip } from 'layerchart';
+  import { ClipPath, Chart, GeoPath, GeoTile, Layer, Tooltip } from 'layerchart';
   import { Field, RangeField, Switch } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';

@@ -2,7 +2,7 @@
   import { geoAlbersUsa, geoAlbers, geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Chart, ChartClipPath, GeoPath, Layer, Svg, Tooltip } from 'layerchart';
+  import { Chart, ChartClipPath, GeoPath, Layer, Tooltip } from 'layerchart';
   import { SelectField } from 'svelte-ux';
   import { sort } from '@layerstack/utils';
 

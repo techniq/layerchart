@@ -11,7 +11,7 @@
     type GeoProjection,
   } from 'd3-geo';
 
-  import { Canvas, Chart, GeoPath } from 'layerchart';
+  import { Chart, GeoPath, Layer } from 'layerchart';
   import {
     Button,
     ButtonGroup,
@@ -26,7 +26,7 @@
   import { mdiChevronDown } from '@mdi/js';
 
   import { goto } from '$app/navigation';
-
+  import { shared } from '../../shared.svelte.js';
   let { data } = $props();
 
   const geojson = $derived(data.geojson);
@@ -106,9 +106,9 @@
           fitGeojson: geojson,
         }}
       >
-        <Canvas>
+        <Layer type={shared.renderContext}>
           <GeoPath {geojson} fill="white" />
-        </Canvas>
+        </Layer>
       </Chart>
     {:else}
       <EmptyMessage class="h-full">Please specify a file</EmptyMessage>

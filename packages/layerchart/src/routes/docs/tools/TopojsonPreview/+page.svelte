@@ -17,7 +17,7 @@
   import { feature } from 'topojson-client';
   import type { GeometryCollection, Topology } from 'topojson-specification';
 
-  import { Canvas, Chart, GeoPath, GeoTile, Svg, Tooltip } from 'layerchart';
+  import { Chart, GeoPath, GeoTile, Layer, Tooltip } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
   import {
     CopyButton,
@@ -31,6 +31,7 @@
 
   import TilesetField from '$lib/docs/TilesetField.svelte';
   import Json from '$lib/docs/Json.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let topojsonStr = $state('');
   let topojson = $state<Topology<Record<string, GeometryCollection<{ name: string }>>>>();
@@ -107,18 +108,18 @@
       >
         {#snippet children({ context })}
           {#if projection === geoMercator && serviceUrl}
-            <Svg>
+            <Layer type={shared.renderContext}>
               <!-- technique: https://observablehq.com/@d3/seamless-zoomable-map-tiles -->
               <GeoTile url={serviceUrl} zoomDelta={-100} />
               <GeoTile url={serviceUrl} zoomDelta={-4} />
               <GeoTile url={serviceUrl} zoomDelta={-1} />
               <GeoTile url={serviceUrl} {zoomDelta} />
-            </Svg>
+            </Layer>
           {/if}
 
           <TransformControls />
 
-          <Canvas>
+          <Layer type={shared.renderContext}>
             {#if geojson?.features}
               {#each geojson.features as feature}
                 <GeoPath
@@ -129,7 +130,7 @@
                 />
               {/each}
             {/if}
-          </Canvas>
+          </Layer>
 
           <Tooltip.Root>
             {#snippet children({ data })}

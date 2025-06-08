@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { Area, Axis, BarChart, Chart, Highlight, Layer, Spline, Svg, Tooltip } from 'layerchart';
+  import { Area, Axis, BarChart, Chart, Highlight, Layer, Spline, Tooltip } from 'layerchart';
   import { scaleLinear, scaleTime } from 'd3-scale';
   import { extent } from 'd3-array';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import { shared } from '../../shared.svelte.js';
-  import { render } from 'svelte/server';
 
   let { data } = $props();
 

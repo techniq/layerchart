@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Chart, Layer, LinearGradient, Rect, Svg } from 'layerchart';
+  import { Chart, Layer, LinearGradient, Rect } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
   import { shared } from '../../shared.svelte.js';
 </script>

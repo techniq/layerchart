@@ -21,6 +21,7 @@ export async function load({ fetch }) {
     meta: {
       description: 'Array per series, each with `x` / `y` items',
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       hideTableOfContents: true,
     },
   };

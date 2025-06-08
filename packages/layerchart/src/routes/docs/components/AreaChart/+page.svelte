@@ -9,7 +9,6 @@
     Html,
     Line,
     LinearGradient,
-    Svg,
     Spline,
     Text,
     Tooltip,
@@ -18,6 +17,7 @@
     accessor,
     type ChartContextValue,
     defaultChartPadding,
+    Layer,
   } from 'layerchart';
   import { curveBasis, curveCatmullRom, curveStepAfter } from 'd3-shape';
   import { group } from 'd3-array';
@@ -1328,12 +1328,12 @@
   <div class="h-[300px] p-4 border rounded-sm">
     <AreaChart data={dateSeriesData} x="date" y="value" {renderContext} {debug}>
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <Area line={{ class: 'stroke-primary' }} class="fill-primary/30" />
           <Highlight points lines />
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}

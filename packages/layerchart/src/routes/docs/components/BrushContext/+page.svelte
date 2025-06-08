@@ -61,9 +61,9 @@
 <Preview data={dataSeriesData}>
   <div class="h-[100px]">
     <Chart data={dataSeriesData} x="date" xScale={scaleBand().padding(0.4)} y="value" brush>
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Bars strokeWidth={1} class="fill-primary" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview> -->

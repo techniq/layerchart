@@ -5,7 +5,7 @@
   import { geoIdentity, type GeoProjection } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, Legend, Layer, Svg, Tooltip } from 'layerchart';
+  import { Chart, GeoPath, Legend, Layer, Tooltip } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
