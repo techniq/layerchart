@@ -157,10 +157,11 @@
       name: 'GeoPath',
       render,
       events: {
-        click: _onClick,
-        pointerenter: _onPointerEnter,
-        pointermove: _onPointerMove,
-        pointerleave: _onPointerLeave,
+        // Only register events if they are defined (so they are not registered with hit canvas unnecessarily)
+        click: onclick ? _onClick : undefined,
+        pointerenter: restProps.onpointerenter || tooltipContext ? _onPointerEnter : undefined,
+        pointermove: restProps.onpointermove || tooltipContext ? _onPointerMove : undefined,
+        pointerleave: restProps.onpointerleave || tooltipContext ? _onPointerLeave : undefined,
         pointerdown: restProps.onpointerdown,
         touchmove: restProps.ontouchmove,
       },
