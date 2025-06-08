@@ -23,7 +23,7 @@
   import Html from './Html.svelte';
   import Svg from './Svg.svelte';
 
-  let { type, children, onpointermove, ...restProps }: LayerProps = $props();
+  let { type, children, ...restProps }: LayerProps = $props();
 </script>
 
 {#if type === 'canvas'}
