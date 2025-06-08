@@ -6,15 +6,14 @@
 
   import {
     Axis,
-    Canvas,
     Chart,
     Circle,
     Highlight,
     Labels,
+    Layer,
     Legend,
     LinearGradient,
     Spline,
-    Svg,
     Text,
     Tooltip,
     pivotLonger,
@@ -23,6 +22,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -71,35 +71,11 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Spline class="stroke-2 stroke-primary" />
-      </Svg>
-    </Chart>
-  </div>
-</Preview>
-
-<h2>Canvas</h2>
-
-<Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      data={dateSeriesData}
-      x="date"
-      xScale={scaleTime()}
-      y="value"
-      yDomain={[0, null]}
-      yNice
-      padding={{ left: 16, bottom: 24 }}
-    >
-      <Svg>
-        <Axis placement="left" grid rule />
-        <Axis placement="bottom" rule />
-      </Svg>
-      <Canvas>
-        <Spline class="stroke-2 stroke-primary" />
-      </Canvas>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -118,12 +94,12 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Spline class="stroke-2 stroke-primary" />
         <Highlight points lines />
-      </Svg>
+      </Layer>
 
       <Tooltip.Root>
         {#snippet children({ data })}
@@ -150,12 +126,12 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Spline class="stroke-2 stroke-primary" />
         <Labels format="integer" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -172,7 +148,7 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <LinearGradient stops={ticks(1, 0, 10).map(temperatureColor.interpolator())} vertical>
@@ -180,7 +156,7 @@
             <Spline class="stroke-2" stroke={gradient} />
           {/snippet}
         </LinearGradient>
-      </Svg>
+      </Layer>
       <Legend
         scale={temperatureColor}
         title="Temperature (°F)"
@@ -207,7 +183,7 @@
       {#snippet children({ context })}
         {@const thresholdOffset =
           (context.yScale(50) / (context.height + context.padding.bottom)) * 100 + '%'}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           <LinearGradient
@@ -222,7 +198,7 @@
               <Spline class="stroke-2" stroke={gradient} />
             {/snippet}
           </LinearGradient>
-        </Svg>
+        </Layer>
       {/snippet}
     </Chart>
   </div>
@@ -247,7 +223,7 @@
       tooltip={{ mode: 'voronoi' }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}
@@ -267,7 +243,7 @@
             </Spline>
           {/each}
           <Highlight points lines />
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -299,7 +275,7 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Spline y={(d) => d.y} class="stroke-2" stroke={fruitColors.bananas} />
@@ -307,7 +283,7 @@
         <Highlight y={(d) => d.y} points={{ fill: fruitColors.bananas }} />
         <Highlight y={(d) => d.y1} points={{ fill: fruitColors.oranges }} />
         <Highlight lines />
-      </Svg>
+      </Layer>
 
       <Tooltip.Root>
         {#snippet children({ data })}
@@ -340,7 +316,7 @@
       tooltip={{ mode: 'voronoi' }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}
@@ -363,7 +339,7 @@
             </g>
           {/each}
           <Highlight points lines />
-        </Svg>
+        </Layer>
         <Tooltip.Root>
           <Tooltip.Header value={context.tooltip.data.date} format="day" />
           <Tooltip.List>
@@ -394,7 +370,7 @@
       tooltip={{ mode: 'voronoi' }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#each dataByFruit as [fruit, data]}
@@ -403,7 +379,7 @@
           {/each}
           <Labels format="integer" />
           <Highlight points lines />
-        </Svg>
+        </Layer>
         <Tooltip.Root>
           {#snippet children({ data })}
             <Tooltip.Header value={data.date} format="day" />

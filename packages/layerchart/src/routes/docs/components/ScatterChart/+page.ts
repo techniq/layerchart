@@ -16,6 +16,7 @@ export async function load({ fetch }) {
       source,
       pageSource,
       description: 'Streamlined Chart configuration for Scatter charts',
+      supportedContexts: ['svg', 'canvas'],
       related: ['components/Chart', 'components/Points', 'examples/Scatter'],
     },
   };

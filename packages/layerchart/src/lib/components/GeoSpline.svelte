@@ -42,13 +42,13 @@
     link,
     loft = 1.0,
     curve = curveNatural,
-    splineRef: splineRefProp = $bindable(),
+    pathRef: pathRefProp = $bindable(),
     ...restProps
   }: GeoSplineProps = $props();
 
-  let splineRef = $state<SVGPathElement>();
+  let pathRef = $state<SVGPathElement>();
   $effect.pre(() => {
-    splineRefProp = splineRef;
+    pathRefProp = pathRef;
   });
 
   const geoCtx = getGeoContext();
@@ -76,7 +76,7 @@
 </script>
 
 <Spline
-  bind:splineRef
+  bind:pathRef
   data={[source, middle, target]}
   x={(d) => d[0]}
   y={(d) => d[1]}

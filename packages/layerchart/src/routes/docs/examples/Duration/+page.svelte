@@ -7,6 +7,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import { getRandomInteger } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   const count = 10;
   const now = startOfDay(new Date());
@@ -22,6 +23,8 @@
       endDate,
     };
   });
+
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 
   // TODO: Update to use better data example: https://observablehq.com/@d3/dot-plot
 </script>
@@ -40,6 +43,7 @@
       grid={{ x: false, y: true, bandAlign: 'between' }}
       orientation="horizontal"
       padding={{ left: 36, bottom: 36 }}
+      {renderContext}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -87,6 +91,7 @@
       grid={{ x: false, y: true, bandAlign: 'between' }}
       orientation="horizontal"
       padding={{ left: 36, bottom: 36 }}
+      {renderContext}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -134,6 +139,7 @@
           points: true,
         },
       }}
+      {renderContext}
     >
       {#snippet marks()}
         <Points class="fill-primary-100 stroke-primary" links={{ class: 'stroke-primary' }} />
@@ -192,6 +198,7 @@
           points: true,
         },
       }}
+      {renderContext}
     >
       {#snippet marks()}
         <Points links />

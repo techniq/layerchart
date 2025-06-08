@@ -17,6 +17,7 @@ export async function load({ fetch }) {
     )) as USCountyPopulationData,
     meta: {
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
     },
   };
 }

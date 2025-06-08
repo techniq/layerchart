@@ -9,12 +9,13 @@
   import { curveLinear } from 'd3-shape';
 
   import { Field, Switch } from 'svelte-ux';
-  import { Chart, ForceSimulation, Link, Svg, Tooltip } from 'layerchart';
+  import { Chart, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
   import { cls } from '@layerstack/tailwind';
   import { clamp, type Prettify } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { movable } from '$lib/actions/movable.js';
+  import { shared } from '../../shared.svelte.js';
 
   type NodeDatum = {
     id: number;
@@ -73,7 +74,7 @@
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
     <Chart>
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <ForceSimulation
             forces={{
               link: linkForce,
@@ -144,7 +145,7 @@
               {/each}
             {/snippet}
           </ForceSimulation>
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {context.tooltip.data?.id}

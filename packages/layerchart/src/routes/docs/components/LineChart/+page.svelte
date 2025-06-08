@@ -14,7 +14,7 @@
   import { scaleBand, scaleSequential } from 'd3-scale';
   import { curveCatmullRom, curveLinearClosed } from 'd3-shape';
   import { extent, flatGroup, group, ticks } from 'd3-array';
-  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, Switch } from 'svelte-ux';
   import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -23,6 +23,7 @@
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { cls } from '@layerstack/tailwind';
   import { slide } from 'svelte/transition';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -86,20 +87,13 @@
 
   let show = $state(true);
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
   let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-
   <Field label="Debug" let:id classes={{ container: 'h-full' }}>
     <Switch {id} bind:checked={debug} />
   </Field>

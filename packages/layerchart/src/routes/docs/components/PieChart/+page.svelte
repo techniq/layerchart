@@ -1,15 +1,17 @@
 <script lang="ts">
+  import type { ComponentProps } from 'svelte';
   import { Spring } from 'svelte/motion';
   import { PieChart, Text } from 'layerchart';
   import { group, sum } from 'd3-array';
   import { quantize } from 'd3-interpolate';
   import { schemeTableau10, interpolateRainbow } from 'd3-scale-chromatic';
-  import { Field, RangeField, Switch, Toggle, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, RangeField, Switch, Toggle } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { longData } from '$lib/utils/genData.js';
   import { format } from '@layerstack/utils';
   import Arc from '$lib/components/Arc.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   const dataByYear = group(longData, (d) => d.year);
   const data = dataByYear.get(2019) ?? [];
@@ -41,20 +43,15 @@
     })
   );
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let renderContext = $derived(
+    shared.renderContext as ComponentProps<typeof PieChart>['renderContext']
+  );
   let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-
   <Field label="Debug" let:id classes={{ container: 'h-full' }}>
     <Switch {id} bind:checked={debug} />
   </Field>

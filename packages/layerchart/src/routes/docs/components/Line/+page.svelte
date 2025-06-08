@@ -1,7 +1,8 @@
 <script lang="ts">
   import Preview from '$lib/docs/Preview.svelte';
 
-  import { Axis, Chart, Line, Svg } from 'layerchart';
+  import { Axis, Chart, Line, Layer } from 'layerchart';
+  import { shared } from '../../shared.svelte.js';
 </script>
 
 <h1>Examples</h1>
@@ -9,7 +10,7 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={{ bottom: 20, left: 20 }}>
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Line x1={100} y1={100} x2={200} y2={200} class="stroke-2 stroke-primary" />
@@ -23,7 +24,7 @@
           markerStart="circle"
           markerEnd="arrow"
         />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

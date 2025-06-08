@@ -5,10 +5,11 @@
   import { curveLinearClosed } from 'd3-shape';
   import { feature } from 'topojson-client';
 
-  import { Axis, Chart, Circle, GeoPath, GeoPoint, Hull, Points, Svg, Text } from 'layerchart';
+  import { Axis, Chart, Circle, GeoPath, GeoPoint, Hull, Layer, Points, Text } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -44,21 +45,23 @@
       padding={{ left: 16, bottom: 24 }}
     >
       {@const dataByGroup = group(data.groupData, (d) => d.group)}
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         {#each dataByGroup as [group, data]}
-          <Points r={3} {data} fill={groupColor(group)} />
+          {@const color = groupColor(group)}
+          <Points r={3} {data} fill={color} />
+          <!-- TODO: handle group color differently to work with Canvas -->
           <Hull
             {data}
             {curve}
-            style="--group-color:{groupColor(group)}"
+            style="--group-color:{color}"
             classes={{
               path: 'pointer-events-none stroke-[var(--group-color)] fill-[var(--group-color)] [fill-opacity:0.1]',
             }}
           />
         {/each}
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -75,15 +78,11 @@
         fitGeojson: states,
       }}
     >
-      <Svg>
-        <g class="states">
-          {#each states.features as feature}
-            <GeoPath
-              geojson={feature}
-              class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
-            />
-          {/each}
-        </g>
+      <Layer type={shared.renderContext}>
+        <GeoPath
+          geojson={states}
+          class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
+        />
         <g class="points pointer-events-none">
           <Hull
             data={data.us.stateCaptitals.filter((d) => {
@@ -96,6 +95,7 @@
           />
 
           {#each data.us.stateCaptitals as capital}
+            <!-- TODO: Fix GeoPoint to work with Canvas -->
             <GeoPoint lat={capital.latitude} long={capital.longitude}>
               <Circle r={2} class="fill-white stroke-danger" />
               <Text
@@ -107,7 +107,7 @@
             </GeoPoint>
           {/each}
         </g>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

@@ -36,6 +36,7 @@ export async function load({ fetch }) {
       source,
       pageSource,
       description: 'Streamlined Chart configuration for Bar charts',
+      supportedContexts: ['svg', 'canvas'],
       related: [
         'components/Chart',
         'components/Bars',

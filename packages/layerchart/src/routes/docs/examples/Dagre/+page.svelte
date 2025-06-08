@@ -5,12 +5,13 @@
   import { slide } from 'svelte/transition';
   import { cls } from '@layerstack/tailwind';
 
-  import { Chart, Dagre, Group, Rect, Spline, Svg, Text, Tooltip } from 'layerchart';
+  import { Chart, Dagre, Group, Layer, Rect, Spline, Text, Tooltip } from 'layerchart';
   import { Field, MenuField, Switch, Toggle } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import DagreControls from './DagreControls.svelte';
   import TransformControls from '$lib/components/TransformControls.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -121,7 +122,7 @@
         >
           <TransformControls />
 
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Dagre data={selectedGraph} edges={(d) => d.links} {...settings.playground}>
               {#snippet children({ nodes, edges })}
                 <g class="edges">
@@ -162,7 +163,7 @@
                 </g>
               {/snippet}
             </Dagre>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
 
@@ -196,7 +197,7 @@
         >
           <TransformControls />
 
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Dagre data={data.basic} edges={(d) => d.links} {...settings.simple}>
               {#snippet children({ nodes, edges })}
                 <g class="edges">
@@ -237,7 +238,7 @@
                 </g>
               {/snippet}
             </Dagre>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
 
@@ -275,7 +276,7 @@
         >
           <TransformControls />
 
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Dagre data={data.tcpState} edges={(d) => d.links} {...settings.tcpState}>
               {#snippet children({ nodes, edges })}
                 <g class="edges">
@@ -339,7 +340,7 @@
                 </g>
               {/snippet}
             </Dagre>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
 
@@ -377,7 +378,7 @@
         >
           <TransformControls />
 
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Dagre
               data={data.softwareUserFlow}
               edges={(d) => d.links}
@@ -445,7 +446,7 @@
                 </g>
               {/snippet}
             </Dagre>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
 
@@ -482,7 +483,7 @@
         >
           <TransformControls />
 
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Dagre
               data={data.cluster}
               edges={(d) => d.links}
@@ -531,7 +532,7 @@
                 {/each}
               </g>
             </Dagre>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
 

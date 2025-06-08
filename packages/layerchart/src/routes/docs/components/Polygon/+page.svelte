@@ -2,6 +2,7 @@
   import { Chart, Group, Layer, Polygon } from 'layerchart';
   import { RangeField } from 'svelte-ux';
   import Preview from 'layerchart/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let points = $state(8);
   let cornerRadius = $state(0);
@@ -16,8 +17,6 @@
 
   // Separate inset to allow playground to default to 0
   let starInset = $state(0.7);
-
-  let renderContext = $state<'svg' | 'canvas'>('svg');
 </script>
 
 <h1>Playground</h1>
@@ -38,7 +37,7 @@
 <div class="h-[300px] p-4 border rounded-sm">
   <Chart>
     {#snippet children({ context })}
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Polygon
           cx={context.width / 2}
           cy={context.height / 2}
@@ -74,7 +73,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -96,7 +95,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -118,7 +117,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -141,7 +140,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -164,7 +163,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -188,7 +187,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -211,7 +210,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -233,7 +232,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -255,7 +254,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -277,7 +276,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Polygon
                 cx={context.width / 2}
                 cy={context.height / 2}
@@ -317,7 +316,7 @@
         <div class="h-[150px] p-4 border rounded-sm">
           <Chart>
             {#snippet children({ context })}
-              <Layer type={renderContext}>
+              <Layer type={shared.renderContext}>
                 <Polygon
                   cx={context.width / 2}
                   cy={context.height / 2}
@@ -348,7 +347,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Group x={context.width / 2} y={context.height / 2}>
                 {@const size = 60}
                 <Polygon
@@ -378,7 +377,7 @@
       <div class="h-[150px] p-4 border rounded-sm">
         <Chart>
           {#snippet children({ context })}
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Group x={context.width / 2} y={context.height / 2}>
                 {@const size = 50}
                 <Polygon

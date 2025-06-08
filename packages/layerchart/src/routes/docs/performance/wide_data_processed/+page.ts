@@ -14,6 +14,7 @@ export async function load({ fetch }) {
     meta: {
       description: 'Wide data (property per series).  Pre-processed before passed to LineChart',
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       hideTableOfContents: true,
     },
   };

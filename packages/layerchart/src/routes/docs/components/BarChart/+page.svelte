@@ -11,8 +11,6 @@
     LinearGradient,
     Text,
     Tooltip,
-    Circle,
-    Group,
     Polygon,
   } from 'layerchart';
   import { extent, group, mean, sum } from 'd3-array';
@@ -22,10 +20,11 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, wideData, longData } from '$lib/utils/genData.js';
-  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, Switch } from 'svelte-ux';
   import { timeMonth } from 'd3-time';
   import { interpolate, quantize } from 'd3-interpolate';
   import { interpolateSpectral } from 'd3-scale-chromatic';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -105,20 +104,13 @@
     },
   ];
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
   let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-
   <Field label="Debug" let:id classes={{ container: 'h-full' }}>
     <Switch {id} bind:checked={debug} />
   </Field>

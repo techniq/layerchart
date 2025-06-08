@@ -4,12 +4,13 @@
   import { feature } from 'topojson-client';
   import { presimplify, simplify } from 'topojson-simplify';
 
-  import { Chart, GeoPath, Graticule, Svg, type ChartContextValue } from 'layerchart';
+  import { Chart, GeoPath, Graticule, Layer, type ChartContextValue } from 'layerchart';
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
   import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -45,7 +46,7 @@
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>SVG</h2>
+  <h2>Basic</h2>
 
   <div class="mb-2 flex gap-6">
     <Field label="Spin:" dense labelPlacement="left">
@@ -77,11 +78,11 @@
       ondragstart={timer.stop}
       bind:context
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
         <Graticule class="stroke-surface-content/20" />
         <GeoPath geojson={land} {curve} class="stroke-surface-content/50 fill-white" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

@@ -5,12 +5,13 @@
   import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   const { data } = $props();
 
   let example = $state<'single'>('single');
 
-  let renderContext = $state<'svg' | 'canvas'>('svg');
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
   let motion = $state(true);
   let show = $state(true);
 
@@ -26,13 +27,6 @@
 
 <div class="grid gap-4">
   <div class="flex gap-3">
-    <Field label="Render context">
-      <ToggleGroup bind:value={renderContext} variant="outline">
-        <ToggleOption value="svg">Svg</ToggleOption>
-        <ToggleOption value="canvas">Canvas</ToggleOption>
-      </ToggleGroup>
-    </Field>
-
     <Field label="Motion">
       <ToggleGroup bind:value={motion} variant="outline">
         <ToggleOption value={true}>Yes</ToggleOption>

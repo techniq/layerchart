@@ -3,8 +3,9 @@
   import { Button, ButtonGroup, Field, TextField, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format } from '@layerstack/utils';
   import { TimerState } from '@layerstack/svelte-state';
+  import { shared } from '../../shared.svelte.js';
 
-  let renderContext = $state<'svg' | 'canvas'>('canvas');
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
   let motion = $state(true);
   let show = $state(true);
 
@@ -93,13 +94,6 @@
 
 <div class="grid gap-4">
   <div class="flex gap-3">
-    <Field label="Render context">
-      <ToggleGroup bind:value={renderContext} variant="outline">
-        <ToggleOption value="svg">Svg</ToggleOption>
-        <ToggleOption value="canvas">Canvas</ToggleOption>
-      </ToggleGroup>
-    </Field>
-
     <Field label="Motion">
       <ToggleGroup bind:value={motion} variant="outline">
         <ToggleOption value={true}>Yes</ToggleOption>

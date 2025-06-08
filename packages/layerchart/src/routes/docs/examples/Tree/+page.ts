@@ -5,6 +5,7 @@ export async function load({ fetch }) {
     flare: await fetch('/data/examples/hierarchy/flare.json').then((r) => r.json()),
     meta: {
       pageSource,
+      supportedContexts: ['svg'], // TODO: `canvas` coming soon
     },
   };
 }

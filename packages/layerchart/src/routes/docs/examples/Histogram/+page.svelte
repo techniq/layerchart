@@ -17,6 +17,7 @@
   import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -47,6 +48,8 @@
   const randomDateData = $derived(
     Array.from({ length: randomCount }, () => getRandomDate(subDays(now, dateRange), now)) as any[]
   ); // TODO: Make typescript happy
+
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -67,6 +70,7 @@
         yAxis: { format: 'metric', motion: 'tween' },
         bars: { motion: 'tween' },
       }}
+      {renderContext}
     >
       {#snippet tooltip()}
         <Tooltip.Root>
@@ -89,6 +93,7 @@
     </BarChart>
   </div>
 </Preview>
+
 <h2>Horizontal</h2>
 
 <Preview data={olympiansBins}>
@@ -104,6 +109,7 @@
         bars: { motion: 'tween' },
       }}
       orientation="horizontal"
+      {renderContext}
     >
       {#snippet tooltip()}
         <Tooltip.Root>
@@ -198,6 +204,7 @@
         yAxis: { format: 'metric', motion: 'tween' },
         bars: { motion: 'tween' },
       }}
+      {renderContext}
     >
       {#snippet tooltip()}
         <Tooltip.Root>
@@ -250,6 +257,7 @@
           yAxis: { format: 'metric', motion: 'tween' },
           bars: { motion: 'tween' },
         }}
+        {renderContext}
       >
         {#snippet tooltip()}
           <Tooltip.Root>
@@ -320,6 +328,7 @@
           yAxis: { format: 'metric', motion: 'tween' },
           bars: { motion: 'tween' },
         }}
+        {renderContext}
       >
         {#snippet tooltip()}
           <Tooltip.Root>

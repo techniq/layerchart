@@ -19,6 +19,7 @@ declare namespace App {
       hideUsage?: boolean;
       hideTableOfContents?: boolean;
       status?: string;
+      supportedContexts?: Array<'svg' | 'canvas' | 'html'>;
     };
   }
 

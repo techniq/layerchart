@@ -5,10 +5,11 @@
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
 
-  import { Area, Axis, Chart, Points, Spline, Svg } from 'layerchart';
+  import { Area, Axis, Chart, Layer, Points, Spline } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -49,7 +50,7 @@
       padding={{ top: 32, bottom: 8 }}
       radial
     >
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Axis
           placement="radius"
           grid={{ class: 'stroke-surface-content/20 fill-surface-200/50' }}
@@ -59,7 +60,7 @@
         <Axis placement="angle" grid={{ class: 'stroke-surface-content/20' }} />
         <Spline {curve} class="stroke-primary fill-primary/20" />
         <Points class="fill-primary stroke-surface-200" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -75,8 +76,9 @@
       y={['minmin', 'maxmax']}
       yRange={({ height }) => [height / 5, height / 2]}
       radial
+      padding={{ top: 12, bottom: 12 }}
     >
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Spline y={(d) => d.avg} curve={curveCatmullRom} class="stroke-primary" />
         <Area
           y0={(d) => d.min}
@@ -97,7 +99,7 @@
           grid
           format={(v) => v + '° F'}
         />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -116,9 +118,10 @@
       zDomain={[1940, 2024]}
       zRange={[0.1, 0.2]}
       radial
+      padding={{ top: 12, bottom: 12 }}
     >
       {#snippet children({ context })}
-        <Svg center>
+        <Layer type={shared.renderContext} center>
           {#each flatGroup(data.dailyTemperatures, (d) => d.year) as [year, yearData]}
             <Spline
               data={yearData}
@@ -141,7 +144,7 @@
             ticks={4}
             format={(v) => v + '° F'}
           />
-        </Svg>
+        </Layer>
       {/snippet}
     </Chart>
   </div>

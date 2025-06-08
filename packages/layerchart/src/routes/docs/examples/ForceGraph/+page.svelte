@@ -11,11 +11,12 @@
   import { scaleOrdinal } from 'd3-scale';
   import { schemeCategory10 } from 'd3-scale-chromatic';
 
-  import { Chart, Circle, ForceSimulation, Link, Svg, Tooltip } from 'layerchart';
+  import { Chart, Circle, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
   import { Checkbox, Field, ProgressCircle, RangeField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import type { Prettify } from '@layerstack/utils';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -277,7 +278,7 @@
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
     <Chart>
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <ForceSimulation
             forces={{
               ...(hasLinkForce && { link: linkForce }),
@@ -322,7 +323,7 @@
               {/each}
             {/snippet}
           </ForceSimulation>
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {context.tooltip.data?.id}

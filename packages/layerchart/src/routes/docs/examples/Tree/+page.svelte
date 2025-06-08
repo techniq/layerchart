@@ -1,18 +1,19 @@
 <script lang="ts">
+  import type { ComponentProps } from 'svelte';
   import { cubicOut } from 'svelte/easing';
   import { hierarchy, type HierarchyNode } from 'd3-hierarchy';
   import { curveBumpX, curveBumpY, curveStep, curveStepBefore, curveStepAfter } from 'd3-shape';
 
-  import { Chart, Group, Html, Link, Rect, Svg, Text, Tree } from 'layerchart';
+  import { Chart, Group, Link, Layer, Rect, Text, Tree } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
   import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import type { Component, ComponentProps } from 'svelte';
   import type { ConnectorSweep, ConnectorType } from 'layerchart/utils/connectorUtils.js';
   import ConnectorTypeMenuField from 'layerchart/docs/ConnectorTypeMenuField.svelte';
   import ConnectorSweepMenuField from 'layerchart/docs/ConnectorSweepMenuField.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -27,7 +28,6 @@
   let orientation: ComponentProps<typeof Tree>['orientation'] = $state('horizontal');
   let curve = $state(curveBumpX);
   let layout = $state('chart');
-  let Context: Component = $state(Svg);
   let selected = $state();
   let sweep: ConnectorSweep = $state('none'); // Sweep direction
   let type: ConnectorType = $state('d3'); // Connector type: 'straight', 'square', 'beveled', 'rounded', 'd3'
@@ -94,13 +94,6 @@
       <RangeField label="Radius" bind:value={radius} min={0} />
     {/if}
   </div>
-
-  <!-- <Field label="Context">
-      <ToggleGroup bind:value={Context} variant="outline" size="sm" inset class="w-full">
-        <ToggleOption value={Svg}>Svg</ToggleOption>
-        <ToggleOption value={Canvas}>Canvas</ToggleOption>
-      </ToggleGroup>
-    </Field> -->
 </div>
 
 <h2>Basic</h2>
@@ -123,7 +116,7 @@
           nodeSize={layout === 'node' ? nodeSize : undefined}
         >
           {#snippet children({ nodes, links })}
-            <Context>
+            <Layer type={shared.renderContext}>
               {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
                 <Link
                   data={link}
@@ -184,7 +177,7 @@
                   />
                 </Group>
               {/each}
-            </Context>
+            </Layer>
           {/snippet}
         </Tree>
       {/snippet}
@@ -212,7 +205,7 @@
           nodeSize={layout === 'node' ? nodeSize : undefined}
         >
           {#snippet children({ nodes, links })}
-            <Context>
+            <Layer type={shared.renderContext}>
               {#each links as link (getNodeKey(link.source) + '_' + getNodeKey(link.target))}
                 <Link
                   data={link}
@@ -225,9 +218,9 @@
                   class="stroke-surface-content opacity-20"
                 />
               {/each}
-            </Context>
+            </Layer>
 
-            <Html>
+            <Layer type="html">
               {#each nodes as node}
                 {@const x = (orientation === 'horizontal' ? node.y : node.x) - nodeWidth / 2}
                 {@const y = (orientation === 'horizontal' ? node.x : node.y) - nodeHeight / 2}
@@ -257,7 +250,7 @@
                   {node.data.name}
                 </Group>
               {/each}
-            </Html>
+            </Layer>
           {/snippet}
         </Tree>
       {/snippet}

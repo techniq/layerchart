@@ -2,8 +2,9 @@
   import { geoAlbersUsa } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, Svg, Tooltip } from 'layerchart';
+  import { Chart, GeoPath, Layer, Tooltip } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -13,7 +14,7 @@
 
 <h1>Examples</h1>
 
-<h2>SVG</h2>
+<h2>Basic</h2>
 
 <Preview data={states}>
   <div class="h-[600px]">
@@ -24,7 +25,7 @@
       }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           {#each states.features as feature}
             <GeoPath
               geojson={feature}
@@ -37,58 +38,20 @@
             geojson={counties}
             class="fill-none stroke-surface-content/10 pointer-events-none"
           />
-        </Svg>
+        </Layer>
 
-        <Tooltip.Root>
-          {#snippet children({ data })}
-            {@const [longitude, latitude] =
-              context.geo.projection?.invert?.([context.tooltip.x, context.tooltip.y]) ?? []}
-            <Tooltip.Header>{data.properties.name}</Tooltip.Header>
-            <Tooltip.List>
-              <Tooltip.Item label="longitude" value={longitude} format="decimal" />
-              <Tooltip.Item label="latitude" value={latitude} format="decimal" />
-            </Tooltip.List>
-          {/snippet}
-        </Tooltip.Root>
-      {/snippet}
-    </Chart>
-  </div>
-</Preview>
-
-<h2>Canvas</h2>
-
-<Preview data={states}>
-  <div class="h-[600px] mt-10">
-    <Chart
-      geo={{
-        projection: geoAlbersUsa,
-        fitGeojson: states,
-      }}
-    >
-      {#snippet children({ context })}
-        <Canvas>
-          {#each states.features as feature}
-            <GeoPath
-              geojson={feature}
-              class="stroke-surface-content"
-              tooltipContext={context.tooltip}
-            />
-          {/each}
-        </Canvas>
-
-        <Canvas pointerEvents={false}>
-          <GeoPath geojson={counties} class="stroke-surface-content/10" />
-        </Canvas>
-
-        <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
-        <Canvas pointerEvents={false}>
-          {#if context.tooltip.data}
-            <GeoPath
-              geojson={context.tooltip.data}
-              class="stroke-surface-content fill-surface-content/20"
-            />
-          {/if}
-        </Canvas>
+        <!-- Draw tooltip path for canvas since hover: not supported -->
+        <!-- Provides better performance by rendering tooltip path on separate <canvas> layer -->
+        {#if shared.renderContext === 'canvas'}
+          <Layer type={shared.renderContext} pointerEvents={false}>
+            {#if context.tooltip.data}
+              <GeoPath
+                geojson={context.tooltip.data}
+                class="stroke-surface-content fill-surface-content/20"
+              />
+            {/if}
+          </Layer>
+        {/if}
 
         <Tooltip.Root>
           {#snippet children({ data })}

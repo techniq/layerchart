@@ -13,15 +13,16 @@
   import {
     Chart,
     Group,
+    Layer,
     Rect,
     RectClipPath,
-    Svg,
     Text,
     Tooltip,
     Treemap,
     findAncestor,
   } from 'layerchart';
   import { type ComponentProps } from 'svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -144,7 +145,7 @@
   <div class="aspect-[16/9]">
     <Chart>
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Treemap
             hierarchy={rootPopulation}
             {tile}
@@ -212,7 +213,7 @@
               {/each}
             {/snippet}
           </Treemap>
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -277,7 +278,7 @@
   <div class="h-[800px]">
     <Chart>
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Treemap
             hierarchy={root.copy()}
             {tile}
@@ -345,7 +346,7 @@
               {/each}
             {/snippet}
           </Treemap>
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -365,7 +366,7 @@
 <Preview data={rootFlat}>
   <div class="h-[400px]">
     <Chart>
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Treemap hierarchy={rootFlat}>
           {#snippet children({ nodes })}
             {#each nodes.filter((n) => n.depth > 0) as node}
@@ -390,7 +391,7 @@
             {/each}
           {/snippet}
         </Treemap>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

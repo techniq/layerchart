@@ -10,23 +10,24 @@
   import {
     Area,
     Axis,
+    Bars,
     Chart,
     ChartClipPath,
     Circle,
     Highlight,
+    Layer,
     LinearGradient,
     Points,
     Rule,
     Text,
     Tooltip,
-    Svg,
-    Bars,
   } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
   import { asAny } from '$lib/utils/types.js';
   import type { DomainType } from '$lib/utils/scales.svelte.js';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -60,9 +61,9 @@
 <Preview data={dataSeriesData}>
   <div class="h-[100px]">
     <Chart data={dataSeriesData} x="date" xScale={scaleBand().padding(0.4)} y="value" brush>
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Bars strokeWidth={1} class="fill-primary" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview> -->
@@ -72,9 +73,9 @@
 <Preview data={data.appleStock}>
   <div class="h-[40px]">
     <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" brush>
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -90,9 +91,9 @@
       y="value"
       brush={{ classes: { range: 'bg-secondary/10', handle: 'bg-secondary/50' } }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -108,9 +109,9 @@
       y="value"
       brush={{ classes: { range: 'striped-background' } }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -127,7 +128,7 @@
       brush={{ classes: { range: 'bg-secondary/10' }, handleSize: 8 }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
 
           {#if context.brush.isActive}
@@ -165,7 +166,7 @@
               <path d={mdiChevronRight} class="fill-secondary-content origin-center" />
             </svg>
           {/if}
-        </Svg>
+        </Layer>
       {/snippet}
     </Chart>
   </div>
@@ -177,7 +178,7 @@
   <div class="h-[40px]">
     <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" brush>
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
           {#if context.brush.isActive}
             <Text
@@ -196,7 +197,7 @@
               class="text-xs"
             />
           {/if}
-        </Svg>
+        </Layer>
       {/snippet}
     </Chart>
   </div>
@@ -216,7 +217,7 @@
         brush
       >
         {#snippet children({ context })}
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
 
             {#if context.brush.isActive}
@@ -236,7 +237,7 @@
                 class="text-xs"
               />
             {/if}
-          </Svg>
+          </Layer>
         {/snippet}
       </Chart>
     </div>
@@ -265,7 +266,7 @@
             },
           }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
@@ -275,7 +276,7 @@
                 {/snippet}
               </LinearGradient>
             </ChartClipPath>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </State>
@@ -304,7 +305,7 @@
             },
           }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
@@ -314,7 +315,7 @@
                 {/snippet}
               </LinearGradient>
             </ChartClipPath>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </State>
@@ -348,7 +349,7 @@
             },
           }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
@@ -358,7 +359,7 @@
                 {/snippet}
               </LinearGradient>
             </ChartClipPath>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </State>
@@ -380,7 +381,7 @@
           yDomain={[0, null]}
           padding={{ left: 16, bottom: 24 }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
@@ -390,7 +391,7 @@
                 {/snippet}
               </LinearGradient>
             </ChartClipPath>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
 
@@ -408,9 +409,9 @@
             },
           }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </State>
@@ -437,9 +438,9 @@
             },
           }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-          </Svg>
+          </Layer>
         </Chart>
       </div>
 
@@ -452,7 +453,7 @@
           {yDomain}
           padding={{ left: 16, bottom: 24 }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
             <ChartClipPath>
@@ -462,7 +463,7 @@
                 {/snippet}
               </LinearGradient>
             </ChartClipPath>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </State>
@@ -489,7 +490,7 @@
           yDomain={[0, null]}
           padding={{ left: 16, bottom: 24 }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Axis placement="left" grid rule motion={{ type: 'tween', duration: 200 }} />
             <Axis placement="bottom" rule />
             <LinearGradient class="from-primary/50 to-primary/1" vertical>
@@ -504,7 +505,7 @@
                 />
               {/snippet}
             </LinearGradient>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
 
@@ -522,9 +523,9 @@
             },
           }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </State>
@@ -554,7 +555,7 @@
             yBaseline={0}
             padding={{ left: 16, bottom: 24 }}
           >
-            <Svg>
+            <Layer type={shared.renderContext}>
               <Axis placement="left" grid rule />
               <Axis placement="bottom" />
               <Rule y={0} />
@@ -568,7 +569,7 @@
                   {/snippet}
                 </LinearGradient>
               </ChartClipPath>
-            </Svg>
+            </Layer>
           </Chart>
         </div>
 
@@ -586,13 +587,13 @@
               onReset: (e) => (xDomain = null),
             }}
           >
-            <Svg>
+            <Layer type={shared.renderContext}>
               <Area
                 line={{ class: 'stroke-2 stroke-(--chart-color)' }}
                 class="fill-(--chart-color) opacity-20"
               />
               <!-- <Brush bind:xDomain mode="separated" /> -->
-            </Svg>
+            </Layer>
           </Chart>
         </div>
       </div>
@@ -624,7 +625,7 @@
           }}
         >
           {#snippet children({ context })}
-            <Svg>
+            <Layer type={shared.renderContext}>
               <Axis placement="left" grid rule />
               <Axis placement="bottom" rule />
               <ChartClipPath>
@@ -635,7 +636,7 @@
                 </LinearGradient>
               </ChartClipPath>
               <Highlight points lines />
-            </Svg>
+            </Layer>
 
             <Tooltip.Root
               y="data"
@@ -692,7 +693,7 @@
           },
         }}
       >
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
 
@@ -718,7 +719,7 @@
               {/each}
             {/snippet}
           </Points>
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </State>
@@ -751,14 +752,14 @@
             },
           }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Axis placement="left" grid rule />
             <Axis placement="bottom" rule />
 
             <ChartClipPath>
               <Points class="fill-primary/30 stroke-primary" r={4} />
             </ChartClipPath>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
 
@@ -783,7 +784,7 @@
             },
           }}
         >
-          <Svg>
+          <Layer type={shared.renderContext}>
             <Points>
               {#snippet children({ points })}
                 {#each points as point}
@@ -808,7 +809,7 @@
                 {/each}
               {/snippet}
             </Points>
-          </Svg>
+          </Layer>
         </Chart>
       </div>
     </div>

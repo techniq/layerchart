@@ -11,10 +11,11 @@
   import { range } from 'd3-array';
   import { feature } from 'topojson-client';
 
-  import { Chart, GeoCircle, GeoPath, Graticule, Svg } from 'layerchart';
+  import { Chart, GeoCircle, GeoPath, Graticule, Layer } from 'layerchart';
   import { Field, RangeField, SelectField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -98,7 +99,7 @@
       }}
       padding={{ left: 100, right: 100 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content/30" id="globe" />
         <Graticule class="stroke-surface-content/20" />
 
@@ -126,7 +127,7 @@
             />
           {/each}
         {/if}
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

@@ -3,10 +3,11 @@
   import { scaleThreshold } from 'd3-scale';
   import { range } from 'd3-array';
 
-  import { Calendar, Chart, Group, Text, Tooltip, Svg } from 'layerchart';
+  import { Calendar, Chart, Group, Text, Tooltip, Layer } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   const now = new Date();
   const firstDayOfYear = startOfYear(now);
@@ -40,16 +41,17 @@
         'var(--color-primary-500)',
         'var(--color-primary-700)',
       ]}
+      padding={{ top: 13 }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Calendar
             start={firstDayOfYear}
             end={lastDayOfYear}
             tooltipContext={context.tooltip}
             monthPath
           />
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -88,9 +90,10 @@
         'var(--color-primary-500)',
         'var(--color-primary-700)',
       ]}
+      padding={{ top: 13 }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Calendar
             start={firstDayOfYear}
             end={lastDayOfYear}
@@ -98,7 +101,7 @@
             cellSize={16}
             monthPath
           />
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -137,10 +140,10 @@
         'var(--color-primary-500)',
         'var(--color-primary-700)',
       ]}
-      padding={{ left: 20 }}
+      padding={{ left: 20, top: 13 }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           {#each range(2019, 2024) as year, i}
             {@const start = new Date(year, 0, 1)}
             {@const end = endOfYear(start)}
@@ -157,7 +160,7 @@
               <Calendar {start} {end} tooltipContext={context.tooltip} cellSize={16} monthPath />
             </Group>
           {/each}
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}

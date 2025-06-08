@@ -54,6 +54,7 @@ export async function load({ fetch }) {
       source,
       pageSource,
       description: 'Streamlined Chart configuration for Area charts',
+      supportedContexts: ['svg', 'canvas'],
       related: ['components/Chart', 'components/Area', 'examples/Area'],
     },
   };

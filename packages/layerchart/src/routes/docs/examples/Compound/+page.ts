@@ -21,6 +21,7 @@ export async function load({ fetch }) {
     )) as HydroData,
     meta: {
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       related: [
         'components/Bars',
         'examples/Bars',

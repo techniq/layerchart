@@ -3,10 +3,11 @@
   import { randomUniform } from 'd3-random';
   import { forceX, forceY, forceManyBody, forceCollide, type SimulationNodeDatum } from 'd3-force';
 
-  import { Chart, Circle, Group, ForceSimulation, Svg } from 'layerchart';
+  import { Chart, Circle, Group, ForceSimulation, Layer } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import type { Prettify } from '@layerstack/utils';
+  import { shared } from '../../shared.svelte.js';
 
   type NodeDatum = { r: number; group: number };
   type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
@@ -39,19 +40,25 @@
   <div class="h-[600px] p-4 border rounded-sm overflow-hidden">
     <Chart>
       {#snippet children({ context })}
-        <Svg>
-          <ForceSimulation
-            forces={{
-              x: xForce,
-              y: yForce,
-              collide: collideForce,
-              charge: manyBodyForce.strength((d, i) => (i ? 0 : (-context.width * 2) / 3)),
-            }}
-            data={{ nodes: randomData }}
-            alphaTarget={0.3}
-            velocityDecay={0.1}
-          >
-            {#snippet children({ nodes, simulation })}
+        <ForceSimulation
+          forces={{
+            x: xForce,
+            y: yForce,
+            collide: collideForce,
+            charge: manyBodyForce.strength((d, i) => (i ? 0 : (-context.width * 2) / 3)),
+          }}
+          data={{ nodes: randomData }}
+          alphaTarget={0.3}
+          velocityDecay={0.1}
+        >
+          {#snippet children({ nodes, simulation })}
+            <Layer
+              type={shared.renderContext}
+              onpointermove={(e) => {
+                simulation.nodes()[0].fx = e.offsetX - context.width / 2;
+                simulation.nodes()[0].fy = e.offsetY - context.height / 2;
+              }}
+            >
               <Group center>
                 {#each nodes as node, i}
                   {#if i > 0}
@@ -64,19 +71,9 @@
                   {/if}
                 {/each}
               </Group>
-
-              <rect
-                width={context.width}
-                height={context.height}
-                onpointermove={(e) => {
-                  simulation.nodes()[0].fx = e.offsetX - context.width / 2;
-                  simulation.nodes()[0].fy = e.offsetY - context.height / 2;
-                }}
-                class="fill-transparent"
-              />
-            {/snippet}
-          </ForceSimulation>
-        </Svg>
+            </Layer>
+          {/snippet}
+        </ForceSimulation>
       {/snippet}
     </Chart>
   </div>

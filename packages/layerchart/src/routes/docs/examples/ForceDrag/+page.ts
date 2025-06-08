@@ -4,6 +4,7 @@ export async function load() {
   return {
     meta: {
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       related: ['https://observablehq.com/@d3/sticky-force-layout'],
     },
   };

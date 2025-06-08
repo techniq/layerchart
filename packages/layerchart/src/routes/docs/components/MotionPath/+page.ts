@@ -9,6 +9,7 @@ export async function load() {
       source,
       pageSource,
       description: 'Animate an object along a path',
+      supportedContexts: ['svg'],
       related: ['components/Spline'],
     },
   };

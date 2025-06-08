@@ -5,12 +5,13 @@
   import * as chromatic from 'd3-scale-chromatic';
   import { hsl } from 'd3-color';
 
-  import { Arc, Bounds, Chart, Partition, Svg, Tooltip, findAncestor } from 'layerchart';
+  import { Arc, Bounds, Chart, Layer, Partition, Tooltip, findAncestor } from 'layerchart';
 
   import { Breadcrumb, Button, Field, ToggleGroup, ToggleOption } from 'svelte-ux';
   import { format, sortFunc, compoundSortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -84,7 +85,7 @@
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
       {#snippet children({ context })}
-        <Svg center>
+        <Layer type={shared.renderContext} center>
           <Bounds
             domain={{ x0: selected?.x0 ?? 0, x1: selected?.x1 ?? 1, y0: selected?.y0 ?? 0, y1: 1 }}
             range={({ height }) => ({
@@ -107,7 +108,8 @@
                       innerRadius={Math.max(0, yScale(node.y0))}
                       outerRadius={Math.max(0, yScale(node.y1))}
                       fill={nodeColor}
-                      class="stroke-black/50 cursor-pointer"
+                      stroke="black"
+                      class="cursor-pointer"
                       onclick={() => {
                         selected = node;
                       }}
@@ -119,7 +121,7 @@
               </Partition>
             {/snippet}
           </Bounds>
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}

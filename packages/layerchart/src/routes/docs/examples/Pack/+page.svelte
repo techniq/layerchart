@@ -11,7 +11,8 @@
     Circle,
     Group,
     Pack,
-    Svg,
+    Layer,
+    Text,
     findAncestor,
     type ChartContextValue,
   } from 'layerchart';
@@ -19,8 +20,10 @@
   import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 
   const complexHierarchy = hierarchy(data.flare)
     .sum((d) => d.value)
@@ -120,7 +123,7 @@
       }}
       bind:context
     >
-      <Svg onclick={() => (selected = complexHierarchy)}>
+      <Layer type={renderContext} onclick={() => (selected = complexHierarchy)}>
         <Pack {padding} hierarchy={complexHierarchy} bind:nodes>
           {#each nodes as node ([node.data.name, node.parent?.data.name].join('-'))}
             <Group
@@ -143,6 +146,7 @@
               />
             </Group>
           {/each}
+
           {@const selectedNodes = selected
             ? (selected.children ?? [selected])
             : nodes[0]
@@ -153,20 +157,18 @@
             {@const trueNode = findSelectedNodeInHierarchy(node, nodes)}
             {@const fontSize = 1 / context.transform.scale}
             <g in:fade|local>
-              <text
+              <Text
+                value={trueNode.data.name}
                 x={trueNode.x}
                 y={trueNode.y}
                 dy={fontSize * 8}
-                class="stroke-white/70 pointer-events-none [text-anchor:middle] [paint-order:stroke]"
-                style:font-size="{fontSize}rem"
-                style:stroke-width="{fontSize * 2}px"
-              >
-                {trueNode.data.name}
-              </text>
+                style="font-size: {fontSize}rem; stroke-width: {fontSize * 2}px"
+                class="fill-black stroke-white/70 pointer-events-none [text-anchor:middle] [paint-order:stroke]"
+              />
             </g>
           {/each}
         </Pack>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
