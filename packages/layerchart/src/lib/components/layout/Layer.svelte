@@ -3,17 +3,19 @@
 
   export type CanvasLayerProps = {
     type: 'canvas';
-  } & Omit<ComponentProps<typeof Canvas>, 'type'>;
+  } & Omit<ComponentProps<typeof Canvas>, 'type' | 'onpointermove'>;
 
   export type HtmlLayerProps = {
     type: 'html';
-  } & Omit<ComponentProps<typeof Html>, 'type'>;
+  } & Omit<ComponentProps<typeof Html>, 'type' | 'onpointermove'>;
 
   export type SvgLayerProps = {
     type: 'svg';
-  } & Omit<ComponentProps<typeof Svg>, 'type'>;
+  } & Omit<ComponentProps<typeof Svg>, 'type' | 'onpointermove'>;
 
-  export type LayerProps = CanvasLayerProps | HtmlLayerProps | SvgLayerProps;
+  export type LayerProps = (CanvasLayerProps | HtmlLayerProps | SvgLayerProps) & {
+    onpointermove?: (e: PointerEvent) => void;
+  };
 </script>
 
 <script lang="ts">
@@ -21,7 +23,7 @@
   import Html from './Html.svelte';
   import Svg from './Svg.svelte';
 
-  let { type, children, ...restProps }: LayerProps = $props();
+  let { type, children, onpointermove, ...restProps }: LayerProps = $props();
 </script>
 
 {#if type === 'canvas'}
