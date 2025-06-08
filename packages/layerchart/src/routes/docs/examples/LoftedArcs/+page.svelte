@@ -3,11 +3,12 @@
   import { flatRollup } from 'd3-array';
   import { feature } from 'topojson-client';
 
-  import { Chart, GeoEdgeFade, GeoPath, GeoPoint, GeoSpline, Graticule, Svg } from 'layerchart';
+  import { Chart, GeoEdgeFade, GeoPath, GeoPoint, GeoSpline, Graticule, Layer } from 'layerchart';
   import { Field, Switch } from 'svelte-ux';
 
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -40,7 +41,7 @@
       }}
       padding={{ top: 16, bottom: 16, left: 16, right: 16 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
         <Graticule class="stroke-surface-content/20" />
         {#each countries.features as country}
@@ -52,7 +53,7 @@
           <GeoPoint lat={link.source[1]} long={link.source[0]} r={2} class="fill-black" />
           <GeoPoint lat={link.target[1]} long={link.target[0]} r={2} class="fill-black" />
         {/each}
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -83,7 +84,7 @@
       {#if debug}
         <GeoDebug class="absolute top-0 right-0 z-10" />
       {/if}
-      <Svg>
+      <Layer type={shared.renderContext}>
         <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
         <Graticule class="stroke-surface-content/20 pointer-events-none" />
         {#each countries.features as country}
@@ -100,7 +101,7 @@
             <GeoSpline {link} class="stroke-danger stroke-2" loft={1.3} />
           </GeoEdgeFade>
         {/each}
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

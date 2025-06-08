@@ -6,7 +6,7 @@
   import { mdiPlay, mdiStop } from '@mdi/js';
 
   import { Chart, GeoPath, Graticule, Layer, Tooltip, type ChartContextValue } from 'layerchart';
-  import { Button, ButtonGroup, Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Button, ButtonGroup, Field, Switch } from 'svelte-ux';
   import { sortFunc } from '@layerstack/utils';
   import { scrollIntoView } from '@layerstack/svelte-actions';
   import { cls } from '@layerstack/tailwind';
@@ -17,12 +17,12 @@
   import TransformDebug from '$lib/docs/TransformDebug.svelte';
 
   import { timings } from './timings.js';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
   let context = $state<ChartContextValue>(null!);
 
   let selectedFeature: (typeof countries.features)[0] | null = $state(null);
@@ -95,18 +95,9 @@
   let debug = $state(false);
 </script>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 mb-3">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-
-  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
-</div>
+<Field label="Debug" let:id classes={{ container: 'h-full mb-3' }}>
+  <Switch {id} bind:checked={debug} />
+</Field>
 
 <Preview data={countries}>
   <div class="h-[600px] grid grid-cols-[224px_1fr] relative">
@@ -157,7 +148,7 @@
           </div>
         {/if}
 
-        <Layer type={renderContext} {debug}>
+        <Layer type={shared.renderContext} {debug}>
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
           <Graticule class="stroke-surface-content/20" />
 
@@ -176,7 +167,7 @@
           {/each}
         </Layer>
 
-        {#if renderContext === 'canvas'}
+        {#if shared.renderContext === 'canvas'}
           <!-- Provides better performance by rendering tooltip path on separate <Canvas> -->
           <Layer type="canvas" pointerEvents={false}>
             {#if context.tooltip.data}

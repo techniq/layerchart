@@ -7,7 +7,7 @@
     GeoContext,
     GeoPath,
     Graticule,
-    Svg,
+    Layer,
     Tooltip,
     type ChartContextValue,
   } from 'layerchart';
@@ -15,6 +15,7 @@
   import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -41,7 +42,7 @@
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>SVG</h2>
+  <h2>Basic</h2>
 
   <div class="mb-2 flex gap-6">
     <Field label="Spin:" dense labelPlacement="left" let:id>
@@ -75,7 +76,7 @@
     >
       {#snippet children({ context })}
         {@const [yaw, pitch, roll] = context.geo.projection?.rotate() ?? [0, 0, 0]}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/20" />
 
           <!-- Back -->
@@ -100,7 +101,7 @@
               tooltipContext={context.tooltip}
             />
           {/each}
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
