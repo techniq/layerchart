@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { format } from 'date-fns';
   import { sum } from 'd3-array';
   import { cls } from '@layerstack/tailwind';
-  import { format as formatUtil } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
 
   import { Arc, Chart, Group, Layer, Pie, Text, Tooltip } from 'layerchart';
 
@@ -278,7 +277,7 @@
                 {#snippet children({ getArcTextProps })}
                   {@const textProps = getArcTextProps('centroid')}
                   <Text
-                    value={formatUtil(arc.data.value / dataSum, 'percent')}
+                    value={format(arc.data.value / dataSum, 'percent')}
                     {...textProps}
                     dy={-8}
                     class={cls('text-base', colors.content)}
@@ -411,7 +410,7 @@
         </Layer>
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
               <Tooltip.Item
@@ -461,7 +460,7 @@
                   >
                     {#snippet children({ getArcTextProps })}
                       <Text
-                        value={formatUtil(arc.data.value / dataSum, 'percent')}
+                        value={format(arc.data.value / dataSum, 'percent')}
                         {...getArcTextProps('centroid')}
                         class={cls('text-base', colors.content)}
                       />
@@ -475,7 +474,7 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
               <Tooltip.Item
