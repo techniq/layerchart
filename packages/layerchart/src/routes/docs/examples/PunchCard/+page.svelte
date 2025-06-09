@@ -1,7 +1,7 @@
 <script lang="ts">
   import { scaleBand } from 'd3-scale';
   import { range } from 'd3-array';
-  import { getDay, getWeek } from 'date-fns';
+  import { timeWeek, timeYear } from 'd3-time';
 
   import { Highlight, ScatterChart, Tooltip } from 'layerchart';
 
@@ -24,9 +24,9 @@
   <div class="h-[300px] p-4 border rounded-sm">
     <ScatterChart
       {data}
-      x={(d) => getWeek(d.date)}
+      x={(d) => timeWeek.count(timeYear(d.date), d.date)}
       xScale={scaleBand()}
-      y={(d) => getDay(d.date)}
+      y={(d) => d.date.getDay()}
       yScale={scaleBand()}
       yDomain={range(7)}
       r="value"

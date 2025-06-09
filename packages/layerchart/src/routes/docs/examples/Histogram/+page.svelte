@@ -9,8 +9,7 @@
     randomNormal,
     randomUniform,
   } from 'd3-random';
-  import { timeDays, timeMonths, timeWeeks } from 'd3-time';
-  import { subDays } from 'date-fns';
+  import { timeDay, timeMonth, timeWeek } from 'd3-time';
 
   import { BarChart, Tooltip, thresholdTime } from 'layerchart';
   import { MenuField, RangeField, NumberStepper, State } from 'svelte-ux';
@@ -46,7 +45,9 @@
   const now = new Date();
   let dateRange = $state(10);
   const randomDateData = $derived(
-    Array.from({ length: randomCount }, () => getRandomDate(subDays(now, dateRange), now)) as any[]
+    Array.from({ length: randomCount }, () =>
+      getRandomDate(timeDay.offset(now, -dateRange), now)
+    ) as any[]
   ); // TODO: Make typescript happy
 
   let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
@@ -284,7 +285,7 @@
   </Preview>
 </State>
 
-<State initial={{ intervalValue: 'weeks', intervalFunc: timeWeeks }} let:value let:set>
+<State initial={{ intervalValue: 'weeks', intervalFunc: timeWeek.range }} let:value let:set>
   {@const binByTime = bin().thresholds(
     (_data, min, max) =>
       value?.intervalFunc(new Date(min), new Date(max)).map((d) => d.valueOf()) ?? []
@@ -298,9 +299,9 @@
     <MenuField
       label="Interval"
       options={[
-        { label: 'Days', value: 'days', interval: timeDays },
-        { label: 'Weeks', value: 'weeks', interval: timeWeeks },
-        { label: 'Months', value: 'months', interval: timeMonths },
+        { label: 'Days', value: 'days', interval: timeDay.range },
+        { label: 'Weeks', value: 'weeks', interval: timeWeek.range },
+        { label: 'Months', value: 'months', interval: timeMonth.range },
       ]}
       value={value?.intervalValue}
       on:change={(e) => {

@@ -1,4 +1,4 @@
-import { addMinutes, startOfDay, startOfToday, subDays } from 'date-fns';
+import { timeMinute, timeDay } from 'd3-time';
 import { cumsum } from 'd3-array';
 import { randomNormal } from 'd3-random';
 
@@ -65,7 +65,7 @@ export function createDateSeries<TKey extends string>(options: {
   keys?: TKey[];
   value?: 'number' | 'integer';
 }) {
-  const now = startOfToday();
+  const now = timeDay.floor(new Date());
 
   const count = options.count ?? 10;
   const min = options.min;
@@ -74,7 +74,7 @@ export function createDateSeries<TKey extends string>(options: {
 
   return Array.from({ length: count }).map((_, i) => {
     return {
-      date: subDays(now, count - i - 1),
+      date: timeDay.offset(now, -count + i),
       ...Object.fromEntries(
         keys.map((key) => {
           return [
@@ -99,11 +99,11 @@ export function createTimeSeries<TKey extends string>(options: {
   const max = options.max;
   const keys = options.keys ?? ['value'];
 
-  let lastStartDate = startOfDay(new Date());
+  let lastStartDate = timeDay.floor(new Date());
 
   const timeSeries = Array.from({ length: count }).map((_, i) => {
-    const startDate = addMinutes(lastStartDate, getRandomInteger(0, 60));
-    const endDate = addMinutes(startDate, getRandomInteger(5, 60));
+    const startDate = timeMinute.offset(lastStartDate, getRandomInteger(0, 60));
+    const endDate = timeMinute.offset(startDate, getRandomInteger(5, 60));
     lastStartDate = startDate;
     return {
       name: `item ${i + 1}`,
