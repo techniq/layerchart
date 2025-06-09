@@ -21,9 +21,9 @@
   } from 'layerchart';
   import { curveBasis, curveCatmullRom, curveStepAfter } from 'd3-shape';
   import { group } from 'd3-array';
-  import { Button, Field, ToggleGroup, ToggleOption, Kbd, Switch } from 'svelte-ux';
+  import { timeDay } from 'd3-time';
+  import { Button, Field, Kbd, Switch } from 'svelte-ux';
   import { format, sortFunc } from '@layerstack/utils';
-  import { addDays } from 'date-fns';
   import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -55,11 +55,11 @@
 
   const now = new Date();
   const denseDateSeriesData = randomWalk({ count: 1000 }).map((value, i) => ({
-    date: addDays(now, i),
+    date: timeDay.offset(now, i),
     value: 10 + value,
   }));
   const denseDateSeriesData2 = randomWalk({ count: 1000 }).map((value, i) => ({
-    date: addDays(now, i),
+    date: timeDay.offset(now, i),
     value: 10 + value,
   }));
 

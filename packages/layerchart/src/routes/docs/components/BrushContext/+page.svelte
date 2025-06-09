@@ -1,10 +1,10 @@
 <script lang="ts">
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { range } from 'd3-array';
+  import { timeDay } from 'd3-time';
   import { State } from 'svelte-ux';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { subDays } from 'date-fns';
   import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
   import {
@@ -32,13 +32,27 @@
   let { data } = $props();
 
   const now = new Date();
-  let xDomain = $state([subDays(now, 60), subDays(now, 30)]) as DomainType | undefined;
+  let xDomain = $state([timeDay.offset(now, -60), timeDay.offset(now, -30)]) as
+    | DomainType
+    | undefined;
 
   const seriesData = [
-    randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
-    randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
-    randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
-    randomWalk({ count: 100 }).map((value, i) => ({ date: subDays(now, i), value: 10 + value })),
+    randomWalk({ count: 100 }).map((value, i) => ({
+      date: timeDay.offset(now, -i),
+      value: 10 + value,
+    })),
+    randomWalk({ count: 100 }).map((value, i) => ({
+      date: timeDay.offset(now, -i),
+      value: 10 + value,
+    })),
+    randomWalk({ count: 100 }).map((value, i) => ({
+      date: timeDay.offset(now, -i),
+      value: 10 + value,
+    })),
+    randomWalk({ count: 100 }).map((value, i) => ({
+      date: timeDay.offset(now, -i),
+      value: 10 + value,
+    })),
   ];
 
   const randomData = range(200).map((d) => {

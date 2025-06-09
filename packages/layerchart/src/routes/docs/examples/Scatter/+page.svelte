@@ -1,6 +1,5 @@
 <script lang="ts">
   import { scaleTime, scaleThreshold } from 'd3-scale';
-  import { format } from 'date-fns';
 
   import { Axis, Chart, Highlight, Labels, Layer, Points, Tooltip } from 'layerchart';
 
@@ -65,7 +64,7 @@
 
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header value={data.date} format="day" />
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>

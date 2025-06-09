@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { format } from 'date-fns';
-
   import { LineChart, Tooltip } from 'layerchart';
+  import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -86,7 +85,7 @@
         >
           {#snippet children({ data })}
             <div class="whitespace-nowrap">
-              {format(data.date, 'eee, MMM do')}
+              {format(data.date, 'day')}
             </div>
             <div class="font-semibold">
               {data.value}
@@ -127,7 +126,7 @@
             >
               {#snippet children({ data })}
                 <div class="whitespace-nowrap">
-                  {format(data.date, 'eee, MMM do')}
+                  {format(data.date, 'day')}
                 </div>
                 <div class="font-semibold">
                   {data.value}

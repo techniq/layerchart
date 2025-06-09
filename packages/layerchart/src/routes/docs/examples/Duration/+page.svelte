@@ -1,6 +1,6 @@
 <script lang="ts">
   import { scaleTime } from 'd3-scale';
-  import { addMinutes, startOfDay } from 'date-fns';
+  import { timeMinute, timeDay } from 'd3-time';
   import { Duration } from 'svelte-ux';
 
   import { BarChart, Points, Tooltip } from 'layerchart';
@@ -10,12 +10,12 @@
   import { shared } from '../../shared.svelte.js';
 
   const count = 10;
-  const now = startOfDay(new Date());
+  const now = timeDay.floor(new Date());
   let lastStartDate = now;
 
   const data = Array.from({ length: count }).map((_, i) => {
-    const startDate = addMinutes(lastStartDate, getRandomInteger(0, 60));
-    const endDate = addMinutes(startDate, getRandomInteger(0, 60));
+    const startDate = timeMinute.offset(lastStartDate, getRandomInteger(0, 60));
+    const endDate = timeMinute.offset(startDate, getRandomInteger(0, 60));
     lastStartDate = startDate;
     return {
       name: `Item ${i + 1}`,

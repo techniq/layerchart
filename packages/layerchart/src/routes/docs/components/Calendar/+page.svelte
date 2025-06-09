@@ -1,17 +1,18 @@
 <script lang="ts">
-  import { startOfYear, endOfYear } from 'date-fns';
   import { scaleThreshold } from 'd3-scale';
   import { range } from 'd3-array';
+  import { timeYear } from 'd3-time';
 
   import { Calendar, Chart, Group, Text, Tooltip, Layer } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import { shared } from '../../shared.svelte.js';
+  import { endOfInterval } from '$lib/utils/date.js';
 
   const now = new Date();
-  const firstDayOfYear = startOfYear(now);
-  const lastDayOfYear = endOfYear(now);
+  const firstDayOfYear = timeYear.floor(now);
+  const lastDayOfYear = endOfInterval(now, timeYear);
 
   const data = createDateSeries({ count: 365 * 4, min: 10, max: 100, value: 'integer' }).map(
     (d) => {
@@ -146,7 +147,7 @@
         <Layer type={shared.renderContext}>
           {#each range(2019, 2024) as year, i}
             {@const start = new Date(year, 0, 1)}
-            {@const end = endOfYear(start)}
+            {@const end = endOfInterval(start, timeYear)}
             <Group y={140 * i}>
               <Text
                 value={year}

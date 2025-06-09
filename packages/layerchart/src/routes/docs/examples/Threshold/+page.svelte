@@ -1,6 +1,5 @@
 <script lang="ts">
   import { curveStepAfter } from 'd3-shape';
-  import { format } from 'date-fns';
 
   import { AreaChart, Area, Spline, Threshold, Tooltip } from 'layerchart';
 
@@ -98,7 +97,7 @@
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label="value" value={data.value} />
               <Tooltip.Item label="baseline" value={data.baseline} />
