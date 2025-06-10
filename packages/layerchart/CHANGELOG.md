@@ -1,5 +1,13 @@
 # LayerChart
 
+## 2.0.0-next.18
+
+### Patch Changes
+
+- refactor: Replace `date-fns` usage with existing `d3-time` to reduce bundle size ([#551](https://github.com/techniq/layerchart/pull/551))
+
+- fix(Text): Performance improvement by only determining word width if `width` prop defined (for word wrapping) ([#554](https://github.com/techniq/layerchart/pull/554))
+
 ## 2.0.0-next.17
 
 ### Patch Changes
