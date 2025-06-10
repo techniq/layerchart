@@ -281,27 +281,34 @@
       // Split each line into words
       const words = line.split(/(?:(?!\u00A0+)\s+)/);
 
-      // Handle word wrapping within each line
-      return words.reduce((result: { words: string[]; width?: number }[], item) => {
-        const currentLine = result[result.length - 1];
-        const itemWidth = getStringWidth(item, style) || 0;
+      if (width == null) {
+        // No width specified, only use explicit line breaks (if used)
+        return [{ words }];
+      } else {
+        // Handle word wrapping within each line
+        return words.reduce((result: { words: string[]; width?: number }[], item) => {
+          const currentLine = result[result.length - 1];
+          const itemWidth = getStringWidth(item, style) || 0;
 
-        if (
-          currentLine &&
-          (width == null || scaleToFit || (currentLine.width || 0) + itemWidth + spaceWidth < width)
-        ) {
-          // Word can be added to an existing line
-          currentLine.words.push(item);
-          currentLine.width = currentLine.width || 0;
-          currentLine.width += itemWidth + spaceWidth;
-        } else {
-          // Add first word to line or word is too long to scaleToFit on existing line
-          const newLine = { words: [item], width: itemWidth };
-          result.push(newLine);
-        }
+          if (
+            currentLine &&
+            (width == null ||
+              scaleToFit ||
+              (currentLine.width || 0) + itemWidth + spaceWidth < width)
+          ) {
+            // Word can be added to an existing line
+            currentLine.words.push(item);
+            currentLine.width = currentLine.width || 0;
+            currentLine.width += itemWidth + spaceWidth;
+          } else {
+            // Add first word to line or word is too long to scaleToFit on existing line
+            const newLine = { words: [item], width: itemWidth };
+            result.push(newLine);
+          }
 
-        return result;
-      }, []);
+          return result;
+        }, []);
+      }
     });
   });
 
