@@ -36,7 +36,7 @@
     /**
      * Props to pass to the `<text>` element for month labels.
      */
-    monthLabel?: Partial<ComponentProps<typeof Text>>;
+    monthLabel?: boolean | Partial<ComponentProps<typeof Text>>;
 
     /**
      * Tooltip context to setup mouse events to show tooltip for related data
@@ -74,9 +74,9 @@
     start,
     cellSize: cellSizeProp,
     monthPath = false,
+    monthLabel = true,
     tooltipContext: tooltip,
     children,
-    monthLabel,
     ...restProps
   }: CalendarPropsWithoutHTML = $props();
 
@@ -136,7 +136,11 @@
 {#if monthPath}
   {#each yearMonths as date}
     <MonthPath {date} {cellSize} {...extractLayerProps(monthPath, 'calendar-month-path')} />
+  {/each}
+{/if}
 
+{#if monthLabel}
+  {#each yearMonths as date}
     <Text
       x={timeWeek.count(timeYear.floor(date), timeWeek.ceil(date)) * cellSize[0]}
       y={-4}
