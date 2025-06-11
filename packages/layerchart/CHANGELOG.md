@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.19
+
+### Patch Changes
+
+- fix(Calendar): Pass `cellSize` to children snippet (useful when responsive) ([#558](https://github.com/techniq/layerchart/pull/558))
+
 ## 2.0.0-next.18
 
 ### Patch Changes
