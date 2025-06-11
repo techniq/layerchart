@@ -5,6 +5,7 @@ import dsv from '@rollup/plugin-dsv';
 import { autoType } from 'd3-dsv';
 import Icons from 'unplugin-icons/vite';
 import devtoolsJson from 'vite-plugin-devtools-json';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 /** @type {import('vite').UserConfig} */
 const config = {
@@ -19,6 +20,10 @@ const config = {
     }),
     // @ts-expect-error
     devtoolsJson(),
+    visualizer({
+      emitFile: true,
+      filename: 'stats.html',
+    }),
   ],
   // optimizeDeps: {
   //   include: ['svelte-ux'],

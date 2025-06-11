@@ -63,6 +63,7 @@
     "prism-themes": "^1.9.0",
     "prismjs": "^1.30.0",
     "rehype-slug": "^6.0.0",
+    "rollup-plugin-visualizer": "^6.0.3",
     "shapefile": "^0.6.6",
     "solar-calculator": "^0.3.0",
     "svelte": "5.32.1",
