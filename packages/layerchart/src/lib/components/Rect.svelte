@@ -166,4 +166,26 @@
     {onpointerout}
     bind:this={ref}
   />
+{:else if renderCtx === 'html'}
+  <div
+    style:position="absolute"
+    style:left="{motionX.current}px"
+    style:top="{motionY.current}px"
+    style:width="{motionWidth.current}px"
+    style:height="{motionHeight.current}px"
+    style:background-color={fill}
+    style:background-opacity={opacity}
+    style:border-width="{strokeWidth}px"
+    style:border-style="solid"
+    style:border-color={stroke}
+    class={cls(layerClass('rect'), fill == null && 'fill-surface-content', className)}
+    {...restProps}
+    {onclick}
+    {ondblclick}
+    {onpointerenter}
+    {onpointermove}
+    {onpointerleave}
+    {onpointerover}
+    {onpointerout}
+  />
 {/if}
