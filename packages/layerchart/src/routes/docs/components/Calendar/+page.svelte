@@ -183,3 +183,68 @@
     </Chart>
   </div>
 </Preview>
+
+<h2>Html</h2>
+
+<Preview {data}>
+  <div class="h-[200px] p-4 border rounded-sm">
+    <Chart
+      {data}
+      x="date"
+      c="value"
+      cScale={scaleThreshold().unknown('transparent')}
+      cDomain={[25, 50, 75]}
+      cRange={[
+        'var(--color-primary-100)',
+        'var(--color-primary-300)',
+        'var(--color-primary-500)',
+        'var(--color-primary-700)',
+      ]}
+      padding={{ top: 13 }}
+    >
+      {#snippet children({ context })}
+        <Layer type="html">
+          <Calendar start={firstDayOfYear} end={lastDayOfYear} tooltipContext={context.tooltip}>
+            {#snippet children({ cells, cellSize })}
+              {#each cells as cell}
+                <div
+                  class="absolute p-px"
+                  style:left="{cell.x}px"
+                  style:top="{cell.y}px"
+                  style:width="{cellSize[0]}px"
+                  style:height="{cellSize[1]}px"
+                  onpointermove={(e) => context.tooltip?.show(e, cell.data)}
+                  onpointerleave={(e) => context.tooltip?.hide()}
+                >
+                  <div
+                    class="w-full h-full rounded-sm"
+                    style:background-color={cell.color === 'transparent'
+                      ? 'rgb(0 0 0 / 5%)'
+                      : cell.color}
+                  ></div>
+                </div>
+              {/each}
+            {/snippet}
+          </Calendar>
+        </Layer>
+
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.Header value={data.date} format="day" />
+
+            {#if data.value != null}
+              <Tooltip.List>
+                <Tooltip.Item
+                  label="value"
+                  value={data.value}
+                  format="integer"
+                  valueAlign="right"
+                />
+              </Tooltip.List>
+            {/if}
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
+    </Chart>
+  </div>
+</Preview>

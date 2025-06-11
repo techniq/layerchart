@@ -43,7 +43,7 @@
      */
     tooltipContext?: TooltipContextValue;
 
-    children?: Snippet<[{ cells: CalendarCell[] }]>;
+    children?: Snippet<[{ cells: CalendarCell[]; cellSize: [number, number] }]>;
   } & Omit<
     RectPropsWithoutHTML,
     'children' | 'x' | 'y' | 'width' | 'height' | 'fill' | 'onpointermove' | 'onpointerleave'
@@ -117,7 +117,7 @@
 </script>
 
 {#if children}
-  {@render children({ cells })}
+  {@render children({ cells, cellSize })}
 {:else}
   {#each cells as cell}
     <Rect
