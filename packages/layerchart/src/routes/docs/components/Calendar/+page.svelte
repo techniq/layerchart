@@ -192,7 +192,7 @@
       {data}
       x="date"
       c="value"
-      cScale={scaleThreshold().unknown('transparent')}
+      cScale={scaleThreshold()}
       cDomain={[25, 50, 75]}
       cRange={[
         'var(--color-primary-100)',
@@ -218,9 +218,7 @@
                 >
                   <div
                     class="w-full h-full rounded-sm"
-                    style:background-color={cell.color === 'transparent'
-                      ? 'rgb(0 0 0 / 5%)'
-                      : cell.color}
+                    style:background-color={cell.color ?? 'rgb(0 0 0 / 5%)'}
                   ></div>
                 </div>
               {/each}
