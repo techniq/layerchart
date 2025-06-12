@@ -1,6 +1,6 @@
-import { cls } from '@layerstack/tailwind';
-import { memoize } from 'lodash-es';
 import type { ClassValue } from 'svelte/elements';
+import memoize from 'memoize';
+import { cls } from '@layerstack/tailwind';
 import type { PatternShape } from '$lib/components/Pattern.svelte';
 
 export const DEFAULT_FILL = 'rgb(0, 0, 0)';
@@ -332,20 +332,9 @@ export function _createLinearGradient(
 }
 
 /** Create linear gradient and memoize result to fix reactivity */
-export const createLinearGradient = memoize(
-  _createLinearGradient,
-  (
-    ctx: CanvasRenderingContext2D,
-    x0: number,
-    y0: number,
-    x1: number,
-    y1: number,
-    stops: { offset: number; color: string }[]
-  ) => {
-    const key = JSON.stringify({ x0, y0, x1, y1, stops });
-    return key;
-  }
-);
+export const createLinearGradient = memoize(_createLinearGradient, {
+  cacheKey: (args) => JSON.stringify(args.slice(1)), // Ignore `ctx` argument
+});
 
 export function _createPattern(
   ctx: CanvasRenderingContext2D,
@@ -395,16 +384,6 @@ export function _createPattern(
 }
 
 /** Create pattern and memoize result to fix reactivity */
-export const createPattern = memoize(
-  _createPattern,
-  (
-    ctx: CanvasRenderingContext2D,
-    width: number,
-    height: number,
-    shapes: PatternShape[],
-    background?: string
-  ) => {
-    const key = JSON.stringify({ width, height, shapes, background });
-    return key;
-  }
-);
+export const createPattern = memoize(_createPattern, {
+  cacheKey: (args) => JSON.stringify(args.slice(1)), // Ignore `ctx` argument
+});
