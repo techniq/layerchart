@@ -20,13 +20,28 @@ export type ComputedStylesOptions = {
   classes?: ClassValue | null;
 };
 
+const supportedStyles = [
+  'fill',
+  'stroke',
+  'opacity',
+  'fillOpacity',
+  'strokeWidth',
+  'fontWeight',
+  'fontSize',
+  'fontFamily',
+  'textAnchor',
+  'textAlign',
+  'paintOrder',
+] as const;
+
 /**
  * Appends or reuses `<svg>` element below `<canvas>` to resolve CSS variables and classes (ex. `stroke: var(--color-primary)` => `stroke: rgb(...)` )
  */
-export function getComputedStyles(
+export function _getComputedStyles(
   canvas: HTMLCanvasElement,
   { styles, classes }: ComputedStylesOptions = {}
 ) {
+  // console.count(`getComputedStyles: ${getComputedStylesKey(canvas, { styles, classes })}`);
   try {
     // Get or create `<svg>` below `<canvas>`
     let svg = document.getElementById(CANVAS_STYLES_ELEMENT_ID) as SVGElement | null;
@@ -61,13 +76,31 @@ export function getComputedStyles(
       );
     }
 
-    const computedStyles = window.getComputedStyle(svg);
+    // Capture copy to enable memoization and avoid capturing all styles (which is very slow)
+    const computedStyles = supportedStyles.reduce((acc, style) => {
+      acc[style] = window.getComputedStyle(svg)[style];
+      return acc;
+    }, {} as CSSStyleDeclaration);
+
     return computedStyles;
   } catch (e) {
     console.error('Unable to get computed styles', e);
     return {} as CSSStyleDeclaration;
   }
 }
+
+function getComputedStylesKey(
+  canvas: HTMLCanvasElement,
+  { styles, classes }: ComputedStylesOptions = {}
+) {
+  return JSON.stringify({ canvasId: canvas.id, styles, classes });
+}
+
+export const getComputedStyles = memoize(_getComputedStyles, {
+  cacheKey: ([canvas, styleOptions]) => {
+    return getComputedStylesKey(canvas, styleOptions);
+  },
+});
 
 /** Render onto canvas context.  Supports CSS variables and classes by tranferring to hidden `<svg>` element before retrieval) */
 function render(
@@ -89,11 +122,29 @@ function render(
     )
   ) {
     // Skip resolving styles if no classes are provided and no styles are using CSS variables
-    // TODO: Convert colors using `rgb(0 0 0 / 50%)` to `rgba(0, 0, 0, 0.5)`
     resolvedStyles = styleOptions.styles ?? {};
   } else {
-    const computedStyles = getComputedStyles(ctx.canvas, styleOptions);
-    resolvedStyles = computedStyles;
+    // Remove constant non-css variable properties (ex. `strokeWidth: 0.5`, `fill: #123456`) as not needed and improves memoization cache hit
+    const { constantStyles, variableStyles } = Object.entries(styleOptions.styles ?? {}).reduce<{
+      constantStyles: StyleOptions;
+      variableStyles: StyleOptions;
+    }>(
+      (acc, [key, value]) => {
+        if (typeof value === 'number' || (typeof value === 'string' && !value.includes('var('))) {
+          (acc.constantStyles as any)[key] = value;
+        } else if (typeof value === 'string' && value.includes('var(')) {
+          (acc.variableStyles as any)[key] = value;
+        }
+        return acc;
+      },
+      { constantStyles: {} as StyleOptions, variableStyles: {} as StyleOptions }
+    );
+
+    const computedStyles = getComputedStyles(ctx.canvas, {
+      styles: variableStyles,
+      classes: styleOptions.classes,
+    });
+    resolvedStyles = { ...computedStyles, ...constantStyles };
   }
 
   // Adhere to CSS paint order: https://developer.mozilla.org/en-US/docs/Web/CSS/paint-order
