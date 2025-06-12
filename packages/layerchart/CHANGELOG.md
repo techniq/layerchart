@@ -1,5 +1,21 @@
 # LayerChart
 
+## 2.0.0-next.20
+
+### Patch Changes
+
+- fix(Canvas): Improve performance by skipping unnecessary work when hit canvas is unneeded ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(Canvas): Improve performance by reducing computed style lookups and memoizing responses ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(Canvas): Only apply text/font properties to canvas to improve performance ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(GeoPath): Improve performance by only using custom geoCurvePath when `curve` overridden ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(GeoPath): Fix reactivity with `curve` when using Canvas context ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(Calendar): Support showing month labels without path via `monthLabel` prop (true by default) ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.19
 
 ### Patch Changes
