@@ -4,6 +4,7 @@
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import MarkerWrapper, { type MarkerOptions } from './MarkerWrapper.svelte';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+  import { pointsToAngleAndLength } from '$lib/utils/math.js';
 
   export type LinePropsWithoutHTML = {
     /**
@@ -201,4 +202,21 @@
   <MarkerWrapper id={markerStartId} marker={markerStart ?? marker} />
   <MarkerWrapper id={markerMidId} marker={markerMid ?? marker} />
   <MarkerWrapper id={markerEndId} marker={markerEnd ?? marker} />
+{:else if renderCtx === 'html'}
+  {@const { angle, length } = pointsToAngleAndLength(
+    { x: motionX1.current, y: motionY1.current },
+    { x: motionX2.current, y: motionY2.current }
+  )}
+  <div
+    style:position="absolute"
+    style:left="{motionX1.current}px"
+    style:top="{motionY1.current}px"
+    style:width="{length}px"
+    style:height="1px"
+    style:transform="rotate({angle}deg)"
+    style:transform-origin="0 50%"
+    style:opacity
+    style:background-color={fill}
+    class={cls(layerClass('line'), stroke === undefined && 'bg-surface-content', className)}
+  ></div>
 {/if}
