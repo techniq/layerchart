@@ -8,7 +8,6 @@
 
   import {
     Chart,
-    Circle,
     GeoPath,
     GeoPoint,
     GeoVisible,
@@ -80,7 +79,7 @@
       bind:context
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.renderContext} disableHitCanvas={timer.running}>
           <GeoPath
             geojson={{ type: 'Sphere' }}
             class="fill-surface-200 stroke-surface-content/20"
