@@ -82,8 +82,14 @@ function render(
 
   // TODO: Consider memoizing?  How about reactiving to CSS variable changes (light/dark mode toggle)
   let resolvedStyles: StyleOptions;
-  if (styleOptions.classes == null) {
-    // Skip resolving styles if no classes are provided
+  if (
+    styleOptions.classes == null &&
+    !Object.values(styleOptions.styles ?? {}).some(
+      (v) => typeof v === 'string' && v.includes('var(')
+    )
+  ) {
+    // Skip resolving styles if no classes are provided and no styles are using CSS variables
+    // TODO: Convert colors using `rgb(0 0 0 / 50%)` to `rgba(0, 0, 0, 0.5)`
     resolvedStyles = styleOptions.styles ?? {};
   } else {
     const computedStyles = getComputedStyles(ctx.canvas, styleOptions);
