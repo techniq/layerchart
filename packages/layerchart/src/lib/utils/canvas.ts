@@ -22,10 +22,10 @@ export type ComputedStylesOptions = {
 
 const supportedStyles = [
   'fill',
-  'stroke',
-  'opacity',
   'fillOpacity',
+  'stroke',
   'strokeWidth',
+  'opacity',
   'fontWeight',
   'fontSize',
   'fontFamily',
@@ -109,7 +109,12 @@ function render(
     stroke: (ctx: CanvasRenderingContext2D) => void;
     fill: (ctx: CanvasRenderingContext2D) => void;
   },
-  styleOptions: ComputedStylesOptions = {}
+  styleOptions: ComputedStylesOptions = {},
+  {
+    applyText,
+  }: {
+    applyText?: boolean;
+  } = {}
 ) {
   // console.count('render');
 
@@ -155,25 +160,28 @@ function render(
     ctx.globalAlpha = Number(resolvedStyles?.opacity);
   }
 
-  // Text properties
-  ctx.font = `${resolvedStyles.fontWeight} ${resolvedStyles.fontSize} ${resolvedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
+  // font/text properties can be expensive to set (not sure why), so only apply if needed (renderText())
+  if (applyText) {
+    // Text properties
+    ctx.font = `${resolvedStyles.fontWeight} ${resolvedStyles.fontSize} ${resolvedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
 
-  // TODO: Hack to handle `textAnchor` with canvas.  Try to find a better approach
-  if (resolvedStyles.textAnchor === 'middle') {
-    ctx.textAlign = 'center';
-  } else if (resolvedStyles.textAnchor === 'end') {
-    ctx.textAlign = 'right';
-  } else {
-    ctx.textAlign = resolvedStyles.textAlign as CanvasTextAlign; // TODO: Handle/map `justify` and `match-parent`?
+    // TODO: Hack to handle `textAnchor` with canvas.  Try to find a better approach
+    if (resolvedStyles.textAnchor === 'middle') {
+      ctx.textAlign = 'center';
+    } else if (resolvedStyles.textAnchor === 'end') {
+      ctx.textAlign = 'right';
+    } else {
+      ctx.textAlign = resolvedStyles.textAlign as CanvasTextAlign; // TODO: Handle/map `justify` and `match-parent`?
+    }
+
+    // TODO: Handle `textBaseline` / `verticalAnchor` (Text)
+    // ctx.textBaseline = 'top';
+    // ctx.textBaseline = 'middle';
+    // ctx.textBaseline = 'bottom';
+    // ctx.textBaseline = 'alphabetic';
+    // ctx.textBaseline = 'hanging';
+    // ctx.textBaseline = 'ideographic';
   }
-
-  // TODO: Handle `textBaseline` / `verticalAnchor` (Text)
-  // ctx.textBaseline = 'top';
-  // ctx.textBaseline = 'middle';
-  // ctx.textBaseline = 'bottom';
-  // ctx.textBaseline = 'alphabetic';
-  // ctx.textBaseline = 'hanging';
-  // ctx.textBaseline = 'ideographic';
 
   // Dashed lines
   if (resolvedStyles.strokeDasharray?.includes(',')) {
@@ -258,7 +266,8 @@ export function renderText(
         fill: (ctx) => ctx.fillText(text.toString(), coords.x, coords.y),
         stroke: (ctx) => ctx.strokeText(text.toString(), coords.x, coords.y),
       },
-      styleOptions
+      styleOptions,
+      { applyText: true }
     );
   }
 }
