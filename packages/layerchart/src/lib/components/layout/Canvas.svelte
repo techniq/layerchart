@@ -346,45 +346,53 @@
       context.restore();
     }
 
-    // sync hit canvas with main canvas
+    /*
+     * Sync hit canvas with main canvas
+     */
     if (hitCanvasContext) {
-      // scale hit canvas to match main canvas
-      scaleCanvas(hitCanvasContext, ctx.containerWidth, ctx.containerHeight);
-      hitCanvasContext.clearRect(0, 0, ctx.containerWidth, ctx.containerHeight);
-
-      // reset and sync transform to the state after retainState components
-      hitCanvasContext.resetTransform();
-      hitCanvasContext.setTransform(mainTransformAfterRetain);
-
-      // reset color generator
-      colorGenerator = rgbColorGenerator();
-
       const inactiveMoving = !activeCanvas && transformCtx.moving;
+      if (disableHitCanvas || transformCtx.dragging || inactiveMoving) {
+        // Skip rendering hit canvas
+        hitCanvasContext.clearRect(0, 0, ctx.containerWidth, ctx.containerHeight);
+      } else {
+        // scale hit canvas to match main canvas
+        scaleCanvas(hitCanvasContext, ctx.containerWidth, ctx.containerHeight);
+        hitCanvasContext.clearRect(0, 0, ctx.containerWidth, ctx.containerHeight);
 
-      // render retainState components on hit canvas (e.g., Group)
-      for (const c of retainStateComponents) {
-        const componentHasEvents = c.events && Object.values(c.events).filter((d) => d).length > 0;
+        // reset and sync transform to the state after retainState components
+        hitCanvasContext.resetTransform();
+        hitCanvasContext.setTransform(mainTransformAfterRetain);
 
-        if (componentHasEvents && !inactiveMoving && !transformCtx.dragging) {
-          // since the transform was already applied via setTransform, skip rendering
-          // the retainState component's transform again; proceed to its children
-          continue;
+        // reset color generator
+        colorGenerator = rgbColorGenerator();
+
+        // render retainState components on hit canvas (e.g., Group)
+        for (const c of retainStateComponents) {
+          const componentHasEvents =
+            c.events && Object.values(c.events).filter((d) => d).length > 0;
+
+          if (componentHasEvents) {
+            // since the transform was already applied via setTransform, skip rendering
+            // the retainState component's transform again; proceed to its children
+            continue;
+          }
         }
-      }
 
-      // render non-retainState components on hit canvas
-      for (const c of nonRetainStateComponents) {
-        const componentHasEvents = c.events && Object.values(c.events).filter((d) => d).length > 0;
+        // render non-retainState components on hit canvas
+        for (const c of nonRetainStateComponents) {
+          const componentHasEvents =
+            c.events && Object.values(c.events).filter((d) => d).length > 0;
 
-        if (componentHasEvents && !inactiveMoving && !transformCtx.dragging && !disableHitCanvas) {
-          const color = getColorStr(colorGenerator.next().value);
-          const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
+          if (componentHasEvents) {
+            const color = getColorStr(colorGenerator.next().value);
+            const styleOverrides = { styles: { fill: color, stroke: color, _fillOpacity: 0.1 } };
 
-          hitCanvasContext.save();
-          c.render(hitCanvasContext, styleOverrides);
-          hitCanvasContext.restore();
+            hitCanvasContext.save();
+            c.render(hitCanvasContext, styleOverrides);
+            hitCanvasContext.restore();
 
-          componentByColor.set(color, c);
+            componentByColor.set(color, c);
+          }
         }
       }
     }
