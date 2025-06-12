@@ -7,14 +7,16 @@ export const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
 const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
 
+type StyleOptions = Partial<
+  Omit<CSSStyleDeclaration, 'fillOpacity' | 'strokeWidth' | 'opacity'> & {
+    fillOpacity?: number | string;
+    strokeWidth?: number | string;
+    opacity?: number | string;
+  }
+>;
+
 export type ComputedStylesOptions = {
-  styles?: Partial<
-    Omit<CSSStyleDeclaration, 'fillOpacity' | 'strokeWidth' | 'opacity'> & {
-      fillOpacity?: number | string;
-      strokeWidth?: number | string;
-      opacity?: number | string;
-    }
-  >;
+  styles?: StyleOptions;
   classes?: ClassValue | null;
 };
 
@@ -79,26 +81,33 @@ function render(
   // console.count('render');
 
   // TODO: Consider memoizing?  How about reactiving to CSS variable changes (light/dark mode toggle)
-  const computedStyles = getComputedStyles(ctx.canvas, styleOptions);
+  let resolvedStyles: StyleOptions;
+  if (styleOptions.classes == null) {
+    // Skip resolving styles if no classes are provided
+    resolvedStyles = styleOptions.styles ?? {};
+  } else {
+    const computedStyles = getComputedStyles(ctx.canvas, styleOptions);
+    resolvedStyles = computedStyles;
+  }
 
   // Adhere to CSS paint order: https://developer.mozilla.org/en-US/docs/Web/CSS/paint-order
   const paintOrder =
-    computedStyles?.paintOrder === 'stroke' ? ['stroke', 'fill'] : ['fill', 'stroke'];
+    resolvedStyles?.paintOrder === 'stroke' ? ['stroke', 'fill'] : ['fill', 'stroke'];
 
-  if (computedStyles?.opacity) {
-    ctx.globalAlpha = Number(computedStyles?.opacity);
+  if (resolvedStyles?.opacity) {
+    ctx.globalAlpha = Number(resolvedStyles?.opacity);
   }
 
   // Text properties
-  ctx.font = `${computedStyles.fontWeight} ${computedStyles.fontSize} ${computedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
+  ctx.font = `${resolvedStyles.fontWeight} ${resolvedStyles.fontSize} ${resolvedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
 
   // TODO: Hack to handle `textAnchor` with canvas.  Try to find a better approach
-  if (computedStyles.textAnchor === 'middle') {
+  if (resolvedStyles.textAnchor === 'middle') {
     ctx.textAlign = 'center';
-  } else if (computedStyles.textAnchor === 'end') {
+  } else if (resolvedStyles.textAnchor === 'end') {
     ctx.textAlign = 'right';
   } else {
-    ctx.textAlign = computedStyles.textAlign as CanvasTextAlign; // TODO: Handle/map `justify` and `match-parent`?
+    ctx.textAlign = resolvedStyles.textAlign as CanvasTextAlign; // TODO: Handle/map `justify` and `match-parent`?
   }
 
   // TODO: Handle `textBaseline` / `verticalAnchor` (Text)
@@ -110,8 +119,8 @@ function render(
   // ctx.textBaseline = 'ideographic';
 
   // Dashed lines
-  if (computedStyles.strokeDasharray.includes(',')) {
-    const dashArray = computedStyles.strokeDasharray
+  if (resolvedStyles.strokeDasharray?.includes(',')) {
+    const dashArray = resolvedStyles.strokeDasharray
       .split(',')
       .map((s) => Number(s.replace('px', '')));
     ctx.setLineDash(dashArray);
@@ -125,13 +134,13 @@ function render(
           (styleOptions.styles?.fill as any) instanceof CanvasPattern ||
           !styleOptions.styles?.fill?.includes('var'))
           ? styleOptions.styles.fill
-          : computedStyles?.fill;
+          : resolvedStyles?.fill;
 
       if (fill && !['none', DEFAULT_FILL].includes(fill)) {
         const currentGlobalAlpha = ctx.globalAlpha;
 
-        const fillOpacity = Number(computedStyles?.fillOpacity);
-        const opacity = Number(computedStyles?.opacity);
+        const fillOpacity = Number(resolvedStyles?.fillOpacity);
+        const opacity = Number(resolvedStyles?.opacity);
         ctx.globalAlpha = fillOpacity * opacity;
 
         ctx.fillStyle = fill;
@@ -146,13 +155,13 @@ function render(
         ((styleOptions.styles?.stroke as any) instanceof CanvasGradient ||
           !styleOptions.styles?.stroke?.includes('var'))
           ? styleOptions.styles?.stroke
-          : computedStyles?.stroke;
+          : resolvedStyles?.stroke;
 
       if (stroke && !['none'].includes(stroke)) {
         ctx.lineWidth =
-          typeof computedStyles?.strokeWidth === 'string'
-            ? Number(computedStyles?.strokeWidth?.replace('px', ''))
-            : (computedStyles?.strokeWidth ?? 1);
+          typeof resolvedStyles?.strokeWidth === 'string'
+            ? Number(resolvedStyles?.strokeWidth?.replace('px', ''))
+            : (resolvedStyles?.strokeWidth ?? 1);
 
         ctx.strokeStyle = stroke;
         render.stroke(ctx);
