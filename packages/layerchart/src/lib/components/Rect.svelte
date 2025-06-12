@@ -178,6 +178,7 @@
     style:border-width="{strokeWidth}px"
     style:border-style="solid"
     style:border-color={stroke}
+    style:border-radius="{restProps.rx}px"
     class={cls(layerClass('rect'), fill == null && 'fill-surface-content', className)}
     {...restProps}
     {onclick}
