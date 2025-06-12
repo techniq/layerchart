@@ -8,7 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
-      supportedContexts: ['svg', 'canvas'],
+      supportedContexts: ['svg', 'canvas', 'html'],
       related: ['components/Grid', 'components/Rule'],
     },
   };

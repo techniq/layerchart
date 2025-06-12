@@ -384,7 +384,7 @@
       y={placement === 'top' || placement === 'bottom' ? placement : placement === 'radius'}
       {motion}
       {...ruleProps}
-      class={cls('stroke-surface-content/50', classes.rule, ruleProps?.class)}
+      class={cls('stroke-surface-content/50 bg-surface-content/50', classes.rule, ruleProps?.class)}
     />
   {/if}
 

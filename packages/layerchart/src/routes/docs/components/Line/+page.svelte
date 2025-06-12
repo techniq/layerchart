@@ -9,7 +9,11 @@
 
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart xDomain={[0, 100]} yDomain={[0, 100]} padding={{ bottom: 20, left: 20 }}>
+    <Chart
+      xDomain={[0, 100]}
+      yDomain={[0, 100]}
+      padding={{ top: 10, bottom: 20, left: 20, right: 10 }}
+    >
       <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />

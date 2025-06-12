@@ -128,7 +128,11 @@
       fill={cell.color}
       onpointermove={(e) => tooltip?.show(e, cell.data)}
       onpointerleave={(e) => tooltip?.hide()}
-      {...extractLayerProps(restProps, 'calendar-cell', 'stroke-surface-content/5')}
+      {...extractLayerProps(
+        restProps,
+        'calendar-cell',
+        'stroke-surface-content/5 border border-surface-content/5'
+      )}
     />
   {/each}
 {/if}
