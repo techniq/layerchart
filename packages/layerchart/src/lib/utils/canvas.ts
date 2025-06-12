@@ -1,30 +1,47 @@
-import { cls } from '@layerstack/tailwind';
-import { memoize } from 'lodash-es';
 import type { ClassValue } from 'svelte/elements';
+import memoize from 'memoize';
+import { cls } from '@layerstack/tailwind';
 import type { PatternShape } from '$lib/components/Pattern.svelte';
 
 export const DEFAULT_FILL = 'rgb(0, 0, 0)';
 
 const CANVAS_STYLES_ELEMENT_ID = '__layerchart_canvas_styles_id';
 
+type StyleOptions = Partial<
+  Omit<CSSStyleDeclaration, 'fillOpacity' | 'strokeWidth' | 'opacity'> & {
+    fillOpacity?: number | string;
+    strokeWidth?: number | string;
+    opacity?: number | string;
+  }
+>;
+
 export type ComputedStylesOptions = {
-  styles?: Partial<
-    Omit<CSSStyleDeclaration, 'fillOpacity' | 'strokeWidth' | 'opacity'> & {
-      fillOpacity?: number | string;
-      strokeWidth?: number | string;
-      opacity?: number | string;
-    }
-  >;
+  styles?: StyleOptions;
   classes?: ClassValue | null;
 };
+
+const supportedStyles = [
+  'fill',
+  'fillOpacity',
+  'stroke',
+  'strokeWidth',
+  'opacity',
+  'fontWeight',
+  'fontSize',
+  'fontFamily',
+  'textAnchor',
+  'textAlign',
+  'paintOrder',
+] as const;
 
 /**
  * Appends or reuses `<svg>` element below `<canvas>` to resolve CSS variables and classes (ex. `stroke: var(--color-primary)` => `stroke: rgb(...)` )
  */
-export function getComputedStyles(
+export function _getComputedStyles(
   canvas: HTMLCanvasElement,
   { styles, classes }: ComputedStylesOptions = {}
 ) {
+  // console.count(`getComputedStyles: ${getComputedStylesKey(canvas, { styles, classes })}`);
   try {
     // Get or create `<svg>` below `<canvas>`
     let svg = document.getElementById(CANVAS_STYLES_ELEMENT_ID) as SVGElement | null;
@@ -59,13 +76,31 @@ export function getComputedStyles(
       );
     }
 
-    const computedStyles = window.getComputedStyle(svg);
+    // Capture copy to enable memoization and avoid capturing all styles (which is very slow)
+    const computedStyles = supportedStyles.reduce((acc, style) => {
+      acc[style] = window.getComputedStyle(svg)[style];
+      return acc;
+    }, {} as CSSStyleDeclaration);
+
     return computedStyles;
   } catch (e) {
     console.error('Unable to get computed styles', e);
     return {} as CSSStyleDeclaration;
   }
 }
+
+function getComputedStylesKey(
+  canvas: HTMLCanvasElement,
+  { styles, classes }: ComputedStylesOptions = {}
+) {
+  return JSON.stringify({ canvasId: canvas.id, styles, classes });
+}
+
+export const getComputedStyles = memoize(_getComputedStyles, {
+  cacheKey: ([canvas, styleOptions]) => {
+    return getComputedStylesKey(canvas, styleOptions);
+  },
+});
 
 /** Render onto canvas context.  Supports CSS variables and classes by tranferring to hidden `<svg>` element before retrieval) */
 function render(
@@ -74,44 +109,83 @@ function render(
     stroke: (ctx: CanvasRenderingContext2D) => void;
     fill: (ctx: CanvasRenderingContext2D) => void;
   },
-  styleOptions: ComputedStylesOptions = {}
+  styleOptions: ComputedStylesOptions = {},
+  {
+    applyText,
+  }: {
+    applyText?: boolean;
+  } = {}
 ) {
   // console.count('render');
 
   // TODO: Consider memoizing?  How about reactiving to CSS variable changes (light/dark mode toggle)
-  const computedStyles = getComputedStyles(ctx.canvas, styleOptions);
+  let resolvedStyles: StyleOptions;
+  if (
+    styleOptions.classes == null &&
+    !Object.values(styleOptions.styles ?? {}).some(
+      (v) => typeof v === 'string' && v.includes('var(')
+    )
+  ) {
+    // Skip resolving styles if no classes are provided and no styles are using CSS variables
+    resolvedStyles = styleOptions.styles ?? {};
+  } else {
+    // Remove constant non-css variable properties (ex. `strokeWidth: 0.5`, `fill: #123456`) as not needed and improves memoization cache hit
+    const { constantStyles, variableStyles } = Object.entries(styleOptions.styles ?? {}).reduce<{
+      constantStyles: StyleOptions;
+      variableStyles: StyleOptions;
+    }>(
+      (acc, [key, value]) => {
+        if (typeof value === 'number' || (typeof value === 'string' && !value.includes('var('))) {
+          (acc.constantStyles as any)[key] = value;
+        } else if (typeof value === 'string' && value.includes('var(')) {
+          (acc.variableStyles as any)[key] = value;
+        }
+        return acc;
+      },
+      { constantStyles: {} as StyleOptions, variableStyles: {} as StyleOptions }
+    );
+
+    const computedStyles = getComputedStyles(ctx.canvas, {
+      styles: variableStyles,
+      classes: styleOptions.classes,
+    });
+    resolvedStyles = { ...computedStyles, ...constantStyles };
+  }
 
   // Adhere to CSS paint order: https://developer.mozilla.org/en-US/docs/Web/CSS/paint-order
   const paintOrder =
-    computedStyles?.paintOrder === 'stroke' ? ['stroke', 'fill'] : ['fill', 'stroke'];
+    resolvedStyles?.paintOrder === 'stroke' ? ['stroke', 'fill'] : ['fill', 'stroke'];
 
-  if (computedStyles?.opacity) {
-    ctx.globalAlpha = Number(computedStyles?.opacity);
+  if (resolvedStyles?.opacity) {
+    ctx.globalAlpha = Number(resolvedStyles?.opacity);
   }
 
-  // Text properties
-  ctx.font = `${computedStyles.fontWeight} ${computedStyles.fontSize} ${computedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
+  // font/text properties can be expensive to set (not sure why), so only apply if needed (renderText())
+  if (applyText) {
+    // Text properties
+    ctx.font = `${resolvedStyles.fontWeight} ${resolvedStyles.fontSize} ${resolvedStyles.fontFamily}`; // build string instead of using `computedStyles.font` to fix/workaround `tabular-nums` returning `null`
 
-  // TODO: Hack to handle `textAnchor` with canvas.  Try to find a better approach
-  if (computedStyles.textAnchor === 'middle') {
-    ctx.textAlign = 'center';
-  } else if (computedStyles.textAnchor === 'end') {
-    ctx.textAlign = 'right';
-  } else {
-    ctx.textAlign = computedStyles.textAlign as CanvasTextAlign; // TODO: Handle/map `justify` and `match-parent`?
+    // TODO: Hack to handle `textAnchor` with canvas.  Try to find a better approach
+    if (resolvedStyles.textAnchor === 'middle') {
+      ctx.textAlign = 'center';
+    } else if (resolvedStyles.textAnchor === 'end') {
+      ctx.textAlign = 'right';
+    } else {
+      ctx.textAlign = resolvedStyles.textAlign as CanvasTextAlign; // TODO: Handle/map `justify` and `match-parent`?
+    }
+
+    // TODO: Handle `textBaseline` / `verticalAnchor` (Text)
+    // ctx.textBaseline = 'top';
+    // ctx.textBaseline = 'middle';
+    // ctx.textBaseline = 'bottom';
+    // ctx.textBaseline = 'alphabetic';
+    // ctx.textBaseline = 'hanging';
+    // ctx.textBaseline = 'ideographic';
   }
-
-  // TODO: Handle `textBaseline` / `verticalAnchor` (Text)
-  // ctx.textBaseline = 'top';
-  // ctx.textBaseline = 'middle';
-  // ctx.textBaseline = 'bottom';
-  // ctx.textBaseline = 'alphabetic';
-  // ctx.textBaseline = 'hanging';
-  // ctx.textBaseline = 'ideographic';
 
   // Dashed lines
-  if (computedStyles.strokeDasharray.includes(',')) {
-    const dashArray = computedStyles.strokeDasharray
+  if (resolvedStyles.strokeDasharray?.includes(',')) {
+    const dashArray = resolvedStyles.strokeDasharray
       .split(',')
       .map((s) => Number(s.replace('px', '')));
     ctx.setLineDash(dashArray);
@@ -125,13 +199,13 @@ function render(
           (styleOptions.styles?.fill as any) instanceof CanvasPattern ||
           !styleOptions.styles?.fill?.includes('var'))
           ? styleOptions.styles.fill
-          : computedStyles?.fill;
+          : resolvedStyles?.fill;
 
       if (fill && !['none', DEFAULT_FILL].includes(fill)) {
         const currentGlobalAlpha = ctx.globalAlpha;
 
-        const fillOpacity = Number(computedStyles?.fillOpacity);
-        const opacity = Number(computedStyles?.opacity);
+        const fillOpacity = Number(resolvedStyles?.fillOpacity);
+        const opacity = Number(resolvedStyles?.opacity);
         ctx.globalAlpha = fillOpacity * opacity;
 
         ctx.fillStyle = fill;
@@ -146,13 +220,13 @@ function render(
         ((styleOptions.styles?.stroke as any) instanceof CanvasGradient ||
           !styleOptions.styles?.stroke?.includes('var'))
           ? styleOptions.styles?.stroke
-          : computedStyles?.stroke;
+          : resolvedStyles?.stroke;
 
       if (stroke && !['none'].includes(stroke)) {
         ctx.lineWidth =
-          typeof computedStyles?.strokeWidth === 'string'
-            ? Number(computedStyles?.strokeWidth?.replace('px', ''))
-            : (computedStyles?.strokeWidth ?? 1);
+          typeof resolvedStyles?.strokeWidth === 'string'
+            ? Number(resolvedStyles?.strokeWidth?.replace('px', ''))
+            : (resolvedStyles?.strokeWidth ?? 1);
 
         ctx.strokeStyle = stroke;
         render.stroke(ctx);
@@ -192,7 +266,8 @@ export function renderText(
         fill: (ctx) => ctx.fillText(text.toString(), coords.x, coords.y),
         stroke: (ctx) => ctx.strokeText(text.toString(), coords.x, coords.y),
       },
-      styleOptions
+      styleOptions,
+      { applyText: true }
     );
   }
 }
@@ -323,20 +398,9 @@ export function _createLinearGradient(
 }
 
 /** Create linear gradient and memoize result to fix reactivity */
-export const createLinearGradient = memoize(
-  _createLinearGradient,
-  (
-    ctx: CanvasRenderingContext2D,
-    x0: number,
-    y0: number,
-    x1: number,
-    y1: number,
-    stops: { offset: number; color: string }[]
-  ) => {
-    const key = JSON.stringify({ x0, y0, x1, y1, stops });
-    return key;
-  }
-);
+export const createLinearGradient = memoize(_createLinearGradient, {
+  cacheKey: (args) => JSON.stringify(args.slice(1)), // Ignore `ctx` argument
+});
 
 export function _createPattern(
   ctx: CanvasRenderingContext2D,
@@ -386,16 +450,6 @@ export function _createPattern(
 }
 
 /** Create pattern and memoize result to fix reactivity */
-export const createPattern = memoize(
-  _createPattern,
-  (
-    ctx: CanvasRenderingContext2D,
-    width: number,
-    height: number,
-    shapes: PatternShape[],
-    background?: string
-  ) => {
-    const key = JSON.stringify({ width, height, shapes, background });
-    return key;
-  }
-);
+export const createPattern = memoize(_createPattern, {
+  cacheKey: (args) => JSON.stringify(args.slice(1)), // Ignore `ctx` argument
+});

@@ -8,7 +8,6 @@
 
   import {
     Chart,
-    Circle,
     GeoPath,
     GeoPoint,
     GeoVisible,
@@ -80,7 +79,7 @@
       bind:context
     >
       {#snippet children({ context })}
-        <Layer type={shared.renderContext}>
+        <Layer type={shared.renderContext} disableHitCanvas={timer.running}>
           <GeoPath
             geojson={{ type: 'Sphere' }}
             class="fill-surface-200 stroke-surface-content/20"
@@ -103,18 +102,6 @@
             />
           {/each}
 
-          <!-- Switch to Canvas for better performance -->
-          <!-- {#each data.landingPoints.features as feature}
-            {@const [long, lat] = feature.geometry.coordinates}
-            <GeoCircle
-              center={[long, lat]}
-              radius={0.5}
-              class="fill-surface-content stroke-surface-100 stroke"
-              onpointermove={(e) => tooltip?.show(e, feature.properties)}
-              onpointerleave={(e) => tooltip?.hide()}
-            />
-          {/each} -->
-
           {#each data.landingPoints.features as feature}
             {@const [long, lat] = feature.geometry.coordinates}
             <GeoVisible {lat} {long}>
@@ -133,10 +120,6 @@
         <Tooltip.Root>
           {#snippet children({ data })}
             {data.name}
-            <!-- <Tooltip.List>
-          <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
-          <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
-        </Tooltip.List> -->
           {/snippet}
         </Tooltip.Root>
       {/snippet}

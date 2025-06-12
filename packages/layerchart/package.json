@@ -110,6 +110,7 @@
     "d3-tile": "^1.0.0",
     "d3-time": "^3.1.0",
     "lodash-es": "^4.17.21",
+    "memoize": "^10.1.0",
     "runed": "^0.28.0"
   },
   "peerDependencies": {
