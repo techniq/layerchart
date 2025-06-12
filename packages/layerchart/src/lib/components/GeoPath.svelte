@@ -171,8 +171,9 @@
         touchmove: restProps.ontouchmove,
       },
       deps: () => [
-        geojson,
         projection,
+        geojson,
+        curve,
         fillKey.current,
         strokeKey.current,
         strokeWidth,
