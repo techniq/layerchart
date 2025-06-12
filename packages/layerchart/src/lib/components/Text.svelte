@@ -546,4 +546,19 @@
       </text>
     {/if}
   </svg>
+{:else if renderCtx === 'html'}
+  {@const translateX = textAnchor === 'middle' ? '-50%' : textAnchor === 'end' ? '-100%' : '0%'}
+  {@const translateY =
+    verticalAnchor === 'middle' ? '-50%' : verticalAnchor === 'end' ? '-100%' : '0%'}
+  <!-- TODO: How best to handle dx/dy when adjusted for svg style issues? -->
+  <!-- TODO: How to handle fill-/stroke- vs bg-/text-/border- colors? -->
+  <div
+    style:position="absolute"
+    style:left="{dx + motionX.current}px"
+    style:top="{dy + motionY.current}px"
+    style:transform="translate({translateX}, {translateY})"
+    class={cls(layerClass('text'), fill === undefined && 'text-surface-content', className)}
+  >
+    {textValue}
+  </div>
 {/if}
