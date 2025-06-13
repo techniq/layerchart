@@ -96,7 +96,7 @@
     transitionInParams?: TransitionParams<In>;
 
     /**
-     * Scale for the axis
+     * Override scale for the axis
      */
     scale?: any;
 
@@ -212,27 +212,29 @@
   function getCoords(tick: any) {
     switch (placement) {
       case 'top':
-        return {
-          x: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
-          y: yRangeMinMax[0],
-        };
-
       case 'bottom':
         return {
-          x: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
-          y: yRangeMinMax[1],
+          x:
+            scale(tick) +
+            (isScaleBand(scale)
+              ? scale.bandwidth() / 2
+              : ctx.xInterval
+                ? (scale(ctx.xInterval.offset(tick)) - scale(tick)) / 2 // offset 1/2 time interval
+                : 0),
+          y: placement === 'top' ? yRangeMinMax[0] : yRangeMinMax[1],
         };
 
       case 'left':
-        return {
-          x: xRangeMinMax[0],
-          y: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
-        };
-
       case 'right':
         return {
-          x: xRangeMinMax[1],
-          y: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
+          x: placement === 'left' ? xRangeMinMax[0] : xRangeMinMax[1],
+          y:
+            scale(tick) +
+            (isScaleBand(scale)
+              ? scale.bandwidth() / 2
+              : ctx.yInterval
+                ? (scale(ctx.yInterval.offset(tick)) - scale(tick)) / 2 // offset 1/2 time interval
+                : 0),
         };
 
       case 'angle':
