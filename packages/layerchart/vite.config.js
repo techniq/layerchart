@@ -20,9 +20,11 @@ const config = {
     }),
     // @ts-expect-error
     devtoolsJson(),
+    // Needs to be last
     visualizer({
       emitFile: true,
       filename: 'stats.html',
+      gzipSize: true,
     }),
   ],
   // optimizeDeps: {
