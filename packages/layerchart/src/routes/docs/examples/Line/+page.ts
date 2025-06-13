@@ -9,6 +9,7 @@ export async function load({ fetch }) {
     ),
     meta: {
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
     },
   };
 }

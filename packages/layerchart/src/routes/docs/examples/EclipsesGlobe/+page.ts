@@ -17,6 +17,7 @@ export async function load({ fetch }) {
     }>,
     meta: {
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       related: [
         'https://www.visionscarto.net/empreintes-d-eclipses',
         'http://xjubier.free.fr/en/site_pages/Solar_Eclipses.html',

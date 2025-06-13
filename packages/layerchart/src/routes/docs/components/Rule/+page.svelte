@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { Axis, Chart, Rule, Svg } from 'layerchart';
+  import { Axis, Chart, Rule, Layer } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
 </script>
@@ -17,11 +18,11 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" />
         <Axis placement="left" />
         <Rule x y />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -35,11 +36,11 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="top" />
         <Axis placement="right" />
         <Rule x="right" y="top" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -53,11 +54,11 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" />
         <Axis placement="left" />
         <Rule x={0} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -71,11 +72,11 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Rule x={70} class="stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] " />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -90,11 +91,11 @@
       yDomain={[-20, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" />
         <Axis placement="left" />
         <Rule y={0} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -108,11 +109,11 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Rule y={70} class="stroke-2 stroke-danger [stroke-dasharray:4] [stroke-linecap:round] " />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

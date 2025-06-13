@@ -3,15 +3,7 @@
   import { scaleSqrt } from 'd3-scale';
   import { feature } from 'topojson-client';
 
-  import {
-    Button,
-    ButtonGroup,
-    Field,
-    RangeField,
-    Switch,
-    ToggleGroup,
-    ToggleOption,
-  } from 'svelte-ux';
+  import { Button, ButtonGroup, Field, RangeField, Switch } from 'svelte-ux';
   import { TimerState } from '@layerstack/svelte-state';
 
   import {
@@ -24,6 +16,7 @@
     type ChartContextValue,
   } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -50,26 +43,12 @@
     disabled: true,
   });
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
   let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
 
 <div class="flex gap-2 items-end mb-2">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-
-  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
-
-  <div class="grow"></div>
-
   <Field label="Spin:" dense labelPlacement="left" let:id>
     <ButtonGroup size="sm" variant="fill-light">
       <Button on:click={timer.start} disabled={timer.running}>Start</Button>
@@ -85,6 +64,11 @@
     disabled={!timer.running}
     labelPlacement="left"
   />
+  <div class="grow"></div>
+
+  <Field label="Debug" labelPlacement="left" let:id classes={{ container: 'h-full' }}>
+    <Switch {id} bind:checked={debug} />
+  </Field>
 </div>
 
 <Preview data={countries}>
@@ -106,7 +90,7 @@
       ondragstart={timer.stop}
     >
       {#snippet children({ context })}
-        <Layer type={renderContext} {debug} disableHitCanvas={timer.running}>
+        <Layer type={shared.renderContext} {debug} disableHitCanvas={timer.running}>
           <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" />
 
           <Graticule class="stroke-surface-content/20" />

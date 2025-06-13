@@ -9,6 +9,7 @@ export async function load({ fetch }) {
 
     meta: {
       pageSource,
+      supportedContexts: ['svg'], // TODO: `canvas` coming soon
       related: ['components/Sankey', 'components/Link'],
     },
   };

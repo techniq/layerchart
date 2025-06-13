@@ -2,10 +2,10 @@
   import { scaleOrdinal, scaleTime, scaleUtc } from 'd3-scale';
   import { utcDay } from 'd3-time';
 
-  import { Axis, Bars, Chart, Highlight, Points, Svg, Tooltip } from 'layerchart';
-  import { PeriodType, formatDate } from '@layerstack/utils';
+  import { Axis, Bars, Chart, Highlight, Layer, Points, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 </script>
@@ -32,16 +32,16 @@
       tooltip={{ mode: 'bisect-x' }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule tickSpacing={20} />
           <Axis placement="bottom" rule />
           <Points links r={0} />
           <Bars y={(d) => [d.open, d.close]} radius={2} insets={{ x: 1 }} />
           <Highlight area />
-        </Svg>
+        </Layer>
         <Tooltip.Root {context}>
           {#snippet children({ data })}
-            <Tooltip.Header>{formatDate(data.date, PeriodType.Day)}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label="Open" value={data.open} format="decimal" />
               <Tooltip.Item label="Close" value={data.close} format="decimal" />

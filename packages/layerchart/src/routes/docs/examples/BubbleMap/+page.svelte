@@ -7,10 +7,11 @@
   import { feature } from 'topojson-client';
   import { sortFunc } from '@layerstack/utils';
 
-  import { Chart, Canvas, GeoPath, Legend, Svg, Tooltip, Circle } from 'layerchart';
+  import { Chart, GeoPath, Legend, Layer, Tooltip, Circle } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -66,7 +67,7 @@
 
 <h1>Examples</h1>
 
-<h2>SVG</h2>
+<h2>Basic</h2>
 
 <Preview data={states}>
   <div class="h-[600px] overflow-hidden">
@@ -85,7 +86,7 @@
         {@const strokeWidth = 1 / context.transform.scale}
         <TransformControls />
 
-        <Svg>
+        <Layer type={shared.renderContext}>
           <GeoPath
             geojson={states}
             class="fill-surface-content/10 stroke-surface-100"
@@ -102,9 +103,9 @@
                   {cy}
                   r={rScale(d?.population ?? 0)}
                   fill={colorScale(d?.percentUnder18 ?? 0)}
-                  fill-opacity={0.5}
+                  fillOpacity={0.5}
                   stroke={colorScale(d?.percentUnder18 ?? 0)}
-                  stroke-width={strokeWidth / 2}
+                  strokeWidth={strokeWidth / 2}
                   class="pointer-events-none"
                 />
               {/snippet}
@@ -119,102 +120,18 @@
               {strokeWidth}
             />
           {/each}
-        </Svg>
+        </Layer>
 
-        <Legend
-          scale={colorScale}
-          title="Est. Percent under 18"
-          placement="top-left"
-          class="bg-surface-100/80 px-2 py-1 backdrop-blur-xs rounded-sm m-1"
-        />
-
-        <Tooltip.Root>
-          {#snippet children({ data })}
-            {@const d = data.properties.data}
-            <Tooltip.Header>
-              {data.properties.name + ' - ' + data.properties.data?.state}
-            </Tooltip.Header>
-            <Tooltip.List>
-              <Tooltip.Item
-                label="Total Population"
-                value={d?.population}
-                format="integer"
-                valueAlign="right"
-              />
-              <Tooltip.Item
-                label="Est. Population under 18"
-                value={d?.populationUnder18}
-                format="integer"
-                valueAlign="right"
-              />
-              <Tooltip.Item
-                label="Est. Percent under 18"
-                value={d?.percentUnder18 / 100}
-                format="percentRound"
-                valueAlign="right"
-              />
-            </Tooltip.List>
-          {/snippet}
-        </Tooltip.Root>
-      {/snippet}
-    </Chart>
-  </div>
-</Preview>
-
-<h2>Canvas</h2>
-
-<Preview data={states}>
-  <div class="h-[600px]">
-    <Chart
-      geo={{
-        projection,
-        fitGeojson: states,
-      }}
-      transform={{
-        mode: 'canvas',
-        initialScrollMode: 'scale',
-      }}
-      padding={{ top: 60 }}
-    >
-      {#snippet children({ context })}
-        {@const strokeWidth = 1 / context.transform.scale}
-        <TransformControls />
-
-        <Canvas>
-          <GeoPath
-            geojson={states}
-            class="fill-surface-content/10 stroke-surface-100"
-            {strokeWidth}
-          />
-
-          {#each enrichedCountiesFeatures as feature}
-            <GeoPath geojson={feature} {strokeWidth} tooltipContext={context.tooltip}>
-              {#snippet children({ geoPath })}
-                {@const [cx, cy] = geoPath?.centroid(feature) ?? []}
-                {@const d = feature.properties.data}
-                <Circle
-                  {cx}
-                  {cy}
-                  r={rScale(d?.population ?? 0)}
-                  fill={colorScale(d?.percentUnder18 ?? 0)}
-                  fillOpacity={0.5}
-                  stroke={colorScale(d?.percentUnder18 ?? 0)}
-                  strokeWidth={strokeWidth / 2}
-                />
-              {/snippet}
-            </GeoPath>
-          {/each}
-        </Canvas>
-
-        <Canvas pointerEvents={false}>
-          {#if context.tooltip.data}
+        <!-- Add extra path to mimic hover stroke on canvas -->
+        <Layer type={shared.renderContext} pointerEvents={false}>
+          {#if context.tooltip.data && shared.renderContext === 'canvas'}
             <GeoPath
               geojson={context.tooltip.data}
               class="stroke-none fill-surface-content/10"
               {strokeWidth}
             />
           {/if}
-        </Canvas>
+        </Layer>
 
         <Legend
           scale={colorScale}

@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Snippet } from 'svelte';
-  import type { Without } from '$lib/utils/types.js';
+  import { asAny, type Without } from '$lib/utils/types.js';
 
   export type TooltipHeaderPropsWithoutHTML = {
     /**
@@ -13,7 +13,7 @@
     /**
      * The format to use when displaying the value.
      */
-    format?: FormatType;
+    format?: FormatType | FormatConfig;
 
     /**
      * The color to use for the color dot.
@@ -54,7 +54,7 @@
 </script>
 
 <script lang="ts">
-  import { format as formatUtil, type FormatType } from '@layerstack/utils';
+  import { format as formatUtil, type FormatType, type FormatConfig } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import { layerClass } from '$lib/utils/attributes.js';
 
@@ -114,6 +114,7 @@
   {#if children}
     {@render children?.()}
   {:else}
-    {format ? formatUtil(value, format) : value}
+    <!-- @ts-expect-error - improve types -->
+    {format ? formatUtil(value, asAny(format)) : value}
   {/if}
 </div>

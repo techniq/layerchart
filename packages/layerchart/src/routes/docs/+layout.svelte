@@ -15,7 +15,16 @@
     mdiLink,
   } from '@mdi/js';
 
-  import { ApiDocs, Button, Dialog, Icon, ListItem, TableOfContents } from 'svelte-ux';
+  import {
+    ApiDocs,
+    Button,
+    Dialog,
+    Icon,
+    ListItem,
+    TableOfContents,
+    ToggleGroup,
+    ToggleOption,
+  } from 'svelte-ux';
 
   import { MediaQueryPresets } from '@layerstack/svelte-state';
   import { cls } from '@layerstack/tailwind';
@@ -24,15 +33,22 @@
   import Code from '$lib/docs/Code.svelte';
   import ViewSourceButton from '$lib/docs/ViewSourceButton.svelte';
   import { page } from '$app/state';
+  import { shared } from './shared.svelte.js';
 
   const { children } = $props();
 
   const [type, name] = $derived(page.url.pathname.split('/').slice(2) ?? []);
   const title = $derived(page.data.meta?.title ?? name);
   const pageUrl = $derived(`src/routes/docs/${type}/${name}/+page.svelte?plain=1`);
+
+  const getComponentPath = (name: string) => {
+    if (name.endsWith('Chart') && name !== 'Chart') return `charts/${name}`;
+    if (name.startsWith('Tooltip')) return `tooltip/${name}`;
+    return name;
+  };
   const sourceUrl = $derived(
     ['components', 'utils'].includes(type)
-      ? `src/lib/${type}/${name}.${type === 'components' ? 'svelte' : 'ts'}`
+      ? `src/lib/${type}/${getComponentPath(name)}.${type === 'components' ? 'svelte' : 'ts'}`
       : null
   );
   const {
@@ -45,6 +61,7 @@
     pageSource,
     api,
     status,
+    supportedContexts,
   } = $derived(page.data.meta ?? {});
 
   const { xlScreen } = new MediaQueryPresets();
@@ -90,11 +107,28 @@
       </div>
     </div>
 
-    <div class="text-2xl font-bold">
-      {#if type === 'examples' || type === 'tools'}
-        {title.replace(/([a-z])([A-Z])/g, '$1 $2')}
-      {:else}
-        {title}
+    <div class="flex items-center gap-4">
+      <span class="text-2xl font-bold">
+        {#if type === 'examples' || type === 'tools'}
+          {title.replace(/([a-z])([A-Z])/g, '$1 $2')}
+        {:else}
+          {title}
+        {/if}
+      </span>
+
+      {#if supportedContexts}
+        <ToggleGroup
+          bind:value={shared.renderContext}
+          variant="fill"
+          color="primary"
+          inset
+          gap="px"
+          size="sm"
+        >
+          {#each supportedContexts as context}
+            <ToggleOption value={context}>{toTitleCase(context)}</ToggleOption>
+          {/each}
+        </ToggleGroup>
       {/if}
 
       {#if status}
@@ -121,7 +155,7 @@
         label="Source"
         {source}
         href={sourceUrl
-          ? `https://github.com/techniq/layerchart/blob/main/packages/layerchart/${sourceUrl}`
+          ? `https://github.com/techniq/layerchart/blob/next/packages/layerchart/${sourceUrl}`
           : ''}
         icon={mdiCodeTags}
       />
@@ -130,7 +164,7 @@
         label="Page source"
         source={pageSource}
         href={pageUrl
-          ? `https://github.com/techniq/layerchart/blob/main/packages/layerchart/${pageUrl}`
+          ? `https://github.com/techniq/layerchart/blob/next/packages/layerchart/${pageUrl}`
           : ''}
         icon={mdiFileDocumentEditOutline}
       />

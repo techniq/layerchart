@@ -13,6 +13,7 @@ export async function load({ fetch }) {
     meta: {
       description: 'Individual arrays per dimension, similar to uplot',
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       hideTableOfContents: true,
     },
   };

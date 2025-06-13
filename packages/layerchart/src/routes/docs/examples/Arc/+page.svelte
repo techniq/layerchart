@@ -6,8 +6,8 @@
     Chart,
     ClipPath,
     Group,
+    Layer,
     LinearGradient,
-    Svg,
     Text,
     Tooltip,
     cartesianToPolar,
@@ -19,6 +19,7 @@
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let value = $state(75);
   let segments = $state(60);
@@ -59,7 +60,7 @@
 <Preview>
   <div class="h-[120px] p-4 border resize overflow-auto">
     <Chart>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Group y={16}>
           <LinearGradient class="from-secondary to-primary">
             {#snippet children({ gradient })}
@@ -85,7 +86,7 @@
             {/snippet}
           </LinearGradient>
         </Group>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -95,7 +96,7 @@
 <Preview>
   <div class="h-[200px] p-4 border resize overflow-auto">
     <Chart>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Arc
           value={400}
           domain={[0, 1000]}
@@ -122,7 +123,7 @@
           class="fill-cyan-400"
           track={{ class: 'fill-cyan-500/10' }}
         />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -136,7 +137,7 @@
 <Preview>
   <div class="h-[240px] p-4 border resize overflow-auto">
     <Chart>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <SpringValue {value} let:value>
           {#each { length: segments } as _, segmentIndex}
             {@const segmentAngle = (2 * Math.PI) / segments}
@@ -162,7 +163,7 @@
             class="text-6xl tabular-nums"
           />
         </SpringValue>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -176,7 +177,7 @@
 <Preview>
   <div class="h-[240px] p-4 border resize overflow-auto">
     <Chart>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <SpringValue {value} let:value>
           <ClipPath>
             {#snippet clip()}
@@ -208,7 +209,7 @@
             class="text-6xl tabular-nums"
           />
         </SpringValue>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -219,7 +220,7 @@
   <div class="h-[300px] p-4 border resize overflow-auto">
     <Chart>
       {#snippet children({ context })}
-        <Svg center>
+        <Layer type={shared.renderContext} center>
           {#each { length: layerCount } as _, layerIndex}
             {@const layer = layerIndex + 1}
             {#each { length: divisions } as _, segmentIndex}
@@ -241,7 +242,7 @@
               />
             {/each}
           {/each}
-        </Svg>
+        </Layer>
         <Tooltip.Root>
           {#snippet children({ data })}
             {data}
@@ -264,7 +265,7 @@
   <Preview>
     <div class="h-[200px] p-4 border resize overflow-auto">
       <Chart>
-        <Svg center>
+        <Layer type={shared.renderContext} center>
           {#if show}
             <Arc
               initialValue={0}
@@ -296,7 +297,7 @@
               motion={{ type: 'tween', duration: 1000, easing: cubicInOut }}
             />
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -308,7 +309,7 @@
   <div class="h-[200px] p-4 border resize overflow-auto">
     <Chart>
       {#snippet children({ context })}
-        <Svg center>
+        <Layer type={shared.renderContext} center>
           {@const arcWidth = 20}
           {@const maxValue = 100}
           <SpringValue {value} let:value={springValue}>
@@ -383,7 +384,7 @@
           r={circleRadius}
           class="stroke-black/10 fill-black/10"
         /> -->
-        </Svg>
+        </Layer>
       {/snippet}
     </Chart>
   </div>

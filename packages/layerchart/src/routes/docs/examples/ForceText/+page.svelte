@@ -1,13 +1,13 @@
 <script lang="ts">
+  import type { ComponentProps } from 'svelte';
   import { forceX, forceY, forceManyBody, forceCollide } from 'd3-force';
 
-  import { Canvas, Chart, Circle, ForceSimulation, Points, Svg } from 'layerchart';
+  import { Chart, ForceSimulation, Layer, Points } from 'layerchart';
   import { Field, RangeField, Switch, TextField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
-
   import { rasterizeText, type RasterizeTextOptions } from '$lib/utils/string.js';
-  import type { ChartResizeDetail } from '$lib/components/Chart.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   const collisionStrength = 0.01;
 
@@ -19,10 +19,10 @@
   let hasChargeForce = $state(false);
   let transition = $state(false);
 
-  function onResize(e: ChartResizeDetail) {
+  const onResize: ComponentProps<typeof Chart>['onResize'] = (e) => {
     width = e.width;
     height = e.height;
-  }
+  };
 
   let mouseNode = $derived({
     x: 0,
@@ -90,13 +90,13 @@
 <Preview {data}>
   <div class="h-[500px] p-4 border rounded-sm overflow-hidden">
     <Chart
+      {data}
       x="x"
       xDomain={[0, 1]}
       xRange={[0, 1]}
       y="y"
       yDomain={[0, 1]}
       yRange={[0, 1]}
-      {data}
       {onResize}
     >
       {#snippet children({ context })}
@@ -111,31 +111,20 @@
               charge: manyBodyForce.strength((d, i) => (i ? 0 : (-context.width * 2) / 10)),
             }),
           }}
+          data={{ nodes: data }}
           alphaTarget={1}
           velocityDecay={0.2}
         >
           {#snippet children({ nodes, simulation })}
-            <Canvas>
-              <!-- <Circle
-                cx={nodes?.[0]?.x}
-                cy={nodes?.[0]?.y}
-                r={nodes?.[0]?.rTarget}
-                class="fill-primary/10"
-              /> -->
+            <Layer
+              type={shared.renderContext}
+              onpointermove={(e) => {
+                simulation.nodes()[0].fx = e.offsetX;
+                simulation.nodes()[0].fy = e.offsetY;
+              }}
+            >
               <Points data={nodes.slice(1)} r={radius} class="fill-primary" />
-            </Canvas>
-
-            <Svg>
-              <rect
-                width={context.width}
-                height={context.height}
-                onpointermove={(e) => {
-                  simulation.nodes()[0].fx = e.offsetX;
-                  simulation.nodes()[0].fy = e.offsetY;
-                }}
-                class="fill-transparent"
-              />
-            </Svg>
+            </Layer>
           {/snippet}
         </ForceSimulation>
       {/snippet}

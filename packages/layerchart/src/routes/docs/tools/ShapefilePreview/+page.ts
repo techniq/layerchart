@@ -8,6 +8,7 @@ export async function load({ url }) {
     geojson: file ? await read(file) : null,
     meta: {
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       hideTableOfContents: true,
     },
   };

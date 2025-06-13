@@ -5,6 +5,7 @@
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
   import { curveLinearClosed, type CurveFactory, type CurveFactoryLineOnly } from 'd3-shape';
   import {
+    geoPath as d3GeoPath,
     geoTransform as d3geoTransform,
     type GeoIdentityTransform,
     type GeoPermissibleObjects,
@@ -105,6 +106,10 @@
   const geoPath = $derived.by(() => {
     geojson;
     if (!projection) return;
+    // Only use geoCurvePath for custom curves (performance impact)
+    if (curve === curveLinearClosed) {
+      return d3GeoPath(projection);
+    }
     return geoCurvePath(projection, curve);
   });
 
@@ -157,16 +162,18 @@
       name: 'GeoPath',
       render,
       events: {
-        click: _onClick,
-        pointerenter: _onPointerEnter,
-        pointermove: _onPointerMove,
-        pointerleave: _onPointerLeave,
+        // Only register events if they are defined (so they are not registered with hit canvas unnecessarily)
+        click: onclick ? _onClick : undefined,
+        pointerenter: restProps.onpointerenter || tooltipContext ? _onPointerEnter : undefined,
+        pointermove: restProps.onpointermove || tooltipContext ? _onPointerMove : undefined,
+        pointerleave: restProps.onpointerleave || tooltipContext ? _onPointerLeave : undefined,
         pointerdown: restProps.onpointerdown,
         touchmove: restProps.ontouchmove,
       },
       deps: () => [
-        geojson,
         projection,
+        geojson,
+        curve,
         fillKey.current,
         strokeKey.current,
         strokeWidth,

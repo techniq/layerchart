@@ -1,15 +1,16 @@
 <script lang="ts">
   import { scaleTime, scaleThreshold } from 'd3-scale';
-  import { format } from 'date-fns';
-  import { formatDate, PeriodType } from '@layerstack/utils';
 
-  import { Axis, Chart, Highlight, Labels, Points, Svg, Tooltip } from 'layerchart';
+  import { Axis, Chart, Highlight, Labels, Layer, Points, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   const data = createDateSeries({ min: 10, max: 100, value: 'integer' });
+
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -31,11 +32,11 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Points class="fill-primary/10 stroke-primary" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -54,16 +55,16 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Points class="fill-primary/10 stroke-primary" />
         <Highlight points lines />
-      </Svg>
+      </Layer>
 
       <Tooltip.Root>
         {#snippet children({ data })}
-          <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+          <Tooltip.Header value={data.date} format="day" />
           <Tooltip.List>
             <Tooltip.Item label="value" value={data.value} />
           </Tooltip.List>
@@ -86,12 +87,12 @@
       yNice
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Points class="fill-primary/10 stroke-primary" />
         <Labels format="integer" offset={10} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -115,11 +116,11 @@
       cRange={['var(--color-danger)', 'var(--color-warning)', 'var(--color-success)']}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
         <Points class="stroke-surface-content/50" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

@@ -9,21 +9,13 @@
     Tooltip,
     type Placement,
   } from 'layerchart';
-  import {
-    Button,
-    Field,
-    Menu,
-    RangeField,
-    Switch,
-    Toggle,
-    ToggleGroup,
-    ToggleOption,
-  } from 'svelte-ux';
-  import { format, PeriodType, sortFunc } from '@layerstack/utils';
+  import { Button, Field, Menu, RangeField, Switch, Toggle } from 'svelte-ux';
+  import { format, sortFunc } from '@layerstack/utils';
   import { maxIndex } from 'd3-array';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -65,20 +57,13 @@
   let yOffset = $state(0);
   let radius = $state(4);
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
   let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-
   <Field label="Debug" let:id classes={{ container: 'h-full' }}>
     <Switch {id} bind:checked={debug} />
   </Field>
@@ -117,7 +102,7 @@
               </div>
             {:else}
               <!-- Normal tooltip -->
-              <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+              <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
               <Tooltip.List>
                 <Tooltip.Item label="value" value={context.y(data)} />
               </Tooltip.List>
@@ -162,7 +147,7 @@
               </div>
             {:else}
               <!-- Normal tooltip -->
-              <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+              <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
               <Tooltip.List>
                 <Tooltip.Item label="value" value={context.y(data)} />
               </Tooltip.List>
@@ -216,7 +201,7 @@
               </div>
             {:else}
               <!-- Normal tooltip -->
-              <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+              <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
               <Tooltip.List>
                 <Tooltip.Item label="value" value={context.y(data)} />
               </Tooltip.List>

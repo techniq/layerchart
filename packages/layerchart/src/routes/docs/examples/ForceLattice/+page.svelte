@@ -2,9 +2,10 @@
   import { forceManyBody, forceLink } from 'd3-force';
   import { curveLinear } from 'd3-shape';
 
-  import { Chart, Circle, ForceSimulation, Link, Svg } from 'layerchart';
+  import { Chart, Circle, ForceSimulation, Link, Layer } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   const n = 20;
   const nodes = Array.from({ length: n * n }, (_, i) => ({ index: i }));
@@ -24,16 +25,16 @@
 
 <Preview data={nodes}>
   <div class="h-[800px] p-4 border rounded-sm overflow-hidden">
-    <Chart data={nodes}>
-      <Svg center>
-        <ForceSimulation
-          {links}
-          forces={{
-            charge: chargeForce,
-            link: linkForce,
-          }}
-        >
-          {#snippet children({ nodes, linkPositions })}
+    <Chart>
+      <ForceSimulation
+        data={{ nodes, links }}
+        forces={{
+          charge: chargeForce,
+          link: linkForce,
+        }}
+      >
+        {#snippet children({ nodes, linkPositions })}
+          <Layer type={shared.renderContext} center>
             {#each links as link, i (i)}
               <Link
                 explicitCoords={linkPositions[i]}
@@ -46,9 +47,9 @@
             {#each nodes as node}
               <Circle cx={node.x} cy={node.y} r={3} class="fill-surface-content" />
             {/each}
-          {/snippet}
-        </ForceSimulation>
-      </Svg>
+          </Layer>
+        {/snippet}
+      </ForceSimulation>
     </Chart>
   </div>
 </Preview>

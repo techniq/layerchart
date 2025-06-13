@@ -18,53 +18,53 @@
      *
      * @default 0
      */
-    padding?: number;
+    padding?: number | ((node: HierarchyRectangularNode<T>) => number);
 
     /**
      * The inner padding between nodes.
      *
      * @default 0
      */
-    paddingInner?: number;
+    paddingInner?: number | ((node: HierarchyRectangularNode<T>) => number);
 
     /**
      * The outer padding between nodes.
      *
      * @default 0
      */
-    paddingOuter?: number;
+    paddingOuter?: number | ((node: HierarchyRectangularNode<T>) => number);
 
     /**
      * The top padding between nodes.
      *
      * @default 0
      */
-    paddingTop?: number;
+    paddingTop?: number | ((node: HierarchyRectangularNode<T>) => number);
 
     /**
      * The bottom padding between nodes.
      *
      * @default 0
      */
-    paddingBottom?: number;
+    paddingBottom?: number | ((node: HierarchyRectangularNode<T>) => number);
     /**
      * The left padding between nodes.
      *
      */
-    paddingLeft?: number;
+    paddingLeft?: number | ((node: HierarchyRectangularNode<T>) => number);
 
     /**
      * The right padding between nodes.
      *
      */
-    paddingRight?: number;
+    paddingRight?: number | ((node: HierarchyRectangularNode<T>) => number);
 
     /**
-     * The selected node.
+     * Modify tiling function for approapriate aspect ratio when treemap is zoomed in
      *
-     * @default null
+     * @default false
      */
-    selected?: HierarchyRectangularNode<T> | null;
+    maintainAspectRatio?: boolean;
 
     hierarchy?: HierarchyNode<T>;
 
@@ -99,7 +99,7 @@
     paddingBottom = 0,
     paddingLeft,
     paddingRight,
-    selected = $bindable(null),
+    maintainAspectRatio = false,
     children,
   }: TreemapProps<T> = $props();
 
@@ -121,45 +121,82 @@
                 : tile
   );
 
-  const treemap = $derived.by(() => {
+  const treemapData = $derived.by(() => {
     const _treemap = d3treemap<T>()
       .size([ctx.width, ctx.height])
-      .tile(aspectTile(tileFunc, ctx.width, ctx.height));
+      .tile(maintainAspectRatio ? aspectTile(tileFunc, ctx.width, ctx.height) : tileFunc);
 
     if (padding) {
-      _treemap.padding(padding);
+      // Make Typescript happy to pick the correct overload
+      // TODO: Better way to do this?
+      if (typeof padding === 'number') {
+        _treemap.padding(padding);
+      } else {
+        _treemap.padding(padding);
+      }
     }
 
     if (paddingInner) {
-      _treemap.paddingInner(paddingInner);
+      if (typeof paddingInner === 'number') {
+        _treemap.paddingInner(typeof paddingInner === 'number' ? paddingInner : paddingInner);
+      } else {
+        _treemap.paddingInner(paddingInner);
+      }
     }
 
     if (paddingOuter) {
-      _treemap.paddingOuter(paddingOuter);
+      if (typeof paddingOuter === 'number') {
+        _treemap.paddingOuter(paddingOuter);
+      } else {
+        _treemap.paddingOuter(paddingOuter);
+      }
     }
 
     if (paddingTop) {
-      _treemap.paddingTop(paddingTop);
+      if (typeof paddingTop === 'number') {
+        _treemap.paddingTop(paddingTop);
+      } else {
+        _treemap.paddingTop(paddingTop);
+      }
     }
 
     if (paddingBottom) {
-      _treemap.paddingBottom(paddingBottom);
+      if (typeof paddingBottom === 'number') {
+        _treemap.paddingBottom(paddingBottom);
+      } else {
+        _treemap.paddingBottom(paddingBottom);
+      }
     }
 
     if (paddingLeft) {
-      _treemap.paddingLeft(paddingLeft);
+      if (typeof paddingLeft === 'number') {
+        _treemap.paddingLeft(paddingLeft);
+      } else {
+        _treemap.paddingLeft(paddingLeft);
+      }
     }
     if (paddingRight) {
-      _treemap.paddingRight(paddingRight);
+      if (typeof paddingRight === 'number') {
+        _treemap.paddingRight(paddingRight);
+      } else {
+        _treemap.paddingRight(paddingRight);
+      }
     }
-    return _treemap;
-  });
 
-  const treemapData = $derived(hierarchy ? treemap(hierarchy) : null);
+    if (hierarchy) {
+      const h = hierarchy.copy();
+      const treemapData = _treemap(h);
+      return {
+        links: treemapData.links(),
+        nodes: treemapData.descendants(),
+      };
+    }
 
-  $effect.pre(() => {
-    selected = treemapData;
+    return {
+      links: [],
+      nodes: [],
+    };
   });
 </script>
 
-{@render children?.({ nodes: treemapData ? treemapData.descendants() : [] })}
+{@render children?.({ nodes: treemapData.nodes })}

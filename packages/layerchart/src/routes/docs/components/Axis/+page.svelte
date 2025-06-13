@@ -1,6 +1,7 @@
 <script lang="ts">
   import { scaleLinear, scaleTime, scaleBand, scaleLog } from 'd3-scale';
   import { range } from 'd3-array';
+  import { Axis, Chart, Frame, Layer, Rule, Text, Grid, asAny } from 'layerchart';
   import {
     timeDay,
     timeHour,
@@ -10,14 +11,13 @@
     timeYear,
     timeMillisecond,
   } from 'd3-time';
-  import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { Field, RangeField, Switch } from 'svelte-ux';
 
-  import { Axis, Chart, Frame, Layer, Rule, Text, Grid, asAny } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   import { createDateSeries } from '$lib/utils/genData.js';
   import Blockquote from '$lib/docs/Blockquote.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   const largeData = createDateSeries({ count: 100, min: 50, max: 100, value: 'integer' });
 
@@ -52,20 +52,10 @@
 
   let tickSpacing = $state(80); // x-axis default
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
   let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
-
-<div class="flex gap-2">
-  <Field label="Render context" class="grow">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-</div>
 
 <h2>left / bottom placement</h2>
 
@@ -78,7 +68,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
       </Layer>
@@ -97,7 +87,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="top" rule />
         <Axis placement="right" rule />
       </Layer>
@@ -116,7 +106,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
       </Layer>
@@ -135,7 +125,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="top" rule />
         <Axis placement="right" rule />
       </Layer>
@@ -154,7 +144,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" grid />
         <Axis placement="left" grid />
       </Layer>
@@ -173,7 +163,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" />
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} />
       </Layer>
@@ -192,7 +182,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid />
         <Axis placement="bottom" grid rule />
       </Layer>
@@ -213,7 +203,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid />
         <Axis placement="bottom" grid rule />
         <Rule x="left" />
@@ -235,7 +225,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Grid x y />
         <Axis placement="left" rule />
         <Axis placement="bottom" rule />
@@ -255,7 +245,7 @@
       yNice
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule={{ markerEnd: 'arrow' }} />
         <Axis placement="bottom" grid rule={{ markerEnd: 'arrow' }} />
       </Layer>
@@ -268,7 +258,7 @@
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xScale={scaleTime()} xDomain={[timeDay.offset(now, -10), now]} padding={{ bottom: 24 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis
           placement="bottom"
           rule
@@ -288,7 +278,7 @@
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xScale={scaleTime()} xDomain={[timeDay.offset(now, -10), now]} padding={{ bottom: 24 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis
           placement="bottom"
           rule
@@ -307,7 +297,7 @@
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xScale={scaleTime()} xDomain={[timeDay.offset(now, -10), now]} padding={{ bottom: 24 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule tickMarks={false} />
       </Layer>
     </Chart>
@@ -324,12 +314,12 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis
           placement="bottom"
           rule
           ticks={(scale) => scale.domain()}
-          format={(d) => format(d, PeriodType.Day, { variant: 'long' })}
+          format={{ type: 'day', options: { variant: 'long' } }}
         >
           {#snippet tickLabel({ props, index })}
             <Text {...props} textAnchor={index === 0 ? 'start' : 'end'} />
@@ -346,7 +336,7 @@
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xDomain={[0, 2]} padding={{ bottom: 24 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis
           placement="bottom"
           rule
@@ -363,7 +353,7 @@
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xDomain={[0, 100]} padding={{ bottom: 24 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule ticks={[0, 50, 100]} />
       </Layer>
     </Chart>
@@ -375,7 +365,7 @@
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xDomain={[0, 100]} padding={{ bottom: 24 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule ticks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />
       </Layer>
     </Chart>
@@ -387,7 +377,7 @@
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xDomain={[0, 100]} padding={{ bottom: 24 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule ticks={20} />
       </Layer>
     </Chart>
@@ -399,7 +389,7 @@
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xDomain={[0, 100]} padding={{ bottom: 24 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule tickSpacing={200} />
       </Layer>
     </Chart>
@@ -411,7 +401,7 @@
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xScale={scaleTime()} xDomain={[timeDay.offset(now, -10), now]} padding={{ bottom: 24 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis
           placement="bottom"
           rule
@@ -429,7 +419,7 @@
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xDomain={[0, 100]} padding={{ bottom: 24 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule ticks={(scale) => scale.ticks?.().filter((d) => d !== 0)} />
       </Layer>
     </Chart>
@@ -441,7 +431,7 @@
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xDomain={[0, 100]} padding={{ bottom: 24 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule format={(v) => v || ''} />
       </Layer>
     </Chart>
@@ -453,7 +443,7 @@
 <Preview data={largeData}>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart data={largeData} x="date" xScale={scaleBand()} y="value" padding={{ bottom: 24 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis
           placement="bottom"
           rule
@@ -481,7 +471,7 @@
       xDomain={[timeDay.offset(now, -10), now]}
       padding={{ top: 32, bottom: 32, left: 20, right: 20 }}
     >
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         {#if debug}
           <Frame class="fill-danger/5" />
           <Frame class="fill-danger/5" full />
@@ -512,7 +502,7 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart yDomain={[0, 100]} padding={{ top: 20, bottom: 20, left: 32, right: 32 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         {#if debug}
           <Frame class="fill-danger/5" />
           <Frame class="fill-danger/5" full />
@@ -543,7 +533,7 @@
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xScale={scaleTime()} xDomain={[timeYear.offset(now, -2), now]} padding={{ bottom: 30 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         {#if debug}
           <Frame class="fill-danger/5" />
           <Frame class="fill-danger/5" full />
@@ -571,7 +561,7 @@
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xScale={scaleTime()} xDomain={[timeYear.offset(now, -2), now]} padding={{ bottom: 30 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         {#if debug}
           <Frame class="fill-danger/5" />
           <Frame class="fill-danger/5" full />
@@ -603,7 +593,7 @@
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart yDomain={[0, 100]} padding={{ right: 90 }}>
       {#snippet children({ context })}
-        <Layer type={renderContext}>
+        <Layer type={shared.renderContext}>
           {#if debug}
             <Frame class="fill-danger/5" />
             <Frame class="fill-danger/5" full />
@@ -636,7 +626,7 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart xScale={scaleTime()} xDomain={[timeDay.offset(now, -10), now]} yDomain={[0, 100]} radial>
-      <Layer type={renderContext} center>
+      <Layer type={shared.renderContext} center>
         <Axis placement="radius" rule />
         <Axis placement="angle" rule />
       </Layer>
@@ -649,7 +639,7 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart xScale={scaleTime()} xDomain={[timeDay.offset(now, -10), now]} yDomain={[0, 100]} radial>
-      <Layer type={renderContext} center>
+      <Layer type={shared.renderContext} center>
         <Axis placement="radius" grid />
         <Axis placement="angle" grid />
       </Layer>
@@ -662,7 +652,7 @@
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xScale={scaleLog()} xDomain={[1, 100]} padding={{ bottom: 24 }}>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule />
       </Layer>
     </Chart>
@@ -692,7 +682,7 @@
             xDomain={example.domain}
             padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Axis placement="bottom" rule grid {tickSpacing} />
             </Layer>
           </Chart>
@@ -725,7 +715,7 @@
             xDomain={example.domain}
             padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Axis placement="bottom" rule grid tickMultiline {tickSpacing} />
             </Layer>
           </Chart>
@@ -748,7 +738,7 @@
             xDomain={example.domain}
             padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Axis
                 placement="bottom"
                 rule
@@ -777,7 +767,7 @@
             xDomain={example.domain}
             padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
-            <Layer type={renderContext}>
+            <Layer type={shared.renderContext}>
               <Axis
                 placement="bottom"
                 rule
@@ -821,7 +811,7 @@
           },
         }}
       >
-        <Layer type={renderContext}>
+        <Layer type={shared.renderContext}>
           <Axis placement="bottom" rule grid {tickSpacing} />
           <Axis placement="left" />
         </Layer>
@@ -841,7 +831,7 @@
           },
         }}
       >
-        <Layer type={renderContext}>
+        <Layer type={shared.renderContext}>
           <Axis placement="bottom" rule grid ticks={{ interval: timeYear.every(1) }} />
         </Layer>
       </Chart>
@@ -876,7 +866,7 @@
           },
         }}
       >
-        <Layer type={renderContext}>
+        <Layer type={shared.renderContext}>
           <Axis placement="bottom" rule grid tickMultiline {tickSpacing} />
           <Axis placement="left" />
         </Layer>
@@ -896,7 +886,7 @@
           },
         }}
       >
-        <Layer type={renderContext}>
+        <Layer type={shared.renderContext}>
           <Axis placement="bottom" rule grid ticks={{ interval: timeYear.every(1) }} />
         </Layer>
       </Chart>

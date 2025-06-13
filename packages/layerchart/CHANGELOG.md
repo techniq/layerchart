@@ -1,5 +1,101 @@
 # LayerChart
 
+## 2.0.0-next.20
+
+### Patch Changes
+
+- fix(Canvas): Improve performance by skipping unnecessary work when hit canvas is unneeded ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(Canvas): Improve performance by reducing computed style lookups and memoizing responses ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(Canvas): Only apply text/font properties to canvas to improve performance ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(GeoPath): Improve performance by only using custom geoCurvePath when `curve` overridden ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(GeoPath): Fix reactivity with `curve` when using Canvas context ([#561](https://github.com/techniq/layerchart/pull/561))
+
+- fix(Calendar): Support showing month labels without path via `monthLabel` prop (true by default) ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.19
+
+### Patch Changes
+
+- fix(Calendar): Pass `cellSize` to children snippet (useful when responsive) ([#558](https://github.com/techniq/layerchart/pull/558))
+
+## 2.0.0-next.18
+
+### Patch Changes
+
+- refactor: Replace `date-fns` usage with existing `d3-time` to reduce bundle size ([#551](https://github.com/techniq/layerchart/pull/551))
+
+- fix(Text): Performance improvement by only determining word width if `width` prop defined (for word wrapping) ([#554](https://github.com/techniq/layerchart/pull/554))
+
+## 2.0.0-next.17
+
+### Patch Changes
+
+- feat: Add Polygon primitive ([#533](https://github.com/techniq/layerchart/pull/533))
+
+- feat: Add Ellipse primitive ([#533](https://github.com/techniq/layerchart/pull/533))
+
+- feat(Spline): Add `value` to `startContent` and `endContent` snippets to easily access the `x` and `y` data values ([#537](https://github.com/techniq/layerchart/pull/537))
+
+- breaking(Spline): Rename `splineRef` to `pathRef` ([#549](https://github.com/techniq/layerchart/pull/549))
+
+- fix(GeoPath): Do not register with hit canavs unless pointer events (onclick, onpointermove, etc) or tooltipContext are defined ([#549](https://github.com/techniq/layerchart/pull/549))
+
+- fix(Treemap): Fix reactivity of props (tile, padding, etc) ([#516](https://github.com/techniq/layerchart/pull/516))
+
+- breaking(Treemap): Remove `selected` prop ([#516](https://github.com/techniq/layerchart/pull/516))
+
+- fix(Treemap): Add `maintainAspectRatio` (default: false) to opt into tiling function adjustment (primarily for zoom) ([#516](https://github.com/techniq/layerchart/pull/516))
+
+- fix(Treemap): Fix `padding*` prop types to support function or number constant ([#516](https://github.com/techniq/layerchart/pull/516))
+
+- feat(ForceSimulation): Refined `onstart`/`ontick`/`onend` events of `ForceSimulation` ([#547](https://github.com/techniq/layerchart/pull/547))
+
+- fix(ForceSimulation): Fixed a bug that would sometimes keep a simulation running, when its inputs change, even if `alpha < alphaMin` ([#546](https://github.com/techniq/layerchart/pull/546))
+
+- fix(TooltipList): Align label to top (start) instead of center by default ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- breaking(Blur): Remove children snippet props (not needed and easier to support canvas in the future) ([#549](https://github.com/techniq/layerchart/pull/549))
+
+- fix(Calendar|MonthPath): Support canvas by using `Spline` instead of `path` ([#549](https://github.com/techniq/layerchart/pull/549))
+
+- docs: Document each component's context support (svg, canvas, html) with interactive toggle ([#549](https://github.com/techniq/layerchart/pull/549))
+
+## 2.0.0-next.16
+
+### Patch Changes
+
+- fix(ForceSimulation): Expose default values by exporting them as constants ([#530](https://github.com/techniq/layerchart/pull/530))
+
+- fix(ForceSimulation): Export Forces<NodeDatum, LinkDatum> type. ([#531](https://github.com/techniq/layerchart/pull/531))
+
+## 2.0.0-next.15
+
+### Minor Changes
+
+- fix(ForceSimulation): Decouple from `ChartContext` by taking nodes and links via `data` prop. ([#526](https://github.com/techniq/layerchart/pull/526))
+
+- fix(ForceSimulation): Improve types of `nodes` and `links` via generics (i.e. `ForceSimulation<Node, Link>`). ([#527](https://github.com/techniq/layerchart/pull/527))
+
+- fix(ForceSimulation): Expose `links` via `children` snippet.
+
+## 2.0.0-next.14
+
+### Patch Changes
+
+- fix(AreaChart|BarChar|LineChart): Use value axis (typically y) property name/accessor for tooltip label if defined as string (ex. `<AreaChart x="date" y="visitors">` will use `visitors` instead of `value`) ([#523](https://github.com/techniq/layerchart/pull/523))
+
+## 2.0.0-next.13
+
+### Patch Changes
+
+- feat: Support passing `FormatConfig` (ex. `{ type: '...', options: { ... } }`) anywhere `FormatType` is supported to simplify custom formatting (ex. `variant`) ([#521](https://github.com/techniq/layerchart/pull/521))
+
+- feat: Support passing `PeriodTypeCode` strings for simplified date formatting and reduce imports. Example: `format={PeriodType.Day}` is now `format="day"`. Also supported with config object for passing additional options (ex. `format={{ type: 'day', options: { variant: 'long' } }}`). Supported for all `format` props include Axis, Labels, Legend and Tooltip. ([#521](https://github.com/techniq/layerchart/pull/521))
+
 ## 2.0.0-next.12
 
 ### Patch Changes

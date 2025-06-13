@@ -58,6 +58,7 @@ export async function load({ fetch }) {
 
     meta: {
       pageSource,
+      supportedContexts: ['svg'], // TODO: `canvas` coming soon
       related: ['components/Dagre', 'components/Link'],
     },
   };

@@ -14,8 +14,8 @@
   import { scaleBand, scaleSequential } from 'd3-scale';
   import { curveCatmullRom, curveLinearClosed } from 'd3-shape';
   import { extent, flatGroup, group, ticks } from 'd3-array';
-  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
-  import { format, PeriodType, sortFunc } from '@layerstack/utils';
+  import { Field, Switch } from 'svelte-ux';
+  import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
@@ -23,6 +23,7 @@
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { cls } from '@layerstack/tailwind';
   import { slide } from 'svelte/transition';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -86,20 +87,13 @@
 
   let show = $state(true);
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
   let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-
   <Field label="Debug" let:id classes={{ container: 'h-full' }}>
     <Switch {id} bind:checked={debug} />
   </Field>
@@ -620,7 +614,7 @@
       yDomain={null}
       props={{
         spline: { class: 'stroke' },
-        xAxis: { format: PeriodType.Month },
+        xAxis: { format: 'month' },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
         tooltip: {
@@ -658,7 +652,7 @@
       rule={{ y: 'top', class: 'stroke-surface-content/20' }}
       props={{
         spline: { class: 'stroke' },
-        xAxis: { format: PeriodType.Month, tickMarks: false },
+        xAxis: { format: 'month', tickMarks: false },
         yAxis: { ticks: 4, format: (v) => v + '° F' },
         highlight: { points: false },
         tooltip: {
@@ -844,7 +838,7 @@
           contained={false}
         >
           {#snippet children({ data })}
-            {format(context.x(data), PeriodType.Day)}
+            {format(context.x(data), 'day')}
           {/snippet}
         </Tooltip.Root>
       {/snippet}
@@ -886,7 +880,7 @@
               </div>
             {:else}
               <!-- Normal tooltip -->
-              <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+              <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
               <Tooltip.List>
                 <Tooltip.Item label="value" value={context.y(data)} />
               </Tooltip.List>
@@ -1100,7 +1094,7 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+            <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
             <Tooltip.List>
               <Tooltip.Item label="value" value={context.y(data)} />
             </Tooltip.List>

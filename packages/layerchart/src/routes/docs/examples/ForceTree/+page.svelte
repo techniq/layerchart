@@ -1,42 +1,52 @@
 <script lang="ts">
-  import { hierarchy } from 'd3-hierarchy';
-  import { forceX, forceY, forceManyBody, forceLink } from 'd3-force';
+  import { hierarchy, type HierarchyLink, type HierarchyNode } from 'd3-hierarchy';
+  import { forceX, forceY, forceManyBody, forceLink, type SimulationNodeDatum } from 'd3-force';
 
-  import { Chart, Circle, ForceSimulation, Link, Svg, Tooltip } from 'layerchart';
+  import { Chart, Circle, ForceSimulation, Link, Layer, Tooltip } from 'layerchart';
   import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import type { Prettify } from '@layerstack/utils';
+  import { shared } from '../../shared.svelte.js';
+
+  type NodeDatum = { name: string; value: number };
+  type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
 
   let { data } = $props();
 
-  const root = hierarchy(data.flare);
-  const nodes = root.descendants();
-  const links = root.links();
+  const root: HierarchyNode<MySimulationNodeDatum> = hierarchy<MySimulationNodeDatum>(data.flare);
+  const nodes: HierarchyNode<MySimulationNodeDatum>[] = root.descendants();
+  const links: HierarchyLink<MySimulationNodeDatum>[] = root.links();
 
-  const linkForce = forceLink(links).distance(0).strength(1);
-  const chargeForce = forceManyBody().strength(-50);
-  const xForce = forceX();
-  const yForce = forceY();
+  const linkForce = forceLink<
+    HierarchyNode<MySimulationNodeDatum>,
+    HierarchyLink<MySimulationNodeDatum>
+  >(links)
+    .distance(0)
+    .strength(1);
+  const chargeForce = forceManyBody<HierarchyNode<MySimulationNodeDatum>>().strength(-50);
+  const xForce = forceX<HierarchyNode<MySimulationNodeDatum>>();
+  const yForce = forceY<HierarchyNode<MySimulationNodeDatum>>();
 </script>
 
 <h1>Examples</h1>
 
 <Preview data={nodes}>
   <div class="h-[600px] p-4 border rounded-sm">
-    <Chart data={nodes}>
+    <Chart>
       {#snippet children({ context })}
-        <Svg center>
-          <ForceSimulation
-            forces={{
-              link: linkForce,
-              charge: chargeForce,
-              x: xForce,
-              y: yForce,
-            }}
-            {links}
-            cloneNodes
-          >
-            {#snippet children({ nodes, linkPositions })}
+        <ForceSimulation
+          forces={{
+            link: linkForce,
+            charge: chargeForce,
+            x: xForce,
+            y: yForce,
+          }}
+          data={{ nodes, links }}
+          cloneNodes
+        >
+          {#snippet children({ nodes, linkPositions })}
+            <Layer type={shared.renderContext} center>
               {#each links as link, i}
                 <Link
                   data={link}
@@ -59,9 +69,9 @@
                   onpointerleave={context.tooltip.hide}
                 />
               {/each}
-            {/snippet}
-          </ForceSimulation>
-        </Svg>
+            </Layer>
+          {/snippet}
+        </ForceSimulation>
 
         <Tooltip.Root>
           {#snippet children({ data })}

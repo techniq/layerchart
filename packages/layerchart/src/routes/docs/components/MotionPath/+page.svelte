@@ -2,13 +2,14 @@
   import type { ComponentProps } from 'svelte';
   import { linear } from 'svelte/easing';
 
-  import { Axis, Chart, Circle, MotionPath, Spline, Svg } from 'layerchart';
+  import { Axis, Chart, Circle, Layer, MotionPath, Spline } from 'layerchart';
   import { Field, RangeField, Switch, Toggle } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let pointCount = $state(100);
 
@@ -46,7 +47,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -57,7 +58,7 @@
               {/snippet}
             </MotionPath>
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -78,7 +79,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -96,7 +97,7 @@
               {/snippet}
             </MotionPath>
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -117,7 +118,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -130,7 +131,7 @@
               </MotionPath>
             {/key}
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>

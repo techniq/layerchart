@@ -15,6 +15,7 @@ export async function load({ fetch }) {
       api,
       source,
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       related: ['components/AnnotationLine', 'components/AnnotationRange'],
     },
   };

@@ -8,6 +8,7 @@ export async function load() {
       api,
       source,
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       related: [
         'examples/Area',
         'examples/Bars',

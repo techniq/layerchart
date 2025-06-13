@@ -1,17 +1,19 @@
 <script lang="ts">
   import { scaleBand } from 'd3-scale';
   import { range } from 'd3-array';
-  import { getDay, getWeek } from 'date-fns';
+  import { timeWeek, timeYear } from 'd3-time';
 
   import { Highlight, ScatterChart, Tooltip } from 'layerchart';
-  import { formatDate, PeriodType } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   const data = createDateSeries({ count: 60, min: 10, max: 100, value: 'integer' });
 
-  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -22,14 +24,14 @@
   <div class="h-[300px] p-4 border rounded-sm">
     <ScatterChart
       {data}
-      x={(d) => getWeek(d.date)}
+      x={(d) => timeWeek.count(timeYear(d.date), d.date)}
       xScale={scaleBand()}
-      y={(d) => getDay(d.date)}
+      y={(d) => d.date.getDay()}
       yScale={scaleBand()}
       yDomain={range(7)}
       r="value"
       rRange={[0, 16]}
-      padding={{ left: 48, bottom: 16 }}
+      padding={{ left: 32, bottom: 16 }}
       props={{
         xAxis: { format: (d) => 'Week ' + d },
         yAxis: { format: (d) => daysOfWeek[d] },
@@ -37,6 +39,7 @@
         grid: { x: false, y: true, bandAlign: 'between' },
         tooltip: { context: { mode: 'band' } },
       }}
+      {renderContext}
     >
       {#snippet highlight()}
         <Highlight area axis="x" />
@@ -46,7 +49,7 @@
       {#snippet tooltip()}
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{formatDate(data.date, PeriodType.Day)}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label="value" value={data.value} valueAlign="right" />
             </Tooltip.List>

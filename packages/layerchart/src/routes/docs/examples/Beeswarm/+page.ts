@@ -10,6 +10,7 @@ export async function load({ fetch }) {
     )) as USSenatorsData,
     meta: {
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
     },
   };
 }

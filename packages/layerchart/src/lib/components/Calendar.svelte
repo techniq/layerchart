@@ -36,14 +36,14 @@
     /**
      * Props to pass to the `<text>` element for month labels.
      */
-    monthLabel?: Partial<ComponentProps<typeof Text>>;
+    monthLabel?: boolean | Partial<ComponentProps<typeof Text>>;
 
     /**
      * Tooltip context to setup mouse events to show tooltip for related data
      */
     tooltipContext?: TooltipContextValue;
 
-    children?: Snippet<[{ cells: CalendarCell[] }]>;
+    children?: Snippet<[{ cells: CalendarCell[]; cellSize: [number, number] }]>;
   } & Omit<
     RectPropsWithoutHTML,
     'children' | 'x' | 'y' | 'width' | 'height' | 'fill' | 'onpointermove' | 'onpointerleave'
@@ -57,7 +57,7 @@
   import { type ComponentProps, type Snippet } from 'svelte';
   import { timeDays, timeMonths, timeWeek, timeYear } from 'd3-time';
   import { index } from 'd3-array';
-  import { format } from 'date-fns';
+  import { format } from '@layerstack/utils';
 
   import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
   import type { TooltipContextValue } from './tooltip/TooltipContext.svelte';
@@ -74,9 +74,9 @@
     start,
     cellSize: cellSizeProp,
     monthPath = false,
+    monthLabel = true,
     tooltipContext: tooltip,
     children,
-    monthLabel,
     ...restProps
   }: CalendarPropsWithoutHTML = $props();
 
@@ -117,7 +117,7 @@
 </script>
 
 {#if children}
-  {@render children({ cells })}
+  {@render children({ cells, cellSize })}
 {:else}
   {#each cells as cell}
     <Rect
@@ -136,11 +136,15 @@
 {#if monthPath}
   {#each yearMonths as date}
     <MonthPath {date} {cellSize} {...extractLayerProps(monthPath, 'calendar-month-path')} />
+  {/each}
+{/if}
 
+{#if monthLabel}
+  {#each yearMonths as date}
     <Text
       x={timeWeek.count(timeYear.floor(date), timeWeek.ceil(date)) * cellSize[0]}
       y={-4}
-      value={format(date, 'MMM')}
+      value={format(date, 'month', { variant: 'short' })}
       {...extractLayerProps(monthLabel, 'calendar-month-label', 'text-xs')}
     />
   {/each}

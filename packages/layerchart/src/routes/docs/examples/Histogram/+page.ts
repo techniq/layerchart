@@ -8,6 +8,7 @@ export async function load({ fetch }) {
     )) as OlympiansData,
     meta: {
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       related: ['components/Bars', 'examples/Bars', 'examples/Columns'],
     },
   };

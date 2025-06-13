@@ -82,7 +82,7 @@
     type = 'rounded',
     radius = 20,
     curve = curveLinear,
-    splineRef = $bindable(),
+    pathRef = $bindable(),
     pathData: pathDataProp,
     marker,
     markerStart,
@@ -137,7 +137,7 @@
 
 <Spline
   pathData={motionPath.current}
-  bind:splineRef
+  bind:pathRef
   marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
   marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
   marker-end={markerEndId ? `url(#${markerEndId})` : undefined}

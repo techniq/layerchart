@@ -37,6 +37,7 @@ export async function load({ fetch }) {
       source,
       pageSource,
       description: 'Streamlined Chart configuration for Line charts',
+      supportedContexts: ['svg', 'canvas'],
       related: ['components/Chart', 'components/Spline', 'examples/Line'],
     },
   };

@@ -1,28 +1,17 @@
 <script lang="ts">
-  import { Chart, Layer, LinearGradient, Rect, Svg } from 'layerchart';
+  import { Chart, Layer, LinearGradient, Rect } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
-  import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
-
-  let renderContext: 'svg' | 'canvas' = $state('svg');
+  import { shared } from '../../shared.svelte.js';
 </script>
 
 <h1>Examples</h1>
-
-<div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-</div>
 
 <h2>Direction with custom colors</h2>
 
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <LinearGradient stops={['hsl(60 100% 50%)', 'hsl(30 100% 40%)']}>
           {#snippet children({ gradient })}
             <Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />
@@ -45,12 +34,57 @@
   </div>
 </Preview>
 
+<h2>Explicit offsets</h2>
+
+<Preview>
+  <div class="h-[334px] p-4 border rounded-sm">
+    <Chart>
+      <Layer type={shared.renderContext}>
+        <LinearGradient
+          stops={[
+            ['30%', 'hsl(60 100% 50%)'],
+            ['70%', 'hsl(30 100% 40%)'],
+          ]}
+        >
+          {#snippet children({ gradient })}
+            <Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
+
+        <LinearGradient
+          stops={[
+            ['10%', 'hsl(60 100% 50%)'],
+            ['90%', 'hsl(140 100% 40%)'],
+          ]}
+          rotate={45}
+        >
+          {#snippet children({ gradient })}
+            <Rect x={120 * 1} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
+
+        <LinearGradient
+          stops={[
+            ['50%', 'hsl(195 100% 50%)'],
+            ['50%', 'hsl(270 100% 30%)'],
+          ]}
+          vertical
+        >
+          {#snippet children({ gradient })}
+            <Rect x={120 * 2} y={0} width={100} height={300} rx={8} fill={gradient} />
+          {/snippet}
+        </LinearGradient>
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Tailwind colors</h2>
 
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <LinearGradient class="from-pink-500 to-yellow-500" vertical>
           {#snippet children({ gradient })}
             <Rect x={120 * 0} y={0} width={100} height={300} rx={8} fill={gradient} />
@@ -114,7 +148,7 @@
 <Preview>
   <div class="h-[334px] p-4 border rounded-sm">
     <Chart>
-      <Layer type={renderContext}>
+      <Layer type={shared.renderContext}>
         <LinearGradient class="from-green-500 to-blue-500" units="objectBoundingBox">
           {#snippet children({ gradient })}
             {#each { length: 6 } as _, i}

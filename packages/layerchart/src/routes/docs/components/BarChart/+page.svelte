@@ -9,19 +9,22 @@
     Layer,
     Labels,
     LinearGradient,
+    Text,
     Tooltip,
+    Polygon,
   } from 'layerchart';
   import { extent, group, mean, sum } from 'd3-array';
   import { scaleLinear, scaleLog, scaleThreshold, scaleTime } from 'd3-scale';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, wideData, longData } from '$lib/utils/genData.js';
-  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, Switch } from 'svelte-ux';
   import { timeMonth } from 'd3-time';
   import { interpolate, quantize } from 'd3-interpolate';
   import { interpolateSpectral } from 'd3-scale-chromatic';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -101,20 +104,13 @@
     },
   ];
 
-  let renderContext: 'svg' | 'canvas' = $state('svg');
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
   let debug = $state(false);
 </script>
 
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field>
-
   <Field label="Debug" let:id classes={{ container: 'h-full' }}>
     <Switch {id} bind:checked={debug} />
   </Field>
@@ -271,7 +267,7 @@
       orientation="horizontal"
       props={{
         xAxis: {
-          format: PeriodType.Month,
+          format: 'month',
         },
         tooltip: {
           context: { mode: 'bounds' },
@@ -285,8 +281,8 @@
           {#snippet children({ data })}
             <Tooltip.Header>{format(context.y(data))}</Tooltip.Header>
             <Tooltip.List>
-              <Tooltip.Item label="Start" value={data.start} format={PeriodType.Day} />
-              <Tooltip.Item label="End" value={data.end} format={PeriodType.Day} />
+              <Tooltip.Item label="Start" value={data.start} format="day" />
+              <Tooltip.Item label="End" value={data.end} format="day" />
             </Tooltip.List>
           {/snippet}
         </Tooltip.Root>
@@ -1182,6 +1178,100 @@
   </div>
 </Preview>
 
+<h2>Single stack with indicator</h2>
+
+<Preview>
+  <div class="h-[68px] p-4 border rounded-sm">
+    <BarChart
+      data={[
+        {
+          label: 'Severe thinness',
+          start: 15,
+          end: 16,
+        },
+        {
+          label: 'Thinness',
+          start: 16,
+          end: 18.5,
+        },
+        {
+          label: 'Normal',
+          start: 18.5,
+          end: 25,
+        },
+        {
+          label: 'Overweight',
+          start: 25,
+          end: 30,
+        },
+        {
+          label: 'Obese',
+          start: 30,
+          end: 35,
+        },
+        {
+          label: 'Severe obese',
+          start: 35,
+          end: 40,
+        },
+      ]}
+      x={['start', 'end']}
+      y={(d) => 1}
+      xBaseline={undefined}
+      xNice={false}
+      c="label"
+      cRange={[
+        'var(--color-blue-500)',
+        'var(--color-blue-400)',
+        'var(--color-teal-500)',
+        'var(--color-yellow-500)',
+        'var(--color-orange-500)',
+        'var(--color-red-500)',
+      ]}
+      bandPadding={0}
+      padding={{ top: 12, bottom: 12 }}
+      orientation="horizontal"
+      props={{
+        tooltip: {
+          context: { mode: 'bounds' },
+        },
+      }}
+      {renderContext}
+      {debug}
+    >
+      {#snippet axis({ context })}
+        <Axis placement="bottom" tickLength={0} ticks={[15, 16, 18.5, 25, 30, 35, 40]}>
+          {#snippet tickLabel({ props })}
+            <Text {...props} textAnchor={props.value === '40' ? 'end' : 'start'} />
+          {/snippet}
+        </Axis>
+      {/snippet}
+
+      {#snippet aboveMarks({ context })}
+        <Polygon
+          cx={context.xScale(26.5)}
+          cy={-3}
+          r={6}
+          points={3}
+          rotate={90}
+          class="fill-black stroke-white dark:fill-white dark:stroke-black"
+        />
+      {/snippet}
+
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.List>
+              <Tooltip.Item label="Label:" value={data.label} />
+              <Tooltip.Item label="Range:" value="{data.start} - {data.end}" />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
+    </BarChart>
+  </div>
+</Preview>
+
 <h2>Single axis (x)</h2>
 
 <Preview data={dateSeriesData}>
@@ -1407,7 +1497,7 @@
       orientation="horizontal"
       props={{
         xAxis: {
-          format: PeriodType.Month,
+          format: 'month',
         },
         grid: { bandAlign: 'between' },
         tooltip: {
@@ -1423,8 +1513,8 @@
           {#snippet children({ data })}
             <Tooltip.Header>{format(context.y(data))}</Tooltip.Header>
             <Tooltip.List>
-              <Tooltip.Item label="Start" value={data.start} format={PeriodType.Day} />
-              <Tooltip.Item label="End" value={data.end} format={PeriodType.Day} />
+              <Tooltip.Item label="Start" value={data.start} format="day" />
+              <Tooltip.Item label="End" value={data.end} format="day" />
             </Tooltip.List>
           {/snippet}
         </Tooltip.Root>
@@ -1486,7 +1576,7 @@
       {#snippet tooltip({ context })}
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(context.x(data), PeriodType.DayTime)}</Tooltip.Header>
+            <Tooltip.Header>{format(context.x(data), 'daytime')}</Tooltip.Header>
             <Tooltip.List>
               <Tooltip.Item label="value" value={context.y(data)} />
             </Tooltip.List>

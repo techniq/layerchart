@@ -23,7 +23,7 @@
   bind:this={ref}
   class={cls(
     layerClass('tooltip-list'),
-    'grid grid-cols-[1fr_auto] gap-x-2 gap-y-1 items-center',
+    'grid grid-cols-[1fr_auto] gap-x-2 gap-y-1 items-start',
     className
   )}
   {...restProps}

@@ -10,6 +10,7 @@ export async function load() {
       pageSource,
       description:
         'Setup tooltip context, include mode to identify related data based on pointer position.  Typically used indirectly via the `tooltip` prop Chart',
+      supportedContexts: ['svg', 'canvas'],
       related: ['components/Chart', 'components/Tooltip', 'components/Highlight'],
     },
   };

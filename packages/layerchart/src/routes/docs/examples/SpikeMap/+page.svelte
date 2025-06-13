@@ -4,10 +4,11 @@
   import { scaleLinear } from 'd3-scale';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, spikePath, Spline, Svg, Tooltip } from 'layerchart';
+  import { Chart, GeoPath, Layer, spikePath, Spline, Tooltip } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -50,7 +51,7 @@
 
 <h1>Examples</h1>
 
-<h2>SVG</h2>
+<h2>Basic</h2>
 
 <Preview data={states}>
   <div class="h-[600px] overflow-hidden">
@@ -69,7 +70,7 @@
 
         <TransformControls />
 
-        <Svg>
+        <Layer type={shared.renderContext}>
           <GeoPath
             geojson={states}
             class="fill-surface-content/10 stroke-surface-100"
@@ -82,10 +83,10 @@
                 {@const [x, y] = geoPath?.centroid(feature) ?? [0, 0]}
                 {@const d = feature.properties.data}
                 {@const height = heightScale(d?.population ?? 0)}
-                <path
-                  d={spikePath({ x, y, width, height })}
+                <Spline
+                  pathData={spikePath({ x, y, width, height })}
                   class="stroke-danger fill-danger/25"
-                  stroke-width={strokeWidth}
+                  {strokeWidth}
                 />
               {/snippet}
             </GeoPath>
@@ -99,91 +100,18 @@
               {strokeWidth}
             />
           {/each}
-        </Svg>
+        </Layer>
 
-        <Tooltip.Root>
-          {#snippet children({ data })}
-            {@const d = data.properties.data}
-            <Tooltip.Header
-              >{data.properties.name + ' - ' + data.properties.data?.state}</Tooltip.Header
-            >
-            <Tooltip.List>
-              <Tooltip.Item
-                label="Total Population"
-                value={d?.population}
-                format="integer"
-                valueAlign="right"
-              />
-              <Tooltip.Item
-                label="Est. Population under 18"
-                value={d?.populationUnder18}
-                format="integer"
-                valueAlign="right"
-              />
-              <Tooltip.Item
-                label="Est. Percent under 18"
-                value={d?.percentUnder18 / 100}
-                format="percentRound"
-                valueAlign="right"
-              />
-            </Tooltip.List>
-          {/snippet}
-        </Tooltip.Root>
-      {/snippet}
-    </Chart>
-  </div>
-</Preview>
-
-<h2>Canvas</h2>
-
-<Preview data={states}>
-  <div class="h-[600px] mt-10">
-    <Chart
-      geo={{
-        projection,
-        fitGeojson: states,
-      }}
-      transform={{
-        mode: 'canvas',
-        initialScrollMode: 'scale',
-      }}
-    >
-      {#snippet children({ context })}
-        {@const strokeWidth = 1 / context.transform.scale}
-        <TransformControls />
-
-        <Canvas>
-          <GeoPath
-            geojson={states}
-            class="fill-surface-content/10 stroke-surface-100"
-            {strokeWidth}
-          />
-
-          {#each enrichedCountiesFeatures as feature}
-            <GeoPath geojson={feature} {strokeWidth} tooltipContext={context.tooltip}>
-              {#snippet children({ geoPath })}
-                {@const [x, y] = geoPath?.centroid(feature) ?? [0, 0]}
-                {@const d = feature.properties.data}
-                {@const height = heightScale(d?.population ?? 0)}
-                <Spline
-                  pathData={spikePath({ x, y, width, height })}
-                  class="stroke-danger fill-danger/25"
-                  {strokeWidth}
-                />
-              {/snippet}
-            </GeoPath>
-          {/each}
-        </Canvas>
-
-        <Canvas pointerEvents={false}>
-          {#if context.tooltip.data}
+        <!-- Add extra path to mimic hover stroke on canvas -->
+        <Layer type={shared.renderContext} pointerEvents={false}>
+          {#if context.tooltip.data && shared.renderContext === 'canvas'}
             <GeoPath
               geojson={context.tooltip.data}
               class="stroke-none fill-surface-content/10"
               {strokeWidth}
             />
           {/if}
-        </Canvas>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}

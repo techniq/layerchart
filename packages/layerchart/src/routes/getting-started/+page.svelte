@@ -101,7 +101,7 @@
   <Code
     source={'<' +
       `script>
-  import { Chart, Svg, Axis, Bars } from 'layerchart';
+  import { Chart, Layer, Axis, Bars } from 'layerchart';
 </script>`}
     language="svelte"
   />

@@ -9,14 +9,14 @@
     randomNormal,
     randomUniform,
   } from 'd3-random';
-  import { timeDays, timeMonths, timeWeeks } from 'd3-time';
-  import { subDays } from 'date-fns';
+  import { timeDay, timeMonth, timeWeek } from 'd3-time';
 
   import { BarChart, Tooltip, thresholdTime } from 'layerchart';
   import { MenuField, RangeField, NumberStepper, State } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -45,8 +45,12 @@
   const now = new Date();
   let dateRange = $state(10);
   const randomDateData = $derived(
-    Array.from({ length: randomCount }, () => getRandomDate(subDays(now, dateRange), now)) as any[]
+    Array.from({ length: randomCount }, () =>
+      getRandomDate(timeDay.offset(now, -dateRange), now)
+    ) as any[]
   ); // TODO: Make typescript happy
+
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -67,6 +71,7 @@
         yAxis: { format: 'metric', motion: 'tween' },
         bars: { motion: 'tween' },
       }}
+      {renderContext}
     >
       {#snippet tooltip()}
         <Tooltip.Root>
@@ -89,6 +94,7 @@
     </BarChart>
   </div>
 </Preview>
+
 <h2>Horizontal</h2>
 
 <Preview data={olympiansBins}>
@@ -104,6 +110,7 @@
         bars: { motion: 'tween' },
       }}
       orientation="horizontal"
+      {renderContext}
     >
       {#snippet tooltip()}
         <Tooltip.Root>
@@ -198,6 +205,7 @@
         yAxis: { format: 'metric', motion: 'tween' },
         bars: { motion: 'tween' },
       }}
+      {renderContext}
     >
       {#snippet tooltip()}
         <Tooltip.Root>
@@ -250,20 +258,19 @@
           yAxis: { format: 'metric', motion: 'tween' },
           bars: { motion: 'tween' },
         }}
+        {renderContext}
       >
         {#snippet tooltip()}
           <Tooltip.Root>
             {#snippet children({ data })}
               <Tooltip.Header class="text-center">
-                {format(data.x0, PeriodType.Day) +
-                  ' - ' +
-                  format(data.x1, PeriodType.Day)}</Tooltip.Header
+                {format(data.x0, 'day') + ' - ' + format(data.x1, 'day')}</Tooltip.Header
               >
               <Tooltip.List>
                 <Tooltip.Item label="count" value={data.length} format="integer" />
                 <Tooltip.Separator />
                 {#each data.slice(0, 5) as d}
-                  <Tooltip.Item label="value" value={d} format={PeriodType.DayTime} />
+                  <Tooltip.Item label="value" value={d} format={'daytime'} />
                 {/each}
                 {#if data.length > 5}
                   <span></span>
@@ -278,7 +285,7 @@
   </Preview>
 </State>
 
-<State initial={{ intervalValue: 'weeks', intervalFunc: timeWeeks }} let:value let:set>
+<State initial={{ intervalValue: 'weeks', intervalFunc: timeWeek.range }} let:value let:set>
   {@const binByTime = bin().thresholds(
     (_data, min, max) =>
       value?.intervalFunc(new Date(min), new Date(max)).map((d) => d.valueOf()) ?? []
@@ -292,9 +299,9 @@
     <MenuField
       label="Interval"
       options={[
-        { label: 'Days', value: 'days', interval: timeDays },
-        { label: 'Weeks', value: 'weeks', interval: timeWeeks },
-        { label: 'Months', value: 'months', interval: timeMonths },
+        { label: 'Days', value: 'days', interval: timeDay.range },
+        { label: 'Weeks', value: 'weeks', interval: timeWeek.range },
+        { label: 'Months', value: 'months', interval: timeMonth.range },
       ]}
       value={value?.intervalValue}
       on:change={(e) => {
@@ -322,20 +329,19 @@
           yAxis: { format: 'metric', motion: 'tween' },
           bars: { motion: 'tween' },
         }}
+        {renderContext}
       >
         {#snippet tooltip()}
           <Tooltip.Root>
             {#snippet children({ data })}
               <Tooltip.Header class="text-center">
-                {format(data.x0, PeriodType.Day) +
-                  ' - ' +
-                  format(data.x1, PeriodType.Day)}</Tooltip.Header
+                {format(data.x0, 'day') + ' - ' + format(data.x1, 'day')}</Tooltip.Header
               >
               <Tooltip.List>
                 <Tooltip.Item label="count" value={data.length} format="integer" />
                 <Tooltip.Separator />
                 {#each data.slice(0, 5) as d}
-                  <Tooltip.Item label="value" value={d} format={PeriodType.DayTime} />
+                  <Tooltip.Item label="value" value={d} format={'daytime'} />
                 {/each}
                 {#if data.length > 5}
                   <span></span>

@@ -1,19 +1,20 @@
 <script lang="ts">
-  import type { Component, ComponentProps } from 'svelte';
+  import type { ComponentProps } from 'svelte';
 
-  import { Axis, Canvas, Chart, Circle, Points, Spline, Svg, Text } from 'layerchart';
+  import { Axis, Canvas, Chart, Circle, Layer, Points, Spline, Text } from 'layerchart';
   import { Field, RangeField, Switch, Toggle, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import PathDataMenuField from '$lib/docs/PathDataMenuField.svelte';
+  import { format } from '@layerstack/utils';
+  import { shared } from '../../shared.svelte.js';
 
   let pointCount = $state(100);
   let showPoints = $state(false);
   let show = $state(true);
   let motion: 'draw' | 'tween' | 'none' = $state('tween');
-  let Context: Component = $state(Svg);
 
   let pathGenerator = $state((x: number) => x);
   let curve: ComponentProps<typeof CurveMenuField>['value'] = $state(undefined);
@@ -44,16 +45,9 @@
     </Field>
   </div>
 
-  <div class="grid grid-cols-[100px_auto_auto_1fr] gap-2">
+  <div class="grid grid-cols-[100px_auto_1fr] gap-2">
     <Field label="Show" let:id>
       <Switch bind:checked={show} {id} size="md" />
-    </Field>
-
-    <Field label="Context" classes={{ input: 'mt-1 mb-[6px]' }}>
-      <ToggleGroup bind:value={Context} variant="outline" size="sm">
-        <ToggleOption value={Svg}>Svg</ToggleOption>
-        <ToggleOption value={Canvas}>Canvas</ToggleOption>
-      </ToggleGroup>
     </Field>
 
     <Field label="Motion" classes={{ input: 'mt-1 mb-[6px]' }}>
@@ -69,7 +63,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="x" y="y" yNice padding={{ left: 24, bottom: 24, top: 4, right: 8 }}>
-      <Context>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
 
@@ -89,7 +83,7 @@
             />
           {/if}
         {/if}
-      </Context>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -111,13 +105,13 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
             <Spline {curve} draw class="stroke-primary stroke-2" />
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -138,13 +132,13 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
             <Spline {curve} motion="tween" class="stroke-primary stroke-2" />
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -165,7 +159,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -176,13 +170,13 @@
               markerEnd={{ type: 'arrow', class: 'stroke-2' }}
             />
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
 </Toggle>
 
-<h2>basic start and end slots</h2>
+<h2>basic start and end snippets</h2>
 
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
@@ -197,7 +191,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -210,13 +204,13 @@
               {/snippet}
             </Spline>
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
 </Toggle>
 
-<h2>label using start/end slots</h2>
+<h2>label using start/end snippets</h2>
 
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
@@ -231,7 +225,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 48, bottom: 24, right: 48 }}>
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -247,13 +241,13 @@
               {/snippet}
             </Spline>
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
 </Toggle>
 
-<h2>end slot with draw</h2>
+<h2>end snippet with draw</h2>
 
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
@@ -268,7 +262,7 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
       <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
           {#if show}
@@ -278,13 +272,13 @@
               {/snippet}
             </Spline>
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
 </Toggle>
 
-<h2>Canvas</h2>
+<h2>end slot with draw with value</h2>
 
 <Toggle on let:on={show} let:toggle>
   <div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-2 mb-2">
@@ -293,21 +287,29 @@
     </Field>
     <PathDataMenuField bind:value={pathGenerator} {amplitude} {frequency} {phase} />
     <CurveMenuField bind:value={curve} />
-    <RangeField label="Points" bind:value={pointCount} min={2} max={1000} />
+    <RangeField label="Points" bind:value={pointCount} min={2} />
   </div>
 
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm">
-      <Chart {data} x="x" y="y" yNice padding={{ left: 16, bottom: 24 }}>
-        <Svg>
+      <Chart {data} x="x" y="y" yNice padding={{ left: 16, right: 40, bottom: 24 }}>
+        <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule />
           <Axis placement="bottom" rule />
-        </Svg>
-        <Canvas>
           {#if show}
-            <Spline {curve} motion="tween" class="stroke-primary stroke-2" />
+            <Spline {curve} draw={{ duration: 3000 }} class="stroke-primary stroke-2">
+              {#snippet endContent({ value })}
+                <Circle r={5} class="fill-primary" />
+                <Text
+                  value={format(value.y, 'decimal')}
+                  textAnchor="start"
+                  verticalAnchor="middle"
+                  dx={8}
+                />
+              {/snippet}
+            </Spline>
           {/if}
-        </Canvas>
+        </Layer>
       </Chart>
     </div>
   </Preview>

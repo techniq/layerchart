@@ -1,21 +1,21 @@
 <script lang="ts">
   import { scaleTime } from 'd3-scale';
-  import { addMinutes, startOfDay } from 'date-fns';
+  import { timeMinute, timeDay } from 'd3-time';
   import { Duration } from 'svelte-ux';
-  import { PeriodType, format } from '@layerstack/utils';
 
   import { BarChart, Points, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { getRandomInteger } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   const count = 10;
-  const now = startOfDay(new Date());
+  const now = timeDay.floor(new Date());
   let lastStartDate = now;
 
   const data = Array.from({ length: count }).map((_, i) => {
-    const startDate = addMinutes(lastStartDate, getRandomInteger(0, 60));
-    const endDate = addMinutes(startDate, getRandomInteger(0, 60));
+    const startDate = timeMinute.offset(lastStartDate, getRandomInteger(0, 60));
+    const endDate = timeMinute.offset(startDate, getRandomInteger(0, 60));
     lastStartDate = startDate;
     return {
       name: `Item ${i + 1}`,
@@ -23,6 +23,8 @@
       endDate,
     };
   });
+
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 
   // TODO: Update to use better data example: https://observablehq.com/@d3/dot-plot
 </script>
@@ -41,6 +43,7 @@
       grid={{ x: false, y: true, bandAlign: 'between' }}
       orientation="horizontal"
       padding={{ left: 36, bottom: 36 }}
+      {renderContext}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -49,11 +52,13 @@
             <Tooltip.List>
               <Tooltip.Item
                 label="start"
-                value={format(data.startDate, PeriodType.TimeOnly, { variant: 'short' })}
+                value={data.startDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Item
                 label="end"
-                value={format(data.endDate, PeriodType.TimeOnly, { variant: 'short' })}
+                value={data.endDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Separator />
               <Tooltip.Item label="duration" valueAlign="right">
@@ -86,6 +91,7 @@
       grid={{ x: false, y: true, bandAlign: 'between' }}
       orientation="horizontal"
       padding={{ left: 36, bottom: 36 }}
+      {renderContext}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
@@ -94,11 +100,13 @@
             <Tooltip.List>
               <Tooltip.Item
                 label="start"
-                value={format(data.startDate, PeriodType.TimeOnly, { variant: 'short' })}
+                value={data.startDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Item
                 label="end"
-                value={format(data.endDate, PeriodType.TimeOnly, { variant: 'short' })}
+                value={data.endDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Separator />
               <Tooltip.Item label="duration" valueAlign="right">
@@ -131,6 +139,7 @@
           points: true,
         },
       }}
+      {renderContext}
     >
       {#snippet marks()}
         <Points class="fill-primary-100 stroke-primary" links={{ class: 'stroke-primary' }} />
@@ -143,11 +152,13 @@
             <Tooltip.List>
               <Tooltip.Item
                 label="start"
-                value={format(data.startDate, PeriodType.TimeOnly, { variant: 'short' })}
+                value={data.startDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Item
                 label="end"
-                value={format(data.endDate, PeriodType.TimeOnly, { variant: 'short' })}
+                value={data.endDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Separator />
               <Tooltip.Item label="duration" valueAlign="right">
@@ -187,6 +198,7 @@
           points: true,
         },
       }}
+      {renderContext}
     >
       {#snippet marks()}
         <Points links />
@@ -199,11 +211,13 @@
             <Tooltip.List>
               <Tooltip.Item
                 label="start"
-                value={format(data.startDate, PeriodType.TimeOnly, { variant: 'short' })}
+                value={data.startDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Item
                 label="end"
-                value={format(data.endDate, PeriodType.TimeOnly, { variant: 'short' })}
+                value={data.endDate}
+                format={{ type: 'time', options: { variant: 'short' } }}
               />
               <Tooltip.Separator />
               <Tooltip.Item label="duration" valueAlign="right">

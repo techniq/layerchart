@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { Axis, Chart, Circle, Point, Svg } from 'layerchart';
+  import { Axis, Chart, Circle, Point, Layer } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let data: Array<{ x: number; y: number }> = [];
 </script>
@@ -17,7 +18,7 @@
       yDomain={[0, 100]}
       padding={{ bottom: 20, left: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
         <Point d={{ x: 50, y: 50 }}>
@@ -30,7 +31,7 @@
             <Circle cx={x} cy={y} r={15} class="fill-primary" />
           {/snippet}
         </Point>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

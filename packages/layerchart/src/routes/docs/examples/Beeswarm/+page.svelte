@@ -1,19 +1,27 @@
 <script lang="ts">
   import { scaleOrdinal } from 'd3-scale';
-  import { forceX, forceY, forceCollide } from 'd3-force';
-  import { PeriodType } from '@layerstack/utils';
+  import { forceX, forceY, forceCollide, type SimulationNodeDatum } from 'd3-force';
 
-  import { asAny, Axis, Chart, Circle, ForceSimulation, Svg, Tooltip } from 'layerchart';
+  import { asAny, Axis, Chart, Circle, ForceSimulation, Layer, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import type { USSenatorsDatum } from '$static/data/examples/us-senators.js';
+  import type { Prettify } from '@layerstack/utils';
+  import { shared } from '../../shared.svelte.js';
+
+  type NodeDatum = USSenatorsDatum;
+
+  type MySimulationNodeDatum = Prettify<NodeDatum & SimulationNodeDatum>;
 
   let { data } = $props();
 
+  const nodes: MySimulationNodeDatum[] = data.usSenators;
+
   const genderColor = scaleOrdinal(['var(--color-info)', 'var(--color-warning)']);
 
-  const xForce = forceX().strength(0.95);
-  const yForce = forceY().strength(0.075);
-  const collideForce = forceCollide();
+  const xForce = forceX<MySimulationNodeDatum>().strength(0.95);
+  const yForce = forceY<MySimulationNodeDatum>().strength(0.075);
+  const collideForce = forceCollide<MySimulationNodeDatum>();
 </script>
 
 <h1>Examples</h1>
@@ -24,11 +32,11 @@
       data={data.usSenators}
       x={(d) => d.date_of_birth.getFullYear()}
       xNice
-      padding={{ bottom: 12, left: 8, right: 8 }}
+      padding={{ bottom: 20, left: 12, right: 12 }}
     >
       {#snippet children({ context })}
         {@const r = 6}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Axis placement="bottom" format="none" rule grid />
           <ForceSimulation
             forces={{
@@ -36,6 +44,7 @@
               y: yForce.y(context.height / 2),
               collide: collideForce.radius(r),
             }}
+            data={{ nodes }}
             static
           >
             {#snippet children({ nodes })}
@@ -52,13 +61,13 @@
               {/each}
             {/snippet}
           </ForceSimulation>
-        </Svg>
+        </Layer>
 
         <Tooltip.Root {context}>
           {#snippet children({ data })}
             <Tooltip.Header>{data.name}</Tooltip.Header>
             <Tooltip.List>
-              <Tooltip.Item label="Birth date" value={data.date_of_birth} format={PeriodType.Day} />
+              <Tooltip.Item label="Birth date" value={data.date_of_birth} format="day" />
               <Tooltip.Item label="State" value={data.state_name} />
               <Tooltip.Item label="Party" value={data.party} />
               <Tooltip.Item label="Gender" value={data.gender} />

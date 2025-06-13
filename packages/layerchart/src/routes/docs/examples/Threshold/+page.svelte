@@ -1,6 +1,5 @@
 <script lang="ts">
   import { curveStepAfter } from 'd3-shape';
-  import { format } from 'date-fns';
 
   import { AreaChart, Area, Spline, Threshold, Tooltip } from 'layerchart';
 
@@ -8,6 +7,9 @@
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import Blockquote from '$lib/docs/Blockquote.svelte';
+  import { shared } from '../../shared.svelte.js';
+
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 
   let selectedCurve = $state(curveStepAfter);
 
@@ -38,6 +40,7 @@
       y={['value', 'baseline']}
       padding={{ left: 16, bottom: 24 }}
       tooltip={false}
+      {renderContext}
     >
       {#snippet marks()}
         <Threshold curve={selectedCurve}>
@@ -72,6 +75,7 @@
         highlight: { area: true, lines: false, points: false },
         tooltip: { context: { mode: 'bisect-x', findTooltipData: 'left' } },
       }}
+      {renderContext}
     >
       {#snippet marks()}
         <Threshold curve={selectedCurve}>
@@ -93,7 +97,7 @@
       {#snippet tooltip({ context })}
         <Tooltip.Root {context}>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label="value" value={data.value} />
               <Tooltip.Item label="baseline" value={data.baseline} />
@@ -118,6 +122,7 @@
       padding={{ left: 16, bottom: 24 }}
       labels
       tooltip={false}
+      {renderContext}
     >
       {#snippet marks()}
         <Threshold>

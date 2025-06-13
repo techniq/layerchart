@@ -10,10 +10,11 @@
   } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Canvas, Chart, GeoPath, Graticule, Svg, Tooltip } from 'layerchart';
+  import { Chart, GeoPath, Graticule, Layer, Tooltip } from 'layerchart';
   import { Field, RangeField, SelectField, Switch } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -70,8 +71,6 @@
 
 <h1>Examples</h1>
 
-<h2>SVG</h2>
-
 <Preview data={geojson}>
   <div class="h-[600px] overflow-hidden">
     <Chart
@@ -85,7 +84,7 @@
       padding={{ left: 100, right: 100 }}
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content fill-blue-400/50" />
           <Graticule class="stroke-surface-content/20 pointer-events-none" />
           {#each features as feature}
@@ -95,38 +94,12 @@
               class="stroke-surface-content/50 fill-white hover:fill-gray-300"
             />
           {/each}
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {context.tooltip.data?.properties.name}
         </Tooltip.Root>
       {/snippet}
-    </Chart>
-  </div>
-</Preview>
-
-<h2>Canvas</h2>
-
-<Preview data={geojson}>
-  <div class="h-[600px]">
-    <Chart
-      geo={{
-        projection: config.projection,
-        fitGeojson: geojson,
-        rotate: config.rotate,
-        scale: config.scale,
-        // applyTransform: ['rotate'],
-      }}
-    >
-      <Canvas>
-        <GeoPath geojson={{ type: 'Sphere' }} class="stroke-surface-content fill-blue-400/50" />
-      </Canvas>
-      <Canvas>
-        <Graticule class="stroke-surface-content/20" />
-      </Canvas>
-      <Canvas>
-        <GeoPath {geojson} class="stroke-surface-content/50 fill-white" />
-      </Canvas>
     </Chart>
   </div>
 </Preview>

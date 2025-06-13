@@ -14,6 +14,7 @@ export async function load({ fetch }) {
       api,
       source,
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
     },
   };
 }

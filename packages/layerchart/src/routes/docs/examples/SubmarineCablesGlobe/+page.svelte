@@ -8,16 +8,16 @@
 
   import {
     Chart,
-    Circle,
     GeoPath,
     GeoPoint,
     GeoVisible,
     Graticule,
-    Svg,
+    Layer,
     Tooltip,
     type ChartContextValue,
   } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -46,7 +46,7 @@
 <h1>Examples</h1>
 
 <div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>SVG</h2>
+  <h2>Basic</h2>
 
   <div class="mb-2 flex gap-6">
     <Field label="Spin:" dense labelPlacement="left" let:id>
@@ -79,7 +79,7 @@
       bind:context
     >
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext} disableHitCanvas={timer.running}>
           <GeoPath
             geojson={{ type: 'Sphere' }}
             class="fill-surface-200 stroke-surface-content/20"
@@ -102,40 +102,24 @@
             />
           {/each}
 
-          <!-- Switch to Canvas for better performance -->
-          <!-- {#each data.landingPoints.features as feature}
-            {@const [long, lat] = feature.geometry.coordinates}
-            <GeoCircle
-              center={[long, lat]}
-              radius={0.5}
-              class="fill-surface-content stroke-surface-100 stroke"
-              onpointermove={(e) => tooltip?.show(e, feature.properties)}
-              onpointerleave={(e) => tooltip?.hide()}
-            />
-          {/each} -->
-
           {#each data.landingPoints.features as feature}
             {@const [long, lat] = feature.geometry.coordinates}
             <GeoVisible {lat} {long}>
-              <GeoPoint {lat} {long}>
-                <Circle
-                  r={2}
-                  class="fill-surface-content stroke-surface-100 stroke"
-                  onpointermove={(e) => context.tooltip.show(e, feature.properties)}
-                  onpointerleave={(e) => context.tooltip.hide()}
-                />
-              </GeoPoint>
+              <GeoPoint
+                {lat}
+                {long}
+                r={2}
+                class="fill-surface-content stroke-surface-100 stroke"
+                onpointermove={(e) => context.tooltip.show(e, feature.properties)}
+                onpointerleave={(e) => context.tooltip.hide()}
+              />
             </GeoVisible>
           {/each}
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{data.name}</Tooltip.Header>
-            <!-- <Tooltip.List>
-          <Tooltip.Item label="Latitude" value={data.latitude} format="decimal" />
-          <Tooltip.Item label="Longitude" value={data.longitude} format="decimal" />
-        </Tooltip.List> -->
+            {data.name}
           {/snippet}
         </Tooltip.Root>
       {/snippet}

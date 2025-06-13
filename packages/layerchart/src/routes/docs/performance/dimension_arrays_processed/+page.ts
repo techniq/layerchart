@@ -14,6 +14,7 @@ export async function load({ fetch }) {
       description:
         'Individual arrays per dimension, similar to uplot.  Pre-processed before passed to LineChart',
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       hideTableOfContents: true,
     },
   };

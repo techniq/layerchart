@@ -3,8 +3,9 @@
   import { feature } from 'topojson-client';
   import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
-  import { Canvas, Chart, Circle, GeoPath, GeoPoint, Svg, Text, Tooltip } from 'layerchart';
+  import { Canvas, Chart, Circle, GeoPath, GeoPoint, Layer, Text, Tooltip } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   // @ts-expect-error
   import LucideStar from '~icons/lucide/star';
@@ -22,13 +23,6 @@
 <h1>Examples</h1>
 
 <div class="flex gap-2">
-  <!-- <Field label="Render context">
-    <ToggleGroup bind:value={renderContext} variant="outline">
-      <ToggleOption value="svg">Svg</ToggleOption>
-      <ToggleOption value="canvas">Canvas</ToggleOption>
-    </ToggleGroup>
-  </Field> -->
-
   <Field label="Tooltip mode" class="grow">
     <ToggleGroup bind:value={tooltipMode} variant="outline">
       <ToggleOption value="quadtree">quadtree</ToggleOption>
@@ -53,29 +47,44 @@
         fitGeojson: states,
       }}
     >
-      <Svg>
-        <g class="states">
-          {#each states.features as feature}
-            <GeoPath
-              geojson={feature}
-              class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
-            />
-          {/each}
-        </g>
+      <Layer type={shared.renderContext}>
+        {#each states.features as feature}
+          <GeoPath
+            geojson={feature}
+            class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
+          />
+        {/each}
+
         <g class="points pointer-events-none">
           {#each data.us.capitals as capital}
-            <GeoPoint lat={capital.latitude} long={capital.longitude}>
-              <Circle r={2} class="fill-white stroke-danger" />
-              <Text
-                y="-6"
-                value={capital.description}
-                textAnchor="middle"
-                class="text-[8px] stroke-surface-100 [stroke-width:2px]"
-              />
-            </GeoPoint>
+            <!-- TODO: Improve GeoPoint to standardize svg/canvas -->
+            {#if shared.renderContext === 'svg'}
+              <GeoPoint lat={capital.latitude} long={capital.longitude}>
+                <Circle r={2} class="fill-white stroke-danger" />
+                <Text
+                  y="-6"
+                  value={capital.description}
+                  textAnchor="middle"
+                  class="text-[8px] stroke-surface-100 [stroke-width:2px]"
+                />
+              </GeoPoint>
+            {:else if shared.renderContext === 'canvas'}
+              <GeoPoint lat={capital.latitude} long={capital.longitude}>
+                {#snippet children({ x, y })}
+                  <Circle cx={x} cy={y} r={2} class="fill-white stroke-danger" />
+                  <Text
+                    {x}
+                    y={y - 6}
+                    value={capital.description}
+                    textAnchor="middle"
+                    class="text-[8px] stroke-surface-100 [stroke-width:2px]"
+                  />
+                {/snippet}
+              </GeoPoint>
+            {/if}
           {/each}
         </g>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -95,44 +104,62 @@
       tooltip={{ mode: tooltipMode, debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
-        <Svg>
-          <g class="states">
-            {#each countries.features as feature}
-              <GeoPath
-                geojson={feature}
-                class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
-              />
-            {/each}
-          </g>
+        <Layer type={shared.renderContext}>
+          {#each countries.features as feature}
+            <GeoPath
+              geojson={feature}
+              class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
+            />
+          {/each}
 
-          <g class="points pointer-events-none">
-            {#each data.world.capitals as capital}
+          {#each data.world.capitals as capital}
+            <GeoPoint
+              lat={capital.latitude}
+              long={capital.longitude}
+              r={2}
+              class="fill-white stroke-danger pointer-events-none"
+            />
+          {/each}
+        </Layer>
+
+        <!-- Show tooltip as GeoPoint (Svg/Canvas) instead of Tooltip.Point (Html)) -->
+        <!-- Render tooltip on separate layer to avoid performance issues (canvas) -->
+        <Layer type={shared.renderContext}>
+          {#if context.tooltip.data}
+            {#if shared.renderContext === 'svg'}
               <GeoPoint
-                lat={capital.latitude}
-                long={capital.longitude}
-                r={2}
-                class="fill-white stroke-danger"
-              />
-
-              <!-- Show tooltip as GeoPoint (Svg/Canvas) instead of Tooltip.Point (Html)) -->
-              {#if context.tooltip.data}
-                <GeoPoint
-                  lat={context.tooltip.data.latitude}
-                  long={context.tooltip.data.longitude}
-                  motion="spring"
-                >
-                  <Circle r={4} class="stroke-primary/50 fill-none" />
+                lat={context.tooltip.data.latitude}
+                long={context.tooltip.data.longitude}
+                motion="spring"
+              >
+                <Circle r={4} class="stroke-primary/50 fill-none" />
+                <Text
+                  y="-6"
+                  value={context.tooltip.data.label}
+                  textAnchor="middle"
+                  class="text-[8px] stroke-surface-100 [stroke-width:2px]"
+                />
+              </GeoPoint>
+            {:else if shared.renderContext === 'canvas'}
+              <GeoPoint
+                lat={context.tooltip.data.latitude}
+                long={context.tooltip.data.longitude}
+                motion="spring"
+              >
+                {#snippet children({ x, y })}
+                  <Circle cx={x} cy={y} r={4} class="stroke-primary/50 fill-none" />
                   <Text
-                    y="-6"
-                    value={context.tooltip.data.label}
+                    {x}
+                    y={y - 6}
+                    value={context.tooltip.data?.label}
                     textAnchor="middle"
                     class="text-[8px] stroke-surface-100 [stroke-width:2px]"
                   />
-                </GeoPoint>
-              {/if}
-            {/each}
-          </g>
-        </Svg>
+                {/snippet}
+              </GeoPoint>
+            {/if}
+          {/if}
+        </Layer>
       {/snippet}
     </Chart>
   </div>
@@ -153,37 +180,36 @@
       tooltip={{ mode: tooltipMode, debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
-        <Svg>
-          <g class="states">
-            {#each states.features as feature}
-              <GeoPath
-                geojson={feature}
-                class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
-              />
-            {/each}
-          </g>
+        <Layer type={shared.renderContext}>
+          {#each states.features as feature}
+            <GeoPath
+              geojson={feature}
+              class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
+            />
+          {/each}
 
-          <g class="points pointer-events-none">
-            {#each data.us.airports as airport}
-              <GeoPoint
-                lat={airport.latitude}
-                long={airport.longitude}
-                r={1}
-                class="fill-primary"
-              />
-            {/each}
+          {#each data.us.airports as airport}
+            <GeoPoint
+              lat={airport.latitude}
+              long={airport.longitude}
+              r={1}
+              class="fill-primary pointer-events-none"
+            />
+          {/each}
+        </Layer>
 
-            {#if context.tooltip.data}
-              <GeoPoint
-                lat={context.tooltip.data.latitude}
-                long={context.tooltip.data.longitude}
-                r={4}
-                class="stroke-primary/50 fill-none"
-                motion="spring"
-              />
-            {/if}
-          </g>
-        </Svg>
+        <!-- Render tooltip on separate layer to avoid performance issues (canvas) -->
+        <Layer type={shared.renderContext}>
+          {#if context.tooltip.data}
+            <GeoPoint
+              lat={context.tooltip.data.latitude}
+              long={context.tooltip.data.longitude}
+              r={4}
+              class="stroke-primary/50 fill-none pointer-events-none"
+              motion="spring"
+            />
+          {/if}
+        </Layer>
 
         <Tooltip.Root {context}>
           {#snippet children({ data })}
@@ -214,33 +240,33 @@
       tooltip={{ mode: tooltipMode, debug, radius: tooltipRadius }}
     >
       {#snippet children({ context })}
-        <Svg>
-          <g class="countries">
-            {#each countries.features as feature}
-              <GeoPath geojson={feature} class="fill-surface-content/10 stroke-surface-100" />
-            {/each}
-          </g>
-          <g class="points pointer-events-none">
-            {#each data.world.airports as airport}
-              <GeoPoint
-                lat={airport.latitude}
-                long={airport.longitude}
-                r={1}
-                class="fill-primary"
-              />
-            {/each}
+        <Layer type={shared.renderContext}>
+          {#each countries.features as feature}
+            <GeoPath geojson={feature} class="fill-surface-content/10 stroke-surface-100" />
+          {/each}
 
-            {#if context.tooltip.data}
-              <GeoPoint
-                lat={context.tooltip.data.latitude}
-                long={context.tooltip.data.longitude}
-                r={4}
-                class="stroke-primary/50 fill-none"
-                motion="spring"
-              />
-            {/if}
-          </g>
-        </Svg>
+          {#each data.world.airports as airport}
+            <GeoPoint
+              lat={airport.latitude}
+              long={airport.longitude}
+              r={1}
+              class="fill-primary pointer-events-none"
+            />
+          {/each}
+        </Layer>
+
+        <!-- Render tooltip on separate layer to avoid performance issues (canvas) -->
+        <Layer type={shared.renderContext}>
+          {#if context.tooltip.data}
+            <GeoPoint
+              lat={context.tooltip.data.latitude}
+              long={context.tooltip.data.longitude}
+              r={4}
+              class="stroke-primary/50 fill-none pointer-events-none"
+              motion="spring"
+            />
+          {/if}
+        </Layer>
 
         <Tooltip.Root {context}>
           {#snippet children({ data })}
@@ -256,39 +282,6 @@
   </div>
 </Preview>
 
-<h2>Canvas</h2>
-
-<Preview data={data.us.capitals}>
-  <div class="h-[600px]">
-    <Chart
-      geo={{
-        projection: geoAlbersUsa,
-        fitGeojson: states,
-      }}
-    >
-      <Canvas>
-        {#each states.features as feature}
-          <GeoPath geojson={feature} class="fill-surface-content/10 stroke-surface-100" />
-        {/each}
-        {#each data.us.capitals as capital}
-          <GeoPoint lat={capital.latitude} long={capital.longitude}>
-            {#snippet children({ x, y })}
-              <Circle cx={x} cy={y} r={2} class="fill-white stroke-danger" />
-              <Text
-                {x}
-                y={y - 6}
-                value={capital.description}
-                textAnchor="middle"
-                class="text-[8px] stroke-surface-100 [stroke-width:2px]"
-              />
-            {/snippet}
-          </GeoPoint>
-        {/each}
-      </Canvas>
-    </Chart>
-  </div>
-</Preview>
-
 <h2>Icons</h2>
 
 <Preview data={data.us.capitals}>
@@ -300,36 +293,34 @@
       }}
     >
       {#snippet children({ context })}
-        <Svg>
-          <g class="states">
-            {#each states.features as feature}
-              <GeoPath
-                geojson={feature}
-                class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
+        <Layer type={shared.renderContext}>
+          {#each states.features as feature}
+            <GeoPath
+              geojson={feature}
+              class="fill-surface-content/10 stroke-surface-100 hover:fill-surface-content/20"
+            />
+          {/each}
+
+          {#each data.us.capitals as capital}
+            <GeoPoint lat={capital.latitude} long={capital.longitude}>
+              <!-- TODO: How best to support canvas? -->
+              <LucideStar class="text-danger text-[8px]" x={-5} y={-5} />
+              <Text
+                y="-6"
+                value={capital.description}
+                textAnchor="middle"
+                class="text-[8px] stroke-surface-100 [stroke-width:2px]"
               />
-            {/each}
-          </g>
-          <g class="points">
-            {#each data.us.capitals as capital}
-              <GeoPoint lat={capital.latitude} long={capital.longitude}>
-                <LucideStar class="text-danger text-[8px]" x={-5} y={-5} />
-                <Text
-                  y="-6"
-                  value={capital.description}
-                  textAnchor="middle"
-                  class="text-[8px] stroke-surface-100 [stroke-width:2px]"
-                />
-                <Circle
-                  r={10}
-                  class="fill-transparent"
-                  onpointerenter={(e) => context.tooltip.show(e, capital)}
-                  onpointermove={(e) => context.tooltip.show(e, capital)}
-                  onpointerleave={(e) => context.tooltip.hide(e)}
-                />
-              </GeoPoint>
-            {/each}
-          </g>
-        </Svg>
+              <Circle
+                r={10}
+                class="fill-transparent"
+                onpointerenter={(e) => context.tooltip.show(e, capital)}
+                onpointermove={(e) => context.tooltip.show(e, capital)}
+                onpointerleave={(e) => context.tooltip.hide(e)}
+              />
+            </GeoPoint>
+          {/each}
+        </Layer>
 
         <Tooltip.Root {context}>
           {#snippet children({ data })}

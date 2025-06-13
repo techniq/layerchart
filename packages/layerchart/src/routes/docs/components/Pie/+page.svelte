@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { format } from 'date-fns';
   import { sum } from 'd3-array';
   import { cls } from '@layerstack/tailwind';
-  import { format as formatUtil } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
 
-  import { Arc, Chart, Group, Pie, Svg, Text, Tooltip } from 'layerchart';
+  import { Arc, Chart, Group, Layer, Pie, Text, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import { Field, Switch, Toggle } from 'svelte-ux';
+  import { shared } from '../../shared.svelte.js';
 
   const data = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
   const data2 = createDateSeries({ min: 20, max: 100, value: 'integer', count: 4 });
@@ -37,9 +37,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -49,9 +49,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie sort={null} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -61,9 +61,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" xRange={[-90, 90]} c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -73,9 +73,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie range={[-90, 90]} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -85,9 +85,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie padAngle={0.05} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -97,9 +97,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie innerRadius={100} padAngle={0.03} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -111,9 +111,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie innerRadius={100} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -123,9 +123,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie innerRadius={0.9} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -135,9 +135,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie innerRadius={-30} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -147,9 +147,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie outerRadius={100} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -159,10 +159,10 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie innerRadius={100} {data} />
         <Pie outerRadius={90} data={data2} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -178,11 +178,11 @@
   <Preview {data}>
     <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
       <Chart {data} x="value" c="date" cRange={keyColors}>
-        <Svg center>
+        <Layer type={shared.renderContext} center>
           {#if show}
             <Pie motion="tween" />
           {/if}
-        </Svg>
+        </Layer>
       </Chart>
     </div>
   </Preview>
@@ -193,9 +193,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie offset={4} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -205,7 +205,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie>
           {#snippet children({ arcs })}
             {#each arcs as arc, index}
@@ -219,7 +219,7 @@
             {/each}
           {/snippet}
         </Pie>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -231,7 +231,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date">
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie>
           {#snippet children({ arcs })}
             {#each arcs as arc, index}
@@ -253,7 +253,7 @@
             {/each}
           {/snippet}
         </Pie>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -263,7 +263,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date">
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie>
           {#snippet children({ arcs })}
             {#each arcs as arc, index}
@@ -277,7 +277,7 @@
                 {#snippet children({ getArcTextProps })}
                   {@const textProps = getArcTextProps('centroid')}
                   <Text
-                    value={formatUtil(arc.data.value / dataSum, 'percent')}
+                    value={format(arc.data.value / dataSum, 'percent')}
                     {...textProps}
                     dy={-8}
                     class={cls('text-base', colors.content)}
@@ -293,7 +293,7 @@
             {/each}
           {/snippet}
         </Pie>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -303,7 +303,7 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date">
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie>
           {#snippet children({ arcs })}
             {#each arcs as arc, index}
@@ -325,7 +325,7 @@
             {/each}
           {/snippet}
         </Pie>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -335,7 +335,7 @@
 <Preview {data}>
   <div class="h-[320px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date">
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie>
           {#snippet children({ arcs })}
             {#each arcs as arc, index}
@@ -357,7 +357,7 @@
             {/each}
           {/snippet}
         </Pie>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -372,7 +372,7 @@
 	if it meets the minimum needed to fit the label, and if not, we push it? Idk
 	-->
     <Chart {data} x="value" c="date" padding={24}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie>
           {#snippet children({ arcs })}
             {#each arcs as arc, index}
@@ -394,7 +394,7 @@
             {/each}
           {/snippet}
         </Pie>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -405,12 +405,12 @@
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       {#snippet children({ context })}
-        <Svg center>
+        <Layer type={shared.renderContext} center>
           <Pie tooltipContext={context.tooltip} />
-        </Svg>
+        </Layer>
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
               <Tooltip.Item
@@ -433,7 +433,7 @@
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       {#snippet children({ context })}
-        <Svg center>
+        <Layer type={shared.renderContext} center>
           <Pie>
             {#snippet children({ arcs })}
               {#each arcs as arc, index}
@@ -460,7 +460,7 @@
                   >
                     {#snippet children({ getArcTextProps })}
                       <Text
-                        value={formatUtil(arc.data.value / dataSum, 'percent')}
+                        value={format(arc.data.value / dataSum, 'percent')}
                         {...getArcTextProps('centroid')}
                         class={cls('text-base', colors.content)}
                       />
@@ -470,11 +470,11 @@
               {/each}
             {/snippet}
           </Pie>
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            <Tooltip.Header>{format(data.date, 'eee, MMMM do')}</Tooltip.Header>
+            <Tooltip.Header value={data.date} format="day" />
             <Tooltip.List>
               <Tooltip.Item label="value" value={data.value} format="integer" valueAlign="right" />
               <Tooltip.Item
@@ -499,11 +499,11 @@
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Group x={context.height / 2} center="y">
             <Pie />
           </Group>
-        </Svg>
+        </Layer>
       {/snippet}
     </Chart>
   </div>
@@ -514,9 +514,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Pie />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -527,11 +527,11 @@
   <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
     <Chart {data} x="value" c="date" cRange={keyColors}>
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Group x={context.width - context.height / 2} center="y">
             <Pie />
           </Group>
-        </Svg>
+        </Layer>
       {/snippet}
     </Chart>
   </div>

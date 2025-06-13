@@ -86,7 +86,6 @@
   import { onMount, type ComponentProps } from 'svelte';
   import { scaleBand, scaleLinear, scaleTime } from 'd3-scale';
   import { stack, stackOffsetDiverging, stackOffsetExpand, stackOffsetNone } from 'd3-shape';
-  import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Axis from '../Axis.svelte';
@@ -160,6 +159,14 @@
       ? [
           {
             key: 'default',
+            label:
+              orientation === 'vertical'
+                ? typeof yProp === 'string'
+                  ? yProp
+                  : 'value'
+                : typeof xProp === 'string'
+                  ? xProp
+                  : 'value',
             value: orientation === 'vertical' ? yProp : xProp,
           },
         ]
@@ -365,20 +372,14 @@
       return {
         placement: radial ? 'radius' : 'left',
 
-        format:
-          isVertical && seriesLayout === 'stackExpand'
-            ? (value) => format(value, 'percentRound')
-            : undefined,
+        format: isVertical && seriesLayout === 'stackExpand' ? 'percentRound' : undefined,
         ...(typeof axis === 'object' ? axis : null),
         ...props.yAxis,
       };
     }
     return {
       placement: radial ? 'angle' : 'bottom',
-      format:
-        !isVertical && seriesLayout === 'stackExpand'
-          ? (value) => format(value, 'percentRound')
-          : undefined,
+      format: !isVertical && seriesLayout === 'stackExpand' ? 'percentRound' : undefined,
       ...(typeof axis === 'object' ? axis : null),
       ...props.xAxis,
     };

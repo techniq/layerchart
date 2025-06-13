@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { format } from 'date-fns';
-
   import { BarChart, Tooltip } from 'layerchart';
+  import { format } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   const data = createDateSeries({
     count: 30,
@@ -14,6 +14,8 @@
     keys: ['value', 'baseline'],
   });
   const negativeData = createDateSeries({ count: 30, min: -20, max: 50, value: 'integer' });
+
+  let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 </script>
 
 <h1>Examples</h1>
@@ -30,6 +32,7 @@
       grid={false}
       bandPadding={0.1}
       props={{ bars: { radius: 1, strokeWidth: 0 } }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -49,6 +52,7 @@
           grid={false}
           bandPadding={0.1}
           props={{ bars: { radius: 1, strokeWidth: 0 } }}
+          {renderContext}
         />
       </span> Sed ipsum justo, facilisis id tempor hendrerit, suscipit eu ipsum. Mauris ut sapien quis
       nibh volutpat venenatis. Ut viverra justo varius sapien convallis venenatis vel faucibus urna.
@@ -68,6 +72,7 @@
       grid={false}
       bandPadding={0.1}
       props={{ bars: { radius: 1, strokeWidth: 0 } }}
+      {renderContext}
     />
   </div>
 </Preview>
@@ -84,6 +89,7 @@
       grid={false}
       bandPadding={0.1}
       props={{ bars: { radius: 1, strokeWidth: 0 } }}
+      {renderContext}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root
@@ -96,7 +102,7 @@
         >
           {#snippet children({ data })}
             <div class="whitespace-nowrap">
-              {format(data.date, 'eee, MMM do')}
+              {format(data.date, 'day')}
             </div>
             <div class="font-semibold">
               {data.value}
@@ -123,6 +129,7 @@
           grid={false}
           bandPadding={0.1}
           props={{ bars: { radius: 1, strokeWidth: 0 } }}
+          {renderContext}
         >
           {#snippet tooltip({ context })}
             <Tooltip.Root
@@ -133,7 +140,7 @@
               xOffset={0}
             >
               {#snippet children({ data })}
-                <Tooltip.Header>{format(data.date, 'eee, MMM do')}</Tooltip.Header>
+                <Tooltip.Header value={data.date} format="day" />
                 <Tooltip.List>
                   <Tooltip.Item label="value" value={data.value} />
                 </Tooltip.List>

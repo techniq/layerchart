@@ -1,12 +1,12 @@
 <script lang="ts">
   import { scaleTime, scaleBand } from 'd3-scale';
   import { MediaQueryPresets } from '@layerstack/svelte-state';
-  import { format, PeriodType } from '@layerstack/utils';
 
-  import { Axis, Chart, Grid, Svg } from 'layerchart';
+  import { Axis, Chart, Grid, Layer } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
 
   import { createDateSeries } from '$lib/utils/genData.js';
+  import { shared } from '../../shared.svelte.js';
 
   const data = createDateSeries({ min: 50, max: 100, value: 'integer' });
   const { mdScreen } = new MediaQueryPresets();
@@ -26,9 +26,9 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Grid x y />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -45,9 +45,9 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Grid x />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -64,9 +64,9 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Grid y />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -83,9 +83,9 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Grid y={{ style: 'stroke-dasharray: 2' }} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -102,10 +102,10 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Grid x />
         <Axis placement="bottom" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -122,10 +122,10 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Grid x bandAlign="between" />
         <Axis placement="bottom" rule />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -135,9 +135,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
-      <Svg center>
+      <Layer type={shared.renderContext}>
         <Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -147,9 +147,9 @@
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
-      <Svg center>
+      <Layer type={shared.renderContext} center>
         <Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y radialY="linear" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -166,7 +166,7 @@
       yDomain={[0, 2]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Grid y yTicks={(scale) => scale.ticks?.().filter(Number.isInteger)} />
         <Axis
           placement="left"
@@ -174,7 +174,7 @@
           ticks={(scale) => scale.ticks?.().filter(Number.isInteger)}
           format="integer"
         />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -191,10 +191,10 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Grid y yTicks={[0, 25, 50, 75, 100]} />
         <Axis placement="left" rule ticks={[0, 50, 100]} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -211,10 +211,10 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Grid y yTicks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />
         <Axis placement="left" rule ticks={(scale) => [45, ...(scale.ticks?.() ?? [])]} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -231,10 +231,10 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Grid y yTicks={20} />
         <Axis placement="left" rule ticks={10} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -251,10 +251,10 @@
       yDomain={[0, 100]}
       padding={{ bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Grid x xTicks={mdScreen.current ? 10 : 5} />
         <Axis placement="bottom" rule ticks={mdScreen.current ? 10 : 5} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -271,10 +271,10 @@
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Grid y yTicks={null} />
         <Axis placement="left" rule ticks={null} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

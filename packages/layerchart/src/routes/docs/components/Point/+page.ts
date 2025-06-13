@@ -9,6 +9,7 @@ export async function load() {
       source,
       pageSource,
       description: 'Convenient way to translate a data item to SVG x/y coordinates',
+      supportedContexts: ['svg', 'canvas'],
       related: ['examples/Area'],
     },
   };

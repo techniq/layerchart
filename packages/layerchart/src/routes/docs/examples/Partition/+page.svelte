@@ -15,7 +15,7 @@
     Partition,
     Rect,
     RectClipPath,
-    Svg,
+    Layer,
     Text,
     findAncestor,
   } from 'layerchart';
@@ -33,6 +33,7 @@
   import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -172,7 +173,7 @@
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Bounds
             domain={{
               x0: selectedHorizontal?.y0,
@@ -241,7 +242,7 @@
               </ChartClipPath>
             {/snippet}
           </Bounds>
-        </Svg>
+        </Layer>
       {/snippet}
     </Chart>
   </div>
@@ -267,7 +268,7 @@
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Bounds
             domain={{
               x0: selectedVertical?.x0,
@@ -339,7 +340,7 @@
               </ChartClipPath>
             {/snippet}
           </Bounds>
-        </Svg>
+        </Layer>
       {/snippet}
     </Chart>
   </div>
@@ -372,7 +373,7 @@
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Bounds
           domain={{ x0: selectedCarNode?.y0, y0: selectedCarNode?.x0, y1: selectedCarNode?.x1 }}
         >
@@ -439,7 +440,7 @@
             </ChartClipPath>
           {/snippet}
         </Bounds>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

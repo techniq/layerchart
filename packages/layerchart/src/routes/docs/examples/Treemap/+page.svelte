@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { untrack, type ComponentProps } from 'svelte';
   import { cubicOut } from 'svelte/easing';
   import { fade } from 'svelte/transition';
   import { hierarchy, type HierarchyNode, type HierarchyRectangularNode } from 'd3-hierarchy';
@@ -28,14 +29,15 @@
     Group,
     Rect,
     RectClipPath,
-    Svg,
+    Layer,
     Text,
     Tooltip,
     Treemap,
+    asAny,
     findAncestor,
   } from 'layerchart';
   import { isNodeVisible } from '$lib/utils/treemap.js';
-  import { untrack, type ComponentProps } from 'svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -81,10 +83,11 @@
   });
 
   let tile: ComponentProps<typeof Treemap>['tile'] = $state('squarify');
+  let maintainAspectRatio = $state(false);
   let colorBy = $state('children');
 
-  let selectedNested: HierarchyRectangularNode<any> | null = $state(null);
-  let selectedZoomable: HierarchyRectangularNode<any> | null = $state(null);
+  let selectedNested: HierarchyNode<any> = $state(complexDataHierarchy.copy());
+  let selectedZoomable: HierarchyNode<any> = $state(complexDataHierarchy.copy());
   let paddingOuter = $state(4);
   let paddingInner = $state(4);
   let paddingTop = $state(20);
@@ -118,12 +121,10 @@
 
 <h1>Examples</h1>
 
-<h2>Nested</h2>
-
-<h3>Zoomable</h3>
+<h2>Nested (zoom)</h2>
 
 <div class="grid gap-1 mb-4">
-  <div class="grid grid-cols-[6fr_3fr] gap-1">
+  <div class="grid grid-cols-[6fr_1fr_3fr] gap-1">
     <Field label="Tile">
       <ToggleGroup bind:value={tile} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="squarify">Squarify</ToggleOption>
@@ -132,6 +133,18 @@
         <ToggleOption value="slice">Slice</ToggleOption>
         <ToggleOption value="dice">Dice</ToggleOption>
         <ToggleOption value="sliceDice">Slice / Dice</ToggleOption>
+      </ToggleGroup>
+    </Field>
+    <Field label="Maintain Aspect Ratio">
+      <ToggleGroup
+        bind:value={maintainAspectRatio}
+        variant="outline"
+        size="sm"
+        inset
+        class="w-full"
+      >
+        <ToggleOption value={false}>No</ToggleOption>
+        <ToggleOption value={true}>Yes</ToggleOption>
       </ToggleGroup>
     </Field>
     <Field label="Color By">
@@ -172,17 +185,17 @@
   <div class="h-[800px] p-4 border rounded-sm">
     <Chart>
       {#snippet children({ context })}
-        <Svg>
+        <Layer type={shared.renderContext}>
           <Bounds
-            domain={selectedNested}
+            domain={asAny(selectedNested)}
             motion={{ type: 'tween', duration: 800, easing: cubicOut }}
           >
             {#snippet children({ xScale, yScale })}
               <ChartClipPath>
                 <Treemap
-                  hierarchy={complexDataHierarchy.copy()}
+                  hierarchy={complexDataHierarchy}
                   {tile}
-                  bind:selected={selectedNested}
+                  {maintainAspectRatio}
                   {paddingOuter}
                   {paddingInner}
                   {paddingTop}
@@ -251,7 +264,7 @@
               </ChartClipPath>
             {/snippet}
           </Bounds>
-        </Svg>
+        </Layer>
 
         <Tooltip.Root>
           {#snippet children({ data })}
@@ -266,12 +279,10 @@
   </div>
 </Preview>
 
-<h2>Nested</h2>
-
-<h3>Grouped and Filterable</h3>
+<h2>Nested (filter)</h2>
 
 <div class="grid gap-1 mb-4">
-  <div class="grid grid-cols-[6fr_3fr] gap-1">
+  <div class="grid grid-cols-[6fr_1fr_3fr] gap-1">
     <Field label="Tile">
       <ToggleGroup bind:value={tile} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="squarify">Squarify</ToggleOption>
@@ -280,6 +291,18 @@
         <ToggleOption value="slice">Slice</ToggleOption>
         <ToggleOption value="dice">Dice</ToggleOption>
         <ToggleOption value="sliceDice">Slice / Dice</ToggleOption>
+      </ToggleGroup>
+    </Field>
+    <Field label="Maintain Aspect Ratio">
+      <ToggleGroup
+        bind:value={maintainAspectRatio}
+        variant="outline"
+        size="sm"
+        inset
+        class="w-full"
+      >
+        <ToggleOption value={false}>No</ToggleOption>
+        <ToggleOption value={true}>Yes</ToggleOption>
       </ToggleGroup>
     </Field>
     <Field label="Color By">
@@ -326,10 +349,11 @@
   </Breadcrumb>
   <div class="h-[800px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Treemap
           hierarchy={groupedHierarchy}
           {tile}
+          {maintainAspectRatio}
           {paddingOuter}
           {paddingInner}
           {paddingTop}
@@ -402,17 +426,15 @@
             {/each}
           {/snippet}
         </Treemap>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
 
-<h2>Stacked</h2>
-
-<h3>Zoomable</h3>
+<h2>Stacked (zoom)</h2>
 
 <div class="grid grid-flow-col gap-4 mb-4">
-  <div class="grid grid-cols-[6fr_3fr] gap-2">
+  <div class="grid grid-cols-[6fr_1fr_3fr] gap-2">
     <Field label="Tile">
       <ToggleGroup bind:value={tile} variant="outline" size="sm" inset class="w-full">
         <ToggleOption value="squarify">Squarify</ToggleOption>
@@ -421,6 +443,18 @@
         <ToggleOption value="slice">Slice</ToggleOption>
         <ToggleOption value="dice">Dice</ToggleOption>
         <ToggleOption value="sliceDice">Slice / Dice</ToggleOption>
+      </ToggleGroup>
+    </Field>
+    <Field label="Maintain Aspect Ratio">
+      <ToggleGroup
+        bind:value={maintainAspectRatio}
+        variant="outline"
+        size="sm"
+        inset
+        class="w-full"
+      >
+        <ToggleOption value={false}>No</ToggleOption>
+        <ToggleOption value={true}>Yes</ToggleOption>
       </ToggleGroup>
     </Field>
     <Field label="Color By">
@@ -450,18 +484,14 @@
   </Breadcrumb>
   <div class="h-[600px] p-4 border rounded-sm">
     <Chart>
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Bounds
-          domain={selectedZoomable}
+          domain={asAny(selectedZoomable)}
           motion={{ type: 'tween', duration: 800, easing: cubicOut }}
         >
           {#snippet children({ xScale, yScale })}
             <ChartClipPath>
-              <Treemap
-                hierarchy={complexDataHierarchy.copy()}
-                {tile}
-                bind:selected={selectedZoomable}
-              >
+              <Treemap hierarchy={complexDataHierarchy} {tile} {maintainAspectRatio}>
                 {#snippet children({ nodes })}
                   {#each nodes as node}
                     <Group
@@ -473,7 +503,7 @@
                       {@const nodeHeight = yScale(node.y1) - yScale(node.y0)}
                       <RectClipPath width={nodeWidth} height={nodeHeight}>
                         {@const nodeColor = getNodeColor(node, colorBy)}
-                        {#if isNodeVisible(node, selectedZoomable)}
+                        {#if isNodeVisible( node, nodes.find((n) => n.data.name === selectedZoomable.data.name && n.depth === selectedZoomable.depth) )}
                           <g transition:fade={{ duration: 600 }}>
                             <Rect
                               width={nodeWidth}
@@ -515,7 +545,7 @@
             </ChartClipPath>
           {/snippet}
         </Bounds>
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>

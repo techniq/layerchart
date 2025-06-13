@@ -3,13 +3,14 @@
   import { geoMercator } from 'd3-geo';
   import { feature } from 'topojson-client';
 
-  import { Chart, GeoPath, GeoTile, Svg, Tooltip, geoFitObjectTransform } from 'layerchart';
+  import { Chart, GeoPath, GeoTile, Layer, Tooltip, geoFitObjectTransform } from 'layerchart';
   import TransformControls from '$lib/components/TransformControls.svelte';
   import { Field, RangeField, Switch } from 'svelte-ux';
 
   import GeoDebug from '$lib/docs/GeoDebug.svelte';
   import Preview from '$lib/docs/Preview.svelte';
   import TilesetField from '$lib/docs/TilesetField.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -38,7 +39,7 @@
 
 <h1>Examples</h1>
 
-<h2>SVG</h2>
+<h2>Basic</h2>
 
 {#if serviceUrl}
   <Preview data={filteredStates}>
@@ -62,7 +63,7 @@
 
           <TransformControls />
 
-          <Svg>
+          <Layer type={shared.renderContext}>
             <GeoTile url={serviceUrl} {zoomDelta} {debug} />
 
             {#each filteredStates.features as feature}
@@ -82,7 +83,7 @@
                 }}
               />
             {/each}
-          </Svg>
+          </Layer>
 
           <Tooltip.Root>
             {#snippet children({ data })}
@@ -100,7 +101,7 @@
     </div>
   </Preview>
 
-  <h2>SVG with padding</h2>
+  <h2>With padding</h2>
 
   <Preview data={filteredStates}>
     <div class="h-[600px] relative overflow-hidden">
@@ -129,7 +130,7 @@
 
           <TransformControls />
 
-          <Svg>
+          <Layer type={shared.renderContext}>
             <GeoTile url={serviceUrl} {zoomDelta} {debug} />
 
             {#each filteredStates.features as feature}
@@ -149,7 +150,7 @@
                 }}
               />
             {/each}
-          </Svg>
+          </Layer>
 
           <Tooltip.Root>
             {#snippet children({ data })}
@@ -193,7 +194,7 @@
 
           <TransformControls />
 
-          <Svg>
+          <Layer type={shared.renderContext}>
             <!-- technique: https://observablehq.com/@d3/seamless-zoomable-map-tiles -->
             <GeoTile url={serviceUrl} zoomDelta={-100} />
             <GeoTile url={serviceUrl} zoomDelta={-4} />
@@ -217,7 +218,7 @@
                 }}
               />
             {/each}
-          </Svg>
+          </Layer>
 
           <Tooltip.Root>
             {#snippet children({ data })}

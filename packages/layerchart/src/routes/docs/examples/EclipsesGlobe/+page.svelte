@@ -16,11 +16,12 @@
   } from 'layerchart';
 
   import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
-  import { format, PeriodType } from '@layerstack/utils';
+  import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import { TimerState } from '@layerstack/svelte-state';
 
   import Preview from '$lib/docs/Preview.svelte';
+  import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
@@ -53,9 +54,7 @@
 
 <h1>Examples</h1>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>SVG</h2>
-
+<div class="flex gap-2 items-end mb-2">
   <div class="mb-2 flex gap-6">
     <Field label="Spin:" dense labelPlacement="left" let:id>
       <ButtonGroup size="sm" variant="fill-light">
@@ -88,9 +87,9 @@
       padding={{ top: 60 }}
     >
       {#snippet children({ context })}
-        <Legend scale={colorScale} title="Eclipse date" tickFormat={PeriodType.CalendarYear} />
+        <Legend scale={colorScale} title="Eclipse date" tickFormat="year" />
 
-        <Layer type="svg">
+        <Layer type={shared.renderContext}>
           <GeoPath
             geojson={{ type: 'Sphere' }}
             class="fill-surface-200 stroke-surface-content/20"
@@ -114,7 +113,7 @@
 
         <Tooltip.Root>
           {#snippet children({ data })}
-            {format(data.Date, PeriodType.Day, { variant: 'long' })}
+            {format(data.Date, 'day', { variant: 'long' })}
           {/snippet}
         </Tooltip.Root>
       {/snippet}

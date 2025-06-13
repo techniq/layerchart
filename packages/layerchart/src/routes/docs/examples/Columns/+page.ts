@@ -5,6 +5,7 @@ export async function load() {
     meta: {
       title: 'Bar Chart (Vertical)',
       pageSource,
+      supportedContexts: ['svg', 'canvas'],
       related: ['components/Bars', 'examples/Bars', 'examples/Histogram', 'examples/Sparkbar'],
     },
   };
