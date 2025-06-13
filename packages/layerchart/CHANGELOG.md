@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.21
+
+### Patch Changes
+
+- fix: Reduce bundle size by removing culori as transitive dependency ([#563](https://github.com/techniq/layerchart/pull/563))
+
 ## 2.0.0-next.20
 
 ### Patch Changes
