@@ -125,11 +125,11 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule tickMultiline />
         <Bars strokeWidth={1} class="fill-primary" />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
@@ -149,11 +149,11 @@
       yNice={4}
       padding={{ left: 16, bottom: 24 }}
     >
-      <Svg>
+      <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule tickMultiline />
         <Bars class="fill-primary" insets={{ x: 2 }} />
-      </Svg>
+      </Layer>
     </Chart>
   </div>
 </Preview>
