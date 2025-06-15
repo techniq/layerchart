@@ -270,7 +270,7 @@
     }
   }
 
-  function showTooltip(e: PointerEvent, tooltipData?: any) {
+  function showTooltip(e: PointerEvent | MouseEvent | TouchEvent, tooltipData?: any) {
     // Cancel hiding tooltip if from previous event loop
     if (hideTimeoutId) {
       clearTimeout(hideTimeoutId);
@@ -511,6 +511,24 @@
   const triggerPointerEvents = $derived(
     ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode)
   );
+
+  function onPointerEnter(e: PointerEvent | MouseEvent | TouchEvent) {
+    isHoveringTooltipArea = true;
+    if (triggerPointerEvents) {
+      showTooltip(e);
+    }
+  }
+
+  function onPointerMove(e: PointerEvent | MouseEvent | TouchEvent) {
+    if (triggerPointerEvents) {
+      showTooltip(e);
+    }
+  }
+
+  function onPointerLeave(e: PointerEvent | MouseEvent | TouchEvent) {
+    isHoveringTooltipArea = false;
+    hideTooltip();
+  }
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -521,25 +539,15 @@
   style:height="{ctx.height}px"
   class={cls(
     layerClass('tooltip-context'),
-    'absolute touch-none',
+    'absolute',
     debug && triggerPointerEvents && 'bg-danger/10 outline outline-danger'
   )}
-  onpointerenter={(e) => {
-    isHoveringTooltipArea = true;
-    if (triggerPointerEvents) {
-      showTooltip(e);
-    }
-  }}
-  onpointermove={(e) => {
-    if (triggerPointerEvents) {
-      showTooltip(e);
-    }
-  }}
-  onpointerleave={(e) => {
-    isHoveringTooltipArea = false;
-
-    hideTooltip();
-  }}
+  onmouseenter={onPointerEnter}
+  ontouchstart={onPointerEnter}
+  onmousemove={onPointerMove}
+  ontouchmove={onPointerMove}
+  onmouseleave={onPointerLeave}
+  ontouchend={onPointerLeave}
   onclick={(e) => {
     // Ignore clicks without data (triggered from Legend clicks, for example)
     if (triggerPointerEvents && tooltipContext.data != null) {
