@@ -319,7 +319,7 @@
           _range.width < RESET_THRESHOLD ||
           _range.height < RESET_THRESHOLD
         ) {
-          // Clicked on frame, or pointer delta was <1
+          // Clicked on frame, or pointer delta was less than threshold (default: 1px)
           if (ignoreResetClick) {
             logger.debug('ignoring frame click reset');
           } else {
