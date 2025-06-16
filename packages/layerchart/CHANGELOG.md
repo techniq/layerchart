@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.22
+
+### Patch Changes
+
+- fix(TooltipContext): Fix touch scrolling on mobile. Fixes #255 ([#566](https://github.com/techniq/layerchart/pull/566))
+
 ## 2.0.0-next.21
 
 ### Patch Changes
