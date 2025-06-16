@@ -14,8 +14,10 @@
   import { TimerState } from '@layerstack/svelte-state';
 
   import {
+    Blur,
     Chart,
     Circle,
+    Ellipse,
     GeoCircle,
     GeoPath,
     GeoPoint,
@@ -109,10 +111,12 @@
         fitGeojson: countries,
         applyTransform: ['rotate'],
       }}
+      padding={{ top: 20, bottom: 50 }}
       ondragstart={timer.stop}
     >
       {#snippet children({ context })}
         <Layer type={shared.renderContext} {debug} disableHitCanvas={timer.running}>
+          <!-- TODO: styling - https://observablehq.com/@d3/faux-parabolic-arcs -->
           {@const gold = ['#ffd700', '#b8860b', '#8b4513']}
           {@const silver = ['#f5f5f5', '#8c8c8c', '#333333']}
           {@const bronze = ['#cd7f32', '#a0522d', '#8b4513']}
@@ -120,7 +124,49 @@
           {@const blue = ['#87ceeb', '#4682b4', '#191970']}
           {@const lightBlue = ['hsl(210, 100%, 60%)', 'hsl(210, 100%, 50%)', 'hsl(210, 100%, 40%)']}
           <!-- <GeoPath geojson={{ type: 'Sphere' }} class="fill-blue-400/50" /> -->
-          <RadialGradient stops={lightBlue} fx="50%" fy="50%" class="fill-blue-400/50">
+
+          <!-- <RadialGradient stops={lightBlue} fx="50%" fy="50%">
+            {#snippet children({ gradient })}
+              <GeoPath geojson={{ type: 'Sphere' }} fill={gradient} />
+            {/snippet}
+          </RadialGradient> -->
+
+          {@const cx = context.width / 2}
+          {@const cy = context.height / 2}
+          {@const r = Math.min(context.width, context.height) / 2}
+
+          <!-- Shadow -->
+          <RadialGradient
+            stops={[
+              ['20%', 'rgba(0, 0, 0, 0.5)'],
+              ['100%', 'rgba(0, 0, 0, 0.1)'],
+            ]}
+            cx="75%"
+            cy="25%"
+          >
+            {#snippet children({ gradient })}
+              <Blur stdDeviation={10}>
+                <Ellipse
+                  {cx}
+                  cy={cy + r * 0.95}
+                  rx={r * 0.9}
+                  ry={r * 0.25}
+                  class="fill-black/20"
+                  _fill={gradient}
+                />
+              </Blur>
+            {/snippet}
+          </RadialGradient>
+
+          <!-- Ocean -->
+          <RadialGradient
+            stops={[
+              ['5%', '#fff'],
+              ['100%', '#aaa'],
+            ]}
+            cx="75%"
+            cy="25%"
+          >
             {#snippet children({ gradient })}
               <GeoPath geojson={{ type: 'Sphere' }} fill={gradient} />
             {/snippet}
@@ -148,7 +194,7 @@
 
             {#if mode === 'hex'}
               {#if geoContains(feature.properties.centroid)}
-                <GeoPath geojson={feature} class="fill-surface-content" />
+                <GeoPath geojson={feature} class="fill-surface-content/20" />
               {/if}
             {/if}
 
@@ -157,11 +203,39 @@
                 <GeoCircle
                   center={feature.properties.centroid}
                   radius={180 / count / 6.0}
-                  class="fill-surface-content"
+                  class="fill-surface-content/20"
                 />
               {/if}
             {/if}
           {/each}
+
+          <!-- Highlight -->
+          <!-- <RadialGradient
+            stops={[
+              ['5%', 'rgba(255, 215, 0, 0.2)'],
+              ['100%', 'rgba(184, 134, 11, 0.1)'],
+            ]}
+            cx="75%"
+            cy="25%"
+          >
+            {#snippet children({ gradient })}
+              <GeoPath geojson={{ type: 'Sphere' }} fill={gradient} />
+            {/snippet}
+          </RadialGradient> -->
+
+          <!-- Shading -->
+          <RadialGradient
+            stops={[
+              ['30%', 'rgba(255, 255, 255, 0)'],
+              ['100%', 'rgba(85, 96, 102, 0.3)'],
+            ]}
+            cx="55%"
+            cy="45%"
+          >
+            {#snippet children({ gradient })}
+              <GeoPath geojson={{ type: 'Sphere' }} fill={gradient} />
+            {/snippet}
+          </RadialGradient>
         </Layer>
 
         <Tooltip.Root {context}>
