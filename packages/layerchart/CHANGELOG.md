@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.23
+
+### Patch Changes
+
+- fix(Highlight): Fix display of lines for first values (`0` coord). Fixes #568 ([#569](https://github.com/techniq/layerchart/pull/569))
+
 ## 2.0.0-next.22
 
 ### Patch Changes
