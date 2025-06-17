@@ -175,7 +175,7 @@
             y2: max(ctx.yRange) as unknown as number,
           })),
         ];
-      } else if (xCoord) {
+      } else if (xCoord != null) {
         tmpLines = [
           ...tmpLines,
           {
@@ -201,7 +201,7 @@
             y2: yItem + yOffset,
           })),
         ];
-      } else if (yCoord) {
+      } else if (yCoord != null) {
         tmpLines = [
           ...tmpLines,
           {
