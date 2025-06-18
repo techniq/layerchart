@@ -297,6 +297,29 @@
   </div>
 </Preview>
 
+<h2>Legend (small / responsive)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <PieChart
+      {data}
+      key="fruit"
+      value="value"
+      padding={{ bottom: 32 }}
+      legend={{
+        classes: {
+          root: 'w-full',
+          items: 'justify-center',
+          swatch: 'size-2',
+          item: 'text-xs',
+        },
+      }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
 <h2>Legend (custom label)</h2>
 
 <Preview {data}>
