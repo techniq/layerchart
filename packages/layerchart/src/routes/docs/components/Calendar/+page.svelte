@@ -8,11 +8,11 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
   import { shared } from '../../shared.svelte.js';
-  import { endOfInterval } from '$lib/utils/date.js';
+  import { endOfInterval } from '@layerstack/utils';
 
   const now = new Date();
   const firstDayOfYear = timeYear.floor(now);
-  const lastDayOfYear = endOfInterval(now, timeYear);
+  const lastDayOfYear = endOfInterval('year', now);
 
   const data = createDateSeries({ count: 365 * 4, min: 10, max: 100, value: 'integer' }).map(
     (d) => {
@@ -147,7 +147,7 @@
         <Layer type={shared.renderContext}>
           {#each range(2019, 2024) as year, i}
             {@const start = new Date(year, 0, 1)}
-            {@const end = endOfInterval(start, timeYear)}
+            {@const end = endOfInterval('year', start)}
             <Group y={140 * i}>
               <Text
                 value={year}

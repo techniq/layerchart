@@ -31,8 +31,8 @@
 
 <script lang="ts">
   import { timeWeek, timeMonth, timeYear } from 'd3-time';
-  import { endOfInterval } from '$lib/utils/date.js';
   import { cls } from '@layerstack/tailwind';
+  import { endOfInterval } from '@layerstack/utils';
   import { layerClass } from '$lib/utils/attributes.js';
   import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';
 
@@ -58,7 +58,7 @@
   const startWeek = $derived(timeWeek.count(timeYear(date), date));
 
   // end of month
-  const monthEnd = $derived(endOfInterval(date, timeMonth));
+  const monthEnd = $derived(endOfInterval('month', date));
   const endDayOfWeek = $derived(monthEnd.getDay());
   const endWeek = $derived(timeWeek.count(timeYear(monthEnd), monthEnd));
 
