@@ -345,16 +345,6 @@
     }
   });
 
-  const pathStartDy = $derived.by(() => {
-    if (verticalAnchor === 'start') {
-      return getPixelValue(capHeight);
-    } else if (verticalAnchor === 'middle') {
-      return (0 / 2) * -getPixelValue(lineHeight) + getPixelValue(capHeight) / 2;
-    } else {
-      return 0 * -getPixelValue(lineHeight);
-    }
-  });
-
   const scaleTransform = $derived.by(() => {
     if (
       scaleToFit &&
