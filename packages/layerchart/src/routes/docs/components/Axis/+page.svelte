@@ -716,6 +716,7 @@
             padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
             <Layer type={shared.renderContext}>
+              <Axis placement="top" rule grid tickMultiline {tickSpacing} />
               <Axis placement="bottom" rule grid tickMultiline {tickSpacing} />
             </Layer>
           </Chart>
