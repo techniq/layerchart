@@ -264,14 +264,14 @@
         return {
           textAnchor: 'middle',
           verticalAnchor: 'end',
-          dy: -tickLength - 2, // manually adjusted until Text supports custom styles
+          dy: -tickLength,
         };
 
       case 'bottom':
         return {
           textAnchor: 'middle',
           verticalAnchor: 'start',
-          dy: tickLength, // manually adjusted until Text supports custom styles
+          dy: tickLength,
         };
 
       case 'left':
@@ -279,7 +279,6 @@
           textAnchor: 'end',
           verticalAnchor: 'middle',
           dx: -tickLength,
-          dy: -2, // manually adjusted until Text supports custom styles
         };
 
       case 'right':
@@ -287,7 +286,6 @@
           textAnchor: 'start',
           verticalAnchor: 'middle',
           dx: tickLength,
-          dy: -2, // manually adjusted until Text supports custom styles
         };
 
       case 'angle':
@@ -302,7 +300,7 @@
                 ? 'end'
                 : 'start',
           verticalAnchor: 'middle',
-          dx: Math.sin(xValue) * (tickLength + 2),
+          dx: Math.sin(xValue) * tickLength,
           dy: -Math.cos(xValue) * (tickLength + 4), // manually adjusted until Text supports custom styles
         };
 
@@ -311,7 +309,6 @@
           textAnchor: 'middle',
           verticalAnchor: 'middle',
           dx: 2,
-          dy: -2, // manually adjusted until Text supports custom styles
         };
     }
   }
@@ -416,7 +413,9 @@
       value: tickFormat(tick, index),
       ...getDefaultTickLabelProps(tick),
       motion,
-      lineHeight: '11px', // complement 10px text (until Text supports custom styles)
+      // complement 10px text (until Text supports custom styles)
+      capHeight: '7px',
+      lineHeight: '11px',
       ...tickLabelProps,
       class: cls(
         layerClass('axis-tick-label'),

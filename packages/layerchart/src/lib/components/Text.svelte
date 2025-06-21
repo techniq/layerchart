@@ -337,11 +337,11 @@
 
   const startDy = $derived.by(() => {
     if (verticalAnchor === 'start') {
-      return getPixelValue(capHeight);
+      return getPixelValue(lineHeight);
     } else if (verticalAnchor === 'middle') {
       return ((lineCount - 1) / 2) * -getPixelValue(lineHeight) + getPixelValue(capHeight) / 2;
     } else {
-      return (lineCount - 1) * -getPixelValue(lineHeight);
+      return (lineCount - 1) * -getPixelValue(lineHeight) - getPixelValue(capHeight) / 2;
     }
   });
 
