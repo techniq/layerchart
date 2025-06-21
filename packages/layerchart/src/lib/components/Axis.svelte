@@ -207,7 +207,16 @@
         : undefined
   );
   const tickVals = $derived(resolveTickVals(scale, ticks, tickCount));
-  const tickFormat = $derived(resolveTickFormat(scale, ticks, tickCount, format, tickMultiline));
+  const tickFormat = $derived(
+    resolveTickFormat({
+      scale,
+      ticks,
+      count: tickCount,
+      formatType: format,
+      multiline: tickMultiline,
+      placement,
+    })
+  );
 
   function getCoords(tick: any) {
     switch (placement) {
@@ -407,6 +416,7 @@
       value: tickFormat(tick, index),
       ...getDefaultTickLabelProps(tick),
       motion,
+      lineHeight: '11px', // complement 10px text (until Text supports custom styles)
       ...tickLabelProps,
       class: cls(
         layerClass('axis-tick-label'),
