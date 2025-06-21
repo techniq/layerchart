@@ -527,7 +527,7 @@
         {#each wordsByLines as line, index}
           <tspan
             x={motionX.current}
-            dy={index === 0 ? startDy : lineHeight}
+            dy={index === 0 ? startDy : getPixelValue(lineHeight)}
             class={layerClass('text-tspan')}
           >
             {line.words.join(' ')}

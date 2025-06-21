@@ -416,6 +416,7 @@
       value: tickFormat(tick, index),
       ...getDefaultTickLabelProps(tick),
       motion,
+      lineHeight: '11px', // complement 10px text (until Text supports custom styles)
       ...tickLabelProps,
       class: cls(
         layerClass('axis-tick-label'),
