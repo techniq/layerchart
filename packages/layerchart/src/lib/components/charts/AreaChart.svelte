@@ -452,10 +452,10 @@
     ? {
         axis: 'x',
         resetOnEnd: true,
-        xDomain,
+        x: xDomain,
         ...brushProps,
         onBrushEnd: (e) => {
-          xDomain = e.xDomain;
+          xDomain = e.brush.x;
           brushProps.onBrushEnd?.(e);
         },
       }

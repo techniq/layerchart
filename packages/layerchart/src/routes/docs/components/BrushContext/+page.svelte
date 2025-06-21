@@ -2,8 +2,8 @@
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { range } from 'd3-array';
   import { timeDay } from 'd3-time';
-  import { State } from 'svelte-ux';
-  import { format } from '@layerstack/utils';
+  import { Button, State } from 'svelte-ux';
+  import { endOfInterval, format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
@@ -66,21 +66,90 @@
     value: 'integer',
     keys: ['value', 'baseline'],
   });
+
+  let xDomain2 = $state<DomainType>([null, null]);
 </script>
 
 <h1>Examples</h1>
 
-<!-- <h2>Band scale</h2>
+<h2>Html click</h2>
+
+<Preview data={dataSeriesData}>
+  <Button
+    variant="outline"
+    color="primary"
+    size="sm"
+    on:click={() => {
+      xDomain2 = [null, null];
+    }}
+    class="mb-1"
+  >
+    Reset
+  </Button>
+  <div class="h-[40px]">
+    <Chart
+      data={dataSeriesData}
+      x="date"
+      xScale={scaleTime()}
+      xDomain={xDomain2}
+      y="value"
+      brush={{
+        resetOnEnd: true,
+        ignoreResetClick: true, // allow clicking on task without resetting brush
+        onBrushEnd: (e) => {
+          console.log('onBrushEnd', e);
+          xDomain2 = e.brush.x;
+        },
+      }}
+    >
+      {#snippet children({ context })}
+        <Layer type="html" class="overflow-hidden">
+          {#each dataSeriesData as d}
+            {@const start = d.date}
+            {@const end = endOfInterval('day', d.date)}
+
+            {@const x = context.xScale(start)}
+            {@const width = context.xScale(end) - x}
+            {@const height = context.height}
+
+            <div
+              class="absolute bg-primary/10 hover:bg-primary/20 border border-primary/20 rounded"
+              style="top:0; left:{x}px; width:{width}px; height:{height}px;"
+              onclick={(e) => {
+                console.log('clicked', start);
+              }}
+              onpointerenter={(e) => {
+                // console.log(start);
+              }}
+            ></div>
+          {/each}
+        </Layer>
+      {/snippet}
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Band scale</h2>
 
 <Preview data={dataSeriesData}>
   <div class="h-[100px]">
-    <Chart data={dataSeriesData} x="date" xScale={scaleBand().padding(0.4)} y="value" brush>
+    <Chart
+      data={dataSeriesData}
+      x="date"
+      xScale={scaleBand().padding(0.4)}
+      y="value"
+      brush={{
+        onBrushEnd: (e) => {
+          console.log(e);
+        },
+      }}
+    >
       <Layer type={shared.renderContext}>
         <Bars strokeWidth={1} class="fill-primary" />
       </Layer>
     </Chart>
   </div>
-</Preview> -->
+</Preview>
 
 <h2>Basic</h2>
 
@@ -145,7 +214,7 @@
         <Layer type={shared.renderContext}>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
 
-          {#if context.brush.isActive}
+          {#if context.brush.active}
             <rect
               x={context.brush.range.x}
               width={context.brush.handleSize}
@@ -194,11 +263,11 @@
       {#snippet children({ context })}
         <Layer type={shared.renderContext}>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
-          {#if context.brush.isActive}
+          {#if context.brush.active}
             <Text
               x={context.brush.range.x - 4}
               y={context.brush.range.height / 2}
-              value={format(asAny(context.brush.xDomain?.[0]))}
+              value={format(asAny(context.brush.x?.[0]))}
               textAnchor="end"
               verticalAnchor="middle"
               class="text-xs"
@@ -206,7 +275,7 @@
             <Text
               x={context.brush.range.x + context.brush.range.width + 4}
               y={context.brush.range.height / 2}
-              value={format(asAny(context.brush.xDomain?.[1]))}
+              value={format(asAny(context.brush.x?.[1]))}
               verticalAnchor="middle"
               class="text-xs"
             />
@@ -234,11 +303,11 @@
           <Layer type={shared.renderContext}>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
 
-            {#if context.brush.isActive}
+            {#if context.brush.active}
               <Text
                 x={-4}
                 y={context.height / 2}
-                value={format(asAny(context.brush.xDomain?.[0]))}
+                value={format(asAny(context.brush.x?.[0]))}
                 textAnchor="end"
                 verticalAnchor="middle"
                 class="text-xs"
@@ -246,7 +315,7 @@
               <Text
                 x={context.width + 4}
                 y={context.height / 2}
-                value={format(asAny(context.brush.xDomain?.[1]))}
+                value={format(asAny(context.brush.x?.[1]))}
                 verticalAnchor="middle"
                 class="text-xs"
               />
@@ -276,7 +345,7 @@
             resetOnEnd: true,
             onBrushEnd: (e) => {
               // @ts-expect-error
-              set(e.xDomain);
+              set(e.brush.x);
             },
           }}
         >
@@ -315,7 +384,7 @@
             resetOnEnd: true,
             onBrushEnd: (e) => {
               // @ts-expect-error
-              set(e.yDomain);
+              set(e.brush.y);
             },
           }}
         >
@@ -356,9 +425,9 @@
             onBrushEnd: (e) => {
               set({
                 // @ts-expect-error
-                xDomain: e.xDomain,
+                xDomain: e.brush.x,
                 // @ts-expect-error
-                yDomain: e.yDomain,
+                yDomain: e.brush.y,
               });
             },
           }}
@@ -419,7 +488,7 @@
           brush={{
             onChange: (e) => {
               // @ts-expect-error
-              set(e.xDomain);
+              set(e.brush.x);
             },
           }}
         >
@@ -448,7 +517,7 @@
             axis: 'y',
             onChange: (e) => {
               // @ts-expect-error
-              set(e.yDomain);
+              set(e.brush.y);
             },
           }}
         >
@@ -533,7 +602,7 @@
           brush={{
             onChange: (e) => {
               // @ts-expect-error
-              set(e.xDomain);
+              set(e.brush.x);
             },
           }}
         >
@@ -596,8 +665,8 @@
             padding={{ left: 16 }}
             brush={{
               mode: 'separated',
-              xDomain,
-              onChange: (e) => (xDomain = e.xDomain),
+              x: xDomain,
+              onChange: (e) => (xDomain = e.brush.x),
               onReset: (e) => (xDomain = null),
             }}
           >
@@ -606,7 +675,6 @@
                 line={{ class: 'stroke-2 stroke-(--chart-color)' }}
                 class="fill-(--chart-color) opacity-20"
               />
-              <!-- <Brush bind:xDomain mode="separated" /> -->
             </Layer>
           </Chart>
         </div>
@@ -634,7 +702,7 @@
             resetOnEnd: true,
             onBrushEnd: (e) => {
               // @ts-expect-error
-              set(e.xDomain);
+              set(e.brush.x);
             },
           }}
         >
@@ -700,9 +768,9 @@
           onChange: (e) => {
             set({
               // @ts-expect-error
-              xDomain: e.xDomain,
+              xDomain: e.brush.x,
               // @ts-expect-error
-              yDomain: e.yDomain,
+              yDomain: e.brush.y,
             });
           },
         }}
@@ -759,9 +827,9 @@
             onBrushEnd: (e) => {
               set({
                 // @ts-expect-error
-                xDomain: e.xDomain,
+                xDomain: e.brush.x,
                 // @ts-expect-error
-                yDomain: e.yDomain,
+                yDomain: e.brush.y,
               });
             },
           }}
@@ -791,9 +859,9 @@
             onChange: (e) => {
               set({
                 // @ts-expect-error
-                xDomain: e.xDomain,
+                xDomain: e.brush.x,
                 // @ts-expect-error
-                yDomain: e.yDomain,
+                yDomain: e.brush.y,
               });
             },
           }}

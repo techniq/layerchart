@@ -262,12 +262,12 @@
     ? {
         axis: 'both',
         resetOnEnd: true,
-        xDomain,
-        yDomain,
+        x: xDomain,
+        y: yDomain,
         ...brushProps,
         onBrushEnd: (e) => {
-          xDomain = e.xDomain;
-          yDomain = e.yDomain;
+          xDomain = e.brush.x;
+          yDomain = e.brush.y;
           brushProps.onBrushEnd?.(e);
         },
       }
