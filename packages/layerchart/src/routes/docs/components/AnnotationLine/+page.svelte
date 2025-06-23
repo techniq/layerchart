@@ -8,7 +8,7 @@
     LineChart,
     type Placement,
   } from 'layerchart';
-  import { Button, Field, Menu, RangeField, Switch, Toggle } from 'svelte-ux';
+  import { Button, Field, Menu, RangeField, Toggle } from 'svelte-ux';
   import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -57,14 +57,10 @@
   let renderContext = $derived(
     shared.renderContext as ComponentProps<typeof LineChart>['renderContext']
   );
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
-
-<Field label="Debug" let:id classes={{ container: 'h-full' }}>
-  <Switch {id} bind:checked={debug} />
-</Field>
 
 <h2>Vertical</h2>
 

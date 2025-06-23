@@ -14,8 +14,6 @@
 
   const countries = feature(data.geojson, data.geojson.objects.countries);
 
-  let debug = $state(false);
-
   // Use a single link per source
   const singleLinks = $derived(
     flatRollup(
@@ -26,6 +24,8 @@
       (d) => d.sourceId
     ).map((d) => d[1])
   );
+
+  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
@@ -58,18 +58,7 @@
   </div>
 </Preview>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>Draggable globe with EdgeFade</h2>
-
-  <div class="mb-2">
-    <Field dense let:id>
-      <label class="flex gap-2 items-center text-sm" for={id}>
-        Debug
-        <Switch bind:checked={debug} {id} />
-      </label>
-    </Field>
-  </div>
-</div>
+<h2>Draggable globe with EdgeFade</h2>
 
 <Preview data={countries}>
   <div class="h-[600px] overflow-hidden">

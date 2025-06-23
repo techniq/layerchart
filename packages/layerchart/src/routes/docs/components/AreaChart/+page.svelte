@@ -23,7 +23,7 @@
   import { group } from 'd3-array';
   import { timeDay } from 'd3-time';
   import { scaleBand, scalePoint } from 'd3-scale';
-  import { Button, Field, Kbd, Switch } from 'svelte-ux';
+  import { Button, Kbd } from 'svelte-ux';
   import { format, sortFunc } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
@@ -130,7 +130,7 @@
   let renderContext = $derived(
     shared.renderContext as ComponentProps<typeof AreaChart>['renderContext']
   );
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 
   let markerPoints: { date: Date; value: number }[] = $state([]);
   let context = $state<ChartContextValue<(typeof denseDateSeriesData)[number]>>(null!);
@@ -165,12 +165,6 @@
 />
 
 <h1>Examples</h1>
-
-<div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
-</div>
 
 <h2>Basic</h2>
 

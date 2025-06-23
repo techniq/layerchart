@@ -1,9 +1,9 @@
 <script lang="ts">
   import { geoAlbersUsa, geoNaturalEarth1 } from 'd3-geo';
   import { feature } from 'topojson-client';
-  import { Field, RangeField, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
+  import { Field, RangeField, ToggleGroup, ToggleOption } from 'svelte-ux';
 
-  import { Canvas, Chart, Circle, GeoPath, GeoPoint, Layer, Text, Tooltip } from 'layerchart';
+  import { Chart, Circle, GeoPath, GeoPoint, Layer, Text, Tooltip } from 'layerchart';
   import Preview from '$lib/docs/Preview.svelte';
   import { shared } from '../../shared.svelte.js';
 
@@ -17,7 +17,7 @@
 
   let tooltipMode = $state<'quadtree' | 'voronoi'>('quadtree');
   let tooltipRadius = $state(30);
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
@@ -31,10 +31,6 @@
   </Field>
 
   <RangeField label="Tooltip radius" bind:value={tooltipRadius} max={100} class="grow" />
-
-  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
 </div>
 
 <h2>US State Capitals</h2>

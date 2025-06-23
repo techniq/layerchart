@@ -88,16 +88,10 @@
   let show = $state(true);
 
   let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
-
-<div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
-</div>
 
 <h2>Basic</h2>
 
