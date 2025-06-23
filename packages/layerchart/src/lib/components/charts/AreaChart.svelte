@@ -443,7 +443,7 @@
   tooltip={tooltip === false
     ? false
     : {
-        mode: 'bisect-x',
+        mode: 'quadtree-x',
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,

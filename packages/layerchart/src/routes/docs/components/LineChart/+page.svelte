@@ -184,7 +184,7 @@
   </div>
 </Preview>
 
-<h2>Series (voronoi tooltip with highlight)</h2>
+<h2>Series (individual tooltip with highlight)</h2>
 
 <Preview data={multiSeriesFlatData}>
   <div class="h-[300px] p-4 border rounded-sm">
@@ -197,7 +197,7 @@
         { key: 'bananas', color: 'var(--color-success)' },
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      props={{ tooltip: { context: { mode: 'voronoi' } } }}
+      props={{ tooltip: { context: { mode: 'quadtree' } } }}
       {renderContext}
       {debug}
       brush
