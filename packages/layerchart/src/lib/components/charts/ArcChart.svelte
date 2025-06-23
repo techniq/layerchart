@@ -384,7 +384,9 @@
         ]}
   padding={{ bottom: legend === true ? 32 : 0 }}
   {...restProps}
-  tooltip={tooltip === false ? false : props.tooltip?.context}
+  tooltip={tooltip === false
+    ? false
+    : { ...props.tooltip?.context, ...(typeof tooltip === 'object' ? tooltip : null) }}
 >
   {#snippet children({ context })}
     {@const snippetProps = {
