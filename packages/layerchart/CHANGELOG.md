@@ -1,5 +1,19 @@
 # LayerChart
 
+## 2.0.0-next.25
+
+### Patch Changes
+
+- fix(ScatterChart): Change default tooltip mode from `voronoi` to `quadtree` ([#578](https://github.com/techniq/layerchart/pull/578))
+
+- feat(TooltipContext): Support `quadtree-x` and `quadtree-y` modes. Resolves #525 ([#578](https://github.com/techniq/layerchart/pull/578))
+
+- fix(LineChart): Change default tooltip mode from `bisect-x` to `quadtree-x` (works with catagorical data and does not require data to be sorted) ([#578](https://github.com/techniq/layerchart/pull/578))
+
+- fix(AreaChart): Change default tooltip mode from `bisect-x` to `quadtree-x` (works with catagorical data and does not require data to be sorted) ([#578](https://github.com/techniq/layerchart/pull/578))
+
+- fix: Support passing `<*Chart tooltip={...}>` to underlying TooltipContext (as types already indicate) ([#576](https://github.com/techniq/layerchart/pull/576))
+
 ## 2.0.0-next.24
 
 ### Patch Changes
