@@ -14,6 +14,8 @@
     mdiGithub,
     mdiLink,
   } from '@mdi/js';
+  // @ts-expect-error
+  import IconAlignLeft from '~icons/lucide/align-left';
 
   import {
     ApiDocs,
@@ -225,8 +227,16 @@
           on:click={() => (showTableOfContents = false)}
         />
         <TableOfContents
-          icon={mdiChevronRight}
-          class="px-4 py-2"
+          linkIndent={12}
+          class="p-4"
+          classes={{
+            a: cls(
+              'border-l text-sm text-surface-content/50 py-[2px] hover:text-surface-content',
+              'data-active:border-primary data-active:text-primary',
+              'data-[level=1]:font-semibold'
+            ),
+          }}
+          scrollOffset={184}
           on:nodeClick={(e) => {
             showTableOfContents = false;
           }}
@@ -316,12 +326,25 @@
       <div
         class="w-[224px] sticky top-[calc(var(--headerHeight)+10px)] pr-2 max-h-[calc(100dvh-64px)] overflow-auto z-60"
       >
-        <div class="text-xs uppercase leading-8 tracking-widest text-surface-content/50">
+        <div
+          class="flex gap-2 items-center text-xs font-medium uppercase pb-3 tracking-widest text-surface-content/50"
+        >
+          <IconAlignLeft />
           On this page
         </div>
         <!-- Rebuild toc when page changes -->
         {#key page.route.id}
-          <TableOfContents icon={mdiChevronRight} class="border-l pl-3" scrollOffset={184} />
+          <TableOfContents
+            linkIndent={12}
+            classes={{
+              a: cls(
+                'border-l text-sm text-surface-content/50 py-[2px] hover:text-surface-content',
+                'data-active:border-primary data-active:text-primary',
+                'data-[level=1]:font-semibold'
+              ),
+            }}
+            scrollOffset={184}
+          />
         {/key}
       </div>
     {/if}
