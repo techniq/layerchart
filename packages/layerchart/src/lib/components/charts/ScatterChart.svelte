@@ -253,7 +253,7 @@
   tooltip={tooltip === false
     ? false
     : {
-        mode: 'voronoi',
+        mode: 'quadtree',
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
