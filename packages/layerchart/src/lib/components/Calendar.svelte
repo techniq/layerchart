@@ -147,8 +147,8 @@
   {#each yearMonths as date}
     <Text
       x={timeWeek.count(timeYear.floor(date), timeWeek.ceil(date)) * cellSize[0]}
-      y={-4}
       value={format(date, 'month', { variant: 'short' })}
+      capHeight="7px"
       {...extractLayerProps(monthLabel, 'calendar-month-label', 'text-xs')}
     />
   {/each}
