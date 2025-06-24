@@ -546,7 +546,13 @@
     style:position="absolute"
     style:left="{dx + motionX.current}px"
     style:top="{dy + motionY.current}px"
-    style:transform="translate({translateX}, {translateY})"
+    style:transform="translate({translateX}, {translateY}) rotate({rotate}deg)"
+    style:transform-origin="{verticalAnchor === 'middle'
+      ? 'center'
+      : verticalAnchor === 'end'
+        ? 'bottom'
+        : 'top'}
+    {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
     class={cls(layerClass('text'), fill === undefined && 'text-surface-content', className)}
   >
     {textValue}
