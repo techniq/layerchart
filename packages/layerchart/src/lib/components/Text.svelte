@@ -546,7 +546,7 @@
     style:position="absolute"
     style:left="{dx + motionX.current}px"
     style:top="{dy + motionY.current}px"
-    style:transform="translate({translateX}, {translateY}) rotate({rotate}deg)"
+    style:transform="translate({translateX}, {translateY}) rotate({rotate ?? 0}deg)"
     style:transform-origin="{verticalAnchor === 'middle'
       ? 'center'
       : verticalAnchor === 'end'
