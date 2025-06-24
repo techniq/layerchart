@@ -9,46 +9,53 @@ import {
   DateToken,
 } from '@layerstack/utils';
 import { isScaleBand, isScaleTime, type AnyScale } from './scales.svelte.js';
+import type { AxisProps } from '$lib/components/Axis.svelte';
 
-export function getDurationFormat(duration: Duration, multiline = false) {
+export function getDurationFormat(
+  duration: Duration,
+  options: { multiline?: boolean; placement?: AxisProps['placement'] } = {
+    multiline: false,
+  }
+) {
+  const { multiline = false, placement = 'bottom' } = options;
+
   return function (date: Date, i: number) {
+    let result: string | Array<string | false> = '';
+
     if (+duration >= +new Duration({ duration: { years: 1 } })) {
       // Year
-      return format(date, 'year');
+      result = format(date, 'year');
     } else if (+duration >= +new Duration({ duration: { days: 28 } })) {
       // Month
       const isFirst = i === 0 || +timeYear.floor(date) === +date;
       if (multiline) {
-        return (
-          format(date, 'month', { variant: 'short' }) + (isFirst ? `\n${format(date, 'year')}` : '')
-        );
+        result = [format(date, 'month', { variant: 'short' }), isFirst && format(date, 'year')];
       } else {
-        return (
+        result =
           format(date, 'month', { variant: 'short' }) +
-          (isFirst ? ` '${format(date, 'year', { variant: 'short' })}` : '')
-        );
+          (isFirst ? ` '${format(date, 'year', { variant: 'short' })}` : '');
       }
     } else if (+duration >= +new Duration({ duration: { days: 1 } })) {
       // Day
       const isFirst = i === 0 || date.getDate() <= duration.days;
       if (multiline) {
-        return (
-          format(date, 'custom', { custom: DateToken.DayOfMonth_numeric }) +
-          (isFirst ? `\n${format(date, 'month', { variant: 'short' })}` : '')
-        );
+        result = [
+          format(date, 'custom', { custom: DateToken.DayOfMonth_numeric }),
+          isFirst && format(date, 'month', { variant: 'short' }),
+        ];
       } else {
-        return format(date, 'day', { variant: 'short' });
+        result = format(date, 'day', { variant: 'short' });
       }
     } else if (+duration >= +new Duration({ duration: { hours: 1 } })) {
       // Hours
       const isFirst = i === 0 || +timeDay.floor(date) === +date;
       if (multiline) {
-        return (
-          format(date, 'custom', { custom: DateToken.Hour_numeric }) +
-          (isFirst ? `\n${format(date, 'day', { variant: 'short' })}` : '')
-        );
+        result = [
+          format(date, 'custom', { custom: DateToken.Hour_numeric }),
+          isFirst && format(date, 'day', { variant: 'short' }),
+        ];
       } else {
-        return isFirst
+        result = isFirst
           ? format(date, 'day', { variant: 'short' })
           : format(date, 'custom', { custom: DateToken.Hour_numeric });
       }
@@ -56,24 +63,24 @@ export function getDurationFormat(duration: Duration, multiline = false) {
       // Minutes
       const isFirst = i === 0 || +timeDay.floor(date) === +date;
       if (multiline) {
-        return (
-          format(date, 'time', { variant: 'short' }) +
-          (isFirst ? `\n${format(date, 'day', { variant: 'short' })}` : '')
-        );
+        result = [
+          format(date, 'time', { variant: 'short' }),
+          isFirst && format(date, 'day', { variant: 'short' }),
+        ];
       } else {
-        return format(date, 'time', { variant: 'short' });
+        result = format(date, 'time', { variant: 'short' });
       }
     } else if (+duration >= +new Duration({ duration: { seconds: 1 } })) {
       // Seconds
       const isFirst = i === 0 || +timeDay.floor(date) === +date;
-      return (
-        format(date, 'time') +
-        (multiline && isFirst ? `\n${format(date, 'day', { variant: 'short' })}` : '')
-      );
+      result = [
+        format(date, 'time'),
+        multiline && isFirst && format(date, 'day', { variant: 'short' }),
+      ];
     } else if (+duration >= +new Duration({ duration: { milliseconds: 1 } })) {
       // Milliseconds
       const isFirst = i === 0 || +timeDay.floor(date) === +date;
-      return (
+      result = [
         format(date, 'custom', {
           custom: [
             DateToken.Hour_2Digit,
@@ -82,10 +89,28 @@ export function getDurationFormat(duration: Duration, multiline = false) {
             DateToken.MiliSecond_3,
             DateToken.Hour_woAMPM,
           ],
-        }) + (multiline && isFirst ? `\n${format(date, 'day', { variant: 'short' })}` : '')
-      );
+        }),
+        multiline && isFirst && format(date, 'day', { variant: 'short' }),
+      ];
     } else {
-      return date.toString();
+      result = date.toString();
+    }
+
+    if (Array.isArray(result)) {
+      switch (placement) {
+        case 'top':
+          return result.filter(Boolean).reverse().join('\n');
+        case 'bottom':
+          return result.filter(Boolean).join('\n');
+        case 'left':
+          return result.filter(Boolean).reverse().join(' ');
+        case 'right':
+          return result.filter(Boolean).join(' ');
+        default:
+          return result.filter(Boolean).join('\n');
+      }
+    } else {
+      return result;
     }
   };
 }
@@ -127,13 +152,16 @@ export function resolveTickVals(scale: AnyScale, ticks?: TicksConfig, count?: nu
   return [];
 }
 
-export function resolveTickFormat(
-  scale: AnyScale,
-  ticks?: TicksConfig,
-  count?: number,
-  formatType?: FormatType | FormatConfig,
-  multiline = false
-) {
+export function resolveTickFormat(options: {
+  scale: AnyScale;
+  ticks?: TicksConfig;
+  count?: number;
+  formatType?: FormatType | FormatConfig;
+  multiline?: boolean;
+  placement?: AxisProps['placement'];
+}) {
+  const { scale, ticks, count, formatType, multiline, placement } = options;
+
   // Explicit format
   if (formatType) {
     // @ts-expect-error - improve types
@@ -145,11 +173,11 @@ export function resolveTickFormat(
     if (isLiteralObject(ticks) && 'interval' in ticks && ticks.interval != null) {
       const start = ticks.interval.floor(new Date());
       const end = ticks.interval.ceil(new Date());
-      return getDurationFormat(new Duration({ start, end }), multiline);
+      return getDurationFormat(new Duration({ start, end }), { multiline, placement });
     } else {
       // Compare first 2 ticks to determine duration between ticks for formatting
       const [start, end] = timeTicks(scale.domain()[0], scale.domain()[1], count);
-      return getDurationFormat(new Duration({ start, end }), multiline);
+      return getDurationFormat(new Duration({ start, end }), { multiline, placement });
     }
   }
 

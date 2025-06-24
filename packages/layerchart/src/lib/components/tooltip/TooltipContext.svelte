@@ -6,13 +6,15 @@
   const _TooltipContext = new Context<TooltipContextValue>('TooltipContext');
 
   type TooltipMode =
-    | 'bisect-x'
-    | 'bisect-y'
+    | 'bisect-x' // requires values to be sorted
+    | 'bisect-y' // requires values to be sorted
     | 'band'
-    | 'bisect-band'
+    | 'bisect-band' // requires values to be sorted
     | 'bounds'
     | 'voronoi'
     | 'quadtree'
+    | 'quadtree-x' // ignores y values (constant 0)
+    | 'quadtree-y' // ignores x values (constant 0)
     | 'manual';
 
   export type TooltipContextValue<T = any> = {
@@ -298,7 +300,6 @@
     }
 
     // If tooltipData not provided already (voronoi, etc), attempt to find it
-    // TODO: When using bisect-x/y/band, values should be sorted.  Typically they are for `x`, but not `y` (and band depends on if x or y scale)
     if (tooltipData == null) {
       switch (mode) {
         case 'bisect-x': {
@@ -311,6 +312,7 @@
             xValueAtPoint = scaleInvert(ctx.xScale, point.x - ctx.padding.left);
           }
 
+          // Requires values to be sorted
           const index = bisectX(ctx.flatData, xValueAtPoint, 1);
           const previousValue = ctx.flatData[index - 1];
           const currentValue = ctx.flatData[index];
@@ -322,6 +324,7 @@
           // `y` value at pointer coordinate
           const yValueAtPoint = scaleInvert(ctx.yScale, point.y - ctx.padding.top);
 
+          // Requires values to be sorted
           const index = bisectY(ctx.flatData, yValueAtPoint, 1);
           const previousValue = ctx.flatData[index - 1];
           const currentValue = ctx.flatData[index];
@@ -339,6 +342,7 @@
             const bandData = ctx.flatData
               .filter((d) => ctx.x(d) === xValueAtPoint)
               .sort(sortFunc(ctx.y as () => any)); // sort for bisect
+            // Requires values to be sorted
             const index = bisectY(bandData, yValueAtPoint, 1);
             const previousValue = bandData[index - 1];
             const currentValue = bandData[index];
@@ -348,6 +352,7 @@
             const bandData = ctx.flatData
               .filter((d) => ctx.y(d) === yValueAtPoint)
               .sort(sortFunc(ctx.x as () => any)); // sort for bisect
+            // Requires values to be sorted
             const index = bisectX(bandData, xValueAtPoint, 1);
             const previousValue = bandData[index - 1];
             const currentValue = bandData[index];
@@ -358,6 +363,8 @@
           break;
         }
 
+        case 'quadtree-x':
+        case 'quadtree-y':
         case 'quadtree': {
           tooltipData = quadtree?.find(
             point.x - ctx.padding.left,
@@ -406,9 +413,13 @@
   }
 
   const quadtree: Quadtree<[number, number]> | undefined = $derived.by(() => {
-    if (mode === 'quadtree') {
+    if (['quadtree', 'quadtree-x', 'quadtree-y'].includes(mode)) {
       return d3Quadtree()
         .x((d) => {
+          if (mode === 'quadtree-y') {
+            return 0;
+          }
+
           if (geoCtx.projection) {
             const lat = ctx.x(d);
             const long = ctx.y(d);
@@ -429,6 +440,10 @@
           }
         })
         .y((d) => {
+          if (mode === 'quadtree-x') {
+            return 0;
+          }
+
           if (geoCtx.projection) {
             const lat = ctx.x(d);
             const long = ctx.y(d);
@@ -509,7 +524,7 @@
     });
 
   const triggerPointerEvents = $derived(
-    ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree'].includes(mode)
+    ['bisect-x', 'bisect-y', 'bisect-band', 'quadtree', 'quadtree-x', 'quadtree-y'].includes(mode)
   );
 
   function onPointerEnter(e: PointerEvent | MouseEvent | TouchEvent) {
@@ -646,7 +661,7 @@
           {/each}
         </g>
       </Svg>
-    {:else if mode === 'quadtree' && debug}
+    {:else if ['quadtree', 'quadtree-x', 'quadtree-y'].includes(mode) && debug}
       <Svg pointerEvents={false}>
         <ChartClipPath>
           <g class={layerClass('tooltip-quadtree-g')}>

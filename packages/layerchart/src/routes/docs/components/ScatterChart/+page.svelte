@@ -1,11 +1,9 @@
 <script lang="ts">
-  import type { ComponentProps } from 'svelte';
   import { Axis, Highlight, Layer, Points, ScatterChart, Tooltip } from 'layerchart';
   import { format } from '@layerstack/utils';
   import { flatGroup } from 'd3-array';
   import { randomNormal } from 'd3-random';
   import { scaleThreshold } from 'd3-scale';
-  import { Field, Switch, ToggleGroup, ToggleOption } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
@@ -39,16 +37,10 @@
   const dateSeriesData = createDateSeries({ count: 30, min: 20, max: 100, value: 'integer' });
 
   let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
-
-<div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
-</div>
 
 <h2>Basic</h2>
 

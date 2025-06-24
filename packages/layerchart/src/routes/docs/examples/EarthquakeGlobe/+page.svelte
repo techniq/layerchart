@@ -3,7 +3,7 @@
   import { scaleSqrt } from 'd3-scale';
   import { feature } from 'topojson-client';
 
-  import { Button, ButtonGroup, Field, RangeField, Switch } from 'svelte-ux';
+  import { Button, ButtonGroup, Field, RangeField } from 'svelte-ux';
   import { TimerState } from '@layerstack/svelte-state';
 
   import {
@@ -43,7 +43,7 @@
     disabled: true,
   });
 
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
@@ -64,11 +64,6 @@
     disabled={!timer.running}
     labelPlacement="left"
   />
-  <div class="grow"></div>
-
-  <Field label="Debug" labelPlacement="left" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
 </div>
 
 <Preview data={countries}>

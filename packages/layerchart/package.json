@@ -4,7 +4,7 @@
   "author": "Sean Lynch <techniq35@gmail.com>",
   "license": "MIT",
   "repository": "techniq/layerchart",
-  "version": "2.0.0-next.23",
+  "version": "2.0.0-next.25",
   "scripts": {
     "dev": "vite dev --port 3002",
     "build": "vite build",
@@ -69,7 +69,7 @@
     "svelte": "5.34.1",
     "svelte-check": "^4.2.1",
     "svelte-json-tree": "^2.2.0",
-    "svelte-ux": "2.0.0-next.11",
+    "svelte-ux": "2.0.0-next.13",
     "svelte2tsx": "^0.7.39",
     "tailwindcss": "^4.1.10",
     "topojson-client": "^3.1.0",

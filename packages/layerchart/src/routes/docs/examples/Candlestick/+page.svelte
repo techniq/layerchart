@@ -25,7 +25,7 @@
       cDomain={['desc', 'asc']}
       cRange={['#e41a1c', '#4daf4a']}
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
         <Layer type={shared.renderContext}>

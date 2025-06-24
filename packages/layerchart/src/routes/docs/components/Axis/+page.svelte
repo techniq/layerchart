@@ -11,7 +11,7 @@
     timeYear,
     timeMillisecond,
   } from 'd3-time';
-  import { Field, RangeField, Switch } from 'svelte-ux';
+  import { RangeField } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
 
@@ -52,7 +52,7 @@
 
   let tickSpacing = $state(80); // x-axis default
 
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
@@ -454,15 +454,7 @@
   </div>
 </Preview>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>Axis label placements (top/bottom)</h2>
-
-  <div class="mb-2 flex gap-6">
-    <Field label="Debug:" dense labelPlacement="left" let:id>
-      <Switch {id} bind:checked={debug} />
-    </Field>
-  </div>
-</div>
+<h2>Axis label placements (top/bottom)</h2>
 
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
@@ -489,15 +481,7 @@
   </div>
 </Preview>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>Axis label placements (left/right)</h2>
-
-  <div class="mb-2 flex gap-6">
-    <Field label="Debug:" dense labelPlacement="left" let:id>
-      <Switch {id} bind:checked={debug} />
-    </Field>
-  </div>
-</div>
+<h2>Axis label placements (left/right)</h2>
 
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
@@ -520,15 +504,7 @@
   </div>
 </Preview>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>Multiple time axis with same placement (bottom)</h2>
-
-  <div class="mb-2 flex gap-6">
-    <Field label="Debug:" dense labelPlacement="left" let:id>
-      <Switch {id} bind:checked={debug} />
-    </Field>
-  </div>
-</div>
+<h2>Multiple time axis with same placement (bottom)</h2>
 
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
@@ -579,15 +555,7 @@
   </div>
 </Preview>
 
-<div class="grid grid-cols-[1fr_auto] gap-2 items-end">
-  <h2>Multiple different axis with same placement (right)</h2>
-
-  <div class="mb-2 flex gap-6">
-    <Field label="Debug:" dense labelPlacement="left" let:id>
-      <Switch {id} bind:checked={debug} />
-    </Field>
-  </div>
-</div>
+<h2>Multiple different axis with same placement (right)</h2>
 
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
@@ -716,6 +684,7 @@
             padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
             <Layer type={shared.renderContext}>
+              <Axis placement="top" rule grid tickMultiline {tickSpacing} />
               <Axis placement="bottom" rule grid tickMultiline {tickSpacing} />
             </Layer>
           </Chart>

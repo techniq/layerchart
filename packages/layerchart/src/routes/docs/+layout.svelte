@@ -14,16 +14,23 @@
     mdiGithub,
     mdiLink,
   } from '@mdi/js';
+  // @ts-expect-error
+  import IconAlignLeft from '~icons/lucide/align-left';
 
   import {
     ApiDocs,
     Button,
     Dialog,
+    Field,
     Icon,
     ListItem,
+    Menu,
+    Switch,
     TableOfContents,
+    Toggle,
     ToggleGroup,
     ToggleOption,
+    Tooltip,
   } from 'svelte-ux';
 
   import { MediaQueryPresets } from '@layerstack/svelte-state';
@@ -34,6 +41,9 @@
   import ViewSourceButton from '$lib/docs/ViewSourceButton.svelte';
   import { page } from '$app/state';
   import { shared } from './shared.svelte.js';
+
+  // @ts-ignore
+  import IconSettings from '~icons/lucide/settings';
 
   const { children } = $props();
 
@@ -116,25 +126,41 @@
         {/if}
       </span>
 
-      {#if supportedContexts}
-        <ToggleGroup
-          bind:value={shared.renderContext}
-          variant="fill"
-          color="primary"
-          inset
-          gap="px"
-          size="sm"
-        >
-          {#each supportedContexts as context}
-            <ToggleOption value={context}>{toTitleCase(context)}</ToggleOption>
-          {/each}
-        </ToggleGroup>
-      {/if}
+      <span class="flex items-center gap-1">
+        {#if supportedContexts}
+          <ToggleGroup
+            bind:value={shared.renderContext}
+            variant="fill"
+            color="primary"
+            inset
+            gap="px"
+            size="sm"
+          >
+            {#each supportedContexts as context}
+              <ToggleOption value={context}>{toTitleCase(context)}</ToggleOption>
+            {/each}
+          </ToggleGroup>
+        {/if}
+
+        <Toggle let:on={open} let:toggle let:toggleOff>
+          <Tooltip title="Settings">
+            <Button iconOnly on:click={toggle}>
+              <IconSettings class="text-surface-content" />
+              <Menu {open} on:close={toggleOff} placement="bottom-start" classes={{ menu: 'p-2' }}>
+                <label class="flex items-center gap-2">
+                  <span class="text-sm text-surface-content">Debug</span>
+                  <Switch bind:checked={shared.debug} />
+                </label>
+              </Menu>
+            </Button>
+          </Tooltip>
+        </Toggle>
+      </span>
 
       {#if status}
         <span
           class={cls(
-            'text-sm  px-2 rounded-sm',
+            'text-sm px-2 rounded-sm',
             status === 'beta' && 'bg-yellow-500/20 text-yellow-800',
             status === 'deprecated' && 'bg-red-500/20 text-red-900'
           )}
@@ -201,8 +227,16 @@
           on:click={() => (showTableOfContents = false)}
         />
         <TableOfContents
-          icon={mdiChevronRight}
-          class="px-4 py-2"
+          linkIndent={12}
+          class="p-4"
+          classes={{
+            a: cls(
+              'border-l text-sm text-surface-content/50 py-[2px] hover:text-surface-content',
+              'data-active:border-primary data-active:text-primary',
+              'data-[level=1]:font-semibold'
+            ),
+          }}
+          scrollOffset={184}
           on:nodeClick={(e) => {
             showTableOfContents = false;
           }}
@@ -292,12 +326,25 @@
       <div
         class="w-[224px] sticky top-[calc(var(--headerHeight)+10px)] pr-2 max-h-[calc(100dvh-64px)] overflow-auto z-60"
       >
-        <div class="text-xs uppercase leading-8 tracking-widest text-surface-content/50">
+        <div
+          class="flex gap-2 items-center text-xs font-medium uppercase pb-3 tracking-widest text-surface-content/50"
+        >
+          <IconAlignLeft />
           On this page
         </div>
         <!-- Rebuild toc when page changes -->
         {#key page.route.id}
-          <TableOfContents icon={mdiChevronRight} class="border-l pl-3" scrollOffset={184} />
+          <TableOfContents
+            linkIndent={12}
+            classes={{
+              a: cls(
+                'border-l text-sm text-surface-content/50 py-[2px] hover:text-surface-content',
+                'data-active:border-primary data-active:text-primary',
+                'data-[level=1]:font-semibold'
+              ),
+            }}
+            scrollOffset={184}
+          />
         {/key}
       </div>
     {/if}

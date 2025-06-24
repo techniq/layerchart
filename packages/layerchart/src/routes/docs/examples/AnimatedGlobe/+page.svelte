@@ -6,7 +6,7 @@
   import { mdiPlay, mdiStop } from '@mdi/js';
 
   import { Chart, GeoPath, Graticule, Layer, Tooltip, type ChartContextValue } from 'layerchart';
-  import { Button, ButtonGroup, Field, Switch } from 'svelte-ux';
+  import { Button, ButtonGroup } from 'svelte-ux';
   import { sortFunc } from '@layerstack/utils';
   import { scrollIntoView } from '@layerstack/svelte-actions';
   import { cls } from '@layerstack/tailwind';
@@ -92,12 +92,8 @@
     selectedFeature = null;
   }
 
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 </script>
-
-<Field label="Debug" let:id classes={{ container: 'h-full mb-3' }}>
-  <Switch {id} bind:checked={debug} />
-</Field>
 
 <Preview data={countries}>
   <div class="h-[600px] grid grid-cols-[224px_1fr] relative">
