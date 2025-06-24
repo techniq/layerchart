@@ -164,4 +164,21 @@
     class={cls(layerClass('circle'), fill == null && 'fill-surface-content', className)}
     {...restProps}
   />
+{:else if renderCtx === 'html'}
+  <div
+    style:position="absolute"
+    style:left="{motionCx.current}px"
+    style:top="{motionCy.current}px"
+    style:width="{motionR.current * 2}px"
+    style:height="{motionR.current * 2}px"
+    style:border-radius="50%"
+    style:background-color={fill}
+    style:opacity
+    style:border-width={strokeWidth}
+    style:border-color={stroke}
+    style:border-style="solid"
+    style:transform="translate(-50%, -50%)"
+    class={cls(layerClass('circle'), fill == null && 'bg-surface-content', className)}
+    {...restProps}
+  ></div>
 {/if}
