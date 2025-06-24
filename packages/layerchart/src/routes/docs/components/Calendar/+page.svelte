@@ -244,7 +244,7 @@
   </div>
 </Preview>
 
-<h2>Html</h2>
+<h2>Html with padding</h2>
 
 <Preview {data}>
   <div class="h-[200px] p-4 border rounded-sm">

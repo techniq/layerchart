@@ -13,6 +13,7 @@ export async function load() {
       supportedContexts: [
         'svg',
         // 'canvas' // TODO: Supported, but limited use cases
+        'html',
       ],
       related: [
         'examples/Pack',

@@ -187,7 +187,7 @@
   >
     {@render children?.()}
   </g>
-{:else}
+{:else if renderCtx === 'html'}
   <div
     bind:this={ref}
     style:transform

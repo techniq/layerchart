@@ -9,7 +9,7 @@ export async function load() {
       source,
       pageSource,
       description: '`<circle>` element with tweened properties using `motionStore`',
-      supportedContexts: ['svg', 'canvas'],
+      supportedContexts: ['svg', 'canvas', 'html'],
       related: ['components/Points', 'examples/Pack', 'examples/PunchCard'],
     },
   };
