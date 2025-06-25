@@ -1,5 +1,13 @@
 # LayerChart
 
+## 2.0.0-next.27
+
+### Patch Changes
+
+- feat: Update `applyLanes()` util to support nested string key and function accessors for start/end properties ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix: Add `applyLanes()` as top-level export ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.26
 
 ### Patch Changes
