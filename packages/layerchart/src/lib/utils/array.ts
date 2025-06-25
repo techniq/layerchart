@@ -20,3 +20,29 @@ export function arraysEqual(arr1: unknown[], arr2: unknown[]) {
     return arr2.includes(k);
   });
 }
+
+/**
+ * Add `lanes` property to each element in the data array support densely packing.
+ * This is useful for visualizing overlapping events in a timeline / Gantt chart.
+ */
+export function applyLanes<T extends Record<string, any>>(
+  data: T[],
+  options: { start: keyof T; end: keyof T } = { start: 'start' as keyof T, end: 'end' as keyof T }
+) {
+  const result: (T & { lane: number })[] = [];
+  let stack: T[] = [];
+
+  for (const d of data) {
+    let lane = stack.findIndex(
+      (s) => s[options.end] <= d[options.start] && s[options.start] < d[options.start]
+    );
+    if (lane === -1) {
+      lane = stack.length;
+    }
+
+    result.push({ ...d, lane });
+    stack[lane] = d;
+  }
+
+  return result;
+}
