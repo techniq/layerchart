@@ -1,5 +1,6 @@
 import type { Numeric } from 'd3-array';
 import { extent as d3extent } from 'd3-array';
+import { accessor, type Accessor } from './common.js';
 
 /**
  * Wrapper around d3-array's `extent()` but remove [undefined, undefined] return type
@@ -27,14 +28,20 @@ export function arraysEqual(arr1: unknown[], arr2: unknown[]) {
  */
 export function applyLanes<T extends Record<string, any>>(
   data: T[],
-  options: { start: keyof T; end: keyof T } = { start: 'start' as keyof T, end: 'end' as keyof T }
+  options: { start: Accessor<T>; end: Accessor<T> } = {
+    start: 'start',
+    end: 'end',
+  }
 ) {
   const result: (T & { lane: number })[] = [];
   let stack: T[] = [];
 
+  const startAccessor = accessor(options.start as any);
+  const endAccessor = accessor(options.end as any);
+
   for (const d of data) {
     let lane = stack.findIndex(
-      (s) => s[options.end] <= d[options.start] && s[options.start] < d[options.start]
+      (s) => endAccessor(s) <= startAccessor(d) && startAccessor(s) < startAccessor(d)
     );
     if (lane === -1) {
       lane = stack.length;

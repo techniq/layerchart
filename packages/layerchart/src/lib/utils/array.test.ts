@@ -92,6 +92,50 @@ describe('applyLanes', () => {
     ]);
   });
 
+  it('should work with nested string keys for start and end', () => {
+    const data = [
+      { name: 'Task 1', duration: { start: new Date('2023-01-01'), end: new Date('2023-01-02') } },
+      { name: 'Task 2', duration: { start: new Date('2023-01-03'), end: new Date('2023-01-04') } },
+    ];
+
+    const result = applyLanes(data, { start: 'duration.start', end: 'duration.end' });
+
+    expect(result).toEqual([
+      {
+        name: 'Task 1',
+        duration: { start: new Date('2023-01-01'), end: new Date('2023-01-02') },
+        lane: 0,
+      },
+      {
+        name: 'Task 2',
+        duration: { start: new Date('2023-01-03'), end: new Date('2023-01-04') },
+        lane: 0,
+      },
+    ]);
+  });
+
+  it('should work with function accessors for start and end', () => {
+    const data = [
+      { name: 'Task 1', duration: { start: new Date('2023-01-01'), end: new Date('2023-01-02') } },
+      { name: 'Task 2', duration: { start: new Date('2023-01-03'), end: new Date('2023-01-04') } },
+    ];
+
+    const result = applyLanes(data, { start: (d) => d.duration.start, end: (d) => d.duration.end });
+
+    expect(result).toEqual([
+      {
+        name: 'Task 1',
+        duration: { start: new Date('2023-01-01'), end: new Date('2023-01-02') },
+        lane: 0,
+      },
+      {
+        name: 'Task 2',
+        duration: { start: new Date('2023-01-03'), end: new Date('2023-01-04') },
+        lane: 0,
+      },
+    ]);
+  });
+
   it('should handle empty array', () => {
     const data: any[] = [];
     const result = applyLanes(data);

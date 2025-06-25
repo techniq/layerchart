@@ -1,3 +1,4 @@
+export { applyLanes } from './array.js';
 export * from './canvas.js';
 export * from './common.js';
 export * from './geo.js';
