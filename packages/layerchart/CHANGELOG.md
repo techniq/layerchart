@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.26
+
+### Patch Changes
+
+- feat: Add `applyLanes()` array util to support densely packing timelines ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.25
 
 ### Patch Changes
