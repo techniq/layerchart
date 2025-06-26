@@ -27,6 +27,10 @@
     };
   });
 
+  function formatYear(number: number): string {
+    return Math.sign(number) === -1 ? Math.abs(number) + ' BC' : number + ' AD';
+  }
+
   let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
 </script>
 
@@ -338,6 +342,111 @@
               <Tooltip.Item label="duration" valueAlign="right">
                 <Duration start={data.startDate} end={data.endDate} totalUnits={2} />
               </Tooltip.Item>
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
+    </BarChart>
+  </div>
+</Preview>
+
+<h2>Civilization timeline</h2>
+
+<Preview data={data.civilizationEvents}>
+  <div class="h-[700px] p-4 border rounded-sm">
+    <BarChart
+      data={data.civilizationEvents}
+      x={['start', 'end']}
+      y="civilization"
+      c="region"
+      cRange={[
+        'var(--color-danger)',
+        'var(--color-warning)',
+        'var(--color-success)',
+        'var(--color-info)',
+      ]}
+      rule={false}
+      orientation="horizontal"
+      padding={{ left: 200, bottom: 36 }}
+      props={{
+        xAxis: {
+          format: formatYear,
+        },
+        yAxis: {
+          tickLabelProps: {
+            width: 300,
+            truncate: { position: 'middle' },
+          },
+        },
+      }}
+      {renderContext}
+    >
+      {#snippet tooltip({ context })}
+        <Tooltip.Root {context}>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.civilization}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="region" value={data.region} />
+              <Tooltip.Item label="timeline" value={data.timeline} />
+              <!-- <Tooltip.Item label="start label" value={data.startLabel} />
+              <Tooltip.Item label="end label" value={data.endLabel} /> -->
+              <Tooltip.Item label="start" value={data.start} format={formatYear} />
+              <Tooltip.Item label="end" value={data.end} format={formatYear} />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
+    </BarChart>
+  </div>
+</Preview>
+
+<h2>Civilization timeline (dense)</h2>
+
+<Preview data={applyLanes(data.civilizationEvents)}>
+  <div class="h-[500px] p-4 border rounded-sm">
+    <BarChart
+      data={applyLanes(data.civilizationEvents)}
+      x={['start', 'end']}
+      y="lane"
+      c="region"
+      cRange={[
+        'var(--color-danger)',
+        'var(--color-warning)',
+        'var(--color-success)',
+        'var(--color-info)',
+        'var(--color-primary)',
+        'var(--color-secondary)',
+        'var(--color-accent)',
+      ]}
+      rule={false}
+      axis="x"
+      orientation="horizontal"
+      padding={{ left: 20, bottom: 36, right: 20 }}
+      props={{
+        xAxis: {
+          format: formatYear,
+        },
+        yAxis: {
+          tickLabelProps: {
+            width: 300,
+            truncate: { position: 'middle' },
+          },
+        },
+        tooltip: { context: { mode: 'bounds' } },
+      }}
+      {renderContext}
+    >
+      {#snippet tooltip({ context })}
+        <Tooltip.Root {context}>
+          {#snippet children({ data })}
+            <Tooltip.Header>{data.civilization}</Tooltip.Header>
+            <Tooltip.List>
+              <Tooltip.Item label="region" value={data.region} />
+              <Tooltip.Item label="timeline" value={data.timeline} />
+              <!-- <Tooltip.Item label="start label" value={data.startLabel} />
+              <Tooltip.Item label="end label" value={data.endLabel} /> -->
+              <Tooltip.Item label="start" value={data.start} format={formatYear} />
+              <Tooltip.Item label="end" value={data.end} format={formatYear} />
             </Tooltip.List>
           {/snippet}
         </Tooltip.Root>
