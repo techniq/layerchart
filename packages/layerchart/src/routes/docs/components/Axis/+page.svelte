@@ -441,13 +441,13 @@
 <h2>Override axis ticks with custom scale</h2>
 
 <Preview data={largeData}>
-  <div class="h-[80px] p-4 border rounded-sm">
+  <div class="h-[80px] p-4 border rounded-sm resize-x overflow-auto">
     <Chart data={largeData} x="date" xScale={scaleBand()} y="value" padding={{ bottom: 24 }}>
       <Layer type={shared.renderContext}>
         <Axis
           placement="bottom"
           rule
-          ticks={(scale) => scaleTime(scale.domain(), scale.range()).ticks()}
+          ticks={(scale) => scaleTime(scale.domain(), scale.range()).ticks(scale.range()[1] / 80)}
         />
       </Layer>
     </Chart>
