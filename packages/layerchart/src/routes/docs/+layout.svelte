@@ -14,8 +14,6 @@
     mdiGithub,
     mdiLink,
   } from '@mdi/js';
-  // @ts-expect-error
-  import IconAlignLeft from '~icons/lucide/align-left';
 
   import {
     ApiDocs,
@@ -42,7 +40,9 @@
   import { page } from '$app/state';
   import { shared } from './shared.svelte.js';
 
-  // @ts-ignore
+  // @ts-expect-error
+  import IconAlignLeft from '~icons/lucide/align-left';
+  // @ts-expect-error
   import IconSettings from '~icons/lucide/settings';
 
   const { children } = $props();
