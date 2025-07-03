@@ -400,7 +400,7 @@
     <Text {...resolvedLabelProps} />
   {/if}
 
-  {#each tickVals as tick, index (tick)}
+  {#each tickVals as tick, index (tick.valueOf())}
     {@const tickCoords = getCoords(tick)}
     {@const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y)}
     {@const [radialTickMarkCoordsX, radialTickMarkCoordsY] = pointRadial(
