@@ -110,6 +110,25 @@
     Search docs using <Kbd command class="text-xs">K</Kbd> or browse using the sidebar navigation.
   </p>
 
+  <h2>Tailwind 4</h2>
+
+  <p>If you are using Tailwind 4, please add the folloing lines to your app.css</p>
+
+  <Code
+    source={`
+@import 'tailwindcss';
+@source '../node_modules/layerchart/**/*.{svelte,js}';
+
+@theme {
+    --color-primary: hsl(257.4075 100% 50%);
+    --color-surface-100: hsl(180 100% 100%);
+    --color-surface-200: hsl(0 0% 94.902%);
+    --color-surface-300: hsl(180 1.9608% 90%);
+    --color-surface-content: hsl(215 27.907% 16.8627%);
+      }`}
+    language="css"
+  />
+
   <h2>Examples</h2>
 
   <p>
