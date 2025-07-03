@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.28
+
+### Patch Changes
+
+- fix(Axis): Fix memory leak and improve performance when tick values are `Date` instances ([#586](https://github.com/techniq/layerchart/pull/586))
+
 ## 2.0.0-next.27
 
 ### Patch Changes
