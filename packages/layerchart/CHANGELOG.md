@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.29
+
+### Patch Changes
+
+- fix(Axis): Fix display of axis labels ([#591](https://github.com/techniq/layerchart/pull/591))
+
 ## 2.0.0-next.28
 
 ### Patch Changes
