@@ -361,13 +361,15 @@
   });
 
   const resolvedLabelProps = $derived({
-    value: typeof label === 'function' ? '' : undefined,
+    value: typeof label === 'function' ? '' : label,
     x: resolvedLabelX,
     y: resolvedLabelY,
     textAnchor: resolvedLabelTextAnchor,
     verticalAnchor: resolvedLabelVerticalAnchor,
     rotate: orientation === 'vertical' && labelPlacement === 'middle' ? -90 : 0,
-    capHeight: '.5rem', // text-[10px]
+    // complement 10px text (until Text supports custom styles)
+    capHeight: '7px',
+    lineHeight: '11px',
     ...labelProps,
     class: cls(
       layerClass('axis-label'),
