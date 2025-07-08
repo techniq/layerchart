@@ -34,18 +34,14 @@
   import { Button, Icon, MenuButton, Tooltip } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
 
-  // TODO: maybe we include the icons as I think importing them like this
-  // will bog down the dev server
-  import {
-    mdiArrowULeftTop,
-    mdiMagnifyPlusOutline,
-    mdiMagnifyMinusOutline,
-    mdiImageFilterCenterFocus,
-    mdiChevronDown,
-    mdiResize,
-    mdiArrowExpandAll,
-    mdiCancel,
-  } from '@mdi/js';
+  import LucideFocus from '~icons/lucide/focus';
+  import LucideChevronDown from '~icons/lucide/chevron-down';
+  import LucideCircleOff from '~icons/lucide/circle-off';
+  import LucideImageUpscale from '~icons/lucide/image-upscale';
+  import LucideMove from '~icons/lucide/move';
+  import LucideUndo2 from '~icons/lucide/undo-2';
+  import LucideZoomIn from '~icons/lucide/zoom-in';
+  import LucideZoomOut from '~icons/lucide/zoom-out';
 
   import { getTransformContext } from './TransformContext.svelte';
   import type { Without } from '$lib/utils/types.js';
@@ -113,7 +109,7 @@
   {#if show.includes('zoomIn')}
     <Tooltip title="Zoom in">
       <Button
-        icon={mdiMagnifyPlusOutline}
+        icon={LucideZoomIn}
         on:click={() => transform.zoomIn()}
         {size}
         class="text-surface-content p-2"
@@ -124,7 +120,7 @@
   {#if show.includes('zoomOut')}
     <Tooltip title="Zoom out">
       <Button
-        icon={mdiMagnifyMinusOutline}
+        icon={LucideZoomOut}
         on:click={() => transform.zoomOut()}
         {size}
         class="text-surface-content p-2"
@@ -135,7 +131,7 @@
   {#if show.includes('center')}
     <Tooltip title="Center">
       <Button
-        icon={mdiImageFilterCenterFocus}
+        icon={LucideFocus}
         on:click={() => transform.translateCenter()}
         {size}
         class="text-surface-content p-2"
@@ -146,7 +142,7 @@
   {#if show.includes('reset')}
     <Tooltip title="Reset">
       <Button
-        icon={mdiArrowULeftTop}
+        icon={LucideUndo2}
         on:click={() => transform.reset()}
         {size}
         class="text-surface-content p-2"
@@ -159,9 +155,9 @@
       <MenuButton
         iconOnly
         options={[
-          { label: 'None', value: 'none', icon: mdiCancel },
-          { label: 'Zoom', value: 'scale', icon: mdiResize },
-          { label: 'Move', value: 'translate', icon: mdiArrowExpandAll },
+          { label: 'None', value: 'none', icon: LucideCircleOff },
+          { label: 'Zoom', value: 'scale', icon: LucideImageUpscale },
+          { label: 'Move', value: 'translate', icon: LucideMove },
         ]}
         menuProps={{ placement: menuPlacementByOrientationAndPlacement[orientation][placement] }}
         menuIcon={null}
@@ -171,7 +167,7 @@
         class="text-surface-content"
       >
         <svelte:fragment slot="selection" let:value>
-          <Icon data={value?.icon ?? mdiChevronDown} />
+          <Icon data={value?.icon ?? LucideChevronDown} />
         </svelte:fragment>
       </MenuButton>
     </Tooltip>

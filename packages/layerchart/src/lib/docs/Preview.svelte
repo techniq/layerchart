@@ -3,7 +3,9 @@
   // TODO: No longer copy from svelte-ux after prismjs is migrated to ESM (commonjs causes issue with Vite from another library)
   import Prism from 'prismjs';
   import 'prism-svelte';
-  import { mdiCodeTags, mdiTable } from '@mdi/js';
+
+  import LucideCode from '~icons/lucide/code';
+  import LucideTable from '~icons/lucide/table';
 
   import { Button, CopyButton, Dialog, Toggle, Tooltip } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
@@ -68,7 +70,7 @@
 
 {#if code}
   <Button
-    icon={mdiCodeTags}
+    icon={LucideCode}
     class="text-surface-content/70 py-1"
     on:click={() => (showCode = !showCode)}
   >
@@ -78,7 +80,8 @@
 
 {#if data}
   <Toggle let:on={open} let:toggle let:toggleOff>
-    <Button icon={mdiTable} class="text-surface-content/70 py-1" on:click={toggle}>View data</Button
+    <Button icon={LucideTable} class="text-surface-content/70 py-1" on:click={toggle}
+      >View data</Button
     >
     <Dialog
       {open}
