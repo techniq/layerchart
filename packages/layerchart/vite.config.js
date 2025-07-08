@@ -33,6 +33,9 @@ const config = {
   resolve: {
     noExternal: true, // https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440
   },
+  optimizeDeps: {
+    exclude: ['~icons'],
+  },
 };
 
 export default config;
