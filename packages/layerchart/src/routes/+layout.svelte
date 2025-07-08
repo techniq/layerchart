@@ -3,7 +3,6 @@
   import posthog from 'posthog-js';
   import { watch } from 'runed';
 
-  import { mdiArrowTopRight, mdiDotsVertical, mdiGithub, mdiTwitter } from '@mdi/js';
   import 'prism-themes/themes/prism-vsc-dark-plus.css';
   import {
     AppBar,
@@ -19,6 +18,12 @@
   } from 'svelte-ux';
   import { sortFunc } from '@layerstack/utils';
   import { MediaQueryPresets } from '@layerstack/svelte-state';
+
+  import LucideArrowUpRight from '~icons/lucide/arrow-up-right';
+  import LucideEllipsisVertical from '~icons/lucide/ellipsis-vertical';
+  import LucideGithub from '~icons/lucide/github';
+  import CustomBluesky from '~icons/custom-brands/bluesky';
+  import CustomDiscord from '~icons/custom-brands/discord';
 
   import { dev } from '$app/environment';
   import { afterNavigate, goto } from '$app/navigation';
@@ -141,7 +146,7 @@
     <div slot="actions" class="flex gap-3">
       <Button
         href="https://svelte-ux.techniq.dev"
-        icon={{ data: mdiArrowTopRight, class: 'opacity-50' }}
+        icon={LucideArrowUpRight}
         target="_blank"
         class="p-2 max-lg:hidden flex-row-reverse"
       >
@@ -161,7 +166,7 @@
       {#if lgScreen.current}
         <Tooltip title="Discord" placement="left" offset={2}>
           <Button
-            icon="M20.33 5.06C18.78 4.33 17.12 3.8 15.38 3.5 15.17 3.89 14.92 4.4 14.74 4.82 12.9 4.54 11.07 4.54 9.26 4.82 9.09 4.4 8.83 3.89 8.62 3.5 6.88 3.8 5.21 4.33 3.66 5.06 0.53 9.79-0.32 14.41 0.1 18.96 2.18 20.52 4.19 21.46 6.17 22.08 6.66 21.4 7.1 20.69 7.48 19.93 6.76 19.66 6.07 19.33 5.43 18.94 5.6 18.81 5.77 18.68 5.93 18.54 9.88 20.39 14.17 20.39 18.07 18.54 18.23 18.68 18.4 18.81 18.57 18.94 17.92 19.33 17.24 19.66 16.52 19.94 16.9 20.69 17.33 21.41 17.82 22.08 19.8 21.46 21.82 20.52 23.9 18.96 24.4 13.69 23.05 9.11 20.33 5.06ZM8.01 16.17C6.83 16.17 5.86 15.06 5.86 13.71 5.86 12.36 6.81 11.25 8.01 11.25 9.22 11.25 10.19 12.36 10.17 13.71 10.17 15.06 9.22 16.17 8.01 16.17ZM15.99 16.17C14.8 16.17 13.83 15.06 13.83 13.71 13.83 12.36 14.78 11.25 15.99 11.25 17.19 11.25 18.17 12.36 18.14 13.71 18.14 15.06 17.19 16.17 15.99 16.17Z"
+            icon={CustomDiscord}
             href="https://discord.gg/697JhMPD3t"
             class="p-2"
             target="_blank"
@@ -170,7 +175,7 @@
 
         <Tooltip title="Bluesky" placement="left" offset={2}>
           <Button
-            icon="M5.43 3.26c2.66 2 5.52 6.05 6.57 8.22 1.05-2.17 3.91-6.22 6.57-8.22 1.92-1.44 5.03-2.56 5.03 0.99 0 0.71-0.41 5.95-0.64 6.81-0.83 2.96-3.85 3.71-6.53 3.25 4.69 0.8 5.89 3.44 3.3 6.09-4.9 5.02-7.04-1.26-7.58-2.87-0.1-0.3-0.15-0.43-0.15-0.31 0-0.12-0.05 0.02-0.15 0.31-0.55 1.61-2.69 7.89-7.58 2.87-2.58-2.65-1.38-5.29 3.3-6.09-2.68 0.46-5.7-0.3-6.53-3.25-0.24-0.85-0.64-6.09-0.64-6.81 0-3.55 3.11-2.43 5.03-0.99z"
+            icon={CustomBluesky}
             href="https://bsky.app/profile/techniq.dev"
             class="p-2"
             target="_blank"
@@ -179,7 +184,7 @@
 
         <Tooltip title="View repository" placement="left" offset={2}>
           <Button
-            icon={mdiGithub}
+            icon={LucideGithub}
             href="https://github.com/techniq/layerchart"
             class="p-2"
             target="_blank"
@@ -187,29 +192,29 @@
         </Tooltip>
       {:else}
         <MenuButton
-          icon={mdiDotsVertical}
+          icon={LucideEllipsisVertical}
           menuIcon={null}
           iconOnly={true}
           options={[
             {
               label: 'Svelte UX',
               value: 'https://svelte-ux.techniq.dev',
-              icon: mdiArrowTopRight,
+              icon: LucideArrowUpRight,
             },
             {
               label: 'Github',
               value: 'https://github.com/techniq/layerchart',
-              icon: mdiGithub,
+              icon: LucideGithub,
             },
             {
               label: 'Discord',
               value: 'https://discord.gg/697JhMPD3t',
-              icon: 'M20.33 5.06C18.78 4.33 17.12 3.8 15.38 3.5 15.17 3.89 14.92 4.4 14.74 4.82 12.9 4.54 11.07 4.54 9.26 4.82 9.09 4.4 8.83 3.89 8.62 3.5 6.88 3.8 5.21 4.33 3.66 5.06 0.53 9.79-0.32 14.41 0.1 18.96 2.18 20.52 4.19 21.46 6.17 22.08 6.66 21.4 7.1 20.69 7.48 19.93 6.76 19.66 6.07 19.33 5.43 18.94 5.6 18.81 5.77 18.68 5.93 18.54 9.88 20.39 14.17 20.39 18.07 18.54 18.23 18.68 18.4 18.81 18.57 18.94 17.92 19.33 17.24 19.66 16.52 19.94 16.9 20.69 17.33 21.41 17.82 22.08 19.8 21.46 21.82 20.52 23.9 18.96 24.4 13.69 23.05 9.11 20.33 5.06ZM8.01 16.17C6.83 16.17 5.86 15.06 5.86 13.71 5.86 12.36 6.81 11.25 8.01 11.25 9.22 11.25 10.19 12.36 10.17 13.71 10.17 15.06 9.22 16.17 8.01 16.17ZM15.99 16.17C14.8 16.17 13.83 15.06 13.83 13.71 13.83 12.36 14.78 11.25 15.99 11.25 17.19 11.25 18.17 12.36 18.14 13.71 18.14 15.06 17.19 16.17 15.99 16.17Z',
+              icon: CustomDiscord,
             },
             {
-              label: 'Twitter / X',
-              value: 'https://twitter.com/techniq35',
-              icon: mdiTwitter,
+              label: 'Bluesky',
+              value: 'https://bsky.app/profile/techniq.dev',
+              icon: CustomBluesky,
             },
           ]}
           on:change={(e) => {

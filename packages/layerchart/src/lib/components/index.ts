@@ -130,7 +130,7 @@ export * from './tooltip/TooltipContext.svelte';
 
 export { default as TransformContext } from './TransformContext.svelte';
 export * from './TransformContext.svelte';
-// export { default as TransformControls } from './TransformControls.svelte'; // TODO: Restore once no longer using `svelet-ux` or `@mdi/js` (as they are dev dependencies)
+// export { default as TransformControls } from './TransformControls.svelte'; // TODO: Restore once no longer using `svelte-ux` or `~icons` (as they are dev dependencies)
 export { default as Tree } from './Tree.svelte';
 export * from './Tree.svelte';
 export { default as Treemap } from './Treemap.svelte';

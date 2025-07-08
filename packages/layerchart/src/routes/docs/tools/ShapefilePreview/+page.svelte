@@ -23,7 +23,7 @@
     Toggle,
   } from 'svelte-ux';
 
-  import { mdiChevronDown } from '@mdi/js';
+  import LucideChevronDown from '~icons/lucide/chevron-down';
 
   import { goto } from '$app/navigation';
   import { shared } from '../../shared.svelte.js';
@@ -61,8 +61,8 @@
         <ButtonGroup variant="fill-outline" color="primary">
           <Button on:click={() => loadFile()}>Load file</Button>
           <Toggle let:on={open} let:toggle>
-            <span>
-              <Button icon={mdiChevronDown} on:click={toggle} rounded class="px-1" />
+            <span class="flex">
+              <Button icon={LucideChevronDown} on:click={toggle} rounded class="px-1" />
               <Menu {open} on:close={toggle} placement="bottom-end">
                 <MenuItem
                   on:click={() => {
