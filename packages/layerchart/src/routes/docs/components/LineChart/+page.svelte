@@ -24,6 +24,7 @@
   import { cls } from '@layerstack/tailwind';
   import { slide } from 'svelte/transition';
   import { shared } from '../../shared.svelte.js';
+  import { tick } from 'svelte';
 
   let { data } = $props();
 
@@ -766,6 +767,34 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} {debug} />
+  </div>
+</Preview>
+
+<h2>Axis labels inside</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      {renderContext}
+      {debug}
+      props={{
+        yAxis: {
+          tickLabelProps: {
+            textAnchor: 'start',
+            verticalAnchor: 'end',
+          },
+          tickLength: 0,
+        },
+      }}
+      padding={{
+        left: 0,
+        top: 10,
+        bottom: 24,
+      }}
+    />
   </div>
 </Preview>
 
