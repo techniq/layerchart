@@ -22,7 +22,11 @@
     y: number;
     data: T | null;
     payload: TooltipPayload[];
-    show(e: PointerEvent, tooltipData?: any, payload?: TooltipPayload): void;
+    show(
+      e: PointerEvent | MouseEvent | TouchEvent,
+      tooltipData?: any,
+      payload?: TooltipPayload
+    ): void;
     hide(e?: PointerEvent): void;
     mode: TooltipMode;
     isHoveringTooltipArea: boolean;
