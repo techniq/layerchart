@@ -125,7 +125,7 @@
       y1Scale={scaleLinear()}
       y1Range={({ yScale }) => yScale.domain()}
       padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
         <Layer type={shared.renderContext}>
@@ -204,7 +204,7 @@
       x="year"
       y="efficiency"
       padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
       <Layer type={shared.renderContext}>
         <Axis

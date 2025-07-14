@@ -22,12 +22,13 @@
   import { curveBasis, curveCatmullRom, curveStepAfter } from 'd3-shape';
   import { group } from 'd3-array';
   import { timeDay } from 'd3-time';
-  import { Button, Field, Kbd, Switch } from 'svelte-ux';
+  import { scaleBand, scalePoint } from 'd3-scale';
+  import { Button, Kbd } from 'svelte-ux';
   import { format, sortFunc } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Preview from '$lib/docs/Preview.svelte';
-  import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
+  import { createDateSeries, longData, randomWalk } from '$lib/utils/genData.js';
   import type { DomainType } from '$lib/utils/scales.svelte.js';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import CurveMenuField from '$lib/docs/CurveMenuField.svelte';
@@ -129,7 +130,7 @@
   let renderContext = $derived(
     shared.renderContext as ComponentProps<typeof AreaChart>['renderContext']
   );
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 
   let markerPoints: { date: Date; value: number }[] = $state([]);
   let context = $state<ChartContextValue<(typeof denseDateSeriesData)[number]>>(null!);
@@ -164,12 +165,6 @@
 />
 
 <h1>Examples</h1>
-
-<div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
-</div>
 
 <h2>Basic</h2>
 
@@ -348,7 +343,7 @@
   </div>
 </Preview>
 
-<h2>Series (voronoi tooltip with highlight)</h2>
+<h2>Series (individual tooltip with highlight)</h2>
 
 <Preview data={multiSeriesDataByFruit}>
   <div class="h-[300px] p-4 border rounded-sm">
@@ -372,7 +367,7 @@
           color: 'var(--color-warning)',
         },
       ]}
-      props={{ tooltip: { context: { mode: 'voronoi' } } }}
+      props={{ tooltip: { context: { mode: 'quadtree' } } }}
       {renderContext}
       {debug}
     >
@@ -1319,6 +1314,40 @@
         {debug}
       />
     </div>
+  </div>
+</Preview>
+
+<h2>Point scale</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <AreaChart
+      data={longData.filter((d) => d.year === 2019)}
+      xScale={scalePoint()}
+      x="fruit"
+      y="value"
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Band scale</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <AreaChart
+      data={longData.filter((d) => d.year === 2019)}
+      xScale={scaleBand()}
+      x="fruit"
+      y="value"
+      tooltip={{
+        mode: 'band',
+        debug,
+      }}
+      {renderContext}
+      {debug}
+    />
   </div>
 </Preview>
 

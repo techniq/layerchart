@@ -253,10 +253,11 @@
   tooltip={tooltip === false
     ? false
     : {
-        mode: 'voronoi',
+        mode: 'quadtree',
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
+        ...(typeof tooltip === 'object' ? tooltip : null),
       }}
   brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
     ? {

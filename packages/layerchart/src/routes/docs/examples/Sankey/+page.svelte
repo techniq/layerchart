@@ -8,7 +8,8 @@
   import { Icon } from 'svelte-ux';
   import { sortFunc } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { mdiArrowRightBold } from '@mdi/js';
+
+  import LucideArrowRight from '~icons/lucide/arrow-right';
 
   import {
     Chart,
@@ -156,7 +157,7 @@
                 {data.node.name}
               {:else if data.link}
                 {data.link.source.name}
-                <Icon data={mdiArrowRightBold} class="text-white/50" />
+                <Icon data={LucideArrowRight} class="text-white/50" />
                 {data.link.target.name}
               {/if}
             </Tooltip.Header>
@@ -343,7 +344,7 @@
                 {data.node.name}
               {:else if data.link}
                 {data.link.source.name}
-                <Icon data={mdiArrowRightBold} class="text-white/50" />
+                <Icon data={LucideArrowRight} class="text-white/50" />
                 {data.link.target.name}
               {/if}
             </Tooltip.Header>

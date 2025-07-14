@@ -24,6 +24,7 @@
   import { cls } from '@layerstack/tailwind';
   import { slide } from 'svelte/transition';
   import { shared } from '../../shared.svelte.js';
+  import { tick } from 'svelte';
 
   let { data } = $props();
 
@@ -88,16 +89,10 @@
   let show = $state(true);
 
   let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
-
-<div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
-</div>
 
 <h2>Basic</h2>
 
@@ -184,7 +179,7 @@
   </div>
 </Preview>
 
-<h2>Series (voronoi tooltip with highlight)</h2>
+<h2>Series (individual tooltip with highlight)</h2>
 
 <Preview data={multiSeriesFlatData}>
   <div class="h-[300px] p-4 border rounded-sm">
@@ -197,7 +192,7 @@
         { key: 'bananas', color: 'var(--color-success)' },
         { key: 'oranges', color: 'var(--color-warning)' },
       ]}
-      props={{ tooltip: { context: { mode: 'voronoi' } } }}
+      props={{ tooltip: { context: { mode: 'quadtree' } } }}
       {renderContext}
       {debug}
       brush
@@ -772,6 +767,34 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} {debug} />
+  </div>
+</Preview>
+
+<h2>Axis labels inside</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      {renderContext}
+      {debug}
+      props={{
+        yAxis: {
+          tickLabelProps: {
+            textAnchor: 'start',
+            verticalAnchor: 'end',
+          },
+          tickLength: 0,
+        },
+      }}
+      padding={{
+        left: 0,
+        top: 10,
+        bottom: 24,
+      }}
+    />
   </div>
 </Preview>
 

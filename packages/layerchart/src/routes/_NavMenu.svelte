@@ -1,8 +1,13 @@
 <script lang="ts">
   import { NavItem } from 'svelte-ux';
-  import { mdiFormatListBulleted, mdiHome, mdiPlayCircle } from '@mdi/js';
 
   import { page } from '$app/state';
+
+  import LucideArrowUpRight from '~icons/lucide/arrow-up-right';
+  import LucideCirclePlay from '~icons/lucide/circle-play';
+  import LucideHouse from '~icons/lucide/house';
+  import LucideList from '~icons/lucide/list';
+  import LucideSettings2 from '~icons/lucide/settings-2';
 
   type LinkCollection = Record<string, Array<string | { label: string; value: string }>>;
 
@@ -129,16 +134,16 @@
   ];
 </script>
 
-<NavItem text="Home" icon={mdiHome} currentUrl={page.url} path="/" />
+<NavItem text="Home" icon={LucideHouse} currentUrl={page.url} path="/" />
 <NavItem
   text="Getting Started"
-  icon={mdiPlayCircle}
+  icon={LucideCirclePlay}
   currentUrl={page.url}
   path="/getting-started"
 />
 <NavItem
   text="Changelog"
-  icon={mdiFormatListBulleted}
+  icon={LucideList}
   currentUrl={page.url}
   path="https://github.com/techniq/layerchart/releases"
   target="_blank"

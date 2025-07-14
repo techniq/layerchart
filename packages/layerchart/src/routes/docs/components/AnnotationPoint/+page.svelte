@@ -9,7 +9,7 @@
     Tooltip,
     type Placement,
   } from 'layerchart';
-  import { Button, Field, Menu, RangeField, Switch, Toggle } from 'svelte-ux';
+  import { Button, Field, Menu, RangeField, Toggle } from 'svelte-ux';
   import { format, sortFunc } from '@layerstack/utils';
   import { maxIndex } from 'd3-array';
 
@@ -58,16 +58,10 @@
   let radius = $state(4);
 
   let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
-
-<div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
-</div>
 
 <h2>On axis with tooltip</h2>
 

@@ -343,10 +343,11 @@
   tooltip={tooltip === false
     ? false
     : {
-        mode: 'bisect-x',
+        mode: 'quadtree-x',
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
+        ...(typeof tooltip === 'object' ? tooltip : null),
       }}
   brush={brush && (brush === true || brush.mode == undefined || brush.mode === 'integrated')
     ? {

@@ -20,7 +20,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, wideData, longData } from '$lib/utils/genData.js';
-  import { Field, Switch } from 'svelte-ux';
   import { timeMonth } from 'd3-time';
   import { interpolate, quantize } from 'd3-interpolate';
   import { interpolateSpectral } from 'd3-scale-chromatic';
@@ -105,16 +104,10 @@
   ];
 
   let renderContext = $derived(shared.renderContext as 'svg' | 'canvas');
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
-
-<div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
-</div>
 
 <h2>Vertical (default)</h2>
 
