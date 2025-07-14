@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.30
+
+### Patch Changes
+
+- fix(AnnotationPoint): Do not propagate mouse/touch move/leave events to TooltipContext after switching from pointer events. Fixes #598 ([#602](https://github.com/techniq/layerchart/pull/602))
+
 ## 2.0.0-next.29
 
 ### Patch Changes

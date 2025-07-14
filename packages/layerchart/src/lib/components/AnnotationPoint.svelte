@@ -88,23 +88,30 @@
         ? 'start'
         : 'middle',
   });
+
+  function onPointerMove(e: PointerEvent | MouseEvent | TouchEvent) {
+    if (details) {
+      e.stopPropagation();
+      ctx.tooltip.show(e, { annotation: { label, details } });
+    }
+  }
+
+  function onPointerLeave(e: PointerEvent | MouseEvent | TouchEvent) {
+    if (details) {
+      e.stopPropagation();
+      ctx.tooltip.hide();
+    }
+  }
 </script>
 
 <Circle
   cx={point.x}
   cy={point.y}
   {r}
-  onpointermove={(e) => {
-    if (details) {
-      e.stopPropagation();
-      ctx.tooltip.show(e, { annotation: { label, details } });
-    }
-  }}
-  onpointerleave={() => {
-    if (details) {
-      ctx.tooltip.hide();
-    }
-  }}
+  onmousemove={onPointerMove}
+  ontouchmove={onPointerMove}
+  onmouseleave={onPointerLeave}
+  ontouchend={onPointerLeave}
   {...props?.circle}
   class={cls('stroke-surface-100', props?.circle?.class)}
 />
