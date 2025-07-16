@@ -3,6 +3,7 @@
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { mean, sum } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
+  import { timeDay } from 'd3-time';
 
   import { Field, ToggleGroup, ToggleOption, Toggle, Switch } from 'svelte-ux';
 
@@ -658,6 +659,75 @@
           </Tooltip.List>
         {/snippet}
       </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Time scale (with interval)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <Chart
+      {data}
+      x="value"
+      xDomain={[0, null]}
+      xNice={4}
+      y="date"
+      yScale={scaleTime()}
+      yInterval={timeDay}
+      padding={{ left: 20, bottom: 20 }}
+    >
+      <Layer type={shared.renderContext}>
+        <Axis placement="bottom" grid rule />
+        <Axis placement="left" rule />
+        <Bars strokeWidth={1} class="fill-primary" />
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Time scale with missing data</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <Chart
+      data={data.filter((d) => (Math.random() > 0.5 ? true : false))}
+      x="value"
+      xDomain={[0, null]}
+      xNice={4}
+      y="date"
+      yScale={scaleTime()}
+      yInterval={timeDay}
+      padding={{ left: 20, bottom: 20 }}
+    >
+      <Layer type={shared.renderContext}>
+        <Axis placement="bottom" grid rule />
+        <Axis placement="left" rule />
+        <Bars strokeWidth={1} class="fill-primary" />
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Time scale with inset</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <Chart
+      {data}
+      x="value"
+      xDomain={[0, null]}
+      xNice={4}
+      y="date"
+      yScale={scaleTime()}
+      yInterval={timeDay}
+      padding={{ left: 20, bottom: 20 }}
+    >
+      <Layer type={shared.renderContext}>
+        <Axis placement="bottom" grid rule />
+        <Axis placement="left" rule />
+        <Bars class="fill-primary" insets={{ x: 2 }} />
+      </Layer>
     </Chart>
   </div>
 </Preview>

@@ -795,6 +795,12 @@
 
   const _xDomain: DomainType | undefined = $derived.by(() => {
     if (xDomainProp !== undefined) return xDomainProp;
+
+    if (xInterval != null && Array.isArray(data) && data.length > 0) {
+      const lastXValue = accessor(xProp)(data[data.length - 1]);
+      return [null, xInterval.offset(lastXValue)];
+    }
+
     if (xBaseline != null && Array.isArray(data)) {
       const xValues = data.flatMap(accessor(xProp));
       return [min([xBaseline, ...xValues]), max([xBaseline, ...xValues])];
@@ -803,6 +809,12 @@
 
   const _yDomain: DomainType | undefined = $derived.by(() => {
     if (yDomainProp !== undefined) return yDomainProp;
+
+    if (yInterval != null && Array.isArray(data) && data.length > 0) {
+      const lastYValue = accessor(yProp)(data[data.length - 1]);
+      return [null, yInterval.offset(lastYValue)];
+    }
+
     if (yBaseline != null && Array.isArray(data)) {
       const yValues = data.flatMap(accessor(yProp));
       return [min([yBaseline, ...yValues]), max([yBaseline, ...yValues])];
