@@ -207,7 +207,16 @@
         : undefined
   );
   const tickVals = $derived(resolveTickVals(scale, ticks, tickCount));
-  const tickFormat = $derived(resolveTickFormat(scale, ticks, tickCount, format, tickMultiline));
+  const tickFormat = $derived(
+    resolveTickFormat({
+      scale,
+      ticks,
+      count: tickCount,
+      formatType: format,
+      multiline: tickMultiline,
+      placement,
+    })
+  );
 
   function getCoords(tick: any) {
     switch (placement) {
@@ -257,14 +266,14 @@
         return {
           textAnchor: 'middle',
           verticalAnchor: 'end',
-          dy: -tickLength - 2, // manually adjusted until Text supports custom styles
+          dy: -tickLength,
         };
 
       case 'bottom':
         return {
           textAnchor: 'middle',
           verticalAnchor: 'start',
-          dy: tickLength, // manually adjusted until Text supports custom styles
+          dy: tickLength,
         };
 
       case 'left':
@@ -272,7 +281,6 @@
           textAnchor: 'end',
           verticalAnchor: 'middle',
           dx: -tickLength,
-          dy: -2, // manually adjusted until Text supports custom styles
         };
 
       case 'right':
@@ -280,7 +288,6 @@
           textAnchor: 'start',
           verticalAnchor: 'middle',
           dx: tickLength,
-          dy: -2, // manually adjusted until Text supports custom styles
         };
 
       case 'angle':
@@ -295,7 +302,7 @@
                 ? 'end'
                 : 'start',
           verticalAnchor: 'middle',
-          dx: Math.sin(xValue) * (tickLength + 2),
+          dx: Math.sin(xValue) * tickLength,
           dy: -Math.cos(xValue) * (tickLength + 4), // manually adjusted until Text supports custom styles
         };
 
@@ -304,7 +311,6 @@
           textAnchor: 'middle',
           verticalAnchor: 'middle',
           dx: 2,
-          dy: -2, // manually adjusted until Text supports custom styles
         };
     }
   }
@@ -357,13 +363,15 @@
   });
 
   const resolvedLabelProps = $derived({
-    value: typeof label === 'function' ? '' : undefined,
+    value: typeof label === 'function' ? '' : label,
     x: resolvedLabelX,
     y: resolvedLabelY,
     textAnchor: resolvedLabelTextAnchor,
     verticalAnchor: resolvedLabelVerticalAnchor,
     rotate: orientation === 'vertical' && labelPlacement === 'middle' ? -90 : 0,
-    capHeight: '.5rem', // text-[10px]
+    // complement 10px text (until Text supports custom styles)
+    capHeight: '7px',
+    lineHeight: '11px',
     ...labelProps,
     class: cls(
       layerClass('axis-label'),
@@ -396,7 +404,7 @@
     <Text {...resolvedLabelProps} />
   {/if}
 
-  {#each tickVals as tick, index (tick)}
+  {#each tickVals as tick, index (tick.valueOf())}
     {@const tickCoords = getCoords(tick)}
     {@const [radialTickCoordsX, radialTickCoordsY] = pointRadial(tickCoords.x, tickCoords.y)}
     {@const [radialTickMarkCoordsX, radialTickMarkCoordsY] = pointRadial(
@@ -409,6 +417,9 @@
       value: tickFormat(tick, index),
       ...getDefaultTickLabelProps(tick),
       motion,
+      // complement 10px text (until Text supports custom styles)
+      capHeight: '7px',
+      lineHeight: '11px',
       ...tickLabelProps,
       class: cls(
         layerClass('axis-tick-label'),

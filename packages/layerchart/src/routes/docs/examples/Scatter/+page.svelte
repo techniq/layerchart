@@ -53,7 +53,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />

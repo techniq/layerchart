@@ -8,7 +8,7 @@
     LineChart,
     type Placement,
   } from 'layerchart';
-  import { Button, Field, Menu, RangeField, Switch, Toggle } from 'svelte-ux';
+  import { Button, Field, Menu, RangeField, Toggle } from 'svelte-ux';
   import { format, sortFunc } from '@layerstack/utils';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -57,14 +57,10 @@
   let renderContext = $derived(
     shared.renderContext as ComponentProps<typeof LineChart>['renderContext']
   );
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
-
-<Field label="Debug" let:id classes={{ container: 'h-full' }}>
-  <Switch {id} bind:checked={debug} />
-</Field>
 
 <h2>Vertical</h2>
 
@@ -79,6 +75,49 @@
           props={{
             line: { class: '[stroke-dasharray:2,2] stroke-danger' },
             label: { class: 'fill-danger' },
+          }}
+        />
+      {/snippet}
+    </LineChart>
+  </div>
+</Preview>
+
+<h2>Vertical with rotation</h2>
+
+<Preview data={data.appleStock}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart data={data.appleStock} x="date" y="value" {renderContext} {debug}>
+      {#snippet aboveMarks({ context })}
+        <AnnotationLine
+          x={new Date('2010-01-01')}
+          label="Start"
+          labelXOffset={4}
+          props={{
+            line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+            label: {
+              class: 'fill-danger',
+              rotate: -90,
+              textAnchor: 'end',
+              verticalAnchor: 'end',
+              dx: -2,
+              dy: 0,
+            },
+          }}
+        />
+
+        <AnnotationLine
+          x={new Date('2010-12-31')}
+          label="End"
+          labelXOffset={4}
+          props={{
+            line: { class: '[stroke-dasharray:2,2] stroke-danger' },
+            label: {
+              class: 'fill-danger',
+              rotate: 90,
+              verticalAnchor: 'end',
+              dx: -4,
+              dy: 0,
+            },
           }}
         />
       {/snippet}

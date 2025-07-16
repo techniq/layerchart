@@ -34,6 +34,8 @@
       { label: 'bounds', value: 'bounds' },
       { label: 'voronoi', value: 'voronoi' },
       { label: 'quadtree', value: 'quadtree' },
+      { label: 'quadtree-x', value: 'quadtree-x' },
+      { label: 'quadtree-y', value: 'quadtree-y' },
     ]}
   />
 

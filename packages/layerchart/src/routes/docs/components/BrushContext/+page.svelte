@@ -5,7 +5,6 @@
   import { State } from 'svelte-ux';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 
   import {
     Area,
@@ -22,6 +21,9 @@
     Text,
     Tooltip,
   } from 'layerchart';
+
+  import LucideChevronLeft from '~icons/lucide/chevron-left.svelte';
+  import LucideChevronRight from '~icons/lucide/chevron-right.svelte';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
@@ -152,16 +154,11 @@
               height={context.brush.range.height}
               class={cls('fill-secondary cursor-ew-resize select-none')}
             />
-            <svg
+            <LucideChevronLeft
               x={context.brush.range.x - 6}
               y={context.brush.range.height / 2 - 10}
-              width="20px"
-              height="20px"
-              viewBox="0 0 24 24"
-              class="icon z-20"
-            >
-              <path d={mdiChevronLeft} class="fill-secondary-content origin-center" />
-            </svg>
+              class="fill-secondary-content"
+            />
 
             <rect
               x={context.brush.range.x + context.brush.range.width - context.brush.handleSize}
@@ -169,16 +166,11 @@
               height={context.brush.range.height}
               class={cls('fill-secondary cursor-ew-resize select-none')}
             />
-            <svg
+            <LucideChevronRight
               x={context.brush.range.x + context.brush.range.width - context.brush.handleSize - 6}
               y={context.brush.range.height / 2 - 10}
-              width="20px"
-              height="20px"
-              viewBox="0 0 24 24"
-              class="icon z-20"
-            >
-              <path d={mdiChevronRight} class="fill-secondary-content origin-center" />
-            </svg>
+              class="fill-secondary-content"
+            />
           {/if}
         </Layer>
       {/snippet}
@@ -629,7 +621,7 @@
           y="value"
           yDomain={[0, null]}
           padding={{ left: 16, bottom: 24 }}
-          tooltip={{ mode: 'bisect-x' }}
+          tooltip={{ mode: 'quadtree-x' }}
           brush={{
             resetOnEnd: true,
             onBrushEnd: (e) => {

@@ -1,5 +1,81 @@
 # LayerChart
 
+## 2.0.0-next.30
+
+### Patch Changes
+
+- fix(AnnotationPoint): Do not propagate mouse/touch move/leave events to TooltipContext after switching from pointer events. Fixes #598 ([#602](https://github.com/techniq/layerchart/pull/602))
+
+## 2.0.0-next.29
+
+### Patch Changes
+
+- fix(Axis): Fix display of axis labels ([#591](https://github.com/techniq/layerchart/pull/591))
+
+## 2.0.0-next.28
+
+### Patch Changes
+
+- fix(Axis): Fix memory leak and improve performance when tick values are `Date` instances ([#586](https://github.com/techniq/layerchart/pull/586))
+
+## 2.0.0-next.27
+
+### Patch Changes
+
+- feat: Update `applyLanes()` util to support nested string key and function accessors for start/end properties ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix: Add `applyLanes()` as top-level export ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.26
+
+### Patch Changes
+
+- feat: Add `applyLanes()` array util to support densely packing timelines ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.25
+
+### Patch Changes
+
+- feat(TooltipContext): Support `quadtree-x` and `quadtree-y` modes. Resolves #525 ([#578](https://github.com/techniq/layerchart/pull/578))
+
+- fix(AreaChart): Change default tooltip mode from `bisect-x` to `quadtree-x` (works with catagorical data and does not require data to be sorted) ([#578](https://github.com/techniq/layerchart/pull/578))
+
+- fix(LineChart): Change default tooltip mode from `bisect-x` to `quadtree-x` (works with catagorical data and does not require data to be sorted) ([#578](https://github.com/techniq/layerchart/pull/578))
+
+- fix(ScatterChart): Change default tooltip mode from `voronoi` to `quadtree` ([#578](https://github.com/techniq/layerchart/pull/578))
+
+- fix: Support passing `<*Chart tooltip={...}>` to underlying TooltipContext (as types already indicate) ([#576](https://github.com/techniq/layerchart/pull/576))
+
+## 2.0.0-next.24
+
+### Patch Changes
+
+- breaking(Legend): Rename `classes.swatches` to `classes.item` ([#571](https://github.com/techniq/layerchart/pull/571))
+
+- fix(Legend): Improve / simplify responsive use cases with additional default classes (center, shrink, truncate) ([#571](https://github.com/techniq/layerchart/pull/571))
+
+- fix(Axis): Correctly place multiline parts based on placement ([#574](https://github.com/techniq/layerchart/pull/574))
+
+- fix(Axis|Text): Improve Text y placement using lineHeight/capHeight and remove explicit adjustments, aligning with Html rendering ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.23
+
+### Patch Changes
+
+- fix(Highlight): Fix display of lines for first values (`0` coord). Fixes #568 ([#569](https://github.com/techniq/layerchart/pull/569))
+
+## 2.0.0-next.22
+
+### Patch Changes
+
+- fix(TooltipContext): Fix touch scrolling on mobile. Fixes #255 ([#566](https://github.com/techniq/layerchart/pull/566))
+
+## 2.0.0-next.21
+
+### Patch Changes
+
+- fix: Reduce bundle size by removing culori as transitive dependency ([#563](https://github.com/techniq/layerchart/pull/563))
+
 ## 2.0.0-next.20
 
 ### Patch Changes

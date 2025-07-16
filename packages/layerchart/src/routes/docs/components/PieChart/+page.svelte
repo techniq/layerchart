@@ -46,16 +46,10 @@
   let renderContext = $derived(
     shared.renderContext as ComponentProps<typeof PieChart>['renderContext']
   );
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
-
-<div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
-</div>
 
 <h2>Basic</h2>
 
@@ -291,6 +285,29 @@
       key="fruit"
       value="value"
       legend={{ placement: 'top-left', orientation: 'vertical' }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Legend (small / responsive)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <PieChart
+      {data}
+      key="fruit"
+      value="value"
+      padding={{ bottom: 32 }}
+      legend={{
+        classes: {
+          root: 'w-full',
+          items: 'justify-center',
+          swatch: 'size-2',
+          item: 'text-xs',
+        },
+      }}
       {renderContext}
       {debug}
     />

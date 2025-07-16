@@ -2,7 +2,7 @@
   import type { ComponentProps } from 'svelte';
 
   import { AnnotationRange, BarChart, LineChart, type Placement } from 'layerchart';
-  import { Button, Field, Menu, RangeField, Switch, Toggle } from 'svelte-ux';
+  import { Button, Field, Menu, RangeField, Toggle } from 'svelte-ux';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries } from '$lib/utils/genData.js';
@@ -36,16 +36,10 @@
   let renderContext = $derived(
     shared.renderContext as ComponentProps<typeof LineChart>['renderContext']
   );
-  let debug = $state(false);
+  let debug = $derived(shared.debug);
 </script>
 
 <h1>Examples</h1>
-
-<div class="grid grid-cols-[1fr_auto] gap-2">
-  <Field label="Debug" let:id classes={{ container: 'h-full' }}>
-    <Switch {id} bind:checked={debug} />
-  </Field>
-</div>
 
 <h2>Horizontal with pattern, lower bound</h2>
 

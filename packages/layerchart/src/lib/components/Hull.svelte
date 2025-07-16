@@ -55,7 +55,7 @@
 <script lang="ts">
   import { min } from 'd3-array';
   import { Delaunay } from 'd3-delaunay';
-  // @ts-expect-error
+  // @ts-expect-error - no types available
   import { geoVoronoi } from 'd3-geo-voronoi';
   import { curveLinearClosed } from 'd3-shape';
   import { cls } from '@layerstack/tailwind';

@@ -112,6 +112,29 @@
   </div>
 
   <div>
+    <h3>Rectangle</h3>
+    <Preview>
+      <div class="h-[150px] p-4 border rounded-sm">
+        <Chart>
+          {#snippet children({ context })}
+            <Layer type={shared.renderContext}>
+              <Polygon
+                cx={context.width / 2}
+                cy={context.height / 2}
+                r={60}
+                points={4}
+                scaleX={1.5}
+                rotate={rotate + 45}
+                {cornerRadius}
+              />
+            </Layer>
+          {/snippet}
+        </Chart>
+      </div>
+    </Preview>
+  </div>
+
+  <div>
     <h3>Diamond</h3>
     <Preview>
       <div class="h-[150px] p-4 border rounded-sm">
@@ -238,28 +261,6 @@
                 cy={context.height / 2}
                 r={60}
                 points={6}
-                {rotate}
-                {cornerRadius}
-              />
-            </Layer>
-          {/snippet}
-        </Chart>
-      </div>
-    </Preview>
-  </div>
-
-  <div>
-    <h3>Octagon</h3>
-    <Preview>
-      <div class="h-[150px] p-4 border rounded-sm">
-        <Chart>
-          {#snippet children({ context })}
-            <Layer type={shared.renderContext}>
-              <Polygon
-                cx={context.width / 2}
-                cy={context.height / 2}
-                r={60}
-                points={8}
                 {rotate}
                 {cornerRadius}
               />

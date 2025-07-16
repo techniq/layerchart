@@ -337,21 +337,11 @@
 
   const startDy = $derived.by(() => {
     if (verticalAnchor === 'start') {
-      return getPixelValue(capHeight);
+      return getPixelValue(lineHeight);
     } else if (verticalAnchor === 'middle') {
       return ((lineCount - 1) / 2) * -getPixelValue(lineHeight) + getPixelValue(capHeight) / 2;
     } else {
-      return (lineCount - 1) * -getPixelValue(lineHeight);
-    }
-  });
-
-  const pathStartDy = $derived.by(() => {
-    if (verticalAnchor === 'start') {
-      return getPixelValue(capHeight);
-    } else if (verticalAnchor === 'middle') {
-      return (0 / 2) * -getPixelValue(lineHeight) + getPixelValue(capHeight) / 2;
-    } else {
-      return 0 * -getPixelValue(lineHeight);
+      return (lineCount - 1) * -getPixelValue(lineHeight) - getPixelValue(capHeight) / 2;
     }
   });
 
@@ -537,7 +527,7 @@
         {#each wordsByLines as line, index}
           <tspan
             x={motionX.current}
-            dy={index === 0 ? startDy : lineHeight}
+            dy={index === 0 ? startDy : getPixelValue(lineHeight)}
             class={layerClass('text-tspan')}
           >
             {line.words.join(' ')}

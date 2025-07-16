@@ -86,9 +86,9 @@
       title?: string;
       label?: string;
       tick?: string;
-      swatches?: string;
+      items?: string;
       swatch?: string;
-      item?: (item: LegendItem) => string;
+      item?: string | ((item: LegendItem) => string);
     };
 
     /**
@@ -383,7 +383,7 @@
         layerClass('legend-swatch-group'),
         'flex gap-x-4 gap-y-1',
         orientation === 'vertical' && 'flex-col',
-        classes.swatches
+        classes.items
       )}
     >
       {#each scaleConfig.tickValues ?? scaleConfig.xScale?.ticks?.(ticks) ?? [] as tick}
@@ -392,22 +392,26 @@
         <button
           class={cls(
             layerClass('legend-swatch-button'),
-            'flex gap-1',
+            'flex items-center gap-1 truncate',
             !onclick && 'cursor-auto',
-            classes.item?.(item)
+            typeof classes.item === 'function' ? classes.item(item) : classes.item
           )}
           onclick={(e) => onclick?.(e, item)}
           onpointerenter={(e) => onpointerenter?.(e, item)}
           onpointerleave={(e) => onpointerleave?.(e, item)}
         >
           <div
-            class={cls(layerClass('legend-swatch'), 'h-4 w-4 rounded-full', classes.swatch)}
+            class={cls(
+              layerClass('legend-swatch'),
+              'h-4 w-4 shrink-0 rounded-full',
+              classes.swatch
+            )}
             style:background-color={color}
           ></div>
           <div
             class={cls(
               layerClass('legend-swatch-label'),
-              'text-xs text-surface-content whitespace-nowrap',
+              'text-xs text-surface-content truncate whitespace-nowrap',
               classes.label
             )}
           >

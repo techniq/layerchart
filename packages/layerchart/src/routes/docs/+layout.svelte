@@ -2,28 +2,33 @@
   import { onMount } from 'svelte';
   import { flatGroup } from 'd3-array';
 
-  import {
-    mdiCheck,
-    mdiChevronDown,
-    mdiChevronRight,
-    mdiClose,
-    mdiCodeBraces,
-    mdiCodeTags,
-    mdiDatabaseOutline,
-    mdiFileDocumentEditOutline,
-    mdiGithub,
-    mdiLink,
-  } from '@mdi/js';
+  import LucideAlignLeft from '~icons/lucide/align-left.svelte';
+  import LucideChevronRight from '~icons/lucide/chevron-right.svelte';
+  import LucideChevronDown from '~icons/lucide/chevron-down.svelte';
+  import LucideCircleCheck from '~icons/lucide/circle-check.svelte';
+  import LucideCode from '~icons/lucide/code';
+  import LucideBraces from '~icons/lucide/braces';
+  import LucideDatabase from '~icons/lucide/database';
+  import LucideFilePenLine from '~icons/lucide/file-pen-line';
+  import LucideGithub from '~icons/lucide/github.svelte';
+  import LucideLink2 from '~icons/lucide/link-2';
+  import IconSettings from '~icons/lucide/settings';
+  import LucideX from '~icons/lucide/x';
 
   import {
     ApiDocs,
     Button,
     Dialog,
+    Field,
     Icon,
     ListItem,
+    Menu,
+    Switch,
     TableOfContents,
+    Toggle,
     ToggleGroup,
     ToggleOption,
+    Tooltip,
   } from 'svelte-ux';
 
   import { MediaQueryPresets } from '@layerstack/svelte-state';
@@ -101,7 +106,7 @@
   {#if title}
     <div>
       <div class="inline-block text-xs font-bold text-surface-content/50 capitalize">Docs</div>
-      <Icon path={mdiChevronRight} class="divider opacity-25" />
+      <Icon data={LucideChevronRight} class="divider opacity-25" />
       <div class="inline-block text-xs font-bold text-primary capitalize">
         {type}
       </div>
@@ -116,25 +121,41 @@
         {/if}
       </span>
 
-      {#if supportedContexts}
-        <ToggleGroup
-          bind:value={shared.renderContext}
-          variant="fill"
-          color="primary"
-          inset
-          gap="px"
-          size="sm"
-        >
-          {#each supportedContexts as context}
-            <ToggleOption value={context}>{toTitleCase(context)}</ToggleOption>
-          {/each}
-        </ToggleGroup>
-      {/if}
+      <span class="flex items-center gap-1">
+        {#if supportedContexts}
+          <ToggleGroup
+            bind:value={shared.renderContext}
+            variant="fill"
+            color="primary"
+            inset
+            gap="px"
+            size="sm"
+          >
+            {#each supportedContexts as context}
+              <ToggleOption value={context}>{toTitleCase(context)}</ToggleOption>
+            {/each}
+          </ToggleGroup>
+        {/if}
+
+        <Toggle let:on={open} let:toggle let:toggleOff>
+          <Tooltip title="Settings">
+            <Button iconOnly on:click={toggle}>
+              <IconSettings class="text-surface-content" />
+              <Menu {open} on:close={toggleOff} placement="bottom-start" classes={{ menu: 'p-2' }}>
+                <label class="flex items-center gap-2">
+                  <span class="text-sm text-surface-content">Debug</span>
+                  <Switch bind:checked={shared.debug} />
+                </label>
+              </Menu>
+            </Button>
+          </Tooltip>
+        </Toggle>
+      </span>
 
       {#if status}
         <span
           class={cls(
-            'text-sm  px-2 rounded-sm',
+            'text-sm px-2 rounded-sm',
             status === 'beta' && 'bg-yellow-500/20 text-yellow-800',
             status === 'deprecated' && 'bg-red-500/20 text-red-900'
           )}
@@ -157,7 +178,7 @@
         href={sourceUrl
           ? `https://github.com/techniq/layerchart/blob/next/packages/layerchart/${sourceUrl}`
           : ''}
-        icon={mdiCodeTags}
+        icon={LucideCode}
       />
 
       <ViewSourceButton
@@ -166,12 +187,12 @@
         href={pageUrl
           ? `https://github.com/techniq/layerchart/blob/next/packages/layerchart/${pageUrl}`
           : ''}
-        icon={mdiFileDocumentEditOutline}
+        icon={LucideFilePenLine}
       />
 
       {#if !hideTableOfContents}
         <Button
-          icon={mdiChevronDown}
+          icon={LucideChevronDown}
           on:click={() => {
             showTableOfContents = !showTableOfContents;
           }}
@@ -195,14 +216,22 @@
       >
         <div slot="title">On this page</div>
         <Button
-          icon={mdiClose}
+          icon={LucideX}
           class="absolute top-1 right-1"
           size="sm"
           on:click={() => (showTableOfContents = false)}
         />
         <TableOfContents
-          icon={mdiChevronRight}
-          class="px-4 py-2"
+          linkIndent={12}
+          class="p-4"
+          classes={{
+            a: cls(
+              'border-l text-sm text-surface-content/50 py-[2px] hover:text-surface-content',
+              'data-active:border-primary data-active:text-primary',
+              'data-[level=1]:font-semibold'
+            ),
+          }}
+          scrollOffset={184}
           on:nodeClick={(e) => {
             showTableOfContents = false;
           }}
@@ -227,7 +256,7 @@
             {#each features.flatMap( (feature) => (Array.isArray(feature) ? feature.map( (f) => ({ description: f, depth: 1 }) ) : { description: feature, depth: 0 }) ) as feature}
               <ListItem
                 title={feature.description}
-                icon={mdiCheck}
+                icon={LucideCircleCheck}
                 avatar={{ size: 'sm', class: 'text-xs text-white bg-success' }}
                 classes={{ root: feature.depth ? 'pl-12' : '', title: 'text-sm' }}
               />
@@ -253,14 +282,14 @@
                 {#each items as item}
                   {@const icon =
                     item.type === 'components' || item.type === 'examples'
-                      ? mdiCodeTags
+                      ? LucideCode
                       : item.type === 'stores'
-                        ? mdiDatabaseOutline
+                        ? LucideDatabase
                         : item.type === 'actions'
-                          ? mdiCodeBraces
+                          ? LucideBraces
                           : item.type === 'github'
-                            ? mdiGithub
-                            : mdiLink}
+                            ? LucideGithub
+                            : LucideLink2}
                   <a href={item.url.toString()} class="group">
                     <ListItem
                       title={item.name.toString()}
@@ -270,7 +299,7 @@
                       class="hover:bg-surface-200 cursor-pointer"
                     >
                       <div slot="actions">
-                        <Icon data={mdiChevronRight} class="text-surface-content/50" />
+                        <Icon data={LucideChevronRight} class="text-surface-content/50" />
                       </div>
                     </ListItem>
                   </a>
@@ -292,12 +321,25 @@
       <div
         class="w-[224px] sticky top-[calc(var(--headerHeight)+10px)] pr-2 max-h-[calc(100dvh-64px)] overflow-auto z-60"
       >
-        <div class="text-xs uppercase leading-8 tracking-widest text-surface-content/50">
+        <div
+          class="flex gap-2 items-center text-xs font-medium uppercase pb-3 tracking-widest text-surface-content/50"
+        >
+          <LucideAlignLeft />
           On this page
         </div>
         <!-- Rebuild toc when page changes -->
         {#key page.route.id}
-          <TableOfContents icon={mdiChevronRight} class="border-l pl-3" scrollOffset={184} />
+          <TableOfContents
+            linkIndent={12}
+            classes={{
+              a: cls(
+                'border-l text-sm text-surface-content/50 py-[2px] hover:text-surface-content',
+                'data-active:border-primary data-active:text-primary',
+                'data-[level=1]:font-semibold'
+              ),
+            }}
+            scrollOffset={184}
+          />
         {/key}
       </div>
     {/if}

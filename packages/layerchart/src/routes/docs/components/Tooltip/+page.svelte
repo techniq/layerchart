@@ -57,7 +57,7 @@
 
   let charts = $state({
     area: {
-      mode: 'bisect-x',
+      mode: 'quadtree-x',
       highlight: ['points', 'lines'],
       axis: undefined,
       snapToDataX: false,
@@ -65,7 +65,7 @@
       debug: false,
     },
     areaStack: {
-      mode: 'voronoi',
+      mode: 'quadtree-x',
       highlight: ['points', 'lines'],
       axis: undefined,
       snapToDataX: false,
@@ -73,7 +73,7 @@
       debug: false,
     },
     dateTime: {
-      mode: 'bisect-x',
+      mode: 'quadtree-x',
       highlight: ['points', 'lines'],
       axis: 'x',
       snapToDataX: false,
@@ -113,7 +113,7 @@
       debug: false,
     },
     scatter: {
-      mode: 'voronoi',
+      mode: 'quadtree',
       highlight: ['points', 'lines'],
       axis: 'both',
       snapToDataX: true,
@@ -154,7 +154,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
@@ -186,7 +186,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
@@ -211,7 +211,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
@@ -243,7 +243,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
@@ -275,7 +275,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
@@ -308,7 +308,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
@@ -340,7 +340,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
@@ -372,7 +372,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
       {#snippet children({ context })}
         <Layer type={shared.renderContext}>
@@ -515,7 +515,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
     >
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
@@ -565,7 +565,7 @@
       yDomain={[0, null]}
       yNice
       padding={{ left: 16, bottom: 24 }}
-      tooltip={{ mode: 'bisect-x' }}
+      tooltip={{ mode: 'quadtree-x' }}
       bind:context
     >
       <Layer type={shared.renderContext}>
@@ -590,7 +590,7 @@
 
 <h2>Area <small>x: scaleTime, y: scaleLinear</small></h2>
 <small class="block -mt-1 mb-1">
-  bisect-x recommended. voronoi and quadtree supported. bounds and band to be improved
+  quadtree-x recommended. bisect-x, voronoi, and quadtree supported. bounds and band to be improved
 </small>
 
 <TooltipControls bind:settings={charts.area} />

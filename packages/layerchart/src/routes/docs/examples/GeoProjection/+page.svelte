@@ -7,6 +7,8 @@
     geoMercator,
     geoNaturalEarth1,
     geoOrthographic,
+    geoStereographic,
+    geoGnomonic,
   } from 'd3-geo';
   import { feature } from 'topojson-client';
 
@@ -37,6 +39,8 @@
     { label: 'Mercator', value: geoMercator },
     { label: 'Natural Earth', value: geoNaturalEarth1 },
     { label: 'Orthographic', value: geoOrthographic },
+    { label: 'Stereographic', value: geoStereographic },
+    { label: 'Gnomonic', value: geoGnomonic },
   ];
 
   const dataGeoJson = $derived(config.detailed ? data.geojsonDetail : data.geojson);

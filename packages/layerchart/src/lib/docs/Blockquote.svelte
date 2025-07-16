@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { mdiInformation } from '@mdi/js';
-  import { Icon } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
+
+  import LucideInfo from '~icons/lucide/info';
 
   const { children } = $props();
 </script>
@@ -12,6 +12,6 @@
     '[&>a]:font-medium [&>a]:underline [&>a]:decoration-dashed [&>a]:decoration-primary/50 [&>a]:underline-offset-2'
   )}
 >
-  <Icon data={mdiInformation} class="text-primary" />
+  <LucideInfo class="text-primary" />
   {@render children()}
 </div>
