@@ -141,6 +141,8 @@
     bandPadding = radial ? 0 : 0.4,
     groupPadding = 0,
     stackPadding = 0,
+    xInterval,
+    yInterval,
     tooltip = true,
     children: childrenProp,
     aboveContext,
@@ -211,21 +213,25 @@
 
   const xScale = $derived(
     xScaleProp ??
-      (isVertical
-        ? scaleBand().padding(bandPadding)
-        : accessor(xProp)(chartData[0]) instanceof Date // TODO: also check for Array<Date> instances (ex. x={['start', 'end']})
-          ? scaleTime()
-          : scaleLinear())
+      (xInterval
+        ? scaleTime()
+        : isVertical
+          ? scaleBand().padding(bandPadding)
+          : accessor(xProp)(chartData[0]) instanceof Date // TODO: also check for Array<Date> instances (ex. x={['start', 'end']})
+            ? scaleTime()
+            : scaleLinear())
   );
   const xBaseline = $derived(isVertical || isScaleTime(xScale) ? undefined : 0);
 
   const yScale = $derived(
     yScaleProp ??
-      (isVertical
-        ? accessor(yProp)(chartData[0]) instanceof Date // TODO: also check for Array<Date> instances (ex. y={['start', 'end']})
-          ? scaleTime()
-          : scaleLinear()
-        : scaleBand().padding(bandPadding))
+      (yInterval
+        ? scaleTime()
+        : isVertical
+          ? accessor(yProp)(chartData[0]) instanceof Date // TODO: also check for Array<Date> instances (ex. y={['start', 'end']})
+            ? scaleTime()
+            : scaleLinear()
+          : scaleBand().padding(bandPadding))
   );
   const yBaseline = $derived(isVertical || isScaleTime(yScale) ? 0 : undefined);
 
@@ -436,6 +442,7 @@
   {x1Scale}
   {x1Domain}
   {x1Range}
+  {xInterval}
   y={resolveAccessor(yProp)}
   {yScale}
   {yBaseline}
@@ -443,6 +450,7 @@
   {y1Scale}
   {y1Domain}
   {y1Range}
+  {yInterval}
   c={isVertical ? yProp : xProp}
   cRange={['var(--color-primary)']}
   {radial}
@@ -451,7 +459,7 @@
   tooltip={tooltip === false
     ? false
     : {
-        mode: 'band',
+        mode: xInterval ? 'quadtree-x' : yInterval ? 'quadtree-y' : 'band',
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,

@@ -20,7 +20,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, wideData, longData } from '$lib/utils/genData.js';
-  import { timeMonth } from 'd3-time';
+  import { timeDay, timeMonth } from 'd3-time';
   import { interpolate, quantize } from 'd3-interpolate';
   import { interpolateSpectral } from 'd3-scale-chromatic';
   import { shared } from '../../shared.svelte.js';
@@ -141,6 +141,37 @@
       x="date"
       y="value"
       props={{ bars: { class: 'fill-secondary' } }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Time scale / interval</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      xInterval={timeDay}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Time scale / interval (horizontal)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="value"
+      y="date"
+      yInterval={timeDay}
+      orientation="horizontal"
       {renderContext}
       {debug}
     />
