@@ -183,6 +183,9 @@
   const scale = $derived(
     scaleProp ?? (['horizontal', 'angle'].includes(orientation) ? ctx.xScale : ctx.yScale)
   );
+  const interval = $derived(
+    ['horizontal', 'angle'].includes(orientation) ? ctx.xInterval : ctx.yInterval
+  );
 
   const xRangeMinMax = $derived(extent<number>(ctx.xRange)) as [number, number];
   const yRangeMinMax = $derived(extent<number>(ctx.yRange)) as [number, number];
@@ -206,7 +209,7 @@
         ? Math.round(ctxSize / tickSpacing)
         : undefined
   );
-  const tickVals = $derived(resolveTickVals(scale, ticks, tickCount));
+  const tickVals = $derived(resolveTickVals(scale, ticks, tickCount, interval));
   const tickFormat = $derived(
     resolveTickFormat({
       scale,
