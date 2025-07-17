@@ -726,7 +726,7 @@
       <Layer type={shared.renderContext}>
         <Axis placement="bottom" grid rule />
         <Axis placement="left" rule />
-        <Bars class="fill-primary" insets={{ x: 2 }} />
+        <Bars class="fill-primary" insets={{ y: 2 }} />
       </Layer>
     </Chart>
   </div>

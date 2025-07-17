@@ -7,6 +7,7 @@
     createScale,
     getRange,
     isScaleBand,
+    isScaleTime,
     makeAccessor,
     type AnyScale,
     type DomainType,
@@ -825,7 +826,9 @@
     _yRangeProp ?? (radial ? ({ height }: { height: number }) => [0, height / 2] : undefined)
   );
 
-  const yReverse = $derived(yScaleProp ? !isScaleBand(yScaleProp) : true);
+  const yReverse = $derived(
+    yScaleProp ? !isScaleBand(yScaleProp) && !isScaleTime(yScaleProp) : true
+  );
 
   const x = $derived(makeAccessor(xProp));
   const y = $derived(makeAccessor(yProp));
