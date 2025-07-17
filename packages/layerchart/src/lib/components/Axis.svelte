@@ -228,7 +228,7 @@
             (isScaleBand(scale)
               ? scale.bandwidth() / 2
               : ctx.xInterval
-                ? (scale(ctx.xInterval.offset(tick)) - scale(tick)) / 2 // offset 1/2 time interval
+                ? (scale(ctx.xInterval.offset(tick)) - scale(tick)) / 2 // offset 1/2 width of time interval
                 : 0),
           y: placement === 'top' ? yRangeMinMax[0] : yRangeMinMax[1],
         };
@@ -242,7 +242,7 @@
             (isScaleBand(scale)
               ? scale.bandwidth() / 2
               : ctx.yInterval
-                ? (scale(ctx.yInterval.offset(tick)) - scale(tick)) / 2 // offset 1/2 time interval
+                ? (scale(ctx.yInterval.offset(tick)) - scale(tick)) / 2 // offset 1/2 height of time interval
                 : 0),
         };
 

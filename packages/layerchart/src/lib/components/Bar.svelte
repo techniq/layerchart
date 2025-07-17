@@ -81,7 +81,7 @@
   import Rect from './Rect.svelte';
   import Spline from './Spline.svelte';
 
-  import { isScaleBand } from '../utils/scales.svelte.js';
+  import { isScaleBand, isScaleTime } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { getChartContext } from './Chart.svelte';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
@@ -127,7 +127,7 @@
 
   const dimensions = $derived(getDimensions(data) ?? { x: 0, y: 0, width: 0, height: 0 });
 
-  const isVertical = $derived(isScaleBand(ctx.xScale));
+  const isVertical = $derived(isScaleBand(ctx.xScale) || isScaleTime(ctx.xScale));
   const valueAccessor = $derived(accessor(isVertical ? y : x));
   const value = $derived(valueAccessor(data));
   const resolvedValue = $derived(Array.isArray(value) ? greatestAbs(value) : value);
