@@ -132,21 +132,6 @@
   </div>
 </Preview>
 
-<h2>Color (Bars class)</h2>
-
-<Preview data={dateSeriesData}>
-  <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart
-      data={dateSeriesData}
-      x="date"
-      y="value"
-      props={{ bars: { class: 'fill-secondary' } }}
-      {renderContext}
-      {debug}
-    />
-  </div>
-</Preview>
-
 <h2>Time scale / interval</h2>
 
 <Preview data={dateSeriesData}>
@@ -172,6 +157,21 @@
       y="date"
       yInterval={timeDay}
       orientation="horizontal"
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Color (Bars class)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      props={{ bars: { class: 'fill-secondary' } }}
       {renderContext}
       {debug}
     />
