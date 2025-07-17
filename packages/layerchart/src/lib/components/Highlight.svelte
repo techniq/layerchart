@@ -116,7 +116,7 @@
   import { notNull } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
-  import { isScaleBand } from '$lib/utils/scales.svelte.js';
+  import { isScaleBand, isScaleTime } from '$lib/utils/scales.svelte.js';
   import { asAny } from '$lib/utils/types.js';
   import { getChartContext } from './Chart.svelte';
   import { getTooltipContext } from './tooltip/TooltipContext.svelte';
@@ -158,7 +158,9 @@
     Array.isArray(yValue) ? yValue.map((v) => ctx.yScale(v)) : ctx.yScale(yValue)
   );
   const yOffset = $derived(isScaleBand(ctx.yScale) && !ctx.radial ? ctx.yScale.bandwidth() / 2 : 0);
-  const axis = $derived(axisProp == null ? (isScaleBand(ctx.yScale) ? 'y' : 'x') : axisProp);
+  const axis = $derived(
+    axisProp == null ? (isScaleBand(ctx.yScale) || isScaleTime(ctx.yScale) ? 'y' : 'x') : axisProp
+  );
 
   const _lines: { x1: number; y1: number; x2: number; y2: number }[] = $derived.by(() => {
     let tmpLines: { x1: number; y1: number; x2: number; y2: number }[] = [];
@@ -249,6 +251,7 @@
       height: 0,
     };
     if (!highlightData) return tmpArea;
+
     if (axis === 'x' || axis === 'both') {
       // x area
       if (Array.isArray(xCoord)) {
@@ -284,9 +287,9 @@
         tmpArea.height = ctx.yScale.step();
       } else {
         // Find width to next data point
-        const index = ctx.flatData.findIndex((d) => Number(x(d)) === Number(x(highlightData)));
+        const index = ctx.flatData.findIndex((d) => Number(y(d)) === Number(y(highlightData)));
         const isLastPoint = index + 1 === ctx.flatData.length;
-        const nextDataPoint = isLastPoint ? max(ctx.yDomain) : x(ctx.flatData[index + 1]);
+        const nextDataPoint = isLastPoint ? max(ctx.yDomain) : y(ctx.flatData[index + 1]);
         tmpArea.height = (ctx.yScale(nextDataPoint) ?? 0) - (yCoord ?? 0);
       }
 
