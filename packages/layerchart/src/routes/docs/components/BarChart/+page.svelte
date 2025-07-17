@@ -163,6 +163,22 @@
   </div>
 </Preview>
 
+<h2>Time scale / interval with inset</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      xInterval={timeDay}
+      props={{ bars: { insets: { x: 4 } } }}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
 <h2>Color (Bars class)</h2>
 
 <Preview data={dateSeriesData}>
