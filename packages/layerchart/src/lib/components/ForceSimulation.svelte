@@ -31,7 +31,7 @@
   > = {
     alpha: number;
     alphaTarget: number;
-    simulation: SimulationFor<NodeDatum, LinkDatum>;
+    simulation: Simulation<NodeDatum, LinkDatum>;
   };
 
   export type OnTickEvent<
@@ -40,9 +40,9 @@
   > = {
     alpha: number;
     alphaTarget: number;
-    nodes: NodeDatumFor<NodeDatum>[];
-    links: LinkDatumFor<NodeDatum, LinkDatum>[];
-    simulation: SimulationFor<NodeDatum, LinkDatum>;
+    nodes: NodeDatum[];
+    links: LinkDatum[];
+    simulation: Simulation<NodeDatum, LinkDatum>;
   };
 
   export type OnEndEvent<
@@ -51,7 +51,7 @@
   > = {
     alpha: number;
     alphaTarget: number;
-    simulation: SimulationFor<NodeDatum, LinkDatum>;
+    simulation: Simulation<NodeDatum, LinkDatum>;
   };
 
   /**
@@ -80,16 +80,6 @@
    * Default velocity decay factor applied to nodes each tick.
    */
   export const DEFAULT_VELOCITY_DECAY: number = 0.4;
-
-  type NodeDatumFor<NodeDatum> = NodeDatum & SimulationNodeDatum;
-
-  type LinkDatumFor<NodeDatum, LinkDatum> = LinkDatum &
-    SimulationLinkDatum<NodeDatumFor<NodeDatum>>;
-
-  type SimulationFor<NodeDatum, LinkDatum> = Simulation<
-    NodeDatumFor<NodeDatum>,
-    LinkDatumFor<NodeDatum, LinkDatum>
-  >;
 
   export type ForceSimulationProps<
     NodeDatum extends SimulationNodeDatum,
@@ -172,10 +162,10 @@
     children?: Snippet<
       [
         {
-          nodes: NodeDatumFor<NodeDatum>[];
-          links: LinkDatumFor<NodeDatum, LinkDatum>[];
+          nodes: NodeDatum[];
+          links: LinkDatum[];
           linkPositions: LinkPosition[];
-          simulation: SimulationFor<NodeDatum, LinkDatum>;
+          simulation: Simulation<NodeDatum, LinkDatum>;
         },
       ]
     >;
@@ -211,15 +201,13 @@
   // MARK: Private Props
 
   let linkPositions: LinkPosition[] = $state([]);
-  let simulatedNodes: NodeDatumFor<NodeDatum>[] = $state([]);
-  let simulatedLinks: LinkDatumFor<NodeDatum, LinkDatum>[] = $derived(
-    (data.links ?? []) as LinkDatumFor<NodeDatum, LinkDatum>[]
-  );
+  let simulatedNodes: NodeDatum[] = $state([]);
+  let simulatedLinks: LinkDatum[] = $derived(data.links ?? []);
 
   // This casting is unfortunately necessary, due to unfortunate
   // overloading choices made, over at `@typed/d3-force`:
-  const simulation: SimulationFor<NodeDatum, LinkDatum> = (
-    forceSimulation() as SimulationFor<NodeDatum, LinkDatum>
+  const simulation: Simulation<NodeDatum, LinkDatum> = (
+    forceSimulation<NodeDatum>() as Simulation<NodeDatum, LinkDatum>
   ).stop();
 
   // d3.Simulation does not provide a `.forces()` getter, so we need to
