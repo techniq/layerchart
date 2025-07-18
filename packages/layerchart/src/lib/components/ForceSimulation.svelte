@@ -54,6 +54,17 @@
     simulation: Simulation<NodeDatum, LinkDatum>;
   };
 
+  export type OnNodesChangeEvent<
+    NodeDatum extends SimulationNodeDatum,
+    LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,
+  > = {
+    alpha: number;
+    alphaTarget: number;
+    nodes: NodeDatum[];
+    links: LinkDatum[];
+    simulation: Simulation<NodeDatum, LinkDatum>;
+  };
+
   /**
    * Default initial alpha value of the simulation.
    */
@@ -150,6 +161,11 @@
     onStart?: (e: OnStartEvent<NodeDatum, LinkDatum | undefined>) => void;
 
     /**
+     * Callback function triggered right before nodes get passed to the simulation
+     */
+    onNodesChange?: (e: OnNodesChangeEvent<NodeDatum, LinkDatum | undefined>) => void;
+
+    /**
      * Callback function triggered on each simulation tick
      */
     onTick?: (e: OnTickEvent<NodeDatum, LinkDatum | undefined>) => void;
@@ -190,6 +206,7 @@
     stopped = false,
     static: staticProp,
     onStart: onStartProp,
+    onNodesChange: onNodesChangeProp,
     onTick: onTickProp,
     onEnd: onEndProp,
     children,
@@ -251,6 +268,7 @@
     () => {
       // Any time the `nodes` prop, or the `data` store gets changed
       // we pass them to the internal d3 simulation object:
+      onNodesChange();
       pushNodesToSimulation(data.nodes);
       runOrResumeSimulation();
     }
@@ -482,6 +500,16 @@
     onEndProp?.({
       alpha,
       alphaTarget,
+      simulation,
+    });
+  }
+
+  function onNodesChange() {
+    onNodesChangeProp?.({
+      alpha,
+      alphaTarget,
+      nodes: data.nodes,
+      links: data.links ?? [],
       simulation,
     });
   }
