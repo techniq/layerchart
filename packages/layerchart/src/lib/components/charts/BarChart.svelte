@@ -459,7 +459,7 @@
   tooltip={tooltip === false
     ? false
     : {
-        mode: xInterval ? 'quadtree-x' : yInterval ? 'quadtree-y' : 'band',
+        mode: 'band',
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
