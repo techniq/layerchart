@@ -20,7 +20,6 @@
       data={data.appleTicker}
       x="date"
       xScale={scaleUtc()}
-      xDomain={[null, utcDay.offset(data.appleTicker[data.appleTicker.length - 1].date)]}
       xInterval={utcDay}
       y={['high', 'low']}
       yNice
@@ -34,9 +33,10 @@
       {#snippet children({ context })}
         <Layer type={shared.renderContext}>
           <Axis placement="left" grid rule tickSpacing={20} />
-          <Axis placement="bottom" rule />
+          <Axis placement="bottom" rule tickMultiline />
           <Points links r={0} />
-          <Bars y={(d) => [d.open, d.close]} radius={2} insets={{ x: 1 }} />
+          <Bars y={(d) => [d.open, d.close]} insets={{ x: 0.5 }} />
+          <Bars y={(d) => [d.high, d.low]} insets={{ x: 1.5 }} />
           <Highlight area />
         </Layer>
         <Tooltip.Root {context}>
