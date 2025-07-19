@@ -154,7 +154,7 @@ export function resolveTickVals(
     const tickVals = scale.ticks(count ?? (typeof ticks === 'number' ? ticks : undefined));
 
     if (interval) {
-      // Remove last tick with interval is provided (such as for bar charts with center aligned (offset) ticks
+      // Remove last tick when interval is provided (such as for bar charts with center aligned (offset) ticks)
       tickVals.pop();
     }
 
