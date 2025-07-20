@@ -31,7 +31,7 @@
   > = {
     alpha: number;
     alphaTarget: number;
-    simulation: SimulationFor<NodeDatum, LinkDatum>;
+    simulation: Simulation<NodeDatum, LinkDatum>;
   };
 
   export type OnTickEvent<
@@ -40,9 +40,9 @@
   > = {
     alpha: number;
     alphaTarget: number;
-    nodes: NodeDatumFor<NodeDatum>[];
-    links: LinkDatumFor<NodeDatum, LinkDatum>[];
-    simulation: SimulationFor<NodeDatum, LinkDatum>;
+    nodes: NodeDatum[];
+    links: LinkDatum[];
+    simulation: Simulation<NodeDatum, LinkDatum>;
   };
 
   export type OnEndEvent<
@@ -51,7 +51,18 @@
   > = {
     alpha: number;
     alphaTarget: number;
-    simulation: SimulationFor<NodeDatum, LinkDatum>;
+    simulation: Simulation<NodeDatum, LinkDatum>;
+  };
+
+  export type OnNodesChangeEvent<
+    NodeDatum extends SimulationNodeDatum,
+    LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,
+  > = {
+    alpha: number;
+    alphaTarget: number;
+    nodes: NodeDatum[];
+    links: LinkDatum[];
+    simulation: Simulation<NodeDatum, LinkDatum>;
   };
 
   /**
@@ -80,16 +91,6 @@
    * Default velocity decay factor applied to nodes each tick.
    */
   export const DEFAULT_VELOCITY_DECAY: number = 0.4;
-
-  type NodeDatumFor<NodeDatum> = NodeDatum & SimulationNodeDatum;
-
-  type LinkDatumFor<NodeDatum, LinkDatum> = LinkDatum &
-    SimulationLinkDatum<NodeDatumFor<NodeDatum>>;
-
-  type SimulationFor<NodeDatum, LinkDatum> = Simulation<
-    NodeDatumFor<NodeDatum>,
-    LinkDatumFor<NodeDatum, LinkDatum>
-  >;
 
   export type ForceSimulationProps<
     NodeDatum extends SimulationNodeDatum,
@@ -160,6 +161,11 @@
     onStart?: (e: OnStartEvent<NodeDatum, LinkDatum | undefined>) => void;
 
     /**
+     * Callback function triggered right before nodes get passed to the simulation
+     */
+    onNodesChange?: (e: OnNodesChangeEvent<NodeDatum, LinkDatum | undefined>) => void;
+
+    /**
      * Callback function triggered on each simulation tick
      */
     onTick?: (e: OnTickEvent<NodeDatum, LinkDatum | undefined>) => void;
@@ -172,10 +178,10 @@
     children?: Snippet<
       [
         {
-          nodes: NodeDatumFor<NodeDatum>[];
-          links: LinkDatumFor<NodeDatum, LinkDatum>[];
+          nodes: NodeDatum[];
+          links: LinkDatum[];
           linkPositions: LinkPosition[];
-          simulation: SimulationFor<NodeDatum, LinkDatum>;
+          simulation: Simulation<NodeDatum, LinkDatum>;
         },
       ]
     >;
@@ -200,6 +206,7 @@
     stopped = false,
     static: staticProp,
     onStart: onStartProp,
+    onNodesChange: onNodesChangeProp,
     onTick: onTickProp,
     onEnd: onEndProp,
     children,
@@ -211,15 +218,13 @@
   // MARK: Private Props
 
   let linkPositions: LinkPosition[] = $state([]);
-  let simulatedNodes: NodeDatumFor<NodeDatum>[] = $state([]);
-  let simulatedLinks: LinkDatumFor<NodeDatum, LinkDatum>[] = $derived(
-    (data.links ?? []) as LinkDatumFor<NodeDatum, LinkDatum>[]
-  );
+  let simulatedNodes: NodeDatum[] = $state([]);
+  let simulatedLinks: LinkDatum[] = $derived(data.links ?? []);
 
   // This casting is unfortunately necessary, due to unfortunate
   // overloading choices made, over at `@typed/d3-force`:
-  const simulation: SimulationFor<NodeDatum, LinkDatum> = (
-    forceSimulation() as SimulationFor<NodeDatum, LinkDatum>
+  const simulation: Simulation<NodeDatum, LinkDatum> = (
+    forceSimulation<NodeDatum>() as Simulation<NodeDatum, LinkDatum>
   ).stop();
 
   // d3.Simulation does not provide a `.forces()` getter, so we need to
@@ -263,6 +268,7 @@
     () => {
       // Any time the `nodes` prop, or the `data` store gets changed
       // we pass them to the internal d3 simulation object:
+      onNodesChange();
       pushNodesToSimulation(data.nodes);
       runOrResumeSimulation();
     }
@@ -494,6 +500,16 @@
     onEndProp?.({
       alpha,
       alphaTarget,
+      simulation,
+    });
+  }
+
+  function onNodesChange() {
+    onNodesChangeProp?.({
+      alpha,
+      alphaTarget,
+      nodes: data.nodes,
+      links: data.links ?? [],
       simulation,
     });
   }
