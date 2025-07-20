@@ -151,16 +151,20 @@
   const bottomRight = $derived(['all', 'bottom', 'right', 'bottom-right'].includes(rounded));
   const width = $derived(dimensions.width);
   const height = $derived(dimensions.height);
-  const diameter = $derived(2 * radius);
+
+  // Clamp radius to prevent extending beyond bounding box
+  const r = $derived(Math.min(radius, width / 2, height / 2));
+  const diameter = $derived(2 * r);
+
   const pathData = $derived(
-    `M${dimensions.x + radius},${dimensions.y} h${width - diameter}
-      ${topRight ? `a${radius},${radius} 0 0 1 ${radius},${radius}` : `h${radius}v${radius}`}
+    `M${dimensions.x + r},${dimensions.y} h${width - diameter}
+      ${topRight ? `a${r},${r} 0 0 1 ${r},${r}` : `h${r}v${r}`}
       v${height - diameter}
-      ${bottomRight ? `a${radius},${radius} 0 0 1 ${-radius},${radius}` : `v${radius}h${-radius}`}
+      ${bottomRight ? `a${r},${r} 0 0 1 ${-r},${r}` : `v${r}h${-r}`}
       h${diameter - width}
-      ${bottomLeft ? `a${radius},${radius} 0 0 1 ${-radius},${-radius}` : `h${-radius}v${-radius}`}
+      ${bottomLeft ? `a${r},${r} 0 0 1 ${-r},${-r}` : `h${-r}v${-r}`}
       v${diameter - height}
-      ${topLeft ? `a${radius},${radius} 0 0 1 ${radius},${-radius}` : `v${-radius}h${radius}`}
+      ${topLeft ? `a${r},${r} 0 0 1 ${r},${-r}` : `v${-r}h${r}`}
       z`
       .split('\n')
       .join('')
