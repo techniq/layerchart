@@ -3,6 +3,7 @@
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { mean, sum } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
+  import { timeDay } from 'd3-time';
 
   import {
     Axis,
@@ -659,6 +660,75 @@
           </Tooltip.List>
         {/snippet}
       </Tooltip.Root>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Time scale (with interval)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      xInterval={timeDay}
+      y="value"
+      yDomain={[0, null]}
+      yNice={4}
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Layer type={shared.renderContext}>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule tickMultiline />
+        <Bars strokeWidth={1} class="fill-primary" />
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Time scale with missing data</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <Chart
+      data={data.filter((d) => (Math.random() > 0.5 ? true : false))}
+      x="date"
+      xScale={scaleTime()}
+      xInterval={timeDay}
+      y="value"
+      yDomain={[0, null]}
+      yNice={4}
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Layer type={shared.renderContext}>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule tickMultiline />
+        <Bars strokeWidth={1} class="fill-primary" />
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Time scale with inset</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <Chart
+      {data}
+      x="date"
+      xScale={scaleTime()}
+      xInterval={timeDay}
+      y="value"
+      yDomain={[0, null]}
+      yNice={4}
+      padding={{ left: 16, bottom: 24 }}
+    >
+      <Layer type={shared.renderContext}>
+        <Axis placement="left" grid rule />
+        <Axis placement="bottom" rule tickMultiline />
+        <Bars class="fill-primary" insets={{ x: 2 }} />
+      </Layer>
     </Chart>
   </div>
 </Preview>

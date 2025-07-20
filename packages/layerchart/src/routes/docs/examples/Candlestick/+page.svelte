@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { scaleBand, scaleOrdinal } from 'd3-scale';
+  import { scaleOrdinal, scaleTime, scaleUtc } from 'd3-scale';
+  import { utcDay } from 'd3-time';
 
   import { Axis, Bars, Chart, Highlight, Layer, Points, Tooltip } from 'layerchart';
 
@@ -11,13 +12,15 @@
 
 <h1>Examples</h1>
 
-<!-- TODO: Should use xScale={scaleTime()} once `<Bar>` / createDimensionGetter() supports it -->
+<h2>Basic</h2>
+
 <Preview data={data.appleTicker}>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
       data={data.appleTicker}
       x="date"
-      xScale={scaleBand().paddingInner(0.4)}
+      xScale={scaleUtc()}
+      xInterval={utcDay}
       y={['high', 'low']}
       yNice
       c={(d) => (d.close < d.open ? 'desc' : 'asc')}
@@ -29,10 +32,11 @@
     >
       {#snippet children({ context })}
         <Layer type={shared.renderContext}>
-          <Axis placement="left" grid rule ticks={10} />
-          <Axis placement="bottom" rule format={(d) => ''} />
+          <Axis placement="left" grid rule tickSpacing={20} />
+          <Axis placement="bottom" rule tickMultiline />
           <Points links r={0} />
-          <Bars y={(d) => [d.open, d.close]} radius={2} />
+          <Bars y={(d) => [d.open, d.close]} insets={{ x: 0.5 }} />
+          <Bars y={(d) => [d.high, d.low]} insets={{ x: 1.5 }} />
           <Highlight area />
         </Layer>
         <Tooltip.Root {context}>

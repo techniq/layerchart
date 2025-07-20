@@ -7,6 +7,7 @@
     createScale,
     getRange,
     isScaleBand,
+    isScaleTime,
     makeAccessor,
     type AnyScale,
     type DomainType,
@@ -40,6 +41,7 @@
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
   import BrushContext, { type BrushContextValue } from './BrushContext.svelte';
   import { layerClass } from '$lib/utils/attributes.js';
+  import type { TimeInterval } from 'd3-time';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -149,6 +151,8 @@
     cGet: (d: T) => any;
     x1Get: (d: T) => any;
     y1Get: (d: T) => any;
+    xInterval: TimeInterval | null;
+    yInterval: TimeInterval | null;
     radial: boolean;
     tooltip: TooltipContextValue<T>;
     geo: GeoContextValue;
@@ -640,6 +644,16 @@
      */
     yBaseline?: number | null;
 
+    /**
+     * Time interval to use for the x-axis when using a time scale.
+     */
+    xInterval?: TimeInterval | null;
+
+    /**
+     * Time interval to use for the y-axis when using a time scale.
+     */
+    yInterval?: TimeInterval | null;
+
     /* Props passed to ChartContext */
 
     /**
@@ -738,6 +752,8 @@
     rRange: rRangeProp,
     xBaseline = null,
     yBaseline = null,
+    xInterval = null,
+    yInterval = null,
     meta = {},
     children: _children,
     radial = false,
@@ -780,6 +796,12 @@
 
   const _xDomain: DomainType | undefined = $derived.by(() => {
     if (xDomainProp !== undefined) return xDomainProp;
+
+    if (xInterval != null && Array.isArray(data) && data.length > 0) {
+      const lastXValue = accessor(xProp)(data[data.length - 1]);
+      return [null, xInterval.offset(lastXValue)];
+    }
+
     if (xBaseline != null && Array.isArray(data)) {
       const xValues = data.flatMap(accessor(xProp));
       return [min([xBaseline, ...xValues]), max([xBaseline, ...xValues])];
@@ -788,6 +810,12 @@
 
   const _yDomain: DomainType | undefined = $derived.by(() => {
     if (yDomainProp !== undefined) return yDomainProp;
+
+    if (yInterval != null && Array.isArray(data) && data.length > 0) {
+      const lastYValue = accessor(yProp)(data[data.length - 1]);
+      return [null, yInterval.offset(lastYValue)];
+    }
+
     if (yBaseline != null && Array.isArray(data)) {
       const yValues = data.flatMap(accessor(yProp));
       return [min([yBaseline, ...yValues]), max([yBaseline, ...yValues])];
@@ -798,7 +826,9 @@
     _yRangeProp ?? (radial ? ({ height }: { height: number }) => [0, height / 2] : undefined)
   );
 
-  const yReverse = $derived(yScaleProp ? !isScaleBand(yScaleProp) : true);
+  const yReverse = $derived(
+    yScaleProp ? !isScaleBand(yScaleProp) && !isScaleTime(yScaleProp) : true
+  );
 
   const x = $derived(makeAccessor(xProp));
   const y = $derived(makeAccessor(yProp));
@@ -1246,6 +1276,12 @@
     },
     get y1Scale() {
       return y1Scale;
+    },
+    get xInterval() {
+      return xInterval;
+    },
+    get yInterval() {
+      return yInterval;
     },
     get radial() {
       return radial;

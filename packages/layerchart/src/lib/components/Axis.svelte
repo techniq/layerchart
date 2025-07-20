@@ -44,7 +44,7 @@
     ticks?: TicksConfig;
 
     /**
-     * Width or height of each tick in pxiels (responsive reduce)
+     * Width or height of each tick in pixels (enabling responsive count)
      */
     tickSpacing?: number;
 
@@ -96,7 +96,7 @@
     transitionInParams?: TransitionParams<In>;
 
     /**
-     * Scale for the axis
+     * Override scale for the axis
      */
     scale?: any;
 
@@ -183,6 +183,9 @@
   const scale = $derived(
     scaleProp ?? (['horizontal', 'angle'].includes(orientation) ? ctx.xScale : ctx.yScale)
   );
+  const interval = $derived(
+    ['horizontal', 'angle'].includes(orientation) ? ctx.xInterval : ctx.yInterval
+  );
 
   const xRangeMinMax = $derived(extent<number>(ctx.xRange)) as [number, number];
   const yRangeMinMax = $derived(extent<number>(ctx.yRange)) as [number, number];
@@ -206,7 +209,7 @@
         ? Math.round(ctxSize / tickSpacing)
         : undefined
   );
-  const tickVals = $derived(resolveTickVals(scale, ticks, tickCount));
+  const tickVals = $derived(resolveTickVals(scale, ticks, tickCount, interval));
   const tickFormat = $derived(
     resolveTickFormat({
       scale,
@@ -221,27 +224,29 @@
   function getCoords(tick: any) {
     switch (placement) {
       case 'top':
-        return {
-          x: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
-          y: yRangeMinMax[0],
-        };
-
       case 'bottom':
         return {
-          x: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
-          y: yRangeMinMax[1],
+          x:
+            scale(tick) +
+            (isScaleBand(scale)
+              ? scale.bandwidth() / 2
+              : ctx.xInterval
+                ? (scale(ctx.xInterval.offset(tick)) - scale(tick)) / 2 // offset 1/2 width of time interval
+                : 0),
+          y: placement === 'top' ? yRangeMinMax[0] : yRangeMinMax[1],
         };
 
       case 'left':
-        return {
-          x: xRangeMinMax[0],
-          y: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
-        };
-
       case 'right':
         return {
-          x: xRangeMinMax[1],
-          y: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
+          x: placement === 'left' ? xRangeMinMax[0] : xRangeMinMax[1],
+          y:
+            scale(tick) +
+            (isScaleBand(scale)
+              ? scale.bandwidth() / 2
+              : ctx.yInterval
+                ? (scale(ctx.yInterval.offset(tick)) - scale(tick)) / 2 // offset 1/2 height of time interval
+                : 0),
         };
 
       case 'angle':
