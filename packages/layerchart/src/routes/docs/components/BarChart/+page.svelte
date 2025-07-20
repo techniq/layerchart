@@ -1384,13 +1384,26 @@
   </div>
 </Preview>
 
-<h2>Brushing (WIP)</h2>
+<h2>Brushing</h2>
 
-<Preview data={dateSeriesData}>
+<Preview data={largeDateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" brush {renderContext} {debug} />
+    <BarChart
+      data={largeDateSeriesData}
+      x="date"
+      y="value"
+      xInterval={timeDay}
+      brush
+      {renderContext}
+      {debug}
+    />
   </div>
 </Preview>
+
+<Blockquote>
+  Brushing is a work in progress and only supports time/interval scales and does not support band
+  scales yet.
+</Blockquote>
 
 <h2>Radial (vertical)</h2>
 
