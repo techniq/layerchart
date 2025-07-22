@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.32
+
+### Patch Changes
+
+- fix(Points): Update `point.x` / `point.y` based on `ctx.radial` to simplify children snippet usage ([#611](https://github.com/techniq/layerchart/pull/611))
+
 ## 2.0.0-next.31
 
 ### Minor Changes
