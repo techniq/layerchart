@@ -209,7 +209,17 @@
         ? Math.round(ctxSize / tickSpacing)
         : undefined
   );
-  const tickVals = $derived(resolveTickVals(scale, ticks, tickCount, interval));
+  const tickVals = $derived.by(() => {
+    const tickVals = resolveTickVals(scale, ticks, tickCount);
+
+    if (interval != null) {
+      // Remove last tick when interval is provided (such as for bar charts with center aligned (offset) ticks)
+      tickVals.pop();
+    }
+
+    return tickVals;
+  });
+
   const tickFormat = $derived(
     resolveTickFormat({
       scale,

@@ -122,12 +122,7 @@ export type TicksConfig =
   | { interval: TimeInterval | null }
   | null;
 
-export function resolveTickVals(
-  scale: AnyScale,
-  ticks?: TicksConfig,
-  count?: number,
-  interval?: TimeInterval | null
-): any[] {
+export function resolveTickVals(scale: AnyScale, ticks?: TicksConfig, count?: number): any[] {
   // Explicit ticks
   if (Array.isArray(ticks)) return ticks;
 
@@ -151,14 +146,7 @@ export function resolveTickVals(
 
   // Ticks from scale
   if (scale.ticks && typeof scale.ticks === 'function') {
-    const tickVals = scale.ticks(count ?? (typeof ticks === 'number' ? ticks : undefined));
-
-    if (interval) {
-      // Remove last tick when interval is provided (such as for bar charts with center aligned (offset) ticks)
-      tickVals.pop();
-    }
-
-    return tickVals;
+    return scale.ticks(count ?? (typeof ticks === 'number' ? ticks : undefined));
   }
 
   return [];
