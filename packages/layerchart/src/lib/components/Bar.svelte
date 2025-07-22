@@ -136,10 +136,10 @@
   const rounded = $derived(
     roundedProp === 'edge'
       ? isVertical
-        ? resolvedValue >= 0
+        ? resolvedValue >= 0 && ctx.yRange[0] > ctx.yRange[1] // not inverted (bottom to top)
           ? 'top'
           : 'bottom'
-        : resolvedValue >= 0
+        : resolvedValue >= 0 && ctx.xRange[0] < ctx.xRange[1] // not inverted (left to right)
           ? 'right'
           : 'left'
       : roundedProp

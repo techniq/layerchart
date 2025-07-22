@@ -247,9 +247,8 @@
       padding={{ left: 32, right: 32, bottom: 20 }}
       props={{
         bars: {
-          // TODO: Determine why non-rounded Rect within Bar is not working for inverted range
-          // rounded: 'none',
-          class: 'stroke-none fill-blue-500',
+          rounded: 'none',
+          class: '_stroke-none fill-blue-500',
         },
       }}
       {renderContext}
