@@ -152,6 +152,11 @@ export function createDimensionGetter<TData>(
         bottom = yValue;
       }
 
+      // If yRange is inverted (drawing from top), swap top and bottom
+      if (ctx.yRange[0] < ctx.yRange[1]) {
+        [top, bottom] = [bottom, top];
+      }
+
       const y = ctx.yScale(top) + insets.top;
       const height = ctx.yScale(bottom) - ctx.yScale(top) - insets.bottom - insets.top;
 
