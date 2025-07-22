@@ -24,7 +24,6 @@
   import { cls } from '@layerstack/tailwind';
   import { slide } from 'svelte/transition';
   import { shared } from '../../shared.svelte.js';
-  import { tick } from 'svelte';
 
   let { data } = $props();
 

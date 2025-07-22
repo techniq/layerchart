@@ -103,9 +103,14 @@
     const scaledX: number = ctx.xScale(xVal);
     const scaledY: number = ctx.yScale(yVal);
 
+    const x = scaledX + getOffset(scaledX, offsetX, ctx.xScale);
+    const y = scaledY + getOffset(scaledY, offsetY, ctx.yScale);
+
+    const radialPoint = pointRadial(x, y);
+
     return {
-      x: scaledX + getOffset(scaledX, offsetX, ctx.xScale),
-      y: scaledY + getOffset(scaledY, offsetY, ctx.yScale),
+      x: ctx.radial ? radialPoint[0] : x,
+      y: ctx.radial ? radialPoint[1] : y,
       r: ctx.config.r ? ctx.rGet(d) : r,
       xValue: xVal,
       yValue: yVal,
@@ -192,10 +197,9 @@
   {/if}
 
   {#each points as point}
-    {@const radialPoint = pointRadial(point.x, point.y)}
     <Circle
-      cx={ctx.radial ? radialPoint[0] : point.x}
-      cy={ctx.radial ? radialPoint[1] : point.y}
+      cx={point.x}
+      cy={point.y}
       r={point.r}
       fill={fill ?? (ctx.config.c ? ctx.cGet(point.data) : null)}
       {fillOpacity}
