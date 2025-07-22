@@ -99,7 +99,7 @@
   import Spline from './Spline.svelte';
   import { getChartContext } from './Chart.svelte';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
-  import { resolveTickVals, type TicksConfig } from '$lib/utils/ticks.js';
+  import { autoTickVals, type TicksConfig } from '$lib/utils/ticks.js';
 
   const ctx = getChartContext();
 
@@ -131,8 +131,8 @@
 
   const transitionIn = $derived((transitionInProp ?? tweenConfig?.options) ? fade : () => ({}));
 
-  const xTickVals = $derived(resolveTickVals(ctx.xScale, xTicks));
-  const yTickVals = $derived(resolveTickVals(ctx.yScale, yTicks));
+  const xTickVals = $derived(autoTickVals(ctx.xScale, xTicks));
+  const yTickVals = $derived(autoTickVals(ctx.yScale, yTicks));
 
   const xBandOffset = $derived(
     isScaleBand(ctx.xScale)

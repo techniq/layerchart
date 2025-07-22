@@ -138,7 +138,7 @@
   import { getChartContext } from './Chart.svelte';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { type MotionProp } from '$lib/utils/motion.svelte.js';
-  import { resolveTickFormat, resolveTickVals, type TicksConfig } from '$lib/utils/ticks.js';
+  import { autoTickVals, autoTickFormat, type TicksConfig } from '$lib/utils/ticks.js';
 
   let {
     placement,
@@ -210,7 +210,7 @@
         : undefined
   );
   const tickVals = $derived.by(() => {
-    const tickVals = resolveTickVals(scale, ticks, tickCount);
+    const tickVals = autoTickVals(scale, ticks, tickCount);
 
     if (interval != null) {
       // Remove last tick when interval is provided (such as for bar charts with center aligned (offset) ticks)
@@ -221,7 +221,7 @@
   });
 
   const tickFormat = $derived(
-    resolveTickFormat({
+    autoTickFormat({
       scale,
       ticks,
       count: tickCount,
