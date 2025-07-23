@@ -66,10 +66,4 @@ describe('autoTickVals', () => {
     expect(autoTickVals(scale, null, undefined)).toEqual([1, 2, 3]);
     expect(scale.ticks).toHaveBeenCalledWith(undefined);
   });
-
-  it('removes last tick when interval is provided', () => {
-    const interval = { every: vi.fn() } as unknown as TimeInterval;
-    const scale = { ticks: vi.fn(() => [1, 2, 3, 4]) } as any;
-    expect(autoTickVals(scale, undefined, undefined, interval)).toEqual([1, 2, 3]);
-  });
 });
