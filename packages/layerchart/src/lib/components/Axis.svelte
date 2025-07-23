@@ -126,7 +126,7 @@
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
 
-  import { type FormatType, type FormatConfig } from '@layerstack/utils';
+  import { type FormatType, type FormatConfig, unique } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Group, { type GroupProps } from './Group.svelte';
@@ -217,7 +217,8 @@
       tickVals.pop();
     }
 
-    return tickVals;
+    // Remove any duplicates (manually added)
+    return unique(tickVals);
   });
 
   const tickFormat = $derived(
