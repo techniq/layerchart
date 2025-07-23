@@ -27,17 +27,17 @@ importers:
         specifier: ^1.1.4
         version: 1.1.4
       '@layerstack/svelte-actions':
-        specifier: 1.0.1-next.12
-        version: 1.0.1-next.12
+        specifier: 1.0.1-next.14
+        version: 1.0.1-next.14
       '@layerstack/svelte-state':
-        specifier: 0.1.0-next.17
-        version: 0.1.0-next.17
+        specifier: 0.1.0-next.19
+        version: 0.1.0-next.19
       '@layerstack/tailwind':
-        specifier: 2.0.0-next.15
-        version: 2.0.0-next.15
+        specifier: 2.0.0-next.17
+        version: 2.0.0-next.17
       '@layerstack/utils':
-        specifier: 2.0.0-next.12
-        version: 2.0.0-next.12
+        specifier: 2.0.0-next.14
+        version: 2.0.0-next.14
       d3-array:
         specifier: ^3.2.4
         version: 3.2.4
@@ -735,8 +735,11 @@ packages:
   '@layerstack/svelte-actions@1.0.1-next.12':
     resolution: {integrity: sha512-dndWTlYu8b1u6vw2nrO7NssccoACArGG75WoNlyVC13KuENZlWdKE9Q79/wlnbq00NeQMNKMjJwRMsrKQj2ULA==}
 
-  '@layerstack/svelte-state@0.1.0-next.17':
-    resolution: {integrity: sha512-z7e6mPJnypD80LEI/UDuH0bI6s8/nut06MB7rEkRcEfHJekhKSJgFhMnrYzLED7Mc2gTTD0X/wcYlakauWlU8A==}
+  '@layerstack/svelte-actions@1.0.1-next.14':
+    resolution: {integrity: sha512-MPBmVaB+GfNHvBkg5nJkPG18smoXKvsvJRpsdWnrUBfca+TieZLoaEzNxDH+9LG11dIXP9gghsXt1mUqbbyAsA==}
+
+  '@layerstack/svelte-state@0.1.0-next.19':
+    resolution: {integrity: sha512-yCYoQAIbeP8y1xmOB/r0+UundgP4JFnpNURgMki+26TotzoqrZ5oLpHvhPSVm60ks+buR3ebDBTeUFdHzxwzQQ==}
 
   '@layerstack/svelte-stores@1.0.2-next.12':
     resolution: {integrity: sha512-XwKyGCXl3+NHQzB3LsPSo6Rb0TjoY3LZzb1Snw09VnOUxvA9skMmVnM8EO3eKFti/8tyOLReddEUA1ygUaT4Lg==}
@@ -747,8 +750,14 @@ packages:
   '@layerstack/tailwind@2.0.0-next.15':
     resolution: {integrity: sha512-7tqKE3OV7/ybeDOORX++USYYCBJa7IgTya2czFpzbgXGo7CQDVyuv+0J1DggjRcEqhhXQA4MUhgnhcRaZvHxWg==}
 
+  '@layerstack/tailwind@2.0.0-next.17':
+    resolution: {integrity: sha512-ZSn6ouqpnzB6DKzSKLVwrUBOQsrzpDA/By2/ba9ApxgTGnaD1nyqNwrvmZ+kswdAwB4YnrGEAE4VZkKrB2+DaQ==}
+
   '@layerstack/utils@2.0.0-next.12':
     resolution: {integrity: sha512-fhGZUlSr3N+D44BYm37WKMGSEFyZBW+dwIqtGU8Cl54mR4TLQ/UwyGhdpgIHyH/x/8q1abE0fP0Dn6ZsrDE3BA==}
+
+  '@layerstack/utils@2.0.0-next.14':
+    resolution: {integrity: sha512-1I2CS0Cwgs53W35qVg1eBdYhB/CiPvL3s0XE61b8jWkTHxgjBF65yYNgXjW74kv7WI7GsJcWMNBufPd0rnu9kA==}
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -3258,9 +3267,15 @@ snapshots:
       '@layerstack/utils': 2.0.0-next.12
       d3-scale: 4.0.2
 
-  '@layerstack/svelte-state@0.1.0-next.17':
+  '@layerstack/svelte-actions@1.0.1-next.14':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.12
+      '@floating-ui/dom': 1.7.1
+      '@layerstack/utils': 2.0.0-next.14
+      d3-scale: 4.0.2
+
+  '@layerstack/svelte-state@0.1.0-next.19':
+    dependencies:
+      '@layerstack/utils': 2.0.0-next.14
 
   '@layerstack/svelte-stores@1.0.2-next.12':
     dependencies:
@@ -3284,7 +3299,22 @@ snapshots:
       lodash-es: 4.17.21
       tailwind-merge: 3.3.0
 
+  '@layerstack/tailwind@2.0.0-next.17':
+    dependencies:
+      '@layerstack/utils': 2.0.0-next.14
+      clsx: 2.1.1
+      d3-array: 3.2.4
+      lodash-es: 4.17.21
+      tailwind-merge: 3.3.0
+
   '@layerstack/utils@2.0.0-next.12':
+    dependencies:
+      d3-array: 3.2.4
+      d3-time: 3.1.0
+      d3-time-format: 4.1.0
+      lodash-es: 4.17.21
+
+  '@layerstack/utils@2.0.0-next.14':
     dependencies:
       d3-array: 3.2.4
       d3-time: 3.1.0
