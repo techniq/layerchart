@@ -46,7 +46,7 @@
       label: '6 months',
       domain: [timeMonth.offset(today, -6), today],
       interval: timeMonth.every(1),
-      format: 'month',
+      format: { type: 'month', options: { variant: 'short' } },
     },
     {
       label: '90 days',
