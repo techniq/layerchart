@@ -125,8 +125,17 @@
 
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
+  import {
+    timeDay,
+    timeHour,
+    timeMillisecond,
+    timeMinute,
+    timeMonth,
+    timeSecond,
+    timeYear,
+  } from 'd3-time';
 
-  import { type FormatType, type FormatConfig, unique } from '@layerstack/utils';
+  import { type FormatType, type FormatConfig, unique, PeriodType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Group, { type GroupProps } from './Group.svelte';
@@ -210,11 +219,37 @@
         : undefined
   );
   const tickVals = $derived.by(() => {
-    const tickVals = autoTickVals(scale, ticks, tickCount);
+    let tickVals = autoTickVals(scale, ticks, tickCount);
 
     if (interval != null) {
       // Remove last tick when interval is provided (such as for bar charts with center aligned (offset) ticks)
       tickVals.pop();
+    }
+
+    // Use format to filter ticks (helpful to keep ticks above a threshold for wide charts or short durations)
+    const formatType = typeof format === 'object' ? format?.type : format;
+
+    if (formatType === 'integer') {
+      tickVals = tickVals.filter(Number.isInteger);
+    } else if (formatType === 'year' || formatType === PeriodType.CalendarYear) {
+      tickVals = tickVals.filter((val) => +timeYear.floor(val) === +val);
+    } else if (
+      formatType === 'month' ||
+      formatType === PeriodType.Month ||
+      formatType === PeriodType.MonthYear
+    ) {
+      // tickVals = tickVals.filter((val) => +timeMonth.floor(val) === +val);
+      tickVals = tickVals.filter((val) => val.getDate() < 7); // first week of the month
+    } else if (formatType === 'day' || formatType === PeriodType.Day) {
+      tickVals = tickVals.filter((val) => +timeDay.floor(val) === +val);
+    } else if (formatType === 'hour' || formatType === PeriodType.Hour) {
+      tickVals = tickVals.filter((val) => +timeHour.floor(val) === +val);
+    } else if (formatType === 'minute' || formatType === PeriodType.Minute) {
+      tickVals = tickVals.filter((val) => +timeMinute.floor(val) === +val);
+    } else if (formatType === 'second' || formatType === PeriodType.Second) {
+      tickVals = tickVals.filter((val) => +timeSecond.floor(val) === +val);
+    } else if (formatType === 'millisecond' || formatType === PeriodType.Millisecond) {
+      tickVals = tickVals.filter((val) => +timeMillisecond.floor(val) === +val);
     }
 
     // Remove any duplicates (manually added)

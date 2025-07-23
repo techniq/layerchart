@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { ComponentProps } from 'svelte';
   import { scaleLinear, scaleTime, scaleBand, scaleLog } from 'd3-scale';
   import { range } from 'd3-array';
   import { Axis, Chart, Frame, Layer, Rule, Text, Grid, asAny } from 'layerchart';
@@ -10,6 +11,7 @@
     timeSecond,
     timeYear,
     timeMillisecond,
+    type TimeInterval,
   } from 'd3-time';
   import { RangeField } from 'svelte-ux';
   import { startOfInterval } from '@layerstack/utils';
@@ -28,40 +30,90 @@
   let xDomain = $state([timeYear.offset(today, -4), today]);
 
   const timeScaleExamples = [
-    { label: '5 years', domain: [timeYear.offset(today, -5), today], interval: timeYear.every(1) },
-    { label: '1 year', domain: [timeYear.offset(today, -1), today], interval: timeMonth.every(1) },
+    {
+      label: '5 years',
+      domain: [timeYear.offset(today, -5), today],
+      interval: timeYear.every(1),
+      format: 'year',
+    },
+    {
+      label: '1 year',
+      domain: [timeYear.offset(today, -1), today],
+      interval: timeMonth.every(1),
+      format: { type: 'month', options: { variant: 'short' } },
+    },
     {
       label: '6 months',
       domain: [timeMonth.offset(today, -6), today],
       interval: timeMonth.every(1),
+      format: 'month',
     },
-    { label: '90 days', domain: [timeDay.offset(today, -90), today], interval: timeDay.every(7) },
-    { label: '30 days', domain: [timeDay.offset(today, -30), today], interval: timeDay.every(1) },
-    { label: '10 days', domain: [timeDay.offset(today, -10), today], interval: timeDay.every(1) },
-    { label: '7 days', domain: [timeDay.offset(today, -7), today], interval: timeDay.every(1) },
-    { label: '3 days', domain: [timeDay.offset(today, -3), today], interval: timeHour.every(4) },
+    {
+      label: '90 days',
+      domain: [timeDay.offset(today, -90), today],
+      interval: timeDay.every(7),
+      format: { type: 'day', options: { variant: 'short' } },
+    },
+    {
+      label: '30 days',
+      domain: [timeDay.offset(today, -30), today],
+      interval: timeDay.every(1),
+      format: { type: 'day', options: { variant: 'short' } },
+    },
+    {
+      label: '10 days',
+      domain: [timeDay.offset(today, -10), today],
+      interval: timeDay.every(1),
+      format: { type: 'day', options: { variant: 'short' } },
+    },
+    {
+      label: '7 days',
+      domain: [timeDay.offset(today, -7), today],
+      interval: timeDay.every(1),
+      format: { type: 'day', options: { variant: 'short' } },
+    },
+    {
+      label: '3 days',
+      domain: [timeDay.offset(today, -3), today],
+      interval: timeHour.every(4),
+      format: { type: 'day', options: { variant: 'short' } },
+    },
     {
       label: '24 hours',
       domain: [timeHour.offset(today, -24), today],
       interval: timeHour.every(1),
+      format: 'hour',
     },
     {
       label: '12 hours',
       domain: [timeHour.offset(today, -12), today],
       interval: timeHour.every(1),
+      format: 'hour',
     },
-    { label: '1 hour', domain: [timeHour.offset(today, -1), today], interval: timeMinute.every(5) },
+    {
+      label: '1 hour',
+      domain: [timeHour.offset(today, -1), today],
+      interval: timeMinute.every(5),
+      format: 'minute',
+    },
     {
       label: '1 minute',
       domain: [timeMinute.offset(today, -1), today],
       interval: timeSecond.every(10),
+      format: 'second',
     },
     {
       label: '1 second',
       domain: [timeSecond.offset(today, -1), today],
       interval: timeMillisecond.every(100),
+      format: 'millisecond',
     },
-  ];
+  ] as {
+    label: string;
+    domain: [Date, Date];
+    interval: TimeInterval;
+    format?: ComponentProps<typeof Axis>['format'];
+  }[];
 
   let tickSpacing = $state(80); // x-axis default
 
@@ -356,18 +408,25 @@
   </div>
 </Preview>
 
-<h2>integer-only ticks</h2>
+<h2>integer-only ticks via filter</h2>
 
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
     <Chart xDomain={[0, 2]} padding={{ bottom: 24 }}>
       <Layer type={shared.renderContext}>
-        <Axis
-          placement="bottom"
-          rule
-          ticks={(scale) => scale.ticks?.().filter(Number.isInteger)}
-          format="integer"
-        />
+        <Axis placement="bottom" rule ticks={(scale) => scale.ticks?.().filter(Number.isInteger)} />
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>integer-only ticks via format</h2>
+
+<Preview>
+  <div class="h-[80px] p-4 border rounded-sm">
+    <Chart xDomain={[0, 2]} padding={{ bottom: 24 }}>
+      <Layer type={shared.renderContext}>
+        <Axis placement="bottom" rule format="integer" />
       </Layer>
     </Chart>
   </div>
@@ -733,6 +792,39 @@
             <Layer type={shared.renderContext}>
               <Axis placement="top" rule grid tickMultiline {tickSpacing} />
               <Axis placement="bottom" rule grid tickMultiline {tickSpacing} />
+            </Layer>
+          </Chart>
+        </div>
+      </div>
+    {/each}
+  </div>
+</Preview>
+
+<div class="flex gap-2 mb-1/2">
+  <h2 class="grow">Time scale (auto) with format (filtering)</h2>
+  <RangeField
+    label="tickSpacing"
+    labelPlacement="left"
+    bind:value={tickSpacing}
+    min={10}
+    max={300}
+    step={10}
+  />
+</div>
+
+<Preview>
+  <div class="grid gap-3">
+    {#each timeScaleExamples as example}
+      <div class="resize-x overflow-auto">
+        <div class="text-sm mb-1">{example.label}</div>
+        <div class="h-[100px] p-4 border rounded-sm">
+          <Chart
+            xScale={scaleTime()}
+            xDomain={example.domain}
+            padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+          >
+            <Layer type={shared.renderContext}>
+              <Axis placement="bottom" rule grid {tickSpacing} format={example.format} />
             </Layer>
           </Chart>
         </div>
