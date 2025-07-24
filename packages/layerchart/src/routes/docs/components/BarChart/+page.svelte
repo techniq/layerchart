@@ -4,6 +4,7 @@
     asAny,
     Axis,
     BarChart,
+    Bar,
     Bars,
     Highlight,
     Layer,
@@ -1271,6 +1272,7 @@
       bandPadding={0}
       padding={{ top: 12, bottom: 12 }}
       orientation="horizontal"
+      grid={false}
       props={{
         tooltip: {
           context: { mode: 'bounds' },
@@ -1285,6 +1287,123 @@
             <Text {...props} textAnchor={props.value === '40' ? 'end' : 'start'} />
           {/snippet}
         </Axis>
+      {/snippet}
+
+      {#snippet aboveMarks({ context })}
+        <Polygon
+          cx={context.xScale(26.5)}
+          cy={-3}
+          r={6}
+          points={3}
+          rotate={90}
+          class="fill-black stroke-white dark:fill-white dark:stroke-black"
+        />
+      {/snippet}
+
+      {#snippet tooltip({ context })}
+        <Tooltip.Root>
+          {#snippet children({ data })}
+            <Tooltip.List>
+              <Tooltip.Item label="Label:" value={data.label} />
+              <Tooltip.Item label="Range:" value="{data.start} - {data.end}" />
+            </Tooltip.List>
+          {/snippet}
+        </Tooltip.Root>
+      {/snippet}
+    </BarChart>
+  </div>
+</Preview>
+
+<h2>Single stack with indicator (rounded)</h2>
+
+<Preview>
+  <div class="h-[68px] p-4 border rounded-sm">
+    <BarChart
+      data={[
+        {
+          label: 'Severe thinness',
+          start: 15,
+          end: 16,
+        },
+        {
+          label: 'Thinness',
+          start: 16,
+          end: 18.5,
+        },
+        {
+          label: 'Normal',
+          start: 18.5,
+          end: 25,
+        },
+        {
+          label: 'Overweight',
+          start: 25,
+          end: 30,
+        },
+        {
+          label: 'Obese',
+          start: 30,
+          end: 35,
+        },
+        {
+          label: 'Severe obese',
+          start: 35,
+          end: 40,
+        },
+      ]}
+      x={['start', 'end']}
+      y={(d) => 1}
+      xBaseline={undefined}
+      xNice={false}
+      c="label"
+      cRange={[
+        'var(--color-blue-500)',
+        'var(--color-blue-400)',
+        'var(--color-teal-500)',
+        'var(--color-yellow-500)',
+        'var(--color-orange-500)',
+        'var(--color-red-500)',
+      ]}
+      bandPadding={0}
+      padding={{ top: 12, bottom: 12 }}
+      orientation="horizontal"
+      grid={false}
+      props={{
+        bars: {
+          rounded: 'none',
+          strokeWidth: 0,
+        },
+        tooltip: {
+          context: { mode: 'bounds' },
+        },
+      }}
+      {renderContext}
+      {debug}
+    >
+      {#snippet axis({ context })}
+        <Axis placement="bottom" tickLength={0} ticks={[15, 16, 18.5, 25, 30, 35, 40]}>
+          {#snippet tickLabel({ props })}
+            <Text {...props} textAnchor={props.value === '40' ? 'end' : 'start'} />
+          {/snippet}
+        </Axis>
+      {/snippet}
+
+      {#snippet marks({ context, series, getBarsProps })}
+        {#each series as s, i (s.key)}
+          <Bars {...getBarsProps(s, i)}>
+            {#snippet children({ data })}
+              {#each data as d, i}
+                <Bar
+                  data={d}
+                  fill={context.cGet(d)}
+                  radius={context.height / 2}
+                  rounded={i === 0 ? 'left' : i === data.length - 1 ? 'right' : 'none'}
+                  strokeWidth={1}
+                />
+              {/each}
+            {/snippet}
+          </Bars>
+        {/each}
       {/snippet}
 
       {#snippet aboveMarks({ context })}
