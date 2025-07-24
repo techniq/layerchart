@@ -18,7 +18,7 @@
      */
     onBarClick?: (e: MouseEvent, detail: { data: any }) => void;
 
-    children?: Snippet;
+    children?: Snippet<[{ data: any[] }]>;
     // TODO: investigate
     [key: string]: any;
   } & Omit<BarPropsWithoutHTML, 'data' | 'children'>;
@@ -42,9 +42,6 @@
     data: dataProp,
     onBarClick = () => {},
     children,
-    radius = 0,
-    strokeWidth = 0,
-    stroke = 'black',
     ...restProps
   }: BarsProps = $props();
 
@@ -54,14 +51,11 @@
 
 <Group class={layerClass('bars')}>
   {#if children}
-    {@render children()}
+    {@render children({ data })}
   {:else}
     {#each data as d, i (key(d, i))}
       <Bar
         data={d}
-        {radius}
-        {strokeWidth}
-        {stroke}
         fill={fill ?? (ctx.config.c ? ctx.cGet(d) : null)}
         onclick={(e) => onBarClick(e, { data: d })}
         {...extractLayerProps(restProps, 'bars-bar')}
