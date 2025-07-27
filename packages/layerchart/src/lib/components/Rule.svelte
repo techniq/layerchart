@@ -100,21 +100,6 @@
   const xRangeMinMax = $derived(extent<number>(ctx.xRange));
   const yRangeMinMax = $derived(extent<number>(ctx.yRange));
 
-  function showRule(value: typeof x | typeof y, axis: 'x' | 'y') {
-    switch (typeof value) {
-      case 'boolean':
-        return value;
-      case 'string':
-        return true;
-      default:
-        if (axis === 'x') {
-          return ctx.xScale(value) >= xRangeMinMax[0]! && ctx.xScale(value) <= xRangeMinMax[1]!;
-        } else {
-          return ctx.yScale(value) >= yRangeMinMax[0]! && ctx.yScale(value) <= yRangeMinMax[1]!;
-        }
-    }
-  }
-
   const lines = $derived.by(() => {
     const result: {
       x1: number;
@@ -161,8 +146,8 @@
       });
     }
 
+    // Data driven lines
     if (!singleX && !singleY) {
-      // Data driven
       const xAccessor = x !== false ? accessor(x as Accessor) : ctx.x;
       const yAccessor = y !== false ? accessor(y as Accessor) : ctx.y;
 
@@ -181,11 +166,16 @@
       }
     }
 
-    // TODO: Remove if out of range (showRule)
-    return result;
+    // Remove lines if out of range of chart (non-0 baseline, brushing, etc)
+    return result.filter((line) => {
+      return (
+        line.x1 >= xRangeMinMax[0]! &&
+        line.x2 <= xRangeMinMax[1]! &&
+        line.y1 >= yRangeMinMax[0]! &&
+        line.y2 <= yRangeMinMax[1]!
+      );
+    });
   });
-
-  // $inspect({ lines });
 </script>
 
 <Group class={layerClass('rule-g')}>
