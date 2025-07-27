@@ -186,6 +186,7 @@
 {#if children}
   {@render children({ points })}
 {:else}
+  <!-- TODO: Remove and replace usage with <Rule> -->
   {#if links}
     {#each _links as link}
       <Link
