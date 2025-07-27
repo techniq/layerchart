@@ -62,6 +62,7 @@
   import { getChartContext } from './Chart.svelte';
   import { accessor, chartDataArray, type Accessor } from '../utils/common.js';
   import { layerClass } from '$lib/utils/attributes.js';
+  import { isScaleBand } from '$lib/utils/scales.svelte.js';
 
   let {
     data: dataProp,
@@ -77,14 +78,24 @@
 
   const ctx = getChartContext();
 
+  const data = $derived(chartDataArray(dataProp ?? ctx.data));
+
   const singleX = $derived(
-    typeof x === 'number' || x instanceof Date || x === true || x === '$left' || x === '$right'
+    typeof x === 'number' ||
+      x instanceof Date ||
+      x === true ||
+      x === '$left' ||
+      x === '$right' ||
+      (isScaleBand(ctx.xScale) && ctx.xDomain.includes(x as any))
   );
   const singleY = $derived(
-    typeof y === 'number' || y instanceof Date || y === true || y === '$bottom' || y === '$top'
+    typeof y === 'number' ||
+      y instanceof Date ||
+      y === true ||
+      y === '$bottom' ||
+      y === '$top' ||
+      (isScaleBand(ctx.yScale) && ctx.yDomain.includes(y as any))
   );
-
-  const data = $derived(chartDataArray(dataProp ?? ctx.data));
 
   const xRangeMinMax = $derived(extent<number>(ctx.xRange));
   const yRangeMinMax = $derived(extent<number>(ctx.yRange));
