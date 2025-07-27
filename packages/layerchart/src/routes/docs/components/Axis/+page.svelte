@@ -271,7 +271,7 @@
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid />
         <Axis placement="bottom" grid rule />
-        <Rule x="left" />
+        <Rule x="$left" />
       </Layer>
     </Chart>
   </div>

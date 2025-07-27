@@ -95,7 +95,7 @@
         <Axis placement="angle" grid tickLength={0} format={'month'} />
         <Axis
           placement="radius"
-          rule={{ y: 'top', class: 'stroke-surface-content/20' }}
+          rule={{ y: '$top', class: 'stroke-surface-content/20' }}
           grid
           format={(v) => v + '° F'}
         />
@@ -140,7 +140,7 @@
           <Axis
             placement="radius"
             grid
-            rule={{ y: 'top', class: 'stroke-surface-content/20' }}
+            rule={{ y: '$top', class: 'stroke-surface-content/20' }}
             ticks={4}
             format={(v) => v + '° F'}
           />

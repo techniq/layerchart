@@ -39,7 +39,7 @@
       <Layer type={shared.renderContext}>
         <Axis placement="top" />
         <Axis placement="right" />
-        <Rule x="right" y="top" />
+        <Rule x="$right" y="$top" />
       </Layer>
     </Chart>
   </div>
