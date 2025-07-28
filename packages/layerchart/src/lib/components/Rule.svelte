@@ -158,12 +158,18 @@
         const xValue = xAccessor(d);
         const yValue = yAccessor(d);
 
+        // TODO: Is this the best logic for handling banded scales (lollipop)?
+        const x1Value = Array.isArray(xValue) ? xValue[0] : isScaleBand(ctx.yScale) ? 0 : xValue;
+        const x2Value = Array.isArray(xValue) ? xValue[1] : xValue;
+        const y1Value = Array.isArray(yValue) ? yValue[0] : isScaleBand(ctx.xScale) ? 0 : yValue;
+        const y2Value = Array.isArray(yValue) ? yValue[1] : yValue;
+
         result.push({
-          x1: ctx.xScale(Array.isArray(xValue) ? xValue[0] : xValue) + xBandOffset + xOffset,
-          y1: ctx.yScale(Array.isArray(yValue) ? yValue[0] : yValue) + yBandOffset + yOffset,
-          x2: ctx.xScale(Array.isArray(xValue) ? xValue[1] : xValue) + xBandOffset + xOffset,
-          y2: ctx.yScale(Array.isArray(yValue) ? yValue[1] : yValue) + yBandOffset + yOffset,
-          axis: Array.isArray(xValue) ? 'x' : 'y', // TODO: what about single prop like lollipop?
+          x1: ctx.xScale(x1Value) + xBandOffset + xOffset,
+          y1: ctx.yScale(y1Value) + yBandOffset + yOffset,
+          x2: ctx.xScale(x2Value) + xBandOffset + xOffset,
+          y2: ctx.yScale(y2Value) + yBandOffset + yOffset,
+          axis: Array.isArray(yValue) || isScaleBand(ctx.xScale) ? 'x' : 'y', // TODO: what about single prop like lollipop?
           stroke: (strokeProp ?? ctx.config.c) ? ctx.cGet(d) : null, // use color scale, if available
         });
       }
@@ -179,6 +185,8 @@
       );
     });
   });
+
+  // $inspect({ lines });
 </script>
 
 <Group class={layerClass('rule-g')}>
