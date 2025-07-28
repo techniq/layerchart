@@ -35,7 +35,7 @@
         <Axis placement="left" grid rule tickSpacing={20} />
         <Axis placement="bottom" rule tickMultiline />
         <Rule y={['high', 'low']} />
-        <Rule y={['open', 'close']} strokeWidth={2} />
+        <Rule y={['open', 'close']} strokeWidth={3} />
         <Highlight lines />
       </Layer>
 
@@ -80,7 +80,7 @@
           <Axis placement="left" grid rule tickSpacing={20} />
           <Axis placement="bottom" rule tickMultiline />
           <Rule y={['high', 'low']} />
-          <Rule y={['open', 'close']} strokeWidth={2} />
+          <Rule y={['open', 'close']} strokeWidth={3} />
           <Highlight lines />
         </Layer>
 
@@ -140,7 +140,7 @@
         <Axis placement="left" grid rule tickSpacing={20} />
         <Axis placement="bottom" rule tickMultiline />
         <Rule y={['high', 'low']} class="stroke-surface-content" />
-        <Rule y={['open', 'close']} strokeWidth={2} />
+        <Rule y={['open', 'close']} strokeWidth={3} />
         <Highlight lines />
       </Layer>
 
