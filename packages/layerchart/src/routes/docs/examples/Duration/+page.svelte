@@ -261,7 +261,7 @@
       {renderContext}
     >
       {#snippet marks()}
-        <Rule y="name" />
+        <Rule />
         <Points />
       {/snippet}
 
@@ -321,7 +321,7 @@
       {renderContext}
     >
       {#snippet marks()}
-        <Rule y="name" />
+        <Rule />
         <Points />
       {/snippet}
 

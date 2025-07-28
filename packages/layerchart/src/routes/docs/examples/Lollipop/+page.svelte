@@ -30,7 +30,7 @@
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule format="percentRound" />
         <Axis placement="bottom" rule />
-        <Rule x="letter" />
+        <Rule />
         <Points />
         <Highlight area />
       </Layer>

@@ -776,7 +776,7 @@
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" />
-        <Rule y="name" />
+        <Rule />
         <Points class="fill-primary" />
         <Highlight
           points={charts.duration.highlight.includes('points')}
@@ -837,7 +837,7 @@
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" />
-        <Rule y="name" />
+        <Rule />
         <Points class="fill-primary" />
         <Highlight
           points={charts.multiDuration.highlight.includes('points')}
