@@ -62,7 +62,7 @@
   import { getChartContext } from './Chart.svelte';
   import { accessor, chartDataArray, type Accessor } from '../utils/common.js';
   import { layerClass } from '$lib/utils/attributes.js';
-  import { isScaleBand } from '$lib/utils/scales.svelte.js';
+  import { isScaleBand, isScaleNumeric } from '$lib/utils/scales.svelte.js';
 
   let {
     data: dataProp,
@@ -158,10 +158,9 @@
         const xValue = xAccessor(d);
         const yValue = yAccessor(d);
 
-        // TODO: Is this the best logic for handling banded scales (lollipop)?
-        const x1Value = Array.isArray(xValue) ? xValue[0] : isScaleBand(ctx.yScale) ? 0 : xValue;
+        const x1Value = Array.isArray(xValue) ? xValue[0] : isScaleNumeric(ctx.xScale) ? 0 : xValue;
         const x2Value = Array.isArray(xValue) ? xValue[1] : xValue;
-        const y1Value = Array.isArray(yValue) ? yValue[0] : isScaleBand(ctx.xScale) ? 0 : yValue;
+        const y1Value = Array.isArray(yValue) ? yValue[0] : isScaleNumeric(ctx.yScale) ? 0 : yValue;
         const y2Value = Array.isArray(yValue) ? yValue[1] : yValue;
 
         result.push({
