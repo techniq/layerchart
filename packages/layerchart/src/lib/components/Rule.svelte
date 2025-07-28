@@ -151,15 +151,18 @@
       const xAccessor = x !== false ? accessor(x as Accessor) : ctx.x;
       const yAccessor = y !== false ? accessor(y as Accessor) : ctx.y;
 
+      const xBandOffset = isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0;
+      const yBandOffset = isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0;
+
       for (const d of data) {
         const xValue = xAccessor(d);
         const yValue = yAccessor(d);
 
         result.push({
-          x1: ctx.xScale(Array.isArray(xValue) ? xValue[0] : xValue) + xOffset,
-          y1: ctx.yScale(Array.isArray(yValue) ? yValue[0] : yValue) + yOffset,
-          x2: ctx.xScale(Array.isArray(xValue) ? xValue[1] : xValue) + xOffset,
-          y2: ctx.yScale(Array.isArray(yValue) ? yValue[1] : yValue) + yOffset,
+          x1: ctx.xScale(Array.isArray(xValue) ? xValue[0] : xValue) + xBandOffset + xOffset,
+          y1: ctx.yScale(Array.isArray(yValue) ? yValue[0] : yValue) + yBandOffset + yOffset,
+          x2: ctx.xScale(Array.isArray(xValue) ? xValue[1] : xValue) + xBandOffset + xOffset,
+          y2: ctx.yScale(Array.isArray(yValue) ? yValue[1] : yValue) + yBandOffset + yOffset,
           axis: Array.isArray(xValue) ? 'x' : 'y', // TODO: what about single prop like lollipop?
           stroke: (strokeProp ?? ctx.config.c) ? ctx.cGet(d) : null, // use color scale, if available
         });
