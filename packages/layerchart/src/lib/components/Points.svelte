@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
-  import type { ComponentProps, Snippet } from 'svelte';
+  import type { Snippet } from 'svelte';
 
   export type Point = { x: number; y: number; r: number; xValue: any; yValue: any; data: any };
   type Offset = number | ((value: number, context: any) => number) | undefined;
@@ -37,13 +37,6 @@
      */
     offsetY?: Offset;
 
-    /**
-     * Enable showing links between related points (array x/y accessors)
-     *
-     * @default false
-     */
-    links?: boolean | Partial<ComponentProps<typeof Link>>;
-
     children?: Snippet<[{ points: Point[] }]>;
   } & CommonStyleProps;
 
@@ -71,7 +64,6 @@
     r = 5,
     offsetX,
     offsetY,
-    links = false,
     fill,
     fillOpacity,
     stroke,
@@ -136,67 +128,11 @@
       return [];
     }) as Point[]
   );
-
-  const _links = $derived(
-    pointsData.flatMap((d: any) => {
-      const xValue = xAccessor(d);
-      const yValue = yAccessor(d);
-
-      if (Array.isArray(xValue)) {
-        /*
-				x={["prop1" ,"prop2"]}
-				y="prop3"
-			*/
-        const [xMin, xMax] = extent(ctx.xGet(d)) as unknown as [number, number];
-        const y = ctx.yGet(d) + getOffset(ctx.yGet(d), offsetY, ctx.yScale);
-        return {
-          source: {
-            x: xMin + getOffset(xMin, offsetX, ctx.xScale) + (ctx.config.r ? ctx.rGet(d) : r),
-            y,
-          },
-          target: {
-            x: xMax + getOffset(xMax, offsetX, ctx.xScale) - (ctx.config.r ? ctx.rGet(d) : r),
-            y: y,
-          },
-          data: d,
-        };
-      } else if (Array.isArray(yValue)) {
-        /*
-				x="prop1"
-				y={["prop2" ,"prop3"]}
-			*/
-        const x = ctx.xGet(d) + getOffset(ctx.xGet(d), offsetX, ctx.xScale);
-        const [yMin, yMax] = extent(ctx.yGet(d)) as unknown as [number, number];
-        return {
-          source: {
-            x: x,
-            y: yMin + getOffset(yMin, offsetY, ctx.yScale),
-          },
-          target: {
-            x: x,
-            y: yMax + getOffset(yMax, offsetY, ctx.yScale),
-          },
-          data: d,
-        };
-      }
-    })
-  );
 </script>
 
 {#if children}
   {@render children({ points })}
 {:else}
-  <!-- TODO: Remove and replace usage with <Rule> -->
-  {#if links}
-    {#each _links as link}
-      <Link
-        data={link}
-        stroke={fill ?? (ctx.config.c ? ctx.cGet(link.data) : null)}
-        {...extractLayerProps(links, 'points-link')}
-      />
-    {/each}
-  {/if}
-
   {#each points as point}
     <Circle
       cx={point.x}
