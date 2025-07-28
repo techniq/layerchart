@@ -9,7 +9,7 @@ export async function load() {
       source,
       pageSource,
       supportedContexts: ['svg', 'canvas'],
-      related: ['components/Axis', 'components/Line'],
+      related: ['components/Axis', 'components/Line', 'examples/Candlestick', 'examples/Duration'],
     },
   };
 }

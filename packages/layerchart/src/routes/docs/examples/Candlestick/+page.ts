@@ -11,13 +11,7 @@ export async function load({ fetch }) {
     meta: {
       pageSource,
       supportedContexts: ['svg', 'canvas'],
-      related: [
-        'components/Bars',
-        'components/Points',
-        'examples/Bars',
-        'examples/Histogram',
-        'examples/Sparkbar',
-      ],
+      related: ['components/Rule', 'components/Bars'],
     },
   };
 }
