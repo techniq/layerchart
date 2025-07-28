@@ -67,6 +67,7 @@
         )}
         x="date"
         xScale={scaleUtc()}
+        {xDomain}
         y={['high', 'low']}
         yNice
         c={(d) => (d.close < d.open ? 'desc' : 'asc')}
