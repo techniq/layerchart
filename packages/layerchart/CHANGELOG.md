@@ -1,5 +1,17 @@
 # LayerChart
 
+## 2.0.0-next.34
+
+### Minor Changes
+
+- feat(Rule): Support using as data-driven mark (ex. candlestick, lollipop) by default (`<Rule>` using Chart accessors) or passing explicit `x`/`y` accessors (ex. `<Rule y={["high", "low"]} />`). Resolves #64 ([#622](https://github.com/techniq/layerchart/pull/622))
+
+- breaking(Points): Remove `<Points links>` prop. Use `<Rule>` with x/y accessor instead ([#622](https://github.com/techniq/layerchart/pull/622))
+
+### Patch Changes
+
+- breaking(Axis): Rename `x="left|right"` and `y="top|bottom"` props with `# LayerChart prefix (ex. `<Axis x="$left">`) ([#622](https://github.com/techniq/layerchart/pull/622))
+
 ## 2.0.0-next.33
 
 ### Patch Changes
