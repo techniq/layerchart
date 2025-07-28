@@ -12,6 +12,7 @@
     Layer,
     Highlight,
     Points,
+    Rule,
     Tooltip,
     type ChartContextValue,
   } from 'layerchart';
@@ -723,7 +724,7 @@
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" />
-        <Points class="fill-primary-100 stroke-primary" />
+        <Points class="fill-primary" />
         <Highlight
           points={charts.dateTime.highlight.includes('points')}
           lines={charts.dateTime.highlight.includes('lines')}
@@ -775,7 +776,8 @@
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" />
-        <Points class="fill-primary-100 stroke-primary" links />
+        <Rule />
+        <Points class="fill-primary" />
         <Highlight
           points={charts.duration.highlight.includes('points')}
           lines={charts.duration.highlight.includes('lines')}
@@ -835,7 +837,8 @@
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" />
-        <Points class="fill-primary-100 stroke-primary" links />
+        <Rule />
+        <Points class="fill-primary" />
         <Highlight
           points={charts.multiDuration.highlight.includes('points')}
           lines={charts.multiDuration.highlight.includes('lines')}

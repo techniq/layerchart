@@ -53,6 +53,11 @@ export function isScaleTime(scale: AnyScale<any, any>): scale is ScaleTime<any, 
   return domain[0] instanceof Date || domain[1] instanceof Date;
 }
 
+export function isScaleNumeric(scale: AnyScale<any, any>): scale is ScaleTime<any, any> {
+  const domain = scale.domain();
+  return typeof domain[0] === 'number' || typeof domain[1] === 'number';
+}
+
 export function getRange(scale: any) {
   if (isAnyScale(scale)) {
     return scale.range();

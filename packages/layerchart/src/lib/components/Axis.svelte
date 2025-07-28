@@ -439,8 +439,8 @@
   {#if rule !== false}
     {@const ruleProps = extractLayerProps(rule, 'axis-rule')}
     <Rule
-      x={placement === 'left' || placement === 'right' ? placement : placement === 'angle'}
-      y={placement === 'top' || placement === 'bottom' ? placement : placement === 'radius'}
+      x={placement === 'left' ? '$left' : placement === 'right' ? '$right' : placement === 'angle'}
+      y={placement === 'top' ? '$top' : placement === 'bottom' ? '$bottom' : placement === 'radius'}
       {motion}
       {...ruleProps}
       class={cls('stroke-surface-content/50', classes.rule, ruleProps?.class)}

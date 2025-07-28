@@ -643,7 +643,7 @@
       yNice={false}
       yPadding={[0, 20]}
       radial
-      rule={{ y: 'top', class: 'stroke-surface-content/20' }}
+      rule={{ y: '$top', class: 'stroke-surface-content/20' }}
       props={{
         spline: { class: 'stroke' },
         xAxis: { format: 'month', tickMarks: false },
