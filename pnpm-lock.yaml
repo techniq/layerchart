@@ -253,8 +253,8 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0(svelte@5.34.1)
       svelte-ux:
-        specifier: 2.0.0-next.16
-        version: 2.0.0-next.16(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.5)(yaml@2.8.0))(postcss@8.5.5)(svelte@5.34.1)
+        specifier: 2.0.0-next.17
+        version: 2.0.0-next.17(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.5)(yaml@2.8.0))(postcss@8.5.5)(svelte@5.34.1)
       svelte2tsx:
         specifier: ^0.7.39
         version: 0.7.39(svelte@5.34.1)(typescript@5.8.3)
@@ -2492,8 +2492,8 @@ packages:
       typescript:
         optional: true
 
-  svelte-ux@2.0.0-next.16:
-    resolution: {integrity: sha512-3ilgsf0Evx05to5WplngFgHW6VCYfqZ5YFmZLSDBsQrXN4zVBRNTQhZn080RCAbqVSlihxRZrlWpSVIzHnpSCg==}
+  svelte-ux@2.0.0-next.17:
+    resolution: {integrity: sha512-jKE/4baK3Q0SsdlHIH7o2kZDIPtktIdddlzFiqumME7hSafzGHW61HU/x2FhfaQoMBC5yyvtA6DcEh5UOylwhw==}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0 || ^5.0.0
 
@@ -4951,7 +4951,7 @@ snapshots:
       postcss-load-config: 6.0.1(jiti@2.4.2)(postcss@8.5.5)(yaml@2.8.0)
       typescript: 5.8.3
 
-  svelte-ux@2.0.0-next.16(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.5)(yaml@2.8.0))(postcss@8.5.5)(svelte@5.34.1):
+  svelte-ux@2.0.0-next.17(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.5)(yaml@2.8.0))(postcss@8.5.5)(svelte@5.34.1):
     dependencies:
       '@floating-ui/dom': 1.7.3
       '@layerstack/svelte-actions': 1.0.1-next.14
