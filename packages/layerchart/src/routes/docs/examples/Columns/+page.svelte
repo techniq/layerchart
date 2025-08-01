@@ -920,7 +920,6 @@
       cDomain={colorKeys}
       cRange={keyColors}
       x1="fruit"
-      x1Scale={scaleBand()}
       x1Domain={colorKeys}
       x1Range={({ xScale }) => [0, xScale.bandwidth()]}
       padding={{ left: 16, bottom: 24 }}

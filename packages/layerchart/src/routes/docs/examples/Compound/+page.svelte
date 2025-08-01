@@ -122,7 +122,6 @@
       yDomain={[0, null]}
       yNice
       y1="efficiency"
-      y1Scale={scaleLinear()}
       y1Range={({ yScale }) => yScale.domain()}
       padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
       tooltip={{ mode: 'quadtree-x' }}

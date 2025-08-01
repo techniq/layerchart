@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import { scaleLinear, scaleOrdinal, scaleSqrt } from 'd3-scale';
+  import { scaleOrdinal, scaleSqrt } from 'd3-scale';
   import { type Accessor, accessor, chartDataArray } from '$lib/utils/common.js';
   import { printDebug } from '$lib/utils/debug.js';
   import { filterObject } from '$lib/utils/filterObject.js';
@@ -422,21 +422,21 @@
     /**
      * The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if
      * you want to override the default or you want to extra options.
-     * @default scaleLinear
+     * @default autoScale
      */
     xScale?: XScale;
 
     /**
      * The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if
      * you want to override the default or you want to extra options.
-     * @default scaleLinear
+     * @default autoScale
      */
     yScale?: YScale;
 
     /**
      * The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if
      * you want to override the default or you want to extra options.
-     * @default scaleLinear
+     * @default autoScale
      */
     zScale?: AnyScale;
 
@@ -450,14 +450,14 @@
     /**
      * The D3 scale that should be used for the x1-dimension. Pass in an instantiated D3 scale if
      * you want to override the default or you want to extra options.
-     * @default scaleLinear
+     * @default autoScale
      */
     x1Scale?: AnyScale;
 
     /**
      * The D3 scale that should be used for the y1-dimension. Pass in an instantiated D3 scale if
      * you want to override the default or you want to extra options.
-     * @default scaleLinear
+     * @default autoScale
      */
     y1Scale?: AnyScale;
 
@@ -1011,24 +1011,36 @@
   const rGet = $derived(createGetter(r, rScale));
 
   const x1Scale = $derived(
-    x1ScaleProp && x1RangeProp
-      ? createScale(x1ScaleProp, x1Domain, x1RangeProp, {
-          xScale: xScale,
-          width,
-          height,
-        })
+    x1RangeProp
+      ? createScale(
+          // @ts-expect-error shh
+          x1ScaleProp ?? autoScale(x1DomainProp, flatDataProp ?? data, x1Prop),
+          x1Domain,
+          x1RangeProp,
+          {
+            xScale,
+            width,
+            height,
+          }
+        )
       : null
   );
 
   const x1Get = $derived(createGetter(x1, x1Scale));
 
   const y1Scale = $derived(
-    y1ScaleProp && y1RangeProp
-      ? createScale(y1ScaleProp, y1Domain, y1RangeProp, {
-          yScale: yScale,
-          width,
-          height,
-        })
+    y1RangeProp
+      ? createScale(
+          // @ts-expect-error shh
+          y1ScaleProp ?? autoScale(y1DomainProp, flatDataProp ?? data, y1Prop),
+          y1Domain,
+          y1RangeProp,
+          {
+            yScale,
+            width,
+            height,
+          }
+        )
       : null
   );
 

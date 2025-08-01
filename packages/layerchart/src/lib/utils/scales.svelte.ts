@@ -163,6 +163,44 @@ export function createScale(
 }
 
 /**
+ * Auto-detect scale type based on domain values or data values
+ */
+export function autoScale(
+  domain?: DomainType,
+  data?: any[],
+  propAccessor?: Accessor<any>
+): AnyScale {
+  let values = null;
+  if (domain && domain.length > 0) {
+    // Determine based on domain values
+    values = domain;
+  } else if (data && data.length > 0 && propAccessor) {
+    // Determine based on data values
+    const value = accessor(propAccessor)(data[0]);
+
+    // If accessor defined with an array (ex. `x={['start', 'end']}`) use both values
+    if (Array.isArray(value)) {
+      values = value;
+    } else {
+      values = [value];
+    }
+  }
+
+  if (values) {
+    if (values.some((v) => v instanceof Date)) {
+      return scaleTime();
+    } else if (values.some((v) => typeof v === 'number')) {
+      return scaleLinear();
+    } else if (values.some((v) => typeof v === 'string')) {
+      return scaleBand();
+    }
+  }
+
+  // fallback to linear scale
+  return scaleLinear();
+}
+
+/**
  * Create a `scaleBand()` within another scaleBand()'s bandwidth
  * (typically a x1 of an x0 scale, used for grouping)
  */
@@ -293,42 +331,4 @@ export function makeAccessor<TData>(acc: Accessor<TData>): (d: TData) => any {
     return (d: TData) => d[acc];
   }
   return acc;
-}
-
-/**
- * Auto-detect scale type based on domain values or data values
- */
-export function autoScale(
-  domain?: DomainType,
-  data?: any[],
-  propAccessor?: Accessor<any>
-): AnyScale {
-  let values = null;
-  if (domain && domain.length > 0) {
-    // Determine based on domain values
-    values = domain;
-  } else if (data && data.length > 0 && propAccessor) {
-    // Determine based on data values
-    const value = accessor(propAccessor)(data[0]);
-
-    // If accessor defined with an array (ex. `x={['start', 'end']}`) use both values
-    if (Array.isArray(value)) {
-      values = value;
-    } else {
-      values = [value];
-    }
-  }
-
-  if (values) {
-    if (values.some((v) => v instanceof Date)) {
-      return scaleTime();
-    } else if (values.some((v) => typeof v === 'number')) {
-      return scaleLinear();
-    } else if (values.some((v) => typeof v === 'string')) {
-      return scaleBand();
-    }
-  }
-
-  // fallback to linear scale
-  return scaleLinear();
 }
