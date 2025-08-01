@@ -823,7 +823,7 @@
       x="value"
       xNice
       y="year"
-      yScale={scaleBand().paddingInner(0.3).paddingOuter(0.1)}
+      yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
       c="fruit"
       cDomain={colorKeys}
       cRange={keyColors}
@@ -881,7 +881,7 @@
       x="values"
       xNice
       y="year"
-      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       c="fruit"
       cDomain={colorKeys}
       cRange={keyColors}
@@ -936,7 +936,7 @@
       x="values"
       xNice
       y="year"
-      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       c="fruit"
       cDomain={colorKeys}
       cRange={keyColors}
@@ -991,7 +991,7 @@
       x="values"
       xNice
       y="year"
-      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       c="fruit"
       cDomain={colorKeys}
       cRange={keyColors}

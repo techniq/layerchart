@@ -913,7 +913,7 @@
     <Chart
       data={groupedData}
       x="year"
-      xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      xScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       y="value"
       yNice
       c="fruit"
@@ -970,7 +970,7 @@
     <Chart
       data={stackedData}
       x="year"
-      xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      xScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       y="values"
       yNice
       c="fruit"
@@ -1024,7 +1024,7 @@
     <Chart
       data={stackedPercentData}
       x="year"
-      xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      xScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       y="values"
       yNice
       c="fruit"
@@ -1078,7 +1078,7 @@
     <Chart
       data={groupedStackedData}
       x="year"
-      xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      xScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       y="values"
       yNice
       c="fruit"
@@ -1146,7 +1146,7 @@
     <Chart
       data={transitionData}
       x="year"
-      xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      xScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       y="values"
       yNice
       c="fruit"
@@ -1248,7 +1248,7 @@
     <Chart
       data={transitionData}
       x="year"
-      xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      xScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       y="values"
       yNice
       c="fruit"
