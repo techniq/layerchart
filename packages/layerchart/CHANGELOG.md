@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.35
+
+### Patch Changes
+
+- feat(Chart): Automatically determine scale based on data and domain values (instead of defaulting to scaleLinear) ([#624](https://github.com/techniq/layerchart/pull/624))
+
 ## 2.0.0-next.34
 
 ### Minor Changes
