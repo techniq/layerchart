@@ -673,7 +673,6 @@
       xDomain={[0, null]}
       xNice={4}
       y="date"
-      yScale={scaleTime()}
       yInterval={timeDay}
       padding={{ left: 20, bottom: 20 }}
     >
@@ -696,7 +695,6 @@
       xDomain={[0, null]}
       xNice={4}
       y="date"
-      yScale={scaleTime()}
       yInterval={timeDay}
       padding={{ left: 20, bottom: 20 }}
     >
@@ -719,7 +717,6 @@
       xDomain={[0, null]}
       xNice={4}
       y="date"
-      yScale={scaleTime()}
       yInterval={timeDay}
       padding={{ left: 20, bottom: 20 }}
     >
@@ -826,13 +823,11 @@
       x="value"
       xNice
       y="year"
-      yScale={scaleBand().paddingInner(0.3).paddingOuter(0.1)}
+      yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       y1="fruit"
-      y1Scale={scaleBand()}
       y1Domain={colorKeys}
       y1Range={({ yScale }) => [0, yScale.bandwidth?.()]}
       padding={{ left: 16, bottom: 24 }}
@@ -886,9 +881,8 @@
       x="values"
       xNice
       y="year"
-      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
@@ -942,9 +936,8 @@
       x="values"
       xNice
       y="year"
-      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
@@ -998,9 +991,8 @@
       x="values"
       xNice
       y="year"
-      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       y1="basket"
@@ -1071,7 +1063,6 @@
       y="year"
       yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       y1={transitionChart.groupBy}
@@ -1175,7 +1166,6 @@
       y="year"
       yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       y1={transitionChart.groupBy}

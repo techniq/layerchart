@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { scaleBand } from 'd3-scale';
-
   import { Axis, Chart, Highlight, Layer, Points, Rule, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
@@ -21,7 +19,6 @@
     <Chart
       data={chartData}
       x="letter"
-      xScale={scaleBand()}
       y="frequency"
       yNice
       padding={{ left: 20, bottom: 32 }}

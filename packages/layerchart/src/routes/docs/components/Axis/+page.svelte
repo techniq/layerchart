@@ -127,7 +127,6 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      xScale={scaleTime()}
       xDomain={[timeDay.offset(today, -10), today]}
       yDomain={[0, 100]}
       yNice
@@ -146,7 +145,6 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      xScale={scaleTime()}
       xDomain={[timeDay.offset(today, -10), today]}
       yDomain={[0, 100]}
       yNice
@@ -165,7 +163,6 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      xScale={scaleTime()}
       xDomain={[timeDay.offset(today, -10), today]}
       yDomain={[0, 100]}
       yNice
@@ -184,7 +181,6 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      xScale={scaleTime()}
       xDomain={[timeDay.offset(today, -10), today]}
       yDomain={[0, 100]}
       yNice
@@ -203,7 +199,6 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      xScale={scaleTime()}
       xDomain={[timeDay.offset(today, -10), today]}
       yDomain={[0, 100]}
       yNice
@@ -222,7 +217,6 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      xScale={scaleTime()}
       xDomain={[timeDay.offset(today, -10), today]}
       yDomain={[0, 100]}
       yNice
@@ -241,7 +235,6 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      xScale={scaleTime()}
       xDomain={[timeDay.offset(today, -10), today]}
       yDomain={[0, 100]}
       yNice
@@ -262,7 +255,6 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      xScale={scaleTime()}
       xDomain={[timeDay.offset(today, -10), today]}
       yDomain={[0, 100]}
       yNice
@@ -284,7 +276,6 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      xScale={scaleTime()}
       xDomain={[timeDay.offset(today, -10), today]}
       yDomain={[0, 100]}
       yNice
@@ -304,7 +295,6 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      xScale={scaleTime()}
       xDomain={[timeDay.offset(today, -10), today]}
       yDomain={[0, 100]}
       yNice
@@ -322,11 +312,7 @@
 
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
-    <Chart
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(today, -10), today]}
-      padding={{ bottom: 24 }}
-    >
+    <Chart xDomain={[timeDay.offset(today, -10), today]} padding={{ bottom: 24 }}>
       <Layer type={shared.renderContext}>
         <Axis
           placement="bottom"
@@ -346,11 +332,7 @@
 
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
-    <Chart
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(today, -10), today]}
-      padding={{ bottom: 24 }}
-    >
+    <Chart xDomain={[timeDay.offset(today, -10), today]} padding={{ bottom: 24 }}>
       <Layer type={shared.renderContext}>
         <Axis
           placement="bottom"
@@ -369,11 +351,7 @@
 
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
-    <Chart
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(today, -10), today]}
-      padding={{ bottom: 24 }}
-    >
+    <Chart xDomain={[timeDay.offset(today, -10), today]} padding={{ bottom: 24 }}>
       <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule tickMarks={false} />
       </Layer>
@@ -386,7 +364,6 @@
 <Preview>
   <div class="h-[200px] p-4 border rounded-sm">
     <Chart
-      xScale={scaleTime()}
       xDomain={[timeDay.offset(today, -10), today]}
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -484,11 +461,7 @@
 
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
-    <Chart
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(today, -10), today]}
-      padding={{ bottom: 24 }}
-    >
+    <Chart xDomain={[timeDay.offset(today, -10), today]} padding={{ bottom: 24 }}>
       <Layer type={shared.renderContext}>
         <Axis
           placement="bottom"
@@ -547,7 +520,6 @@
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
     <Chart
-      xScale={scaleTime()}
       xDomain={[timeDay.offset(today, -10), today]}
       padding={{ top: 40, bottom: 40, left: 20, right: 20 }}
     >
@@ -596,11 +568,7 @@
 
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
-    <Chart
-      xScale={scaleTime()}
-      xDomain={[timeYear.offset(today, -2), today]}
-      padding={{ bottom: 30 }}
-    >
+    <Chart xDomain={[timeYear.offset(today, -2), today]} padding={{ bottom: 30 }}>
       <Layer type={shared.renderContext}>
         {#if debug}
           <Frame class="fill-danger/5" />
@@ -628,11 +596,7 @@
 
 <Preview>
   <div class="h-[80px] p-4 border rounded-sm">
-    <Chart
-      xScale={scaleTime()}
-      xDomain={[timeYear.offset(today, -2), today]}
-      padding={{ bottom: 30 }}
-    >
+    <Chart xDomain={[timeYear.offset(today, -2), today]} padding={{ bottom: 30 }}>
       <Layer type={shared.renderContext}>
         {#if debug}
           <Frame class="fill-danger/5" />
@@ -689,12 +653,7 @@
 
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(today, -10), today]}
-      yDomain={[0, 100]}
-      radial
-    >
+    <Chart xDomain={[timeDay.offset(today, -10), today]} yDomain={[0, 100]} radial>
       <Layer type={shared.renderContext} center>
         <Axis placement="radius" rule />
         <Axis placement="angle" rule />
@@ -707,12 +666,7 @@
 
 <Preview>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      xScale={scaleTime()}
-      xDomain={[timeDay.offset(today, -10), today]}
-      yDomain={[0, 100]}
-      radial
-    >
+    <Chart xDomain={[timeDay.offset(today, -10), today]} yDomain={[0, 100]} radial>
       <Layer type={shared.renderContext} center>
         <Axis placement="radius" grid />
         <Axis placement="angle" grid />
@@ -751,11 +705,7 @@
       <div class="resize-x overflow-auto">
         <div class="text-sm mb-1">{example.label}</div>
         <div class="h-[100px] p-4 border rounded-sm">
-          <Chart
-            xScale={scaleTime()}
-            xDomain={example.domain}
-            padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          >
+          <Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>
             <Layer type={shared.renderContext}>
               <Axis placement="bottom" rule grid {tickSpacing} />
             </Layer>
@@ -784,11 +734,7 @@
       <div class="resize-x overflow-auto">
         <div class="text-sm mb-1">{example.label}</div>
         <div class="h-[100px] p-4 border rounded-sm">
-          <Chart
-            xScale={scaleTime()}
-            xDomain={example.domain}
-            padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          >
+          <Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>
             <Layer type={shared.renderContext}>
               <Axis placement="top" rule grid tickMultiline {tickSpacing} />
               <Axis placement="bottom" rule grid tickMultiline {tickSpacing} />
@@ -818,11 +764,7 @@
       <div class="resize-x overflow-auto">
         <div class="text-sm mb-1">{example.label}</div>
         <div class="h-[100px] p-4 border rounded-sm">
-          <Chart
-            xScale={scaleTime()}
-            xDomain={example.domain}
-            padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          >
+          <Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>
             <Layer type={shared.renderContext}>
               <Axis placement="bottom" rule grid {tickSpacing} format={example.format} />
             </Layer>
@@ -841,11 +783,7 @@
       <div class="resize-x overflow-auto">
         <div class="text-sm mb-1">{example.label}</div>
         <div class="h-[100px] p-4 border rounded-sm">
-          <Chart
-            xScale={scaleTime()}
-            xDomain={example.domain}
-            padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          >
+          <Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>
             <Layer type={shared.renderContext}>
               <Axis
                 placement="bottom"
@@ -870,11 +808,7 @@
       <div class="resize-x overflow-auto">
         <div class="text-sm mb-1">{example.label}</div>
         <div class="h-[100px] p-4 border rounded-sm">
-          <Chart
-            xScale={scaleTime()}
-            xDomain={example.domain}
-            padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          >
+          <Chart xDomain={example.domain} padding={{ top: 20, bottom: 20, left: 20, right: 20 }}>
             <Layer type={shared.renderContext}>
               <Axis
                 placement="bottom"
@@ -908,7 +842,6 @@
   <div class="p-4 border rounded-sm resize-x overflow-auto">
     <div class="h-[200px]">
       <Chart
-        xScale={scaleTime()}
         {xDomain}
         yDomain={[0, 100]}
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -928,7 +861,6 @@
 
     <div class="h-[80px]">
       <Chart
-        xScale={scaleTime()}
         xDomain={initialXDomain}
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
         brush={{
@@ -963,7 +895,6 @@
   <div class="p-4 border rounded-sm resize-x overflow-auto">
     <div class="h-[200px]">
       <Chart
-        xScale={scaleTime()}
         {xDomain}
         yDomain={[0, 100]}
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -983,7 +914,6 @@
 
     <div class="h-[80px]">
       <Chart
-        xScale={scaleTime()}
         xDomain={initialXDomain}
         padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
         brush={{

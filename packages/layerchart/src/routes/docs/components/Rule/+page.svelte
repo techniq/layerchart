@@ -4,7 +4,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, createTimeSeries } from '$lib/utils/genData.js';
   import { shared } from '../../shared.svelte.js';
-  import { scaleBand, scaleTime } from 'd3-scale';
   import { sort } from 'd3-array';
 
   let { data } = $props();
@@ -131,7 +130,6 @@
     <Chart
       data={dateData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yNice
       padding={{ top: 20, bottom: 20, left: 40, right: 20 }}
@@ -152,7 +150,6 @@
     <Chart
       data={alphabetData}
       x="letter"
-      xScale={scaleBand()}
       y="frequency"
       yNice
       padding={{ top: 20, bottom: 20, left: 40, right: 20 }}
@@ -173,9 +170,7 @@
     <Chart
       data={timeData}
       x={['startDate', 'endDate']}
-      xScale={scaleTime()}
       y="name"
-      yScale={scaleBand()}
       padding={{ top: 20, bottom: 20, left: 40, right: 20 }}
     >
       <Layer type={shared.renderContext}>
@@ -194,7 +189,6 @@
     <Chart
       data={dateData}
       x="date"
-      xScale={scaleTime()}
       y={['low', 'high']}
       yNice
       padding={{ top: 20, bottom: 20, left: 40, right: 20 }}
