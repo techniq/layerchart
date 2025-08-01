@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { scaleOrdinal, scaleSequential, scaleTime } from 'd3-scale';
+  import { scaleOrdinal, scaleSequential } from 'd3-scale';
   import { extent, flatGroup, ticks } from 'd3-array';
   import { interpolateTurbo } from 'd3-scale-chromatic';
   import { cls } from '@layerstack/tailwind';
@@ -65,7 +65,6 @@
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -87,7 +86,6 @@
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -120,7 +118,6 @@
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -140,14 +137,7 @@
 
 <Preview data={temperatureData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      data={temperatureData}
-      x="date"
-      xScale={scaleTime()}
-      y="value"
-      yNice
-      padding={{ left: 16, bottom: 24 }}
-    >
+    <Chart data={temperatureData} x="date" y="value" yNice padding={{ left: 16, bottom: 24 }}>
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
@@ -172,14 +162,7 @@
 
 <Preview data={temperatureData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      data={temperatureData}
-      x="date"
-      xScale={scaleTime()}
-      y="value"
-      yNice
-      padding={{ left: 16, bottom: 24 }}
-    >
+    <Chart data={temperatureData} x="date" y="value" yNice padding={{ left: 16, bottom: 24 }}>
       {#snippet children({ context })}
         {@const thresholdOffset =
           (context.yScale(50) / (context.height + context.padding.bottom)) * 100 + '%'}
@@ -211,7 +194,6 @@
     <Chart
       data={multiSeriesFlatData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -304,7 +286,6 @@
     <Chart
       data={multiSeriesFlatData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -358,7 +339,6 @@
     <Chart
       data={multiSeriesFlatData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice

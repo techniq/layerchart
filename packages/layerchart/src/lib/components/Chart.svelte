@@ -4,6 +4,7 @@
   import { printDebug } from '$lib/utils/debug.js';
   import { filterObject } from '$lib/utils/filterObject.js';
   import {
+    autoScale,
     createScale,
     getRange,
     isScaleBand,
@@ -717,6 +718,7 @@
     z: zProp,
     r: rProp,
     data = [],
+    flatData: flatDataProp,
     xDomain: xDomainProp,
     yDomain: yDomainProp,
     zDomain: zDomainProp,
@@ -730,12 +732,12 @@
     zPadding,
     rPadding,
     // @ts-expect-error shh
-    xScale: xScaleProp = scaleLinear(),
+    xScale: xScaleProp = autoScale(xDomainProp, flatDataProp ?? data, xProp),
     // @ts-expect-error shh
-    yScale: yScaleProp = scaleLinear(),
-    zScale: zScaleProp = scaleLinear(),
+    yScale: yScaleProp = autoScale(yDomainProp, flatDataProp ?? data, yProp),
+    // @ts-expect-error shh
+    zScale: zScaleProp = autoScale(zDomainProp, flatDataProp ?? data, zProp),
     rScale: rScaleProp = scaleSqrt(),
-    flatData: flatDataProp,
     padding: paddingProp = {},
     verbose = true,
     debug = false,

@@ -11,7 +11,7 @@
     Spline,
     Tooltip,
   } from 'layerchart';
-  import { scaleBand, scaleSequential } from 'd3-scale';
+  import { scaleSequential } from 'd3-scale';
   import { curveCatmullRom, curveLinearClosed } from 'd3-shape';
   import { extent, flatGroup, group, ticks } from 'd3-array';
   import { Field, Switch } from 'svelte-ux';
@@ -368,7 +368,6 @@
     <LineChart
       data={pitchData}
       x="name"
-      xScale={scaleBand()}
       y="value"
       yPadding={[0, 8]}
       padding={{ top: 8 }}
@@ -412,7 +411,6 @@
     <LineChart
       data={pitchData}
       x="name"
-      xScale={scaleBand()}
       y="value"
       padding={{ top: 8 }}
       radial
@@ -454,7 +452,6 @@
     <LineChart
       data={budgetData}
       x="name"
-      xScale={scaleBand()}
       yPadding={[0, 8]}
       radial
       series={[

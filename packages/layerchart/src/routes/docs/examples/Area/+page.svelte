@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cubicInOut } from 'svelte/easing';
-  import { scaleOrdinal, scaleTime } from 'd3-scale';
+  import { scaleOrdinal } from 'd3-scale';
   import { flatGroup } from 'd3-array';
   import { stack, type Series } from 'd3-shape';
 
@@ -91,7 +91,6 @@
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -113,7 +112,6 @@
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -145,7 +143,6 @@
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -168,7 +165,6 @@
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -194,7 +190,6 @@
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -220,7 +215,6 @@
     <Chart
       data={dateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -250,7 +244,6 @@
     <Chart
       data={multiSeriesFlatData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -373,7 +366,6 @@
     <Chart
       data={multiSeriesFlatData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -438,7 +430,6 @@
     <Chart
       data={multiSeriesFlatData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -487,7 +478,6 @@
       data={stackData}
       flatData={flatten(stackData)}
       x={(d) => asAny(d).data.date}
-      xScale={scaleTime()}
       y={[0, 1]}
       yNice
       c="key"
@@ -538,7 +528,6 @@
       data={stackData}
       flatData={flatten(stackData)}
       x={(d) => asAny(d).data.date}
-      xScale={scaleTime()}
       y={[0, 1]}
       yNice
       padding={{ left: 16, bottom: 24 }}
@@ -591,7 +580,6 @@
       <Chart
         data={dateSeriesData}
         x="date"
-        xScale={scaleTime()}
         y="value"
         yDomain={[0, null]}
         yNice
@@ -626,7 +614,6 @@
       <Chart
         data={dateSeriesData}
         x="date"
-        xScale={scaleTime()}
         y="value"
         yDomain={[0, null]}
         yNice
@@ -662,7 +649,6 @@
       <Chart
         data={dateSeriesData}
         x="date"
-        xScale={scaleTime()}
         y="value"
         yDomain={[0, null]}
         yNice
@@ -696,7 +682,6 @@
     <Chart
       data={negativeDateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
@@ -731,7 +716,6 @@
     <Chart
       data={negativeDateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
@@ -766,7 +750,6 @@
     <Chart
       data={negativeDateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
@@ -819,7 +802,6 @@
     <Chart
       data={negativeDateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
@@ -883,7 +865,6 @@
     <Chart
       data={negativeDateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
@@ -926,7 +907,6 @@
     <Chart
       data={negativeDateSeriesData}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yNice
       padding={{ left: 16, bottom: 24 }}
@@ -970,7 +950,6 @@
     <Chart
       data={data.appleStock}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { scaleBand, scaleUtc } from 'd3-scale';
+  import { scaleUtc } from 'd3-scale';
   import { flatGroup } from 'd3-array';
   import { curveLinearClosed, curveCatmullRomClosed, curveCatmullRom } from 'd3-shape';
   import { Field, ToggleGroup, ToggleOption } from 'svelte-ux';
@@ -44,7 +44,6 @@
     <Chart
       data={pitchData}
       x="name"
-      xScale={scaleBand()}
       y="value"
       yPadding={[0, 10]}
       padding={{ top: 32, bottom: 8 }}

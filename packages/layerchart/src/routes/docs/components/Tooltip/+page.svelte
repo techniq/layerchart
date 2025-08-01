@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
-  import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
+  import { scaleBand, scaleOrdinal } from 'd3-scale';
   import { stack } from 'd3-shape';
 
   import {
@@ -150,7 +150,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -182,7 +181,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -207,7 +205,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -239,7 +236,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -271,7 +267,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -304,7 +299,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -336,7 +330,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -368,7 +361,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -511,7 +503,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -561,7 +552,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -600,7 +590,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -648,7 +637,6 @@
       data={stackData}
       flatData={flatten(stackData)}
       x={(d) => asAny(d).data.date}
-      xScale={scaleTime()}
       y={[0, 1]}
       yNice
       c="key"
@@ -712,9 +700,7 @@
     <Chart
       data={timeSeries}
       x="startDate"
-      xScale={scaleTime()}
       y="name"
-      yScale={scaleBand()}
       padding={{ left: 36, bottom: 36 }}
       tooltip={{
         mode: charts.dateTime.mode,
@@ -764,9 +750,7 @@
     <Chart
       data={timeSeries}
       x={['startDate', 'endDate']}
-      xScale={scaleTime()}
       y="name"
-      yScale={scaleBand()}
       padding={{ left: 36, bottom: 36 }}
       tooltip={{
         mode: charts.duration.mode,
@@ -825,9 +809,7 @@
     <Chart
       data={overlapTimeSeries}
       x={['startDate', 'endDate']}
-      xScale={scaleTime()}
       y="name"
-      yScale={scaleBand()}
       padding={{ left: 36, bottom: 36 }}
       tooltip={{
         mode: charts.multiDuration.mode,

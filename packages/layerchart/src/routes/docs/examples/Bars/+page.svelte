@@ -673,7 +673,6 @@
       xDomain={[0, null]}
       xNice={4}
       y="date"
-      yScale={scaleTime()}
       yInterval={timeDay}
       padding={{ left: 20, bottom: 20 }}
     >
@@ -696,7 +695,6 @@
       xDomain={[0, null]}
       xNice={4}
       y="date"
-      yScale={scaleTime()}
       yInterval={timeDay}
       padding={{ left: 20, bottom: 20 }}
     >
@@ -719,7 +717,6 @@
       xDomain={[0, null]}
       xNice={4}
       y="date"
-      yScale={scaleTime()}
       yInterval={timeDay}
       padding={{ left: 20, bottom: 20 }}
     >
