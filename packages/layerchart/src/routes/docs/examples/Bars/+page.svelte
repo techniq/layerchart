@@ -825,7 +825,6 @@
       y="year"
       yScale={scaleBand().paddingInner(0.3).paddingOuter(0.1)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       y1="fruit"
@@ -885,7 +884,6 @@
       y="year"
       yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
@@ -941,7 +939,6 @@
       y="year"
       yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
@@ -997,7 +994,6 @@
       y="year"
       yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       y1="basket"
@@ -1068,7 +1064,6 @@
       y="year"
       yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       y1={transitionChart.groupBy}
@@ -1172,7 +1167,6 @@
       y="year"
       yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       y1={transitionChart.groupBy}

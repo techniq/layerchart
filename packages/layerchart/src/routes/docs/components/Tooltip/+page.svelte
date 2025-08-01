@@ -640,7 +640,6 @@
       y={[0, 1]}
       yNice
       c="key"
-      cScale={scaleOrdinal()}
       cDomain={keys}
       cRange={['var(--color-info)', 'var(--color-success)', 'var(--color-warning)']}
       padding={{ left: 16, bottom: 24 }}

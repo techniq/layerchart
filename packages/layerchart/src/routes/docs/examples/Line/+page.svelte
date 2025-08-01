@@ -198,7 +198,6 @@
       yDomain={[0, null]}
       yNice
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
@@ -290,7 +289,6 @@
       yDomain={[0, null]}
       yNice
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
@@ -343,7 +341,6 @@
       yDomain={[0, null]}
       yNice
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24 }}

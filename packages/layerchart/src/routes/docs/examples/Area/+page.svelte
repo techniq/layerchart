@@ -248,7 +248,6 @@
       yDomain={[0, null]}
       yNice
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
@@ -370,7 +369,6 @@
       yDomain={[0, null]}
       yNice
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24, right: 48 }}
@@ -434,7 +432,6 @@
       yDomain={[0, null]}
       yNice
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24 }}
@@ -481,7 +478,6 @@
       y={[0, 1]}
       yNice
       c="key"
-      cScale={scaleOrdinal()}
       cDomain={Object.keys(fruitColors)}
       cRange={Object.values(fruitColors)}
       padding={{ left: 16, bottom: 24 }}
@@ -755,7 +751,6 @@
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
       c={(d) => (d.value < 0 ? 'under' : 'over')}
-      cScale={scaleOrdinal()}
       cDomain={['over', 'under']}
       cRange={['var(--color-success)', 'var(--color-danger)']}
     >

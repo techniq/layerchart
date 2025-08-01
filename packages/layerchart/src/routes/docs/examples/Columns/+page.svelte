@@ -917,7 +917,6 @@
       y="value"
       yNice={4}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       x1="fruit"
@@ -976,7 +975,6 @@
       y="values"
       yNice={4}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
@@ -1031,7 +1029,6 @@
       y="values"
       yNice={4}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
@@ -1086,7 +1083,6 @@
       y="values"
       yNice={4}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       x1="basket"
@@ -1155,7 +1151,6 @@
       y="values"
       yNice={4}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       x1={transitionChart.groupBy}
@@ -1258,7 +1253,6 @@
       y="values"
       yNice={4}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       x1={transitionChart.groupBy}
