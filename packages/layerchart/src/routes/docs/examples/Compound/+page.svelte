@@ -63,7 +63,7 @@
       data={data.appleTicker}
       x="date"
       y="volume"
-      yNice={4}
+      yNice
       axis={false}
       grid={false}
       padding={{ left: 16, bottom: 16 }}
@@ -78,7 +78,7 @@
       data={data.appleTicker}
       x="date"
       y={['open', 'close']}
-      yNice={4}
+      yNice
       yDomain={null}
       padding={{ left: 16, bottom: 16 }}
       props={{

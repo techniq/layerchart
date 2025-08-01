@@ -120,7 +120,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -142,7 +142,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -164,7 +164,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
@@ -196,7 +196,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
@@ -228,7 +228,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'band' }}
     >
@@ -271,7 +271,7 @@
       x="date"
       xScale={scaleBand().padding(0.4)}
       y="value"
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -292,7 +292,7 @@
       x="date"
       xScale={scaleBand().padding(0.4)}
       y="value"
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -314,7 +314,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yBaseline={0}
-      yNice={4}
+      yNice
       yPadding={[16, 16]}
       padding={{ left: 16, bottom: 24 }}
     >
@@ -339,7 +339,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yBaseline={0}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -363,7 +363,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -385,7 +385,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -411,7 +411,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -437,7 +437,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -467,7 +467,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -497,7 +497,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -524,7 +524,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       {#snippet children({ context })}
@@ -562,7 +562,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -584,7 +584,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -606,7 +606,7 @@
       xScale={scaleBand().padding(0.4)}
       y={['value', 'baseline']}
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
@@ -639,7 +639,7 @@
       x="date"
       xScale={scaleBand().padding(0.4)}
       y={['value', (d) => -d.baseline]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
       tooltip={{ mode: 'bisect-x' }}
     >
@@ -675,7 +675,7 @@
       xInterval={timeDay}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -698,7 +698,7 @@
       xInterval={timeDay}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -721,7 +721,7 @@
       xInterval={timeDay}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
     >
       <Layer type={shared.renderContext}>
@@ -750,7 +750,7 @@
         xScale={scaleBand().padding(0.4)}
         y="value"
         yDomain={[0, null]}
-        yNice={4}
+        yNice
         padding={{ left: 16, bottom: 24 }}
       >
         <Layer type={shared.renderContext}>
@@ -791,7 +791,7 @@
         xScale={scaleBand().padding(0.4)}
         y="value"
         yDomain={[0, null]}
-        yNice={4}
+        yNice
         padding={{ left: 16, bottom: 24 }}
       >
         <Layer type={shared.renderContext}>
@@ -833,7 +833,7 @@
         xScale={scaleBand().padding(0.4)}
         y="value"
         yDomain={[0, null]}
-        yNice={4}
+        yNice
         padding={{ left: 16, bottom: 24 }}
       >
         <Layer type={shared.renderContext}>
@@ -877,7 +877,7 @@
         xScale={scaleBand().padding(0.4)}
         y="value"
         yDomain={[0, null]}
-        yNice={4}
+        yNice
         padding={{ left: 16, bottom: 24 }}
       >
         <Layer type={shared.renderContext}>
@@ -915,7 +915,7 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="value"
-      yNice={4}
+      yNice
       c="fruit"
       cDomain={colorKeys}
       cRange={keyColors}
@@ -973,7 +973,7 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yNice={4}
+      yNice
       c="fruit"
       cDomain={colorKeys}
       cRange={keyColors}
@@ -1027,7 +1027,7 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yNice={4}
+      yNice
       c="fruit"
       cDomain={colorKeys}
       cRange={keyColors}
@@ -1081,7 +1081,7 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yNice={4}
+      yNice
       c="fruit"
       cDomain={colorKeys}
       cRange={keyColors}
@@ -1149,7 +1149,7 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yNice={4}
+      yNice
       c="fruit"
       cDomain={colorKeys}
       cRange={keyColors}
@@ -1251,7 +1251,7 @@
       x="year"
       xScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
       y="values"
-      yNice={4}
+      yNice
       c="fruit"
       cDomain={colorKeys}
       cRange={keyColors}
@@ -1336,7 +1336,7 @@
       xScale={scaleBand().padding(0.4)}
       y="value"
       yDomain={[0, null]}
-      yNice={4}
+      yNice
       padding={{ left: 16, bottom: 24 }}
       tooltip={{
         mode: 'band',
