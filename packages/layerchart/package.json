@@ -19,8 +19,8 @@
     "prepare": "svelte-kit sync"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.4",
-    "@iconify-json/lucide": "^1.2.48",
+    "@changesets/cli": "^2.29.5",
+    "@iconify-json/lucide": "^1.2.60",
     "@rollup/plugin-dsv": "^3.0.5",
     "@sveltejs/adapter-cloudflare": "^7.0.4",
     "@sveltejs/kit": "^2.21.5",
@@ -28,7 +28,7 @@
     "@sveltejs/vite-plugin-svelte": "^5.1.0",
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
     "@tailwindcss/typography": "^0.5.16",
-    "@tailwindcss/vite": "^4.1.10",
+    "@tailwindcss/vite": "^4.1.11",
     "@types/d3": "^7.4.3",
     "@types/d3-array": "^3.2.1",
     "@types/d3-color": "^3.1.3",
@@ -55,8 +55,8 @@
     "@types/topojson-specification": "^1.0.5",
     "marked": "^15.0.12",
     "mdsvex": "^0.12.3",
-    "posthog-js": "^1.252.0",
-    "prettier": "^3.5.3",
+    "posthog-js": "^1.258.5",
+    "prettier": "^3.6.2",
     "prettier-plugin-svelte": "^3.4.0",
     "prism-svelte": "^0.5.0",
     "prism-themes": "^1.9.0",
@@ -70,21 +70,21 @@
     "svelte-json-tree": "^2.2.0",
     "svelte-ux": "2.0.0-next.17",
     "svelte2tsx": "^0.7.39",
-    "tailwindcss": "^4.1.10",
+    "tailwindcss": "^4.1.11",
     "topojson-client": "^3.1.0",
     "topojson-simplify": "^3.0.3",
     "tslib": "^2.8.1",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.2",
     "unist-util-visit": "^5.0.0",
-    "unplugin-icons": "^22.1.0",
+    "unplugin-icons": "^22.2.0",
     "us-atlas": "^3.0.1",
     "vite": "^6.3.5",
     "vite-plugin-devtools-json": "^0.2.0",
-    "vitest": "^3.2.3"
+    "vitest": "^3.2.4"
   },
   "type": "module",
   "dependencies": {
-    "@dagrejs/dagre": "^1.1.4",
+    "@dagrejs/dagre": "^1.1.5",
     "@layerstack/svelte-actions": "1.0.1-next.14",
     "@layerstack/svelte-state": "0.1.0-next.19",
     "@layerstack/tailwind": "2.0.0-next.17",
@@ -110,7 +110,7 @@
     "d3-time": "^3.1.0",
     "lodash-es": "^4.17.21",
     "memoize": "^10.1.0",
-    "runed": "^0.28.0"
+    "runed": "^0.31.1"
   },
   "peerDependencies": {
     "svelte": "^5.0.0"
