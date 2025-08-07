@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.36
+
+### Patch Changes
+
+- fix(PieChart): Do not pass `y` accessor to use linear scale fallback ([#631](https://github.com/techniq/layerchart/pull/631))
+
 ## 2.0.0-next.35
 
 ### Patch Changes
