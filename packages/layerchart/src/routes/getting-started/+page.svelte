@@ -73,7 +73,7 @@
   <h2>Install package</h2>
 
   <div>Install <code>layerchart</code> package</div>
-  <Code source={`npm install layerchart`} language="sh" />
+  <Code source={`npm install layerchart@next`} language="sh" />
 
   <Blockquote>
     <div>
