@@ -33,13 +33,13 @@
   });
 </script>
 
-<div class={cls('Code', 'rounded', classes.root, rest.class)}>
+<div class={cls('Code', 'bg-none rounded-sm', classes.root, rest.class)}>
   {#if source}
     <div class="relative">
       <pre
-        class={cls('p-0 rounded overflow-hidden', classes.pre)}
+        class={cls('p-0 rounded-sm overflow-hidden', classes.pre)}
         style="margin: 0; white-space: normal;">
-          <code class={cls('*:m-0 *:text-xs', classes.code)}>
+          <code class={cls('*:m-0 *:text-xs *:rounded-none', classes.code)}>
             {@html htmlHighlightedSource}
           </code>
       </pre>
