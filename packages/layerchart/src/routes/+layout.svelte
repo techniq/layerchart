@@ -158,7 +158,7 @@
         classes={{ button: 'max-sm:-mr-3' }}
       />
 
-      <div class="border-r border-primary-content/20 pr-2">
+      <div class="border-r border-primary-content/20 pr-2 flex items-center">
         <ThemeSelect keyboardShortcuts />
       </div>
 
