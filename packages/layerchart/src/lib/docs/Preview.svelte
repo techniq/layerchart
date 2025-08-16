@@ -16,10 +16,17 @@
     code?: string;
     data?: any;
     language?: string;
-    showCode?: boolean
+    showCode?: boolean;
   }
 
-  let { children, code = undefined, data = undefined, language = 'svelte', showCode = false, ...rest }: Props & HTMLAttributes<HTMLDivElement> = $props();
+  let {
+    children,
+    code = undefined,
+    data = undefined,
+    language = 'svelte',
+    showCode = false,
+    ...rest
+  }: Props & HTMLAttributes<HTMLDivElement> = $props();
 
   /**
    * Custom JSON replacer (to use with JSON.stringify()) to convert `Date` instances to `new Date()`

@@ -8,24 +8,29 @@
   let highlighter: Highlighter | undefined = $state(undefined);
 
   interface Props {
-    source?: string | null,
-    language?: string,
-    classes?: { root?: string; pre?: string; code?: string; }
+    source?: string | null;
+    language?: string;
+    classes?: { root?: string; pre?: string; code?: string };
   }
 
-  let { source = null, language = 'svelte', classes = {}, ...rest }: Props & HTMLAttributes<HTMLDivElement> = $props();
+  let {
+    source = null,
+    language = 'svelte',
+    classes = {},
+    ...rest
+  }: Props & HTMLAttributes<HTMLDivElement> = $props();
 
   let htmlHighlightedSource = $derived.by(() => {
-    if (!highlighter || !source) return ''
-    return highlighter.codeToHtml(source, { lang: language, theme: 'min-dark'});
+    if (!highlighter || !source) return '';
+    return highlighter.codeToHtml(source, { lang: language, theme: 'min-dark' });
   });
 
   onMount(async () => {
     highlighter = await createHighlighter({
       themes: ['min-dark'],
-      langs: [language]
+      langs: [language],
     });
-  })
+  });
 </script>
 
 <div class={cls('Code', 'rounded', classes.root, rest.class)}>
@@ -34,7 +39,7 @@
       <pre
         class={cls('p-0 rounded overflow-hidden', classes.pre)}
         style="margin: 0; white-space: normal;">
-          <code class={cls("*:m-0 *:text-xs", classes.code)}>
+          <code class={cls('*:m-0 *:text-xs', classes.code)}>
             {@html htmlHighlightedSource}
           </code>
       </pre>
