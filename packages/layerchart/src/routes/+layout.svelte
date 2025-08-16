@@ -3,7 +3,6 @@
   import posthog from 'posthog-js';
   import { watch } from 'runed';
 
-  import 'prism-themes/themes/prism-vsc-dark-plus.css';
   import {
     AppBar,
     AppLayout,
