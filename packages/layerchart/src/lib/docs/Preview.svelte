@@ -1,8 +1,6 @@
 <script lang="ts">
   import { slide } from 'svelte/transition';
   // TODO: No longer copy from svelte-ux after prismjs is migrated to ESM (commonjs causes issue with Vite from another library)
-  import Prism from 'prismjs';
-  import 'prism-svelte';
   import { mdiCodeTags, mdiTable } from '@mdi/js';
 
   import { Button, CopyButton, Dialog, Toggle, Tooltip } from 'svelte-ux';
@@ -10,12 +8,18 @@
 
   import Code from './Code.svelte';
   import Json from './Json.svelte';
+  import type { HTMLAttributes } from 'svelte/elements';
+  import type { Snippet } from 'svelte';
 
-  export let code: string | undefined = undefined;
-  export let data: any | undefined = undefined;
-  export let language = 'svelte';
-  export let highlightedCode = code ? Prism.highlight(code, Prism.languages.svelte, language) : '';
-  export let showCode = false;
+  interface Props {
+    children: Snippet;
+    code?: string;
+    data?: any;
+    language?: string;
+    showCode?: boolean
+  }
+
+  let { children, code = undefined, data = undefined, language = 'svelte', showCode = false, ...rest }: Props & HTMLAttributes<HTMLDivElement> = $props();
 
   /**
    * Custom JSON replacer (to use with JSON.stringify()) to convert `Date` instances to `new Date()`
@@ -41,14 +45,14 @@
   }
 </script>
 
-<div class={cls('Preview border rounded bg-surface-100', $$props.class)}>
+<div class={cls('Preview border rounded bg-surface-100', rest.class)}>
   <div class="p-4">
-    <slot />
+    {@render children()}
   </div>
 
   {#if code && showCode}
     <div transition:slide class="bg-surface-200">
-      <Code source={code} highlightedSource={highlightedCode} classes={{ pre: 'rounded-t-none' }} />
+      <Code source={code} {language} classes={{ pre: 'rounded-t-none', code: '*:p-3' }} />
     </div>
   {/if}
 </div>

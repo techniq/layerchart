@@ -1,29 +1,42 @@
 <script lang="ts">
-  import Prism from 'prismjs';
-  import 'prism-svelte';
   import { CopyButton } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
+  import { createHighlighter, type Highlighter } from 'shiki';
+  import { onMount } from 'svelte';
+  import type { HTMLAttributes } from 'svelte/elements';
 
-  export let source: string | null = null;
-  export let language = 'svelte';
-  export let highlightedSource = source
-    ? Prism.highlight(source, Prism.languages[language] ?? Prism.languages.text, language)
-    : '';
+  let highlighter: Highlighter | undefined = $state(undefined);
 
-  export let classes: {
-    root?: string;
-    pre?: string;
-    code?: string;
-  } = {};
+  interface Props {
+    source?: string | null,
+    language?: string,
+    classes?: { root?: string; pre?: string; code?: string; }
+  }
+
+  let { source = null, language = 'svelte', classes = {}, ...rest }: Props & HTMLAttributes<HTMLDivElement> = $props();
+
+  let htmlHighlightedSource = $derived.by(() => {
+    if (!highlighter || !source) return ''
+    return highlighter.codeToHtml(source, { lang: language, theme: 'min-dark'});
+  });
+
+  onMount(async () => {
+    highlighter = await createHighlighter({
+      themes: ['min-dark'],
+      langs: [language]
+    });
+  })
 </script>
 
-<div class={cls('Code', 'rounded', classes.root, $$props.class)}>
+<div class={cls('Code', 'rounded', classes.root, rest.class)}>
   {#if source}
     <div class="relative">
       <pre
-        class={cls('language-{language} rounded', classes.pre)}
+        class={cls('p-0 rounded overflow-hidden', classes.pre)}
         style="margin: 0; white-space: normal;">
-          <code class={cls('language-{language}', classes.code)}>{@html highlightedSource}</code>
+          <code class={cls("*:m-0 *:text-xs", classes.code)}>
+            {@html htmlHighlightedSource}
+          </code>
       </pre>
 
       <div class="absolute top-0 right-0 p-2 z-10">

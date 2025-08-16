@@ -3,7 +3,6 @@
   import posthog from 'posthog-js';
 
   import { mdiArrowTopRight, mdiDotsVertical, mdiGithub, mdiTwitter } from '@mdi/js';
-  import 'prism-themes/themes/prism-vsc-dark-plus.css';
   import {
     AppBar,
     AppLayout,
