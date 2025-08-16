@@ -248,7 +248,7 @@
           <Code
             source={`import { ${name} } from 'layerchart';`}
             language="javascript"
-            class="bg-surface-100 dark:bg-surface-300 border rounded p-4"
+            class="bg-surface-100 border rounded"
           />
         {/key}
       {/if}

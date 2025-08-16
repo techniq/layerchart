@@ -59,7 +59,7 @@
 
   {#if code && showCode}
     <div transition:slide class="border-t">
-      <Code source={code} {language} class="bg-surface-200 dark:bg-surface-300 p-4" />
+      <Code source={code} {language} />
     </div>
   {/if}
 </div>

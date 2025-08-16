@@ -3,7 +3,7 @@
 
   const highlighter = await createHighlighter({
     themes: ['github-light-default', 'github-dark-default'],
-    langs: ['svelte', 'javascript', 'ts', 'typescript', 'json'],
+    langs: ['svelte', 'javascript', 'ts', 'typescript', 'json', 'sh'],
   });
 </script>
 
@@ -37,7 +37,14 @@
   });
 </script>
 
-<div class={cls('Code', 'relative overflow-auto', classes.root, className)}>
+<div
+  class={cls(
+    'Code',
+    'relative bg-surface-200 dark:bg-surface-300 p-4 overflow-auto not-prose',
+    classes.root,
+    className
+  )}
+>
   {#if source}
     <pre class={cls('whitespace-normal overflow-auto', classes.pre)}>
       <code class={cls('text-xs', classes.code)}>

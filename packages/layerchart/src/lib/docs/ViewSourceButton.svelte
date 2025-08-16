@@ -35,12 +35,8 @@
         {/if}
       </div>
 
-      <div class="overflow-auto">
-        <Code
-          {source}
-          language={source.startsWith('<script') ? 'svelte' : 'js'}
-          class="bg-surface-200 dark:bg-surface-300 p-4 border-t"
-        />
+      <div class="overflow-auto border-t">
+        <Code {source} language={source.startsWith('<script') ? 'svelte' : 'js'} />
       </div>
 
       <div slot="actions">
