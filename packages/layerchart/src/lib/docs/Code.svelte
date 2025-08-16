@@ -1,11 +1,16 @@
+<script module>
+  import { createHighlighter } from 'shiki';
+
+  const highlighter = await createHighlighter({
+    themes: ['github-light-default', 'github-dark-default'],
+    langs: ['svelte', 'javascript', 'ts', 'typescript', 'json'],
+  });
+</script>
+
 <script lang="ts">
   import { CopyButton } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
-  import { createHighlighter, type Highlighter } from 'shiki';
-  import { onMount } from 'svelte';
   import type { HTMLAttributes } from 'svelte/elements';
-
-  let highlighter: Highlighter | undefined = $state(undefined);
 
   interface Props {
     source?: string | null;
@@ -28,13 +33,6 @@
         light: 'github-light-default',
         dark: 'github-dark-default',
       },
-    });
-  });
-
-  onMount(async () => {
-    highlighter = await createHighlighter({
-      themes: ['github-light-default', 'github-dark-default'],
-      langs: [language],
     });
   });
 </script>
