@@ -37,9 +37,9 @@
   });
 </script>
 
-<div class={cls('Code', 'relative', classes.root, className)}>
+<div class={cls('Code', 'relative overflow-auto', classes.root, className)}>
   {#if source}
-    <pre class={cls('whitespace-normal', classes.pre)}>
+    <pre class={cls('whitespace-normal overflow-auto', classes.pre)}>
       <code class={cls('text-xs', classes.code)}>
         {@html htmlHighlightedSource}
       </code>

@@ -36,7 +36,11 @@
       </div>
 
       <div class="overflow-auto">
-        <Code {source} language={source.startsWith('<script') ? 'svelte' : 'js'} />
+        <Code
+          {source}
+          language={source.startsWith('<script') ? 'svelte' : 'js'}
+          class="bg-surface-200 dark:bg-surface-300 p-4 border-t"
+        />
       </div>
 
       <div slot="actions">
