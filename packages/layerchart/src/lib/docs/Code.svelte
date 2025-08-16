@@ -17,40 +17,57 @@
     source = null,
     language = 'svelte',
     classes = {},
-    ...rest
+    class: className,
   }: Props & HTMLAttributes<HTMLDivElement> = $props();
 
   let htmlHighlightedSource = $derived.by(() => {
     if (!highlighter || !source) return '';
-    return highlighter.codeToHtml(source, { lang: language, theme: 'min-dark' });
+    return highlighter.codeToHtml(source, {
+      lang: language,
+      themes: {
+        light: 'github-light-default',
+        dark: 'github-dark-default',
+      },
+    });
   });
 
   onMount(async () => {
     highlighter = await createHighlighter({
-      themes: ['min-dark'],
+      themes: ['github-light-default', 'github-dark-default'],
       langs: [language],
     });
   });
 </script>
 
-<div class={cls('Code', 'bg-none rounded-sm', classes.root, rest.class)}>
+<div class={cls('Code', 'relative', classes.root, className)}>
   {#if source}
-    <div class="relative">
-      <pre
-        class={cls('p-0 rounded-sm overflow-hidden', classes.pre)}
-        style="margin: 0; white-space: normal;">
-          <code class={cls('*:m-0 *:text-xs *:rounded-none', classes.code)}>
-            {@html htmlHighlightedSource}
-          </code>
-      </pre>
+    <pre class={cls('whitespace-normal', classes.pre)}>
+      <code class={cls('text-xs', classes.code)}>
+        {@html htmlHighlightedSource}
+      </code>
+    </pre>
 
-      <div class="absolute top-0 right-0 p-2 z-10">
-        <CopyButton
-          value={source ?? ''}
-          class="text-white/70 hover:bg-surface-100/20 py-1 backdrop-blur-md"
-          size="sm"
-        />
-      </div>
+    <div class="absolute top-0 right-0 p-2 z-10">
+      <CopyButton
+        value={source ?? ''}
+        class="text-surface-content/70 hover:bg-surface-100/20 py-1 backdrop-blur-md"
+        size="sm"
+      />
     </div>
   {/if}
 </div>
+
+<style>
+  :global(.shiki) {
+    background-color: transparent !important;
+  }
+
+  :global(html.dark .shiki),
+  :global(html.dark .shiki span) {
+    color: var(--shiki-dark) !important;
+    /* background-color: var(--shiki-dark-bg) !important; */
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+</style>

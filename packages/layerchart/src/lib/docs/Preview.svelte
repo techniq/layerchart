@@ -25,7 +25,7 @@
     data = undefined,
     language = 'svelte',
     showCode = false,
-    ...rest
+    class: className,
   }: Props & HTMLAttributes<HTMLDivElement> = $props();
 
   /**
@@ -52,14 +52,14 @@
   }
 </script>
 
-<div class={cls('Preview border rounded bg-surface-100', rest.class)}>
+<div class={cls('Preview border rounded bg-surface-100', className)}>
   <div class="p-4">
     {@render children()}
   </div>
 
   {#if code && showCode}
-    <div transition:slide class="bg-surface-200">
-      <Code source={code} {language} classes={{ pre: 'rounded-t-none', code: '*:p-3' }} />
+    <div transition:slide class="border-t">
+      <Code source={code} {language} class="bg-surface-200 dark:bg-surface-300 p-4" />
     </div>
   {/if}
 </div>

@@ -245,7 +245,11 @@
       {#if type === 'components' && !hideUsage}
         {#key page.route.id}
           <h1 id="usage">Usage</h1>
-          <Code source={`import { ${name} } from 'layerchart';`} language="javascript" />
+          <Code
+            source={`import { ${name} } from 'layerchart';`}
+            language="javascript"
+            class="bg-surface-100 dark:bg-surface-300 border rounded p-4"
+          />
         {/key}
       {/if}
 
