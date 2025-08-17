@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import Rect, { type RectPropsWithoutHTML } from './Rect.svelte';
-  import type { Without } from '$lib/utils/types.js';
+  import type { CommonEvents, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import type { Snippet } from 'svelte';
 
@@ -58,7 +58,8 @@
     Without<RectPropsWithoutHTML, BaseRectClipPathPropsWithoutHTML>;
 
   export type RectClipPathProps = RectClipPathPropsWithoutHTML &
-    Without<SVGAttributes<SVGElement>, RectClipPathPropsWithoutHTML>;
+    Without<SVGAttributes<SVGElement>, RectClipPathPropsWithoutHTML> &
+    CommonEvents;
 </script>
 
 <script lang="ts">

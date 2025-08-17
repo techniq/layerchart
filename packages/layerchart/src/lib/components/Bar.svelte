@@ -71,7 +71,8 @@
     Without<
       Omit<SVGAttributes<SVGElement>, 'width' | 'height' | 'x' | 'y' | 'offset'>,
       BarPropsWithoutHTML
-    >;
+    > &
+    CommonEvents;
 </script>
 
 <script lang="ts">
@@ -84,7 +85,7 @@
   import { isScaleBand, isScaleTime } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { getChartContext } from './Chart.svelte';
-  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+  import type { CommonEvents, CommonStyleProps, Without } from '$lib/utils/types.js';
   import { extractLayerProps } from '$lib/utils/attributes.js';
   import { extractTweenConfig, type MotionProp } from '$lib/utils/motion.svelte.js';
   import Arc from './Arc.svelte';

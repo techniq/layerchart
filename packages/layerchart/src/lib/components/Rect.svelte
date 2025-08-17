@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { CommonStyleProps, Without } from '$lib/utils/types.js';
+  import type { CommonEvents, CommonStyleProps, Without } from '$lib/utils/types.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createMotion, parseMotionProp, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { renderRect, type ComputedStylesOptions } from '$lib/utils/canvas.js';
@@ -39,7 +39,8 @@
   } & CommonStyleProps;
 
   export type RectProps = RectPropsWithoutHTML &
-    Without<SVGAttributes<SVGRectElement>, RectPropsWithoutHTML>;
+    Without<SVGAttributes<SVGRectElement>, RectPropsWithoutHTML> &
+    CommonEvents;
 </script>
 
 <script lang="ts">
@@ -167,6 +168,8 @@
     bind:this={ref}
   />
 {:else if renderCtx === 'html'}
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     style:position="absolute"
     style:left="{motionX.current}px"
@@ -180,7 +183,7 @@
     style:border-color={stroke}
     style:border-radius="{restProps.rx}px"
     class={cls(layerClass('rect'), fill == null && 'fill-surface-content', className)}
-    {...restProps}
+    {...restProps as any}
     {onclick}
     {ondblclick}
     {onpointerenter}
@@ -188,5 +191,5 @@
     {onpointerleave}
     {onpointerover}
     {onpointerout}
-  />
+  ></div>
 {/if}
