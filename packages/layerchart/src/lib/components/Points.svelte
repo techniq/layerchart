@@ -45,11 +45,9 @@
 </script>
 
 <script lang="ts">
-  import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
 
   import Circle, { type CircleProps } from './Circle.svelte';
-  import Link from './Link.svelte';
   import { isScaleBand, type AnyScale } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { getChartContext } from './Chart.svelte';
