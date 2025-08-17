@@ -176,8 +176,9 @@
   actions, stores, and utilities to build highly interactive applications.
 </div>
 
-<style lang="postcss">
+<style>
   :global(.Code) {
-    @apply border rounded;
+    border-width: theme(borderWidth.DEFAULT);
+    border-radius: theme(borderRadius.DEFAULT);
   }
 </style>
