@@ -1,5 +1,11 @@
 # LayerChart
 
+## 2.0.0-next.37
+
+### Patch Changes
+
+- fix(ArcChart): Do not pass y accessor to use linear scale fallback ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.36
 
 ### Patch Changes
