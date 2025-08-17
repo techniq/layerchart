@@ -175,3 +175,9 @@
   <a href="https://svelte-ux.techniq.dev/">Svelte UX</a> for a large collection of Svelte components,
   actions, stores, and utilities to build highly interactive applications.
 </div>
+
+<style lang="postcss">
+  :global(.Code) {
+    @apply border rounded;
+  }
+</style>
