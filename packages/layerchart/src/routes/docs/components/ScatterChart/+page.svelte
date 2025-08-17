@@ -50,10 +50,6 @@
   </div>
 </Preview>
 
-<Blockquote>
-  See also: <a href="/docs/components/AnnotationRange">AnnotationRange</a> for more examples
-</Blockquote>
-
 <h2>Domain padding</h2>
 
 <Preview data={spiralData}>
