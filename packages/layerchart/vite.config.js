@@ -24,7 +24,6 @@ const config = {
         },
       },
     }),
-    // @ts-expect-error
     devtoolsJson(),
     // Needs to be last
     visualizer({
