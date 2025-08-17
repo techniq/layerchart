@@ -44,7 +44,6 @@
 </script>
 
 <script lang="ts" generics="TData">
-  import { scaleLinear, scaleTime } from 'd3-scale';
   import { format } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
@@ -88,8 +87,6 @@
     renderContext = 'svg',
     profile = false,
     debug = false,
-    xScale: xScaleProp,
-    yScale: yScaleProp,
     children: childrenProp,
     aboveContext,
     belowContext,
@@ -106,18 +103,6 @@
   );
 
   const seriesState = new SeriesState(() => series);
-
-  // Default xScale based on first data's `x` value
-  const xScale = $derived(
-    xScaleProp ??
-      (accessor(xProp)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear())
-  );
-
-  // Default yScale based on first data's `y` value
-  const yScale = $derived(
-    yScaleProp ??
-      (accessor(yProp)(chartDataArray(data)[0]) instanceof Date ? scaleTime() : scaleLinear())
-  );
 
   const chartData = $derived(
     seriesState.visibleSeries
@@ -241,10 +226,8 @@
   data={chartData}
   x={xProp}
   {xDomain}
-  {xScale}
   y={yProp}
   {yDomain}
-  {yScale}
   yNice
   c={yProp}
   cRange={['var(--color-primary)']}

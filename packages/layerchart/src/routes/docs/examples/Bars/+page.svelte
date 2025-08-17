@@ -3,6 +3,7 @@
   import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { mean, sum } from 'd3-array';
   import { stackOffsetExpand } from 'd3-shape';
+  import { timeDay } from 'd3-time';
 
   import { Field, ToggleGroup, ToggleOption, Toggle, Switch } from 'svelte-ux';
 
@@ -662,6 +663,72 @@
   </div>
 </Preview>
 
+<h2>Time scale (with interval)</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <Chart
+      {data}
+      x="value"
+      xDomain={[0, null]}
+      xNice={4}
+      y="date"
+      yInterval={timeDay}
+      padding={{ left: 20, bottom: 20 }}
+    >
+      <Layer type={shared.renderContext}>
+        <Axis placement="bottom" grid rule />
+        <Axis placement="left" rule />
+        <Bars strokeWidth={1} class="fill-primary" />
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Time scale with missing data</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <Chart
+      data={data.filter((d) => (Math.random() > 0.5 ? true : false))}
+      x="value"
+      xDomain={[0, null]}
+      xNice={4}
+      y="date"
+      yInterval={timeDay}
+      padding={{ left: 20, bottom: 20 }}
+    >
+      <Layer type={shared.renderContext}>
+        <Axis placement="bottom" grid rule />
+        <Axis placement="left" rule />
+        <Bars strokeWidth={1} class="fill-primary" />
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
+<h2>Time scale with inset</h2>
+
+<Preview {data}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <Chart
+      {data}
+      x="value"
+      xDomain={[0, null]}
+      xNice={4}
+      y="date"
+      yInterval={timeDay}
+      padding={{ left: 20, bottom: 20 }}
+    >
+      <Layer type={shared.renderContext}>
+        <Axis placement="bottom" grid rule />
+        <Axis placement="left" rule />
+        <Bars class="fill-primary" insets={{ y: 2 }} />
+      </Layer>
+    </Chart>
+  </div>
+</Preview>
+
 <h2>Tween on mount</h2>
 
 <Toggle on let:on={show} let:toggle>
@@ -756,13 +823,11 @@
       x="value"
       xNice
       y="year"
-      yScale={scaleBand().paddingInner(0.3).paddingOuter(0.1)}
+      yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       y1="fruit"
-      y1Scale={scaleBand()}
       y1Domain={colorKeys}
       y1Range={({ yScale }) => [0, yScale.bandwidth?.()]}
       padding={{ left: 16, bottom: 24 }}
@@ -816,9 +881,8 @@
       x="values"
       xNice
       y="year"
-      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
@@ -872,9 +936,8 @@
       x="values"
       xNice
       y="year"
-      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       padding={{ left: 16, bottom: 24 }}
@@ -928,9 +991,8 @@
       x="values"
       xNice
       y="year"
-      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.1)}
+      yScale={scaleBand().paddingInner(0.4).paddingOuter(0.2)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       y1="basket"
@@ -1001,7 +1063,6 @@
       y="year"
       yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       y1={transitionChart.groupBy}
@@ -1105,7 +1166,6 @@
       y="year"
       yScale={scaleBand().paddingInner(0.2).paddingOuter(0.1)}
       c="fruit"
-      cScale={scaleOrdinal()}
       cDomain={colorKeys}
       cRange={keyColors}
       y1={transitionChart.groupBy}

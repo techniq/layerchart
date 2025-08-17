@@ -11,7 +11,7 @@
     Spline,
     Tooltip,
   } from 'layerchart';
-  import { scaleBand, scaleSequential } from 'd3-scale';
+  import { scaleSequential } from 'd3-scale';
   import { curveCatmullRom, curveLinearClosed } from 'd3-shape';
   import { extent, flatGroup, group, ticks } from 'd3-array';
   import { Field, Switch } from 'svelte-ux';
@@ -368,7 +368,6 @@
     <LineChart
       data={pitchData}
       x="name"
-      xScale={scaleBand()}
       y="value"
       yPadding={[0, 8]}
       padding={{ top: 8 }}
@@ -412,7 +411,6 @@
     <LineChart
       data={pitchData}
       x="name"
-      xScale={scaleBand()}
       y="value"
       padding={{ top: 8 }}
       radial
@@ -454,7 +452,6 @@
     <LineChart
       data={budgetData}
       x="name"
-      xScale={scaleBand()}
       yPadding={[0, 8]}
       radial
       series={[
@@ -643,7 +640,7 @@
       yNice={false}
       yPadding={[0, 20]}
       radial
-      rule={{ y: 'top', class: 'stroke-surface-content/20' }}
+      rule={{ y: '$top', class: 'stroke-surface-content/20' }}
       props={{
         spline: { class: 'stroke' },
         xAxis: { format: 'month', tickMarks: false },
@@ -766,6 +763,34 @@
 <Preview data={dateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
     <LineChart data={dateSeriesData} x="date" y="value" axis="y" {renderContext} {debug} />
+  </div>
+</Preview>
+
+<h2>Axis labels inside</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <LineChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      {renderContext}
+      {debug}
+      props={{
+        yAxis: {
+          tickLabelProps: {
+            textAnchor: 'start',
+            verticalAnchor: 'end',
+          },
+          tickLength: 0,
+        },
+      }}
+      padding={{
+        left: 0,
+        top: 10,
+        bottom: 24,
+      }}
+    />
   </div>
 </Preview>
 

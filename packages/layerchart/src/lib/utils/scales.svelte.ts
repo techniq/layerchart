@@ -1,5 +1,5 @@
 import { unique } from '@layerstack/utils';
-import { scaleBand, type ScaleBand, type ScaleTime } from 'd3-scale';
+import { scaleBand, scaleLinear, scaleTime, type ScaleBand, type ScaleTime } from 'd3-scale';
 import {
   createControlledMotion,
   type MotionProp,
@@ -8,7 +8,7 @@ import {
   type TweenOptions,
 } from '$lib/utils/motion.svelte.js';
 import { Spring, Tween } from 'svelte/motion';
-import type { Accessor } from './common.js';
+import { accessor, type Accessor } from './common.js';
 import type { OnlyObjects } from './types.js';
 import type { TimeInterval } from 'd3-time';
 
@@ -51,6 +51,11 @@ export function isScaleBand(scale: AnyScale<any, any>): scale is ScaleBand<any> 
 export function isScaleTime(scale: AnyScale<any, any>): scale is ScaleTime<any, any> {
   const domain = scale.domain();
   return domain[0] instanceof Date || domain[1] instanceof Date;
+}
+
+export function isScaleNumeric(scale: AnyScale<any, any>): scale is ScaleTime<any, any> {
+  const domain = scale.domain();
+  return typeof domain[0] === 'number' || typeof domain[1] === 'number';
 }
 
 export function getRange(scale: any) {
@@ -155,6 +160,44 @@ export function createScale(
     scaleCopy.range(range);
   }
   return scaleCopy;
+}
+
+/**
+ * Auto-detect scale type based on domain values or data values
+ */
+export function autoScale(
+  domain?: DomainType,
+  data?: any[],
+  propAccessor?: Accessor<any>
+): AnyScale {
+  let values = null;
+  if (domain && domain.length > 0) {
+    // Determine based on domain values
+    values = domain;
+  } else if (data && data.length > 0 && propAccessor) {
+    // Determine based on data values
+    const value = accessor(propAccessor)(data[0]);
+
+    // If accessor defined with an array (ex. `x={['start', 'end']}`) use both values
+    if (Array.isArray(value)) {
+      values = value;
+    } else {
+      values = [value];
+    }
+  }
+
+  if (values) {
+    if (values.some((v) => v instanceof Date)) {
+      return scaleTime();
+    } else if (values.some((v) => typeof v === 'number')) {
+      return scaleLinear();
+    } else if (values.some((v) => typeof v === 'string')) {
+      return scaleBand();
+    }
+  }
+
+  // fallback to linear scale
+  return scaleLinear();
 }
 
 /**

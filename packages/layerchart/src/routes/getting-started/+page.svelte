@@ -43,7 +43,7 @@
           <a href="https://tailwindcss.com/docs/guides/sveltekit" target="_blank">guide</a>.
         </p>
 
-        You can use LayerChart with your existing project, such as
+        You can also use LayerChart within your existing project, such as
         <a href="https://www.skeleton.dev/" target="_blank">Skeleton</a>,
         <a href="https://www.shadcn-svelte.com/" target="_blank">shadcn-svelte</a>, or
         <a href="https://daisyui.com/" target="_blank">Daisy UI</a>. See
@@ -73,7 +73,7 @@
   <h2>Install package</h2>
 
   <div>Install <code>layerchart</code> package</div>
-  <Code source={`npm install layerchart`} language="sh" />
+  <Code source={`npm install layerchart@next`} language="sh" />
 
   <Blockquote>
     <div>
@@ -90,9 +90,54 @@
     <a
       href="https://tailwindcss.com/docs/detecting-classes-in-source-files#explicitly-registering-sources"
       target="_blank">Tailwind</a
-    >
+    >.
   </div>
-  <Code source={`@source '../../node_modules/layerchart/dist';`} language="css" />
+  <Code
+    source={`@import 'tailwindcss';
+@source '../node_modules/layerchart/dist';`}
+    language="css"
+  />
+
+  <p>
+    You will also need to add a few theme colors to your Tailwind config. This can be done
+    explicitly (includig <a href="https://github.com/techniq/layerchart/issues/160" target="_blank"
+      >mapping</a
+    > to existing CSS variables of popular frameworks).
+  </p>
+
+  <Code
+    source={`@theme {
+  --color-primary: hsl(...);
+  --color-surface-100: hsl(...);
+  --color-surface-200: hsl(...);
+  --color-surface-300: hsl(...);
+  --color-surface-content: hsl(...);
+}`}
+    language="css"
+  />
+
+  <p>or by leveraging one of LayerStack's themes.</p>
+
+  <Code
+    source={`/* Set up theme colors */
+@import '@layerstack/tailwind/core.css';
+
+/* Then choose one of the following: */
+
+/* 1. Basic light/dark theme */
+@import '@layerstack/tailwind/themes/basic.css';
+
+/* 2. All Daisy UI themes ported to LayerStack */
+@import '@layerstack/tailwind/themes/daisy.css';
+
+/* 3. All Skeleton themes ported to LayerStack */
+@import '@layerstack/tailwind/themes/skeleton.css';
+
+/* 4. All Daisy UI and Skeleton themes ported to LayerStack (used by docs) */
+@import '@layerstack/tailwind/themes/all.css';
+`}
+    language="css"
+  />
 
   <h2>Usage</h2>
 
@@ -130,3 +175,10 @@
   <a href="https://svelte-ux.techniq.dev/">Svelte UX</a> for a large collection of Svelte components,
   actions, stores, and utilities to build highly interactive applications.
 </div>
+
+<style>
+  :global(.Code) {
+    border-width: theme(borderWidth.DEFAULT);
+    border-radius: theme(borderRadius.DEFAULT);
+  }
+</style>

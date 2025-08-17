@@ -4,6 +4,11 @@
 
   export type BaseRulePropsWithoutHTML = {
     /**
+     * Override the data from the context.
+     */
+    data?: any;
+
+    /**
      * Create a vertical `x` line
      * - If true or 'left', will draw at chart left (xRange[0])
      * - If 'right', will draw at chart right (xRange[1])
@@ -12,7 +17,7 @@
      *
      * @default false
      */
-    x?: number | Date | boolean | 'left' | 'right';
+    x?: number | Date | boolean | '$left' | '$right' | Accessor;
 
     /**
      * Pixel offset to apply to `x` coordinate
@@ -30,7 +35,7 @@
      *
      * @default false
      */
-    y?: number | Date | boolean | 'top' | 'bottom';
+    y?: number | Date | boolean | '$top' | '$bottom' | Accessor;
 
     /**
      * Pixel offset to apply to `y` coordinate
@@ -55,13 +60,17 @@
   import Group from './Group.svelte';
   import Line, { type LinePropsWithoutHTML } from './Line.svelte';
   import { getChartContext } from './Chart.svelte';
+  import { accessor, chartDataArray, type Accessor } from '../utils/common.js';
   import { layerClass } from '$lib/utils/attributes.js';
+  import { isScaleBand, isScaleNumeric } from '$lib/utils/scales.svelte.js';
 
   let {
+    data: dataProp,
     x = false,
     xOffset = 0,
     y = false,
     yOffset = 0,
+    stroke: strokeProp,
     class: className,
     children,
     ...restProps
@@ -69,89 +78,163 @@
 
   const ctx = getChartContext();
 
-  const xRangeMinMax = $derived(extent<number | Date>(ctx.xRange));
-  const yRangeMinMax = $derived(extent<number | Date>(ctx.yRange));
+  const data = $derived(chartDataArray(dataProp ?? ctx.data));
 
-  function showRule(value: typeof x | typeof y, axis: 'x' | 'y') {
-    switch (typeof value) {
-      case 'boolean':
-        return value;
-      case 'string':
-        return true;
-      default:
-        if (axis === 'x') {
-          return ctx.xScale(value) >= xRangeMinMax[0]! && ctx.xScale(value) <= xRangeMinMax[1]!;
-        } else {
-          return ctx.yScale(value) >= yRangeMinMax[0]! && ctx.yScale(value) <= yRangeMinMax[1]!;
-        }
+  const singleX = $derived(
+    typeof x === 'number' ||
+      x instanceof Date ||
+      x === true ||
+      x === '$left' ||
+      x === '$right' ||
+      (isScaleBand(ctx.xScale) && ctx.xDomain.includes(x as any))
+  );
+  const singleY = $derived(
+    typeof y === 'number' ||
+      y instanceof Date ||
+      y === true ||
+      y === '$bottom' ||
+      y === '$top' ||
+      (isScaleBand(ctx.yScale) && ctx.yDomain.includes(y as any))
+  );
+
+  const xRangeMinMax = $derived(extent<number>(ctx.xRange));
+  const yRangeMinMax = $derived(extent<number>(ctx.yRange));
+
+  const lines = $derived.by(() => {
+    const result: {
+      x1: number;
+      y1: number;
+      x2: number;
+      y2: number;
+      axis: 'x' | 'y';
+      stroke?: string;
+    }[] = [];
+
+    // Single x line
+    if (singleX) {
+      const _x =
+        x === true || x === '$left'
+          ? xRangeMinMax[0]!
+          : x === '$right'
+            ? xRangeMinMax[1]!
+            : ctx.xScale(x) + xOffset;
+
+      result.push({
+        x1: _x,
+        y1: ctx.yRange[0] || 0,
+        x2: _x,
+        y2: ctx.yRange[1] || 0,
+        axis: 'x',
+      });
     }
-  }
+
+    // Single y line
+    if (singleY) {
+      const _y =
+        y === true || y === '$bottom'
+          ? yRangeMinMax[1]!
+          : y === '$top'
+            ? yRangeMinMax[0]!
+            : ctx.yScale(y) + yOffset;
+
+      result.push({
+        x1: ctx.xRange[0] || 0,
+        y1: _y,
+        x2: ctx.xRange[1] || 0,
+        y2: _y,
+        axis: 'y',
+      });
+    }
+
+    // Data driven lines
+    if (!singleX && !singleY) {
+      const xAccessor = x !== false ? accessor(x as Accessor) : ctx.x;
+      const yAccessor = y !== false ? accessor(y as Accessor) : ctx.y;
+
+      const xBandOffset = isScaleBand(ctx.xScale) ? ctx.xScale.bandwidth() / 2 : 0;
+      const yBandOffset = isScaleBand(ctx.yScale) ? ctx.yScale.bandwidth() / 2 : 0;
+
+      for (const d of data) {
+        const xValue = xAccessor(d);
+        const yValue = yAccessor(d);
+
+        const x1Value = Array.isArray(xValue) ? xValue[0] : isScaleNumeric(ctx.xScale) ? 0 : xValue;
+        const x2Value = Array.isArray(xValue) ? xValue[1] : xValue;
+        const y1Value = Array.isArray(yValue) ? yValue[0] : isScaleNumeric(ctx.yScale) ? 0 : yValue;
+        const y2Value = Array.isArray(yValue) ? yValue[1] : yValue;
+
+        result.push({
+          x1: ctx.xScale(x1Value) + xBandOffset + xOffset,
+          y1: ctx.yScale(y1Value) + yBandOffset + yOffset,
+          x2: ctx.xScale(x2Value) + xBandOffset + xOffset,
+          y2: ctx.yScale(y2Value) + yBandOffset + yOffset,
+          axis: Array.isArray(yValue) || isScaleBand(ctx.xScale) ? 'x' : 'y', // TODO: what about single prop like lollipop?
+          stroke: (strokeProp ?? ctx.config.c) ? ctx.cGet(d) : null, // use color scale, if available
+        });
+      }
+    }
+
+    // Remove lines if out of range of chart (non-0 baseline, brushing, etc)
+    return result.filter((line) => {
+      return (
+        line.x1 >= xRangeMinMax[0]! &&
+        line.x2 <= xRangeMinMax[1]! &&
+        line.y1 >= yRangeMinMax[0]! &&
+        line.y2 <= yRangeMinMax[1]!
+      );
+    });
+  });
+
+  // $inspect({ lines });
 </script>
 
 <Group class={layerClass('rule-g')}>
-  {#if showRule(x, 'x')}
-    {@const xCoord =
-      x === true || x === 'left'
-        ? xRangeMinMax[0]
-        : x === 'right'
-          ? xRangeMinMax[1]
-          : ctx.xScale(x) + xOffset}
+  {#each lines as line}
+    {@const stroke = line.stroke}
 
     {#if ctx.radial}
-      {@const [x1, y1] = pointRadial(xCoord, Number(yRangeMinMax[0]))}
-      {@const [x2, y2] = pointRadial(xCoord, Number(yRangeMinMax[1]))}
-
-      <Line
-        {...restProps}
-        {x1}
-        {y1}
-        {x2}
-        {y2}
-        class={cls(layerClass('rule-x-radial-line'), 'stroke-surface-content/10', className)}
-      />
+      {#if line.axis === 'x'}
+        {@const [x1, y1] = pointRadial(line.x1, line.y1)}
+        {@const [x2, y2] = pointRadial(line.x2, line.y2)}
+        <Line
+          {...restProps}
+          {x1}
+          {y1}
+          {x2}
+          {y2}
+          {stroke}
+          class={cls(
+            layerClass('rule-x-radial-line'),
+            !stroke && 'stroke-surface-content/10',
+            className
+          )}
+        />
+      {:else if line.axis === 'y'}
+        <Circle
+          r={line.y1}
+          {stroke}
+          class={cls(
+            layerClass('rule-y-radial-circle'),
+            !stroke && 'stroke-surface-content/50',
+            'fill-none',
+            className
+          )}
+        />
+      {/if}
     {:else}
       <Line
         {...restProps}
-        x1={xCoord}
-        x2={xCoord}
-        y1={ctx.yRange[0] || 0}
-        y2={ctx.yRange[1] || 0}
-        class={cls(layerClass('rule-x-line'), 'stroke-surface-content/50', className)}
-      />
-    {/if}
-  {/if}
-
-  {#if showRule(y, 'y')}
-    {#if ctx.radial}
-      <Circle
-        r={y === true || y === 'bottom'
-          ? yRangeMinMax[1]
-          : y === 'top'
-            ? yRangeMinMax[0]
-            : ctx.yScale(y) + yOffset}
+        x1={line.x1}
+        y1={line.y1}
+        x2={line.x2}
+        y2={line.y2}
+        {stroke}
         class={cls(
-          layerClass('rule-y-radial-circle'),
-          'fill-none stroke-surface-content/50',
+          layerClass(line.axis === 'x' ? 'rule-x-line' : 'rule-y-line'),
+          !stroke && 'stroke-surface-content/50',
           className
         )}
       />
-    {:else}
-      <Line
-        {...restProps}
-        x1={ctx.xRange[0] || 0}
-        x2={ctx.xRange[1] || 0}
-        y1={y === true || y === 'bottom'
-          ? yRangeMinMax[1]
-          : y === 'top'
-            ? yRangeMinMax[0]
-            : ctx.yScale(y) + yOffset}
-        y2={y === true || y === 'bottom'
-          ? yRangeMinMax[1]
-          : y === 'top'
-            ? yRangeMinMax[0]
-            : ctx.yScale(y) + yOffset}
-        class={cls(layerClass('rule-y-line'), 'stroke-surface-content/50', className)}
-      />
     {/if}
-  {/if}
+  {/each}
 </Group>

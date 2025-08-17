@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
-  import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
+  import { scaleBand, scaleOrdinal } from 'd3-scale';
   import { stack } from 'd3-shape';
 
   import {
@@ -12,6 +12,7 @@
     Layer,
     Highlight,
     Points,
+    Rule,
     Tooltip,
     type ChartContextValue,
   } from 'layerchart';
@@ -149,7 +150,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -181,7 +181,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -206,7 +205,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -238,7 +236,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -270,7 +267,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -303,7 +299,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -335,7 +330,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -367,7 +361,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -510,7 +503,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -560,7 +552,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -599,7 +590,6 @@
     <Chart
       data={dateSeries}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -647,11 +637,9 @@
       data={stackData}
       flatData={flatten(stackData)}
       x={(d) => asAny(d).data.date}
-      xScale={scaleTime()}
       y={[0, 1]}
       yNice
       c="key"
-      cScale={scaleOrdinal()}
       cDomain={keys}
       cRange={['var(--color-info)', 'var(--color-success)', 'var(--color-warning)']}
       padding={{ left: 16, bottom: 24 }}
@@ -711,9 +699,7 @@
     <Chart
       data={timeSeries}
       x="startDate"
-      xScale={scaleTime()}
       y="name"
-      yScale={scaleBand()}
       padding={{ left: 36, bottom: 36 }}
       tooltip={{
         mode: charts.dateTime.mode,
@@ -723,7 +709,7 @@
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" />
-        <Points class="fill-primary-100 stroke-primary" />
+        <Points class="fill-primary" />
         <Highlight
           points={charts.dateTime.highlight.includes('points')}
           lines={charts.dateTime.highlight.includes('lines')}
@@ -763,9 +749,7 @@
     <Chart
       data={timeSeries}
       x={['startDate', 'endDate']}
-      xScale={scaleTime()}
       y="name"
-      yScale={scaleBand()}
       padding={{ left: 36, bottom: 36 }}
       tooltip={{
         mode: charts.duration.mode,
@@ -775,7 +759,8 @@
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" />
-        <Points class="fill-primary-100 stroke-primary" links />
+        <Rule />
+        <Points class="fill-primary" />
         <Highlight
           points={charts.duration.highlight.includes('points')}
           lines={charts.duration.highlight.includes('lines')}
@@ -823,9 +808,7 @@
     <Chart
       data={overlapTimeSeries}
       x={['startDate', 'endDate']}
-      xScale={scaleTime()}
       y="name"
-      yScale={scaleBand()}
       padding={{ left: 36, bottom: 36 }}
       tooltip={{
         mode: charts.multiDuration.mode,
@@ -835,7 +818,8 @@
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid={{ style: 'stroke-dasharray: 2' }} rule />
         <Axis placement="bottom" />
-        <Points class="fill-primary-100 stroke-primary" links />
+        <Rule />
+        <Points class="fill-primary" />
         <Highlight
           points={charts.multiDuration.highlight.includes('points')}
           lines={charts.multiDuration.highlight.includes('lines')}

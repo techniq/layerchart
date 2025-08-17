@@ -116,7 +116,7 @@ export function createDimensionGetter<TData>(
       const width = Math.max(0, ctx.xScale(right) - ctx.xScale(left) - insets.left - insets.right);
 
       return { x, y, width, height };
-    } else {
+    } else if (isScaleBand(ctx.xScale)) {
       // Vertical band or linear
       const x =
         firstValue(ctx.xScale(_x(item))) + (ctx.x1Scale ? ctx.x1Scale(_x1(item)) : 0) + insets.left;
@@ -152,8 +152,81 @@ export function createDimensionGetter<TData>(
         bottom = yValue;
       }
 
+      // If yRange is inverted (drawing from top), swap top and bottom
+      if (ctx.yRange[0] < ctx.yRange[1]) {
+        [top, bottom] = [bottom, top];
+      }
+
       const y = ctx.yScale(top) + insets.top;
       const height = ctx.yScale(bottom) - ctx.yScale(top) - insets.bottom - insets.top;
+
+      return { x, y, width, height };
+    } else if (ctx.xInterval) {
+      // x-axis time scale with interval
+      const xValue = _x(item);
+      const start = ctx.xInterval.floor(xValue);
+      const end = ctx.xInterval.offset(start);
+      const x = ctx.xScale(start) + insets.left;
+      const width = ctx.xScale(end) - x - insets.right;
+
+      const yValue = _y(item);
+
+      let top = 0;
+      let bottom = 0;
+      if (Array.isArray(yValue)) {
+        // Array contains both top and bottom values (stack, etc);
+        top = max(yValue);
+        bottom = min(yValue);
+      } else if (yValue == null) {
+        // null/undefined value
+        top = 0;
+        bottom = 0;
+      } else if (yValue > 0) {
+        // Positive value
+        top = yValue;
+        bottom = max([0, yDomainMinMax[0]]);
+      } else {
+        // Negative value
+        top = min([0, yDomainMinMax[1]]);
+        bottom = yValue;
+      }
+
+      const y = ctx.yScale(top) + insets.top;
+      const height = ctx.yScale(bottom) - ctx.yScale(top) - insets.bottom - insets.top;
+
+      return { x, y, width, height };
+    } else if (ctx.yInterval) {
+      // y-axis time scale with interval
+      const yValue = _y(item);
+      const start = ctx.yInterval.floor(yValue);
+      const end = ctx.yInterval.offset(start);
+      const y = ctx.yScale(start) + insets.top;
+      const height = ctx.yScale(end) - y - insets.bottom;
+
+      const xValue = _x(item);
+
+      let left = 0;
+      let right = 0;
+      if (Array.isArray(xValue)) {
+        // Array contains both top and bottom values (stack, etc);
+        left = min(xValue);
+        right = max(xValue);
+      } else if (xValue == null) {
+        // null/undefined value
+        left = 0;
+        right = 0;
+      } else if (xValue > 0) {
+        // Positive value
+        left = max([0, xDomainMinMax[0]]);
+        right = xValue;
+      } else {
+        // Negative value
+        left = xValue;
+        right = min([0, xDomainMinMax[1]]);
+      }
+
+      const x = ctx.xScale(left) + insets.left;
+      const width = ctx.xScale(right) - x - insets.right;
 
       return { x, y, width, height };
     }
@@ -164,6 +237,6 @@ export function createDimensionGetter<TData>(
  * If value is an array, returns first item, else returns original value
  * Useful when x/y getters for band scale are an array (such as for histograms)
  */
-export function firstValue(value: number | number[]) {
+export function firstValue(value: number | number[] | undefined) {
   return Array.isArray(value) ? value[0] : value;
 }

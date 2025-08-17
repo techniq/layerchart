@@ -1,12 +1,14 @@
 <script lang="ts" module>
-  import { scaleLinear, scaleOrdinal, scaleSqrt } from 'd3-scale';
+  import { scaleOrdinal, scaleSqrt } from 'd3-scale';
   import { type Accessor, accessor, chartDataArray } from '$lib/utils/common.js';
   import { printDebug } from '$lib/utils/debug.js';
   import { filterObject } from '$lib/utils/filterObject.js';
   import {
+    autoScale,
     createScale,
     getRange,
     isScaleBand,
+    isScaleTime,
     makeAccessor,
     type AnyScale,
     type DomainType,
@@ -40,6 +42,7 @@
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
   import BrushContext, { type BrushContextValue } from './BrushContext.svelte';
   import { layerClass } from '$lib/utils/attributes.js';
+  import type { TimeInterval } from 'd3-time';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -149,6 +152,8 @@
     cGet: (d: T) => any;
     x1Get: (d: T) => any;
     y1Get: (d: T) => any;
+    xInterval: TimeInterval | null;
+    yInterval: TimeInterval | null;
     radial: boolean;
     tooltip: TooltipContextValue<T>;
     geo: GeoContextValue;
@@ -417,21 +422,21 @@
     /**
      * The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if
      * you want to override the default or you want to extra options.
-     * @default scaleLinear
+     * @default autoScale
      */
     xScale?: XScale;
 
     /**
      * The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if
      * you want to override the default or you want to extra options.
-     * @default scaleLinear
+     * @default autoScale
      */
     yScale?: YScale;
 
     /**
      * The D3 scale that should be used for the x-dimension. Pass in an instantiated D3 scale if
      * you want to override the default or you want to extra options.
-     * @default scaleLinear
+     * @default autoScale
      */
     zScale?: AnyScale;
 
@@ -445,14 +450,14 @@
     /**
      * The D3 scale that should be used for the x1-dimension. Pass in an instantiated D3 scale if
      * you want to override the default or you want to extra options.
-     * @default scaleLinear
+     * @default autoScale
      */
     x1Scale?: AnyScale;
 
     /**
      * The D3 scale that should be used for the y1-dimension. Pass in an instantiated D3 scale if
      * you want to override the default or you want to extra options.
-     * @default scaleLinear
+     * @default autoScale
      */
     y1Scale?: AnyScale;
 
@@ -640,6 +645,16 @@
      */
     yBaseline?: number | null;
 
+    /**
+     * Time interval to use for the x-axis when using a time scale.
+     */
+    xInterval?: TimeInterval | null;
+
+    /**
+     * Time interval to use for the y-axis when using a time scale.
+     */
+    yInterval?: TimeInterval | null;
+
     /* Props passed to ChartContext */
 
     /**
@@ -703,6 +718,7 @@
     z: zProp,
     r: rProp,
     data = [],
+    flatData: flatDataProp,
     xDomain: xDomainProp,
     yDomain: yDomainProp,
     zDomain: zDomainProp,
@@ -716,12 +732,12 @@
     zPadding,
     rPadding,
     // @ts-expect-error shh
-    xScale: xScaleProp = scaleLinear(),
+    xScale: xScaleProp = autoScale(xDomainProp, flatDataProp ?? data, xProp),
     // @ts-expect-error shh
-    yScale: yScaleProp = scaleLinear(),
-    zScale: zScaleProp = scaleLinear(),
+    yScale: yScaleProp = autoScale(yDomainProp, flatDataProp ?? data, yProp),
+    // @ts-expect-error shh
+    zScale: zScaleProp = autoScale(zDomainProp, flatDataProp ?? data, zProp),
     rScale: rScaleProp = scaleSqrt(),
-    flatData: flatDataProp,
     padding: paddingProp = {},
     verbose = true,
     debug = false,
@@ -738,6 +754,8 @@
     rRange: rRangeProp,
     xBaseline = null,
     yBaseline = null,
+    xInterval = null,
+    yInterval = null,
     meta = {},
     children: _children,
     radial = false,
@@ -780,6 +798,12 @@
 
   const _xDomain: DomainType | undefined = $derived.by(() => {
     if (xDomainProp !== undefined) return xDomainProp;
+
+    if (xInterval != null && Array.isArray(data) && data.length > 0) {
+      const lastXValue = accessor(xProp)(data[data.length - 1]);
+      return [null, xInterval.offset(lastXValue)];
+    }
+
     if (xBaseline != null && Array.isArray(data)) {
       const xValues = data.flatMap(accessor(xProp));
       return [min([xBaseline, ...xValues]), max([xBaseline, ...xValues])];
@@ -788,6 +812,12 @@
 
   const _yDomain: DomainType | undefined = $derived.by(() => {
     if (yDomainProp !== undefined) return yDomainProp;
+
+    if (yInterval != null && Array.isArray(data) && data.length > 0) {
+      const lastYValue = accessor(yProp)(data[data.length - 1]);
+      return [null, yInterval.offset(lastYValue)];
+    }
+
     if (yBaseline != null && Array.isArray(data)) {
       const yValues = data.flatMap(accessor(yProp));
       return [min([yBaseline, ...yValues]), max([yBaseline, ...yValues])];
@@ -798,7 +828,9 @@
     _yRangeProp ?? (radial ? ({ height }: { height: number }) => [0, height / 2] : undefined)
   );
 
-  const yReverse = $derived(yScaleProp ? !isScaleBand(yScaleProp) : true);
+  const yReverse = $derived(
+    yScaleProp ? !isScaleBand(yScaleProp) && !isScaleTime(yScaleProp) : true
+  );
 
   const x = $derived(makeAccessor(xProp));
   const y = $derived(makeAccessor(yProp));
@@ -979,24 +1011,36 @@
   const rGet = $derived(createGetter(r, rScale));
 
   const x1Scale = $derived(
-    x1ScaleProp && x1RangeProp
-      ? createScale(x1ScaleProp, x1Domain, x1RangeProp, {
-          xScale: xScale,
-          width,
-          height,
-        })
+    x1RangeProp
+      ? createScale(
+          // @ts-expect-error shh
+          x1ScaleProp ?? autoScale(x1DomainProp, flatDataProp ?? data, x1Prop),
+          x1Domain,
+          x1RangeProp,
+          {
+            xScale,
+            width,
+            height,
+          }
+        )
       : null
   );
 
   const x1Get = $derived(createGetter(x1, x1Scale));
 
   const y1Scale = $derived(
-    y1ScaleProp && y1RangeProp
-      ? createScale(y1ScaleProp, y1Domain, y1RangeProp, {
-          yScale: yScale,
-          width,
-          height,
-        })
+    y1RangeProp
+      ? createScale(
+          // @ts-expect-error shh
+          y1ScaleProp ?? autoScale(y1DomainProp, flatDataProp ?? data, y1Prop),
+          y1Domain,
+          y1RangeProp,
+          {
+            yScale,
+            width,
+            height,
+          }
+        )
       : null
   );
 
@@ -1246,6 +1290,12 @@
     },
     get y1Scale() {
       return y1Scale;
+    },
+    get xInterval() {
+      return xInterval;
+    },
+    get yInterval() {
+      return yInterval;
     },
     get radial() {
       return radial;

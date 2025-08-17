@@ -81,7 +81,7 @@
   import Rect from './Rect.svelte';
   import Spline from './Spline.svelte';
 
-  import { isScaleBand } from '../utils/scales.svelte.js';
+  import { isScaleBand, isScaleTime } from '../utils/scales.svelte.js';
   import { accessor, type Accessor } from '../utils/common.js';
   import { getChartContext } from './Chart.svelte';
   import type { CommonStyleProps, Without } from '$lib/utils/types.js';
@@ -127,7 +127,7 @@
 
   const dimensions = $derived(getDimensions(data) ?? { x: 0, y: 0, width: 0, height: 0 });
 
-  const isVertical = $derived(isScaleBand(ctx.xScale));
+  const isVertical = $derived(isScaleBand(ctx.xScale) || isScaleTime(ctx.xScale));
   const valueAccessor = $derived(accessor(isVertical ? y : x));
   const value = $derived(valueAccessor(data));
   const resolvedValue = $derived(Array.isArray(value) ? greatestAbs(value) : value);
@@ -136,10 +136,10 @@
   const rounded = $derived(
     roundedProp === 'edge'
       ? isVertical
-        ? resolvedValue >= 0
+        ? resolvedValue >= 0 && ctx.yRange[0] > ctx.yRange[1] // not inverted (bottom to top)
           ? 'top'
           : 'bottom'
-        : resolvedValue >= 0
+        : resolvedValue >= 0 && ctx.xRange[0] < ctx.xRange[1] // not inverted (left to right)
           ? 'right'
           : 'left'
       : roundedProp
@@ -151,16 +151,20 @@
   const bottomRight = $derived(['all', 'bottom', 'right', 'bottom-right'].includes(rounded));
   const width = $derived(dimensions.width);
   const height = $derived(dimensions.height);
-  const diameter = $derived(2 * radius);
+
+  // Clamp radius to prevent extending beyond bounding box
+  const r = $derived(Math.min(radius, width / 2, height / 2));
+  const diameter = $derived(2 * r);
+
   const pathData = $derived(
-    `M${dimensions.x + radius},${dimensions.y} h${width - diameter}
-      ${topRight ? `a${radius},${radius} 0 0 1 ${radius},${radius}` : `h${radius}v${radius}`}
+    `M${dimensions.x + r},${dimensions.y} h${width - diameter}
+      ${topRight ? `a${r},${r} 0 0 1 ${r},${r}` : `h${r}v${r}`}
       v${height - diameter}
-      ${bottomRight ? `a${radius},${radius} 0 0 1 ${-radius},${radius}` : `v${radius}h${-radius}`}
+      ${bottomRight ? `a${r},${r} 0 0 1 ${-r},${r}` : `v${r}h${-r}`}
       h${diameter - width}
-      ${bottomLeft ? `a${radius},${radius} 0 0 1 ${-radius},${-radius}` : `h${-radius}v${-radius}`}
+      ${bottomLeft ? `a${r},${r} 0 0 1 ${-r},${-r}` : `h${-r}v${-r}`}
       v${diameter - height}
-      ${topLeft ? `a${radius},${radius} 0 0 1 ${radius},${-radius}` : `v${-radius}h${radius}`}
+      ${topLeft ? `a${r},${r} 0 0 1 ${r},${-r}` : `v${-r}h${r}`}
       z`
       .split('\n')
       .join('')

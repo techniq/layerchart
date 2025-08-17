@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { scaleTime, scaleThreshold } from 'd3-scale';
+  import { scaleThreshold } from 'd3-scale';
 
   import { Axis, Chart, Highlight, Labels, Layer, Points, Tooltip } from 'layerchart';
 
@@ -23,15 +23,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      {data}
-      x="date"
-      xScale={scaleTime()}
-      y="value"
-      yDomain={[0, null]}
-      yNice
-      padding={{ left: 16, bottom: 24 }}
-    >
+    <Chart {data} x="date" y="value" yDomain={[0, null]} yNice padding={{ left: 16, bottom: 24 }}>
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
@@ -48,7 +40,6 @@
     <Chart
       {data}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice
@@ -78,15 +69,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart
-      {data}
-      x="date"
-      xScale={scaleTime()}
-      y="value"
-      yDomain={[0, null]}
-      yNice
-      padding={{ left: 16, bottom: 24 }}
-    >
+    <Chart {data} x="date" y="value" yDomain={[0, null]} yNice padding={{ left: 16, bottom: 24 }}>
       <Layer type={shared.renderContext}>
         <Axis placement="left" grid rule />
         <Axis placement="bottom" rule />
@@ -106,7 +89,6 @@
     <Chart
       {data}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, null]}
       yNice

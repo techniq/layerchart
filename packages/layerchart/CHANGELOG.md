@@ -1,5 +1,101 @@
 # LayerChart
 
+## 2.0.0-next.37
+
+### Patch Changes
+
+- fix(ArcChart): Do not pass y accessor to use linear scale fallback ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.36
+
+### Patch Changes
+
+- fix(PieChart): Do not pass `y` accessor to use linear scale fallback ([#631](https://github.com/techniq/layerchart/pull/631))
+
+## 2.0.0-next.35
+
+### Patch Changes
+
+- feat(Chart): Automatically determine scale based on data and domain values (instead of defaulting to scaleLinear) ([#624](https://github.com/techniq/layerchart/pull/624))
+
+## 2.0.0-next.34
+
+### Minor Changes
+
+- feat(Rule): Support using as data-driven mark (ex. candlestick, lollipop) by default (`<Rule>` using Chart accessors) or passing explicit `x`/`y` accessors (ex. `<Rule y={["high", "low"]} />`). Resolves #64 ([#622](https://github.com/techniq/layerchart/pull/622))
+
+- breaking(Points): Remove `<Points links>` prop. Use `<Rule>` with x/y accessor instead ([#622](https://github.com/techniq/layerchart/pull/622))
+
+### Patch Changes
+
+- breaking(Axis): Rename `x="left|right"` and `y="top|bottom"` props with `# LayerChart prefix (ex. `<Axis x="$left">`) ([#622](https://github.com/techniq/layerchart/pull/622))
+
+## 2.0.0-next.33
+
+### Patch Changes
+
+- fix(Bars): Fix inverted rect when rendered top-to-bottom or right-to-left. Fixes #540 ([#613](https://github.com/techniq/layerchart/pull/613))
+
+- fix(Axis): Filter distinct tick values (useful when manually injecting extra values) ([#615](https://github.com/techniq/layerchart/pull/615))
+
+- feat(Axis): Use `format` to filter ticks (integer and date/time). Helpful to keep ticks above a threshold for wide charts or short durations. ([#615](https://github.com/techniq/layerchart/pull/615))
+
+## 2.0.0-next.32
+
+### Patch Changes
+
+- fix(Points): Update `point.x` / `point.y` based on `ctx.radial` to simplify children snippet usage ([#611](https://github.com/techniq/layerchart/pull/611))
+
+## 2.0.0-next.31
+
+### Minor Changes
+
+- feat(Chart): Add `xInterval` / `yInterval` for time scales usage with bar charts ([#562](https://github.com/techniq/layerchart/pull/562))
+
+- feat(BarChart): Support time scale with `xInterval` / `yInterval` props ([#562](https://github.com/techniq/layerchart/pull/562))
+
+- feat(TooltipContext): Support `band` mode with time scale (similar to band scale) ([#562](https://github.com/techniq/layerchart/pull/562))
+
+- feat(ForceSimulation): Added `onNodesChange` callback to `ForceSimulation` ([#607](https://github.com/techniq/layerchart/pull/607))
+
+### Patch Changes
+
+- fix(Bar): Clamp radius to width/height to not cause artifacts with small values (including `0`) when rounding a single edge. Fixes #383 ([#610](https://github.com/techniq/layerchart/pull/610))
+
+- fix(Highlight): Properly handle area highlights with y-axis time scales ([#562](https://github.com/techniq/layerchart/pull/562))
+
+## 2.0.0-next.30
+
+### Patch Changes
+
+- fix(AnnotationPoint): Do not propagate mouse/touch move/leave events to TooltipContext after switching from pointer events. Fixes #598 ([#602](https://github.com/techniq/layerchart/pull/602))
+
+## 2.0.0-next.29
+
+### Patch Changes
+
+- fix(Axis): Fix display of axis labels ([#591](https://github.com/techniq/layerchart/pull/591))
+
+## 2.0.0-next.28
+
+### Patch Changes
+
+- fix(Axis): Fix memory leak and improve performance when tick values are `Date` instances ([#586](https://github.com/techniq/layerchart/pull/586))
+
+## 2.0.0-next.27
+
+### Patch Changes
+
+- feat: Update `applyLanes()` util to support nested string key and function accessors for start/end properties ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix: Add `applyLanes()` as top-level export ([#449](https://github.com/techniq/layerchart/pull/449))
+
+## 2.0.0-next.26
+
+### Patch Changes
+
+- feat: Add `applyLanes()` array util to support densely packing timelines ([#449](https://github.com/techniq/layerchart/pull/449))
+
 ## 2.0.0-next.25
 
 ### Patch Changes

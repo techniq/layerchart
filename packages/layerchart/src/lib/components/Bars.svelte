@@ -32,8 +32,8 @@
   import Bar, { type BarProps, type BarPropsWithoutHTML } from './Bar.svelte';
   import Group from './Group.svelte';
 
-  import { chartDataArray } from '../utils/common.js';
   import { getChartContext } from './Chart.svelte';
+  import { chartDataArray } from '../utils/common.js';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
 
   let {

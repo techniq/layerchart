@@ -367,7 +367,6 @@
   bind:context
   data={visibleData}
   x={value}
-  y={key}
   {c}
   cDomain={chartData.map(keyAccessor)}
   cRange={seriesColors.length

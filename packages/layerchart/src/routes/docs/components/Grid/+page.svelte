@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { scaleTime, scaleBand } from 'd3-scale';
   import { MediaQueryPresets } from '@layerstack/svelte-state';
 
   import { Axis, Chart, Grid, Layer } from 'layerchart';
@@ -21,7 +20,6 @@
     <Chart
       {data}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -40,7 +38,6 @@
     <Chart
       {data}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -59,7 +56,6 @@
     <Chart
       {data}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -78,7 +74,6 @@
     <Chart
       {data}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -97,7 +92,6 @@
     <Chart
       {data}
       x="date"
-      xScale={scaleBand()}
       y="value"
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -117,7 +111,6 @@
     <Chart
       {data}
       x="date"
-      xScale={scaleBand()}
       y="value"
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -134,7 +127,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
+    <Chart {data} x="date" y="value" yDomain={[0, 100]} radial>
       <Layer type={shared.renderContext}>
         <Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y />
       </Layer>
@@ -146,7 +139,7 @@
 
 <Preview {data}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <Chart {data} x="date" xScale={scaleTime()} y="value" yDomain={[0, 100]} radial>
+    <Chart {data} x="date" y="value" yDomain={[0, 100]} radial>
       <Layer type={shared.renderContext} center>
         <Grid x xTicks={(scale) => scale.ticks?.().splice(1)} y radialY="linear" />
       </Layer>
@@ -161,7 +154,6 @@
     <Chart
       {data}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, 2]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -186,7 +178,6 @@
     <Chart
       {data}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -206,7 +197,6 @@
     <Chart
       {data}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -226,7 +216,6 @@
     <Chart
       {data}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
@@ -246,7 +235,6 @@
     <Chart
       {data}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, 100]}
       padding={{ bottom: 20, left: 20, right: 20 }}
@@ -266,7 +254,6 @@
     <Chart
       {data}
       x="date"
-      xScale={scaleTime()}
       y="value"
       yDomain={[0, 100]}
       padding={{ top: 20, bottom: 20, left: 20, right: 20 }}

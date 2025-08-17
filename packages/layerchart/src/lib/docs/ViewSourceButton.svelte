@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ComponentProps } from 'svelte';
   import { Button, Dialog, Toggle, Tooltip } from 'svelte-ux';
-  import { mdiGithub } from '@mdi/js';
+  import LucideGithub from '~icons/lucide/github.svelte';
 
   import Code from './Code.svelte';
 
@@ -29,13 +29,13 @@
         </div>
 
         {#if href}
-          <Button icon={mdiGithub} variant="fill-light" color="primary" {href} target="_blank">
+          <Button icon={LucideGithub} variant="fill-light" color="primary" {href} target="_blank">
             View on Github
           </Button>
         {/if}
       </div>
 
-      <div class="overflow-auto">
+      <div class="overflow-auto border-t">
         <Code {source} language={source.startsWith('<script') ? 'svelte' : 'js'} />
       </div>
 

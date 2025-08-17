@@ -3,7 +3,8 @@
   import { feature } from 'topojson-client';
   import { index } from 'd3-array';
 
-  import { mdiPlay, mdiStop } from '@mdi/js';
+  import LucidePlay from '~icons/lucide/play';
+  import LucideSquare from '~icons/lucide/square';
 
   import { Chart, GeoPath, Graticule, Layer, Tooltip, type ChartContextValue } from 'layerchart';
   import { Button, ButtonGroup } from 'svelte-ux';
@@ -104,8 +105,18 @@
         </span>
       {/if}
       <ButtonGroup variant="fill-light" color="primary" size="sm">
-        <Button icon={mdiPlay} on:click={play} disabled={isPlaying} />
-        <Button icon={mdiStop} on:click={stop} disabled={!isPlaying} />
+        <Button
+          icon={LucidePlay}
+          on:click={play}
+          disabled={isPlaying}
+          classes={{ icon: 'text-xs' }}
+        />
+        <Button
+          icon={LucideSquare}
+          on:click={stop}
+          disabled={!isPlaying}
+          classes={{ icon: 'text-xs' }}
+        />
       </ButtonGroup>
     </div>
 

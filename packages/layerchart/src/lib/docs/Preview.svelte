@@ -1,34 +1,32 @@
 <script lang="ts">
   import { slide } from 'svelte/transition';
-  // TODO: No longer copy from svelte-ux after prismjs is migrated to ESM (commonjs causes issue with Vite from another library)
-  import Prism from 'prismjs';
-  import 'prism-svelte';
-  import { mdiCodeTags, mdiTable } from '@mdi/js';
+  import LucideCode from '~icons/lucide/code';
+  import LucideTable from '~icons/lucide/table';
 
   import { Button, CopyButton, Dialog, Toggle, Tooltip } from 'svelte-ux';
   import { cls } from '@layerstack/tailwind';
 
   import Code from './Code.svelte';
   import Json from './Json.svelte';
+  import type { HTMLAttributes } from 'svelte/elements';
   import type { Snippet } from 'svelte';
 
-  let {
-    code,
-    data,
-    language = 'svelte',
-    highlightedCode = code ? Prism.highlight(code, Prism.languages.svelte, language) : '',
-    showCode = false,
-    class: className,
-    children,
-  }: {
+  interface Props {
+    children: Snippet;
     code?: string;
     data?: any;
     language?: string;
-    highlightedCode?: string;
     showCode?: boolean;
-    class?: string | null;
-    children: Snippet;
-  } = $props();
+  }
+
+  let {
+    children,
+    code = undefined,
+    data = undefined,
+    language = 'svelte',
+    showCode = false,
+    class: className,
+  }: Props & HTMLAttributes<HTMLDivElement> = $props();
 
   /**
    * Custom JSON replacer (to use with JSON.stringify()) to convert `Date` instances to `new Date()`
@@ -54,21 +52,21 @@
   }
 </script>
 
-<div class={cls('Preview border rounded-sm bg-surface-100', className)}>
+<div class={cls('Preview border rounded bg-surface-100', className)}>
   <div class="p-4">
-    {@render children?.()}
+    {@render children()}
   </div>
 
   {#if code && showCode}
-    <div transition:slide class="bg-surface-200">
-      <Code source={code} highlightedSource={highlightedCode} classes={{ pre: 'rounded-t-none' }} />
+    <div transition:slide class="border-t">
+      <Code source={code} {language} />
     </div>
   {/if}
 </div>
 
 {#if code}
   <Button
-    icon={mdiCodeTags}
+    icon={LucideCode}
     class="text-surface-content/70 py-1"
     on:click={() => (showCode = !showCode)}
   >
@@ -78,7 +76,8 @@
 
 {#if data}
   <Toggle let:on={open} let:toggle let:toggleOff>
-    <Button icon={mdiTable} class="text-surface-content/70 py-1" on:click={toggle}>View data</Button
+    <Button icon={LucideTable} class="text-surface-content/70 py-1" on:click={toggle}
+      >View data</Button
     >
     <Dialog
       {open}

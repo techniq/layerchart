@@ -7,7 +7,6 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { shared } from '../../shared.svelte.js';
 
-  // @ts-expect-error
   import LucideStar from '~icons/lucide/star';
 
   let { data } = $props();
