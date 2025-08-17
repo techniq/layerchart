@@ -1,7 +1,7 @@
 <script module>
   import { createHighlighter } from 'shiki';
 
-  const highlighter = await createHighlighter({
+  const highlighter = createHighlighter({
     themes: ['github-light-default', 'github-dark-default'],
     langs: ['svelte', 'javascript', 'ts', 'typescript', 'json', 'sh'],
   });
@@ -24,17 +24,6 @@
     classes = {},
     class: className,
   }: Props & HTMLAttributes<HTMLDivElement> = $props();
-
-  let htmlHighlightedSource = $derived.by(() => {
-    if (!highlighter || !source) return '';
-    return highlighter.codeToHtml(source, {
-      lang: language,
-      themes: {
-        light: 'github-light-default',
-        dark: 'github-dark-default',
-      },
-    });
-  });
 </script>
 
 <div
@@ -48,7 +37,20 @@
   {#if source}
     <pre class={cls('whitespace-normal overflow-auto', classes.pre)}>
       <code class={cls('text-xs', classes.code)}>
-        {@html htmlHighlightedSource}
+        {#await highlighter}
+          <div>Loading...</div>
+        {:then h}
+          {@html h.codeToHtml(source, {
+            lang: language,
+            themes: {
+              light: 'github-light-default',
+              dark: 'github-dark-default',
+            },
+          })}
+        {:catch error}
+          <div class="text-red-500">Error loading code highlighting: {error.message}</div>
+        {/await}
+
       </code>
     </pre>
 
