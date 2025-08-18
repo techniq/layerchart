@@ -933,7 +933,6 @@
 - breaking(Bar|Bars): Replaced `inset: number` prop with `insets: Insets | undefined`. ([#321](https://github.com/techniq/layerchart/pull/321))
 
   To migrate from `inset` to `insets` replace `inset = n` with:
-
   - `insets = { x: n / 2 }` if `orientation="vertical"`
   - `insets = { y: n / 2 }` if `orientation="horizontal"`
 
@@ -2029,7 +2028,6 @@
   ```
 
   **Additional**
-
   - Rename tooltipContext's `top`/`left` to `x`/`y`
   - Add `anchor` prop to align based on corner/edge/center (9 points) of tooltip instead of always top-left corner.
   - Add more tooltip examples
@@ -2159,7 +2157,6 @@
 - Remove `ConnectedPoints` component and replace with `links` prop on `<Points>` ([`f514bb6`](https://github.com/techniq/layerchart/commit/f514bb69fa99c6243958cf9a620ca24a137b1d6d))
 
 - Highlight overhaul ([`d9dd4bf`](https://github.com/techniq/layerchart/commit/d9dd4bf38f17530950d29eb6edff400a7d6dff02))
-
   - Consolidate HighlightLine and HighlightRect
   - Support enabling `points`, `lines`, and `area` individually
   - Support passing props to underlying Line, Circle, and Rect

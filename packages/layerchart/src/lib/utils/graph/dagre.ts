@@ -109,14 +109,14 @@ export function dagreGraph(
 }
 
 /**
- * Get all upstream predecessors for dagre nodeId
+ * Get all upstream predecessors ids for dagre nodeId
  */
 export function dagreAncestors(
   graph: dagre.graphlib.Graph,
   nodeId: string,
   maxDepth = Infinity,
   currentDepth = 0
-): dagre.Node[] {
+): string[] {
   if (currentDepth === maxDepth) {
     return [];
   }
@@ -124,28 +124,26 @@ export function dagreAncestors(
   const predecessors = graph.predecessors(nodeId) ?? [];
   return [
     ...predecessors,
-    // @ts-expect-error: Types from dagre appear incorrect
     ...predecessors.flatMap((pId) => dagreAncestors(graph, pId, maxDepth, currentDepth + 1)),
   ];
 }
 
 /**
- * Get all downstream descendants for dagre nodeId
+ * Get all downstream descendants ids for dagre nodeId
  */
 export function dagreDescendants(
   graph: dagre.graphlib.Graph,
   nodeId: string,
   maxDepth = Infinity,
   currentDepth = 0
-): dagre.Node[] {
+): string[] {
   if (currentDepth === maxDepth) {
     return [];
   }
 
-  const predecessors = graph.successors(nodeId) ?? [];
+  const successors = graph.successors(nodeId) ?? [];
   return [
-    ...predecessors,
-    // @ts-expect-error: Types from dagre appear incorrect
-    ...predecessors.flatMap((pId) => dagreDescendants(graph, pId, maxDepth, currentDepth + 1)),
+    ...successors,
+    ...successors.flatMap((pId) => dagreDescendants(graph, pId, maxDepth, currentDepth + 1)),
   ];
 }
