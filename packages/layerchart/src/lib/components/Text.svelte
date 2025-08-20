@@ -541,6 +541,7 @@
   {@const translateY =
     verticalAnchor === 'middle' ? '-50%' : verticalAnchor === 'end' ? '-100%' : '0%'}
   <!-- TODO: How best to handle dx/dy when adjusted for svg style issues? -->
+  <!-- style:line-height={lineHeight} -->
   <!-- TODO: How to handle fill-/stroke- vs bg-/text-/border- colors? -->
   <div
     style:position="absolute"

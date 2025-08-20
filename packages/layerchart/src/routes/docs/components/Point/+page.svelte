@@ -16,19 +16,21 @@
       y={(d) => d.y}
       xDomain={[0, 100]}
       yDomain={[0, 100]}
-      padding={{ bottom: 20, left: 20 }}
+      padding={{ top: 10, bottom: 20, left: 24, right: 10 }}
     >
       <Layer type={shared.renderContext}>
         <Axis placement="bottom" rule />
         <Axis placement="left" rule />
+
         <Point d={{ x: 50, y: 50 }}>
           {#snippet children({ x, y })}
-            <Circle cx={x} cy={y} r={10} class="fill-surface-content" />
+            <Circle cx={x} cy={y} r={10} />
           {/snippet}
         </Point>
+
         <Point d={{ x: 20, y: 20 }}>
           {#snippet children({ x, y })}
-            <Circle cx={x} cy={y} r={15} class="fill-primary" />
+            <Circle cx={x} cy={y} r={15} class="fill-primary bg-primary" />
           {/snippet}
         </Point>
       </Layer>
