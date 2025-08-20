@@ -274,7 +274,12 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: className,
+            classes: cls(
+              layerClass('spline-path'),
+              !fill && 'fill-none',
+              !stroke && 'stroke-surface-content',
+              className
+            ),
           }
     );
   }

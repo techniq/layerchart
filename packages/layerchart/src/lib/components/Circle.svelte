@@ -115,7 +115,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: className,
+            classes: cls(layerClass('circle'), fill == null && 'fill-surface-content', className),
           }
     );
   }

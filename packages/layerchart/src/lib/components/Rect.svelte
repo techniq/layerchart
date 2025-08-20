@@ -108,7 +108,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: className,
+            classes: cls(layerClass('rect'), fill == null && 'fill-surface-content', className),
           }
     );
   }
@@ -182,7 +182,7 @@
     style:border-style="solid"
     style:border-color={stroke}
     style:border-radius="{restProps.rx}px"
-    class={cls(layerClass('rect'), fill == null && 'fill-surface-content', className)}
+    class={cls(layerClass('rect'), fill == null && 'bg-surface-content', className)}
     {...restProps as any}
     {onclick}
     {ondblclick}

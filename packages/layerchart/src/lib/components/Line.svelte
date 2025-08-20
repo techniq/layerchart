@@ -149,7 +149,11 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, stroke, strokeWidth, opacity },
-            classes: className,
+            classes: cls(
+              layerClass('line'),
+              stroke === undefined && 'stroke-surface-content',
+              className
+            ),
           }
     );
   }
