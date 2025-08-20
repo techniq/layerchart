@@ -522,7 +522,11 @@
         {stroke}
         stroke-width={strokeWidth}
         {opacity}
-        class={cls(layerClass('text'), fill === undefined && 'fill-surface-content', className)}
+        class={cls(
+          layerClass('text'),
+          fill === undefined && 'text-surface-content fill-current',
+          className
+        )}
       >
         {#each wordsByLines as line, index}
           <tspan
