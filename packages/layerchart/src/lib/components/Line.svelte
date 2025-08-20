@@ -216,8 +216,8 @@
     style:left="{motionX1.current}px"
     style:top="{motionY1.current}px"
     style:width="{length}px"
-    style:height="1px"
-    style:transform="rotate({angle}deg)"
+    style:height="{strokeWidth ?? 1}px"
+    style:transform="translateY(-50%) rotate({angle}deg)"
     style:transform-origin="0 50%"
     style:opacity
     style:background-color={fill}
