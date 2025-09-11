@@ -44,7 +44,7 @@
     ticks?: TicksConfig;
 
     /**
-     * Width or height of each tick in pxiels (responsive reduce)
+     * Width or height of each tick in pixels (enabling responsive count)
      */
     tickSpacing?: number;
 
@@ -96,7 +96,7 @@
     transitionInParams?: TransitionParams<In>;
 
     /**
-     * Scale for the axis
+     * Override scale for the axis
      */
     scale?: any;
 
@@ -125,8 +125,17 @@
 
   import { extent } from 'd3-array';
   import { pointRadial } from 'd3-shape';
+  import {
+    timeDay,
+    timeHour,
+    timeMillisecond,
+    timeMinute,
+    timeMonth,
+    timeSecond,
+    timeYear,
+  } from 'd3-time';
 
-  import { type FormatType, type FormatConfig } from '@layerstack/utils';
+  import { type FormatType, type FormatConfig, unique, PeriodType } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
 
   import Group, { type GroupProps } from './Group.svelte';
@@ -138,7 +147,7 @@
   import { getChartContext } from './Chart.svelte';
   import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
   import { type MotionProp } from '$lib/utils/motion.svelte.js';
-  import { resolveTickFormat, resolveTickVals, type TicksConfig } from '$lib/utils/ticks.js';
+  import { autoTickVals, autoTickFormat, type TicksConfig } from '$lib/utils/ticks.js';
 
   let {
     placement,
@@ -183,6 +192,9 @@
   const scale = $derived(
     scaleProp ?? (['horizontal', 'angle'].includes(orientation) ? ctx.xScale : ctx.yScale)
   );
+  const interval = $derived(
+    ['horizontal', 'angle'].includes(orientation) ? ctx.xInterval : ctx.yInterval
+  );
 
   const xRangeMinMax = $derived(extent<number>(ctx.xRange)) as [number, number];
   const yRangeMinMax = $derived(extent<number>(ctx.yRange)) as [number, number];
@@ -206,9 +218,46 @@
         ? Math.round(ctxSize / tickSpacing)
         : undefined
   );
-  const tickVals = $derived(resolveTickVals(scale, ticks, tickCount));
+  const tickVals = $derived.by(() => {
+    let tickVals = autoTickVals(scale, ticks, tickCount);
+
+    if (interval != null) {
+      // Remove last tick when interval is provided (such as for bar charts with center aligned (offset) ticks)
+      tickVals.pop();
+    }
+
+    // Use format to filter ticks (helpful to keep ticks above a threshold for wide charts or short durations)
+    const formatType = typeof format === 'object' ? format?.type : format;
+
+    if (formatType === 'integer') {
+      tickVals = tickVals.filter(Number.isInteger);
+    } else if (formatType === 'year' || formatType === PeriodType.CalendarYear) {
+      tickVals = tickVals.filter((val) => +timeYear.floor(val) === +val);
+    } else if (
+      formatType === 'month' ||
+      formatType === PeriodType.Month ||
+      formatType === PeriodType.MonthYear
+    ) {
+      // tickVals = tickVals.filter((val) => +timeMonth.floor(val) === +val);
+      tickVals = tickVals.filter((val) => val.getDate() < 7); // first week of the month
+    } else if (formatType === 'day' || formatType === PeriodType.Day) {
+      tickVals = tickVals.filter((val) => +timeDay.floor(val) === +val);
+    } else if (formatType === 'hour' || formatType === PeriodType.Hour) {
+      tickVals = tickVals.filter((val) => +timeHour.floor(val) === +val);
+    } else if (formatType === 'minute' || formatType === PeriodType.Minute) {
+      tickVals = tickVals.filter((val) => +timeMinute.floor(val) === +val);
+    } else if (formatType === 'second' || formatType === PeriodType.Second) {
+      tickVals = tickVals.filter((val) => +timeSecond.floor(val) === +val);
+    } else if (formatType === 'millisecond' || formatType === PeriodType.Millisecond) {
+      tickVals = tickVals.filter((val) => +timeMillisecond.floor(val) === +val);
+    }
+
+    // Remove any duplicates (manually added)
+    return unique(tickVals);
+  });
+
   const tickFormat = $derived(
-    resolveTickFormat({
+    autoTickFormat({
       scale,
       ticks,
       count: tickCount,
@@ -221,27 +270,29 @@
   function getCoords(tick: any) {
     switch (placement) {
       case 'top':
-        return {
-          x: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
-          y: yRangeMinMax[0],
-        };
-
       case 'bottom':
         return {
-          x: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
-          y: yRangeMinMax[1],
+          x:
+            scale(tick) +
+            (isScaleBand(scale)
+              ? scale.bandwidth() / 2
+              : ctx.xInterval
+                ? (scale(ctx.xInterval.offset(tick)) - scale(tick)) / 2 // offset 1/2 width of time interval
+                : 0),
+          y: placement === 'top' ? yRangeMinMax[0] : yRangeMinMax[1],
         };
 
       case 'left':
-        return {
-          x: xRangeMinMax[0],
-          y: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
-        };
-
       case 'right':
         return {
-          x: xRangeMinMax[1],
-          y: scale(tick) + (isScaleBand(scale) ? scale.bandwidth() / 2 : 0),
+          x: placement === 'left' ? xRangeMinMax[0] : xRangeMinMax[1],
+          y:
+            scale(tick) +
+            (isScaleBand(scale)
+              ? scale.bandwidth() / 2
+              : ctx.yInterval
+                ? (scale(ctx.yInterval.offset(tick)) - scale(tick)) / 2 // offset 1/2 height of time interval
+                : 0),
         };
 
       case 'angle':
@@ -388,8 +439,8 @@
   {#if rule !== false}
     {@const ruleProps = extractLayerProps(rule, 'axis-rule')}
     <Rule
-      x={placement === 'left' || placement === 'right' ? placement : placement === 'angle'}
-      y={placement === 'top' || placement === 'bottom' ? placement : placement === 'radius'}
+      x={placement === 'left' ? '$left' : placement === 'right' ? '$right' : placement === 'angle'}
+      y={placement === 'top' ? '$top' : placement === 'bottom' ? '$bottom' : placement === 'radius'}
       {motion}
       {...ruleProps}
       class={cls('stroke-surface-content/50', classes.rule, ruleProps?.class)}

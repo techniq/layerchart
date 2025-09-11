@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
+  import { scaleBand, scaleOrdinal } from 'd3-scale';
   import { range } from 'd3-array';
   import { timeDay } from 'd3-time';
   import { Button, State } from 'svelte-ux';
@@ -157,7 +157,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[40px]">
-    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" brush>
+    <Chart data={data.appleStock} x="date" y="value" brush>
       <Layer type={shared.renderContext}>
         <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
       </Layer>
@@ -172,7 +172,6 @@
     <Chart
       data={data.appleStock}
       x="date"
-      xScale={scaleTime()}
       y="value"
       brush={{ classes: { range: 'bg-secondary/10', handle: 'bg-secondary/50' } }}
     >
@@ -190,7 +189,6 @@
     <Chart
       data={data.appleStock}
       x="date"
-      xScale={scaleTime()}
       y="value"
       brush={{ classes: { range: 'striped-background' } }}
     >
@@ -208,7 +206,6 @@
     <Chart
       data={data.appleStock}
       x="date"
-      xScale={scaleTime()}
       y="value"
       brush={{ classes: { range: 'bg-secondary/10' }, handleSize: 8 }}
     >
@@ -251,7 +248,7 @@
 
 <Preview data={data.appleStock}>
   <div class="h-[40px]">
-    <Chart data={data.appleStock} x="date" xScale={scaleTime()} y="value" brush>
+    <Chart data={data.appleStock} x="date" y="value" brush>
       {#snippet children({ context })}
         <Layer type={shared.renderContext}>
           <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
@@ -283,14 +280,7 @@
 <Preview data={data.appleStock}>
   <State initial={[null, null]} let:value={xDomain} let:set>
     <div class="h-[40px]">
-      <Chart
-        data={data.appleStock}
-        x="date"
-        xScale={scaleTime()}
-        y="value"
-        padding={{ left: 80, right: 80 }}
-        brush
-      >
+      <Chart data={data.appleStock} x="date" y="value" padding={{ left: 80, right: 80 }} brush>
         {#snippet children({ context })}
           <Layer type={shared.renderContext}>
             <Area line={{ class: 'stroke-2 stroke-primary' }} class="fill-primary/20" />
@@ -328,7 +318,6 @@
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           {xDomain}
           y="value"
           yDomain={[0, null]}
@@ -367,7 +356,6 @@
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           y="value"
           {yDomain}
           padding={{ left: 16, bottom: 24 }}
@@ -406,7 +394,6 @@
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           xDomain={value?.xDomain}
           y="value"
           yDomain={value?.yDomain}
@@ -450,7 +437,6 @@
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           {xDomain}
           y="value"
           yDomain={[0, null]}
@@ -474,7 +460,6 @@
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           y="value"
           padding={{ left: 16 }}
           brush={{
@@ -502,7 +487,6 @@
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           y="value"
           padding={{ bottom: 24 }}
           brush={{
@@ -523,7 +507,6 @@
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           y="value"
           {yDomain}
           padding={{ left: 16, bottom: 24 }}
@@ -560,7 +543,6 @@
               (xDomain?.[1] == null || d.date <= xDomain?.[1])
           )}
           x="date"
-          xScale={scaleTime()}
           y="value"
           yDomain={[0, null]}
           padding={{ left: 16, bottom: 24 }}
@@ -588,7 +570,6 @@
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           y="value"
           padding={{ left: 16 }}
           brush={{
@@ -624,7 +605,6 @@
           <Chart
             {data}
             x="date"
-            xScale={scaleTime()}
             {xDomain}
             y="value"
             yBaseline={0}
@@ -652,7 +632,6 @@
           <Chart
             {data}
             x="date"
-            xScale={scaleTime()}
             y="value"
             padding={{ left: 16 }}
             brush={{
@@ -684,7 +663,6 @@
         <Chart
           data={data.appleStock}
           x="date"
-          xScale={scaleTime()}
           {xDomain}
           y="value"
           yDomain={[0, null]}
@@ -889,6 +867,18 @@
     </div>
   </State>
 </Preview>
+
+<!-- <h2>Band scale</h2>
+
+<Preview data={dataSeriesData}>
+  <div class="h-[100px]">
+    <Chart data={dataSeriesData} x="date" xScale={scaleBand().padding(0.4)} y="value" brush>
+      <Layer type={shared.renderContext}>
+        <Bars strokeWidth={1} class="fill-primary" />
+      </Layer>
+    </Chart>
+  </div>
+</Preview> -->
 
 <style>
   :global(.striped-background) {

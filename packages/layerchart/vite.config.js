@@ -24,7 +24,6 @@ const config = {
         },
       },
     }),
-    // @ts-expect-error
     devtoolsJson(),
     // Needs to be last
     visualizer({
@@ -33,9 +32,6 @@ const config = {
       gzipSize: true,
     }),
   ],
-  optimizeDeps: {
-    exclude: ['~icons'],
-  },
   resolve: {
     noExternal: true, // https://github.com/AdrianGonz97/refined-cf-pages-action/issues/26#issuecomment-2878397440
   },

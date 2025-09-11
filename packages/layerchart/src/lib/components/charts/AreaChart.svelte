@@ -122,7 +122,6 @@
     renderContext = 'svg',
     profile = false,
     debug = false,
-    xScale: xScaleProp,
     children: childrenProp,
     aboveContext,
     belowContext,
@@ -195,11 +194,6 @@
 
     return _chartData;
   });
-
-  // Default xScale based on first data's `x` value
-  const xScale = $derived(
-    xScaleProp ?? (accessor(x)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear())
-  );
 
   function isStackData(d: TData): d is TData & { stackData: any[] } {
     return d && typeof d === 'object' && 'stackData' in d;
@@ -433,7 +427,6 @@
   data={chartData}
   {x}
   {xDomain}
-  {xScale}
   y={resolveAccessor(y)}
   yBaseline={0}
   yNice

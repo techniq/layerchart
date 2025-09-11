@@ -58,19 +58,22 @@ export function createSeries<TKey extends string>(options: {
   });
 }
 
-export function createDateSeries<TKey extends string>(options: {
-  count?: number;
-  min: number;
-  max: number;
-  keys?: TKey[];
-  value?: 'number' | 'integer';
-}) {
+export function createDateSeries<TKey extends string>(
+  options: {
+    count?: number;
+    min?: number;
+    max?: number;
+    keys?: TKey[];
+    value?: 'number' | 'integer';
+  } = {}
+) {
   const now = timeDay.floor(new Date());
 
   const count = options.count ?? 10;
-  const min = options.min;
-  const max = options.max;
+  const min = options.min ?? 0;
+  const max = options.max ?? 100;
   const keys = options.keys ?? ['value'];
+  const valueType = options.value ?? 'number';
 
   return Array.from({ length: count }).map((_, i) => {
     return {
@@ -79,7 +82,7 @@ export function createDateSeries<TKey extends string>(options: {
         keys.map((key) => {
           return [
             key,
-            options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max),
+            valueType === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max),
           ];
         })
       ),
@@ -87,17 +90,20 @@ export function createDateSeries<TKey extends string>(options: {
   });
 }
 
-export function createTimeSeries<TKey extends string>(options: {
-  count?: number;
-  min: number;
-  max: number;
-  keys: TKey[];
-  value: 'number' | 'integer';
-}) {
+export function createTimeSeries<TKey extends string>(
+  options: {
+    count?: number;
+    min?: number;
+    max?: number;
+    keys?: TKey[];
+    value?: 'number' | 'integer';
+  } = {}
+) {
   const count = options.count ?? 10;
-  const min = options.min;
-  const max = options.max;
+  const min = options.min ?? 0;
+  const max = options.max ?? 100;
   const keys = options.keys ?? ['value'];
+  const valueType = options.value ?? 'number';
 
   let lastStartDate = timeDay.floor(new Date());
 
@@ -113,7 +119,7 @@ export function createTimeSeries<TKey extends string>(options: {
         keys.map((key) => {
           return [
             key,
-            options.value === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max),
+            valueType === 'integer' ? getRandomInteger(min, max) : getRandomNumber(min, max),
           ];
         })
       ),

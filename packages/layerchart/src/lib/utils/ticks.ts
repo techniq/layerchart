@@ -122,7 +122,7 @@ export type TicksConfig =
   | { interval: TimeInterval | null }
   | null;
 
-export function resolveTickVals(scale: AnyScale, ticks?: TicksConfig, count?: number): any[] {
+export function autoTickVals(scale: AnyScale, ticks?: TicksConfig, count?: number): any[] {
   // Explicit ticks
   if (Array.isArray(ticks)) return ticks;
 
@@ -152,7 +152,7 @@ export function resolveTickVals(scale: AnyScale, ticks?: TicksConfig, count?: nu
   return [];
 }
 
-export function resolveTickFormat(options: {
+export function autoTickFormat(options: {
   scale: AnyScale;
   ticks?: TicksConfig;
   count?: number;

@@ -73,7 +73,7 @@
   <h2>Install package</h2>
 
   <div>Install <code>layerchart</code> package</div>
-  <Code source={`npm install layerchart`} language="sh" />
+  <Code source={`npm install layerchart@next`} language="sh" />
 
   <Blockquote>
     <div>
@@ -175,3 +175,10 @@
   <a href="https://svelte-ux.techniq.dev/">Svelte UX</a> for a large collection of Svelte components,
   actions, stores, and utilities to build highly interactive applications.
 </div>
+
+<style>
+  :global(.Code) {
+    border-width: theme(borderWidth.DEFAULT);
+    border-radius: theme(borderRadius.DEFAULT);
+  }
+</style>

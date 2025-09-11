@@ -20,7 +20,7 @@
   import Preview from '$lib/docs/Preview.svelte';
   import Blockquote from '$lib/docs/Blockquote.svelte';
   import { createDateSeries, wideData, longData } from '$lib/utils/genData.js';
-  import { timeMonth } from 'd3-time';
+  import { timeDay, timeMonth } from 'd3-time';
   import { interpolate, quantize } from 'd3-interpolate';
   import { interpolateSpectral } from 'd3-scale-chromatic';
   import { shared } from '../../shared.svelte.js';
@@ -126,6 +126,53 @@
       x="value"
       y="date"
       orientation="horizontal"
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Time scale / interval</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      xInterval={timeDay}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Time scale / interval (horizontal)</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="value"
+      y="date"
+      yInterval={timeDay}
+      orientation="horizontal"
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Time scale / interval with inset</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={dateSeriesData}
+      x="date"
+      y="value"
+      xInterval={timeDay}
+      props={{ bars: { insets: { x: 4 } } }}
       {renderContext}
       {debug}
     />
@@ -539,6 +586,61 @@
       {renderContext}
       {debug}
     />
+  </div>
+</Preview>
+
+<h2>Group series (labels)</h2>
+
+<Preview data={wideData}>
+  <div class="h-[300px] p-4 border rounded-sm">
+    <BarChart
+      data={wideData}
+      x="year"
+      series={[
+        { key: 'apples', color: 'var(--color-danger)' },
+        {
+          key: 'bananas',
+          color: 'var(--color-warning)',
+        },
+        {
+          key: 'cherries',
+          color: 'var(--color-success)',
+        },
+        {
+          key: 'grapes',
+          color: 'var(--color-info)',
+        },
+      ]}
+      seriesLayout="group"
+      props={{
+        xAxis: { format: 'none' },
+        yAxis: { format: 'metric' },
+        tooltip: {
+          header: { format: 'none' },
+        },
+      }}
+      {renderContext}
+      {debug}
+    >
+      <!-- Workaround until x1Scale is directly handled by Points/Labels: https://github.com/techniq/layerchart/issues/473#issuecomment-3266370636 -->
+      {#snippet aboveMarks({ context, visibleSeries })}
+        {#each visibleSeries as s}
+          {#each wideData as d}
+            {@const valueAccessor = accessor(s.key)}
+            {@const value = valueAccessor(d)}
+            <Text
+              x={context.xScale(d.year) +
+                (context.x1Scale?.(s.key) ?? 0) +
+                (context.x1Scale?.bandwidth?.() ?? 0) / 2}
+              y={context.yScale(value)}
+              {value}
+              textAnchor="middle"
+              class="text-xs"
+            />
+          {/each}
+        {/each}
+      {/snippet}
+    </BarChart>
   </div>
 </Preview>
 
@@ -1337,13 +1439,26 @@
   </div>
 </Preview>
 
-<h2>Brushing (WIP)</h2>
+<h2>Brushing</h2>
 
-<Preview data={dateSeriesData}>
+<Preview data={largeDateSeriesData}>
   <div class="h-[300px] p-4 border rounded-sm">
-    <BarChart data={dateSeriesData} x="date" y="value" brush {renderContext} {debug} />
+    <BarChart
+      data={largeDateSeriesData}
+      x="date"
+      y="value"
+      xInterval={timeDay}
+      brush
+      {renderContext}
+      {debug}
+    />
   </div>
 </Preview>
+
+<Blockquote>
+  Brushing is a work in progress and only supports time/interval scales and does not support band
+  scales yet.
+</Blockquote>
 
 <h2>Radial (vertical)</h2>
 

@@ -22,6 +22,7 @@
       'Duration',
       'Histogram',
       'Line',
+      'Lollipop',
       'Oscilloscope',
       'PunchCard',
       'RadialLine',

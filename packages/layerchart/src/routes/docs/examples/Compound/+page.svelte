@@ -63,7 +63,7 @@
       data={data.appleTicker}
       x="date"
       y="volume"
-      yNice={4}
+      yNice
       axis={false}
       grid={false}
       padding={{ left: 16, bottom: 16 }}
@@ -78,7 +78,7 @@
       data={data.appleTicker}
       x="date"
       y={['open', 'close']}
-      yNice={4}
+      yNice
       yDomain={null}
       padding={{ left: 16, bottom: 16 }}
       props={{
@@ -122,7 +122,6 @@
       yDomain={[0, null]}
       yNice
       y1="efficiency"
-      y1Scale={scaleLinear()}
       y1Range={({ yScale }) => yScale.domain()}
       padding={{ top: 24, bottom: 24, left: 24, right: 24 }}
       tooltip={{ mode: 'quadtree-x' }}
@@ -247,9 +246,8 @@
       padding={{ left: 32, right: 32, bottom: 20 }}
       props={{
         bars: {
-          // TODO: Determine why non-rounded Rect within Bar is not working for inverted range
-          // rounded: 'none',
-          class: 'stroke-none fill-blue-500',
+          rounded: 'none',
+          class: '_stroke-none fill-blue-500',
         },
       }}
       {renderContext}

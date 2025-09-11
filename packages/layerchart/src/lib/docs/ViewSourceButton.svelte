@@ -35,7 +35,7 @@
         {/if}
       </div>
 
-      <div class="overflow-auto">
+      <div class="overflow-auto border-t">
         <Code {source} language={source.startsWith('<script') ? 'svelte' : 'js'} />
       </div>
 

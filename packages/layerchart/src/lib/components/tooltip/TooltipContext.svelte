@@ -135,7 +135,7 @@
   import ChartClipPath from './../ChartClipPath.svelte';
   import Voronoi from './../Voronoi.svelte';
 
-  import { isScaleBand, scaleInvert } from '$lib/utils/scales.svelte.js';
+  import { isScaleBand, isScaleTime, scaleInvert } from '$lib/utils/scales.svelte.js';
   import { cartesianToPolar } from '$lib/utils/math.js';
   import { quadtreeRects } from '$lib/utils/quadtree.js';
   import { raise } from '$lib/utils/chart.js';
@@ -493,14 +493,63 @@
             const fullHeight = max(ctx.yRange) - min(ctx.yRange);
 
             if (mode === 'band') {
-              // full band width/height regardless of value
-              return {
-                x: isScaleBand(ctx.xScale) ? x - xOffset : min(ctx.xRange),
-                y: isScaleBand(ctx.yScale) ? y - yOffset : min(ctx.yRange),
-                width: isScaleBand(ctx.xScale) ? ctx.xScale.step() : fullWidth,
-                height: isScaleBand(ctx.yScale) ? ctx.yScale.step() : fullHeight,
-                data: d,
-              };
+              if (isScaleBand(ctx.xScale)) {
+                // full band width/height regardless of value
+                return {
+                  x: x - xOffset,
+                  y: min(ctx.yRange),
+                  width: ctx.xScale.step(),
+                  height: fullHeight,
+                  data: d,
+                };
+              } else if (isScaleBand(ctx.yScale)) {
+                return {
+                  x: min(ctx.xRange),
+                  y: y - yOffset,
+                  width: fullWidth,
+                  height: ctx.yScale.step(),
+                  data: d,
+                };
+              } else if (isScaleTime(ctx.xScale)) {
+                // Find width to next data point
+                const index = ctx.flatData.findIndex(
+                  (d2) => Number(ctx.x(d2)) === Number(ctx.x(d))
+                );
+                const isLastPoint = index + 1 === ctx.flatData.length;
+                const nextDataPoint = isLastPoint
+                  ? max(ctx.xDomain)
+                  : ctx.x(ctx.flatData[index + 1]);
+
+                return {
+                  x: x - xOffset,
+                  y: min(ctx.yRange),
+                  width: (ctx.xScale(nextDataPoint) ?? 0) - (xValue ?? 0),
+                  height: fullHeight,
+                  data: d,
+                };
+              } else if (isScaleTime(ctx.yScale)) {
+                // Find height to next data point
+                const index = ctx.flatData.findIndex(
+                  (d2) => Number(ctx.y(d2)) === Number(ctx.y(d))
+                );
+                const isLastPoint = index + 1 === ctx.flatData.length;
+                const nextDataPoint = isLastPoint
+                  ? max(ctx.yDomain)
+                  : ctx.y(ctx.flatData[index + 1]);
+
+                return {
+                  x: min(ctx.xRange),
+                  y: y - yOffset,
+                  width: fullWidth,
+                  height: (ctx.yScale(nextDataPoint) ?? 0) - (yValue ?? 0),
+                  data: d,
+                };
+              } else {
+                console.warn(
+                  '[layerchart] TooltipContext band mode requires at least one scale to be band or time.'
+                );
+                return undefined;
+              }
             } else if (mode === 'bounds') {
               return {
                 x: isScaleBand(ctx.xScale) || Array.isArray(xValue) ? x - xOffset : min(ctx.xRange),

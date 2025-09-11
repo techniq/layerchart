@@ -3,7 +3,7 @@
   import { timeMinute, timeDay } from 'd3-time';
   import { Duration } from 'svelte-ux';
 
-  import { BarChart, Points, Tooltip } from 'layerchart';
+  import { BarChart, Points, Rule, Tooltip } from 'layerchart';
 
   import Preview from '$lib/docs/Preview.svelte';
   import { getRandomInteger } from '$lib/utils/genData.js';
@@ -261,7 +261,8 @@
       {renderContext}
     >
       {#snippet marks()}
-        <Points class="fill-primary-100 stroke-primary" links={{ class: 'stroke-primary' }} />
+        <Rule />
+        <Points />
       {/snippet}
 
       {#snippet tooltip({ context })}
@@ -320,7 +321,8 @@
       {renderContext}
     >
       {#snippet marks()}
-        <Points links />
+        <Rule />
+        <Points />
       {/snippet}
 
       {#snippet tooltip({ context })}

@@ -69,7 +69,6 @@
 
 <script lang="ts" generics="TData">
   import { onMount, type ComponentProps } from 'svelte';
-  import { scaleLinear, scaleTime } from 'd3-scale';
   import { cls } from '@layerstack/tailwind';
 
   import Axis from '../Axis.svelte';
@@ -124,7 +123,6 @@
     renderContext = 'svg',
     profile = false,
     debug = false,
-    xScale: xScaleProp,
     tooltip = true,
     children: childrenProp,
     aboveContext,
@@ -157,11 +155,6 @@
     (seriesState.allSeriesData.length
       ? seriesState.allSeriesData
       : chartDataArray(data)) as Array<TData>
-  );
-
-  // Default xScale based on first data's `x` value
-  const xScale = $derived(
-    xScaleProp ?? (accessor(xProp)(chartData[0]) instanceof Date ? scaleTime() : scaleLinear())
   );
 
   function getSplineProps(s: SeriesData<TData, typeof Spline>, i: number) {
@@ -333,7 +326,6 @@
   data={chartData}
   x={xProp}
   {xDomain}
-  {xScale}
   y={yProp ?? series.map((s) => s.value ?? s.key)}
   yBaseline={0}
   yNice
