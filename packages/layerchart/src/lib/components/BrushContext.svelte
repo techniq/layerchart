@@ -1,10 +1,14 @@
 <script lang="ts" module>
   import { Context } from 'runed';
 
+  // TODO: Should we support the full `DomainType` (`string`, etc)
+  // type BrushDomainType = NonNullable<DomainType>;
+  export type BrushDomainType = Array<number | Date | null>;
+
   // TODO: move to new file?
   export class BrushState {
-    x = $state<DomainType>();
-    y = $state<DomainType>();
+    x = $state<BrushDomainType>([null, null]);
+    y = $state<BrushDomainType>([null, null]);
     active = $state<boolean>();
 
     // TODO: make read only
@@ -18,7 +22,7 @@
     // TODO: make read only
     handleSize = $state(0);
 
-    constructor(options?: { x?: DomainType; y?: DomainType; active?: boolean }) {
+    constructor(options?: { x?: BrushDomainType; y?: BrushDomainType; active?: boolean }) {
       this.x = options?.x ?? [null, null];
       this.y = options?.y ?? [null, null];
       // this.active = options?.active ?? (this.x !== null || this.y !== null);
@@ -104,8 +108,8 @@
      */
     ignoreResetClick?: boolean;
 
-    x?: DomainType;
-    y?: DomainType;
+    x?: BrushDomainType;
+    y?: BrushDomainType;
 
     /**
      * Mode of operation
@@ -171,7 +175,7 @@
   import { cls } from '@layerstack/tailwind';
   import { Logger } from '@layerstack/utils';
 
-  import { scaleInvert, type DomainType } from '../utils/scales.svelte.js';
+  import { scaleInvert } from '../utils/scales.svelte.js';
   import { add } from '../utils/math.js';
   import type { HTMLAttributes } from 'svelte/elements';
   import { getChartContext } from './Chart.svelte';
@@ -303,8 +307,8 @@
     /** Callback on pointer move */
     fn: (
       start: {
-        x: DomainType;
-        y: DomainType;
+        x: BrushDomainType;
+        y: BrushDomainType;
         value: { x: number; y: number };
       },
       value: { x: number; y: number }
@@ -335,11 +339,11 @@
         x: [
           brushState.x[0] ?? ctx.xScale.domain()[0],
           brushState.x[1] ?? ctx.xScale.domain()[1],
-        ] as DomainType,
+        ] as BrushDomainType,
         y: [
           brushState.y[0] ?? ctx.yScale.domain()[0],
           brushState.y[1] ?? ctx.yScale.domain()[1],
-        ] as DomainType,
+        ] as BrushDomainType,
         value: {
           x: scaleInvert(ctx.xScale, startPoint?.x ?? 0),
           y: scaleInvert(ctx.yScale, startPoint?.y ?? 0),

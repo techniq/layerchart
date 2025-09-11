@@ -28,15 +28,13 @@
   import Preview from '$lib/docs/Preview.svelte';
   import { createDateSeries, randomWalk } from '$lib/utils/genData.js';
   import { asAny } from '$lib/utils/types.js';
-  import type { DomainType } from '$lib/utils/scales.svelte.js';
+  import type { BrushDomainType } from '$lib/components/BrushContext.svelte';
   import { shared } from '../../shared.svelte.js';
 
   let { data } = $props();
 
   const now = new Date();
-  let xDomain = $state([timeDay.offset(now, -60), timeDay.offset(now, -30)]) as
-    | DomainType
-    | undefined;
+  let xDomain = $state([timeDay.offset(now, -60), timeDay.offset(now, -30)]) as BrushDomainType;
 
   const seriesData = [
     randomWalk({ count: 100 }).map((value, i) => ({
@@ -69,7 +67,7 @@
     keys: ['value', 'baseline'],
   });
 
-  let xDomain2 = $state<DomainType>([null, null]);
+  let xDomain2 = $state<BrushDomainType>([null, null]);
 </script>
 
 <h1>Examples</h1>
@@ -114,6 +112,7 @@
             {@const width = context.xScale(end) - x}
             {@const height = context.height}
 
+            <!-- svelte-ignore a11y_no_static_element_interactions, a11y_click_events_have_key_events -->
             <div
               class="absolute bg-primary/10 hover:bg-primary/20 border border-primary/20 rounded"
               style="top:0; left:{x}px; width:{width}px; height:{height}px;"
@@ -131,7 +130,7 @@
   </div>
 </Preview>
 
-<h2>Band scale</h2>
+<h2>Band scale (WIP)</h2>
 
 <Preview data={dataSeriesData}>
   <div class="h-[100px]">
@@ -638,7 +637,7 @@
               mode: 'separated',
               x: xDomain,
               onChange: (e) => (xDomain = e.brush.x),
-              onReset: (e) => (xDomain = null),
+              onReset: (e) => (xDomain = [null, null]),
             }}
           >
             <Layer type={shared.renderContext}>
@@ -824,8 +823,8 @@
           brush={{
             axis: 'both',
             mode: 'separated',
-            xDomain: value?.xDomain,
-            yDomain: value?.yDomain,
+            x: value?.xDomain,
+            y: value?.yDomain,
             onChange: (e) => {
               set({
                 // @ts-expect-error

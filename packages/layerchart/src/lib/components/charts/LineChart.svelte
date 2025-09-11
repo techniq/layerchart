@@ -101,6 +101,7 @@
   import { layerClass } from '$lib/utils/attributes.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
+  import type { BrushDomainType } from '../BrushContext.svelte';
 
   let {
     data = [],
@@ -345,7 +346,7 @@
     ? {
         axis: 'x',
         resetOnEnd: true,
-        x: xDomain,
+        x: xDomain as BrushDomainType,
         ...brushProps,
         onBrushEnd: (e) => {
           xDomain = e.brush.x;
