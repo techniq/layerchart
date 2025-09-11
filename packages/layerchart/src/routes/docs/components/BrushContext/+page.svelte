@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { scaleBand, scaleOrdinal } from 'd3-scale';
+  import { scaleBand, scaleOrdinal, scaleTime } from 'd3-scale';
   import { range } from 'd3-array';
   import { timeDay } from 'd3-time';
   import { Button, State } from 'svelte-ux';
