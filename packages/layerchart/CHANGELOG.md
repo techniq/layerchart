@@ -1,5 +1,15 @@
 # LayerChart
 
+## 2.0.0-next.38
+
+### Patch Changes
+
+- Update dependencies ([#629](https://github.com/techniq/layerchart/pull/629))
+
+- fix(autoScale): Ignore `null` domain values, fixing some brush examples ([#449](https://github.com/techniq/layerchart/pull/449))
+
+- fix: Update `dagreAncestors()` and `dagreDescendants()` util types ([#629](https://github.com/techniq/layerchart/pull/629))
+
 ## 2.0.0-next.37
 
 ### Patch Changes
