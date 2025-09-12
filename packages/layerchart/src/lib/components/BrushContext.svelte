@@ -1,4 +1,5 @@
 <script lang="ts" module>
+  import type { Snippet } from 'svelte';
   import { Context } from 'runed';
 
   // TODO: Should we support the full `DomainType` (`string`, etc)
@@ -174,12 +175,12 @@
   import { clamp, localPoint } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import { Logger } from '@layerstack/utils';
+  import type { NonNullArray } from 'layerchart/utils/types.js';
 
   import { scaleInvert } from '../utils/scales.svelte.js';
   import { add } from '../utils/math.js';
   import type { HTMLAttributes } from 'svelte/elements';
   import { getChartContext } from './Chart.svelte';
-  import type { Snippet } from 'svelte';
   import { layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
@@ -307,8 +308,8 @@
     /** Callback on pointer move */
     fn: (
       start: {
-        x: BrushDomainType;
-        y: BrushDomainType;
+        x: NonNullArray<BrushDomainType>;
+        y: NonNullArray<BrushDomainType>;
         value: { x: number; y: number };
       },
       value: { x: number; y: number }
@@ -339,11 +340,11 @@
         x: [
           brushState.x[0] ?? ctx.xScale.domain()[0],
           brushState.x[1] ?? ctx.xScale.domain()[1],
-        ] as BrushDomainType,
+        ] as Parameters<typeof fn>[0]['x'],
         y: [
           brushState.y[0] ?? ctx.yScale.domain()[0],
           brushState.y[1] ?? ctx.yScale.domain()[1],
-        ] as BrushDomainType,
+        ] as Parameters<typeof fn>[0]['y'],
         value: {
           x: scaleInvert(ctx.xScale, startPoint?.x ?? 0),
           y: scaleInvert(ctx.yScale, startPoint?.y ?? 0),
@@ -420,59 +421,55 @@
     brushState.active = true;
 
     brushState.x = [
-      // @ts-expect-error
       clamp(min([start.value.x, value.x]), xDomainMin, xDomainMax),
-      // @ts-expect-error
       clamp(max([start.value.x, value.x]), xDomainMin, xDomainMax),
     ];
     // xDomain = [start.value.x, value.x];
 
     brushState.y = [
-      // @ts-expect-error
       clamp(min([start.value.y, value.y]), yDomainMin, yDomainMax),
-      // @ts-expect-error
       clamp(max([start.value.y, value.y]), yDomainMin, yDomainMax),
     ];
   });
 
   const adjustRange = handler((start, value) => {
     logger.debug('adjustRange');
-    const dx = clamp(value.x - start.value.x, xDomainMin - start.x[0], xDomainMax - start.x[1]);
+    const dx = clamp(value.x - start.value.x, xDomainMin - +start.x[0], xDomainMax - +start.x[1]);
     brushState.x = [add(start.x[0], dx), add(start.x[1], dx)];
 
-    const dy = clamp(value.y - start.value.y, yDomainMin - start.y[0], yDomainMax - start.y[1]);
+    const dy = clamp(value.y - start.value.y, yDomainMin - +start.y[0], yDomainMax - +start.y[1]);
     brushState.y = [add(start.y[0], dy), add(start.y[1], dy)];
   });
 
   const adjustTop = handler((start, value) => {
     logger.debug('adjustTop');
     brushState.y = [
-      clamp(value.y < start.y[0] ? value.y : start.y[0], yDomainMin, yDomainMax),
-      clamp(value.y < start.y[0] ? start.y[0] : value.y, yDomainMin, yDomainMax),
+      clamp(value.y < +start.y[0] ? value.y : start.y[0], yDomainMin, yDomainMax),
+      clamp(value.y < +start.y[0] ? start.y[0] : value.y, yDomainMin, yDomainMax),
     ];
   });
 
   const adjustBottom = handler((start, value) => {
     logger.debug('adjustBottom');
     brushState.y = [
-      clamp(value.y > start.y[1] ? start.y[1] : value.y, yDomainMin, yDomainMax),
-      clamp(value.y > start.y[1] ? value.y : start.y[1], yDomainMin, yDomainMax),
+      clamp(value.y > +start.y[1] ? start.y[1] : value.y, yDomainMin, yDomainMax),
+      clamp(value.y > +start.y[1] ? value.y : start.y[1], yDomainMin, yDomainMax),
     ];
   });
 
   const adjustLeft = handler((start, value) => {
     logger.debug('adjustLeft');
     brushState.x = [
-      clamp(value.x > start.x[1] ? start.x[1] : value.x, xDomainMin, xDomainMax),
-      clamp(value.x > start.x[1] ? value.x : start.x[1], xDomainMin, xDomainMax),
+      clamp(value.x > +start.x[1] ? start.x[1] : value.x, xDomainMin, xDomainMax),
+      clamp(value.x > +start.x[1] ? value.x : start.x[1], xDomainMin, xDomainMax),
     ];
   });
 
   const adjustRight = handler((start, value) => {
     logger.debug('adjustRight');
     brushState.x = [
-      clamp(value.x < start.x[0] ? value.x : start.x[0], xDomainMin, xDomainMax),
-      clamp(value.x < start.x[0] ? start.x[0] : value.x, xDomainMin, xDomainMax),
+      clamp(value.x < +start.x[0] ? value.x : start.x[0], xDomainMin, xDomainMax),
+      clamp(value.x < +start.x[0] ? start.x[0] : value.x, xDomainMin, xDomainMax),
     ];
   });
 

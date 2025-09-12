@@ -36,8 +36,8 @@ importers:
         specifier: 2.0.0-next.17
         version: 2.0.0-next.17
       '@layerstack/utils':
-        specifier: 2.0.0-next.14
-        version: 2.0.0-next.14
+        specifier: 2.0.0-next.15
+        version: 2.0.0-next.15
       d3-array:
         specifier: ^3.2.4
         version: 3.2.4
@@ -922,6 +922,9 @@ packages:
 
   '@layerstack/utils@2.0.0-next.14':
     resolution: {integrity: sha512-1I2CS0Cwgs53W35qVg1eBdYhB/CiPvL3s0XE61b8jWkTHxgjBF65yYNgXjW74kv7WI7GsJcWMNBufPd0rnu9kA==}
+
+  '@layerstack/utils@2.0.0-next.15':
+    resolution: {integrity: sha512-s54EUjFKPeCH8F+2L45Tq2O1m9MBSi5Ix0MB3wpCaRNwYh3ZuDXdPvacxk//C3VA/6W1W7io2h2TYMytcghO4A==}
 
   '@lucide/svelte@0.534.0':
     resolution: {integrity: sha512-XqlT0ibiEEoEGcmZLdk0RNtq1OW77OjqxXZjJE/23Wabl+2d9Pxg9AAx7+6WFv8BSf8K6im73vz3cZKYEgY9Mw==}
@@ -3694,13 +3697,20 @@ snapshots:
 
   '@layerstack/tailwind@2.0.0-next.17':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.14
+      '@layerstack/utils': 2.0.0-next.15
       clsx: 2.1.1
       d3-array: 3.2.4
       lodash-es: 4.17.21
       tailwind-merge: 3.3.0
 
   '@layerstack/utils@2.0.0-next.14':
+    dependencies:
+      d3-array: 3.2.4
+      d3-time: 3.1.0
+      d3-time-format: 4.1.0
+      lodash-es: 4.17.21
+
+  '@layerstack/utils@2.0.0-next.15':
     dependencies:
       d3-array: 3.2.4
       d3-time: 3.1.0

@@ -84,7 +84,7 @@
     "@layerstack/svelte-actions": "1.0.1-next.14",
     "@layerstack/svelte-state": "0.1.0-next.19",
     "@layerstack/tailwind": "2.0.0-next.17",
-    "@layerstack/utils": "2.0.0-next.14",
+    "@layerstack/utils": "2.0.0-next.15",
     "d3-array": "^3.2.4",
     "d3-color": "^3.1.0",
     "d3-delaunay": "^6.0.4",
