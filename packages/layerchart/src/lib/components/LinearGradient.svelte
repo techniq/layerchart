@@ -170,7 +170,7 @@
       {y2}
       gradientTransform={rotate ? `rotate(${rotate})` : ''}
       gradientUnits={units}
-      {...extractLayerProps(restProps, 'linear-gradient')}
+      {...extractLayerProps(restProps, 'lc-linear-gradient')}
     >
       {#if stopsContent}
         {@render stopsContent?.()}

@@ -173,5 +173,5 @@ TODO:
   {type}
   {curve}
   {sweep}
-  {...extractLayerProps(restProps, 'link')}
+  {...extractLayerProps(restProps, 'lc-link')}
 />

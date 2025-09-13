@@ -135,7 +135,7 @@
     y={(y + ty) * scale - 0.5}
     width={scale + 1}
     height={scale + 1}
-    {...extractLayerProps(restProps, 'tile-image-lower')}
+    {...extractLayerProps(restProps, 'lc-tile-image-lower')}
   />
   <image
     {href}
@@ -143,7 +143,7 @@
     y={(y + ty) * scale}
     width={scale}
     height={scale}
-    {...extractLayerProps(restProps, 'tile-image')}
+    {...extractLayerProps(restProps, 'lc-tile-image')}
   />
 {/key}
 {#if debug}

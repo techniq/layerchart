@@ -106,7 +106,7 @@
     <Group
       x={-ctx.padding.left}
       y={-ctx.padding.top}
-      {...extractLayerProps(group, 'geo-tile-group')}
+      {...extractLayerProps(group, 'lc-geo-tile-group')}
     >
       {#each tiles as [x, y, z] (url(x, y, z))}
         <TileImage

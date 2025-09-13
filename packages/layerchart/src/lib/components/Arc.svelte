@@ -402,7 +402,7 @@
     pathData={trackArc()}
     stroke="none"
     bind:pathRef={trackRef}
-    {...extractLayerProps(track, 'arc-track')}
+    {...extractLayerProps(track, 'lc-arc-track')}
   />
 {/if}
 

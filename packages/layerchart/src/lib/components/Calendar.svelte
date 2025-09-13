@@ -130,7 +130,7 @@
       onpointerleave={(e) => tooltip?.hide()}
       {...extractLayerProps(
         restProps,
-        'calendar-cell',
+        'lc-calendar-cell',
         'stroke-surface-content/5 border border-surface-content/5'
       )}
     />
@@ -139,7 +139,7 @@
 
 {#if monthPath}
   {#each yearMonths as date}
-    <MonthPath {date} {cellSize} {...extractLayerProps(monthPath, 'calendar-month-path')} />
+    <MonthPath {date} {cellSize} {...extractLayerProps(monthPath, 'lc-calendar-month-path')} />
   {/each}
 {/if}
 
@@ -149,7 +149,7 @@
       x={timeWeek.count(timeYear.floor(date), timeWeek.ceil(date)) * cellSize[0]}
       value={format(date, 'month', { variant: 'short' })}
       capHeight="7px"
-      {...extractLayerProps(monthLabel, 'calendar-month-label', 'text-xs')}
+      {...extractLayerProps(monthLabel, 'lc-calendar-month-label', 'text-xs')}
     />
   {/each}
 {/if}

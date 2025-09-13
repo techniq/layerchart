@@ -41,5 +41,5 @@
   {disabled}
   height={ctx.height + (full ? (ctx.padding?.top ?? 0) + (ctx.padding?.bottom ?? 0) : 0)}
   width={ctx.width + (full ? (ctx.padding?.left ?? 0) + (ctx.padding?.right ?? 0) : 0)}
-  {...extractLayerProps(restProps, 'chart-clip-path')}
+  {...extractLayerProps(restProps, 'lc-chart-clip-path')}
 />

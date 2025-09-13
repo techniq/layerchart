@@ -265,7 +265,7 @@
       {width}
       {height}
       patternUnits="userSpaceOnUse"
-      {...extractLayerProps(restProps, 'pattern')}
+      {...extractLayerProps(restProps, 'lc-pattern')}
     >
       {#if patternContent}
         {@render patternContent?.()}

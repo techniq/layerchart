@@ -82,7 +82,7 @@
 
 <ClipPath {id} {disabled}>
   {#snippet clip()}
-    <Rect {x} {y} {...extractLayerProps(restProps, 'clip-path-rect')} />
+    <Rect {x} {y} {...extractLayerProps(restProps, 'lc-clip-path-rect')} />
   {/snippet}
   {#snippet children({ url })}
     {@render childrenProp?.({ id, url })}

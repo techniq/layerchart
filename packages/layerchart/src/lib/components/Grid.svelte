@@ -153,7 +153,7 @@
 
 <Group bind:ref class={cls('lc-grid', classes.root, className)} {...restProps}>
   {#if x}
-    {@const splineProps = extractLayerProps(x, 'grid-x-line')}
+    {@const splineProps = extractLayerProps(x, 'lc-grid-x-line')}
 
     <Group {transitionIn} {transitionInParams} class="lc-grid-x">
       {#each xTickVals as x (x)}
@@ -209,7 +209,7 @@
   {/if}
 
   {#if y}
-    {@const splineProps = extractLayerProps(y, 'grid-y-line')}
+    {@const splineProps = extractLayerProps(y, 'lc-grid-y-line')}
     <Group {transitionIn} {transitionInParams} class="lc-grid-y">
       {#each yTickVals as y (y)}
         {#if ctx.radial}

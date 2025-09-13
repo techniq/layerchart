@@ -100,7 +100,7 @@
     {fill}
     {rotate}
     bind:this={ref}
-    {...extractLayerProps(restProps, 'motion-path')}
+    {...extractLayerProps(restProps, 'lc-motion-path')}
   >
     <mpath href="#{pathId}" />
   </animateMotion>

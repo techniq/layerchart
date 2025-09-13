@@ -167,7 +167,7 @@
       {spreadMethod}
       gradientTransform={transform}
       gradientUnits={units}
-      {...extractLayerProps({ ...restProps, class: className }, 'radial-gradient')}
+      {...extractLayerProps({ ...restProps, class: className }, 'lc-radial-gradient')}
     >
       {#if stopsContent}
         {@render stopsContent()}

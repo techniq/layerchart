@@ -178,7 +178,7 @@
   <Points {data} {x} {y}>
     {#snippet children({ points })}
       {#each points as point, i (key(point.data, i))}
-        {@const textProps = extractLayerProps(getTextProps(point), 'labels-text')}
+        {@const textProps = extractLayerProps(getTextProps(point), 'lc-labels-text')}
         {#if childrenProp}
           {@render childrenProp({ data: point, textProps })}
         {:else}

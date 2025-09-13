@@ -343,7 +343,7 @@
           />
         {:else if scaleConfig.swatches}
           {#each scaleConfig.swatches as swatch, i}
-            <rect {...extractLayerProps(swatch, 'legend-swatch')} />
+            <rect {...extractLayerProps(swatch, 'lc-legend-swatch')} />
           {/each}
         {/if}
       </g>

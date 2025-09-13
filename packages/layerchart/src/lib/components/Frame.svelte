@@ -37,5 +37,5 @@
   width={ctx.width + (full ? (ctx.padding?.left ?? 0) + (ctx.padding?.right ?? 0) : 0)}
   height={ctx.height + (full ? (ctx.padding?.top ?? 0) + (ctx.padding?.bottom ?? 0) : 0)}
   bind:ref
-  {...extractLayerProps(restProps, 'frame')}
+  {...extractLayerProps(restProps, 'lc-frame')}
 />

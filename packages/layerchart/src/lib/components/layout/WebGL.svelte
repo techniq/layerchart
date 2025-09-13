@@ -123,7 +123,7 @@
   style:bottom={ctx.padding.bottom + 'px'}
   style:left={ctx.padding.left + 'px'}
   style="width:100%;height:100%;position:absolute;"
-  {...extractLayerProps(restProps, 'layout-webgl')}
+  {...extractLayerProps(restProps, 'lc-layout-webgl')}
 >
   {#if typeof fallback === 'function'}
     {@render fallback()}

@@ -436,10 +436,10 @@
     }
   );
 
-  const areaProps = $derived(extractLayerProps(area, 'highlight-area'));
-  const barProps = $derived(extractLayerProps(bar, 'highlight-bar'));
-  const linesProps = $derived(extractLayerProps(linesProp, 'highlight-line'));
-  const pointsProps = $derived(extractLayerProps(points, 'highlight-point'));
+  const areaProps = $derived(extractLayerProps(area, 'lc-highlight-area'));
+  const barProps = $derived(extractLayerProps(bar, 'lc-highlight-bar'));
+  const linesProps = $derived(extractLayerProps(linesProp, 'lc-highlight-line'));
+  const pointsProps = $derived(extractLayerProps(points, 'lc-highlight-point'));
 </script>
 
 {#if highlightData}

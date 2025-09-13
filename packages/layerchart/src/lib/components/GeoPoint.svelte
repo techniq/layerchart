@@ -53,11 +53,11 @@
 
 {#if renderContext === 'svg'}
   {#if children}
-    <Group {x} {y} {...extractLayerProps(restProps, 'geo-point-group')}>
+    <Group {x} {y} {...extractLayerProps(restProps, 'lc-geo-point-group')}>
       {@render children({ x, y })}
     </Group>
   {:else}
-    <Circle cx={x} cy={y} {...extractLayerProps(restProps, 'geo-point')} />
+    <Circle cx={x} cy={y} {...extractLayerProps(restProps, 'lc-geo-point')} />
   {/if}
 {/if}
 
@@ -68,6 +68,6 @@
     {@render children({ x, y })}
     <!-- </Group> -->
   {:else}
-    <Circle cx={x} cy={y} {...extractLayerProps(restProps, 'geo-point')} />
+    <Circle cx={x} cy={y} {...extractLayerProps(restProps, 'lc-geo-point')} />
   {/if}
 {/if}

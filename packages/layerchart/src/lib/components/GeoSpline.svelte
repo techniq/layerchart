@@ -81,5 +81,5 @@
   x={(d) => d[0]}
   y={(d) => d[1]}
   {curve}
-  {...extractLayerProps(restProps, 'geo-spline')}
+  {...extractLayerProps(restProps, 'lc-geo-spline')}
 />

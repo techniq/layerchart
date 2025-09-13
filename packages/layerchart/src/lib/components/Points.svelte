@@ -141,7 +141,7 @@
       {stroke}
       {strokeWidth}
       {opacity}
-      {...extractLayerProps(restProps, 'point')}
+      {...extractLayerProps(restProps, 'lc-point')}
     />
   {/each}
 {/if}

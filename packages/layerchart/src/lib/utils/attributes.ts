@@ -1,19 +1,5 @@
 import { cls } from '@layerstack/tailwind';
 
-/**
- * Creates a string containing a class name that can be used by
- * developers to target a specific layer/element within a LayerChart.
- *
- * This is a function so that the class names remain consistent and the
- * prefix/structure can be changed in the future if needed
- *
- * @param layerName - the name of the layer to be appended to the generated class name
- * @returns a string to be used as a class on an element
- */
-export function layerClass(layerName: string) {
-  return `lc-${layerName}`;
-}
-
 type ExtractObjectType<T> = T extends object ? (T extends Function ? never : T) : never;
 type WithClass<T> = T & { class?: string };
 type DefaultProps = WithClass<{ [key: string]: any }>;
@@ -29,17 +15,15 @@ function isObjectWithClass(val: any): val is { class?: string } {
  * a class name to its class property to identify the layer for CSS targeting.
  *
  * @param props The props to be extracted, can be an object, function or any other type
- * @param layerName The name of the layer used to apply a layer classname for targeting styling
+ * @param className The class name to be applied to the layer for targeting styling (e.g. 'lc-layer')
  * @param extraClasses Additional classes to be applied to the layer if they don't exist in the props already
  * @returns a typed spreadable object with props for the layer
  */
 export function extractLayerProps<T>(
   props: T,
-  layerName: string,
+  className: string,
   extraClasses?: string
 ): WithClass<ExtractObjectType<T> extends never ? DefaultProps : ExtractObjectType<T>> {
-  const className = layerClass(layerName);
-
   if (isObjectWithClass(props)) {
     return {
       ...props,

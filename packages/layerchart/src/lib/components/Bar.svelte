@@ -184,7 +184,7 @@
     {strokeWidth}
     {opacity}
     cornerRadius={radius}
-    {...extractLayerProps(restProps, 'bar')}
+    {...extractLayerProps(restProps, 'lc-bar')}
   />
 {:else if rounded === 'all' || rounded === 'none' || radius === 0}
   <Rect
@@ -200,7 +200,7 @@
     {initialHeight}
     {initialWidth}
     {...dimensions}
-    {...extractLayerProps(restProps, 'bar')}
+    {...extractLayerProps(restProps, 'lc-bar')}
   />
 {:else}
   {@const tweenMotion = extractTweenConfig(motion)}
@@ -212,6 +212,6 @@
     {strokeWidth}
     {opacity}
     motion={tweenMotion}
-    {...extractLayerProps(restProps, 'bar')}
+    {...extractLayerProps(restProps, 'lc-bar')}
   />
 {/if}

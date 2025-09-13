@@ -34,4 +34,4 @@
   const geojson = $derived(geoCircle().radius(radius).center(center).precision(precision)());
 </script>
 
-<GeoPath {geojson} {...extractLayerProps(restProps, 'geo-circle')} />
+<GeoPath {geojson} {...extractLayerProps(restProps, 'lc-geo-circle')} />

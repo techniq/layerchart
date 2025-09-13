@@ -437,7 +437,7 @@
   class={cls('lc-axis', `placement-${placement}`, classes.root, className)}
 >
   {#if rule !== false}
-    {@const ruleProps = extractLayerProps(rule, 'axis-rule')}
+    {@const ruleProps = extractLayerProps(rule, 'lc-axis-rule')}
     <Rule
       x={placement === 'left' ? '$left' : placement === 'right' ? '$right' : placement === 'angle'}
       y={placement === 'top' ? '$top' : placement === 'bottom' ? '$bottom' : placement === 'radius'}
@@ -480,7 +480,7 @@
 
     <Group {transitionIn} {transitionInParams} class="lc-axis-tick-group">
       {#if grid !== false}
-        {@const ruleProps = extractLayerProps(grid, 'axis-grid')}
+        {@const ruleProps = extractLayerProps(grid, 'lc-axis-grid')}
         <Rule
           x={orientation === 'horizontal' || orientation === 'angle' ? tick : false}
           y={orientation === 'vertical' || orientation === 'radius' ? tick : false}
