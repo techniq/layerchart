@@ -74,7 +74,7 @@
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
   import { getChartContext } from './Chart.svelte';
   import Group from './Group.svelte';
-  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -174,7 +174,7 @@
   }
 </script>
 
-<Group class={layerClass('labels-g')}>
+<Group class="lc-labels-g">
   <Points {data} {x} {y}>
     {#snippet children({ points })}
       {#each points as point, i (key(point.data, i))}

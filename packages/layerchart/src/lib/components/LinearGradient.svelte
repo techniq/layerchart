@@ -81,7 +81,7 @@
   import { createLinearGradient, getComputedStyles } from '../utils/canvas.js';
   import { parsePercent } from '../utils/math.js';
   import { createId } from '$lib/utils/createId.js';
-  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
   import { cls } from '@layerstack/tailwind';
 
   const uid = $props.id();
@@ -180,13 +180,13 @@
             <stop
               offset={stop[0]}
               stop-color={stop[1]}
-              class={cls(layerClass('linear-gradient-stop'), className)}
+              class={cls('lc-linear-gradient-stop', className)}
             />
           {:else}
             <stop
               offset="{i * (100 / (stops.length - 1))}%"
               stop-color={stop}
-              class={cls(layerClass('linear-gradient-stop'), className)}
+              class={cls('lc-linear-gradient-stop', className)}
             />
           {/if}
         {/each}

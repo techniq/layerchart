@@ -99,7 +99,6 @@
 
   import { createKey } from '$lib/utils/key.svelte.js';
   import { createId } from '$lib/utils/createId.js';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   const uid = $props.id();
 
@@ -149,11 +148,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, stroke, strokeWidth, opacity },
-            classes: cls(
-              layerClass('line'),
-              stroke === undefined && 'stroke-surface-content',
-              className
-            ),
+            classes: cls('lc-line', stroke === undefined && 'stroke-surface-content', className),
           }
     );
   }
@@ -200,7 +195,7 @@
     marker-start={markerStartId ? `url(#${markerStartId})` : undefined}
     marker-mid={markerMidId ? `url(#${markerMidId})` : undefined}
     marker-end={markerEndId ? `url(#${markerEndId})` : undefined}
-    class={cls(layerClass('line'), stroke === undefined && 'stroke-surface-content', className)}
+    class={cls('lc-line', stroke === undefined && 'stroke-surface-content', className)}
     {...restProps}
   />
   <MarkerWrapper id={markerStartId} marker={markerStart ?? marker} />
@@ -221,6 +216,6 @@
     style:transform-origin="0 50%"
     style:opacity
     style:background-color={fill}
-    class={cls(layerClass('line'), stroke === undefined && 'bg-surface-content', className)}
+    class={cls('lc-line', stroke === undefined && 'bg-surface-content', className)}
   ></div>
 {/if}

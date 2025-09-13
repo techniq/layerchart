@@ -217,7 +217,6 @@
   import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
   import { cls } from '@layerstack/tailwind';
-  import { layerClass } from '$lib/utils/attributes.js';
   import {
     createControlledMotion,
     createMotionTracker,
@@ -519,7 +518,7 @@
   onpointerup={onPointerUp}
   ondblclick={onDoubleClick}
   onclickcapture={onClick}
-  class={cls(layerClass('transform-context'), 'h-full', className)}
+  class={cls('lc-transform-context', 'h-full', className)}
   bind:this={ref}
   {...restProps}
 >

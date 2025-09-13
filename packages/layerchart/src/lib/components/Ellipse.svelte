@@ -82,7 +82,6 @@
   import { renderEllipse, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import type { SVGAttributes } from 'svelte/elements';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     cx = 0,
@@ -133,7 +132,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: cls(layerClass('ellipse'), fill == null && 'fill-surface-content', className),
+            classes: cls('lc-ellipse', fill == null && 'fill-surface-content', className),
           }
     );
   }
@@ -181,7 +180,7 @@
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
-    class={cls(layerClass('ellipse'), fill == null && 'fill-surface-content', className)}
+    class={cls('lc-ellipse', fill == null && 'fill-surface-content', className)}
     {...restProps}
   />
 {:else if renderCtx === 'html'}
@@ -198,7 +197,7 @@
     style:border-color={stroke}
     style:border-style="solid"
     style:transform="translate(-50%, -50%)"
-    class={cls(layerClass('ellipse'), fill == null && 'bg-surface-content', className)}
+    class={cls('lc-ellipse', fill == null && 'bg-surface-content', className)}
     {...restProps}
   ></div>
 {/if}

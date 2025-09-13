@@ -50,7 +50,6 @@
   import { getRenderContext } from './Chart.svelte';
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     height,
@@ -108,7 +107,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: cls(layerClass('rect'), fill == null && 'fill-surface-content', className),
+            classes: cls('lc-rect', fill == null && 'fill-surface-content', className),
           }
     );
   }
@@ -156,7 +155,7 @@
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
-    class={cls(layerClass('rect'), fill == null && 'fill-surface-content', className)}
+    class={cls('lc-rect', fill == null && 'fill-surface-content', className)}
     {...restProps}
     {onclick}
     {ondblclick}
@@ -182,7 +181,7 @@
     style:border-style="solid"
     style:border-color={stroke}
     style:border-radius="{restProps.rx}px"
-    class={cls(layerClass('rect'), fill == null && 'bg-surface-content', className)}
+    class={cls('lc-rect', fill == null && 'bg-surface-content', className)}
     {...restProps as any}
     {onclick}
     {ondblclick}

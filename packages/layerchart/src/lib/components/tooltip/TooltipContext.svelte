@@ -144,7 +144,6 @@
     getTooltipPayload,
     type TooltipPayload,
   } from './tooltipMetaContext.js';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext<any>();
   const geoCtx = getGeoContext();
@@ -606,7 +605,7 @@
   style:width="{ctx.width}px"
   style:height="{ctx.height}px"
   class={cls(
-    layerClass('tooltip-context'),
+    'lc-tooltip-context',
     'absolute',
     debug && triggerPointerEvents && 'bg-danger/10 outline outline-danger'
   )}
@@ -627,7 +626,7 @@
 >
   <!-- Rendering slot within TooltipContext to allow pointer events to bubble up (ex. Brush) -->
   <div
-    class={cls(layerClass('tooltip-context-container'), 'absolute')}
+    class={cls('lc-tooltip-context-container', 'absolute')}
     style:top="-{ctx.padding.top ?? 0}px"
     style:left="-{ctx.padding.left ?? 0}px"
     style:width="{ctx.containerWidth}px"
@@ -661,7 +660,7 @@
       </Svg>
     {:else if mode === 'bounds' || mode === 'band'}
       <Svg center={ctx.radial}>
-        <g class={layerClass('tooltip-rects-g')}>
+        <g class="lc-tooltip-rects-g">
           {#each rects as rect}
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             {#if ctx.radial}
@@ -671,7 +670,7 @@
                 startAngle={rect.x}
                 endAngle={rect.x + rect.width}
                 class={cls(
-                  layerClass('tooltip-rect'),
+                  'lc-tooltip-rect',
                   debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent'
                 )}
                 onpointerenter={(e) => showTooltip(e, rect?.data)}
@@ -694,7 +693,7 @@
                 width={rect?.width}
                 height={rect?.height}
                 class={cls(
-                  layerClass('tooltip-rect'),
+                  'lc-tooltip-rect',
                   debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent'
                 )}
                 onpointerenter={(e) => showTooltip(e, rect?.data)}
@@ -717,7 +716,7 @@
     {:else if ['quadtree', 'quadtree-x', 'quadtree-y'].includes(mode) && debug}
       <Svg pointerEvents={false}>
         <ChartClipPath>
-          <g class={layerClass('tooltip-quadtree-g')}>
+          <g class="lc-tooltip-quadtree-g">
             {#if quadtree}
               {#each quadtreeRects(quadtree, false) as rect}
                 <rect
@@ -726,7 +725,7 @@
                   width={rect.width}
                   height={rect.height}
                   class={cls(
-                    layerClass('tooltip-quadtree-rect'),
+                    'lc-tooltip-quadtree-rect',
                     debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent'
                   )}
                 />

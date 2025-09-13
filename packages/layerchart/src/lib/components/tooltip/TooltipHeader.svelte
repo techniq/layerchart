@@ -56,7 +56,6 @@
 <script lang="ts">
   import { format as formatUtil, type FormatType, type FormatConfig } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     ref: refProp = $bindable(),
@@ -90,7 +89,7 @@
 
 <div
   class={cls(
-    layerClass('tooltip-header'),
+    'lc-tooltip-header',
     'font-semibold whitespace-nowrap border-b mb-1 pb-1 flex items-center gap-2',
     classes.root,
     props.root?.class,
@@ -103,7 +102,7 @@
     <div
       bind:this={colorRef}
       class={cls(
-        layerClass('tooltip-header-color'),
+        'lc-tooltip-header-color',
         'color',
         'inline-block size-2 rounded-full bg-[var(--color)]',
         classes.color

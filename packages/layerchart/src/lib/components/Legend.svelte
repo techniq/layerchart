@@ -116,7 +116,7 @@
   import { cls } from '@layerstack/tailwind';
   import type { AnyScale } from '$lib/utils/scales.svelte.js';
   import { getChartContext } from './Chart.svelte';
-  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
 
   let {
     scale: scaleProp,
@@ -297,7 +297,7 @@
   {...restProps}
   data-placement={placement}
   class={cls(
-    layerClass('legend-container'),
+    'lc-legend-container',
     'inline-block',
     'z-1', // stack above tooltip context layers (band rects, voronoi, ...)
     placement && [
@@ -318,7 +318,7 @@
     classes.root
   )}
 >
-  <div class={cls(layerClass('legend-title'), 'text-[10px] font-semibold', classes.title)}>
+  <div class={cls('lc-legend-title', 'text-[10px] font-semibold', classes.title)}>
     {title}
   </div>
   {#if children}
@@ -331,15 +331,15 @@
       {width}
       height={height + tickLengthProp + tickFontSize}
       viewBox="0 0 {width} {height + tickLengthProp + tickFontSize}"
-      class={cls(layerClass('legend-ramp-svg'), 'overflow-visible')}
+      class={cls('lc-legend-ramp-svg', 'overflow-visible')}
     >
-      <g class={layerClass('legend-ramp-g')}>
+      <g class="lc-legend-ramp-g">
         {#if scaleConfig.interpolator}
           <ColorRamp
             {width}
             {height}
             interpolator={scaleConfig.interpolator}
-            class={layerClass('legend-color-ramp')}
+            class="lc-legend-color-ramp"
           />
         {:else if scaleConfig.swatches}
           {#each scaleConfig.swatches as swatch, i}
@@ -348,18 +348,14 @@
         {/if}
       </g>
 
-      <g class={layerClass('legend-tick-group')}>
+      <g class="lc-legend-tick-group">
         {#each tickValuesProp ?? scaleConfig.xScale?.ticks?.(ticks) ?? [] as tick, i}
           <text
             text-anchor="middle"
             x={scaleConfig.xScale?.(tick) + scaleConfig.tickLabelOffset}
             y={height + tickLengthProp + tickFontSize}
             style:font-size={tickFontSize}
-            class={cls(
-              layerClass('legend-tick-text'),
-              'text-[10px] fill-surface-content',
-              classes.label
-            )}
+            class={cls('lc-legend-tick-text', 'text-[10px] fill-surface-content', classes.label)}
           >
             <!-- @ts-expect-error - improve types -->
             {tickFormatProp ? format(tick, asAny(tickFormatProp)) : tick}
@@ -371,7 +367,7 @@
               y1={0}
               x2={scaleConfig.xScale?.(tick)}
               y2={height + tickLengthProp}
-              class={cls(layerClass('legend-tick-line'), 'stroke-surface-content', classes.tick)}
+              class={cls('lc-legend-tick-line', 'stroke-surface-content', classes.tick)}
             />
           {/if}
         {/each}
@@ -380,7 +376,7 @@
   {:else if variant === 'swatches'}
     <div
       class={cls(
-        layerClass('legend-swatch-group'),
+        'lc-legend-swatch-group',
         'flex gap-x-4 gap-y-1',
         orientation === 'vertical' && 'flex-col',
         classes.items
@@ -391,7 +387,7 @@
         {@const item = { value: tick, color }}
         <button
           class={cls(
-            layerClass('legend-swatch-button'),
+            'lc-legend-swatch-button',
             'flex items-center gap-1 truncate',
             !onclick && 'cursor-auto',
             typeof classes.item === 'function' ? classes.item(item) : classes.item
@@ -401,16 +397,12 @@
           onpointerleave={(e) => onpointerleave?.(e, item)}
         >
           <div
-            class={cls(
-              layerClass('legend-swatch'),
-              'h-4 w-4 shrink-0 rounded-full',
-              classes.swatch
-            )}
+            class={cls('lc-legend-swatch', 'h-4 w-4 shrink-0 rounded-full', classes.swatch)}
             style:background-color={color}
           ></div>
           <div
             class={cls(
-              layerClass('legend-swatch-label'),
+              'lc-legend-swatch-label',
               'text-xs text-surface-content truncate whitespace-nowrap',
               classes.label
             )}

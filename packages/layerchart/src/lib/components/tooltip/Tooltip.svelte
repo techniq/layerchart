@@ -162,7 +162,6 @@
   import { getTooltipContext } from './TooltipContext.svelte';
   import { createMotion, type MotionProp } from '$lib/utils/motion.svelte.js';
   import { untrack, type Snippet } from 'svelte';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     anchor = 'top-left',
@@ -359,7 +358,7 @@
 {#if tooltipCtx.data}
   <div
     {...props.root}
-    class={cls('root', layerClass('tooltip-root'), classes.root, props.root?.class)}
+    class={cls('root', 'lc-tooltip-root', classes.root, props.root?.class)}
     class:pointer-events-none={!pointerEvents}
     style:top="{motionY.current}px"
     style:left="{motionX.current}px"
@@ -377,7 +376,7 @@
     <div
       {...props.container}
       class={cls(
-        layerClass('tooltip-container'),
+        'lc-tooltip-container',
         variant !== 'none' && ['text-sm py-1 px-2 h-full rounded-sm elevation-1'],
         {
           default: [
@@ -396,7 +395,7 @@
       )}
     >
       {#if children}
-        <div {...props.content} class={cls(layerClass('tooltip-content'), classes.content)}>
+        <div {...props.content} class={cls('lc-tooltip-content', classes.content)}>
           {@render children({ data: tooltipCtx.data, payload: tooltipCtx.payload })}
         </div>
       {/if}

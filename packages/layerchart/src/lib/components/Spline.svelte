@@ -132,7 +132,6 @@
   import { getChartContext } from './Chart.svelte';
   import { createKey } from '$lib/utils/key.svelte.js';
   import { createId } from '$lib/utils/createId.js';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -275,7 +274,7 @@
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
             classes: cls(
-              layerClass('spline-path'),
+              'lc-spline-path',
               !fill && 'fill-none',
               !stroke && 'stroke-surface-content',
               className
@@ -368,7 +367,7 @@
       d={tweenedState.current}
       {...restProps}
       class={cls(
-        layerClass('spline-path'),
+        'lc-spline-path',
         !fill && 'fill-none',
         !stroke && 'stroke-surface-content',
         className
@@ -389,7 +388,7 @@
     <MarkerWrapper id={markerEndId} marker={markerEnd} />
 
     {#if startContent && startPoint}
-      <Group x={startPoint.x} y={startPoint.y} class={layerClass('spline-g-start')}>
+      <Group x={startPoint.x} y={startPoint.y} class="lc-spline-g-start">
         {@render startContent({
           point: startPoint,
           value: {
@@ -401,7 +400,7 @@
     {/if}
 
     {#if endContent && endPoint.current}
-      <Group x={endPoint.current.x} y={endPoint.current.y} class={layerClass('spline-g-end')}>
+      <Group x={endPoint.current.x} y={endPoint.current.y} class="lc-spline-g-end">
         {@render endContent({
           point: endPoint.current,
           value: {

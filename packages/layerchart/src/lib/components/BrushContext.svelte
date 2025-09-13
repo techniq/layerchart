@@ -148,7 +148,6 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import { getChartContext } from './Chart.svelte';
   import type { Snippet } from 'svelte';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   const ctx = getChartContext();
 
@@ -463,7 +462,7 @@
 {#if disabled}
   {@render children?.({ brushContext })}
 {:else}
-  {@const handleClass = layerClass('brush-handle')}
+  {@const handleClass = 'lc-brush-handle'}
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     bind:this={rootEl}
@@ -471,12 +470,12 @@
     style:left="{ctx.padding.left}px"
     style:width="{ctx.width}px"
     style:height="{ctx.height}px"
-    class={cls(layerClass('brush-context'), 'absolute touch-none')}
+    class={cls('lc-brush-context', 'absolute touch-none')}
     onpointerdown={createRange}
     ondblclick={() => selectAll()}
   >
     <div
-      class={cls(layerClass('brush-container'), 'absolute')}
+      class={cls('lc-brush-container', 'absolute')}
       style:top="-{ctx.padding.top ?? 0}px"
       style:left="-{ctx.padding.left ?? 0}px"
       style:width="{ctx.containerWidth}px"
@@ -493,7 +492,7 @@
         style:width="{_range.width}px"
         style:height="{_range.height}px"
         class={cls(
-          layerClass('brush-range'),
+          'lc-brush-range',
           'absolute bg-surface-content/10 cursor-move select-none',
           'z-10',
           classes.range,

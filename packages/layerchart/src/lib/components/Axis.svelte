@@ -145,7 +145,7 @@
   import { isScaleBand } from '$lib/utils/scales.svelte.js';
 
   import { getChartContext } from './Chart.svelte';
-  import { extractLayerProps, layerClass } from '$lib/utils/attributes.js';
+  import { extractLayerProps } from '$lib/utils/attributes.js';
   import { type MotionProp } from '$lib/utils/motion.svelte.js';
   import { autoTickVals, autoTickFormat, type TicksConfig } from '$lib/utils/ticks.js';
 
@@ -423,7 +423,7 @@
     lineHeight: '11px',
     ...labelProps,
     class: cls(
-      layerClass('axis-label'),
+      'lc-axis-label',
       'text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
       classes.label,
       labelProps?.class
@@ -434,7 +434,7 @@
 <Group
   {...restProps}
   data-placement={placement}
-  class={cls(layerClass('axis'), `placement-${placement}`, classes.root, className)}
+  class={cls('lc-axis', `placement-${placement}`, classes.root, className)}
 >
   {#if rule !== false}
     {@const ruleProps = extractLayerProps(rule, 'axis-rule')}
@@ -471,14 +471,14 @@
       lineHeight: '11px',
       ...tickLabelProps,
       class: cls(
-        layerClass('axis-tick-label'),
+        'lc-axis-tick-label',
         'text-[10px] stroke-surface-100 [stroke-width:2px] font-light',
         classes.tickLabel,
         tickLabelProps?.class
       ),
     }}
 
-    <Group {transitionIn} {transitionInParams} class={layerClass('axis-tick-group')}>
+    <Group {transitionIn} {transitionInParams} class="lc-axis-tick-group">
       {#if grid !== false}
         {@const ruleProps = extractLayerProps(grid, 'axis-grid')}
         <Rule
@@ -491,11 +491,7 @@
       {/if}
 
       {#if tickMarks}
-        {@const tickClasses = cls(
-          layerClass('axis-tick'),
-          'stroke-surface-content/50',
-          classes.tick
-        )}
+        {@const tickClasses = cls('lc-axis-tick', 'stroke-surface-content/50', classes.tick)}
         {#if orientation === 'horizontal'}
           <Line
             x1={tickCoords.x}
@@ -534,3 +530,9 @@
     </Group>
   {/each}
 </Group>
+
+<style>
+  .lc-axis-tick-label {
+    fill: blue;
+  }
+</style>

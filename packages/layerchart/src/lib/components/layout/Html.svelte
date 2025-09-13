@@ -50,7 +50,6 @@
   import { getTransformContext } from '../TransformContext.svelte';
 
   import { getChartContext, setRenderContext } from '../Chart.svelte';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     ref: refProp = $bindable(),
@@ -91,7 +90,7 @@
 <div
   bind:this={ref}
   class={cls(
-    layerClass('layout-html'),
+    'lc-layout-html',
     'absolute top-0 left-0',
     pointerEvents === false && 'pointer-events-none',
     className

@@ -61,7 +61,6 @@
   import Line, { type LinePropsWithoutHTML } from './Line.svelte';
   import { getChartContext } from './Chart.svelte';
   import { accessor, chartDataArray, type Accessor } from '../utils/common.js';
-  import { layerClass } from '$lib/utils/attributes.js';
   import { isScaleBand, isScaleNumeric } from '$lib/utils/scales.svelte.js';
 
   let {
@@ -188,7 +187,7 @@
   // $inspect({ lines });
 </script>
 
-<Group class={layerClass('rule-g')}>
+<Group class="lc-rule-g">
   {#each lines as line}
     {@const stroke = line.stroke}
 
@@ -203,18 +202,14 @@
           {x2}
           {y2}
           {stroke}
-          class={cls(
-            layerClass('rule-x-radial-line'),
-            !stroke && 'stroke-surface-content/10',
-            className
-          )}
+          class={cls('lc-rule-x-radial-line', !stroke && 'stroke-surface-content/10', className)}
         />
       {:else if line.axis === 'y'}
         <Circle
           r={line.y1}
           {stroke}
           class={cls(
-            layerClass('rule-y-radial-circle'),
+            'lc-rule-y-radial-circle',
             !stroke && 'stroke-surface-content/50',
             'fill-none',
             className
@@ -230,7 +225,7 @@
         y2={line.y2}
         {stroke}
         class={cls(
-          layerClass(line.axis === 'x' ? 'rule-x-line' : 'rule-y-line'),
+          line.axis === 'x' ? 'lc-rule-x-line' : 'lc-rule-y-line',
           !stroke && 'stroke-surface-content/50',
           className
         )}

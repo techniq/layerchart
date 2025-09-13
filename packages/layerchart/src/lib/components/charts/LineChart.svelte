@@ -98,7 +98,6 @@
   } from './types.js';
   import { createLegendProps, SeriesState } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
-  import { layerClass } from '$lib/utils/attributes.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
 
@@ -165,7 +164,7 @@
       ...props.spline,
       ...s.props,
       class: cls(
-        layerClass('line-chart-line'),
+        'lc-line-chart-line',
         'transition-opacity',
         // Checking `visibleSeries.length > 1` fixes re-animated tweened areas on hover
         seriesState.visibleSeries.length > 1 &&

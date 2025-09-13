@@ -1,6 +1,5 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
-  import { layerClass } from '$lib/utils/attributes.js';
   import type { HTMLAttributes } from 'svelte/elements';
 
   let {
@@ -21,7 +20,7 @@
 <div
   bind:this={ref}
   class={cls(
-    layerClass('tooltip-separator'),
+    'lc-tooltip-separator',
     'rounded-sm bg-surface-content/20 my-1 col-span-full h-px',
     className
   )}

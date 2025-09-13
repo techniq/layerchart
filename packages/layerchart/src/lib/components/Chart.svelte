@@ -41,7 +41,6 @@
   import { geoFitObjectTransform } from '$lib/utils/geo.js';
   import TransformContext, { type TransformContextValue } from './TransformContext.svelte';
   import BrushContext, { type BrushContextValue } from './BrushContext.svelte';
-  import { layerClass } from '$lib/utils/attributes.js';
   import type { TimeInterval } from 'd3-time';
 
   const defaultPadding = { top: 0, right: 0, bottom: 0, left: 0 };
@@ -1394,7 +1393,7 @@
     style:pointer-events={pointerEvents === false ? 'none' : null}
     bind:clientWidth={containerWidth}
     bind:clientHeight={containerHeight}
-    class={layerClass('root-container')}
+    class="lc-root-container"
   >
     {#key isMounted}
       <!-- svelte-ignore ownership_invalid_binding -->

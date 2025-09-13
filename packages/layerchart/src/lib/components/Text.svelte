@@ -188,7 +188,6 @@
   import { getComputedStyles, renderText, type ComputedStylesOptions } from '../utils/canvas.js';
 
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { layerClass } from '$lib/utils/attributes.js';
   import { degreesToRadians } from '$lib/utils/math.js';
   import { createId } from '$lib/utils/createId.js';
 
@@ -477,7 +476,7 @@
     x={dx}
     y={dy}
     {...svgProps}
-    class={cls(layerClass('text-svg'), 'overflow-visible [paint-order:stroke]', svgProps?.class)}
+    class={cls('lc-text-svg', 'overflow-visible [paint-order:stroke]', svgProps?.class)}
     bind:this={svgRef}
   >
     {#if path}
@@ -496,14 +495,14 @@
         stroke-width={strokeWidth}
         {opacity}
         transform={transformProp}
-        class={cls(layerClass('text'), fill === undefined && 'fill-surface-content', className)}
+        class={cls('lc-text', fill === undefined && 'fill-surface-content', className)}
       >
         <textPath
           style="text-anchor: {textAnchor};"
           dominant-baseline={dominantBaseline}
           href="#{pathId}"
           {startOffset}
-          class={cls(layerClass('text-path'))}
+          class={cls('lc-text-path')}
         >
           {wordsByLines.map((line) => line.words.join(' ')).join()}
         </textPath>
@@ -522,17 +521,13 @@
         {stroke}
         stroke-width={strokeWidth}
         {opacity}
-        class={cls(
-          layerClass('text'),
-          fill === undefined && 'text-surface-content fill-current',
-          className
-        )}
+        class={cls('lc-text', fill === undefined && 'text-surface-content fill-current', className)}
       >
         {#each wordsByLines as line, index}
           <tspan
             x={motionX.current}
             dy={index === 0 ? startDy : getPixelValue(lineHeight)}
-            class={layerClass('text-tspan')}
+            class="lc-text-tspan"
           >
             {line.words.join(' ')}
           </tspan>
@@ -558,7 +553,7 @@
         ? 'bottom'
         : 'top'}
     {textAnchor === 'middle' ? 'center' : textAnchor === 'end' ? 'right' : 'left'}"
-    class={cls(layerClass('text'), fill === undefined && 'text-surface-content', className)}
+    class={cls('lc-text', fill === undefined && 'text-surface-content', className)}
   >
     {textValue}
   </div>

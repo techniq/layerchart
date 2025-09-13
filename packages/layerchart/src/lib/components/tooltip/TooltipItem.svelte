@@ -78,7 +78,6 @@
   import { format as formatUtil, type FormatType, type FormatConfig } from '@layerstack/utils';
   import { cls } from '@layerstack/tailwind';
   import type { Snippet } from 'svelte';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     ref: refProp = $bindable(),
@@ -129,20 +128,14 @@
 
 <div
   {...props.root}
-  class={cls(
-    layerClass('tooltip-item-root'),
-    'contents',
-    classes.root,
-    className,
-    props.root?.class
-  )}
+  class={cls('lc-tooltip-item-root', 'contents', classes.root, className, props.root?.class)}
   {...restProps}
   bind:this={ref}
 >
   <div
     {...props.label}
     class={cls(
-      layerClass('tooltip-item-label'),
+      'lc-tooltip-item-label',
       'label',
       'flex items-center gap-2 whitespace-nowrap',
       classes.label,
@@ -154,7 +147,7 @@
       <div
         {...props.color}
         class={cls(
-          layerClass('tooltip-item-color'),
+          'lc-tooltip-item-color',
           'color',
           'inline-block size-2 rounded-full bg-[var(--color)]',
           classes.color,
@@ -175,7 +168,7 @@
     bind:this={valueRef}
     {...props.value}
     class={cls(
-      layerClass('tooltip-item-value'),
+      'lc-tooltip-item-value',
       'value',
       'tabular-nums',
       {

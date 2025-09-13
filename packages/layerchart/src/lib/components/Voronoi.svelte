@@ -71,8 +71,6 @@
   import { getGeoContext } from './GeoContext.svelte';
   import CircleClipPath from './CircleClipPath.svelte';
 
-  import { layerClass } from '$lib/utils/attributes.js';
-
   let {
     data,
     r,
@@ -118,7 +116,7 @@
   const disableClip = $derived(r === 0 || r == null || r === Infinity);
 </script>
 
-<Group {...restProps} class={cls(layerClass('voronoi-g'), classes.root, className)}>
+<Group {...restProps} class={cls('lc-voronoi-g', classes.root, className)}>
   {#if geo.projection}
     {@const polygons = geoVoronoi().polygons(points)}
     {#each polygons.features as feature}
@@ -131,11 +129,7 @@
       >
         <GeoPath
           geojson={feature}
-          class={cls(
-            layerClass('voronoi-geo-path'),
-            'fill-transparent stroke-transparent',
-            classes.path
-          )}
+          class={cls('lc-voronoi-geo-path', 'fill-transparent stroke-transparent', classes.path)}
           onclick={(e) => onclick?.(e, { data: feature.properties.site.data, feature })}
           onpointerenter={(e) =>
             onpointerenter?.(e, { data: feature.properties.site.data, feature })}
@@ -158,11 +152,7 @@
         <CircleClipPath cx={point[0]} cy={point[1]} r={r ?? 0} disabled={disableClip}>
           <Spline
             {pathData}
-            class={cls(
-              layerClass('voronoi-path'),
-              'fill-transparent stroke-transparent',
-              classes.path
-            )}
+            class={cls('lc-voronoi-path', 'fill-transparent stroke-transparent', classes.path)}
             onclick={(e) => onclick?.(e, { data: point.data, point })}
             onpointerenter={(e) => onpointerenter?.(e, { data: point.data, point })}
             onpointermove={(e) => onpointermove?.(e, { data: point.data, point })}

@@ -144,7 +144,6 @@
   import { registerCanvasComponent } from './layout/Canvas.svelte';
   import { renderPathData, type ComputedStylesOptions } from '$lib/utils/canvas.js';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { layerClass } from '$lib/utils/attributes.js';
   import { polygon } from '$lib/utils/shape.js';
   import { roundedPolygonPath } from '$lib/utils/path.js';
 
@@ -234,7 +233,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: cls(layerClass('polygon'), fill == null && 'fill-surface-content', className),
+            classes: cls('lc-polygon', fill == null && 'fill-surface-content', className),
           }
     );
   }
@@ -278,7 +277,7 @@
     {stroke}
     stroke-width={strokeWidth}
     {opacity}
-    class={cls(layerClass('polygon'), fill == null && 'fill-surface-content', className)}
+    class={cls('lc-polygon', fill == null && 'fill-surface-content', className)}
     {...restProps}
     bind:this={ref}
   />

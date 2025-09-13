@@ -74,7 +74,6 @@
   import { geoCurvePath } from '$lib/utils/geo.js';
   import { getGeoContext } from './GeoContext.svelte';
   import { createKey } from '$lib/utils/key.svelte.js';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let {
     fill,
@@ -199,6 +198,6 @@
     onpointerenter={_onPointerEnter}
     onpointermove={_onPointerMove}
     onpointerleave={_onPointerLeave}
-    class={cls(layerClass('geo-path'), fill == null && 'fill-transparent', className)}
+    class={cls('lc-geo-path', fill == null && 'fill-transparent', className)}
   />
 {/if}

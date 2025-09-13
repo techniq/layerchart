@@ -13,7 +13,6 @@
 <script lang="ts">
   import { computedStyles } from '@layerstack/svelte-actions';
   import { cls } from '@layerstack/tailwind';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   let { class: className, children }: ComputedStylesProps = $props();
 
@@ -21,7 +20,7 @@
 </script>
 
 <div
-  class={cls(layerClass('computed-styles'), 'hidden', className)}
+  class={cls('lc-computed-styles', 'hidden', className)}
   use:computedStyles={(_styles) => (styles = _styles)}
 ></div>
 

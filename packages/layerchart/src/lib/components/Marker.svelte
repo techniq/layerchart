@@ -73,7 +73,6 @@
 <script lang="ts">
   import { cls } from '@layerstack/tailwind';
   import { createId } from '$lib/utils/createId.js';
-  import { layerClass } from '$lib/utils/attributes.js';
 
   const uid = $props.id();
 
@@ -106,7 +105,7 @@
     {viewBox}
     {...restProps}
     class={cls(
-      layerClass('marker'),
+      'lc-marker',
       'overflow-visible',
       // stroke
       restProps.stroke == null &&
@@ -130,13 +129,13 @@
     {#if children}
       {@render children()}
     {:else if type === 'triangle'}
-      <path d="M 0 0 L 10 5 L 0 10 z" class={layerClass('marker-triangle')} />
+      <path d="M 0 0 L 10 5 L 0 10 z" class="lc-marker-triangle" />
     {:else if type === 'arrow'}
-      <polyline points="0 0, 10 5, 0 10" class={layerClass('marker-arrow')} />
+      <polyline points="0 0, 10 5, 0 10" class="lc-marker-arrow" />
     {:else if type === 'circle' || type === 'circle-stroke' || type === 'dot'}
-      <circle cx={5} cy={5} r={5} class={layerClass('marker-circle')} />
+      <circle cx={5} cy={5} r={5} class="lc-marker-circle" />
     {:else if type === 'line'}
-      <polyline points="5 0, 5 10" class={layerClass('marker-line')} />
+      <polyline points="5 0, 5 10" class="lc-marker-line" />
     {/if}
   </marker>
 </defs>

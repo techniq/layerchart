@@ -30,10 +30,9 @@
 </script>
 
 <script lang="ts">
-  import { timeWeek, timeMonth, timeYear } from 'd3-time';
+  import { timeWeek, timeYear } from 'd3-time';
   import { cls } from '@layerstack/tailwind';
   import { endOfInterval } from '@layerstack/utils';
-  import { layerClass } from '$lib/utils/attributes.js';
   import Spline, { type SplinePropsWithoutHTML } from './Spline.svelte';
 
   let {
@@ -75,6 +74,6 @@
   bind:pathRef
   {pathData}
   fill="none"
-  class={cls(layerClass('month-path'), 'stroke-surface-content/20', className)}
+  class={cls('lc-month-path', 'stroke-surface-content/20', className)}
   {...restProps}
 />
