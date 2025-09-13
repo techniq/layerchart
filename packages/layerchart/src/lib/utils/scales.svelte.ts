@@ -171,9 +171,9 @@ export function autoScale(
   propAccessor?: Accessor<any>
 ): AnyScale {
   let values = null;
-  if (domain && domain.length > 0) {
-    // Determine based on domain values
-    values = domain;
+  if (domain && domain.length > 0 && domain.some((d) => d != null)) {
+    // Determine based on non-null domain values
+    values = domain.filter((d) => d != null);
   } else if (data && data.length > 0 && propAccessor) {
     // Determine based on data values
     const value = accessor(propAccessor)(data[0]);
