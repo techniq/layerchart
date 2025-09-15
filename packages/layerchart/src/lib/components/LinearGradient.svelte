@@ -113,6 +113,35 @@
 
   let canvasGradient = $state<CanvasGradient>();
 
+  function createCSSGradient(): string {
+    if (!stops?.length) return '';
+
+    let direction: string;
+    if (rotate !== undefined) {
+      // Convert SVG rotation to CSS linear-gradient angle
+      // SVG: rotate(0) on horizontal gradient = left-to-right = CSS 90deg
+      // SVG: rotate(0) on vertical gradient = top-to-bottom = CSS 180deg
+      const baseAngle = vertical ? 180 : 90;
+      const cssAngle = baseAngle + rotate;
+      direction = `${cssAngle}deg`;
+    } else {
+      // Use direction keywords when no rotation is specified
+      direction = vertical ? 'to bottom' : 'to right';
+    }
+
+    const cssStops = stops
+      .map((stop, i) => {
+        if (Array.isArray(stop)) {
+          return `${stop[1]} ${stop[0]}`;
+        } else {
+          return `${stop} ${i * (100 / (stops.length - 1))}%`;
+        }
+      })
+      .join(', ');
+
+    return `linear-gradient(${direction}, ${cssStops})`;
+  }
+
   function render(_ctx: CanvasRenderingContext2D) {
     // Use `getComputedStyles()` to convert each stop (if using CSS variables and/or classes) to color values
     const _stops = stops.map((stop, i) => {
@@ -195,4 +224,6 @@
   </defs>
 
   {@render children?.({ id, gradient: `url(#${id})` })}
+{:else if renderCtx === 'html'}
+  {@render children?.({ id, gradient: createCSSGradient() })}
 {/if}

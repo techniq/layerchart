@@ -169,13 +169,14 @@
 {:else if renderCtx === 'html'}
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
+  {console.log({ fill })}
   <div
     style:position="absolute"
     style:left="{motionX.current}px"
     style:top="{motionY.current}px"
     style:width="{motionWidth.current}px"
     style:height="{motionHeight.current}px"
-    style:background-color={fill}
+    style:background={fill}
     style:background-opacity={opacity}
     style:border-width="{strokeWidth}px"
     style:border-style="solid"
@@ -209,8 +210,8 @@
     }
 
     /* Html layers */
-    :global(:where(.lc-layout-html .lc-rect):not([background-color])) {
-      background-color: var(--fill-color);
+    :global(:where(.lc-layout-html .lc-rect):not([background])) {
+      background: var(--fill-color);
     }
     :global(:where(.lc-layout-html .lc-rect):not([border-color])) {
       border-color: var(--stroke-color);
