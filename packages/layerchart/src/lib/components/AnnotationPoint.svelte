@@ -108,12 +108,14 @@
   cx={point.x}
   cy={point.y}
   {r}
+  onpointermove={onPointerMove}
   onmousemove={onPointerMove}
   ontouchmove={onPointerMove}
+  onpointerleave={onPointerLeave}
   onmouseleave={onPointerLeave}
   ontouchend={onPointerLeave}
   {...props?.circle}
-  class={cls('stroke-surface-100', props?.circle?.class)}
+  class={cls('lc-annotation-point', props?.circle?.class)}
 />
 
 {#if label}
@@ -121,6 +123,19 @@
     value={label}
     {...labelProps}
     {...props?.label}
-    class={cls('text-xs pointer-events-none', props?.label?.class)}
+    class={cls('lc-annotation-point-label', props?.label?.class)}
   />
 {/if}
+
+<style>
+  @layer components {
+    :global(:where(.lc-annotation-point)) {
+      /* --stroke-color: var(--color-surface-content, currentColor); */
+    }
+
+    :global(:where(.lc-annotation-point-label)) {
+      font-size: 12px;
+      pointer-events: none;
+    }
+  }
+</style>
