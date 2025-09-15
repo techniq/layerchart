@@ -78,6 +78,14 @@
     locked?: boolean;
 
     /**
+     * Controls the touch event behavior on the tooltip container.
+     * By default uses `pan-y` to allow verticle scrolling but horizontal scrubbing.
+     * Use `none` to disable all touch events (useful for improved transform/geo charts interactions)
+     * @default 'pan-y'
+     */
+    touchEvents?: 'none' | 'pan-x' | 'pan-y' | 'auto';
+
+    /**
      * quadtree search or voronoi clip radius
      * @default Infinity
      */
@@ -154,6 +162,7 @@
     findTooltipData = 'closest',
     hideDelay = 0,
     locked = false,
+    touchEvents = 'pan-y',
     mode = 'manual',
     onclick = () => {},
     radius = Infinity,
@@ -604,18 +613,11 @@
   style:left="{ctx.padding.left}px"
   style:width="{ctx.width}px"
   style:height="{ctx.height}px"
-  class={cls(
-    'lc-tooltip-context',
-    'absolute',
-    // 'touch-none', // TODO: Keep page from scrolling on touch devices (useful for transform/geo charts)
-    debug && triggerPointerEvents && 'bg-danger/10 outline outline-danger'
-  )}
-  onmouseenter={onPointerEnter}
-  ontouchstart={onPointerEnter}
-  onmousemove={onPointerMove}
-  ontouchmove={onPointerMove}
-  onmouseleave={onPointerLeave}
-  ontouchend={onPointerLeave}
+  style:--touch-action={touchEvents}
+  class={cls('lc-tooltip-context', debug && triggerPointerEvents && 'debug')}
+  onpointerenter={onPointerEnter}
+  onpointermove={onPointerMove}
+  onpointerleave={onPointerLeave}
   onclick={(e) => {
     // Ignore clicks without data (triggered from Legend clicks, for example)
     if (triggerPointerEvents && tooltipContext.data != null) {
@@ -627,7 +629,7 @@
 >
   <!-- Rendering slot within TooltipContext to allow pointer events to bubble up (ex. Brush) -->
   <div
-    class={cls('lc-tooltip-context-container', 'absolute')}
+    class="lc-tooltip-context-container"
     style:top="-{ctx.padding.top ?? 0}px"
     style:left="-{ctx.padding.left ?? 0}px"
     style:width="{ctx.containerWidth}px"
@@ -670,10 +672,7 @@
                 outerRadius={rect.y + rect.height}
                 startAngle={rect.x}
                 endAngle={rect.x + rect.width}
-                class={cls(
-                  'lc-tooltip-rect',
-                  debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent'
-                )}
+                class={cls('lc-tooltip-rect', debug && 'debug')}
                 onpointerenter={(e) => showTooltip(e, rect?.data)}
                 onpointermove={(e) => showTooltip(e, rect?.data)}
                 onpointerleave={() => hideTooltip()}
@@ -693,10 +692,7 @@
                 y={rect?.y}
                 width={rect?.width}
                 height={rect?.height}
-                class={cls(
-                  'lc-tooltip-rect',
-                  debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent'
-                )}
+                class={cls('lc-tooltip-rect', debug && 'debug')}
                 onpointerenter={(e) => showTooltip(e, rect?.data)}
                 onpointermove={(e) => showTooltip(e, rect?.data)}
                 onpointerleave={() => hideTooltip()}
@@ -725,10 +721,7 @@
                   y={rect.y}
                   width={rect.width}
                   height={rect.height}
-                  class={cls(
-                    'lc-tooltip-quadtree-rect',
-                    debug ? 'fill-danger/10 stroke-danger' : 'fill-transparent'
-                  )}
+                  class={cls('lc-tooltip-quadtree-rect', debug && 'debug')}
                 />
               {/each}
             {/if}
@@ -738,3 +731,37 @@
     {/if}
   </div>
 </div>
+
+<style>
+  :where(.lc-tooltip-context-container) {
+    position: absolute;
+  }
+
+  :where(.lc-tooltip-context) {
+    position: absolute;
+    touch-action: var(--touch-action);
+
+    &.debug {
+      outline: 1px solid var(--color-danger);
+      background-color: color-mix(in oklch, var(--color-danger) 10%, transparent);
+    }
+  }
+
+  :where(.lc-tooltip-rect) {
+    fill: transparent;
+
+    &.debug {
+      stroke: var(--color-danger);
+      fill: color-mix(in oklch, var(--color-danger) 10%, transparent);
+    }
+  }
+
+  :where(.lc-tooltip-quadtree-rect) {
+    fill: transparent;
+
+    &.debug {
+      stroke: var(--color-danger);
+      fill: color-mix(in oklch, var(--color-danger) 10%, transparent);
+    }
+  }
+</style>
