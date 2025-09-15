@@ -733,35 +733,37 @@
 </div>
 
 <style>
-  :where(.lc-tooltip-context-container) {
-    position: absolute;
-  }
-
-  :where(.lc-tooltip-context) {
-    position: absolute;
-    touch-action: var(--touch-action);
-
-    &.debug {
-      outline: 1px solid var(--color-danger);
-      background-color: color-mix(in oklch, var(--color-danger) 10%, transparent);
+  @layer base {
+    :where(.lc-tooltip-context-container) {
+      position: absolute;
     }
-  }
 
-  :where(.lc-tooltip-rect) {
-    fill: transparent;
+    :where(.lc-tooltip-context) {
+      position: absolute;
+      touch-action: var(--touch-action);
 
-    &.debug {
-      stroke: var(--color-danger);
-      fill: color-mix(in oklch, var(--color-danger) 10%, transparent);
+      &.debug {
+        outline: 1px solid var(--color-danger);
+        background-color: color-mix(in oklch, var(--color-danger) 10%, transparent);
+      }
     }
-  }
 
-  :where(.lc-tooltip-quadtree-rect) {
-    fill: transparent;
+    :where(.lc-tooltip-rect) {
+      fill: transparent;
 
-    &.debug {
-      stroke: var(--color-danger);
-      fill: color-mix(in oklch, var(--color-danger) 10%, transparent);
+      &.debug {
+        stroke: var(--color-danger);
+        fill: color-mix(in oklch, var(--color-danger) 10%, transparent);
+      }
+    }
+
+    :where(.lc-tooltip-quadtree-rect) {
+      fill: transparent;
+
+      &.debug {
+        stroke: var(--color-danger);
+        fill: color-mix(in oklch, var(--color-danger) 10%, transparent);
+      }
     }
   }
 </style>
