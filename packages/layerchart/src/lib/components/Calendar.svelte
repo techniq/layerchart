@@ -128,11 +128,8 @@
       fill={cell.color}
       onpointermove={(e) => tooltip?.show(e, cell.data)}
       onpointerleave={(e) => tooltip?.hide()}
-      {...extractLayerProps(
-        restProps,
-        'lc-calendar-cell',
-        'stroke-surface-content/5 border border-surface-content/5'
-      )}
+      strokeWidth={1}
+      {...extractLayerProps(restProps, 'lc-calendar-cell')}
     />
   {/each}
 {/if}
@@ -149,7 +146,23 @@
       x={timeWeek.count(timeYear.floor(date), timeWeek.ceil(date)) * cellSize[0]}
       value={format(date, 'month', { variant: 'short' })}
       capHeight="7px"
-      {...extractLayerProps(monthLabel, 'lc-calendar-month-label', 'text-xs')}
+      {...extractLayerProps(monthLabel, 'lc-calendar-month-label')}
     />
   {/each}
 {/if}
+
+<style>
+  @layer components {
+    :global(:where(.lc-calendar-cell)) {
+      --stroke-color: color-mix(
+        in oklch,
+        var(--color-surface-content, currentColor) 5%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-calendar-month-label)) {
+      font-size: 12px;
+    }
+  }
+</style>
