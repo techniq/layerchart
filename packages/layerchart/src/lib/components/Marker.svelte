@@ -103,28 +103,9 @@
     {refX}
     {refY}
     {viewBox}
+    data-type={type}
     {...restProps}
-    class={cls(
-      'lc-marker',
-      'overflow-visible',
-      // stroke
-      restProps.stroke == null &&
-        (['arrow', 'circle-stroke', 'line'].includes(type ?? '')
-          ? 'stroke-[context-stroke]'
-          : type === 'circle'
-            ? 'stroke-surface-100'
-            : 'stroke-none'),
-      // extra stroke attrs
-      '[stroke-linecap:round] [stroke-linejoin:round]',
-      //fill
-      restProps.fill == null &&
-        (['triangle', 'dot', 'circle'].includes(type ?? '')
-          ? 'fill-[context-stroke]'
-          : type === 'circle-stroke'
-            ? 'fill-surface-100'
-            : 'fill-none'),
-      className
-    )}
+    class={cls('lc-marker', className)}
   >
     {#if children}
       {@render children()}
@@ -139,3 +120,34 @@
     {/if}
   </marker>
 </defs>
+
+<style>
+  @layer base {
+    :global(:where(.lc-marker)) {
+      overflow: visible;
+
+      &[data-type='arrow'],
+      &[data-type='circle-stroke'],
+      &[data-type='line'] {
+        fill: none;
+        stroke: context-stroke;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      &[data-type='circle'] {
+        stroke: var(--color-surface-100, light-dark(white, black));
+      }
+
+      &[data-type='triangle'],
+      &[data-type='dot'],
+      &[data-type='circle'] {
+        fill: context-stroke;
+      }
+
+      &[data-type='circle-stroke'] {
+        fill: var(--color-surface-100, light-dark(white, black));
+      }
+    }
+  }
+</style>
