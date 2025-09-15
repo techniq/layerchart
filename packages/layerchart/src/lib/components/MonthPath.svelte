@@ -74,6 +74,18 @@
   bind:pathRef
   {pathData}
   fill="none"
-  class={cls('lc-month-path', 'stroke-surface-content/20', className)}
+  class={cls('lc-month-path', className)}
   {...restProps}
 />
+
+<style>
+  @layer components {
+    :global(:where(.lc-month-path)) {
+      --stroke-color: color-mix(
+        in oklch,
+        var(--color-surface-content, currentColor) 20%,
+        transparent
+      );
+    }
+  }
+</style>
