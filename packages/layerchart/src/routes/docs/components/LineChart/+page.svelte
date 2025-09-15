@@ -130,6 +130,21 @@
   </div>
 </Preview>
 
+<h2>Vertical</h2>
+
+<Preview data={dateSeriesData}>
+  <div class="h-[600px] w-[400px] p-4 border rounded-sm">
+    <LineChart
+      data={dateSeriesData}
+      x="value"
+      y="date"
+      orientation="vertical"
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
 <h2>Series</h2>
 
 <Preview data={multiSeriesData}>
@@ -171,6 +186,25 @@
           data: multiSeriesDataByFruit.get('oranges'),
           color: 'var(--color-warning)',
         },
+      ]}
+      {renderContext}
+      {debug}
+    />
+  </div>
+</Preview>
+
+<h2>Series (vertical)</h2>
+
+<Preview data={multiSeriesData}>
+  <div class="h-[600px] w-[400px] p-4 border rounded-sm">
+    <LineChart
+      data={multiSeriesData}
+      y="date"
+      orientation="vertical"
+      series={[
+        { key: 'apples', color: 'var(--color-danger)' },
+        { key: 'bananas', color: 'var(--color-success)' },
+        { key: 'oranges', color: 'var(--color-warning)' },
       ]}
       {renderContext}
       {debug}

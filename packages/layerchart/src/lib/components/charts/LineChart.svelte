@@ -44,12 +44,11 @@
     LineChartExtraSnippetProps<TData>
   > & {
     /**
-     * The event to be dispatched when the point is clicked.
+     * The orientation of the line chart.
+     *
+     * @default 'horizontal'
      */
-    onPointClick?: (
-      e: MouseEvent,
-      details: { data: HighlightPointData; series: SeriesData<TData, typeof Spline> }
-    ) => void;
+    orientation?: 'vertical' | 'horizontal';
 
     props?: LineChartPropsObjProp;
 
@@ -64,6 +63,14 @@
         seriesIndex: number;
       }
     >;
+
+    /**
+     * The event to be dispatched when the point is clicked.
+     */
+    onPointClick?: (
+      e: MouseEvent,
+      details: { data: HighlightPointData; series: SeriesData<TData, typeof Spline> }
+    ) => void;
   };
 </script>
 
@@ -83,12 +90,7 @@
   import Rule from '../Rule.svelte';
   import Spline from '../Spline.svelte';
 
-  import {
-    accessor,
-    chartDataArray,
-    defaultChartPadding,
-    findRelatedData,
-  } from '../../utils/common.js';
+  import { chartDataArray, defaultChartPadding, findRelatedData } from '../../utils/common.js';
   import { asAny } from '../../utils/types.js';
   import type {
     SeriesData,
@@ -100,13 +102,17 @@
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
   import ChartAnnotations from './ChartAnnotations.svelte';
+  import { isScaleTime } from 'layerchart/utils/scales.svelte.js';
 
   let {
     data = [],
     x: xProp,
-    y: yProp,
+    xScale,
     xDomain,
+    y: yProp,
+    yScale,
     radial = false,
+    orientation = 'horizontal',
     series: seriesProp,
     seriesLayout = 'overlap',
     axis = true,
@@ -136,13 +142,22 @@
     ...restProps
   }: LineChartProps<TData> = $props();
 
+  const isVertical = $derived(orientation === 'vertical');
+
   const series = $derived(
     seriesProp === undefined
       ? [
           {
             key: 'default',
-            label: typeof yProp === 'string' ? yProp : 'value',
-            value: yProp,
+
+            label: isVertical
+              ? typeof xProp === 'string'
+                ? xProp
+                : 'value'
+              : typeof yProp === 'string'
+                ? yProp
+                : 'value',
+            value: isVertical ? xProp : yProp,
             color: 'var(--color-primary)',
           },
         ]
@@ -159,7 +174,8 @@
   function getSplineProps(s: SeriesData<TData, typeof Spline>, i: number) {
     const splineProps: ComponentProps<typeof Spline> = {
       data: s.data,
-      y: s.value ?? (s.data ? undefined : s.key),
+      x: isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
+      y: !isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
       stroke: s.color,
       ...props.spline,
       ...s.props,
@@ -182,7 +198,8 @@
   function getPointsProps(s: SeriesData<TData, typeof Spline>, i: number) {
     const pointsProps: ComponentProps<typeof Points> = {
       data: s.data,
-      y: s.value ?? (s.data ? undefined : s.key),
+      x: isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
+      y: !isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
       fill: s.color,
       ...props.points,
       ...(typeof points === 'object' ? points : null),
@@ -202,7 +219,8 @@
   function getLabelsProps(s: SeriesData<TData, typeof Spline>, i: number) {
     const labelsProps: ComponentProps<typeof Labels<TData>> = {
       data: s.data,
-      y: s.value ?? (s.data ? undefined : s.key),
+      x: isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
+      y: !isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
       ...props.labels,
       ...(typeof labels === 'object' ? labels : null),
       class: cls(
@@ -234,7 +252,8 @@
 
     return {
       data: seriesTooltipData,
-      y: s.value ?? (s.data ? undefined : s.key),
+      x: isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
+      y: !isVertical ? (s.value ?? (s.data ? undefined : s.key)) : undefined,
       lines: i === 0,
       onPointClick: onPointClick
         ? (e, detail) => onPointClick(e, { ...detail, series: s })
@@ -323,18 +342,20 @@
 <Chart
   bind:context
   data={chartData}
-  x={xProp}
+  x={xProp ?? (isVertical ? series.map((s) => s.value ?? s.key) : undefined)}
   {xDomain}
-  y={yProp ?? series.map((s) => s.value ?? s.key)}
-  yBaseline={0}
-  yNice
+  xBaseline={!isVertical || (xScale && isScaleTime(xScale)) ? undefined : 0}
+  xNice={orientation === 'vertical'}
+  y={yProp ?? (isVertical ? undefined : series.map((s) => s.value ?? s.key))}
+  yBaseline={isVertical || (yScale && isScaleTime(yScale)) ? undefined : 0}
+  yNice={orientation === 'horizontal'}
   {radial}
   padding={radial ? undefined : defaultChartPadding(axis, legend)}
   {...restProps}
   tooltip={tooltip === false
     ? false
     : {
-        mode: 'quadtree-x',
+        mode: isVertical ? 'quadtree-y' : 'quadtree-x',
         onclick: onTooltipClick,
         debug,
         ...props.tooltip?.context,
