@@ -273,12 +273,7 @@
         ? merge({ styles: { strokeWidth } }, styleOverrides)
         : {
             styles: { fill, fillOpacity, stroke, strokeWidth, opacity },
-            classes: cls(
-              'lc-spline-path',
-              !fill && 'fill-none',
-              !stroke && 'stroke-surface-content',
-              className
-            ),
+            classes: cls('lc-spline-path', className),
           }
     );
   }
@@ -366,12 +361,7 @@
     <path
       d={tweenedState.current}
       {...restProps}
-      class={cls(
-        'lc-spline-path',
-        !fill && 'fill-none',
-        !stroke && 'stroke-surface-content',
-        className
-      )}
+      class={cls('lc-spline-path', className)}
       {fill}
       fill-opacity={fillOpacity}
       {stroke}
@@ -412,3 +402,28 @@
     {/if}
   {/key}
 {/if}
+
+<style>
+  @layer base {
+    :global(:where(.lc-spline-path)) {
+      --fill-color: none;
+      --stroke-color: var(--color-surface-content, currentColor);
+    }
+
+    /* Svg | Canvas layers */
+    :global(:where(.lc-layout-svg .lc-spline-path, svg.lc-spline-path):not([fill])) {
+      fill: var(--fill-color);
+    }
+    :global(:where(.lc-layout-svg .lc-spline-path, svg.lc-spline-path):not([stroke])) {
+      stroke: var(--stroke-color);
+    }
+
+    /* Html layers */
+    :global(:where(.lc-layout-html .lc-spline-path):not([background-color])) {
+      background-color: var(--fill-color);
+    }
+    :global(:where(.lc-layout-html .lc-spline-path):not([border-color])) {
+      border-color: var(--stroke-color);
+    }
+  }
+</style>

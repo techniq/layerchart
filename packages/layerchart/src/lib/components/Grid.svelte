@@ -167,12 +167,7 @@
             {y2}
             motion={tweenConfig}
             {...splineProps}
-            class={cls(
-              'lc-grid-x-radial-line',
-              'stroke-surface-content/10',
-              classes.line,
-              splineProps?.class
-            )}
+            class={cls('lc-grid-x-radial-line', classes.line, splineProps?.class)}
           />
         {:else}
           <Rule
@@ -180,12 +175,7 @@
             xOffset={xBandOffset}
             {motion}
             {...splineProps}
-            class={cls(
-              'lc-grid-x-rule',
-              'stroke-surface-content/10',
-              classes.line,
-              splineProps?.class
-            )}
+            class={cls('lc-grid-x-rule', classes.line, splineProps?.class)}
           />
         {/if}
       {/each}
@@ -197,12 +187,7 @@
           xOffset={ctx.xScale.step() + xBandOffset}
           {motion}
           {...splineProps}
-          class={cls(
-            'lc-grid-x-end-rule',
-            'stroke-surface-content/10',
-            classes.line,
-            splineProps?.class
-          )}
+          class={cls('lc-grid-x-end-rule', classes.line, splineProps?.class)}
         />
       {/if}
     </Group>
@@ -218,12 +203,7 @@
               r={ctx.yScale(y) + yBandOffset}
               {motion}
               {...splineProps}
-              class={cls(
-                'lc-grid-y-radial-circle',
-                'fill-none stroke-surface-content/10',
-                classes.line,
-                splineProps?.class
-              )}
+              class={cls('lc-grid-y-radial-circle', classes.line, splineProps?.class)}
             />
           {:else}
             <Spline
@@ -233,12 +213,7 @@
               motion={tweenConfig}
               curve={curveLinearClosed}
               {...splineProps}
-              class={cls(
-                'lc-grid-y-radial-line',
-                'stroke-surface-content/10',
-                classes.line,
-                splineProps?.class
-              )}
+              class={cls('lc-grid-y-radial-line', classes.line, splineProps?.class)}
             />
           {/if}
         {:else}
@@ -247,12 +222,7 @@
             yOffset={yBandOffset}
             {motion}
             {...splineProps}
-            class={cls(
-              'lc-grid-y-rule',
-              'stroke-surface-content/10',
-              classes.line,
-              splineProps?.class
-            )}
+            class={cls('lc-grid-y-rule', classes.line, splineProps?.class)}
           />
         {/if}
       {/each}
@@ -264,12 +234,7 @@
             r={ctx.yScale(yTickVals[yTickVals.length - 1])! + ctx.yScale.step() + yBandOffset}
             {motion}
             {...splineProps}
-            class={cls(
-              'lc-grid-y-radial-circle',
-              'fill-none stroke-surface-content/10',
-              classes.line,
-              splineProps?.class
-            )}
+            class={cls('lc-grid-y-radial-circle', classes.line, splineProps?.class)}
           />
         {:else}
           <Rule
@@ -277,15 +242,40 @@
             yOffset={ctx.yScale.step() + yBandOffset}
             {motion}
             {...splineProps}
-            class={cls(
-              'lc-grid-y-end-rule',
-              'stroke-surface-content/10',
-              classes.line,
-              splineProps?.class
-            )}
+            class={cls('lc-grid-y-end-rule', classes.line, splineProps?.class)}
           />
         {/if}
       {/if}
     </Group>
   {/if}
 </Group>
+
+<style>
+  @layer components {
+    :global(
+      :where(
+        .lc-grid-x-rule,
+        .lc-grid-x-end-rule,
+        .lc-grid-x-radial-line,
+        .lc-grid-y-rule,
+        .lc-grid-y-end-rule,
+        .lc-grid-y-radial-line
+      )
+    ) {
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 10%,
+        transparent
+      );
+    }
+
+    :global(:where(.lc-grid-y-radial-circle)) {
+      --fill-color: none;
+      --stroke-color: color-mix(
+        in oklab,
+        var(--color-surface-content, currentColor) 10%,
+        transparent
+      );
+    }
+  }
+</style>
