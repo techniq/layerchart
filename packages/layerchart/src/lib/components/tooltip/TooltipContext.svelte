@@ -607,6 +607,7 @@
   class={cls(
     'lc-tooltip-context',
     'absolute',
+    // 'touch-none', // TODO: Keep page from scrolling on touch devices (useful for transform/geo charts)
     debug && triggerPointerEvents && 'bg-danger/10 outline outline-danger'
   )}
   onmouseenter={onPointerEnter}
